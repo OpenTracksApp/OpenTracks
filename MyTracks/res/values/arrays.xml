@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+  <!-- Task frequency -->
+  <string-array name="task_frequency_options">
+    <item>Off</item>
+    <item>1 min</item>
+    <item>2 min</item>
+    <item>5 min</item>
+    <item>10 min</item>
+    <item>15 min</item>
+    <item>30 min</item>
+    <item>60 min</item>
+  </string-array>
+
+  <string-array name="task_frequency_values">
+    <item>-1</item>
+    <item>1</item>
+    <item>2</item>
+    <item>5</item>
+    <item>10</item>
+    <item>15</item>
+    <item>30</item>
+    <item>60</item>
+  </string-array>
+
+
+  <!-- Minimum recording distance -->
+  <string-array name="min_recording_distance_options">
+    <item>1 m</item>
+    <item>2 m</item>
+    <item>3 m</item>
+    <item>4 m</item>
+    <item>5 m (recommended)</item>
+    <item>10 m</item>
+    <item>100 m</item>
+  </string-array>
+
+  <string-array name="min_recording_distance_options_ft">
+    <item>3 ft</item>
+    <item>6 ft</item>
+    <item>10 ft</item>
+    <item>13 ft</item>
+    <item>16 ft (recommended)</item>
+    <item>33 ft</item>
+    <item>328 ft</item>
+  </string-array>
+
+  <string-array name="min_recording_distance_values">
+    <item>1</item>
+    <item>2</item>
+    <item>3</item>
+    <item>4</item>
+    <item>5</item>
+    <item>10</item>
+    <item>100</item>
+  </string-array>
+
+
+  <!-- Maximum recording distance -->
+  <string-array name="max_recording_distance_options">
+    <item>50 m</item>
+    <item>100 m</item>
+    <item>200 m (recommended)</item>
+    <item>500 m</item>
+    <item>1000 m</item>
+    <item>5000 m</item>
+  </string-array>
+
+  <string-array name="max_recording_distance_options_ft">
+    <item>164 ft</item>
+    <item>328 ft</item>
+    <item>656 ft (recommended)</item>
+    <item>1640 ft</item>
+    <item>0.6 miles</item>
+    <item>3.1 miles</item>
+  </string-array>
+
+  <string-array name="max_recording_distance_values">
+    <item>50</item>
+    <item>100</item>
+    <item>200</item>
+    <item>500</item>
+    <item>1000</item>
+    <item>5000</item>
+  </string-array>
+
+
+  <!-- Minimum recording interval -->
+  <string-array name="min_recording_interval_options">
+    <item>battery miser (adaptive)</item>
+    <item>high accuracy (adaptive)</item>
+    <item>highest (recommended)</item>
+    <item>2 s</item>
+    <item>3 s</item>
+    <item>4 s</item>
+    <item>5 s</item>
+    <item>10 s</item>
+    <item>20 s</item>
+    <item>30 s</item>
+    <item>1 min</item>
+    <item>2 min</item>
+    <item>5 min</item>
+    <item>10 min</item>
+    <item>15 min</item>
+    <item>30 min</item>
+  </string-array>
+
+  <string-array name="min_recording_interval_values">
+    <item>-2</item>
+    <item>-1</item>
+    <item>0</item>
+    <item>2</item>
+    <item>3</item>
+    <item>4</item>
+    <item>5</item>
+    <item>10</item>
+    <item>20</item>
+    <item>30</item>
+    <item>60</item>
+    <item>120</item>
+    <item>300</item>
+    <item>480</item>
+    <item>900</item>
+    <item>1800</item>
+  </string-array>
+
+
+  <!-- Minimum required accuracy -->
+  <string-array name="min_required_accuracy_options">
+    <item>10 m (excellent GPS signal)</item>
+    <item>20 m</item>
+    <item>50 m</item>
+    <item>100 m</item>
+    <item>200 m (recommended)</item>
+    <item>500 m</item>
+    <item>1000 m</item>
+    <item>2000 m</item>
+    <item>5000 m (poor GPS signal)</item>
+  </string-array>
+
+  <string-array name="min_required_accuracy_options_ft">
+    <item>33 ft (excellent GPS signal)</item>
+    <item>66 ft</item>
+    <item>165 ft</item>
+    <item>328 ft</item>
+    <item>656 ft (recommended)</item>
+    <item>1640 ft</item>
+    <item>0.6 miles</item>
+    <item>1.2 miles</item>
+    <item>3.1 miles (poor GPS signal)</item>
+  </string-array>
+
+  <string-array name="min_required_accuracy_values">
+    <item>10</item>
+    <item>20</item>
+    <item>50</item>
+    <item>100</item>
+    <item>200</item>
+    <item>500</item>
+    <item>1000</item>
+    <item>2000</item>
+    <item>5000</item>
+  </string-array>
+
+
+  <!-- Split frequency -->
+  <string-array name="split_frequency_options">
+    <item>No splitting</item>
+    <item>100 km</item>
+    <item>50 km</item>
+    <item>25 km</item>
+    <item>10 km</item>
+    <item>5 km</item>
+    <item>1 km</item>
+    <item>60 min</item>
+    <item>30 min</item>
+    <item>15 min</item>
+    <item>10 min</item>
+    <item>5 min</item>
+    <item>2 min</item>
+    <item>1 min</item>
+  </string-array>
+
+  <string-array name="split_frequency_options_ft">
+    <item>No splitting</item>
+    <item>100 mi</item>
+    <item>50 mi</item>
+    <item>25 mi</item>
+    <item>10 mi</item>
+    <item>5 mi</item>
+    <item>1 mi</item>
+    <item>60 min</item>
+    <item>30 min</item>
+    <item>15 min</item>
+    <item>10 min</item>
+    <item>5 min</item>
+    <item>2 min</item>
+    <item>1 min</item>
+  </string-array>
+
+  <string-array name="split_frequency_values">
+    <item>0</item>
+    <item>-100</item>
+    <item>-50</item>
+    <item>-25</item>
+    <item>-10</item>
+    <item>-5</item>
+    <item>-1</item>
+    <item>60</item>
+    <item>30</item>
+    <item>15</item>
+    <item>10</item>
+    <item>5</item>
+    <item>2</item>
+    <item>1</item>
+  </string-array>
+
+
+  <!-- Other non-preference arrays -->
+  <array name="activity_types">
+    <item>unknown</item>
+    <item>mixed type</item>
+    <item>other</item>
+
+    <item>running</item>
+    <item>street running</item>
+    <item>track running</item>
+    <item>trail running</item>
+    <item>walking</item>
+    <item>speed walking</item>
+    <item>hiking</item>
+    <item>trail hiking</item>
+    <item>off trail hiking</item>
+    <item>climbing</item>
+
+    <item>cycling</item>
+    <item>road biking</item>
+    <item>mountain biking</item>
+    <item>track cycling</item>
+
+    <item>skating</item>
+    <item>inline skating</item>
+    <item>skate boarding</item>
+
+    <item>snow shoeing</item>
+    <item>skiing</item>
+    <item>snow boarding</item>
+    <item>sled</item>
+    <item>ice sailing</item>
+
+    <item>sailing</item>
+    <item>paddling</item>
+    <item>kayaking</item>
+    <item>rowing</item>
+    <item>motor boating</item>
+    <item>ferry</item>
+    <item>RC boat</item>
+    <item>surfing</item>
+    <item>wind surfing</item>
+    <item>kite surfing</item>
+    <item>water skiing</item>
+    <item>wake boarding</item>
+
+    <item>airplane</item>
+    <item>seaplane</item>
+    <item>commercial airplane</item>
+    <item>helicopter</item>
+    <item>hot air balloon</item>
+    <item>blimp</item>
+    <item>RC airplane</item>
+    <item>RC helicopter</item>
+    <item>sky jumping</item>
+    <item>gliding</item>
+    <item>hang gliding</item>
+    <item>para gliding</item>
+
+    <item>riding</item>
+    <item>horse back riding</item>
+    <item>donkey back riding</item>
+
+    <item>driving car</item>
+    <item>driving bus</item>
+    <item>train</item>
+    <item>motor bike</item>
+    <item>dirt bike</item>
+    <item>ATV</item>
+
+    <item>land sailing</item>
+    <item>frisbee</item>
+    <item>ultimate frisbee</item>
+  </array>
+
+  <array name="waypoint_types">
+    <item>ATM</item>
+    <item>bank</item>
+    <item>bar</item>
+    <item>barbeque</item>
+    <item>building</item>
+    <item>bus stop</item>
+    <item>cafe</item>
+    <item>campfire</item>
+    <item>campground</item>
+    <item>church</item>
+    <item>coffee house</item>
+    <item>convenience store</item>
+    <item>drinking water</item>
+    <item>falling rocks</item>
+    <item>ferry</item>
+    <item>fire place</item>
+    <item>fire station</item>
+    <item>fishing</item>
+    <item>gas station</item>
+    <item>golf course</item>
+    <item>grocery store</item>
+    <item>hair dresser</item>
+    <item>harbor</item>
+    <item>hiking path</item>
+    <item>hotel</item>
+    <item>house</item>
+    <item>information</item>
+    <item>intersection</item>
+    <item>mail box</item>
+    <item>market</item>
+    <item>meeting point</item>
+    <item>opera</item>
+    <item>parking</item>
+    <item>post office</item>
+    <item>pothole</item>
+    <item>police station</item>
+    <item>railway crossing</item>
+    <item>restaurant</item>
+    <item>shopping</item>
+    <item>sight</item>
+    <item>store</item>
+    <item>swimming pool</item>
+    <item>telephone</item>
+    <item>theater</item>
+    <item>toilet</item>
+    <item>tourist information</item>
+    <item>tunnel</item>
+    <item>tree</item>
+    <item>waterfall</item>
+    <item>water fountain</item>
+    <item>way point</item>
+  </array>
+
+  <array name="export_formats">
+    <item>GPX</item>
+    <item>KML</item>
+    <item>CSV</item>
+  </array>
+</resources>
