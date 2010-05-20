@@ -337,7 +337,7 @@ limitations under the License.
   <string name="about_support">Support:</string>
 
   <!-- DO NOT TRANSLATE -->
-  <string name="version">1.0.13</string>
+  <string name="version">1.0.14</string>
   <string name="about_googlegroups">mytracks@googlegroups.com</string>
   <string name="about_weburl">mytracks.appspot.com</string>
   <string name="about_copyright_message">Copyright 2009 Google Inc.</string>
