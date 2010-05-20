@@ -35,7 +35,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.AbstractHttpEntity;
-import org.apache.http.entity.BasicHttpEntity;
+import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
@@ -46,6 +46,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
+import java.util.zip.GZIPInputStream;
 
 /**
  * Implementation of a GDataClient using GoogleHttpClient to make HTTP requests.
@@ -186,6 +187,7 @@ public class AndroidGDataClient implements GDataClient {
     while (redirectsLeft > 0) {
 
       HttpUriRequest request = creator.createRequest(uri);
+      request.addHeader("Accept-Encoding", "gzip");
 
       // only add the auth token if not null (to allow for GData feeds that do
       // not require
@@ -197,9 +199,6 @@ public class AndroidGDataClient implements GDataClient {
         for (Header h : request.getAllHeaders()) {
           Log.v(TAG, h.getName() + ": " + h.getValue());
         }
-      }
-
-      if (Log.isLoggable(TAG, Log.DEBUG)) {
         Log.d(TAG, "Executing " + request.getRequestLine().toString());
       }
 
@@ -228,6 +227,10 @@ public class AndroidGDataClient implements GDataClient {
       status = statusLine.getStatusCode();
 
       HttpEntity entity = response.getEntity();
+
+      if ((status >= 200) && (status < 300) && entity != null) {
+        return getUngzippedContent(entity);
+      }
 
       // TODO: handle 301, 307?
       // TODO: let the http client handle the redirects, if we can be sure we'll
@@ -293,6 +296,34 @@ public class AndroidGDataClient implements GDataClient {
       exceptionMessage += (": " + errorMessage);
     }
     throw new HttpException(exceptionMessage, status, null /* InputStream */);
+  }
+
+  /**
+   * Gets the input stream from a response entity.  If the entity is gzipped
+   * then this will get a stream over the uncompressed data.
+   *
+   * @param entity the entity whose content should be read
+   * @return the input stream to read from
+   * @throws IOException
+   */
+  private static InputStream getUngzippedContent(HttpEntity entity)
+      throws IOException {
+    InputStream responseStream = entity.getContent();
+    if (responseStream == null) {
+      return responseStream;
+    }
+    Header header = entity.getContentEncoding();
+    if (header == null) {
+      return responseStream;
+    }
+    String contentEncoding = header.getValue();
+    if (contentEncoding == null) {
+      return responseStream;
+    }
+    if (contentEncoding.contains("gzip")){
+      responseStream = new GZIPInputStream(responseStream);
+    }
+    return responseStream;
   }
 
   /*
@@ -422,7 +453,7 @@ public class AndroidGDataClient implements GDataClient {
       }
     }
 
-    AbstractHttpEntity entity = new BasicHttpEntity();
+    AbstractHttpEntity entity = new ByteArrayEntity(entryBytes);
     entity.setContentType(entry.getContentType());
     return entity;
   }
