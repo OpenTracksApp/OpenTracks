@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -31,7 +31,7 @@ public class Track implements Parcelable {
   /**
    * Creator for a Track object
    */
-  public class Creator implements Parcelable.Creator<Track> {
+  public static class Creator implements Parcelable.Creator<Track> {
 
     public Track createFromParcel(Parcel source) {
       Track track = new Track();
@@ -55,10 +55,10 @@ public class Track implements Parcelable {
       track.totalElevationGain = source.readDouble();
       track.minGrade = source.readDouble();
       track.maxGrade = source.readDouble();
-      left = source.readInt();
-      top = source.readInt();
-      right = source.readInt();
-      bottom = source.readInt();
+      track.left = source.readInt();
+      track.top = source.readInt();
+      track.right = source.readInt();
+      track.bottom = source.readInt();
       track.numberOfPoints = source.readInt();
       for (int i = 0; i < track.numberOfPoints; ++i) {
         Location loc = source.readParcelable(null);
@@ -72,7 +72,7 @@ public class Track implements Parcelable {
     }
   }
 
-  public static final Creator CREATOR = new Track().new Creator();
+  public static final Creator CREATOR = new Creator();
 
   /**
    * The track points.

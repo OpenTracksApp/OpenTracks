@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -28,7 +28,172 @@ public abstract class MyTracksConstants {
   public static final String TAG = "MyTracks";
 
   /**
+   * Name of the gps location provider:
+   */
+  public static final String GPS_PROVIDER = "gps";
+
+  /*
+   * onActivityResult request codes:
+   */
+
+  public static final int GET_LOGIN = 0;
+  public static final int GET_MAP = 1;
+  public static final int CREATE_MAP = 2;
+  public static final int SHOW_TRACK = 3;
+  public static final int ADD_LIST = 4;
+  public static final int FEATURE_DETAILS = 5;
+  public static final int START_RECORDING = 6;
+  public static final int STOP_RECORDING = 7;
+  public static final int AUTHENTICATE_TO_DOCS = 8;
+  public static final int AUTHENTICATE_TO_TRIX = 9;
+  public static final int SEND_TO_DOCS = 10;
+  public static final int DELETE_TRACK = 11;
+  public static final int SEND_TO_GOOGLE = 12;
+  public static final int SEND_TO_GOOGLE_DIALOG = 13;
+  public static final int SHARE_LINK = 14;
+  public static final int SHARE_GPX_FILE = 15;
+  public static final int SHARE_KML_FILE = 16;
+  public static final int SHARE_CSV_FILE = 17;
+  public static final int EDIT_DETAILS = 18;
+  public static final int SAVE_GPX_FILE = 19;
+  public static final int SAVE_KML_FILE = 20;
+  public static final int SAVE_CSV_FILE = 21;
+  public static final int CLEAR_MAP = 22;
+  public static final int SHOW_WAYPOINT = 23;
+  public static final int EDIT_WAYPOINT = 24;
+  public static final int WELCOME = 25;
+
+  /*
+   * Menu ids:
+   */
+
+  public static final int MENU_START_RECORDING = 1;
+  public static final int MENU_STOP_RECORDING = 2;
+  public static final int MENU_LIST_TRACKS = 3;
+  public static final int MENU_LIST_MARKERS = 4;
+  public static final int MENU_SETTINGS = 5;
+  public static final int MENU_MY_LOCATION = 6;
+  public static final int MENU_TOGGLE_LAYERS = 7;
+  public static final int MENU_CHART_SETTINGS = 8;
+  public static final int MENU_HELP = 9;
+  public static final int MENU_CURRENT_SEGMENT = 10;
+
+  /*
+   * Context menu ids:
+   */
+
+  public static final int MENU_EDIT = 100;
+  public static final int MENU_DELETE = 101;
+  public static final int MENU_SEND_TO_GOOGLE = 102;
+  public static final int MENU_SHARE = 103;
+  public static final int MENU_SHOW = 104;
+  public static final int MENU_SHARE_LINK = 200;
+  public static final int MENU_SHARE_GPX_FILE = 201;
+  public static final int MENU_SHARE_KML_FILE = 202;
+  public static final int MENU_SHARE_CSV_FILE = 203;
+  public static final int MENU_WRITE_TO_SD_CARD = 204;
+  public static final int MENU_SAVE_GPX_FILE = 205;
+  public static final int MENU_SAVE_KML_FILE = 206;
+  public static final int MENU_SAVE_CSV_FILE = 207;
+  public static final int MENU_CLEAR_MAP = 208;
+
+  /**
+   * The number of distance readings to smooth to get a stable signal.
+   */
+  public static final int DISTANCE_SMOOTHING_FACTOR = 25;
+
+  /**
+   * The number of elevation readings to smooth to get a somewhat accurate
+   * signal.
+   */
+  public static final int ELEVATION_SMOOTHING_FACTOR = 25;
+
+  /**
+   * The number of grade readings to smooth to get a somewhat accurate signal.
+   */
+  public static final int GRADE_SMOOTHING_FACTOR = 5;
+
+  /**
+   * The number of speed reading to smooth to get a somewhat accurate signal.
+   */
+  public static final int SPEED_SMOOTHING_FACTOR = 25;
+
+  /**
+   * Maximum number of track points displayed by the map overlay.
+   */
+  public static final int MAX_DISPLAYED_TRACK_POINTS = 10000;
+
+  /**
+   * Maximum number of track points ever loaded at once from the provider into
+   * memory.
+   * With a recording frequency of 2 seconds, 15000 corresponds to 8.3 hours.
+   */
+  public static final int MAX_LOADED_TRACK_POINTS = 20000;
+
+  /**
+   * Maximum number of way points displayed by the map overlay.
+   */
+  public static final int MAX_DISPLAYED_WAYPOINTS_POINTS = 128;
+
+  /**
+   * Maximum number of way points that will be loaded at one time.
+   */
+  public static final int MAX_LOADED_WAYPOINTS_POINTS = 10000;
+
+  /**
+   * Any time segment where the distance traveled is less than this value will
+   * not be considered moving.
+   */
+  public static final double MAX_NO_MOVEMENT_DISTANCE = 2;
+
+  /**
+   * Anything faster than that (in meters per second) will be considered moving.
+   */
+  public static final double MAX_NO_MOVEMENT_SPEED = 0.224;
+
+  /**
+   * Ignore any acceleration faster than this.
+   * Will ignore any speeds that imply accelaration greater than 2g's
+   * 2g = 19.6 m/s^2 = 0.0002 m/ms^2 = 0.02 m/(m*ms)
+   */
+  public static final double MAX_ACCELERATION = 0.02;
+
+  /**
+   * The type of account that we can use for gdata uploads.
+   */
+  public static final String ACCOUNT_TYPE = "com.google";
+
+  public static int getActionFromMenuId(int menuId) {
+    switch (menuId) {
+      case MyTracksConstants.MENU_SEND_TO_GOOGLE:
+        return MyTracksConstants.SEND_TO_GOOGLE_DIALOG;
+      case MyTracksConstants.MENU_EDIT:
+        return MyTracksConstants.EDIT_DETAILS;
+      case MyTracksConstants.MENU_DELETE:
+        return MyTracksConstants.DELETE_TRACK;
+      case MyTracksConstants.MENU_SHARE_LINK:
+        return MyTracksConstants.SHARE_LINK;
+      case MyTracksConstants.MENU_SHARE_KML_FILE:
+        return MyTracksConstants.SHARE_KML_FILE;
+      case MyTracksConstants.MENU_SHARE_GPX_FILE:
+        return MyTracksConstants.SHARE_GPX_FILE;
+      case MyTracksConstants.MENU_SHARE_CSV_FILE:
+        return MyTracksConstants.SHARE_CSV_FILE;
+      case MyTracksConstants.MENU_SAVE_GPX_FILE:
+        return MyTracksConstants.SAVE_GPX_FILE;
+      case MyTracksConstants.MENU_SAVE_KML_FILE:
+        return MyTracksConstants.SAVE_KML_FILE;
+      case MyTracksConstants.MENU_SAVE_CSV_FILE:
+        return MyTracksConstants.SAVE_CSV_FILE;
+      case MyTracksConstants.MENU_CLEAR_MAP:
+        return MyTracksConstants.CLEAR_MAP;
+      default:
+        return -1;
+    }
+  }
+
+  /**
    * This is an abstract utility class.
    */
-  private MyTracksConstants() { }
+  protected MyTracksConstants() { }
 }

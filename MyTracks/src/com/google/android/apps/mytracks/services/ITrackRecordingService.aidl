@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks.services;
 
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.stats.TripStatisticsData;
 
 /**
  * MyTracks service.
@@ -36,9 +37,17 @@ interface ITrackRecordingService {
   boolean isRecording();
 
   /**
+   * Returns the track ID of the track currently being recorded, or -1 if none
+   * is being recorded. This ID can then be used to read track data from the
+   * content source.
+   */
+  long getRecordingTrackId();
+
+  /**
    * Inserts a waypoint marker in the track being recorded.
    *
    * @param waypoint the waypoint to insert
+   * @return the unique ID of the inserted marker
    */
   long insertWaypointMarker(in Waypoint waypoint);
 

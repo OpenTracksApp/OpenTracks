@@ -1,12 +1,12 @@
 /*
  * Copyright 2010 Google Inc.
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -60,7 +60,7 @@ public interface MyTracksProviderUtils {
    * Finds the next statistics waypoint after the given waypoint.
    *
    * @param waypoint a given waypoint
-   * @return the next statistics waypoint, or null if none found
+   * @return the next statistics waypoint, or null if none found.
    */
   Waypoint getNextStatisticsWaypointAfter(Waypoint waypoint);
 
@@ -275,7 +275,7 @@ public interface MyTracksProviderUtils {
   /**
    * Creates a waypoint object from a given cursor.
    *
-   * @param cursor a cursor pointing at a db or provider with waypoints
+   * @param cursor a cursor pointing at a db or provider with waypoints.
    * @return a new waypoint object
    */
   public Waypoint createWaypoint(Cursor cursor);
