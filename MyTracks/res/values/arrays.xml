@@ -27,6 +27,7 @@ limitations under the License.
     <item>60 min</item>
   </string-array>
 
+  <!-- DO NOT TRANSLATE -->
   <string-array name="task_frequency_values">
     <item>-1</item>
     <item>1</item>
@@ -60,6 +61,7 @@ limitations under the License.
     <item>328 ft</item>
   </string-array>
 
+  <!-- DO NOT TRANSLATE -->
   <string-array name="min_recording_distance_values">
     <item>1</item>
     <item>2</item>
@@ -90,6 +92,7 @@ limitations under the License.
     <item>3.1 miles</item>
   </string-array>
 
+  <!-- DO NOT TRANSLATE -->
   <string-array name="max_recording_distance_values">
     <item>50</item>
     <item>100</item>
@@ -120,6 +123,7 @@ limitations under the License.
     <item>30 min</item>
   </string-array>
 
+  <!-- DO NOT TRANSLATE -->
   <string-array name="min_recording_interval_values">
     <item>-2</item>
     <item>-1</item>
@@ -165,6 +169,7 @@ limitations under the License.
     <item>3.1 miles (poor GPS signal)</item>
   </string-array>
 
+  <!-- DO NOT TRANSLATE -->
   <string-array name="min_required_accuracy_values">
     <item>10</item>
     <item>20</item>
@@ -213,6 +218,7 @@ limitations under the License.
     <item>1 min</item>
   </string-array>
 
+  <!-- DO NOT TRANSLATE -->
   <string-array name="split_frequency_values">
     <item>0</item>
     <item>-100</item>
@@ -359,6 +365,7 @@ limitations under the License.
     <item>way point</item>
   </array>
 
+  <!-- DO NOT TRANSLATE -->
   <array name="export_formats">
     <item>GPX</item>
     <item>KML</item>

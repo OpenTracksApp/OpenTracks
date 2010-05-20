@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
+  <!-- DO NOT TRANSLATE -->
   <string name="app_name">My Tracks</string>
 
   <!-- Used by the Menu -->
@@ -330,19 +331,20 @@ limitations under the License.
   <!-- About -->
   <string name="about">About</string>
   <string name="help">Help</string>
+  <string name="about_team">Team:</string>
+  <string name="about_version">Version:</string>
   <string name="about_email">Support</string>
+  <string name="about_support">Support:</string>
+
+  <!-- DO NOT TRANSLATE -->
+  <string name="version">1.0.12</string>
   <string name="about_googlegroups">mytracks@googlegroups.com</string>
   <string name="about_weburl">mytracks.appspot.com</string>
-
   <string name="about_copyright_message">Copyright 2009 Google Inc.</string>
-  <string name="about_team">Team:</string>
   <string name="about_dylan">Dylan Casey</string>
   <string name="about_leif">Leif Hendrik Wilden</string>
   <string name="about_rdamazio">Rodrigo Damazio Bovendorp</string>
   <string name="about_sandor">Sandor Dornbush</string>
-  <string name="about_version">Version:</string>
-  <string name="about_support">Support:</string>
-  <string name="version">1.0.11</string>
 
   <!-- Send to Google -->
   <string name="sendtogoogle_title">Send to...</string>

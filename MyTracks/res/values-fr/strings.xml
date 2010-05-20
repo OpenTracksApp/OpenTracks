@@ -318,6 +318,11 @@ limitations under the License.
   <string name="sendtogoogle_send_stats">Envoyer les statistiques du parcours</string>
   <string name="sendtogoogle_send_stats_and_points">Envoyer les statistiques et les balises</string>
 
+  <!-- Getting the account to upload to. -->
+  <string name="no_account_found_title">Pas de compte Google</string>
+  <string name="no_account_found">Un compte Google est nécessaire pour télécharger le parcours.</string>
+  <string name="choose_account_title">Choisissez un compte</string>
+
   <!-- SD card -->
   <string name="io_no_external_storage_found">Aucun emplacement externe de sauvegarde n\'a été trouvé. Assurez-vous qu\'une carte SD est insérée et que votre téléphone n\'est pas relié à un ordinateur.</string>
   <string name="io_write_failed">Impossible d\'écrire dans le fichier.</string>

@@ -318,6 +318,11 @@ limitations under the License.
   <string name="sendtogoogle_send_stats">Trackstatistik senden</string>
   <string name="sendtogoogle_send_stats_and_points">Statistik und Punkte senden</string>
 
+  <!-- Getting the account to upload to. -->
+  <string name="no_account_found_title">Kein Konto vorhanden</string>
+  <string name="no_account_found">Kein Konto gefunden um Tracks zu versenden.</string>
+  <string name="choose_account_title">Wählen Sei ein Konto</string>
+
   <!-- SD card -->
   <string name="io_no_external_storage_found">Keine externes Speichermedium verfügbar. Stellen Sie sicher, dass eine SD-Karte vorhanden ist und nicht bereits von einem Computer darauf zugegriffen wird.</string>
   <string name="io_write_failed">Die Datei kann nicht geschrieben werden.</string>
