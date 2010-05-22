@@ -662,6 +662,7 @@ public class SendToMyMaps {
         + (isStart ? context.getString(R.string.start)
                    : context.getString(R.string.end));
     myMapsFeature.setTitle(name);
+    myMapsFeature.setDescription(isStart ? "" : track.getDescription());
     return myMapsFeature;
   }
 
@@ -684,6 +685,7 @@ public class SendToMyMaps {
     } else {
       myMapsFeature.setTitle(wpt.getName());
     }
+    myMapsFeature.setDescription(wpt.getDescription().replaceAll("\n", "<br>"));
     return myMapsFeature;
   }
 }
