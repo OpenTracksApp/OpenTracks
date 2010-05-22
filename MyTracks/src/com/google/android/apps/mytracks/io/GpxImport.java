@@ -119,7 +119,6 @@ public class GpxImport {
         } else if (segmentNode.getNodeName().equals("description")) {
           track.setDescription(segmentNode.getFirstChild().getNodeValue());
         } else if (segmentNode.getNodeName().equals("trkseg")) {
-          long pointTime = locations.get(locations.size() - 1).getTime();
           if (nSegments > 0) {
             // Add a segment separator:
             Location location = new Location("gps");
@@ -127,6 +126,7 @@ public class GpxImport {
             location.setLongitude(100.0);
             location.setAltitude(0);
             if (locations.size() > 0) {
+              long pointTime = locations.get(locations.size() - 1).getTime();
               location.setTime(pointTime);
             }
             track.addLocation(location);
@@ -217,7 +217,6 @@ public class GpxImport {
             track.setStartTime(startTime);
 
             // Calculate statistics for the imported track
-            int numberOfPoints = locations.size();
             TripStatistics stats = new TripStatistics(startTime);
             for (Location location : locations) {
               if (MyTracksUtils.isValidLocation(location)) {
@@ -225,8 +224,9 @@ public class GpxImport {
                 stats.addLocation(location, location.getTime());
               }
             }
-            stats.pauseAt(pointTime);
-            track.setStopTime(pointTime);
+            long lastPointTime = locations.get(locations.size() - 1).getTime();
+            stats.pauseAt(lastPointTime);
+            track.setStopTime(lastPointTime);
 
             stats.fillStatisticsForTrack(track);
           }
