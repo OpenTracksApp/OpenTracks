@@ -950,46 +950,46 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     showDialogSafely(DIALOG_IMPORT_PROGRESS);
     Thread t = new Thread() {
       @Override
-      public void run() {
-        int message = R.string.success;
+			public void run() {
+				int message = R.string.success;
 
-        long[] trackIdsImported = null;
-        
-        try {
-          try {
-        		InputStream is = new FileInputStream(fileName);
-        	  trackIdsImported = GpxSaxImporter.importGPXFile(is, providerUtils);
-          } catch (SAXException e) {
-            Log.e(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
-            message = R.string.error_generic;
-          } catch (ParserConfigurationException e) {
-            Log.e(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
-            message = R.string.error_generic;
-          } catch (IOException e) {
-            Log.e(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
-            message = R.string.error_unable_to_read_file;
-          } catch (NullPointerException e) {
-            Log.e(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
-            message = R.string.error_invalid_gpx_format;
-          } catch (OutOfMemoryError e) {
-            Log.e(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
-            message = R.string.error_out_of_memory;
-          }
-          if (trackIdsImported != null && trackIdsImported.length > 0) {
-            // select last track from import file
-        	  setSelectedTrack(trackIdsImported[trackIdsImported.length -1]);
-          } else {
-            MyTracks.this.showMessageDialog(message, false/*success*/);
-          }
-        } finally {
-          runOnUiThread(new Runnable() {
-            public void run() {
-              dismissDialog(DIALOG_IMPORT_PROGRESS);
-            }
-          });
-        }
-      }
-    };
+				long[] trackIdsImported = null;
+
+				try {
+					try {
+						InputStream is = new FileInputStream(fileName);
+						trackIdsImported = GpxSaxImporter.importGPXFile(is, providerUtils);
+					} catch (SAXException e) {
+						Log.e(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
+						message = R.string.error_generic;
+					} catch (ParserConfigurationException e) {
+						Log.e(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
+						message = R.string.error_generic;
+					} catch (IOException e) {
+						Log.e(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
+						message = R.string.error_unable_to_read_file;
+					} catch (NullPointerException e) {
+						Log.e(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
+						message = R.string.error_invalid_gpx_format;
+					} catch (OutOfMemoryError e) {
+						Log.e(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
+						message = R.string.error_out_of_memory;
+					}
+					if (trackIdsImported != null && trackIdsImported.length > 0) {
+						// select last track from import file
+						setSelectedTrack(trackIdsImported[trackIdsImported.length - 1]);
+					} else {
+						MyTracks.this.showMessageDialog(message, false/* success */);
+					}
+				} finally {
+					runOnUiThread(new Runnable() {
+						public void run() {
+							dismissDialog(DIALOG_IMPORT_PROGRESS);
+						}
+					});
+				}
+			}
+		};
     t.start();
   }
 

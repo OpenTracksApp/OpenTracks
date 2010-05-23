@@ -35,10 +35,10 @@ import com.google.android.apps.mytracks.testing.TestingProviderUtilsFactory;
  * @author Steffen (steffen.horlacher@gmail.com)
  */
 public class GpxImporterTest extends AndroidTestCase {
-	
+
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(
-		"yyyy-MM-dd'T'hh:mm:ss'Z'");
-	
+			"yyyy-MM-dd'T'hh:mm:ss'Z'");
+
 	private static final String TRACK_NAME = "blablub";
 
 	private static final String TRACK_DESC = "s'Laebe isch koi Schlotzer";
@@ -54,22 +54,25 @@ public class GpxImporterTest extends AndroidTestCase {
 	private static final String TRACK_TIME_2 = "2010-04-22T18:21:50Z";
 
 	// TODO use real files from different sources with more track points
-	private static final String VALID_TEST_GPX = 
-		"<gpx><trk><name><![CDATA[" + TRACK_NAME + "]]></name><desc><![CDATA[" + TRACK_DESC + "]]></desc><trkseg>" + 
-		"<trkpt lat=\"" + TRACK_LAT_1 + "\" lon=\"" + TRACK_LON_1 + "\"><ele>" + TRACK_ELE_1 + "</ele><time>" + TRACK_TIME_1 + "</time></trkpt> +" +
-		"<trkpt lat=\"" + TRACK_LAT_2 + "\" lon=\"" + TRACK_LON_2 + "\"><ele>" + TRACK_ELE_2 + "</ele><time>" + TRACK_TIME_2 + "</time></trkpt>" + 
-		"</trkseg></trk></gpx>";
-	
+	private static final String VALID_TEST_GPX = "<gpx><trk><name><![CDATA["
+			+ TRACK_NAME + "]]></name><desc><![CDATA[" + TRACK_DESC
+			+ "]]></desc><trkseg>" + "<trkpt lat=\"" + TRACK_LAT_1 + "\" lon=\""
+			+ TRACK_LON_1 + "\"><ele>" + TRACK_ELE_1 + "</ele><time>" + TRACK_TIME_1
+			+ "</time></trkpt> +" + "<trkpt lat=\"" + TRACK_LAT_2 + "\" lon=\""
+			+ TRACK_LON_2 + "\"><ele>" + TRACK_ELE_2 + "</ele><time>" + TRACK_TIME_2
+			+ "</time></trkpt>" + "</trkseg></trk></gpx>";
+
 	// invalid xml
-	private static final String INVALID_TEST_GPX = VALID_TEST_GPX.substring(0,VALID_TEST_GPX.length() - 50);
+	private static final String INVALID_TEST_GPX = VALID_TEST_GPX.substring(0,
+			VALID_TEST_GPX.length() - 50);
 
 	private static final long TRACK_ID = 1;
 	private static final long TRACK_POINT_ID = 1;
 
-	private static final Uri TRACK_ID_URI = 
-		ContentUris.appendId( TracksColumns.CONTENT_URI.buildUpon(), TRACK_ID).build();
-	private static final Uri TRACK_POINT_ID_URI = 
-		ContentUris.appendId( TrackPointsColumns.CONTENT_URI.buildUpon(), TRACK_POINT_ID).build();
+	private static final Uri TRACK_ID_URI = ContentUris.appendId(
+			TracksColumns.CONTENT_URI.buildUpon(), TRACK_ID).build();
+	private static final Uri TRACK_POINT_ID_URI = ContentUris.appendId(
+			TrackPointsColumns.CONTENT_URI.buildUpon(), TRACK_POINT_ID).build();
 
 	private MyTracksProviderUtils providerUtils;
 
@@ -98,17 +101,15 @@ public class GpxImporterTest extends AndroidTestCase {
 		Capture<Location> locParam = new Capture<Location>();
 		Capture<Long> idParam = new Capture<Long>();
 
-		expect(
-				providerUtils.insertTrack(capture(trackParam)))
-					.andReturn(TRACK_ID_URI);
-		
-		expect(
-				providerUtils.insertTrackPoint(capture(locParam),capture(idParam)))
-					.andReturn(TRACK_POINT_ID_URI);
+		expect(providerUtils.insertTrack(capture(trackParam))).andReturn(
+				TRACK_ID_URI);
+
+		expect(providerUtils.insertTrackPoint(capture(locParam), capture(idParam)))
+				.andReturn(TRACK_POINT_ID_URI);
 		expectLastCall().times(2);
-		
+
 		providerUtils.updateTrack(capture(trackParam));
-		
+
 		replay(providerUtils);
 
 		InputStream is = new ByteArrayInputStream(VALID_TEST_GPX.getBytes());
@@ -120,40 +121,39 @@ public class GpxImporterTest extends AndroidTestCase {
 		Track track = trackParam.getValue();
 		assertEquals(TRACK_NAME, track.getName());
 		assertEquals(TRACK_DESC, track.getDescription());
-		assertEquals(DATE_FORMAT.parse(TRACK_TIME_1).getTime(), track.getStartTime());
+		assertEquals(DATE_FORMAT.parse(TRACK_TIME_1).getTime(), track
+				.getStartTime());
 		assertNotSame(-1, track.getStartId());
 		assertNotSame(-1, track.getStopId());
-		
+
 		// verify last location parameter
 		Location loc = locParam.getValue();
-		assertEquals(Double.parseDouble(TRACK_LAT_2),loc.getLatitude());
-		assertEquals(Double.parseDouble(TRACK_LON_2),loc.getLongitude());
-		assertEquals(Double.parseDouble(TRACK_ELE_2),loc.getAltitude());
+		assertEquals(Double.parseDouble(TRACK_LAT_2), loc.getLatitude());
+		assertEquals(Double.parseDouble(TRACK_LON_2), loc.getLongitude());
+		assertEquals(Double.parseDouble(TRACK_ELE_2), loc.getAltitude());
 		assertEquals(DATE_FORMAT.parse(TRACK_TIME_2).getTime(), loc.getTime());
-		
+
 	}
 
 	/**
-	 * Test if created track will be deleted on 
-	 * parsing errors
+	 * Test if created track will be deleted on parsing errors
 	 */
 	public void testImportFailure() throws ParserConfigurationException,
 			SAXException, IOException {
 
+		expect(providerUtils.insertTrack((Track) EasyMock.anyObject())).andReturn(
+				TRACK_ID_URI);
 		expect(
-			providerUtils.insertTrack((Track) EasyMock.anyObject())).andReturn(TRACK_ID_URI);
-		expect(
-				providerUtils.insertTrackPoint(
-						(Location) EasyMock.anyObject(),
+				providerUtils.insertTrackPoint((Location) EasyMock.anyObject(),
 						EasyMock.anyLong())).andReturn(TRACK_POINT_ID_URI);
-		
+
 		expectLastCall().anyTimes();
 		providerUtils.deleteTrack(TRACK_ID);
 
 		replay(providerUtils);
 
 		InputStream is = new ByteArrayInputStream(INVALID_TEST_GPX.getBytes());
-		
+
 		try {
 			GpxSaxImporter.importGPXFile(is, providerUtils);
 		} catch (SAXException e) {

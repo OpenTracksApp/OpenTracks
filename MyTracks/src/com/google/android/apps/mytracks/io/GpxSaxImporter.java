@@ -112,11 +112,10 @@ public class GpxSaxImporter extends DefaultHandler {
 	private boolean isCurrentTrackRollbackable;
 
 	private MyTracksProviderUtils providerUtils;
-	
+
 	/**
-	 * flag to indicate if we in a track xml element
-	 * some sub elements like name may be used in other
-	 * parts of the gpx file - ignore them 
+	 * flag to indicate if we in a track xml element some sub elements like name
+	 * may be used in other parts of the gpx file - ignore them
 	 */
 	private boolean isInTrackElement;
 
@@ -124,34 +123,42 @@ public class GpxSaxImporter extends DefaultHandler {
 	 * Reads GPS tracks from a GPX file and append tracks and their coordinates to
 	 * the given list of tracks.
 	 * 
-	 * Callers must execute <pre>rollbackUnfinishedTrack</pre> in case of 
-	 * an exception to avoid inconsistent data
+	 * Callers must execute
+	 * 
+	 * <pre>
+	 * rollbackUnfinishedTrack
+	 * </pre>
+	 * 
+	 * in case of an exception to avoid inconsistent data
 	 * 
 	 * @param tracks
 	 *          a list of tracks
 	 * @param is
 	 *          a input steam with gpx-xml data
-   * @throws SAXException a parsing error
-   * @throws ParserConfigurationException internal error
-   * @throws IOException a file reading problem
+	 * @throws SAXException
+	 *           a parsing error
+	 * @throws ParserConfigurationException
+	 *           internal error
+	 * @throws IOException
+	 *           a file reading problem
 	 */
-	public static long[] importGPXFile(
-			final InputStream is,final MyTracksProviderUtils providerUtils)
+	public static long[] importGPXFile(final InputStream is,
+			final MyTracksProviderUtils providerUtils)
 			throws ParserConfigurationException, SAXException, IOException {
 
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		GpxSaxImporter handler = new GpxSaxImporter(providerUtils);
 		SAXParser parser = factory.newSAXParser();
 		long[] trackIds = null;
-		
-		try{
+
+		try {
 			parser.parse(is, handler);
 			trackIds = handler.getImportedTrackIds();
 		} finally {
 			// delete track if not finished
 			handler.rollbackUnfinishedTracks();
 		}
-		
+
 		return trackIds;
 	}
 
@@ -163,7 +170,7 @@ public class GpxSaxImporter extends DefaultHandler {
 		tracksWritten = new ArrayList<Long>();
 		content = new StringBuilder();
 	}
-	
+
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
 		content.append(ch, start, length);
@@ -176,16 +183,15 @@ public class GpxSaxImporter extends DefaultHandler {
 		if (localName.equalsIgnoreCase(TAG_TRACK)) {
 			isInTrackElement = true;
 			onTrackElementStart();
-			
+
 			// process this element only as sub-elements of track
-		} else if(isInTrackElement) {
-			
+		} else if (isInTrackElement) {
+
 			if (localName.equalsIgnoreCase(TAG_TRACK_POINT)) {
 				onTrackPointElementStart(attributes);
 			}
-		} 
+		}
 	}
-
 
 	@Override
 	public void endElement(String uri, String localName, String name)
@@ -194,10 +200,10 @@ public class GpxSaxImporter extends DefaultHandler {
 		if (localName.equalsIgnoreCase(TAG_TRACK)) {
 			onTrackElementEnd();
 			isInTrackElement = false;
-			
+
 			// process these elements only as sub-elements of track
-		} else if(isInTrackElement) {
-			
+		} else if (isInTrackElement) {
+
 			if (localName.equalsIgnoreCase(TAG_TRACK_POINT)) {
 				onTrackPointElementEnd();
 			} else if (localName.equalsIgnoreCase(TAG_ALTITUDE)) {
@@ -259,7 +265,6 @@ public class GpxSaxImporter extends DefaultHandler {
 		return loc;
 	}
 
-
 	private void onDescriptionElementEnd() {
 		track.setDescription(content.toString().trim());
 	}
@@ -272,25 +277,26 @@ public class GpxSaxImporter extends DefaultHandler {
 	 * Track point finished, write in database
 	 */
 	private void onTrackPointElementEnd() {
-		
+
 		if (MyTracksUtils.isValidLocation(location)) {
-		
+
 			stats.addLocation(location, location.getTime());
 
-			// insert in db 
-			Uri trackPointIdUri = providerUtils.insertTrackPoint(location, track.getId());
+			// insert in db
+			Uri trackPointIdUri = providerUtils.insertTrackPoint(location, track
+					.getId());
 
 			// set start and stop id for track
 			long trackPointId = Long.parseLong(trackPointIdUri.getLastPathSegment());
 
 			// first track point?
-			if(lastLocation == null) {
+			if (lastLocation == null) {
 				track.setStartId(trackPointId);
 			}
 			// location has no setId method
 			// updating stop id on track every time...
 			track.setStopId(trackPointId);
-			
+
 			lastLocation = location;
 			numberOfLocations++;
 		}
@@ -300,9 +306,9 @@ public class GpxSaxImporter extends DefaultHandler {
 	 * Track finished - update in database
 	 */
 	private void onTrackElementEnd() {
-		
+
 		if (lastLocation != null) {
-			
+
 			// Calculate statistics for the imported track and update
 			stats.pauseAt(lastLocation.getTime());
 			track.setStopTime(lastLocation.getTime());
@@ -310,9 +316,9 @@ public class GpxSaxImporter extends DefaultHandler {
 			stats.fillStatisticsForTrack(track);
 			providerUtils.updateTrack(track);
 			tracksWritten.add(new Long(track.getId()));
-			
+
 		} else {
-			
+
 			// track contains no track points makes not really
 			// sense to import it as we have no location
 			// information -> roll back
@@ -321,18 +327,17 @@ public class GpxSaxImporter extends DefaultHandler {
 		isCurrentTrackRollbackable = false;
 	}
 
-	/** 
-	 * setting time and doing additional calculations 
-	 * as this is the last value required. Also sets the
-	 * start time for track and statistics as there is 
-	 * no start time in the track root element  
+	/**
+	 * setting time and doing additional calculations as this is the last value
+	 * required. Also sets the start time for track and statistics as there is no
+	 * start time in the track root element
 	 */
 	private void onTimeElementEnd() {
-		
+
 		long time = parseTimeForAllFormats(content.toString().trim());
-		
-		if(location != null) {
-			
+
+		if (location != null) {
+
 			location.setTime(time);
 			// initialize start time with time of first track point
 			if (stats == null) {
@@ -355,16 +360,16 @@ public class GpxSaxImporter extends DefaultHandler {
 	}
 
 	private void onAltitudeElementEnd() {
-		if(location != null) {
+		if (location != null) {
 			String altitude = content.toString().trim();
 			// make altitude optional
-			if(altitude != null){
+			if (altitude != null) {
 				location.setAltitude(Double.parseDouble(altitude));
 			}
 		}
 
 	}
-	
+
 	/**
 	 * If a exception is thrown during the import callers must execute this method
 	 * in the catch clause to avoid inconsistent data
