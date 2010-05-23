@@ -123,14 +123,6 @@ public class GpxSaxImporter extends DefaultHandler {
    * Reads GPS tracks from a GPX file and append tracks and their coordinates to
    * the given list of tracks.
    * 
-   * Callers must execute
-   * 
-   * <pre>
-   * rollbackUnfinishedTrack
-   * </pre>
-   * 
-   * in case of an exception to avoid inconsistent data
-   * 
    * @param tracks
    *          a list of tracks
    * @param is
@@ -316,6 +308,7 @@ public class GpxSaxImporter extends DefaultHandler {
       stats.fillStatisticsForTrack(track);
       providerUtils.updateTrack(track);
       tracksWritten.add(new Long(track.getId()));
+      isCurrentTrackRollbackable = false;
 
     } else {
 
@@ -324,7 +317,6 @@ public class GpxSaxImporter extends DefaultHandler {
       // information -> roll back
       rollbackUnfinishedTracks();
     }
-    isCurrentTrackRollbackable = false;
   }
 
   /**
@@ -372,11 +364,12 @@ public class GpxSaxImporter extends DefaultHandler {
 
   /**
    * If a exception is thrown during the import callers must execute this method
-   * in the catch clause to avoid inconsistent data
+   * in the catch (also finally is ok) clause to avoid inconsistent data.
    */
   public void rollbackUnfinishedTracks() {
     if (isCurrentTrackRollbackable) {
       providerUtils.deleteTrack(track.getId());
+      isCurrentTrackRollbackable = false;
     }
   }
 
