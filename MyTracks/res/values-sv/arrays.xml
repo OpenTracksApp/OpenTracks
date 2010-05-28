@@ -17,7 +17,7 @@ limitations under the License.
 <resources>
   <!-- Task frequency -->
   <string-array name="task_frequency_options">
-    <item>Off</item>
+    <item>Av</item>
     <item>1 min</item>
     <item>2 min</item>
     <item>5 min</item>
@@ -46,7 +46,7 @@ limitations under the License.
     <item>2 m</item>
     <item>3 m</item>
     <item>4 m</item>
-    <item>5 m (recommended)</item>
+    <item>5 m (rekommenderad)</item>
     <item>10 m</item>
     <item>100 m</item>
   </string-array>
@@ -56,7 +56,7 @@ limitations under the License.
     <item>6 ft</item>
     <item>10 ft</item>
     <item>13 ft</item>
-    <item>16 ft (recommended)</item>
+    <item>16 ft (rekommenderad)</item>
     <item>33 ft</item>
     <item>328 ft</item>
   </string-array>
@@ -77,7 +77,7 @@ limitations under the License.
   <string-array name="max_recording_distance_options">
     <item>50 m</item>
     <item>100 m</item>
-    <item>200 m (recommended)</item>
+    <item>200 m (rekommenderad)</item>
     <item>500 m</item>
     <item>1000 m</item>
     <item>5000 m</item>
@@ -86,28 +86,18 @@ limitations under the License.
   <string-array name="max_recording_distance_options_ft">
     <item>164 ft</item>
     <item>328 ft</item>
-    <item>656 ft (recommended)</item>
+    <item>656 ft (rekommenderad)</item>
     <item>1640 ft</item>
     <item>0.6 miles</item>
     <item>3.1 miles</item>
   </string-array>
 
-  <!-- DO NOT TRANSLATE -->
-  <string-array name="max_recording_distance_values">
-    <item>50</item>
-    <item>100</item>
-    <item>200</item>
-    <item>500</item>
-    <item>1000</item>
-    <item>5000</item>
-  </string-array>
-
 
   <!-- Minimum recording interval -->
   <string-array name="min_recording_interval_options">
-    <item>battery miser (adaptive)</item>
-    <item>high accuracy (adaptive)</item>
-    <item>highest (recommended)</item>
+    <item>battery miser (anpassningsbar)</item>
+    <item>hög precision (anpassningsbar)</item>
+    <item>högsta (recommenderad)</item>
     <item>2 s</item>
     <item>3 s</item>
     <item>4 s</item>
@@ -146,32 +136,32 @@ limitations under the License.
 
   <!-- Minimum required accuracy -->
   <string-array name="min_required_accuracy_options">
-    <item>10 m (excellent GPS signal)</item>
+    <item>10 m (bra GPS-signal)</item>
     <item>20 m</item>
     <item>50 m</item>
     <item>100 m</item>
-    <item>200 m (recommended)</item>
+    <item>200 m (rekommenderad)</item>
     <item>500 m</item>
     <item>1000 m</item>
     <item>2000 m</item>
-    <item>5000 m (poor GPS signal)</item>
+    <item>5000 m (dålig GPS-signal)</item>
   </string-array>
 
   <string-array name="min_required_accuracy_options_ft">
-    <item>33 ft (excellent GPS signal)</item>
+    <item>33 ft (bra GPS-signal)</item>
     <item>66 ft</item>
     <item>165 ft</item>
     <item>328 ft</item>
-    <item>656 ft (recommended)</item>
+    <item>656 ft (rekommenderad)</item>
     <item>1640 ft</item>
     <item>0.6 miles</item>
     <item>1.2 miles</item>
-    <item>3.1 miles (poor GPS signal)</item>
+    <item>3.1 miles (dålig GPS-signal)</item>
   </string-array>
 
   <!-- Split frequency -->
   <string-array name="split_frequency_options">
-    <item>No splitting</item>
+    <item>Ingen delning</item>
     <item>100 km</item>
     <item>50 km</item>
     <item>25 km</item>
@@ -188,7 +178,7 @@ limitations under the License.
   </string-array>
 
   <string-array name="split_frequency_options_ft">
-    <item>No splitting</item>
+    <item>Ingen delning</item>
     <item>100 mi</item>
     <item>50 mi</item>
     <item>25 mi</item>
@@ -238,9 +228,9 @@ limitations under the License.
     <item>hiking</item>
     <item>trail hiking</item>
     <item>off trail hiking</item>
-    <item>climbing</item>
+    <item>klättring</item>
 
-    <item>cycling</item>
+    <item>cykling</item>
     <item>road biking</item>
     <item>mountain biking</item>
     <item>track cycling</item>
@@ -250,45 +240,45 @@ limitations under the License.
     <item>skate boarding</item>
 
     <item>snow shoeing</item>
-    <item>skiing</item>
-    <item>snow boarding</item>
+    <item>skidåkning</item>
+    <item>snowboardåkning</item>
     <item>sled</item>
     <item>ice sailing</item>
 
-    <item>sailing</item>
+    <item>segling</item>
     <item>paddling</item>
     <item>kayaking</item>
-    <item>rowing</item>
+    <item>rodd</item>
     <item>motor boating</item>
-    <item>ferry</item>
-    <item>RC boat</item>
-    <item>surfing</item>
-    <item>wind surfing</item>
+    <item>färja</item>
+    <item>RC båt</item>
+    <item>surfning</item>
+    <item>vindsurfning</item>
     <item>kite surfing</item>
-    <item>water skiing</item>
-    <item>wake boarding</item>
+    <item>vattenskidåkning</item>
+    <item>wakeboardåkning</item>
 
-    <item>airplane</item>
-    <item>seaplane</item>
-    <item>commercial airplane</item>
-    <item>helicopter</item>
-    <item>hot air balloon</item>
+    <item>flygplan</item>
+    <item>sjöflygplan</item>
+    <item>commercielt flygplan</item>
+    <item>helikopter</item>
+    <item>varmlyftsballong</item>
     <item>blimp</item>
-    <item>RC airplane</item>
+    <item>RC flygplan</item>
     <item>RC helicopter</item>
     <item>sky jumping</item>
     <item>gliding</item>
     <item>hang gliding</item>
     <item>para gliding</item>
 
-    <item>riding</item>
+    <item>ridning</item>
     <item>horse back riding</item>
     <item>donkey back riding</item>
 
     <item>driving car</item>
     <item>driving bus</item>
-    <item>train</item>
-    <item>motor bike</item>
+    <item>tåg</item>
+    <item>motorcykel</item>
     <item>dirt bike</item>
     <item>ATV</item>
 
@@ -302,52 +292,52 @@ limitations under the License.
     <item>bank</item>
     <item>bar</item>
     <item>barbeque</item>
-    <item>building</item>
+    <item>byggnad</item>
     <item>bus stop</item>
-    <item>cafe</item>
+    <item>café</item>
     <item>campfire</item>
     <item>campground</item>
-    <item>church</item>
+    <item>kyrka</item>
     <item>coffee house</item>
     <item>convenience store</item>
-    <item>drinking water</item>
+    <item>driksvatten</item>
     <item>falling rocks</item>
-    <item>ferry</item>
+    <item>färja</item>
     <item>fire place</item>
-    <item>fire station</item>
+    <item>brandstation</item>
     <item>fishing</item>
-    <item>gas station</item>
-    <item>golf course</item>
-    <item>grocery store</item>
-    <item>hair dresser</item>
-    <item>harbor</item>
+    <item>bensinstation</item>
+    <item>golfbana</item>
+    <item>mataffär</item>
+    <item>hårfrissör</item>
+    <item>hamn</item>
     <item>hiking path</item>
     <item>hotel</item>
-    <item>house</item>
+    <item>hus</item>
     <item>information</item>
-    <item>intersection</item>
-    <item>mail box</item>
-    <item>market</item>
+    <item>korsning</item>
+    <item>postlåda</item>
+    <item>marknad</item>
     <item>meeting point</item>
     <item>opera</item>
-    <item>parking</item>
-    <item>post office</item>
+    <item>parkering</item>
+    <item>postkontor</item>
     <item>pothole</item>
-    <item>police station</item>
-    <item>railway crossing</item>
+    <item>polisstation</item>
+    <item>järnvägskorssning</item>
     <item>restaurant</item>
     <item>shopping</item>
     <item>sight</item>
-    <item>store</item>
-    <item>swimming pool</item>
-    <item>telephone</item>
-    <item>theater</item>
-    <item>toilet</item>
-    <item>tourist information</item>
+    <item>affär</item>
+    <item>swimmingpool</item>
+    <item>telefon</item>
+    <item>teater</item>
+    <item>toalett</item>
+    <item>turistinformation</item>
     <item>tunnel</item>
-    <item>tree</item>
-    <item>waterfall</item>
-    <item>water fountain</item>
+    <item>träd</item>
+    <item>watenfall</item>
+    <item>wattenfontän</item>
     <item>way point</item>
   </array>
 </resources>
