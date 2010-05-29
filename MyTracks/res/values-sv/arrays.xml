@@ -180,36 +180,36 @@ limitations under the License.
     <item>annat</item>
 
     <item>löpning</item>
-    <item>street running</item>
-    <item>track running</item>
-    <item>trail running</item>
-    <item>walking</item>
-    <item>speed walking</item>
-    <item>hiking</item>
-    <item>trail hiking</item>
-    <item>off trail hiking</item>
+    <item>väglöpning</item>
+    <item>banlöpning</item>
+    <item>spårlöpning</item>
+    <item>gång</item>
+    <item>gångsport</item>
+    <item>vandring</item>
+    <item>spårvandring</item>
+    <item>vildmarksvandring</item>
     <item>klättring</item>
 
     <item>cykling</item>
-    <item>road biking</item>
-    <item>mountain biking</item>
-    <item>track cycling</item>
+    <item>vägcyckling</item>
+    <item>mountainbikeåkning</item>
+    <item>bancyckling</item>
 
-    <item>skating</item>
-    <item>inline skating</item>
-    <item>skate boarding</item>
+    <item>skridskoåkning</item>
+    <item>inlineåkning</item>
+    <item>skateboardåkning</item>
 
-    <item>snow shoeing</item>
+    <item>snöskovandring</item>
     <item>skidåkning</item>
     <item>snowboardåkning</item>
-    <item>sled</item>
-    <item>ice sailing</item>
+    <item>kälke</item>
+    <item>issegling</item>
 
     <item>segling</item>
     <item>paddling</item>
-    <item>kayaking</item>
+    <item>kayakpaddling</item>
     <item>rodd</item>
-    <item>motor boating</item>
+    <item>motorbåtsåkning</item>
     <item>färja</item>
     <item>RC båt</item>
     <item>surfning</item>
@@ -220,29 +220,29 @@ limitations under the License.
 
     <item>flygplan</item>
     <item>sjöflygplan</item>
-    <item>commercielt flygplan</item>
+    <item>kommersiellt flygplan</item>
     <item>helikopter</item>
     <item>varmlyftsballong</item>
-    <item>blimp</item>
+    <item>luftskepp</item>
     <item>RC flygplan</item>
     <item>RC helicopter</item>
-    <item>sky jumping</item>
-    <item>gliding</item>
-    <item>hang gliding</item>
-    <item>para gliding</item>
+    <item>falskärmshoppning</item>
+    <item>segelflygning</item>
+    <item>hängflygning</item>
+    <item>skärmflygning</item>
 
     <item>ridning</item>
-    <item>horse back riding</item>
-    <item>donkey back riding</item>
+    <item>hästridning</item>
+    <item>åsneridning</item>
 
-    <item>driving car</item>
-    <item>driving bus</item>
+    <item>köra bil</item>
+    <item>köra buss</item>
     <item>tåg</item>
     <item>motorcykel</item>
-    <item>dirt bike</item>
-    <item>ATV</item>
+    <item>motorcross</item>
+    <item>fyrhjuling</item>
 
-    <item>land sailing</item>
+    <item>landsegling</item>
     <item>frisbee</item>
     <item>ultimate frisbee</item>
   </array>
@@ -278,26 +278,26 @@ limitations under the License.
     <item>korsning</item>
     <item>postlåda</item>
     <item>marknad</item>
-    <item>meeting point</item>
+    <item>mötesplats</item>
     <item>opera</item>
     <item>parkering</item>
     <item>postkontor</item>
-    <item>pothole</item>
+    <item>grop</item>
     <item>polisstation</item>
     <item>järnvägskorssning</item>
     <item>restaurant</item>
     <item>shopping</item>
-    <item>sight</item>
+    <item>sevärdhet</item>
     <item>affär</item>
-    <item>swimmingpool</item>
+    <item>simbassäng</item>
     <item>telefon</item>
     <item>teater</item>
     <item>toalett</item>
     <item>turistinformation</item>
     <item>tunnel</item>
     <item>träd</item>
-    <item>watenfall</item>
+    <item>vatenfall</item>
     <item>wattenfontän</item>
-    <item>way point</item>
+    <item>etappmål</item>
   </array>
 </resources>
