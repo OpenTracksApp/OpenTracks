@@ -27,19 +27,6 @@ limitations under the License.
     <item>60 min</item>
   </string-array>
 
-  <!-- DO NOT TRANSLATE -->
-  <string-array name="task_frequency_values">
-    <item>-1</item>
-    <item>1</item>
-    <item>2</item>
-    <item>5</item>
-    <item>10</item>
-    <item>15</item>
-    <item>30</item>
-    <item>60</item>
-  </string-array>
-
-
   <!-- Minimum recording distance -->
   <string-array name="min_recording_distance_options">
     <item>1 m</item>
@@ -60,18 +47,6 @@ limitations under the License.
     <item>33 ft</item>
     <item>328 ft</item>
   </string-array>
-
-  <!-- DO NOT TRANSLATE -->
-  <string-array name="min_recording_distance_values">
-    <item>1</item>
-    <item>2</item>
-    <item>3</item>
-    <item>4</item>
-    <item>5</item>
-    <item>10</item>
-    <item>100</item>
-  </string-array>
-
 
   <!-- Maximum recording distance -->
   <string-array name="max_recording_distance_options">
