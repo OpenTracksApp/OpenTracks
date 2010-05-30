@@ -15,9 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-  <!-- DO NOT TRANSLATE -->
-  <string name="app_name">My Tracks</string>
-
   <!-- Used by the Menu -->
   <string name="start_recording">Rejestruj trasę</string>
   <string name="stop_recording">Zakończ rejestrowanie</string>
