@@ -15,16 +15,24 @@
  */
 package com.google.android.apps.mytracks;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Random;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
+import com.google.android.accounts.Account;
+import com.google.android.apps.mymaps.MyMapsConstants;
+import com.google.android.apps.mymaps.MyMapsList;
+import com.google.android.apps.mymaps.VersionChecker;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.io.AuthManager;
+import com.google.android.apps.mytracks.io.AuthManagerFactory;
+import com.google.android.apps.mytracks.io.GpxImporter;
+import com.google.android.apps.mytracks.io.SendToDocs;
+import com.google.android.apps.mytracks.io.SendToMyMaps;
+import com.google.android.apps.mytracks.io.TrackWriter;
+import com.google.android.apps.mytracks.io.TrackWriterFactory;
+import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
+import com.google.android.apps.mytracks.services.ITrackRecordingService;
+import com.google.android.apps.mytracks.services.TrackRecordingService;
+import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -62,24 +70,16 @@ import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.Toast;
 
-import com.google.android.accounts.Account;
-import com.google.android.apps.mymaps.MyMapsConstants;
-import com.google.android.apps.mymaps.MyMapsList;
-import com.google.android.apps.mymaps.VersionChecker;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.io.AuthManager;
-import com.google.android.apps.mytracks.io.AuthManagerFactory;
-import com.google.android.apps.mytracks.io.GpxSaxImporter;
-import com.google.android.apps.mytracks.io.SendToDocs;
-import com.google.android.apps.mytracks.io.SendToMyMaps;
-import com.google.android.apps.mytracks.io.TrackWriter;
-import com.google.android.apps.mytracks.io.TrackWriterFactory;
-import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
-import com.google.android.apps.mytracks.services.ITrackRecordingService;
-import com.google.android.apps.mytracks.services.TrackRecordingService;
-import com.google.android.maps.mytracks.R;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Random;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 /**
  * The super activity that embeds our sub activities.
@@ -958,7 +958,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
         try {
           try {
             InputStream is = new FileInputStream(fileName);
-            trackIdsImported = GpxSaxImporter.importGPXFile(is, providerUtils);
+            trackIdsImported = GpxImporter.importGPXFile(is, providerUtils);
           } catch (SAXException e) {
             Log.e(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
             message = R.string.error_generic;
