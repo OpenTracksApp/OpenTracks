@@ -123,6 +123,11 @@ public class GpxImporter extends DefaultHandler {
   private boolean isInTrackElement;
 
   /**
+   * Counter to find out which child level of track we are processing 
+   */
+  private int trackChildDepth;
+
+  /**
    * SAX-Locator to get current line information
    */
   private Locator locator;
@@ -193,11 +198,13 @@ public class GpxImporter extends DefaultHandler {
       }
 
       isInTrackElement = true;
+      trackChildDepth = 0;
       onTrackElementStart();
 
       // process this element only as sub-elements of track
     } else if (isInTrackElement) {
 
+      trackChildDepth++;
       if (localName.equalsIgnoreCase(TAG_TRACK_POINT)) {
         onTrackPointElementStart(attributes);
       }
@@ -211,6 +218,7 @@ public class GpxImporter extends DefaultHandler {
     if (localName.equalsIgnoreCase(TAG_TRACK)) {
       onTrackElementEnd();
       isInTrackElement = false;
+      trackChildDepth = 0;
 
       // process these elements only as sub-elements of track
     } else if (isInTrackElement) {
@@ -222,10 +230,17 @@ public class GpxImporter extends DefaultHandler {
       } else if (localName.equalsIgnoreCase(TAG_TIME)) {
         onTimeElementEnd();
       } else if (localName.equalsIgnoreCase(TAG_NAME)) {
-        onNameElementEnd();
+        // we are only interested in the first level name element
+        if (trackChildDepth == 1) {
+          onNameElementEnd();
+        }
       } else if (localName.equalsIgnoreCase(TAG_DESCRIPTION)) {
-        onDescriptionElementEnd();
+        // we are only interested in the first level description element
+        if (trackChildDepth == 1) {
+          onDescriptionElementEnd();
+        }
       }
+      trackChildDepth--;
     }
 
     // reset element content
@@ -342,6 +357,7 @@ public class GpxImporter extends DefaultHandler {
       tracksWritten.add(track.getId());
       isCurrentTrackRollbackable = false;
       lastLocation = null;
+      stats = null;
 
     } else {
 
@@ -366,6 +382,15 @@ public class GpxImporter extends DefaultHandler {
 
     if (location != null) {
 
+      // check for negative time change
+      if (lastLocation != null) {
+        long timeDifference = time - lastLocation.getTime();
+        if (timeDifference < 0) {
+          String msg = createErrorMessage("Found negative time change.");
+          throw new SAXException(msg);
+        }
+      }
+      
       location.setTime(time);
       // initialize start time with time of first track point
       if (stats == null) {
