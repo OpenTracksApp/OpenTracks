@@ -333,16 +333,6 @@ limitations under the License.
   <string name="about_email">Wsparcie</string>
   <string name="about_support">Wsparcie:</string>
 
-  <!-- DO NOT TRANSLATE -->
-  <string name="version">1.0.14</string>
-  <string name="about_googlegroups">mytracks@googlegroups.com</string>
-  <string name="about_weburl">mytracks.appspot.com</string>
-  <string name="about_copyright_message">Copyright 2009 Google Inc.</string>
-  <string name="about_dylan">Dylan Casey</string>
-  <string name="about_leif">Leif Hendrik Wilden</string>
-  <string name="about_rdamazio">Rodrigo Damazio Bovendorp</string>
-  <string name="about_sandor">Sandor Dornbush</string>
-
   <!-- Send to Google -->
   <string name="sendtogoogle_title">Wyślij do...</string>
   <string name="sendtogoogle_google_mymaps">Moje Mapy Google</string>
