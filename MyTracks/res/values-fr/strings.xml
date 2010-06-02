@@ -26,6 +26,7 @@ limitations under the License.
   <string name="list_markers">Marqueurs</string>
   <string name="delete_all_tracks">Supprimer tous les parcours</string>
   <string name="settings">Paramètres</string>
+  <string name="elevation">Altitude</string>
   <string name="choose_track_message">Sélectionnez le parcours à visualiser</string>
   <string name="current_track">Parcours actuel</string>
   <string name="current_segment">Segment actuel</string>
