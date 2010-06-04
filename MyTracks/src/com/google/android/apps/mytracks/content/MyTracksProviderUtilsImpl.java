@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks.content;
 
+import com.google.android.apps.mytracks.stats.TripStatistics;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -82,6 +84,8 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
    */
   private static ContentValues createContentValues(Track track) {
     ContentValues values = new ContentValues();
+    TripStatistics stats = track.getStatistics();
+
     // Values id < 0 indicate no id is available:
     if (track.getId() >= 0) {
       values.put(TracksColumns._ID, track.getId());
@@ -92,29 +96,31 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     values.put(TracksColumns.CATEGORY, track.getCategory());
     values.put(TracksColumns.NUMPOINTS, track.getNumberOfPoints());
     values.put(TracksColumns.STARTID, track.getStartId());
-    values.put(TracksColumns.STARTTIME, track.getStartTime());
-    values.put(TracksColumns.STOPTIME, track.getStopTime());
+    values.put(TracksColumns.STARTTIME, stats.getStartTime());
+    values.put(TracksColumns.STOPTIME, stats.getStopTime());
     values.put(TracksColumns.STOPID, track.getStopId());
-    values.put(TracksColumns.TOTALDISTANCE, track.getTotalDistance());
-    values.put(TracksColumns.TOTALTIME, track.getTotalTime());
-    values.put(TracksColumns.MOVINGTIME, track.getMovingTime());
-    values.put(TracksColumns.MAXLAT, track.getTop());
-    values.put(TracksColumns.MINLAT, track.getBottom());
-    values.put(TracksColumns.MAXLON, track.getRight());
-    values.put(TracksColumns.MINLON, track.getLeft());
-    values.put(TracksColumns.AVGSPEED, track.getAverageSpeed());
-    values.put(TracksColumns.AVGMOVINGSPEED, track.getAverageMovingSpeed());
-    values.put(TracksColumns.MAXSPEED, track.getMaxSpeed());
-    values.put(TracksColumns.MINELEVATION, track.getMinElevation());
-    values.put(TracksColumns.MAXELEVATION, track.getMaxElevation());
-    values.put(TracksColumns.ELEVATIONGAIN, track.getTotalElevationGain());
-    values.put(TracksColumns.MINGRADE, track.getMinGrade());
-    values.put(TracksColumns.MAXGRADE, track.getMaxGrade());
+    values.put(TracksColumns.TOTALDISTANCE, stats.getTotalDistance());
+    values.put(TracksColumns.TOTALTIME, stats.getTotalTime());
+    values.put(TracksColumns.MOVINGTIME, stats.getMovingTime());
+    values.put(TracksColumns.MAXLAT, stats.getTop());
+    values.put(TracksColumns.MINLAT, stats.getBottom());
+    values.put(TracksColumns.MAXLON, stats.getRight());
+    values.put(TracksColumns.MINLON, stats.getLeft());
+    values.put(TracksColumns.AVGSPEED, stats.getAverageSpeed());
+    values.put(TracksColumns.AVGMOVINGSPEED, stats.getAverageMovingSpeed());
+    values.put(TracksColumns.MAXSPEED, stats.getMaxSpeed());
+    values.put(TracksColumns.MINELEVATION, stats.getMinElevation());
+    values.put(TracksColumns.MAXELEVATION, stats.getMaxElevation());
+    values.put(TracksColumns.ELEVATIONGAIN, stats.getTotalElevationGain());
+    values.put(TracksColumns.MINGRADE, stats.getMinGrade());
+    values.put(TracksColumns.MAXGRADE, stats.getMaxGrade());
     return values;
   }
 
   private static ContentValues createContentValues(Waypoint waypoint) {
     ContentValues values = new ContentValues();
+    TripStatistics stats = waypoint.getStatistics();
+
     // Values id < 0 indicate no id is available:
     if (waypoint.getId() >= 0) {
       values.put(WaypointsColumns._ID, waypoint.getId());
@@ -127,23 +133,21 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     values.put(WaypointsColumns.TYPE, waypoint.getType());
     values.put(WaypointsColumns.LENGTH, waypoint.getLength());
     values.put(WaypointsColumns.DURATION, waypoint.getDuration());
-    values.put(WaypointsColumns.STARTTIME, waypoint.getStartTime());
+    values.put(WaypointsColumns.STARTTIME, stats.getStartTime());
     values.put(WaypointsColumns.STARTID, waypoint.getStartId());
     values.put(WaypointsColumns.STOPID, waypoint.getStopId());
 
-    values.put(WaypointsColumns.TOTALDISTANCE, waypoint.getTotalDistance());
-    values.put(WaypointsColumns.TOTALTIME, waypoint.getTotalTime());
-    values.put(WaypointsColumns.MOVINGTIME, waypoint.getMovingTime());
-    values.put(WaypointsColumns.AVGSPEED, waypoint.getAverageSpeed());
-    values.put(WaypointsColumns.AVGMOVINGSPEED,
-        waypoint.getAverageMovingSpeed());
-    values.put(WaypointsColumns.MAXSPEED, waypoint.getMaxSpeed());
-    values.put(WaypointsColumns.MINELEVATION, waypoint.getMinElevation());
-    values.put(WaypointsColumns.MAXELEVATION, waypoint.getMaxElevation());
-    values.put(WaypointsColumns.ELEVATIONGAIN,
-        waypoint.getTotalElevationGain());
-    values.put(WaypointsColumns.MINGRADE, waypoint.getMinGrade());
-    values.put(WaypointsColumns.MAXGRADE, waypoint.getMaxGrade());
+    values.put(WaypointsColumns.TOTALDISTANCE, stats.getTotalDistance());
+    values.put(WaypointsColumns.TOTALTIME, stats.getTotalTime());
+    values.put(WaypointsColumns.MOVINGTIME, stats.getMovingTime());
+    values.put(WaypointsColumns.AVGSPEED, stats.getAverageSpeed());
+    values.put(WaypointsColumns.AVGMOVINGSPEED, stats.getAverageMovingSpeed());
+    values.put(WaypointsColumns.MAXSPEED, stats.getMaxSpeed());
+    values.put(WaypointsColumns.MINELEVATION, stats.getMinElevation());
+    values.put(WaypointsColumns.MAXELEVATION, stats.getMaxElevation());
+    values.put(WaypointsColumns.ELEVATIONGAIN, stats.getTotalElevationGain());
+    values.put(WaypointsColumns.MINGRADE, stats.getMinGrade());
+    values.put(WaypointsColumns.MAXGRADE, stats.getMaxGrade());
 
     Location location = waypoint.getLocation();
     if (location != null) {
@@ -232,9 +236,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
         cursor.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE);
     int idxTotalTime = cursor.getColumnIndexOrThrow(TracksColumns.TOTALTIME);
     int idxMovingTime = cursor.getColumnIndexOrThrow(TracksColumns.MOVINGTIME);
-    int idxAverageSpeed = cursor.getColumnIndexOrThrow(TracksColumns.AVGSPEED);
-    int idxAverageMovingSpeed =
-        cursor.getColumnIndexOrThrow(TracksColumns.AVGMOVINGSPEED);
     int idxMaxSpeed = cursor.getColumnIndexOrThrow(TracksColumns.MAXSPEED);
     int idxMinElevation =
         cursor.getColumnIndexOrThrow(TracksColumns.MINELEVATION);
@@ -246,6 +247,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     int idxMaxGrade = cursor.getColumnIndexOrThrow(TracksColumns.MAXGRADE);
 
     Track track = new Track();
+    TripStatistics stats = track.getStatistics();
     if (!cursor.isNull(idxId)) {
       track.setId(cursor.getLong(idxId));
     }
@@ -265,10 +267,10 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       track.setStartId(cursor.getInt(idxStartId));
     }
     if (!cursor.isNull(idxStartTime)) {
-      track.setStartTime(cursor.getLong(idxStartTime));
+      stats.setStartTime(cursor.getLong(idxStartTime));
     }
     if (!cursor.isNull(idxStopTime)) {
-      track.setStopTime(cursor.getLong(idxStopTime));
+      stats.setStopTime(cursor.getLong(idxStopTime));
     }
     if (!cursor.isNull(idxStopId)) {
       track.setStopId(cursor.getInt(idxStopId));
@@ -277,13 +279,13 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       track.setNumberOfPoints(cursor.getInt(idxNumPoints));
     }
     if (!cursor.isNull(idxTotalDistance)) {
-      track.setTotalDistance(cursor.getFloat(idxTotalDistance));
+      stats.setTotalDistance(cursor.getFloat(idxTotalDistance));
     }
     if (!cursor.isNull(idxTotalTime)) {
-      track.setTotalTime(cursor.getLong(idxTotalTime));
+      stats.setTotalTime(cursor.getLong(idxTotalTime));
     }
     if (!cursor.isNull(idxMovingTime)) {
-      track.setMovingTime(cursor.getLong(idxMovingTime));
+      stats.setMovingTime(cursor.getLong(idxMovingTime));
     }
     if (!cursor.isNull(idxMaxlat)
         && !cursor.isNull(idxMinlat)
@@ -293,31 +295,25 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       int bottom = cursor.getInt(idxMinlat);
       int right = cursor.getInt(idxMaxlon);
       int left = cursor.getInt(idxMinlon);
-      track.setBounds(left, top, right, bottom);
-    }
-    if (!cursor.isNull(idxAverageSpeed)) {
-      track.setAverageSpeed(cursor.getFloat(idxAverageSpeed));
-    }
-    if (!cursor.isNull(idxAverageMovingSpeed)) {
-      track.setAverageMovingSpeed(cursor.getFloat(idxAverageMovingSpeed));
+      stats.setBounds(left, top, right, bottom);
     }
     if (!cursor.isNull(idxMaxSpeed)) {
-      track.setMaxSpeed(cursor.getFloat(idxMaxSpeed));
+      stats.setMaxSpeed(cursor.getFloat(idxMaxSpeed));
     }
     if (!cursor.isNull(idxMinElevation)) {
-      track.setMinElevation(cursor.getFloat(idxMinElevation));
+      stats.setMinElevation(cursor.getFloat(idxMinElevation));
     }
     if (!cursor.isNull(idxMaxElevation)) {
-      track.setMaxElevation(cursor.getFloat(idxMaxElevation));
+      stats.setMaxElevation(cursor.getFloat(idxMaxElevation));
     }
     if (!cursor.isNull(idxElevationGain)) {
-      track.setTotalElevationGain(cursor.getFloat(idxElevationGain));
+      stats.setTotalElevationGain(cursor.getFloat(idxElevationGain));
     }
     if (!cursor.isNull(idxMinGrade)) {
-      track.setMinGrade(cursor.getFloat(idxMinGrade));
+      stats.setMinGrade(cursor.getFloat(idxMinGrade));
     }
     if (!cursor.isNull(idxMaxGrade)) {
-      track.setMaxGrade(cursor.getFloat(idxMaxGrade));
+      stats.setMaxGrade(cursor.getFloat(idxMaxGrade));
     }
     return track;
   }
@@ -343,10 +339,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     int idxTotalTime = cursor.getColumnIndexOrThrow(WaypointsColumns.TOTALTIME);
     int idxMovingTime =
         cursor.getColumnIndexOrThrow(WaypointsColumns.MOVINGTIME);
-    int idxAverageSpeed =
-        cursor.getColumnIndexOrThrow(WaypointsColumns.AVGSPEED);
-    int idxAverageMovingSpeed =
-        cursor.getColumnIndexOrThrow(WaypointsColumns.AVGMOVINGSPEED);
     int idxMaxSpeed = cursor.getColumnIndexOrThrow(WaypointsColumns.MAXSPEED);
     int idxMinElevation =
         cursor.getColumnIndexOrThrow(WaypointsColumns.MINELEVATION);
@@ -366,6 +358,8 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     int idxSpeed = cursor.getColumnIndexOrThrow(WaypointsColumns.SPEED);
 
     Waypoint waypoint = new Waypoint();
+    TripStatistics stats = waypoint.getStatistics();
+
     if (!cursor.isNull(idxId)) {
       waypoint.setId(cursor.getLong(idxId));
     }
@@ -394,7 +388,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       waypoint.setDuration(cursor.getLong(idxDuration));
     }
     if (!cursor.isNull(idxStartTime)) {
-      waypoint.setStartTime(cursor.getLong(idxStartTime));
+      stats.setStartTime(cursor.getLong(idxStartTime));
     }
     if (!cursor.isNull(idxStartId)) {
       waypoint.setStartId(cursor.getLong(idxStartId));
@@ -403,37 +397,31 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       waypoint.setStopId(cursor.getLong(idxStopId));
     }
     if (!cursor.isNull(idxTotalDistance)) {
-      waypoint.setTotalDistance(cursor.getFloat(idxTotalDistance));
+      stats.setTotalDistance(cursor.getFloat(idxTotalDistance));
     }
     if (!cursor.isNull(idxTotalTime)) {
-      waypoint.setTotalTime(cursor.getLong(idxTotalTime));
+      stats.setTotalTime(cursor.getLong(idxTotalTime));
     }
     if (!cursor.isNull(idxMovingTime)) {
-      waypoint.setMovingTime(cursor.getLong(idxMovingTime));
-    }
-    if (!cursor.isNull(idxAverageSpeed)) {
-      waypoint.setAverageSpeed(cursor.getFloat(idxAverageSpeed));
-    }
-    if (!cursor.isNull(idxAverageMovingSpeed)) {
-      waypoint.setAverageMovingSpeed(cursor.getFloat(idxAverageMovingSpeed));
+      stats.setMovingTime(cursor.getLong(idxMovingTime));
     }
     if (!cursor.isNull(idxMaxSpeed)) {
-      waypoint.setMaxSpeed(cursor.getFloat(idxMaxSpeed));
+      stats.setMaxSpeed(cursor.getFloat(idxMaxSpeed));
     }
     if (!cursor.isNull(idxMinElevation)) {
-      waypoint.setMinElevation(cursor.getFloat(idxMinElevation));
+      stats.setMinElevation(cursor.getFloat(idxMinElevation));
     }
     if (!cursor.isNull(idxMaxElevation)) {
-      waypoint.setMaxElevation(cursor.getFloat(idxMaxElevation));
+      stats.setMaxElevation(cursor.getFloat(idxMaxElevation));
     }
     if (!cursor.isNull(idxElevationGain)) {
-      waypoint.setTotalElevationGain(cursor.getFloat(idxElevationGain));
+      stats.setTotalElevationGain(cursor.getFloat(idxElevationGain));
     }
     if (!cursor.isNull(idxMinGrade)) {
-      waypoint.setMinGrade(cursor.getFloat(idxMinGrade));
+      stats.setMinGrade(cursor.getFloat(idxMinGrade));
     }
     if (!cursor.isNull(idxMaxGrade)) {
-      waypoint.setMaxGrade(cursor.getFloat(idxMaxGrade));
+      stats.setMaxGrade(cursor.getFloat(idxMaxGrade));
     }
 
     Location location = new Location("");
@@ -494,7 +482,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       if (nextWaypoint != null) {
         Log.d(MyTracksProvider.TAG, "Correcting marker " + nextWaypoint.getId()
             + " after deleted marker " + deletedWaypoint.getId());
-        nextWaypoint.combine(deletedWaypoint);
+        nextWaypoint.getStatistics().merge(deletedWaypoint.getStatistics());
         nextWaypoint.setDescription(
             descriptionGenerator.generateWaypointDescription(nextWaypoint));
         if (!updateWaypoint(nextWaypoint)) {

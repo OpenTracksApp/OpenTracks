@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackPointsColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
+import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.MyTracksUtils;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -657,14 +658,15 @@ public class MyTracksMap extends MapActivity
     if (track == null || mapView == null || track.getNumberOfPoints() < 2) {
       return;
     }
-    int latSpanE6 = track.getTop() - track.getBottom();
-    int lonSpanE6 = track.getRight() - track.getLeft();
+    TripStatistics stats = track.getStatistics();
+    int latSpanE6 = stats.getTop() - stats.getBottom();
+    int lonSpanE6 = stats.getRight() - stats.getLeft();
     if (latSpanE6 > 0 && latSpanE6 < 180E6 && lonSpanE6 > 0
         && lonSpanE6 < 180E6) {
       keepMyLocationVisible = false;
       GeoPoint center = new GeoPoint(
-          track.getBottom() + latSpanE6 / 2,
-          track.getLeft() + lonSpanE6 / 2);
+          stats.getBottom() + latSpanE6 / 2,
+          stats.getLeft() + lonSpanE6 / 2);
       if (MyTracksUtils.isValidGeoPoint(center)) {
         mapView.getController().setCenter(center);
         mapView.getController().zoomToSpan(latSpanE6, lonSpanE6);

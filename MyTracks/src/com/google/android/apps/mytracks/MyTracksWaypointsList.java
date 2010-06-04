@@ -168,16 +168,20 @@ public class MyTracksWaypointsList extends ListActivity
     switch (v.getId()) {
       case R.id.waypointslist_btn_insert_waypoint: {
         long id = MyTracks.getInstance().insertWaypointMarker();
-        Intent intent = new Intent(this, MyTracksWaypointDetails.class);
-        intent.putExtra("waypointid", id);
-        startActivity(intent);
+        if (id >= 0) {
+          Intent intent = new Intent(this, MyTracksWaypointDetails.class);
+          intent.putExtra("waypointid", id);
+          startActivity(intent);
+        }
         break;
       }
       case R.id.waypointslist_btn_insert_statistics: {
         long id = MyTracks.getInstance().insertStatisticsMarker();
-        Intent intent = new Intent(this, MyTracksWaypointDetails.class);
-        intent.putExtra("waypointid", id);
-        startActivity(intent);
+        if (id >= 0) {
+          Intent intent = new Intent(this, MyTracksWaypointDetails.class);
+          intent.putExtra("waypointid", id);
+          startActivity(intent);
+        }
         break;
       }
 

@@ -17,6 +17,7 @@ package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.MyTracksConstants;
 import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.stats.TripStatistics;
 
 import com.google.android.maps.GeoPoint;
 
@@ -181,6 +182,7 @@ public class MyTracksUtils {
     Track piece = null;
     do {
       piece = new Track();
+      TripStatistics pieceStats = piece.getStatistics();
       piece.setId(track.getId());
       piece.setName(track.getName());
       piece.setDescription(track.getDescription());
@@ -191,8 +193,8 @@ public class MyTracksUtils {
       }
       int nPointsPiece = pieceLocations.size();
       if (nPointsPiece >= 2) {
-        piece.setStartTime(pieceLocations.get(0).getTime());
-        piece.setStopTime(pieceLocations.get(nPointsPiece - 1).getTime());
+        pieceStats.setStartTime(pieceLocations.get(0).getTime());
+        pieceStats.setStopTime(pieceLocations.get(nPointsPiece - 1).getTime());
         result.add(piece);
       }
       n += (pieceLocations.size() - 1);

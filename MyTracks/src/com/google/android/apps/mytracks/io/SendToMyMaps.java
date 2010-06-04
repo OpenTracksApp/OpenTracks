@@ -28,6 +28,7 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackBuffer;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
+import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.MyTracksUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
@@ -105,12 +106,14 @@ public class SendToMyMaps {
 
     // Create segments from each full track:
     Track segment = new Track();
+    TripStatistics segmentStats = segment.getStatistics();
+    TripStatistics trackStats = track.getStatistics();
     segment.setId(track.getId());
     segment.setName(track.getName());
     segment.setDescription(/* track.getDescription() */ "");
     segment.setCategory(track.getCategory());
-    segment.setStartTime(track.getStartTime());
-    segment.setStopTime(track.getStopTime());
+    segmentStats.setStartTime(trackStats.getStartTime());
+    segmentStats.setStopTime(trackStats.getStopTime());
     boolean startNewTrackSegment = false;
     for (int i = 0; i < buffer.getLocationsLoaded(); ++i) {
       Location loc = buffer.get(i);
@@ -134,8 +137,8 @@ public class SendToMyMaps {
 
       if (loc.getLatitude() <= 90) {
         segment.addLocation(loc);
-        if (segment.getStartTime() < 0) {
-          segment.setStartTime(loc.getTime());
+        if (segmentStats.getStartTime() < 0) {
+          segmentStats.setStartTime(loc.getTime());
         }
       }
     }
@@ -159,8 +162,10 @@ public class SendToMyMaps {
    */
   private void prepareTrackSegment(
       Track segment, ArrayList<Track> splitTracks) {
-    if (segment.getStopTime() < 0 && segment.getLocations().size() > 0) {
-      segment.setStopTime(segment.getLocations().size() - 1);
+    TripStatistics segmentStats = segment.getStatistics();
+    if (segmentStats.getStopTime() < 0
+        && segment.getLocations().size() > 0) {
+      segmentStats.setStopTime(segment.getLocations().size() - 1);
     }
 
     /*

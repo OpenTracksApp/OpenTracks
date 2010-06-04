@@ -19,6 +19,7 @@ import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.DescriptionGenerator;
+import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -175,23 +176,24 @@ public class StringUtils implements DescriptionGenerator {
           preferences.getBoolean(MyTracksSettings.REPORT_SPEED, true);
     }
 
-    final double distanceInKm = track.getTotalDistance() / 1000;
+    TripStatistics trackStats = track.getStatistics();
+    final double distanceInKm = trackStats.getTotalDistance() / 1000;
     final double distanceInMiles = distanceInKm * UnitConversions.KM_TO_MI;
-    final long minElevationInMeters = Math.round(track.getMinElevation());
+    final long minElevationInMeters = Math.round(trackStats.getMinElevation());
     final long minElevationInFeet =
-        Math.round(track.getMinElevation() * UnitConversions.M_TO_FT);
-    final long maxElevationInMeters = Math.round(track.getMaxElevation());
+        Math.round(trackStats.getMinElevation() * UnitConversions.M_TO_FT);
+    final long maxElevationInMeters = Math.round(trackStats.getMaxElevation());
     final long maxElevationInFeet =
-        Math.round(track.getMaxElevation() * UnitConversions.M_TO_FT);
+        Math.round(trackStats.getMaxElevation() * UnitConversions.M_TO_FT);
     final long elevationGainInMeters =
-        Math.round(track.getTotalElevationGain());
-    final long elevationGainInFeet =
-        Math.round(track.getTotalElevationGain() * UnitConversions.M_TO_FT);
+        Math.round(trackStats.getTotalElevationGain());
+    final long elevationGainInFeet = Math.round(
+        trackStats.getTotalElevationGain() * UnitConversions.M_TO_FT);
 
     long minGrade = 0;
     long maxGrade = 0;
-    double trackMaxGrade = track.getMaxGrade();
-    double trackMinGrade = track.getMinGrade();
+    double trackMaxGrade = trackStats.getMaxGrade();
+    double trackMinGrade = trackStats.getMinGrade();
     if (!Double.isNaN(trackMaxGrade)
         && !Double.isInfinite(trackMaxGrade)) {
       maxGrade = Math.round(trackMaxGrade * 100);
@@ -207,19 +209,19 @@ public class StringUtils implements DescriptionGenerator {
     }
 
     String averageSpeed =
-        getSpeedString(track.getAverageSpeed(),
+        getSpeedString(trackStats.getAverageSpeed(),
             R.string.average_speed_label,
             R.string.average_pace_label,
             displaySpeed);
 
     String averageMovingSpeed =
-        getSpeedString(track.getAverageMovingSpeed(),
+        getSpeedString(trackStats.getAverageMovingSpeed(),
             R.string.average_moving_speed_label,
             R.string.average_moving_pace_label,
             displaySpeed);
 
     String maxSpeed =
-        getSpeedString(track.getMaxSpeed(),
+        getSpeedString(trackStats.getMaxSpeed(),
             R.string.max_speed_label,
             R.string.min_pace_label,
             displaySpeed);
@@ -248,11 +250,11 @@ public class StringUtils implements DescriptionGenerator {
 
         // Line 3
         context.getString(R.string.total_time_label),
-        StringUtils.formatTime(track.getTotalTime()),
+        StringUtils.formatTime(trackStats.getTotalTime()),
 
         // Line 4
         context.getString(R.string.moving_time_label),
-        StringUtils.formatTime(track.getMovingTime()),
+        StringUtils.formatTime(trackStats.getMovingTime()),
 
         // Line 5
         averageSpeed, averageMovingSpeed, maxSpeed,
@@ -280,7 +282,7 @@ public class StringUtils implements DescriptionGenerator {
 
         // Line 11
         context.getString(R.string.recorded_date),
-        new Date(track.getStartTime()),
+        new Date(trackStats.getStartTime()),
 
         // Line 12
         context.getString(R.string.category), category,
@@ -322,35 +324,39 @@ public class StringUtils implements DescriptionGenerator {
    * @return a track description
    */
   public String generateWaypointDescription(Waypoint waypoint) {
-    final double distanceInKm = waypoint.getTotalDistance() / 1000;
+    TripStatistics stats = waypoint.getStatistics();
+
+    final double distanceInKm = stats.getTotalDistance() / 1000;
     final double distanceInMiles = distanceInKm * UnitConversions.KM_TO_MI;
-    final double averageSpeedInKmh = waypoint.getAverageSpeed() * 3.6;
+    final double averageSpeedInKmh = stats.getAverageSpeed() * 3.6;
     final double averageSpeedInMph =
         averageSpeedInKmh * UnitConversions.KMH_TO_MPH;
-    final double movingSpeedInKmh = waypoint.getAverageMovingSpeed() * 3.6;
+    final double movingSpeedInKmh = stats.getAverageMovingSpeed() * 3.6;
     final double movingSpeedInMph =
         movingSpeedInKmh * UnitConversions.KMH_TO_MPH;
-    final double maxSpeedInKmh = waypoint.getMaxSpeed() * 3.6;
+    final double maxSpeedInKmh = stats.getMaxSpeed() * 3.6;
     final double maxSpeedInMph = maxSpeedInKmh * UnitConversions.KMH_TO_MPH;
-    final long minElevationInMeters = Math.round(waypoint.getMinElevation());
+    final long minElevationInMeters = Math.round(stats.getMinElevation());
     final long minElevationInFeet =
-        Math.round(waypoint.getMinElevation() * UnitConversions.M_TO_FT);
-    final long maxElevationInMeters = Math.round(waypoint.getMaxElevation());
+        Math.round(stats.getMinElevation() * UnitConversions.M_TO_FT);
+    final long maxElevationInMeters = Math.round(stats.getMaxElevation());
     final long maxElevationInFeet =
-        Math.round(waypoint.getMaxElevation() * UnitConversions.M_TO_FT);
+        Math.round(stats.getMaxElevation() * UnitConversions.M_TO_FT);
     final long elevationGainInMeters =
-      Math.round(waypoint.getTotalElevationGain());
-    final long elevationGainInFeet = Math.round(waypoint.getTotalElevationGain()
-        * UnitConversions.M_TO_FT);
+        Math.round(stats.getTotalElevationGain());
+    final long elevationGainInFeet = Math.round(
+        stats.getTotalElevationGain() * UnitConversions.M_TO_FT);
     long theMinGrade = 0;
     long theMaxGrade = 0;
-    if (!Double.isNaN(waypoint.getMaxGrade()) &&
-        !Double.isInfinite(waypoint.getMaxGrade())) {
-      theMaxGrade = Math.round(waypoint.getMaxGrade() * 100);
+    double maxGrade = stats.getMaxGrade();
+    double minGrade = stats.getMinGrade();
+    if (!Double.isNaN(maxGrade) &&
+        !Double.isInfinite(maxGrade)) {
+      theMaxGrade = Math.round(maxGrade * 100);
     }
-    if (!Double.isNaN(waypoint.getMinGrade()) &&
-        !Double.isInfinite(waypoint.getMinGrade())) {
-      theMinGrade = Math.round(waypoint.getMinGrade() * 100);
+    if (!Double.isNaN(minGrade) &&
+        !Double.isInfinite(minGrade)) {
+      theMinGrade = Math.round(minGrade * 100);
     }
     final String percent = "%";
 
@@ -370,9 +376,9 @@ public class StringUtils implements DescriptionGenerator {
             distanceInKm, context.getString(R.string.kilometer),
             distanceInMiles, context.getString(R.string.mile),
         context.getString(R.string.time_label),
-            StringUtils.formatTime(waypoint.getTotalTime()),
+            StringUtils.formatTime(stats.getTotalTime()),
         context.getString(R.string.moving_time_label),
-            StringUtils.formatTime(waypoint.getMovingTime()),
+            StringUtils.formatTime(stats.getMovingTime()),
         context.getString(R.string.average_speed_label),
             averageSpeedInKmh, context.getString(R.string.kilometer_per_hour),
             averageSpeedInMph, context.getString(R.string.mile_per_hour),

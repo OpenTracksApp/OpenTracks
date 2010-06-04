@@ -15,8 +15,7 @@
  */
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
@@ -219,32 +218,18 @@ public class StatsUtilities {
     setGrade(R.id.max_grade_register, maxGrade);
   }
 
-  public void setAllStats(Waypoint wpt) {
-    setTime(R.id.moving_time_register, wpt.getMovingTime());
-    setDistance(R.id.total_distance_register, wpt.getTotalDistance() / 1000);
-    setSpeed(R.id.average_speed_register, wpt.getAverageSpeed() * 3.6);
+  public void setAllStats(TripStatistics stats) {
+    setTime(R.id.moving_time_register, stats.getMovingTime());
+    setDistance(R.id.total_distance_register, stats.getTotalDistance() / 1000);
+    setSpeed(R.id.average_speed_register, stats.getAverageSpeed() * 3.6);
     setSpeed(R.id.average_moving_speed_register,
-        wpt.getAverageMovingSpeed() * 3.6);
-    setSpeed(R.id.max_speed_register, wpt.getMaxSpeed() * 3.6);
-    setAltitude(R.id.min_elevation_register, wpt.getMinElevation());
-    setAltitude(R.id.max_elevation_register, wpt.getMaxElevation());
-    setAltitude(R.id.elevation_gain_register, wpt.getTotalElevationGain());
-    setGrade(R.id.min_grade_register, wpt.getMinGrade());
-    setGrade(R.id.max_grade_register, wpt.getMaxGrade());
-  }
-
-  public void setAllStats(Track track) {
-    setTime(R.id.moving_time_register, track.getMovingTime());
-    setDistance(R.id.total_distance_register, track.getTotalDistance() / 1000);
-    setSpeed(R.id.average_speed_register, track.getAverageSpeed() * 3.6);
-    setSpeed(R.id.average_moving_speed_register,
-        track.getAverageMovingSpeed() * 3.6);
-    setSpeed(R.id.max_speed_register, track.getMaxSpeed() * 3.6);
-    setAltitude(R.id.min_elevation_register, track.getMinElevation());
-    setAltitude(R.id.max_elevation_register, track.getMaxElevation());
-    setAltitude(R.id.elevation_gain_register, track.getTotalElevationGain());
-    setGrade(R.id.min_grade_register, track.getMinGrade());
-    setGrade(R.id.max_grade_register, track.getMaxGrade());
+        stats.getAverageMovingSpeed() * 3.6);
+    setSpeed(R.id.max_speed_register, stats.getMaxSpeed() * 3.6);
+    setAltitude(R.id.min_elevation_register, stats.getMinElevation());
+    setAltitude(R.id.max_elevation_register, stats.getMaxElevation());
+    setAltitude(R.id.elevation_gain_register, stats.getTotalElevationGain());
+    setGrade(R.id.min_grade_register, stats.getMinGrade());
+    setGrade(R.id.max_grade_register, stats.getMaxGrade());
   }
 
   public void setSpeedLabel(int id, int speedString, int paceString) {

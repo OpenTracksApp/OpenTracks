@@ -84,10 +84,23 @@ public class ExtremityMonitor {
 
   /**
    * Sets the minimum and maximum values.
-   * Useful when restoring state.
    */
   public void set(double min, double max) {
     this.min = min;
+    this.max = max;
+  }
+
+  /**
+   * Sets the minimum value.
+   */
+  public void setMin(double min) {
+    this.min = min;
+  }
+
+  /**
+   * Sets the maximum value.
+   */
+  public void setMax(double max) {
     this.max = max;
   }
 }

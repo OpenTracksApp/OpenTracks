@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -16,7 +16,7 @@
 package com.google.android.apps.mytracks.io;
 
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.MyTracksUtils;
 
 import android.location.Location;
@@ -214,21 +214,21 @@ public class GpxImport {
 
           if (locations.size() > 0) {
             long startTime = locations.get(0).getTime();
-            track.setStartTime(startTime);
 
             // Calculate statistics for the imported track
-            TripStatistics stats = new TripStatistics(startTime);
+            TripStatisticsBuilder statsBuilder = new TripStatisticsBuilder();
+            statsBuilder.resumeAt(startTime);
             for (Location location : locations) {
               if (MyTracksUtils.isValidLocation(location)) {
                 /* Any time works here. The totalTime will be set by "pauseAt" later: */
-                stats.addLocation(location, location.getTime());
+                statsBuilder.addLocation(location, location.getTime());
               }
             }
-            long lastPointTime = locations.get(locations.size() - 1).getTime();
-            stats.pauseAt(lastPointTime);
-            track.setStopTime(lastPointTime);
 
-            stats.fillStatisticsForTrack(track);
+            long lastPointTime = locations.get(locations.size() - 1).getTime();
+            statsBuilder.pauseAt(lastPointTime);
+
+            track.setStatistics(statsBuilder.getStatistics());
           }
         }
       }

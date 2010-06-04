@@ -24,6 +24,7 @@ import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.MyTracksUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
@@ -92,8 +93,8 @@ public class TrackRecordingService extends Service implements LocationListener {
    */
   private MyTracksProviderUtils providerUtils;
 
-  private TripStatistics stats = new TripStatistics();
-  private TripStatistics waypointStats = new TripStatistics();
+  private TripStatisticsBuilder statsBuilder = new TripStatisticsBuilder();
+  private TripStatisticsBuilder waypointStatsBuilder = new TripStatisticsBuilder();
 
   /**
    * Current length of the recorded track. This length is calculated from the
@@ -229,6 +230,7 @@ public class TrackRecordingService extends Service implements LocationListener {
       if (lastRecordedLocation != null
           && lastRecordedLocation.getLatitude() < 90) {
         ContentValues values = new ContentValues();
+        TripStatistics stats = statsBuilder.getStatistics();
         if (recordingTrack.getStartId() < 0) {
           values.put(TracksColumns.STARTID, pointId);
           recordingTrack.setStartId(pointId);
@@ -271,10 +273,11 @@ public class TrackRecordingService extends Service implements LocationListener {
   private void updateCurrentWaypoint() {
     if (currentWaypointId >= 0) {
       ContentValues values = new ContentValues();
+      TripStatistics waypointStats = waypointStatsBuilder.getStatistics();
       values.put(WaypointsColumns.STARTTIME, waypointStats.getStartTime());
       values.put(WaypointsColumns.LENGTH, length);
-      values.put(WaypointsColumns.DURATION,
-          System.currentTimeMillis() - stats.getStartTime());
+      values.put(WaypointsColumns.DURATION, System.currentTimeMillis()
+          - statsBuilder.getStatistics().getStartTime());
       values.put(WaypointsColumns.TOTALDISTANCE,
           waypointStats.getTotalDistance());
       values.put(WaypointsColumns.TOTALTIME, waypointStats.getTotalTime());
@@ -397,7 +400,9 @@ public class TrackRecordingService extends Service implements LocationListener {
       return;
     }
 
-    stats = new TripStatistics(track.getStartTime());
+    TripStatistics stats = track.getStatistics();
+    statsBuilder = new TripStatisticsBuilder();
+    statsBuilder.resumeAt(stats.getStartTime());
     if (executer != null) {
       executer.scheduleTask(announcementFrequency * 60000);
     }
@@ -410,10 +415,11 @@ public class TrackRecordingService extends Service implements LocationListener {
     Waypoint waypoint = providerUtils.getFirstWaypoint(recordingTrackId);
     if (waypoint != null) {
       currentWaypointId = waypoint.getId();
-      waypointStats = new TripStatistics(waypoint);
+      waypointStatsBuilder = new TripStatisticsBuilder(waypoint.getStatistics());
     } else {
       // This should never happen, but we got to do something so life goes on:
-      waypointStats = new TripStatistics(track.getStartTime());
+      waypointStatsBuilder = new TripStatisticsBuilder();
+      waypointStatsBuilder.resumeAt(stats.getStartTime());
       currentWaypointId = -1;
     }
 
@@ -427,7 +433,7 @@ public class TrackRecordingService extends Service implements LocationListener {
           do {
             Location location = providerUtils.createLocation(cursor);
             if (MyTracksUtils.isValidLocation(location)) {
-              stats.addLocation(location, location.getTime());
+              statsBuilder.addLocation(location, location.getTime());
               if (lastValidLocation != null) {
                 length += location.distanceTo(lastValidLocation);
               }
@@ -435,9 +441,9 @@ public class TrackRecordingService extends Service implements LocationListener {
             }
           } while (cursor.moveToPrevious());
         }
-        stats.setMovingTime(track.getMovingTime());
-        stats.pauseAt(track.getStopTime());
-        stats.resume();
+        statsBuilder.getStatistics().setMovingTime(stats.getMovingTime());
+        statsBuilder.pauseAt(stats.getStopTime());
+        statsBuilder.resume();
       } else {
         Log.e(MyTracksConstants.TAG, "Could not get track points cursor.");
       }
@@ -494,12 +500,12 @@ public class TrackRecordingService extends Service implements LocationListener {
 
       if (MyTracksUtils.isValidLocation(location)) {
         long now = System.currentTimeMillis();
-        stats.addLocation(location, now);
-        waypointStats.addLocation(location, now);
+        statsBuilder.addLocation(location, now);
+        waypointStatsBuilder.addLocation(location, now);
       }
 
       // Update the idle time if needed.
-      locationListenerPolicy.updateIdleTime(stats.getIdleTime());
+      locationListenerPolicy.updateIdleTime(statsBuilder.getIdleTime());
       if (currentRecordingInterval
           != locationListenerPolicy.getDesiredPollingInterval()) {
         registerLocationListener();
@@ -798,8 +804,8 @@ public class TrackRecordingService extends Service implements LocationListener {
   public long insertWaypointMarker(Waypoint waypoint) {
     if (waypoint.getLocation() != null) {
       waypoint.setLength(length);
-      waypoint.setDuration(
-          waypoint.getLocation().getTime() - stats.getStartTime());
+      waypoint.setDuration(waypoint.getLocation().getTime()
+          - statsBuilder.getStatistics().getStartTime());
       Uri uri = providerUtils.insertWaypoint(waypoint);
       return Long.parseLong(uri.getLastPathSegment());
     }
@@ -814,22 +820,35 @@ public class TrackRecordingService extends Service implements LocationListener {
    * @return the unique id of the inserted marker
    */
   public long insertStatisticsMarker(Location location) {
+    StringUtils utils = new StringUtils(TrackRecordingService.this);
+
+    // Create a new waypoint to save
     Waypoint waypoint = new Waypoint();
+
+    // Set stop and total time in the stats data
+    final long time = System.currentTimeMillis();
+    waypointStatsBuilder.pauseAt(time);
+
+    // Override the duration - it's not the duration from the last waypoint, but
+    // the duration from the beginning of the whole track
+    waypoint.setDuration(time - statsBuilder.getStatistics().getStartTime());
+
+    // Set the rest of the waypoint data
     waypoint.setTrackId(recordingTrackId);
     waypoint.setType(Waypoint.TYPE_STATISTICS);
     waypoint.setName(TrackRecordingService.this.getString(R.string.statistics));
-    waypointStats.fillStatisticsForWaypoint(waypoint);
-    StringUtils utils = new StringUtils(TrackRecordingService.this);
+    waypoint.setStatistics(waypointStatsBuilder.getStatistics());
     waypoint.setDescription(utils.generateWaypointDescription(waypoint));
     waypoint.setLocation(location);
     waypoint.setIcon(STATISTICS_ICON_URL);
     waypoint.setLength(length);
-    final long time = System.currentTimeMillis();
-    waypoint.setDuration(time - stats.getStartTime());
-    waypoint.setStartTime(waypointStats.getStartTime());
+
     waypoint.setStartId(providerUtils.getLastLocationId(recordingTrackId));
     Uri uri = providerUtils.insertWaypoint(waypoint);
-    waypointStats = new TripStatistics(time);
+
+    // Create a new stats keeper for the next marker
+    waypointStatsBuilder = new TripStatisticsBuilder();
+    waypointStatsBuilder.resumeAt(time);
     updateCurrentWaypoint();
     return Long.parseLong(uri.getLastPathSegment());
   }
@@ -858,8 +877,10 @@ public class TrackRecordingService extends Service implements LocationListener {
         public long startNewTrack() {
           Log.d(MyTracksConstants.TAG, "TrackRecordingService.startNewTrack");
           Track track = new Track();
+          TripStatistics trackStats = track.getStatistics();
           track.setName("new");
-          track.setStartTime(System.currentTimeMillis());
+          long startTime = System.currentTimeMillis();
+          trackStats.setStartTime(startTime);
           track.setStartId(-1);
           Uri trackUri = providerUtils.insertTrack(track);
           long trackId = Long.parseLong(trackUri.getLastPathSegment());
@@ -870,7 +891,8 @@ public class TrackRecordingService extends Service implements LocationListener {
           currentWaypointId = insertStatisticsMarker(null);
           isRecording = true;
           isMoving = true;
-          stats = new TripStatistics(track.getStartTime());
+          statsBuilder = new TripStatisticsBuilder();
+          statsBuilder.resumeAt(startTime);
           if (announcementFrequency != -1 && executer != null) {
             executer.scheduleTask(announcementFrequency * 60000);
           }
@@ -912,9 +934,9 @@ public class TrackRecordingService extends Service implements LocationListener {
           isRecording = false;
           Track recordingTrack = providerUtils.getTrack(recordingTrackId);
           if (recordingTrack != null) {
-            recordingTrack.setStopTime(System.currentTimeMillis());
-            recordingTrack.setTotalTime(
-                recordingTrack.getStopTime() - recordingTrack.getStartTime());
+            TripStatistics stats = recordingTrack.getStatistics();
+            stats.setStopTime(System.currentTimeMillis());
+            stats.setTotalTime(stats.getStopTime() - stats.getStartTime());
             long lastRecordedLocationId =
                 providerUtils.getLastLocationId(recordingTrackId);
             ContentValues values = new ContentValues();
@@ -922,8 +944,8 @@ public class TrackRecordingService extends Service implements LocationListener {
                 && recordingTrack.getStopId() >= 0) {
               values.put(TracksColumns.STOPID, lastRecordedLocationId);
             }
-            values.put(TracksColumns.STOPTIME, recordingTrack.getStopTime());
-            values.put(TracksColumns.TOTALTIME, recordingTrack.getTotalTime());
+            values.put(TracksColumns.STOPTIME, stats.getStopTime());
+            values.put(TracksColumns.TOTALTIME, stats.getTotalTime());
             getContentResolver().update(TracksColumns.CONTENT_URI, values,
                 "_id=" + recordingTrack.getId(), null);
           }
@@ -951,7 +973,7 @@ public class TrackRecordingService extends Service implements LocationListener {
       };
 
   TripStatistics getTripStatistics() {
-    return stats;
+    return statsBuilder.getStatistics();
   }
 
   Location getLastLocation() {

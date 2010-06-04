@@ -22,7 +22,7 @@ import com.google.android.apps.mytracks.content.TrackPointsColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
-import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.MyTracksUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
@@ -488,10 +488,10 @@ public class ChartActivity extends Activity implements
       if (Math.abs(location.getSpeed() - 128) > 1) {
         speedBuffer.setNext(location.getSpeed());
       }
-    } else if (TripStatistics.isValidSpeed(
+    } else if (TripStatisticsBuilder.isValidSpeed(
         location.getTime(), location.getSpeed(), lastLocation.getTime(),
         lastLocation.getSpeed(), speedBuffer)
-        && (location.getSpeed() <= track.getMaxSpeed())) {
+        && (location.getSpeed() <= track.getStatistics().getMaxSpeed())) {
       speedBuffer.setNext(location.getSpeed());
     }
     result[2] = speedBuffer.getAverage() * 3.6;

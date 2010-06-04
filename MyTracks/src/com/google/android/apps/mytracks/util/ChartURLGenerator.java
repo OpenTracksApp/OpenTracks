@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -82,18 +83,19 @@ public class ChartURLGenerator {
     }
 
     // Round it up.
+    TripStatistics stats = track.getStatistics();
     double effectiveMaxY = metricUnits
-        ? track.getMaxElevation()
-        : track.getMaxElevation() * UnitConversions.M_TO_FT;
+        ? stats.getMaxElevation()
+        : stats.getMaxElevation() * UnitConversions.M_TO_FT;
     effectiveMaxY = ((int) (effectiveMaxY / 100)) * 100 + 100;
     // Round it down.
     double effectiveMinY = 0;
     double minElevation = metricUnits
-        ? track.getMinElevation()
-        : track.getMinElevation() * UnitConversions.M_TO_FT;
+        ? stats.getMinElevation()
+        : stats.getMinElevation() * UnitConversions.M_TO_FT;
 
     effectiveMinY = ((int) (minElevation / 100)) * 100;
-    if (track.getMinElevation() < 0) {
+    if (stats.getMinElevation() < 0) {
       effectiveMinY -= 100;
     }
     double ySpread = effectiveMaxY - effectiveMinY;
@@ -108,7 +110,7 @@ public class ChartURLGenerator {
 
     // Labels
     sb.append("&chxt=x,y");
-    double distKM = track.getTotalDistance() / 1000.0;
+    double distKM = stats.getTotalDistance() / 1000.0;
     double distDisplay =
         metricUnits ? distKM : (distKM * UnitConversions.KM_TO_MI);
     int xInterval = ((int) (distDisplay / 6));
@@ -162,11 +164,11 @@ public class ChartURLGenerator {
     return sb.toString();
   }
 
-  protected static double getNormalizedDistance(double d, Track track) {
-    return d / track.getTotalDistance();
+  private static double getNormalizedDistance(double d, Track track) {
+    return d / track.getStatistics().getTotalDistance();
   }
 
-  protected static double getNormalizedElevation(
+  private static double getNormalizedElevation(
       double d, double effectiveMinY, double ySpread) {
     return (d - effectiveMinY) / ySpread;
   }

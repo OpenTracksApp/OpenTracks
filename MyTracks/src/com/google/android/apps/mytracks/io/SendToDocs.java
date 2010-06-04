@@ -24,6 +24,7 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.gdata.GDataClientFactory;
 import com.google.android.apps.mytracks.io.gdata.GDataWrapper;
 import com.google.android.apps.mytracks.io.gdata.GDataWrapper.QueryFunction;
+import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ResourceUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
@@ -429,6 +430,7 @@ public class SendToDocs {
       String worksheetId) throws IOException {
     String worksheetUri = String.format(DOCS_SPREADSHEET_URL_FORMAT,
         spreadsheetId, worksheetId);
+    TripStatistics stats = track.getStatistics();
 
     /* Prepare the Post-Text we are going to send. */
     StringBuilder sb = new StringBuilder();
@@ -437,29 +439,29 @@ public class SendToDocs {
         + "2006/extended'>");
     appendTag("name", track.getName(), sb);
     appendTag("description", track.getDescription(), sb);
-    appendTag("date", String.format("%tc", track.getStartTime()), sb);
+    appendTag("date", String.format("%tc", stats.getStartTime()), sb);
     appendTag("totaltime", StringUtils.formatTimeAlwaysShowingHours(
-        track.getTotalTime()), sb);
+        stats.getTotalTime()), sb);
     appendTag("movingtime", StringUtils.formatTimeAlwaysShowingHours(
-        track.getMovingTime()), sb);
-    appendLargeUnitsTag("distance", track.getTotalDistance() / 1000, sb);
+        stats.getMovingTime()), sb);
+    appendLargeUnitsTag("distance", stats.getTotalDistance() / 1000, sb);
     appendTag("distanceunit",
         metricUnits
             ? activity.getString(R.string.kilometer)
             : activity.getString(R.string.mile),
         sb);
-    appendLargeUnitsTag("averagespeed", track.getAverageSpeed() * 3.6, sb);
+    appendLargeUnitsTag("averagespeed", stats.getAverageSpeed() * 3.6, sb);
     appendLargeUnitsTag("averagemovingspeed",
-        track.getAverageMovingSpeed() * 3.6, sb);
-    appendLargeUnitsTag("maxspeed", track.getMaxSpeed() * 3.6, sb);
+        stats.getAverageMovingSpeed() * 3.6, sb);
+    appendLargeUnitsTag("maxspeed", stats.getMaxSpeed() * 3.6, sb);
     appendTag("speedunit",
         metricUnits
             ? activity.getString(R.string.kilometer_per_hour)
             : activity.getString(R.string.mile_per_hour),
         sb);
-    appendSmallUnitsTag("elevationgain", track.getTotalElevationGain(), sb);
-    appendSmallUnitsTag("minelevation", track.getMinElevation(), sb);
-    appendSmallUnitsTag("maxelevation", track.getMaxElevation(), sb);
+    appendSmallUnitsTag("elevationgain", stats.getTotalElevationGain(), sb);
+    appendSmallUnitsTag("minelevation", stats.getMinElevation(), sb);
+    appendSmallUnitsTag("maxelevation", stats.getMaxElevation(), sb);
     appendTag("elevationunit",
         metricUnits
         ? activity.getString(R.string.meter)

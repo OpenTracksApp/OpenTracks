@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
+import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -132,8 +133,9 @@ public class MyTracksWaypointDetails extends Activity
           detailsView.setVisibility(View.GONE);
           statsView.setVisibility(View.VISIBLE);
           iconId = R.drawable.ylw_pushpin;
-          utils.setAllStats(waypoint);
-          utils.setTime(R.id.total_time_register, waypoint.getTotalTime());
+          TripStatistics waypointStats = waypoint.getStatistics();
+          utils.setAllStats(waypointStats);
+          utils.setTime(R.id.total_time_register, waypointStats.getTotalTime());
           utils.setAltitude(
               R.id.elevation_register, waypoint.getLocation().getAltitude());
           break;

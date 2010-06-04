@@ -3,6 +3,7 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.stats.TripStatistics;
 
 import junit.framework.TestCase;
 
@@ -19,9 +20,10 @@ public class ChartURLGeneratorTest extends TestCase {
     Vector<Double> distances = new Vector<Double>();
     Vector<Double> elevations = new Vector<Double>();
     Track t = new Track();
-    t.setMinElevation(0);
-    t.setMaxElevation(2000);
-    t.setTotalDistance(100);
+    TripStatistics stats = t.getStatistics();
+    stats.setMinElevation(0);
+    stats.setMaxElevation(2000);
+    stats.setTotalDistance(100);
 
     distances.add(0.0);
     elevations.add(10.0);

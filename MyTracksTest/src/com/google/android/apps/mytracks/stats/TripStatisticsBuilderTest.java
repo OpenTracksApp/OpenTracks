@@ -9,24 +9,27 @@ import android.location.Location;
 import junit.framework.TestCase;
 
 /**
- * Test the the function of the TripStatistics class.
+ * Test the the function of the TripStatisticsBuilder class.
  *
  * @author Sandor Dornbush
  */
-public class TripStatisticsTest extends TestCase {
+public class TripStatisticsBuilderTest extends TestCase {
 
-  private TripStatistics stats = null;
+  private TripStatisticsBuilder builder = null;
 
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    stats = new TripStatistics();
+    builder = new TripStatisticsBuilder();
+    builder.resume();
   }
 
   public void testAddLocationSimple() throws Exception {
-    stats = new TripStatistics(1000);
+    builder = new TripStatisticsBuilder();
+    builder.resumeAt(1000);
+    TripStatistics stats = builder.getStatistics();
 
-    assertEquals(0.0, stats.getSmoothedElevation());
+    assertEquals(0.0, builder.getSmoothedElevation());
     assertEquals(Double.POSITIVE_INFINITY, stats.getMinElevation());
     assertEquals(Double.NEGATIVE_INFINITY, stats.getMaxElevation());
     assertEquals(0.0, stats.getMaxSpeed());
@@ -48,19 +51,20 @@ public class TripStatisticsTest extends TestCase {
       // Each time slice is 10 seconds.
       long time = 1000 + 10000 * i;
       l.setTime(time);
-      boolean moving = stats.addLocation(l, time);
+      boolean moving = builder.addLocation(l, time);
       assertEquals((i != 0), moving);
 
+      stats = builder.getStatistics();
       assertEquals(10000 * i, stats.getTotalTime());
-      System.out.println("i: " + i + "\nLocation: " + l + "\nStats: " + stats);
       assertEquals(10000 * i, stats.getMovingTime());
-      assertEquals(i, stats.getSmoothedElevation(),
+      assertEquals(i, builder.getSmoothedElevation(),
                    MyTracksConstants.ELEVATION_SMOOTHING_FACTOR / 2);
       assertEquals(0.0, stats.getMinElevation());
-      assertEquals(i , stats.getMaxElevation(),
+      assertEquals(i, stats.getMaxElevation(),
                    MyTracksConstants.ELEVATION_SMOOTHING_FACTOR / 2);
       assertEquals(i, stats.getTotalElevationGain(),
                    MyTracksConstants.ELEVATION_SMOOTHING_FACTOR);
+
       if (i > MyTracksConstants.SPEED_SMOOTHING_FACTOR) {
         assertEquals(11.1f, stats.getMaxSpeed(), 0.1);
       }
@@ -80,13 +84,15 @@ public class TripStatisticsTest extends TestCase {
    */
   public void testElevationSimple() throws Exception {
     for (double elevation = 0; elevation < 1000; elevation += 10) {
-      stats = new TripStatistics();
+      builder = new TripStatisticsBuilder();
+      builder.resume();
       for (int j = 0; j < 100; j++) {
-        assertEquals(0.0, stats.updateElevation(elevation));
-        assertEquals(elevation, stats.getSmoothedElevation());
-        assertEquals(elevation, stats.getMinElevation());
-        assertEquals(elevation, stats.getMaxElevation());
-        assertEquals(0.0, stats.getTotalElevationGain());
+        assertEquals(0.0, builder.updateElevation(elevation));
+        assertEquals(elevation, builder.getSmoothedElevation());
+        TripStatistics data = builder.getStatistics();
+        assertEquals(elevation, data.getMinElevation());
+        assertEquals(elevation, data.getMaxElevation());
+        assertEquals(0.0, data.getTotalElevationGain());
       }
     }
   }
@@ -102,12 +108,13 @@ public class TripStatisticsTest extends TestCase {
         expectedGain = 1.0;
       }
       assertEquals(expectedGain,
-                   stats.updateElevation(i));
-      assertEquals(i, stats.getSmoothedElevation(), 20);
-      assertEquals(0.0, stats.getMinElevation(), 0.0);
-      assertEquals(i, stats.getMaxElevation(),
+                   builder.updateElevation(i));
+      assertEquals(i, builder.getSmoothedElevation(), 20);
+      TripStatistics data = builder.getStatistics();
+      assertEquals(0.0, data.getMinElevation(), 0.0);
+      assertEquals(i, data.getMaxElevation(),
                    MyTracksConstants.ELEVATION_SMOOTHING_FACTOR);
-      assertEquals(i, stats.getTotalElevationGain(),
+      assertEquals(i, data.getTotalElevationGain(),
                    MyTracksConstants.ELEVATION_SMOOTHING_FACTOR);
     }
   }
@@ -116,23 +123,23 @@ public class TripStatisticsTest extends TestCase {
     for (double i = 0; i < 1000; i++) {
       // The value of the elevation does not matter.  This is just to fill the
       // buffer.
-      stats.updateElevation(i);
-      stats.updateGrade(100, 100);
+      builder.updateElevation(i);
+      builder.updateGrade(100, 100);
       if ((i > MyTracksConstants.GRADE_SMOOTHING_FACTOR)
           && (i > MyTracksConstants.ELEVATION_SMOOTHING_FACTOR)) {
-        assertEquals(1.0, stats.getMaxGrade());
-        assertEquals(1.0, stats.getMinGrade());
+        assertEquals(1.0, builder.getStatistics().getMaxGrade());
+        assertEquals(1.0, builder.getStatistics().getMinGrade());
       }
     }
     for (double i = 0; i < 1000; i++) {
       // The value of the elevation does not matter.  This is just to fill the
       // buffer.
-      stats.updateElevation(i);
-      stats.updateGrade(100, -100);
+      builder.updateElevation(i);
+      builder.updateGrade(100, -100);
       if ((i > MyTracksConstants.GRADE_SMOOTHING_FACTOR)
           && (i > MyTracksConstants.ELEVATION_SMOOTHING_FACTOR)) {
-        assertEquals(1.0, stats.getMaxGrade());
-        assertEquals(-1.0, stats.getMinGrade());
+        assertEquals(1.0, builder.getStatistics().getMaxGrade());
+        assertEquals(-1.0, builder.getStatistics().getMinGrade());
       }
     }
   }
@@ -141,39 +148,39 @@ public class TripStatisticsTest extends TestCase {
     for (double i = 0; i < 100; i++) {
       // The value of the elevation does not matter.  This is just to fill the
       // buffer.
-      stats.updateElevation(i);
-      stats.updateGrade(1, 100);
-      assertEquals(Double.NEGATIVE_INFINITY, stats.getMaxGrade());
-      assertEquals(Double.POSITIVE_INFINITY, stats.getMinGrade());
+      builder.updateElevation(i);
+      builder.updateGrade(1, 100);
+      assertEquals(Double.NEGATIVE_INFINITY, builder.getStatistics().getMaxGrade());
+      assertEquals(Double.POSITIVE_INFINITY, builder.getStatistics().getMinGrade());
     }
   }
 
   public void testUpdateSpeedIncludeZero() {
     for (int i = 0; i < 1000; i++) {
-      stats.updateSpeed(i + 1000, 0.0, i, 4.0);
-      assertEquals(0.0, stats.getMaxSpeed());
-      assertEquals((i + 1) * 1000, stats.getMovingTime());
+      builder.updateSpeed(i + 1000, 0.0, i, 4.0);
+      assertEquals(0.0, builder.getStatistics().getMaxSpeed());
+      assertEquals((i + 1) * 1000, builder.getStatistics().getMovingTime());
     }
   }
 
   public void testUpdateSpeedIngoreErrorCode() {
-    stats.updateSpeed(12345000, 128.0, 12344000, 0.0);
-    assertEquals(0.0, stats.getMaxSpeed());
-    assertEquals(1000, stats.getMovingTime());
+    builder.updateSpeed(12345000, 128.0, 12344000, 0.0);
+    assertEquals(0.0, builder.getStatistics().getMaxSpeed());
+    assertEquals(1000, builder.getStatistics().getMovingTime());
   }
 
   public void testUpdateSpeedIngoreLargeAcceleration() {
-    stats.updateSpeed(12345000, 100.0, 12344000, 1.0);
-    assertEquals(0.0, stats.getMaxSpeed());
-    assertEquals(1000, stats.getMovingTime());
+    builder.updateSpeed(12345000, 100.0, 12344000, 1.0);
+    assertEquals(0.0, builder.getStatistics().getMaxSpeed());
+    assertEquals(1000, builder.getStatistics().getMovingTime());
   }
 
   public void testUpdateSpeed() {
     for (int i = 0; i < 1000; i++) {
-      stats.updateSpeed(i + 1000, 4.0, i, 4.0);
-      assertEquals((i + 1) * 1000, stats.getMovingTime());
+      builder.updateSpeed(i + 1000, 4.0, i, 4.0);
+      assertEquals((i + 1) * 1000, builder.getStatistics().getMovingTime());
       if (i > MyTracksConstants.SPEED_SMOOTHING_FACTOR) {
-        assertEquals(4.0, stats.getMaxSpeed());
+        assertEquals(4.0, builder.getStatistics().getMaxSpeed());
       }
     }
   }

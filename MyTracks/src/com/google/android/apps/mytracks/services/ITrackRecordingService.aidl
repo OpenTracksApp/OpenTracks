@@ -16,7 +16,6 @@
 package com.google.android.apps.mytracks.services;
 
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.stats.TripStatisticsData;
 
 /**
  * MyTracks service.

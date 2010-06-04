@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks.content;
 
+import com.google.android.apps.mytracks.stats.TripStatistics;
+
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -24,7 +26,10 @@ import java.util.ArrayList;
 /**
  * A class representing a (GPS) Track.
  *
+ * TODO: hashCode and equals
+ *
  * @author Leif Hendrik Wilden
+ * @author Rodrigo Damazio
  */
 public class Track implements Parcelable {
 
@@ -34,6 +39,7 @@ public class Track implements Parcelable {
   public static class Creator implements Parcelable.Creator<Track> {
 
     public Track createFromParcel(Parcel source) {
+      ClassLoader classLoader = getClass().getClassLoader();
       Track track = new Track();
       track.id = source.readLong();
       track.name = source.readString();
@@ -42,28 +48,14 @@ public class Track implements Parcelable {
       track.category = source.readString();
       track.startId = source.readLong();
       track.stopId = source.readLong();
-      track.startTime = source.readLong();
-      track.stopTime = source.readLong();
-      track.totalDistance = source.readDouble();
-      track.totalTime = source.readLong();
-      track.movingTime = source.readLong();
-      track.averageSpeed = source.readDouble();
-      track.averageMovingSpeed = source.readDouble();
-      track.maxSpeed = source.readDouble();
-      track.minElevation = source.readDouble();
-      track.maxElevation = source.readDouble();
-      track.totalElevationGain = source.readDouble();
-      track.minGrade = source.readDouble();
-      track.maxGrade = source.readDouble();
-      track.left = source.readInt();
-      track.top = source.readInt();
-      track.right = source.readInt();
-      track.bottom = source.readInt();
+      track.stats = source.readParcelable(classLoader);
+
       track.numberOfPoints = source.readInt();
       for (int i = 0; i < track.numberOfPoints; ++i) {
-        Location loc = source.readParcelable(null);
+        Location loc = source.readParcelable(classLoader);
         track.locations.add(loc);
       }
+
       return track;
     }
 
@@ -75,9 +67,15 @@ public class Track implements Parcelable {
   public static final Creator CREATOR = new Creator();
 
   /**
-   * The track points.
+   * The track points (which may not have been loaded).
    */
   private ArrayList<Location> locations = new ArrayList<Location>();
+
+  /**
+   * The number of location points (present even if the points themselves were
+   * not loaded).
+   */
+  private int numberOfPoints = 0;
 
   private long id = -1;
   private String name = "";
@@ -87,34 +85,9 @@ public class Track implements Parcelable {
   private long stopId = -1;
   private String category = "";
 
-  // Fields derived from locations. Use setDerivedFields() to set them:
-  //-------------------------------------------------------------------
-
-  private long startTime = -1;
-  private long stopTime = -1;
-  private int numberOfPoints = 0;
-  private double totalDistance = 0;
-  private long totalTime = 0;
-  private long movingTime = 0;
-  private int left;
-  private int top;
-  private int right;
-  private int bottom;
-
-  private double averageSpeed = 0;
-  private double averageMovingSpeed = 0;
-  private double maxSpeed = 0;
-  private double minElevation = 0;
-  private double maxElevation = 0;
-  private double totalElevationGain = 0;
-  private double minGrade = 0;
-  private double maxGrade = 0;
+  private TripStatistics stats = new TripStatistics();
 
   public Track() {
-    left = Integer.MAX_VALUE;
-    top = Integer.MIN_VALUE;
-    right = Integer.MIN_VALUE;
-    bottom = Integer.MAX_VALUE;
   }
 
   public void writeToParcel(Parcel dest, int flags) {
@@ -125,23 +98,8 @@ public class Track implements Parcelable {
     dest.writeString(category);
     dest.writeLong(startId);
     dest.writeLong(stopId);
-    dest.writeLong(startTime);
-    dest.writeLong(stopTime);
-    dest.writeDouble(totalDistance);
-    dest.writeLong(totalTime);
-    dest.writeLong(movingTime);
-    dest.writeDouble(averageSpeed);
-    dest.writeDouble(averageMovingSpeed);
-    dest.writeDouble(maxSpeed);
-    dest.writeDouble(minElevation);
-    dest.writeDouble(maxElevation);
-    dest.writeDouble(totalElevationGain);
-    dest.writeDouble(minGrade);
-    dest.writeDouble(maxGrade);
-    dest.writeInt(left);
-    dest.writeInt(top);
-    dest.writeInt(right);
-    dest.writeInt(bottom);
+    dest.writeParcelable(stats, 0);
+
     dest.writeInt(numberOfPoints);
     for (int i = 0; i < numberOfPoints; ++i) {
       dest.writeParcelable(locations.get(i), 0);
@@ -150,29 +108,6 @@ public class Track implements Parcelable {
 
   // Getters and setters:
   //---------------------
-
-  public int getLeft() {
-    return left;
-  }
-
-  public int getTop() {
-    return top;
-  }
-
-  public int getRight() {
-    return right;
-  }
-
-  public int getBottom() {
-    return bottom;
-  }
-
-  public void setBounds(int aLeft, int aTop, int aRight, int aBottom) {
-    left = aLeft;
-    top = aTop;
-    right = aRight;
-    bottom = aBottom;
-  }
 
   public int describeContents() {
     return 0;
@@ -184,46 +119,6 @@ public class Track implements Parcelable {
 
   public void setId(long id) {
     this.id = id;
-  }
-
-  public double getTotalDistance() {
-    return totalDistance;
-  }
-
-  public void setTotalDistance(double totalDistance) {
-    this.totalDistance = totalDistance;
-  }
-
-  public long getTotalTime() {
-    return totalTime;
-  }
-
-  public void setTotalTime(long totalTime) {
-    this.totalTime = totalTime;
-  }
-
-  public long getMovingTime() {
-    return movingTime;
-  }
-
-  public void setMovingTime(long movingTime) {
-    this.movingTime = movingTime;
-  }
-
-  public long getStartTime() {
-    return startTime;
-  }
-
-  public void setStartTime(long startTime) {
-    this.startTime = startTime;
-  }
-
-  public long getStopTime() {
-    return stopTime;
-  }
-
-  public void setStopTime(long stopTime) {
-    this.stopTime = stopTime;
   }
 
   public String getName() {
@@ -274,70 +169,6 @@ public class Track implements Parcelable {
     this.category = category;
   }
 
-  public double getAverageSpeed() {
-    return averageSpeed;
-  }
-
-  public void setAverageSpeed(double averageSpeed) {
-    this.averageSpeed = averageSpeed;
-  }
-
-  public double getAverageMovingSpeed() {
-    return averageMovingSpeed;
-  }
-
-  public void setAverageMovingSpeed(double averageMovingSpeed) {
-    this.averageMovingSpeed = averageMovingSpeed;
-  }
-
-  public double getMaxSpeed() {
-    return maxSpeed;
-  }
-
-  public void setMaxSpeed(double maxSpeed) {
-    this.maxSpeed = maxSpeed;
-  }
-
-  public double getMinElevation() {
-    return minElevation;
-  }
-
-  public void setMinElevation(double minElevation) {
-    this.minElevation = minElevation;
-  }
-
-  public double getMaxElevation() {
-    return maxElevation;
-  }
-
-  public void setMaxElevation(double maxElevation) {
-    this.maxElevation = maxElevation;
-  }
-
-  public double getTotalElevationGain() {
-    return totalElevationGain;
-  }
-
-  public void setTotalElevationGain(double totalElevationGain) {
-    this.totalElevationGain = totalElevationGain;
-  }
-
-  public double getMinGrade() {
-    return minGrade;
-  }
-
-  public void setMinGrade(double minGrade) {
-    this.minGrade = minGrade;
-  }
-
-  public double getMaxGrade() {
-    return maxGrade;
-  }
-
-  public void setMaxGrade(double maxGrade) {
-    this.maxGrade = maxGrade;
-  }
-
   public int getNumberOfPoints() {
     return numberOfPoints;
   }
@@ -356,5 +187,13 @@ public class Track implements Parcelable {
 
   public void setLocations(ArrayList<Location> locations) {
     this.locations = locations;
+  }
+
+  public TripStatistics getStatistics() {
+    return stats;
+  }
+
+  public void setStatistics(TripStatistics stats) {
+    this.stats = stats;
   }
 }
