@@ -159,7 +159,7 @@ public class TripStatistics implements Parcelable {
    *         stopped
    */
   public long getStopTime() {
-    return startTime;
+    return stopTime;
   }
 
   /**

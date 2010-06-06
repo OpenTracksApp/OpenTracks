@@ -860,13 +860,14 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
         return;
       }
 
-      while (cursor.moveToNext()) {
+      do {
         Location location = createLocation(cursor);
         if (location == null) {
           continue;
         }
         buffer.add(location, cursor.getLong(idColumnIdx));
-      }
+      } while (cursor.moveToNext());
+      
       if (buffer.getLocationsLoaded() == 0) {
         Log.w(MyTracksProvider.TAG, "No locations read.");
         buffer.resetAt(startingPoint + buffer.getSize());
