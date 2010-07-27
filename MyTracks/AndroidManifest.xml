@@ -69,7 +69,8 @@
              android:process=":trackrecord"
              android:label="Track Recording Service"
              android:icon="@drawable/arrow_320"
-             android:enabled="true" />
+             android:enabled="true"
+             android:exported="true" />
 
   </application>
 
