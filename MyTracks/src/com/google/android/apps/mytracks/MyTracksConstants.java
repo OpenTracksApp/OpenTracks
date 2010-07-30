@@ -77,6 +77,7 @@ public abstract class MyTracksConstants {
   public static final int MENU_CHART_SETTINGS = 8;
   public static final int MENU_HELP = 9;
   public static final int MENU_CURRENT_SEGMENT = 10;
+  public static final int MENU_AGGREGATED_STATS = 11;
 
   /*
    * Context menu ids:

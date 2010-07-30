@@ -15,6 +15,9 @@
  */
 package com.google.android.apps.mytracks.content;
 
+import java.util.Collection;
+import java.util.List;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
@@ -183,6 +186,15 @@ public interface MyTracksProviderUtils {
    * @return a Track object, or null if not found
    */
   Track getTrack(long id);
+  
+	/**
+	 * Retrieves all tracks without track points. If no tracks exist an empty
+	 * collection will be returns. Use {@link #getTrackPoints(Track, int)} to load
+	 * the track points.
+	 * 
+	 * @return a collection of all the recorded tracks
+	 */
+	List<Track> retrieveAllTracks();
 
   /**
    * Loads the track points for a given track.

@@ -142,6 +142,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   private MenuItem listMarkers;
   private MenuItem settings;
   private MenuItem help;
+  private MenuItem aggregatedStats;
 
   /*
    * Information on upload success to MyMaps/Docs.
@@ -432,6 +433,8 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     settings.setIcon(android.R.drawable.ic_menu_preferences);
     help = menu.add(0, MyTracksConstants.MENU_HELP, 10002, R.string.help);
     help.setIcon(android.R.drawable.ic_menu_info_details);
+    aggregatedStats = menu.add(0, MyTracksConstants.MENU_AGGREGATED_STATS, 
+    		10003, R.string.aggregated_stats);
     return true;
   }
 
@@ -486,6 +489,11 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       }
       case MyTracksConstants.MENU_CLEAR_MAP: {
         setSelectedTrack(-1);
+        return true;
+      }
+      case MyTracksConstants.MENU_AGGREGATED_STATS: {
+    	Intent startIntent = new Intent(this, AggregatedStatsActivity.class);
+        startActivity(startIntent);
         return true;
       }
     }

@@ -15,6 +15,10 @@
  */
 package com.google.android.apps.mytracks.content;
 
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
 import com.google.android.apps.mytracks.stats.TripStatistics;
 
 import android.content.ContentValues;
@@ -801,6 +805,17 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   public Track getTrack(long id) {
     String select = TracksColumns._ID + "=" + id;
     return findTrackBy(select);
+  }
+  
+  public List<Track> retrieveAllTracks() {
+  	List<Track> tracks = new LinkedList<Track>();
+  	Cursor cursor = getTracksCursor(null);
+  	if (cursor != null) {
+  		do {
+  			tracks.add(createTrack(cursor));
+  		} while(cursor.moveToNext());
+  	}
+  	return tracks;
   }
 
   @Override

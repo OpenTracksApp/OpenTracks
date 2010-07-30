@@ -32,6 +32,7 @@ limitations under the License.
   <string name="choose_track_message">Please select the track to view</string>
   <string name="current_track">Current track</string>
   <string name="current_segment">Last segment</string>
+  <string name="aggregated_stats">Aggregated Statistics</string>
 
   <!-- Error messages -->
   <string name="error_no_location_manager">No location manager was found on this device!</string>
