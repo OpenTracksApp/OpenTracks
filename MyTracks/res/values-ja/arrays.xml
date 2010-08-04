@@ -87,8 +87,8 @@ limitations under the License.
     <item>328 ft</item>
     <item>656 ft (推奨)</item>
     <item>1640 ft</item>
-    <item>0.6 miles</item>
-    <item>3.1 miles</item>
+    <item>0.6 mi</item>
+    <item>3.1 mi</item>
   </string-array>
 
   <!-- DO NOT TRANSLATE -->
@@ -104,8 +104,8 @@ limitations under the License.
 
   <!-- Minimum recording interval -->
   <string-array name="min_recording_interval_options">
-    <item>電源節約 (adaptive)</item>
-    <item>高精度 (adaptive)</item>
+    <item>電源節約 (動的制御)</item>
+    <item>高精度 (動的制御)</item>
     <item>最高 (推奨)</item>
     <item>2 秒</item>
     <item>3 秒</item>
@@ -157,15 +157,15 @@ limitations under the License.
   </string-array>
 
   <string-array name="min_required_accuracy_options_ft">
-    <item>33 ft (GPS信号強度良好l)</item>
+    <item>33 ft (GPS信号強度良好)</item>
     <item>66 ft</item>
     <item>165 ft</item>
     <item>328 ft</item>
     <item>656 ft (推奨)</item>
     <item>1640 ft</item>
-    <item>0.6 miles</item>
-    <item>1.2 miles</item>
-    <item>3.1 miles (GPS信号強度不良)</item>
+    <item>0.6 mi</item>
+    <item>1.2 mi</item>
+    <item>3.1 mi (GPS信号強度不良)</item>
   </string-array>
 
   <!-- DO NOT TRANSLATE -->

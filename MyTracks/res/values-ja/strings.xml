@@ -51,7 +51,7 @@ limitations under the License.
   <string name="wait_for_fix">GPS位置精度がよくなるまで待機しています．空が見えるところにいて下さい．</string>
   <string name="status_now_recording">新しいトラックを記録中です．</string>
   <string name="status_stopped_recording">トラック記録を停止しました．</string>
-  <string name="status_new_mymap_has_been_created">新しいGoogle毎マップを maps.google.com に作成しました．</string>
+  <string name="status_new_mymap_has_been_created">新しいGoogleマイマップを maps.google.com に作成しました．</string>
   <string name="status_tracks_have_been_uploaded">トラックを maps.google.com に送信しました．</string>
   <string name="status_tracks_have_been_uploaded_to_new_doc">トラックを docs.google.com の新しいスプレッドシートに送信しました．</string>
   <string name="status_tracks_have_been_uploaded_to_docs">トラックを docs.google.com に送信しました．</string>
@@ -401,7 +401,7 @@ limitations under the License.
   <!-- Signal Strength -->
   <string name="error_rate"> 誤り率: %1$d</string>
   <string name="signal_to_noise_ratio"> S/N比: %1$d</string>
-  <string name="ecio"> Ec/lo: %1$.1f dB</string>
+  <string name="ecio"> Ec/Io比: %1$.1f dB</string>
   <string name="gsm_strength">GSM 強度: %1$d</string>
   <string name="cdma_strength">CDMA 強度: %1$d dBm</string>
   <string name="evdo_strength">EVDO 強度: %1$d dBm</string>
