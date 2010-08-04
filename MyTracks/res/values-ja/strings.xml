@@ -16,7 +16,7 @@ limitations under the License.
 -->
 <resources>
   <!-- DO NOT TRANSLATE -->
-  <string name="app_name">マイトラック</string>
+  <string name="app_name">My Tracks</string>
 
   <!-- Used by the Menu -->
   <string name="start_recording">トラック記録</string>
@@ -83,8 +83,8 @@ limitations under the License.
   <string name="marker_will_be_permanently_deleted">マーカをこの端末から完全に削除しました．</string>
 
   <!-- Text and links when uploading to Google My Maps -->
-  <string name="new_map_description">Android用マイトラックで作成</string>
-  <string name="my_map_link">Android用&lt;a href=\'http://mytracks.appspot.com\'&gt;マイトラック&lt;/a&gt;で作成しました．</string>
+  <string name="new_map_description">Android用My Tracksで作成</string>
+  <string name="my_map_link">Android用&lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt;で作成しました．</string>
   <string name="new_map_title">新規マップ</string>
 
   <!-- Formatting of track and marker descriptions -->
@@ -160,7 +160,7 @@ limitations under the License.
   <string name="waypointdetails_category">マーカタイプ(建物, 洞穴, 名所...)</string>
 
   <!-- MyTracks Settings -->
-  <string name="mytracks_settings">マイトラック設定</string>
+  <string name="mytracks_settings">My Tracks設定</string>
   <string name="settings_display">表示</string>
   <string name="settings_recording">記録</string>
   <string name="settings_sharing">共有</string>
@@ -380,10 +380,10 @@ limitations under the License.
   <!-- Welcome -->
   <string name="welcome">ようこそ</string>
   <string name="welcome_read_later">Ok</string>
-  <string name="welcome_about">マイトラックについて</string>
+  <string name="welcome_about">My Tracksについて</string>
 
   <!-- Announcement -->
-  <string name="announce_no_distance">マイトラック 移動していません</string>
+  <string name="announce_no_distance">My Tracks 移動していません</string>
   <!-- Format:
   $1 : Distance label
   $2 : Distance value (5)
@@ -392,7 +392,7 @@ limitations under the License.
   $5 : Speed value (5.6) : Pace value (5 minutes 6 seconds)
   $6 : Speed units (mph) : Pace units (per mile)
   -->
-  <string name="announce_template">マイトラック %1$s %2$.2f %3$s 時間 %4$s 速度/ペース %5$s %6$s</string>
+  <string name="announce_template">My Tracks %1$s %2$.2f %3$s 時間 %4$s 速度/ペース %5$s %6$s</string>
 
   <!-- Check Units -->
   <string name="check_units_title">計測単位についてのご注意</string>
