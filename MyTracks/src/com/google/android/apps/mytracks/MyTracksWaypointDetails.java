@@ -15,12 +15,6 @@
  */
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.content.WaypointsColumns;
-import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.maps.mytracks.R;
-
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
@@ -33,6 +27,12 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.WaypointsColumns;
+import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.maps.mytracks.R;
 
 /**
  * Screen in which the user enters details about a waypoint.
@@ -135,7 +135,6 @@ public class MyTracksWaypointDetails extends Activity
           iconId = R.drawable.ylw_pushpin;
           TripStatistics waypointStats = waypoint.getStatistics();
           utils.setAllStats(waypointStats);
-          utils.setTime(R.id.total_time_register, waypointStats.getTotalTime());
           utils.setAltitude(
               R.id.elevation_register, waypoint.getLocation().getAltitude());
           break;

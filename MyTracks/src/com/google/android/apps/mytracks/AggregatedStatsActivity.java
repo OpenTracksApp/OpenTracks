@@ -1,23 +1,21 @@
 package com.google.android.apps.mytracks;
 
-import java.util.Collection;
 import java.util.List;
-
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Window;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.maps.mytracks.R;
 
 /**
  * Activity for viewing the combined statistics for all the recorded tracks.
@@ -50,6 +48,7 @@ public class AggregatedStatsActivity extends Activity
 				    MyTracksSettings.METRIC_UNITS, true);
 				utils.setMetricUnits(metricUnits);
 				utils.updateUnits();
+				loadAggregatedStats();
 			} 
 		}
 	}
@@ -60,7 +59,6 @@ public class AggregatedStatsActivity extends Activity
 
     // We don't need a window title bar:
     requestWindowFeature(Window.FEATURE_NO_TITLE);
-    //TODO - change to custom layout - without dynamic fields
     setContentView(R.layout.stats);
 
     ScrollView sv = ((ScrollView) findViewById(R.id.scrolly));
@@ -83,8 +81,14 @@ public class AggregatedStatsActivity extends Activity
     if (metrics.heightPixels > 600) {
       ((TextView) findViewById(R.id.speed_register)).setTextSize(80.0f);
     }
+    loadAggregatedStats();
 	}
 	
+	/**
+	 * 1. Reads tracks from the db
+	 * 2. Merges the trip stats from the tracks
+	 * 3. Updates the view
+	 */
 	private void loadAggregatedStats() {
 		List<Track> tracks = retrieveTracks();
 		TripStatistics rollingStats = null;
@@ -98,14 +102,13 @@ public class AggregatedStatsActivity extends Activity
 		updateView(rollingStats);
 	}
 	
-	
 	private List<Track> retrieveTracks() {
 		return tracksProvider.retrieveAllTracks();
 	}
 	
 	private void updateView(TripStatistics aggStats) {
 		if (aggStats != null) {
-			
+			utils.setAllStats(aggStats);
 		}
 	}
 }

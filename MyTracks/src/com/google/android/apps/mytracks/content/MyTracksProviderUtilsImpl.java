@@ -15,11 +15,8 @@
  */
 package com.google.android.apps.mytracks.content;
 
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-
-import com.google.android.apps.mytracks.stats.TripStatistics;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -27,6 +24,8 @@ import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
 import android.util.Log;
+
+import com.google.android.apps.mytracks.stats.TripStatistics;
 
 /**
  * Helper class providing easy access to locations and tracks in the
@@ -807,10 +806,11 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     return findTrackBy(select);
   }
   
+  @Override
   public List<Track> retrieveAllTracks() {
   	List<Track> tracks = new LinkedList<Track>();
   	Cursor cursor = getTracksCursor(null);
-  	if (cursor != null) {
+  	if (cursor != null && cursor.moveToFirst()) {
   		do {
   			tracks.add(createTrack(cursor));
   		} while(cursor.moveToNext());

@@ -15,17 +15,17 @@
  */
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.apps.mytracks.util.UnitConversions;
-import com.google.android.maps.mytracks.R;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 import android.app.Activity;
 import android.util.Log;
 import android.widget.TextView;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
+import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.StringUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
+import com.google.android.maps.mytracks.R;
 
 /**
  * Various utility functions for views that display statistics information.
@@ -218,7 +218,7 @@ public class StatsUtilities {
     setGrade(R.id.max_grade_register, maxGrade);
   }
 
-  public void setAllStats(TripStatistics stats) {
+	public void setAllStats(TripStatistics stats) {
     setTime(R.id.moving_time_register, stats.getMovingTime());
     setDistance(R.id.total_distance_register, stats.getTotalDistance() / 1000);
     setSpeed(R.id.average_speed_register, stats.getAverageSpeed() * 3.6);
@@ -230,6 +230,8 @@ public class StatsUtilities {
     setAltitude(R.id.elevation_gain_register, stats.getTotalElevationGain());
     setGrade(R.id.min_grade_register, stats.getMinGrade());
     setGrade(R.id.max_grade_register, stats.getMaxGrade());
+    setTime(R.id.total_time_register, stats.getTotalTime());
+    
   }
 
   public void setSpeedLabel(int id, int speedString, int paceString) {
