@@ -70,8 +70,6 @@ import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.Toast;
 
-import org.xml.sax.SAXException;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -79,6 +77,8 @@ import java.util.HashMap;
 import java.util.Random;
 
 import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 /**
  * The super activity that embeds our sub activities.
@@ -434,7 +434,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     help = menu.add(0, MyTracksConstants.MENU_HELP, 10002, R.string.help);
     help.setIcon(android.R.drawable.ic_menu_info_details);
     aggregatedStats = menu.add(0, MyTracksConstants.MENU_AGGREGATED_STATS, 
-    		10003, R.string.aggregated_stats);
+        10003, R.string.aggregated_stats);
     return true;
   }
 
@@ -492,7 +492,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
         return true;
       }
       case MyTracksConstants.MENU_AGGREGATED_STATS: {
-    	Intent startIntent = new Intent(this, AggregatedStatsActivity.class);
+    	  Intent startIntent = new Intent(this, AggregatedStatsActivity.class);
         startActivity(startIntent);
         return true;
       }

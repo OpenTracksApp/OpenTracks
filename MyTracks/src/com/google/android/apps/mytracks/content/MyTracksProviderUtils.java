@@ -15,12 +15,12 @@
  */
 package com.google.android.apps.mytracks.content;
 
-import java.util.List;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
+
+import java.util.List;
 
 /**
  * Utility to access data from the mytracks content provider.
@@ -186,14 +186,14 @@ public interface MyTracksProviderUtils {
    */
   Track getTrack(long id);
   
-	/**
-	 * Retrieves all tracks without track points. If no tracks exist an empty
-	 * list will be returned. Use {@link #getTrackPoints(Track, int)} to load
-	 * the track points.
-	 * 
-	 * @return a list of all the recorded tracks
-	 */
-	List<Track> retrieveAllTracks();
+  /**
+   * Retrieves all tracks without track points. If no tracks exist an empty
+   * list will be returned. Use {@link #getTrackPoints(Track, int)} to load
+   * the track points.
+   * 
+   * @return a list of all the recorded tracks
+   */
+  List<Track> retrieveAllTracks();
 
   /**
    * Loads the track points for a given track.
