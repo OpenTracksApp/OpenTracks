@@ -193,7 +193,7 @@ public interface MyTracksProviderUtils {
    * 
    * @return a list of all the recorded tracks
    */
-  List<Track> retrieveAllTracks();
+  List<Track> getAllTracks();
 
   /**
    * Loads the track points for a given track.

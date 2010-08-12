@@ -807,7 +807,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
   
   @Override
-  public List<Track> retrieveAllTracks() {
+  public List<Track> getAllTracks() {
     List<Track> tracks = new LinkedList<Track>();
     Cursor cursor = getTracksCursor(null);
     if (cursor != null && cursor.moveToFirst()) {

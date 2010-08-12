@@ -85,8 +85,9 @@ public class AggregatedStatsActivity extends Activity implements
   }
 
   /**
-   * 1. Reads tracks from the db 2. Merges the trip stats from the tracks 3.
-   * Updates the view
+   * 1. Reads tracks from the db 
+   * 2. Merges the trip stats from the tracks 
+   * 3. Updates the view
    */
   private void loadAggregatedStats() {
     List<Track> tracks = retrieveTracks();
@@ -102,7 +103,7 @@ public class AggregatedStatsActivity extends Activity implements
   }
 
   private List<Track> retrieveTracks() {
-    return tracksProvider.retrieveAllTracks();
+    return tracksProvider.getAllTracks();
   }
 
   private void updateView(TripStatistics aggStats) {
