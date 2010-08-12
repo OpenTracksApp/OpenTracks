@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.google.android.apps.mytracks.io;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
@@ -46,32 +61,31 @@ public class GpxImporterTest extends AndroidTestCase {
 
   // TODO use real files from different sources with more track points
   private static final String VALID_TEST_GPX = "<gpx><trk><name><![CDATA["
-          + TRACK_NAME + "]]></name><desc><![CDATA[" + TRACK_DESC
-          + "]]></desc><trkseg>" + "<trkpt lat=\"" + TRACK_LAT_1 + "\" lon=\""
-          + TRACK_LON_1 + "\"><ele>" + TRACK_ELE_1 + "</ele><time>"
-          + TRACK_TIME_1 + "</time></trkpt> +" + "<trkpt lat=\"" + TRACK_LAT_2
-          + "\" lon=\"" + TRACK_LON_2 + "\"><ele>" + TRACK_ELE_2
-          + "</ele><time>" + TRACK_TIME_2 + "</time></trkpt>"
-          + "</trkseg></trk></gpx>";
+      + TRACK_NAME + "]]></name><desc><![CDATA[" + TRACK_DESC
+      + "]]></desc><trkseg>" + "<trkpt lat=\"" + TRACK_LAT_1 + "\" lon=\""
+      + TRACK_LON_1 + "\"><ele>" + TRACK_ELE_1 + "</ele><time>" + TRACK_TIME_1
+      + "</time></trkpt> +" + "<trkpt lat=\"" + TRACK_LAT_2 + "\" lon=\""
+      + TRACK_LON_2 + "\"><ele>" + TRACK_ELE_2 + "</ele><time>" + TRACK_TIME_2
+      + "</time></trkpt>" + "</trkseg></trk></gpx>";
 
   // invalid xml
-  private static final String INVALID_XML_TEST_GPX = VALID_TEST_GPX
-          .substring(0, VALID_TEST_GPX.length() - 50);
+  private static final String INVALID_XML_TEST_GPX = VALID_TEST_GPX.substring(
+      0, VALID_TEST_GPX.length() - 50);
   private static final String INVALID_LOCATION_TEST_GPX = VALID_TEST_GPX
-          .replaceAll(TRACK_LAT_1, "1000.0");
+      .replaceAll(TRACK_LAT_1, "1000.0");
   private static final String INVALID_TIME_TEST_GPX = VALID_TEST_GPX
-          .replaceAll(TRACK_TIME_1, "invalid");
+      .replaceAll(TRACK_TIME_1, "invalid");
 
   private static final long TRACK_ID = 1;
   private static final long TRACK_POINT_ID_1 = 1;
   private static final long TRACK_POINT_ID_2 = 1;
-  
+
   private static final Uri TRACK_ID_URI = ContentUris.appendId(
-          TracksColumns.CONTENT_URI.buildUpon(), TRACK_ID).build();
+      TracksColumns.CONTENT_URI.buildUpon(), TRACK_ID).build();
   private static final Uri TRACK_POINT_ID_URI_1 = ContentUris.appendId(
-          TrackPointsColumns.CONTENT_URI.buildUpon(), TRACK_POINT_ID_1).build();
+      TrackPointsColumns.CONTENT_URI.buildUpon(), TRACK_POINT_ID_1).build();
   private static final Uri TRACK_POINT_ID_URI_2 = ContentUris.appendId(
-          TrackPointsColumns.CONTENT_URI.buildUpon(), TRACK_POINT_ID_2).build();
+      TrackPointsColumns.CONTENT_URI.buildUpon(), TRACK_POINT_ID_2).build();
 
   private MyTracksProviderUtils providerUtils;
 
@@ -82,8 +96,8 @@ public class GpxImporterTest extends AndroidTestCase {
   protected void setUp() throws Exception {
     super.setUp();
     providerUtils = AndroidMock.createMock(MyTracksProviderUtils.class);
-    oldProviderUtilsFactory = TestingProviderUtilsFactory
-            .installWithInstance(providerUtils);
+    oldProviderUtilsFactory =
+        TestingProviderUtilsFactory.installWithInstance(providerUtils);
   }
 
   @Override
@@ -96,22 +110,21 @@ public class GpxImporterTest extends AndroidTestCase {
    * Test import success
    */
   public void testImportSuccess() throws Exception {
-
     Capture<Track> trackParam = new Capture<Track>();
     Capture<Location> locParam1 = new MyLocationCaptue();
     Capture<Location> locParam2 = new MyLocationCaptue();
 
     AndroidMock.expect(
-            providerUtils.insertTrack(AndroidMock.capture(trackParam)))
-            .andReturn(TRACK_ID_URI);
+        providerUtils.insertTrack(AndroidMock.capture(trackParam))).andReturn(
+        TRACK_ID_URI);
 
     AndroidMock.expect(
-            providerUtils.insertTrackPoint(AndroidMock.capture(locParam1),
-                    AndroidMock.anyLong())).andReturn(TRACK_POINT_ID_URI_1);
+        providerUtils.insertTrackPoint(AndroidMock.capture(locParam1),
+            AndroidMock.anyLong())).andReturn(TRACK_POINT_ID_URI_1);
 
     AndroidMock.expect(
-            providerUtils.insertTrackPoint(AndroidMock.capture(locParam2),
-                    AndroidMock.anyLong())).andReturn(TRACK_POINT_ID_URI_2);
+        providerUtils.insertTrackPoint(AndroidMock.capture(locParam2),
+            AndroidMock.anyLong())).andReturn(TRACK_POINT_ID_URI_2);
 
     providerUtils.updateTrack(AndroidMock.capture(trackParam));
 
@@ -128,8 +141,8 @@ public class GpxImporterTest extends AndroidTestCase {
     Track track = trackParam.getValue();
     assertEquals(TRACK_NAME, track.getName());
     assertEquals(TRACK_DESC, track.getDescription());
-    assertEquals(format.parse(TRACK_TIME_1).getTime(),
-        track.getStatistics().getStartTime());
+    assertEquals(format.parse(TRACK_TIME_1).getTime(), track.getStatistics()
+        .getStartTime());
     assertNotSame(-1, track.getStartId());
     assertNotSame(-1, track.getStopId());
 
@@ -151,47 +164,41 @@ public class GpxImporterTest extends AndroidTestCase {
    * Test with invalid location - track should be deleted
    */
   public void testImportLocationFailure() throws ParserConfigurationException,
-          SAXException, IOException {
-
+      SAXException, IOException {
     testInvalidXML(INVALID_LOCATION_TEST_GPX);
   }
 
-  
   /**
    * Test with invalid time - track should be deleted
    */
   public void testImportTimeFailure() throws ParserConfigurationException,
-          SAXException, IOException {
-
+      SAXException, IOException {
     testInvalidXML(INVALID_TIME_TEST_GPX);
   }
-  
+
   /**
    * Test with invalid xml - track should be deleted
    */
   public void testImportXMLFailure() throws ParserConfigurationException,
-          SAXException, IOException {
-
+      SAXException, IOException {
     testInvalidXML(INVALID_XML_TEST_GPX);
   }
 
   private void testInvalidXML(String xml) throws ParserConfigurationException,
-          IOException {
+      IOException {
+    AndroidMock.expect(
+        providerUtils.insertTrack((Track) AndroidMock.anyObject())).andReturn(
+        TRACK_ID_URI);
 
     AndroidMock.expect(
-            providerUtils.insertTrack((Track) AndroidMock.anyObject()))
-            .andReturn(TRACK_ID_URI);
-
-    AndroidMock.expect(
-            providerUtils.insertTrackPoint((Location) AndroidMock.anyObject(),
-                    AndroidMock.anyLong())).andStubReturn(TRACK_POINT_ID_URI_1);
+        providerUtils.insertTrackPoint((Location) AndroidMock.anyObject(),
+            AndroidMock.anyLong())).andStubReturn(TRACK_POINT_ID_URI_1);
 
     providerUtils.deleteTrack(TRACK_ID);
 
     AndroidMock.replay(providerUtils);
 
     InputStream is = new ByteArrayInputStream(xml.getBytes());
-
     try {
       GpxImporter.importGPXFile(is, providerUtils);
     } catch (SAXException e) {
@@ -199,24 +206,20 @@ public class GpxImporterTest extends AndroidTestCase {
     }
 
     AndroidMock.verify();
-
   }
 
   /**
    * Workaround because of capture bug 2617107 in easymock:
-   * 
-   * http://sourceforge.net/tracker/?func=detail&aid=2617107&group_id=82958&atid=567837
+   * http://sourceforge.net
+   * /tracker/?func=detail&aid=2617107&group_id=82958&atid=567837
    */
   @SuppressWarnings("serial")
   class MyLocationCaptue extends Capture<Location> {
-
     @Override
     public void setValue(Location value) {
       if (!hasCaptured()) {
         super.setValue(value);
       }
     }
-
   }
-
 }

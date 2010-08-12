@@ -42,7 +42,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * Imports GPX XML files to the my tracks provider
+ * Imports GPX XML files to the my tracks provider.
  * 
  * @author Leif Hendrik Wilden
  * @author Steffen Horlacher
@@ -53,15 +53,15 @@ public class GpxImporter extends DefaultHandler {
    * Different date formats used in GPX files
    */
   static final SimpleDateFormat DATE_FORMAT1 = new SimpleDateFormat(
-          "yyyy-MM-dd'T'hh:mm:ssZ");
+      "yyyy-MM-dd'T'hh:mm:ssZ");
   static final SimpleDateFormat DATE_FORMAT2 = new SimpleDateFormat(
-          "yyyy-MM-dd'T'hh:mm:ss'Z'");
+      "yyyy-MM-dd'T'hh:mm:ss'Z'");
   static final SimpleDateFormat DATE_FORMAT3 = new SimpleDateFormat(
-          "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+      "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
   static final SimpleTimeZone UTC_TIMEZONE = new SimpleTimeZone(0, "UTC");
-  
+
   /**
-   * GPX-XML tag names and attributes
+   * GPX-XML tag names and attributes.
    */
   private static final String TAG_TRACK = "trk";
   private static final String TAG_TRACK_POINT = "trkpt";
@@ -72,31 +72,31 @@ public class GpxImporter extends DefaultHandler {
   private static final String ATT_LAT = "lat";
   private static final String ATT_LON = "lon";
 
-  final private MyTracksProviderUtils providerUtils;
+  private final MyTracksProviderUtils providerUtils;
 
   /**
    * List of track ids written in the database. Only contains successfully
    * written tracks.
    */
-  final private List<Long> tracksWritten;
+  private final List<Long> tracksWritten;
 
   /**
-   * Contains the current elements content
+   * Contains the current elements content.
    */
   private StringBuilder content;
 
   /**
-   * Currently reading location
+   * Currently reading location.
    */
   private Location location;
 
   /**
-   * Previous location, required for calculations
+   * Previous location, required for calculations.
    */
   private Location lastLocation;
 
   /**
-   * Currently reading track
+   * Currently reading track.
    */
   private Track track;
 
@@ -106,7 +106,7 @@ public class GpxImporter extends DefaultHandler {
   private TripStatisticsBuilder statsBuilder;
 
   /**
-   * Number of locations already processed
+   * Number of locations already processed.
    */
   private int numberOfLocations;
 
@@ -118,17 +118,17 @@ public class GpxImporter extends DefaultHandler {
 
   /**
    * Flag to indicate if we in a track xml element some sub elements like name
-   * may be used in other parts of the gpx file - ignore them
+   * may be used in other parts of the gpx file - ignore them.
    */
   private boolean isInTrackElement;
 
   /**
-   * Counter to find out which child level of track we are processing 
+   * Counter to find out which child level of track we are processing.
    */
   private int trackChildDepth;
 
   /**
-   * SAX-Locator to get current line information
+   * SAX-Locator to get current line information.
    */
   private Locator locator;
 
@@ -136,22 +136,16 @@ public class GpxImporter extends DefaultHandler {
    * Reads GPS tracks from a GPX file and writes tracks and their coordinates to
    * the database.
    * 
-   * @param tracks
-   *          a list of tracks
-   * @param is
-   *          a input steam with gpx-xml data
+   * @param tracks a list of tracks
+   * @param is a input steam with gpx-xml data
    * @return long[] array of track ids written in the database
-   * @throws SAXException
-   *           a parsing error
-   * @throws ParserConfigurationException
-   *           internal error
-   * @throws IOException
-   *           a file reading problem
+   * @throws SAXException a parsing error
+   * @throws ParserConfigurationException internal error
+   * @throws IOException a file reading problem
    */
   public static long[] importGPXFile(final InputStream is,
-          final MyTracksProviderUtils providerUtils)
-          throws ParserConfigurationException, SAXException, IOException {
-
+      final MyTracksProviderUtils providerUtils)
+      throws ParserConfigurationException, SAXException, IOException {
     SAXParserFactory factory = SAXParserFactory.newInstance();
     GpxImporter handler = new GpxImporter(providerUtils);
     SAXParser parser = factory.newSAXParser();
@@ -184,13 +178,11 @@ public class GpxImporter extends DefaultHandler {
 
   @Override
   public void startElement(String uri, String localName, String name,
-          Attributes attributes) throws SAXException {
-
+      Attributes attributes) throws SAXException {
     // reset element content
     content.setLength(0);
 
     if (localName.equalsIgnoreCase(TAG_TRACK)) {
-
       // test if we are already in a track element - abort in this case
       if (isInTrackElement) {
         String msg = createErrorMessage("Invalid GPX-XML detected");
@@ -203,7 +195,6 @@ public class GpxImporter extends DefaultHandler {
 
       // process this element only as sub-elements of track
     } else if (isInTrackElement) {
-
       trackChildDepth++;
       if (localName.equalsIgnoreCase(TAG_TRACK_POINT)) {
         onTrackPointElementStart(attributes);
@@ -213,8 +204,7 @@ public class GpxImporter extends DefaultHandler {
 
   @Override
   public void endElement(String uri, String localName, String name)
-          throws SAXException {
-
+      throws SAXException {
     if (localName.equalsIgnoreCase(TAG_TRACK)) {
       onTrackElementEnd();
       isInTrackElement = false;
@@ -222,7 +212,6 @@ public class GpxImporter extends DefaultHandler {
 
       // process these elements only as sub-elements of track
     } else if (isInTrackElement) {
-
       if (localName.equalsIgnoreCase(TAG_TRACK_POINT)) {
         onTrackPointElementEnd();
       } else if (localName.equalsIgnoreCase(TAG_ALTITUDE)) {
@@ -257,7 +246,6 @@ public class GpxImporter extends DefaultHandler {
    * updated with missing values later.
    */
   private void onTrackElementStart() {
-
     track = new Track();
     numberOfLocations = 0;
 
@@ -268,10 +256,9 @@ public class GpxImporter extends DefaultHandler {
   }
 
   /**
-   * Reads trackpoint attributes and assigns them to the current location
+   * Reads trackpoint attributes and assigns them to the current location.
    * 
-   * @param attributes
-   *          xml attributes
+   * @param attributes xml attributes
    */
   private void onTrackPointElementStart(Attributes attributes) {
     location = createLocationFromAttributes(attributes);
@@ -305,20 +292,17 @@ public class GpxImporter extends DefaultHandler {
   }
 
   /**
-   * Track point finished, write in database
+   * Track point finished, write in database.
    * 
-   * @throws SAXException
-   *           - thrown if track point is invalid
+   * @throws SAXException - thrown if track point is invalid
    */
   private void onTrackPointElementEnd() throws SAXException {
-
     if (MyTracksUtils.isValidLocation(location)) {
-
       statsBuilder.addLocation(location, location.getTime());
 
       // insert in db
-      Uri trackPointIdUri = providerUtils.insertTrackPoint(location, track
-              .getId());
+      Uri trackPointIdUri = providerUtils.insertTrackPoint(location,
+          track.getId());
 
       // set start and stop id for track
       long trackPointId = Long.parseLong(trackPointIdUri.getLastPathSegment());
@@ -327,6 +311,7 @@ public class GpxImporter extends DefaultHandler {
       if (lastLocation == null) {
         track.setStartId(trackPointId);
       }
+
       // location has no setId method
       // updating stop id on track every time...
       track.setStopId(trackPointId);
@@ -334,7 +319,6 @@ public class GpxImporter extends DefaultHandler {
       lastLocation = location;
       numberOfLocations++;
     } else {
-
       // invalid location - abort import
       String msg = createErrorMessage("Invalid location detected: " + location);
       throw new SAXException(msg);
@@ -342,12 +326,10 @@ public class GpxImporter extends DefaultHandler {
   }
 
   /**
-   * Track finished - update in database
+   * Track finished - update in database.
    */
   private void onTrackElementEnd() {
-
     if (lastLocation != null) {
-
       // Calculate statistics for the imported track and update
       statsBuilder.pauseAt(lastLocation.getTime());
       track.setNumberOfPoints(numberOfLocations);
@@ -357,9 +339,7 @@ public class GpxImporter extends DefaultHandler {
       isCurrentTrackRollbackable = false;
       lastLocation = null;
       statsBuilder = null;
-
     } else {
-
       // track contains no track points makes not really
       // sense to import it as we have no location
       // information -> roll back
@@ -370,17 +350,14 @@ public class GpxImporter extends DefaultHandler {
   /**
    * Setting time and doing additional calculations as this is the last value
    * required. Also sets the start time for track and statistics as there is no
-   * start time in the track root element
+   * start time in the track root element.
    * 
-   * @throws SAXException
-   *           on parsing errors
+   * @throws SAXException on parsing errors
    */
   private void onTimeElementEnd() throws SAXException {
-
     long time = parseTimeForAllFormats(content.toString().trim());
 
     if (location != null) {
-
       // check for negative time change
       if (lastLocation != null) {
         long timeDifference = time - lastLocation.getTime();
@@ -393,8 +370,8 @@ public class GpxImporter extends DefaultHandler {
       location.setTime(time);
       // initialize start time with time of first track point
       if (statsBuilder == null) {
-    	statsBuilder = new TripStatisticsBuilder();
-    	statsBuilder.resumeAt(time);
+        statsBuilder = new TripStatisticsBuilder();
+        statsBuilder.resumeAt(time);
       }
 
       // We don't have a speed and bearing in GPX, make something up from
@@ -418,7 +395,6 @@ public class GpxImporter extends DefaultHandler {
       String altitude = content.toString().trim();
       location.setAltitude(Double.parseDouble(altitude));
     }
-
   }
 
   /**
@@ -433,7 +409,7 @@ public class GpxImporter extends DefaultHandler {
   }
 
   /**
-   * Get all track ids of the tracks created by this importer run
+   * Get all track ids of the tracks created by this importer run.
    * 
    * @return array of track ids
    */
@@ -447,37 +423,28 @@ public class GpxImporter extends DefaultHandler {
   }
 
   /**
-   * Parse time trying different formats used in GPX files
+   * Parse time trying different formats used in GPX files.
    * 
-   * @param timeContents
-   *          string with time information
+   * @param timeContents string with time information
    * @return time as long
-   * @throws SAXException
-   *           on time parsing errors
+   * @throws SAXException on time parsing errors
    */
   private long parseTimeForAllFormats(String timeContents) throws SAXException {
-
     long time = -1;
-    
+
     // 1st try with time zone at end a la "+0000"
     time = parseTime(timeContents, DATE_FORMAT1);
-    if(time > -1) {
-      return time;
-    }
+    if (time > -1) { return time; }
 
     // if that fails, try with a literal "Z" at the end
     // (this is not according to xml standard, but some gpx files are like
     // that):
     time = parseTime(timeContents, DATE_FORMAT2);
-    if(time > -1) {
-      return time;
-    }
+    if (time > -1) { return time; }
 
     // some gpx timestamps have 3 additional digits at the end.
     time = parseTime(timeContents, DATE_FORMAT3);
-    if(time > -1) {
-      return time;
-    }
+    if (time > -1) { return time; }
 
     // everything failed - abort the import
     String msg = createErrorMessage("Invalid time format: " + timeContents);
@@ -496,10 +463,9 @@ public class GpxImporter extends DefaultHandler {
   }
 
   /**
-   * Builds an parsing error message with current line information
+   * Builds a parsing error message with current line information.
    * 
-   * @param details
-   *          details about the error, will be appended
+   * @param details details about the error, will be appended
    * @return error message string with current line information
    */
   private String createErrorMessage(String details) {
@@ -512,5 +478,4 @@ public class GpxImporter extends DefaultHandler {
     msg.append(details);
     return msg.toString();
   }
-
 }
