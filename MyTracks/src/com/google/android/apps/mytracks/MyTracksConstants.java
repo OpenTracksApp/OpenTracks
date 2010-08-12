@@ -64,7 +64,6 @@ public abstract class MyTracksConstants {
   public static final int SHOW_WAYPOINT = 25;
   public static final int EDIT_WAYPOINT = 26;
   public static final int WELCOME = 27;
-  public static final int REQUEST_ENABLE_BT = 28;
 
   /*
    * Menu ids:

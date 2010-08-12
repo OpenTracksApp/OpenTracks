@@ -109,7 +109,8 @@ public class ExportAllTracks {
         context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
     long recordingTrackId = -1;
     if (prefs != null) {
-      recordingTrackId = prefs.getLong(context.getString(R.string.recording_track_key), -1);
+      recordingTrackId =
+    	  prefs.getLong(context.getString(R.string.recording_track_key), -1);
     }
     if (recordingTrackId != -1) {
       acquireWakeLock();

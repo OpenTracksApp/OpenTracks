@@ -55,7 +55,7 @@ public class MyTracksOverlay extends Overlay {
   private final Paint errorCirclePaint;
   private final Context context;
   private final ArrayList<Waypoint> waypoints = new ArrayList<Waypoint>();
-  private final ArrayList<Location> points = new ArrayList<Location>();
+  private final ArrayList<Location> points = new ArrayList<Location>(1024);
 
   private Track selectedTrack;
   private int lastHeading = 0;

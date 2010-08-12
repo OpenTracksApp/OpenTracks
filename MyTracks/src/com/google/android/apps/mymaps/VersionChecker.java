@@ -87,10 +87,12 @@ public class VersionChecker {
     try {
       PackageInfo pi =
           parentActivity.getPackageManager().getPackageInfo(
-              "com.google.android.maps.mytracks", PackageManager.GET_META_DATA);
+              "com.google.android.maps.mytracks",
+              PackageManager.GET_META_DATA);
       currentVersion = pi.versionName;
     } catch (NameNotFoundException e) {
       Log.w(MyTracksConstants.TAG, "Failed to get version info.", e);
+      return;
     }
 
     GDataParser parser = client.getParserForFeed(

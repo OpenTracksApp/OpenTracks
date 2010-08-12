@@ -167,10 +167,6 @@ limitations under the License.
   <string name="settings_recording">Recording</string>
   <string name="settings_sharing">Sharing</string>
 
-  <string name="settings_black_box_mode">Black box mode</string>
-  <string name="settings_black_box_mode_summary_on">Recording will be started and stopped automatically</string>
-  <string name="settings_black_box_mode_summary_off">Recording must be initiated by the user</string>
-
   <string name="settings_announcement_frequency">Announcement frequency</string>
   <string name="settings_announcement_frequency_summary">Minimum time between two voice announcements</string>
   <string name="settings_announcement_not_available_summary">Text-to-speech announcements are not available in your version of Android</string>
@@ -354,7 +350,6 @@ limitations under the License.
   <string name="max_heart_rate">Max Heart Rate</string>
   <string name="unknown">-</string>
   <string name="waiting">Waiting...</string>
-  <string name="mode">Mode</string>
 
   <!-- End User License Agreement -->
   <string name="eula_title">End User License Agreement</string>
@@ -436,31 +431,6 @@ limitations under the License.
   <string name="cdma_strength">CDMA Strength: %1$d dBm</string>
   <string name="evdo_strength">EVDO Strength: %1$d dBm</string>
 
-  <!-- These are constants used internally for preferences - DO NOT TRANSLATE -->
-  <string name="announcement_frequency_key">announcementFrequency</string>
-  <string name="bluetooth_device_key">bluetoothDevice</string>
-  <string name="bluetooth_pairing_key">bluetoothPairing</string>
-  <string name="bluetooth_sensor_key">bluetoothSensor</string>
-  <string name="default_map_public_key">defaultMapPublic</string>
-  <string name="max_recording_distance_key">maxRecordingDistance</string>
-  <string name="metric_units_key">metricUnits</string>
-  <string name="min_recording_distance_key">minRecordingDistance</string>
-  <string name="min_recording_interval_key">minRecordingInterval</string>
-  <string name="min_required_accuracy_key">minRequiredAccuracy</string>
-  <string name="modular_stats_display_key">modularStatsDisplay</string>
-  <string name="pick_existing_map_key">pickExistingMap</string>
-  <string name="recording_track_key">recordingTrack</string>
-  <string name="report_speed_key">reportSpeed</string>
-  <string name="selected_track_key">selectedTrack</string>
-  <string name="send_stats_and_points_key">sendStatsAndPoints</string>
-  <string name="send_to_docs_key">sendToDocs</string>
-  <string name="send_to_my_maps_key">sendToMyMaps</string>
-  <string name="sensor_id_key">sensorId</string>
-  <string name="sensor_type_key">sensorType</string>
-  <string name="share_url_only_key">shareUrlOnly</string>
-  <string name="signal_sampling_frequency_key">signalSamplingFrequency</string>
-  <string name="split_frequency_key">splitFrequency</string>
-
   <!-- Fake preference keys - never saved, but show options in the preferences screen -->
   <string name="method_bluetooth">Bluetooth</string>
   <string name="bluetooth_options">Bluetooth options</string>
@@ -484,16 +454,5 @@ limitations under the License.
   <string name="sensor_data_time">Sensor Data Time</string>
   <string name="power_meter_enabled">Power meter enabled</string>
   <string name="heart_rate_monitor_enabled">Heart rate monitor enabled</string>
-  <string name="last_upload_latency">Last Upload Latency</string>
-  <string name="last_n_uploads_latency">Last N Uploads Latency</string>
-
-  <!-- Realtime data uploads -->
-  <string name="realtime_upload_failed">Realtime upload failed.</string>
-  <string name="realtime_uploader_status">Realtime upload status</string>
-  <string name="key_loading_failed">Failed to load encryption keys.</string>
-  <string name="uploader_id">Uploader ID</string>
-  <string name="uploader_id_summary">Your ID to upload data with</string>
-  <string name="upload_url">Upload URL</string>
-  <string name="upload_url_summary">URL to upload realtime data to</string>
 
 </resources>

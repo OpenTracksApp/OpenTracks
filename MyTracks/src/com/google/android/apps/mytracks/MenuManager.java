@@ -26,7 +26,7 @@ import android.view.MenuItem;
  * 
  * @author Sandor Dornbush
  */
-public class MenuManager {
+class MenuManager {
 
   private MyTracks activity;
 

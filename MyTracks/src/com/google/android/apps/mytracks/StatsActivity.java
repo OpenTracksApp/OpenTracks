@@ -94,6 +94,9 @@ public class StatsActivity extends Activity
    */
   private boolean showCurrentSegment = false;
 
+  private final MyTracksProviderUtils providerUtils;
+  private Track track = null;
+
   /**
    * A runnable for posting to the UI thread. Will update the total time field.
    */
@@ -130,9 +133,6 @@ public class StatsActivity extends Activity
       Log.w(MyTracksConstants.TAG, "UIUpdateThread finished.");
     }
   }
-
-  private MyTracksProviderUtils providerUtils;
-  private Track track = null;
 
   public StatsActivity() {
     utils = new StatsUtilities(this);

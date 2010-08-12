@@ -215,30 +215,26 @@ public class MyTracksMap extends MapActivity
         while (lastSeenLocationId < selectedTrack.getStopId()) {
           cursor = providerUtils.getLocationsCursor(
               selectedTrack.getId(), lastSeenLocationId, bufferSize, false);
-          if (cursor != null) {
-            if (cursor.moveToFirst()) {
-              final int idColumnIdx =
-                  cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
-              while (cursor.moveToNext()) {
-                points++;
-                Location location = providerUtils.createLocation(cursor);
-                if (MyTracksUtils.isValidLocation(location)) {
-                  lastSeenLocationId = cursor.getLong(idColumnIdx);
-                  // Include a point if it fits one of the following criteria:
-                  // - Has the mod for the sampling frequency.
-                  // - Is the first point.
-                  // - Is the last point and we are not recording this track.
-                  if (points % samplingFrequency == 0 ||
-                      points == 0 ||
-                      (recordingTrackId != selectedTrack.getId() &&
-                          points == (totalLocations - 1))) {
-                    mapOverlay.addLocation(location);
-                  }
-                }
-              }
-            } else {
-              lastSeenLocationId += bufferSize;
-            }
+          if (cursor != null && cursor.moveToFirst()) {
+	          final int idColumnIdx =
+	              cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
+	          while (cursor.moveToNext()) {
+	            points++;
+	            Location location = providerUtils.createLocation(cursor);
+	            if (MyTracksUtils.isValidLocation(location)) {
+	              lastSeenLocationId = cursor.getLong(idColumnIdx);
+	              // Include a point if it fits one of the following criteria:
+	              // - Has the mod for the sampling frequency.
+	              // - Is the first point.
+	              // - Is the last point and we are not recording this track.
+	              if (points % samplingFrequency == 0 ||
+	                  points == 0 ||
+	                  (recordingTrackId != selectedTrack.getId() &&
+	                      points == (totalLocations - 1))) {
+	                mapOverlay.addLocation(location);
+	              }
+	            }
+	          }
           } else {
             lastSeenLocationId += bufferSize;
           }
