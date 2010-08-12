@@ -128,7 +128,8 @@ public class GpxImporterTest extends AndroidTestCase {
     Track track = trackParam.getValue();
     assertEquals(TRACK_NAME, track.getName());
     assertEquals(TRACK_DESC, track.getDescription());
-    assertEquals(format.parse(TRACK_TIME_1).getTime(), track.getStartTime());
+    assertEquals(format.parse(TRACK_TIME_1).getTime(),
+        track.getStatistics().getStartTime());
     assertNotSame(-1, track.getStartId());
     assertNotSame(-1, track.getStopId());
 

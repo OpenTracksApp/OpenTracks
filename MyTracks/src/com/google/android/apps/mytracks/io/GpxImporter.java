@@ -1,12 +1,12 @@
 /*
- * Copyright 2008 Google Inc.
- * 
+ * Copyright 2010 Google Inc.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -17,7 +17,7 @@ package com.google.android.apps.mytracks.io;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.MyTracksUtils;
 
 import android.location.Location;
@@ -101,9 +101,9 @@ public class GpxImporter extends DefaultHandler {
   private Track track;
 
   /**
-   * Statistics object for the current track
+   * Statistics builder for the current track.
    */
-  private TripStatistics stats;
+  private TripStatisticsBuilder statsBuilder;
 
   /**
    * Number of locations already processed
@@ -314,7 +314,7 @@ public class GpxImporter extends DefaultHandler {
 
     if (MyTracksUtils.isValidLocation(location)) {
 
-      stats.addLocation(location, location.getTime());
+      statsBuilder.addLocation(location, location.getTime());
 
       // insert in db
       Uri trackPointIdUri = providerUtils.insertTrackPoint(location, track
@@ -349,15 +349,14 @@ public class GpxImporter extends DefaultHandler {
     if (lastLocation != null) {
 
       // Calculate statistics for the imported track and update
-      stats.pauseAt(lastLocation.getTime());
-      track.setStopTime(lastLocation.getTime());
+      statsBuilder.pauseAt(lastLocation.getTime());
       track.setNumberOfPoints(numberOfLocations);
-      stats.fillStatisticsForTrack(track);
+      track.setStatistics(statsBuilder.getStatistics());
       providerUtils.updateTrack(track);
       tracksWritten.add(track.getId());
       isCurrentTrackRollbackable = false;
       lastLocation = null;
-      stats = null;
+      statsBuilder = null;
 
     } else {
 
@@ -390,12 +389,12 @@ public class GpxImporter extends DefaultHandler {
           throw new SAXException(msg);
         }
       }
-      
+
       location.setTime(time);
       // initialize start time with time of first track point
-      if (stats == null) {
-        stats = new TripStatistics(time);
-        track.setStartTime(time);
+      if (statsBuilder == null) {
+    	statsBuilder = new TripStatisticsBuilder();
+    	statsBuilder.resumeAt(time);
       }
 
       // We don't have a speed and bearing in GPX, make something up from
