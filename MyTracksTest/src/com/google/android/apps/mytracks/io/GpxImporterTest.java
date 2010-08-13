@@ -111,8 +111,8 @@ public class GpxImporterTest extends AndroidTestCase {
    */
   public void testImportSuccess() throws Exception {
     Capture<Track> trackParam = new Capture<Track>();
-    Capture<Location> locParam1 = new MyLocationCaptue();
-    Capture<Location> locParam2 = new MyLocationCaptue();
+    Capture<Location> locParam1 = new MyLocationCapture();
+    Capture<Location> locParam2 = new MyLocationCapture();
 
     AndroidMock.expect(
         providerUtils.insertTrack(AndroidMock.capture(trackParam))).andReturn(
@@ -214,7 +214,7 @@ public class GpxImporterTest extends AndroidTestCase {
    * /tracker/?func=detail&aid=2617107&group_id=82958&atid=567837
    */
   @SuppressWarnings("serial")
-  class MyLocationCaptue extends Capture<Location> {
+  class MyLocationCapture extends Capture<Location> {
     @Override
     public void setValue(Location value) {
       if (!hasCaptured()) {

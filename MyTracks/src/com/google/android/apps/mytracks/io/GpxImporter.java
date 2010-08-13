@@ -43,9 +43,12 @@ import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * Imports GPX XML files to the my tracks provider.
- * 
+ *
+ * TODO: Show progress indication to the user.
+ *
  * @author Leif Hendrik Wilden
  * @author Steffen Horlacher
+ * @author Rodrigo Damazio
  */
 public class GpxImporter extends DefaultHandler {
 
@@ -65,6 +68,7 @@ public class GpxImporter extends DefaultHandler {
    */
   private static final String TAG_TRACK = "trk";
   private static final String TAG_TRACK_POINT = "trkpt";
+  private static final Object TAG_TRACK_SEGMENT = "trkseg";
   private static final String TAG_NAME = "name";
   private static final String TAG_DESCRIPTION = "desc";
   private static final String TAG_ALTITUDE = "ele";
@@ -83,7 +87,7 @@ public class GpxImporter extends DefaultHandler {
   /**
    * Contains the current elements content.
    */
-  private StringBuilder content;
+  private String content;
 
   /**
    * Currently reading location.
@@ -95,6 +99,12 @@ public class GpxImporter extends DefaultHandler {
    */
   private Location lastLocation;
 
+  /**
+   * URI of the last point inserted into the database.
+   * We parse point IDs out of this when necessary.
+   */
+  private Uri lastPointIdUri;
+  
   /**
    * Currently reading track.
    */
@@ -117,8 +127,9 @@ public class GpxImporter extends DefaultHandler {
   private boolean isCurrentTrackRollbackable;
 
   /**
-   * Flag to indicate if we in a track xml element some sub elements like name
-   * may be used in other parts of the gpx file - ignore them.
+   * Flag to indicate if we're inside a track's xml element.
+   * Some sub elements like name may be used in other parts of the gpx file,
+   * and we use this to ignore them.
    */
   private boolean isInTrackElement;
 
@@ -154,6 +165,8 @@ public class GpxImporter extends DefaultHandler {
     try {
       parser.parse(is, handler);
       trackIds = handler.getImportedTrackIds();
+    } catch (SAXException e) {
+      throw e;
     } finally {
       // delete track if not finished
       handler.rollbackUnfinishedTracks();
@@ -168,72 +181,74 @@ public class GpxImporter extends DefaultHandler {
   public GpxImporter(MyTracksProviderUtils providerUtils) {
     this.providerUtils = providerUtils;
     tracksWritten = new ArrayList<Long>();
-    content = new StringBuilder();
   }
 
   @Override
   public void characters(char[] ch, int start, int length) throws SAXException {
-    content.append(ch, start, length);
+    String newContent = new String(ch, start, length);
+    if (content == null) {
+      content = newContent;
+    } else {
+      // In 99% of the cases, a single call to this method will be made for each
+      // sequence of characters we're interested in, so we'll rarely be
+      // concatenating strings, thus not justifying the use of a StringBuilder.
+      content += newContent;
+    }
   }
 
   @Override
   public void startElement(String uri, String localName, String name,
       Attributes attributes) throws SAXException {
-    // reset element content
-    content.setLength(0);
-
-    if (localName.equalsIgnoreCase(TAG_TRACK)) {
-      // test if we are already in a track element - abort in this case
-      if (isInTrackElement) {
+    if (isInTrackElement) {
+      trackChildDepth++;
+      if (localName.equals(TAG_TRACK_POINT)) {
+        onTrackPointElementStart(attributes);
+      } else if (localName.equals(TAG_TRACK_SEGMENT)) {
+        onTrackSegmentElementStart();
+      } else if (localName.equals(TAG_TRACK)) {
         String msg = createErrorMessage("Invalid GPX-XML detected");
         throw new SAXException(msg);
       }
-
+    } else if (localName.equals(TAG_TRACK)) {
       isInTrackElement = true;
       trackChildDepth = 0;
       onTrackElementStart();
-
-      // process this element only as sub-elements of track
-    } else if (isInTrackElement) {
-      trackChildDepth++;
-      if (localName.equalsIgnoreCase(TAG_TRACK_POINT)) {
-        onTrackPointElementStart(attributes);
-      }
     }
   }
 
   @Override
   public void endElement(String uri, String localName, String name)
       throws SAXException {
-    if (localName.equalsIgnoreCase(TAG_TRACK)) {
+    if (!isInTrackElement) { return; }
+
+    // process these elements only as sub-elements of track
+    if (localName.equals(TAG_TRACK_POINT)) {
+      onTrackPointElementEnd();
+    } else if (localName.equals(TAG_ALTITUDE)) {
+      onAltitudeElementEnd();
+    } else if (localName.equals(TAG_TIME)) {
+      onTimeElementEnd();
+    } else if (localName.equals(TAG_NAME)) {
+      // we are only interested in the first level name element
+      if (trackChildDepth == 1) {
+        onNameElementEnd();
+      }
+    } else if (localName.equals(TAG_DESCRIPTION)) {
+      // we are only interested in the first level description element
+      if (trackChildDepth == 1) {
+        onDescriptionElementEnd();
+      }
+    } else if (localName.equals(TAG_TRACK_SEGMENT)) {
+      onTrackSegmentElementEnd();
+    } else if (localName.equals(TAG_TRACK)) {
       onTrackElementEnd();
       isInTrackElement = false;
       trackChildDepth = 0;
-
-      // process these elements only as sub-elements of track
-    } else if (isInTrackElement) {
-      if (localName.equalsIgnoreCase(TAG_TRACK_POINT)) {
-        onTrackPointElementEnd();
-      } else if (localName.equalsIgnoreCase(TAG_ALTITUDE)) {
-        onAltitudeElementEnd();
-      } else if (localName.equalsIgnoreCase(TAG_TIME)) {
-        onTimeElementEnd();
-      } else if (localName.equalsIgnoreCase(TAG_NAME)) {
-        // we are only interested in the first level name element
-        if (trackChildDepth == 1) {
-          onNameElementEnd();
-        }
-      } else if (localName.equalsIgnoreCase(TAG_DESCRIPTION)) {
-        // we are only interested in the first level description element
-        if (trackChildDepth == 1) {
-          onDescriptionElementEnd();
-        }
-      }
-      trackChildDepth--;
     }
+    trackChildDepth--;
 
     // reset element content
-    content.setLength(0);
+    content = null;
   }
 
   @Override
@@ -255,25 +270,50 @@ public class GpxImporter extends DefaultHandler {
     isCurrentTrackRollbackable = true;
   }
 
+  private void onDescriptionElementEnd() {
+    track.setDescription(content.toString().trim());
+  }
+
+  private void onNameElementEnd() {
+    track.setName(content.toString().trim());
+  }
+
+  /**
+   * Track segment started.
+   */
+  private void onTrackSegmentElementStart() {
+    // TODO Auto-generated method stub
+    
+  }
+
   /**
    * Reads trackpoint attributes and assigns them to the current location.
-   * 
+   *
    * @param attributes xml attributes
    */
-  private void onTrackPointElementStart(Attributes attributes) {
+  private void onTrackPointElementStart(Attributes attributes) throws SAXException {
+    if (location != null) {
+      String errorMsg = createErrorMessage("Found a track point inside another one.");
+      throw new SAXException(errorMsg);
+    }
+
     location = createLocationFromAttributes(attributes);
   }
 
-  private Location createLocationFromAttributes(Attributes attributes) {
-    String latitude = null;
-    String longitude = null;
+  /**
+   * Creates and returns a location with the position parsed from the given
+   * attributes.
+   *
+   * @param attributes the attributes to parse
+   * @return the created location
+   * @throws SAXException if the attributes cannot be parsed
+   */
+  private Location createLocationFromAttributes(Attributes attributes) throws SAXException {
+    String latitude = attributes.getValue(ATT_LAT);
+    String longitude = attributes.getValue(ATT_LON);
 
-    for (int i = 0; i < attributes.getLength(); i++) {
-      if (attributes.getLocalName(i).equals(ATT_LAT)) {
-        latitude = attributes.getValue(i);
-      } else if (attributes.getLocalName(i).equals(ATT_LON)) {
-        longitude = attributes.getValue(i);
-      }
+    if (latitude == null || longitude == null) {
+      throw new SAXException(createErrorMessage("Point with no longitude or latitude"));
     }
 
     // create new location and set attributes
@@ -281,14 +321,6 @@ public class GpxImporter extends DefaultHandler {
     loc.setLatitude(Double.parseDouble(latitude));
     loc.setLongitude(Double.parseDouble(longitude));
     return loc;
-  }
-
-  private void onDescriptionElementEnd() {
-    track.setDescription(content.toString().trim());
-  }
-
-  private void onNameElementEnd() {
-    track.setName(content.toString().trim());
   }
 
   /**
@@ -301,28 +333,29 @@ public class GpxImporter extends DefaultHandler {
       statsBuilder.addLocation(location, location.getTime());
 
       // insert in db
-      Uri trackPointIdUri = providerUtils.insertTrackPoint(location,
-          track.getId());
-
-      // set start and stop id for track
-      long trackPointId = Long.parseLong(trackPointIdUri.getLastPathSegment());
+      lastPointIdUri = providerUtils.insertTrackPoint(location, track.getId());
 
       // first track point?
       if (lastLocation == null) {
-        track.setStartId(trackPointId);
+        track.setStartId(getLastPointId());
       }
 
-      // location has no setId method
-      // updating stop id on track every time...
-      track.setStopId(trackPointId);
-
       lastLocation = location;
+      location = null;
       numberOfLocations++;
     } else {
       // invalid location - abort import
       String msg = createErrorMessage("Invalid location detected: " + location);
       throw new SAXException(msg);
     }
+  }
+  
+  /**
+   * Track segment finished.
+   */
+  private void onTrackSegmentElementEnd() {
+    // TODO Auto-generated method stub
+    
   }
 
   /**
@@ -332,6 +365,7 @@ public class GpxImporter extends DefaultHandler {
     if (lastLocation != null) {
       // Calculate statistics for the imported track and update
       statsBuilder.pauseAt(lastLocation.getTime());
+      track.setStopId(getLastPointId());
       track.setNumberOfPoints(numberOfLocations);
       track.setStatistics(statsBuilder.getStatistics());
       providerUtils.updateTrack(track);
@@ -340,7 +374,7 @@ public class GpxImporter extends DefaultHandler {
       lastLocation = null;
       statsBuilder = null;
     } else {
-      // track contains no track points makes not really
+      // track contains no track points makes no real
       // sense to import it as we have no location
       // information -> roll back
       rollbackUnfinishedTracks();
@@ -355,23 +389,16 @@ public class GpxImporter extends DefaultHandler {
    * @throws SAXException on parsing errors
    */
   private void onTimeElementEnd() throws SAXException {
-    long time = parseTimeForAllFormats(content.toString().trim());
+    if (location == null) { return; }
 
-    if (location != null) {
+    long time = parseTimeForAllFormats(content);
+    if (lastLocation != null) {
+      long timeDifference = time - lastLocation.getTime();
+
       // check for negative time change
-      if (lastLocation != null) {
-        long timeDifference = time - lastLocation.getTime();
-        if (timeDifference < 0) {
-          String msg = createErrorMessage("Found negative time change.");
-          throw new SAXException(msg);
-        }
-      }
-
-      location.setTime(time);
-      // initialize start time with time of first track point
-      if (statsBuilder == null) {
-        statsBuilder = new TripStatisticsBuilder();
-        statsBuilder.resumeAt(time);
+      if (timeDifference < 0) {
+        String msg = createErrorMessage("Found negative time change.");
+        throw new SAXException(msg);
       }
 
       // We don't have a speed and bearing in GPX, make something up from
@@ -379,27 +406,27 @@ public class GpxImporter extends DefaultHandler {
       // TODO GPS points tend to have some inherent imprecision,
       // speed and bearing will likely be off, so the statistics for things like
       // max speed will also be off.
-      if (lastLocation != null) {
-        final long dt = location.getTime() - lastLocation.getTime();
-        if (dt > 0) {
-          final float speed = location.distanceTo(lastLocation) / (dt / 1000);
-          location.setSpeed(speed);
-        }
-        location.setBearing(lastLocation.bearingTo(location));
-      }
+      float speed = location.distanceTo(lastLocation) * 1000.0f / timeDifference;
+      location.setSpeed(speed);
+      location.setBearing(lastLocation.bearingTo(location));
+    }
+
+    location.setTime(time);
+    // initialize start time with time of first track point
+    if (statsBuilder == null) {
+      statsBuilder = new TripStatisticsBuilder();
+      statsBuilder.resumeAt(time);
     }
   }
 
   private void onAltitudeElementEnd() {
     if (location != null) {
-      String altitude = content.toString().trim();
-      location.setAltitude(Double.parseDouble(altitude));
+      location.setAltitude(Double.parseDouble(content));
     }
   }
 
   /**
-   * If a exception is thrown during the import callers must execute this method
-   * in the catch (also finally is ok) clause to avoid inconsistent data.
+   * Deletes the last track if it was not completely imported.
    */
   public void rollbackUnfinishedTracks() {
     if (isCurrentTrackRollbackable) {
@@ -430,7 +457,8 @@ public class GpxImporter extends DefaultHandler {
    * @throws SAXException on time parsing errors
    */
   private long parseTimeForAllFormats(String timeContents) throws SAXException {
-    long time = -1;
+    long time;
+    timeContents = timeContents.trim();
 
     // 1st try with time zone at end a la "+0000"
     time = parseTime(timeContents, DATE_FORMAT1);
@@ -457,9 +485,15 @@ public class GpxImporter extends DefaultHandler {
       format.setTimeZone(UTC_TIMEZONE);
       return format.parse(timeContents).getTime();
     } catch (ParseException ex) {
-      // do nothing
+      return -1;
     }
-    return -1;
+  }
+
+  /**
+   * Returns the ID of the last point inserted into the database.
+   */
+  private long getLastPointId() {
+    return Long.parseLong(lastPointIdUri.getLastPathSegment());
   }
 
   /**
