@@ -15,17 +15,20 @@
  */
 package com.google.android.apps.mytracks.io;
 
+import static com.google.android.testing.mocking.AndroidMock.eq;
+import static com.google.android.testing.mocking.AndroidMock.expect;
+
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.TrackPointsColumns;
-import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
+import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.testing.TestingProviderUtilsFactory;
 import com.google.android.testing.mocking.AndroidMock;
 import com.google.android.testing.mocking.UsesMocks;
 
 import android.content.ContentUris;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.test.AndroidTestCase;
 
@@ -33,10 +36,12 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.easymock.Capture;
+import org.easymock.IArgumentMatcher;
 import org.xml.sax.SAXException;
 
 /**
@@ -78,14 +83,10 @@ public class GpxImporterTest extends AndroidTestCase {
 
   private static final long TRACK_ID = 1;
   private static final long TRACK_POINT_ID_1 = 1;
-  private static final long TRACK_POINT_ID_2 = 1;
+  private static final long TRACK_POINT_ID_2 = 2;
 
   private static final Uri TRACK_ID_URI = ContentUris.appendId(
       TracksColumns.CONTENT_URI.buildUpon(), TRACK_ID).build();
-  private static final Uri TRACK_POINT_ID_URI_1 = ContentUris.appendId(
-      TrackPointsColumns.CONTENT_URI.buildUpon(), TRACK_POINT_ID_1).build();
-  private static final Uri TRACK_POINT_ID_URI_2 = ContentUris.appendId(
-      TrackPointsColumns.CONTENT_URI.buildUpon(), TRACK_POINT_ID_2).build();
 
   private MyTracksProviderUtils providerUtils;
 
@@ -95,6 +96,7 @@ public class GpxImporterTest extends AndroidTestCase {
   @Override
   protected void setUp() throws Exception {
     super.setUp();
+
     providerUtils = AndroidMock.createMock(MyTracksProviderUtils.class);
     oldProviderUtilsFactory =
         TestingProviderUtilsFactory.installWithInstance(providerUtils);
@@ -111,20 +113,31 @@ public class GpxImporterTest extends AndroidTestCase {
    */
   public void testImportSuccess() throws Exception {
     Capture<Track> trackParam = new Capture<Track>();
-    Capture<Location> locParam1 = new MyLocationCapture();
-    Capture<Location> locParam2 = new MyLocationCapture();
 
-    AndroidMock.expect(
-        providerUtils.insertTrack(AndroidMock.capture(trackParam))).andReturn(
-        TRACK_ID_URI);
+    SimpleDateFormat format = GpxImporter.DATE_FORMAT2;
+    Location loc1 = new Location(LocationManager.GPS_PROVIDER);
+    loc1.setTime(format.parse(TRACK_TIME_1).getTime());
+    loc1.setLatitude(Double.parseDouble(TRACK_LAT_1));
+    loc1.setLongitude(Double.parseDouble(TRACK_LON_1));
+    loc1.setAltitude(Double.parseDouble(TRACK_ELE_1));
 
-    AndroidMock.expect(
-        providerUtils.insertTrackPoint(AndroidMock.capture(locParam1),
-            AndroidMock.anyLong())).andReturn(TRACK_POINT_ID_URI_1);
+    Location loc2 = new Location(LocationManager.GPS_PROVIDER);
+    loc2.setTime(format.parse(TRACK_TIME_2).getTime());
+    loc2.setLatitude(Double.parseDouble(TRACK_LAT_2));
+    loc2.setLongitude(Double.parseDouble(TRACK_LON_2));
+    loc2.setAltitude(Double.parseDouble(TRACK_ELE_2));
 
-    AndroidMock.expect(
-        providerUtils.insertTrackPoint(AndroidMock.capture(locParam2),
-            AndroidMock.anyLong())).andReturn(TRACK_POINT_ID_URI_2);
+    expect(providerUtils.insertTrack(AndroidMock.capture(trackParam)))
+        .andReturn(TRACK_ID_URI);
+
+    expect(providerUtils.getLastLocationId(TRACK_ID)).andReturn(TRACK_POINT_ID_1).andReturn(TRACK_POINT_ID_2);
+
+    // A flush happens after the first insertion to get the starting point ID,
+    // which is why we get two calls
+    expect(providerUtils.bulkInsertTrackPoints(LocationsMatcher.eqLoc(loc1),
+        eq(1), eq(TRACK_ID))).andReturn(1);
+    expect(providerUtils.bulkInsertTrackPoints(LocationsMatcher.eqLoc(loc2),
+        eq(1), eq(TRACK_ID))).andReturn(1);
 
     providerUtils.updateTrack(AndroidMock.capture(trackParam));
 
@@ -133,9 +146,7 @@ public class GpxImporterTest extends AndroidTestCase {
     InputStream is = new ByteArrayInputStream(VALID_TEST_GPX.getBytes());
     GpxImporter.importGPXFile(is, providerUtils);
 
-    AndroidMock.verify();
-
-    SimpleDateFormat format = GpxImporter.DATE_FORMAT2;
+    AndroidMock.verify(providerUtils);
 
     // verify track parameter
     Track track = trackParam.getValue();
@@ -145,19 +156,6 @@ public class GpxImporterTest extends AndroidTestCase {
         .getStartTime());
     assertNotSame(-1, track.getStartId());
     assertNotSame(-1, track.getStopId());
-
-    // verify last location parameter
-    Location loc1 = locParam1.getValue();
-    assertEquals(Double.parseDouble(TRACK_LAT_1), loc1.getLatitude());
-    assertEquals(Double.parseDouble(TRACK_LON_1), loc1.getLongitude());
-    assertEquals(Double.parseDouble(TRACK_ELE_1), loc1.getAltitude());
-    assertEquals(format.parse(TRACK_TIME_1).getTime(), loc1.getTime());
-
-    Location loc2 = locParam2.getValue();
-    assertEquals(Double.parseDouble(TRACK_LAT_2), loc2.getLatitude());
-    assertEquals(Double.parseDouble(TRACK_LON_2), loc2.getLongitude());
-    assertEquals(Double.parseDouble(TRACK_ELE_2), loc2.getAltitude());
-    assertEquals(format.parse(TRACK_TIME_2).getTime(), loc2.getTime());
   }
 
   /**
@@ -186,13 +184,12 @@ public class GpxImporterTest extends AndroidTestCase {
 
   private void testInvalidXML(String xml) throws ParserConfigurationException,
       IOException {
-    AndroidMock.expect(
-        providerUtils.insertTrack((Track) AndroidMock.anyObject())).andReturn(
-        TRACK_ID_URI);
+    expect(providerUtils.insertTrack((Track) AndroidMock.anyObject()))
+        .andReturn(TRACK_ID_URI);
 
-    AndroidMock.expect(
-        providerUtils.insertTrackPoint((Location) AndroidMock.anyObject(),
-            AndroidMock.anyLong())).andStubReturn(TRACK_POINT_ID_URI_1);
+    expect(providerUtils.bulkInsertTrackPoints((Location[]) AndroidMock.anyObject(),
+        AndroidMock.anyInt(), AndroidMock.anyLong())).andStubReturn(1);
+    expect(providerUtils.getLastLocationId(TRACK_ID)).andStubReturn(TRACK_POINT_ID_1);
 
     providerUtils.deleteTrack(TRACK_ID);
 
@@ -205,7 +202,7 @@ public class GpxImporterTest extends AndroidTestCase {
       // expected exception
     }
 
-    AndroidMock.verify();
+    AndroidMock.verify(providerUtils);
   }
 
   /**
@@ -213,13 +210,49 @@ public class GpxImporterTest extends AndroidTestCase {
    * http://sourceforge.net
    * /tracker/?func=detail&aid=2617107&group_id=82958&atid=567837
    */
-  @SuppressWarnings("serial")
-  class MyLocationCapture extends Capture<Location> {
+  private static class LocationsMatcher implements IArgumentMatcher {
+    private final Location[] matchLocs;
+
+    private LocationsMatcher(Location[] expected) {
+      this.matchLocs = expected;
+    }
+
+    public static Location[] eqLoc(Location[] expected) {
+      IArgumentMatcher matcher = new LocationsMatcher(expected);
+      AndroidMock.reportMatcher(matcher);
+      return null;
+    }
+
+    public static Location[] eqLoc(Location expected) {
+      return eqLoc(new Location[] { expected});
+    }
+    
     @Override
-    public void setValue(Location value) {
-      if (!hasCaptured()) {
-        super.setValue(value);
+    public void appendTo(StringBuffer buf) {
+      buf.append("eqLoc(").append(Arrays.toString(matchLocs)).append(")");
+    }
+
+    @Override
+    public boolean matches(Object obj) {
+      if (! (obj instanceof Location[])) { return false; }
+      Location[] locs = (Location[]) obj;
+      if (locs.length < matchLocs.length) { return false; }
+
+      // Only check the first elements (those that will be taken into account)
+      for (int i = 0; i < matchLocs.length; i++) {
+        if (!locationsMatch(locs[i], matchLocs[i])) {
+          return false;
+        }
       }
+
+      return true;
+    }
+
+    private boolean locationsMatch(Location loc1, Location loc2) {
+      return (loc1.getTime() == loc2.getTime()) &&
+             (loc1.getLatitude() == loc2.getLatitude()) &&
+             (loc1.getLongitude() == loc2.getLongitude()) &&
+             (loc1.getAltitude() == loc2.getAltitude());
     }
   }
 }

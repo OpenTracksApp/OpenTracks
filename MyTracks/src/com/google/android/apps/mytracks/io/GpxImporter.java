@@ -15,6 +15,7 @@
  */
 package com.google.android.apps.mytracks.io;
 
+import com.google.android.apps.mytracks.MyTracksConstants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
@@ -23,6 +24,7 @@ import com.google.android.apps.mytracks.util.MyTracksUtils;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,7 +54,7 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class GpxImporter extends DefaultHandler {
 
-  /**
+  /*
    * Different date formats used in GPX files
    */
   static final SimpleDateFormat DATE_FORMAT1 = new SimpleDateFormat(
@@ -63,7 +65,7 @@ public class GpxImporter extends DefaultHandler {
       "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
   static final SimpleTimeZone UTC_TIMEZONE = new SimpleTimeZone(0, "UTC");
 
-  /**
+  /*
    * GPX-XML tag names and attributes.
    */
   private static final String TAG_TRACK = "trk";
@@ -76,6 +78,14 @@ public class GpxImporter extends DefaultHandler {
   private static final String ATT_LAT = "lat";
   private static final String ATT_LON = "lon";
 
+  /**
+   * The maximum number of locations to buffer for bulk-insertion into the database.
+   */
+  private static final int MAX_BUFFERED_LOCATIONS = 512;
+
+  /**
+   * Utilities for accessing the contnet provider.
+   */
   private final MyTracksProviderUtils providerUtils;
 
   /**
@@ -98,12 +108,6 @@ public class GpxImporter extends DefaultHandler {
    * Previous location, required for calculations.
    */
   private Location lastLocation;
-
-  /**
-   * URI of the last point inserted into the database.
-   * We parse point IDs out of this when necessary.
-   */
-  private Uri lastPointIdUri;
   
   /**
    * Currently reading track.
@@ -115,6 +119,16 @@ public class GpxImporter extends DefaultHandler {
    */
   private TripStatisticsBuilder statsBuilder;
 
+  /**
+   * Buffer of locations to be bulk-inserted into the database.
+   */
+  private Location[] bufferedPointInserts = new Location[MAX_BUFFERED_LOCATIONS];
+
+  /**
+   * Number of locations buffered to be inserted into the database.
+   */
+  private int numBufferedPointInserts = 0;
+  
   /**
    * Number of locations already processed.
    */
@@ -163,7 +177,13 @@ public class GpxImporter extends DefaultHandler {
     long[] trackIds = null;
 
     try {
+      long start = System.currentTimeMillis();
+
       parser.parse(is, handler);
+
+      long end = System.currentTimeMillis();
+      Log.d(MyTracksConstants.TAG, "Total import time: " + (end - start) + "ms");
+
       trackIds = handler.getImportedTrackIds();
     } catch (SAXException e) {
       throw e;
@@ -182,7 +202,7 @@ public class GpxImporter extends DefaultHandler {
     this.providerUtils = providerUtils;
     tracksWritten = new ArrayList<Long>();
   }
-
+  
   @Override
   public void characters(char[] ch, int start, int length) throws SAXException {
     String newContent = new String(ch, start, length);
@@ -333,7 +353,7 @@ public class GpxImporter extends DefaultHandler {
       statsBuilder.addLocation(location, location.getTime());
 
       // insert in db
-      lastPointIdUri = providerUtils.insertTrackPoint(location, track.getId());
+      insertTrackPoint(location);
 
       // first track point?
       if (lastLocation == null) {
@@ -349,7 +369,23 @@ public class GpxImporter extends DefaultHandler {
       throw new SAXException(msg);
     }
   }
-  
+
+  protected void insertTrackPoint(Location loc) {
+    bufferedPointInserts[numBufferedPointInserts] = loc;
+    numBufferedPointInserts++;
+
+    if (numBufferedPointInserts >= MAX_BUFFERED_LOCATIONS) {
+      flushPointInserts();
+    }
+  }
+
+  private void flushPointInserts() {
+    if (numBufferedPointInserts <= 0) { return; }
+
+    providerUtils.bulkInsertTrackPoints(bufferedPointInserts, numBufferedPointInserts, track.getId());
+    numBufferedPointInserts = 0;
+  }
+
   /**
    * Track segment finished.
    */
@@ -363,6 +399,8 @@ public class GpxImporter extends DefaultHandler {
    */
   private void onTrackElementEnd() {
     if (lastLocation != null) {
+      flushPointInserts();
+
       // Calculate statistics for the imported track and update
       statsBuilder.pauseAt(lastLocation.getTime());
       track.setStopId(getLastPointId());
@@ -493,7 +531,9 @@ public class GpxImporter extends DefaultHandler {
    * Returns the ID of the last point inserted into the database.
    */
   private long getLastPointId() {
-    return Long.parseLong(lastPointIdUri.getLastPathSegment());
+    flushPointInserts();
+    
+    return providerUtils.getLastLocationId(track.getId());
   }
 
   /**

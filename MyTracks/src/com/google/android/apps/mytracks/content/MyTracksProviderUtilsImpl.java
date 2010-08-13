@@ -840,8 +840,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     Cursor cursor = getLocationsCursor(track.getId(),
                                        startingPoint,
                                        buffer.getSize(), false);
-    final int idColumnIdx =
-        cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
     if (cursor == null) {
       Log.w(MyTracksProvider.TAG, "Cannot get a locations cursor!");
       buffer.setInvalid();
@@ -860,6 +858,8 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
         return;
       }
 
+      final int idColumnIdx =
+          cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
       do {
         Location location = createLocation(cursor);
         if (location == null) {
@@ -898,6 +898,18 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     Log.d(MyTracksProvider.TAG, "MyTracksProviderUtilsImpl.insertTrackPoint");
     return context.getContentResolver().insert(TrackPointsColumns.CONTENT_URI,
         createContentValues(location, trackId));
+  }
+
+  @Override
+  public int bulkInsertTrackPoints(Location[] locations, int length, long trackId) {
+    if (length == -1) { length = locations.length; }
+
+    ContentValues[] values = new ContentValues[length];
+    for (int i = 0; i < length; i++) {
+      values[i] = createContentValues(locations[i], trackId);
+    }
+
+    return context.getContentResolver().bulkInsert(TrackPointsColumns.CONTENT_URI, values);
   }
 
   @Override

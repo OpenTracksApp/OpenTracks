@@ -233,6 +233,17 @@ public interface MyTracksProviderUtils {
   Uri insertTrackPoint(Location location, long trackId);
 
   /**
+   * Inserts multiple track points in a single operation.
+   *
+   * @param locations an array of locations to insert
+   * @param length the number of locations (from the beginning of the array)
+   *        to actually insert, or -1 for all of them
+   * @param trackId the ID of the track to insert the points into
+   * @return the number of points inserted
+   */
+  int bulkInsertTrackPoints(Location[] locations, int length, long trackId);
+
+  /**
    * Inserts a waypoint in the provider.
    *
    * @param waypoint the waypoint to insert
@@ -262,7 +273,7 @@ public interface MyTracksProviderUtils {
    * @param cursor a cursor pointing at a db or provider with locations
    * @return a new location object
    */
-  public Location createLocation(Cursor cursor);
+  Location createLocation(Cursor cursor);
 
   /**
    * Creates a waypoint object from a given cursor.
@@ -270,7 +281,7 @@ public interface MyTracksProviderUtils {
    * @param cursor a cursor pointing at a db or provider with waypoints.
    * @return a new waypoint object
    */
-  public Waypoint createWaypoint(Cursor cursor);
+  Waypoint createWaypoint(Cursor cursor);
 
   /**
    * A factory which can produce instances of {@link MyTracksProviderUtils},
