@@ -135,6 +135,11 @@ public class GpxImporter extends DefaultHandler {
   private int numberOfLocations;
 
   /**
+   * Number of segments already processed.
+   */
+  private int numberOfSegments;
+
+  /**
    * Used to identify if a track was written to the database but not yet
    * finished successfully.
    */
@@ -156,6 +161,7 @@ public class GpxImporter extends DefaultHandler {
    * SAX-Locator to get current line information.
    */
   private Locator locator;
+  private Location lastSegmentLocation;
 
   /**
    * Reads GPS tracks from a GPX file and writes tracks and their coordinates to
@@ -302,8 +308,22 @@ public class GpxImporter extends DefaultHandler {
    * Track segment started.
    */
   private void onTrackSegmentElementStart() {
-    // TODO Auto-generated method stub
-    
+    if (numberOfSegments > 0) {
+      // Add a segment separator:
+      location = new Location(LocationManager.GPS_PROVIDER);
+      location.setLatitude(100.0);
+      location.setLongitude(100.0);
+      location.setAltitude(0);
+      if (lastLocation != null) {
+        location.setTime(lastLocation.getTime());
+      }
+      insertTrackPoint(location);
+      lastLocation = location;
+      lastSegmentLocation = null;
+      location = null;
+    }
+
+    numberOfSegments++;
   }
 
   /**
@@ -356,13 +376,13 @@ public class GpxImporter extends DefaultHandler {
       insertTrackPoint(location);
 
       // first track point?
-      if (lastLocation == null) {
+      if (lastLocation == null && numberOfSegments == 1) {
         track.setStartId(getLastPointId());
       }
 
       lastLocation = location;
+      lastSegmentLocation = location;
       location = null;
-      numberOfLocations++;
     } else {
       // invalid location - abort import
       String msg = createErrorMessage("Invalid location detected: " + location);
@@ -370,9 +390,10 @@ public class GpxImporter extends DefaultHandler {
     }
   }
 
-  protected void insertTrackPoint(Location loc) {
+  private void insertTrackPoint(Location loc) {
     bufferedPointInserts[numBufferedPointInserts] = loc;
     numBufferedPointInserts++;
+    numberOfLocations++;
 
     if (numBufferedPointInserts >= MAX_BUFFERED_LOCATIONS) {
       flushPointInserts();
@@ -409,6 +430,7 @@ public class GpxImporter extends DefaultHandler {
       providerUtils.updateTrack(track);
       tracksWritten.add(track.getId());
       isCurrentTrackRollbackable = false;
+      lastSegmentLocation = null;
       lastLocation = null;
       statsBuilder = null;
     } else {
@@ -430,8 +452,8 @@ public class GpxImporter extends DefaultHandler {
     if (location == null) { return; }
 
     long time = parseTimeForAllFormats(content);
-    if (lastLocation != null) {
-      long timeDifference = time - lastLocation.getTime();
+    if (lastSegmentLocation != null) {
+      long timeDifference = time - lastSegmentLocation.getTime();
 
       // check for negative time change
       if (timeDifference < 0) {
@@ -446,7 +468,7 @@ public class GpxImporter extends DefaultHandler {
       // max speed will also be off.
       float speed = location.distanceTo(lastLocation) * 1000.0f / timeDifference;
       location.setSpeed(speed);
-      location.setBearing(lastLocation.bearingTo(location));
+      location.setBearing(lastSegmentLocation.bearingTo(location));
     }
 
     location.setTime(time);
