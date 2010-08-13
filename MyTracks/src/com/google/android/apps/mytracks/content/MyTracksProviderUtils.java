@@ -241,14 +241,6 @@ public interface MyTracksProviderUtils {
   Uri insertWaypoint(Waypoint waypoint);
 
   /**
-   * Inserts a track including its track points in the provider.
-   *
-   * @param track the track to insert
-   * @return the content provider URI for the inserted track
-   */
-  Uri insertTrackAndTrackPoints(Track track);
-
-  /**
    * Tests if a track with given id exists.
    *
    * @param id the unique id

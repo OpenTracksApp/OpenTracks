@@ -909,31 +909,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   @Override
-  public Uri insertTrackAndTrackPoints(Track track) {
-    // Insert the track right away to have its ID
-    Uri trackUri = insertTrack(track);
-    long trackId = Long.parseLong(trackUri.getLastPathSegment());
-    track.setId(trackId);
-
-    // Insert all the points (associated with the track ID)
-    boolean firstPoint = true;
-    long pointId = -1;
-    for (Location location : track.getLocations()) {
-      Uri pointUri = insertTrackPoint(location, trackId);
-      pointId = Long.parseLong(pointUri.getLastPathSegment());
-      if (firstPoint) {
-        track.setStartId(pointId);
-        firstPoint = false;
-      }
-    }
-    track.setStopId(pointId);
-
-    // Update the track with the start and end point IDs
-    updateTrack(track);
-    return trackUri;
-  }
-
-  @Override
   public boolean trackExists(long id) {
     Cursor cursor = null;
     try {
