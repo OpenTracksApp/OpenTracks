@@ -409,8 +409,7 @@ public class GpxImporter extends DefaultHandler {
    * Track segment finished.
    */
   private void onTrackSegmentElementEnd() {
-    // TODO Auto-generated method stub
-    
+    // Nothing to be done
   }
 
   /**
