@@ -191,8 +191,6 @@ public class GpxImporter extends DefaultHandler {
       Log.d(MyTracksConstants.TAG, "Total import time: " + (end - start) + "ms");
 
       trackIds = handler.getImportedTrackIds();
-    } catch (SAXException e) {
-      throw e;
     } finally {
       // delete track if not finished
       handler.rollbackUnfinishedTracks();
