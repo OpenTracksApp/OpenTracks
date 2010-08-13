@@ -58,9 +58,9 @@ public class GpxImporter extends DefaultHandler {
    * Different date formats used in GPX files
    */
   static final SimpleDateFormat DATE_FORMAT1 = new SimpleDateFormat(
-      "yyyy-MM-dd'T'hh:mm:ssZ");
+      "yyyy-MM-dd'T'HH:mm:ssZ");
   static final SimpleDateFormat DATE_FORMAT2 = new SimpleDateFormat(
-      "yyyy-MM-dd'T'hh:mm:ss'Z'");
+      "yyyy-MM-dd'T'HH:mm:ss'Z'");
   static final SimpleDateFormat DATE_FORMAT3 = new SimpleDateFormat(
       "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
   static final SimpleTimeZone UTC_TIMEZONE = new SimpleTimeZone(0, "UTC");
