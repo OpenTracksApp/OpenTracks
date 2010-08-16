@@ -27,18 +27,6 @@ limitations under the License.
     <item>60 分</item>
   </string-array>
 
-  <!-- DO NOT TRANSLATE -->
-  <string-array name="task_frequency_values">
-    <item>-1</item>
-    <item>1</item>
-    <item>2</item>
-    <item>5</item>
-    <item>10</item>
-    <item>15</item>
-    <item>30</item>
-    <item>60</item>
-  </string-array>
-
  <!-- Minimum recording distance -->
   <string-array name="min_recording_distance_options">
     <item>1 m</item>
@@ -58,17 +46,6 @@ limitations under the License.
     <item>16 ft (推奨)</item>
     <item>33 ft</item>
     <item>328 ft</item>
-  </string-array>
-
-  <!-- DO NOT TRANSLATE -->
-  <string-array name="min_recording_distance_values">
-    <item>1</item>
-    <item>2</item>
-    <item>3</item>
-    <item>4</item>
-    <item>5</item>
-    <item>10</item>
-    <item>100</item>
   </string-array>
 
 
@@ -91,16 +68,6 @@ limitations under the License.
     <item>3.1 mi</item>
   </string-array>
 
-  <!-- DO NOT TRANSLATE -->
-  <string-array name="max_recording_distance_values">
-    <item>50</item>
-    <item>100</item>
-    <item>200</item>
-    <item>500</item>
-    <item>1000</item>
-    <item>5000</item>
-  </string-array>
-
 
   <!-- Minimum recording interval -->
   <string-array name="min_recording_interval_options">
@@ -120,26 +87,6 @@ limitations under the License.
     <item>10 分</item>
     <item>15 分</item>
     <item>30 分</item>
-  </string-array>
-
-  <!-- DO NOT TRANSLATE -->
-  <string-array name="min_recording_interval_values">
-    <item>-2</item>
-    <item>-1</item>
-    <item>0</item>
-    <item>2</item>
-    <item>3</item>
-    <item>4</item>
-    <item>5</item>
-    <item>10</item>
-    <item>20</item>
-    <item>30</item>
-    <item>60</item>
-    <item>120</item>
-    <item>300</item>
-    <item>480</item>
-    <item>900</item>
-    <item>1800</item>
   </string-array>
 
 
@@ -166,19 +113,6 @@ limitations under the License.
     <item>0.6 mi</item>
     <item>1.2 mi</item>
     <item>3.1 mi (GPS信号強度不良)</item>
-  </string-array>
-
-  <!-- DO NOT TRANSLATE -->
-  <string-array name="min_required_accuracy_values">
-    <item>10</item>
-    <item>20</item>
-    <item>50</item>
-    <item>100</item>
-    <item>200</item>
-    <item>500</item>
-    <item>1000</item>
-    <item>2000</item>
-    <item>5000</item>
   </string-array>
 
 
@@ -215,24 +149,6 @@ limitations under the License.
     <item>5 分</item>
     <item>2 分</item>
     <item>1 分</item>
-  </string-array>
-
-  <!-- DO NOT TRANSLATE -->
-  <string-array name="split_frequency_values">
-    <item>0</item>
-    <item>-100</item>
-    <item>-50</item>
-    <item>-25</item>
-    <item>-10</item>
-    <item>-5</item>
-    <item>-1</item>
-    <item>60</item>
-    <item>30</item>
-    <item>15</item>
-    <item>10</item>
-    <item>5</item>
-    <item>2</item>
-    <item>1</item>
   </string-array>
 
 
@@ -362,12 +278,5 @@ limitations under the License.
     <item>滝</item>
     <item>噴水</item>
     <item>ウェイポイント</item>
-  </array>
-
-  <!-- DO NOT TRANSLATE -->
-  <array name="export_formats">
-    <item>GPX</item>
-    <item>KML</item>
-    <item>CSV</item>
   </array>
 </resources>
