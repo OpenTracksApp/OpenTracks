@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+
+  <!-- Used by the Menu -->
+  <string name="start_recording">Spela in spår</string>
+  <string name="stop_recording">Stoppa inspelning</string>
+  <string name="switch_to_sat">Satellitläge</string>
+  <string name="switch_to_map">Kartläge</string>
+  <string name="mylocation">Min plats</string>
+  <string name="list_tracks">Spår</string>
+  <string name="list_markers">Markörer</string>
+  <string name="delete_all_tracks">Ta bort alla spår</string>
+  <string name="settings">Inställningar</string>
+  <string name="elevation">Höjd</string>
+  <string name="choose_track_message">Välj ett spår att visa</string>
+  <string name="current_track">Nuvarande spår</string>
+  <string name="current_segment">Senaste segmentet</string>
+
+  <!-- Error messages -->
+  <string name="error_no_location_manager">Ingen platshanterare hittades på denna enhet!</string>
+  <string name="error_no_gps_location_provider">Ingen GPS-positioneringstjänst hittades på denna enhet.</string>
+  <string name="error_sending_to_mymap">Det uppstod ett fel i sändningen av ditt spår till Google My Map. Försök igen senare.</string>
+  <string name="error_sending_to_docs">Det uppstod ett fel i sändningen av ditt spår till Google Docs. Försök igen senare.</string>
+  <string name="error_unable_to_start_recording">Kan inte starta inspelningen. Försök igen.</string>
+  <string name="error_unable_to_stop_recording">Kan inte stoppa inspelningen. Försök igen.</string>
+  <string name="error_unable_to_read_file">Kan inte läsa från fil.</string>
+  <string name="error_invalid_gpx_format">Filen har inte ett giltigt GPX-format.</string>
+  <string name="error_generic">Ett fel uppstod. Försök igen.</string>
+  <string name="error_track_does_not_exist">Spåret finns inte.</string>
+  <string name="error_out_of_memory">Den här filen är för stor (måste vara mindre än 500 KB). Avbryter.</string>
+  <string name="error_unable_to_insert_marker">Kan inte skapa markör. Ingen possition tillgänglig.</string>
+
+  <!-- Status messages -->
+  <string name="wait_for_fix">Väntar på bättre GPS-posstion. Se till att himlen är synlig.</string>
+  <string name="status_now_recording">Spelar nu in ett nytt spår.</string>
+  <string name="status_stopped_recording">Stoppade inspelning av ditt spår.</string>
+  <string name="status_new_mymap_has_been_created">En ny Google My Map har skapats på maps.google.com.</string>
+  <string name="status_tracks_have_been_uploaded">Ditt spår har skickats till maps.google.com.</string>
+  <string name="status_tracks_have_been_uploaded_to_new_doc">Ditt spår har skockats till ett nytt kalkylblad på docs.google.com.</string>
+  <string name="status_tracks_have_been_uploaded_to_docs">Ditt spår har skickats till docs.google.com.</string>
+  <string name="status_mymap_info">Det kan ibland ta några minuter innan nya spår visas.</string>
+  <string name="status_enable_gps">Klicka här för att gå till Säkerhet och Platsinställningar och kryssa i \'aktivera gps-satteliter\'. Tryck på tillbakaknappen för att återgå.</string>
+  <string name="status_approximate_location">OBS: En ungerfärlig position som avgörs från mobilmaster och WIFI-nät visas.</string>
+  <string name="status_no_location">En position kan för närvarande inte fastställas. Aktivera mer platskällor (se Säkerhet och Platsinställningar) och se till att himlen är synlig. Försök igen senare.</string>
+  <string name="status_waypoint_inserted">En positionsmarkör har lagts in.</string>
+  <string name="status_statistics_inserted">En statistikmarkör har lagts in.</string>
+
+  <!-- Progress dialog -->
+  <string name="progress_title">Var god vänta...</string>
+  <string name="progress_message">Skickar ditt spår till Google.</string>
+  <string name="progress_message_reading_track">Läser spår...</string>
+  <string name="progress_message_preparing_track">Förbereder spår...</string>
+  <string name="progress_message_authenticating_mymaps">Autentiserar till Google Maps...</string>
+  <string name="progress_message_authenticating_docs">Autentiserar till Google Docs...</string>
+  <string name="progress_message_sending_docs">Skickar spår till Google Docs...</string>
+  <string name="progress_message_sending_mymaps">Skickar spår till Google Maps...</string>
+  <string name="progress_message_creating_map">Skapar en ny My Map...</string>
+  <string name="import_progress_message">Importerar ett GPS-spår. Detta kan ta en stund.</string>
+  <string name="write_progress_message">Skriver til till SD-kortet. Detta kan ta en stund.</string>
+  <string name="progress_message_updating_track">Uppdaterar spårstatistik...</string>
+
+  <!-- Used by DeleteAllDataHandler -->
+  <string name="are_you_sure_question">Är du säker?</string>
+  <string name="all_data_will_be_permanently_deleted">Alla spår och markörer kommer att tas bort från telefonen.</string>
+  <string name="track_will_be_permanently_deleted">Spåret och dess markörer kommer att permanent tas bort från telefonen.</string>
+  <string name="marker_will_be_permanently_deleted">Markören kommer att permanent tas bort från telefonen.</string>
+
+  <!-- Text and links when uploading to Google My Maps -->
+  <string name="new_map_description">Skapad av My Tracks på Android.</string>
+  <string name="my_map_link">Skapad av &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; på Android.</string>
+  <string name="new_map_title">Ny karta</string>
+
+  <!-- Formatting of track and marker descriptions -->
+  <string name="points">Punkter</string>
+  <string name="recorded_date">Inspelad</string>
+  <string name="category">Aktivitetstyp</string>
+  <string name="waypoint_category">Markörtyp</string>
+  <string name="part">(Del %d)</string>
+
+  <!-- Used by the track recording service -->
+  <string name="recording_your_track">Spelar in ditt spår...</string>
+  <string name="new_track">Spår %d</string>
+
+  <!-- Common -->
+  <string name="no">Nej</string>
+  <string name="yes">Ja</string>
+  <string name="ok">OK</string>
+  <string name="error">Fel</string>
+  <string name="success">Lyckades</string>
+  <string name="waypoint">Positionsmärke</string>
+
+  <!-- Placemark labels for start and end of track -->
+  <string name="start">(Start)</string>
+  <string name="end">(Slut)</string>
+
+  <!--  TrackList -->
+  <string name="tracklist_show_track">Visa</string>
+  <string name="tracklist_send_to_mymaps">Skicka till Google My Maps</string>
+  <string name="tracklist_send_to_new_mymap">Skicka till New Google My Map</string>
+  <string name="tracklist_send_to_docs">Skicka till Google Docs</string>
+  <string name="tracklist_send_to_google">Skicka till Google...</string>
+  <string name="tracklist_delete_track">Ta bort från telefonen...</string>
+  <string name="tracklist_edit_track">Ändra detaljer</string>
+  <string name="tracklist_write_to_sd">Skriv till SD-kort...</string>
+  <string name="tracklist_save_as_gpx">Spara en GPX-fil</string>
+  <string name="tracklist_save_as_kml">Spara en KML-fil</string>
+  <string name="tracklist_save_as_csv">Spara en CSV-fil</string>
+  <string name="tracklist_btn_send_all_to_mymaps">Skicka till Google My Maps</string>
+  <string name="tracklist_btn_delete_all">Ta bort alla spår</string>
+  <!-- Export All -->
+  <string name="tracklist_btn_export_all">Exportera alla spår</string>
+  <string name="export_done">Exporteringen slutfördes</string>
+  <string name="tracklist_pick_one">Välj ett spår. TryckPress&amp;håll för fler alternativ.</string>
+  <string name="tracklist_all_tracks">Alla spår:</string>
+  <string name="tracklist_this_track">Det här spåret</string>
+  <string name="tracklist_share_track">Dela med vänner...</string>
+  <string name="tracklist_share_link">En länk till Google My Map</string>
+  <string name="tracklist_share_gpx_file">En GPX-fil</string>
+  <string name="tracklist_share_kml_file">En KML-fil</string>
+  <string name="tracklist_share_csv_file">En CSV-fil</string>
+  <string name="tracklist_clear_map">Rensa karta</string>
+
+  <!-- Waypoints list -->
+  <string name="waypointslist_btn_delete_all">Ta bort alla markörer</string>
+  <string name="waypointslist_this_waypoint">Den här markören</string>
+  <string name="waypointslist_delete_waypoint">Ta bort</string>
+  <string name="waypointslist_edit_waypoint">Ändra detaljer</string>
+  <string name="waypointslist_show_waypoint">Visa på karta</string>
+  <string name="waypointslist_btn_insert_waypoint">Infoga positionspunkt</string>
+  <string name="waypointslist_btn_insert_statistics">Infoga statistik</string>
+  <string name="waypointslist_pick_one">Välj en markör. TryckPress&amp;håll för fler alternativ.</string>
+
+  <!-- MyTracks Details -->
+  <string name="trackdetails_title">Spårdetaljer</string>
+  <string name="trackdetails_name">Spårnamn</string>
+  <string name="trackdetails_description">Spårbeskrivning</string>
+  <string name="trackdetails_category">Aktivitetstyp (t ex vandring, cyckling, låpning, klättring...)</string>
+
+  <!-- MyTracks Waypoint Details -->
+  <string name="waypointdetails_title">Markördetaljer</string>
+  <string name="waypointdetails_name">Markörnamn</string>
+  <string name="waypointdetails_description">Markörbeskrivning</string>
+  <string name="waypointdetails_category">Markörtyp (e.g. byggnad, grop, sevärdhet...)</string>
+
+  <!-- MyTracks Settings -->
+  <string name="mytracks_settings">My Tracks inställningar</string>
+  <string name="settings_display">Visning</string>
+  <string name="settings_recording">Inspelning</string>
+  <string name="settings_sharing">Delning</string>
+
+  <string name="settings_announcement_frequency">Meddelandefrekvens</string>
+  <string name="settings_announcement_frequency_summary">Minimumtid mellan två röstmeddelanden</string>
+  <string name="settings_announcement_not_available_summary">Text-till-talmeddelanden är inte tillgängligt i din version av Android</string>
+
+  <string name="settings_min_recording_distance">Min distans mellan två punkter</string>
+  <string name="settings_min_recording_distance_summary">Minsta distans mellan två inspelningar av din position</string>
+
+  <string name="settings_max_recording_distance">Max distans mellan punter</string>
+  <string name="settings_max_recording_distance_summary">Om två punkter är längre bort än det här, kommer spåret att delas</string>
+
+  <string name="settings_min_recording_interval">Min tid mellan punkter</string>
+  <string name="settings_min_recording_interval_summary">Minsta tidsintervall mellan två inspelningar av din position</string>
+
+  <string name="settings_min_required_accuracy">Minsta precision</string>
+  <string name="settings_min_required_accuracy_summary">Inspelningen kommer att pausas om din position inte är minst så här precis</string>
+
+  <string name="settings_metric_units">Använd metersystemet</string>
+  <string name="settings_metric_units_summary_on">Alla distanser kommer att visas i metriska enheter</string>
+  <string name="settings_metric_units_summary_off">Alla distanser kommer att visas i brittiska enheter</string>
+
+  <string name="settings_map_public">Gör kartor offentliga</string>
+  <string name="settings_map_public_summary_on">Uppladdade kartor kommer att vara synliga för alla på maps.google.com</string>
+  <string name="settings_map_public_summary_off">Uppladdad kartor kommer inte att visas offentligt på maps.google.com</string>
+
+  <string name="settings_report_speed_or_pace">Visa hastighet</string>
+  <string name="settings_report_speed_or_pace_summary_on">Hastighet kommer att visas</string>
+  <string name="settings_report_speed_or_pace_summary_off">Tempo kommer att visas</string>
+
+  <string name="settings_share_url_only">Dela bara länk</string>
+  <string name="settings_share_url_only_summary_on">Bara länken till kartan kommer att skickas vid delning</string>
+  <string name="settings_share_url_only_summary_off">Innehållet i spåret kommer också att inkluderas vid delning</string>
+
+  <string name="settings_signal_sampling_frequency">Signalprovsfrekvens</string>
+  <string name="settings_signal_sampling_frequency_summary">Tid mellan två inspelningar av telefonens signalstyrka</string>
+
+  <string name="settings_split_frequency">Delningsfrekvens</string>
+  <string name="settings_split_frequency_summary">Maximala tiden eller distansen varefter en ny delnginsmarkör kommer infogas</string>
+  <string name="pace_label">Tempo</string>
+
+  <!-- MyTracksSky -->
+  <string name="mytracks_sky">GPS-satteliter</string>
+
+  <!-- My Maps -->
+  <string name="select_map_message">Välje en karta från ditt konto:</string>
+  <string name="create_new_map">Skapa en ny karta...</string>
+  <string name="map_list_title">Skicka till Google My Maps</string>
+  <string name="maps_list_loading">Laddar kartor...</string>
+  <string name="maps_list_failed">Din kartor kunde inte laddas just nu!</string>
+  <string name="open_map">Välj den här kartan</string>
+  <string name="edit_map_details">Ändra kartdetaljer</string>
+  <string name="share_map">Dela kartan med vänner</string>
+  <string name="share_track">Dela spår med vänner</string>
+  <string name="delete_map">Ta bort kartan från ditt konto</string>
+  <string name="map_title">Karttitel:</string>
+  <string name="map_description">Kartbeskrivning:</string>
+  <string name="map_searchable_edit">Gör så att kartan och dess innehåll visas i sökresultat</string>
+  <string name="map_not_searchable_edit">Låt inte kartan och dess innehåll visas i sökresultat, men de kan ändå ses av andra genom en direktlänken</string>
+  <string name="map_searchable">Kartan och dess innehåll kommer att visas i sökresultat</string>
+  <string name="map_not_searchable">Varken kartan eller dess innehåll visas i sökresultat, men de kan ändå ses av andra genom en direktlänk</string>
+  <string name="close">Stäng</string>
+  <string name="edit">Ändra</string>
+  <string name="cancel">Avbryt</string>
+  <string name="save">Spara</string>
+
+  <!-- Sharing -->
+  <string name="share_map_subject">Jag vill dela en karta med dig</string>
+  <string name="share_map_body_format">Jag tror att du skulle vara intresserad av den här kartan:
+
+      %s</string>
+  <string name="send_track_subject">Jag vill dela ett spår med dig</string>
+  <string name="send_track_body_format">Jag tror att du skulle vara intresserad av det här spåret.
+
+    För att se det här spåret använd Google Earth eller något annat kartprogram.</string>
+
+  <!-- Visibility -->
+  <string name="public_map">Publik</string>
+  <string name="unlisted_map">Olistat</string>
+  <string name="mapslist_no_maps_available">Du har inge kartor än.</string>
+
+  <!-- Statistics View -->
+  <!-- Average Moving -->
+  <string name="average_moving_speed_label">Genomsnittlig rörlig hastighet</string>
+  <string name="average_moving_pace_label">Genomsnittlig rörligt tempo</string>
+
+  <!-- Average -->
+  <string name="average_speed_label">Genomsnittlig hastighet</string>
+  <string name="average_pace_label">Genomsnittligt tempo</string>
+
+  <string name="elevation_chart_name">Höjddiagram</string>
+  <string name="elevation_gain_label">Höjdvinst</string>
+  <string name="elevation_label">Höjt</string>
+  <string name="latitude_label">Latitud</string>
+  <string name="longitude_label">Longitud</string>
+
+  <!-- Min -->
+  <string name="min_elevation_label">Min höjd</string>
+  <string name="min_grade_label">Min lutning</string>
+  <string name="min_pace_label">Min tempo</string>
+
+  <!-- Max -->
+  <string name="max_elevation_label">Maxhöjd</string>
+  <string name="max_grade_label">Maxlutning</string>
+  <string name="max_speed_label">Maxhastighet</string>
+
+  <string name="loading_track">Laddar spår...</string>
+
+  <!-- Chart Settings -->
+  <string name="chart_settings">Diagraminställningar</string>
+  <!-- X Axis -->
+  <string name="x_axis">X Axel</string>
+  <string name="by_distance">Efter distans</string>
+  <string name="by_time">Efter tid</string>
+
+  <!-- Y Axis -->
+  <string name="y_axis">Y Axel</string>
+
+  <!-- Units -->
+  <!-- Time  -->
+  <string name="hour">timme</string>
+  <string name="hours">timmar</string>
+  <string name="hr">tim</string>
+  <string name="min">min</string>
+  <string name="minute">minut</string>
+  <string name="minutes">minuter</string>
+  <string name="second">sekund</string>
+  <string name="seconds">sekunder</string>
+
+  <!-- Distance -->
+  <string name="meter">m</string>
+  <string name="kilometer">km</string>
+  <string name="kilometers_long">kilometer</string>
+  <string name="feet">ft</string>
+  <string name="mile">mi</string>
+  <string name="miles_long">miles</string>
+
+  <!-- Speed and Pace -->
+  <string name="kilometer_per_hour">km/h</string>
+  <string name="kilometer_per_hour_long">kilometer per timme</string>
+  <string name="min_per_kilometer">min/km</string>
+  <string name="per_kilometer">per kilometer</string>
+  <string name="mile_per_hour">mi/h</string>
+  <string name="mile_per_hour_long">miles per timme</string>
+  <string name="min_per_mile">min/mi</string>
+  <string name="per_mile">per mile</string>
+
+  <!-- Stats Labels -->
+  <string name="moving_time_label">Rörelsetid</string>
+  <string name="total_time_label">Total tid</string>
+  <string name="time_label">Tid</string>
+  <string name="sd_unavail">SD otillgängligt</string>
+  <string name="speed">Hastighet</string>
+  <string name="start_trip">Du måste starta en tur.</string>
+  <string name="statistics">Statistik</string>
+  <string name="total_distance_label">Total distans</string>
+  <string name="distance_label">Distans</string>
+  <string name="unknown">-</string>
+  <string name="waiting">Väntar...</string>
+
+  <!-- End User License Agreement -->
+  <string name="eula_title">Licensavtal för slutanvändare</string>
+  <string name="accept">Acceptera</string>
+  <string name="decline">Avböj</string>
+
+  <!-- About -->
+  <string name="about">Om</string>
+  <string name="help">Hjälp</string>
+  <string name="about_team">Team:</string>
+  <string name="about_version">Version:</string>
+  <string name="about_email">Support</string>
+  <string name="about_support">Support:</string>
+
+  <!-- Send to Google -->
+  <string name="sendtogoogle_title">Skicka till...</string>
+  <string name="sendtogoogle_google_mymaps">Google My Maps</string>
+  <string name="sendtogoogle_google_docs">Google Docs</string>
+  <string name="sendtogoogle_send_now">Skicka nu</string>
+  <string name="sendtogoogle_create_new_map">Skapa en ny karta</string>
+  <string name="sendtogoogle_pick_existing_map">Välj en befintlig karta</string>
+  <string name="sendtogoogle_send_stats">Skicka spårstatistik</string>
+  <string name="sendtogoogle_send_stats_and_points">Skicka statistik och punkter</string>
+
+  <!-- Getting the account to upload to. -->
+  <string name="no_account_found_title">Inget konto hittades</string>
+  <string name="no_account_found">Inget konto hittades att ladda upp spåret till.</string>
+  <string name="choose_account_title">Välj konto</string>
+
+  <!-- SD card -->
+  <string name="io_no_external_storage_found">Ingen extern lagring hittades. Se till att ett SD-kort sitter i och att telefonen inte är monterad till en dator.</string>
+  <string name="io_write_failed">Kan inte skriva till filen.</string>
+  <string name="io_create_dir_failed">Kunde inte skapa katalog på SD-kort.</string>
+  <string name="io_write_finished">Slutförde skrivningen av spåret till SD-kort.</string>
+
+  <!-- VersionChecker -->
+  <string name="version_check_title">Uppgraderingskoll</string>
+  <string name="version_check_upgrade_button">Uppgradera nu</string>
+  <string name="version_check_continue_button">Fortsätt utan att uppgradera</string>
+  <string name="upgrade_required">Din version av %1$s kanske inte fungerar korrekt längre, och stöds inte längre. Uppgradera för att fortsätta använda %1$s.</string>
+  <string name="upgrade_recommended">Din version av %1$s kanske inte fungerar korrekt längre. Du kan uppgradera den nu, eller fortsätta att använda den på egen risk. Vissa funktioner såsom synkronisering kanske inte fungerar förrän du uppgraderar.</string>
+  <string name="upgrade_available">En ny version av %1$s finns tillgänglig. Du kan fortsätta använda din nuvarande version utan problem, men du kommer inte få de senaste funktionerna förrän du uppgraderar.</string>
+
+  <!-- Welcome -->
+  <string name="welcome">Välkommen</string>
+  <string name="welcome_read_later">Ok</string>
+  <string name="welcome_about">Om My Tracks</string>
+
+  <!-- Announcement -->
+  <string name="announce_no_distance">My Tracks ingen distans</string>
+  <!-- Format:
+  $1 : Distance label
+  $2 : Distance value (5)
+  $3 : Distance units (mi, km)
+  $4 : Time description (10 minutes 5 seconds)
+  $5 : Speed value (5.6) : Pace value (5 minutes 6 seconds)
+  $6 : Speed units (mph) : Pace units (per mile)
+  -->
+  <string name="announce_template">My Tracks %1$s %2$.2f %3$s på %4$s i %5$s %6$s</string>
+
+  <!-- Check Units -->
+  <string name="check_units_title">Mätenheter</string>
+  <string name="check_units_message">Som standard är enheterna metriska. Vill du ändra den inställningen?</string>
+
+  <!-- Signal Strength -->
+  <string name="error_rate"> Felfrekvens: %1$d</string>
+  <string name="signal_to_noise_ratio"> Signal / brus-förhållande: %1$d</string>
+  <string name="ecio"> Ec/lo: %1$.1f dB</string>
+  <string name="gsm_strength">GSM styrka: %1$d</string>
+  <string name="cdma_strength">CDMA styrka: %1$d dBm</string>
+  <string name="evdo_strength">EVDO styrka: %1$d dBm</string>
+</resources>
