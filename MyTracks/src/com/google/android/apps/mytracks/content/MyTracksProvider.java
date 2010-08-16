@@ -167,24 +167,25 @@ public class MyTracksProvider extends ContentProvider {
 
   @Override
   public int delete(Uri url, String where, String[] selectionArgs) {
-    if (urlMatcher.match(url) == TRACKPOINTS) {
-      Log.w(MyTracksProvider.TAG, "provider trackpoints delete!");
-      int count = db.delete(TRACKPOINTS_TABLE, where, selectionArgs);
-      getContext().getContentResolver().notifyChange(url, null, true);
-      return count;
-    } else if (urlMatcher.match(url) == TRACKS) {
-      Log.w(MyTracksProvider.TAG, "provider track delete!");
-      int count = db.delete(TRACKS_TABLE, where, selectionArgs);
-      getContext().getContentResolver().notifyChange(url, null, true);
-      return count;
-    } else if (urlMatcher.match(url) == WAYPOINTS) {
-      Log.w(MyTracksProvider.TAG, "provider waypoint delete!");
-      int count = db.delete(WAYPOINTS_TABLE, where, selectionArgs);
-      getContext().getContentResolver().notifyChange(url, null, true);
-      return count;
-    } else {
-      throw new IllegalArgumentException("Unknown URL " + url);
+    String table;
+    switch (urlMatcher.match(url)) {
+      case TRACKPOINTS:
+        table = TRACKPOINTS_TABLE;
+        break;
+      case TRACKS:
+        table = TRACKS_TABLE;
+        break;
+      case WAYPOINTS:
+        table = WAYPOINTS_TABLE;
+        break;
+      default:
+        throw new IllegalArgumentException("Unknown URL " + url);
     }
+
+    Log.w(MyTracksProvider.TAG, "provider delete in " + table + "!");
+    int count = db.delete(table, where, selectionArgs);
+    getContext().getContentResolver().notifyChange(url, null, true);
+    return count;
   }
 
   @Override
@@ -216,19 +217,49 @@ public class MyTracksProvider extends ContentProvider {
     } else {
       values = new ContentValues();
     }
-    if (urlMatcher.match(url) == TRACKPOINTS) {
-      return insertTrackPoint(url, values);
-    } else if (urlMatcher.match(url) == TRACKS) {
-      return insertTrack(url, values);
-    } else if (urlMatcher.match(url) == WAYPOINTS) {
-      return insertWaypoint(url, values);
-    } else {
-      throw new IllegalArgumentException("Unknown URL " + url);
+
+    int urlMatchType = urlMatcher.match(url);
+    return insertType(url, urlMatchType, values);
+  }
+
+  private Uri insertType(Uri url, int urlMatchType, ContentValues values) {
+    switch (urlMatchType) {
+      case TRACKPOINTS:
+        return insertTrackPoint(url, values);
+      case TRACKS:
+        return insertTrack(url, values);
+      case WAYPOINTS:
+        return insertWaypoint(url, values);
+      default:
+        throw new IllegalArgumentException("Unknown URL " + url);
     }
   }
 
+  @Override
+  public int bulkInsert(Uri url, ContentValues[] valuesBulk) {
+    Log.d(MyTracksProvider.TAG, "MyTracksProvider.bulkInsert");
+    int numInserted = 0;
+    try {
+      // Use a transaction in order to make the insertions run as a single batch
+      db.beginTransaction();
+
+      int urlMatch = urlMatcher.match(url);
+      for (numInserted = 0; numInserted < valuesBulk.length; numInserted++) {
+        ContentValues values = valuesBulk[numInserted];
+        if (values == null) { values = new ContentValues(); }
+
+        insertType(url, urlMatch, values);
+      }
+
+      db.setTransactionSuccessful();
+    } finally {
+      db.endTransaction();
+    }
+
+    return numInserted;
+  }
+
   private Uri insertTrackPoint(Uri url, ContentValues values) {
-    Log.d(MyTracksProvider.TAG, "MyTracksProvider.insertTrackPoint");
     boolean hasLat = values.containsKey(TrackPointsColumns.LATITUDE);
     boolean hasLong = values.containsKey(TrackPointsColumns.LONGITUDE);
     boolean hasTime = values.containsKey(TrackPointsColumns.TIME);
