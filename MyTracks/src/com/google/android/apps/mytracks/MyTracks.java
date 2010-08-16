@@ -1505,10 +1505,19 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     showDialogSafely(DIALOG_WRITE_PROGRESS);
     final TrackWriter writer =
         TrackWriterFactory.newWriter(this, providerUtils, trackId, format);
+
     String sep = System.getProperty("file.separator");
     String extension = format.getExtension();
-    File dir = new File(Environment.getExternalStorageDirectory()
-        + sep + extension + sep + "tmp");
+    StringBuilder dirNameBuilder = new StringBuilder();
+    dirNameBuilder.append(Environment.getExternalStorageDirectory());
+    dirNameBuilder.append(sep);
+    dirNameBuilder.append(MyTracksConstants.SDCARD_TOP_DIR);
+    dirNameBuilder.append(sep);
+    dirNameBuilder.append(extension);
+    dirNameBuilder.append(sep);
+    dirNameBuilder.append("tmp");
+
+    File dir = new File(dirNameBuilder.toString());
     writer.setDirectory(dir);
     writer.setOnCompletion(new Runnable() {
       public void run() {
