@@ -15,6 +15,7 @@
  */
 package com.google.android.apps.mytracks.content;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
@@ -266,6 +267,24 @@ public interface MyTracksProviderUtils {
    * @param track a given track
    */
   void updateTrack(Track track);
+
+  /**
+   * Creates a Track object from a given cursor.
+   *
+   * @param cursor a cursor pointing at a db or provider with tracks
+   * @return a new Track object
+   */
+  Track createTrack(Cursor cursor);
+
+  /**
+   * Creates the ContentValues for a given Track object.
+   *
+   * Note: If the track has an id<0 the id column will not be filled.
+   *
+   * @param track a given track object
+   * @return a filled in ContentValues object
+   */
+  ContentValues createContentValues(Track track);
 
   /**
    * Creates a location object from a given cursor.

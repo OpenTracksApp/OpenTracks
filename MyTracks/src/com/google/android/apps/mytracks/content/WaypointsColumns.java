@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks.content;
 
+import static com.google.android.apps.mytracks.content.ContentTypeIds.*;
+
 import android.net.Uri;
 import android.provider.BaseColumns;
 
@@ -66,4 +68,19 @@ public interface WaypointsColumns extends BaseColumns {
   public static final String ELEVATIONGAIN = "elevationgain";
   public static final String MINGRADE = "mingrade";
   public static final String MAXGRADE = "maxgrade";
+
+  public static final String[] BACKUP_COLUMNS = {
+      _ID, TRACKID, NAME, DESCRIPTION, CATEGORY, ICON, TYPE, LENGTH, DURATION,
+      STARTTIME, STARTID, STOPID, LATITUDE, LONGITUDE, ALTITUDE, BEARING, TIME,
+      ACCURACY, SPEED, TOTALDISTANCE, TOTALTIME, MOVINGTIME, AVGSPEED,
+      AVGMOVINGSPEED, MAXSPEED, MINELEVATION, MAXELEVATION, ELEVATIONGAIN,
+      MINGRADE, MAXGRADE };
+  public static final byte[] BACKUP_COLUMN_TYPES = {
+      LONG_TYPE_ID, LONG_TYPE_ID, STRING_TYPE_ID, STRING_TYPE_ID,
+      STRING_TYPE_ID, STRING_TYPE_ID, INT_TYPE_ID, FLOAT_TYPE_ID, LONG_TYPE_ID,
+      LONG_TYPE_ID, LONG_TYPE_ID, LONG_TYPE_ID, INT_TYPE_ID, INT_TYPE_ID,
+      FLOAT_TYPE_ID, FLOAT_TYPE_ID, LONG_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID,
+      FLOAT_TYPE_ID, LONG_TYPE_ID, LONG_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID,
+      FLOAT_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID,
+      FLOAT_TYPE_ID };
 }

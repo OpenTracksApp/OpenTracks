@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks.content;
 
+import static com.google.android.apps.mytracks.content.ContentTypeIds.*;
+
 import android.net.Uri;
 import android.provider.BaseColumns;
 
@@ -59,4 +61,16 @@ public interface TracksColumns extends BaseColumns {
   public static final String MINLON = "minlon";
   public static final String MAXLON = "maxlon";
   public static final String MAPID = "mapid";
+
+  public static final String[] BACKUP_COLUMNS = {
+      _ID, NAME, DESCRIPTION, CATEGORY, STARTID, STOPID, STARTTIME, STOPTIME,
+      NUMPOINTS, TOTALDISTANCE, TOTALTIME, MOVINGTIME, AVGSPEED, AVGMOVINGSPEED,
+      MAXSPEED, MINELEVATION, MAXELEVATION, ELEVATIONGAIN, MINGRADE, MAXGRADE,
+      MINLAT, MAXLAT, MINLON, MAXLON };
+  public static final byte[] BACKUP_COLUMN_TYPES = {
+      LONG_TYPE_ID, STRING_TYPE_ID, STRING_TYPE_ID, LONG_TYPE_ID, LONG_TYPE_ID,
+      LONG_TYPE_ID, LONG_TYPE_ID, INT_TYPE_ID, FLOAT_TYPE_ID, LONG_TYPE_ID,
+      LONG_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID,
+      FLOAT_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID, INT_TYPE_ID,
+      INT_TYPE_ID, INT_TYPE_ID, INT_TYPE_ID };
 }

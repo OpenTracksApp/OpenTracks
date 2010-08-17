@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks.content;
 
+import static com.google.android.apps.mytracks.content.ContentTypeIds.*;
+
 import android.net.Uri;
 import android.provider.BaseColumns;
 
@@ -42,4 +44,14 @@ public interface TrackPointsColumns extends BaseColumns {
   public static final String TIME = "time";
   public static final String ACCURACY = "accuracy";
   public static final String SPEED = "speed";
+
+  /** Columns that go into the backup. */
+  public static final String[] BACKUP_COLUMNS =
+      { _ID, TRACKID, LATITUDE, LONGITUDE, ALTITUDE, BEARING, TIME,
+        ACCURACY, SPEED };
+
+  /** Types of the columns that go into the backup. */
+  public static final byte[] BACKUP_COLUMN_TYPES =
+      { LONG_TYPE_ID, LONG_TYPE_ID, INT_TYPE_ID, INT_TYPE_ID, FLOAT_TYPE_ID,
+        FLOAT_TYPE_ID, LONG_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID };
 }

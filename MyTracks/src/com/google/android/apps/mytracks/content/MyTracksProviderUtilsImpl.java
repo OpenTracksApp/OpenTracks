@@ -74,15 +74,8 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     return values;
   }
 
-  /**
-   * Creates the ContentValues for a given Track object.
-   *
-   * Note: If the track has an id<0 the id column will not be filled.
-   *
-   * @param track a given track object
-   * @return a filled in ContentValues object
-   */
-  private static ContentValues createContentValues(Track track) {
+  @Override
+  public ContentValues createContentValues(Track track) {
     ContentValues values = new ContentValues();
     TripStatistics stats = track.getStatistics();
 
@@ -209,13 +202,8 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     return location;
   }
 
-  /**
-   * Creates a Track object from a given cursor.
-   *
-   * @param cursor a cursor pointing at a db or provider with tracks
-   * @return a new Track object
-   */
-  private static Track createTrack(Cursor cursor) {
+  @Override
+  public Track createTrack(Cursor cursor) {
     int idxId = cursor.getColumnIndexOrThrow(TracksColumns._ID);
     int idxName = cursor.getColumnIndexOrThrow(TracksColumns.NAME);
     int idxDescription =
