@@ -3,7 +3,7 @@
 	<name>MyTracksTest</name>
 	<comment></comment>
 	<projects>
-		<project>MyTracks</project>
+		<project>MyTracks-opensource</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

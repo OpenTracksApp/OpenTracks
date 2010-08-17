@@ -353,6 +353,11 @@ public class StatsActivity extends Activity
     }
 
     track = providerUtils.getTrack(selectedTrackId);
+    startTime = track.getStatistics().getStartTime();
+    if(!selectedTrackIsRecording()) {
+      utils.setTime(R.id.total_time_register,
+          track.getStatistics().getTotalTime());
+    }
     utils.setAllStats(track.getStatistics());
   }
 

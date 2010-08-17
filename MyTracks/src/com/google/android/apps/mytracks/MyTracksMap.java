@@ -165,11 +165,12 @@ public class MyTracksMap extends MapActivity
             final int idColumnIdx =
                 cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
             int i = 0;
-            // TODO We should update the samplingFrequency.
+            setSamplingFrequency(selectedTrack);
             do {
-              if (i % samplingFrequency == 0) {
+              Location location = providerUtils.createLocation(cursor);
+              if (i % samplingFrequency == 0 ||
+                  MyTracksUtils.isValidLocation(location)) {
                 lastSeenLocationId = cursor.getLong(idColumnIdx);
-                Location location = providerUtils.createLocation(cursor);
                 if (location != null) {
                   mapOverlay.addLocation(location);
                 }
@@ -199,16 +200,12 @@ public class MyTracksMap extends MapActivity
         return;
       }
       Cursor cursor = null;
+      long totalLocations = selectedTrack.getStopId() -
+          selectedTrack.getStartId();
+
       mapOverlay.clearPoints();
       lastSeenLocationId = selectedTrack.getStartId();
-      long totalLocations = selectedTrack.getStopId()
-          - selectedTrack.getStartId();
-  
-      // Limit the number of map points readings.
-      samplingFrequency =
-            (int) (1 +
-                totalLocations / MyTracksConstants.TARGET_DISPLAYED_TRACK_POINTS);
-      Log.i(MyTracksConstants.TAG, "Sampling locations: " + samplingFrequency);
+      setSamplingFrequency(selectedTrack);
       int bufferSize = 1024;
       try {
         int points = 0;
@@ -1040,5 +1037,16 @@ public class MyTracksMap extends MapActivity
   @Override
   public void onAccuracyChanged(Sensor s, int accuracy) {
     // do nothing
+  }
+  
+  private void setSamplingFrequency(Track track) {
+    long totalLocations = track.getStopId() - track.getStartId();
+
+    // Limit the number of map points readings.
+    samplingFrequency =
+          (int) (1 +
+              totalLocations / MyTracksConstants.TARGET_DISPLAYED_TRACK_POINTS);
+    Log.i(MyTracksConstants.TAG, "Sampling locations: " + samplingFrequency);
+
   }
 }
