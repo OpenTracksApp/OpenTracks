@@ -152,41 +152,7 @@ public class MyTracksMap extends MapActivity
       if (selectedTrack == null) {
         return;
       }
-      Cursor cursor = null;
-      try {
-        cursor = providerUtils.getLocationsCursor(
-            recordingTrackId,
-            lastSeenLocationId + 1,
-            MyTracksConstants.MAX_DISPLAYED_TRACK_POINTS
-                - selectedTrack.getLocations().size(),
-            true);
-        if (cursor != null) {
-          if (cursor.moveToLast()) {
-            final int idColumnIdx =
-                cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
-            int i = 0;
-            setSamplingFrequency(selectedTrack);
-            do {
-              Location location = providerUtils.createLocation(cursor);
-              if (i % samplingFrequency == 0 ||
-                  MyTracksUtils.isValidLocation(location)) {
-                lastSeenLocationId = cursor.getLong(idColumnIdx);
-                if (location != null) {
-                  mapOverlay.addLocation(location);
-                }
-              }
-              i++;
-            } while (cursor.moveToPrevious());
-          }
-        }
-      } catch (RuntimeException e) {
-        Log.w(MyTracksConstants.TAG, "Caught an unexpected exception: ", e);
-      } finally {
-        if (cursor != null) {
-          cursor.close();
-        }
-        mapView.postInvalidate();
-      }
+      readAllNewTrackPoints();
     }
   };
 
@@ -199,53 +165,9 @@ public class MyTracksMap extends MapActivity
       if (selectedTrack == null) {
         return;
       }
-      Cursor cursor = null;
-      long totalLocations = selectedTrack.getStopId() -
-          selectedTrack.getStartId();
-
       mapOverlay.clearPoints();
       lastSeenLocationId = selectedTrack.getStartId();
-      setSamplingFrequency(selectedTrack);
-      int bufferSize = 1024;
-      try {
-        int points = 0;
-        while (lastSeenLocationId < selectedTrack.getStopId()) {
-          cursor = providerUtils.getLocationsCursor(
-              selectedTrack.getId(), lastSeenLocationId, bufferSize, false);
-          if (cursor != null && cursor.moveToFirst()) {
-	          final int idColumnIdx =
-	              cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
-	          while (cursor.moveToNext()) {
-	            points++;
-	            Location location = providerUtils.createLocation(cursor);
-	            if (MyTracksUtils.isValidLocation(location)) {
-	              lastSeenLocationId = cursor.getLong(idColumnIdx);
-	              // Include a point if it fits one of the following criteria:
-	              // - Has the mod for the sampling frequency.
-	              // - Is the first point.
-	              // - Is the last point and we are not recording this track.
-	              if (points % samplingFrequency == 0 ||
-	                  points == 0 ||
-	                  (recordingTrackId != selectedTrack.getId() &&
-	                      points == (totalLocations - 1))) {
-	                mapOverlay.addLocation(location);
-	              }
-	            }
-	          }
-          } else {
-            lastSeenLocationId += bufferSize;
-          }
-          cursor.close();
-          cursor = null;
-        }
-      } catch (RuntimeException e) {
-        Log.w(MyTracksConstants.TAG, "Caught unexpected exception.", e);
-      } finally {
-        if (cursor != null) {
-          cursor.close();
-        }
-      }
-      mapView.postInvalidate();
+      readAllNewTrackPoints();
     }
   };
 
@@ -1048,5 +970,49 @@ public class MyTracksMap extends MapActivity
               totalLocations / MyTracksConstants.TARGET_DISPLAYED_TRACK_POINTS);
     Log.i(MyTracksConstants.TAG, "Sampling locations: " + samplingFrequency);
 
+  }
+  
+  private void readAllNewTrackPoints() {
+    Cursor cursor = null;
+    // Refetch the track to get the latest StopId
+    selectedTrack = providerUtils.getTrack(selectedTrack.getId());
+    long totalLocations = selectedTrack.getStopId() -
+        selectedTrack.getStartId();
+
+    setSamplingFrequency(selectedTrack);
+    int bufferSize = 1024;
+    int points = 0;
+    while (lastSeenLocationId < selectedTrack.getStopId()) {
+      cursor = providerUtils.getLocationsCursor(
+          selectedTrack.getId(), lastSeenLocationId, bufferSize, false);
+      if (cursor != null && cursor.moveToFirst()) {
+        final int idColumnIdx = cursor.getColumnIndexOrThrow(
+            TrackPointsColumns._ID);
+        while (cursor.moveToNext()) {
+          points++;
+          Location location = providerUtils.createLocation(cursor);
+          lastSeenLocationId = cursor.getLong(idColumnIdx);
+          // Include a point if it fits one of the following criteria:
+          // - Has the mod for the sampling frequency.
+          // - Is the first point.
+          // - Is the last point and we are not recording this track.
+          if (!MyTracksUtils.isValidLocation(location) ||
+              points % samplingFrequency == 0 ||
+              points == 0 ||
+              (recordingTrackId != selectedTrack.getId() &&
+                  points == (totalLocations - 1))) {
+            mapOverlay.addLocation(location);
+          }
+        }
+      } else {
+        lastSeenLocationId += bufferSize;
+      }
+      cursor.close();
+      cursor = null;
+    }
+    if (cursor != null) {
+      cursor.close();
+    }
+    mapView.postInvalidate();
   }
 }

@@ -1240,7 +1240,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * Starts the track recording service (if not already running) and binds to
    * it. Starts recording a new track.
    */
-  protected void startRecording() {
+  public void startRecording() {
     if (trackRecordingService == null) {
       startNewTrackRequested = true;
       Intent startIntent = new Intent(this, TrackRecordingService.class);
@@ -1266,7 +1266,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * Stops the track recording service and unbinds from it. Will display a toast
    * "Stopped recording" and pop up the Track Details activity.
    */
-  protected void stopRecording() {
+  public void stopRecording() {
     if (trackRecordingService != null) {
       try {
         trackRecordingService.endCurrentTrack();
@@ -1325,7 +1325,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    *
    * @param trackId the id of the track
    */
-  protected void setSelectedTrack(final long trackId) {
+  public void setSelectedTrack(final long trackId) {
     runOnUiThread(new Runnable() {
       public void run() {
         SharedPreferences prefs =

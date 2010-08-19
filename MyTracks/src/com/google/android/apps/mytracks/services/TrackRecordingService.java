@@ -68,8 +68,6 @@ public class TrackRecordingService extends Service implements LocationListener {
   private LocationManager locationManager;
   private WakeLock wakeLock;
 
-  private int minRecordingInterval =
-      MyTracksSettings.DEFAULT_MIN_RECORDING_INTERVAL;
   private int minRecordingDistance =
       MyTracksSettings.DEFAULT_MIN_RECORDING_DISTANCE;
   private int maxRecordingDistance =
@@ -110,6 +108,8 @@ public class TrackRecordingService extends Service implements LocationListener {
   private TaskExecuterManager signalManager;
   private SplitManager splitManager;
 
+  private PreferenceManager prefManager;
+  
   /**
    * The interval in milliseconds that we have requested to be notified of gps
    * readings.
@@ -626,96 +626,7 @@ public class TrackRecordingService extends Service implements LocationListener {
   public void onSharedPreferenceChanged(String key) {
     Log.d(MyTracksConstants.TAG,
         "TrackRecordingService.onSharedPreferenceChanged");
-    SharedPreferences sharedPreferences =
-        getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
-    if (sharedPreferences == null) {
-      Log.w(MyTracksConstants.TAG,
-          "TrackRecordingService: Couldn't get shared preferences.");
-      return;
-    }
-
-    if (key == null
-        || key.equals(getString(R.string.min_recording_distance_key))) {
-      minRecordingDistance = sharedPreferences.getInt(
-          getString(R.string.min_recording_distance_key),
-          MyTracksSettings.DEFAULT_MIN_RECORDING_DISTANCE);
-      Log.d(MyTracksConstants.TAG,
-          "TrackRecordingService: minRecordingDistance = "
-          + minRecordingDistance);
-    }
-    if (key == null
-        || key.equals(getString(R.string.max_recording_distance_key))) {
-      maxRecordingDistance = sharedPreferences.getInt(
-          getString(R.string.max_recording_distance_key),
-          MyTracksSettings.DEFAULT_MAX_RECORDING_DISTANCE);
-    }
-    if (key == null
-        || key.equals(getString(R.string.min_recording_interval_key))) {
-      minRecordingInterval = sharedPreferences.getInt(
-          getString(R.string.min_recording_interval_key),
-          MyTracksSettings.DEFAULT_MIN_RECORDING_INTERVAL);
-      switch (minRecordingInterval) {
-        case -2:
-          // Battery Miser
-          // min: 30 seconds
-          // max: 5 minutes
-          // minDist: 5 meters Choose battery life over moving time accuracy.
-          locationListenerPolicy =
-              new AdaptiveLocationListenerPolicy(30000, 300000, 5);
-          break;
-        case -1:
-          // High Accuracy
-          // min: 1 second
-          // max: 30 seconds
-          // minDist: 0 meters get all updates to properly measure moving time.
-          locationListenerPolicy =
-              new AdaptiveLocationListenerPolicy(1000, 30000, 0);
-          break;
-        default:
-          locationListenerPolicy =
-              new AbsoluteLocationListenerPolicy(minRecordingInterval * 1000);
-      }
-    }
-    if (key == null
-        || key.equals(getString(R.string.min_required_accuracy_key))) {
-      minRequiredAccuracy = sharedPreferences.getInt(
-          getString(R.string.min_required_accuracy_key),
-          MyTracksSettings.DEFAULT_MIN_REQUIRED_ACCURACY);
-    }
-    if (key == null
-        || key.equals(getString(R.string.announcement_frequency_key))) {
-      announcementFrequency =
-          sharedPreferences.getInt(getString(R.string.announcement_frequency_key),
-              -1);
-      if (mTTSAvailable) {
-        if (announcementFrequency == -1) {
-          if (executer != null) {
-            executer.shutdown();
-            executer = null;
-          }
-        } else {
-          if (executer == null) {
-            SafeStatusAnnouncerTask announcer =
-                new SafeStatusAnnouncerTask(this);
-            executer = new PeriodicTaskExecuter(announcer, this);
-          }
-          executer.scheduleTask(announcementFrequency * 60000);
-        }
-      }
-    }
-    if (key == null || key.equals(getString(R.string.split_frequency_key))) {
-      splitManager.setSplitFrequency(
-          sharedPreferences.getInt(getString(R.string.split_frequency_key), 0));
-    }
-    if (key == null
-        || key.equals(getString(R.string.signal_sampling_frequency_key))) {
-      signalManager.setFrequency(sharedPreferences.getInt(
-          getString(R.string.signal_sampling_frequency_key), -1), this);
-    }
-    if (key == null || key.equals(getString(R.string.metric_units_key))) {
-      splitManager.setMetricUnits(sharedPreferences.getBoolean(
-          getString(R.string.metric_units_key), true));
-    }
+    prefManager.onSharedPreferenceChanged(key);
 
     if (isRecording) {
       registerLocationListener();
@@ -748,6 +659,7 @@ public class TrackRecordingService extends Service implements LocationListener {
       signalManager =
           new TaskExecuterManager(-1, new SignalStrengthTask(this), this);
     }
+    prefManager = new PreferenceManager(this);
     onSharedPreferenceChanged(null);
     restoreStats();
     registerLocationListener();
@@ -982,5 +894,69 @@ public class TrackRecordingService extends Service implements LocationListener {
 
   long getRecordingTrackId() {
     return recordingTrackId;
+  }
+
+  public int getAnnouncementFrequency() {
+    return announcementFrequency;
+  }
+
+  public void setAnnouncementFrequency(int announcementFrequency) {
+    this.announcementFrequency = announcementFrequency;
+    if (mTTSAvailable) {
+      if (announcementFrequency == -1) {
+        if (executer != null) {
+          executer.shutdown();
+          executer = null;
+        }
+      } else {
+        if (executer == null) {
+          SafeStatusAnnouncerTask announcer =
+              new SafeStatusAnnouncerTask(this);
+          executer = new PeriodicTaskExecuter(announcer, this);
+        }
+        executer.scheduleTask(announcementFrequency * 60000);
+      }
+    }
+  }
+
+  public int getMaxRecordingDistance() {
+    return maxRecordingDistance;
+  }
+
+  public void setMaxRecordingDistance(int maxRecordingDistance) {
+    this.maxRecordingDistance = maxRecordingDistance;
+  }
+
+  public int getMinRecordingDistance() {
+    return minRecordingDistance;
+  }
+
+  public void setMinRecordingDistance(int minRecordingDistance) {
+    this.minRecordingDistance = minRecordingDistance;
+  }
+
+  public int getMinRequiredAccuracy() {
+    return minRequiredAccuracy;
+  }
+
+  public void setMinRequiredAccuracy(int minRequiredAccuracy) {
+    this.minRequiredAccuracy = minRequiredAccuracy;
+  }
+
+  public LocationListenerPolicy getLocationListenerPolicy() {
+    return locationListenerPolicy;
+  }
+
+  public void setLocationListenerPolicy(
+      LocationListenerPolicy locationListenerPolicy) {
+    this.locationListenerPolicy = locationListenerPolicy;
+  }
+
+  public SplitManager getSplitManager() {
+    return splitManager;
+  }
+
+  public TaskExecuterManager getSignalManager() {
+    return signalManager;
   }
 }
