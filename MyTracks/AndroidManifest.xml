@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.google.android.maps.mytracks"
+          android:versionCode="16"
+          android:versionName="1.0.15">
+  <application android:icon="@drawable/arrow_icon"
+               android:label="@string/app_name">
+    <uses-library android:name="com.google.android.maps" />
+
+    <provider android:name="com.google.android.apps.mytracks.content.MyTracksProvider"
+              android:multiprocess="true"
+              android:authorities="com.google.android.maps.mytracks" />
+
+
+    <activity android:name="com.google.android.apps.mytracks.MyTracks"
+              android:label="My Tracks"
+              android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|fontScale">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="file" />
+        <data android:mimeType="application/gpx+xml" />
+        <data android:mimeType="application/gpx" />
+        <data android:mimeType="application/vnd.google-earth.gpx" />
+        <data android:mimeType="application/vnd.google-earth.gpx+xml" />
+      </intent-filter>
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.MyTracksMap"
+              android:label="MyTracks" />
+
+    <activity android:name="com.google.android.apps.mymaps.MyMapsList"
+              android:label="@string/map_list_title"
+              android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|fontScale">
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.MyTracksList"
+              android:label="Recorded Tracks">
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.MyTracksWaypointsList"
+              android:label="Recorded Waypoints">
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.MyTracksDetails"
+              android:label="@string/trackdetails_title" />
+
+    <activity android:name="com.google.android.apps.mytracks.MyTracksWaypointDetails"
+              android:label="@string/waypointdetails_title" />
+
+    <activity android:name="com.google.android.apps.mytracks.MyTracksSettings"
+              android:label="@string/mytracks_settings" />
+
+    <activity android:name="com.google.android.apps.mytracks.StatsActivity"
+              android:label="@string/statistics"/>
+
+    <activity android:name="com.google.android.apps.mytracks.ChartActivity"
+              android:label="@string/elevation_label"/>
+
+    <activity android:name="com.google.android.apps.mytracks.WelcomeActivity"
+          android:label="@string/welcome"/>
+
+    <service android:name="com.google.android.apps.mytracks.services.TrackRecordingService"
+             android:process=":trackrecord"
+             android:label="Track Recording Service"
+             android:icon="@drawable/arrow_320"
+             android:enabled="true"
+             android:exported="true" />
+
+  </application>
+
+  <!-- Permissions for recording tracks and showing maps -->
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+  <!-- Permissions for uploading tracks -->
+  <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+  <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+  <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+  <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH" />
+  <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.local" />
+  <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.wise" />
+  <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.writely" />
+  <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+
+  <uses-sdk android:minSdkVersion="3"/>
+  <supports-screens
+          android:largeScreens="true"
+          android:normalScreens="true"
+          android:smallScreens="true"
+          android:anyDensity="true" />
+</manifest>
+

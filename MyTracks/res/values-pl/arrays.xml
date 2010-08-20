@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+  <!-- Task frequency -->
+  <string-array name="task_frequency_options">
+    <item>Brak</item>
+    <item>1 min</item>
+    <item>2 min</item>
+    <item>5 min</item>
+    <item>10 min</item>
+    <item>15 min</item>
+    <item>30 min</item>
+    <item>60 min</item>
+  </string-array>
+
+  <!-- Minimum recording distance -->
+  <string-array name="min_recording_distance_options">
+    <item>1 m</item>
+    <item>2 m</item>
+    <item>3 m</item>
+    <item>4 m</item>
+    <item>5 m (zalecane)</item>
+    <item>10 m</item>
+    <item>100 m</item>
+  </string-array>
+
+  <string-array name="min_recording_distance_options_ft">
+    <item>3 stopy</item>
+    <item>6 stóp</item>
+    <item>10 stóp</item>
+    <item>13 stóp</item>
+    <item>16 stóp (zalecane)</item>
+    <item>33 stopy</item>
+    <item>328 stóp</item>
+  </string-array>
+
+  <!-- Maximum recording distance -->
+  <string-array name="max_recording_distance_options">
+    <item>50 m</item>
+    <item>100 m</item>
+    <item>200 m (zalecane)</item>
+    <item>500 m</item>
+    <item>1000 m</item>
+    <item>5000 m</item>
+  </string-array>
+
+  <string-array name="max_recording_distance_options_ft">
+    <item>164 stopy</item>
+    <item>328 stóp</item>
+    <item>656 stóp (polecane)</item>
+    <item>1640 stóp</item>
+    <item>0.6 mili</item>
+    <item>3.1 mili</item>
+  </string-array>
+
+  <!-- Minimum recording interval -->
+  <string-array name="min_recording_interval_options">
+    <item>oszczędzanie baterii (adaptacyjny)</item>
+    <item>wysoka dokładność (adaptacyjny)</item>
+    <item>najwyższa (zalecane)</item>
+    <item>2 s</item>
+    <item>3 s</item>
+    <item>4 s</item>
+    <item>5 s</item>
+    <item>10 s</item>
+    <item>20 s</item>
+    <item>30 s</item>
+    <item>1 min</item>
+    <item>2 min</item>
+    <item>5 min</item>
+    <item>10 min</item>
+    <item>15 min</item>
+    <item>30 min</item>
+  </string-array>
+
+  <!-- Minimum required accuracy -->
+  <string-array name="min_required_accuracy_options">
+    <item>10 m (doskonał sygnał GPS)</item>
+    <item>20 m</item>
+    <item>50 m</item>
+    <item>100 m</item>
+    <item>200 m (zalecane)</item>
+    <item>500 m</item>
+    <item>1000 m</item>
+    <item>2000 m</item>
+    <item>5000 m (słaby sygnał GPS)</item>
+  </string-array>
+
+  <string-array name="min_required_accuracy_options_ft">
+    <item>33 stopy (doskonały sygnał GPS)</item>
+    <item>66 stóp</item>
+    <item>165 stóp</item>
+    <item>328 stóp</item>
+    <item>656 stóp (zalecany)</item>
+    <item>1640 ft</item>
+    <item>0.6 mili</item>
+    <item>1.2 mili</item>
+    <item>3.1 mili (słaby sygnał GPS)</item>
+  </string-array>
+
+  <!-- Split frequency -->
+  <string-array name="split_frequency_options">
+    <item>Brak dzielenia</item>
+    <item>100 km</item>
+    <item>50 km</item>
+    <item>25 km</item>
+    <item>10 km</item>
+    <item>5 km</item>
+    <item>1 km</item>
+    <item>60 min</item>
+    <item>30 min</item>
+    <item>15 min</item>
+    <item>10 min</item>
+    <item>5 min</item>
+    <item>2 min</item>
+    <item>1 min</item>
+  </string-array>
+
+  <string-array name="split_frequency_options_ft">
+    <item>Brak dzielenia</item>
+    <item>100 mi</item>
+    <item>50 mi</item>
+    <item>25 mi</item>
+    <item>10 mi</item>
+    <item>5 mi</item>
+    <item>1 mi</item>
+    <item>60 min</item>
+    <item>30 min</item>
+    <item>15 min</item>
+    <item>10 min</item>
+    <item>5 min</item>
+    <item>2 min</item>
+    <item>1 min</item>
+  </string-array>
+
+  <!-- Other non-preference arrays -->
+  <array name="activity_types">
+    <item>nieznany</item>
+    <item>typ mieszany</item>
+    <item>inny</item>
+
+    <item>bieanie</item>
+    <item>bieganie uliczne</item>
+    <item>bieganie na torze</item>
+    <item>bieganie terenowe</item>
+    <item>spacer</item>
+    <item>szybki spacer</item>
+    <item>wędrówka</item>
+    <item>wędrówka po szlaku</item>
+    <item>wędrówka poza szlakiem</item>
+    <item>wspinaczka</item>
+
+    <item>jazda rowerem</item>
+    <item>jazda po szosie</item>
+    <item>jazda górska</item>
+    <item>jazda na torze</item>
+
+    <item>łyżwiarstwo</item>
+    <item>łyżwiarstwo torowe</item>
+    <item>deskorolka</item>
+
+    <item>wędrówka po sniegu</item>
+    <item>narciarstwo</item>
+    <item>snowboard</item>
+    <item>saneczkastwo</item>
+    <item>żeglarstwo lodowe</item>
+
+    <item>żeglowanie</item>
+    <item>paddling</item>
+    <item>kajak</item>
+    <item>wioślarstwo</item>
+    <item>motorówka</item>
+    <item>prom</item>
+    <item>łódź zdalnie st.</item>
+    <item>surfing</item>
+    <item>wind surfing</item>
+    <item>kite surfing</item>
+    <item>narty wodne</item>
+    <item>wake boarding</item>
+
+    <item>samolot</item>
+    <item>wodolot</item>
+    <item>commercial airplane</item>
+    <item>helikopter</item>
+    <item>balon powietrzny</item>
+    <item>sterowiec</item>
+    <item>samolot zdalnie st.</item>
+    <item>helikopter zalnie st.</item>
+    <item>sky jumping</item>
+    <item>szybowiec</item>
+    <item>hang gliding</item>
+    <item>para gliding</item>
+
+    <item>jeździectwo</item>
+    <item>jazda konna</item>
+    <item>jazda na ośle</item>
+
+    <item>samochód</item>
+    <item>autobus</item>
+    <item>pociąg</item>
+    <item>motocykl</item>
+    <item>rower terenowy</item>
+    <item>ATV</item>
+
+    <item>żeglarstwo lądowe</item>
+    <item>ringo</item>
+    <item>ultimate ringo</item>
+  </array>
+
+  <array name="waypoint_types">
+    <item>bankomat</item>
+    <item>bank</item>
+    <item>bar</item>
+    <item>grill</item>
+    <item>budynek</item>
+    <item>przystanek autobusowy</item>
+    <item>kawa</item>
+    <item>ognisko</item>
+    <item>kemping</item>
+    <item>kościół</item>
+    <item>kawiarnia</item>
+    <item>delikatesy</item>
+    <item>woda pitna</item>
+    <item>spadające skały</item>
+    <item>prom</item>
+    <item>kominek</item>
+    <item>remiza strażacka</item>
+    <item>baza wędkarska</item>
+    <item>stcja paliw</item>
+    <item>pole golfowe</item>
+    <item>sklep spożywczy</item>
+    <item>fryzjer</item>
+    <item>zatoka</item>
+    <item>szlak</item>
+    <item>hotel</item>
+    <item>dom</item>
+    <item>informacja</item>
+    <item>skrzyżowanie</item>
+    <item>skrzynka pocztowa</item>
+    <item>market</item>
+    <item>miejsce zbiórki</item>
+    <item>opera</item>
+    <item>parking</item>
+    <item>poczta</item>
+    <item>grota</item>
+    <item>posterunek policji</item>
+    <item>przejazd kolejowy</item>
+    <item>restauracja</item>
+    <item>zakupy</item>
+    <item>widok</item>
+    <item>sklep</item>
+    <item>basen</item>
+    <item>telefon</item>
+    <item>teatr</item>
+    <item>toaleta</item>
+    <item>informacja turystyczna</item>
+    <item>tunel</item>
+    <item>drzewo</item>
+    <item>wodospad</item>
+    <item>zdrój</item>
+    <item>punkt orientacyjny</item>
+  </array>
+
+</resources>
