@@ -154,6 +154,9 @@ public class MyTracksOverlay extends Overlay {
     ArrayList<Waypoint> currentWaypoints = waypoints;
     for (int i = 1; i < currentWaypoints.size(); i++) {
       Waypoint wpt = currentWaypoints.get(i);
+      if (wpt == null) {
+        continue;
+      }
       Location loc = wpt.getLocation();
       if (loc == null) {
         continue;
