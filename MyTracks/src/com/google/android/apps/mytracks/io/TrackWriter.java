@@ -20,6 +20,7 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackBuffer;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.MyTracksUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -27,14 +28,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
-import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.util.HashSet;
 
 /**
  * The class which exports tracks to the SD card.
@@ -51,32 +50,12 @@ public class TrackWriter {
   private final MyTracksProviderUtils providerUtils;
   private final Track track;
   private final TrackFormatWriter writer;
+  private final FileUtils fileUtils;
   private Runnable onCompletion = null;
   private boolean success = false;
   private int errorMessage = -1;
   private File directory = null;
   private File file = null;
-
-  /**
-   * A set of characters that are prohibited from being in file names.
-   */
-  private static final HashSet<Character> PROHIBITED_CHARACTERS =
-      new HashSet<Character>();
-
-  static {
-    for (int i = 0; i < 48; i++) {
-      PROHIBITED_CHARACTERS.add(new Character((char) i));
-    }
-    for (int i = 58; i < 65; i++) {
-      PROHIBITED_CHARACTERS.add(new Character((char) i));
-    }
-    for (int i = 91; i < 97; i++) {
-      PROHIBITED_CHARACTERS.add(new Character((char) i));
-    }
-    for (int i = 123; i < 128; i++) {
-      PROHIBITED_CHARACTERS.add(new Character((char) i));
-    }
-  }
 
   public TrackWriter(Context context, MyTracksProviderUtils providerUtils,
       Track track, TrackFormatWriter writer) {
@@ -84,6 +63,7 @@ public class TrackWriter {
     this.providerUtils = providerUtils;
     this.track = track;
     this.writer = writer;
+    this.fileUtils = new FileUtils();
   }
 
   /**
@@ -149,26 +129,6 @@ public class TrackWriter {
    * ===============
    */
 
-  /**
-   * Makes sure the given directory exists, creating it if necessary.
-   *
-   * @param dir the directory to ensure exists
-   * @return True on success
-   */
-  private static boolean ensureExists(File dir) {
-    if (dir.exists()) {
-      return true;
-    }
-    File parent = dir.getParentFile();
-    if (parent == null) {
-      return true;
-    }
-    if (!ensureExists(parent)) {
-      return false;
-    }
-    return dir.mkdir();
-  }
-
   private void finished() {
     if (onCompletion != null) {
       runOnUiThread(onCompletion);
@@ -197,7 +157,7 @@ public class TrackWriter {
 
     // Make sure the name will work on FAT
     String fileName =
-      sanitizeName(track.getName()) + "." + writer.getExtension();
+        fileUtils.sanitizeName(track.getName() + "." + writer.getExtension());
     Log.i(MyTracksConstants.TAG, "Writing track to: " + fileName);
     try {
       writer.prepare(track, newOutputStream(fileName));
@@ -214,23 +174,16 @@ public class TrackWriter {
    */
   protected boolean canWriteFile() {
     if (directory == null) {
-      String sep = System.getProperty("file.separator");
-      StringBuilder dirNameBuilder = new StringBuilder();
-      dirNameBuilder.append(Environment.getExternalStorageDirectory());
-      dirNameBuilder.append(sep);
-      dirNameBuilder.append(MyTracksConstants.SDCARD_TOP_DIR);
-      dirNameBuilder.append(sep);
-      dirNameBuilder.append(writer.getExtension());
-      directory = newFile(dirNameBuilder.toString());
+      String dirName = fileUtils.buildExternalDirectoryPath(writer.getExtension());
+      directory = newFile(dirName);
     }
 
-    if (!Environment.getExternalStorageState()
-        .equals(Environment.MEDIA_MOUNTED)) {
+    if (!fileUtils.isSdCardAvailable()) {
       Log.i(MyTracksConstants.TAG, "Could not find SD card.");
       errorMessage = R.string.io_no_external_storage_found;
       return false;
     }
-    if (!ensureExists(directory)) {
+    if (!fileUtils.ensureDirectoryExists(directory)) {
       Log.i(MyTracksConstants.TAG, "Could not create export directory.");
       errorMessage = R.string.io_create_dir_failed;
       return false;
@@ -255,25 +208,6 @@ public class TrackWriter {
    */
   protected File newFile(String path) {
     return new File(path);
-  }
-
-  /**
-   * Normalizes the input string and make sure it is a valid fat32 file name.
-   */
-  static String sanitizeName(String name) {
-    StringBuilder cleaned = new StringBuilder();
-    for (int i = 0; i < name.length(); i++) {
-      char c = name.charAt(i);
-      if (!PROHIBITED_CHARACTERS.contains(c)) {
-        cleaned.append(c);
-      }
-    }
-
-    // Max = 260
-    // Boiler plate /[gpx|kml]/ .[gpx|kml] = 8
-    return (cleaned.length() > 252)
-        ? cleaned.substring(0, 252)
-        : cleaned.toString();
   }
 
   /**

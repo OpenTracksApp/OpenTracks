@@ -32,6 +32,7 @@ import com.google.android.apps.mytracks.io.TrackWriterFactory;
 import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
+import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -62,9 +63,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 import android.view.WindowManager.BadTokenException;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
@@ -1506,18 +1507,11 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     final TrackWriter writer =
         TrackWriterFactory.newWriter(this, providerUtils, trackId, format);
 
-    String sep = System.getProperty("file.separator");
+    FileUtils fileUtils = new FileUtils();
     String extension = format.getExtension();
-    StringBuilder dirNameBuilder = new StringBuilder();
-    dirNameBuilder.append(Environment.getExternalStorageDirectory());
-    dirNameBuilder.append(sep);
-    dirNameBuilder.append(MyTracksConstants.SDCARD_TOP_DIR);
-    dirNameBuilder.append(sep);
-    dirNameBuilder.append(extension);
-    dirNameBuilder.append(sep);
-    dirNameBuilder.append("tmp");
+    String dirName = fileUtils.buildExternalDirectoryPath(extension, "tmp");
 
-    File dir = new File(dirNameBuilder.toString());
+    File dir = new File(dirName);
     writer.setDirectory(dir);
     writer.setOnCompletion(new Runnable() {
       public void run() {
