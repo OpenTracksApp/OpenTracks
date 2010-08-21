@@ -64,6 +64,11 @@ public class GpxImporter extends DefaultHandler {
   static final SimpleDateFormat DATE_FORMAT3 = new SimpleDateFormat(
       "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
   static final SimpleTimeZone UTC_TIMEZONE = new SimpleTimeZone(0, "UTC");
+  static {
+    DATE_FORMAT1.setTimeZone(UTC_TIMEZONE);
+    DATE_FORMAT2.setTimeZone(UTC_TIMEZONE);
+    DATE_FORMAT3.setTimeZone(UTC_TIMEZONE);
+  }
 
   /*
    * GPX-XML tag names and attributes.
@@ -536,10 +541,8 @@ public class GpxImporter extends DefaultHandler {
     throw new SAXException(msg);
   }
 
-  private long parseTime(String timeContents, SimpleDateFormat formatParam) {
-    SimpleDateFormat format = formatParam;
+  private long parseTime(String timeContents, SimpleDateFormat format) {
     try {
-      format.setTimeZone(UTC_TIMEZONE);
       return format.parse(timeContents).getTime();
     } catch (ParseException ex) {
       return -1;

@@ -46,7 +46,7 @@ import java.util.TimeZone;
 public class CsvTrackWriter implements TrackFormatWriter {
   static final SimpleDateFormat TIMESTAMP_FORMAT =
       new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-  {
+  static {
     TIMESTAMP_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
   }
 
