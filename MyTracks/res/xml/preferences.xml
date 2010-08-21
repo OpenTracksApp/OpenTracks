@@ -109,4 +109,28 @@ limitations under the License.
         android:summaryOff="@string/settings_share_url_only_summary_off"
         android:defaultValue="false" />
   </PreferenceCategory>
+
+  <!-- Backup settings -->
+  <PreferenceScreen android:title="@string/settings_backup">
+    <PreferenceCategory android:title="@string/settings_sd_backup">
+      <Preference
+          android:key="backupToSd"
+          android:title="@string/settings_backup_to_sd"
+          android:summary="@string/settings_backup_to_sd_summary"
+          android:persistent="false" />
+   	  <Preference
+          android:key="restoreFromSd"
+          android:title="@string/settings_restore_from_sd"
+          android:summary="@string/settings_restore_from_sd_summary"
+          android:persistent="false" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/settings_cloud_backup">
+      <CheckBoxPreference
+          android:key="backupToCloud"
+          android:title="@string/settings_backup_to_cloud"
+          android:summaryOn="@string/settings_backup_to_cloud_summary_on"
+          android:summaryOff="@string/settings_backup_to_cloud_summary_off"
+          android:defaultValue="true" />
+    </PreferenceCategory>
+  </PreferenceScreen>
 </PreferenceScreen>

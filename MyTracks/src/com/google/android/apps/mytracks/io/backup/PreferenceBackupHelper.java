@@ -25,6 +25,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Map;
 
 /**
@@ -43,9 +44,26 @@ class PreferenceBackupHelper {
    * @return the corresponding byte array
    * @throws IOException if there are any errors while writing to the byte array
    */
-  public byte[] exportPreferences(SharedPreferences preferences) throws IOException {
+  public byte[] exportPreferences(SharedPreferences preferences)
+      throws IOException {
     ByteArrayOutputStream bufStream = new ByteArrayOutputStream(BUFFER_SIZE);
     DataOutputStream outWriter = new DataOutputStream(bufStream);
+    exportPreferences(preferences, outWriter);
+
+    return bufStream.toByteArray();
+  }
+
+  /**
+   * Exports all shared preferences from the given object into the given output
+   * stream.
+   *
+   * @param preferences the preferences to export
+   * @param bufStream the stream to write them to
+   * @throws IOException if there are any errors while writing the output
+   */
+  public void exportPreferences(
+      SharedPreferences preferences,
+      DataOutputStream outWriter) throws IOException {
     Map<String, ?> values = preferences.getAll();
 
     outWriter.writeInt(values.size());
@@ -53,8 +71,6 @@ class PreferenceBackupHelper {
       writePreference(entry.getKey(), entry.getValue(), outWriter);
     }
     outWriter.flush();
-
-    return bufStream.toByteArray();
   }
 
   /**
@@ -66,14 +82,27 @@ class PreferenceBackupHelper {
    * @throws IOException if there are any errors while reading
    */
   public boolean importPreferences(byte[] data, SharedPreferences preferences) throws IOException {
-    Editor editor = preferences.edit();
-    editor.clear();
-    
     ByteArrayInputStream bufStream = new ByteArrayInputStream(data);
     DataInputStream reader = new DataInputStream(bufStream);
 
-    int numPreferneces = reader.readInt();
-    for (int i = 0; i < numPreferneces; i++) {
+    return importPreferences(reader, preferences);
+  }
+
+  /**
+   * Imports all preferences from the given stream.
+   *
+   * @param reader the stream to read from
+   * @param preferences the shared preferences to edit
+   * @return whether the preference change was successful
+   * @throws IOException if there are any errors while reading
+   */
+  public boolean importPreferences(DataInputStream reader,
+      SharedPreferences preferences) throws IOException {
+    Editor editor = preferences.edit();
+    editor.clear();
+
+    int numPreferences = reader.readInt();
+    for (int i = 0; i < numPreferences; i++) {
       String name = reader.readUTF();
       byte typeId = reader.readByte();
       readAndSetPreference(name, typeId, reader, editor);

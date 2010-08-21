@@ -15,6 +15,7 @@
  */
 package com.google.android.apps.mytracks;
 
+import com.google.android.apps.mytracks.io.backup.ExternalFileBackup;
 import com.google.android.apps.mytracks.services.SafeStatusAnnouncerTask;
 import com.google.android.maps.mytracks.R;
 
@@ -23,6 +24,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -118,6 +120,35 @@ public class MyTracksSettings extends PreferenceActivity {
       announcementFrequency.setSummary(
           R.string.settings_announcement_not_available_summary);
     }
+
+    // Disable cloud backup options if not supported
+    if (MyTracksConstants.ANDROID_API_LEVEL < 8) {
+      // TODO: Merge by moving pref names to XML
+      CheckBoxPreference cloudBackupPreference = (CheckBoxPreference) findPreference("backupToCloud");
+      cloudBackupPreference.setEnabled(false);
+      cloudBackupPreference.setChecked(false);
+      cloudBackupPreference.setSummaryOff(R.string.settings_not_available_summary);
+    }
+
+    Preference backupNowPreference = findPreference("backupToSd");
+    backupNowPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+      @Override
+      public boolean onPreferenceClick(Preference preference) {
+        ExternalFileBackup helper = new ExternalFileBackup(MyTracksSettings.this);
+        helper.writeToDefaultFile();
+        return true;
+      }
+    });
+
+    Preference restoreNowPreference = findPreference("restoreFromSd");
+    restoreNowPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+      @Override
+      public boolean onPreferenceClick(Preference preference) {
+        ExternalFileBackup helper = new ExternalFileBackup(MyTracksSettings.this);
+        helper.restoreFromFileList();
+        return true;
+      }
+    });
   }
 
   /**

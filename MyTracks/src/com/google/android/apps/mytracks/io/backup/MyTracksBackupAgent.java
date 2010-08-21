@@ -84,12 +84,19 @@ public class MyTracksBackupAgent extends BackupAgent {
   @Override
   public void onBackup(ParcelFileDescriptor oldState, BackupDataOutput data,
       ParcelFileDescriptor newState) throws IOException {
+    SharedPreferences preferences = this.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+    // TODO: Pref name to XML
+    if (!preferences.getBoolean("backupToCloud", true)) {
+      Log.i(MyTracksConstants.TAG, "Cloud backup disabled - not doing it.");
+      return;
+    }
+
     // TODO: Trigger backup on: track stop, preference change, track edit
     // TODO: How to handle backup while recording? (track may still change)
     BackupStateManager backupStateManager = createStateManager(oldState, newState);
     BackupStateManager stateManager = backupStateManager;
 
-    backupPreferences(data);
+    backupPreferences(data, preferences);
     backupTracks(data, stateManager);
 
     stateManager.flushNewState();
@@ -100,8 +107,7 @@ public class MyTracksBackupAgent extends BackupAgent {
     return new BackupStateManager(oldState, newState);
   }
 
-  private void backupPreferences(BackupDataOutput data) throws IOException {
-    SharedPreferences preferences = this.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+  private void backupPreferences(BackupDataOutput data, SharedPreferences preferences) throws IOException {
     PreferenceBackupHelper preferenceDumper = createPreferenceBackupHelper();
     byte[] dumpedContents = preferenceDumper.exportPreferences(preferences);
     data.writeEntityHeader(PREFERENCES_ENTITY, dumpedContents.length);

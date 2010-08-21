@@ -165,9 +165,10 @@ limitations under the License.
   <string name="settings_recording">Recording</string>
   <string name="settings_sharing">Sharing</string>
 
+  <string name="settings_not_available_summary">Not available in your version of Android</string>
+
   <string name="settings_announcement_frequency">Announcement frequency</string>
   <string name="settings_announcement_frequency_summary">Minimum time between two voice announcements</string>
-  <string name="settings_announcement_not_available_summary">Text-to-speech announcements are not available in your version of Android</string>
 
   <string name="settings_min_recording_distance">Min distance between points</string>
   <string name="settings_min_recording_distance_summary">Smallest distance between two recordings of your position</string>
@@ -203,6 +204,24 @@ limitations under the License.
   <string name="settings_split_frequency">Split Frequency</string>
   <string name="settings_split_frequency_summary">Maximum time or distance after which a new split marker will be inserted</string>
   <string name="pace_label">Pace</string>
+
+  <string name="settings_backup">Backup</string>
+  <string name="settings_sd_backup">SD Card Backup</string>
+  <string name="settings_backup_to_sd">Backup now</string>
+  <string name="settings_backup_to_sd_summary">Write a full backup of all your tracks to the SD card</string>
+  <string name="settings_restore_from_sd">Restore now</string>
+  <string name="settings_restore_from_sd_summary">Restore a backup from the SD card</string>
+  <string name="settings_cloud_backup">Cloud Backup</string>
+  <string name="settings_backup_to_cloud">Enable cloud backup</string>
+  <string name="settings_backup_to_cloud_summary_on">Your data will be automatically copied to servers</string>
+  <string name="settings_backup_to_cloud_summary_off">Your data will NOT be copied to servers</string>
+
+  <!-- Backups -->
+  <string name="restore_overwrites_warning">Restoring a backup from the SD card will OVERWRITE all your current tracks. Are you sure?</string>
+  <string name="select_backup_to_restore">Select the backup to restore</string>
+  <string name="no_backups">No backups found.</string>
+  <string name="backup_write_progress_message">Writing all tracks to the SD card. This may take a while...</string>
+  <string name="backup_import_progress_message">Reading all tracks from the SD card. This may take a while...</string>
 
   <!-- MyTracksSky -->
   <string name="mytracks_sky">GPS Satellites</string>
@@ -364,8 +383,10 @@ limitations under the License.
   <!-- SD card -->
   <string name="io_no_external_storage_found">No external storage was found. Make sure that a SD card is inserted and that your phone is not mounted to a computer.</string>
   <string name="io_write_failed">Unable to write to file.</string>
+  <string name="io_read_failed">Unable to read from file.</string>
   <string name="io_create_dir_failed">Unable to create directory on SD card.</string>
-  <string name="io_write_finished">Finished writing the track to SD card.</string>
+  <string name="io_write_finished">Finished writing to SD card.</string>
+  <string name="io_read_finished">Finished reading from SD card.</string>
 
   <!-- VersionChecker -->
   <string name="version_check_title">Upgrade Check</string>
