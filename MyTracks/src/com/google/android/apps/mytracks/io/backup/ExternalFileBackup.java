@@ -48,6 +48,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Handler for writing or reading single-file backups.
@@ -55,11 +56,17 @@ import java.util.Date;
  * @author Rodrigo Damazio
  */
 public class ExternalFileBackup {
-  // Since the user sees this format, we use the local timezone
+  // Filename format - in UTC
   private static final SimpleDateFormat BACKUP_FILENAME_FORMAT =
       new SimpleDateFormat("'backup-'yyyy-MM-dd_HH-mm-ss");
+  static {
+    BACKUP_FILENAME_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
+  }
+
+  // Since the user sees this format, we use the local timezone
   private static final SimpleDateFormat DISPLAY_BACKUP_FORMAT =
       new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
   private static final String BACKUPS_SUBDIR = "backups";
   private static final int BACKUP_FILE_VERSION = 1;
 
