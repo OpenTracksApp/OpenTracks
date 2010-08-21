@@ -47,6 +47,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -69,6 +70,14 @@ public class ExternalFileBackup {
 
   private static final String BACKUPS_SUBDIR = "backups";
   private static final int BACKUP_FILE_VERSION = 1;
+  
+  private static final Comparator<String> REVERSE_STRING_COMPARATOR =
+      new Comparator<String>() {
+        @Override
+        public int compare(String s1, String s2) {
+          return s2.compareTo(s1);
+        }
+      };
 
   private final Context context;
   private final FileUtils fileUtils;
@@ -187,8 +196,7 @@ public class ExternalFileBackup {
         throw new IllegalStateException("All filenames should be good here");
       }
     }
-    // TODO: Invert order
-    Arrays.sort(backupFileDates);
+    Arrays.sort(backupFileDates, REVERSE_STRING_COMPARATOR);
 
     // Show a dialog for the user to pick which backup to restore
     Builder dialogBuilder = new AlertDialog.Builder(context);
