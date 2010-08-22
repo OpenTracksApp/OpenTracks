@@ -222,7 +222,7 @@ public class MyTracksOverlay extends Overlay {
     int h = mapView.getLatitudeSpan();
     int cx = mapView.getMapCenter().getLongitudeE6();
     int cy = mapView.getMapCenter().getLatitudeE6();
-    Rect rect = new Rect(cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2);
+    Rect rect = new Rect(cx - w, cy - h, cx + w, cy + h);
 
     Point pt = new Point();
     GeoPoint geoPoint;
@@ -238,14 +238,6 @@ public class MyTracksOverlay extends Overlay {
     int lastLocLon = (int) (points.get(0).getLongitude() * 1E6);
     int lastLocLat = (int) (points.get(0).getLatitude() * 1E6);
 
-    // Line decimation for dummies:
-    // Skip di additional points, where di depends on zoom level:
-    int di = 0;
-    int dl = 17 - mapView.getZoomLevel();
-    if (dl > 0) {
-      di += (dl * dl);
-    }
-
     // Loop over track points:
     path = new Path();
     for (int i = 1; i < points.size(); i++) {
@@ -256,23 +248,6 @@ public class MyTracksOverlay extends Overlay {
       }
       locLon = (int) (loc.getLongitude() * 1E6);
       locLat = (int) (loc.getLatitude() * 1E6);
-
-      // Skip to every n-th point (depends on zoom level, see above):
-      for (int j = 0; j < di && i < points.size() - 1; j++) {
-        // TODO Check the thread synchronization.
-        // There is no reason that points.get(i + 1) should be null but users
-        // have reported it causing null pointer exceptions.
-        if ((locLat > 90E6) ||
-            (lastLocLat > 90E6) ||
-            (points.get(i + 1) == null) ||
-            (points.get(i + 1).getLatitude() > 90)) {
-          break;
-        }
-        i++;
-        loc = points.get(i);
-        locLon = (int) (loc.getLongitude() * 1E6);
-        locLat = (int) (loc.getLatitude() * 1E6);
-      }
 
       // Draw a line segment if it's inside the viewing window:
       if (locLat < 90E6 && lastLocLat < 90E6) {
