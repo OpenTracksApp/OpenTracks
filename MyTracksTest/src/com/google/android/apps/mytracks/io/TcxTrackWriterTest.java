@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Tests for the GPX track exporter.
  *
- * @author Rodrigo Damazio
+ * @author Sandor Dornbush
  */
 public class TcxTrackWriterTest extends TrackFormatWriterTest {
 

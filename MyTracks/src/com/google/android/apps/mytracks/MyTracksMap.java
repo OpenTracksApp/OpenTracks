@@ -961,6 +961,11 @@ public class MyTracksMap extends MapActivity
     // do nothing
   }
   
+  /**
+   * Set the sampling frequency from the total number of points in the track.
+   *
+   * @param track The track to read the total number of points from.
+   */
   private void setSamplingFrequency(Track track) {
     long totalLocations = track.getStopId() - track.getStartId();
 
@@ -969,7 +974,6 @@ public class MyTracksMap extends MapActivity
           (int) (1 +
               totalLocations / MyTracksConstants.TARGET_DISPLAYED_TRACK_POINTS);
     Log.i(MyTracksConstants.TAG, "Sampling locations: " + samplingFrequency);
-
   }
   
   private void readAllNewTrackPoints() {
