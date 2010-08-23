@@ -15,11 +15,6 @@
  */
 package com.google.android.apps.mytracks.services;
 
-/**
- * A class that manages reading the shared preferences for the service.
- * 
- * @author Sandor Dornbush
- */
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -27,6 +22,11 @@ import com.google.android.apps.mytracks.MyTracksConstants;
 import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.maps.mytracks.R;
 
+/**
+ * A class that manages reading the shared preferences for the service.
+ * 
+ * @author Sandor Dornbush
+ */
 public class PreferenceManager {
   private TrackRecordingService service;
   private String announcement_frequency_key;
