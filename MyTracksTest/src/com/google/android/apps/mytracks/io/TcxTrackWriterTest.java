@@ -38,7 +38,7 @@ public class TcxTrackWriterTest extends TrackFormatWriterTest {
   /**
    * Asserts that the given tags describe the given points, in the same order.
    */
-  protected void assertTagsMatchPoints(List<Element> tags, Location... locs) {
+  private void assertTagsMatchPoints(List<Element> tags, Location... locs) {
     assertEquals(locs.length, tags.size());
     for (int i = 0; i < locs.length; i++) {
       Element tag = tags.get(i);
