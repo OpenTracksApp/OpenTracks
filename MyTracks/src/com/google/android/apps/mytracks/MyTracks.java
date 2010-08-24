@@ -24,7 +24,7 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.AuthManager;
 import com.google.android.apps.mytracks.io.AuthManagerFactory;
-import com.google.android.apps.mytracks.io.GpxImport;
+import com.google.android.apps.mytracks.io.GpxImporter;
 import com.google.android.apps.mytracks.io.SendToDocs;
 import com.google.android.apps.mytracks.io.SendToMyMaps;
 import com.google.android.apps.mytracks.io.TrackWriter;
@@ -62,23 +62,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
-import android.view.Window;
 import android.view.WindowManager.BadTokenException;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.Toast;
 
-import org.xml.sax.SAXException;
-
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Random;
 
 import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 /**
  * The super activity that embeds our sub activities.
@@ -895,13 +896,14 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     Thread t = new Thread() {
       @Override
       public void run() {
-        boolean success = false;
-        ArrayList<Track> tracks = new ArrayList<Track>();
         int message = R.string.success;
+
+        long[] trackIdsImported = null;
+
         try {
           try {
-            GpxImport.importGPXFile(fileName, tracks);
-            success = true;
+            InputStream is = new FileInputStream(fileName);
+            trackIdsImported = GpxImporter.importGPXFile(is, providerUtils);
           } catch (SAXException e) {
             Log.e(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
             message = R.string.error_generic;
@@ -918,15 +920,11 @@ public class MyTracks extends TabActivity implements OnTouchListener,
             Log.e(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
             message = R.string.error_out_of_memory;
           }
-          if (success) {
-            long trackId = -1;
-            for (Track track : tracks) {
-              Uri uri = providerUtils.insertTrackAndTrackPoints(track);
-              trackId = Long.parseLong(uri.getLastPathSegment());
-            }
-            setSelectedTrack(trackId);
+          if (trackIdsImported != null && trackIdsImported.length > 0) {
+            // select last track from import file
+            setSelectedTrack(trackIdsImported[trackIdsImported.length - 1]);
           } else {
-            MyTracks.this.showMessageDialog(message, false/*success*/);
+            MyTracks.this.showMessageDialog(message, false/* success */);
           }
         } finally {
           runOnUiThread(new Runnable() {
