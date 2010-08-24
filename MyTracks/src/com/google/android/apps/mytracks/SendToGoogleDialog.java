@@ -105,17 +105,25 @@ public class SendToGoogleDialog extends Dialog {
         getContext().getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
     if (prefs != null) {
       sendToMyMapsCheckBox.setChecked(
-          prefs.getBoolean(MyTracksSettings.SEND_TO_MYMAPS, true));
+          prefs.getBoolean(
+              getContext().getString(R.string.send_to_my_maps_key), true));
       sendToDocsCheckBox.setChecked(
-          prefs.getBoolean(MyTracksSettings.SEND_TO_DOCS, true));
+          prefs.getBoolean(
+              getContext().getString(R.string.send_to_docs_key), true));
       pickMapRadioButton.setChecked(
-          prefs.getBoolean(MyTracksSettings.PICK_EXISTING_MAP, false));
+          prefs.getBoolean(
+              getContext().getString(R.string.pick_existing_map_key), false));
       createNewMapRadioButton.setChecked(
-          !prefs.getBoolean(MyTracksSettings.PICK_EXISTING_MAP, false));
+          !prefs.getBoolean(
+              getContext().getString(R.string.pick_existing_map_key), false));
       sendStatsAndPointsRadioButton.setChecked(
-          prefs.getBoolean(MyTracksSettings.SEND_STATS_AND_POINTS, false));
+          prefs.getBoolean(
+              getContext().getString(R.string.send_stats_and_points_key),
+              false));
       sendStatsRadioButton.setChecked(
-          !prefs.getBoolean(MyTracksSettings.SEND_STATS_AND_POINTS, false));
+          !prefs.getBoolean(
+              getContext().getString(R.string.send_stats_and_points_key),
+              false));
     }
   }
 
@@ -127,13 +135,16 @@ public class SendToGoogleDialog extends Dialog {
       Editor editor = prefs.edit();
       if (editor != null) {
         editor.putBoolean(
-            MyTracksSettings.SEND_TO_MYMAPS, sendToMyMapsCheckBox.isChecked());
+            getContext().getString(R.string.send_to_my_maps_key),
+            sendToMyMapsCheckBox.isChecked());
         editor.putBoolean(
-            MyTracksSettings.SEND_TO_DOCS, sendToDocsCheckBox.isChecked());
+            getContext().getString(R.string.send_to_docs_key),
+            sendToDocsCheckBox.isChecked());
         editor.putBoolean(
-            MyTracksSettings.PICK_EXISTING_MAP, pickMapRadioButton.isChecked());
+            getContext().getString(R.string.pick_existing_map_key),
+            pickMapRadioButton.isChecked());
         editor.putBoolean(
-            MyTracksSettings.SEND_STATS_AND_POINTS,
+            getContext().getString(R.string.send_stats_and_points_key),
             sendStatsAndPointsRadioButton.isChecked());
         editor.commit();
       }

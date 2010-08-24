@@ -62,7 +62,7 @@ public class MyTracksDeleteAllTracks extends Handler {
             SharedPreferences prefs =
                 context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putLong(MyTracksSettings.SELECTED_TRACK, -1);
+            editor.putLong(context.getString(R.string.selected_track_key), -1);
             editor.commit();
             if (done != null) {
               Handler h = new Handler();

@@ -23,6 +23,7 @@ import com.google.android.apps.mytracks.content.TrackPointsColumns;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.io.backup.BackupStateManager.TrackState;
+import com.google.android.maps.mytracks.R;
 
 import android.app.backup.BackupAgent;
 import android.app.backup.BackupDataInput;
@@ -85,8 +86,7 @@ public class MyTracksBackupAgent extends BackupAgent {
   public void onBackup(ParcelFileDescriptor oldState, BackupDataOutput data,
       ParcelFileDescriptor newState) throws IOException {
     SharedPreferences preferences = this.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
-    // TODO: Pref name to XML
-    if (!preferences.getBoolean("backupToCloud", true)) {
+    if (!preferences.getBoolean(getString(R.string.backup_to_cloud_key), true)) {
       Log.i(MyTracksConstants.TAG, "Cloud backup disabled - not doing it.");
       return;
     }

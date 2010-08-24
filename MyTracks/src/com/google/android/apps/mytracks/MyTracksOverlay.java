@@ -55,6 +55,7 @@ public class MyTracksOverlay extends Overlay {
   private final Paint errorCirclePaint;
   private final Context context;
   private final ArrayList<Waypoint> waypoints = new ArrayList<Waypoint>();
+  private final ArrayList<Location> points = new ArrayList<Location>(1024);
 
   private Track selectedTrack;
   private int lastHeading = 0;
@@ -128,12 +129,27 @@ public class MyTracksOverlay extends Overlay {
     return selectedTrack;
   }
 
+  /**
+   * Add a location to the map overlay.
+   * 
+   * NOTE: this method takes ownership of this location and may change it.
+   * 
+   * @param l the location to add
+   */
+  public void addLocation(Location l) {
+    points.add(l);
+  }
+  
   public void addWaypoint(Waypoint wpt) {
     waypoints.add(wpt);
   }
 
   public void clearWaypoints() {
     waypoints.clear();
+  }
+
+  public void clearPoints() {
+    points.clear();
   }
 
   public void setShowEndMarker(boolean showEndMarker) {
@@ -153,7 +169,8 @@ public class MyTracksOverlay extends Overlay {
     // Draw the waypoints:
     ArrayList<Waypoint> currentWaypoints = waypoints;
     for (int i = 1; i < currentWaypoints.size(); i++) {
-      Location loc = currentWaypoints.get(i).getLocation();
+      Waypoint wpt = currentWaypoints.get(i);
+      Location loc = wpt.getLocation();
       if (loc == null) {
         continue;
       }
@@ -162,7 +179,7 @@ public class MyTracksOverlay extends Overlay {
       mapView.getProjection().toPixels(geoPoint, pt);
       canvas.save();
       canvas.translate(pt.x - (markerWidth / 2) + 3, pt.y - (markerHeight));
-      if (currentWaypoints.get(i).getType() == Waypoint.TYPE_STATISTICS) {
+      if (wpt.getType() == Waypoint.TYPE_STATISTICS) {
         statsMarker.draw(canvas);
       } else {
         waypointMarker.draw(canvas);
@@ -196,7 +213,6 @@ public class MyTracksOverlay extends Overlay {
     if (track == null) {
       return;
     }
-    ArrayList<Location> points = track.getLocations();
     if (points.size() < 2) {
       return;
     }
@@ -206,7 +222,7 @@ public class MyTracksOverlay extends Overlay {
     int h = mapView.getLatitudeSpan();
     int cx = mapView.getMapCenter().getLongitudeE6();
     int cy = mapView.getMapCenter().getLatitudeE6();
-    Rect rect = new Rect(cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2);
+    Rect rect = new Rect(cx - w, cy - h, cx + w, cy + h);
 
     Point pt = new Point();
     GeoPoint geoPoint;
@@ -222,14 +238,6 @@ public class MyTracksOverlay extends Overlay {
     int lastLocLon = (int) (points.get(0).getLongitude() * 1E6);
     int lastLocLat = (int) (points.get(0).getLatitude() * 1E6);
 
-    // Line decimation for dummies:
-    // Skip di additional points, where di depends on zoom level:
-    int di = 0;
-    int dl = 17 - mapView.getZoomLevel();
-    if (dl > 0) {
-      di += (dl * dl);
-    }
-
     // Loop over track points:
     path = new Path();
     for (int i = 1; i < points.size(); i++) {
@@ -240,23 +248,6 @@ public class MyTracksOverlay extends Overlay {
       }
       locLon = (int) (loc.getLongitude() * 1E6);
       locLat = (int) (loc.getLatitude() * 1E6);
-
-      // Skip to every n-th point (depends on zoom level, see above):
-      for (int j = 0; j < di && i < points.size() - 1; j++) {
-        // TODO Check the thread synchronization.
-        // There is no reason that points.get(i + 1) should be null but users
-        // have reported it causing null pointer exceptions.
-        if ((locLat > 90E6) ||
-            (lastLocLat > 90E6) ||
-            (points.get(i + 1) == null) ||
-            (points.get(i + 1).getLatitude() > 90)) {
-          break;
-        }
-        i++;
-        loc = points.get(i);
-        locLon = (int) (loc.getLongitude() * 1E6);
-        locLat = (int) (loc.getLatitude() * 1E6);
-      }
 
       // Draw a line segment if it's inside the viewing window:
       if (locLat < 90E6 && lastLocLat < 90E6) {

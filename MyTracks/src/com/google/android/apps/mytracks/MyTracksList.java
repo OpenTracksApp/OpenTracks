@@ -90,6 +90,8 @@ public class MyTracksList extends ListActivity
                 R.string.tracklist_share_kml_file);
             share.add(0, MyTracksConstants.MENU_SHARE_CSV_FILE, 0,
                 R.string.tracklist_share_csv_file);
+            share.add(0, MyTracksConstants.MENU_SHARE_TCX_FILE, 0,
+                R.string.tracklist_share_tcx_file);
             SubMenu save = menu.addSubMenu(0,
                 MyTracksConstants.MENU_WRITE_TO_SD_CARD, 0,
                 R.string.tracklist_write_to_sd);
@@ -99,6 +101,8 @@ public class MyTracksList extends ListActivity
                 R.string.tracklist_save_as_kml);
             save.add(0, MyTracksConstants.MENU_SAVE_CSV_FILE, 0,
                 R.string.tracklist_save_as_csv);
+            save.add(0, MyTracksConstants.MENU_SAVE_TCX_FILE, 0,
+                R.string.tracklist_save_as_tcx);
             menu.add(0, MyTracksConstants.MENU_DELETE, 0,
                 R.string.tracklist_delete_track);
           }
@@ -111,14 +115,16 @@ public class MyTracksList extends ListActivity
     if (key == null) {
       return;
     }
-    if (key.equals(MyTracksSettings.METRIC_UNITS)) {
-      metricUnits = sharedPreferences.getBoolean(MyTracksSettings.METRIC_UNITS, true);
+    if (key.equals(getString(R.string.metric_units_key))) {
+      metricUnits = sharedPreferences.getBoolean(
+          getString(R.string.metric_units_key), true);
       if (tracksCursor != null && !tracksCursor.isClosed()) {
         tracksCursor.requery();
       }
     }
-    if (key.equals(MyTracksSettings.RECORDING_TRACK)) {
-      recordingTrackId = sharedPreferences.getLong(MyTracksSettings.RECORDING_TRACK, -1);
+    if (key.equals(getString(R.string.recording_track_key))) {
+      recordingTrackId = sharedPreferences.getLong(
+          getString(R.string.recording_track_key), -1);
     }
   }
 
@@ -193,9 +199,10 @@ public class MyTracksList extends ListActivity
     SharedPreferences preferences =
         getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
     preferences.registerOnSharedPreferenceChangeListener(this);
-    metricUnits = preferences.getBoolean(MyTracksSettings.METRIC_UNITS, true);
+    metricUnits =
+        preferences.getBoolean(getString(R.string.metric_units_key), true);
     recordingTrackId =
-        preferences.getLong(MyTracksSettings.RECORDING_TRACK, -1);
+        preferences.getLong(getString(R.string.recording_track_key), -1);
 
     tracksCursor = getContentResolver().query(
         TracksColumns.CONTENT_URI, null, null, null, "_id DESC");
