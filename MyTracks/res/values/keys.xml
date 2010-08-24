@@ -41,5 +41,4 @@ limitations under the License.
   <string name="split_frequency_key">splitFrequency</string>
   <string name="backup_to_sd_key">backupToSd</string>
   <string name="restore_from_sd_key">restoreFromSd</string>
-  <string name="backup_to_cloud_key">backupToCloud</string>
 </resources>

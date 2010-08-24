@@ -225,10 +225,6 @@ limitations under the License.
   <string name="settings_backup_to_sd_summary">Write a full backup of all your tracks to the SD card</string>
   <string name="settings_restore_from_sd">Restore now</string>
   <string name="settings_restore_from_sd_summary">Restore a backup from the SD card</string>
-  <string name="settings_cloud_backup">Cloud Backup</string>
-  <string name="settings_backup_to_cloud">Enable cloud backup</string>
-  <string name="settings_backup_to_cloud_summary_on">Your data will be automatically copied to servers</string>
-  <string name="settings_backup_to_cloud_summary_off">Your data will NOT be copied to servers</string>
 
   <!-- Backups -->
   <string name="restore_overwrites_warning">Restoring a backup from the SD card will OVERWRITE all your current tracks. Are you sure?</string>

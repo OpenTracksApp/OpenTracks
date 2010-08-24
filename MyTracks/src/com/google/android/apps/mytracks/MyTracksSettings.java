@@ -102,16 +102,9 @@ public class MyTracksSettings extends PreferenceActivity {
           R.string.settings_announcement_not_available_summary);
     }
 
-    // Disable cloud backup options if not supported
-    if (MyTracksConstants.ANDROID_API_LEVEL < 8) {
-      CheckBoxPreference cloudBackupPreference =
-          (CheckBoxPreference) findPreference(getString(R.string.backup_to_cloud_key));
-      cloudBackupPreference.setEnabled(false);
-      cloudBackupPreference.setChecked(false);
-      cloudBackupPreference.setSummaryOff(R.string.settings_not_available_summary);
-    }
-
+    // Add actions to the backup preferences
     Preference backupNowPreference = findPreference(getString(R.string.backup_to_sd_key));
+    Preference restoreNowPreference = findPreference(getString(R.string.restore_from_sd_key));
     backupNowPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
       @Override
       public boolean onPreferenceClick(Preference preference) {
@@ -120,8 +113,6 @@ public class MyTracksSettings extends PreferenceActivity {
         return true;
       }
     });
-
-    Preference restoreNowPreference = findPreference(getString(R.string.restore_from_sd_key));
     restoreNowPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
       @Override
       public boolean onPreferenceClick(Preference preference) {

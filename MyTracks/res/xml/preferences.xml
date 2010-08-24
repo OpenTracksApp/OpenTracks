@@ -124,13 +124,5 @@ limitations under the License.
           android:summary="@string/settings_restore_from_sd_summary"
           android:persistent="false" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/settings_cloud_backup">
-      <CheckBoxPreference
-          android:key="@string/backup_to_cloud_key"
-          android:title="@string/settings_backup_to_cloud"
-          android:summaryOn="@string/settings_backup_to_cloud_summary_on"
-          android:summaryOff="@string/settings_backup_to_cloud_summary_off"
-          android:defaultValue="true" />
-    </PreferenceCategory>
   </PreferenceScreen>
 </PreferenceScreen>
