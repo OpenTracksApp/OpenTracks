@@ -65,6 +65,9 @@
     <activity android:name="com.google.android.apps.mytracks.WelcomeActivity"
               android:label="@string/welcome"/>
 
+    <activity android:name="com.google.android.apps.mytracks.io.backup.BackupActivity"
+              android:label="@string/settings_backup" />
+
     <service android:name="com.google.android.apps.mytracks.services.TrackRecordingService"
              android:process=":trackrecord"
              android:label="Track Recording Service"

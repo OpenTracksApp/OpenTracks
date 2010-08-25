@@ -222,16 +222,17 @@ limitations under the License.
   <string name="settings_backup">Backup</string>
   <string name="settings_sd_backup">SD Card Backup</string>
   <string name="settings_backup_to_sd">Backup now</string>
-  <string name="settings_backup_to_sd_summary">Write a full backup of all your tracks to the SD card</string>
+  <string name="settings_backup_to_sd_summary">Write a full copy of all your tracks and settings to the SD card</string>
   <string name="settings_restore_from_sd">Restore now</string>
-  <string name="settings_restore_from_sd_summary">Restore a backup from the SD card</string>
+  <string name="settings_restore_from_sd_summary">Restore all tracks and settings from the SD card</string>
+  <string name="settings_no_backup_while_recording">Cannot manipulate backups while recording a track.</string>
 
   <!-- Backups -->
-  <string name="restore_overwrites_warning">Restoring a backup from the SD card will OVERWRITE all your current tracks. Are you sure?</string>
+  <string name="restore_overwrites_warning">Restoring a backup from the SD card will OVERWRITE all your current tracks and settings. Are you sure?</string>
   <string name="select_backup_to_restore">Select the backup to restore</string>
   <string name="no_backups">No backups found.</string>
-  <string name="backup_write_progress_message">Writing all tracks to the SD card. This may take a while...</string>
-  <string name="backup_import_progress_message">Reading all tracks from the SD card. This may take a while...</string>
+  <string name="backup_write_progress_message">Writing all tracks and settings to the SD card. This may take a while...</string>
+  <string name="backup_import_progress_message">Reading all tracks and settings from the SD card. This may take a while...</string>
 
   <!-- MyTracksSky -->
   <string name="mytracks_sky">GPS Satellites</string>

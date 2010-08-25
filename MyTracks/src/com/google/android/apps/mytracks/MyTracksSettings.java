@@ -15,10 +15,13 @@
  */
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.io.backup.ExternalFileBackup;
+import com.google.android.apps.mytracks.io.backup.BackupActivity;
+import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
 import com.google.android.apps.mytracks.services.SafeStatusAnnouncerTask;
 import com.google.android.maps.mytracks.R;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -50,6 +53,9 @@ public class MyTracksSettings extends PreferenceActivity {
   public static final int DEFAULT_SPLIT_FREQUENCY = 0;
 
   private static boolean mTTSAvailable;
+  private BackupPreferencesListener backupListener;
+
+  private SharedPreferences preferences;
 
   /* establish whether the tts class is available to us */
   static {
@@ -71,6 +77,11 @@ public class MyTracksSettings extends PreferenceActivity {
     PreferenceManager preferenceManager = getPreferenceManager();
     preferenceManager.setSharedPreferencesName(SETTINGS_NAME);
     preferenceManager.setSharedPreferencesMode(0);
+
+    // Set up automatic preferences backup
+    backupListener = BackupPreferencesListener.create(this);
+    preferences = preferenceManager.getSharedPreferences();
+    preferences.registerOnSharedPreferenceChangeListener(backupListener);
 
     // Load the preferences to be displayed
     addPreferencesFromResource(R.xml.preferences);
@@ -101,26 +112,53 @@ public class MyTracksSettings extends PreferenceActivity {
       announcementFrequency.setSummary(
           R.string.settings_announcement_not_available_summary);
     }
+  }
 
-    // Add actions to the backup preferences
+  @Override
+  protected void onResume() {
+    super.onResume();
+
     Preference backupNowPreference = findPreference(getString(R.string.backup_to_sd_key));
     Preference restoreNowPreference = findPreference(getString(R.string.restore_from_sd_key));
+
+    // If recording, disable backup/restore (we don't want to get to inconsistent states)
+    boolean recording = preferences.getLong(getString(R.string.recording_track_key), -1) != -1;
+    backupNowPreference.setEnabled(!recording);
+    restoreNowPreference.setEnabled(!recording);
+    backupNowPreference.setSummary(
+        recording ? R.string.settings_no_backup_while_recording
+                  : R.string.settings_backup_to_sd_summary);
+    restoreNowPreference.setSummary(
+        recording ? R.string.settings_no_backup_while_recording
+                  : R.string.settings_restore_from_sd_summary);
+
+    // Add actions to the backup preferences
     backupNowPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
       @Override
       public boolean onPreferenceClick(Preference preference) {
-        ExternalFileBackup helper = new ExternalFileBackup(MyTracksSettings.this);
-        helper.writeToDefaultFile();
+        Intent intent = new Intent(MyTracksSettings.this, BackupActivity.class);
+        intent.setAction(BackupActivity.BACKUP_ACTION);
+        startActivity(intent);
         return true;
       }
     });
     restoreNowPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
       @Override
       public boolean onPreferenceClick(Preference preference) {
-        ExternalFileBackup helper = new ExternalFileBackup(MyTracksSettings.this);
-        helper.restoreFromFileList();
+        Intent intent = new Intent(MyTracksSettings.this, BackupActivity.class);
+        intent.setAction(BackupActivity.RESTORE_ACTION);
+        startActivity(intent);
         return true;
       }
     });
+  }
+
+  @Override
+  protected void onDestroy() {
+    getPreferenceManager().getSharedPreferences()
+        .unregisterOnSharedPreferenceChangeListener(backupListener);
+
+    super.onPause();
   }
 
   /**

@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-  <!-- These are constants used internally for preferences - DO NOT TRANSLATE -->
+  <!-- Keys for application preferences - DO NOT TRANSLATE -->
   <string name="announcement_frequency_key">announcementFrequency</string>
   <string name="bluetooth_device_key">bluetoothDevice</string>
   <string name="bluetooth_pairing_key">bluetoothPairing</string>
@@ -28,9 +28,7 @@ limitations under the License.
   <string name="min_required_accuracy_key">minRequiredAccuracy</string>
   <string name="modular_stats_display_key">modularStatsDisplay</string>
   <string name="pick_existing_map_key">pickExistingMap</string>
-  <string name="recording_track_key">recordingTrack</string>
   <string name="report_speed_key">reportSpeed</string>
-  <string name="selected_track_key">selectedTrack</string>
   <string name="send_stats_and_points_key">sendStatsAndPoints</string>
   <string name="send_to_docs_key">sendToDocs</string>
   <string name="send_to_my_maps_key">sendToMyMaps</string>
@@ -39,6 +37,12 @@ limitations under the License.
   <string name="share_url_only_key">shareUrlOnly</string>
   <string name="signal_sampling_frequency_key">signalSamplingFrequency</string>
   <string name="split_frequency_key">splitFrequency</string>
+
+  <!-- Preference keys which keep transient state (not user preferences) - DO NOT TRANSLATE -->
+  <string name="recording_track_key">recordingTrack</string>
+  <string name="selected_track_key">selectedTrack</string>
+
+  <!-- Keys for non-persisted preferences - DO NOT TRANSLATE -->
   <string name="backup_to_sd_key">backupToSd</string>
   <string name="restore_from_sd_key">restoreFromSd</string>
 </resources>
