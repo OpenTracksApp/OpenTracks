@@ -141,7 +141,8 @@ class ExternalFileBackup {
    * Synchronously writes a backup to the given file.
    */
   private void writeToFile(File outputFile) throws IOException {
-    Log.d(MyTracksConstants.TAG, "Writing backup to file " + outputFile.getAbsolutePath());
+    Log.d(MyTracksConstants.TAG,
+        "Writing backup to file " + outputFile.getAbsolutePath());
 
     // Create all the auxiliary classes that will do the writing
     PreferenceBackupHelper preferencesHelper = new PreferenceBackupHelper();
@@ -212,13 +213,17 @@ class ExternalFileBackup {
    * Synchronously restores the backup from the given file.
    */
   private void restoreFromFile(File inputFile) throws IOException {
-    Log.d(MyTracksConstants.TAG, "Restoring from file " + inputFile.getAbsolutePath());
+    Log.d(MyTracksConstants.TAG,
+        "Restoring from file " + inputFile.getAbsolutePath());
 
     PreferenceBackupHelper preferencesHelper = new PreferenceBackupHelper();
     ContentResolver resolver = context.getContentResolver();
-    DatabaseImporter trackImporter = new DatabaseImporter(TracksColumns.CONTENT_URI, resolver, false);
-    DatabaseImporter waypointImporter = new DatabaseImporter(WaypointsColumns.CONTENT_URI, resolver, false);
-    DatabaseImporter pointImporter = new DatabaseImporter(TrackPointsColumns.CONTENT_URI, resolver, false);
+    DatabaseImporter trackImporter =
+        new DatabaseImporter(TracksColumns.CONTENT_URI, resolver, false);
+    DatabaseImporter waypointImporter =
+        new DatabaseImporter(WaypointsColumns.CONTENT_URI, resolver, false);
+    DatabaseImporter pointImporter =
+        new DatabaseImporter(TrackPointsColumns.CONTENT_URI, resolver, false);
 
     FileInputStream inputStream = new FileInputStream(inputFile);
     DataInputStream reader = new DataInputStream(inputStream);

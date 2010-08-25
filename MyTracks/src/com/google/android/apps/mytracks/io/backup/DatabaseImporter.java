@@ -100,7 +100,8 @@ public class DatabaseImporter {
       for (int c = 0; c < numColumns; c++) {
         if ((fields & 1) == 1) {
           // Field is present, read into values
-          readOneCell(columnNames[c], columnTypes[c], valueBulk[numValues], reader);
+          readOneCell(columnNames[c], columnTypes[c], valueBulk[numValues],
+              reader);
         } else if (readNullFields) {
           // Field not present but still written, read and discard
           readOneCell(columnNames[c], columnTypes[c], null, reader);
@@ -139,7 +140,8 @@ public class DatabaseImporter {
    *        in - if null, the value is just discarded
    * @throws IOException if there are any problems while reading
    */
-  private void readOneCell(String name, byte typeId, ContentValues values, DataInputStream reader) throws IOException {
+  private void readOneCell(String name, byte typeId, ContentValues values,
+      DataInputStream reader) throws IOException {
     switch (typeId) {
       case ContentTypeIds.BOOLEAN_TYPE_ID: {
         boolean value = reader.readBoolean();

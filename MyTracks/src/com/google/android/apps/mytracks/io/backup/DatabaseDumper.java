@@ -60,7 +60,8 @@ class DatabaseDumper {
    * This assumes the cursor will have the same column and column indices on
    * every row (and thus may not work with a {@link MergeCursor}).
    */
-  public void writeAllRows(Cursor cursor, DataOutputStream writer) throws IOException {
+  public void writeAllRows(Cursor cursor, DataOutputStream writer)
+      throws IOException {
     writeHeaders(cursor, cursor.getCount(), writer);
 
     if (!cursor.moveToFirst()) {
@@ -81,7 +82,8 @@ class DatabaseDumper {
    * @param numRows the number of rows that will be later written
    * @throws IOException if there are errors while writing
    */
-  public void writeHeaders(Cursor cursor, int numRows, DataOutputStream writer) throws IOException {
+  public void writeHeaders(Cursor cursor, int numRows, DataOutputStream writer)
+      throws IOException {
     initializeCachedValues(cursor);
     writeQueryMetadata(cursor, numRows, writer);
   }
@@ -93,7 +95,8 @@ class DatabaseDumper {
    * @param cursor the cursor to write data from
    * @throws IOException if there are any errors while writing
    */
-  public void writeOneRow(Cursor cursor, DataOutputStream writer) throws IOException {
+  public void writeOneRow(Cursor cursor, DataOutputStream writer)
+      throws IOException {
     if (columnIndices == null) {
       throw new IllegalStateException(
           "Cannot write rows before writing the header");
@@ -147,7 +150,8 @@ class DatabaseDumper {
    * @param numRows the number of rows that will be dumped
    * @throws IOException if there are any errors while writing
    */
-  private void writeQueryMetadata(Cursor cursor, int numRows, DataOutputStream writer) throws IOException {
+  private void writeQueryMetadata(
+      Cursor cursor, int numRows, DataOutputStream writer) throws IOException {
     // Write column data
     writer.writeInt(columnNames.length);
     for (int i = 0; i < columnNames.length; i++) {
@@ -169,7 +173,9 @@ class DatabaseDumper {
    * @param cursor the cursor to read from
    * @throws IOException if there are any errors while writing
    */
-  private void writeCell(int columnIdx, byte columnTypeId, Cursor cursor, DataOutputStream writer) throws IOException {
+  private void writeCell(
+      int columnIdx, byte columnTypeId, Cursor cursor, DataOutputStream writer)
+      throws IOException {
     switch (columnTypeId) {
       case ContentTypeIds.LONG_TYPE_ID:
         writer.writeLong(cursor.getLong(columnIdx));
@@ -190,7 +196,8 @@ class DatabaseDumper {
         writer.writeUTF(cursor.getString(columnIdx));
         return;
       default:
-        throw new IllegalArgumentException("Type " + columnTypeId + " not supported");
+        throw new IllegalArgumentException(
+            "Type " + columnTypeId + " not supported");
     }
   }
 
@@ -200,7 +207,8 @@ class DatabaseDumper {
    * @param columnType the type of the value to write
    * @throws IOException if there are any errors while writing
    */
-  private void writeDummyCell(byte columnTypeId, DataOutputStream writer) throws IOException {
+  private void writeDummyCell(byte columnTypeId, DataOutputStream writer)
+      throws IOException {
     switch (columnTypeId) {
       case ContentTypeIds.LONG_TYPE_ID:
         writer.writeLong(0L);
@@ -221,7 +229,8 @@ class DatabaseDumper {
         writer.writeUTF("");
         return;
       default:
-        throw new IllegalArgumentException("Type " + columnTypeId + " not supported");
+        throw new IllegalArgumentException(
+            "Type " + columnTypeId + " not supported");
     }
   }
 }

@@ -80,7 +80,8 @@ class PreferenceBackupHelper {
    * @return whether the preference change was successful
    * @throws IOException if there are any errors while reading
    */
-  public boolean importPreferences(byte[] data, SharedPreferences preferences) throws IOException {
+  public boolean importPreferences(byte[] data, SharedPreferences preferences)
+      throws IOException {
     ByteArrayInputStream bufStream = new ByteArrayInputStream(data);
     DataInputStream reader = new DataInputStream(bufStream);
 
@@ -148,7 +149,8 @@ class PreferenceBackupHelper {
    * @param writer the writer to write to
    * @throws IOException if there are errors while writing
    */
-  private void writePreference(String name, Object value, DataOutputStream writer) throws IOException {
+  private void writePreference(String name, Object value, DataOutputStream writer)
+      throws IOException {
     writer.writeUTF(name);
 
     if (value instanceof Boolean) {
@@ -167,7 +169,8 @@ class PreferenceBackupHelper {
       writer.writeByte(ContentTypeIds.STRING_TYPE_ID);
       writer.writeUTF((String) value);
     } else {
-      throw new IllegalArgumentException("Type " + value.getClass().getName() + " not supported");
+      throw new IllegalArgumentException(
+          "Type " + value.getClass().getName() + " not supported");
     }
   }
 }

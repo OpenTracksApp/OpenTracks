@@ -89,7 +89,8 @@ public class MyTracksSettings extends PreferenceActivity {
     // Hook up switching of displayed list entries between metric and imperial
     // units
     CheckBoxPreference metricUnitsPreference =
-        (CheckBoxPreference) findPreference(getString(R.string.metric_units_key));
+        (CheckBoxPreference) findPreference(
+            getString(R.string.metric_units_key));
     metricUnitsPreference.setOnPreferenceChangeListener(
         new OnPreferenceChangeListener() {
           @Override
@@ -118,11 +119,15 @@ public class MyTracksSettings extends PreferenceActivity {
   protected void onResume() {
     super.onResume();
 
-    Preference backupNowPreference = findPreference(getString(R.string.backup_to_sd_key));
-    Preference restoreNowPreference = findPreference(getString(R.string.restore_from_sd_key));
+    Preference backupNowPreference =
+        findPreference(getString(R.string.backup_to_sd_key));
+    Preference restoreNowPreference =
+        findPreference(getString(R.string.restore_from_sd_key));
 
-    // If recording, disable backup/restore (we don't want to get to inconsistent states)
-    boolean recording = preferences.getLong(getString(R.string.recording_track_key), -1) != -1;
+    // If recording, disable backup/restore
+    // (we don't want to get to inconsistent states)
+    boolean recording =
+        preferences.getLong(getString(R.string.recording_track_key), -1) != -1;
     backupNowPreference.setEnabled(!recording);
     restoreNowPreference.setEnabled(!recording);
     backupNowPreference.setSummary(
@@ -133,24 +138,28 @@ public class MyTracksSettings extends PreferenceActivity {
                   : R.string.settings_restore_from_sd_summary);
 
     // Add actions to the backup preferences
-    backupNowPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-      @Override
-      public boolean onPreferenceClick(Preference preference) {
-        Intent intent = new Intent(MyTracksSettings.this, BackupActivity.class);
-        intent.setAction(BackupActivity.BACKUP_ACTION);
-        startActivity(intent);
-        return true;
-      }
-    });
-    restoreNowPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-      @Override
-      public boolean onPreferenceClick(Preference preference) {
-        Intent intent = new Intent(MyTracksSettings.this, BackupActivity.class);
-        intent.setAction(BackupActivity.RESTORE_ACTION);
-        startActivity(intent);
-        return true;
-      }
-    });
+    backupNowPreference.setOnPreferenceClickListener(
+        new OnPreferenceClickListener() {
+          @Override
+          public boolean onPreferenceClick(Preference preference) {
+            Intent intent =
+                new Intent(MyTracksSettings.this, BackupActivity.class);
+            intent.setAction(BackupActivity.BACKUP_ACTION);
+            startActivity(intent);
+            return true;
+          }
+        });
+    restoreNowPreference.setOnPreferenceClickListener(
+        new OnPreferenceClickListener() {
+          @Override
+          public boolean onPreferenceClick(Preference preference) {
+            Intent intent =
+                new Intent(MyTracksSettings.this, BackupActivity.class);
+            intent.setAction(BackupActivity.RESTORE_ACTION);
+            startActivity(intent);
+            return true;
+          }
+        });
   }
 
   @Override

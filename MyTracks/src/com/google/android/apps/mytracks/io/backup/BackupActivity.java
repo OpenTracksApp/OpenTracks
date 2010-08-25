@@ -62,7 +62,8 @@ public class BackupActivity extends Activity {
   public static final String RESTORE_ACTION = "restore";
 
   private final FileUtils fileUtils = new FileUtils();
-  private final ExternalFileBackup backup = new ExternalFileBackup(this, fileUtils);
+  private final ExternalFileBackup backup =
+      new ExternalFileBackup(this, fileUtils);
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -155,18 +156,20 @@ public class BackupActivity extends Activity {
     Builder confirmationDialogBuilder = new AlertDialog.Builder(this);
     confirmationDialogBuilder.setMessage(R.string.restore_overwrites_warning);
     confirmationDialogBuilder.setCancelable(false);
-    confirmationDialogBuilder.setNegativeButton(android.R.string.no, new OnClickListener() {
-      @Override
-      public void onClick(DialogInterface dialog, int which) {
-        BackupActivity.this.finish();
-      }
-    });
-    confirmationDialogBuilder.setPositiveButton(android.R.string.yes, new OnClickListener() {
-      @Override
-      public void onClick(DialogInterface dialog, int which) {
-        pickBackupForRestore(backupDates);
-      }
-    });
+    confirmationDialogBuilder.setNegativeButton(android.R.string.no,
+        new OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            BackupActivity.this.finish();
+          }
+        });
+    confirmationDialogBuilder.setPositiveButton(android.R.string.yes,
+        new OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            pickBackupForRestore(backupDates);
+          }
+        });
     confirmationDialogBuilder.create().show();
   }
 

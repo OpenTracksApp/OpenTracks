@@ -30,12 +30,14 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
  *
  * @author Rodrigo Damazio
  */
-public abstract class BackupPreferencesListener implements OnSharedPreferenceChangeListener {
+public abstract class BackupPreferencesListener
+    implements OnSharedPreferenceChangeListener {
 
   /**
    * Real implementation of the listener, which calls the {@link BackupManager}.
    */
-  private static class BackupPreferencesListenerImpl extends BackupPreferencesListener {
+  private static class BackupPreferencesListenerImpl
+      extends BackupPreferencesListener {
     private final BackupManager backupManager;
 
     public BackupPreferencesListenerImpl(Context context) {
@@ -43,7 +45,8 @@ public abstract class BackupPreferencesListener implements OnSharedPreferenceCha
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    public void onSharedPreferenceChanged(
+        SharedPreferences sharedPreferences, String key) {
       backupManager.dataChanged();
     }
   }
@@ -51,9 +54,11 @@ public abstract class BackupPreferencesListener implements OnSharedPreferenceCha
   /**
    * Dummy implementation of the listener which does nothing.
    */
-  private static class DummyBackupPreferencesListener extends BackupPreferencesListener {
+  private static class DummyBackupPreferencesListener
+      extends BackupPreferencesListener {
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    public void onSharedPreferenceChanged(
+        SharedPreferences sharedPreferences, String key) {
       // Do nothing
     }
   }
