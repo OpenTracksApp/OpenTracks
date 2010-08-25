@@ -866,28 +866,36 @@ public class MyTracksMap extends MapActivity
   }
 
   @Override
-  public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-      String key) {
+  public void onSharedPreferenceChanged(
+      final SharedPreferences sharedPreferences,
+      final String key) {
     if (key != null) {
-      if (key.equals(getString(R.string.min_required_accuracy_key))) {
-        minRequiredAccuracy = sharedPreferences.getInt(
-            getString(R.string.min_required_accuracy_key),
-            MyTracksSettings.DEFAULT_MIN_REQUIRED_ACCURACY);
-      } else if (key.equals(getString(R.string.selected_track_key))) {
-        long selectedTrackId =
-            sharedPreferences.getLong(getString(R.string.selected_track_key),
-                -1);
-        setSelectedTrack(selectedTrackId);
-      } else if (key.equals(getString(R.string.recording_track_key))) {
-        recordingTrackId =
-            sharedPreferences.getLong(getString(R.string.recording_track_key),
-                -1);
-        if (selectedTrack != null) {
-          mapOverlay.setShowEndMarker(
-              selectedTrack.getId() != recordingTrackId);
-          mapView.postInvalidate();
+      uiHandler.post(new Runnable() {
+        @Override
+        public void run() {
+          if (key.equals(getString(R.string.min_required_accuracy_key))) {
+            minRequiredAccuracy = sharedPreferences.getInt(
+                getString(R.string.min_required_accuracy_key),
+                MyTracksSettings.DEFAULT_MIN_REQUIRED_ACCURACY);
+          } else if (key.equals(getString(R.string.selected_track_key))) {
+            long selectedTrackId =
+                sharedPreferences.getLong(
+                    getString(R.string.selected_track_key),
+                    -1);
+            setSelectedTrack(selectedTrackId);
+          } else if (key.equals(getString(R.string.recording_track_key))) {
+            recordingTrackId =
+                sharedPreferences.getLong(
+                    getString(R.string.recording_track_key),
+                    -1);
+            if (selectedTrack != null) {
+              mapOverlay.setShowEndMarker(
+                  selectedTrack.getId() != recordingTrackId);
+              mapView.postInvalidate();
+            }
+          }
         }
-      }
+      });
     }
   }
 

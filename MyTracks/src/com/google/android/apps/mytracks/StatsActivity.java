@@ -216,43 +216,51 @@ public class StatsActivity extends Activity
 
   @Override
   public void onSharedPreferenceChanged(
-      SharedPreferences sharedPreferences, String key) {
+      final SharedPreferences sharedPreferences, final String key) {
     Log.d(MyTracksConstants.TAG,
         "StatsActivity: onSharedPreferences changed " + key);
     if (key != null) {
-      if (key.equals(getString(R.string.selected_track_key))) {
-        selectedTrackId =
-            sharedPreferences.getLong(getString(R.string.selected_track_key),
-                -1);
-        checkLiveTrack();
-        restoreStats();
-        updateLocation(null);
-      } else if (key.equals(getString(R.string.recording_track_key))) {
-        recordingTrackId =
-            sharedPreferences.getLong(getString(R.string.recording_track_key),
-                -1);
-        checkLiveTrack();
-        restoreStats();
-        updateLocation(null);
-      } else if (key.equals(getString(R.string.metric_units_key))) {
-        metricUnits =
-            sharedPreferences.getBoolean(
-                getString(R.string.metric_units_key), true);
-        utils.setMetricUnits(metricUnits);
-        utils.updateUnits();
-        restoreStats();
-      } else if (key.equals(getString(R.string.report_speed_key))) {
-        displaySpeed =
-            sharedPreferences.getBoolean(getString(R.string.report_speed_key),
-                true);
-        utils.setReportSpeed(displaySpeed);
-        utils.updateUnits();
-        utils.setSpeedLabel(
-            R.id.speed_label, R.string.speed, R.string.pace_label);
-        Log.w(MyTracksConstants.TAG, "Setting speed labels");
-        utils.setSpeedLabels();
-        restoreStats();
-      }
+      runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+          if (key.equals(getString(R.string.selected_track_key))) {
+            selectedTrackId =
+                sharedPreferences.getLong(
+                    getString(R.string.selected_track_key),
+                    -1);
+            checkLiveTrack();
+            restoreStats();
+            updateLocation(null);
+          } else if (key.equals(getString(R.string.recording_track_key))) {
+            recordingTrackId =
+                sharedPreferences.getLong(
+                    getString(R.string.recording_track_key),
+                    -1);
+            checkLiveTrack();
+            restoreStats();
+            updateLocation(null);
+          } else if (key.equals(getString(R.string.metric_units_key))) {
+            metricUnits =
+                sharedPreferences.getBoolean(
+                    getString(R.string.metric_units_key), true);
+            utils.setMetricUnits(metricUnits);
+            utils.updateUnits();
+            restoreStats();
+          } else if (key.equals(getString(R.string.report_speed_key))) {
+            displaySpeed =
+                sharedPreferences.getBoolean(
+                    getString(R.string.report_speed_key),
+                    true);
+            utils.setReportSpeed(displaySpeed);
+            utils.updateUnits();
+            utils.setSpeedLabel(
+                R.id.speed_label, R.string.speed, R.string.pace_label);
+            Log.w(MyTracksConstants.TAG, "Setting speed labels");
+            utils.setSpeedLabels();
+            restoreStats();
+          }
+        }
+      });
     }
   }
 
@@ -353,8 +361,13 @@ public class StatsActivity extends Activity
     }
 
     track = providerUtils.getTrack(selectedTrackId);
+    if (track == null || track.getStatistics() == null) {
+      utils.setAllToUnknown();
+      return;
+    }
+
     startTime = track.getStatistics().getStartTime();
-    if(!selectedTrackIsRecording()) {
+    if (!selectedTrackIsRecording()) {
       utils.setTime(R.id.total_time_register,
           track.getStatistics().getTotalTime());
     }
