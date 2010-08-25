@@ -31,15 +31,18 @@ import android.util.Log;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipOutputStream;
 
 /**
  * Handler for writing or reading single-file backups.
@@ -49,13 +52,16 @@ import java.util.TimeZone;
 class ExternalFileBackup {
   // Filename format - in UTC
   private static final SimpleDateFormat BACKUP_FILENAME_FORMAT =
-      new SimpleDateFormat("'backup-'yyyy-MM-dd_HH-mm-ss'.mytracks'");
+      new SimpleDateFormat("'backup-'yyyy-MM-dd_HH-mm-ss'.zip'");
   static {
     BACKUP_FILENAME_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
   }
 
   private static final String BACKUPS_SUBDIR = "backups";
-  private static final int BACKUP_FILE_VERSION = 1;
+  private static final int BACKUP_FORMAT_VERSION = 1;
+  private static final String ZIP_ENTRY_NAME =
+      "backup.mytracks.v" + BACKUP_FORMAT_VERSION;
+  private static final int COMPRESSION_LEVEL = 8;
 
   private final Context context;
   private final FileUtils fileUtils;
@@ -161,12 +167,12 @@ class ExternalFileBackup {
 
     // Open the target for writing
     FileOutputStream outputStream = new FileOutputStream(outputFile);
-    DataOutputStream outWriter = new DataOutputStream(outputStream);
+    ZipOutputStream compressedStream = new ZipOutputStream(outputStream);
+    compressedStream.setLevel(COMPRESSION_LEVEL);
+    compressedStream.putNextEntry(new ZipEntry(ZIP_ENTRY_NAME));
+    DataOutputStream outWriter = new DataOutputStream(compressedStream);
 
     try {
-      // Output a version header
-      outWriter.writeInt(BACKUP_FILE_VERSION);
-
       // Dump the entire contents of each table
       ContentResolver contentResolver = context.getContentResolver();
       Cursor tracksCursor = contentResolver.query(
@@ -204,8 +210,8 @@ class ExternalFileBackup {
 
       throw e;
     } finally {
-      outputStream.flush();
-      outputStream.close();
+      compressedStream.closeEntry();
+      compressedStream.close();
     }
   }
 
@@ -225,15 +231,16 @@ class ExternalFileBackup {
     DatabaseImporter pointImporter =
         new DatabaseImporter(TrackPointsColumns.CONTENT_URI, resolver, false);
 
-    FileInputStream inputStream = new FileInputStream(inputFile);
-    DataInputStream reader = new DataInputStream(inputStream);
+    ZipFile zipFile = new ZipFile(inputFile, ZipFile.OPEN_READ);
+    ZipEntry zipEntry = zipFile.getEntry(ZIP_ENTRY_NAME);
+    if (zipEntry == null) {
+      throw new IOException("Invalid backup ZIP file");
+    }
+
+    InputStream compressedStream = zipFile.getInputStream(zipEntry);
+    DataInputStream reader = new DataInputStream(compressedStream);
 
     try {
-      int backupVersion = reader.readInt();
-      if (backupVersion != BACKUP_FILE_VERSION) {
-        throw new IOException("Unknown backup file version " + backupVersion);
-      }
-
       // Delete all previous contents of the tables and preferences.
       resolver.delete(TracksColumns.CONTENT_URI, null, null);
       resolver.delete(TrackPointsColumns.CONTENT_URI, null, null);
@@ -249,7 +256,8 @@ class ExternalFileBackup {
           context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
       preferencesHelper.importPreferences(reader, preferences);
     } finally {
-      inputStream.close();
+      compressedStream.close();
+      zipFile.close();
     }
   }
 }
