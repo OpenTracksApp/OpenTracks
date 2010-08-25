@@ -96,7 +96,6 @@ public class BackupActivityHelper {
           showToast(R.string.io_write_finished);
         } catch (IOException e) {
           showToast(R.string.io_write_failed);
-          return;
         } finally {
           dismissDialog(progressDialog);
         }
@@ -131,7 +130,7 @@ public class BackupActivityHelper {
     // Show a confirmation dialog
     Builder confirmationDialogBuilder = new AlertDialog.Builder(activity);
     confirmationDialogBuilder.setMessage(R.string.restore_overwrites_warning);
-    confirmationDialogBuilder.setCancelable(false);
+    confirmationDialogBuilder.setCancelable(true);
     confirmationDialogBuilder.setPositiveButton(android.R.string.yes,
         new OnClickListener() {
           @Override
@@ -139,6 +138,7 @@ public class BackupActivityHelper {
             pickBackupForRestore(backupDates);
           }
         });
+    confirmationDialogBuilder.setNegativeButton(android.R.string.no, null);
     confirmationDialogBuilder.create().show();
   }
 

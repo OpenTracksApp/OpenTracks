@@ -49,7 +49,7 @@ import java.util.TimeZone;
 class ExternalFileBackup {
   // Filename format - in UTC
   private static final SimpleDateFormat BACKUP_FILENAME_FORMAT =
-      new SimpleDateFormat("'backup-'yyyy-MM-dd_HH-mm-ss");
+      new SimpleDateFormat("'backup-'yyyy-MM-dd_HH-mm-ss'.mytracks'");
   static {
     BACKUP_FILENAME_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
   }
