@@ -25,10 +25,8 @@ import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
-import android.os.Bundle;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -38,13 +36,13 @@ import java.util.Comparator;
 import java.util.Date;
 
 /**
- * Activity which shows a UI for writing or restoring a backup,
- * and calls the approriate handler for actually executing those
+ * Helper which shows a UI for writing or restoring a backup,
+ * and calls the appropriate handler for actually executing those
  * operations.
  *
  * @author Rodrigo Damazio
  */
-public class BackupActivity extends Activity {
+public class BackupActivityHelper {
 
   // Since the user sees this format, we use the local timezone
   private static final SimpleDateFormat DISPLAY_BACKUP_FORMAT =
@@ -58,53 +56,35 @@ public class BackupActivity extends Activity {
         }
       };
 
-  public static final String BACKUP_ACTION = "backup";
-  public static final String RESTORE_ACTION = "restore";
+  private final FileUtils fileUtils;
+  private final ExternalFileBackup backup;
+  private final Activity activity;
 
-  private final FileUtils fileUtils = new FileUtils();
-  private final ExternalFileBackup backup =
-      new ExternalFileBackup(this, fileUtils);
-
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    Intent intent = getIntent();
-    if (intent != null) {
-      String action = intent.getAction();
-      if (action != null) {
-        if (action.equals(BACKUP_ACTION)) {
-          writeBackup();
-        } else if (action.equals(RESTORE_ACTION)) {
-          restoreBackup();
-        } else {
-          throw new IllegalArgumentException("Unknown action: " + action);
-        }
-      }
-    }
+  public BackupActivityHelper(Activity activity) {
+    this.activity = activity;
+    this.fileUtils = new FileUtils();
+    this.backup = new ExternalFileBackup(activity, fileUtils);
   }
 
   /**
    * Writes a full backup to the default file.
    * This shows the results to the user.
    */
-  private void writeBackup() {
+  public void writeBackup() {
     if (!fileUtils.isSdCardAvailable()) {
       showToast(R.string.io_no_external_storage_found);
-      finish();
       return;
     }
 
     if (!backup.isBackupsDirectoryAvailable(true)) {
       showToast(R.string.io_create_dir_failed);
-      finish();
       return;
     }
 
     final ProgressDialog progressDialog = ProgressDialog.show(
-        this,
-        getString(R.string.progress_title),
-        getString(R.string.backup_write_progress_message),
+        activity,
+        activity.getString(R.string.progress_title),
+        activity.getString(R.string.backup_write_progress_message),
         true);
 
     // Do the writing in another thread
@@ -119,7 +99,6 @@ public class BackupActivity extends Activity {
           return;
         } finally {
           dismissDialog(progressDialog);
-          finish();
         }
       }
     }.start();
@@ -130,39 +109,29 @@ public class BackupActivity extends Activity {
    * The user will be given a choice of which backup to restore as well as a
    * confirmation dialog.
    */
-  private void restoreBackup() {
+  public void restoreBackup() {
     // Get the list of existing backups
     if (!fileUtils.isSdCardAvailable()) {
       showToast(R.string.io_no_external_storage_found);
-      finish();
       return;
     }
 
     if (!backup.isBackupsDirectoryAvailable(false)) {
       showToast(R.string.no_backups);
-      finish();
       return;
     }
 
     final Date[] backupDates = backup.getAvailableBackups();
     if (backupDates == null || backupDates.length == 0) {
       showToast(R.string.no_backups);
-      finish();
       return;
     }
     Arrays.sort(backupDates, REVERSE_DATE_ORDER);
 
     // Show a confirmation dialog
-    Builder confirmationDialogBuilder = new AlertDialog.Builder(this);
+    Builder confirmationDialogBuilder = new AlertDialog.Builder(activity);
     confirmationDialogBuilder.setMessage(R.string.restore_overwrites_warning);
     confirmationDialogBuilder.setCancelable(false);
-    confirmationDialogBuilder.setNegativeButton(android.R.string.no,
-        new OnClickListener() {
-          @Override
-          public void onClick(DialogInterface dialog, int which) {
-            BackupActivity.this.finish();
-          }
-        });
     confirmationDialogBuilder.setPositiveButton(android.R.string.yes,
         new OnClickListener() {
           @Override
@@ -183,7 +152,6 @@ public class BackupActivity extends Activity {
     if (backupDates.length == 1) {
       // Only one choice, don't bother showing the list
       restoreFromDateAsync(backupDates[0]);
-      finish();
       return;
     }
 
@@ -194,7 +162,7 @@ public class BackupActivity extends Activity {
     }
 
     // Show a dialog for the user to pick which backup to restore
-    Builder dialogBuilder = new AlertDialog.Builder(this);
+    Builder dialogBuilder = new AlertDialog.Builder(activity);
     dialogBuilder.setCancelable(true);
     dialogBuilder.setTitle(R.string.select_backup_to_restore);
     dialogBuilder.setItems(backupDateStrs, new OnClickListener() {
@@ -202,12 +170,6 @@ public class BackupActivity extends Activity {
       public void onClick(DialogInterface dialog, int which) {
         // User picked to restore this one
         restoreFromDateAsync(backupDates[which]);
-      }
-    });
-    dialogBuilder.setOnCancelListener(new OnCancelListener() {
-      @Override
-      public void onCancel(DialogInterface dialog) {
-        BackupActivity.this.finish();
       }
     });
     dialogBuilder.create().show();
@@ -221,9 +183,9 @@ public class BackupActivity extends Activity {
   private void restoreFromDateAsync(final Date date) {
     // Show a progress dialog
     final ProgressDialog progressDialog = ProgressDialog.show(
-        this,
-        getString(R.string.progress_title),
-        getString(R.string.backup_import_progress_message),
+        activity,
+        activity.getString(R.string.progress_title),
+        activity.getString(R.string.backup_import_progress_message),
         true);
 
     // Do the actual importing in another thread (don't block the UI)
@@ -250,19 +212,19 @@ public class BackupActivity extends Activity {
    * This forces any modified data to be re-read.
    */
   private void restartApplication() {
-    Intent intent = new Intent(this, MyTracks.class);
+    Intent intent = new Intent(activity, MyTracks.class);
     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    startActivity(intent);
+    activity.startActivity(intent);
   }
 
   /**
    * Shows a toast with the given contents.
    */
   private void showToast(final int resId) {
-    runOnUiThread(new Runnable() {
+    activity.runOnUiThread(new Runnable() {
       @Override
       public void run() {
-        Toast.makeText(BackupActivity.this, resId, Toast.LENGTH_LONG).show();
+        Toast.makeText(activity, resId, Toast.LENGTH_LONG).show();
       }
     });
   }
@@ -271,7 +233,7 @@ public class BackupActivity extends Activity {
    * Safely dismisses the given dialog.
    */
   private void dismissDialog(final Dialog dialog) {
-    runOnUiThread(new Runnable() {
+    activity.runOnUiThread(new Runnable() {
       @Override
       public void run() {
         dialog.dismiss();

@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.io.backup.BackupActivity;
+import com.google.android.apps.mytracks.io.backup.BackupActivityHelper;
 import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
 import com.google.android.apps.mytracks.services.SafeStatusAnnouncerTask;
 import com.google.android.maps.mytracks.R;
@@ -142,10 +142,9 @@ public class MyTracksSettings extends PreferenceActivity {
         new OnPreferenceClickListener() {
           @Override
           public boolean onPreferenceClick(Preference preference) {
-            Intent intent =
-                new Intent(MyTracksSettings.this, BackupActivity.class);
-            intent.setAction(BackupActivity.BACKUP_ACTION);
-            startActivity(intent);
+            BackupActivityHelper backupHelper =
+                new BackupActivityHelper(MyTracksSettings.this);
+            backupHelper.writeBackup();
             return true;
           }
         });
@@ -153,10 +152,9 @@ public class MyTracksSettings extends PreferenceActivity {
         new OnPreferenceClickListener() {
           @Override
           public boolean onPreferenceClick(Preference preference) {
-            Intent intent =
-                new Intent(MyTracksSettings.this, BackupActivity.class);
-            intent.setAction(BackupActivity.RESTORE_ACTION);
-            startActivity(intent);
+            BackupActivityHelper backupHelper =
+                new BackupActivityHelper(MyTracksSettings.this);
+            backupHelper.restoreBackup();
             return true;
           }
         });
