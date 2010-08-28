@@ -264,7 +264,9 @@ public class SendToMyMaps {
         MyTracksSettings.SETTINGS_NAME, 0);
     boolean metricUnits = true;
     if (preferences != null) {
-      metricUnits = preferences.getBoolean(MyTracksSettings.METRIC_UNITS, true);
+      metricUnits =
+          preferences.getBoolean(context.getString(R.string.metric_units_key),
+              true);
     }
 
     // For the progress monitor:
@@ -390,7 +392,7 @@ public class SendToMyMaps {
         boolean mapPublic = true;
         if (preferences != null) {
           mapPublic = preferences.getBoolean(
-              MyTracksSettings.DEFAULT_MAP_PUBLIC, true);
+              context.getString(R.string.default_map_public_key), true);
         }
         metaData.setSearchable(mapPublic);
         Entry entry = MyMapsGDataConverter.getMapEntryForMetadata(metaData);

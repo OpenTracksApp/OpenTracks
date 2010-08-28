@@ -370,5 +370,6 @@ limitations under the License.
     <item>GPX</item>
     <item>KML</item>
     <item>CSV</item>
+    <item>TCX</item>
   </array>
 </resources>

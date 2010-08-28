@@ -139,9 +139,9 @@ public class MyTracksWaypointsList extends ListActivity
         getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
     if (preferences != null) {
       recordingTrackId =
-          preferences.getLong(MyTracksSettings.RECORDING_TRACK, -1);
+          preferences.getLong(getString(R.string.recording_track_key), -1);
       selectedTrackId =
-          preferences.getLong(MyTracksSettings.SELECTED_TRACK, -1);
+          preferences.getLong(getString(R.string.selected_track_key), -1);
     }
     boolean selectedRecording = selectedTrackId > 0
         && selectedTrackId == recordingTrackId;
