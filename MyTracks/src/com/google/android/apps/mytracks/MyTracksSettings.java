@@ -20,7 +20,6 @@ import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
 import com.google.android.apps.mytracks.services.SafeStatusAnnouncerTask;
 import com.google.android.maps.mytracks.R;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
