@@ -19,12 +19,17 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.webkit.WebView;
+import android.widget.TextView;
 
 /**
  * An activity that displays a welcome screen.
@@ -72,5 +77,16 @@ public class WelcomeActivity extends Activity {
     builder.setIcon(R.drawable.arrow_icon);
     AlertDialog dialog = builder.create();
     dialog.show();
+
+    // Get the version from the manifest.
+    try {
+      PackageInfo pi =
+          getPackageManager().getPackageInfo("com.google.android.maps.mytracks",
+              PackageManager.GET_META_DATA);
+      ((TextView) dialog.findViewById(R.id.about_version_register)).
+          setText(pi.versionName);
+    } catch (NameNotFoundException e) {
+      Log.w(MyTracksConstants.TAG, "Failed to get version info.", e);
+    }
   }
 }
