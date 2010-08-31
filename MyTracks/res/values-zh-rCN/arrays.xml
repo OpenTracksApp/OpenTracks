@@ -275,10 +275,4 @@ limitations under the License.
     <item>路点</item>
   </array>
 
-  <!-- DO NOT TRANSLATE -->
-  <array name="export_formats">
-    <item>GPX</item>
-    <item>KML</item>
-    <item>CSV</item>
-  </array>
 </resources>

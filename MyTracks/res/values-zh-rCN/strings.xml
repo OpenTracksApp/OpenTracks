@@ -83,8 +83,8 @@ limitations under the License.
   <string name="marker_will_be_permanently_deleted">选定标记将被从本机删除.</string>
 
   <!-- Text and links when uploading to Google My Maps -->
-  <string name="new_map_description">由 Android 上的 My Tracks 创建.</string>
-  <string name="my_map_link">由 Android 上的 &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; 创建.</string>
+  <string name="new_map_description">由 Android 上的 My Tracks 生成.</string>
+  <string name="my_map_link">由 Android 上的 &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; 生成.</string>
   <string name="new_map_title">新地图</string>
 
   <!-- Formatting of track and marker descriptions -->
