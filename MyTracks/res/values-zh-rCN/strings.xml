@@ -381,7 +381,7 @@ limitations under the License.
   <string name="welcome_about">关于 My Tracks</string>
 
   <!-- Announcement -->
-  <string name="announce_no_distance">My Tracks no distance</string>
+  <string name="announce_no_distance">My Tracks 无距离</string>
   <!-- Format:
   $1 : Distance label
   $2 : Distance value (5)
@@ -390,7 +390,7 @@ limitations under the License.
   $5 : Speed value (5.6) : Pace value (5 minutes 6 seconds)
   $6 : Speed units (mph) : Pace units (per mile)
   -->
-  <string name="announce_template">My Tracks %1$s %2$.2f %3$s in %4$s at %5$s %6$s</string>
+  <string name="announce_template">My Tracks %1$s %2$.2f %3$s 用时 %4$s 速度 %5$s %6$s</string>
 
   <!-- Check Units -->
   <string name="check_units_title">测量单位提示</string>
