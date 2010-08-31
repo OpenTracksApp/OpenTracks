@@ -66,6 +66,10 @@ public class ChartSettingsDialog extends Dialog {
   }
 
   public void setup(ChartActivity chart) {
+    if (chart == null) {
+      return;
+    }
+
     RadioGroup rd = (RadioGroup) findViewById(R.id.chart_settings_x);
     rd.check(chart.getMode() == Mode.BY_DISTANCE
              ? R.id.chart_settings_by_distance
