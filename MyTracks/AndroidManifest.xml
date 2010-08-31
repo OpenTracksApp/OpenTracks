@@ -8,7 +8,7 @@
                android:backupAgent="com.google.android.apps.mytracks.io.backup.MyTracksBackupAgentHelper">
     <uses-library android:name="com.google.android.maps" />
 
-	<meta-data android:name="com.google.android.backup.api_key"
+    <meta-data android:name="com.google.android.backup.api_key"
                android:value="AEdPqrEAAAAIi-_QiwoRSc9_bAC9cmuNXTQyU8ajJmGtKdhskQ" />
 
     <provider android:name="com.google.android.apps.mytracks.content.MyTracksProvider"
