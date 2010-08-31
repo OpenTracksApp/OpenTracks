@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -131,15 +131,15 @@ public class MyTracksOverlay extends Overlay {
 
   /**
    * Add a location to the map overlay.
-   * 
+   *
    * NOTE: this method takes ownership of this location and may change it.
-   * 
+   *
    * @param l the location to add
    */
   public void addLocation(Location l) {
     points.add(l);
   }
-  
+
   public void addWaypoint(Waypoint wpt) {
     waypoints.add(wpt);
   }
@@ -170,6 +170,9 @@ public class MyTracksOverlay extends Overlay {
     ArrayList<Waypoint> currentWaypoints = waypoints;
     for (int i = 1; i < currentWaypoints.size(); i++) {
       Waypoint wpt = currentWaypoints.get(i);
+      if (wpt == null) {
+        continue;
+      }
       Location loc = wpt.getLocation();
       if (loc == null) {
         continue;
