@@ -29,6 +29,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 
 /**
@@ -71,6 +72,9 @@ public class MyTracksSettings extends PreferenceActivity {
   @Override
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
+
+    // The volume we want to control is the Text-To-Speech volume
+    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
     // Tell it where to read/write preferences
     PreferenceManager preferenceManager = getPreferenceManager();

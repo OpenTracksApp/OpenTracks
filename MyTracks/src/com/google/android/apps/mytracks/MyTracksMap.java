@@ -47,6 +47,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.provider.Settings;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -278,6 +279,9 @@ public class MyTracksMap extends MapActivity
   public void onCreate(Bundle bundle) {
     Log.d(MyTracksConstants.TAG, "MyTracksMap.onCreate");
     super.onCreate(bundle);
+
+    // The volume we want to control is the Text-To-Speech volume
+    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
     providerUtils = MyTracksProviderUtils.Factory.get(this);
 

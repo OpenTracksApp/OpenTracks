@@ -35,6 +35,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -236,6 +237,9 @@ public class ChartActivity extends Activity implements
     super.onCreate(savedInstanceState);
     MyTracks.getInstance().setChartActivity(this);
     providerUtils = MyTracksProviderUtils.Factory.get(this);
+
+    // The volume we want to control is the Text-To-Speech volume
+    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
     requestWindowFeature(Window.FEATURE_NO_TITLE);
     setContentView(R.layout.mytracks_elevation);
