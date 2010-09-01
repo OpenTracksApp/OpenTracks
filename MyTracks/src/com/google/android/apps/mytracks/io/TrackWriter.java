@@ -159,7 +159,8 @@ public class TrackWriter {
     String fileName = fileUtils.buildUniqueFileName(
         directory, track.getName(), writer.getExtension());
     if (fileName == null) {
-      Log.e(MyTracksConstants.TAG, "Unable to get a unique filename for " + fileName);
+      Log.e(MyTracksConstants.TAG,
+          "Unable to get a unique filename for " + fileName);
       return false;
     }
 
@@ -179,7 +180,8 @@ public class TrackWriter {
    */
   protected boolean canWriteFile() {
     if (directory == null) {
-      String dirName = fileUtils.buildExternalDirectoryPath(writer.getExtension());
+      String dirName =
+          fileUtils.buildExternalDirectoryPath(writer.getExtension());
       directory = newFile(dirName);
     }
 
