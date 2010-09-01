@@ -20,6 +20,8 @@ import com.google.android.apps.mytracks.MyTracksConstants;
 import android.os.Environment;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 import junit.framework.TestCase;
 
@@ -29,16 +31,23 @@ import junit.framework.TestCase;
  * @author Rodrigo Damazio
  */
 public class FileUtilsTest extends TestCase {
-  private static final String ORIGINAL_NAME = "Swimming across the pacific";
-  private static final String SANITIZED_NAME = "Swimmingacrossthepacific";
+  private static final String ORIGINAL_NAME = "Swim\10ming ^across: the/ pacific (ocean).";
+  private static final String SANITIZED_NAME = "Swimming across the pacific (ocean).";
 
   private FileUtils fileUtils;
+  private Set<String> existingFiles;
 
   @Override
   protected void setUp() throws Exception {
     super.setUp();
 
-    fileUtils = new FileUtils();
+    existingFiles = new HashSet<String>();
+    fileUtils = new FileUtils() {
+      @Override
+      protected boolean fileExists(File directory, String fullName) {
+        return existingFiles.contains(fullName);
+      }
+    };
   }
 
   public void testBuildExternalDirectoryPath() {
@@ -58,5 +67,29 @@ public class FileUtilsTest extends TestCase {
 
   public void testSanitizeName() {
     assertEquals(SANITIZED_NAME, fileUtils.sanitizeName(ORIGINAL_NAME));
+  }
+
+  public void testBuildUniqueFileName_someExist() {
+    existingFiles = new HashSet<String>();
+    existingFiles.add("Filename.ext");
+    existingFiles.add("Filename (1).ext");
+    existingFiles.add("Filename (2).ext");
+    existingFiles.add("Filename (3).ext");
+    existingFiles.add("Filename (4).ext");
+
+    String filename = fileUtils.buildUniqueFileName(null, "Filename", "ext");
+    assertEquals("Filename (5).ext", filename);
+  }
+
+  public void testBuildUniqueFileName_oneExists() {
+    existingFiles.add("Filename.ext");
+
+    String filename = fileUtils.buildUniqueFileName(null, "Filename", "ext");
+    assertEquals("Filename (1).ext", filename);
+  }
+
+  public void testBuildUniqueFileName_noneExists() {
+    String filename = fileUtils.buildUniqueFileName(null, "Filename", "ext");
+    assertEquals("Filename.ext", filename);
   }
 }

@@ -155,9 +155,14 @@ public class TrackWriter {
       return false;
     }
 
-    // Make sure the name will work on FAT
-    String fileName =
-        fileUtils.sanitizeName(track.getName() + "." + writer.getExtension());
+    // Make sure the file doesn't exist yet (possibly by changing the filename)
+    String fileName = fileUtils.buildUniqueFileName(
+        directory, track.getName(), writer.getExtension());
+    if (fileName == null) {
+      Log.e(MyTracksConstants.TAG, "Unable to get a unique filename for " + fileName);
+      return false;
+    }
+
     Log.i(MyTracksConstants.TAG, "Writing track to: " + fileName);
     try {
       writer.prepare(track, newOutputStream(fileName));

@@ -20,7 +20,7 @@ import com.google.android.apps.mytracks.MyTracksConstants;
 import android.os.Environment;
 
 import java.io.File;
-import java.util.HashSet;
+import java.util.regex.Pattern;
 
 /**
  * Utilities for dealing with files.
@@ -28,27 +28,16 @@ import java.util.HashSet;
  * @author Rodrigo Damazio
  */
 public class FileUtils {
+  /**
+   * The maximum length of a filename, as per the FAT32 specification.
+   */
+  private static final int MAX_FILENAME_LENGTH = 260;
 
   /**
    * A set of characters that are prohibited from being in file names.
    */
-  private static final HashSet<Character> PROHIBITED_CHARACTERS =
-      new HashSet<Character>();
-
-  static {
-    for (int i = 0; i < 48; i++) {
-      PROHIBITED_CHARACTERS.add(new Character((char) i));
-    }
-    for (int i = 58; i < 65; i++) {
-      PROHIBITED_CHARACTERS.add(new Character((char) i));
-    }
-    for (int i = 91; i < 97; i++) {
-      PROHIBITED_CHARACTERS.add(new Character((char) i));
-    }
-    for (int i = 123; i < 128; i++) {
-      PROHIBITED_CHARACTERS.add(new Character((char) i));
-    }
-  }
+  private static final Pattern PROHIBITED_CHAR_PATTERN =
+      Pattern.compile("[^ A-Za-z0-9_.()]+");
 
   /**
    * Builds a path inside the My Tracks directory in the SD card.
@@ -72,26 +61,33 @@ public class FileUtils {
    * Returns whether the SD card is available.
    */
   public boolean isSdCardAvailable() {
-    return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+    return Environment.MEDIA_MOUNTED.equals(
+        Environment.getExternalStorageState());
   }
 
   /**
    * Normalizes the input string and make sure it is a valid fat32 file name.
+   *
+   * @param name the name to normalize
+   * @param overheadSize the number of additional characters that will be added
+   *        to the name after sanitization
+   * @return the sanitized name
    */
-  public String sanitizeName(String name) {
-    StringBuilder cleaned = new StringBuilder();
-    for (int i = 0; i < name.length(); i++) {
-      char c = name.charAt(i);
-      if (!PROHIBITED_CHARACTERS.contains(c)) {
-        cleaned.append(c);
-      }
-    }
+  String sanitizeName(String name) {
+    String cleaned = PROHIBITED_CHAR_PATTERN.matcher(name).replaceAll("");
 
-    return (cleaned.length() > 260)
-        ? cleaned.substring(0, 260)
+    return (cleaned.length() > MAX_FILENAME_LENGTH)
+        ? cleaned.substring(0, MAX_FILENAME_LENGTH)
         : cleaned.toString();
   }
 
+  /**
+   * Ensures the given directory exists by creating it and its parents if
+   * necessary.
+   * 
+   * @return whether the directory exists (either already existed or was
+   *         successfully created)
+   */
   public boolean ensureDirectoryExists(File dir) {
     if (dir.exists() && dir.isDirectory()) {
       return true;
@@ -102,5 +98,54 @@ public class FileUtils {
     }
 
     return false;
+  }
+
+  /**
+   * Builds a filename with the given base name (prefix) and the given
+   * extension, possibly adding a suffix to ensure the file doesn't exist.
+   *
+   * @param directory the directory the file will live in
+   * @param fileBaseName the prefix for the file name
+   * @param extension the file's extension
+   * @return the complete file name, without the directory
+   */
+  public synchronized String buildUniqueFileName(File directory,
+      String fileBaseName, String extension) {
+    return buildUniqueFileName(directory, fileBaseName, extension, 0);
+  }
+
+  /**
+   * Builds a filename with the given base name (prefix) and the given
+   * extension, possibly adding a suffix to ensure the file doesn't exist.
+   *
+   * @param directory the directory the file will live in
+   * @param fileBaseName the prefix for the file name
+   * @param extension the file's extension
+   * @param suffix the first numeric suffix to try to use, or 0 for none
+   * @return the complete file name, without the directory
+   */
+  private String buildUniqueFileName(File directory, String fileBaseName,
+      String extension, int suffix) {
+    String suffixedBaseName = fileBaseName;
+    if (suffix > 0) {
+      suffixedBaseName += " (" + Integer.toString(suffix) + ")";
+    }
+
+    String fullName = suffixedBaseName + "." + extension;
+    String sanitizedName = sanitizeName(fullName);
+    if (!fileExists(directory, sanitizedName)) {
+      return sanitizedName;
+    }
+
+    return buildUniqueFileName(directory, fileBaseName, extension, suffix + 1);
+  }
+
+  /**
+   * Checks whether a file with the given name exists in the given directory.
+   * This is isolated so it can be overridden in tests.
+   */
+  protected boolean fileExists(File directory, String fullName) {
+    File file = new File(directory, fullName);
+    return file.exists();
   }
 }

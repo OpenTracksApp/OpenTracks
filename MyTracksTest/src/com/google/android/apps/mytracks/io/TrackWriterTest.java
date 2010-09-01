@@ -117,7 +117,7 @@ public class TrackWriterTest extends AndroidTestCase {
   private static final long TRACK_ID = 1234567L;
   private static final String EXTENSION = "ext";
   private static final String TRACK_NAME = "Swimming across the pacific";
-  private static final String FULL_TRACK_NAME = "Swimmingacrossthepacific.ext";
+  private static final String FULL_TRACK_NAME = "Swimming across the pacific.ext";
 
   private Track track;
   private TrackFormatWriter formatWriter;
