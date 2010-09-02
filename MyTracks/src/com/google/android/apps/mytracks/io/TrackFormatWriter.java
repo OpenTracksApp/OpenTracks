@@ -54,14 +54,6 @@ public interface TrackFormatWriter {
   void prepare(Track track, OutputStream out);
 
   /**
-   * Determines the default location that will be written to (if no other is
-   * specified).
-   *
-   * @return The absolute path for the the file created, or null on failure
-   */
-  String getDefaultDirectory();
-
-  /**
    * @return The file extentsion (i.e. gpx, kml, ...)
    */
   String getExtension();

@@ -20,7 +20,6 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
 
 import android.location.Location;
-import android.os.Environment;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -47,7 +46,7 @@ import java.util.TimeZone;
 public class CsvTrackWriter implements TrackFormatWriter {
   static final SimpleDateFormat TIMESTAMP_FORMAT =
       new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-  {
+  static {
     TIMESTAMP_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
   }
 
@@ -55,13 +54,6 @@ public class CsvTrackWriter implements TrackFormatWriter {
   private int numFields = -1;
   private PrintWriter pw;
   private Track track;
-
-  @Override
-  public String getDefaultDirectory() {
-    return Environment.getExternalStorageDirectory()
-        + System.getProperty("file.separator")
-        + getExtension();
-  }
 
   @Override
   public String getExtension() {

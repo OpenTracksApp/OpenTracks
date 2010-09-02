@@ -347,6 +347,8 @@ public class TripStatisticsBuilder {
    * Returns the amount of time the user has been idle or 0 if they are moving.
    */
   public long getIdleTime() {
+    if (lastLocation == null || lastMovingLocation == null)
+      return 0;
     return lastLocation.getTime() - lastMovingLocation.getTime();
   }
 

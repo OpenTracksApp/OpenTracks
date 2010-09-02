@@ -24,7 +24,7 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.AuthManager;
 import com.google.android.apps.mytracks.io.AuthManagerFactory;
-import com.google.android.apps.mytracks.io.GpxImport;
+import com.google.android.apps.mytracks.io.GpxImporter;
 import com.google.android.apps.mytracks.io.SendToDocs;
 import com.google.android.apps.mytracks.io.SendToMyMaps;
 import com.google.android.apps.mytracks.io.TrackWriter;
@@ -32,6 +32,7 @@ import com.google.android.apps.mytracks.io.TrackWriterFactory;
 import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
+import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -70,15 +71,16 @@ import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.Toast;
 
-import org.xml.sax.SAXException;
-
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Random;
 
 import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 /**
  * The super activity that embeds our sub activities.
@@ -133,15 +135,9 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   private ChartSettingsDialog chartSettingsDialog;
 
   /*
-   * Menu items:
+   * Menu manager.
    */
-
-  private MenuItem startRecording;
-  private MenuItem stopRecording;
-  private MenuItem listTracks;
-  private MenuItem listMarkers;
-  private MenuItem settings;
-  private MenuItem help;
+  private MenuManager menuManager;
 
   /*
    * Information on upload success to MyMaps/Docs.
@@ -282,6 +278,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     super.onCreate(savedInstanceState);
     instance = this;
     providerUtils = MyTracksProviderUtils.Factory.get(this);
+    menuManager = new MenuManager(this);
 
     // The volume we want to control is the Text-To-Speech volume
     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
@@ -320,8 +317,10 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     SharedPreferences prefs =
         getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
     if (prefs != null) {
-      selectedTrackId = prefs.getLong(MyTracksSettings.SELECTED_TRACK, -1);
-      recordingTrackId = prefs.getLong(MyTracksSettings.RECORDING_TRACK, -1);
+      selectedTrackId =
+          prefs.getLong(getString(R.string.selected_track_key), -1);
+      recordingTrackId =
+          prefs.getLong(getString(R.string.recording_track_key), -1);
       prefs.registerOnSharedPreferenceChangeListener(this);
     }
 
@@ -415,81 +414,21 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     super.onCreateOptionsMenu(menu);
-    startRecording = menu.add(0, MyTracksConstants.MENU_START_RECORDING, 0,
-        R.string.start_recording);
-    startRecording.setIcon(R.drawable.menu_record);
-    stopRecording = menu.add(0, MyTracksConstants.MENU_STOP_RECORDING, 0,
-        R.string.stop_recording);
-    stopRecording.setIcon(R.drawable.menu_stop);
-    listTracks = menu.add(0, MyTracksConstants.MENU_LIST_TRACKS, 0,
-        R.string.list_tracks);
-    listTracks.setIcon(R.drawable.menu_list_tracks);
-    listMarkers = menu.add(0, MyTracksConstants.MENU_LIST_MARKERS, 0,
-        R.string.list_markers);
-    listMarkers.setIcon(R.drawable.menu_marker);
-    settings = menu.add(0, MyTracksConstants.MENU_SETTINGS, 10001,
-        R.string.settings);
-    settings.setIcon(android.R.drawable.ic_menu_preferences);
-    help = menu.add(0, MyTracksConstants.MENU_HELP, 10002, R.string.help);
-    help.setIcon(android.R.drawable.ic_menu_info_details);
-    return true;
+    return menuManager.onCreateOptionsMenu(menu);
   }
 
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
-    boolean hasRecorded = providerUtils.getLastTrack() != null;
-    boolean isRecording = isRecording();
-    listTracks = menu.findItem(MyTracksConstants.MENU_LIST_TRACKS);
-    listTracks.setEnabled(hasRecorded);
-    listMarkers = menu.findItem(MyTracksConstants.MENU_LIST_MARKERS);
-    listMarkers.setEnabled(hasRecorded && selectedTrackId >= 0);
-    startRecording = menu.findItem(MyTracksConstants.MENU_START_RECORDING);
-    startRecording.setEnabled(!isRecording);
-    startRecording.setVisible(!isRecording);
-    stopRecording = menu.findItem(MyTracksConstants.MENU_STOP_RECORDING);
-    stopRecording.setEnabled(isRecording);
-    stopRecording.setVisible(isRecording);
+    menuManager.onPrepareOptionsMenu(menu, providerUtils.getLastTrack() != null,
+        isRecording(), selectedTrackId >= 0);
     return super.onPrepareOptionsMenu(menu);
   }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case MyTracksConstants.MENU_START_RECORDING: {
-        startRecording();
-        return true;
-      }
-      case MyTracksConstants.MENU_STOP_RECORDING: {
-        stopRecording();
-        return true;
-      }
-      case MyTracksConstants.MENU_LIST_TRACKS: {
-        Intent startIntent = new Intent(this, MyTracksList.class);
-        startActivityForResult(startIntent, MyTracksConstants.SHOW_TRACK);
-        return true;
-      }
-      case MyTracksConstants.MENU_LIST_MARKERS: {
-        Intent startIntent = new Intent(this, MyTracksWaypointsList.class);
-        startIntent.putExtra("trackid", selectedTrackId);
-        startActivityForResult(startIntent, MyTracksConstants.SHOW_WAYPOINT);
-        return true;
-      }
-      case MyTracksConstants.MENU_SETTINGS: {
-        Intent startIntent = new Intent(this, MyTracksSettings.class);
-        startActivity(startIntent);
-        return true;
-      }
-      case MyTracksConstants.MENU_HELP: {
-        Intent startIntent = new Intent(this, WelcomeActivity.class);
-        startActivity(startIntent);
-        return true;
-      }
-      case MyTracksConstants.MENU_CLEAR_MAP: {
-        setSelectedTrack(-1);
-        return true;
-      }
-    }
-    return super.onOptionsItemSelected(item);
+    return (menuManager.onOptionsItemSelected(item)
+        ? true
+        : super.onOptionsItemSelected(item));
   }
 
   /*
@@ -786,8 +725,11 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       case MyTracksConstants.SAVE_KML_FILE:
         if (exportFormat == null) { exportFormat = TrackFileFormat.KML; }
         //$FALL-THROUGH$
-      case MyTracksConstants.SAVE_CSV_FILE: {
+      case MyTracksConstants.SAVE_CSV_FILE:
         if (exportFormat == null) { exportFormat = TrackFileFormat.CSV; }
+        //$FALL-THROUGH$
+      case MyTracksConstants.SAVE_TCX_FILE:
+        if (exportFormat == null) { exportFormat = TrackFileFormat.TCX; }
 
         if (results != null && resultCode == Activity.RESULT_OK) {
           final long trackId = results.getLongExtra("trackid", selectedTrackId);
@@ -796,7 +738,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
           }
         }
         break;
-      }
       case MyTracksConstants.SHARE_LINK: {
         Track selectedTrack = providerUtils.getTrack(selectedTrackId);
         if (selectedTrack != null) {
@@ -810,15 +751,21 @@ public class MyTracks extends TabActivity implements OnTouchListener,
         break;
       }
       case MyTracksConstants.SHARE_GPX_FILE:
-      case MyTracksConstants.SHARE_KML_FILE: {
-        if (results != null && resultCode == RESULT_OK) {
-          long trackId = results.getLongExtra("trackid", selectedTrackId);
+        if (exportFormat == null) { exportFormat = TrackFileFormat.GPX; }
+        //$FALL-THROUGH$
+      case MyTracksConstants.SHARE_KML_FILE:
+        if (exportFormat == null) { exportFormat = TrackFileFormat.KML; }
+        //$FALL-THROUGH$
+      case MyTracksConstants.SHARE_CSV_FILE:
+        if (exportFormat == null) { exportFormat = TrackFileFormat.CSV; }
+        //$FALL-THROUGH$
+      case MyTracksConstants.SHARE_TCX_FILE: {
+        if (exportFormat == null) { exportFormat = TrackFileFormat.TCX; }
+
+        if (results != null && resultCode == Activity.RESULT_OK) {
+          final long trackId = results.getLongExtra("trackid", selectedTrackId);
           if (trackId >= 0) {
-            TrackFileFormat format =
-                (requestCode == MyTracksConstants.SHARE_GPX_FILE)
-                ? TrackFileFormat.GPX
-                : TrackFileFormat.KML;
-            sendTrack(trackId, format);
+            sendTrack(trackId, exportFormat);
           }
         }
         break;
@@ -861,9 +808,9 @@ public class MyTracks extends TabActivity implements OnTouchListener,
             + "to shared preferences: ", e);
       }
     }
-    if (key != null && key.equals(MyTracksSettings.SELECTED_TRACK)) {
+    if (key != null && key.equals(getString(R.string.selected_track_key))) {
       selectedTrackId =
-          sharedPreferences.getLong(MyTracksSettings.SELECTED_TRACK, -1);
+          sharedPreferences.getLong(getString(R.string.selected_track_key), -1);
     }
   }
 
@@ -950,13 +897,14 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     Thread t = new Thread() {
       @Override
       public void run() {
-        boolean success = false;
-        ArrayList<Track> tracks = new ArrayList<Track>();
         int message = R.string.success;
+
+        long[] trackIdsImported = null;
+
         try {
           try {
-            GpxImport.importGPXFile(fileName, tracks);
-            success = true;
+            InputStream is = new FileInputStream(fileName);
+            trackIdsImported = GpxImporter.importGPXFile(is, providerUtils);
           } catch (SAXException e) {
             Log.e(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
             message = R.string.error_generic;
@@ -973,15 +921,11 @@ public class MyTracks extends TabActivity implements OnTouchListener,
             Log.e(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
             message = R.string.error_out_of_memory;
           }
-          if (success) {
-            long trackId = -1;
-            for (Track track : tracks) {
-              Uri uri = providerUtils.insertTrackAndTrackPoints(track);
-              trackId = Long.parseLong(uri.getLastPathSegment());
-            }
-            setSelectedTrack(trackId);
+          if (trackIdsImported != null && trackIdsImported.length > 0) {
+            // select last track from import file
+            setSelectedTrack(trackIdsImported[trackIdsImported.length - 1]);
           } else {
-            MyTracks.this.showMessageDialog(message, false/*success*/);
+            MyTracks.this.showMessageDialog(message, false/* success */);
           }
         } finally {
           runOnUiThread(new Runnable() {
@@ -1071,7 +1015,8 @@ public class MyTracks extends TabActivity implements OnTouchListener,
         getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
     boolean shareUrlOnly = true;
     if (prefs != null) {
-      shareUrlOnly = prefs.getBoolean(MyTracksSettings.SHARE_URL_ONLY, false);
+      shareUrlOnly =
+          prefs.getBoolean(getString(R.string.share_url_only_key), false);
     }
 
     String url = MyMapsConstants.MAPSHOP_BASE_URL + "?msa=0&msid=" + mapId;
@@ -1294,7 +1239,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * Starts the track recording service (if not already running) and binds to
    * it. Starts recording a new track.
    */
-  private void startRecording() {
+  public void startRecording() {
     if (trackRecordingService == null) {
       startNewTrackRequested = true;
       Intent startIntent = new Intent(this, TrackRecordingService.class);
@@ -1320,7 +1265,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * Stops the track recording service and unbinds from it. Will display a toast
    * "Stopped recording" and pop up the Track Details activity.
    */
-  private void stopRecording() {
+  public void stopRecording() {
     if (trackRecordingService != null) {
       try {
         trackRecordingService.endCurrentTrack();
@@ -1379,16 +1324,20 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    *
    * @param trackId the id of the track
    */
-  private void setSelectedTrack(final long trackId) {
+  public void setSelectedTrack(final long trackId) {
     runOnUiThread(new Runnable() {
       public void run() {
         SharedPreferences prefs =
             getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putLong(MyTracksSettings.SELECTED_TRACK, trackId);
+        editor.putLong(getString(R.string.selected_track_key), trackId);
         editor.commit();
       }
     });
+  }
+
+  protected long getSelectedTrack() {
+    return selectedTrackId;
   }
 
   /**
@@ -1403,7 +1352,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
         SharedPreferences prefs =
             getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putLong(MyTracksSettings.RECORDING_TRACK, trackId);
+        editor.putLong(getString(R.string.recording_track_key), trackId);
         editor.commit();
       }
     });
@@ -1421,8 +1370,8 @@ public class MyTracks extends TabActivity implements OnTouchListener,
             getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
         if (prefs != null) {
           SharedPreferences.Editor editor = prefs.edit();
-          editor.putLong(MyTracksSettings.SELECTED_TRACK, theSelectedTrackId);
-          editor.putLong(MyTracksSettings.RECORDING_TRACK, theRecordingTrackId);
+          editor.putLong(getString(R.string.selected_track_key), theSelectedTrackId);
+          editor.putLong(getString(R.string.recording_track_key), theRecordingTrackId);
           editor.commit();
         }
       }
@@ -1507,10 +1456,12 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     showDialogSafely(DIALOG_WRITE_PROGRESS);
     final TrackWriter writer =
         TrackWriterFactory.newWriter(this, providerUtils, trackId, format);
-    String sep = System.getProperty("file.separator");
+
+    FileUtils fileUtils = new FileUtils();
     String extension = format.getExtension();
-    File dir = new File(Environment.getExternalStorageDirectory()
-        + sep + extension + sep + "tmp");
+    String dirName = fileUtils.buildExternalDirectoryPath(extension, "tmp");
+
+    File dir = new File(dirName);
     writer.setDirectory(dir);
     writer.setOnCompletion(new Runnable() {
       public void run() {

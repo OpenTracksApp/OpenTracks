@@ -2,6 +2,10 @@
 
 package com.google.android.apps.mytracks.io;
 
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.isA;
+import static org.easymock.EasyMock.same;
+
 import com.google.android.apps.mytracks.MyTracksConstants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
@@ -15,17 +19,13 @@ import android.database.Cursor;
 import android.location.Location;
 import android.test.AndroidTestCase;
 
-import org.easymock.EasyMock;
-import org.easymock.IAnswer;
-
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.isA;
-import static org.easymock.EasyMock.same;
-import org.easymock.IMocksControl;
-
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.OutputStream;
+
+import org.easymock.EasyMock;
+import org.easymock.IAnswer;
+import org.easymock.IMocksControl;
 
 /**
  * Tests for the track writer.
@@ -115,11 +115,10 @@ public class TrackWriterTest extends AndroidTestCase {
   }
 
   private static final long TRACK_ID = 1234567L;
-  private static final String DEFAULT_DIR = "default/dir";
   private static final String EXTENSION = "ext";
   private static final String TRACK_NAME = "Swimming across the pacific";
-  private static final String TRACK_SANITIZED_NAME = "Swimmingacrossthepacific";
-  private static final String FULL_TRACK_NAME = "Swimmingacrossthepacific.ext";
+  private static final String FULL_TRACK_NAME =
+      "Swimming across the pacific.ext";
 
   private Track track;
   private TrackFormatWriter formatWriter;
@@ -142,7 +141,6 @@ public class TrackWriterTest extends AndroidTestCase {
     oldProviderUtilsFactory =
         TestingProviderUtilsFactory.installWithInstance(providerUtils);
 
-    expect(formatWriter.getDefaultDirectory()).andStubReturn(DEFAULT_DIR);
     expect(formatWriter.getExtension()).andStubReturn(EXTENSION);
 
     track = new Track();
@@ -190,10 +188,6 @@ public class TrackWriterTest extends AndroidTestCase {
     mocksControl.verify();
   }
   
-  public void testSanitizeName() {
-    assertEquals(TRACK_SANITIZED_NAME, TrackWriter.sanitizeName(TRACK_NAME));
-  }
-
   public void testOpenFile() {
     final ByteArrayOutputStream stream = new ByteArrayOutputStream();
     writer = new OpenFileTrackWriter(

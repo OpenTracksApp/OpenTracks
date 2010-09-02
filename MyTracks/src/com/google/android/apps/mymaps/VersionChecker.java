@@ -29,6 +29,9 @@ import android.app.Dialog;
 import android.app.TabActivity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
@@ -80,7 +83,17 @@ public class VersionChecker {
     final boolean newVersion;  // Returned new version available
     final boolean newVersionRecommended;  // Returned new version recommended
     final boolean newVersionRequired;  // Returned new version required
-    String currentVersion = parentActivity.getString(R.string.version);
+    String currentVersion = "";
+    try {
+      PackageInfo pi =
+          parentActivity.getPackageManager().getPackageInfo(
+              "com.google.android.maps.mytracks",
+              PackageManager.GET_META_DATA);
+      currentVersion = pi.versionName;
+    } catch (NameNotFoundException e) {
+      Log.w(MyTracksConstants.TAG, "Failed to get version info.", e);
+      return;
+    }
 
     GDataParser parser = client.getParserForFeed(
             Entry.class,

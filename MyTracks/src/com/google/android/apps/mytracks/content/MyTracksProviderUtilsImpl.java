@@ -74,15 +74,8 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     return values;
   }
 
-  /**
-   * Creates the ContentValues for a given Track object.
-   *
-   * Note: If the track has an id<0 the id column will not be filled.
-   *
-   * @param track a given track object
-   * @return a filled in ContentValues object
-   */
-  private static ContentValues createContentValues(Track track) {
+  @Override
+  public ContentValues createContentValues(Track track) {
     ContentValues values = new ContentValues();
     TripStatistics stats = track.getStatistics();
 
@@ -209,13 +202,8 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     return location;
   }
 
-  /**
-   * Creates a Track object from a given cursor.
-   *
-   * @param cursor a cursor pointing at a db or provider with tracks
-   * @return a new Track object
-   */
-  private static Track createTrack(Cursor cursor) {
+  @Override
+  public Track createTrack(Cursor cursor) {
     int idxId = cursor.getColumnIndexOrThrow(TracksColumns._ID);
     int idxName = cursor.getColumnIndexOrThrow(TracksColumns.NAME);
     int idxDescription =
@@ -840,8 +828,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     Cursor cursor = getLocationsCursor(track.getId(),
                                        startingPoint,
                                        buffer.getSize(), false);
-    final int idColumnIdx =
-        cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
     if (cursor == null) {
       Log.w(MyTracksProvider.TAG, "Cannot get a locations cursor!");
       buffer.setInvalid();
@@ -860,13 +846,16 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
         return;
       }
 
-      while (cursor.moveToNext()) {
+      final int idColumnIdx =
+          cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
+      do {
         Location location = createLocation(cursor);
         if (location == null) {
           continue;
         }
         buffer.add(location, cursor.getLong(idColumnIdx));
-      }
+      } while (cursor.moveToNext());
+      
       if (buffer.getLocationsLoaded() == 0) {
         Log.w(MyTracksProvider.TAG, "No locations read.");
         buffer.resetAt(startingPoint + buffer.getSize());
@@ -900,36 +889,23 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   @Override
+  public int bulkInsertTrackPoints(Location[] locations, int length, long trackId) {
+    if (length == -1) { length = locations.length; }
+
+    ContentValues[] values = new ContentValues[length];
+    for (int i = 0; i < length; i++) {
+      values[i] = createContentValues(locations[i], trackId);
+    }
+
+    return context.getContentResolver().bulkInsert(TrackPointsColumns.CONTENT_URI, values);
+  }
+
+  @Override
   public Uri insertWaypoint(Waypoint waypoint) {
     Log.d(MyTracksProvider.TAG, "MyTracksProviderUtilsImpl.insertWaypoint");
     waypoint.setId(-1);
     return context.getContentResolver().insert(WaypointsColumns.CONTENT_URI,
         createContentValues(waypoint));
-  }
-
-  @Override
-  public Uri insertTrackAndTrackPoints(Track track) {
-    // Insert the track right away to have its ID
-    Uri trackUri = insertTrack(track);
-    long trackId = Long.parseLong(trackUri.getLastPathSegment());
-    track.setId(trackId);
-
-    // Insert all the points (associated with the track ID)
-    boolean firstPoint = true;
-    long pointId = -1;
-    for (Location location : track.getLocations()) {
-      Uri pointUri = insertTrackPoint(location, trackId);
-      pointId = Long.parseLong(pointUri.getLastPathSegment());
-      if (firstPoint) {
-        track.setStartId(pointId);
-        firstPoint = false;
-      }
-    }
-    track.setStopId(pointId);
-
-    // Update the track with the start and end point IDs
-    updateTrack(track);
-    return trackUri;
   }
 
   @Override

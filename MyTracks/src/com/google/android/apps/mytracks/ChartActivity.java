@@ -1,12 +1,12 @@
 /*
  * Copyright 2009 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -35,6 +35,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,7 +50,7 @@ import java.util.ArrayList;
 
 /**
  * An activity that displays a chart from the track point provider.
- * 
+ *
  * @author Sandor Dornbush
  */
 public class ChartActivity extends Activity implements
@@ -204,23 +205,27 @@ public class ChartActivity extends Activity implements
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
       String key) {
     if (key != null) {
-      if (key.equals(MyTracksSettings.SELECTED_TRACK)) {
+      if (key.equals(getString(R.string.selected_track_key))) {
         selectedTrackId =
-            sharedPreferences.getLong(MyTracksSettings.SELECTED_TRACK, -1);
+            sharedPreferences.getLong(getString(R.string.selected_track_key),
+                -1);
         readProfileAsync();
-      } else if (key.equals(MyTracksSettings.METRIC_UNITS)) {
+      } else if (key.equals(getString(R.string.metric_units_key))) {
         metricUnits =
-            sharedPreferences.getBoolean(MyTracksSettings.METRIC_UNITS, true);
+            sharedPreferences.getBoolean(getString(R.string.metric_units_key),
+                true);
         cv.setMetricUnits(metricUnits);
         readProfileAsync();
-      } else if (key.equals(MyTracksSettings.REPORT_SPEED)) {
+      } else if (key.equals(getString(R.string.report_speed_key))) {
         reportSpeed =
-            sharedPreferences.getBoolean(MyTracksSettings.REPORT_SPEED, true);
+            sharedPreferences.getBoolean(getString(R.string.report_speed_key),
+                true);
         cv.setReportSpeed(reportSpeed, this);
         readProfileAsync();
-      } else if (key.equals(MyTracksSettings.RECORDING_TRACK)) {
+      } else if (key.equals(getString(R.string.recording_track_key))) {
         recordingTrackId =
-            sharedPreferences.getLong(MyTracksSettings.RECORDING_TRACK, -1);
+            sharedPreferences.getLong(getString(R.string.recording_track_key),
+                -1);
         runOnUiThread(updateChart);
       }
     }
@@ -232,6 +237,9 @@ public class ChartActivity extends Activity implements
     super.onCreate(savedInstanceState);
     MyTracks.getInstance().setChartActivity(this);
     providerUtils = MyTracksProviderUtils.Factory.get(this);
+
+    // The volume we want to control is the Text-To-Speech volume
+    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
     requestWindowFeature(Window.FEATURE_NO_TITLE);
     setContentView(R.layout.mytracks_elevation);
@@ -246,12 +254,14 @@ public class ChartActivity extends Activity implements
         getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
     if (preferences != null) {
       selectedTrackId =
-          preferences.getLong(MyTracksSettings.SELECTED_TRACK, -1);
+          preferences.getLong(getString(R.string.selected_track_key), -1);
       recordingTrackId =
-          preferences.getLong(MyTracksSettings.RECORDING_TRACK, -1);
-      metricUnits = preferences.getBoolean(MyTracksSettings.METRIC_UNITS, true);
+          preferences.getLong(getString(R.string.recording_track_key), -1);
+      metricUnits = preferences.getBoolean(getString(R.string.metric_units_key),
+          true);
       cv.setMetricUnits(metricUnits);
-      reportSpeed = preferences.getBoolean(MyTracksSettings.REPORT_SPEED, true);
+      reportSpeed = preferences.getBoolean(getString(R.string.report_speed_key),
+          true);
       cv.setReportSpeed(reportSpeed, this);
       preferences.registerOnSharedPreferenceChangeListener(this);
     }
@@ -450,7 +460,7 @@ public class ChartActivity extends Activity implements
    * data[0] = the time or distance
    * data[1] = the elevation
    * data[2] = the speed
-   * 
+   *
    * @param location a location
    * @return the data point
    */

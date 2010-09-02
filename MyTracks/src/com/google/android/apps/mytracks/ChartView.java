@@ -511,8 +511,8 @@ public class ChartView extends View {
       // Dimensions have changed (for example due to orientation change):
       w = c.getWidth();
       h = c.getHeight();
-      effectiveWidth = w - leftBorder - RIGHT_BORDER;
-      effectiveHeight = h - TOP_BORDER - BOTTOM_BORDER;
+      effectiveWidth = Math.max(0, w - leftBorder - RIGHT_BORDER);
+      effectiveHeight = Math.max(0, h - TOP_BORDER - BOTTOM_BORDER);
       setupPath();
     }
     c.save();

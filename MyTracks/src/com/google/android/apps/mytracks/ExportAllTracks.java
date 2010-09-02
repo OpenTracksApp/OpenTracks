@@ -17,6 +17,7 @@ package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.TracksColumns;
+import com.google.android.apps.mytracks.io.TrackWriter;
 import com.google.android.apps.mytracks.io.TrackWriterFactory;
 import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
 import com.google.android.maps.mytracks.R;
@@ -109,7 +110,8 @@ public class ExportAllTracks {
         context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
     long recordingTrackId = -1;
     if (prefs != null) {
-      recordingTrackId = prefs.getLong(MyTracksSettings.RECORDING_TRACK, -1);
+      recordingTrackId =
+    	  prefs.getLong(context.getString(R.string.recording_track_key), -1);
     }
     if (recordingTrackId != -1) {
       acquireWakeLock();
@@ -153,6 +155,7 @@ public class ExportAllTracks {
       if (cursor == null) {
         return;
       }
+
       final int trackCount = cursor.getCount();
       Log.i(MyTracksConstants.TAG,
           "ExportAllTracks: Exporting: " + cursor.getCount() + " tracks.");
@@ -160,7 +163,9 @@ public class ExportAllTracks {
       MyTracks.getInstance().runOnUiThread(new Runnable() {
         public void run() {
           makeProgressDialog(trackCount);
-        }});
+        }
+      });
+
       for (int i = 0; cursor.moveToNext(); i++) {
         final int status = i;
         MyTracks.getInstance().runOnUiThread(new Runnable() {
@@ -176,16 +181,27 @@ public class ExportAllTracks {
 
         long id = cursor.getLong(idxTrackId);
         Log.i(MyTracksConstants.TAG, "ExportAllTracks: exporting: " + id);
-        TrackWriterFactory.newWriter(context, providerUtils, id, format)
-            .writeTrack();
+        TrackWriter writer =
+            TrackWriterFactory.newWriter(context, providerUtils, id, format);
+        writer.writeTrack();
+
+        if (!writer.wasSuccess()) {
+          // Abort the whole export on the first error.
+          int error = writer.getErrorMessage();
+          Toast.makeText(context, error, Toast.LENGTH_LONG).show();
+          return;
+        }
       }
     } finally {
       if (cursor != null) {
         cursor.close();
       }
-    }
-    if (progress != null) {
-      progress.dismiss();
+      if (progress != null) {
+        synchronized (this) {
+          progress.dismiss();
+          progress = null;
+        }
+      }
     }
   }
 

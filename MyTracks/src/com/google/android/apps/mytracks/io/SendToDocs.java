@@ -112,7 +112,9 @@ public class SendToDocs {
     SharedPreferences preferences = activity.getSharedPreferences(
         MyTracksSettings.SETTINGS_NAME, 0);
     if (preferences != null) {
-      metricUnits = preferences.getBoolean(MyTracksSettings.METRIC_UNITS, true);
+      metricUnits =
+          preferences.getBoolean(activity.getString(R.string.metric_units_key),
+              true);
     } else {
       metricUnits = true;
     }

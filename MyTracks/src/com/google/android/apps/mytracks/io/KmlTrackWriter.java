@@ -22,7 +22,6 @@ import com.google.android.apps.mytracks.util.StringUtils;
 
 import android.content.Context;
 import android.location.Location;
-import android.os.Environment;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -56,12 +55,6 @@ public class KmlTrackWriter implements TrackFormatWriter {
   public void prepare(Track track, OutputStream out) {
     this.track = track;
     this.pw = new PrintWriter(out);
-  }
-
-  @Override
-  public String getDefaultDirectory() {
-    return Environment.getExternalStorageDirectory()
-        + System.getProperty("file.separator") + getExtension();
   }
 
   @Override

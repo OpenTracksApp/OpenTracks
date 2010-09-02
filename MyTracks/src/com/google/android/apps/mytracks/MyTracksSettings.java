@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -15,16 +15,21 @@
  */
 package com.google.android.apps.mytracks;
 
+import com.google.android.apps.mytracks.io.backup.BackupActivityHelper;
+import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
 import com.google.android.apps.mytracks.services.SafeStatusAnnouncerTask;
 import com.google.android.maps.mytracks.R;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 
 /**
@@ -37,26 +42,6 @@ public class MyTracksSettings extends PreferenceActivity {
 
   public static final String SETTINGS_NAME = "MyTracksSettings";
 
-  public static final String ANNOUNCEMENT_FREQUENCY = "announcementFrequency";
-  public static final String DEFAULT_MAP_PUBLIC = "defaultMapPublic";
-  public static final String MAX_RECORDING_DISTANCE = "maxRecordingDistance";
-  public static final String METRIC_UNITS = "metricUnits";
-  public static final String MIN_RECORDING_DISTANCE = "minRecordingDistance";
-  public static final String MIN_RECORDING_INTERVAL = "minRecordingInterval";
-  public static final String MIN_REQUIRED_ACCURACY = "minRequiredAccuracy";
-  public static final String PICK_EXISTING_MAP = "pickExistingMap";
-  public static final String RECORDING_TRACK = "recordingTrack";
-  public static final String REPORT_SPEED = "reportSpeed";
-  public static final String SELECTED_TRACK = "selectedTrack";
-  public static final String SEND_STATS_AND_POINTS = "sendStatsAndPoints";
-  public static final String SEND_TO_DOCS = "sendToDocs";
-  public static final String SEND_TO_MYMAPS = "sendToMyMaps";
-  public static final String SHARE_URL_ONLY = "shareUrlOnly";
-  public static final String SIGNAL_SAMPLING_FREQUENCY =
-      "signalSamplingFrequency";
-  public static final String SPLIT_FREQUENCY = "splitFrequency";
-  public static final String WRITE_TO_SD_CARD = "writeToSdCard";
-
   /*
    * Default values - keep in sync with those in preferences.xml.
    */
@@ -68,6 +53,9 @@ public class MyTracksSettings extends PreferenceActivity {
   public static final int DEFAULT_SPLIT_FREQUENCY = 0;
 
   private static boolean mTTSAvailable;
+  private BackupPreferencesListener backupListener;
+
+  private SharedPreferences preferences;
 
   /* establish whether the tts class is available to us */
   static {
@@ -85,10 +73,18 @@ public class MyTracksSettings extends PreferenceActivity {
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
 
+    // The volume we want to control is the Text-To-Speech volume
+    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
+
     // Tell it where to read/write preferences
     PreferenceManager preferenceManager = getPreferenceManager();
     preferenceManager.setSharedPreferencesName(SETTINGS_NAME);
     preferenceManager.setSharedPreferencesMode(0);
+
+    // Set up automatic preferences backup
+    backupListener = BackupPreferencesListener.create(this);
+    preferences = preferenceManager.getSharedPreferences();
+    preferences.registerOnSharedPreferenceChangeListener(backupListener);
 
     // Load the preferences to be displayed
     addPreferencesFromResource(R.xml.preferences);
@@ -96,7 +92,8 @@ public class MyTracksSettings extends PreferenceActivity {
     // Hook up switching of displayed list entries between metric and imperial
     // units
     CheckBoxPreference metricUnitsPreference =
-        (CheckBoxPreference) findPreference(METRIC_UNITS);
+        (CheckBoxPreference) findPreference(
+            getString(R.string.metric_units_key));
     metricUnitsPreference.setOnPreferenceChangeListener(
         new OnPreferenceChangeListener() {
           @Override
@@ -112,12 +109,66 @@ public class MyTracksSettings extends PreferenceActivity {
     // Disable TTS announcement preference if not available
     if (!mTTSAvailable) {
       IntegerListPreference announcementFrequency =
-          (IntegerListPreference) findPreference(ANNOUNCEMENT_FREQUENCY);
+          (IntegerListPreference) findPreference(
+              getString(R.string.announcement_frequency_key));
       announcementFrequency.setEnabled(false);
       announcementFrequency.setValue("-1");
       announcementFrequency.setSummary(
           R.string.settings_announcement_not_available_summary);
     }
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+
+    Preference backupNowPreference =
+        findPreference(getString(R.string.backup_to_sd_key));
+    Preference restoreNowPreference =
+        findPreference(getString(R.string.restore_from_sd_key));
+
+    // If recording, disable backup/restore
+    // (we don't want to get to inconsistent states)
+    boolean recording =
+        preferences.getLong(getString(R.string.recording_track_key), -1) != -1;
+    backupNowPreference.setEnabled(!recording);
+    restoreNowPreference.setEnabled(!recording);
+    backupNowPreference.setSummary(
+        recording ? R.string.settings_no_backup_while_recording
+                  : R.string.settings_backup_to_sd_summary);
+    restoreNowPreference.setSummary(
+        recording ? R.string.settings_no_backup_while_recording
+                  : R.string.settings_restore_from_sd_summary);
+
+    // Add actions to the backup preferences
+    backupNowPreference.setOnPreferenceClickListener(
+        new OnPreferenceClickListener() {
+          @Override
+          public boolean onPreferenceClick(Preference preference) {
+            BackupActivityHelper backupHelper =
+                new BackupActivityHelper(MyTracksSettings.this);
+            backupHelper.writeBackup();
+            return true;
+          }
+        });
+    restoreNowPreference.setOnPreferenceClickListener(
+        new OnPreferenceClickListener() {
+          @Override
+          public boolean onPreferenceClick(Preference preference) {
+            BackupActivityHelper backupHelper =
+                new BackupActivityHelper(MyTracksSettings.this);
+            backupHelper.restoreBackup();
+            return true;
+          }
+        });
+  }
+
+  @Override
+  protected void onDestroy() {
+    getPreferenceManager().getSharedPreferences()
+        .unregisterOnSharedPreferenceChangeListener(backupListener);
+
+    super.onPause();
   }
 
   /**
@@ -128,13 +179,17 @@ public class MyTracksSettings extends PreferenceActivity {
    */
   private void updatePreferenceUnits(boolean isMetric) {
     final ListPreference minRecordingDistance =
-        (ListPreference) findPreference(MIN_RECORDING_DISTANCE);
+        (ListPreference) findPreference(
+            getString(R.string.min_recording_distance_key));
     final ListPreference maxRecordingDistance =
-        (ListPreference) findPreference(MAX_RECORDING_DISTANCE);
+        (ListPreference) findPreference(
+            getString(R.string.max_recording_distance_key));
     final ListPreference minRequiredAccuracy =
-        (ListPreference) findPreference(MIN_REQUIRED_ACCURACY);
+        (ListPreference) findPreference(
+            getString(R.string.min_required_accuracy_key));
     final ListPreference splitFrequency =
-        (ListPreference) findPreference(SPLIT_FREQUENCY);
+        (ListPreference) findPreference(
+            getString(R.string.split_frequency_key));
 
     minRecordingDistance.setEntries(isMetric
         ? R.array.min_recording_distance_options

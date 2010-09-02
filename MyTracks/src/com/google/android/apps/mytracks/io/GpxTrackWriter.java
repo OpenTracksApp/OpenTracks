@@ -21,7 +21,6 @@ import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.util.StringUtils;
 
 import android.location.Location;
-import android.os.Environment;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -38,7 +37,7 @@ public class GpxTrackWriter implements TrackFormatWriter {
 
   static final SimpleDateFormat TIMESTAMP_FORMAT =
       new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-  {
+  static {
     TIMESTAMP_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
   }
 
@@ -49,13 +48,6 @@ public class GpxTrackWriter implements TrackFormatWriter {
   public void prepare(Track track, OutputStream out) {
     this.track = track;
     this.pw = new PrintWriter(out);
-  }
-
-  @Override
-  public String getDefaultDirectory() {
-    return Environment.getExternalStorageDirectory()
-        + System.getProperty("file.separator")
-        + getExtension();
   }
 
   @Override
@@ -145,6 +137,7 @@ public class GpxTrackWriter implements TrackFormatWriter {
   @Override
   public void writeWaypoint(Waypoint waypoint) {
     if (pw != null) {
+      // TODO: The gpx spec says waypoints should come *before* tracks
       Location l = waypoint.getLocation();
       if (l != null) {
         pw.println("<wpt lat=\"" + l.getLatitude() + "\" lon=\""

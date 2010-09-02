@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -15,6 +15,9 @@
  */
 package com.google.android.apps.mytracks;
 
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtilsImpl;
+import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.maps.mytracks.R;
@@ -24,13 +27,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.ContentObserver;
-import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
 import android.os.Handler;
+import android.speech.tts.TextToSpeech;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
@@ -48,23 +51,6 @@ import android.widget.Toast;
 public class StatsActivity extends Activity
     implements OnSharedPreferenceChangeListener, LocationListener {
 
-  /**
-   * Columns we need from the provider
-   */
-  private static final String[] PROJECTION_COLUMNS = {
-      TracksColumns._ID,
-      TracksColumns.STARTTIME,
-      TracksColumns.TOTALTIME,
-      TracksColumns.MOVINGTIME,
-      TracksColumns.TOTALDISTANCE,
-      TracksColumns.AVGSPEED,
-      TracksColumns.AVGMOVINGSPEED,
-      TracksColumns.MAXSPEED,
-      TracksColumns.MINELEVATION,
-      TracksColumns.MAXELEVATION,
-      TracksColumns.ELEVATIONGAIN,
-      TracksColumns.MINGRADE,
-      TracksColumns.MAXGRADE };
 
   private final StatsUtilities utils;
   private UIUpdateThread thread;
@@ -109,6 +95,9 @@ public class StatsActivity extends Activity
    */
   private boolean showCurrentSegment = false;
 
+  private final MyTracksProviderUtils providerUtils;
+  private Track track = null;
+
   /**
    * A runnable for posting to the UI thread. Will update the total time field.
    */
@@ -147,13 +136,17 @@ public class StatsActivity extends Activity
   }
 
   public StatsActivity() {
-    this.utils = new StatsUtilities(this);
+    utils = new StatsUtilities(this);
+    providerUtils = new MyTracksProviderUtilsImpl(this);
   }
 
   /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    // The volume we want to control is the Text-To-Speech volume
+    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
     // We don't need a window title bar:
     requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -176,20 +169,20 @@ public class StatsActivity extends Activity
     SharedPreferences preferences =
         getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
     if (preferences != null) {
-      selectedTrackId = preferences.getLong(MyTracksSettings.SELECTED_TRACK,
-          -1);
-      recordingTrackId = preferences.getLong(MyTracksSettings.RECORDING_TRACK,
-          -1);
-      metricUnits = preferences.getBoolean(MyTracksSettings.METRIC_UNITS,
-          true);
+      selectedTrackId = preferences.getLong(
+          getString(R.string.selected_track_key), -1);
+      recordingTrackId = preferences.getLong(
+          getString(R.string.recording_track_key), -1);
+      metricUnits = preferences.getBoolean(
+          getString(R.string.metric_units_key), true);
       displaySpeed =
-        preferences.getBoolean(MyTracksSettings.REPORT_SPEED, true);
+        preferences.getBoolean(getString(R.string.report_speed_key), true);
       checkLiveTrack();
       restoreStats();
       updateLocation(null);
       preferences.registerOnSharedPreferenceChangeListener(this);
     }
-    locationManager = 
+    locationManager =
         (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     utils.setMetricUnits(metricUnits);
     utils.setReportSpeed(displaySpeed);
@@ -227,39 +220,51 @@ public class StatsActivity extends Activity
 
   @Override
   public void onSharedPreferenceChanged(
-      SharedPreferences sharedPreferences, String key) {
+      final SharedPreferences sharedPreferences, final String key) {
     Log.d(MyTracksConstants.TAG,
         "StatsActivity: onSharedPreferences changed " + key);
     if (key != null) {
-      if (key.equals(MyTracksSettings.SELECTED_TRACK)) {
-        selectedTrackId =
-            sharedPreferences.getLong(MyTracksSettings.SELECTED_TRACK, -1);
-        checkLiveTrack();
-        restoreStats();
-        updateLocation(null);
-      } else if (key.equals(MyTracksSettings.RECORDING_TRACK)) {
-        recordingTrackId =
-            sharedPreferences.getLong(MyTracksSettings.RECORDING_TRACK, -1);
-        checkLiveTrack();
-        restoreStats();
-        updateLocation(null);
-      } else if (key.equals(MyTracksSettings.METRIC_UNITS)) {
-        metricUnits =
-            sharedPreferences.getBoolean(MyTracksSettings.METRIC_UNITS, true);
-        utils.setMetricUnits(metricUnits);
-        utils.updateUnits();
-        restoreStats();
-      } else if (key.equals(MyTracksSettings.REPORT_SPEED)) {
-        displaySpeed =
-            sharedPreferences.getBoolean(MyTracksSettings.REPORT_SPEED, true);
-        utils.setReportSpeed(displaySpeed);
-        utils.updateUnits();
-        utils.setSpeedLabel(
-            R.id.speed_label, R.string.speed, R.string.pace_label);
-        Log.w(MyTracksConstants.TAG, "Setting speed labels");
-        utils.setSpeedLabels();
-        restoreStats();
-      }
+      runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+          if (key.equals(getString(R.string.selected_track_key))) {
+            selectedTrackId =
+                sharedPreferences.getLong(
+                    getString(R.string.selected_track_key),
+                    -1);
+            checkLiveTrack();
+            restoreStats();
+            updateLocation(null);
+          } else if (key.equals(getString(R.string.recording_track_key))) {
+            recordingTrackId =
+                sharedPreferences.getLong(
+                    getString(R.string.recording_track_key),
+                    -1);
+            checkLiveTrack();
+            restoreStats();
+            updateLocation(null);
+          } else if (key.equals(getString(R.string.metric_units_key))) {
+            metricUnits =
+                sharedPreferences.getBoolean(
+                    getString(R.string.metric_units_key), true);
+            utils.setMetricUnits(metricUnits);
+            utils.updateUnits();
+            restoreStats();
+          } else if (key.equals(getString(R.string.report_speed_key))) {
+            displaySpeed =
+                sharedPreferences.getBoolean(
+                    getString(R.string.report_speed_key),
+                    true);
+            utils.setReportSpeed(displaySpeed);
+            utils.updateUnits();
+            utils.setSpeedLabel(
+                R.id.speed_label, R.string.speed, R.string.pace_label);
+            Log.w(MyTracksConstants.TAG, "Setting speed labels");
+            utils.setSpeedLabels();
+            restoreStats();
+          }
+        }
+      });
     }
   }
 
@@ -359,60 +364,18 @@ public class StatsActivity extends Activity
       return;
     }
 
-    Cursor cursor = null;
-    try {
-      cursor = getContentResolver().query(
-          showCurrentSegment
-              ? WaypointsColumns.CONTENT_URI
-              : TracksColumns.CONTENT_URI,
-          PROJECTION_COLUMNS,
-          showCurrentSegment
-              ? WaypointsColumns.TRACKID + "=" + selectedTrackId
-              : "_id=" + selectedTrackId,
-          null,
-          "_id LIMIT 1");
-
-      if (cursor != null && cursor.moveToFirst()) {
-        final int idxStartTime =
-            cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
-        final int idxTotalTime =
-            cursor.getColumnIndexOrThrow(TracksColumns.TOTALTIME);
-        final int idxMovingTime =
-            cursor.getColumnIndexOrThrow(TracksColumns.MOVINGTIME);
-        final int idxTotalDistance =
-            cursor.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE);
-        final int idxAverageSpeed =
-          cursor.getColumnIndexOrThrow(TracksColumns.AVGSPEED);
-        final int idxAverageMovingSpeed =
-            cursor.getColumnIndexOrThrow(TracksColumns.AVGMOVINGSPEED);
-        final int idxMaxSpeed =
-            cursor.getColumnIndexOrThrow(TracksColumns.MAXSPEED);
-        final int idxMinElevation =
-            cursor.getColumnIndexOrThrow(TracksColumns.MINELEVATION);
-        final int idxMaxElevation =
-            cursor.getColumnIndexOrThrow(TracksColumns.MAXELEVATION);
-        final int idxElevationGain =
-            cursor.getColumnIndexOrThrow(TracksColumns.ELEVATIONGAIN);
-        final int idxMinGrade =
-            cursor.getColumnIndexOrThrow(TracksColumns.MINGRADE);
-        final int idxMaxGrade =
-            cursor.getColumnIndexOrThrow(TracksColumns.MAXGRADE);
-        startTime = cursor.getLong(idxStartTime);
-        if (!selectedTrackIsRecording()) {
-          utils.setTime(R.id.total_time_register, cursor.getLong(idxTotalTime));
-        }
-        utils.setAllStats(cursor.getLong(idxMovingTime),
-            cursor.getFloat(idxTotalDistance), cursor.getFloat(idxAverageSpeed),
-            cursor.getFloat(idxAverageMovingSpeed),
-            cursor.getFloat(idxMaxSpeed), cursor.getFloat(idxMinElevation),
-            cursor.getFloat(idxMaxElevation), cursor.getFloat(idxElevationGain),
-            cursor.getFloat(idxMinGrade), cursor.getFloat(idxMaxGrade));
-      }
-    } finally {
-      if (cursor != null) {
-        cursor.close();
-      }
+    track = providerUtils.getTrack(selectedTrackId);
+    if (track == null || track.getStatistics() == null) {
+      utils.setAllToUnknown();
+      return;
     }
+
+    startTime = track.getStatistics().getStartTime();
+    if (!selectedTrackIsRecording()) {
+      utils.setTime(R.id.total_time_register,
+          track.getStatistics().getTotalTime());
+    }
+    utils.setAllStats(track.getStatistics());
   }
 
   /**

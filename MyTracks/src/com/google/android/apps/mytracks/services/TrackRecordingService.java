@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -36,7 +36,6 @@ import android.app.Service;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.location.Location;
@@ -56,7 +55,7 @@ import java.util.TimerTask;
 /**
  * A background service that registers a location listener and records track
  * points. Track points are saved to the MyTracksProvider.
- * 
+ *
  * @author Leif Hendrik Wilden
  */
 public class TrackRecordingService extends Service implements LocationListener {
@@ -68,8 +67,6 @@ public class TrackRecordingService extends Service implements LocationListener {
   private LocationManager locationManager;
   private WakeLock wakeLock;
 
-  private int minRecordingInterval =
-      MyTracksSettings.DEFAULT_MIN_RECORDING_INTERVAL;
   private int minRecordingDistance =
       MyTracksSettings.DEFAULT_MIN_RECORDING_DISTANCE;
   private int maxRecordingDistance =
@@ -110,8 +107,10 @@ public class TrackRecordingService extends Service implements LocationListener {
   private TaskExecuterManager signalManager;
   private SplitManager splitManager;
 
+  private PreferenceManager prefManager;
+  
   /**
-   * The interval in milliseconds that we have requested to be notfied of gps
+   * The interval in milliseconds that we have requested to be notified of gps
    * readings.
    */
   private long currentRecordingInterval = 0;
@@ -126,7 +125,7 @@ public class TrackRecordingService extends Service implements LocationListener {
    * Task invoked by a timer periodically to make sure the location listener is
    * still registered.
    */
-  private TimerTask checkLocationListener = new TimerTask() {
+  private final TimerTask checkLocationListener = new TimerTask() {
     @Override
     public void run() {
       if (!onCreateWasCalled) {
@@ -198,7 +197,7 @@ public class TrackRecordingService extends Service implements LocationListener {
   /**
    * Inserts a new location in the track points db and updates the corresponding
    * track in the track db.
-   * 
+   *
    * @param recordingTrack the track that is currently being recorded
    * @param location the location to be inserted
    * @param lastRecordedLocation the last recorded location before this one (or
@@ -475,8 +474,7 @@ public class TrackRecordingService extends Service implements LocationListener {
       }
 
       // This should never happen, but just in case (we really don't want the
-      // service
-      // to crash):
+      // service to crash):
       if (location == null) {
         Log.w(MyTracksConstants.TAG,
             "Location changed, but location is null.");
@@ -559,8 +557,7 @@ public class TrackRecordingService extends Service implements LocationListener {
         }
 
         // If separation from last recorded point is too large insert a
-        // separator
-        // to indicate end of a segment:
+        // separator to indicate end of a segment:
         boolean startNewSegment =
             lastRecordedLocation != null
                 && lastRecordedLocation.getLatitude() < 90
@@ -620,7 +617,7 @@ public class TrackRecordingService extends Service implements LocationListener {
    */
 
   /**
-   * Notifies that preferences have changed. 
+   * Notifies that preferences have changed.
    * Call this with key == null to update all preferences in one call.
    *
    * @param key the key that changed (may be null to update all preferences)
@@ -628,93 +625,7 @@ public class TrackRecordingService extends Service implements LocationListener {
   public void onSharedPreferenceChanged(String key) {
     Log.d(MyTracksConstants.TAG,
         "TrackRecordingService.onSharedPreferenceChanged");
-    SharedPreferences sharedPreferences =
-        getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
-    if (sharedPreferences == null) {
-      Log.w(MyTracksConstants.TAG,
-          "TrackRecordingService: Couldn't get shared preferences.");
-      return;
-    }
-
-    if (key == null || key.equals(MyTracksSettings.MIN_RECORDING_DISTANCE)) {
-      minRecordingDistance = sharedPreferences.getInt(
-          MyTracksSettings.MIN_RECORDING_DISTANCE,
-          MyTracksSettings.DEFAULT_MIN_RECORDING_DISTANCE);
-      Log.d(MyTracksConstants.TAG,
-          "TrackRecordingService: minRecordingDistance = "
-          + minRecordingDistance);
-    }
-    if (key == null || key.equals(MyTracksSettings.MAX_RECORDING_DISTANCE)) {
-      maxRecordingDistance = sharedPreferences.getInt(
-          MyTracksSettings.MAX_RECORDING_DISTANCE,
-          MyTracksSettings.DEFAULT_MAX_RECORDING_DISTANCE);
-    }
-    if (key == null || key.equals(MyTracksSettings.MIN_RECORDING_INTERVAL)) {
-      minRecordingInterval = sharedPreferences.getInt(
-          MyTracksSettings.MIN_RECORDING_INTERVAL,
-          MyTracksSettings.DEFAULT_MIN_RECORDING_INTERVAL);
-      switch (minRecordingInterval) {
-        case -2:
-          // Battery Miser
-          // min: 30 seconds
-          // max: 5 minutes
-          // minDist: 5 meters Choose battery life over moving time accuracy.
-          locationListenerPolicy =
-              new AdaptiveLocationListenerPolicy(30000, 300000, 5);
-          break;
-        case -1:
-          // High Accuracy
-          // min: 1 second
-          // max: 30 seconds
-          // minDist: 0 meters get all updates to properly measure moving time.
-          locationListenerPolicy =
-              new AdaptiveLocationListenerPolicy(1000, 30000, 0);
-          break;
-        default:
-          locationListenerPolicy =
-              new AbsoluteLocationListenerPolicy(minRecordingInterval * 1000);
-      }
-    }
-    if (key == null || key.equals(MyTracksSettings.MIN_REQUIRED_ACCURACY)) {
-      minRequiredAccuracy = sharedPreferences.getInt(
-          MyTracksSettings.MIN_REQUIRED_ACCURACY,
-          MyTracksSettings.DEFAULT_MIN_REQUIRED_ACCURACY);
-    }
-    if (key == null || key.equals(MyTracksSettings.RECORDING_TRACK)) {
-      recordingTrackId =
-          sharedPreferences.getLong(MyTracksSettings.RECORDING_TRACK, -1);
-    }
-    if (key == null || key.equals(MyTracksSettings.ANNOUNCEMENT_FREQUENCY)) {
-      announcementFrequency =
-          sharedPreferences.getInt(MyTracksSettings.ANNOUNCEMENT_FREQUENCY, -1);
-      if (mTTSAvailable) {
-        if (announcementFrequency == -1) {
-          if (executer != null) {
-            executer.shutdown();
-            executer = null;
-          }
-        } else {
-          if (executer == null) {
-            SafeStatusAnnouncerTask announcer =
-                new SafeStatusAnnouncerTask(this);
-            executer = new PeriodicTaskExecuter(announcer, this);
-          }
-          executer.scheduleTask(announcementFrequency * 60000);
-        }
-      }
-    }
-    if (key == null || key.equals(MyTracksSettings.SPLIT_FREQUENCY)) {
-      splitManager.setSplitFrequency(
-          sharedPreferences.getInt(MyTracksSettings.SPLIT_FREQUENCY, 0));
-    }
-    if (key == null || key.equals(MyTracksSettings.SIGNAL_SAMPLING_FREQUENCY)) {
-      signalManager.setFrequency(sharedPreferences.getInt(
-          MyTracksSettings.SIGNAL_SAMPLING_FREQUENCY, -1), this);
-    }
-    if (key == null || key.equals(MyTracksSettings.METRIC_UNITS)) {
-      splitManager.setMetricUnits(
-          sharedPreferences.getBoolean(MyTracksSettings.METRIC_UNITS, true));
-    }
+    prefManager.onSharedPreferenceChanged(key);
 
     if (isRecording) {
       registerLocationListener();
@@ -730,7 +641,6 @@ public class TrackRecordingService extends Service implements LocationListener {
     Log.d(MyTracksConstants.TAG, "TrackRecordingService.onCreate");
     super.onCreate();
     onCreateWasCalled = true;
-    setForeground(true);
     providerUtils = MyTracksProviderUtils.Factory.get(this);
     notificationManager =
         (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -748,6 +658,7 @@ public class TrackRecordingService extends Service implements LocationListener {
       signalManager =
           new TaskExecuterManager(-1, new SignalStrengthTask(this), this);
     }
+    prefManager = new PreferenceManager(this);
     onSharedPreferenceChanged(null);
     restoreStats();
     registerLocationListener();
@@ -815,7 +726,7 @@ public class TrackRecordingService extends Service implements LocationListener {
   /**
    * Inserts a statistics marker. A statistics marker holds the stats for the
    * last segment up to this marker.
-   * 
+   *
    * @param location the location where to insert
    * @return the unique id of the inserted marker
    */
@@ -872,7 +783,7 @@ public class TrackRecordingService extends Service implements LocationListener {
         public boolean hasRecorded() {
           return providerUtils.getLastTrackId() >= 0;
         }
-    
+
         @Override
         public long startNewTrack() {
           Log.d(MyTracksConstants.TAG, "TrackRecordingService.startNewTrack");
@@ -903,11 +814,11 @@ public class TrackRecordingService extends Service implements LocationListener {
           signalManager.restore();
           return trackId;
         }
-    
+
         /**
          * Insert the given waypoint marker. Users can insert waypoint markers
          * to tag locations with a name, description, category etc.
-         * 
+         *
          * @param waypoint a waypoint
          * @return the unique id of the inserted marker
          */
@@ -915,11 +826,11 @@ public class TrackRecordingService extends Service implements LocationListener {
         public long insertWaypointMarker(Waypoint waypoint) {
           return TrackRecordingService.this.insertWaypointMarker(waypoint);
         }
-    
+
         /**
          * Insert a statistics marker. A statistics marker holds the stats for
          * the last segment up to this marker.
-         * 
+         *
          * @param location the location where to insert
          * @return the unique id of the inserted marker
          */
@@ -927,7 +838,7 @@ public class TrackRecordingService extends Service implements LocationListener {
         public long insertStatisticsMarker(Location location) {
           return TrackRecordingService.this.insertStatisticsMarker(location);
         }
-    
+
         @Override
         public void endCurrentTrack() {
           Log.d(MyTracksConstants.TAG, "TrackRecordingService.endCurrentTrack");
@@ -952,18 +863,18 @@ public class TrackRecordingService extends Service implements LocationListener {
           showNotification();
           recordingTrackId = -1;
         }
-    
+
         @Override
         public void deleteAllTracks() {
           endCurrentTrack();
           providerUtils.deleteAllTracks();
         }
-    
+
         @Override
         public void recordLocation(Location loc) {
           onLocationChanged(loc);
         }
-    
+
         @Override
         public void sharedPreferenceChanged(String key) {
           Log.d(MyTracksConstants.TAG,
@@ -982,5 +893,69 @@ public class TrackRecordingService extends Service implements LocationListener {
 
   long getRecordingTrackId() {
     return recordingTrackId;
+  }
+
+  public int getAnnouncementFrequency() {
+    return announcementFrequency;
+  }
+
+  public void setAnnouncementFrequency(int announcementFrequency) {
+    this.announcementFrequency = announcementFrequency;
+    if (mTTSAvailable) {
+      if (announcementFrequency == -1) {
+        if (executer != null) {
+          executer.shutdown();
+          executer = null;
+        }
+      } else {
+        if (executer == null) {
+          SafeStatusAnnouncerTask announcer =
+              new SafeStatusAnnouncerTask(this);
+          executer = new PeriodicTaskExecuter(announcer, this);
+        }
+        executer.scheduleTask(announcementFrequency * 60000);
+      }
+    }
+  }
+
+  public int getMaxRecordingDistance() {
+    return maxRecordingDistance;
+  }
+
+  public void setMaxRecordingDistance(int maxRecordingDistance) {
+    this.maxRecordingDistance = maxRecordingDistance;
+  }
+
+  public int getMinRecordingDistance() {
+    return minRecordingDistance;
+  }
+
+  public void setMinRecordingDistance(int minRecordingDistance) {
+    this.minRecordingDistance = minRecordingDistance;
+  }
+
+  public int getMinRequiredAccuracy() {
+    return minRequiredAccuracy;
+  }
+
+  public void setMinRequiredAccuracy(int minRequiredAccuracy) {
+    this.minRequiredAccuracy = minRequiredAccuracy;
+  }
+
+  public LocationListenerPolicy getLocationListenerPolicy() {
+    return locationListenerPolicy;
+  }
+
+  public void setLocationListenerPolicy(
+      LocationListenerPolicy locationListenerPolicy) {
+    this.locationListenerPolicy = locationListenerPolicy;
+  }
+
+  public SplitManager getSplitManager() {
+    return splitManager;
+  }
+
+  public TaskExecuterManager getSignalManager() {
+    return signalManager;
   }
 }

@@ -173,7 +173,7 @@ public class StringUtils implements DescriptionGenerator {
         context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
     if (preferences != null) {
       displaySpeed =
-          preferences.getBoolean(MyTracksSettings.REPORT_SPEED, true);
+          preferences.getBoolean(context.getString(R.string.report_speed_key), true);
     }
 
     TripStatistics trackStats = track.getStatistics();
