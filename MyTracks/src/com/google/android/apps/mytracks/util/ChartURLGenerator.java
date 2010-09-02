@@ -53,7 +53,8 @@ public class ChartURLGenerator {
         context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
     boolean metricUnits = true;
     if (preferences != null) {
-      metricUnits = preferences.getBoolean(MyTracksSettings.METRIC_UNITS, true);
+      metricUnits = preferences.getBoolean(
+          context.getString(R.string.metric_units_key), true);
     }
 
     return getChartUrl(distances, elevations, track,

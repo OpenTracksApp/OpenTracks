@@ -44,9 +44,9 @@ public class AggregatedStatsActivity extends Activity implements
     Log.d(MyTracksConstants.TAG, "StatsActivity: onSharedPreferences changed "
             + key);
     if (key != null) {
-      if (key.equals(MyTracksSettings.METRIC_UNITS)) {
+      if (key.equals(R.string.metric_units_key)) {
         metricUnits = sharedPreferences.getBoolean(
-                MyTracksSettings.METRIC_UNITS, true);
+                getString(R.string.metric_units_key), true);
         utils.setMetricUnits(metricUnits);
         utils.updateUnits();
         loadAggregatedStats();
@@ -68,7 +68,7 @@ public class AggregatedStatsActivity extends Activity implements
     SharedPreferences preferences = getSharedPreferences(
             MyTracksSettings.SETTINGS_NAME, 0);
     if (preferences != null) {
-      metricUnits = preferences.getBoolean(MyTracksSettings.METRIC_UNITS, true);
+      metricUnits = preferences.getBoolean(getString(R.string.metric_units_key), true);
       preferences.registerOnSharedPreferenceChangeListener(this);
     }
     utils.setMetricUnits(metricUnits);

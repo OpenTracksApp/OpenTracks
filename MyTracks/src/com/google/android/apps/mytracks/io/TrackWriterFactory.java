@@ -49,6 +49,12 @@ public class TrackWriterFactory {
       public TrackFormatWriter newFormatWriter(Context context) {
         return new CsvTrackWriter();
       }
+    },
+    TCX {
+      @Override
+      public TrackFormatWriter newFormatWriter(Context context) {
+        return new TcxTrackWriter();
+      }
     };
 
     /**

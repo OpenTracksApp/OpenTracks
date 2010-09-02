@@ -855,8 +855,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     Cursor cursor = getLocationsCursor(track.getId(),
                                        startingPoint,
                                        buffer.getSize(), false);
-    final int idColumnIdx =
-        cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
     if (cursor == null) {
       Log.w(MyTracksProvider.TAG, "Cannot get a locations cursor!");
       buffer.setInvalid();
@@ -875,6 +873,8 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
         return;
       }
 
+      final int idColumnIdx =
+          cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
       do {
         Location location = createLocation(cursor);
         if (location == null) {
@@ -916,36 +916,23 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   @Override
+  public int bulkInsertTrackPoints(Location[] locations, int length, long trackId) {
+    if (length == -1) { length = locations.length; }
+
+    ContentValues[] values = new ContentValues[length];
+    for (int i = 0; i < length; i++) {
+      values[i] = createContentValues(locations[i], trackId);
+    }
+
+    return context.getContentResolver().bulkInsert(TrackPointsColumns.CONTENT_URI, values);
+  }
+
+  @Override
   public Uri insertWaypoint(Waypoint waypoint) {
     Log.d(MyTracksProvider.TAG, "MyTracksProviderUtilsImpl.insertWaypoint");
     waypoint.setId(-1);
     return context.getContentResolver().insert(WaypointsColumns.CONTENT_URI,
         createContentValues(waypoint));
-  }
-
-  @Override
-  public Uri insertTrackAndTrackPoints(Track track) {
-    // Insert the track right away to have its ID
-    Uri trackUri = insertTrack(track);
-    long trackId = Long.parseLong(trackUri.getLastPathSegment());
-    track.setId(trackId);
-
-    // Insert all the points (associated with the track ID)
-    boolean firstPoint = true;
-    long pointId = -1;
-    for (Location location : track.getLocations()) {
-      Uri pointUri = insertTrackPoint(location, trackId);
-      pointId = Long.parseLong(pointUri.getLastPathSegment());
-      if (firstPoint) {
-        track.setStartId(pointId);
-        firstPoint = false;
-      }
-    }
-    track.setStopId(pointId);
-
-    // Update the track with the start and end point IDs
-    updateTrack(track);
-    return trackUri;
   }
 
   @Override

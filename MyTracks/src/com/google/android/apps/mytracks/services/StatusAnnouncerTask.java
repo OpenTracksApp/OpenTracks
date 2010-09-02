@@ -116,10 +116,12 @@ public class StatusAnnouncerTask
     boolean metricUnits = true;
     boolean reportSpeed = true;
     if (preferences != null) {
-      metricUnits =  preferences.getBoolean(MyTracksSettings.METRIC_UNITS,
-                                            true);
-      reportSpeed =  preferences.getBoolean(MyTracksSettings.REPORT_SPEED,
-                                            true);
+      metricUnits = 
+          preferences.getBoolean(context.getString(R.string.metric_units_key),
+              true);
+      reportSpeed =
+          preferences.getBoolean(context.getString(R.string.report_speed_key),
+              true);
     }
 
     double d =  stats.getTotalDistance() / 1000;

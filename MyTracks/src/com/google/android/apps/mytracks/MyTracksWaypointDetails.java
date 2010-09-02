@@ -66,11 +66,11 @@ public class MyTracksWaypointDetails extends Activity
         getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
     if (preferences != null) {
       boolean useMetric =
-          preferences.getBoolean(MyTracksSettings.METRIC_UNITS, true);
+          preferences.getBoolean(getString(R.string.metric_units_key), true);
       utils.setMetricUnits(useMetric);
 
       boolean displaySpeed =
-          preferences.getBoolean(MyTracksSettings.REPORT_SPEED, true);
+          preferences.getBoolean(getString(R.string.report_speed_key), true);
       utils.setReportSpeed(displaySpeed);
 
       utils.updateWaypointUnits();

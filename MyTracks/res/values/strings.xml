@@ -123,6 +123,7 @@ limitations under the License.
   <string name="tracklist_save_as_gpx">Save a GPX file</string>
   <string name="tracklist_save_as_kml">Save a KML file</string>
   <string name="tracklist_save_as_csv">Save a CSV file</string>
+  <string name="tracklist_save_as_tcx">Save a TCX file</string>
   <string name="tracklist_btn_send_all_to_mymaps">Send to Google My Maps</string>
   <string name="tracklist_btn_delete_all">Delete all tracks</string>
   <!-- Export All -->
@@ -136,6 +137,7 @@ limitations under the License.
   <string name="tracklist_share_gpx_file">A GPX file</string>
   <string name="tracklist_share_kml_file">A KML file</string>
   <string name="tracklist_share_csv_file">A CSV file</string>
+  <string name="tracklist_share_tcx_file">A TCX file</string>
   <string name="tracklist_clear_map">Clear map</string>
 
   <!-- Waypoints list -->
@@ -204,6 +206,21 @@ limitations under the License.
   <string name="settings_split_frequency">Split Frequency</string>
   <string name="settings_split_frequency_summary">Maximum time or distance after which a new split marker will be inserted</string>
   <string name="pace_label">Pace</string>
+
+  <string name="eclair_required">Only supported in Android 2.0 or above</string>
+  <string name="settings_sensor_type">Sensor Type</string>
+  <string name="settings_sensor_type_summary">The type of sensor to connect to.</string>
+
+  <string name="settings_sensor_id">Sensor Id</string>
+  <string name="settings_sensor_id_summary">The Id sent to sensors.</string>
+  <string name="sensor_id_malformed">The Id must be an integer value.</string>
+
+  <string name="bluetooth_sensor_title">Bluetooth sensor</string>
+  <string name="bluetooth_sensor_summary">The bluetooth sensor to connect to.</string>
+
+  <string name="settings_modular_stats_display_title">Modular Stats Display</string>
+  <string name="settings_modular_stats_display_summary_on">The stats screen is split in various modes.</string>
+  <string name="settings_modular_stats_display_summary_off">Display all stats on one screen</string>
 
   <!-- MyTracksSky -->
   <string name="mytracks_sky">GPS Satellites</string>
@@ -292,6 +309,7 @@ limitations under the License.
   <string name="minutes">minutes</string>
   <string name="second">second</string>
   <string name="seconds">seconds</string>
+  <string name="milliseconds">ms</string>
 
   <!-- Distance -->
   <string name="meter">m</string>
@@ -311,6 +329,12 @@ limitations under the License.
   <string name="min_per_mile">min/mi</string>
   <string name="per_mile">per mile</string>
 
+  <!-- Power -->
+  <string name="watts">W</string>
+
+  <string name="revolutions_per_minute">rpm</string>
+  <string name="bpm">bpm</string>
+
   <!-- Stats Labels -->
   <string name="moving_time_label">Moving Time</string>
   <string name="total_time_label">Total Time</string>
@@ -321,6 +345,10 @@ limitations under the License.
   <string name="statistics">Statistics</string>
   <string name="total_distance_label">Total Distance</string>
   <string name="distance_label">Distance</string>
+  <string name="power">Power</string>
+  <string name="cadence">Cadence</string>
+  <string name="heart_rate">Heart Rate</string>
+  <string name="max_heart_rate">Max Heart Rate</string>
   <string name="unknown">-</string>
   <string name="waiting">Waiting...</string>
 
@@ -338,7 +366,6 @@ limitations under the License.
   <string name="about_support">Support:</string>
 
   <!-- DO NOT TRANSLATE -->
-  <string name="version">1.0.14</string>
   <string name="about_googlegroups">mytracks@googlegroups.com</string>
   <string name="about_weburl">mytracks.appspot.com</string>
   <string name="about_copyright_message">Copyright 2009 Google Inc.</string>
@@ -404,4 +431,29 @@ limitations under the License.
   <string name="gsm_strength">GSM Strength: %1$d</string>
   <string name="cdma_strength">CDMA Strength: %1$d dBm</string>
   <string name="evdo_strength">EVDO Strength: %1$d dBm</string>
+
+  <!-- Fake preference keys - never saved, but show options in the preferences screen -->
+  <string name="method_bluetooth">Bluetooth</string>
+  <string name="bluetooth_options">Bluetooth options</string>
+  <string name="bluetooth_pairing">Device pairing</string>
+  <string name="bluetooth_pairing_summary">Open Android\'s bluetooth settings to pair a device</string>
+  <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
+  <string name="sensor_options">Sensor Options</string>
+
+  <!-- Sensor Types => DO NOT TRANSLATE -->
+  <string name="none">NONE</string>
+  <string name="ant_sensor_type">ANT</string>
+  <string name="srm_sensor_type">SRM</string>
+  <string name="athlosoft_sensor_type">ATHLOSOFT</string>
+
+  <!-- Bluetooth Sensor -->
+  <string name="bluetooth_connected">Connected to %s</string>
+  <string name="bluetooth_connecting">Bluetooth sensor connecting ...</string>
+  <string name="bluetooth_not_connected">Bluetooth sensor not connected</string>
+
+  <!-- Sensor State -->
+  <string name="sensor_data_time">Sensor Data Time</string>
+  <string name="power_meter_enabled">Power meter enabled</string>
+  <string name="heart_rate_monitor_enabled">Heart rate monitor enabled</string>
+
 </resources>

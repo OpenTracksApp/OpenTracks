@@ -54,30 +54,25 @@ public abstract class MyTracksConstants {
   public static final int SHARE_GPX_FILE = 15;
   public static final int SHARE_KML_FILE = 16;
   public static final int SHARE_CSV_FILE = 17;
-  public static final int EDIT_DETAILS = 18;
-  public static final int SAVE_GPX_FILE = 19;
-  public static final int SAVE_KML_FILE = 20;
-  public static final int SAVE_CSV_FILE = 21;
-  public static final int CLEAR_MAP = 22;
-  public static final int SHOW_WAYPOINT = 23;
-  public static final int EDIT_WAYPOINT = 24;
-  public static final int WELCOME = 25;
+  public static final int SHARE_TCX_FILE = 18;
+  public static final int EDIT_DETAILS = 19;
+  public static final int SAVE_GPX_FILE = 20;
+  public static final int SAVE_KML_FILE = 21;
+  public static final int SAVE_CSV_FILE = 22;
+  public static final int SAVE_TCX_FILE = 23;
+  public static final int CLEAR_MAP = 24;
+  public static final int SHOW_WAYPOINT = 25;
+  public static final int EDIT_WAYPOINT = 26;
+  public static final int WELCOME = 27;
 
   /*
    * Menu ids:
    */
 
-  public static final int MENU_START_RECORDING = 1;
-  public static final int MENU_STOP_RECORDING = 2;
-  public static final int MENU_LIST_TRACKS = 3;
-  public static final int MENU_LIST_MARKERS = 4;
-  public static final int MENU_SETTINGS = 5;
-  public static final int MENU_MY_LOCATION = 6;
-  public static final int MENU_TOGGLE_LAYERS = 7;
-  public static final int MENU_CHART_SETTINGS = 8;
-  public static final int MENU_HELP = 9;
-  public static final int MENU_CURRENT_SEGMENT = 10;
-  public static final int MENU_AGGREGATED_STATS = 11;
+  public static final int MENU_MY_LOCATION = 1;
+  public static final int MENU_TOGGLE_LAYERS = 2;
+  public static final int MENU_CHART_SETTINGS = 3;
+  public static final int MENU_CURRENT_SEGMENT = 4;
 
   /*
    * Context menu ids:
@@ -92,11 +87,13 @@ public abstract class MyTracksConstants {
   public static final int MENU_SHARE_GPX_FILE = 201;
   public static final int MENU_SHARE_KML_FILE = 202;
   public static final int MENU_SHARE_CSV_FILE = 203;
-  public static final int MENU_WRITE_TO_SD_CARD = 204;
-  public static final int MENU_SAVE_GPX_FILE = 205;
-  public static final int MENU_SAVE_KML_FILE = 206;
-  public static final int MENU_SAVE_CSV_FILE = 207;
-  public static final int MENU_CLEAR_MAP = 208;
+  public static final int MENU_SHARE_TCX_FILE = 204;
+  public static final int MENU_WRITE_TO_SD_CARD = 205;
+  public static final int MENU_SAVE_GPX_FILE = 206;
+  public static final int MENU_SAVE_KML_FILE = 207;
+  public static final int MENU_SAVE_CSV_FILE = 208;
+  public static final int MENU_SAVE_TCX_FILE = 209;
+  public static final int MENU_CLEAR_MAP = 210;
 
   /**
    * The number of distance readings to smooth to get a stable signal.
@@ -123,6 +120,12 @@ public abstract class MyTracksConstants {
    * Maximum number of track points displayed by the map overlay.
    */
   public static final int MAX_DISPLAYED_TRACK_POINTS = 10000;
+
+  /**
+   * Target number of track points displayed by the map overlay.
+   * We may display more than this number of points.
+   */
+  public static final int TARGET_DISPLAYED_TRACK_POINTS = 5000;
 
   /**
    * Maximum number of track points ever loaded at once from the provider into
@@ -180,12 +183,16 @@ public abstract class MyTracksConstants {
         return MyTracksConstants.SHARE_GPX_FILE;
       case MyTracksConstants.MENU_SHARE_CSV_FILE:
         return MyTracksConstants.SHARE_CSV_FILE;
+      case MyTracksConstants.MENU_SHARE_TCX_FILE:
+        return MyTracksConstants.SHARE_TCX_FILE;
       case MyTracksConstants.MENU_SAVE_GPX_FILE:
         return MyTracksConstants.SAVE_GPX_FILE;
       case MyTracksConstants.MENU_SAVE_KML_FILE:
         return MyTracksConstants.SAVE_KML_FILE;
       case MyTracksConstants.MENU_SAVE_CSV_FILE:
         return MyTracksConstants.SAVE_CSV_FILE;
+      case MyTracksConstants.MENU_SAVE_TCX_FILE:
+        return MyTracksConstants.SAVE_TCX_FILE;
       case MyTracksConstants.MENU_CLEAR_MAP:
         return MyTracksConstants.CLEAR_MAP;
       default:
