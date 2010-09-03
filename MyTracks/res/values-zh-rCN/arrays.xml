@@ -101,15 +101,15 @@ limitations under the License.
   </string-array>
 
   <string-array name="min_required_accuracy_options_ft">
-    <item>33 ft (excellent GPS signal)</item>
-    <item>66 ft</item>
-    <item>165 ft</item>
-    <item>328 ft</item>
-    <item>656 ft (recommended)</item>
-    <item>1640 ft</item>
-    <item>0.6 miles</item>
-    <item>1.2 miles</item>
-    <item>3.1 miles (poor GPS signal)</item>
+    <item>33 英尺 (良好的 GPS 信号)</item>
+    <item>66 英尺</item>
+    <item>165 英尺</item>
+    <item>328 英尺</item>
+    <item>656 英尺 (推荐)</item>
+    <item>1640 英尺</item>
+    <item>0.6 英里</item>
+    <item>1.2 英里</item>
+    <item>3.1 英里 (糟糕的 GPS 信号)</item>
   </string-array>
 
   <!-- Split frequency -->
