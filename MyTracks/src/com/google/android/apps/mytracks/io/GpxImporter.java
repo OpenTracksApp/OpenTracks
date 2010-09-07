@@ -20,6 +20,7 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.MyTracksUtils;
+import com.google.android.apps.mytracks.util.StringUtils;
 
 import android.location.Location;
 import android.location.LocationManager;
@@ -28,11 +29,8 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SimpleTimeZone;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -53,22 +51,6 @@ import org.xml.sax.helpers.DefaultHandler;
  * @author Rodrigo Damazio
  */
 public class GpxImporter extends DefaultHandler {
-
-  /*
-   * Different date formats used in GPX files
-   */
-  static final SimpleDateFormat DATE_FORMAT1 = new SimpleDateFormat(
-      "yyyy-MM-dd'T'HH:mm:ssZ");
-  static final SimpleDateFormat DATE_FORMAT2 = new SimpleDateFormat(
-      "yyyy-MM-dd'T'HH:mm:ss'Z'");
-  static final SimpleDateFormat DATE_FORMAT3 = new SimpleDateFormat(
-      "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-  static final SimpleTimeZone UTC_TIMEZONE = new SimpleTimeZone(0, "UTC");
-  static {
-    DATE_FORMAT1.setTimeZone(UTC_TIMEZONE);
-    DATE_FORMAT2.setTimeZone(UTC_TIMEZONE);
-    DATE_FORMAT3.setTimeZone(UTC_TIMEZONE);
-  }
 
   /*
    * GPX-XML tag names and attributes.
@@ -211,7 +193,7 @@ public class GpxImporter extends DefaultHandler {
     this.providerUtils = providerUtils;
     tracksWritten = new ArrayList<Long>();
   }
-  
+
   @Override
   public void characters(char[] ch, int start, int length) throws SAXException {
     String newContent = new String(ch, start, length);
@@ -453,7 +435,16 @@ public class GpxImporter extends DefaultHandler {
   private void onTimeElementEnd() throws SAXException {
     if (location == null) { return; }
 
-    long time = parseTimeForAllFormats(content);
+    // Parse the time
+    long time;
+    try {
+      time = StringUtils.parseXmlDateTime(content.trim());
+    } catch (IllegalArgumentException e) {
+      String msg = createErrorMessage("Unable to parse time: " + content);
+      throw new SAXException(msg, e);
+    }
+
+    // Calculate derived attributes from previous point
     if (lastSegmentLocation != null) {
       long timeDifference = time - lastSegmentLocation.getTime();
 
@@ -473,7 +464,9 @@ public class GpxImporter extends DefaultHandler {
       location.setBearing(lastSegmentLocation.bearingTo(location));
     }
 
+    // Fill in the time
     location.setTime(time);
+
     // initialize start time with time of first track point
     if (statsBuilder == null) {
       statsBuilder = new TripStatisticsBuilder();
@@ -509,44 +502,6 @@ public class GpxImporter extends DefaultHandler {
       result[i] = tracksWritten.get(i);
     }
     return result;
-  }
-
-  /**
-   * Parse time trying different formats used in GPX files.
-   * 
-   * @param timeContents string with time information
-   * @return time as long
-   * @throws SAXException on time parsing errors
-   */
-  private long parseTimeForAllFormats(String timeContents) throws SAXException {
-    long time;
-    timeContents = timeContents.trim();
-
-    // 1st try with time zone at end a la "+0000"
-    time = parseTime(timeContents, DATE_FORMAT1);
-    if (time > -1) { return time; }
-
-    // if that fails, try with a literal "Z" at the end
-    // (this is not according to xml standard, but some gpx files are like
-    // that):
-    time = parseTime(timeContents, DATE_FORMAT2);
-    if (time > -1) { return time; }
-
-    // some gpx timestamps have 3 additional digits at the end.
-    time = parseTime(timeContents, DATE_FORMAT3);
-    if (time > -1) { return time; }
-
-    // everything failed - abort the import
-    String msg = createErrorMessage("Invalid time format: " + timeContents);
-    throw new SAXException(msg);
-  }
-
-  private long parseTime(String timeContents, SimpleDateFormat format) {
-    try {
-      return format.parse(timeContents).getTime();
-    } catch (ParseException ex) {
-      return -1;
-    }
   }
 
   /**
