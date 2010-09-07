@@ -375,7 +375,6 @@ public class MyTracksMap extends MapActivity
     }
   }
 
-  @SuppressWarnings("deprecation")
   protected void setupZoomControls() {
     mapView.setBuiltInZoomControls(true);
   }
@@ -640,14 +639,18 @@ public class MyTracksMap extends MapActivity
       return;
     }
     TripStatistics stats = track.getStatistics();
-    int latSpanE6 = stats.getTop() - stats.getBottom();
-    int lonSpanE6 = stats.getRight() - stats.getLeft();
-    if (latSpanE6 > 0 && latSpanE6 < 180E6 && lonSpanE6 > 0
-        && lonSpanE6 < 180E6) {
+    int bottom = stats.getBottom();
+    int left = stats.getLeft();
+    int latSpanE6 = stats.getTop() - bottom;
+    int lonSpanE6 = stats.getRight() - left;
+    if (latSpanE6 > 0
+        && latSpanE6 < 180E6
+        && lonSpanE6 > 0
+        && lonSpanE6 < 360E6) {
       keepMyLocationVisible = false;
       GeoPoint center = new GeoPoint(
-          stats.getBottom() + latSpanE6 / 2,
-          stats.getLeft() + lonSpanE6 / 2);
+          bottom + latSpanE6 / 2,
+          left + lonSpanE6 / 2);
       if (MyTracksUtils.isValidGeoPoint(center)) {
         mapView.getController().setCenter(center);
         mapView.getController().zoomToSpan(latSpanE6, lonSpanE6);
@@ -1025,9 +1028,6 @@ public class MyTracksMap extends MapActivity
       }
       cursor.close();
       cursor = null;
-    }
-    if (cursor != null) {
-      cursor.close();
     }
     mapView.postInvalidate();
   }

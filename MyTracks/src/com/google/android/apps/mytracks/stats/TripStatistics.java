@@ -403,15 +403,16 @@ public class TripStatistics implements Parcelable {
 
   /**
    * Sets the bounding box for this trip.
+   * The unit for all parameters is signed decimal degrees (degrees * 1E6).
    *
-   * @param left the westmost longitude reached
-   * @param top the northmost latitude reached
-   * @param right the eastmost longitude reached
-   * @param bottom the southmost latitude reached
+   * @param leftE6 the westmost longitude reached
+   * @param topE6 the northmost latitude reached
+   * @param rightE6 the eastmost longitude reached
+   * @param bottomE6 the southmost latitude reached
    */
-  public void setBounds(int left, int top, int right, int bottom) {
-    latitudeExtremities.set(bottom, top);
-    longitudeExtremities.set(left, right);
+  public void setBounds(int leftE6, int topE6, int rightE6, int bottomE6) {
+    latitudeExtremities.set(bottomE6 / 1E6, topE6 / 1E6);
+    longitudeExtremities.set(leftE6 / 1E6, rightE6 / 1E6);
   }
 
   // Data manipulation methods
