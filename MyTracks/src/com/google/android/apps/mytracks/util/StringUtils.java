@@ -90,8 +90,9 @@ public class StringUtils implements DescriptionGenerator {
       Pattern.compile("^(\\.\\d+)?(?:Z|([+-])(\\d{2}):(\\d{2}))?$");
 
   /**
-   * Parses an XML dateTime element as defined by
-   * {@link http://www.w3.org/TR/xmlschema-2/#dateTime}.
+   * Parses an XML dateTime element as defined by the XML standard.
+   *
+   * @see <a href="http://www.w3.org/TR/xmlschema-2/#dateTime">dateTime</a>
    */
   public static long parseXmlDateTime(String xmlTime) {
     // Parse the base date (fixed format)

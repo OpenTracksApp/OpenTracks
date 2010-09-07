@@ -57,7 +57,7 @@ class PreferenceBackupHelper {
    * stream.
    *
    * @param preferences the preferences to export
-   * @param bufStream the stream to write them to
+   * @param outWriter the stream to write them to
    * @throws IOException if there are any errors while writing the output
    */
   public void exportPreferences(

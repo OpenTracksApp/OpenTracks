@@ -154,7 +154,6 @@ public class GpxImporter extends DefaultHandler {
    * Reads GPS tracks from a GPX file and writes tracks and their coordinates to
    * the database.
    * 
-   * @param tracks a list of tracks
    * @param is a input steam with gpx-xml data
    * @return long[] array of track ids written in the database
    * @throws SAXException a parsing error
