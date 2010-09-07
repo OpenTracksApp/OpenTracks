@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.SimpleTimeZone;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -62,12 +63,19 @@ public class GpxImporterTest extends AndroidTestCase {
   private static final String TRACK_LAT_2 = "48.768374";
   private static final String TRACK_LON_2 = "9.177816";
   private static final String TRACK_ELE_2 = "333.0";
-  private static final String TRACK_TIME_2 = "2010-04-22T18:21:50.12";
+  private static final String TRACK_TIME_2 = "2010-04-22T18:21:50.123";
 
   private static final SimpleDateFormat DATE_FORMAT1 =
       new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
   private static final SimpleDateFormat DATE_FORMAT2 =
       new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'");
+  static {
+    // We can't omit the timezones in the test, otherwise it'll use the local
+    // timezone and fail depending on where the test runner is.
+    SimpleTimeZone utc = new SimpleTimeZone(0, "UTC");
+    DATE_FORMAT1.setTimeZone(utc);
+    DATE_FORMAT2.setTimeZone(utc);
+  }
 
   // TODO use real files from different sources with more track points
   private static final String VALID_TEST_GPX = "<gpx><trk><name><![CDATA["
@@ -230,7 +238,7 @@ public class GpxImporterTest extends AndroidTestCase {
     public static Location[] eqLoc(Location expected) {
       return eqLoc(new Location[] { expected});
     }
-    
+
     @Override
     public void appendTo(StringBuffer buf) {
       buf.append("eqLoc(").append(Arrays.toString(matchLocs)).append(")");
