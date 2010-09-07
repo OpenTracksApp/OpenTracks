@@ -16,17 +16,22 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.MyTracksSettings;
+import com.google.android.apps.mytracks.content.DescriptionGenerator;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.content.DescriptionGenerator;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.SimpleTimeZone;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Various string manipulation methods.
@@ -74,6 +79,75 @@ public class StringUtils implements DescriptionGenerator {
     // (the end of the first CDATA has the "]]", the other has ">")
     String escaped = unescaped.replaceAll("]]>", "]]]]><![CDATA[>");
     return "<![CDATA[" + escaped + "]]>";
+  }
+
+  private static final SimpleDateFormat BASE_XML_DATE_FORMAT =
+      new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+  static {
+    BASE_XML_DATE_FORMAT.setTimeZone(new SimpleTimeZone(0, "UTC"));
+  }
+  private static final Pattern XML_DATE_EXTRAS_PATTERN =
+      Pattern.compile("^(\\.\\d+)?(?:Z|([+-])(\\d{2}):(\\d{2}))?$");
+
+  /**
+   * Parses an XML dateTime element as defined by
+   * {@link http://www.w3.org/TR/xmlschema-2/#dateTime}.
+   */
+  public static long parseXmlDateTime(String xmlTime) {
+    // Parse the base date (fixed format)
+    ParsePosition position = new ParsePosition(0);
+    Date date = BASE_XML_DATE_FORMAT.parse(xmlTime, position);
+    if (date == null) {
+      throw new IllegalArgumentException("Invalid XML dateTime value: '" + xmlTime
+          + "' (at position " + position.getErrorIndex() + ")");
+    }
+
+    // Parse the extras
+    Matcher matcher =
+        XML_DATE_EXTRAS_PATTERN.matcher(xmlTime.substring(position.getIndex()));
+    if (!matcher.matches()) {
+      // This will match even an empty string as all groups are optional,
+      // so a non-match means some other garbage was there
+      throw new IllegalArgumentException("Invalid XML dateTime value: " + xmlTime);
+    }
+
+    long time = date.getTime();
+
+    // Account for fractional seconds
+    String fractional = matcher.group(1);
+    if (fractional != null) {
+      // Regex ensures fractional part is in (0,1(
+      float fractionalSeconds = Float.parseFloat(fractional);
+      long fractionalMillis = (long) (fractionalSeconds * 1000.0f);
+      time += fractionalMillis;
+    }
+
+    // Account for timezones
+    String sign = matcher.group(2);
+    String offsetHoursStr = matcher.group(3);
+    String offsetMinsStr = matcher.group(4);
+    if (sign != null && offsetHoursStr != null && offsetMinsStr != null) {
+      // Regex ensures sign is + or -
+      boolean plusSign = sign.equals("+");
+      int offsetHours = Integer.parseInt(offsetHoursStr);
+      int offsetMins = Integer.parseInt(offsetMinsStr);
+
+      // Regex ensures values are >= 0
+      if (offsetHours > 14 || offsetMins > 59) {
+        throw new IllegalArgumentException("Bad timezone in " + xmlTime);
+      }
+
+      long totalOffsetMillis = (offsetMins + offsetHours * 60L) * 60000L;
+
+      // Make time go back to UTC
+      if (plusSign) {
+        time -= totalOffsetMillis;
+      } else {
+        time += totalOffsetMillis;
+      }
+    }
+
+    return time;
   }
 
   /**

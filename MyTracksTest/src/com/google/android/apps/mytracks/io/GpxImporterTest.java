@@ -62,7 +62,12 @@ public class GpxImporterTest extends AndroidTestCase {
   private static final String TRACK_LAT_2 = "48.768374";
   private static final String TRACK_LON_2 = "9.177816";
   private static final String TRACK_ELE_2 = "333.0";
-  private static final String TRACK_TIME_2 = "2010-04-22T18:21:50Z";
+  private static final String TRACK_TIME_2 = "2010-04-22T18:21:50.12";
+
+  private static final SimpleDateFormat DATE_FORMAT1 =
+      new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+  private static final SimpleDateFormat DATE_FORMAT2 =
+      new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'");
 
   // TODO use real files from different sources with more track points
   private static final String VALID_TEST_GPX = "<gpx><trk><name><![CDATA["
@@ -114,15 +119,14 @@ public class GpxImporterTest extends AndroidTestCase {
   public void testImportSuccess() throws Exception {
     Capture<Track> trackParam = new Capture<Track>();
 
-    SimpleDateFormat format = GpxImporter.DATE_FORMAT2;
     Location loc1 = new Location(LocationManager.GPS_PROVIDER);
-    loc1.setTime(format.parse(TRACK_TIME_1).getTime());
+    loc1.setTime(DATE_FORMAT2.parse(TRACK_TIME_1).getTime());
     loc1.setLatitude(Double.parseDouble(TRACK_LAT_1));
     loc1.setLongitude(Double.parseDouble(TRACK_LON_1));
     loc1.setAltitude(Double.parseDouble(TRACK_ELE_1));
 
     Location loc2 = new Location(LocationManager.GPS_PROVIDER);
-    loc2.setTime(format.parse(TRACK_TIME_2).getTime());
+    loc2.setTime(DATE_FORMAT1.parse(TRACK_TIME_2).getTime());
     loc2.setLatitude(Double.parseDouble(TRACK_LAT_2));
     loc2.setLongitude(Double.parseDouble(TRACK_LON_2));
     loc2.setAltitude(Double.parseDouble(TRACK_ELE_2));
@@ -152,7 +156,7 @@ public class GpxImporterTest extends AndroidTestCase {
     Track track = trackParam.getValue();
     assertEquals(TRACK_NAME, track.getName());
     assertEquals(TRACK_DESC, track.getDescription());
-    assertEquals(format.parse(TRACK_TIME_1).getTime(), track.getStatistics()
+    assertEquals(DATE_FORMAT2.parse(TRACK_TIME_1).getTime(), track.getStatistics()
         .getStartTime());
     assertNotSame(-1, track.getStartId());
     assertNotSame(-1, track.getStopId());
