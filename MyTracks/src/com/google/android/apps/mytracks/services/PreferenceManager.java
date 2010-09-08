@@ -35,6 +35,7 @@ public class PreferenceManager {
   private String min_recording_distance_key;
   private String min_recording_interval_key;
   private String min_required_accuracy_key;
+  private String recording_track_key;
   private String signal_sampling_frequency_key;
   private String split_frequency_key;
   
@@ -56,6 +57,8 @@ public class PreferenceManager {
       service.getString(R.string.split_frequency_key);
     signal_sampling_frequency_key =
       service.getString(R.string.signal_sampling_frequency_key);
+    recording_track_key =
+      service.getString(R.string.recording_track_key);
   }
   
   /**
@@ -124,6 +127,10 @@ public class PreferenceManager {
       service.setAnnouncementFrequency(
           sharedPreferences.getInt(announcement_frequency_key,
               -1));
+    }
+    if (key == null || key.equals(recording_track_key)) {
+      service.setRecordingTrackId(
+          sharedPreferences.getInt(recording_track_key, -1));
     }
     if (key == null || key.equals(split_frequency_key)) {
       service.getSplitManager().setSplitFrequency(

@@ -895,6 +895,10 @@ public class TrackRecordingService extends Service implements LocationListener {
     return recordingTrackId;
   }
 
+  public void setRecordingTrackId(long recordingTrackId) {
+    this.recordingTrackId = recordingTrackId;
+  }
+
   public int getAnnouncementFrequency() {
     return announcementFrequency;
   }
