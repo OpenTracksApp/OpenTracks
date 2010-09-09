@@ -76,7 +76,7 @@ public class SplitManager {
     if (splitFrequency >= 0) {
       nextSplitDistance = Double.MAX_VALUE;
       Log.d(MyTracksConstants.TAG,
-            "SplitManager: Distance splits dissabled.");
+            "SplitManager: Distance splits disabled.");
       return;
     }
 

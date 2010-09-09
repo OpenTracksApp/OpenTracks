@@ -38,7 +38,7 @@ public abstract class MyTracksConstants {
    * Name of the top-level directory inside the SD card where our files will
    * be read from/written to.
    */
-  public static final Object SDCARD_TOP_DIR = "MyTracks";
+  public static final String SDCARD_TOP_DIR = "MyTracks";
 
   /**
    * The API level of the Android version we're being run under.
