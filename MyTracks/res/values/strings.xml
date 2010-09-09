@@ -219,7 +219,7 @@ limitations under the License.
   <string name="settings_modular_stats_display_summary_on">The stats screen is split in various modes.</string>
   <string name="settings_modular_stats_display_summary_off">Display all stats on one screen</string>
 
-  <string name="settings_backup">Backup</string>
+  <string name="settings_backup">Backup (BETA)</string>
   <string name="settings_sd_backup">SD Card Backup</string>
   <string name="settings_backup_to_sd">Backup now</string>
   <string name="settings_backup_to_sd_summary">Write a full copy of all your tracks and settings to the SD card</string>
