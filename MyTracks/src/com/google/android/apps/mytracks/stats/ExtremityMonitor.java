@@ -85,19 +85,9 @@ public class ExtremityMonitor {
   /**
    * Sets the minimum and maximum values.
    */
-  public void set(double newMin, double newMax) {
-    // If the min is greater than the max and they were actually initialized to
-    // some values, then we have a problem.
-    if (newMin > newMax
-        && !(Double.isInfinite(newMax) || ((int) newMax == Integer.MIN_VALUE))
-        && !(Double.isInfinite(newMin)
-            || ((int) newMin == Integer.MAX_VALUE))) {
-      throw new IllegalArgumentException(
-          "Invalid min: " + newMin + " vs max:" + newMax);
-    }
-
-    this.min = newMin;
-    this.max = newMax;
+  public void set(double min, double max) {
+    this.min = min;
+    this.max = max;
   }
 
   /**

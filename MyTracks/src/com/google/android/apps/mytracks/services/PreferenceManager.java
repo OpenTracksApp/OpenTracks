@@ -29,38 +29,39 @@ import com.google.android.maps.mytracks.R;
  */
 public class PreferenceManager {
   private TrackRecordingService service;
-  private String announcement_frequency_key;
-  private String max_recording_distance_key;
-  private String metric_units_key;
-  private String min_recording_distance_key;
-  private String min_recording_interval_key;
-  private String min_required_accuracy_key;
-  private String recording_track_key;
-  private String signal_sampling_frequency_key;
-  private String split_frequency_key;
-  
+  private final String announcementFrequencyKey;
+  private final String maxRecordingDistanceKey;
+  private final String metricUnitsKey;
+  private final String minRecordingDistanceKey;
+  private final String minRecordingIntervalKey;
+  private final String minRequiredAccuracyKey;
+  private final String recordingTrackKey;
+  private final String signalSamplingFrequencyKey;
+  private final String splitFrequencyKey;
+
   public PreferenceManager(TrackRecordingService service) {
     this.service = service;
-    announcement_frequency_key =
-      service.getString(R.string.announcement_frequency_key);
-    max_recording_distance_key = 
-      service.getString(R.string.max_recording_distance_key);
-    metric_units_key =
-      service.getString(R.string.metric_units_key);
-    min_recording_distance_key =
+
+    announcementFrequencyKey =
+        service.getString(R.string.announcement_frequency_key);
+    maxRecordingDistanceKey = 
+        service.getString(R.string.max_recording_distance_key);
+    metricUnitsKey =
+        service.getString(R.string.metric_units_key);
+    minRecordingDistanceKey =
         service.getString(R.string.min_recording_distance_key);
-    min_recording_interval_key =
-      service.getString(R.string.min_recording_interval_key);
-    min_required_accuracy_key =
-      service.getString(R.string.min_required_accuracy_key);
-    split_frequency_key =
-      service.getString(R.string.split_frequency_key);
-    signal_sampling_frequency_key =
-      service.getString(R.string.signal_sampling_frequency_key);
-    recording_track_key =
-      service.getString(R.string.recording_track_key);
+    minRecordingIntervalKey =
+        service.getString(R.string.min_recording_interval_key);
+    minRequiredAccuracyKey =
+        service.getString(R.string.min_required_accuracy_key);
+    splitFrequencyKey =
+        service.getString(R.string.split_frequency_key);
+    signalSamplingFrequencyKey =
+        service.getString(R.string.signal_sampling_frequency_key);
+    recordingTrackKey =
+        service.getString(R.string.recording_track_key);
   }
-  
+
   /**
    * Notifies that preferences have changed.
    * Call this with key == null to update all preferences in one call.
@@ -76,24 +77,24 @@ public class PreferenceManager {
       return;
     }
 
-    if (key == null || key.equals(min_recording_distance_key)) {
+    if (key == null || key.equals(minRecordingDistanceKey)) {
       service.setMinRecordingDistance(
           sharedPreferences.getInt(
-              min_recording_distance_key,
+              minRecordingDistanceKey,
               MyTracksSettings.DEFAULT_MIN_RECORDING_DISTANCE));
       Log.d(MyTracksConstants.TAG,
           "TrackRecordingService: minRecordingDistance = "
           + service.getMinRecordingDistance());
     }
-    if (key == null || key.equals(max_recording_distance_key)) {
+    if (key == null || key.equals(maxRecordingDistanceKey)) {
       service.setMaxRecordingDistance(
           sharedPreferences.getInt(
-              max_recording_distance_key,
+              maxRecordingDistanceKey,
               MyTracksSettings.DEFAULT_MAX_RECORDING_DISTANCE));
     }
-    if (key == null || key.equals(min_recording_interval_key)) {
+    if (key == null || key.equals(minRecordingIntervalKey)) {
       int minRecordingInterval = sharedPreferences.getInt(
-          min_recording_interval_key,
+          minRecordingIntervalKey,
           MyTracksSettings.DEFAULT_MIN_RECORDING_INTERVAL);
       switch (minRecordingInterval) {
         case -2:
@@ -117,33 +118,34 @@ public class PreferenceManager {
               new AbsoluteLocationListenerPolicy(minRecordingInterval * 1000));
       }
     }
-    if (key == null || key.equals(min_required_accuracy_key)) {
+    if (key == null || key.equals(minRequiredAccuracyKey)) {
       service.setMinRequiredAccuracy(
           sharedPreferences.getInt(
-              min_required_accuracy_key,
+              minRequiredAccuracyKey,
               MyTracksSettings.DEFAULT_MIN_REQUIRED_ACCURACY));
     }
-    if (key == null || key.equals(announcement_frequency_key)) {
+    if (key == null || key.equals(announcementFrequencyKey)) {
       service.setAnnouncementFrequency(
-          sharedPreferences.getInt(announcement_frequency_key,
+          sharedPreferences.getInt(announcementFrequencyKey,
               -1));
     }
-    if (key == null || key.equals(recording_track_key)) {
+    if (key == null || key.equals(recordingTrackKey)) {
       service.setRecordingTrackId(
-          sharedPreferences.getLong(recording_track_key, -1));
+          sharedPreferences.getLong(recordingTrackKey, -1));
     }
-    if (key == null || key.equals(split_frequency_key)) {
+    if (key == null || key.equals(splitFrequencyKey)) {
       service.getSplitManager().setSplitFrequency(
-          sharedPreferences.getInt(split_frequency_key, 0));
+          sharedPreferences.getInt(splitFrequencyKey, 0));
     }
-    if (key == null || key.equals(signal_sampling_frequency_key)) {
+    if (key == null || key.equals(signalSamplingFrequencyKey)) {
       service.getSignalManager().setFrequency(
           sharedPreferences.getInt(
-              signal_sampling_frequency_key, -1), service);
+              signalSamplingFrequencyKey, -1), service);
     }
-    if (key == null || key.equals(metric_units_key)) {
-      service.getSplitManager().setMetricUnits(sharedPreferences.getBoolean(
-          metric_units_key, true));
+    if (key == null || key.equals(metricUnitsKey)) {
+      service.getSplitManager().setMetricUnits(
+          sharedPreferences.getBoolean(
+              metricUnitsKey, true));
     }
   }
 }
