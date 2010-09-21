@@ -33,6 +33,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -221,14 +222,31 @@ public class MyTracksOverlay extends Overlay {
     }
 
     // Get the current viewing window:
-    int w = mapView.getLongitudeSpan();
-    int h = mapView.getLatitudeSpan();
+    int w = mapView.getLongitudeSpan() * 2;
+    int h = mapView.getLatitudeSpan() * 2;
     int cx = mapView.getMapCenter().getLongitudeE6();
     int cy = mapView.getMapCenter().getLatitudeE6();
     Rect rect = new Rect(cx - w, cy - h, cx + w, cy + h);
+    Log.i(MyTracksConstants.TAG,
+        "Found bounding box: " + rect);
 
     Point pt = new Point();
+    GeoPoint upperLeft = new GeoPoint(rect.top, rect.left);
+    Point pUpperLeft = new Point();
+    mapView.getProjection().toPixels(upperLeft, pUpperLeft);
+    GeoPoint bottomRight = new GeoPoint(rect.bottom, rect.right);
+    Point pBottomRight = new Point();
+    mapView.getProjection().toPixels(upperLeft, pBottomRight);
+    Rect dispRect = new Rect(pUpperLeft.x, pUpperLeft.y,
+        pBottomRight.x, pBottomRight.y);
+    Log.i(MyTracksConstants.TAG,
+        "Found display box: " + rect);
+    canvas.drawRect(dispRect, selectedTrackPaint);
+
+    Rect displayRect;
     GeoPoint geoPoint;
+    
+    
     Location loc;
     Location lastValidLocation = null;
     Path path;

@@ -411,8 +411,8 @@ public class TripStatistics implements Parcelable {
    * @param bottomE6 the southmost latitude reached
    */
   public void setBounds(int leftE6, int topE6, int rightE6, int bottomE6) {
-    latitudeExtremities.set(bottomE6, topE6);
-    longitudeExtremities.set(leftE6, rightE6);
+    latitudeExtremities.set(bottomE6 / 1E6, topE6 / 1E6);
+    longitudeExtremities.set(leftE6 / 1E6, rightE6 / 1E6);
   }
 
   // Data manipulation methods

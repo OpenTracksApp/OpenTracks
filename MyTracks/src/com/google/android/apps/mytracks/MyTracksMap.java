@@ -1001,29 +1001,36 @@ public class MyTracksMap extends MapActivity
     setSamplingFrequency(selectedTrack);
     int bufferSize = 1024;
     int points = 0;
-    while (lastSeenLocationId < selectedTrack.getStopId()) {
+    long tailLocationId = selectedTrack.getStopId() - 10;
+    while (lastSeenLocationId < (selectedTrack.getStopId() + 10)) {
       cursor = providerUtils.getLocationsCursor(
-          selectedTrack.getId(), lastSeenLocationId, bufferSize, false);
+          selectedTrack.getId(), lastSeenLocationId + 1, bufferSize, false);
       if (cursor != null && cursor.moveToFirst()) {
         final int idColumnIdx = cursor.getColumnIndexOrThrow(
             TrackPointsColumns._ID);
-        while (cursor.moveToNext()) {
+        do {
           points++;
           Location location = providerUtils.createLocation(cursor);
           lastSeenLocationId = cursor.getLong(idColumnIdx);
           // Include a point if it fits one of the following criteria:
           // - Has the mod for the sampling frequency.
           // - Is the first point.
-          // - Is the last point and we are not recording this track.
+          // - Is on of the last n points.
+          //   => This is to make sure we draw the last points people are probably zoomed in to.
           if (!MyTracksUtils.isValidLocation(location) ||
               points % samplingFrequency == 0 ||
               points == 0 ||
-              (recordingTrackId != selectedTrack.getId() &&
-                  points == (totalLocations - 1))) {
+              lastSeenLocationId > tailLocationId) {
             mapOverlay.addLocation(location);
           }
-        }
+        } while (cursor.moveToNext());
       } else {
+        // TODO this is wrong sometimes.  Should just return.
+        if (lastSeenLocationId >= selectedTrack.getStopId()) {
+          cursor.close();
+          mapView.postInvalidate();
+          return;
+        }
         lastSeenLocationId += bufferSize;
       }
       cursor.close();
