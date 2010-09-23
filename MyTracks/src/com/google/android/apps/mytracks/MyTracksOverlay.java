@@ -15,10 +15,8 @@
  */
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.util.MyTracksUtils;
-
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
@@ -58,7 +56,7 @@ public class MyTracksOverlay extends Overlay {
   private final ArrayList<Waypoint> waypoints = new ArrayList<Waypoint>();
   private final ArrayList<Location> points = new ArrayList<Location>(1024);
 
-  private Track selectedTrack;
+  private boolean trackDrawingEnabled;
   private int lastHeading = 0;
   private Location myLocation;
   private boolean showEndMarker = true;
@@ -122,14 +120,6 @@ public class MyTracksOverlay extends Overlay {
     errorCirclePaint.setAntiAlias(true);
   }
 
-  public void setSelectedTrack(Track track) {
-    selectedTrack = track;
-  }
-
-  public Track getSelectedTrack() {
-    return selectedTrack;
-  }
-
   /**
    * Add a location to the map overlay.
    *
@@ -145,6 +135,10 @@ public class MyTracksOverlay extends Overlay {
     waypoints.add(wpt);
   }
 
+  public int getNumLocations() {
+    return points.size();
+  }
+
   public void clearWaypoints() {
     waypoints.clear();
   }
@@ -153,21 +147,33 @@ public class MyTracksOverlay extends Overlay {
     points.clear();
   }
 
+  public void setTrackDrawingEnabled(boolean trackDrawingEnabled) {
+    this.trackDrawingEnabled = trackDrawingEnabled;
+  }
+
   public void setShowEndMarker(boolean showEndMarker) {
     this.showEndMarker = showEndMarker;
   }
 
   @Override
   public void draw(Canvas canvas, MapView mapView, boolean shadow) {
-
     if (shadow) {
       return;
     }
 
-    // Draw the selected track:
-    drawTrack(canvas, mapView, selectedTrack, true);
+    if (trackDrawingEnabled) {
+      // Draw the selected track:
+      drawTrack(canvas, mapView);
 
-    // Draw the waypoints:
+      // Draw the waypoints:
+      drawWaypoints(canvas, mapView);
+    }
+
+    // Draw the current location
+    drawMyLocation(canvas, mapView);
+  }
+
+  private void drawWaypoints(Canvas canvas, MapView mapView) {
     ArrayList<Waypoint> currentWaypoints = waypoints;
     for (int i = 1; i < currentWaypoints.size(); i++) {
       Waypoint wpt = currentWaypoints.get(i);
@@ -190,11 +196,14 @@ public class MyTracksOverlay extends Overlay {
       }
       canvas.restore();
     }
+  }
 
+  private void drawMyLocation(Canvas canvas, MapView mapView) {
     // Draw the arrow icon:
     if (myLocation == null) {
       return;
     }
+
     GeoPoint geoPoint = new GeoPoint(
         (int) (myLocation.getLatitude() * 1E6),
         (int) (myLocation.getLongitude() * 1E6));
@@ -211,12 +220,7 @@ public class MyTracksOverlay extends Overlay {
     canvas.drawCircle(pt.x, pt.y, radius, errorCirclePaint);
   }
 
-  public void drawTrack(Canvas canvas, MapView mapView, Track track,
-      boolean selected) {
-
-    if (track == null) {
-      return;
-    }
+  private void drawTrack(Canvas canvas, MapView mapView) {
     if (points.size() < 2) {
       return;
     }
