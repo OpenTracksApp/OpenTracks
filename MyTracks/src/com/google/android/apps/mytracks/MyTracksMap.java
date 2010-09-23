@@ -70,8 +70,8 @@ import android.widget.Toast;
  * @author Leif Hendrik Wilden
  */
 public class MyTracksMap extends MapActivity
-    implements LocationListener, SensorEventListener, View.OnTouchListener,
-    View.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
+    implements View.OnTouchListener, View.OnClickListener,
+    SharedPreferences.OnSharedPreferenceChangeListener {
   private static final int TRACKPOINT_BUFFER_SIZE = 1024;
 
   // Saved instance state keys:
@@ -532,10 +532,10 @@ public class MyTracksMap extends MapActivity
             + gpsProvider.getName());
       }
       locationManager.requestLocationUpdates(gpsProvider.getName(),
-          0 /*minTime*/, 0 /*minDist*/, this);
+          0 /*minTime*/, 0 /*minDist*/, locationListener);
       try {
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-            1000 * 60 * 5 /*minTime*/, 0 /*minDist*/, this);
+            1000 * 60 * 5 /*minTime*/, 0 /*minDist*/, locationListener);
       } catch (RuntimeException e) {
         // If anything at all goes wrong with getting a cell location do not
         // abort. Cell location is not essential to this app.
@@ -553,7 +553,7 @@ public class MyTracksMap extends MapActivity
     Log.d(MyTracksConstants.TAG,
         "MyTracksMap: Now registering sensor listeners.");
     sensorManager.registerListener(
-        this, compass, SensorManager.SENSOR_DELAY_UI);
+        sensorListener, compass, SensorManager.SENSOR_DELAY_UI);
   }
 
   /**
@@ -563,12 +563,12 @@ public class MyTracksMap extends MapActivity
     if (locationManager != null) {
       Log.d(MyTracksConstants.TAG,
           "MyTracksMap: Now unregistering location listeners.");
-      locationManager.removeUpdates(this);
+      locationManager.removeUpdates(locationListener);
     }
     if (sensorManager != null) {
       Log.d(MyTracksConstants.TAG,
           "MyTracksMap: Now unregistering sensor listeners.");
-      sensorManager.unregisterListener(this);
+      sensorManager.unregisterListener(sensorListener);
     }
   }
 
@@ -881,8 +881,7 @@ public class MyTracksMap extends MapActivity
   public void onClick(View v) {
     if (v == messagePane) {
       launchMyLocationSettings();
-    }
-    if (v == optionsBtn) {
+    } else if (v == optionsBtn) {
       optionsBtn.performLongClick();
     }
   }
@@ -934,75 +933,79 @@ public class MyTracksMap extends MapActivity
     }
   }
 
-  @Override
-  public void onProviderEnabled(String provider) {
-    if (provider.equals(MyTracksConstants.GPS_PROVIDER)) {
-      messageText.setText(R.string.wait_for_fix);
-    }
-  }
-
-  @Override
-  public void onProviderDisabled(String provider) {
-    if (provider.equals(MyTracksConstants.GPS_PROVIDER)) {
-      messageText.setText(R.string.status_enable_gps);
-      messagePane.setVisibility(View.VISIBLE);
-      messagePane.setOnClickListener(this);
-      screen.requestLayout();
-    }
-  }
-
-  @Override
-  public void onLocationChanged(Location location) {
-    if (location.getProvider().equals(MyTracksConstants.GPS_PROVIDER)) {
-      // Recalculate the variation if there was a jump in location > 1km:
-      if (currentLocation == null
-          || location.distanceTo(currentLocation) > 1000) {
-        setVariation(location);
+  private final LocationListener locationListener = new LocationListener() {
+    @Override
+    public void onProviderEnabled(String provider) {
+      if (provider.equals(MyTracksConstants.GPS_PROVIDER)) {
+        messageText.setText(R.string.wait_for_fix);
       }
-      currentLocation = location;
-      boolean haveGoodFixNow =
-          currentLocation.getAccuracy() < minRequiredAccuracy;
-      if (haveGoodFixNow != haveGoodFix) {
-        haveGoodFix = haveGoodFixNow;
-        messagePane.setVisibility(haveGoodFix ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+      if (provider.equals(MyTracksConstants.GPS_PROVIDER)) {
+        messageText.setText(R.string.status_enable_gps);
+        messagePane.setVisibility(View.VISIBLE);
+        messagePane.setOnClickListener(MyTracksMap.this);
         screen.requestLayout();
       }
-      showCurrentLocation();
-    } else {
-      Log.d(MyTracksConstants.TAG,
-          "MyTracksMap: Network location update received.");
     }
-  }
 
-  @Override
-  public void onStatusChanged(String provider, int status, Bundle extras) {
-    if (provider.equals(MyTracksConstants.GPS_PROVIDER)) {
-      switch (status) {
-        case LocationProvider.OUT_OF_SERVICE:
-        case LocationProvider.TEMPORARILY_UNAVAILABLE:
-          haveGoodFix = false;
-          messagePane.setVisibility(View.VISIBLE);
+    @Override
+    public void onLocationChanged(Location location) {
+      if (location.getProvider().equals(MyTracksConstants.GPS_PROVIDER)) {
+        // Recalculate the variation if there was a jump in location > 1km:
+        if (currentLocation == null
+            || location.distanceTo(currentLocation) > 1000) {
+          setVariation(location);
+        }
+        currentLocation = location;
+        boolean haveGoodFixNow =
+            currentLocation.getAccuracy() < minRequiredAccuracy;
+        if (haveGoodFixNow != haveGoodFix) {
+          haveGoodFix = haveGoodFixNow;
+          messagePane.setVisibility(haveGoodFix ? View.GONE : View.VISIBLE);
           screen.requestLayout();
-          break;
+        }
+        showCurrentLocation();
+      } else {
+        Log.d(MyTracksConstants.TAG,
+            "MyTracksMap: Network location update received.");
       }
     }
-  }
 
-  @Override
-  public void onSensorChanged(SensorEvent se) {
-    synchronized (this) {
-      float magneticHeading = se.values[0];
-      double heading = magneticHeading + variation;
-      if (mapOverlay.setHeading((float) heading)) {
-        mapView.invalidate();
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+      if (provider.equals(MyTracksConstants.GPS_PROVIDER)) {
+        switch (status) {
+          case LocationProvider.OUT_OF_SERVICE:
+          case LocationProvider.TEMPORARILY_UNAVAILABLE:
+            haveGoodFix = false;
+            messagePane.setVisibility(View.VISIBLE);
+            screen.requestLayout();
+            break;
+        }
       }
     }
-  }
+  };
 
-  @Override
-  public void onAccuracyChanged(Sensor s, int accuracy) {
-    // do nothing
-  }
+  private final SensorEventListener sensorListener = new SensorEventListener() {
+    @Override
+    public void onSensorChanged(SensorEvent se) {
+      synchronized (this) {
+        float magneticHeading = se.values[0];
+        double heading = magneticHeading + variation;
+        if (mapOverlay.setHeading((float) heading)) {
+          mapView.invalidate();
+        }
+      }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor s, int accuracy) {
+      // do nothing
+    }
+  };
 
   private void readAllNewTrackPoints() {
     int numPoints = mapOverlay.getNumLocations();
