@@ -17,9 +17,11 @@ package com.google.android.apps.mytracks;
 
 import com.google.android.maps.mytracks.R;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,7 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
+import android.widget.TextView;
 
 /**
  * Creates previous and next arrows for a given activity.
@@ -55,16 +58,23 @@ public class NavControls {
     private final ImageView arrow;
     private final ImageView icon;
 
-    public TouchLayout(Context context, boolean isLeft) {
-      super(context);
-      arrow = new ImageView(context);
-      arrow.setImageDrawable(context.getResources().getDrawable(
+    public TouchLayout(Activity activity, boolean isLeft) {
+      super(activity);
+      arrow = new ImageView(activity);
+      arrow.setImageDrawable(activity.getResources().getDrawable(
           isLeft ? R.drawable.btn_arrow_left : R.drawable.btn_arrow_right));
-      icon = new ImageView(context);
+      icon = new ImageView(activity);
       icon.setVisibility(View.GONE);
       addView(arrow);
       addView(icon);
-      icon.setPadding((isLeft ? 15 : 10), 27, 15, 0);
+      DisplayMetrics metrics = new DisplayMetrics();
+      activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+      // TODO: This should be a smooth function not a step function.
+      if (metrics.heightPixels > 600) {
+        icon.setPadding((isLeft ? 25 : 15), 39, 15, 0);
+      } else {
+        icon.setPadding((isLeft ? 15 : 10), 27, 15, 0);
+      }
     }
 
     public void setIcon(Drawable drawable) {
@@ -114,9 +124,9 @@ public class NavControls {
   private boolean hasNext = true;
   private boolean hasPrev = true;
 
-  public NavControls(Context context, ViewGroup container,
+  public NavControls(Activity activity, ViewGroup container,
       Runnable prevRunnable, Runnable nextRunnable) {
-    this.context = context;
+    this.context = activity;
     this.prevRunnable = prevRunnable;
     this.nextRunnable = nextRunnable;
     LayoutParams prevParams = new LayoutParams(
@@ -124,7 +134,7 @@ public class NavControls {
         LayoutParams.WRAP_CONTENT);
     prevParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
     prevParams.addRule(RelativeLayout.CENTER_VERTICAL);
-    prevImage = new TouchLayout(context, true);
+    prevImage = new TouchLayout(activity, true);
     prevImage.setLayoutParams(prevParams);
     prevImage.setVisibility(View.INVISIBLE);
     container.addView(prevImage);
@@ -133,7 +143,7 @@ public class NavControls {
         LayoutParams.WRAP_CONTENT);
     nextParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
     nextParams.addRule(RelativeLayout.CENTER_VERTICAL);
-    nextImage = new TouchLayout(context, false);
+    nextImage = new TouchLayout(activity, false);
     nextImage.setLayoutParams(nextParams);
     nextImage.setVisibility(View.INVISIBLE);
     container.addView(nextImage);

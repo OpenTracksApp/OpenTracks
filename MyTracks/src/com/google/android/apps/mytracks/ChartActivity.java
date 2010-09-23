@@ -176,12 +176,16 @@ public class ChartActivity extends Activity implements
             final int idColumnIdx =
                 cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
             ArrayList<double[]> data = new ArrayList<double[]>();
+            // Need two locations so we can keep track of the last location.
+            Location[] locations = { new Location(""), new Location("")};
+            int i = 0;
             do {
               lastSeenLocationId = cursor.getLong(idColumnIdx);
-              Location location = providerUtils.createLocation(cursor);
-              if (location != null && MyTracksUtils.isValidLocation(location)) {
-                data.add(getDataPoint(location, track));
+              providerUtils.fillLocation(cursor, locations[i]);
+              if (MyTracksUtils.isValidLocation(locations[i])) {
+                data.add(getDataPoint(locations[i], track));
               }
+              i = (i + 1) % 2;
             } while (cursor.moveToPrevious());
             cv.addDataPoints(data);
           }
@@ -556,6 +560,9 @@ public class ChartActivity extends Activity implements
     try {
       final ArrayList<double[]> theData = new ArrayList<double[]>();
       int points = 0;
+      // Need two locations so we can keep track of the last location.
+      Location[] locations = { new Location(""), new Location("")};
+      int i = 0;
       while (lastLocationRead < track.getStopId()) {
         cursor = providerUtils.getLocationsCursor(
             selectedTrackId, lastLocationRead, bufferSize, false);
@@ -567,15 +574,16 @@ public class ChartActivity extends Activity implements
                 cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
             while (cursor.moveToNext()) {
               points++;
-              Location location = providerUtils.createLocation(cursor);
-              if (MyTracksUtils.isValidLocation(location)) {
+              providerUtils.fillLocation(cursor, locations[i]);
+              if (MyTracksUtils.isValidLocation(locations[i])) {
                 lastLocationRead = lastSeenLocationId =
                     cursor.getLong(idColumnIdx);
-                double[] point = getDataPoint(location, track);
+                double[] point = getDataPoint(locations[i], track);
                 if (points % chartSamplingFrequency == 0) {
                   theData.add(point);
                 }
               }
+              i = (i + 1) % 2;
             }
           } else {
             lastLocationRead += bufferSize;

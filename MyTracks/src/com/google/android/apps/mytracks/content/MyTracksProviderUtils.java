@@ -207,6 +207,19 @@ public interface MyTracksProviderUtils {
   void getTrackPoints(Track track, TrackBuffer buffer);
 
   /**
+   * Fetches some number of locations for the given track.
+   *
+   * This is designed to be used to stream through large tracks without loading
+   * all points into memory.
+   * This method will reuse the Location objects in the buffer.  If you need a
+   * Location object copy the object.
+   *
+   * @param track to load locations for
+   * @param buffer an array of locations to fill
+   */
+  void fillTrackPoints(Track track, TrackBuffer buffer);
+
+  /**
    * Creates a cursor over the tracks provider with a given selection.
    * Caller gets to own the returned cursor. Don't forget to close it.
    *
@@ -293,7 +306,15 @@ public interface MyTracksProviderUtils {
    * @return a new location object
    */
   Location createLocation(Cursor cursor);
-
+  
+  /**
+   * Fill a location object with values from a given cursor.
+   * 
+   * @param cursor a cursor pointing at a db or provider with locations
+   * @param location a location object to be overwritten
+   */
+  void fillLocation(Cursor cursor, Location location);
+  
   /**
    * Creates a waypoint object from a given cursor.
    *

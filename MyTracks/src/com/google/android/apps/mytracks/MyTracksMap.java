@@ -1002,6 +1002,7 @@ public class MyTracksMap extends MapActivity
     int bufferSize = 1024;
     int points = 0;
     long tailLocationId = selectedTrack.getStopId() - 10;
+    Location location;
     while (lastSeenLocationId < (selectedTrack.getStopId() + 10)) {
       cursor = providerUtils.getLocationsCursor(
           selectedTrack.getId(), lastSeenLocationId + 1, bufferSize, false);
@@ -1010,7 +1011,7 @@ public class MyTracksMap extends MapActivity
             TrackPointsColumns._ID);
         do {
           points++;
-          Location location = providerUtils.createLocation(cursor);
+          location = providerUtils.createLocation(cursor);
           lastSeenLocationId = cursor.getLong(idColumnIdx);
           // Include a point if it fits one of the following criteria:
           // - Has the mod for the sampling frequency.
@@ -1021,7 +1022,7 @@ public class MyTracksMap extends MapActivity
               points % samplingFrequency == 0 ||
               points == 0 ||
               lastSeenLocationId > tailLocationId) {
-            mapOverlay.addLocation(location);
+            mapOverlay.addLocation(new Location(location));
           }
         } while (cursor.moveToNext());
       } else {

@@ -168,6 +168,13 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public Location createLocation(Cursor cursor) {
+    Location location = new Location("");
+    fillLocation(cursor, location);
+    return location;
+  }
+  
+  @Override
+  public void fillLocation(Cursor cursor, Location location) {
     int idxLatitude = cursor.getColumnIndexOrThrow(TrackPointsColumns.LATITUDE);
     int idxLongitude =
         cursor.getColumnIndexOrThrow(TrackPointsColumns.LONGITUDE);
@@ -177,7 +184,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     int idxAccuracy = cursor.getColumnIndexOrThrow(TrackPointsColumns.ACCURACY);
     int idxSpeed = cursor.getColumnIndexOrThrow(TrackPointsColumns.SPEED);
 
-    Location location = new Location("");
     if (!cursor.isNull(idxLatitude)) {
       location.setLatitude(1. * cursor.getInt(idxLatitude) / 1E6);
     }
@@ -199,7 +205,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     if (!cursor.isNull(idxAccuracy)) {
       location.setAccuracy(cursor.getFloat(idxAccuracy));
     }
-    return location;
   }
 
   @Override
@@ -822,6 +827,16 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public void getTrackPoints(Track track, TrackBuffer buffer) {
+    getTrackPoints(track, buffer, false);
+  }
+  
+  @Override
+  public void fillTrackPoints(Track track, TrackBuffer buffer) {
+    getTrackPoints(track, buffer, true);
+  }
+
+  public void getTrackPoints(Track track, TrackBuffer buffer,
+      boolean reuseLocations) {
     long startingPoint = buffer.getLastLocationRead() == 0 ? track.getStartId()
         : buffer.getLastLocationRead();
     buffer.reset();
@@ -849,11 +864,15 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       final int idColumnIdx =
           cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
       do {
-        Location location = createLocation(cursor);
-        if (location == null) {
-          continue;
+        if (reuseLocations) {
+          fillLocation(cursor, buffer.location(cursor.getLong(idColumnIdx)));
+        } else {
+          Location location = createLocation(cursor);
+          if (location == null) {
+            continue;
+          }
+          buffer.add(location, cursor.getLong(idColumnIdx));
         }
-        buffer.add(location, cursor.getLong(idColumnIdx));
       } while (cursor.moveToNext());
       
       if (buffer.getLocationsLoaded() == 0) {
