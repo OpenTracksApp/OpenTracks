@@ -158,7 +158,6 @@ limitations under the License.
 
   <string name="settings_announcement_frequency">Fréquence des annonces</string>
   <string name="settings_announcement_frequency_summary">Temps minimum entre eux annonces vocales</string>
-  <string name="settings_announcement_not_available_summary">La synthèse vocale n\'est pas disponible pour cette version d\'Android</string>
 
   <string name="settings_min_recording_distance">Distance min. entre 2 points</string>
   <string name="settings_min_recording_distance_summary">Plus petite distance entre deux enregistrements de votre position</string>
