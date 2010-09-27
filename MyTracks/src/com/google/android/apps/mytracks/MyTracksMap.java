@@ -396,17 +396,6 @@ public class MyTracksMap extends MapActivity
   }
 
   @Override
-  protected void onDestroy() {
-    // Final cleanup before activity is destroyed.
-    // May not be called at all in some situations.
-    Log.d(MyTracksConstants.TAG, "MyTracksMap.onDestroy");
-
-    updateTrackThread.quit();
-
-    super.onDestroy();
-  }
-
-  @Override
   protected void onStart() {
     // Called after onCreate or onStop.
     // Will be followed by onRestart.
