@@ -49,14 +49,12 @@ import android.widget.Toast;
  * @author Sandor Dornbush
  */
 public class StatsActivity extends Activity
-    implements OnSharedPreferenceChangeListener, LocationListener {
-
+    implements OnSharedPreferenceChangeListener {
 
   private final StatsUtilities utils;
   private UIUpdateThread thread;
 
   private ContentObserver observer;
-  private LocationManager locationManager;
 
   /**
    * The id of the currently selected track.
@@ -96,7 +94,6 @@ public class StatsActivity extends Activity
   private boolean showCurrentSegment = false;
 
   private final MyTracksProviderUtils providerUtils;
-  private Track track = null;
 
   /**
    * A runnable for posting to the UI thread. Will update the total time field.
@@ -179,11 +176,9 @@ public class StatsActivity extends Activity
         preferences.getBoolean(getString(R.string.report_speed_key), true);
       checkLiveTrack();
       restoreStats();
-      updateLocation(null);
+      showUnknownLocation();
       preferences.registerOnSharedPreferenceChangeListener(this);
     }
-    locationManager =
-        (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     utils.setMetricUnits(metricUnits);
     utils.setReportSpeed(displaySpeed);
     utils.updateUnits();
@@ -214,7 +209,7 @@ public class StatsActivity extends Activity
     activityOnTop = true;
     checkLiveTrack();
     restoreStats();
-    updateLocation(null);
+    showUnknownLocation();
     super.onResume();
   }
 
@@ -234,7 +229,7 @@ public class StatsActivity extends Activity
                     -1);
             checkLiveTrack();
             restoreStats();
-            updateLocation(null);
+            showUnknownLocation();
           } else if (key.equals(getString(R.string.recording_track_key))) {
             recordingTrackId =
                 sharedPreferences.getLong(
@@ -242,7 +237,7 @@ public class StatsActivity extends Activity
                     -1);
             checkLiveTrack();
             restoreStats();
-            updateLocation(null);
+            showUnknownLocation();
           } else if (key.equals(getString(R.string.metric_units_key))) {
             metricUnits =
                 sharedPreferences.getBoolean(
@@ -299,29 +294,36 @@ public class StatsActivity extends Activity
     return super.onOptionsItemSelected(item);
   }
 
-  @Override
-  public void onLocationChanged(Location l) {
-    if (selectedTrackIsRecording()) {
-      updateLocation(l);
+  private final LocationListener locationListener = new LocationListener() {
+    @Override
+    public void onLocationChanged(Location l) {
+      if (selectedTrackIsRecording()) {
+        showLocation(l);
+      }
     }
-  }
-
-  @Override
-  public void onProviderDisabled(String provider) {
-  }
-
-  @Override
-  public void onProviderEnabled(String provider) {
-  }
-
-  @Override
-  public void onStatusChanged(String provider, int status, Bundle extras) {
-  }
+  
+    @Override
+    public void onProviderDisabled(String provider) {
+      // Do nothing
+    }
+  
+    @Override
+    public void onProviderEnabled(String provider) {
+      // Do nothing
+    }
+  
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+      // Do nothing
+    }
+  };
 
   /**
    * Registers to receive location updates from the GPS location provider.
    */
   private void registerLocationListener() {
+    LocationManager locationManager =
+        (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     if (locationManager != null) {
       LocationProvider gpsProvider =
           locationManager.getProvider(MyTracksConstants.GPS_PROVIDER);
@@ -334,7 +336,7 @@ public class StatsActivity extends Activity
             + gpsProvider.getName());
       }
       locationManager.requestLocationUpdates(gpsProvider.getName(),
-         0/*minTime*/, 0/*minDist*/, this);
+         0/*minTime*/, 0/*minDist*/, locationListener);
     }
   }
 
@@ -342,8 +344,10 @@ public class StatsActivity extends Activity
    * Unregisters all location listener.
    */
   private void unregisterLocationListener() {
+    LocationManager locationManager =
+        (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     if (locationManager != null) {
-      locationManager.removeUpdates(this);
+      locationManager.removeUpdates(locationListener);
     }
   }
 
@@ -364,7 +368,7 @@ public class StatsActivity extends Activity
       return;
     }
 
-    track = providerUtils.getTrack(selectedTrackId);
+    Track track = providerUtils.getTrack(selectedTrackId);
     if (track == null || track.getStatistics() == null) {
       utils.setAllToUnknown();
       return;
@@ -421,17 +425,17 @@ public class StatsActivity extends Activity
    *
    * @param l may be null (will set location fields to unknown)
    */
-  private void updateLocation(Location l) {
-    if (l == null) {
-      utils.setUnknown(R.id.elevation_register);
-      utils.setUnknown(R.id.latitude_register);
-      utils.setUnknown(R.id.longitude_register);
-      utils.setUnknown(R.id.speed_register);
-    } else {
-      utils.setAltitude(R.id.elevation_register, l.getAltitude());
-      utils.setLatLong(R.id.latitude_register, l.getLatitude());
-      utils.setLatLong(R.id.longitude_register, l.getLongitude());
-      utils.setSpeed(R.id.speed_register, l.getSpeed() * 3.6);
-    }
+  private void showLocation(Location l) {
+    utils.setAltitude(R.id.elevation_register, l.getAltitude());
+    utils.setLatLong(R.id.latitude_register, l.getLatitude());
+    utils.setLatLong(R.id.longitude_register, l.getLongitude());
+    utils.setSpeed(R.id.speed_register, l.getSpeed() * 3.6);
+  }
+
+  private void showUnknownLocation() {
+    utils.setUnknown(R.id.elevation_register);
+    utils.setUnknown(R.id.latitude_register);
+    utils.setUnknown(R.id.longitude_register);
+    utils.setUnknown(R.id.speed_register);
   }
 }
