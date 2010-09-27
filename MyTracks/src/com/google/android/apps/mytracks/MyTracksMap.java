@@ -372,6 +372,8 @@ public class MyTracksMap extends MapActivity
         setSelectedTrack(selectedTrackId);
       }
       updateOptionsButton();
+      mapOverlay.setDrawBounds(preferences.getBoolean(
+          getString(R.string.debug_draw_bounds_key), false));
       preferences.registerOnSharedPreferenceChangeListener(this);
     }
   }
@@ -916,6 +918,10 @@ public class MyTracksMap extends MapActivity
               mapOverlay.setShowEndMarker(!isRecordingSelected());
               mapView.postInvalidate();
             }
+          } else if (key.equals(getString(R.string.debug_draw_bounds_key))) {
+            mapOverlay.setDrawBounds(
+                sharedPreferences.getBoolean(
+                    getString(R.string.debug_draw_bounds_key), false));
           }
         }
       });

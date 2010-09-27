@@ -819,33 +819,33 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * This is for debugging and testing only. Useful if there is no GPS signal
    * available.
    */
-  public void recordRandomLocation() {
-    if (trackRecordingService != null) {
-      Location loc = new Location("gps");
-      double latitude = 37.5 + random.nextDouble() / 1000;
-      double longitude = -120.0 + random.nextDouble() / 1000;
-      loc.setLatitude(latitude);
-      loc.setLongitude(longitude);
-      loc.setAltitude(random.nextDouble() * 100);
-      loc.setTime(System.currentTimeMillis());
-      loc.setSpeed(random.nextFloat());
-      MyTracksMap map =
-          (MyTracksMap) getLocalActivityManager().getActivity("tab1");
-      if (map != null) {
-        map.onLocationChanged(loc);
-      }
-      StatsActivity stats =
-          (StatsActivity) getLocalActivityManager().getActivity("tab2");
-      if (stats != null) {
-        stats.onLocationChanged(loc);
-      }
-      try {
-        trackRecordingService.recordLocation(loc);
-      } catch (RemoteException e) {
-        Log.e(MyTracksConstants.TAG, "MyTracks", e);
-      }
-    }
-  }
+//  public void recordRandomLocation() {
+//    if (trackRecordingService != null) {
+//      Location loc = new Location("gps");
+//      double latitude = 37.5 + random.nextDouble() / 1000;
+//      double longitude = -120.0 + random.nextDouble() / 1000;
+//      loc.setLatitude(latitude);
+//      loc.setLongitude(longitude);
+//      loc.setAltitude(random.nextDouble() * 100);
+//      loc.setTime(System.currentTimeMillis());
+//      loc.setSpeed(random.nextFloat());
+//      MyTracksMap map =
+//          (MyTracksMap) getLocalActivityManager().getActivity("tab1");
+//      if (map != null) {
+//        map.onLocationChanged(loc);
+//      }
+//      StatsActivity stats =
+//          (StatsActivity) getLocalActivityManager().getActivity("tab2");
+//      if (stats != null) {
+//        stats.onLocationChanged(loc);
+//      }
+//      try {
+//        trackRecordingService.recordLocation(loc);
+//      } catch (RemoteException e) {
+//        Log.e(MyTracksConstants.TAG, "MyTracks", e);
+//      }
+//    }
+//  }
 
   /**
    * Resets status information for sending to MyMaps/Docs.

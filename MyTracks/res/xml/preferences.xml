@@ -125,4 +125,13 @@ limitations under the License.
           android:persistent="false" />
     </PreferenceCategory>
   </PreferenceScreen>
+
+  <!-- Debug settings - uncomment this while debugging only -->
+  <!-- 
+  <PreferenceScreen android:title="Debug">
+    <CheckBoxPreference android:key="@string/debug_draw_bounds_key"
+                        android:title="Draw bounding box"
+                        android:defaultValue="false" />
+  </PreferenceScreen>
+  -->
 </PreferenceScreen>

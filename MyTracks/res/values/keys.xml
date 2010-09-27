@@ -37,6 +37,7 @@ limitations under the License.
   <string name="share_url_only_key">shareUrlOnly</string>
   <string name="signal_sampling_frequency_key">signalSamplingFrequency</string>
   <string name="split_frequency_key">splitFrequency</string>
+  <string name="debug_draw_bounds_key">debugDrawBounds</string>
 
   <!-- Preference keys which keep transient state (not user preferences) - DO NOT TRANSLATE -->
   <string name="recording_track_key">recordingTrack</string>
