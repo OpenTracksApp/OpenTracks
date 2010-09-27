@@ -155,7 +155,6 @@ limitations under the License.
 
   <string name="settings_announcement_frequency">Dauer zwischen Ansagen:</string>
   <string name="settings_announcement_frequency_summary">Kürzeste Zeit zwichen zwei Ansagen</string>
-  <string name="settings_announcement_not_available_summary">Gesprochene Ansagen sind mit Ihrer Version von Android nicht verfügbar.</string>
 
   <string name="settings_min_recording_distance">Kleinste Entfernung zwischen Punkten:</string>
   <string name="settings_min_recording_distance_summary">Kleinste Entfernung zwischen zwei Positionsaufzeichnungen</string>

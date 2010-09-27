@@ -167,7 +167,7 @@ limitations under the License.
 
   <string name="settings_announcement_frequency">提示频度</string>
   <string name="settings_announcement_frequency_summary">语音提示的最小时间间隔</string>
-  <string name="settings_announcement_not_available_summary">你所使用的 Android 版本不支持文本到语音转换</string>
+  
 
   <string name="settings_min_recording_distance">最小记录间距</string>
   <string name="settings_min_recording_distance_summary">位置记录的最小间隔距离</string>

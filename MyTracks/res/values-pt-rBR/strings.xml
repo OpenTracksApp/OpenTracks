@@ -157,7 +157,6 @@ limitations under the License.
   <string name="settings_sharing">Compartilhamento</string>
   <string name="settings_announcement_frequency">Tempo entre anúncios</string>
   <string name="settings_announcement_frequency_summary">Tempo mínimo entre dois anúncios de voz</string>
-  <string name="settings_announcement_not_available_summary">Anúncios de voz não estão disponíveis em sua versão do Android</string>
   <string name="settings_min_recording_distance">Dist. mín. entre pontos</string>
   <string name="settings_min_recording_distance_summary">Menor distância entre duas gravações da sua posição</string>
   <string name="settings_max_recording_distance">Dist. máx. entre pontos</string>

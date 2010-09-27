@@ -164,7 +164,7 @@ limitations under the License.
 
   <string name="settings_announcement_frequency">定期通知</string>
   <string name="settings_announcement_frequency_summary">音声通知間隔の最小時間</string>
-  <string name="settings_announcement_not_available_summary">お使いのAndroidの版では音声読み上げ機能がありません</string>
+  
 
   <string name="settings_min_recording_distance">ポイント間の最短距離</string>
   <string name="settings_min_recording_distance_summary">位置記録間の最短距離</string>

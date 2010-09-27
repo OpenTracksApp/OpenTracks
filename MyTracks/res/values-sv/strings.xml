@@ -165,7 +165,7 @@ limitations under the License.
 
   <string name="settings_announcement_frequency">Meddelandefrekvens</string>
   <string name="settings_announcement_frequency_summary">Minimumtid mellan två röstmeddelanden</string>
-  <string name="settings_announcement_not_available_summary">Text-till-talmeddelanden är inte tillgängligt i din version av Android</string>
+  
 
   <string name="settings_min_recording_distance">Min distans mellan två punkter</string>
   <string name="settings_min_recording_distance_summary">Minsta distans mellan två inspelningar av din position</string>

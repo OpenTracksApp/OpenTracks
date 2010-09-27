@@ -158,7 +158,6 @@ limitations under the License.
 
   <string name="settings_announcement_frequency">Tiempo entre anuncios</string>
   <string name="settings_announcement_frequency_summary">Tiempo mínimo entre dos anuncios de voz</string>
-  <string name="settings_announcement_not_available_summary">Conversión de anuncios de texto a voz no esta disponible en su versión de Android</string>
 
   <string name="settings_min_recording_distance">Distancia mínima entre puntos consecutivos</string>
   <string name="settings_min_recording_distance_summary">Distancia mínima entre dos grabaciones de posición</string>
