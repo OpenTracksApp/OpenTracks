@@ -17,11 +17,11 @@ limitations under the License.
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
   <item android:state_window_focused="false"
-      android:drawable="@drawable/btn_arrow_right_default" />
+        android:drawable="@drawable/right_arrow_stats" />
 
   <item android:state_pressed="true"
-      android:drawable="@drawable/btn_arrow_right_press" />
+        android:drawable="@drawable/right_arrow_stats_press" />
 
-  <item android:drawable="@drawable/btn_arrow_right_default" />
+  <item android:drawable="@drawable/right_arrow_stats" />
 
 </selector>

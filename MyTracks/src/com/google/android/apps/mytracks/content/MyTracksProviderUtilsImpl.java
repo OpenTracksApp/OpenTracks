@@ -175,6 +175,8 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   
   @Override
   public void fillLocation(Cursor cursor, Location location) {
+    location.reset();
+
     int idxLatitude = cursor.getColumnIndexOrThrow(TrackPointsColumns.LATITUDE);
     int idxLongitude =
         cursor.getColumnIndexOrThrow(TrackPointsColumns.LONGITUDE);
@@ -865,7 +867,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
           cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
       do {
         if (reuseLocations) {
-          fillLocation(cursor, buffer.location(cursor.getLong(idColumnIdx)));
+          fillLocation(cursor, buffer.add(cursor.getLong(idColumnIdx)));
         } else {
           Location location = createLocation(cursor);
           if (location == null) {
@@ -874,7 +876,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
           buffer.add(location, cursor.getLong(idColumnIdx));
         }
       } while (cursor.moveToNext());
-      
+
       if (buffer.getLocationsLoaded() == 0) {
         Log.w(MyTracksProvider.TAG, "No locations read.");
         buffer.resetAt(startingPoint + buffer.getSize());

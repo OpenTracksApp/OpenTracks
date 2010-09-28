@@ -203,7 +203,9 @@ public interface MyTracksProviderUtils {
    *
    * @param track to load locations for
    * @param buffer an array of locations to fill
+   * @deprecated use {@link #fillTrackPoints} instead
    */
+  @Deprecated
   void getTrackPoints(Track track, TrackBuffer buffer);
 
   /**

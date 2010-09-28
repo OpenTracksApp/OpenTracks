@@ -177,15 +177,15 @@ public class ChartActivity extends Activity implements
                 cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
             ArrayList<double[]> data = new ArrayList<double[]>();
             // Need two locations so we can keep track of the last location.
-            Location[] locations = { new Location(""), new Location("")};
-            int i = 0;
+            Location location = new Location("");
             do {
               lastSeenLocationId = cursor.getLong(idColumnIdx);
-              providerUtils.fillLocation(cursor, locations[i]);
-              if (MyTracksUtils.isValidLocation(locations[i])) {
-                data.add(getDataPoint(locations[i], track));
+              providerUtils.fillLocation(cursor, location);
+              if (MyTracksUtils.isValidLocation(location)) {
+                double[] point = new double[3];
+                location = getDataPoint(location, track, point);
+                data.add(point);
               }
-              i = (i + 1) % 2;
             } while (cursor.moveToPrevious());
             cv.addDataPoints(data);
           }
@@ -465,11 +465,14 @@ public class ChartActivity extends Activity implements
    * data[1] = the elevation
    * data[2] = the speed
    *
-   * @param location a location
-   * @return the data point
+   * This must be called in order for each point.
+   *
+   * @param location the location to get data for (this method takes ownership of that location)
+   * @param track the track to get data from
+   * @param result the resulting point to fill out
+   * @return the previous location, now available for reuse
    */
-  public double[] getDataPoint(Location location, Track track) {
-    double[] result = new double[3];
+  private Location getDataPoint(Location location, Track track, double[] result) {
     switch (mode) {
       case BY_DISTANCE:
         result[0] = profileLength;
@@ -516,8 +519,16 @@ public class ChartActivity extends Activity implements
       // Format as hours per unit
       result[2] = (60.0 / result[2]);
     }
+
+    Location oldLastLocation = lastLocation;
     lastLocation = location;
-    return result;
+
+    if (oldLastLocation == null) {
+      // No previous location, but return a blank one for reuse
+      return new Location("");
+    }
+
+    return oldLastLocation;
   }
 
   /**
@@ -561,8 +572,7 @@ public class ChartActivity extends Activity implements
       final ArrayList<double[]> theData = new ArrayList<double[]>();
       int points = 0;
       // Need two locations so we can keep track of the last location.
-      Location[] locations = { new Location(""), new Location("")};
-      int i = 0;
+      Location location = new Location("");
       while (lastLocationRead < track.getStopId()) {
         cursor = providerUtils.getLocationsCursor(
             selectedTrackId, lastLocationRead, bufferSize, false);
@@ -574,16 +584,16 @@ public class ChartActivity extends Activity implements
                 cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
             while (cursor.moveToNext()) {
               points++;
-              providerUtils.fillLocation(cursor, locations[i]);
-              if (MyTracksUtils.isValidLocation(locations[i])) {
+              providerUtils.fillLocation(cursor, location);
+              if (MyTracksUtils.isValidLocation(location)) {
                 lastLocationRead = lastSeenLocationId =
                     cursor.getLong(idColumnIdx);
-                double[] point = getDataPoint(locations[i], track);
+                double[] point = new double[3];
+                location = getDataPoint(location, track, point);
                 if (points % chartSamplingFrequency == 0) {
                   theData.add(point);
                 }
               }
-              i = (i + 1) % 2;
             }
           } else {
             lastLocationRead += bufferSize;
