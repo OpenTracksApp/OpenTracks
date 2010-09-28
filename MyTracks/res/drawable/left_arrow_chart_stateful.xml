@@ -14,12 +14,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<selector xmlns:android="http://schemas.android.com/apk/res/android"><!--
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
 
   <item android:state_window_focused="false"
         android:drawable="@drawable/left_arrow_chart" />
 
-  --><item android:state_pressed="true"
+  <item android:state_pressed="true"
         android:drawable="@drawable/left_arrow_chart_press" />
 
   <item android:drawable="@drawable/left_arrow_chart" />
