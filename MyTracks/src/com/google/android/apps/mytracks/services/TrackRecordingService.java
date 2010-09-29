@@ -753,7 +753,9 @@ public class TrackRecordingService extends Service implements LocationListener {
   }
   
   private boolean maybeResumeTrack(Track track) {
-    List<Location> locations = track.getLocations();
+    Log.d(MyTracksConstants.TAG,
+        "maybeResumeTrack: autoResumeTrackTimeout = " + autoResumeTrackTimeout);
+    
     if (autoResumeTrackTimeout == 0) {
       // Never resume.  
       return false;
@@ -763,9 +765,15 @@ public class TrackRecordingService extends Service implements LocationListener {
     }
 
     // Check if the last recorded point's time is within acceptable range.
-    return System.currentTimeMillis()
+    List<Location> locations = track.getLocations();
+    Log.d(MyTracksConstants.TAG,
+        "maybeResumeTrack: Found " + (locations != null ? locations.size() : 0)
+        + " locations in the previous track");
+    
+    return locations != null && !locations.isEmpty() &&
+        System.currentTimeMillis()
         - locations.get(locations.size() - 1).getTime() <=
-        autoResumeTrackTimeout * 60 * 1000;  
+            autoResumeTrackTimeout * 60 * 1000;  
   }
 
   public boolean isRecording() {
