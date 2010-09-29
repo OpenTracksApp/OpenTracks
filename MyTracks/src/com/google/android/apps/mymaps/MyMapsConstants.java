@@ -25,5 +25,8 @@ public class MyMapsConstants {
       "http://maps.google.com/maps/ms";
   public static final String MAPSHOP_SERVICE = MapsClient.SERVICE;
 
+  /**
+   * Private constructor to prevent instantiation.
+   */
   private MyMapsConstants() { }
 }

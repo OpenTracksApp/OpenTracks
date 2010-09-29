@@ -24,6 +24,9 @@ import android.location.Location;
 import android.net.Uri;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Helper class providing easy access to locations and tracks in the
  * MyTracksProvider. All static members.
@@ -796,6 +799,21 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   public Track getTrack(long id) {
     String select = TracksColumns._ID + "=" + id;
     return findTrackBy(select);
+  }
+  
+  @Override
+  public List<Track> getAllTracks() {
+    Cursor cursor = getTracksCursor(null);
+    if (cursor == null || !cursor.moveToFirst()) {
+      return new ArrayList<Track>();
+    }
+
+    List<Track> tracks = new ArrayList<Track>(cursor.getCount());
+    do {
+      tracks.add(createTrack(cursor));
+    } while(cursor.moveToNext());
+
+    return tracks;
   }
 
   @Override

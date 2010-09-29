@@ -20,10 +20,15 @@
     android:icon="@android:drawable/ic_menu_preferences"
     android:orderInCategory="1001"
     android:title="@string/settings"/>
+    
+  <item android:id="@+id/menu_aggregated_stats"
+    android:icon="@android:drawable/ic_menu_info_details"
+    android:orderInCategory="1002"
+    android:title="@string/aggregated_stats"/>
 
   <item android:id="@+id/menu_help"
     android:icon="@android:drawable/ic_menu_info_details"
-    android:orderInCategory="1002"
+    android:orderInCategory="1003"
     android:title="@string/help"/>
 
 </menu>

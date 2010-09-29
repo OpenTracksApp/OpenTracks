@@ -135,7 +135,6 @@ public class MyTracksWaypointDetails extends Activity
           iconId = R.drawable.ylw_pushpin;
           TripStatistics waypointStats = waypoint.getStatistics();
           utils.setAllStats(waypointStats);
-          utils.setTime(R.id.total_time_register, waypointStats.getTotalTime());
           utils.setAltitude(
               R.id.elevation_register, waypoint.getLocation().getAltitude());
           break;

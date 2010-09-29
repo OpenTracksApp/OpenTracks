@@ -78,6 +78,11 @@ class MenuManager {
         activity.startActivity(startIntent);
         return true;
       }
+      case R.id.menu_aggregated_stats: {
+        Intent startIntent = new Intent(activity, AggregatedStatsActivity.class);
+        activity.startActivity(startIntent);
+        return true;
+      }
       case R.id.menu_help: {
         Intent startIntent = new Intent(activity, WelcomeActivity.class);
         activity.startActivity(startIntent);
