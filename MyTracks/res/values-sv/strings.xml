@@ -43,19 +43,19 @@ limitations under the License.
   <string name="error_generic">Ett fel uppstod. Försök igen.</string>
   <string name="error_track_does_not_exist">Spåret finns inte.</string>
   <string name="error_out_of_memory">Den här filen är för stor (måste vara mindre än 500 KB). Avbryter.</string>
-  <string name="error_unable_to_insert_marker">Kan inte skapa markör. Ingen possition tillgänglig.</string>
+  <string name="error_unable_to_insert_marker">Kan inte skapa markör. Ingen position tillgänglig.</string>
 
   <!-- Status messages -->
-  <string name="wait_for_fix">Väntar på bättre GPS-posstion. Se till att himlen är synlig.</string>
+  <string name="wait_for_fix">Väntar på bättre GPS-position. Se till att himlen är synlig.</string>
   <string name="status_now_recording">Spelar nu in ett nytt spår.</string>
   <string name="status_stopped_recording">Stoppade inspelning av ditt spår.</string>
   <string name="status_new_mymap_has_been_created">En ny Google My Map har skapats på maps.google.com.</string>
   <string name="status_tracks_have_been_uploaded">Ditt spår har skickats till maps.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">Ditt spår har skockats till ett nytt kalkylblad på docs.google.com.</string>
+  <string name="status_tracks_have_been_uploaded_to_new_doc">Ditt spår har skickats till ett nytt kalkylblad på docs.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_docs">Ditt spår har skickats till docs.google.com.</string>
   <string name="status_mymap_info">Det kan ibland ta några minuter innan nya spår visas.</string>
   <string name="status_enable_gps">Klicka här för att gå till Säkerhet och Platsinställningar och kryssa i \'aktivera gps-satteliter\'. Tryck på tillbakaknappen för att återgå.</string>
-  <string name="status_approximate_location">OBS: En ungerfärlig position som avgörs från mobilmaster och WIFI-nät visas.</string>
+  <string name="status_approximate_location">OBS: En ungefärlig position som avgörs från mobilmaster och WIFI-nät visas.</string>
   <string name="status_no_location">En position kan för närvarande inte fastställas. Aktivera mer platskällor (se Säkerhet och Platsinställningar) och se till att himlen är synlig. Försök igen senare.</string>
   <string name="status_waypoint_inserted">En positionsmarkör har lagts in.</string>
   <string name="status_statistics_inserted">En statistikmarkör har lagts in.</string>
@@ -71,7 +71,7 @@ limitations under the License.
   <string name="progress_message_sending_mymaps">Skickar spår till Google Maps...</string>
   <string name="progress_message_creating_map">Skapar en ny My Map...</string>
   <string name="import_progress_message">Importerar ett GPS-spår. Detta kan ta en stund.</string>
-  <string name="write_progress_message">Skriver til till SD-kortet. Detta kan ta en stund.</string>
+  <string name="write_progress_message">Skriver till SD-kortet. Detta kan ta en stund.</string>
   <string name="progress_message_updating_track">Uppdaterar spårstatistik...</string>
 
   <!-- Used by DeleteAllDataHandler -->
@@ -125,7 +125,7 @@ limitations under the License.
   <!-- Export All -->
   <string name="tracklist_btn_export_all">Exportera alla spår</string>
   <string name="export_done">Exporteringen slutfördes</string>
-  <string name="tracklist_pick_one">Välj ett spår. TryckPress&amp;håll för fler alternativ.</string>
+  <string name="tracklist_pick_one">Välj ett spår. Tryck&amp;håll för fler alternativ.</string>
   <string name="tracklist_all_tracks">Alla spår:</string>
   <string name="tracklist_this_track">Det här spåret</string>
   <string name="tracklist_share_track">Dela med vänner...</string>
@@ -143,13 +143,13 @@ limitations under the License.
   <string name="waypointslist_show_waypoint">Visa på karta</string>
   <string name="waypointslist_btn_insert_waypoint">Infoga positionspunkt</string>
   <string name="waypointslist_btn_insert_statistics">Infoga statistik</string>
-  <string name="waypointslist_pick_one">Välj en markör. TryckPress&amp;håll för fler alternativ.</string>
+  <string name="waypointslist_pick_one">Välj en markör. Tryck&amp;håll för fler alternativ.</string>
 
   <!-- MyTracks Details -->
   <string name="trackdetails_title">Spårdetaljer</string>
   <string name="trackdetails_name">Spårnamn</string>
   <string name="trackdetails_description">Spårbeskrivning</string>
-  <string name="trackdetails_category">Aktivitetstyp (t ex vandring, cyckling, låpning, klättring...)</string>
+  <string name="trackdetails_category">Aktivitetstyp (t ex vandring, cyckling, löpning, klättring...)</string>
 
   <!-- MyTracks Waypoint Details -->
   <string name="waypointdetails_title">Markördetaljer</string>
@@ -199,11 +199,11 @@ limitations under the License.
   <string name="settings_signal_sampling_frequency_summary">Tid mellan två inspelningar av telefonens signalstyrka</string>
 
   <string name="settings_split_frequency">Delningsfrekvens</string>
-  <string name="settings_split_frequency_summary">Maximala tiden eller distansen varefter en ny delnginsmarkör kommer infogas</string>
+  <string name="settings_split_frequency_summary">Maximala tiden eller distansen varefter en ny delningsmarkör kommer infogas</string>
   <string name="pace_label">Tempo</string>
 
   <!-- MyTracksSky -->
-  <string name="mytracks_sky">GPS-satteliter</string>
+  <string name="mytracks_sky">GPS-satelliter</string>
 
   <!-- My Maps -->
   <string name="select_map_message">Välje en karta från ditt konto:</string>
@@ -240,7 +240,7 @@ limitations under the License.
   <!-- Visibility -->
   <string name="public_map">Publik</string>
   <string name="unlisted_map">Olistat</string>
-  <string name="mapslist_no_maps_available">Du har inge kartor än.</string>
+  <string name="mapslist_no_maps_available">Du har inga kartor än.</string>
 
   <!-- Statistics View -->
   <!-- Average Moving -->
@@ -253,7 +253,7 @@ limitations under the License.
 
   <string name="elevation_chart_name">Höjddiagram</string>
   <string name="elevation_gain_label">Höjdvinst</string>
-  <string name="elevation_label">Höjt</string>
+  <string name="elevation_label">Höjd</string>
   <string name="latitude_label">Latitud</string>
   <string name="longitude_label">Longitud</string>
 
