@@ -51,7 +51,6 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
 
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -728,13 +727,16 @@ public class TrackRecordingService extends Service implements LocationListener {
   private void handleStartCommand(Intent intent, int startId) {
     Log.d(MyTracksConstants.TAG,
         "TrackRecordingService.handleStartCommand: " + startId);
+
     // Load previous track.
     Track track = getRecordingTrack();
-    
+
     // Check if called on phone reboot with resume intent.
-    if (intent.getBooleanExtra(RESUME_TRACK_EXTRA_NAME, false)) {
+    if (intent != null &&
+        intent.getBooleanExtra(RESUME_TRACK_EXTRA_NAME, false)) {
       Log.d(MyTracksConstants.TAG, "TrackRecordingService: requested resume");
       // Make sure that the current track exists and is fresh enough.
+      // Note: Sometimes we may get null intent, so avoid a NPE.
       if (track == null || !maybeResumeTrack(track)) {
         Log.i(MyTracksConstants.TAG,
             "TrackRecordingService: Not resuming because the previous track "
@@ -764,16 +766,12 @@ public class TrackRecordingService extends Service implements LocationListener {
       return true;
     }
 
-    // Check if the last recorded point's time is within acceptable range.
-    List<Location> locations = track.getLocations();
+    // Check if the last modified time is within the acceptable range.
+    long lastModified = track.getLastModified();
     Log.d(MyTracksConstants.TAG,
-        "maybeResumeTrack: Found " + (locations != null ? locations.size() : 0)
-        + " locations in the previous track");
-    
-    return locations != null && !locations.isEmpty() &&
-        System.currentTimeMillis()
-        - locations.get(locations.size() - 1).getTime() <=
-            autoResumeTrackTimeout * 60 * 1000;  
+        "maybeResumeTrack: lastModified = " + lastModified);
+    return lastModified != -1 && System.currentTimeMillis() - lastModified <=
+        autoResumeTrackTimeout * 60 * 1000;  
   }
 
   public boolean isRecording() {
