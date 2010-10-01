@@ -45,13 +45,13 @@ public class MyTracksSettings extends PreferenceActivity {
   /*
    * Default values - keep in sync with those in preferences.xml.
    */
+  public static final int DEFAULT_AUTO_RESUME_TRACK_TIMEOUT = 10;  // In min.
   public static final int DEFAULT_ANNOUNCEMENT_FREQUENCY = -1;
   public static final int DEFAULT_MAX_RECORDING_DISTANCE = 200;
   public static final int DEFAULT_MIN_RECORDING_DISTANCE = 5;
   public static final int DEFAULT_MIN_RECORDING_INTERVAL = 0;
   public static final int DEFAULT_MIN_REQUIRED_ACCURACY = 200;
   public static final int DEFAULT_SPLIT_FREQUENCY = 0;
-  public static final int DEFAULT_AUTO_RESUME_TRACK_TIMEOUT = 10;  // In min.
 
   private static boolean mTTSAvailable;
   private BackupPreferencesListener backupListener;
@@ -191,9 +191,6 @@ public class MyTracksSettings extends PreferenceActivity {
     final ListPreference splitFrequency =
         (ListPreference) findPreference(
             getString(R.string.split_frequency_key));
-    final ListPreference autoResumeTrackTimeout =
-        (ListPreference) findPreference(
-            getString(R.string.auto_resume_track_timeout_key));
     
     minRecordingDistance.setEntries(isMetric
         ? R.array.min_recording_distance_options
@@ -207,7 +204,5 @@ public class MyTracksSettings extends PreferenceActivity {
     splitFrequency.setEntries(isMetric
         ? R.array.split_frequency_options
         : R.array.split_frequency_options_ft);
-    autoResumeTrackTimeout.setEntries(
-        R.array.auto_resume_track_timeout_options);
   }
 }

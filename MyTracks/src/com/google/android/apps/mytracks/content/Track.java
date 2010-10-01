@@ -196,13 +196,4 @@ public class Track implements Parcelable {
   public void setStatistics(TripStatistics stats) {
     this.stats = stats;
   }
-  
-  /**
-   * Returns the last time this track was modified, or -1 if not available.
-   * @return the last modified time, in milliseconds, since the epoch.
-   */
-  public long getLastModified() {
-    // Don't use locations, just rely on stats.
-    return stats != null ? stats.getStopTime() : -1;
-  }
 }

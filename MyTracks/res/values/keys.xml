@@ -17,6 +17,7 @@ limitations under the License.
 <resources>
   <!-- Keys for application preferences - DO NOT TRANSLATE -->
   <string name="announcement_frequency_key">announcementFrequency</string>
+  <string name="auto_resume_track_timeout_key">autoResumeTrackTimeout</string>
   <string name="bluetooth_device_key">bluetoothDevice</string>
   <string name="bluetooth_pairing_key">bluetoothPairing</string>
   <string name="bluetooth_sensor_key">bluetoothSensor</string>
@@ -37,7 +38,6 @@ limitations under the License.
   <string name="share_url_only_key">shareUrlOnly</string>
   <string name="signal_sampling_frequency_key">signalSamplingFrequency</string>
   <string name="split_frequency_key">splitFrequency</string>
-  <string name="auto_resume_track_timeout_key">autoResumeTrackTimeout</string>
 
   <!-- Preference keys which keep transient state (not user preferences) - DO NOT TRANSLATE -->
   <string name="recording_track_key">recordingTrack</string>

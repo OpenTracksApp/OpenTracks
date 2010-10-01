@@ -15,17 +15,9 @@
  */
 package com.google.android.apps.mytracks.services;
 
-import static com.google.android.apps.mytracks.MyTracksConstants.RESUME_TRACK_EXTRA_NAME;
-
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.Track;
-
 import android.content.Intent;
 import android.os.IBinder;
 import android.test.ServiceTestCase;
-import android.test.mock.MockContentProvider;
-import android.test.mock.MockContentResolver;
-import android.test.mock.MockContext;
 import android.test.suitebuilder.annotation.MediumTest;
 import android.test.suitebuilder.annotation.SmallTest;
 
@@ -36,11 +28,9 @@ import android.test.suitebuilder.annotation.SmallTest;
  */
 public class TrackRecordingServiceTest
     extends ServiceTestCase<TrackRecordingService> {
-  private MyTracksProviderUtils providerUtils;
 	
   public TrackRecordingServiceTest() {
     super(TrackRecordingService.class);
-    providerUtils = MyTracksProviderUtils.Factory.get(getContext());
   }
   
   @SmallTest
@@ -57,22 +47,5 @@ public class TrackRecordingServiceTest
     startIntent.setClass(getContext(), TrackRecordingService.class);
     IBinder service = bindService(startIntent);
     assertNotNull(service);
-  }
-  
-  @MediumTest
-  public void testResumeAfterReboot() throws Exception {
-    // TODO: Figure out how to mock getContentResolver() before submit. 
-    /*
-    Track dummyTrack = new Track();
-    dummyTrack.setName("Dummy Track");
-    providerUtils.insertTrack(dummyTrack);
-    
-    Intent startIntent = new Intent();
-    startIntent.setClass(getContext(), TrackRecordingService.class);
-    startIntent.putExtra(RESUME_TRACK_EXTRA_NAME, true);
-    startService(startIntent);
-    assertNotNull(getService());
-    assertFalse(getService().isRecording());
-    */
   }
 }

@@ -630,6 +630,7 @@ public class TrackRecordingService extends Service implements LocationListener {
 
   @Override
   public void onCreate() {
+    super.onCreate();
     Log.d(MyTracksConstants.TAG, "TrackRecordingService.onCreate");
     providerUtils = MyTracksProviderUtils.Factory.get(this);
     notificationManager =
@@ -692,6 +693,7 @@ public class TrackRecordingService extends Service implements LocationListener {
       executer.shutdown();
     }
     splitManager.shutdown();
+    super.onDestroy();
   }
 
   @Override
@@ -767,10 +769,11 @@ public class TrackRecordingService extends Service implements LocationListener {
     }
 
     // Check if the last modified time is within the acceptable range.
-    long lastModified = track.getLastModified();
+    long lastModified =
+        track.getStatistics() != null ? track.getStatistics().getStopTime() : 0;
     Log.d(MyTracksConstants.TAG,
         "maybeResumeTrack: lastModified = " + lastModified);
-    return lastModified != -1 && System.currentTimeMillis() - lastModified <=
+    return lastModified > 0 && System.currentTimeMillis() - lastModified <=
         autoResumeTrackTimeout * 60 * 1000;  
   }
 

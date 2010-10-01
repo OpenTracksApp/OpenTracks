@@ -30,6 +30,7 @@ import android.util.Log;
 public class PreferenceManager {
   private TrackRecordingService service;
   private final String announcementFrequencyKey;
+  private final String autoResumeTrackTimeoutKey;
   private final String maxRecordingDistanceKey;
   private final String metricUnitsKey;
   private final String minRecordingDistanceKey;
@@ -38,13 +39,14 @@ public class PreferenceManager {
   private final String recordingTrackKey;
   private final String signalSamplingFrequencyKey;
   private final String splitFrequencyKey;
-  private final String autoResumeTrackTimeoutKey;
 
   public PreferenceManager(TrackRecordingService service) {
     this.service = service;
 
     announcementFrequencyKey =
         service.getString(R.string.announcement_frequency_key);
+    autoResumeTrackTimeoutKey =
+      service.getString(R.string.auto_resume_track_timeout_key);
     maxRecordingDistanceKey = 
         service.getString(R.string.max_recording_distance_key);
     metricUnitsKey =
@@ -61,8 +63,6 @@ public class PreferenceManager {
         service.getString(R.string.signal_sampling_frequency_key);
     recordingTrackKey =
         service.getString(R.string.recording_track_key);
-    autoResumeTrackTimeoutKey =
-        service.getString(R.string.auto_resume_track_timeout_key);
   }
 
   /**
@@ -131,6 +131,10 @@ public class PreferenceManager {
       service.setAnnouncementFrequency(
           sharedPreferences.getInt(announcementFrequencyKey, -1));
     }
+    if (key == null || key.equals(autoResumeTrackTimeoutKey)) {
+      service.setAutoResumeTrackTimeout(
+          sharedPreferences.getInt(autoResumeTrackTimeoutKey, -1));
+    }
     if (key == null || key.equals(recordingTrackKey)) {
       service.setRecordingTrackId(
           sharedPreferences.getLong(recordingTrackKey, -1));
@@ -146,10 +150,6 @@ public class PreferenceManager {
     if (key == null || key.equals(metricUnitsKey)) {
       service.getSplitManager().setMetricUnits(
           sharedPreferences.getBoolean(metricUnitsKey, true));
-    }
-    if (key == null || key.equals(autoResumeTrackTimeoutKey)) {
-      service.setAutoResumeTrackTimeout(
-          sharedPreferences.getInt(autoResumeTrackTimeoutKey, -1));
     }
   }
 }
