@@ -326,7 +326,7 @@ public class TrackWriterTest extends AndroidTestCase {
    *        will be fed into the track buffer on each call
    */
   private void stubBufferFill(final Location[]... feeds) {
-    providerUtils.getTrackPoints(same(track), isA(TrackBuffer.class));
+    providerUtils.fillTrackPoints(same(track), isA(TrackBuffer.class));
     EasyMock.expectLastCall().andStubAnswer(new IAnswer<Void>() {
       private int lastId = 1;
       private int reads = 0;

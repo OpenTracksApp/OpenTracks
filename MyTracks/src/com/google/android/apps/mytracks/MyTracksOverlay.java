@@ -15,10 +15,8 @@
  */
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.util.MyTracksUtils;
-
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
@@ -31,6 +29,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.Region;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 
@@ -57,10 +56,11 @@ public class MyTracksOverlay extends Overlay {
   private final ArrayList<Waypoint> waypoints = new ArrayList<Waypoint>();
   private final ArrayList<Location> points = new ArrayList<Location>(1024);
 
-  private Track selectedTrack;
+  private boolean trackDrawingEnabled;
   private int lastHeading = 0;
   private Location myLocation;
   private boolean showEndMarker = true;
+  private boolean drawBounds;
 
   public MyTracksOverlay(Context context) {
     this.context = context;
@@ -121,14 +121,6 @@ public class MyTracksOverlay extends Overlay {
     errorCirclePaint.setAntiAlias(true);
   }
 
-  public void setSelectedTrack(Track track) {
-    selectedTrack = track;
-  }
-
-  public Track getSelectedTrack() {
-    return selectedTrack;
-  }
-
   /**
    * Add a location to the map overlay.
    *
@@ -137,11 +129,21 @@ public class MyTracksOverlay extends Overlay {
    * @param l the location to add
    */
   public void addLocation(Location l) {
-    points.add(l);
+    if (l != null) {
+      synchronized (points) {
+        points.add(l);
+      }
+    }
   }
 
   public void addWaypoint(Waypoint wpt) {
     waypoints.add(wpt);
+  }
+
+  public int getNumLocations() {
+    synchronized (points) {
+      return points.size();
+    }
   }
 
   public void clearWaypoints() {
@@ -149,7 +151,13 @@ public class MyTracksOverlay extends Overlay {
   }
 
   public void clearPoints() {
-    points.clear();
+    synchronized (points) {
+      points.clear();
+    }
+  }
+
+  public void setTrackDrawingEnabled(boolean trackDrawingEnabled) {
+    this.trackDrawingEnabled = trackDrawingEnabled;
   }
 
   public void setShowEndMarker(boolean showEndMarker) {
@@ -158,15 +166,23 @@ public class MyTracksOverlay extends Overlay {
 
   @Override
   public void draw(Canvas canvas, MapView mapView, boolean shadow) {
-
     if (shadow) {
       return;
     }
 
-    // Draw the selected track:
-    drawTrack(canvas, mapView, selectedTrack, true);
+    if (trackDrawingEnabled) {
+      // Draw the selected track:
+      drawTrack(canvas, mapView);
 
-    // Draw the waypoints:
+      // Draw the waypoints:
+      drawWaypoints(canvas, mapView);
+    }
+
+    // Draw the current location
+    drawMyLocation(canvas, mapView);
+  }
+
+  private void drawWaypoints(Canvas canvas, MapView mapView) {
     ArrayList<Waypoint> currentWaypoints = waypoints;
     for (int i = 1; i < currentWaypoints.size(); i++) {
       Waypoint wpt = currentWaypoints.get(i);
@@ -189,11 +205,14 @@ public class MyTracksOverlay extends Overlay {
       }
       canvas.restore();
     }
+  }
 
+  private void drawMyLocation(Canvas canvas, MapView mapView) {
     // Draw the arrow icon:
     if (myLocation == null) {
       return;
     }
+
     GeoPoint geoPoint = new GeoPoint(
         (int) (myLocation.getLatitude() * 1E6),
         (int) (myLocation.getLongitude() * 1E6));
@@ -210,79 +229,119 @@ public class MyTracksOverlay extends Overlay {
     canvas.drawCircle(pt.x, pt.y, radius, errorCirclePaint);
   }
 
-  public void drawTrack(Canvas canvas, MapView mapView, Track track,
-      boolean selected) {
-
-    if (track == null) {
-      return;
-    }
-    if (points.size() < 2) {
-      return;
-    }
+  private void drawTrack(Canvas canvas, MapView mapView) {
+    Path path;
+    Point pt = new Point();
+    Location lastValidLocation;
+    int locLon = 0, locLat = 0;
+    GeoPoint firstGeoPoint = null;
+    boolean lastLocValid;
 
     // Get the current viewing window:
     int w = mapView.getLongitudeSpan();
     int h = mapView.getLatitudeSpan();
     int cx = mapView.getMapCenter().getLongitudeE6();
     int cy = mapView.getMapCenter().getLatitudeE6();
-    Rect rect = new Rect(cx - w, cy - h, cx + w, cy + h);
+    Rect viewRect = new Rect(cx - w, cy - h, cx + w, cy + h);
 
-    Point pt = new Point();
-    GeoPoint geoPoint;
-    Location loc;
-    Location lastValidLocation = null;
-    Path path;
-    boolean wasInside;
-
-    // Do as much allocation and preparation outside the loop over track
-    // points:
-    wasInside = false;
-    int locLon = 0, locLat = 0, minLon, maxLon, minLat, maxLat;
-    int lastLocLon = (int) (points.get(0).getLongitude() * 1E6);
-    int lastLocLat = (int) (points.get(0).getLatitude() * 1E6);
-
-    // Loop over track points:
-    path = new Path();
-    for (int i = 1; i < points.size(); i++) {
-
-      loc = points.get(i);
-      if (loc == null) {
-        continue;
+    // Global bounding box, including points not visible
+    int allMinLat, allMinLon, allMaxLat, allMaxLon;
+    
+    synchronized (points) {
+      int numPoints = points.size();
+      if (numPoints < 2) {
+        return;
       }
-      locLon = (int) (loc.getLongitude() * 1E6);
-      locLat = (int) (loc.getLatitude() * 1E6);
 
-      // Draw a line segment if it's inside the viewing window:
-      if (locLat < 90E6 && lastLocLat < 90E6) {
-        lastValidLocation = loc;
-        minLon = Math.min(locLon, lastLocLon);
-        maxLon = Math.max(locLon, lastLocLon);
-        minLat = Math.min(locLat, lastLocLat);
-        maxLat = Math.max(locLat, lastLocLat);
-        if (rect.intersects(minLon, minLat, maxLon, maxLat)) {
-          if (!wasInside) {
-            geoPoint = new GeoPoint(lastLocLat, lastLocLon);
-            mapView.getProjection().toPixels(geoPoint, pt);
-            path.moveTo(pt.x, pt.y);
+      GeoPoint geoPoint;
+      Location loc;
+      int minLon, maxLon, minLat, maxLat;
+      lastValidLocation = points.get(0);
+      int lastLocLon = allMinLon = allMaxLon = (int) (lastValidLocation.getLongitude() * 1E6);
+      int lastLocLat = allMinLat = allMaxLat = (int) (lastValidLocation.getLatitude() * 1E6);
+      lastLocValid = MyTracksUtils.isValidLocation(lastValidLocation);
+      boolean lastLocVisible = false;
+      path = new Path();
+
+      // Loop over track points:
+      path.incReserve(numPoints);
+      for (int i = 1; i < numPoints; i++) {
+        loc = points.get(i);
+
+        boolean locValid = MyTracksUtils.isValidLocation(loc);
+        boolean locVisible = false;
+        if (locValid) {
+          locLon = (int) (loc.getLongitude() * 1E6);
+          locLat = (int) (loc.getLatitude() * 1E6);
+
+          if (firstGeoPoint == null) {
+            // Found the starting point
+            firstGeoPoint = new GeoPoint(locLat, locLon);
           }
-          geoPoint = new GeoPoint(locLat, locLon);
-          mapView.getProjection().toPixels(geoPoint, pt);
-          path.lineTo(pt.x, pt.y);
-          wasInside = rect.contains(locLon, locLat);
+
+          // If both the current and previous locations were valid
+          if (lastLocValid) {
+            lastValidLocation = loc;
+  
+            // Get the bounding box of the segment about to be drawn
+            if (locLon > lastLocLon) {
+              minLon = lastLocLon;
+              maxLon = locLon;
+            } else {
+              minLon = locLon;
+              maxLon = lastLocLon;
+            }
+            if (locLat > lastLocLat) {
+              minLat = lastLocLat;
+              maxLat = locLat;
+            } else {
+              minLat = locLat;
+              maxLat = lastLocLat;
+            }
+
+            if (drawBounds) {
+              allMaxLat = Math.max(allMaxLat, maxLat);
+              allMinLat = Math.min(allMinLat, minLat);
+              allMaxLon = Math.max(allMaxLon, maxLon);
+              allMinLon = Math.min(allMinLon, minLon);
+            }
+
+            // See if that bounding box intersects the viewable bounding box
+            // Assume that if it does, the location is visible
+            locVisible = viewRect.intersects(minLon, minLat, maxLon, maxLat);
+            if (locVisible) {
+              // If the previous point wasn't drawn, start at its position
+              if (!lastLocVisible) {
+                geoPoint = new GeoPoint(lastLocLat, lastLocLon);
+                mapView.getProjection().toPixels(geoPoint, pt);
+                path.moveTo(pt.x, pt.y);
+              }
+  
+              // Draw a line to the new point
+              geoPoint = new GeoPoint(locLat, locLon);
+              mapView.getProjection().toPixels(geoPoint, pt);
+              path.lineTo(pt.x, pt.y);
+            }
+          }
         }
-      } else {
-        wasInside = false;
+        lastLocLon = locLon;
+        lastLocLat = locLat;
+        lastLocValid = locValid;
+        lastLocVisible = locVisible;
       }
-      lastLocLon = locLon;
-      lastLocLat = locLat;
     }
+
     canvas.drawPath(path, selectedTrackPaint);
 
+    if (drawBounds) {
+      drawBoundingBox(canvas, mapView,
+          allMinLat, allMinLon, allMaxLat, allMaxLon);
+    }
+
     // Draw the "End" marker:
-    Location currentLastValidLocation = lastValidLocation;
-    if (showEndMarker && currentLastValidLocation != null) {
+    if (showEndMarker && lastValidLocation != null) {
       canvas.save();
-      geoPoint = MyTracksUtils.getGeoPoint(currentLastValidLocation);
+      GeoPoint geoPoint = MyTracksUtils.getGeoPoint(lastValidLocation);
       mapView.getProjection().toPixels(geoPoint, pt);
       canvas.translate(pt.x - (markerWidth / 2), pt.y - markerHeight);
       endMarker.draw(canvas);
@@ -290,20 +349,44 @@ public class MyTracksOverlay extends Overlay {
     }
 
     // Draw the "Start" marker:
-    for (int i = 0; i < points.size(); i++) {
-      loc = points.get(i);
-      if (loc.getLatitude() < 90) {
-        locLon = (int) (loc.getLongitude() * 1E6);
-        locLat = (int) (loc.getLatitude() * 1E6);
-        geoPoint = new GeoPoint(locLat, locLon);
-        mapView.getProjection().toPixels(geoPoint, pt);
-        canvas.save();
-        canvas.translate(pt.x - (markerWidth / 2), pt.y - markerHeight);
-        startMarker.draw(canvas);
-        canvas.restore();
-        break;
-      }
+    if (firstGeoPoint != null) {
+      mapView.getProjection().toPixels(firstGeoPoint, pt);
+      canvas.save();
+      canvas.translate(pt.x - (markerWidth / 2), pt.y - markerHeight);
+      startMarker.draw(canvas);
+      canvas.restore();
     }
+  }
+
+  private void drawBoundingBox(Canvas canvas, MapView mapView, int allMinLat,
+      int allMinLon, int allMaxLat, int allMaxLon) {
+    // Transform coordinates
+    GeoPoint maxPoint = new GeoPoint(allMaxLat, allMaxLon);
+    GeoPoint minPoint = new GeoPoint(allMinLat, allMinLon);
+    Point minPt = new Point();
+    Point maxPt = new Point();
+    mapView.getProjection().toPixels(minPoint, minPt);
+    mapView.getProjection().toPixels(maxPoint, maxPt);
+    Rect allBounds = new Rect(minPt.x, minPt.y, maxPt.x, maxPt.y);
+
+    // Prepare a green paint
+    Paint boundingBoxPaint = new Paint();
+    boundingBoxPaint.setColor(context.getResources().getColor(R.color.green));
+    boundingBoxPaint.setStrokeWidth(2);
+    boundingBoxPaint.setStyle(Paint.Style.STROKE);
+    boundingBoxPaint.setAntiAlias(true);
+
+    // Disable clipping
+    canvas.save();
+    canvas.clipRect(Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY,
+                    Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY,
+                    Region.Op.REPLACE);
+
+    // Draw the bounding box
+    canvas.drawRect(allBounds, boundingBoxPaint);
+
+    // Re-enable clipping
+    canvas.restore();
   }
 
   @Override
@@ -373,5 +456,9 @@ public class MyTracksOverlay extends Overlay {
       return true;
     }
     return super.onTap(p, mapView);
+  }
+
+  public void setDrawBounds(boolean drawBounds) {
+    this.drawBounds = drawBounds;
   }
 }

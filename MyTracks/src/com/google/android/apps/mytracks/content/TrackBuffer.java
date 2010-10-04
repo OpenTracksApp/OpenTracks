@@ -94,6 +94,22 @@ public class TrackBuffer {
     buffer[locationsLoaded++] = location;
     lastLocationRead = Math.max(lastLocationRead, id);
   }
+  
+  /**
+   * Get a location from the end of the buffer.
+   * This may reuse Location objects already allocated to the buffer.
+   * @param locationId The of the location to be added.
+   * @return The location object associated with the give id.
+   */
+  public Location add(long locationId) {
+    lastLocationRead = Math.max(lastLocationRead, locationId);
+    if (buffer[locationsLoaded] == null) {
+      buffer[locationsLoaded] = new Location("");
+    } else {
+      buffer[locationsLoaded].reset();
+    }
+    return buffer[locationsLoaded++];
+  }
 
   /**
    * @return The id of the last location loaded into the buffer

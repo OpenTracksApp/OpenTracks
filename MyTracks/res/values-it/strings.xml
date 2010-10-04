@@ -164,7 +164,6 @@ limitations under the License.
 
   <string name="settings_announcement_frequency">Intervallo fra due annunci:</string>
   <string name="settings_announcement_frequency_summary">Tempo minimo fra due annunci audio</string>
-  <string name="settings_announcement_not_available_summary">Gli annunci audio non sono disponibili in questa varsione di Android</string>
 
   <string name="settings_min_recording_distance">Distanza minima fra due punti successivi:</string>
   <string name="settings_min_recording_distance_summary">Distanza minima fra due successive registrazioni della posizione</string>

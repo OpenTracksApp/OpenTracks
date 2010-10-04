@@ -24,6 +24,9 @@ import android.location.Location;
 import android.net.Uri;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Helper class providing easy access to locations and tracks in the
  * MyTracksProvider. All static members.
@@ -168,6 +171,15 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public Location createLocation(Cursor cursor) {
+    Location location = new Location("");
+    fillLocation(cursor, location);
+    return location;
+  }
+  
+  @Override
+  public void fillLocation(Cursor cursor, Location location) {
+    location.reset();
+
     int idxLatitude = cursor.getColumnIndexOrThrow(TrackPointsColumns.LATITUDE);
     int idxLongitude =
         cursor.getColumnIndexOrThrow(TrackPointsColumns.LONGITUDE);
@@ -177,7 +189,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     int idxAccuracy = cursor.getColumnIndexOrThrow(TrackPointsColumns.ACCURACY);
     int idxSpeed = cursor.getColumnIndexOrThrow(TrackPointsColumns.SPEED);
 
-    Location location = new Location("");
     if (!cursor.isNull(idxLatitude)) {
       location.setLatitude(1. * cursor.getInt(idxLatitude) / 1E6);
     }
@@ -199,7 +210,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     if (!cursor.isNull(idxAccuracy)) {
       location.setAccuracy(cursor.getFloat(idxAccuracy));
     }
-    return location;
   }
 
   @Override
@@ -790,6 +800,21 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     String select = TracksColumns._ID + "=" + id;
     return findTrackBy(select);
   }
+  
+  @Override
+  public List<Track> getAllTracks() {
+    Cursor cursor = getTracksCursor(null);
+    if (cursor == null || !cursor.moveToFirst()) {
+      return new ArrayList<Track>();
+    }
+
+    List<Track> tracks = new ArrayList<Track>(cursor.getCount());
+    do {
+      tracks.add(createTrack(cursor));
+    } while(cursor.moveToNext());
+
+    return tracks;
+  }
 
   @Override
   public long getTrackPoints(Track track, int maxPoints) {
@@ -822,6 +847,16 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public void getTrackPoints(Track track, TrackBuffer buffer) {
+    getTrackPoints(track, buffer, false);
+  }
+  
+  @Override
+  public void fillTrackPoints(Track track, TrackBuffer buffer) {
+    getTrackPoints(track, buffer, true);
+  }
+
+  public void getTrackPoints(Track track, TrackBuffer buffer,
+      boolean reuseLocations) {
     long startingPoint = buffer.getLastLocationRead() == 0 ? track.getStartId()
         : buffer.getLastLocationRead();
     buffer.reset();
@@ -849,13 +884,17 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       final int idColumnIdx =
           cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
       do {
-        Location location = createLocation(cursor);
-        if (location == null) {
-          continue;
+        if (reuseLocations) {
+          fillLocation(cursor, buffer.add(cursor.getLong(idColumnIdx)));
+        } else {
+          Location location = createLocation(cursor);
+          if (location == null) {
+            continue;
+          }
+          buffer.add(location, cursor.getLong(idColumnIdx));
         }
-        buffer.add(location, cursor.getLong(idColumnIdx));
       } while (cursor.moveToNext());
-      
+
       if (buffer.getLocationsLoaded() == 0) {
         Log.w(MyTracksProvider.TAG, "No locations read.");
         buffer.resetAt(startingPoint + buffer.getSize());

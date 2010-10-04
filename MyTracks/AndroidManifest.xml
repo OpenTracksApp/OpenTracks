@@ -56,8 +56,11 @@
     <activity android:name="com.google.android.apps.mytracks.MyTracksSettings"
               android:label="@string/mytracks_settings" />
 
+    <activity android:name="com.google.android.apps.mytracks.AggregatedStatsActivity"
+              android:label="@string/aggregated_stats" />
+
     <activity android:name="com.google.android.apps.mytracks.StatsActivity"
-              android:label="@string/statistics"/>
+              android:label="@string/statistics" />
 
     <activity android:name="com.google.android.apps.mytracks.ChartActivity"
               android:label="@string/elevation_label"/>

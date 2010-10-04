@@ -264,7 +264,7 @@ public class TrackWriter {
     while (buffer.getLastLocationRead() < track.getStopId()) {
       Log.d(MyTracksConstants.TAG,
           "Reading track points starting at: " + buffer.getLastLocationRead());
-      providerUtils.getTrackPoints(track, buffer);
+      providerUtils.fillTrackPoints(track, buffer);
       if (!wroteFirst) {
         Location first = buffer.findStartLocation();
         writer.writeBeginTrack(first);

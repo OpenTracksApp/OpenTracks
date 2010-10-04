@@ -70,8 +70,9 @@ import android.widget.Toast;
  * @author Leif Hendrik Wilden
  */
 public class MyTracksMap extends MapActivity
-    implements LocationListener, SensorEventListener, View.OnTouchListener,
-    View.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
+    implements View.OnTouchListener, View.OnClickListener,
+    SharedPreferences.OnSharedPreferenceChangeListener {
+  private static final int TRACKPOINT_BUFFER_SIZE = 1024;
 
   // Saved instance state keys:
   // ---------------------------
@@ -82,9 +83,9 @@ public class MyTracksMap extends MapActivity
   public static final String KEY_HAVE_GOOD_FIX = "haveGoodFix";
 
   /**
-   * The currently selected track (or null if nothing selected).
+   * The ID of the currently selected track (or -1 if nothing selected).
    */
-  private Track selectedTrack;
+  private long selectedTrackId = -1;
 
   /**
    * The id of the currently recording track.
@@ -98,12 +99,18 @@ public class MyTracksMap extends MapActivity
   private boolean keepMyLocationVisible;
 
   /**
+   * Id of the first location that was seen when reading tracks from the
+   * provider.
+   */
+  private long firstSeenLocationId = -1;
+
+  /**
    * Id of the last location that was seen when reading tracks from the
    * provider. This is used to determine which locations are new compared to the
    * last time the mapOverlay was updated.
    */
   private long lastSeenLocationId = -1;
-
+  
   /**
    * Magnetic variation.
    */
@@ -130,8 +137,7 @@ public class MyTracksMap extends MapActivity
    * A thread with a looper. Post to updateTrackHandler to execute Runnables on
    * this thread.
    */
-  private final HandlerThread updateTrackThread =
-      new HandlerThread("updateTrackThread");
+  private HandlerThread updateTrackThread;
 
   /** Handler for updateTrackThread */
   private Handler updateTrackHandler;
@@ -139,18 +145,13 @@ public class MyTracksMap extends MapActivity
   private MyTracksProviderUtils providerUtils;
  
   /**
-   * This value is used to decide how many points to display.
-   */
-  private int samplingFrequency = 1;
-
-  /**
    * A runnable that updates the track from the provider (looking for points
    * added after "lastSeenLocationId".
    */
   private final Runnable updateTrackRunnable = new Runnable() {
     @Override
     public void run() {
-      if (selectedTrack == null) {
+      if (!isATrackSelected()) {
         return;
       }
       readAllNewTrackPoints();
@@ -163,11 +164,12 @@ public class MyTracksMap extends MapActivity
   private Runnable restoreTrackRunnable = new Runnable() {
     @Override
     public void run() {
-      if (selectedTrack == null) {
+      if (!isATrackSelected()) {
         return;
       }
       mapOverlay.clearPoints();
-      lastSeenLocationId = selectedTrack.getStartId();
+      firstSeenLocationId = -1;
+      lastSeenLocationId = -1;
       readAllNewTrackPoints();
     }
   };
@@ -178,7 +180,7 @@ public class MyTracksMap extends MapActivity
   private final Runnable restoreWaypointsRunnable = new Runnable() {
     @Override
     public void run() {
-      if (selectedTrack == null) {
+      if (!isATrackSelected()) {
         return;
       }
 
@@ -188,7 +190,7 @@ public class MyTracksMap extends MapActivity
         // We will silently drop extra waypoints to make the app responsive.
         // TODO: Try to only load the waypoints in the view port.
         cursor = providerUtils.getWaypointsCursor(
-            selectedTrack.getId(), 0,
+            selectedTrackId, 0,
             MyTracksConstants.MAX_DISPLAYED_WAYPOINTS_POINTS);
         if (cursor != null) {
           if (cursor.moveToFirst()) {
@@ -219,10 +221,9 @@ public class MyTracksMap extends MapActivity
     public void run() {
       uiHandler.post(new Runnable() {
         public void run() {
-          showTrack(selectedTrack);
-          mapOverlay.setSelectedTrack(selectedTrack);
-          mapOverlay.setShowEndMarker(selectedTrack == null ||
-              selectedTrack.getId() != recordingTrackId);
+          showTrack(selectedTrackId);
+          mapOverlay.setTrackDrawingEnabled(isATrackSelected());
+          mapOverlay.setShowEndMarker(!isRecordingSelected());
           mapView.invalidate();
           busyPane.setVisibility(View.GONE);
           updateOptionsButton();
@@ -316,6 +317,7 @@ public class MyTracksMap extends MapActivity
     locationManager =
         (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
+    updateTrackThread = new HandlerThread("updateTrackThread");
     updateTrackThread.start();
     updateTrackHandler = new Handler(updateTrackThread.getLooper());
 
@@ -331,8 +333,7 @@ public class MyTracksMap extends MapActivity
           // No track is being recorded. We should not be here.
           return;
         }
-        if (selectedTrack == null
-            || selectedTrack.getId() != recordingTrackId) {
+        if (!isRecordingSelected()) {
           // No track, or one other than the recording track is selected,
           // don't bother.
           return;
@@ -348,7 +349,7 @@ public class MyTracksMap extends MapActivity
       public void onChange(boolean selfChange) {
         Log.d(MyTracksConstants.TAG,
             "MyTracksMap: ContentObserver.onChange waypoints");
-        if (selectedTrack == null) {
+        if (!isATrackSelected()) {
           return;
         }
         updateTrackHandler.post(restoreWaypointsRunnable);
@@ -371,20 +372,29 @@ public class MyTracksMap extends MapActivity
         setSelectedTrack(selectedTrackId);
       }
       updateOptionsButton();
+      mapOverlay.setDrawBounds(preferences.getBoolean(
+          getString(R.string.debug_draw_bounds_key), false));
       preferences.registerOnSharedPreferenceChangeListener(this);
     }
   }
 
-  protected void setupZoomControls() {
-    mapView.setBuiltInZoomControls(true);
+  /**
+   * Returns whether there's a track currently selected for display.
+   */
+  private boolean isATrackSelected() {
+    return selectedTrackId >= 0;
   }
 
-  @Override
-  protected void onDestroy() {
-    // Final cleanup before activity is destroyed.
-    // May not be called at all in some situations.
-    Log.d(MyTracksConstants.TAG, "MyTracksMap.onDestroy");
-    super.onDestroy();
+  /**
+   * Returns whether we're currently recording the same track that's selected
+   * for display.
+   */
+  private boolean isRecordingSelected() {
+    return isATrackSelected() && selectedTrackId == recordingTrackId;
+  }
+
+  protected void setupZoomControls() {
+    mapView.setBuiltInZoomControls(true);
   }
 
   @Override
@@ -449,10 +459,9 @@ public class MyTracksMap extends MapActivity
 
     // While this activity was paused the user may have deleted the selected
     // track. In that case the map overlay needs to be cleared:
-    Track track = mapOverlay.getSelectedTrack();
-    if (track != null && !providerUtils.trackExists(track.getId())) {
+    if (isATrackSelected() && !providerUtils.trackExists(selectedTrackId)) {
       // The recording track must have been deleted meanwhile.
-      mapOverlay.setSelectedTrack(null);
+      mapOverlay.setTrackDrawingEnabled(false);
       mapView.invalidate();
     }
   }
@@ -514,10 +523,10 @@ public class MyTracksMap extends MapActivity
             + gpsProvider.getName());
       }
       locationManager.requestLocationUpdates(gpsProvider.getName(),
-          0 /*minTime*/, 0 /*minDist*/, this);
+          0 /*minTime*/, 0 /*minDist*/, locationListener);
       try {
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-            1000 * 60 * 5 /*minTime*/, 0 /*minDist*/, this);
+            1000 * 60 * 5 /*minTime*/, 0 /*minDist*/, locationListener);
       } catch (RuntimeException e) {
         // If anything at all goes wrong with getting a cell location do not
         // abort. Cell location is not essential to this app.
@@ -535,7 +544,7 @@ public class MyTracksMap extends MapActivity
     Log.d(MyTracksConstants.TAG,
         "MyTracksMap: Now registering sensor listeners.");
     sensorManager.registerListener(
-        this, compass, SensorManager.SENSOR_DELAY_UI);
+        sensorListener, compass, SensorManager.SENSOR_DELAY_UI);
   }
 
   /**
@@ -545,12 +554,12 @@ public class MyTracksMap extends MapActivity
     if (locationManager != null) {
       Log.d(MyTracksConstants.TAG,
           "MyTracksMap: Now unregistering location listeners.");
-      locationManager.removeUpdates(this);
+      locationManager.removeUpdates(locationListener);
     }
     if (sensorManager != null) {
       Log.d(MyTracksConstants.TAG,
           "MyTracksMap: Now unregistering sensor listeners.");
-      sensorManager.unregisterListener(this);
+      sensorManager.unregisterListener(sensorListener);
     }
   }
 
@@ -579,7 +588,7 @@ public class MyTracksMap extends MapActivity
    */
   private void updateOptionsButton() {
     optionsBtn.setVisibility(
-        selectedTrack != null ? View.VISIBLE : View.INVISIBLE);
+        isATrackSelected() ? View.VISIBLE : View.INVISIBLE);
   }
 
   /**
@@ -632,12 +641,18 @@ public class MyTracksMap extends MapActivity
   /**
    * Zooms and pans the map so that the given track is visible.
    *
-   * @param track a given track
+   * @param trackId a given track ID
    */
-  public void showTrack(Track track) {
-    if (track == null || mapView == null || track.getNumberOfPoints() < 2) {
+  public void showTrack(long trackId) {
+    if (mapView == null) {
       return;
     }
+
+    Track track = providerUtils.getTrack(trackId);
+    if (track == null || track.getNumberOfPoints() < 2) {
+      return;
+    }
+
     TripStatistics stats = track.getStatistics();
     int bottom = stats.getBottom();
     int left = stats.getLeft();
@@ -680,24 +695,30 @@ public class MyTracksMap extends MapActivity
    * @param trackId a given track id
    */
   public void setSelectedTrack(final long trackId) {
-    if (selectedTrack != null && selectedTrack.getId() == trackId) {
+    if (selectedTrackId == trackId) {
       // Selected track did not change, nothing to do.
-      mapOverlay.setSelectedTrack(selectedTrack);
+      mapOverlay.setTrackDrawingEnabled(isATrackSelected());
       mapView.invalidate();
       updateOptionsButton();
       return;
     }
+
     if (trackId < 0) {
       // Remove selection.
-      selectedTrack = null;
-      mapOverlay.setSelectedTrack(null);
+      selectedTrackId = -1;
+      mapOverlay.setTrackDrawingEnabled(false);
       mapOverlay.clearWaypoints();
       updateOptionsButton();
       mapView.invalidate();
       return;
     }
+
     busyPane.setVisibility(View.VISIBLE);
-    selectedTrack = providerUtils.getTrack(trackId);
+    selectedTrackId = trackId;
+    loadSelectedTrack();
+  }
+
+  private void loadSelectedTrack() {
     updateTrackHandler.post(restoreTrackRunnable);
     updateTrackHandler.post(restoreWaypointsRunnable);
     updateTrackHandler.post(setSelectedTrackRunnable);
@@ -753,8 +774,7 @@ public class MyTracksMap extends MapActivity
           menu.setHeaderTitle(R.string.tracklist_this_track);
           menu.add(0, MyTracksConstants.MENU_EDIT, 0,
               R.string.tracklist_edit_track);
-          if (!MyTracks.getInstance().isRecording() || (selectedTrack != null
-              && selectedTrack.getId() != recordingTrackId)) {
+          if (!MyTracks.getInstance().isRecording() || !isRecordingSelected()) {
             menu.add(0, MyTracksConstants.MENU_SEND_TO_GOOGLE, 0,
                 R.string.tracklist_send_to_google);
             SubMenu share = menu.addSubMenu(0, MyTracksConstants.MENU_SHARE, 0,
@@ -791,7 +811,7 @@ public class MyTracksMap extends MapActivity
   @Override
   public boolean onMenuItemSelected(int featureId, MenuItem item) {
     if (!super.onMenuItemSelected(featureId, item)) {
-      if (selectedTrack != null) {
+      if (isATrackSelected()) {
         MyTracks.getInstance().onActivityResult(
             MyTracksConstants.getActionFromMenuId(item.getItemId()), RESULT_OK,
             new Intent());
@@ -852,8 +872,7 @@ public class MyTracksMap extends MapActivity
   public void onClick(View v) {
     if (v == messagePane) {
       launchMyLocationSettings();
-    }
-    if (v == optionsBtn) {
+    } else if (v == optionsBtn) {
       optionsBtn.performLongClick();
     }
   }
@@ -895,139 +914,155 @@ public class MyTracksMap extends MapActivity
                 sharedPreferences.getLong(
                     getString(R.string.recording_track_key),
                     -1);
-            if (selectedTrack != null) {
-              mapOverlay.setShowEndMarker(
-                  selectedTrack.getId() != recordingTrackId);
+            if (isATrackSelected()) {
+              mapOverlay.setShowEndMarker(!isRecordingSelected());
               mapView.postInvalidate();
             }
+          } else if (key.equals(getString(R.string.debug_draw_bounds_key))) {
+            mapOverlay.setDrawBounds(
+                sharedPreferences.getBoolean(
+                    getString(R.string.debug_draw_bounds_key), false));
           }
         }
       });
     }
   }
 
-  @Override
-  public void onProviderEnabled(String provider) {
-    if (provider.equals(MyTracksConstants.GPS_PROVIDER)) {
-      messageText.setText(R.string.wait_for_fix);
-    }
-  }
-
-  @Override
-  public void onProviderDisabled(String provider) {
-    if (provider.equals(MyTracksConstants.GPS_PROVIDER)) {
-      messageText.setText(R.string.status_enable_gps);
-      messagePane.setVisibility(View.VISIBLE);
-      messagePane.setOnClickListener(this);
-      screen.requestLayout();
-    }
-  }
-
-  @Override
-  public void onLocationChanged(Location location) {
-    if (location.getProvider().equals(MyTracksConstants.GPS_PROVIDER)) {
-      // Recalculate the variation if there was a jump in location > 1km:
-      if (currentLocation == null
-          || location.distanceTo(currentLocation) > 1000) {
-        setVariation(location);
+  private final LocationListener locationListener = new LocationListener() {
+    @Override
+    public void onProviderEnabled(String provider) {
+      if (provider.equals(MyTracksConstants.GPS_PROVIDER)) {
+        messageText.setText(R.string.wait_for_fix);
       }
-      currentLocation = location;
-      boolean haveGoodFixNow =
-          currentLocation.getAccuracy() < minRequiredAccuracy;
-      if (haveGoodFixNow != haveGoodFix) {
-        haveGoodFix = haveGoodFixNow;
-        messagePane.setVisibility(haveGoodFix ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+      if (provider.equals(MyTracksConstants.GPS_PROVIDER)) {
+        messageText.setText(R.string.status_enable_gps);
+        messagePane.setVisibility(View.VISIBLE);
+        messagePane.setOnClickListener(MyTracksMap.this);
         screen.requestLayout();
       }
-      showCurrentLocation();
-    } else {
-      Log.d(MyTracksConstants.TAG,
-          "MyTracksMap: Network location update received.");
     }
-  }
 
-  @Override
-  public void onStatusChanged(String provider, int status, Bundle extras) {
-    if (provider.equals(MyTracksConstants.GPS_PROVIDER)) {
-      switch (status) {
-        case LocationProvider.OUT_OF_SERVICE:
-        case LocationProvider.TEMPORARILY_UNAVAILABLE:
-          haveGoodFix = false;
-          messagePane.setVisibility(View.VISIBLE);
+    @Override
+    public void onLocationChanged(Location location) {
+      if (location.getProvider().equals(MyTracksConstants.GPS_PROVIDER)) {
+        // Recalculate the variation if there was a jump in location > 1km:
+        if (currentLocation == null
+            || location.distanceTo(currentLocation) > 1000) {
+          setVariation(location);
+        }
+        currentLocation = location;
+        boolean haveGoodFixNow =
+            currentLocation.getAccuracy() < minRequiredAccuracy;
+        if (haveGoodFixNow != haveGoodFix) {
+          haveGoodFix = haveGoodFixNow;
+          messagePane.setVisibility(haveGoodFix ? View.GONE : View.VISIBLE);
           screen.requestLayout();
-          break;
+        }
+        showCurrentLocation();
+      } else {
+        Log.d(MyTracksConstants.TAG,
+            "MyTracksMap: Network location update received.");
       }
     }
-  }
 
-  @Override
-  public void onSensorChanged(SensorEvent se) {
-    synchronized (this) {
-      float magneticHeading = se.values[0];
-      double heading = magneticHeading + variation;
-      if (mapOverlay.setHeading((float) heading)) {
-        mapView.invalidate();
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+      if (provider.equals(MyTracksConstants.GPS_PROVIDER)) {
+        switch (status) {
+          case LocationProvider.OUT_OF_SERVICE:
+          case LocationProvider.TEMPORARILY_UNAVAILABLE:
+            haveGoodFix = false;
+            messagePane.setVisibility(View.VISIBLE);
+            screen.requestLayout();
+            break;
+        }
       }
     }
-  }
+  };
 
-  @Override
-  public void onAccuracyChanged(Sensor s, int accuracy) {
-    // do nothing
-  }
-  
-  /**
-   * Set the sampling frequency from the total number of points in the track.
-   *
-   * @param track The track to read the total number of points from.
-   */
-  private void setSamplingFrequency(Track track) {
-    long totalLocations = track.getStopId() - track.getStartId();
+  private final SensorEventListener sensorListener = new SensorEventListener() {
+    @Override
+    public void onSensorChanged(SensorEvent se) {
+      synchronized (this) {
+        float magneticHeading = se.values[0];
+        double heading = magneticHeading + variation;
+        if (mapOverlay.setHeading((float) heading)) {
+          mapView.invalidate();
+        }
+      }
+    }
 
-    // Limit the number of map points readings.
-    samplingFrequency =
-          (int) (1 +
-              totalLocations / MyTracksConstants.TARGET_DISPLAYED_TRACK_POINTS);
-    Log.i(MyTracksConstants.TAG, "Sampling locations: " + samplingFrequency);
-  }
-  
+    @Override
+    public void onAccuracyChanged(Sensor s, int accuracy) {
+      // do nothing
+    }
+  };
+
   private void readAllNewTrackPoints() {
-    Cursor cursor = null;
-    // Refetch the track to get the latest StopId
-    selectedTrack = providerUtils.getTrack(selectedTrack.getId());
-    long totalLocations = selectedTrack.getStopId() -
-        selectedTrack.getStartId();
+    int numPoints = mapOverlay.getNumLocations();
+    if (numPoints >= MyTracksConstants.MAX_DISPLAYED_TRACK_POINTS) {
+      // We're about to exceed the maximum allowed number of points, so reload
+      // the whole track with fewer points (the sampling frequency will be
+      // lower).
+      loadSelectedTrack();
+      return;
+    }
 
-    setSamplingFrequency(selectedTrack);
-    int bufferSize = 1024;
-    int points = 0;
-    while (lastSeenLocationId < selectedTrack.getStopId()) {
-      cursor = providerUtils.getLocationsCursor(
-          selectedTrack.getId(), lastSeenLocationId, bufferSize, false);
-      if (cursor != null && cursor.moveToFirst()) {
+    long lastStoredLocationId =
+        providerUtils.getLastLocationId(selectedTrackId);
+    int samplingFrequency = -1;
+    Location location = new Location("");
+    for (;;) {
+      Cursor cursor = null;
+      try {
+        cursor = providerUtils.getLocationsCursor(selectedTrackId,
+            lastSeenLocationId + 1, TRACKPOINT_BUFFER_SIZE, false);
+        if (cursor == null || !cursor.moveToFirst()) {
+          // No (more) data
+          break;
+        }
+
         final int idColumnIdx = cursor.getColumnIndexOrThrow(
             TrackPointsColumns._ID);
-        while (cursor.moveToNext()) {
-          points++;
-          Location location = providerUtils.createLocation(cursor);
-          lastSeenLocationId = cursor.getLong(idColumnIdx);
-          // Include a point if it fits one of the following criteria:
-          // - Has the mod for the sampling frequency.
-          // - Is the first point.
-          // - Is the last point and we are not recording this track.
-          if (!MyTracksUtils.isValidLocation(location) ||
-              points % samplingFrequency == 0 ||
-              points == 0 ||
-              (recordingTrackId != selectedTrack.getId() &&
-                  points == (totalLocations - 1))) {
-            mapOverlay.addLocation(location);
+        do {
+          long locationId = cursor.getLong(idColumnIdx);
+          lastSeenLocationId = locationId;
+          if (firstSeenLocationId == -1) {
+            // This was our first point, keep its ID
+            firstSeenLocationId = locationId;
           }
+          if (samplingFrequency == -1) {
+            // Now we already have at least one point, calculate the sampling
+            // frequency
+            long numTotalPoints = lastStoredLocationId - firstSeenLocationId;
+            samplingFrequency = (int) (1 +
+                numTotalPoints / MyTracksConstants.TARGET_DISPLAYED_TRACK_POINTS);
+          }
+
+          providerUtils.fillLocation(cursor, location);
+
+          // Include a point if it fits one of the following criteria:
+          // - Has the mod for the sampling frequency (includes first point).
+          // - Is the last point and we are not recording this track.
+          // - The point is a segment split
+          if (numPoints % samplingFrequency == 0 ||
+              (!isRecordingSelected() && locationId == lastStoredLocationId) ||
+              !MyTracksUtils.isValidLocation(location)) {
+            // Only allocate a new location if it is going to be kept around.
+            mapOverlay.addLocation(new Location(location));
+          }
+
+          numPoints++;
+        } while (cursor.moveToNext());
+      } finally {
+        if (cursor != null) {
+          cursor.close();
         }
-      } else {
-        lastSeenLocationId += bufferSize;
       }
-      cursor.close();
-      cursor = null;
     }
     mapView.postInvalidate();
   }

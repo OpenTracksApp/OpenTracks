@@ -75,7 +75,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
-import java.util.Random;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -217,39 +216,24 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * Tabs/View navigation:
    */
 
-  private static final int NUM_TABS = 3;
-  private int currentTab = 0;
-
   private NavControls navControls;
 
-  private final int icons[] =
-      { R.drawable.arrow_grey, R.drawable.menu_by_time,
-        R.drawable.menu_elevation };
+  /** Icons shown on the left for each tab. */
+  private final int leftIcons[] =
+      { R.drawable.left_arrow_chart_stateful,
+        R.drawable.left_arrow_track_stateful,
+        R.drawable.left_arrow_stats_stateful };
+  /** Icons shown on the right for each tab. */
+  private final int rightIcons[] =
+      { R.drawable.right_arrow_stats_stateful,
+        R.drawable.right_arrow_chart_stateful,
+        R.drawable.right_arrow_track_stateful };
 
-  private final Runnable nextActivity = new Runnable() {
+  private final Runnable changeTab = new Runnable() {
     public void run() {
-      currentTab = (currentTab + 1) % NUM_TABS;
-      navControls.setLeftIcon(icons[(currentTab + NUM_TABS - 1) % NUM_TABS]);
-      navControls.setRightIcon(icons[(currentTab + NUM_TABS + 1) % NUM_TABS]);
-      getTabHost().setCurrentTab(currentTab);
-      navControls.show();
+      getTabHost().setCurrentTab(navControls.getCurrentIcons());
     }
   };
-
-  private final Runnable prevActivity = new Runnable() {
-    public void run() {
-      currentTab--;
-      if (currentTab < 0) {
-        currentTab = NUM_TABS - 1;
-      }
-      navControls.setLeftIcon(icons[(currentTab + NUM_TABS - 1) % NUM_TABS]);
-      navControls.setRightIcon(icons[(currentTab + NUM_TABS + 1) % NUM_TABS]);
-      getTabHost().setCurrentTab(currentTab);
-      navControls.show();
-    }
-  };
-
-  private final Random random = new Random();
 
   public static MyTracks getInstance() {
     return instance;
@@ -311,9 +295,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     LayoutParams params =
         new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
     layout.setLayoutParams(params);
-    navControls = new NavControls(this, layout, prevActivity, nextActivity);
-    navControls.setLeftIcon(icons[NUM_TABS - 1]);
-    navControls.setRightIcon(icons[1]);
+    navControls = new NavControls(this, layout, leftIcons, rightIcons, changeTab);
     navControls.show();
     tabHost.addView(layout);
     layout.setOnTouchListener(this);
@@ -376,8 +358,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     Log.d(MyTracksConstants.TAG, "MyTracks.onResume");
     super.onResume();
     tryBindTrackRecordingService();
-    navControls.setLeftIcon(icons[(currentTab + NUM_TABS - 1) % NUM_TABS]);
-    navControls.setRightIcon(icons[(currentTab + NUM_TABS + 1) % NUM_TABS]);
   }
 
   @Override
@@ -828,33 +808,33 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * This is for debugging and testing only. Useful if there is no GPS signal
    * available.
    */
-  public void recordRandomLocation() {
-    if (trackRecordingService != null) {
-      Location loc = new Location("gps");
-      double latitude = 37.5 + random.nextDouble() / 1000;
-      double longitude = -120.0 + random.nextDouble() / 1000;
-      loc.setLatitude(latitude);
-      loc.setLongitude(longitude);
-      loc.setAltitude(random.nextDouble() * 100);
-      loc.setTime(System.currentTimeMillis());
-      loc.setSpeed(random.nextFloat());
-      MyTracksMap map =
-          (MyTracksMap) getLocalActivityManager().getActivity("tab1");
-      if (map != null) {
-        map.onLocationChanged(loc);
-      }
-      StatsActivity stats =
-          (StatsActivity) getLocalActivityManager().getActivity("tab2");
-      if (stats != null) {
-        stats.onLocationChanged(loc);
-      }
-      try {
-        trackRecordingService.recordLocation(loc);
-      } catch (RemoteException e) {
-        Log.e(MyTracksConstants.TAG, "MyTracks", e);
-      }
-    }
-  }
+//  public void recordRandomLocation() {
+//    if (trackRecordingService != null) {
+//      Location loc = new Location("gps");
+//      double latitude = 37.5 + random.nextDouble() / 1000;
+//      double longitude = -120.0 + random.nextDouble() / 1000;
+//      loc.setLatitude(latitude);
+//      loc.setLongitude(longitude);
+//      loc.setAltitude(random.nextDouble() * 100);
+//      loc.setTime(System.currentTimeMillis());
+//      loc.setSpeed(random.nextFloat());
+//      MyTracksMap map =
+//          (MyTracksMap) getLocalActivityManager().getActivity("tab1");
+//      if (map != null) {
+//        map.onLocationChanged(loc);
+//      }
+//      StatsActivity stats =
+//          (StatsActivity) getLocalActivityManager().getActivity("tab2");
+//      if (stats != null) {
+//        stats.onLocationChanged(loc);
+//      }
+//      try {
+//        trackRecordingService.recordLocation(loc);
+//      } catch (RemoteException e) {
+//        Log.e(MyTracksConstants.TAG, "MyTracks", e);
+//      }
+//    }
+//  }
 
   /**
    * Resets status information for sending to MyMaps/Docs.

@@ -15,8 +15,6 @@
  */
 package com.google.android.apps.mytracks;
 
-import com.google.android.maps.mytracks.R;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
@@ -50,24 +48,22 @@ public class NavControls {
 
   /**
    * A touchable image view.
+   * When touched it changes the navigation control icons accordingly.
    */
-  public class TouchLayout extends RelativeLayout {
-    private final ImageView arrow;
+  private class TouchLayout extends RelativeLayout implements Runnable {
+    private final boolean isLeft;
     private final ImageView icon;
 
     public TouchLayout(Context context, boolean isLeft) {
       super(context);
-      arrow = new ImageView(context);
-      arrow.setImageDrawable(context.getResources().getDrawable(
-          isLeft ? R.drawable.btn_arrow_left : R.drawable.btn_arrow_right));
-      icon = new ImageView(context);
+      this.isLeft = isLeft;
+      this.icon = new ImageView(context);
       icon.setVisibility(View.GONE);
-      addView(arrow);
       addView(icon);
-      icon.setPadding((isLeft ? 15 : 10), 27, 15, 0);
     }
 
-    public void setIcon(Drawable drawable) {
+    public void setIcon(int iconId) {
+      Drawable drawable = getContext().getResources().getDrawable(iconId);
       icon.setImageDrawable(drawable);
       icon.setVisibility(View.VISIBLE);
     }
@@ -77,18 +73,11 @@ public class NavControls {
       switch (event.getAction()) {
         case MotionEvent.ACTION_DOWN:
           setPressed(true);
-          hide();
-          if (this == prevImage) {
-            if (prevRunnable != null) {
-              handler.post(prevRunnable);
-              return true;
-            }
-          } else if (this == nextImage) {
-            if (nextRunnable != null) {
-              handler.post(nextRunnable);
-              return true;
-            }
-          }
+          shiftIcons(isLeft);
+
+          // Call the user back
+          handler.post(this);
+
           break;
         case MotionEvent.ACTION_UP:
           setPressed(false);
@@ -96,55 +85,69 @@ public class NavControls {
       }
       return super.onTouchEvent(event);
     }
+
+    @Override
+    public void run() {
+      touchRunnable.run();
+      setPressed(false);
+    }
   }
 
-  private final Context context;
-  private final Runnable prevRunnable;
-  private final Runnable nextRunnable;
   private final Handler handler = new Handler();
   private final Runnable dismissControls = new Runnable() {
     public void run() {
       hide();
     }
   };
+
   private final TouchLayout prevImage;
   private final TouchLayout nextImage;
+  private final int[] leftIcons;
+  private final int[] rightIcons;
+  private final Runnable touchRunnable;
 
   private boolean isVisible = false;
-  private boolean hasNext = true;
-  private boolean hasPrev = true;
+  private int currentIcons;
 
   public NavControls(Context context, ViewGroup container,
-      Runnable prevRunnable, Runnable nextRunnable) {
-    this.context = context;
-    this.prevRunnable = prevRunnable;
-    this.nextRunnable = nextRunnable;
+      int[] leftIcons, int[] rightIcons,
+      Runnable touchRunnable) {
+    this.leftIcons = leftIcons;
+    this.rightIcons = rightIcons;
+    this.touchRunnable = touchRunnable;
+
+    if (leftIcons.length != rightIcons.length || leftIcons.length < 1) {
+      throw new IllegalArgumentException("Invalid icons specified");
+    }
+    if (touchRunnable == null) {
+      throw new NullPointerException("Runnable cannot be null");
+    }
+
     LayoutParams prevParams = new LayoutParams(
         LayoutParams.WRAP_CONTENT,
         LayoutParams.WRAP_CONTENT);
-    prevParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-    prevParams.addRule(RelativeLayout.CENTER_VERTICAL);
-    prevImage = new TouchLayout(context, true);
-    prevImage.setLayoutParams(prevParams);
-    prevImage.setVisibility(View.INVISIBLE);
-    container.addView(prevImage);
     LayoutParams nextParams = new LayoutParams(
         LayoutParams.WRAP_CONTENT,
         LayoutParams.WRAP_CONTENT);
+
+    prevParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
     nextParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+    prevParams.addRule(RelativeLayout.CENTER_VERTICAL);
     nextParams.addRule(RelativeLayout.CENTER_VERTICAL);
+
     nextImage = new TouchLayout(context, false);
+    prevImage = new TouchLayout(context, true);
     nextImage.setLayoutParams(nextParams);
+    prevImage.setLayoutParams(prevParams);
     nextImage.setVisibility(View.INVISIBLE);
+    prevImage.setVisibility(View.INVISIBLE);
+
+    container.addView(prevImage);
     container.addView(nextImage);
-  }
 
-  public void setHasNext(boolean hasNext) {
-    this.hasNext = hasNext;
-  }
-
-  public void setHasPrev(boolean hasPrev) {
-    this.hasPrev = hasPrev;
+    prevImage.setIcon(leftIcons[0]);
+    nextImage.setIcon(rightIcons[0]);
+    this.currentIcons = 0;
   }
 
   private void keepVisible() {
@@ -156,20 +159,18 @@ public class NavControls {
 
   public void show() {
     if (!isVisible) {
-      if (prevRunnable != null && hasPrev) {
-        SHOW_PREV_ANIMATION.setDuration(500);
-        SHOW_PREV_ANIMATION.startNow();
-        prevImage.setPressed(false);
-        prevImage.setAnimation(SHOW_PREV_ANIMATION);
-        prevImage.setVisibility(View.VISIBLE);
-      }
-      if (nextRunnable != null && hasNext) {
-        SHOW_NEXT_ANIMATION.setDuration(500);
-        SHOW_NEXT_ANIMATION.startNow();
-        nextImage.setPressed(false);
-        nextImage.setAnimation(SHOW_NEXT_ANIMATION);
-        nextImage.setVisibility(View.VISIBLE);
-      }
+      SHOW_PREV_ANIMATION.setDuration(500);
+      SHOW_PREV_ANIMATION.startNow();
+      prevImage.setPressed(false);
+      prevImage.setAnimation(SHOW_PREV_ANIMATION);
+      prevImage.setVisibility(View.VISIBLE);
+
+      SHOW_NEXT_ANIMATION.setDuration(500);
+      SHOW_NEXT_ANIMATION.startNow();
+      nextImage.setPressed(false);
+      nextImage.setAnimation(SHOW_NEXT_ANIMATION);
+      nextImage.setVisibility(View.VISIBLE);
+
       isVisible = true;
       keepVisible();
     } else {
@@ -188,33 +189,25 @@ public class NavControls {
 
   public void hide() {
     isVisible = false;
-    if (prevRunnable != null) {
-      if (hasPrev) {
-        prevImage.setAnimation(HIDE_PREV_ANIMATION);
-        HIDE_PREV_ANIMATION.setDuration(500);
-        HIDE_PREV_ANIMATION.startNow();
-      } else {
-        prevImage.clearAnimation();
-      }
-      prevImage.setVisibility(View.INVISIBLE);
-    }
-    if (nextRunnable != null) {
-      if (hasNext) {
-        nextImage.setAnimation(HIDE_NEXT_ANIMATION);
-        HIDE_NEXT_ANIMATION.setDuration(500);
-        HIDE_NEXT_ANIMATION.startNow();
-      } else {
-        nextImage.clearAnimation();
-      }
-      nextImage.setVisibility(View.INVISIBLE);
-    }
+    prevImage.setAnimation(HIDE_PREV_ANIMATION);
+    HIDE_PREV_ANIMATION.setDuration(500);
+    HIDE_PREV_ANIMATION.startNow();
+    prevImage.setVisibility(View.INVISIBLE);
+
+    nextImage.setAnimation(HIDE_NEXT_ANIMATION);
+    HIDE_NEXT_ANIMATION.setDuration(500);
+    HIDE_NEXT_ANIMATION.startNow();
+    nextImage.setVisibility(View.INVISIBLE);
   }
 
-  public void setLeftIcon(int resourceId) {
-    prevImage.setIcon(context.getResources().getDrawable(resourceId));
+  public int getCurrentIcons() {
+    return currentIcons;
   }
 
-  public void setRightIcon(int resourceId) {
-    nextImage.setIcon(context.getResources().getDrawable(resourceId));
+  private void shiftIcons(boolean isLeft) {
+    // Increment or decrement by one, with wrap around
+    currentIcons = (currentIcons + leftIcons.length + (isLeft ? -1 : 1)) % leftIcons.length;
+    prevImage.setIcon(leftIcons[currentIcons]);
+    nextImage.setIcon(rightIcons[currentIcons]);
   }
 }

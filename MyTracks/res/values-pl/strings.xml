@@ -164,7 +164,7 @@ limitations under the License.
 
   <string name="settings_announcement_frequency">Częstotliwość komunikatów</string>
   <string name="settings_announcement_frequency_summary">Minimalny czas między dwoma komunikatami głosowymi</string>
-  <string name="settings_announcement_not_available_summary">Brak wsparcia dla syntezy mowy w twojej wersji Androida</string>
+  
 
   <string name="settings_min_recording_distance">Min. odległość między punktami</string>
   <string name="settings_min_recording_distance_summary">Najmniejsza odległość między dwoma zapisami twojej pozycji</string>

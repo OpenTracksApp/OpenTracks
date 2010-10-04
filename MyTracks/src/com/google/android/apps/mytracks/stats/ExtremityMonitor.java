@@ -103,4 +103,9 @@ public class ExtremityMonitor {
   public void setMax(double max) {
     this.max = max;
   }
+  
+  @Override
+  public String toString() {
+    return "Min: " + min + " Max: " + max;
+  }
 }
