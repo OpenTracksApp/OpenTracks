@@ -669,8 +669,8 @@ public class TrackRecordingService extends Service implements LocationListener {
     if (recordingTrack != null) {
       restoreStats(recordingTrack);
       isRecording = true;
-      showNotification();
     }
+    showNotification();
   }
   
   /**
