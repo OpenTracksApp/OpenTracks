@@ -34,8 +34,8 @@ limitations under the License.
   <!-- Error messages -->
   <string name="error_no_location_manager">Ingen platshanterare hittades på denna enhet!</string>
   <string name="error_no_gps_location_provider">Ingen GPS-positioneringstjänst hittades på denna enhet.</string>
-  <string name="error_sending_to_mymap">Det uppstod ett fel i sändningen av ditt spår till Google My Map. Försök igen senare.</string>
-  <string name="error_sending_to_docs">Det uppstod ett fel i sändningen av ditt spår till Google Docs. Försök igen senare.</string>
+  <string name="error_sending_to_mymap">Det uppstod ett fel i sändningen av ditt spår till Google Mina Kartor. Försök igen senare.</string>
+  <string name="error_sending_to_docs">Det uppstod ett fel i sändningen av ditt spår till Google Dokument. Försök igen senare.</string>
   <string name="error_unable_to_start_recording">Kan inte starta inspelningen. Försök igen.</string>
   <string name="error_unable_to_stop_recording">Kan inte stoppa inspelningen. Försök igen.</string>
   <string name="error_unable_to_read_file">Kan inte läsa från fil.</string>
@@ -49,7 +49,7 @@ limitations under the License.
   <string name="wait_for_fix">Väntar på bättre GPS-position. Se till att himlen är synlig.</string>
   <string name="status_now_recording">Spelar nu in ett nytt spår.</string>
   <string name="status_stopped_recording">Stoppade inspelning av ditt spår.</string>
-  <string name="status_new_mymap_has_been_created">En ny Google My Map har skapats på maps.google.com.</string>
+  <string name="status_new_mymap_has_been_created">En ny Google Mina Kartor har skapats på maps.google.com.</string>
   <string name="status_tracks_have_been_uploaded">Ditt spår har skickats till maps.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_new_doc">Ditt spår har skickats till ett nytt kalkylblad på docs.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_docs">Ditt spår har skickats till docs.google.com.</string>
@@ -65,11 +65,11 @@ limitations under the License.
   <string name="progress_message">Skickar ditt spår till Google.</string>
   <string name="progress_message_reading_track">Läser spår...</string>
   <string name="progress_message_preparing_track">Förbereder spår...</string>
-  <string name="progress_message_authenticating_mymaps">Autentiserar till Google Maps...</string>
-  <string name="progress_message_authenticating_docs">Autentiserar till Google Docs...</string>
-  <string name="progress_message_sending_docs">Skickar spår till Google Docs...</string>
-  <string name="progress_message_sending_mymaps">Skickar spår till Google Maps...</string>
-  <string name="progress_message_creating_map">Skapar en ny My Map...</string>
+  <string name="progress_message_authenticating_mymaps">Autentiserar till Google Kartor...</string>
+  <string name="progress_message_authenticating_docs">Autentiserar till Google Dokument...</string>
+  <string name="progress_message_sending_docs">Skickar spår till Google Dokument...</string>
+  <string name="progress_message_sending_mymaps">Skickar spår till Google Kartor...</string>
+  <string name="progress_message_creating_map">Skapar en ny Min Karta...</string>
   <string name="import_progress_message">Importerar ett GPS-spår. Detta kan ta en stund.</string>
   <string name="write_progress_message">Skriver till SD-kortet. Detta kan ta en stund.</string>
   <string name="progress_message_updating_track">Uppdaterar spårstatistik...</string>
@@ -110,9 +110,9 @@ limitations under the License.
 
   <!--  TrackList -->
   <string name="tracklist_show_track">Visa</string>
-  <string name="tracklist_send_to_mymaps">Skicka till Google My Maps</string>
-  <string name="tracklist_send_to_new_mymap">Skicka till New Google My Map</string>
-  <string name="tracklist_send_to_docs">Skicka till Google Docs</string>
+  <string name="tracklist_send_to_mymaps">Skicka till Google Mina Kartor</string>
+  <string name="tracklist_send_to_new_mymap">Skicka till ny Google Mina Kartor</string>
+  <string name="tracklist_send_to_docs">Skicka till Google Dokument</string>
   <string name="tracklist_send_to_google">Skicka till Google...</string>
   <string name="tracklist_delete_track">Ta bort från telefonen...</string>
   <string name="tracklist_edit_track">Ändra detaljer</string>
@@ -120,16 +120,16 @@ limitations under the License.
   <string name="tracklist_save_as_gpx">Spara en GPX-fil</string>
   <string name="tracklist_save_as_kml">Spara en KML-fil</string>
   <string name="tracklist_save_as_csv">Spara en CSV-fil</string>
-  <string name="tracklist_btn_send_all_to_mymaps">Skicka till Google My Maps</string>
+  <string name="tracklist_btn_send_all_to_mymaps">Skicka till Google Mina Kartor</string>
   <string name="tracklist_btn_delete_all">Ta bort alla spår</string>
   <!-- Export All -->
   <string name="tracklist_btn_export_all">Exportera alla spår</string>
   <string name="export_done">Exporteringen slutfördes</string>
-  <string name="tracklist_pick_one">Välj ett spår. Tryck&amp;håll för fler alternativ.</string>
+  <string name="tracklist_pick_one">Välj ett spår. Tryck &amp; håll för fler alternativ.</string>
   <string name="tracklist_all_tracks">Alla spår:</string>
   <string name="tracklist_this_track">Det här spåret</string>
   <string name="tracklist_share_track">Dela med vänner...</string>
-  <string name="tracklist_share_link">En länk till Google My Map</string>
+  <string name="tracklist_share_link">En länk till Google Mina Kartor</string>
   <string name="tracklist_share_gpx_file">En GPX-fil</string>
   <string name="tracklist_share_kml_file">En KML-fil</string>
   <string name="tracklist_share_csv_file">En CSV-fil</string>
@@ -143,7 +143,7 @@ limitations under the License.
   <string name="waypointslist_show_waypoint">Visa på karta</string>
   <string name="waypointslist_btn_insert_waypoint">Infoga positionspunkt</string>
   <string name="waypointslist_btn_insert_statistics">Infoga statistik</string>
-  <string name="waypointslist_pick_one">Välj en markör. Tryck&amp;håll för fler alternativ.</string>
+  <string name="waypointslist_pick_one">Välj en markör. Tryck &amp; håll för fler alternativ.</string>
 
   <!-- MyTracks Details -->
   <string name="trackdetails_title">Spårdetaljer</string>
@@ -185,7 +185,7 @@ limitations under the License.
 
   <string name="settings_map_public">Gör kartor offentliga</string>
   <string name="settings_map_public_summary_on">Uppladdade kartor kommer att vara synliga för alla på maps.google.com</string>
-  <string name="settings_map_public_summary_off">Uppladdad kartor kommer inte att visas offentligt på maps.google.com</string>
+  <string name="settings_map_public_summary_off">Uppladdade kartor kommer inte att visas offentligt på maps.google.com</string>
 
   <string name="settings_report_speed_or_pace">Visa hastighet</string>
   <string name="settings_report_speed_or_pace_summary_on">Hastighet kommer att visas</string>
@@ -206,11 +206,11 @@ limitations under the License.
   <string name="mytracks_sky">GPS-satelliter</string>
 
   <!-- My Maps -->
-  <string name="select_map_message">Välje en karta från ditt konto:</string>
+  <string name="select_map_message">Välj en karta från ditt konto:</string>
   <string name="create_new_map">Skapa en ny karta...</string>
-  <string name="map_list_title">Skicka till Google My Maps</string>
+  <string name="map_list_title">Skicka till Google Mina Kartor</string>
   <string name="maps_list_loading">Laddar kartor...</string>
-  <string name="maps_list_failed">Din kartor kunde inte laddas just nu!</string>
+  <string name="maps_list_failed">Dina kartor kunde inte laddas just nu!</string>
   <string name="open_map">Välj den här kartan</string>
   <string name="edit_map_details">Ändra kartdetaljer</string>
   <string name="share_map">Dela kartan med vänner</string>
@@ -219,7 +219,7 @@ limitations under the License.
   <string name="map_title">Karttitel:</string>
   <string name="map_description">Kartbeskrivning:</string>
   <string name="map_searchable_edit">Gör så att kartan och dess innehåll visas i sökresultat</string>
-  <string name="map_not_searchable_edit">Låt inte kartan och dess innehåll visas i sökresultat, men de kan ändå ses av andra genom en direktlänken</string>
+  <string name="map_not_searchable_edit">Låt inte kartan och dess innehåll visas i sökresultat, men de kan ändå ses av andra genom en direktlänk</string>
   <string name="map_searchable">Kartan och dess innehåll kommer att visas i sökresultat</string>
   <string name="map_not_searchable">Varken kartan eller dess innehåll visas i sökresultat, men de kan ändå ses av andra genom en direktlänk</string>
   <string name="close">Stäng</string>
@@ -258,9 +258,9 @@ limitations under the License.
   <string name="longitude_label">Longitud</string>
 
   <!-- Min -->
-  <string name="min_elevation_label">Min höjd</string>
-  <string name="min_grade_label">Min lutning</string>
-  <string name="min_pace_label">Min tempo</string>
+  <string name="min_elevation_label">Minimihöjd</string>
+  <string name="min_grade_label">Minimilutning</string>
+  <string name="min_pace_label">Minimitempo</string>
 
   <!-- Max -->
   <string name="max_elevation_label">Maxhöjd</string>
@@ -272,12 +272,12 @@ limitations under the License.
   <!-- Chart Settings -->
   <string name="chart_settings">Diagraminställningar</string>
   <!-- X Axis -->
-  <string name="x_axis">X Axel</string>
+  <string name="x_axis">X-axel</string>
   <string name="by_distance">Efter distans</string>
   <string name="by_time">Efter tid</string>
 
   <!-- Y Axis -->
-  <string name="y_axis">Y Axel</string>
+  <string name="y_axis">Y-axel</string>
 
   <!-- Units -->
   <!-- Time  -->
@@ -300,16 +300,16 @@ limitations under the License.
 
   <!-- Speed and Pace -->
   <string name="kilometer_per_hour">km/h</string>
-  <string name="kilometer_per_hour_long">kilometer per timme</string>
+  <string name="kilometer_per_hour_long">kilometer i timmen</string>
   <string name="min_per_kilometer">min/km</string>
   <string name="per_kilometer">per kilometer</string>
   <string name="mile_per_hour">mi/h</string>
-  <string name="mile_per_hour_long">miles per timme</string>
+  <string name="mile_per_hour_long">miles i timmen</string>
   <string name="min_per_mile">min/mi</string>
   <string name="per_mile">per mile</string>
 
   <!-- Stats Labels -->
-  <string name="moving_time_label">Rörelsetid</string>
+  <string name="moving_time_label">Rörlig tid</string>
   <string name="total_time_label">Total tid</string>
   <string name="time_label">Tid</string>
   <string name="sd_unavail">SD otillgängligt</string>
@@ -336,8 +336,8 @@ limitations under the License.
 
   <!-- Send to Google -->
   <string name="sendtogoogle_title">Skicka till...</string>
-  <string name="sendtogoogle_google_mymaps">Google My Maps</string>
-  <string name="sendtogoogle_google_docs">Google Docs</string>
+  <string name="sendtogoogle_google_mymaps">Google Mina Kartor</string>
+  <string name="sendtogoogle_google_docs">Google Dokument</string>
   <string name="sendtogoogle_send_now">Skicka nu</string>
   <string name="sendtogoogle_create_new_map">Skapa en ny karta</string>
   <string name="sendtogoogle_pick_existing_map">Välj en befintlig karta</string>
@@ -388,7 +388,7 @@ limitations under the License.
   <string name="error_rate"> Felfrekvens: %1$d</string>
   <string name="signal_to_noise_ratio"> Signal / brus-förhållande: %1$d</string>
   <string name="ecio"> Ec/lo: %1$.1f dB</string>
-  <string name="gsm_strength">GSM styrka: %1$d</string>
-  <string name="cdma_strength">CDMA styrka: %1$d dBm</string>
-  <string name="evdo_strength">EVDO styrka: %1$d dBm</string>
+  <string name="gsm_strength">GSM-styrka: %1$d</string>
+  <string name="cdma_strength">CDMA-styrka: %1$d dBm</string>
+  <string name="evdo_strength">EVDO-styrka: %1$d dBm</string>
 </resources>
