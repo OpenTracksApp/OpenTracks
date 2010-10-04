@@ -207,6 +207,11 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       trackRecordingService = null;
     }
   };
+  
+  /**
+   * Whether {@link #serviceConnection} is bound or not.
+   */
+  private boolean isBound = false;
 
   /*
    * Tabs/View navigation:
@@ -347,6 +352,13 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       Log.d(MyTracksConstants.TAG, "Received an intent with no action.");
     }
   }
+  
+  @Override
+  protected void onDestroy() {
+    Log.d(MyTracksConstants.TAG, "MyTracks.onDestroy");
+    tryUnbindTrackRecordingService();
+    super.onDestroy();
+  }
 
   @Override
   protected void onPause() {
@@ -370,6 +382,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
 
   @Override
   protected void onStop() {
+    Log.d(MyTracksConstants.TAG, "MyTracks.onStop");
     super.onStop();
     // Clean up any temporary GPX and KML files.
     cleanTmpDirectory("gpx");
@@ -1383,6 +1396,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     bindService(new Intent(this, TrackRecordingService.class),
         serviceConnection, 0);
     Log.d(MyTracksConstants.TAG, "MyTracks: ...bind finished!");
+    isBound = true;
   }
 
   /**
@@ -1390,10 +1404,9 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * case service is not registered anymore.
    */
   private void tryUnbindTrackRecordingService() {
-    // Do not attempt to unbind if there is already a pending unbind operation. 
-    if (trackRecordingService != null) {
+    if (isBound) {
       Log.d(MyTracksConstants.TAG,
-           "MyTracks: Trying to unbind from track recording service...");
+          "MyTracks: Trying to unbind from track recording service...");
       try {
         unbindService(serviceConnection);
         Log.d(MyTracksConstants.TAG, "MyTracks: ...unbind finished!");
@@ -1401,6 +1414,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
         Log.d(MyTracksConstants.TAG,
             "MyTracks: Tried unbinding, but service was not registered.", e);
       }
+      isBound = false;
     }
   }
 

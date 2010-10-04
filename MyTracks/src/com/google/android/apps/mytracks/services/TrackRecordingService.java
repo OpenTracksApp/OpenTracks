@@ -154,6 +154,11 @@ public class TrackRecordingService extends Service implements LocationListener {
   private boolean isMoving = true;
 
   /**
+   * The most recent recording track.
+   */
+  private Track recordingTrack;
+  
+  /**
    * Is the service currently recording a track?
    */
   private boolean isRecording = false;
@@ -396,7 +401,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     TripStatistics stats = track.getStatistics();
     statsBuilder = new TripStatisticsBuilder();
     statsBuilder.resumeAt(stats.getStartTime());
-    setUpScheduler(false, true);
+    setUpAnnouncer();
 
     signalManager.restore();
     splitManager.restore();
@@ -481,7 +486,7 @@ public class TrackRecordingService extends Service implements LocationListener {
       }
 
       // At least one track must be available for appending points:
-      Track recordingTrack = providerUtils.getTrack(recordingTrackId);
+      recordingTrack = getRecordingTrack();
       if (recordingTrack == null) {
         Log.d(MyTracksConstants.TAG,
             "Not recording. No track to append to available.");
@@ -496,8 +501,8 @@ public class TrackRecordingService extends Service implements LocationListener {
 
       // Update the idle time if needed.
       locationListenerPolicy.updateIdleTime(statsBuilder.getIdleTime());
-      if (currentRecordingInterval
-          != locationListenerPolicy.getDesiredPollingInterval()) {
+      if (currentRecordingInterval !=
+          locationListenerPolicy.getDesiredPollingInterval()) {
         registerLocationListener();
       }
 
@@ -657,24 +662,29 @@ public class TrackRecordingService extends Service implements LocationListener {
      * registered and spit out additional debugging info to the logs:
      */
     timer.schedule(checkLocationListener, 1000 * 60 * 5, 1000 * 60);
-    setUpScheduler(true, false);
+
+    // Try to restore previous recording state in case this service has been
+    // restarted by the system, which can sometimes happen.
+    recordingTrack = getRecordingTrack();
+    if (recordingTrack != null) {
+      restoreStats(recordingTrack);
+      isRecording = true;
+      showNotification();
+    }
   }
   
   /**
-   * Creates an {@link Executer} and optionally schedules a periodic task.
-   * @param createIfNecessary whether to create {@link #executer},
-   *        if {@code null}.
-   * @param scheduleTask whether to schedule a new task.
+   * Creates an {@link Executer} and schedules {@class SafeStatusAnnouncerTask}.
+   * The announcer requires a TTS service and user should have enabled
+   * the announcements, otherwise this method is no-op.
    */
-  private void setUpScheduler(boolean createIfNecessary, boolean scheduleTask) {
+  private void setUpAnnouncer() {
     if (mTTSAvailable && announcementFrequency != -1) {
-      if (executer == null && createIfNecessary) {
+      if (executer == null) {
         SafeStatusAnnouncerTask announcer = new SafeStatusAnnouncerTask(this);
         executer = new PeriodicTaskExecuter(announcer, this);
       }
-      if (scheduleTask && executer != null) {
-        executer.scheduleTask(announcementFrequency * 60000);
-      }
+      executer.scheduleTask(announcementFrequency * 60000);
     }
   }
 
@@ -730,16 +740,13 @@ public class TrackRecordingService extends Service implements LocationListener {
     Log.d(MyTracksConstants.TAG,
         "TrackRecordingService.handleStartCommand: " + startId);
 
-    // Load previous track.
-    Track track = getRecordingTrack();
-
     // Check if called on phone reboot with resume intent.
     if (intent != null &&
         intent.getBooleanExtra(RESUME_TRACK_EXTRA_NAME, false)) {
       Log.d(MyTracksConstants.TAG, "TrackRecordingService: requested resume");
       // Make sure that the current track exists and is fresh enough.
       // Note: Sometimes we may get null intent, so avoid a NPE.
-      if (track == null || !maybeResumeTrack(track)) {
+      if (recordingTrack == null || !shouldResumeTrack(recordingTrack)) {
         Log.i(MyTracksConstants.TAG,
             "TrackRecordingService: Not resuming because the previous track "
             + "doesn't exist or is too old");
@@ -748,15 +755,9 @@ public class TrackRecordingService extends Service implements LocationListener {
       }
       Log.i(MyTracksConstants.TAG, "TrackRecordingService: resuming");
     }
-    
-    if (track != null) {
-      restoreStats(track);
-      isRecording = true;
-      showNotification();
-    }
   }
   
-  private boolean maybeResumeTrack(Track track) {
+  private boolean shouldResumeTrack(Track track) {
     Log.d(MyTracksConstants.TAG,
         "maybeResumeTrack: autoResumeTrackTimeout = " + autoResumeTrackTimeout);
     
@@ -873,7 +874,7 @@ public class TrackRecordingService extends Service implements LocationListener {
           isMoving = true;
           statsBuilder = new TripStatisticsBuilder();
           statsBuilder.resumeAt(startTime);
-          setUpScheduler(false, true);
+          setUpAnnouncer();
           length = 0;
           showNotification();
           registerLocationListener();
@@ -979,7 +980,7 @@ public class TrackRecordingService extends Service implements LocationListener {
           executer = null;
         }
       } else {
-        setUpScheduler(true, true);
+        setUpAnnouncer();
       }
     }
   }

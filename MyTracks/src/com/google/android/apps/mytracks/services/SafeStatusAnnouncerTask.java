@@ -19,7 +19,7 @@ package com.google.android.apps.mytracks.services;
 import android.content.Context;
 
 /**
- * This class will periodically announce the user's trip statitics. This class
+ * This class will periodically announce the user's trip statistics. This class
  * is a wrapper for cupcake devices.
  * 
  * @author Sandor Dornbush
