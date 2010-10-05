@@ -46,7 +46,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.location.Location;
@@ -112,7 +111,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   private AuthManager auth;
   private final HashMap<String, AuthManager> authMap =
       new HashMap<String, AuthManager>();
-  private AccountChooser accountChooser = new AccountChooser();
+  private final AccountChooser accountChooser = new AccountChooser();
 
   /*
    * Dialogs:
@@ -186,17 +185,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       trackRecordingService = ITrackRecordingService.Stub.asInterface(service);
       if (startNewTrackRequested) {
         startNewTrackRequested = false;
-        try {
-          recordingTrackId = trackRecordingService.startNewTrack();
-          Toast.makeText(MyTracks.this,
-              R.string.status_now_recording, Toast.LENGTH_SHORT).show();
-          setSelectedAndRecordingTrack(recordingTrackId, recordingTrackId);
-        } catch (RemoteException e) {
-          Toast.makeText(MyTracks.this,
-              R.string.error_unable_to_start_recording, Toast.LENGTH_SHORT)
-                  .show();
-          Log.w(MyTracksConstants.TAG, "Unable to start recording.", e);
-        }
+        startRecordingNewTrack();
       }
     }
 
@@ -347,8 +336,8 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     // Called when activity is going into the background, but has not (yet) been
     // killed. Shouldn't block longer than approx. 2 seconds.
     Log.d(MyTracksConstants.TAG, "MyTracks.onPause");
-    super.onPause();
     tryUnbindTrackRecordingService();
+    super.onPause();
   }
 
   @Override
@@ -356,23 +345,23 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     // Called when the current activity is being displayed or re-displayed
     // to the user.
     Log.d(MyTracksConstants.TAG, "MyTracks.onResume");
-    super.onResume();
     tryBindTrackRecordingService();
+    super.onResume();
   }
 
   @Override
   protected void onStop() {
     Log.d(MyTracksConstants.TAG, "MyTracks.onStop");
-    super.onStop();
     // Clean up any temporary GPX and KML files.
     cleanTmpDirectory("gpx");
     cleanTmpDirectory("kml");
+    super.onStop();
   }
 
   private void cleanTmpDirectory(String name) {
     if (!Environment.getExternalStorageState().equals(
         Environment.MEDIA_MOUNTED)) {
-      return; // Can't do anything now.
+      return;  // Can't do anything now.
     }
     String sep = System.getProperty("file.separator");
     File dir = new File(
@@ -388,11 +377,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
         f.delete();
       }
     }
-  }
-
-  @Override
-  public void onConfigurationChanged(Configuration newConfig) {
-    super.onConfigurationChanged(newConfig);
   }
 
   /*
@@ -1223,6 +1207,20 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       }
     }, account);
   }
+  
+  private void startRecordingNewTrack() {
+    try {
+      recordingTrackId = trackRecordingService.startNewTrack();
+      Toast.makeText(this, getString(R.string.status_now_recording),
+          Toast.LENGTH_SHORT).show();
+      setSelectedAndRecordingTrack(recordingTrackId, recordingTrackId);
+    } catch (RemoteException e) {
+      Toast.makeText(this,
+          getString(R.string.error_unable_to_start_recording),
+          Toast.LENGTH_SHORT).show();
+      Log.w(MyTracksConstants.TAG, "Unable to start recording.", e);
+    }
+  }
 
   /**
    * Starts the track recording service (if not already running) and binds to
@@ -1235,18 +1233,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       startService(startIntent);
       tryBindTrackRecordingService();
     } else {
-      try {
-        recordingTrackId = trackRecordingService.startNewTrack();
-        Toast.makeText(this, getString(R.string.status_now_recording),
-            Toast.LENGTH_SHORT).show();
-        setSelectedAndRecordingTrack(recordingTrackId, recordingTrackId);
-      } catch (RemoteException e) {
-        Toast.makeText(this,
-            getString(R.string.error_unable_to_start_recording),
-            Toast.LENGTH_SHORT).show();
-        Log.e(MyTracksConstants.TAG,
-            "Failed to start track recording service", e);
-      }
+      startRecordingNewTrack();
     }
   }
 

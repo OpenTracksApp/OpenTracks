@@ -984,7 +984,7 @@ public class TrackRecordingService extends Service implements LocationListener {
         @Override
         public void sharedPreferenceChanged(String key) {
           Log.d(MyTracksConstants.TAG,
-              "TrackRecordingService.sharedPrefereneChange");
+              "TrackRecordingService.sharedPreferenceChanged: " + key);
           onSharedPreferenceChanged(key);
         }
       };
