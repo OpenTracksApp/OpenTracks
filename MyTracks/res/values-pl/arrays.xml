@@ -146,6 +146,15 @@ limitations under the License.
     <item>2 min</item>
     <item>1 min</item>
   </string-array>
+  
+  <!-- Auto-resume track timeout -->
+  <string-array name="auto_resume_track_timeout_options">
+    <item>Nigdy</item>
+    <item>5 min</item>
+    <item>10 min</item>
+    <item>15 min</item>
+    <item>Zawsze</item>
+  </string-array>
 
   <!-- Other non-preference arrays -->
   <array name="activity_types">

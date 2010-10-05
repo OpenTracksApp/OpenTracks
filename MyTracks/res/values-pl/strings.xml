@@ -29,6 +29,7 @@ limitations under the License.
   <string name="choose_track_message">Wybierz trasę do podglądu</string>
   <string name="current_track">Obecna trasa</string>
   <string name="current_segment">Ostatni segment</string>
+  <string name="aggregated_stats">Statystyki Grupowe</string>
 
   <!-- Error messages -->
   <string name="error_no_location_manager">Brak menedżera lokalizacji na urządzeniu!</string>
@@ -192,14 +193,45 @@ limitations under the License.
 
   <string name="settings_share_url_only">Dziel się tylko odnośnikiem</string>
   <string name="settings_share_url_only_summary_on">Tylko odnośnik do mapy będzie wysyłany podczas dzielenia się</string>
-  <string name="settings_share_url_only_summary_off">Zawartość trasy również będzie przesyłana</string>
+  <string name="settings_share_url_only_summary_off">Zawartość trasy będzie również przesyłana</string>
 
   <string name="settings_signal_sampling_frequency">Częstotliowść próbkowania sygnału</string>
   <string name="settings_signal_sampling_frequency_summary">Czas między dwoma zapisami siły sygnału telefonu</string>
 
   <string name="settings_split_frequency">Częstotliwość rozdzielania</string>
   <string name="settings_split_frequency_summary">Maksymalny czas lub odległość po którym wstawiony zostanie znacznik rozdzielenia</string>
+  
+  <string name="settings_auto_resume_track_timeout">Automatyczne wznawianie rejestracji trasy</string>
+  <string name="settings_auto_resume_track_timeout_summary">Maksymalny czas w minutach, który upłynął od ostatniego restartu telefonu, a po którym nie zostania wznowiona poprzednia trasa</string>
+  
   <string name="pace_label">Tempo</string>
+  
+  <string name="eclair_required">Dostępne tylko w wersji Android 2.0 lub nowszej</string>
+  <string name="settings_sensor_type">Typ Czujnika</string>
+  <string name="settings_sensor_type_summary">Typ czujnika do podłączenia.</string>
+  <string name="settings_sensor_id">Id Czujnika</string>
+  <string name="settings_sensor_id_summary">Identyfikator wysyłany do czujników.</string>
+  <string name="sensor_id_malformed">Identyfikator musi być liczbą całkowitą.</string>
+  <string name="bluetooth_sensor_title">Czujnik bluetooth</string>
+  <string name="bluetooth_sensor_summary">Czujnik bluetooth do podłączenia.</string>
+  <string name="settings_modular_stats_display_title">Widok Statystyk Modularnych</string>
+  <string name="settings_modular_stats_display_summary_on">Ekran statystyk jest podzielony w zależności od trybu.</string>
+  <string name="settings_modular_stats_display_summary_off">Wyświetl wszystkie statystyki na jednym ekranie.</string>
+
+  <string name="settings_backup">Kopia zapasowa (BETA)</string>
+  <string name="settings_sd_backup">Kopia zapasowa na kartę SD</string>
+  <string name="settings_backup_to_sd">Utwórz kopię</string>
+  <string name="settings_backup_to_sd_summary">Tworzy kopię zapasową wszystkich tras i ustawień i zapisuje je na karcie SD</string>
+  <string name="settings_restore_from_sd">Odtwórz z kopii</string>
+  <string name="settings_restore_from_sd_summary">Odtwarza wszystkie trasy i ustawienia z kopii zapasowej z karty SD</string>
+  <string name="settings_no_backup_while_recording">Nie można tworzyć/odtwarzać kopii zapasowej podczas rejestrowania trasy.</string>
+
+  <!-- Backups -->
+  <string name="restore_overwrites_warning">Odtworzenie z kopii zapasowej z karty SD zastąpi wszystkie bieżące trasy i ustawienia. Jesteś tego pewien?</string>
+  <string name="select_backup_to_restore">Wybierz kopię do odtworzenia</string>
+  <string name="no_backups">Nie znaleziono kopii zapasowych.</string>
+  <string name="backup_write_progress_message">Zapisywanie wszystkich tras i ustawień na kartę SD. To może trochę potrwać...</string>
+  <string name="backup_import_progress_message">Odczytywanie wszystkich tras i ustawień z karty SD. To może trochę potrwać...</string>
 
   <!-- MyTracksSky -->
   <string name="mytracks_sky">Satelity GPS</string>
@@ -351,8 +383,10 @@ limitations under the License.
   <!-- SD card -->
   <string name="io_no_external_storage_found">Nie znaleziono zewnętrznej pamięci. Upewniej się, że karta SD jest w telefonie i nie jest podłączona do komputera.</string>
   <string name="io_write_failed">Nie można zapisać pliku.</string>
+  <string name="io_read_failed">Nie można odczytać pliku.</string>
   <string name="io_create_dir_failed">Nie można utworzyć katalogu na karcie SD.</string>
-  <string name="io_write_finished">Zakończono zapisywanie trasy na karcie SD.</string>
+  <string name="io_write_finished">Zakończono zapisywanie na karcie SD.</string>
+  <string name="io_read_finished">Zakończono odczytywanie z karty SD.</string>  
 
   <!-- VersionChecker -->
   <string name="version_check_title">Sprawdzanie aktualizacji</string>
