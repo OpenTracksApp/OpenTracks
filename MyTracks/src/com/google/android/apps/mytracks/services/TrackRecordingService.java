@@ -301,17 +301,6 @@ public class TrackRecordingService extends Service implements LocationListener {
     }
   }
 
-  private void setAutoResumeTrackRetries(
-      SharedPreferences sharedPreferences, int retryAttempts) {
-    Log.d(MyTracksConstants.TAG,
-        "Updating auto-resume retry attempts to: " + retryAttempts);
-    
-    SharedPreferences.Editor editor = sharedPreferences.edit();
-    editor.putInt(
-        getString(R.string.auto_resume_track_current_retry_key), retryAttempts);
-    editor.commit();
-  }
-
   /**
    * Tries to acquire a partial wake lock if not already acquired. Logs errors
    * and gives up trying in case the wake lock cannot be acquired.
@@ -759,25 +748,6 @@ public class TrackRecordingService extends Service implements LocationListener {
         intent.getBooleanExtra(RESUME_TRACK_EXTRA_NAME, false)) {
       Log.d(MyTracksConstants.TAG, "TrackRecordingService: requested resume");
       
-      // Check if we haven't exceeded the maximum number of retry attempts.
-      SharedPreferences sharedPreferences =
-          getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0); 
-      int retries = sharedPreferences.getInt(
-          getString(R.string.auto_resume_track_current_retry_key), 0);
-      Log.d(MyTracksConstants.TAG,
-          "TrackRecordingService: Attempting to auto-resume the track ("
-          + (retries + 1) + "/" + MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS + ")");
-      if (retries >= MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS) {
-        Log.i(MyTracksConstants.TAG,
-            "TrackRecordingService: Not resuming because exceeded the maximum "
-            + "number of auto-resume retries");
-        stopSelfResult(startId);
-        return;
-      }
-
-      // Increase number of retry attempts.
-      setAutoResumeTrackRetries(sharedPreferences, retries + 1);
-
       // Make sure that the current track exists and is fresh enough.
       if (recordingTrack == null || !shouldResumeTrack(recordingTrack)) {
         Log.i(MyTracksConstants.TAG,
@@ -791,10 +761,40 @@ public class TrackRecordingService extends Service implements LocationListener {
     }
   }
   
+  private void setAutoResumeTrackRetries(
+      SharedPreferences sharedPreferences, int retryAttempts) {
+    Log.d(MyTracksConstants.TAG,
+        "Updating auto-resume retry attempts to: " + retryAttempts);
+    
+    SharedPreferences.Editor editor = sharedPreferences.edit();
+    editor.putInt(
+        getString(R.string.auto_resume_track_current_retry_key), retryAttempts);
+    editor.commit();
+  }
+  
   private boolean shouldResumeTrack(Track track) {
     Log.d(MyTracksConstants.TAG,
         "maybeResumeTrack: autoResumeTrackTimeout = " + autoResumeTrackTimeout);
-    
+
+    // Check if we haven't exceeded the maximum number of retry attempts.
+    SharedPreferences sharedPreferences =
+        getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0); 
+    int retries = sharedPreferences.getInt(
+        getString(R.string.auto_resume_track_current_retry_key), 0);
+    Log.d(MyTracksConstants.TAG,
+        "TrackRecordingService: Attempting to auto-resume the track ("
+        + (retries + 1) + "/" + MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS + ")");
+    if (retries >= MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS) {
+      Log.i(MyTracksConstants.TAG,
+          "TrackRecordingService: Not resuming because exceeded the maximum "
+          + "number of auto-resume retries");
+      return false;
+    }
+
+    // Increase number of retry attempts.
+    setAutoResumeTrackRetries(sharedPreferences, retries + 1);
+
+    // Check for special cases.
     if (autoResumeTrackTimeout == 0) {
       // Never resume.  
       return false;
