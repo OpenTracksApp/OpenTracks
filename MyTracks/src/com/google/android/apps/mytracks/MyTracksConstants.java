@@ -185,7 +185,7 @@ public abstract class MyTracksConstants {
    * a previously recorded track.
    */
   public static final String RESUME_TRACK_EXTRA_NAME =
-      "com.google.android.apps.mytracks.resumeTrack";
+      "com.google.android.apps.mytracks.RESUME_TRACK";
 
   public static int getActionFromMenuId(int menuId) {
     switch (menuId) {
