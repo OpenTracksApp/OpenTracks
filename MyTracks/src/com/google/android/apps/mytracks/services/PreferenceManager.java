@@ -46,7 +46,7 @@ public class PreferenceManager {
     announcementFrequencyKey =
         service.getString(R.string.announcement_frequency_key);
     autoResumeTrackTimeoutKey =
-      service.getString(R.string.auto_resume_track_timeout_key);
+        service.getString(R.string.auto_resume_track_timeout_key);
     maxRecordingDistanceKey = 
         service.getString(R.string.max_recording_distance_key);
     metricUnitsKey =
@@ -90,10 +90,9 @@ public class PreferenceManager {
           + service.getMinRecordingDistance());
     }
     if (key == null || key.equals(maxRecordingDistanceKey)) {
-      service.setMaxRecordingDistance(
-          sharedPreferences.getInt(
-              maxRecordingDistanceKey,
-              MyTracksSettings.DEFAULT_MAX_RECORDING_DISTANCE));
+      service.setMaxRecordingDistance(sharedPreferences.getInt(
+          maxRecordingDistanceKey,
+          MyTracksSettings.DEFAULT_MAX_RECORDING_DISTANCE));
     }
     if (key == null || key.equals(minRecordingIntervalKey)) {
       int minRecordingInterval = sharedPreferences.getInt(
@@ -122,18 +121,18 @@ public class PreferenceManager {
       }
     }
     if (key == null || key.equals(minRequiredAccuracyKey)) {
-      service.setMinRequiredAccuracy(
-          sharedPreferences.getInt(
-              minRequiredAccuracyKey,
-              MyTracksSettings.DEFAULT_MIN_REQUIRED_ACCURACY));
+      service.setMinRequiredAccuracy(sharedPreferences.getInt(
+          minRequiredAccuracyKey,
+          MyTracksSettings.DEFAULT_MIN_REQUIRED_ACCURACY));
     }
     if (key == null || key.equals(announcementFrequencyKey)) {
       service.setAnnouncementFrequency(
           sharedPreferences.getInt(announcementFrequencyKey, -1));
     }
     if (key == null || key.equals(autoResumeTrackTimeoutKey)) {
-      service.setAutoResumeTrackTimeout(
-          sharedPreferences.getInt(autoResumeTrackTimeoutKey, -1));
+      service.setAutoResumeTrackTimeout(sharedPreferences.getInt(
+          autoResumeTrackTimeoutKey,
+          MyTracksSettings.DEFAULT_AUTO_RESUME_TRACK_TIMEOUT));
     }
     if (key == null || key.equals(recordingTrackKey)) {
       service.setRecordingTrackId(

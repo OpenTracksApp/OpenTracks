@@ -41,6 +41,7 @@ limitations under the License.
   <string name="debug_draw_bounds_key">debugDrawBounds</string>
 
   <!-- Preference keys which keep transient state (not user preferences) - DO NOT TRANSLATE -->
+  <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>
   <string name="recording_track_key">recordingTrack</string>
   <string name="selected_track_key">selectedTrack</string>
 
