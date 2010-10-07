@@ -638,6 +638,7 @@ public class TrackRecordingService extends Service implements LocationListener {
 
   @Override
   public void onCreate() {
+    Log.d(MyTracksConstants.TAG, "TrackRecordingService.onCreate");
     super.onCreate();
     Log.d(MyTracksConstants.TAG, "TrackRecordingService.onCreate");
     providerUtils = MyTracksProviderUtils.Factory.get(this);
@@ -988,6 +989,35 @@ public class TrackRecordingService extends Service implements LocationListener {
           onSharedPreferenceChanged(key);
         }
       };
+
+  public long startNewTrack() {
+    Log.d(MyTracksConstants.TAG, "TrackRecordingService.startNewTrack");
+    Track track = new Track();
+    TripStatistics trackStats = track.getStatistics();
+    track.setName("new");
+    long startTime = System.currentTimeMillis();
+    trackStats.setStartTime(startTime);
+    track.setStartId(-1);
+    Uri trackUri = providerUtils.insertTrack(track);
+    recordingTrackId = Long.parseLong(trackUri.getLastPathSegment());
+    track.setId(recordingTrackId);
+    track.setName(String.format(getString(R.string.new_track), recordingTrackId));
+    providerUtils.updateTrack(track);
+    currentWaypointId = insertStatisticsMarker(null);
+    isRecording = true;
+    isMoving = true;
+    statsBuilder = new TripStatisticsBuilder();
+    statsBuilder.resumeAt(startTime);
+    if (announcementFrequency != -1 && executer != null) {
+      executer.scheduleTask(announcementFrequency * 60000);
+    }
+    length = 0;
+    showNotification();
+    registerLocationListener();
+    splitManager.restore();
+    signalManager.restore();
+    return recordingTrackId;
+  }
 
   TripStatistics getTripStatistics() {
     return statsBuilder.getStatistics();
