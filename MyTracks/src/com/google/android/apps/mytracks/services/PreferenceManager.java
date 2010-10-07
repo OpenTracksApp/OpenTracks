@@ -135,8 +135,13 @@ public class PreferenceManager {
           MyTracksSettings.DEFAULT_AUTO_RESUME_TRACK_TIMEOUT));
     }
     if (key == null || key.equals(recordingTrackKey)) {
-      service.setRecordingTrackId(
-          sharedPreferences.getLong(recordingTrackKey, -1));
+      long recordingTrackId = sharedPreferences.getLong(recordingTrackKey, -1);
+      // Only read the id if it is valid.
+      // Setting it to -1 should only happen in 
+      // TrackRecordingService.endCurrentTrack()
+      if (recordingTrackId > 0) {
+        service.setRecordingTrackId(recordingTrackId);
+      }
     }
     if (key == null || key.equals(splitFrequencyKey)) {
       service.getSplitManager().setSplitFrequency(
