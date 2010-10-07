@@ -638,7 +638,6 @@ public class TrackRecordingService extends Service implements LocationListener {
 
   @Override
   public void onCreate() {
-    Log.d(MyTracksConstants.TAG, "TrackRecordingService.onCreate");
     super.onCreate();
     Log.d(MyTracksConstants.TAG, "TrackRecordingService.onCreate");
     providerUtils = MyTracksProviderUtils.Factory.get(this);
@@ -980,14 +979,16 @@ public class TrackRecordingService extends Service implements LocationListener {
     isMoving = true;
     statsBuilder = new TripStatisticsBuilder();
     statsBuilder.resumeAt(startTime);
-    if (announcementFrequency != -1 && executer != null) {
-      executer.scheduleTask(announcementFrequency * 60000);
-    }
+    setUpAnnouncer();
     length = 0;
     showNotification();
     registerLocationListener();
     splitManager.restore();
     signalManager.restore();
+    // Reset the number of auto-resume retries.
+    SharedPreferences sharedPreferences =
+        getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0); 
+    setAutoResumeTrackRetries(sharedPreferences, 0);
     return recordingTrackId;
   }
 
