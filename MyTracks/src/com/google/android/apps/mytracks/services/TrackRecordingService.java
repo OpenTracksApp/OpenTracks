@@ -890,35 +890,7 @@ public class TrackRecordingService extends Service implements LocationListener {
 
         @Override
         public long startNewTrack() {
-          Log.d(MyTracksConstants.TAG, "TrackRecordingService.startNewTrack");
-          Track track = new Track();
-          TripStatistics trackStats = track.getStatistics();
-          track.setName("new");
-          long startTime = System.currentTimeMillis();
-          trackStats.setStartTime(startTime);
-          track.setStartId(-1);
-          Uri trackUri = providerUtils.insertTrack(track);
-          long trackId = Long.parseLong(trackUri.getLastPathSegment());
-          track.setId(trackId);
-          track.setName(String.format(getString(R.string.new_track), trackId));
-          providerUtils.updateTrack(track);
-          recordingTrackId = trackId;
-          currentWaypointId = insertStatisticsMarker(null);
-          isRecording = true;
-          isMoving = true;
-          statsBuilder = new TripStatisticsBuilder();
-          statsBuilder.resumeAt(startTime);
-          setUpAnnouncer();
-          length = 0;
-          showNotification();
-          registerLocationListener();
-          splitManager.restore();
-          signalManager.restore();
-          // Reset the number of auto-resume retries.
-          SharedPreferences sharedPreferences =
-              getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0); 
-          setAutoResumeTrackRetries(sharedPreferences, 0);
-          return trackId;
+          return TrackRecordingService.this.startNewTrack();
         }
 
         /**
@@ -988,6 +960,37 @@ public class TrackRecordingService extends Service implements LocationListener {
           onSharedPreferenceChanged(key);
         }
       };
+
+  public long startNewTrack() {
+    Log.d(MyTracksConstants.TAG, "TrackRecordingService.startNewTrack");
+    Track track = new Track();
+    TripStatistics trackStats = track.getStatistics();
+    track.setName("new");
+    long startTime = System.currentTimeMillis();
+    trackStats.setStartTime(startTime);
+    track.setStartId(-1);
+    Uri trackUri = providerUtils.insertTrack(track);
+    recordingTrackId = Long.parseLong(trackUri.getLastPathSegment());
+    track.setId(recordingTrackId);
+    track.setName(String.format(getString(R.string.new_track), recordingTrackId));
+    providerUtils.updateTrack(track);
+    currentWaypointId = insertStatisticsMarker(null);
+    isRecording = true;
+    isMoving = true;
+    statsBuilder = new TripStatisticsBuilder();
+    statsBuilder.resumeAt(startTime);
+    setUpAnnouncer();
+    length = 0;
+    showNotification();
+    registerLocationListener();
+    splitManager.restore();
+    signalManager.restore();
+    // Reset the number of auto-resume retries.
+    SharedPreferences sharedPreferences =
+        getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0); 
+    setAutoResumeTrackRetries(sharedPreferences, 0);
+    return recordingTrackId;
+  }
 
   TripStatistics getTripStatistics() {
     return statsBuilder.getStatistics();
