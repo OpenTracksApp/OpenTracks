@@ -16,11 +16,23 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
+import com.google.android.maps.Projection;
 
+import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Path;
+import android.graphics.Point;
+import android.graphics.PointF;
+import android.graphics.Rect;
 import android.location.Location;
 import android.test.AndroidTestCase;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Tests for the MyTracks map overlay.
@@ -29,16 +41,71 @@ import android.test.AndroidTestCase;
  */
 public class MyTracksOverlayTest extends AndroidTestCase {
   private Canvas canvas;
-  private MyTracksOverlay myTracksOverlay;
+  private MockMyTracksOverlay myTracksOverlay;
   private MapView mockView;
+  private Projection mockProjection;
+  
+  private class MockMyTracksOverlay extends MyTracksOverlay {
+    public MockMyTracksOverlay(Context context) {
+      super(context);
+    }
+    @Override
+    Projection getMapProjection(MapView mapView) {
+      return mockProjection;
+    }
+    @Override
+    Rect getMapViewRect(MapView mapView) {
+      return new Rect(0, 0, 100, 100);
+    }
+    @Override
+    Path newPath() {
+      return new MockPath();
+    }
+  }
+  
+  private static class MockPath extends Path {
+    public final List<List<PointF>> segments = new LinkedList<List<PointF>>();
+    public int totalPoints;
+    private List<PointF> currentSegment;
+
+    @Override
+    public void lineTo(float x, float y) {
+      super.lineTo(x, y);
+      assertNotNull(currentSegment);
+      currentSegment.add(new PointF(x, y));
+      totalPoints++;
+    }
+    @Override
+    public void moveTo(float x, float y) {
+      super.moveTo(x, y);
+      segments.add(currentSegment =
+          new ArrayList<PointF>(Arrays.asList(new PointF(x, y))));
+      totalPoints++;
+    }
+  }
   
   @Override
   protected void setUp() throws Exception {
     super.setUp();
     canvas = new Canvas();
-    myTracksOverlay = new MyTracksOverlay(getContext());
-    // TODO: add real mock view and enable track drawing.
+    myTracksOverlay = new MockMyTracksOverlay(getContext());
+    // Enable drawing.
+    myTracksOverlay.setTrackDrawingEnabled(true);
     mockView = null;
+    mockProjection = new Projection() {
+      @Override
+      public Point toPixels(GeoPoint in, Point out) {
+        return out;
+      }
+      @Override
+      public float metersToEquatorPixels(float meters) {
+        return meters;
+      }
+      @Override
+      public GeoPoint fromPixels(int x, int y) {
+        return new GeoPoint(y, x);
+      }
+    };
   }
 
   public void testAddLocation() throws Exception {
@@ -47,17 +114,26 @@ public class MyTracksOverlayTest extends AndroidTestCase {
     location.setLongitude(20);
     myTracksOverlay.addLocation(location);
     assertEquals(1, myTracksOverlay.getNumLocations());
+    assertEquals(0, myTracksOverlay.getNumWaypoints());
     
     location.setLatitude(20);
     location.setLongitude(30);
     myTracksOverlay.addLocation(location);
     assertEquals(2, myTracksOverlay.getNumLocations());
+    assertEquals(0, myTracksOverlay.getNumWaypoints());
+    assertNull(myTracksOverlay.getLastPath());
     
     // Draw and make sure that we don't lose any point.
     myTracksOverlay.draw(canvas, mockView, false);
     assertEquals(2, myTracksOverlay.getNumLocations());
+    assertEquals(0, myTracksOverlay.getNumWaypoints());
+    assertNotNull(myTracksOverlay.getLastPath());
+    assertEquals(2, ((MockPath)myTracksOverlay.getLastPath()).totalPoints);
+    
     myTracksOverlay.draw(canvas, mockView, true);
     assertEquals(2, myTracksOverlay.getNumLocations());
+    assertEquals(0, myTracksOverlay.getNumWaypoints());
+    assertNotNull(myTracksOverlay.getLastPath());
   }
   
   public void testClearPoints() throws Exception {
@@ -89,6 +165,8 @@ public class MyTracksOverlayTest extends AndroidTestCase {
     waypoint.setLocation(location);
     myTracksOverlay.addWaypoint(waypoint);
     assertEquals(1, myTracksOverlay.getNumWaypoints());
+    assertEquals(0, myTracksOverlay.getNumLocations());
+    assertNull(myTracksOverlay.getLastPath());
     
     final int waypoints = 10;
     for (int i = 0; i < waypoints; ++i) {
@@ -97,6 +175,8 @@ public class MyTracksOverlayTest extends AndroidTestCase {
       myTracksOverlay.addWaypoint(waypoint);
     }
     assertEquals(1 + waypoints, myTracksOverlay.getNumWaypoints());
+    assertEquals(0, myTracksOverlay.getNumLocations());
+    assertNull(myTracksOverlay.getLastPath());
   }
 
   public void testClearWaypoints() throws Exception {
@@ -122,12 +202,26 @@ public class MyTracksOverlayTest extends AndroidTestCase {
     }
     for (int i = 0; i < 100; ++i) {
       location = new Location("gps");
-      location.setLatitude(50 + i);
+      location.setLatitude(20 + i / 2);
       location.setLongitude(150 - i);
       myTracksOverlay.addLocation(location);
     }
     
-    myTracksOverlay.draw(canvas, mockView, false);
+    // Shadow.
     myTracksOverlay.draw(canvas, mockView, true);
+    // We don't expect to do anything if  
+    assertNull(myTracksOverlay.getLastPath());
+    assertEquals(40, myTracksOverlay.getNumWaypoints());
+    assertEquals(100, myTracksOverlay.getNumLocations());
+
+    // No shadow.
+    myTracksOverlay.draw(canvas, mockView, false);
+    assertNotNull(myTracksOverlay.getLastPath());
+    assertTrue(myTracksOverlay.getLastPath() instanceof MockPath);
+    MockPath path = (MockPath) myTracksOverlay.getLastPath();
+    assertEquals(40, myTracksOverlay.getNumWaypoints());
+    assertEquals(100, myTracksOverlay.getNumLocations());
+    assertEquals(100, path.totalPoints);
+    // TODO: Check the points from the path (and the segments).
   }
 }
