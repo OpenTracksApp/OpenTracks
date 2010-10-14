@@ -281,7 +281,7 @@ public class SendToMyMaps {
           context.getString(R.string.progress_message_reading_track));
 
       providerUtils.getTrackPoints(track, buffer);
-      if (buffer.getLocationsLoaded() <= 0) {
+      if (buffer.getLocationsLoaded() <= 0 || buffer.getSize() <= 0) {
          continue;
       }
       if (totalLocationsRead == 0) {
