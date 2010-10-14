@@ -26,6 +26,9 @@ import android.test.AndroidTestCase;
  * @author Rodrigo Damazio
  */
 public class SignalStrengthTaskFactoryTest extends AndroidTestCase {
+  /**
+   * Mock version of the {@link ApiFeatures} class.
+   */
   private static class MockApiFeatures extends ApiFeatures {
     private boolean hasModernStrength;
 

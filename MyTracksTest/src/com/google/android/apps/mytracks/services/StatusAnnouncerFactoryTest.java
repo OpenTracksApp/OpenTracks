@@ -28,8 +28,9 @@ import android.test.AndroidTestCase;
  * @author Rodrigo Damazio
  */
 public class StatusAnnouncerFactoryTest extends AndroidTestCase {
-
-
+  /**
+   * Mock version of the {@link ApiFeatures} class.
+   */
   private class MockApiFeatures extends ApiFeatures {
     private boolean hasTts;
 
