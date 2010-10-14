@@ -15,47 +15,34 @@
  */
 package com.google.android.apps.mytracks.services;
 
+import com.google.android.apps.mytracks.MyTracksConstants;
 import com.google.android.apps.mytracks.util.ApiFeatures;
 
 import android.content.Context;
-import android.media.AudioManager;
+import android.util.Log;
 
 /**
- * Factory which wraps construction and setup of text-to-speech announcements in
- * an API-level-safe way.
+ * Factory for producing a proper {@link SignalStrengthTask} according to the
+ * current API level.
  *
  * @author Rodrigo Damazio
  */
-public class StatusAnnouncerFactory {
+public class SignalStrengthTaskFactory {
+  private final boolean hasModernSignalStrength;
 
-  private final boolean hasTts;
-
-  public StatusAnnouncerFactory(ApiFeatures apiFeatures) {
-    this.hasTts = apiFeatures.hasTextToSpeech();
+  SignalStrengthTaskFactory(ApiFeatures apiFeatures) {
+    this.hasModernSignalStrength = apiFeatures.hasModernSignalStrength();
   }
 
-  /**
-   * Creates a periodic task which does voice announcements.
-   *
-   * @return the task, or null if announcements are not supported
-   */
   public PeriodicTask create(Context context) {
-    if (hasTts) {
-      return new StatusAnnouncerTask(context);
+    if (hasModernSignalStrength) {
+      Log.d(MyTracksConstants.TAG,
+          "TrackRecordingService using modern signal strength api.");
+      return new SignalStrengthTaskModern(context);
     } else {
-      return null;
-    }
-  }
-
-  /**
-   * Returns the appropriate volume stream for controlling announcement
-   * volume.
-   */
-  public int getVolumeStream() {
-    if (hasTts) {
-      return StatusAnnouncerTask.getVolumeStream();
-    } else {
-      return AudioManager.USE_DEFAULT_STREAM_TYPE;
+      Log.w(MyTracksConstants.TAG,
+          "TrackRecordingService using legacy signal strength api.");
+      return new SignalStrengthTask(context);
     }
   }
 }

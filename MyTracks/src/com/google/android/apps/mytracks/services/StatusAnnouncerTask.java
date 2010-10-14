@@ -83,7 +83,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
   /**
    * Called when the TTS engine is initialized.
    */
-  public void onTtsInit(int status) {
+  private void onTtsInit(int status) {
     Log.i(MyTracksConstants.TAG, "TrackRecordingService.TTS init: " + status);
     this.ready = (status == TextToSpeech.SUCCESS);
 

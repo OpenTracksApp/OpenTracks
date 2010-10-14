@@ -61,7 +61,10 @@ public class MyTracksSettings extends PreferenceActivity {
     super.onCreate(icicle);
 
     // The volume we want to control is the Text-To-Speech volume
-    setVolumeControlStream(StatusAnnouncerFactory.getVolumeStream());
+    ApiFeatures apiFeatures = ApiFeatures.getInstance();
+    int volumeStream =
+        new StatusAnnouncerFactory(apiFeatures).getVolumeStream();
+    setVolumeControlStream(volumeStream);
 
     // Tell it where to read/write preferences
     PreferenceManager preferenceManager = getPreferenceManager();
@@ -69,7 +72,7 @@ public class MyTracksSettings extends PreferenceActivity {
     preferenceManager.setSharedPreferencesMode(0);
 
     // Set up automatic preferences backup
-    backupListener = BackupPreferencesListener.create(this);
+    backupListener = BackupPreferencesListener.create(this, apiFeatures);
     preferences = preferenceManager.getSharedPreferences();
     preferences.registerOnSharedPreferenceChangeListener(backupListener);
 
@@ -94,7 +97,7 @@ public class MyTracksSettings extends PreferenceActivity {
     updatePreferenceUnits(metricUnitsPreference.isChecked());
 
     // Disable TTS announcement preference if not available
-    if (!ApiFeatures.hasTextToSpeech()) {
+    if (!apiFeatures.hasTextToSpeech()) {
       IntegerListPreference announcementFrequency =
           (IntegerListPreference) findPreference(
               getString(R.string.announcement_frequency_key));

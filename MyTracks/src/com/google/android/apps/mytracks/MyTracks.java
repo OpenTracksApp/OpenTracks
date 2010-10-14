@@ -32,6 +32,7 @@ import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
+import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -258,7 +259,9 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     menuManager = new MenuManager(this);
 
     // The volume we want to control is the Text-To-Speech volume
-    setVolumeControlStream(StatusAnnouncerFactory.getVolumeStream());
+    int volumeStream =
+        new StatusAnnouncerFactory(ApiFeatures.getInstance()).getVolumeStream();
+    setVolumeControlStream(volumeStream);
 
     // We don't need a window title bar:
     requestWindowFeature(Window.FEATURE_NO_TITLE);

@@ -23,6 +23,7 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.services.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.MyTracksUtils;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -282,7 +283,9 @@ public class MyTracksMap extends MapActivity
     super.onCreate(bundle);
 
     // The volume we want to control is the Text-To-Speech volume
-    setVolumeControlStream(StatusAnnouncerFactory.getVolumeStream());
+    int volumeStream =
+        new StatusAnnouncerFactory(ApiFeatures.getInstance()).getVolumeStream();
+    setVolumeControlStream(volumeStream);
 
     providerUtils = MyTracksProviderUtils.Factory.get(this);
 

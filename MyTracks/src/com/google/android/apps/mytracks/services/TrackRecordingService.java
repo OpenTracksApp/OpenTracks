@@ -635,17 +635,10 @@ public class TrackRecordingService extends Service implements LocationListener {
     locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
     splitManager = new SplitManager(this);
 
-    PeriodicTask signalStrengthTask;
-    if (ApiFeatures.hasModernSignalStrength()) {
-      Log.d(MyTracksConstants.TAG,
-          "TrackRecordingService using modern signal strength api.");
-      signalStrengthTask = new SignalStrengthTaskModern(this);
-    } else {
-      Log.w(MyTracksConstants.TAG,
-          "TrackRecordingService using legacy signal strength api.");
-      signalStrengthTask = new SignalStrengthTask(this);
-    }
-    signalManager = new TaskExecuterManager(-1, signalStrengthTask, this);
+    SignalStrengthTaskFactory strengthTaskFactory =
+        new SignalStrengthTaskFactory(ApiFeatures.getInstance());
+    signalManager =
+        new TaskExecuterManager(-1, strengthTaskFactory.create(this), this);
 
     prefManager = new PreferenceManager(this);
     prefManager.onSharedPreferenceChanged(null);
@@ -666,7 +659,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     }
     showNotification();
   }
-  
+
   /**
    * Creates an {@link Executer} and schedules {@class SafeStatusAnnouncerTask}.
    * The announcer requires a TTS service and user should have enabled
@@ -675,7 +668,9 @@ public class TrackRecordingService extends Service implements LocationListener {
   private void setUpAnnouncer() {
     if (announcementFrequency != -1) {
       if (announcementExecuter == null) {
-        PeriodicTask announcer = StatusAnnouncerFactory.create(this);
+        StatusAnnouncerFactory statusAnnouncerFactory =
+            new StatusAnnouncerFactory(ApiFeatures.getInstance());
+        PeriodicTask announcer = statusAnnouncerFactory.create(this);
         if (announcer == null) return;
 
         announcementExecuter = new PeriodicTaskExecuter(announcer, this);
