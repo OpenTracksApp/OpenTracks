@@ -67,20 +67,18 @@ public class MyTracksOverlay extends Overlay {
   private boolean showEndMarker = true;
   // TODO: Remove it completely after completing performance tests.
   private boolean alwaysVisible = true;
-  
+
+  private GeoPoint lastReferencePoint;
   private Rect lastViewRect;
   private Path lastPath;
   
   /**
    * Represents a pre-processed {@code Location} to speed up drawing.
-   * This class is more like a data object and doesn't provide getters/setters.
+   * This class is more like a data object and doesn't provide accessors.
    */
   private static class CachedLocation {
     public final boolean valid;
     public final GeoPoint geoPoint;
-    // Cached point in the screen's coordinate system.
-    // TODO: Use it in drawTrack.
-    public Point point;
     
     public CachedLocation(Location location) {
       this.valid = MyTracksUtils.isValidLocation(location);
@@ -285,76 +283,91 @@ public class MyTracksOverlay extends Overlay {
 
   private void drawTrack(Canvas canvas, Projection projection, Rect viewRect) {
     Path path;
-    final Point pt = new Point();
-    GeoPoint firstGeoPoint = null;
-    GeoPoint lastGeoPoint = null;
     synchronized (points) {
-      // Merge the pending points with the list of cached locations. 
-      if (pendingPoints.drainTo(points) == 0 && lastPath != null &&
-          viewRect.equals(lastViewRect)) {
+      // Merge the pending points with the list of cached locations.
+      final GeoPoint referencePoint = projection.fromPixels(0, 0);
+      int newPoints = pendingPoints.drainTo(points); 
+      boolean newProjection = !viewRect.equals(lastViewRect) ||
+          !referencePoint.equals(lastReferencePoint); 
+      if (newPoints == 0 && lastPath != null && !newProjection) {
         // No need to recreate path (same points and viewing area).
         path = lastPath;
       } else {
-        // Regenerate the whole path.
         int numPoints = points.size();
         if (numPoints < 2) {
-          return;
-        }
-        path = newPath();
-        path.incReserve(numPoints);
-  
-        // Whether to start a new segment on new valid and visible point.
-        boolean newSegment = true;
-        boolean lastVisible = false;
-        // Loop over track points:
-        for (CachedLocation loc : points) {
-          // Check if valid, if not then indicate a new segment.
-          if (!loc.valid) {
-            newSegment = true;
-            continue;
-          }
-          
-          final GeoPoint geoPoint = loc.geoPoint;
-          if (firstGeoPoint == null) {
-            // Found the starting point.
-            firstGeoPoint = geoPoint;
-          }
-          lastGeoPoint = geoPoint;
-  
-          // Check if this breaks the existing segment.
-          boolean visible = alwaysVisible || viewRect.contains(
-              geoPoint.getLongitudeE6(), geoPoint.getLatitudeE6());
-          if (!visible && !lastVisible) {
-            // This is a point outside view not connected to a visible one.
-            newSegment = true;
-          }
-          lastVisible = visible;
-          
-          // Either move to beginning of a new segment or continue the old one.
-          projection.toPixels(geoPoint, pt);
-          if (newSegment) {
-            path.moveTo(pt.x, pt.y);
-            newSegment = false;
-          } else {
-            path.lineTo(pt.x, pt.y);
-          }
+          path = null;
+        } else if (lastPath != null && !newProjection) {
+          path = lastPath;
+          updatePath(projection, viewRect, path, numPoints - newPoints); 
+        } else {
+          path = newPath();
+          path.incReserve(numPoints);
+          updatePath(projection, viewRect, path, 0); 
         }
         lastPath = path;
-        lastViewRect = viewRect;
       }
+      lastReferencePoint = referencePoint;
+      lastViewRect = viewRect;
     }
-    canvas.drawPath(path, selectedTrackPaint);
+    if (path != null) {
+      canvas.drawPath(path, selectedTrackPaint);
+    }
 
     // Draw the "End" marker.
-    if (showEndMarker && lastGeoPoint != null) {
-      drawElement(canvas, projection, lastGeoPoint, endMarker, -markerWidth / 2,
-          -markerHeight);
+    if (showEndMarker) {
+      for (int i = points.size() - 1; i >= 0; --i) {
+        if (points.get(i).valid) {
+          drawElement(canvas, projection, points.get(i).geoPoint, endMarker,
+              -markerWidth / 2, -markerHeight);
+          break;
+        }
+      }
     }
     
-    // Draw the "Start" marker:
-    if (firstGeoPoint != null) {
-      drawElement(canvas, projection, firstGeoPoint,
-          startMarker, -markerWidth / 2, -markerHeight);
+    // Draw the "Start" marker.
+    for (int i = 0; i < points.size(); ++i) {
+      if (points.get(i).valid) {
+        drawElement(canvas, projection, points.get(i).geoPoint, startMarker,
+            -markerWidth / 2, -markerHeight);
+        break;
+      }
+    }
+  }
+  
+  private void updatePath(Projection projection, Rect viewRect, Path path,
+      int startLocationIdx) {
+    // Whether to start a new segment on new valid and visible point.
+    boolean newSegment =
+        startLocationIdx > 0 ? !points.get(startLocationIdx - 1).valid : true;
+    boolean lastVisible = !newSegment;
+    final Point pt = new Point();
+    // Loop over track points.
+    for (int i = startLocationIdx; i < points.size(); ++i) {
+      CachedLocation loc = points.get(i);
+      // Check if valid, if not then indicate a new segment.
+      if (!loc.valid) {
+        newSegment = true;
+        continue;
+      }
+      
+      final GeoPoint geoPoint = loc.geoPoint;
+      // Check if this breaks the existing segment.
+      boolean visible = alwaysVisible || viewRect.contains(
+          geoPoint.getLongitudeE6(), geoPoint.getLatitudeE6());
+      if (!visible && !lastVisible) {
+        // This is a point outside view not connected to a visible one.
+        newSegment = true;
+      }
+      lastVisible = visible;
+      
+      // Either move to beginning of a new segment or continue the old one.
+      projection.toPixels(geoPoint, pt);
+      if (newSegment) {
+        path.moveTo(pt.x, pt.y);
+        newSegment = false;
+      } else {
+        path.lineTo(pt.x, pt.y);
+      }
     }
   }
   

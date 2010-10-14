@@ -45,6 +45,10 @@ public class MyTracksOverlayTest extends AndroidTestCase {
   private MapView mockView;
   private Projection mockProjection;
   
+  /**
+   * A mock version of {@code MyTracksOverlay} that does not use
+   * {@class MapView}. 
+   */
   private class MockMyTracksOverlay extends MyTracksOverlay {
     public MockMyTracksOverlay(Context context) {
       super(context);
@@ -63,9 +67,16 @@ public class MyTracksOverlayTest extends AndroidTestCase {
     }
   }
   
+  /**
+   * A mock class that intercepts {@code Path}'s and records calls to
+   * {@code #moveTo()} and {@code #lineTo()}.
+   */
   private static class MockPath extends Path {
+    /** A list of disjoined path segments. */
     public final List<List<PointF>> segments = new LinkedList<List<PointF>>();
+    /** The total number of points in this path. */
     public int totalPoints;
+    
     private List<PointF> currentSegment;
 
     @Override
@@ -83,6 +94,24 @@ public class MyTracksOverlayTest extends AndroidTestCase {
       totalPoints++;
     }
   }
+
+  /**
+   * A mock {@code Projection} that acts as the identity matrix.
+   */
+  private static class MockProjection  implements Projection {
+    @Override
+    public Point toPixels(GeoPoint in, Point out) {
+      return out;
+    }
+    @Override
+    public float metersToEquatorPixels(float meters) {
+      return meters;
+    }
+    @Override
+    public GeoPoint fromPixels(int x, int y) {
+      return new GeoPoint(y, x);
+    }
+  }
   
   @Override
   protected void setUp() throws Exception {
@@ -92,20 +121,7 @@ public class MyTracksOverlayTest extends AndroidTestCase {
     // Enable drawing.
     myTracksOverlay.setTrackDrawingEnabled(true);
     mockView = null;
-    mockProjection = new Projection() {
-      @Override
-      public Point toPixels(GeoPoint in, Point out) {
-        return out;
-      }
-      @Override
-      public float metersToEquatorPixels(float meters) {
-        return meters;
-      }
-      @Override
-      public GeoPoint fromPixels(int x, int y) {
-        return new GeoPoint(y, x);
-      }
-    };
+    mockProjection = new MockProjection();
   }
 
   public void testAddLocation() throws Exception {
