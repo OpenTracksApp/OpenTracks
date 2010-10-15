@@ -266,9 +266,10 @@ public class TrackWriter {
   private void writeLocations() {
     boolean wroteFirst = false;
     boolean segmentOpen = false;
-    Location lastLoc = null;
+    Location lastLoc = null, loc = null;
     boolean isLastValid = false;
-    Cursor locationsCursor = providerUtils.getLocationsCursor(track.getId(), 0, -1, false);
+    Cursor locationsCursor =
+        providerUtils.getLocationsCursor(track.getId(), 0, -1, false);
     
     if (locationsCursor == null || !locationsCursor.moveToFirst()) {
       Log.w(MyTracksConstants.TAG, "Unable to get any points to write");
@@ -276,8 +277,8 @@ public class TrackWriter {
     }
 
     do {
-      // TODO: Use fillLocation instead
-      Location loc = providerUtils.createLocation(locationsCursor);
+      if (loc == null) loc = new Location("");
+      providerUtils.fillLocation(locationsCursor, loc);
 
       boolean isValid = MyTracksUtils.isValidLocation(loc);
       boolean validSegment = isValid && isLastValid;
@@ -306,7 +307,12 @@ public class TrackWriter {
         }
       }
 
+      // Swap loc and lastLoc (so lastLoc is reused)
+      Location tmp = lastLoc;
       lastLoc = loc;
+      loc = tmp;
+      loc.reset();
+
       isLastValid = isValid;
     } while (locationsCursor.moveToNext());
 
