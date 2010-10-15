@@ -311,7 +311,7 @@ public class TrackWriter {
       Location tmp = lastLoc;
       lastLoc = loc;
       loc = tmp;
-      loc.reset();
+      if (loc != null) loc.reset();
 
       isLastValid = isValid;
     } while (locationsCursor.moveToNext());

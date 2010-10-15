@@ -4,7 +4,9 @@ package com.google.android.apps.mytracks.io;
 
 import static org.easymock.EasyMock.eq;
 import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.isA;
 import static org.easymock.EasyMock.leq;
+import static org.easymock.EasyMock.same;
 
 import com.google.android.apps.mytracks.MyTracksConstants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
@@ -25,6 +27,7 @@ import java.io.OutputStream;
 
 import org.easymock.EasyMock;
 import org.easymock.IAnswer;
+import org.easymock.IArgumentMatcher;
 import org.easymock.IMocksControl;
 
 /**
@@ -269,8 +272,15 @@ public class TrackWriterTest extends AndroidTestCase {
     }
     expect(providerUtils.getLocationsCursor(
         eq(TRACK_ID), leq(0L), leq(0), eq(false))).andStubReturn(locCursor);
-    expect(providerUtils.createLocation(locCursor))
-        .andStubAnswer(stubCursorToArray(locCursor, locs));
+    providerUtils.fillLocation(same(locCursor), isA(Location.class));
+    EasyMock.expectLastCall().andStubAnswer(new IAnswer<Void>() {
+      @Override
+      public Void answer() throws Throwable {
+        Location loc = (Location) EasyMock.getCurrentArguments()[1];
+        loc.set(locs[locCursor.getPosition()]);
+        return null;
+      }
+    });
 
     MatrixCursor wpCursor =
         new MatrixCursor(new String[] { BaseColumns._ID }, 3);
@@ -286,25 +296,25 @@ public class TrackWriterTest extends AndroidTestCase {
 
     // Begin the track
     formatWriter.writeHeader();
-    formatWriter.writeBeginTrack(locs[0]);
+    formatWriter.writeBeginTrack(locEq(locs[0]));
 
     // Write locations 1-2
     formatWriter.writeOpenSegment();
-    formatWriter.writeLocation(locs[0]);
-    formatWriter.writeLocation(locs[1]);
+    formatWriter.writeLocation(locEq(locs[0]));
+    formatWriter.writeLocation(locEq(locs[1]));
     formatWriter.writeCloseSegment();
 
     // Location 3 is not written - it's invalid
 
     // Write locations 4-6
     formatWriter.writeOpenSegment();
-    formatWriter.writeLocation(locs[3]);
-    formatWriter.writeLocation(locs[4]);
-    formatWriter.writeLocation(locs[5]);
+    formatWriter.writeLocation(locEq(locs[3]));
+    formatWriter.writeLocation(locEq(locs[4]));
+    formatWriter.writeLocation(locEq(locs[5]));
     formatWriter.writeCloseSegment();
 
     // End the track
-    formatWriter.writeEndTrack(locs[5]);
+    formatWriter.writeEndTrack(locEq(locs[5]));
 
     // Expect reading/writing of the waypoints (except the first)
     formatWriter.writeWaypoint(wps[1]);
@@ -320,6 +330,36 @@ public class TrackWriterTest extends AndroidTestCase {
     mocksControl.verify();
   }
 
+  private static Location locEq(final Location loc) {
+    EasyMock.reportMatcher(new IArgumentMatcher() {
+      @Override
+      public boolean matches(Object locObj2) {
+        if (locObj2 == null || loc == null) return loc == locObj2;
+        Location loc2 = (Location) locObj2;
+
+        return loc.hasAccuracy() == loc2.hasAccuracy()
+            && (!loc.hasAccuracy() || loc.getAccuracy() == loc2.getAccuracy())
+            && loc.hasAltitude() == loc2.hasAltitude()
+            && (!loc.hasAltitude() || loc.getAltitude() == loc2.getAltitude())
+            && loc.hasBearing() == loc2.hasBearing()
+            && (!loc.hasBearing() || loc.getBearing() == loc2.getBearing())
+            && loc.hasSpeed() == loc2.hasSpeed()
+            && (!loc.hasSpeed() || loc.getSpeed() == loc2.getSpeed())
+            && loc.getLatitude() == loc2.getLatitude()
+            && loc.getLongitude() == loc2.getLongitude()
+            && loc.getTime() == loc2.getTime();
+      }
+      
+      @Override
+      public void appendTo(StringBuffer buffer) {
+        buffer.append("locEq(");
+        buffer.append(loc);
+        buffer.append(")");
+      }
+    });
+    return null;
+  }
+  
   private <T> IAnswer<T> stubCursorToArray(
       final MatrixCursor cursor, final T[] values) {
     return new IAnswer<T>() {
