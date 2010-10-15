@@ -123,7 +123,7 @@ limitations under the License.
   <string name="tracklist_save_as_gpx">保存为 GPX 文件</string>
   <string name="tracklist_save_as_kml">保存为 KML 文件</string>
   <string name="tracklist_save_as_csv">保存为 CSV 文件</string>
-  <string name="tracklist_save_as_tcx">Save a TCX file</string>
+  <string name="tracklist_save_as_tcx">保存为 TCX 文件</string>
   <string name="tracklist_btn_send_all_to_mymaps">发送到 Google My Maps</string>
   <string name="tracklist_btn_delete_all">删除所有轨迹</string>
   <!-- Export All -->
@@ -383,7 +383,6 @@ limitations under the License.
   <string name="about_support">技术支持:</string>
 
   <!-- DO NOT TRANSLATE -->
-  <string name="version">1.0.14</string>
   <string name="about_googlegroups">mytracks@googlegroups.com</string>
   <string name="about_weburl">mytracks.appspot.com</string>
   <string name="about_copyright_message">Copyright 2009 Google Inc.</string>
@@ -411,7 +410,9 @@ limitations under the License.
   <string name="io_no_external_storage_found">没有发现存贮设备. 请确认插入了 SD 卡并且你的手机没有将挂载 SD 卡到电脑.</string>
   <string name="io_write_failed">无法写入文件.</string>
   <string name="io_create_dir_failed">无法在 SD 卡上创建目录.</string>
+  <string name="io_create_dir_failed">无法在 SD 存储卡上创建目录.</string>
   <string name="io_write_finished">轨迹已导出到 SD 卡.</string>
+  <string name="io_read_finished">从 SD 存储卡读取完毕.</string>
 
   <!-- VersionChecker -->
   <string name="version_check_title">检查更新</string>
@@ -458,6 +459,11 @@ limitations under the License.
   <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
   <string name="sensor_options">感应器选项</string>
 
+  <!-- Sensor Types => DO NOT TRANSLATE -->
+  <string name="none">NONE</string>
+  <string name="ant_sensor_type">ANT</string>
+  <string name="srm_sensor_type">SRM</string>
+  <string name="athlosoft_sensor_type">ATHLOSOFT</string>
 
   <!-- Bluetooth Sensor -->
   <string name="bluetooth_connected">连接到 %s</string>

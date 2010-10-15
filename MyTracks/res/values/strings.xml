@@ -123,7 +123,7 @@ limitations under the License.
   <string name="tracklist_save_as_gpx">Save a GPX file</string>
   <string name="tracklist_save_as_kml">Save a KML file</string>
   <string name="tracklist_save_as_csv">Save a CSV file</string>
-  <string name="tracklist_save_as_tcx">保存为 TCX 文件</string>
+  <string name="tracklist_save_as_tcx">Save a TCX file</string>
   <string name="tracklist_btn_send_all_to_mymaps">Send to Google My Maps</string>
   <string name="tracklist_btn_delete_all">Delete all tracks</string>
   <!-- Export All -->
