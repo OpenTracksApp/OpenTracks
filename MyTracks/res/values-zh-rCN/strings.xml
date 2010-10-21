@@ -15,8 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-  <!-- DO NOT TRANSLATE -->
-  <string name="app_name">My Tracks</string>
+
+
 
   <!-- Used by the Menu -->
   <string name="start_recording">记录轨迹</string>
@@ -220,9 +220,9 @@ limitations under the License.
   <string name="sensor_id_malformed">ID必须是一个整数值.</string>
   <string name="bluetooth_sensor_title">蓝牙感应器</string>
   <string name="bluetooth_sensor_summary">要连接到的蓝牙感应器</string>
-  <string name="settings_modular_stats_display_title">模块化统计信息显示</string>
-  <string name="settings_modular_stats_display_summary_on">统计信息屏幕以多种模式拆分.</string>
-  <string name="settings_modular_stats_display_summary_off">同屏显示多个统计信息</string>
+
+
+
 
   <string name="settings_backup">备份 (测试版)</string>
   <string name="settings_sd_backup">SD 存储卡备份</string>
@@ -320,37 +320,37 @@ limitations under the License.
   <!-- Time  -->
   <string name="hour">小时</string>
   <string name="hours">小时</string>
-  <string name="hr">hr</string>
-  <string name="min">min</string>
+  <string name="hr">时</string>
+  <string name="min">分</string>
   <string name="minute">分钟</string>
   <string name="minutes">分钟</string>
   <string name="second">秒</string>
   <string name="seconds">秒</string>
-  <string name="milliseconds">ms</string>
+
 
   <!-- Distance -->
-  <string name="meter">m</string>
-  <string name="kilometer">km</string>
+
+
   <string name="kilometers_long">千米</string>
-  <string name="feet">ft</string>
-  <string name="mile">mi</string>
+
+
   <string name="miles_long">英里</string>
 
   <!-- Speed and Pace -->
-  <string name="kilometer_per_hour">km/h</string>
+
   <string name="kilometer_per_hour_long">千米每小时</string>
-  <string name="min_per_kilometer">min/km</string>
+
   <string name="per_kilometer">每千米</string>
-  <string name="mile_per_hour">mi/h</string>
+
   <string name="mile_per_hour_long">英里每小时</string>
-  <string name="min_per_mile">min/mi</string>
+
   <string name="per_mile">每英里</string>
 
-  <!-- Power -->
-  <string name="watts">W</string>
 
-  <string name="revolutions_per_minute">rpm</string>
-  <string name="bpm">bpm</string>
+
+
+
+
 
   <!-- Stats Labels -->
   <string name="moving_time_label">移动时间</string>
@@ -366,7 +366,7 @@ limitations under the License.
   <string name="cadence">节奏</string>
   <string name="heart_rate">心率</string>
   <string name="max_heart_rate">最大心率</string>
-  <string name="unknown">-</string>
+
   <string name="waiting">请稍候...</string>
 
   <!-- End User License Agreement -->
@@ -382,19 +382,19 @@ limitations under the License.
   <string name="about_email">技术支持</string>
   <string name="about_support">技术支持:</string>
 
-  <!-- DO NOT TRANSLATE -->
-  <string name="about_googlegroups">mytracks@googlegroups.com</string>
-  <string name="about_weburl">mytracks.appspot.com</string>
-  <string name="about_copyright_message">Copyright 2009 Google Inc.</string>
-  <string name="about_dylan">Dylan Casey</string>
-  <string name="about_leif">Leif Hendrik Wilden</string>
-  <string name="about_rdamazio">Rodrigo Damazio Bovendorp</string>
-  <string name="about_sandor">Sandor Dornbush</string>
+
+
+
+
+
+
+
+
 
   <!-- Send to Google -->
   <string name="sendtogoogle_title">发送到...</string>
-  <string name="sendtogoogle_google_mymaps">Google My Maps</string>
-  <string name="sendtogoogle_google_docs">Google Docs</string>
+
+
   <string name="sendtogoogle_send_now">立即发送</string>
   <string name="sendtogoogle_create_new_map">创建新地图</string>
   <string name="sendtogoogle_pick_existing_map">选择已有地图</string>
@@ -456,14 +456,14 @@ limitations under the License.
   <string name="bluetooth_options">蓝牙设置</string>
   <string name="bluetooth_pairing">设备关联</string>
   <string name="bluetooth_pairing_summary">打开 Android 的蓝牙设置关联设备</string>
-  <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
+
   <string name="sensor_options">感应器选项</string>
 
-  <!-- Sensor Types => DO NOT TRANSLATE -->
-  <string name="none">NONE</string>
-  <string name="ant_sensor_type">ANT</string>
-  <string name="srm_sensor_type">SRM</string>
-  <string name="athlosoft_sensor_type">ATHLOSOFT</string>
+
+
+
+
+
 
   <!-- Bluetooth Sensor -->
   <string name="bluetooth_connected">连接到 %s</string>
