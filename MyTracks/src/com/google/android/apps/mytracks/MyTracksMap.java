@@ -377,6 +377,16 @@ public class MyTracksMap extends MapActivity
     }
   }
 
+  @Override
+  protected void onDestroy() {
+    Log.d(MyTracksConstants.TAG, "MyTracksMap.onDestroy");
+    if (updateTrackThread != null) {
+      updateTrackThread.quit();
+    }
+    
+    super.onDestroy();
+  }
+
   /**
    * Returns whether there's a track currently selected for display.
    */
