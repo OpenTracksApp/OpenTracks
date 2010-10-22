@@ -98,7 +98,7 @@ public class MyTracksOverlayTest extends AndroidTestCase {
   /**
    * A mock {@code Projection} that acts as the identity matrix.
    */
-  private static class MockProjection  implements Projection {
+  private static class MockProjection implements Projection {
     @Override
     public Point toPixels(GeoPoint in, Point out) {
       return out;

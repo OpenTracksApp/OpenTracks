@@ -295,11 +295,14 @@ public class MyTracksOverlay extends Overlay {
       } else {
         int numPoints = points.size();
         if (numPoints < 2) {
+          // Not enough points to draw a path.
           path = null;
         } else if (lastPath != null && !newProjection) {
+          // Incremental update of the path, without repositioning the view.
           path = lastPath;
           updatePath(projection, viewRect, path, numPoints - newPoints); 
         } else {
+          // The view has changed so we have to start from scratch.
           path = newPath();
           path.incReserve(numPoints);
           updatePath(projection, viewRect, path, 0); 
