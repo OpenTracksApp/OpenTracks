@@ -745,6 +745,7 @@ public class TrackRecordingService extends Service implements LocationListener {
             "TrackRecordingService: Not resuming, because the previous track ("
             + recordingTrack + ") doesn't exist or is too old");
         isRecording = false;
+        prefManager.setRecordingTrack(recordingTrackId = -1); 
         stopSelfResult(startId);
         return;
       }
@@ -805,6 +806,11 @@ public class TrackRecordingService extends Service implements LocationListener {
   }
 
   public long insertWaypointMarker(Waypoint waypoint) {
+    if (!isRecording()) {
+      throw new IllegalStateException(
+          "Unable to insert waypoint marker while not recording!");
+    }
+    
     if (waypoint.getLocation() != null) {
       waypoint.setLength(length);
       waypoint.setDuration(waypoint.getLocation().getTime()
@@ -823,6 +829,11 @@ public class TrackRecordingService extends Service implements LocationListener {
    * @return the unique id of the inserted marker
    */
   public long insertStatisticsMarker(Location location) {
+    if (!isRecording()) {
+      throw new IllegalStateException(
+          "Unable to insert statistics marker while not recording!");
+    }
+    
     StringUtils utils = new StringUtils(TrackRecordingService.this);
 
     // Create a new waypoint to save
@@ -930,13 +941,15 @@ public class TrackRecordingService extends Service implements LocationListener {
                 "_id=" + recordingTrack.getId(), null);
           }
           showNotification();
-          recordingTrackId = -1;
-          prefManager.setRecordingTrack(recordingTrackId);
+          prefManager.setRecordingTrack(recordingTrackId = -1);
         }
 
         @Override
         public void deleteAllTracks() {
-          endCurrentTrack();
+          if (isRecording()) {
+            throw new IllegalStateException(
+                "Cannot delete all tracks while recording!");
+          }
           providerUtils.deleteAllTracks();
         }
 
@@ -969,12 +982,13 @@ public class TrackRecordingService extends Service implements LocationListener {
     recordingTrackId = Long.parseLong(trackUri.getLastPathSegment());
     track.setId(recordingTrackId);
     track.setName(String.format(getString(R.string.new_track), recordingTrackId));
+    isRecording = true;
+    isMoving = true;
+    
     providerUtils.updateTrack(track);
     statsBuilder = new TripStatisticsBuilder(startTime);
     waypointStatsBuilder = new TripStatisticsBuilder(startTime);
     currentWaypointId = insertStatisticsMarker(null);
-    isRecording = true;
-    isMoving = true;
     setUpAnnouncer();
     length = 0;
     showNotification();

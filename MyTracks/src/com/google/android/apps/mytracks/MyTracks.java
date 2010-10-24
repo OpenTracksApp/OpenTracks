@@ -26,9 +26,9 @@ import com.google.android.apps.mytracks.io.AuthManagerFactory;
 import com.google.android.apps.mytracks.io.GpxImporter;
 import com.google.android.apps.mytracks.io.SendToDocs;
 import com.google.android.apps.mytracks.io.SendToMyMaps;
-import com.google.android.apps.mytracks.io.SendToMyMaps.OnSendCompletedListener;
 import com.google.android.apps.mytracks.io.TrackWriter;
 import com.google.android.apps.mytracks.io.TrackWriterFactory;
+import com.google.android.apps.mytracks.io.SendToMyMaps.OnSendCompletedListener;
 import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.StatusAnnouncerFactory;
@@ -65,9 +65,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
-import android.view.Window;
 import android.view.WindowManager.BadTokenException;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
@@ -233,19 +233,34 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   }
 
   /**
+   * Checks whether we have a track recording session in progress.
+   * In some cases, when the service has crashed or has been restarted
+   * by the system, we fall back to the shared preferences. 
+   * 
    * @return true if the activity is bound to the track recording service and
-   * the service is recording a track.
+   *         the service is recording a track or in case the service is down,
+   *         based on settings from the shared preferences. 
    */
   public boolean isRecording() {
     if (trackRecordingService == null) {
-      return false;
+      // Fall back to alternative check method.
+      return isRecordingBasedOnSharedPreferences();
     }
     try {
       return trackRecordingService.isRecording();
     } catch (RemoteException e) {
       Log.e(MyTracksConstants.TAG, "MyTracks: Remote exception.", e);
-      return false;
+  
+      // Fall back to alternative check method.
+      return isRecordingBasedOnSharedPreferences();
     }
+  }
+  
+  private boolean isRecordingBasedOnSharedPreferences() {
+    // TrackRecordingServices guarantees that recordingTrackId is set to
+    // -1 if the track has been stopped.
+    // TODO: Refresh recordingTrackId.
+    return recordingTrackId >= 0;
   }
 
   /*
@@ -303,6 +318,12 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       recordingTrackId =
           prefs.getLong(getString(R.string.recording_track_key), -1);
       prefs.registerOnSharedPreferenceChangeListener(this);
+      Log.d(MyTracksConstants.TAG, "recordingTrackId: " + recordingTrackId
+          + ", selectedTrackId: " + selectedTrackId);
+      if (recordingTrackId > 0) {
+        Intent startIntent = new Intent(this, TrackRecordingService.class);
+        startService(startIntent);
+      }
     }
 
     // This will show the eula until the user accepts or quits the app.

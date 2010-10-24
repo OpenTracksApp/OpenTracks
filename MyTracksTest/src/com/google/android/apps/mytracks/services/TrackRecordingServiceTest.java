@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.apps.mytracks.content.MyTracksProvider;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.maps.mytracks.R;
 
@@ -30,8 +31,8 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.location.Location;
 import android.os.IBinder;
-import android.os.RemoteException;
 import android.test.RenamingDelegatingContext;
 import android.test.ServiceTestCase;
 import android.test.mock.MockContentResolver;
@@ -122,6 +123,8 @@ public class TrackRecordingServiceTest
     assertNotNull(getService());
 
     assertTrue(getService().isRecording());
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
+    assertEquals(123, service.getRecordingTrackId());
   }
 
   @MediumTest
@@ -139,6 +142,8 @@ public class TrackRecordingServiceTest
     assertNotNull(getService());
     
     assertFalse(getService().isRecording());
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
+    assertEquals(-1, service.getRecordingTrackId());
   }
   
   @MediumTest
@@ -156,6 +161,8 @@ public class TrackRecordingServiceTest
     assertNotNull(getService());
     
     assertFalse(getService().isRecording());
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
+    assertEquals(-1, service.getRecordingTrackId());
   }
 
   @MediumTest
@@ -174,6 +181,8 @@ public class TrackRecordingServiceTest
     assertNotNull(getService());
     
     assertFalse(getService().isRecording());
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
+    assertEquals(-1, service.getRecordingTrackId());
   }
 
   @MediumTest
@@ -181,17 +190,19 @@ public class TrackRecordingServiceTest
     List<Track> tracks = providerUtils.getAllTracks();
     assertTrue(tracks.isEmpty());
     
-    ITrackRecordingService service = startAndGetService(createStartIntent());
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
     // Test if we start in no-recording mode by default. 
     assertFalse(service.isRecording());
+    assertEquals(-1, service.getRecordingTrackId());
   }
   
   @MediumTest
   public void testRecording_oldTracks() throws Exception {
     createDummyTrack(123, -1, false);
     
-    ITrackRecordingService service = startAndGetService(createStartIntent());
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertFalse(service.isRecording());
+    assertEquals(-1, service.getRecordingTrackId());
   }
 
   @MediumTest
@@ -199,7 +210,7 @@ public class TrackRecordingServiceTest
     List<Track> tracks = providerUtils.getAllTracks();
     assertTrue(tracks.isEmpty());
     
-    ITrackRecordingService service = startAndGetService(createStartIntent());
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertFalse(service.isRecording());
     
     long id = service.startNewTrack();
@@ -210,30 +221,32 @@ public class TrackRecordingServiceTest
     assertEquals(id, track.getId());
     assertEquals(id, sharedPreferences.getLong(
         context.getString(R.string.recording_track_key), -1));
+    assertEquals(id, service.getRecordingTrackId());
   }
   
   @MediumTest
   public void testStartNewTrack_alreadyRecording() throws Exception {
     createDummyTrack(123, -1, true);
     
-    ITrackRecordingService service = startAndGetService(createStartIntent());
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertTrue(service.isRecording());
     
     try {
       service.startNewTrack();
-      fail("Expecting RemoteException");
+      fail("Expecting IllegalStateException");
     } catch (IllegalStateException e) {
       // Expected.
     }
     assertEquals(123, sharedPreferences.getLong(
         context.getString(R.string.recording_track_key), 0));
+    assertEquals(123, service.getRecordingTrackId());
   }  
   
   @MediumTest
   public void testEndCurrentTrack_alreadyRecording() throws Exception {
     createDummyTrack(123, -1, true);
     
-    ITrackRecordingService service = startAndGetService(createStartIntent());
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertTrue(service.isRecording());
 
     // End the current track.
@@ -241,25 +254,170 @@ public class TrackRecordingServiceTest
     assertFalse(service.isRecording());
     assertEquals(-1, sharedPreferences.getLong(
         context.getString(R.string.recording_track_key), 0));
+    assertEquals(-1, service.getRecordingTrackId());
   }
   
   @MediumTest
   public void testEndCurrentTrack_noRecording() throws Exception {
-    ITrackRecordingService service = startAndGetService(createStartIntent());
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertFalse(service.isRecording());
 
     // End the current track.
     try {
       service.endCurrentTrack();
-      fail("Expecting RemoteException");
+      fail("Expecting IllegalStateException");
     } catch (IllegalStateException e) {
       // Expected.
     }
     assertEquals(-1, sharedPreferences.getLong(
         context.getString(R.string.recording_track_key), 0));
+    assertEquals(-1, service.getRecordingTrackId());
   }
   
-  private ITrackRecordingService startAndGetService(Intent intent) {
+  @MediumTest
+  public void testDeleteAllTracks_noRecording() throws Exception {
+    createDummyTrack(123, -1, false);
+    assertEquals(1, providerUtils.getAllTracks().size());
+    
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
+    assertFalse(service.isRecording());
+
+    // Deleting all tracks should succeed.
+    service.deleteAllTracks();
+    assertFalse(service.isRecording());
+    assertTrue(providerUtils.getAllTracks().isEmpty());
+  }
+
+  @MediumTest
+  public void testDeleteAllTracks_noTracks() throws Exception {
+    assertTrue(providerUtils.getAllTracks().isEmpty());
+    
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
+    assertFalse(service.isRecording());
+
+    // Deleting all tracks should succeed.
+    service.deleteAllTracks();
+    assertFalse(service.isRecording());
+    assertTrue(providerUtils.getAllTracks().isEmpty());
+  }
+  
+  @MediumTest
+  public void testDeleteAllTracks_trackInProgress() throws Exception {
+    createDummyTrack(123, -1, true);
+    assertEquals(1, providerUtils.getAllTracks().size());
+    
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
+    assertTrue(service.isRecording());
+
+    // Since we have a track in progress, we expect to fail.
+    try {
+      service.deleteAllTracks();
+      fail("Expecting IllegalStateException");
+    } catch (IllegalStateException e) {
+      // Expected.
+    }
+    assertTrue(service.isRecording());
+    assertEquals(1, providerUtils.getAllTracks().size());
+  }
+  
+  @MediumTest
+  public void testHasRecorded_noTracks() throws Exception {
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
+    assertFalse(service.isRecording());
+    assertFalse(service.hasRecorded());
+  }
+  
+  @MediumTest
+  public void testHasRecorded_trackInProgress() throws Exception {
+    createDummyTrack(123, -1, true);
+    assertEquals(1, providerUtils.getAllTracks().size());
+    
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
+    assertTrue(service.isRecording());
+    assertTrue(service.hasRecorded());
+  }
+  
+  @MediumTest
+  public void testHasRecorded_oldTracks() throws Exception {
+    createDummyTrack(123, -1, false);
+    assertEquals(1, providerUtils.getAllTracks().size());
+    
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
+    assertFalse(service.isRecording());
+    assertTrue(service.hasRecorded());
+  }
+  
+  @MediumTest
+  public void testInsertStatisticsMarker_noRecordingTrack() throws Exception {
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
+    assertFalse(service.isRecording());
+    
+    Location loc = new Location("gps");
+    try {
+      service.insertStatisticsMarker(loc);
+      fail("Expecting IllegalStateException");
+    } catch (IllegalStateException e) {
+      // Expected.
+    }
+  }
+  
+  @MediumTest
+  public void testInsertStatisticsMarker_validLocation() throws Exception {
+    createDummyTrack(123, -1, true);
+    
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
+    assertTrue(service.isRecording());
+    
+    Location loc = new Location("gps");
+    assertEquals(1, service.insertStatisticsMarker(loc));
+    assertEquals(2, service.insertStatisticsMarker(loc));
+    
+    // TODO: Add more checks.
+  }
+
+  @MediumTest
+  public void testInsertWaypointMarker_noRecordingTrack() throws Exception {
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
+    assertFalse(service.isRecording());
+    
+    Location loc = new Location("gps");
+    Waypoint waypoint = new Waypoint();
+    waypoint.setId(1);
+    waypoint.setLocation(loc);
+    try {
+      service.insertWaypointMarker(waypoint);
+      fail("Expecting IllegalStateException");
+    } catch (IllegalStateException e) {
+      // Expected.
+    }
+  }
+  
+  @MediumTest
+  public void testInsertWaypointMarker_invalidWaypoint() throws Exception {
+    createDummyTrack(123, -1, true);
+    
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
+    assertTrue(service.isRecording());
+    
+    Waypoint waypoint = new Waypoint();
+    assertEquals(-1, service.insertWaypointMarker(waypoint));
+  }
+  
+  @MediumTest
+  public void testInsertWaypointMarker_validWaypoint() throws Exception {
+    createDummyTrack(123, -1, true);
+    
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
+    assertTrue(service.isRecording());
+    
+    Location loc = new Location("gps");
+    Waypoint waypoint = new Waypoint();
+    waypoint.setId(1);
+    waypoint.setLocation(loc);
+    assertEquals(1, service.insertWaypointMarker(waypoint));
+  }
+  
+  private ITrackRecordingService bindAndGetService(Intent intent) {
     ITrackRecordingService service = ITrackRecordingService.Stub.asInterface(
         bindService(intent));
     assertNotNull(service);
