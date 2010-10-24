@@ -67,7 +67,7 @@ public class TrackRecordingService extends Service implements LocationListener {
   private static final String STATISTICS_ICON_URL =
       "http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png";
 
-  private static final int MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS = 3;
+  static final int MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS = 3;
   
   private NotificationManager notificationManager;
   private LocationManager locationManager;
@@ -382,6 +382,7 @@ public class TrackRecordingService extends Service implements LocationListener {
   }
   
   private Track getRecordingTrack() {
+    Log.d(MyTracksConstants.TAG, "Recording track ID: " + recordingTrackId);
     if (recordingTrackId < 0) {
       return null;
     }
@@ -390,6 +391,9 @@ public class TrackRecordingService extends Service implements LocationListener {
   }
 
   private void restoreStats(Track track) {
+    Log.d(MyTracksConstants.TAG,
+        "Restoring stats of track with ID: " + track.getId());
+    
     TripStatistics stats = track.getStatistics();
     statsBuilder = new TripStatisticsBuilder();
     statsBuilder.resumeAt(stats.getStartTime());
@@ -739,8 +743,9 @@ public class TrackRecordingService extends Service implements LocationListener {
       // Make sure that the current track exists and is fresh enough.
       if (recordingTrack == null || !shouldResumeTrack(recordingTrack)) {
         Log.i(MyTracksConstants.TAG,
-            "TrackRecordingService: Not resuming because the previous track "
-            + "doesn't exist or is too old");
+            "TrackRecordingService: Not resuming, because the previous track ("
+            + recordingTrack + ") doesn't exist or is too old");
+        isRecording = false;
         stopSelfResult(startId);
         return;
       }
@@ -753,11 +758,7 @@ public class TrackRecordingService extends Service implements LocationListener {
       SharedPreferences sharedPreferences, int retryAttempts) {
     Log.d(MyTracksConstants.TAG,
         "Updating auto-resume retry attempts to: " + retryAttempts);
-    
-    SharedPreferences.Editor editor = sharedPreferences.edit();
-    editor.putInt(
-        getString(R.string.auto_resume_track_current_retry_key), retryAttempts);
-    editor.commit();
+    prefManager.setAutoResumeTrackCurrentRetry(retryAttempts);
   }
   
   private boolean shouldResumeTrack(Track track) {
@@ -908,6 +909,10 @@ public class TrackRecordingService extends Service implements LocationListener {
         @Override
         public void endCurrentTrack() {
           Log.d(MyTracksConstants.TAG, "TrackRecordingService.endCurrentTrack");
+          if (recordingTrackId == -1 || !isRecording) {
+            throw new IllegalStateException("No recording track in progress!");
+          }
+         
           isRecording = false;
           Track recordingTrack = providerUtils.getTrack(recordingTrackId);
           if (recordingTrack != null) {
@@ -928,6 +933,7 @@ public class TrackRecordingService extends Service implements LocationListener {
           }
           showNotification();
           recordingTrackId = -1;
+          prefManager.setRecordingTrack(recordingTrackId);
         }
 
         @Override
@@ -951,6 +957,10 @@ public class TrackRecordingService extends Service implements LocationListener {
 
   public long startNewTrack() {
     Log.d(MyTracksConstants.TAG, "TrackRecordingService.startNewTrack");
+    if (recordingTrackId != -1 || isRecording) {
+      throw new IllegalStateException("A track is already in progress!");
+    }
+    
     Track track = new Track();
     TripStatistics trackStats = track.getStatistics();
     track.setName("new");
@@ -973,10 +983,13 @@ public class TrackRecordingService extends Service implements LocationListener {
     registerLocationListener();
     splitManager.restore();
     signalManager.restore();
+
     // Reset the number of auto-resume retries.
-    SharedPreferences sharedPreferences =
-        getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0); 
-    setAutoResumeTrackRetries(sharedPreferences, 0);
+    setAutoResumeTrackRetries(
+        getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0), 0);
+    // Persist the current recording track.
+    prefManager.setRecordingTrack(recordingTrackId);
+    
     return recordingTrackId;
   }
 
