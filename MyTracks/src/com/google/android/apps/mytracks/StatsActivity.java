@@ -52,7 +52,7 @@ import android.widget.Toast;
 public class StatsActivity extends Activity
     implements OnSharedPreferenceChangeListener {
 
-  private final StatsUtilities utils;
+  private StatsUtilities utils;
   private UIUpdateThread thread;
 
   private ContentObserver observer;
@@ -94,7 +94,7 @@ public class StatsActivity extends Activity
    */
   private boolean showCurrentSegment = false;
 
-  private final MyTracksProviderUtils providerUtils;
+  private MyTracksProviderUtils providerUtils;
 
   /**
    * A runnable for posting to the UI thread. Will update the total time field.
@@ -133,16 +133,14 @@ public class StatsActivity extends Activity
     }
   }
 
-  public StatsActivity() {
-    utils = new StatsUtilities(this);
-    providerUtils = new MyTracksProviderUtilsImpl(getContentResolver());
-  }
-
   /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    utils = new StatsUtilities(this);
+    providerUtils = new MyTracksProviderUtilsImpl(getContentResolver());
+    
     // The volume we want to control is the Text-To-Speech volume
     int volumeStream =
         new StatusAnnouncerFactory(ApiFeatures.getInstance()).getVolumeStream();
