@@ -36,13 +36,13 @@ public class TripStatisticsBuilder {
   /**
    * The last location that the gps reported.
    */
-  private Location lastLocation = null;
+  private Location lastLocation;
 
   /**
    * The last location that contributed to the stats. It is also the last
    * location the user was found to be moving.
    */
-  private Location lastMovingLocation = null;
+  private Location lastMovingLocation;
 
   /**
    * The current speed in meters/second as reported by the gps.
@@ -90,10 +90,13 @@ public class TripStatisticsBuilder {
   private long totalLocations = 0;
 
   /**
-   * Creates a new trip starting at the current system time.
+   * Creates a new trip starting at the given time.
+   * 
+   * @param startTime the start time.
    */
-  public TripStatisticsBuilder() {
+  public TripStatisticsBuilder(long startTime) {
     data = new TripStatistics();
+    resumeAt(startTime);
   }
 
   /**
@@ -103,6 +106,9 @@ public class TripStatisticsBuilder {
    */
   public TripStatisticsBuilder(TripStatistics statsData) {
     data = new TripStatistics(statsData);
+    if (data.getStartTime() > 0) {
+      resumeAt(data.getStartTime());
+    }
   }
 
   /**
@@ -140,8 +146,8 @@ public class TripStatisticsBuilder {
 
     // Don't do anything if we didn't move since last fix:
     double distance = lastLocation.distanceTo(currentLocation);
-    if (distance < MyTracksConstants.MAX_NO_MOVEMENT_DISTANCE
-        && currentSpeed < MyTracksConstants.MAX_NO_MOVEMENT_SPEED) {
+    if (distance < MyTracksConstants.MAX_NO_MOVEMENT_DISTANCE &&
+        currentSpeed < MyTracksConstants.MAX_NO_MOVEMENT_SPEED) {
       lastLocation = currentLocation;
       return false;
     }
@@ -292,13 +298,6 @@ public class TripStatisticsBuilder {
   }
 
   /**
-   * Pauses the track at the current time.
-   */
-  public void pause() {
-    pauseAt(System.currentTimeMillis());
-  }
-
-  /**
    * Pauses the track at the given time.
    * 
    * @param time the time to pause at
@@ -310,13 +309,6 @@ public class TripStatisticsBuilder {
     data.setTotalTime(time - data.getStartTime());
     lastLocation = null; // Make sure the counter restarts.
     paused = true;
-  }
-
-  /**
-   * Resumes the current track at the current time.
-   */
-  public void resume() {
-    resumeAt(System.currentTimeMillis());
   }
 
   /**
@@ -364,8 +356,7 @@ public class TripStatisticsBuilder {
   }
 
   public TripStatistics getStatistics() {
-    // Take a snapshot - we do't want anyone messing with our internals
+    // Take a snapshot - we don't want anyone messing with our internals
     return new TripStatistics(data);
   }
 }
-

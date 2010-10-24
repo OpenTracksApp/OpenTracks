@@ -94,8 +94,8 @@ public class TrackRecordingService extends Service implements LocationListener {
    */
   private MyTracksProviderUtils providerUtils;
 
-  private TripStatisticsBuilder statsBuilder = new TripStatisticsBuilder();
-  private TripStatisticsBuilder waypointStatsBuilder = new TripStatisticsBuilder();
+  private TripStatisticsBuilder statsBuilder;
+  private TripStatisticsBuilder waypointStatsBuilder;
 
   /**
    * Current length of the recorded track. This length is calculated from the
@@ -395,8 +395,7 @@ public class TrackRecordingService extends Service implements LocationListener {
         "Restoring stats of track with ID: " + track.getId());
     
     TripStatistics stats = track.getStatistics();
-    statsBuilder = new TripStatisticsBuilder();
-    statsBuilder.resumeAt(stats.getStartTime());
+    statsBuilder = new TripStatisticsBuilder(stats.getStartTime());
     setUpAnnouncer();
 
     signalManager.restore();
@@ -407,11 +406,11 @@ public class TrackRecordingService extends Service implements LocationListener {
     Waypoint waypoint = providerUtils.getFirstWaypoint(recordingTrackId);
     if (waypoint != null) {
       currentWaypointId = waypoint.getId();
-      waypointStatsBuilder = new TripStatisticsBuilder(waypoint.getStatistics());
+      waypointStatsBuilder = new TripStatisticsBuilder(
+          waypoint.getStatistics());
     } else {
       // This should never happen, but we got to do something so life goes on:
-      waypointStatsBuilder = new TripStatisticsBuilder();
-      waypointStatsBuilder.resumeAt(stats.getStartTime());
+      waypointStatsBuilder = new TripStatisticsBuilder(stats.getStartTime());
       currentWaypointId = -1;
     }
 
@@ -435,7 +434,7 @@ public class TrackRecordingService extends Service implements LocationListener {
         }
         statsBuilder.getStatistics().setMovingTime(stats.getMovingTime());
         statsBuilder.pauseAt(stats.getStopTime());
-        statsBuilder.resume();
+        statsBuilder.resumeAt(System.currentTimeMillis());
       } else {
         Log.e(MyTracksConstants.TAG, "Could not get track points cursor.");
       }
@@ -851,8 +850,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     Uri uri = providerUtils.insertWaypoint(waypoint);
 
     // Create a new stats keeper for the next marker
-    waypointStatsBuilder = new TripStatisticsBuilder();
-    waypointStatsBuilder.resumeAt(time);
+    waypointStatsBuilder = new TripStatisticsBuilder(time);
     updateCurrentWaypoint();
     return Long.parseLong(uri.getLastPathSegment());
   }
@@ -972,11 +970,11 @@ public class TrackRecordingService extends Service implements LocationListener {
     track.setId(recordingTrackId);
     track.setName(String.format(getString(R.string.new_track), recordingTrackId));
     providerUtils.updateTrack(track);
+    statsBuilder = new TripStatisticsBuilder(startTime);
+    waypointStatsBuilder = new TripStatisticsBuilder(startTime);
     currentWaypointId = insertStatisticsMarker(null);
     isRecording = true;
     isMoving = true;
-    statsBuilder = new TripStatisticsBuilder();
-    statsBuilder.resumeAt(startTime);
     setUpAnnouncer();
     length = 0;
     showNotification();

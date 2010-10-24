@@ -20,13 +20,11 @@ public class TripStatisticsBuilderTest extends TestCase {
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    builder = new TripStatisticsBuilder();
-    builder.resume();
+    builder = new TripStatisticsBuilder(System.currentTimeMillis());
   }
 
   public void testAddLocationSimple() throws Exception {
-    builder = new TripStatisticsBuilder();
-    builder.resumeAt(1000);
+    builder = new TripStatisticsBuilder(1000);
     TripStatistics stats = builder.getStatistics();
 
     assertEquals(0.0, builder.getSmoothedElevation());
@@ -84,8 +82,7 @@ public class TripStatisticsBuilderTest extends TestCase {
    */
   public void testElevationSimple() throws Exception {
     for (double elevation = 0; elevation < 1000; elevation += 10) {
-      builder = new TripStatisticsBuilder();
-      builder.resume();
+      builder = new TripStatisticsBuilder(System.currentTimeMillis());
       for (int j = 0; j < 100; j++) {
         assertEquals(0.0, builder.updateElevation(elevation));
         assertEquals(elevation, builder.getSmoothedElevation());
