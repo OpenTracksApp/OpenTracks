@@ -15,7 +15,10 @@
  */
 package com.google.android.apps.mytracks.util;
 
+import com.google.android.apps.mytracks.MyTracksConstants;
+
 import android.os.Build;
+import android.util.Log;
 
 /**
  * Utility class for determining if newer-API features are available on the
@@ -28,9 +31,15 @@ public class ApiFeatures {
   /**
    * The API level of the Android version we're being run under.
    */
-  public static final int ANDROID_API_LEVEL = Integer.parseInt(Build.VERSION.SDK);
-
+  public static final int ANDROID_API_LEVEL = Integer.parseInt(
+      Build.VERSION.SDK);
+  
   private static ApiFeatures instance;
+  
+  /**
+   * The API platform adapter supported by this system.
+   */
+  private ApiPlatformAdapter apiPlatformAdapter;
 
   /**
    * Returns the singleton instance of this class.
@@ -52,7 +61,28 @@ public class ApiFeatures {
   /**
    * Allow subclasses for mocking, but no direct instantiation.
    */
-  protected ApiFeatures() {}
+  protected ApiFeatures() {
+    if (getApiLevel() >= 5) {
+      try {
+        Class<?> clazz = Class.forName(
+            "com.google.android.apps.mytracks.util.EclairPlatformAdapter");
+        apiPlatformAdapter = (ApiPlatformAdapter) clazz.newInstance();
+      } catch (Exception e) {
+        Log.i(MyTracksConstants.TAG, "ApiFeatures: Unable to instantiate Eclair"
+            + " platform adapter", e);
+      }
+    }
+    if (apiPlatformAdapter == null) {
+      Log.i(MyTracksConstants.TAG,
+          "ApiFeatures: Using default platform adapter");
+      // Cupcake adapter is always supported, so it's safe to do static linkage.
+      apiPlatformAdapter = new CupcakePlatformAdapter();
+    }
+  }
+  
+  public ApiPlatformAdapter getApiPlatformAdapter() {
+    return apiPlatformAdapter;
+  }
 
   /**
    * Returns whether cloud backup (a.k.a. Froyo backup) is available.
@@ -81,7 +111,7 @@ public class ApiFeatures {
   public boolean hasModernSignalStrength() {
     return getApiLevel() >= 7;
   }
-
+  
   // Visible for testing.
   protected int getApiLevel() {
     return ANDROID_API_LEVEL;

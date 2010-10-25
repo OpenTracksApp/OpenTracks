@@ -379,7 +379,8 @@ public class MyTracksMap extends MapActivity
   protected void onDestroy() {
     Log.d(MyTracksConstants.TAG, "MyTracksMap.onDestroy");
     if (updateTrackThread != null) {
-      updateTrackThread.quit();
+      ApiFeatures.getInstance().getApiPlatformAdapter().stopHandlerThread(
+          updateTrackThread);
     }
     
     super.onDestroy();

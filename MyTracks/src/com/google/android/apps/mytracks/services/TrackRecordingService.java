@@ -28,6 +28,7 @@ import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.ApiPlatformAdapter;
 import com.google.android.apps.mytracks.util.MyTracksUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
@@ -329,6 +330,8 @@ public class TrackRecordingService extends Service implements LocationListener {
    * Shows the notification message and icon in the notification bar.
    */
   public void showNotification() {
+    final ApiPlatformAdapter apiPlatformAdapter =
+        ApiFeatures.getInstance().getApiPlatformAdapter();
     if (isRecording) {
       Notification notification = new Notification(
           R.drawable.arrow_320, null /* tickerText */,
@@ -339,9 +342,10 @@ public class TrackRecordingService extends Service implements LocationListener {
       notification.setLatestEventInfo(this, getString(R.string.app_name),
           getString(R.string.recording_your_track), contentIntent);
       notification.flags += Notification.FLAG_NO_CLEAR;
-      notificationManager.notify(1, notification);
+      apiPlatformAdapter.startForeground(this, notificationManager, 1,
+          notification);
     } else {
-      notificationManager.cancelAll();
+      apiPlatformAdapter.stopForeground(this, notificationManager, 1);
     }
   }
 
