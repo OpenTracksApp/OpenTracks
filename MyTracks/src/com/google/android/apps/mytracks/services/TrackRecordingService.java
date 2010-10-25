@@ -51,8 +51,10 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.text.format.DateFormat;
 import android.util.Log;
 
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -951,17 +953,18 @@ public class TrackRecordingService extends Service implements LocationListener {
 
   public long startNewTrack() {
     Log.d(MyTracksConstants.TAG, "TrackRecordingService.startNewTrack");
+    long startTime = System.currentTimeMillis();
+
     Track track = new Track();
     TripStatistics trackStats = track.getStatistics();
-    track.setName("new");
-    long startTime = System.currentTimeMillis();
     trackStats.setStartTime(startTime);
     track.setStartId(-1);
     Uri trackUri = providerUtils.insertTrack(track);
     recordingTrackId = Long.parseLong(trackUri.getLastPathSegment());
     track.setId(recordingTrackId);
-    track.setName(String.format(getString(R.string.new_track), recordingTrackId));
+    track.setName(getNewTrackName(this, recordingTrackId, startTime));
     providerUtils.updateTrack(track);
+
     currentWaypointId = insertStatisticsMarker(null);
     isRecording = true;
     isMoving = true;
@@ -980,6 +983,14 @@ public class TrackRecordingService extends Service implements LocationListener {
     return recordingTrackId;
   }
 
+  private static String getNewTrackName(Context context, long trackId, 
+      long startTime) {
+    Date startDate = new Date(startTime);
+    return String.format("%s %s",
+        DateFormat.getDateFormat(context).format(startDate),
+        DateFormat.getTimeFormat(context).format(startDate));
+  }
+  
   TripStatistics getTripStatistics() {
     return statsBuilder.getStatistics();
   }
