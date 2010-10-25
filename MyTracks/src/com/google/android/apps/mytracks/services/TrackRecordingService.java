@@ -762,8 +762,8 @@ public class TrackRecordingService extends Service implements LocationListener {
   }
   
   private boolean shouldResumeTrack(Track track) {
-    Log.d(MyTracksConstants.TAG,
-        "maybeResumeTrack: autoResumeTrackTimeout = " + autoResumeTrackTimeout);
+    Log.d(MyTracksConstants.TAG, "shouldResumeTrack: autoResumeTrackTimeout = "
+        + autoResumeTrackTimeout);
 
     // Check if we haven't exceeded the maximum number of retry attempts.
     SharedPreferences sharedPreferences =
@@ -771,11 +771,11 @@ public class TrackRecordingService extends Service implements LocationListener {
     int retries = sharedPreferences.getInt(
         getString(R.string.auto_resume_track_current_retry_key), 0);
     Log.d(MyTracksConstants.TAG,
-        "TrackRecordingService: Attempting to auto-resume the track ("
+        "shouldResumeTrack: Attempting to auto-resume the track ("
         + (retries + 1) + "/" + MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS + ")");
     if (retries >= MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS) {
       Log.i(MyTracksConstants.TAG,
-          "TrackRecordingService: Not resuming because exceeded the maximum "
+          "shouldResumeTrack: Not resuming because exceeded the maximum "
           + "number of auto-resume retries");
       return false;
     }
@@ -786,9 +786,13 @@ public class TrackRecordingService extends Service implements LocationListener {
     // Check for special cases.
     if (autoResumeTrackTimeout == 0) {
       // Never resume.  
+      Log.d(MyTracksConstants.TAG,
+          "shouldResumeTrack: Auto-resume disabled (never resume)");
       return false;
     } else if (autoResumeTrackTimeout == -1) {
       // Always resume.
+      Log.d(MyTracksConstants.TAG,
+          "shouldResumeTrack: Auto-resume forced (always resume)");
       return true;
     }
 
@@ -796,7 +800,8 @@ public class TrackRecordingService extends Service implements LocationListener {
     long lastModified =
         track.getStatistics() != null ? track.getStatistics().getStopTime() : 0;
     Log.d(MyTracksConstants.TAG,
-        "maybeResumeTrack: lastModified = " + lastModified);
+        "shouldResumeTrack: lastModified = " + lastModified
+        + ", autoResumeTrackTimeout: " + autoResumeTrackTimeout);
     return lastModified > 0 && System.currentTimeMillis() - lastModified <=
         autoResumeTrackTimeout * 60 * 1000;  
   }

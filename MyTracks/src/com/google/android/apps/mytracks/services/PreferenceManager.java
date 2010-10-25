@@ -31,6 +31,7 @@ import android.util.Log;
 public class PreferenceManager {
   private TrackRecordingService service;
   private final String announcementFrequencyKey;
+  private final String autoResumeTrackCurrentRetryKey;
   private final String autoResumeTrackTimeoutKey;
   private final String maxRecordingDistanceKey;
   private final String metricUnitsKey;
@@ -55,6 +56,8 @@ public class PreferenceManager {
     
     announcementFrequencyKey =
         service.getString(R.string.announcement_frequency_key);
+    autoResumeTrackCurrentRetryKey =
+        service.getString(R.string.auto_resume_track_current_retry_key);
     autoResumeTrackTimeoutKey =
         service.getString(R.string.auto_resume_track_timeout_key);
     maxRecordingDistanceKey = 
@@ -161,7 +164,7 @@ public class PreferenceManager {
   
   public void setAutoResumeTrackCurrentRetry(int retryAttempts) {
     SharedPreferences.Editor editor = sharedPreferences.edit();
-    editor.putInt(autoResumeTrackTimeoutKey, retryAttempts);
+    editor.putInt(autoResumeTrackCurrentRetryKey, retryAttempts);
     editor.commit();
   }
 

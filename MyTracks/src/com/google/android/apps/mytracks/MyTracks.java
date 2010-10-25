@@ -313,6 +313,9 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     SharedPreferences prefs =
         getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
     if (prefs != null) {
+      // Dump all preferences.
+      Log.i(MyTracksConstants.TAG, "Shared preferences:" + prefs.getAll());
+      
       selectedTrackId =
           prefs.getLong(getString(R.string.selected_track_key), -1);
       recordingTrackId =

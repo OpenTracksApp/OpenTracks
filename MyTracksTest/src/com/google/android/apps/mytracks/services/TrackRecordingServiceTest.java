@@ -126,6 +126,33 @@ public class TrackRecordingServiceTest
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertEquals(123, service.getRecordingTrackId());
   }
+  
+  @MediumTest
+  public void testResumeAfterReboot_simulateReboot() throws Exception {
+    updateAutoResumePrefs(0, 10);
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
+    assertFalse(service.isRecording());
+
+    // Simulate recording a track.
+    long id = service.startNewTrack();
+    assertTrue(service.isRecording());
+    assertEquals(id, service.getRecordingTrackId());
+    shutdownService();
+    assertEquals(id, sharedPreferences.getLong(
+        context.getString(R.string.recording_track_key), -1));    
+
+    Intent startIntent = createStartIntent();
+    startIntent.putExtra(RESUME_TRACK_EXTRA_NAME, true);
+    startService(startIntent);
+    assertNotNull(getService());
+    
+    // TODO: shutdownService() has a bug and doesn't set mServiceCreated
+    // to false, thus preventing from second call to onCreate().
+    // Report the bug to Android team.  Until then, the following check
+    // must be commented out.
+    
+    // assertTrue(getService().isRecording());
+  }
 
   @MediumTest
   public void testResumeAfterReboot_noRecordingTrack() throws Exception {
@@ -272,6 +299,38 @@ public class TrackRecordingServiceTest
     assertEquals(-1, sharedPreferences.getLong(
         context.getString(R.string.recording_track_key), 0));
     assertEquals(-1, service.getRecordingTrackId());
+  }
+  
+  @MediumTest
+  public void testIntegration_completeRecordingSession() throws Exception {
+    List<Track> tracks = providerUtils.getAllTracks();
+    assertTrue(tracks.isEmpty());
+    
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
+    assertFalse(service.isRecording());
+    
+    // Start a track.
+    long id = service.startNewTrack();
+    assertTrue(id >= 0);
+    assertTrue(service.isRecording());
+    Track track = providerUtils.getTrack(id);
+    assertNotNull(track);
+    assertEquals(id, track.getId());
+    assertEquals(id, sharedPreferences.getLong(
+        context.getString(R.string.recording_track_key), -1));
+    assertEquals(id, service.getRecordingTrackId());
+    
+    // Stop the track.  Validate if it has correct data.
+    service.endCurrentTrack();
+    assertFalse(service.isRecording());
+    assertEquals(-1, service.getRecordingTrackId());
+    track = providerUtils.getTrack(id);
+    assertNotNull(track);
+    assertEquals(id, track.getId());
+    TripStatistics tripStatistics = track.getStatistics();
+    assertNotNull(tripStatistics);
+    assertTrue(tripStatistics.getStartTime() > 0);
+    assertTrue(tripStatistics.getStopTime() >= tripStatistics.getStartTime());
   }
   
   @MediumTest
