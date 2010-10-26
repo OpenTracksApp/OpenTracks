@@ -27,6 +27,7 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
+import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.MyTracksUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
@@ -106,7 +107,7 @@ public class TrackRecordingService extends Service implements LocationListener {
   /**
    * Status announcer executer.
    */
-  private PeriodicTaskExecuter executer;
+  private PeriodicTaskExecuter announcementExecuter;
   private TaskExecuterManager signalManager;
   private SplitManager splitManager;
 
@@ -180,18 +181,6 @@ public class TrackRecordingService extends Service implements LocationListener {
    * The frequency of status announcements.
    */
   private int announcementFrequency = -1;
-
-  private static boolean mTTSAvailable;
-
-  /* establish whether the "new" class is available to us */
-  static {
-    try {
-      SafeStatusAnnouncerTask.checkAvailable();
-      mTTSAvailable = true;
-    } catch (Throwable t) {
-      mTTSAvailable = false;
-    }
-  }
 
   /*
    * Utility functions
@@ -645,17 +634,12 @@ public class TrackRecordingService extends Service implements LocationListener {
         (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
     splitManager = new SplitManager(this);
-    try {
-      signalManager =
-          new TaskExecuterManager(-1, new SignalStrengthTaskModern(this), this);
-      Log.d(MyTracksConstants.TAG,
-          "TrackRecordingService using modern signal strength api.");
-    } catch (LinkageError e) {
-      Log.w(MyTracksConstants.TAG,
-          "TrackRecordingService could not load modern signal strength.", e);
-      signalManager =
-          new TaskExecuterManager(-1, new SignalStrengthTask(this), this);
-    }
+
+    SignalStrengthTaskFactory strengthTaskFactory =
+        new SignalStrengthTaskFactory(ApiFeatures.getInstance());
+    signalManager =
+        new TaskExecuterManager(-1, strengthTaskFactory.create(this), this);
+
     prefManager = new PreferenceManager(this);
     prefManager.onSharedPreferenceChanged(null);
     registerLocationListener();
@@ -675,19 +659,23 @@ public class TrackRecordingService extends Service implements LocationListener {
     }
     showNotification();
   }
-  
+
   /**
    * Creates an {@link Executer} and schedules {@class SafeStatusAnnouncerTask}.
    * The announcer requires a TTS service and user should have enabled
    * the announcements, otherwise this method is no-op.
    */
   private void setUpAnnouncer() {
-    if (mTTSAvailable && announcementFrequency != -1) {
-      if (executer == null) {
-        SafeStatusAnnouncerTask announcer = new SafeStatusAnnouncerTask(this);
-        executer = new PeriodicTaskExecuter(announcer, this);
+    if (announcementFrequency != -1) {
+      if (announcementExecuter == null) {
+        StatusAnnouncerFactory statusAnnouncerFactory =
+            new StatusAnnouncerFactory(ApiFeatures.getInstance());
+        PeriodicTask announcer = statusAnnouncerFactory.create(this);
+        if (announcer == null) return;
+
+        announcementExecuter = new PeriodicTaskExecuter(announcer, this);
       }
-      executer.scheduleTask(announcementFrequency * 60000);
+      announcementExecuter.scheduleTask(announcementFrequency * 60000);
     }
   }
 
@@ -702,8 +690,8 @@ public class TrackRecordingService extends Service implements LocationListener {
     isRecording = false;
     showNotification();
     unregisterLocationListener();
-    if (executer != null) {
-      executer.shutdown();
+    if (announcementExecuter != null) {
+      announcementExecuter.shutdown();
     }
     splitManager.shutdown();
     super.onDestroy();
@@ -1014,15 +1002,13 @@ public class TrackRecordingService extends Service implements LocationListener {
 
   public void setAnnouncementFrequency(int announcementFrequency) {
     this.announcementFrequency = announcementFrequency;
-    if (mTTSAvailable) {
-      if (announcementFrequency == -1) {
-        if (executer != null) {
-          executer.shutdown();
-          executer = null;
-        }
-      } else {
-        setUpAnnouncer();
+    if (announcementFrequency == -1) {
+      if (announcementExecuter != null) {
+        announcementExecuter.shutdown();
+        announcementExecuter = null;
       }
+    } else {
+      setUpAnnouncer();
     }
   }
 

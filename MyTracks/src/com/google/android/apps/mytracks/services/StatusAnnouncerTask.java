@@ -26,6 +26,7 @@ import com.google.android.maps.mytracks.R;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
 
 import java.util.Locale;
@@ -35,8 +36,7 @@ import java.util.Locale;
  *
  * @author Sandor Dornbush
  */
-public class StatusAnnouncerTask
-    implements TextToSpeech.OnInitListener, PeriodicTask {
+public class StatusAnnouncerTask implements PeriodicTask {
 
   /**
    * The rate at which announcements are spoken.
@@ -56,12 +56,12 @@ public class StatusAnnouncerTask
   /**
    * The interface to the text to speech engine.
    */
-  private TextToSpeech tts = null;
+  private final TextToSpeech tts;
 
   /**
    * The response recieved from the TTS engine ater initialization.
    */
-  private int ttsStatus = TextToSpeech.ERROR;
+  private boolean ready = false;
 
   /**
    * Constructs the announcer and start the TTS engine.
@@ -70,19 +70,40 @@ public class StatusAnnouncerTask
     this.context = context;
     this.stringUtils = new StringUtils(context);
 
-    tts = new TextToSpeech(context, this);
-    // Force the language to be the same as the string we will be speaking.
-    tts.setLanguage(Locale.getDefault());
-    // Slow down the speed just a bit as it is hard to hear when exercising.
-    tts.setSpeechRate(TTS_SPEECH_RATE);
+    // We can't have this class also be the listener, otherwise it's unsafe to
+    // reference it in Cupcake (even if we don't instantiate it).
+    tts = new TextToSpeech(context, new OnInitListener() {
+      @Override
+      public void onInit(int status) {
+        onTtsInit(status);
+      }
+    });
   }
 
   /**
-   * Notifies that the tts engine is done with initialization.
+   * Called when the TTS engine is initialized.
    */
-  public void onInit(int status) {
-    this.ttsStatus = status;
+  private void onTtsInit(int status) {
     Log.i(MyTracksConstants.TAG, "TrackRecordingService.TTS init: " + status);
+    this.ready = (status == TextToSpeech.SUCCESS);
+
+    if (ready) {
+      // Force the language to be the same as the string we will be speaking,
+      // if that's available.
+      Locale speechLanguage = Locale.getDefault();
+      int languageAvailability = tts.isLanguageAvailable(speechLanguage);
+      if (languageAvailability == TextToSpeech.LANG_MISSING_DATA ||
+          languageAvailability == TextToSpeech.LANG_NOT_SUPPORTED) {
+        // English is probably supported
+        // TODO: Somehow use announcement strings from English too
+        Log.w(MyTracksConstants.TAG, "Default language not available, using English.");
+        speechLanguage = Locale.ENGLISH;
+      }
+      tts.setLanguage(speechLanguage);
+
+      // Slow down the speed just a bit as it is hard to hear when exercising.
+      tts.setSpeechRate(TTS_SPEECH_RATE);
+    }
   }
 
   /**
@@ -90,8 +111,8 @@ public class StatusAnnouncerTask
    */
   @Override
   public void run(TrackRecordingService service) {
-    if (ttsStatus != TextToSpeech.SUCCESS && tts != null) {
-      Log.e(MyTracksConstants.TAG, "StatusAnnouncer Tts not initialized.");
+    if (!ready) {
+      Log.e(MyTracksConstants.TAG, "StatusAnnouncer Tts not ready.");
       return;
     }
 
@@ -178,5 +199,9 @@ public class StatusAnnouncerTask
 
   @Override
   public void start() {
+  }
+
+  public static int getVolumeStream() {
+    return TextToSpeech.Engine.DEFAULT_STREAM;
   }
 }

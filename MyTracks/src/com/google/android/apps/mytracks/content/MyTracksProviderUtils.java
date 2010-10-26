@@ -175,7 +175,7 @@ public interface MyTracksProviderUtils {
    * @return A cursor over the selected range of locations
    */
   Cursor getWaypointsCursor(long trackId, long minWaypointId,
-      long maxWaypoints);
+      int maxWaypoints);
 
   /**
    * Finds a track by given unique track id.
@@ -205,32 +205,6 @@ public interface MyTracksProviderUtils {
    * @return the id of the last location in the track
    */
   long getTrackPoints(Track track, int maxPoints);
-
-  /**
-   * Fetches some number of locations for the given track.
-   *
-   * This is designed to be used to stream through large tracks without loading
-   * all points into memory.
-   *
-   * @param track to load locations for
-   * @param buffer an array of locations to fill
-   * @deprecated use {@link #fillTrackPoints} instead
-   */
-  @Deprecated
-  void getTrackPoints(Track track, TrackBuffer buffer);
-
-  /**
-   * Fetches some number of locations for the given track.
-   *
-   * This is designed to be used to stream through large tracks without loading
-   * all points into memory.
-   * This method will reuse the Location objects in the buffer.  If you need a
-   * Location object copy the object.
-   *
-   * @param track to load locations for
-   * @param buffer an array of locations to fill
-   */
-  void fillTrackPoints(Track track, TrackBuffer buffer);
 
   /**
    * Creates a cursor over the tracks provider with a given selection.
@@ -319,7 +293,7 @@ public interface MyTracksProviderUtils {
    * @return a new location object
    */
   Location createLocation(Cursor cursor);
-  
+
   /**
    * Fill a location object with values from a given cursor.
    * 
@@ -327,7 +301,7 @@ public interface MyTracksProviderUtils {
    * @param location a location object to be overwritten
    */
   void fillLocation(Cursor cursor, Location location);
-  
+
   /**
    * Creates a waypoint object from a given cursor.
    *

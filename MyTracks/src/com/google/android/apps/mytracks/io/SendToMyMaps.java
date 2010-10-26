@@ -25,7 +25,6 @@ import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.apps.mytracks.ProgressIndicator;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.TrackBuffer;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatistics;
@@ -44,142 +43,296 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.location.Location;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.util.Log;
-
-import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
+
+import org.xmlpull.v1.XmlPullParserException;
 
 /**
  * A helper class used to transmit tracks to Google MyMaps.
+ * A new instance should be used for each upload.
  *
  * @author Leif Hendrik Wilden
  */
-public class SendToMyMaps {
+public class SendToMyMaps implements Runnable {
 
+  public static final String NEW_MAP_ID = "new";
   private static final String END_ICON_URL =
       "http://maps.google.com/mapfiles/ms/micons/red-dot.png";
   private static final String START_ICON_URL =
       "http://maps.google.com/mapfiles/ms/micons/green-dot.png";
+  private static final int MAX_POINTS_PER_UPLOAD = 2048;
 
   private final Activity context;
   private final AuthManager auth;
   private final long trackId;
   private final ProgressIndicator progressIndicator;
+  private final OnSendCompletedListener onCompletion;
   private final StringUtils stringUtils;
   private final MyTracksProviderUtils providerUtils;
   private String mapId;
 
-  private String statusMessage = "";
-  private boolean success = true;
-  private Runnable onCompletion;
-
-  private HandlerThread handlerThread;
-  private Handler handler;
-
-  private String originalDescription;
-
+  // GData service
   private MyMapsGDataWrapper wrapper;
   private MyMapsGDataConverter gdataConverter;
 
-  private Location last = null;
+  // Progress status
+  private int totalLocationsRead;
+  private int totalLocationsPrepared;
+  private int totalLocationsUploaded;
+  private int totalLocations;
+  private int totalSegmentsUploaded;
 
-  private Vector<Double> distances;
-  private Vector<Double> elevations;
-  private DoubleBuffer elevationBuffer;
+  public interface OnSendCompletedListener {
+    void onSendCompleted(String mapId, boolean success, int statusMessage);
+  }
 
-  /**
-   * Prepares a buffer of locations for transmission to google maps.
-   *
-   * @param track the original track with meta data
-   * @param buffer a buffer of locations on the track
-   * @return an array of tracks each with a sub section of the points in the
-   *         original buffer
-   */
-  private ArrayList<Track> prepareLocations(Track track,
-                                            TrackBuffer buffer) {
-    ArrayList<Track> splitTracks = new ArrayList<Track>();
+  public SendToMyMaps(Activity context, String mapId, AuthManager auth,
+      long trackId, ProgressIndicator progressIndicator,
+      OnSendCompletedListener onCompletion) {
+    this.context = context;
+    this.mapId = mapId;
+    this.auth = auth;
+    this.trackId = trackId;
+    this.progressIndicator = progressIndicator;
+    this.onCompletion = onCompletion;
+    this.stringUtils = new StringUtils(context);
+    this.providerUtils = MyTracksProviderUtils.Factory.get(context);
+  }
 
-    // Create segments from each full track:
-    Track segment = new Track();
-    TripStatistics segmentStats = segment.getStatistics();
-    TripStatistics trackStats = track.getStatistics();
-    segment.setId(track.getId());
-    segment.setName(track.getName());
-    segment.setDescription(/* track.getDescription() */ "");
-    segment.setCategory(track.getCategory());
-    segmentStats.setStartTime(trackStats.getStartTime());
-    segmentStats.setStopTime(trackStats.getStopTime());
-    boolean startNewTrackSegment = false;
-    for (int i = 0; i < buffer.getLocationsLoaded(); ++i) {
-      Location loc = buffer.get(i);
-      if (loc.getLatitude() > 90) {
-        startNewTrackSegment = true;
+  @Override
+  public void run() {
+    Log.d(MyTracksConstants.TAG, "Sending to MyMaps: trackId = " + trackId);
+    doUpload();
+  }
+
+  private void doUpload() {
+    int statusMessageId = R.string.error_sending_to_mymap;
+    boolean success = true;
+    try {
+      gdataConverter = new MyMapsGDataConverter();
+  
+      progressIndicator.setProgressValue(1);
+      progressIndicator.setProgressMessage(
+          R.string.progress_message_reading_track);
+  
+      // Get the track meta-data
+      Track track = providerUtils.getTrack(trackId);
+      String originalDescription = track.getDescription();
+      track.setDescription("<p>" + track.getDescription() + "</p><p>"
+          + stringUtils.generateTrackDescription(track, null, null) + "</p>");
+      wrapper = new MyMapsGDataWrapper(context);
+      wrapper.setAuthManager(auth);
+      wrapper.setRetryOnAuthFailure(true);
+  
+      // Create a new map if necessary:
+      boolean isNewMap = mapId.equals(NEW_MAP_ID);
+      if (isNewMap) {
+        success = createNewMap(track, originalDescription);
       }
-
-      if (startNewTrackSegment) {
-        // Close up the last segment.
-        prepareTrackSegment(segment, splitTracks);
-
-        Log.d(MyTracksConstants.TAG,
-            "MyTracksSendToMyMaps: Starting new track segment...");
-        startNewTrackSegment = false;
-        segment = new Track();
-        segment.setId(track.getId());
-        segment.setName(track.getName());
-        segment.setDescription(/* track.getDescription() */ "");
-        segment.setCategory(track.getCategory());
+  
+      // Upload all of the segments of the track plus start/end markers
+      if (success) {
+        success = uploadAllTrackPoints(track, originalDescription);
       }
-
-      if (loc.getLatitude() <= 90) {
-        segment.addLocation(loc);
-        if (segmentStats.getStartTime() < 0) {
-          segmentStats.setStartTime(loc.getTime());
+  
+      // Put waypoints.
+      if (success) {
+        success = uploadWaypoints(track);
+        if (!success) {
+          Log.w(MyTracksConstants.TAG,
+              "SendToMyMaps: upload waypoints failed.");
         }
       }
+  
+      if (success) {
+        statusMessageId = isNewMap
+            ? R.string.status_new_mymap_has_been_created
+            : R.string.status_tracks_have_been_uploaded;
+      }
+      Log.d(MyTracksConstants.TAG, "SendToMyMaps: Done: " + success);
+      progressIndicator.setProgressValue(100);
+    } catch (XmlPullParserException e) {
+      Log.e(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
+    } finally {
+      if (wrapper != null) {
+        wrapper.cleanUp();
+      }
+  
+      final boolean finalSuccess = success;
+      final int finalStatusMessageId = statusMessageId;
+      context.runOnUiThread(new Runnable() {
+        public void run() {
+          if (onCompletion != null) {
+            onCompletion.onSendCompleted(
+                mapId, finalSuccess, finalStatusMessageId);
+          }
+        }
+      });
     }
-
-    prepareTrackSegment(segment, splitTracks);
-
-    return splitTracks;
   }
 
   /**
-   * Prepares a track segment for sending to google maps.
-   * The main steps are:
-   *  - correcting end time
-   *  - decimating locations
-   *  - splitting into smaller tracks.
+   * Creates a new map for the given track.
    *
-   *  The final track pieces will be put in the array list splitTracks.
-   *
-   * @param segment the original segment of the track
-   * @param splitTracks an array of smaller track segments
+   * @param track The track that will be uploaded to this map
+   * @return True on success.
    */
-  private void prepareTrackSegment(
-      Track segment, ArrayList<Track> splitTracks) {
-    TripStatistics segmentStats = segment.getStatistics();
-    if (segmentStats.getStopTime() < 0
-        && segment.getLocations().size() > 0) {
-      segmentStats.setStopTime(segment.getLocations().size() - 1);
+  private boolean createNewMap(final Track track, final String description) {
+    progressIndicator.setProgressMessage(
+        R.string.progress_message_creating_map);
+    return wrapper.runQuery(new QueryFunction() {
+      @Override
+      public void query(MapsClient client) throws IOException, Exception {
+        Log.d(MyTracksConstants.TAG, "Creating a new map.");
+        String mapFeed = MapsClient.getMapsFeed();
+        Log.d(MyTracksConstants.TAG, "Map feed is " + mapFeed);
+        MyMapsMapMetadata metaData = new MyMapsMapMetadata();
+        metaData.setTitle(track.getName());
+        metaData.setDescription(description + " - "
+            + track.getCategory() + " - "
+            + context.getString(R.string.new_map_description));
+        SharedPreferences preferences = context.getSharedPreferences(
+            MyTracksSettings.SETTINGS_NAME, 0);
+        boolean mapPublic = true;
+        if (preferences != null) {
+          mapPublic = preferences.getBoolean(
+              context.getString(R.string.default_map_public_key), true);
+        }
+        metaData.setSearchable(mapPublic);
+        Entry entry = MyMapsGDataConverter.getMapEntryForMetadata(metaData);
+        Log.d(MyTracksConstants.TAG, "Title: " + entry.getTitle());
+        Entry map = client.createEntry(mapFeed, auth.getAuthToken(), entry);
+        mapId = MapsClient.getMapIdFromMapEntryId(map.getId());
+        Log.d(MyTracksConstants.TAG, "New map id is: " + mapId);
+      }
+    });
+  }
+
+  private boolean uploadAllTrackPoints(
+      final Track track, String originalDescription) {
+    SharedPreferences preferences = context.getSharedPreferences(
+        MyTracksSettings.SETTINGS_NAME, 0);
+    boolean metricUnits = true;
+    if (preferences != null) {
+      metricUnits =
+          preferences.getBoolean(context.getString(R.string.metric_units_key),
+              true);
     }
 
-    /*
-     * Decimate to 2 meter precision. Mapshop doesn't like too many
-     * points:
-     */
-    MyTracksUtils.decimate(segment, 2.0);
-
-    /* It the track still has > 500 points, split it in pieces: */
-    if (segment.getLocations().size() > 500) {
-      splitTracks.addAll(MyTracksUtils.split(segment, 500));
-    } else if (segment.getLocations().size() >= 2) {
-      splitTracks.add(segment);
+    Cursor locationsCursor =
+        providerUtils.getLocationsCursor(track.getId(), 0, -1, false);
+    try {
+      if (!locationsCursor.moveToFirst()) {
+        Log.w(MyTracksConstants.TAG, "Unable to get any points to upload");
+        return false;
+      }
+  
+      totalLocationsRead = 0;
+      totalLocationsPrepared = 0;
+      totalLocationsUploaded = 0;
+      totalLocations = locationsCursor.getCount();
+      totalSegmentsUploaded = 0;
+  
+      // Limit the number of elevation readings. Ideally we would want around 250.
+      int elevationSamplingFrequency =
+          Math.max(1, (int) (totalLocations / 250.0));
+      Log.d(MyTracksConstants.TAG,
+            "Using elevation sampling factor: " + elevationSamplingFrequency
+            + " on " + totalLocations);
+      double totalDistance = 0;
+  
+      Vector<Double> distances = new Vector<Double>();
+      Vector<Double> elevations = new Vector<Double>();
+      DoubleBuffer elevationBuffer =
+          new DoubleBuffer(MyTracksConstants.ELEVATION_SMOOTHING_FACTOR);
+  
+      List<Location> locations = new ArrayList<Location>(MAX_POINTS_PER_UPLOAD);
+      progressIndicator.setProgressMessage(
+          R.string.progress_message_reading_track);
+      Location lastLocation = null;
+      do {
+        if (totalLocationsRead % 100 == 0) {
+          updateProgress();
+        }
+  
+        Location loc = providerUtils.createLocation(locationsCursor);
+        locations.add(loc);
+  
+        if (totalLocationsRead == 0) {
+          // Put a marker at the first point of the first valid segment:
+          uploadMarker(track, loc, true);
+        }
+  
+        // Add to the elevation profile.
+        if (loc != null && MyTracksUtils.isValidLocation(loc)) {
+          // All points go into the smoothing buffer...
+          elevationBuffer.setNext(metricUnits ? loc.getAltitude()
+              : loc.getAltitude() * UnitConversions.M_TO_FT);
+          if (lastLocation != null) {
+            double dist = lastLocation.distanceTo(loc);
+            totalDistance += dist;
+          }
+  
+          // ...but only a few points are really used to keep the url short.
+          if (totalLocationsRead % elevationSamplingFrequency == 0) {
+            distances.add(totalDistance);
+            elevations.add(elevationBuffer.getAverage());
+          }
+        }
+  
+        // If the location was not valid, it's a segment split, so make sure the
+        // distance between the previous segment and the new one is not accounted
+        // for in the next iteration.
+        lastLocation = loc;
+  
+        // Every now and then, upload the accumulated points
+        if (totalLocationsRead % MAX_POINTS_PER_UPLOAD
+            == MAX_POINTS_PER_UPLOAD - 1) {
+          if (!prepareAndUploadPoints(track, locations)) {
+            return false;
+          }
+        }
+  
+        totalLocationsRead++;
+      } while (locationsCursor.moveToNext());
+  
+      // Do a final upload with what's left
+      if (!prepareAndUploadPoints(track, locations)) {
+        return false;
+      }
+  
+      // Put an end marker at the last point of the last valid segment:
+      if (lastLocation != null) {
+        track.setDescription("<p>" + originalDescription + "</p><p>"
+            + stringUtils.generateTrackDescription(
+                track, distances, elevations)
+            + "</p>");
+        return uploadMarker(track, lastLocation, false);
+      }
+  
+      return true;
+    } finally {
+      locationsCursor.close();
     }
+  }
+
+  private boolean uploadMarker(final Track track,
+                               final Location location,
+                               final boolean isStart) {
+    boolean okay = wrapper.runQuery(new QueryFunction() {
+      @Override
+      public void query(MapsClient client)
+          throws AuthenticationException, IOException, Exception {
+        String featureFeed = MapsClient.getFeaturesFeed(mapId);
+        insertMarker(context, client, featureFeed, track, location, isStart);
+      }
+    });
+    return okay;
   }
 
   /**
@@ -206,216 +359,197 @@ public class SendToMyMaps {
     }
   }
 
-  private boolean uploadMarker(final Track track,
-                               final Location location,
-                               final boolean isStart) {
-    boolean okay = wrapper.runQuery(new QueryFunction() {
-      @Override
-      public void query(MapsClient client)
-          throws AuthenticationException, IOException, Exception {
-        String featureFeed = MapsClient.getFeaturesFeed(mapId);
-        insertMarker(context, client, featureFeed, track, location, isStart);
-      }
-    });
-    return okay;
-  }
-
   /**
-   * Sets the current upload progress.
+   * Builds a placemark MyMapsFeature from a track.
    *
-   * @param track The track being uploaded
-   * @param totalLocationsRead The total number of locations already read and
-   *        uploaded
-   * @param segmentSize The percent of total that each segment corresponds to
-   * @param progressInSegment The approximate progress in this segment
+   * @param track the track
+   * @param isStart true if it's the start of the track, or false for end
+   * @return a MyMapsFeature
    */
-  private void setProgress(final Track track, int totalLocationsRead,
-                           double segmentSize, double progressInSegment) {
-    long totalLocations = track.getStopId() - track.getStartId();
-
-    // The percent of the total that represents the completed part of this
-    // segment.
-    double percentSegmentInTotal = (segmentSize * progressInSegment);
-
-    int progress = (int) ((100.0 * totalLocationsRead / totalLocations)
-        + percentSegmentInTotal);
-    progress = Math.min(99, progress);
-    progressIndicator.setProgressValue(progress);
+  private static MyMapsFeature buildMyMapsPlacemarkFeature(Context context,
+      Track track, Location loc, boolean isStart) {
+    MyMapsFeature myMapsFeature = new MyMapsFeature();
+    myMapsFeature.generateAndroidId();
+    myMapsFeature.setType(MyMapsFeature.MARKER);
+    if (isStart) {
+      myMapsFeature.setIconUrl(START_ICON_URL);
+    } else {
+      myMapsFeature.setIconUrl(END_ICON_URL);
+    }
+    myMapsFeature.addPoint(MyTracksUtils.getGeoPoint(loc));
+    String name = track.getName() + " "
+        + (isStart ? context.getString(R.string.start)
+                   : context.getString(R.string.end));
+    myMapsFeature.setTitle(name);
+    myMapsFeature.setDescription(isStart ? "" : track.getDescription());
+    return myMapsFeature;
   }
 
-  private boolean uploadAllTrackPoints(final Track track) {
-    int totalLocationsRead = 0;
-    // TODO: This might not actually be accurate.
-    long totalLocations = track.getStopId() - track.getStartId();
-
-    // Limit the number of elevation readings. Ideally we would want around 250.
-    int elevationSamplingFrequency =
-        Math.max(1, (int) (totalLocations / 250.0));
-    Log.d(MyTracksConstants.TAG,
-          "Using elevation sampling factor: " + elevationSamplingFrequency
-          + " on " + totalLocations);
-    double totalDistance = 0;
-    Location lastLocation = null;
-
-    TrackBuffer buffer = new TrackBuffer((int) Math.min(2048, totalLocations));
-    int part = 1;
-
-    SharedPreferences preferences = context.getSharedPreferences(
-        MyTracksSettings.SETTINGS_NAME, 0);
-    boolean metricUnits = true;
-    if (preferences != null) {
-      metricUnits =
-          preferences.getBoolean(context.getString(R.string.metric_units_key),
-              true);
+  private boolean prepareAndUploadPoints(Track track, List<Location> locations) {
+    progressIndicator.setProgressMessage(
+        R.string.progress_message_preparing_track);
+    updateProgress();
+  
+    int numLocations = locations.size();
+    if (numLocations < 2) {
+      Log.d(MyTracksConstants.TAG, "Not preparing/uploading too few points");
+      totalLocationsUploaded += numLocations;
+      return true;
     }
-
-    // For the progress monitor:
-    // For each track segment 33% = read, 33% = prep & 33% = upload
-    // Note: These numbers are very rough.
-
-    // The size of each segment in the 100% progress
-    double segmentSize = buffer.getSize() * 100.0 / totalLocations;
-    while (success && buffer.getLastLocationRead() < track.getStopId()) {
-      setProgress(track, totalLocationsRead, segmentSize, 0.0);
-      progressIndicator.setProgressMessage(
-          context.getString(R.string.progress_message_reading_track));
-
-      providerUtils.getTrackPoints(track, buffer);
-      if (buffer.getLocationsLoaded() <= 0) {
-         continue;
+  
+    // Prepare/pre-process the points
+    ArrayList<Track> splitTracks = prepareLocations(track, locations);
+  
+    // Start uploading them
+    progressIndicator.setProgressMessage(
+        R.string.progress_message_sending_mymaps);
+    for (Track splitTrack : splitTracks) {
+      if (totalSegmentsUploaded > 1) {
+        splitTrack.setName(splitTrack.getName() + " "
+            + String.format(
+                context.getString(R.string.part), totalSegmentsUploaded));
       }
-      if (totalLocationsRead == 0) {
-        // Put a marker at the first point of the first valid segment:
-        uploadMarker(track, buffer.get(0), true);
+      totalSegmentsUploaded++;
+      Log.d(MyTracksConstants.TAG,
+          "SendToMyMaps: Prepared feature for upload w/ "
+          + splitTrack.getLocations().size() + " points.");
+  
+      // Transmit tracks via GData feed:
+      // -------------------------------
+      Log.d(MyTracksConstants.TAG,
+            "SendToMyMaps: Uploading to map " + mapId + " w/ auth " + auth);
+      if (!uploadTrackPoints(splitTrack)) {
+        Log.e(MyTracksConstants.TAG, "Uploading failed");
+        return false;
       }
-      last = buffer.get(buffer.getLocationsLoaded() - 1);
-
-      // Extract the elevation profile.
-      for (int i = 0; i < buffer.getLocationsLoaded(); i++) {
-        // Add all points to the smoothing buffer.
-        Location l = buffer.get(i);
-        if (l != null && MyTracksUtils.isValidLocation(l)) {
-          elevationBuffer.setNext(metricUnits ? l.getAltitude()
-              : l.getAltitude() * UnitConversions.M_TO_FT);
-          if (lastLocation != null) {
-            double dist = lastLocation.distanceTo(l);
-            totalDistance += dist;
-          }
-          lastLocation = l;
-
-          // Only add some data points to keep the url short.
-          if (i % elevationSamplingFrequency == 0) {
-            distances.add(totalDistance);
-            elevations.add(elevationBuffer.getAverage());
-          }
-        }
-      }
-
-      setProgress(track, totalLocationsRead, segmentSize, 0.3333);
-      progressIndicator.setProgressMessage(
-          context.getString(R.string.progress_message_preparing_track));
-
-      ArrayList<Track> splitTracks = prepareLocations(track, buffer);
-
-      int i = 0;
-      for (Track t : splitTracks) {
-        if (part > 1) {
-          t.setName(t.getName() + " "
-              + String.format(context.getString(R.string.part), part));
-        }
-        part++;
-        Log.d(MyTracksConstants.TAG,
-            "SendToMyMaps: Prepared feature for upload w/ "
-            + t.getLocations().size() + " points.");
-
-        //
-        // Transmit tracks via GData feed:
-        // -------------------------------
-        Log.d(MyTracksConstants.TAG,
-              "SendToMyMaps: Uploading to map " + mapId + " w/ auth " + auth);
-        if (!uploadTrackPoints(track, t,
-                               totalLocationsRead, segmentSize)) {
-          success = false;
-          return false;
-        }
-        i++;
-      }
-      totalLocationsRead += buffer.getLocationsLoaded();
     }
-
+  
+    locations.clear();
+    totalLocationsUploaded += numLocations;
+    updateProgress();
     return true;
   }
 
   /**
-   * Uploads a given list of tracks to Google MyMaps using the maps GData feed.
+   * Prepares a buffer of locations for transmission to google maps.
    *
-   * @param track the track meta-data is used for the map name
+   * @param track the original track with meta data
+   * @param buffer a buffer of locations on the track
+   * @return an array of tracks each with a sub section of the points in the
+   *         original buffer
    */
-  private boolean uploadTrackPoints(final Track track, final Track currentTrack,
-      int totalLocationsRead, double segmentSize) {
-    setProgress(track, totalLocationsRead, segmentSize, 0.6666);
-    progressIndicator.setProgressMessage(
-        context.getString(R.string.progress_message_sending_mymaps));
+  private ArrayList<Track> prepareLocations(
+      Track track, Iterable<Location> locations) {
+    ArrayList<Track> splitTracks = new ArrayList<Track>();
+  
+    // Create segments from each full track:
+    Track segment = new Track();
+    TripStatistics segmentStats = segment.getStatistics();
+    TripStatistics trackStats = track.getStatistics();
+    segment.setId(track.getId());
+    segment.setName(track.getName());
+    segment.setDescription(/* track.getDescription() */ "");
+    segment.setCategory(track.getCategory());
+    segmentStats.setStartTime(trackStats.getStartTime());
+    segmentStats.setStopTime(trackStats.getStopTime());
+    boolean startNewTrackSegment = false;
+    for (Location loc : locations) {
+      if (totalLocationsPrepared % 100 == 0) {
+        updateProgress();
+      }
+      if (loc.getLatitude() > 90) {
+        startNewTrackSegment = true;
+      }
+  
+      if (startNewTrackSegment) {
+        // Close up the last segment.
+        prepareTrackSegment(segment, splitTracks);
+  
+        Log.d(MyTracksConstants.TAG,
+            "MyTracksSendToMyMaps: Starting new track segment...");
+        startNewTrackSegment = false;
+        segment = new Track();
+        segment.setId(track.getId());
+        segment.setName(track.getName());
+        segment.setDescription(/* track.getDescription() */ "");
+        segment.setCategory(track.getCategory());
+      }
+  
+      if (loc.getLatitude() <= 90) {
+        segment.addLocation(loc);
+        if (segmentStats.getStartTime() < 0) {
+          segmentStats.setStartTime(loc.getTime());
+        }
+      }
+      totalLocationsPrepared++;
+    }
+  
+    prepareTrackSegment(segment, splitTracks);
+  
+    return splitTracks;
+  }
+
+  /**
+   * Prepares a track segment for sending to google maps.
+   * The main steps are:
+   *  - correcting end time
+   *  - decimating locations
+   *  - splitting into smaller tracks.
+   *
+   *  The final track pieces will be put in the array list splitTracks.
+   *
+   * @param segment the original segment of the track
+   * @param splitTracks an array of smaller track segments
+   */
+  private void prepareTrackSegment(
+      Track segment, ArrayList<Track> splitTracks) {
+    TripStatistics segmentStats = segment.getStatistics();
+    if (segmentStats.getStopTime() < 0
+        && segment.getLocations().size() > 0) {
+      segmentStats.setStopTime(segment.getLocations().size() - 1);
+    }
+  
+    /*
+     * Decimate to 2 meter precision. Mapshop doesn't like too many
+     * points:
+     */
+    MyTracksUtils.decimate(segment, 2.0);
+  
+    /* It the track still has > 500 points, split it in pieces: */
+    if (segment.getLocations().size() > 500) {
+      splitTracks.addAll(MyTracksUtils.split(segment, 500));
+    } else if (segment.getLocations().size() >= 2) {
+      splitTracks.add(segment);
+    }
+  }
+
+  /**
+   * Uploads a given list of tracks to Google MyMaps using the maps GData feed.
+   */
+  private boolean uploadTrackPoints(final Track track) {
     return wrapper.runQuery(new QueryFunction() {
       @Override
       public void query(MapsClient client)
           throws AuthenticationException, IOException, Exception {
         String featureFeed = MapsClient.getFeaturesFeed(mapId);
         Log.d(MyTracksConstants.TAG, "Feature feed url: " + featureFeed);
-        uploadTrackPoints(track, currentTrack, client, featureFeed);
+        uploadTrackPoints(track, client, featureFeed);
       }
     });
   }
 
-  /**
-   * Creates a new map for the given track.
-   *
-   * @param track The track that will be uploaded to this map
-   * @return True on success.
-   */
-  private boolean createNewMap(final Track track) {
-    progressIndicator.setProgressMessage(context
-        .getString(R.string.progress_message_creating_map));
-    return wrapper.runQuery(new QueryFunction() {
-      @Override
-      public void query(MapsClient client) throws IOException, Exception {
-        Log.d(MyTracksConstants.TAG, "Creating a new map.");
-        String mapFeed = MapsClient.getMapsFeed();
-        Log.d(MyTracksConstants.TAG, "Map feed is " + mapFeed);
-        MyMapsMapMetadata metaData = new MyMapsMapMetadata();
-        metaData.setTitle(track.getName());
-        metaData.setDescription(originalDescription + " - "
-            + track.getCategory() + " - "
-            + context.getString(R.string.new_map_description));
-        SharedPreferences preferences = context.getSharedPreferences(
-            MyTracksSettings.SETTINGS_NAME, 0);
-        boolean mapPublic = true;
-        if (preferences != null) {
-          mapPublic = preferences.getBoolean(
-              context.getString(R.string.default_map_public_key), true);
-        }
-        metaData.setSearchable(mapPublic);
-        Entry entry = MyMapsGDataConverter.getMapEntryForMetadata(metaData);
-        Log.d(MyTracksConstants.TAG, "Title: " + entry.getTitle());
-        Entry map = client.createEntry(mapFeed, auth.getAuthToken(), entry);
-        mapId = MapsClient.getMapIdFromMapEntryId(map.getId());
-        Log.d(MyTracksConstants.TAG, "New map id is: " + mapId);
-      }
-    });
-  }
-
-  private boolean uploadTrackPoints(final Track track,
-                                    Track splitTrack,
+  private boolean uploadTrackPoints(Track splitTrack,
                                     MapsClient client,
                                     String featureFeed)
       throws IOException, Exception  {
     Entry entry = null;
-    if (splitTrack.getId() != track.getId()
-        || splitTrack.getLocations().size() < 2) {
+    int numLocations = splitTrack.getLocations().size();
+    if (numLocations < 2) {
       // Need at least two points for a polyline:
+      Log.w(MyTracksConstants.TAG, "Not uploading too few points");
       return true;
     }
-
+  
     // Put the line:
     entry = gdataConverter.getEntryForFeature(
         buildMyMapsLineFeature(splitTrack));
@@ -433,6 +567,29 @@ public class SendToMyMaps {
           "SendToMyMaps: createEntry success on 2nd try!");
     }
     return true;
+  }
+
+  /**
+   * Builds a MyMapsFeature from a track.
+   *
+   * @param track the track
+   * @return a MyMapsFeature
+   */
+  private static MyMapsFeature buildMyMapsLineFeature(Track track) {
+    MyMapsFeature myMapsFeature = new MyMapsFeature();
+    myMapsFeature.generateAndroidId();
+    myMapsFeature.setType(MyMapsFeature.LINE);
+    if (track.getName().length() < 1) {
+      // Features must have a name (otherwise GData upload may fail):
+      myMapsFeature.setTitle("-");
+    } else {
+      myMapsFeature.setTitle(track.getName());
+    }
+    myMapsFeature.setColor(0x80FF0000);
+    for (Location loc : track.getLocations()) {
+      myMapsFeature.addPoint(MyTracksUtils.getGeoPoint(loc));
+    }
+    return myMapsFeature;
   }
 
   /**
@@ -472,7 +629,7 @@ public class SendToMyMaps {
                 } catch (IOException e) {
                   Log.w(MyTracksConstants.TAG,
                       "SendToMyMaps: createEntry 1st try failed. Retrying.");
-
+  
                   // Retry once (often IOException is thrown on a timeout):
                   client.createEntry(featureFeed, auth.getAuthToken(), entry);
                   Log.d(MyTracksConstants.TAG,
@@ -492,185 +649,6 @@ public class SendToMyMaps {
         }
       }
     });
-  }
-
-  public SendToMyMaps(Activity context, String mapId, AuthManager auth,
-      long trackId, ProgressIndicator progressIndicator) {
-    this.context = context;
-    this.mapId = mapId;
-    this.auth = auth;
-    this.trackId = trackId;
-    this.progressIndicator = progressIndicator;
-    this.stringUtils = new StringUtils(context);
-    this.providerUtils = MyTracksProviderUtils.Factory.get(context);
-
-    Log.d(MyTracksConstants.TAG, "Sending to MyMap: trackId = " + trackId);
-    handlerThread = new HandlerThread("SendToMyMaps");
-    handlerThread.start();
-    handler = new Handler(handlerThread.getLooper());
-  }
-
-  public void run() {
-    handler.post(new Runnable() {
-      @Override
-      public void run() {
-        doUpload();
-      }
-    });
-  }
-
-  public void setOnCompletion(Runnable onCompletion) {
-    this.onCompletion = onCompletion;
-  }
-
-  public String getMapId() {
-    return mapId;
-  }
-
-  public boolean wasSuccess() {
-    return success;
-  }
-
-  public String getStatusMessage() {
-    return statusMessage;
-  }
-
-  private void doUpload() {
-    statusMessage = context.getString(R.string.error_sending_to_mymap);
-    success = true;
-    try {
-      gdataConverter = new MyMapsGDataConverter();
-
-      progressIndicator.setProgressValue(1);
-      progressIndicator.setProgressMessage(
-          context.getString(R.string.progress_message_reading_track));
-
-      // Get the track meta-data
-      Track track = providerUtils.getTrack(trackId);
-      originalDescription = track.getDescription();
-      track.setDescription("<p>" + track.getDescription() + "</p><p>"
-          + stringUtils.generateTrackDescription(track, null, null) + "</p>");
-      wrapper = new MyMapsGDataWrapper(context);
-      wrapper.setAuthManager(auth);
-      wrapper.setRetryOnAuthFailure(true);
-
-      distances = new Vector<Double>();
-      elevations = new Vector<Double>();
-      elevationBuffer =
-          new DoubleBuffer(MyTracksConstants.ELEVATION_SMOOTHING_FACTOR);
-
-      // Create a new map if necessary:
-      if (mapId.equals("new")) {
-        if (!createNewMap(track)) {
-          success = false;
-        }
-      }
-
-      // Upload all of the segments of the track.
-      if (success) {
-        if (!uploadAllTrackPoints(track)) {
-          success = false;
-        }
-      }
-
-      // Start end end markers.
-      if (success) {
-      // Put an end marker at the last point of the last valid segment:
-        if (last != null) {
-          track.setDescription("<p>" + originalDescription + "</p><p>"
-              + stringUtils.generateTrackDescription(
-                  track, distances, elevations)
-              + "</p>");
-          if (!uploadMarker(track, last, false)) {
-            success = false;
-          }
-        }
-      }
-
-      // Put waypoints.
-      if (success) {
-        if (!uploadWaypoints(track)) {
-          Log.w(MyTracksConstants.TAG,
-              "SendToMyMaps: upload waypoints failed.");
-          success = false;
-        }
-      }
-
-      if (success) {
-        if (mapId.equals("new")) {
-          statusMessage =
-              context.getString(R.string.status_new_mymap_has_been_created);
-        } else {
-          statusMessage =
-              context.getString(R.string.status_tracks_have_been_uploaded);
-        }
-      }
-      Log.d(MyTracksConstants.TAG, "SendToMyMaps: Done: " + success);
-      progressIndicator.setProgressValue(100);
-    } catch (XmlPullParserException e) {
-      Log.e(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
-    } finally {
-      if (wrapper != null) {
-        wrapper.cleanUp();
-      }
-
-      context.runOnUiThread(new Runnable() {
-        public void run() {
-          if (onCompletion != null) {
-            onCompletion.run();
-          }
-        }
-      });
-    }
-  }
-
-  /**
-   * Builds a MyMapsFeature from a track.
-   *
-   * @param track the track
-   * @return a MyMapsFeature
-   */
-  private static MyMapsFeature buildMyMapsLineFeature(Track track) {
-    MyMapsFeature myMapsFeature = new MyMapsFeature();
-    myMapsFeature.generateAndroidId();
-    myMapsFeature.setType(MyMapsFeature.LINE);
-    if (track.getName().length() < 1) {
-      // Features must have a name (otherwise GData upload may fail):
-      myMapsFeature.setTitle("-");
-    } else {
-      myMapsFeature.setTitle(track.getName());
-    }
-    myMapsFeature.setColor(0x80FF0000);
-    for (Location loc : track.getLocations()) {
-      myMapsFeature.addPoint(MyTracksUtils.getGeoPoint(loc));
-    }
-    return myMapsFeature;
-  }
-
-  /**
-   * Builds a placemark MyMapsFeature from a track.
-   *
-   * @param track the track
-   * @param isStart true if it's the start of the track, or false for end
-   * @return a MyMapsFeature
-   */
-  private static MyMapsFeature buildMyMapsPlacemarkFeature(Context context,
-      Track track, Location loc, boolean isStart) {
-    MyMapsFeature myMapsFeature = new MyMapsFeature();
-    myMapsFeature.generateAndroidId();
-    myMapsFeature.setType(MyMapsFeature.MARKER);
-    if (isStart) {
-      myMapsFeature.setIconUrl(START_ICON_URL);
-    } else {
-      myMapsFeature.setIconUrl(END_ICON_URL);
-    }
-    myMapsFeature.addPoint(MyTracksUtils.getGeoPoint(loc));
-    String name = track.getName() + " "
-        + (isStart ? context.getString(R.string.start)
-                   : context.getString(R.string.end));
-    myMapsFeature.setTitle(name);
-    myMapsFeature.setDescription(isStart ? "" : track.getDescription());
-    return myMapsFeature;
   }
 
   /**
@@ -694,5 +672,18 @@ public class SendToMyMaps {
     }
     myMapsFeature.setDescription(wpt.getDescription().replaceAll("\n", "<br>"));
     return myMapsFeature;
+  }
+
+  /**
+   * Sets the current upload progress.
+   */
+  private void updateProgress() {
+    // The percent of the total that represents the completed part of this
+    // segment.
+    int totalPercentage =
+        (totalLocationsRead + totalLocationsPrepared + totalLocationsUploaded)
+        / (totalLocations * 3);
+    totalPercentage = Math.min(99, totalPercentage);
+    progressIndicator.setProgressValue(totalPercentage);
   }
 }

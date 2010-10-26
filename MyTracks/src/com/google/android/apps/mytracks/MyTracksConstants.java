@@ -15,8 +15,6 @@
  */
 package com.google.android.apps.mytracks;
 
-import android.os.Build;
-
 /**
  * Constants used by the MyTracks application.
  *
@@ -39,11 +37,6 @@ public abstract class MyTracksConstants {
    * be read from/written to.
    */
   public static final String SDCARD_TOP_DIR = "MyTracks";
-
-  /**
-   * The API level of the Android version we're being run under.
-   */
-  public static final int ANDROID_API_LEVEL = Integer.parseInt(Build.VERSION.SDK);
 
   /*
    * onActivityResult request codes:

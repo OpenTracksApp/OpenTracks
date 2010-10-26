@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.io.backup;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.util.ApiFeatures;
 
 import android.app.backup.BackupManager;
 import android.content.Context;
@@ -66,8 +66,9 @@ public abstract class BackupPreferencesListener
   /**
    * Creates and returns a proper instance of the listener for this device.
    */
-  public static BackupPreferencesListener create(Context context) {
-    if (MyTracksConstants.ANDROID_API_LEVEL >= 8) {
+  public static BackupPreferencesListener create(
+      Context context, ApiFeatures apiFeatures) {
+    if (apiFeatures.hasBackup()) {
       return new BackupPreferencesListenerImpl(context);
     } else {
       return new DummyBackupPreferencesListener();

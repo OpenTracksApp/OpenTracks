@@ -102,7 +102,7 @@ public class TrackWriterFactory {
    * @param format the output format to write in
    * @return the new track writer
    */
-  public static TrackWriter newWriter(Context context,
+  private static TrackWriter newWriter(Context context,
       MyTracksProviderUtils providerUtils,
       Track track, TrackFileFormat format) {
     TrackFormatWriter writer = format.newFormatWriter(context);

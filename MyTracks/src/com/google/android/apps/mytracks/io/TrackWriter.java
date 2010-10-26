@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.io;
 import com.google.android.apps.mytracks.MyTracksConstants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.TrackBuffer;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.MyTracksUtils;
@@ -254,60 +253,75 @@ public class TrackWriter {
   void writeDocument() {
     Log.d(MyTracksConstants.TAG, "Started writing track.");
     writer.writeHeader();
-    TrackBuffer buffer = new TrackBuffer(1024);
-    Location last = null;
-    boolean wroteFirst = false;
-    boolean segmentOpen = false;
-    int nValidLocations = 0;
-
-    // Fetch small pieces of the track.
-    while (buffer.getLastLocationRead() < track.getStopId()) {
-      Log.d(MyTracksConstants.TAG,
-          "Reading track points starting at: " + buffer.getLastLocationRead());
-      providerUtils.fillTrackPoints(track, buffer);
-      if (!wroteFirst) {
-        Location first = buffer.findStartLocation();
-        writer.writeBeginTrack(first);
-        wroteFirst = true;
-      }
-
-      Log.d(MyTracksConstants.TAG,
-            "Reading " + buffer.getLocationsLoaded()
-            + " Ending at: " + buffer.getLastLocationRead());
-      for (int i = 0; i < buffer.getLocationsLoaded(); i++) {
-        Location location = buffer.get(i);
-        if (MyTracksUtils.isValidLocation(location)) {
-          nValidLocations++;
-          if (!segmentOpen) {
-            writer.writeOpenSegment();
-            segmentOpen = true;
-          }
-          writer.writeLocation(location);
-          if (nValidLocations >= 2) {
-            last = location;
-          }
-        } else {
-          nValidLocations = 0;
-          last = null;
-          if (segmentOpen) {
-            writer.writeCloseSegment();
-            segmentOpen = false;
-          }
-        }
-      }
-    }
-    if (segmentOpen) {
-      writer.writeCloseSegment();
-      segmentOpen = false;
-    }
-    if (wroteFirst) {
-      writer.writeEndTrack(last);
-    }
+    // TODO: Fix ordering (in GPX waypoints should come first)
+    writeLocations();
     writeWaypoints(track.getId());
     writer.writeFooter();
     writer.close();
     success = true;
     Log.d(MyTracksConstants.TAG, "Done writing track.");
     errorMessage = R.string.io_write_finished;
+  }
+
+  private void writeLocations() {
+    boolean wroteFirst = false;
+    boolean segmentOpen = false;
+    Location lastLoc = null, loc = null;
+    boolean isLastValid = false;
+    Cursor locationsCursor =
+        providerUtils.getLocationsCursor(track.getId(), 0, -1, false);
+    
+    if (locationsCursor == null || !locationsCursor.moveToFirst()) {
+      Log.w(MyTracksConstants.TAG, "Unable to get any points to write");
+      return;
+    }
+
+    do {
+      if (loc == null) loc = new Location("");
+      providerUtils.fillLocation(locationsCursor, loc);
+
+      boolean isValid = MyTracksUtils.isValidLocation(loc);
+      boolean validSegment = isValid && isLastValid;
+      if (!wroteFirst && validSegment) {
+        // Found the first two consecutive points which are valid
+        writer.writeBeginTrack(lastLoc);
+        wroteFirst = true;
+      }
+
+      if (validSegment) {
+        if (!segmentOpen) {
+          // Start a segment for this point
+          writer.writeOpenSegment();
+          segmentOpen = true;
+
+          // Write the previous point, which we had previously skipped
+          writer.writeLocation(lastLoc);
+        }
+
+        // Write the current point
+        writer.writeLocation(loc);
+      } else {
+        if (segmentOpen) {
+          writer.writeCloseSegment();
+          segmentOpen = false;
+        }
+      }
+
+      // Swap loc and lastLoc (so lastLoc is reused)
+      Location tmp = lastLoc;
+      lastLoc = loc;
+      loc = tmp;
+      if (loc != null) loc.reset();
+
+      isLastValid = isValid;
+    } while (locationsCursor.moveToNext());
+
+    if (segmentOpen) {
+      writer.writeCloseSegment();
+      segmentOpen = false;
+    }
+    if (wroteFirst) {
+      writer.writeEndTrack(lastLoc);
+    }
   }
 }

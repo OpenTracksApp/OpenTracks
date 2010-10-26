@@ -775,7 +775,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public Cursor getWaypointsCursor(long trackId, long minWaypointId,
-      long maxWaypoints) {
+      int maxWaypoints) {
     String selection;
     if (minWaypointId > 0) {
       selection = String.format("%s=%d AND %s>=%d",
@@ -843,67 +843,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       cursor.close();
     }
     return lastId;
-  }
-
-  @Override
-  public void getTrackPoints(Track track, TrackBuffer buffer) {
-    getTrackPoints(track, buffer, false);
-  }
-  
-  @Override
-  public void fillTrackPoints(Track track, TrackBuffer buffer) {
-    getTrackPoints(track, buffer, true);
-  }
-
-  public void getTrackPoints(Track track, TrackBuffer buffer,
-      boolean reuseLocations) {
-    long startingPoint = buffer.getLastLocationRead() == 0 ? track.getStartId()
-        : buffer.getLastLocationRead();
-    buffer.reset();
-    Cursor cursor = getLocationsCursor(track.getId(),
-                                       startingPoint,
-                                       buffer.getSize(), false);
-    if (cursor == null) {
-      Log.w(MyTracksProvider.TAG, "Cannot get a locations cursor!");
-      buffer.setInvalid();
-      return;
-    }
-    try {
-      if (cursor.getCount() == 0) {
-        Log.w(MyTracksProvider.TAG, "No matching locations found.");
-        buffer.resetAt(startingPoint + buffer.getSize());
-        return;
-      }
-
-      if (!cursor.moveToFirst()) {
-        Log.w(MyTracksProvider.TAG, "Could not move to first.");
-        buffer.setInvalid();
-        return;
-      }
-
-      final int idColumnIdx =
-          cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
-      do {
-        if (reuseLocations) {
-          fillLocation(cursor, buffer.add(cursor.getLong(idColumnIdx)));
-        } else {
-          Location location = createLocation(cursor);
-          if (location == null) {
-            continue;
-          }
-          buffer.add(location, cursor.getLong(idColumnIdx));
-        }
-      } while (cursor.moveToNext());
-
-      if (buffer.getLocationsLoaded() == 0) {
-        Log.w(MyTracksProvider.TAG, "No locations read.");
-        buffer.resetAt(startingPoint + buffer.getSize());
-      }
-    } catch (RuntimeException e) {
-      Log.w(MyTracksProvider.TAG, "Caught unexpected exception.", e);
-    } finally {
-      cursor.close();
-    }
   }
 
   @Override

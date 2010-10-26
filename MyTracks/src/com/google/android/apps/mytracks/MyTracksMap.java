@@ -21,7 +21,9 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackPointsColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
+import com.google.android.apps.mytracks.services.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.MyTracksUtils;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -47,17 +49,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.provider.Settings;
-import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.View;
-import android.view.View.OnCreateContextMenuListener;
 import android.view.Window;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.View.OnCreateContextMenuListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -139,14 +140,16 @@ public class MyTracksMap extends MapActivity
    */
   private HandlerThread updateTrackThread;
 
-  /** Handler for updateTrackThread */
+  /**
+   * Handler for updateTrackThread.
+   */
   private Handler updateTrackHandler;
 
   private MyTracksProviderUtils providerUtils;
  
   /**
    * A runnable that updates the track from the provider (looking for points
-   * added after "lastSeenLocationId".
+   * added after "lastSeenLocationId").
    */
   private final Runnable updateTrackRunnable = new Runnable() {
     @Override
@@ -154,6 +157,7 @@ public class MyTracksMap extends MapActivity
       if (!isATrackSelected()) {
         return;
       }
+      
       readAllNewTrackPoints();
     }
   };
@@ -167,6 +171,7 @@ public class MyTracksMap extends MapActivity
       if (!isATrackSelected()) {
         return;
       }
+      
       mapOverlay.clearPoints();
       firstSeenLocationId = -1;
       lastSeenLocationId = -1;
@@ -192,13 +197,10 @@ public class MyTracksMap extends MapActivity
         cursor = providerUtils.getWaypointsCursor(
             selectedTrackId, 0,
             MyTracksConstants.MAX_DISPLAYED_WAYPOINTS_POINTS);
-        if (cursor != null) {
-          if (cursor.moveToFirst()) {
-            do {
-              Waypoint wpt = providerUtils.createWaypoint(cursor);
-              mapOverlay.addWaypoint(wpt);
-            } while (cursor.moveToNext());
-          }
+        if (cursor != null && cursor.moveToFirst()) {
+          do {
+            mapOverlay.addWaypoint(providerUtils.createWaypoint(cursor));
+          } while (cursor.moveToNext());
         }
       } catch (RuntimeException e) {
         Log.w(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
@@ -212,9 +214,9 @@ public class MyTracksMap extends MapActivity
   };
 
   /**
-   * A runnable intended to be posted to the updateTrackThread after the
-   * selected track changes. It will post to the ui thread to update the screen
-   * elements and move the map to show the selected track.
+   * A runnable intended to be posted to the {@code #updateTrackThread} after
+   * the selected track changes.  It will post to the UI thread to update
+   * the screen elements and move the map to show the selected track.
    */
   private final Runnable setSelectedTrackRunnable = new Runnable() {
     @Override
@@ -282,7 +284,9 @@ public class MyTracksMap extends MapActivity
     super.onCreate(bundle);
 
     // The volume we want to control is the Text-To-Speech volume
-    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
+    int volumeStream =
+        new StatusAnnouncerFactory(ApiFeatures.getInstance()).getVolumeStream();
+    setVolumeControlStream(volumeStream);
 
     providerUtils = MyTracksProviderUtils.Factory.get(this);
 
@@ -372,10 +376,18 @@ public class MyTracksMap extends MapActivity
         setSelectedTrack(selectedTrackId);
       }
       updateOptionsButton();
-      mapOverlay.setDrawBounds(preferences.getBoolean(
-          getString(R.string.debug_draw_bounds_key), false));
       preferences.registerOnSharedPreferenceChangeListener(this);
     }
+  }
+
+  @Override
+  protected void onDestroy() {
+    Log.d(MyTracksConstants.TAG, "MyTracksMap.onDestroy");
+    if (updateTrackThread != null) {
+      updateTrackThread.quit();
+    }
+    
+    super.onDestroy();
   }
 
   /**
@@ -893,8 +905,7 @@ public class MyTracksMap extends MapActivity
 
   @Override
   public void onSharedPreferenceChanged(
-      final SharedPreferences sharedPreferences,
-      final String key) {
+      final SharedPreferences sharedPreferences, final String key) {
     if (key != null) {
       uiHandler.post(new Runnable() {
         @Override
@@ -918,10 +929,6 @@ public class MyTracksMap extends MapActivity
               mapOverlay.setShowEndMarker(!isRecordingSelected());
               mapView.postInvalidate();
             }
-          } else if (key.equals(getString(R.string.debug_draw_bounds_key))) {
-            mapOverlay.setDrawBounds(
-                sharedPreferences.getBoolean(
-                    getString(R.string.debug_draw_bounds_key), false));
           }
         }
       });
@@ -950,8 +957,8 @@ public class MyTracksMap extends MapActivity
     public void onLocationChanged(Location location) {
       if (location.getProvider().equals(MyTracksConstants.GPS_PROVIDER)) {
         // Recalculate the variation if there was a jump in location > 1km:
-        if (currentLocation == null
-            || location.distanceTo(currentLocation) > 1000) {
+        if (currentLocation == null ||
+            location.distanceTo(currentLocation) > 1000) {
           setVariation(location);
         }
         currentLocation = location;
@@ -1039,8 +1046,8 @@ public class MyTracksMap extends MapActivity
             // Now we already have at least one point, calculate the sampling
             // frequency
             long numTotalPoints = lastStoredLocationId - firstSeenLocationId;
-            samplingFrequency = (int) (1 +
-                numTotalPoints / MyTracksConstants.TARGET_DISPLAYED_TRACK_POINTS);
+            samplingFrequency = (int) (1 + numTotalPoints
+                / MyTracksConstants.TARGET_DISPLAYED_TRACK_POINTS);
           }
 
           providerUtils.fillLocation(cursor, location);
@@ -1052,8 +1059,8 @@ public class MyTracksMap extends MapActivity
           if (numPoints % samplingFrequency == 0 ||
               (!isRecordingSelected() && locationId == lastStoredLocationId) ||
               !MyTracksUtils.isValidLocation(location)) {
-            // Only allocate a new location if it is going to be kept around.
-            mapOverlay.addLocation(new Location(location));
+            // No need to allocate a new location (we can safely reuse the existing).
+            mapOverlay.addLocation(location);
           }
 
           numPoints++;

@@ -37,7 +37,7 @@ public class FileUtils {
    * A set of characters that are prohibited from being in file names.
    */
   private static final Pattern PROHIBITED_CHAR_PATTERN =
-      Pattern.compile("[^ A-Za-z0-9_.()]+");
+      Pattern.compile("[^ A-Za-z0-9_.()-]+");
 
   /**
    * Builds a path inside the My Tracks directory in the SD card.
@@ -69,8 +69,6 @@ public class FileUtils {
    * Normalizes the input string and make sure it is a valid fat32 file name.
    *
    * @param name the name to normalize
-   * @param overheadSize the number of additional characters that will be added
-   *        to the name after sanitization
    * @return the sanitized name
    */
   String sanitizeName(String name) {

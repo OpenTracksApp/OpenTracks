@@ -17,7 +17,8 @@ package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.io.backup.BackupActivityHelper;
 import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
-import com.google.android.apps.mytracks.services.SafeStatusAnnouncerTask;
+import com.google.android.apps.mytracks.services.StatusAnnouncerFactory;
+import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.maps.mytracks.R;
 
 import android.content.SharedPreferences;
@@ -25,12 +26,10 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.speech.tts.TextToSpeech;
-import android.util.Log;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 
 /**
  * An activity that let's the user see and edit the settings.
@@ -53,21 +52,8 @@ public class MyTracksSettings extends PreferenceActivity {
   public static final int DEFAULT_MIN_REQUIRED_ACCURACY = 200;
   public static final int DEFAULT_SPLIT_FREQUENCY = 0;
 
-  private static boolean mTTSAvailable;
   private BackupPreferencesListener backupListener;
-
   private SharedPreferences preferences;
-
-  /* establish whether the tts class is available to us */
-  static {
-    try {
-      SafeStatusAnnouncerTask.checkAvailable();
-      mTTSAvailable = true;
-    } catch (Throwable t) {
-      Log.d(MyTracksConstants.TAG, "TTS not available.", t);
-      mTTSAvailable = false;
-    }
-  }
 
   /** Called when the activity is first created. */
   @Override
@@ -75,7 +61,10 @@ public class MyTracksSettings extends PreferenceActivity {
     super.onCreate(icicle);
 
     // The volume we want to control is the Text-To-Speech volume
-    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
+    ApiFeatures apiFeatures = ApiFeatures.getInstance();
+    int volumeStream =
+        new StatusAnnouncerFactory(apiFeatures).getVolumeStream();
+    setVolumeControlStream(volumeStream);
 
     // Tell it where to read/write preferences
     PreferenceManager preferenceManager = getPreferenceManager();
@@ -83,7 +72,7 @@ public class MyTracksSettings extends PreferenceActivity {
     preferenceManager.setSharedPreferencesMode(0);
 
     // Set up automatic preferences backup
-    backupListener = BackupPreferencesListener.create(this);
+    backupListener = BackupPreferencesListener.create(this, apiFeatures);
     preferences = preferenceManager.getSharedPreferences();
     preferences.registerOnSharedPreferenceChangeListener(backupListener);
 
@@ -108,7 +97,7 @@ public class MyTracksSettings extends PreferenceActivity {
     updatePreferenceUnits(metricUnitsPreference.isChecked());
 
     // Disable TTS announcement preference if not available
-    if (!mTTSAvailable) {
+    if (!apiFeatures.hasTextToSpeech()) {
       IntegerListPreference announcementFrequency =
           (IntegerListPreference) findPreference(
               getString(R.string.announcement_frequency_key));

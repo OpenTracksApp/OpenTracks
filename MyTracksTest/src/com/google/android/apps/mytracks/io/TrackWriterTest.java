@@ -2,21 +2,23 @@
 
 package com.google.android.apps.mytracks.io;
 
+import static org.easymock.EasyMock.eq;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.isA;
+import static org.easymock.EasyMock.leq;
 import static org.easymock.EasyMock.same;
 
 import com.google.android.apps.mytracks.MyTracksConstants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.TrackBuffer;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.testing.TestingProviderUtilsFactory;
 
 import android.content.Context;
-import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.location.Location;
+import android.provider.BaseColumns;
 import android.test.AndroidTestCase;
 
 import java.io.ByteArrayOutputStream;
@@ -25,6 +27,7 @@ import java.io.OutputStream;
 
 import org.easymock.EasyMock;
 import org.easymock.IAnswer;
+import org.easymock.IArgumentMatcher;
 import org.easymock.IMocksControl;
 
 /**
@@ -226,6 +229,8 @@ public class TrackWriterTest extends AndroidTestCase {
     expect(providerUtils.getWaypointsCursor(
         TRACK_ID, 0, MyTracksConstants.MAX_LOADED_WAYPOINTS_POINTS))
         .andStubReturn(null);
+    expect(providerUtils.getLocationsCursor(
+        eq(TRACK_ID), leq(0L), leq(0), eq(false))).andStubReturn(null);
 
     // Set expected mock behavior
     formatWriter.writeHeader();
@@ -242,61 +247,78 @@ public class TrackWriterTest extends AndroidTestCase {
   public void testWriteDocument() {
     writer = new TrackWriter(getContext(), providerUtils, track, formatWriter);
 
-    Location l1 = new Location("fake1");
-    Location l2 = new Location("fake2");
-    Location l3 = new Location("fake3");
-    Location l4 = new Location("fake4");
-    Location l5 = new Location("fake5");
-    Location l6 = new Location("fake6");
-    Waypoint p1 = new Waypoint();
-    Waypoint p2 = new Waypoint();
+    final Location[] locs = {
+        new Location("fake0"),
+        new Location("fake1"),
+        new Location("fake2"),
+        new Location("fake3"),
+        new Location("fake4"),
+        new Location("fake5"),
+    };
+    Waypoint[] wps = { new Waypoint(), new Waypoint(), new Waypoint() };
 
-    addLocations(l1, l2, l3, l4, l5, l6);
-    stubBufferFill(
-        new Location[] { l1, l2, l3, l4 },
-        new Location[] { l5, l6 });
-
-    track.setStopId(6L);
+    // Fill locations with valid values
+    fillLocations(locs);
 
     // Make location 3 invalid
-    l3.setLatitude(100);
+    locs[2].setLatitude(100);
+
+    // Set up cursors
+    // We use fake columns since the cursor is only read by the provider utils
+    final MatrixCursor locCursor =
+        new MatrixCursor(new String[] { BaseColumns._ID }, 6);
+    for (int i = 1; i <= 6; i++) {
+      locCursor.newRow().add(i);
+    }
+    expect(providerUtils.getLocationsCursor(
+        eq(TRACK_ID), leq(0L), leq(0), eq(false))).andStubReturn(locCursor);
+    providerUtils.fillLocation(same(locCursor), isA(Location.class));
+    EasyMock.expectLastCall().andStubAnswer(new IAnswer<Void>() {
+      @Override
+      public Void answer() throws Throwable {
+        Location loc = (Location) EasyMock.getCurrentArguments()[1];
+        loc.set(locs[locCursor.getPosition()]);
+        return null;
+      }
+    });
+
+    MatrixCursor wpCursor =
+        new MatrixCursor(new String[] { BaseColumns._ID }, 3);
+    wpCursor.newRow().add(1);
+    wpCursor.newRow().add(2);
+    wpCursor.newRow().add(3);
+    expect(providerUtils.getWaypointsCursor(
+        eq(TRACK_ID), leq(0L),
+        eq(MyTracksConstants.MAX_LOADED_WAYPOINTS_POINTS)))
+        .andStubReturn(wpCursor);
+    expect(providerUtils.createWaypoint(wpCursor))
+        .andStubAnswer(stubCursorToArray(wpCursor, wps));
 
     // Begin the track
     formatWriter.writeHeader();
-    formatWriter.writeBeginTrack(l1);
+    formatWriter.writeBeginTrack(locEq(locs[0]));
 
     // Write locations 1-2
     formatWriter.writeOpenSegment();
-    formatWriter.writeLocation(l1);
-    formatWriter.writeLocation(l2);
+    formatWriter.writeLocation(locEq(locs[0]));
+    formatWriter.writeLocation(locEq(locs[1]));
     formatWriter.writeCloseSegment();
 
     // Location 3 is not written - it's invalid
 
     // Write locations 4-6
     formatWriter.writeOpenSegment();
-    formatWriter.writeLocation(l4);
-    formatWriter.writeLocation(l5);
-    formatWriter.writeLocation(l6);
+    formatWriter.writeLocation(locEq(locs[3]));
+    formatWriter.writeLocation(locEq(locs[4]));
+    formatWriter.writeLocation(locEq(locs[5]));
     formatWriter.writeCloseSegment();
 
     // End the track
-    formatWriter.writeEndTrack(l6);
+    formatWriter.writeEndTrack(locEq(locs[5]));
 
-    // Expect reading/writing of the waypoints
-    Cursor cursor = mocksControl.createMock(Cursor.class);
-    expect(providerUtils.getWaypointsCursor(
-        TRACK_ID, 0, MyTracksConstants.MAX_LOADED_WAYPOINTS_POINTS))
-        .andStubReturn(cursor);
-    expect(cursor.moveToFirst()).andReturn(true);
-    expect(cursor.moveToNext()).andReturn(true);
-    expect(providerUtils.createWaypoint(cursor)).andReturn(p1);
-    formatWriter.writeWaypoint(p1);
-    expect(cursor.moveToNext()).andReturn(true);
-    expect(providerUtils.createWaypoint(cursor)).andReturn(p2);
-    formatWriter.writeWaypoint(p2);
-    expect(cursor.moveToNext()).andReturn(false).anyTimes();
-    cursor.close();
+    // Expect reading/writing of the waypoints (except the first)
+    formatWriter.writeWaypoint(wps[1]);
+    formatWriter.writeWaypoint(wps[2]);
 
     formatWriter.writeFooter();
     formatWriter.close();
@@ -308,54 +330,52 @@ public class TrackWriterTest extends AndroidTestCase {
     mocksControl.verify();
   }
 
-  private void addLocations(Location... locs) {
+  private static Location locEq(final Location loc) {
+    EasyMock.reportMatcher(new IArgumentMatcher() {
+      @Override
+      public boolean matches(Object locObj2) {
+        if (locObj2 == null || loc == null) return loc == locObj2;
+        Location loc2 = (Location) locObj2;
+
+        return loc.hasAccuracy() == loc2.hasAccuracy()
+            && (!loc.hasAccuracy() || loc.getAccuracy() == loc2.getAccuracy())
+            && loc.hasAltitude() == loc2.hasAltitude()
+            && (!loc.hasAltitude() || loc.getAltitude() == loc2.getAltitude())
+            && loc.hasBearing() == loc2.hasBearing()
+            && (!loc.hasBearing() || loc.getBearing() == loc2.getBearing())
+            && loc.hasSpeed() == loc2.hasSpeed()
+            && (!loc.hasSpeed() || loc.getSpeed() == loc2.getSpeed())
+            && loc.getLatitude() == loc2.getLatitude()
+            && loc.getLongitude() == loc2.getLongitude()
+            && loc.getTime() == loc2.getTime();
+      }
+      
+      @Override
+      public void appendTo(StringBuffer buffer) {
+        buffer.append("locEq(");
+        buffer.append(loc);
+        buffer.append(")");
+      }
+    });
+    return null;
+  }
+  
+  private <T> IAnswer<T> stubCursorToArray(
+      final MatrixCursor cursor, final T[] values) {
+    return new IAnswer<T>() {
+      @Override
+      public T answer() throws Throwable {
+        return values[cursor.getPosition()];
+      }
+    };
+  }
+
+  private void fillLocations(Location... locs) {
     assertTrue(locs.length < 90);
     for (int i = 0; i < locs.length; i++) {
       Location location = locs[i];
       location.setLatitude(i + 1);
       location.setLongitude(i + 1);
     }
-  }
-
-  /**
-   * Defines the behaviour of filling the track buffer when a read is
-   * requested.
-   * The IDs of the locations will be their sequential number.
-   *
-   * @param feeds is a list of location arrays, each element of which
-   *        will be fed into the track buffer on each call
-   */
-  private void stubBufferFill(final Location[]... feeds) {
-    providerUtils.fillTrackPoints(same(track), isA(TrackBuffer.class));
-    EasyMock.expectLastCall().andStubAnswer(new IAnswer<Void>() {
-      private int lastId = 1;
-      private int reads = 0;
-
-      @Override
-      public Void answer() throws Throwable {
-        // Get the buffer from the arguments
-        Object[] args = EasyMock.getCurrentArguments();
-        assertEquals(2, args.length);
-        TrackBuffer buffer = (TrackBuffer) args[1];
-        assertNotNull(buffer);
-
-        // Check that we still have data to feed to the buffer
-        if (reads >= feeds.length) {
-          fail("More buffer reads than expected");
-        }
-
-        // Fill the buffer
-        buffer.reset();
-        Location[] locations = feeds[reads];
-        for (int i = 0; i < locations.length; i++) {
-          buffer.add(locations[i], lastId + i);
-        }
-
-        // Update internal state
-        lastId += locations.length;
-        reads++;
-        return null;
-      }
-    });
   }
 }

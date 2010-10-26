@@ -20,20 +20,24 @@ import com.google.android.apps.mytracks.util.MyTracksUtils;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
+import com.google.android.maps.Projection;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.Region;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 /**
  * A map overlay that displays a "MyLocation" arrow, an error circle, the
@@ -43,7 +47,7 @@ import java.util.ArrayList;
  */
 public class MyTracksOverlay extends Overlay {
 
-  private final Drawable arrow[] = new Drawable[18];
+  private final Drawable[] arrows;
   private final int arrowWidth, arrowHeight;
   private final Drawable statsMarker;
   private final Drawable waypointMarker;
@@ -53,68 +57,94 @@ public class MyTracksOverlay extends Overlay {
   private final Paint selectedTrackPaint;
   private final Paint errorCirclePaint;
   private final Context context;
-  private final ArrayList<Waypoint> waypoints = new ArrayList<Waypoint>();
-  private final ArrayList<Location> points = new ArrayList<Location>(1024);
+  private final List<Waypoint> waypoints;
+  private final List<CachedLocation> points;
+  private final BlockingQueue<CachedLocation> pendingPoints;
 
   private boolean trackDrawingEnabled;
   private int lastHeading = 0;
   private Location myLocation;
   private boolean showEndMarker = true;
-  private boolean drawBounds;
+  // TODO: Remove it completely after completing performance tests.
+  private boolean alwaysVisible = true;
 
+  private GeoPoint lastReferencePoint;
+  private Rect lastViewRect;
+  private Path lastPath;
+  
+  /**
+   * Represents a pre-processed {@code Location} to speed up drawing.
+   * This class is more like a data object and doesn't provide accessors.
+   */
+  private static class CachedLocation {
+    public final boolean valid;
+    public final GeoPoint geoPoint;
+    
+    public CachedLocation(Location location) {
+      this.valid = MyTracksUtils.isValidLocation(location);
+      this.geoPoint = valid ? MyTracksUtils.getGeoPoint(location) : null; 
+    }
+  };
+  
   public MyTracksOverlay(Context context) {
     this.context = context;
+    
+    this.waypoints = new ArrayList<Waypoint>();
+    this.points = new ArrayList<CachedLocation>(1024);
+    this.pendingPoints = new ArrayBlockingQueue<CachedLocation>(
+        MyTracksConstants.MAX_DISPLAYED_TRACK_POINTS, true);
 
     // TODO: Can we use a FrameAnimation or similar here rather
     // than individual resources for each arrow direction?
-
-    arrow[0] = context.getResources().getDrawable(R.drawable.arrow_0);
-    arrow[1] = context.getResources().getDrawable(R.drawable.arrow_20);
-    arrow[2] = context.getResources().getDrawable(R.drawable.arrow_40);
-    arrow[3] = context.getResources().getDrawable(R.drawable.arrow_60);
-    arrow[4] = context.getResources().getDrawable(R.drawable.arrow_80);
-    arrow[5] = context.getResources().getDrawable(R.drawable.arrow_100);
-    arrow[6] = context.getResources().getDrawable(R.drawable.arrow_120);
-    arrow[7] = context.getResources().getDrawable(R.drawable.arrow_140);
-    arrow[8] = context.getResources().getDrawable(R.drawable.arrow_160);
-    arrow[9] = context.getResources().getDrawable(R.drawable.arrow_180);
-    arrow[10] = context.getResources().getDrawable(R.drawable.arrow_200);
-    arrow[11] = context.getResources().getDrawable(R.drawable.arrow_220);
-    arrow[12] = context.getResources().getDrawable(R.drawable.arrow_240);
-    arrow[13] = context.getResources().getDrawable(R.drawable.arrow_260);
-    arrow[14] = context.getResources().getDrawable(R.drawable.arrow_280);
-    arrow[15] = context.getResources().getDrawable(R.drawable.arrow_300);
-    arrow[16] = context.getResources().getDrawable(R.drawable.arrow_320);
-    arrow[17] = context.getResources().getDrawable(R.drawable.arrow_340);
-    arrowWidth = arrow[lastHeading].getIntrinsicWidth();
-    arrowHeight = arrow[lastHeading].getIntrinsicHeight();
-    for (int i = 0; i <= 17; i++) {
-      arrow[i].setBounds(0, 0, arrowWidth, arrowHeight);
+    final Resources resources = context.getResources();
+    arrows = new Drawable[] {
+        resources.getDrawable(R.drawable.arrow_0),
+        resources.getDrawable(R.drawable.arrow_20),
+        resources.getDrawable(R.drawable.arrow_40),
+        resources.getDrawable(R.drawable.arrow_60),
+        resources.getDrawable(R.drawable.arrow_80),
+        resources.getDrawable(R.drawable.arrow_100),
+        resources.getDrawable(R.drawable.arrow_120),
+        resources.getDrawable(R.drawable.arrow_140),
+        resources.getDrawable(R.drawable.arrow_160),
+        resources.getDrawable(R.drawable.arrow_180),
+        resources.getDrawable(R.drawable.arrow_200),
+        resources.getDrawable(R.drawable.arrow_220),
+        resources.getDrawable(R.drawable.arrow_240),
+        resources.getDrawable(R.drawable.arrow_260),
+        resources.getDrawable(R.drawable.arrow_280),
+        resources.getDrawable(R.drawable.arrow_300),
+        resources.getDrawable(R.drawable.arrow_320),
+        resources.getDrawable(R.drawable.arrow_340)
+    };
+    arrowWidth = arrows[lastHeading].getIntrinsicWidth();
+    arrowHeight = arrows[lastHeading].getIntrinsicHeight();
+    for (Drawable arrow : arrows) {
+      arrow.setBounds(0, 0, arrowWidth, arrowHeight);
     }
 
-    statsMarker = context.getResources().getDrawable(R.drawable.ylw_pushpin);
+    statsMarker = resources.getDrawable(R.drawable.ylw_pushpin);
     markerWidth = statsMarker.getIntrinsicWidth();
     markerHeight = statsMarker.getIntrinsicHeight();
     statsMarker.setBounds(0, 0, markerWidth, markerHeight);
 
-    startMarker = context.getResources().getDrawable(R.drawable.green_dot);
+    startMarker = resources.getDrawable(R.drawable.green_dot);
     startMarker.setBounds(0, 0, markerWidth, markerHeight);
 
-    endMarker = context.getResources().getDrawable(R.drawable.red_dot);
+    endMarker = resources.getDrawable(R.drawable.red_dot);
     endMarker.setBounds(0, 0, markerWidth, markerHeight);
 
-    waypointMarker =
-        context.getResources().getDrawable(R.drawable.blue_pushpin);
+    waypointMarker = resources.getDrawable(R.drawable.blue_pushpin);
     waypointMarker.setBounds(0, 0, markerWidth, markerHeight);
 
     selectedTrackPaint = new Paint();
-    selectedTrackPaint.setColor(context.getResources().getColor(R.color.red));
+    selectedTrackPaint.setColor(resources.getColor(R.color.red));
     selectedTrackPaint.setStrokeWidth(3);
     selectedTrackPaint.setStyle(Paint.Style.STROKE);
     selectedTrackPaint.setAntiAlias(true);
 
     errorCirclePaint = new Paint();
-    errorCirclePaint.setColor(context.getResources().getColor(R.color.blue));
+    errorCirclePaint.setColor(resources.getColor(R.color.blue));
     errorCirclePaint.setStyle(Paint.Style.STROKE);
     errorCirclePaint.setStrokeWidth(3);
     errorCirclePaint.setAlpha(127);
@@ -123,36 +153,51 @@ public class MyTracksOverlay extends Overlay {
 
   /**
    * Add a location to the map overlay.
+   * 
+   * NOTE: This method doesn't take ownership of the given location, so it is
+   * safe to reuse the same location while calling this method.
    *
-   * NOTE: this method takes ownership of this location and may change it.
-   *
-   * @param l the location to add
+   * @param l the location to add.
    */
   public void addLocation(Location l) {
-    if (l != null) {
-      synchronized (points) {
-        points.add(l);
-      }
-    }
+    // Queue up in the pending queue until it's merged with {@code #points}.
+    pendingPoints.offer(new CachedLocation(l));
   }
 
   public void addWaypoint(Waypoint wpt) {
-    waypoints.add(wpt);
+    // Note: We don't cache waypoints, because it's not worth the effort.
+    if (wpt != null && wpt.getLocation() != null) {
+      synchronized (waypoints) {
+        waypoints.add(wpt);
+      }
+    }
   }
-
+  
   public int getNumLocations() {
     synchronized (points) {
-      return points.size();
+      return points.size() + pendingPoints.size();
+    }
+  }
+
+  // Visible for testing.
+  int getNumWaypoints() {
+    synchronized (waypoints) {
+      return waypoints.size();
+    }
+  }
+  
+  public void clearPoints() {
+    synchronized (points) {
+      points.clear();
+      pendingPoints.clear();
+      lastPath = null;
+      lastViewRect = null;
     }
   }
 
   public void clearWaypoints() {
-    waypoints.clear();
-  }
-
-  public void clearPoints() {
-    synchronized (points) {
-      points.clear();
+    synchronized (waypoints) {
+      waypoints.clear();
     }
   }
 
@@ -170,230 +215,175 @@ public class MyTracksOverlay extends Overlay {
       return;
     }
 
+    // It's safe to keep projection within a single draw operation.
+    final Projection projection = getMapProjection(mapView);
+    // Get the current viewing window.
     if (trackDrawingEnabled) {
+      Rect viewRect = getMapViewRect(mapView);
+      
       // Draw the selected track:
-      drawTrack(canvas, mapView);
+      drawTrack(canvas, projection, viewRect);
 
       // Draw the waypoints:
-      drawWaypoints(canvas, mapView);
+      drawWaypoints(canvas, projection);
     }
 
     // Draw the current location
-    drawMyLocation(canvas, mapView);
+    drawMyLocation(canvas, projection);
   }
-
-  private void drawWaypoints(Canvas canvas, MapView mapView) {
-    ArrayList<Waypoint> currentWaypoints = waypoints;
-    for (int i = 1; i < currentWaypoints.size(); i++) {
-      Waypoint wpt = currentWaypoints.get(i);
-      if (wpt == null) {
-        continue;
-      }
-      Location loc = wpt.getLocation();
-      if (loc == null) {
-        continue;
-      }
-      GeoPoint geoPoint = MyTracksUtils.getGeoPoint(loc);
-      Point pt = new Point();
-      mapView.getProjection().toPixels(geoPoint, pt);
-      canvas.save();
-      canvas.translate(pt.x - (markerWidth / 2) + 3, pt.y - (markerHeight));
-      if (wpt.getType() == Waypoint.TYPE_STATISTICS) {
-        statsMarker.draw(canvas);
-      } else {
-        waypointMarker.draw(canvas);
-      }
-      canvas.restore();
-    }
+  
+  // Visible for testing.
+  Projection getMapProjection(MapView mapView) {
+    return mapView.getProjection();
   }
-
-  private void drawMyLocation(Canvas canvas, MapView mapView) {
-    // Draw the arrow icon:
-    if (myLocation == null) {
-      return;
-    }
-
-    GeoPoint geoPoint = new GeoPoint(
-        (int) (myLocation.getLatitude() * 1E6),
-        (int) (myLocation.getLongitude() * 1E6));
-    Point pt = new Point();
-    mapView.getProjection().toPixels(geoPoint, pt);
-    canvas.save();
-    canvas.translate(pt.x - (arrowWidth / 2), pt.y - (arrowHeight / 2));
-    arrow[lastHeading].draw(canvas);
-    canvas.restore();
-
-    // Draw the error circle:
-    float radius =
-        mapView.getProjection().metersToEquatorPixels(myLocation.getAccuracy());
-    canvas.drawCircle(pt.x, pt.y, radius, errorCirclePaint);
-  }
-
-  private void drawTrack(Canvas canvas, MapView mapView) {
-    Path path;
-    Point pt = new Point();
-    Location lastValidLocation;
-    int locLon = 0, locLat = 0;
-    GeoPoint firstGeoPoint = null;
-    boolean lastLocValid;
-
-    // Get the current viewing window:
+  
+  // Visible for testing.
+  Rect getMapViewRect(MapView mapView) {
     int w = mapView.getLongitudeSpan();
     int h = mapView.getLatitudeSpan();
     int cx = mapView.getMapCenter().getLongitudeE6();
     int cy = mapView.getMapCenter().getLatitudeE6();
-    Rect viewRect = new Rect(cx - w, cy - h, cx + w, cy + h);
+    return new Rect(cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2);
+  }
+  
+  // Visible for testing.
+  Path newPath() {
+    return new Path();
+  }
+  
+  // Visible for testing.
+  Path getLastPath() {
+    return lastPath;
+  }
 
-    // Global bounding box, including points not visible
-    int allMinLat, allMinLon, allMaxLat, allMaxLon;
-    
+  private void drawWaypoints(Canvas canvas, Projection projection) {
+    synchronized (waypoints) {;
+      for (Waypoint wpt : waypoints) {
+        Location loc = wpt.getLocation();
+        drawElement(canvas, projection, MyTracksUtils.getGeoPoint(loc),
+            wpt.getType() == Waypoint.TYPE_STATISTICS ? statsMarker
+                : waypointMarker, -(markerWidth / 2) + 3, -markerHeight);
+      }
+    }
+  }
+
+  private void drawMyLocation(Canvas canvas, Projection projection) {
+    // Draw the arrow icon.
+    if (myLocation == null) {
+      return;
+    }
+
+    Point pt = drawElement(canvas, projection,
+        MyTracksUtils.getGeoPoint(myLocation), arrows[lastHeading],
+        -(arrowWidth / 2) + 3, -(arrowHeight / 2));
+    // Draw the error circle.
+    float radius = projection.metersToEquatorPixels(myLocation.getAccuracy());
+    canvas.drawCircle(pt.x, pt.y, radius, errorCirclePaint);
+  }
+
+  private void drawTrack(Canvas canvas, Projection projection, Rect viewRect) {
+    Path path;
     synchronized (points) {
-      int numPoints = points.size();
-      if (numPoints < 2) {
-        return;
-      }
-
-      GeoPoint geoPoint;
-      Location loc;
-      int minLon, maxLon, minLat, maxLat;
-      lastValidLocation = points.get(0);
-      int lastLocLon = allMinLon = allMaxLon = (int) (lastValidLocation.getLongitude() * 1E6);
-      int lastLocLat = allMinLat = allMaxLat = (int) (lastValidLocation.getLatitude() * 1E6);
-      lastLocValid = MyTracksUtils.isValidLocation(lastValidLocation);
-      boolean lastLocVisible = false;
-      path = new Path();
-
-      // Loop over track points:
-      path.incReserve(numPoints);
-      for (int i = 1; i < numPoints; i++) {
-        loc = points.get(i);
-
-        boolean locValid = MyTracksUtils.isValidLocation(loc);
-        boolean locVisible = false;
-        if (locValid) {
-          locLon = (int) (loc.getLongitude() * 1E6);
-          locLat = (int) (loc.getLatitude() * 1E6);
-
-          if (firstGeoPoint == null) {
-            // Found the starting point
-            firstGeoPoint = new GeoPoint(locLat, locLon);
-          }
-
-          // If both the current and previous locations were valid
-          if (lastLocValid) {
-            lastValidLocation = loc;
-  
-            // Get the bounding box of the segment about to be drawn
-            if (locLon > lastLocLon) {
-              minLon = lastLocLon;
-              maxLon = locLon;
-            } else {
-              minLon = locLon;
-              maxLon = lastLocLon;
-            }
-            if (locLat > lastLocLat) {
-              minLat = lastLocLat;
-              maxLat = locLat;
-            } else {
-              minLat = locLat;
-              maxLat = lastLocLat;
-            }
-
-            if (drawBounds) {
-              allMaxLat = Math.max(allMaxLat, maxLat);
-              allMinLat = Math.min(allMinLat, minLat);
-              allMaxLon = Math.max(allMaxLon, maxLon);
-              allMinLon = Math.min(allMinLon, minLon);
-            }
-
-            // See if that bounding box intersects the viewable bounding box
-            // Assume that if it does, the location is visible
-            locVisible = viewRect.intersects(minLon, minLat, maxLon, maxLat);
-            if (locVisible) {
-              // If the previous point wasn't drawn, start at its position
-              if (!lastLocVisible) {
-                geoPoint = new GeoPoint(lastLocLat, lastLocLon);
-                mapView.getProjection().toPixels(geoPoint, pt);
-                path.moveTo(pt.x, pt.y);
-              }
-  
-              // Draw a line to the new point
-              geoPoint = new GeoPoint(locLat, locLon);
-              mapView.getProjection().toPixels(geoPoint, pt);
-              path.lineTo(pt.x, pt.y);
-            }
-          }
+      // Merge the pending points with the list of cached locations.
+      final GeoPoint referencePoint = projection.fromPixels(0, 0);
+      int newPoints = pendingPoints.drainTo(points); 
+      boolean newProjection = !viewRect.equals(lastViewRect) ||
+          !referencePoint.equals(lastReferencePoint); 
+      if (newPoints == 0 && lastPath != null && !newProjection) {
+        // No need to recreate path (same points and viewing area).
+        path = lastPath;
+      } else {
+        int numPoints = points.size();
+        if (numPoints < 2) {
+          // Not enough points to draw a path.
+          path = null;
+        } else if (lastPath != null && !newProjection) {
+          // Incremental update of the path, without repositioning the view.
+          path = lastPath;
+          updatePath(projection, viewRect, path, numPoints - newPoints); 
+        } else {
+          // The view has changed so we have to start from scratch.
+          path = newPath();
+          path.incReserve(numPoints);
+          updatePath(projection, viewRect, path, 0); 
         }
-        lastLocLon = locLon;
-        lastLocLat = locLat;
-        lastLocValid = locValid;
-        lastLocVisible = locVisible;
+        lastPath = path;
+      }
+      lastReferencePoint = referencePoint;
+      lastViewRect = viewRect;
+    }
+    if (path != null) {
+      canvas.drawPath(path, selectedTrackPaint);
+    }
+
+    // Draw the "End" marker.
+    if (showEndMarker) {
+      for (int i = points.size() - 1; i >= 0; --i) {
+        if (points.get(i).valid) {
+          drawElement(canvas, projection, points.get(i).geoPoint, endMarker,
+              -markerWidth / 2, -markerHeight);
+          break;
+        }
       }
     }
-
-    canvas.drawPath(path, selectedTrackPaint);
-
-    if (drawBounds) {
-      drawBoundingBox(canvas, mapView,
-          allMinLat, allMinLon, allMaxLat, allMaxLon);
-    }
-
-    // Draw the "End" marker:
-    if (showEndMarker && lastValidLocation != null) {
-      canvas.save();
-      GeoPoint geoPoint = MyTracksUtils.getGeoPoint(lastValidLocation);
-      mapView.getProjection().toPixels(geoPoint, pt);
-      canvas.translate(pt.x - (markerWidth / 2), pt.y - markerHeight);
-      endMarker.draw(canvas);
-      canvas.restore();
-    }
-
-    // Draw the "Start" marker:
-    if (firstGeoPoint != null) {
-      mapView.getProjection().toPixels(firstGeoPoint, pt);
-      canvas.save();
-      canvas.translate(pt.x - (markerWidth / 2), pt.y - markerHeight);
-      startMarker.draw(canvas);
-      canvas.restore();
+    
+    // Draw the "Start" marker.
+    for (int i = 0; i < points.size(); ++i) {
+      if (points.get(i).valid) {
+        drawElement(canvas, projection, points.get(i).geoPoint, startMarker,
+            -markerWidth / 2, -markerHeight);
+        break;
+      }
     }
   }
-
-  private void drawBoundingBox(Canvas canvas, MapView mapView, int allMinLat,
-      int allMinLon, int allMaxLat, int allMaxLon) {
-    // Transform coordinates
-    GeoPoint maxPoint = new GeoPoint(allMaxLat, allMaxLon);
-    GeoPoint minPoint = new GeoPoint(allMinLat, allMinLon);
-    Point minPt = new Point();
-    Point maxPt = new Point();
-    mapView.getProjection().toPixels(minPoint, minPt);
-    mapView.getProjection().toPixels(maxPoint, maxPt);
-    Rect allBounds = new Rect(minPt.x, minPt.y, maxPt.x, maxPt.y);
-
-    // Prepare a green paint
-    Paint boundingBoxPaint = new Paint();
-    boundingBoxPaint.setColor(context.getResources().getColor(R.color.green));
-    boundingBoxPaint.setStrokeWidth(2);
-    boundingBoxPaint.setStyle(Paint.Style.STROKE);
-    boundingBoxPaint.setAntiAlias(true);
-
-    // Disable clipping
+  
+  private void updatePath(Projection projection, Rect viewRect, Path path,
+      int startLocationIdx) {
+    // Whether to start a new segment on new valid and visible point.
+    boolean newSegment =
+        startLocationIdx > 0 ? !points.get(startLocationIdx - 1).valid : true;
+    boolean lastVisible = !newSegment;
+    final Point pt = new Point();
+    // Loop over track points.
+    for (int i = startLocationIdx; i < points.size(); ++i) {
+      CachedLocation loc = points.get(i);
+      // Check if valid, if not then indicate a new segment.
+      if (!loc.valid) {
+        newSegment = true;
+        continue;
+      }
+      
+      final GeoPoint geoPoint = loc.geoPoint;
+      // Check if this breaks the existing segment.
+      boolean visible = alwaysVisible || viewRect.contains(
+          geoPoint.getLongitudeE6(), geoPoint.getLatitudeE6());
+      if (!visible && !lastVisible) {
+        // This is a point outside view not connected to a visible one.
+        newSegment = true;
+      }
+      lastVisible = visible;
+      
+      // Either move to beginning of a new segment or continue the old one.
+      projection.toPixels(geoPoint, pt);
+      if (newSegment) {
+        path.moveTo(pt.x, pt.y);
+        newSegment = false;
+      } else {
+        path.lineTo(pt.x, pt.y);
+      }
+    }
+  }
+  
+  // Visible for testing.
+  Point drawElement(Canvas canvas, Projection projection, GeoPoint geoPoint,
+      Drawable element, int offsetX, int offsetY) {
+    Point pt = new Point();
+    projection.toPixels(geoPoint, pt);
     canvas.save();
-    canvas.clipRect(Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY,
-                    Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY,
-                    Region.Op.REPLACE);
-
-    // Draw the bounding box
-    canvas.drawRect(allBounds, boundingBoxPaint);
-
-    // Re-enable clipping
+    canvas.translate(pt.x + offsetX, pt.y + offsetY);
+    element.draw(canvas);
     canvas.restore();
-  }
-
-  @Override
-  public boolean draw(Canvas canvas, MapView mapView, boolean shadow,
-      long when) {
-    draw(canvas, mapView, shadow);
-    return false;
+    return pt;
   }
 
   /**
@@ -436,29 +426,27 @@ public class MyTracksOverlay extends Overlay {
     final Location tapLocation = MyTracksUtils.getLocation(p);
     double dmin = Double.MAX_VALUE;
     Waypoint waypoint = null;
-    for (int i = 0; i < waypoints.size(); i++) {
-      final Location waypointLocation = waypoints.get(i).getLocation();
-      if (waypointLocation == null) {
-        continue;
-      }
-      final double d = waypointLocation.distanceTo(tapLocation);
-      if (d < dmin) {
-        dmin = d;
-        waypoint = waypoints.get(i);
+    synchronized (waypoints) {
+      for (int i = 0; i < waypoints.size(); i++) {
+        final Location waypointLocation = waypoints.get(i).getLocation();
+        if (waypointLocation == null) {
+          continue;
+        }
+        final double d = waypointLocation.distanceTo(tapLocation);
+        if (d < dmin) {
+          dmin = d;
+          waypoint = waypoints.get(i);
+        }
       }
     }
 
-    if (waypoint != null
-        && dmin < 15000000 / Math.pow(2, mapView.getZoomLevel())) {
+    if (waypoint != null &&
+        dmin < 15000000 / Math.pow(2, mapView.getZoomLevel())) {
       Intent intent = new Intent(context, MyTracksWaypointDetails.class);
       intent.putExtra("waypointid", waypoint.getId());
       context.startActivity(intent);
       return true;
     }
     return super.onTap(p, mapView);
-  }
-
-  public void setDrawBounds(boolean drawBounds) {
-    this.drawBounds = drawBounds;
   }
 }
