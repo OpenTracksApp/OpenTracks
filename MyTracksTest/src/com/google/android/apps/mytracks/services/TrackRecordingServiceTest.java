@@ -135,12 +135,13 @@ public class TrackRecordingServiceTest
     // Clear the number of attempts and set the timeout to 10 min.
     updateAutoResumePrefs(0, 10);
 
-    // Resume the service.  It should resume recording of the previous track.
+    // Start the service in "resume" mode (simulates the on-reboot action).
     Intent startIntent = createStartIntent();
     startIntent.putExtra(RESUME_TRACK_EXTRA_NAME, true);
     startService(startIntent);
     assertNotNull(getService());
 
+    // We expect to resume the previous track. 
     assertTrue(getService().isRecording());
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertEquals(123, service.getRecordingTrackId());
@@ -160,13 +161,14 @@ public class TrackRecordingServiceTest
     assertEquals(id, sharedPreferences.getLong(
         context.getString(R.string.recording_track_key), -1));    
 
+    // Start the service in "resume" mode (simulates the on-reboot action).
     Intent startIntent = createStartIntent();
     startIntent.putExtra(RESUME_TRACK_EXTRA_NAME, true);
     startService(startIntent);
     assertNotNull(getService());
     
     // TODO: shutdownService() has a bug and doesn't set mServiceCreated
-    // to false, thus preventing from second call to onCreate().
+    // to false, thus preventing from a second call to onCreate().
     // Report the bug to Android team.  Until then, the following check
     // must be commented out.
     
@@ -181,12 +183,13 @@ public class TrackRecordingServiceTest
     // Clear the number of attempts and set the timeout to 10 min.
     updateAutoResumePrefs(0, 10);
 
-    // Resume the service.  It should resume recording of the previous track.
+    // Start the service in "resume" mode (simulates the on-reboot action).
     Intent startIntent = createStartIntent();
     startIntent.putExtra(RESUME_TRACK_EXTRA_NAME, true);
     startService(startIntent);
     assertNotNull(getService());
-    
+
+    // We don't expect to resume the previous track, because it was stopped.
     assertFalse(getService().isRecording());
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertEquals(-1, service.getRecordingTrackId());
@@ -200,12 +203,13 @@ public class TrackRecordingServiceTest
     // Clear the number of attempts and set the timeout to 10 min.
     updateAutoResumePrefs(0, 10);
 
-    // Resume the service.  It should resume recording of the previous track.
+    // Start the service in "resume" mode (simulates the on-reboot action).
     Intent startIntent = createStartIntent();
     startIntent.putExtra(RESUME_TRACK_EXTRA_NAME, true);
     startService(startIntent);
     assertNotNull(getService());
     
+    // We don't expect to resume the previous track, because it has expired.
     assertFalse(getService().isRecording());
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertEquals(-1, service.getRecordingTrackId());
@@ -220,12 +224,14 @@ public class TrackRecordingServiceTest
     updateAutoResumePrefs(
         TrackRecordingService.MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS, 10);
 
-    // Resume the service.  It should resume recording of the previous track.
+    // Start the service in "resume" mode (simulates the on-reboot action).
     Intent startIntent = createStartIntent();
     startIntent.putExtra(RESUME_TRACK_EXTRA_NAME, true);
     startService(startIntent);
     assertNotNull(getService());
-    
+
+    // We don't expect to resume the previous track, because there were already
+    // too many attempts.
     assertFalse(getService().isRecording());
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertEquals(-1, service.getRecordingTrackId());
