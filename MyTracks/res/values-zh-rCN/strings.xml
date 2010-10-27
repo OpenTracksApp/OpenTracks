@@ -32,6 +32,7 @@ limitations under the License.
   <string name="choose_track_message">请选择要查看的轨迹</string>
   <string name="current_track">当前轨迹</string>
   <string name="current_segment">上一段轨迹</string>
+  <string name="aggregated_stats">累积统计</string>
 
   <!-- Error messages -->
   <string name="error_no_location_manager">此设备上没有位置管理器!</string>
@@ -122,6 +123,7 @@ limitations under the License.
   <string name="tracklist_save_as_gpx">保存为 GPX 文件</string>
   <string name="tracklist_save_as_kml">保存为 KML 文件</string>
   <string name="tracklist_save_as_csv">保存为 CSV 文件</string>
+  <string name="tracklist_save_as_tcx">Save a TCX file</string>
   <string name="tracklist_btn_send_all_to_mymaps">发送到 Google My Maps</string>
   <string name="tracklist_btn_delete_all">删除所有轨迹</string>
   <!-- Export All -->
@@ -135,6 +137,7 @@ limitations under the License.
   <string name="tracklist_share_gpx_file">GPX 文件</string>
   <string name="tracklist_share_kml_file">KML 文件</string>
   <string name="tracklist_share_csv_file">CSV 文件</string>
+  <string name="tracklist_share_tcx_file">TCX 文件</string>
   <string name="tracklist_clear_map">清除地图</string>
 
   <!-- Waypoints list -->
@@ -165,9 +168,10 @@ limitations under the License.
   <string name="settings_recording">记录</string>
   <string name="settings_sharing">分享</string>
 
+  <string name="settings_not_available_summary">你使用的 Android 版本无法支持</string>
+
   <string name="settings_announcement_frequency">提示频度</string>
   <string name="settings_announcement_frequency_summary">语音提示的最小时间间隔</string>
-  
 
   <string name="settings_min_recording_distance">最小记录间距</string>
   <string name="settings_min_recording_distance_summary">位置记录的最小间隔距离</string>
@@ -202,7 +206,38 @@ limitations under the License.
 
   <string name="settings_split_frequency">切割频度</string>
   <string name="settings_split_frequency_summary">插入新切割标记所需要达到的最大时间或距离</string>
-  <string name="pace_label">步数</string>
+
+  <string name="settings_auto_resume_track_timeout">自动恢复追踪等待时间</string>
+  <string name="settings_auto_resume_track_timeout_summary">手机重启后自动继续上次轨迹记录的最大间隔时间</string>
+
+  <string name="pace_label">节奏</string>
+
+  <string name="eclair_required">只在 Android 2.0 及以上版本支持</string>
+  <string name="settings_sensor_type">感应器类型</string>
+  <string name="settings_sensor_type_summary">要连接到的感应器类型</string>
+  <string name="settings_sensor_id">感应器ID</string>
+  <string name="settings_sensor_id_summary">发送到感应器的ID.</string>
+  <string name="sensor_id_malformed">ID必须是一个整数值.</string>
+  <string name="bluetooth_sensor_title">蓝牙感应器</string>
+  <string name="bluetooth_sensor_summary">要连接到的蓝牙感应器</string>
+  <string name="settings_modular_stats_display_title">模块化统计信息显示</string>
+  <string name="settings_modular_stats_display_summary_on">统计信息屏幕以多种模式拆分.</string>
+  <string name="settings_modular_stats_display_summary_off">同屏显示多个统计信息</string>
+
+  <string name="settings_backup">备份 (测试版)</string>
+  <string name="settings_sd_backup">SD 存储卡备份</string>
+  <string name="settings_backup_to_sd">立即备份</string>
+  <string name="settings_backup_to_sd_summary">将你所有轨迹和设置的完整备份写入到 SD 存储卡</string>
+  <string name="settings_restore_from_sd">立即恢复</string>
+  <string name="settings_restore_from_sd_summary">从 SD 存储卡恢复所有轨迹和设置</string>
+  <string name="settings_no_backup_while_recording">在记录轨迹时无法处理备份数据.</string>
+
+  <!-- Backups -->
+  <string name="restore_overwrites_warning">从 SD 存储卡恢复备份数据将覆盖掉你当前的所有轨迹和设置. 确定要继续吗?</string>
+  <string name="select_backup_to_restore">请选择要恢复的备份文件</string>
+  <string name="no_backups">没有找到备份文件.</string>
+  <string name="backup_write_progress_message">将所有轨迹和设置写入 SD 存储卡中. 这需要一些时间...</string>
+  <string name="backup_import_progress_message">从 SD 存储卡读取轨迹和设置中. 这需要一些时间...</string>
 
   <!-- MyTracksSky -->
   <string name="mytracks_sky">GPS 卫星</string>
@@ -241,7 +276,7 @@ limitations under the License.
 
   <!-- Visibility -->
   <string name="public_map">公开</string>
-  <string name="unlisted_map">Unlisted</string>
+  <string name="unlisted_map">未公布</string>
   <string name="mapslist_no_maps_available">你还没有保存任何地图.</string>
 
   <!-- Statistics View -->
@@ -285,12 +320,13 @@ limitations under the License.
   <!-- Time  -->
   <string name="hour">小时</string>
   <string name="hours">小时</string>
-  <string name="hr">时</string>
-  <string name="min">分</string>
+  <string name="hr">hr</string>
+  <string name="min">min</string>
   <string name="minute">分钟</string>
   <string name="minutes">分钟</string>
   <string name="second">秒</string>
   <string name="seconds">秒</string>
+  <string name="milliseconds">ms</string>
 
   <!-- Distance -->
   <string name="meter">m</string>
@@ -310,6 +346,12 @@ limitations under the License.
   <string name="min_per_mile">min/mi</string>
   <string name="per_mile">每英里</string>
 
+  <!-- Power -->
+  <string name="watts">W</string>
+
+  <string name="revolutions_per_minute">rpm</string>
+  <string name="bpm">bpm</string>
+
   <!-- Stats Labels -->
   <string name="moving_time_label">移动时间</string>
   <string name="total_time_label">总时间</string>
@@ -320,6 +362,10 @@ limitations under the License.
   <string name="statistics">统计</string>
   <string name="total_distance_label">总距离</string>
   <string name="distance_label">距离</string>
+  <string name="power">电源</string>
+  <string name="cadence">节奏</string>
+  <string name="heart_rate">心率</string>
+  <string name="max_heart_rate">最大心率</string>
   <string name="unknown">-</string>
   <string name="waiting">请稍候...</string>
 
@@ -403,4 +449,24 @@ limitations under the License.
   <string name="gsm_strength">GSM 强度 %1$d</string>
   <string name="cdma_strength">CDMA 强度 %1$d dBm</string>
   <string name="evdo_strength">EVDO 强度 %1$d dBm</string>
+
+  <!-- Fake preference keys - never saved, but show options in the preferences screen -->
+  <string name="method_bluetooth">蓝牙</string>
+  <string name="bluetooth_options">蓝牙设置</string>
+  <string name="bluetooth_pairing">设备关联</string>
+  <string name="bluetooth_pairing_summary">打开 Android 的蓝牙设置关联设备</string>
+  <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
+  <string name="sensor_options">感应器选项</string>
+
+
+  <!-- Bluetooth Sensor -->
+  <string name="bluetooth_connected">连接到 %s</string>
+  <string name="bluetooth_connecting">蓝牙感应器连接中 ...</string>
+  <string name="bluetooth_not_connected">未连接蓝牙感应器</string>
+
+  <!-- Sensor State -->
+  <string name="sensor_data_time">感应器数据时间</string>
+  <string name="power_meter_enabled">电源计量器已启用</string>
+  <string name="heart_rate_monitor_enabled">心率监视器已启用</string>
+
 </resources>

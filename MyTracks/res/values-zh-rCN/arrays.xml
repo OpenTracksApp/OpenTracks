@@ -147,6 +147,14 @@ limitations under the License.
     <item>1 分钟</item>
   </string-array>
 
+  <!-- Auto-resume track timeout -->
+  <string-array name="auto_resume_track_timeout_options">
+    <item>从不</item>
+    <item>5 分钟</item>
+    <item>10 分钟</item>
+    <item>15 分钟</item>
+    <item>总是</item>
+  </string-array>
   <!-- Other non-preference arrays -->
   <array name="activity_types">
     <item>未知</item>
