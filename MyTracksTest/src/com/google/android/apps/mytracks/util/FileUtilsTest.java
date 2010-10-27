@@ -31,8 +31,8 @@ import junit.framework.TestCase;
  * @author Rodrigo Damazio
  */
 public class FileUtilsTest extends TestCase {
-  private static final String ORIGINAL_NAME = "Swim\10ming ^across: the/ pacific (ocean).";
-  private static final String SANITIZED_NAME = "Swimming across the pacific (ocean).";
+  private static final String ORIGINAL_NAME = "Swim\10ming-^across: the/ pacific (ocean).";
+  private static final String SANITIZED_NAME = "Swimming-across the pacific (ocean).";
 
   private FileUtils fileUtils;
   private Set<String> existingFiles;
