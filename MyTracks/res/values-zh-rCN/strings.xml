@@ -239,6 +239,9 @@ limitations under the License.
   <string name="backup_write_progress_message">将所有轨迹和设置写入 SD 存储卡中. 这需要一些时间...</string>
   <string name="backup_import_progress_message">从 SD 存储卡读取轨迹和设置中. 这需要一些时间...</string>
 
+  <string name="settings_auto_resume_track_timeout">自动恢复追踪等待时间</string>
+  <string name="settings_auto_resume_track_timeout_summary">手机重启后自动继续上次轨迹记录的最大间隔时间</string>
+
   <!-- MyTracksSky -->
   <string name="mytracks_sky">GPS 卫星</string>
 
@@ -328,6 +331,7 @@ limitations under the License.
   <string name="seconds">秒</string>
 
 
+
   <!-- Distance -->
 
 
@@ -381,6 +385,14 @@ limitations under the License.
   <string name="about_version">版本:</string>
   <string name="about_email">技术支持</string>
   <string name="about_support">技术支持:</string>
+
+
+
+
+
+
+
+
 
 
 
