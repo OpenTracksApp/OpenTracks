@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+  <!-- DO NOT TRANSLATE -->
+  <string name="app_name">My Tracks</string>
+
+  <!-- Used by the Menu -->
+  <string name="start_recording">Record track</string>
+  <string name="stop_recording">Stop recording</string>
+  <string name="switch_to_sat">Satellite Mode</string>
+  <string name="switch_to_map">Map Mode</string>
+  <string name="mylocation">My Location</string>
+  <string name="list_tracks">Tracks</string>
+  <string name="list_markers">Markers</string>
+  <string name="delete_all_tracks">Delete all tracks</string>
+  <string name="settings">Settings</string>
+  <string name="elevation">Elevation</string>
+  <string name="choose_track_message">Please select the track to view</string>
+  <string name="current_track">Current track</string>
+  <string name="current_segment">Last segment</string>
+  <string name="aggregated_stats">Aggregated Statistics</string>
+
+  <!-- Error messages -->
+  <string name="error_no_location_manager">No location manager was found on this device!</string>
+  <string name="error_no_gps_location_provider">No GPS location provider was found on this device.</string>
+  <string name="error_sending_to_mymap">There was an error while sending your track to Google My Map. Please try again later.</string>
+  <string name="error_sending_to_docs">There was an error while sending your track to Google Docs. Please try again later.</string>
+  <string name="error_unable_to_start_recording">Unable to start recording. Try again.</string>
+  <string name="error_unable_to_stop_recording">Unable to stop recording. Try again.</string>
+  <string name="error_unable_to_read_file">Unable to read from file.</string>
+  <string name="error_invalid_gpx_format">File does not have a valid GPX format.</string>
+  <string name="error_generic">An error occurred. Please try again.</string>
+  <string name="error_track_does_not_exist">Track does not exist.</string>
+  <string name="error_out_of_memory">This file is too big (must be less than 500 KB). Aborting.</string>
+  <string name="error_unable_to_insert_marker">Unable to insert marker. No location fix available.</string>
+
+  <!-- Status messages -->
+  <string name="wait_for_fix">Waiting for a better GPS fix. Make sure the sky is visible.</string>
+  <string name="status_now_recording">Now recording a new track.</string>
+  <string name="status_stopped_recording">Stopped recording your track.</string>
+  <string name="status_new_mymap_has_been_created">A new Google My Map has been created at maps.google.com.</string>
+  <string name="status_tracks_have_been_uploaded">Your track has been sent to maps.google.com.</string>
+  <string name="status_tracks_have_been_uploaded_to_new_doc">Your track has been sent to a new spreadsheet at docs.google.com.</string>
+  <string name="status_tracks_have_been_uploaded_to_docs">Your track has been sent to docs.google.com.</string>
+  <string name="status_mymap_info">It may sometimes take a few minutes before new tracks appear.</string>
+  <string name="status_enable_gps">Please tap here to go to Security and Location Settings and check \'enable GPS satellites\'. Press back button to return.</string>
+  <string name="status_approximate_location">Note: An approximate location as determined from cell towers and WIFI networks is shown.</string>
+  <string name="status_no_location">A location can currently not be determined. Enable more location sources (see Security and Location Settings) and make sure the sky is visible. Try again later.</string>
+  <string name="status_waypoint_inserted">A way point marker was inserted.</string>
+  <string name="status_statistics_inserted">A statistics marker was inserted.</string>
+
+  <!-- Progress dialog -->
+  <string name="progress_title">Please wait...</string>
+  <string name="progress_message">Sending your track to Google.</string>
+  <string name="progress_message_reading_track">Reading track...</string>
+  <string name="progress_message_preparing_track">Preparing track...</string>
+  <string name="progress_message_authenticating_mymaps">Authenticating to Google Maps...</string>
+  <string name="progress_message_authenticating_docs">Authenticating to Google Docs...</string>
+  <string name="progress_message_sending_docs">Sending track to Google Docs...</string>
+  <string name="progress_message_sending_mymaps">Sending track to Google Maps...</string>
+  <string name="progress_message_creating_map">Creating new My Map...</string>
+  <string name="import_progress_message">Importing a GPS track. This may take a while.</string>
+  <string name="write_progress_message">Writing file to SD card. This may take a while.</string>
+  <string name="progress_message_updating_track">Updating track statistics...</string>
+
+  <!-- Used by DeleteAllDataHandler -->
+  <string name="are_you_sure_question">Are you sure?</string>
+  <string name="all_data_will_be_permanently_deleted">All tracks and markers will be deleted from this phone.</string>
+  <string name="track_will_be_permanently_deleted">The track and its markers will be permanently deleted from this phone.</string>
+  <string name="marker_will_be_permanently_deleted">The marker will be permanently deleted from this phone.</string>
+
+  <!-- Text and links when uploading to Google My Maps -->
+  <string name="new_map_description">Created by My Tracks on Android.</string>
+  <string name="my_map_link">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
+  <string name="new_map_title">New map</string>
+
+  <!-- Formatting of track and marker descriptions -->
+  <string name="points">Points</string>
+  <string name="recorded_date">Recorded</string>
+  <string name="category">Activity type</string>
+  <string name="waypoint_category">Marker type</string>
+  <string name="part">(Part %d)</string>
+
+  <!-- Used by the track recording service -->
+  <string name="recording_your_track">Recording your track...</string>
+  <string name="new_track">Track %d</string>
+
+  <!-- Common -->
+  <string name="no">No</string>
+  <string name="yes">Yes</string>
+  <string name="ok">OK</string>
+  <string name="error">Error</string>
+  <string name="success">Success</string>
+  <string name="waypoint">Waypoint</string>
+
+  <!-- Placemark labels for start and end of track -->
+  <string name="start">(Start)</string>
+  <string name="end">(End)</string>
+
+  <!--  TrackList -->
+  <string name="tracklist_show_track">Show</string>
+  <string name="tracklist_send_to_mymaps">Send to Google My Maps</string>
+  <string name="tracklist_send_to_new_mymap">Send to New Google My Map</string>
+  <string name="tracklist_send_to_docs">Send to Google Docs</string>
+  <string name="tracklist_send_to_google">Send to Google...</string>
+  <string name="tracklist_delete_track">Delete from phone...</string>
+  <string name="tracklist_edit_track">Edit details</string>
+  <string name="tracklist_write_to_sd">Write to SD card...</string>
+  <string name="tracklist_save_as_gpx">Save a GPX file</string>
+  <string name="tracklist_save_as_kml">Save a KML file</string>
+  <string name="tracklist_save_as_csv">Save a CSV file</string>
+  <string name="tracklist_save_as_tcx">Save a TCX file</string>
+  <string name="tracklist_btn_send_all_to_mymaps">Send to Google My Maps</string>
+  <string name="tracklist_btn_delete_all">Delete all tracks</string>
+  <!-- Export All -->
+  <string name="tracklist_btn_export_all">Export all tracks</string>
+  <string name="export_done">Export finished</string>
+  <string name="tracklist_pick_one">Pick a track. Press&amp;hold for more options.</string>
+  <string name="tracklist_all_tracks">All Tracks:</string>
+  <string name="tracklist_this_track">This Track</string>
+  <string name="tracklist_share_track">Share with Friends...</string>
+  <string name="tracklist_share_link">A link to Google My Map</string>
+  <string name="tracklist_share_gpx_file">A GPX file</string>
+  <string name="tracklist_share_kml_file">A KML file</string>
+  <string name="tracklist_share_csv_file">A CSV file</string>
+  <string name="tracklist_share_tcx_file">A TCX file</string>
+  <string name="tracklist_clear_map">Clear map</string>
+
+  <!-- Waypoints list -->
+  <string name="waypointslist_btn_delete_all">Delete all markers</string>
+  <string name="waypointslist_this_waypoint">This Marker</string>
+  <string name="waypointslist_delete_waypoint">Delete</string>
+  <string name="waypointslist_edit_waypoint">Edit details</string>
+  <string name="waypointslist_show_waypoint">Show on map</string>
+  <string name="waypointslist_btn_insert_waypoint">Insert waypoint</string>
+  <string name="waypointslist_btn_insert_statistics">Insert statistics</string>
+  <string name="waypointslist_pick_one">Pick a marker. Press&amp;hold for more options.</string>
+
+  <!-- MyTracks Details -->
+  <string name="trackdetails_title">Track Details</string>
+  <string name="trackdetails_name">Track Name</string>
+  <string name="trackdetails_description">Track Description</string>
+  <string name="trackdetails_category">Activity Type (e.g. hiking, cycling, running, climbing...)</string>
+
+  <!-- MyTracks Waypoint Details -->
+  <string name="waypointdetails_title">Marker Details</string>
+  <string name="waypointdetails_name">Marker Name</string>
+  <string name="waypointdetails_description">Marker Description</string>
+  <string name="waypointdetails_category">Marker Type (e.g. Building, Pothole, Sight...)</string>
+
+  <!-- MyTracks Settings -->
+  <string name="mytracks_settings">My Tracks Settings</string>
+  <string name="settings_display">Display</string>
+  <string name="settings_recording">Recording</string>
+  <string name="settings_sharing">Sharing</string>
+
+  <string name="settings_not_available_summary">Not available in your version of Android</string>
+
+  <string name="settings_announcement_frequency">Announcement frequency</string>
+  <string name="settings_announcement_frequency_summary">Minimum time between two voice announcements</string>
+
+  <string name="settings_min_recording_distance">Min distance between points</string>
+  <string name="settings_min_recording_distance_summary">Smallest distance between two recordings of your position</string>
+
+  <string name="settings_max_recording_distance">Max distance between points</string>
+  <string name="settings_max_recording_distance_summary">If two points are further than this, the track will be split</string>
+
+  <string name="settings_min_recording_interval">Min time between points</string>
+  <string name="settings_min_recording_interval_summary">Smallest time interval between two recordings of your position</string>
+
+  <string name="settings_min_required_accuracy">Minimum accuracy</string>
+  <string name="settings_min_required_accuracy_summary">Recording will be paused if your position is not at least this accurate</string>
+
+  <string name="settings_metric_units">Use metric units</string>
+  <string name="settings_metric_units_summary_on">All distances will be displayed in metric units</string>
+  <string name="settings_metric_units_summary_off">All distances will be displayed in imperial units</string>
+
+  <string name="settings_map_public">Make maps public</string>
+  <string name="settings_map_public_summary_on">Uploaded maps will be visible to anyone on maps.google.com</string>
+  <string name="settings_map_public_summary_off">Uploaded maps will not be listed publicly on maps.google.com</string>
+
+  <string name="settings_report_speed_or_pace">Display speed</string>
+  <string name="settings_report_speed_or_pace_summary_on">Speed will be displayed</string>
+  <string name="settings_report_speed_or_pace_summary_off">Pace will be displayed</string>
+
+  <string name="settings_share_url_only">Share only URL</string>
+  <string name="settings_share_url_only_summary_on">Only the URL of the map will be sent when sharing</string>
+  <string name="settings_share_url_only_summary_off">The contents of the track will also be included when sharing</string>
+
+  <string name="settings_signal_sampling_frequency">Signal sampling frequency</string>
+  <string name="settings_signal_sampling_frequency_summary">Time between two recordings of the phone\'s signal strength</string>
+
+  <string name="settings_split_frequency">Split frequency</string>
+  <string name="settings_split_frequency_summary">Maximum time or distance after which a new split marker will be inserted</string>
+
+  <string name="settings_auto_resume_track_timeout">Auto-resume track timeout</string>
+  <string name="settings_auto_resume_track_timeout_summary">Maximum time in minutes after which a previously recording track will not be resumed on phone reboot</string>
+
+  <string name="pace_label">Pace</string>
+
+  <string name="eclair_required">Only supported in Android 2.0 or above</string>
+  <string name="settings_sensor_type">Sensor Type</string>
+  <string name="settings_sensor_type_summary">The type of sensor to connect to.</string>
+  <string name="settings_sensor_id">Sensor Id</string>
+  <string name="settings_sensor_id_summary">The Id sent to sensors.</string>
+  <string name="sensor_id_malformed">The Id must be an integer value.</string>
+  <string name="bluetooth_sensor_title">Bluetooth sensor</string>
+  <string name="bluetooth_sensor_summary">The bluetooth sensor to connect to.</string>
+  <string name="settings_modular_stats_display_title">Modular Stats Display</string>
+  <string name="settings_modular_stats_display_summary_on">The stats screen is split in various modes.</string>
+  <string name="settings_modular_stats_display_summary_off">Display all stats on one screen</string>
+
+  <string name="settings_backup">Backup (BETA)</string>
+  <string name="settings_sd_backup">SD Card Backup</string>
+  <string name="settings_backup_to_sd">Backup now</string>
+  <string name="settings_backup_to_sd_summary">Write a full copy of all your tracks and settings to the SD card</string>
+  <string name="settings_restore_from_sd">Restore now</string>
+  <string name="settings_restore_from_sd_summary">Restore all tracks and settings from the SD card</string>
+  <string name="settings_no_backup_while_recording">Cannot manipulate backups while recording a track.</string>
+
+  <!-- Backups -->
+  <string name="restore_overwrites_warning">Restoring a backup from the SD card will OVERWRITE all your current tracks and settings. Are you sure?</string>
+  <string name="select_backup_to_restore">Select the backup to restore</string>
+  <string name="no_backups">No backups found.</string>
+  <string name="backup_write_progress_message">Writing all tracks and settings to the SD card. This may take a while...</string>
+  <string name="backup_import_progress_message">Reading all tracks and settings from the SD card. This may take a while...</string>
+
+  <!-- MyTracksSky -->
+  <string name="mytracks_sky">GPS Satellites</string>
+
+  <!-- My Maps -->
+  <string name="select_map_message">Pick a map from your account:</string>
+  <string name="create_new_map">Create new map...</string>
+  <string name="map_list_title">Send to Google My Maps</string>
+  <string name="maps_list_loading">Loading maps...</string>
+  <string name="maps_list_failed">Your maps could not be loaded at this time!</string>
+  <string name="open_map">Select this Map</string>
+  <string name="edit_map_details">Edit Map Details</string>
+  <string name="share_map">Share Map with Friends</string>
+  <string name="share_track">Share Track with Friends</string>
+  <string name="delete_map">Delete Map from your Account</string>
+  <string name="map_title">Map Title:</string>
+  <string name="map_description">Map Description:</string>
+  <string name="map_searchable_edit">Make this map and its contents show up in search results</string>
+  <string name="map_not_searchable_edit">Do not let this map or its contents show up in search results, though they may still be viewed be others through the direct URL</string>
+  <string name="map_searchable">This map and its contents will show in search results</string>
+  <string name="map_not_searchable">Neither this map nor its contents will show in search results, but they may still be viewed by others through a direct link</string>
+  <string name="close">Close</string>
+  <string name="edit">Edit</string>
+  <string name="cancel">Cancel</string>
+  <string name="save">Save</string>
+
+  <!-- Sharing -->
+  <string name="share_map_subject">I would like to share a map with you</string>
+  <string name="share_map_body_format">I think you might be interested in this map:
+
+      %s</string>
+  <string name="send_track_subject">I would like to share a track with you</string>
+  <string name="send_track_body_format">I think you might be interested in this track.
+
+    To view this track use Google Earth or other mapping software.</string>
+
+  <!-- Visibility -->
+  <string name="public_map">Public</string>
+  <string name="unlisted_map">Unlisted</string>
+  <string name="mapslist_no_maps_available">You don\'t have any maps, yet.</string>
+
+  <!-- Statistics View -->
+  <!-- Average Moving -->
+  <string name="average_moving_speed_label">Average Moving Speed</string>
+  <string name="average_moving_pace_label">Average Moving Pace</string>
+
+  <!-- Average -->
+  <string name="average_speed_label">Average Speed</string>
+  <string name="average_pace_label">Average Pace</string>
+
+  <string name="elevation_chart_name">Elevation Chart</string>
+  <string name="elevation_gain_label">Elevation Gain</string>
+  <string name="elevation_label">Elevation</string>
+  <string name="latitude_label">Latitude</string>
+  <string name="longitude_label">Longitude</string>
+
+  <!-- Min -->
+  <string name="min_elevation_label">Min Elevation</string>
+  <string name="min_grade_label">Min Grade</string>
+  <string name="min_pace_label">Min Pace</string>
+
+  <!-- Max -->
+  <string name="max_elevation_label">Max Elevation</string>
+  <string name="max_grade_label">Max Grade</string>
+  <string name="max_speed_label">Max Speed</string>
+
+  <string name="loading_track">Loading track...</string>
+
+  <!-- Chart Settings -->
+  <string name="chart_settings">Chart Settings</string>
+  <!-- X Axis -->
+  <string name="x_axis">X Axis</string>
+  <string name="by_distance">By Distance</string>
+  <string name="by_time">By Time</string>
+
+  <!-- Y Axis -->
+  <string name="y_axis">Y Axis</string>
+
+  <!-- Units -->
+  <!-- Time  -->
+  <string name="hour">hour</string>
+  <string name="hours">hours</string>
+  <string name="hr">hr</string>
+  <string name="min">min</string>
+  <string name="minute">minute</string>
+  <string name="minutes">minutes</string>
+  <string name="second">second</string>
+  <string name="seconds">seconds</string>
+  <string name="milliseconds">ms</string>
+
+  <!-- Distance -->
+  <string name="meter">m</string>
+  <string name="kilometer">km</string>
+  <string name="kilometers_long">kilometers</string>
+  <string name="feet">ft</string>
+  <string name="mile">mi</string>
+  <string name="miles_long">miles</string>
+
+  <!-- Speed and Pace -->
+  <string name="kilometer_per_hour">km/h</string>
+  <string name="kilometer_per_hour_long">kilometers per hour</string>
+  <string name="min_per_kilometer">min/km</string>
+  <string name="per_kilometer">per kilometer</string>
+  <string name="mile_per_hour">mi/h</string>
+  <string name="mile_per_hour_long">miles per hour</string>
+  <string name="min_per_mile">min/mi</string>
+  <string name="per_mile">per mile</string>
+
+  <!-- Power -->
+  <string name="watts">W</string>
+
+  <string name="revolutions_per_minute">rpm</string>
+  <string name="bpm">bpm</string>
+
+  <!-- Stats Labels -->
+  <string name="moving_time_label">Moving Time</string>
+  <string name="total_time_label">Total Time</string>
+  <string name="time_label">Time</string>
+  <string name="sd_unavail">SD Unavailable</string>
+  <string name="speed">Speed</string>
+  <string name="start_trip">You must start a trip.</string>
+  <string name="statistics">Statistics</string>
+  <string name="total_distance_label">Total Distance</string>
+  <string name="distance_label">Distance</string>
+  <string name="power">Power</string>
+  <string name="cadence">Cadence</string>
+  <string name="heart_rate">Heart Rate</string>
+  <string name="max_heart_rate">Max Heart Rate</string>
+  <string name="unknown">-</string>
+  <string name="waiting">Waiting...</string>
+
+  <!-- End User License Agreement -->
+  <string name="eula_title">End User License Agreement</string>
+  <string name="accept">Accept</string>
+  <string name="decline">Decline</string>
+
+  <!-- About -->
+  <string name="about">About</string>
+  <string name="help">Help</string>
+  <string name="about_team">Team:</string>
+  <string name="about_version">Version:</string>
+  <string name="about_email">Support</string>
+  <string name="about_support">Support:</string>
+
+  <!-- DO NOT TRANSLATE -->
+  <string name="about_googlegroups">mytracks@googlegroups.com</string>
+  <string name="about_weburl">mytracks.appspot.com</string>
+  <string name="about_copyright_message">Copyright 2009 Google Inc.</string>
+  <string name="about_dylan">Dylan Casey</string>
+  <string name="about_leif">Leif Hendrik Wilden</string>
+  <string name="about_rdamazio">Rodrigo Damazio Bovendorp</string>
+  <string name="about_sandor">Sandor Dornbush</string>
+
+  <!-- Send to Google -->
+  <string name="sendtogoogle_title">Send to...</string>
+  <string name="sendtogoogle_google_mymaps">Google My Maps</string>
+  <string name="sendtogoogle_google_docs">Google Docs</string>
+  <string name="sendtogoogle_send_now">Send now</string>
+  <string name="sendtogoogle_create_new_map">Create a new map</string>
+  <string name="sendtogoogle_pick_existing_map">Pick an existing map</string>
+  <string name="sendtogoogle_send_stats">Send track statistics</string>
+  <string name="sendtogoogle_send_stats_and_points">Send statistics and points</string>
+
+  <!-- Getting the account to upload to. -->
+  <string name="no_account_found_title">No Account Found</string>
+  <string name="no_account_found">No account found to upload tracks to.</string>
+  <string name="choose_account_title">Choose Account</string>
+
+  <!-- SD card -->
+  <string name="io_no_external_storage_found">No external storage was found. Make sure that a SD card is inserted and that your phone is not mounted to a computer.</string>
+  <string name="io_write_failed">Unable to write to file.</string>
+  <string name="io_read_failed">Unable to read from file.</string>
+  <string name="io_create_dir_failed">Unable to create directory on SD card.</string>
+  <string name="io_write_finished">Finished writing to SD card.</string>
+  <string name="io_read_finished">Finished reading from SD card.</string>
+
+  <!-- VersionChecker -->
+  <string name="version_check_title">Upgrade Check</string>
+  <string name="version_check_upgrade_button">Upgrade Now</string>
+  <string name="version_check_continue_button">Continue Without Upgrading</string>
+  <string name="upgrade_required">Your version of %1$s may no longer work properly, and is no longer supported. Please upgrade in order to continue using %1$s.</string>
+  <string name="upgrade_recommended">Your version of %1$s may no longer work properly. You may upgrade it now, or continue to use it at your own risk. Some functionality such as server synchronization may not function until you upgrade.</string>
+  <string name="upgrade_available">A new version of %1$s is available. You may continue to use your current version without problems, but you won\'t get the latest features until you upgrade.</string>
+
+  <!-- Welcome -->
+  <string name="welcome">Welcome</string>
+  <string name="welcome_read_later">Ok</string>
+  <string name="welcome_about">About My Tracks</string>
+
+  <!-- Announcement -->
+  <string name="announce_no_distance">My Tracks no distance</string>
+  <!-- Format:
+  $1 : Distance label
+  $2 : Distance value (5)
+  $3 : Distance units (mi, km)
+  $4 : Time description (10 minutes 5 seconds)
+  $5 : Speed value (5.6) : Pace value (5 minutes 6 seconds)
+  $6 : Speed units (mph) : Pace units (per mile)
+  -->
+  <string name="announce_template">My Tracks %1$s %2$.2f %3$s in %4$s at %5$s %6$s</string>
+
+  <!-- Check Units -->
+  <string name="check_units_title">Units of Measure Notice</string>
+  <string name="check_units_message">By default units are metric. Would you like to change that setting?</string>
+
+  <!-- Signal Strength -->
+  <string name="error_rate"> Error Rate: %1$d</string>
+  <string name="signal_to_noise_ratio"> Signal to Noise Ratio: %1$d</string>
+  <string name="ecio"> Ec/lo: %1$.1f dB</string>
+  <string name="gsm_strength">GSM Strength: %1$d</string>
+  <string name="cdma_strength">CDMA Strength: %1$d dBm</string>
+  <string name="evdo_strength">EVDO Strength: %1$d dBm</string>
+
+  <!-- Fake preference keys - never saved, but show options in the preferences screen -->
+  <string name="method_bluetooth">Bluetooth</string>
+  <string name="bluetooth_options">Bluetooth options</string>
+  <string name="bluetooth_pairing">Device pairing</string>
+  <string name="bluetooth_pairing_summary">Open Android\'s bluetooth settings to pair a device</string>
+  <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
+  <string name="sensor_options">Sensor Options</string>
+
+  <!-- Sensor Types => DO NOT TRANSLATE -->
+  <string name="none">NONE</string>
+  <string name="ant_sensor_type">ANT</string>
+  <string name="srm_sensor_type">SRM</string>
+  <string name="athlosoft_sensor_type">ATHLOSOFT</string>
+
+  <!-- Bluetooth Sensor -->
+  <string name="bluetooth_connected">Connected to %s</string>
+  <string name="bluetooth_connecting">Bluetooth sensor connecting ...</string>
+  <string name="bluetooth_not_connected">Bluetooth sensor not connected</string>
+
+  <!-- Sensor State -->
+  <string name="sensor_data_time">Sensor Data Time</string>
+  <string name="power_meter_enabled">Power meter enabled</string>
+  <string name="heart_rate_monitor_enabled">Heart rate monitor enabled</string>
+
+</resources>
