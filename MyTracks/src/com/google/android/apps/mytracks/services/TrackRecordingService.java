@@ -386,7 +386,6 @@ public class TrackRecordingService extends Service implements LocationListener {
   }
   
   private Track getRecordingTrack() {
-    Log.d(MyTracksConstants.TAG, "Recording track ID: " + recordingTrackId);
     if (recordingTrackId < 0) {
       return null;
     }
