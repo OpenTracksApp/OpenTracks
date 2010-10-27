@@ -123,7 +123,7 @@ limitations under the License.
   <string name="tracklist_save_as_gpx">保存为 GPX 文件</string>
   <string name="tracklist_save_as_kml">保存为 KML 文件</string>
   <string name="tracklist_save_as_csv">保存为 CSV 文件</string>
-  <string name="tracklist_save_as_tcx">Save a TCX file</string>
+  <string name="tracklist_save_as_tcx">保存为 TCX 文件</string>
   <string name="tracklist_btn_send_all_to_mymaps">发送到 Google My Maps</string>
   <string name="tracklist_btn_delete_all">删除所有轨迹</string>
   <!-- Export All -->
@@ -239,6 +239,9 @@ limitations under the License.
   <string name="backup_write_progress_message">将所有轨迹和设置写入 SD 存储卡中. 这需要一些时间...</string>
   <string name="backup_import_progress_message">从 SD 存储卡读取轨迹和设置中. 这需要一些时间...</string>
 
+  <string name="settings_auto_resume_track_timeout">自动恢复追踪等待时间</string>
+  <string name="settings_auto_resume_track_timeout_summary">手机重启后自动继续上次轨迹记录的最大间隔时间</string>
+
   <!-- MyTracksSky -->
   <string name="mytracks_sky">GPS 卫星</string>
 
@@ -328,22 +331,23 @@ limitations under the License.
   <string name="seconds">秒</string>
   <string name="milliseconds">ms</string>
 
+
   <!-- Distance -->
-  <string name="meter">m</string>
-  <string name="kilometer">km</string>
+
+
   <string name="kilometers_long">千米</string>
-  <string name="feet">ft</string>
-  <string name="mile">mi</string>
+
+
   <string name="miles_long">英里</string>
 
   <!-- Speed and Pace -->
-  <string name="kilometer_per_hour">km/h</string>
+
   <string name="kilometer_per_hour_long">千米每小时</string>
-  <string name="min_per_kilometer">min/km</string>
+
   <string name="per_kilometer">每千米</string>
-  <string name="mile_per_hour">mi/h</string>
+
   <string name="mile_per_hour_long">英里每小时</string>
-  <string name="min_per_mile">min/mi</string>
+
   <string name="per_mile">每英里</string>
 
   <!-- Power -->
@@ -392,6 +396,14 @@ limitations under the License.
   <string name="about_rdamazio">Rodrigo Damazio Bovendorp</string>
   <string name="about_sandor">Sandor Dornbush</string>
 
+
+
+
+
+
+
+
+
   <!-- Send to Google -->
   <string name="sendtogoogle_title">发送到...</string>
   <string name="sendtogoogle_google_mymaps">Google My Maps</string>
@@ -411,7 +423,9 @@ limitations under the License.
   <string name="io_no_external_storage_found">没有发现存贮设备. 请确认插入了 SD 卡并且你的手机没有将挂载 SD 卡到电脑.</string>
   <string name="io_write_failed">无法写入文件.</string>
   <string name="io_create_dir_failed">无法在 SD 卡上创建目录.</string>
+  <string name="io_create_dir_failed">无法在 SD 存储卡上创建目录.</string>
   <string name="io_write_finished">轨迹已导出到 SD 卡.</string>
+  <string name="io_read_finished">从 SD 存储卡读取完毕.</string>
 
   <!-- VersionChecker -->
   <string name="version_check_title">检查更新</string>
