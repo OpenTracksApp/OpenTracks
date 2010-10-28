@@ -409,7 +409,6 @@ limitations under the License.
   <!-- SD card -->
   <string name="io_no_external_storage_found">没有发现存贮设备. 请确认插入了 SD 卡并且你的手机没有将挂载 SD 卡到电脑.</string>
   <string name="io_write_failed">无法写入文件.</string>
-  <string name="io_create_dir_failed">无法在 SD 卡上创建目录.</string>
   <string name="io_create_dir_failed">无法在 SD 存储卡上创建目录.</string>
   <string name="io_write_finished">轨迹已导出到 SD 卡.</string>
   <string name="io_read_finished">从 SD 存储卡读取完毕.</string>
