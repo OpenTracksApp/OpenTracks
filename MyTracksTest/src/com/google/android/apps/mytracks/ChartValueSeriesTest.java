@@ -25,8 +25,8 @@ import android.test.AndroidTestCase;
  * @author Sandor Dornbush
  */
 public class ChartValueSeriesTest extends AndroidTestCase {
-  ChartValueSeries series;
-  Paint fillPaint1;
+  private ChartValueSeries series;
+  private Paint fillPaint1;
  
   @Override
   protected void setUp() throws Exception {
