@@ -27,6 +27,7 @@ import com.google.android.apps.mytracks.io.GpxImporter;
 import com.google.android.apps.mytracks.io.SendToDocs;
 import com.google.android.apps.mytracks.io.SendToMyMaps;
 import com.google.android.apps.mytracks.io.SendToMyMaps.OnSendCompletedListener;
+import com.google.android.apps.mytracks.io.TempFileCleaner;
 import com.google.android.apps.mytracks.io.TrackWriter;
 import com.google.android.apps.mytracks.io.TrackWriterFactory;
 import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
@@ -115,7 +116,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   private final AccountChooser accountChooser = new AccountChooser();
 
   /*
-   * Dialogs:
+   * Dialogs manager.
    */
   private DialogManager dialogManager;
 
@@ -345,6 +346,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   protected void onStop() {
     Log.d(MyTracksConstants.TAG, "MyTracks.onStop");
     // Clean up any temporary GPX and KML files.
+    (new TempFileCleaner()).clean();
     super.onStop();
   }
 
@@ -725,7 +727,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   /**
    * Resets status information for sending to MyMaps/Docs.
    */
-  void resetSendToGoogleStatus() {
+  public void resetSendToGoogleStatus() {
     sendToMyMapsMessage = "";
     sendToMyMapsSuccess = true;
     sendToDocsMessage = "";
@@ -839,7 +841,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * Shares a link to a My Map via external app (email, gmail, ...)
    * A chooser with apps that support text/plain will be shown to the user.
    */
-  void shareLinkToMyMap(String mapId) {
+  public void shareLinkToMyMap(String mapId) {
     Intent shareIntent = new Intent(Intent.ACTION_SEND);
     shareIntent.setType("text/plain");
     shareIntent.putExtra(Intent.EXTRA_SUBJECT,
