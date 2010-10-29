@@ -258,6 +258,18 @@ public class TrackRecordingServiceTest
   }
 
   @MediumTest
+  public void testRecording_orphanedRecordingTrack() throws Exception {
+    // Just set recording track to a bogus value.
+    setRecordingTrack(256);
+    
+    // Make sure that the service will not start recording and will clear
+    // the bogus track.
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
+    assertFalse(service.isRecording());
+    assertEquals(-1, service.getRecordingTrackId());
+  }
+  
+  @MediumTest
   public void testStartNewTrack_noRecording() throws Exception {
     List<Track> tracks = providerUtils.getAllTracks();
     assertTrue(tracks.isEmpty());
@@ -538,9 +550,12 @@ public class TrackRecordingServiceTest
     assertTrue(track.getId() >= 0);
     providerUtils.insertTrack(track);
     assertEquals(track.getId(), providerUtils.getTrack(track.getId()).getId());
+    setRecordingTrack(isRecording ? track.getId() : -1);
+  }
+  
+  private void setRecordingTrack(long id) {
     Editor editor = sharedPreferences.edit();
-    editor.putLong(context.getString(R.string.recording_track_key),
-        isRecording ? track.getId() : -1);
+    editor.putLong(context.getString(R.string.recording_track_key), id);
     editor.commit();
   }
 }

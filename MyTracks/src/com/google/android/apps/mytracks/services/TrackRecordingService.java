@@ -662,6 +662,11 @@ public class TrackRecordingService extends Service implements LocationListener {
     if (recordingTrack != null) {
       restoreStats(recordingTrack);
       isRecording = true;
+    } else {
+      // Make sure we have consistent state in shared preferences.
+      Log.w(MyTracksConstants.TAG, "TrackRecordingService.onCreate: Resetting "
+          + "an orphaned recording track: " + recordingTrackId);
+      prefManager.setRecordingTrack(recordingTrackId = -1);
     }
     showNotification();
   }

@@ -97,9 +97,10 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   /**
    * Singleton instance
    */
-  private static MyTracks instance = null;
-  private ChartActivity chartActivity = null;
+  private static MyTracks instance;
 
+  private ChartActivity chartActivity;
+  
   public ChartActivity getChartActivity() {
     return chartActivity;
   }
@@ -178,6 +179,8 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * Utilities to deal with the database.
    */
   private MyTracksProviderUtils providerUtils;
+  
+  private SharedPreferences sharedPreferences;
 
   /**
    * The connection to the track recording service.
@@ -275,6 +278,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     instance = this;
     providerUtils = MyTracksProviderUtils.Factory.get(this);
     menuManager = new MenuManager(this);
+    sharedPreferences = getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
 
     // The volume we want to control is the Text-To-Speech volume
     int volumeStream =
@@ -310,14 +314,12 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     tabHost.addView(layout);
     layout.setOnTouchListener(this);
 
-    SharedPreferences prefs =
-        getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
-    if (prefs != null) {
+    if (sharedPreferences != null) {
       selectedTrackId =
-          prefs.getLong(getString(R.string.selected_track_key), -1);
-      recordingTrackId =
-          prefs.getLong(getString(R.string.recording_track_key), -1);
-      prefs.registerOnSharedPreferenceChangeListener(this);
+          sharedPreferences.getLong(getString(R.string.selected_track_key), -1);
+      recordingTrackId = sharedPreferences.getLong(
+          getString(R.string.recording_track_key), -1);
+      sharedPreferences.registerOnSharedPreferenceChangeListener(this);
       Log.d(MyTracksConstants.TAG, "recordingTrackId: " + recordingTrackId
           + ", selectedTrackId: " + selectedTrackId);
       if (recordingTrackId > 0) {
@@ -1029,20 +1031,15 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     shareIntent.putExtra(Intent.EXTRA_SUBJECT,
         getResources().getText(R.string.share_map_subject).toString());
 
-    SharedPreferences prefs =
-        getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
     boolean shareUrlOnly = true;
-    if (prefs != null) {
-      shareUrlOnly =
-          prefs.getBoolean(getString(R.string.share_url_only_key), false);
+    if (sharedPreferences != null) {
+      shareUrlOnly = sharedPreferences.getBoolean(
+          getString(R.string.share_url_only_key), false);
     }
 
     String url = MyMapsConstants.MAPSHOP_BASE_URL + "?msa=0&msid=" + mapId;
-    String msg = (shareUrlOnly
-        ? url
-        : String.format(
-            getResources().getText(R.string.share_map_body_format).toString(),
-            url));
+    String msg = shareUrlOnly ? url : String.format(
+        getResources().getText(R.string.share_map_body_format).toString(), url);
     shareIntent.putExtra(Intent.EXTRA_TEXT, msg);
     startActivity(Intent.createChooser(shareIntent,
         getResources().getText(R.string.share_map).toString()));
@@ -1256,9 +1253,10 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   private void startRecordingNewTrack() {
     try {
       recordingTrackId = trackRecordingService.startNewTrack();
+      // Select the recording track.
+      setSelectedTrack(recordingTrackId);
       Toast.makeText(this, getString(R.string.status_now_recording),
           Toast.LENGTH_SHORT).show();
-      setSelectedAndRecordingTrack(recordingTrackId, recordingTrackId);
     } catch (RemoteException e) {
       Toast.makeText(this,
           getString(R.string.error_unable_to_start_recording),
@@ -1293,7 +1291,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       } catch (RemoteException e) {
         Log.e(MyTracksConstants.TAG, "Unable to stop recording.", e);
       }
-      setRecordingTrack(-1);
       Intent intent = new Intent(MyTracks.this, MyTracksDetails.class);
       intent.putExtra("trackid", recordingTrackId);
       intent.putExtra("hasCancelButton", false);
@@ -1348,9 +1345,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   public void setSelectedTrack(final long trackId) {
     runOnUiThread(new Runnable() {
       public void run() {
-        SharedPreferences prefs =
-            getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
-        SharedPreferences.Editor editor = prefs.edit();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putLong(getString(R.string.selected_track_key), trackId);
         editor.commit();
       }
@@ -1359,44 +1354,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
 
   protected long getSelectedTrack() {
     return selectedTrackId;
-  }
-
-  /**
-   * Writes the recording track id to the shared preferences.
-   * Executed on the UI thread.
-   *
-   * @param trackId the id of the track
-   */
-  private void setRecordingTrack(final long trackId) {
-    runOnUiThread(new Runnable() {
-      public void run() {
-        SharedPreferences prefs =
-            getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putLong(getString(R.string.recording_track_key), trackId);
-        editor.commit();
-      }
-    });
-  }
-
-  /**
-   * Writes the selected and the recording track id to the shared preferences.
-   * Executed on UI thread.
-   */
-  private void setSelectedAndRecordingTrack(final long theSelectedTrackId,
-      final long theRecordingTrackId) {
-    runOnUiThread(new Runnable() {
-      public void run() {
-        SharedPreferences prefs =
-            getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
-        if (prefs != null) {
-          SharedPreferences.Editor editor = prefs.edit();
-          editor.putLong(getString(R.string.selected_track_key), theSelectedTrackId);
-          editor.putLong(getString(R.string.recording_track_key), theRecordingTrackId);
-          editor.commit();
-        }
-      }
-    });
   }
 
   /**
