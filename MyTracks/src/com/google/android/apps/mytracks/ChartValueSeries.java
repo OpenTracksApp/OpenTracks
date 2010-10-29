@@ -25,7 +25,7 @@ import android.graphics.Path;
 import java.text.DecimalFormat;
 
 /**
- * This class encasulates meta data about one series of values for a chart.
+ * This class encapsulates meta data about one series of values for a chart.
  *
  * @author Sandor Dornbush
  */
