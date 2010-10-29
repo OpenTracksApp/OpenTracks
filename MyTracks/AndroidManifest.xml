@@ -12,7 +12,7 @@
                android:value="AEdPqrEAAAAIi-_QiwoRSc9_bAC9cmuNXTQyU8ajJmGtKdhskQ" />
 
     <provider android:name="com.google.android.apps.mytracks.content.MyTracksProvider"
-              android:multiprocess="true"
+              android:process=":trackrecord"
               android:authorities="com.google.android.maps.mytracks" />
 
     <activity android:name="com.google.android.apps.mytracks.MyTracks"
