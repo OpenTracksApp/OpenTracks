@@ -211,8 +211,8 @@ limitations under the License.
   <string name="settings_auto_resume_track_timeout_summary">Maximum time in minutes after which a previously recording track will not be resumed on phone reboot</string>
 
   <string name="settings_timestamp_track_name">Timestamp as track name</string>
-  <string name="settings_timestamp_track_name_on">The default track name will be the date and time at the start of the track</string>
-  <string name="settings_timestamp_track_name_off">Track names will have numbers which increment for each new track.</string>
+  <string name="settings_timestamp_track_name_summary_on">The default track name will be the date and time at the start of the track</string>
+  <string name="settings_timestamp_track_name_summary_off">Track names will have numbers which increment for each new track.</string>
 
   <string name="pace_label">Pace</string>
 

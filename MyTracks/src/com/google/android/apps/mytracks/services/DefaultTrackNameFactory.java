@@ -60,13 +60,7 @@ class DefaultTrackNameFactory {
   protected boolean useTimestampTrackName() {
     SharedPreferences prefs =
         context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
-
-    boolean useTimestamp = false;
-    if (prefs != null) {
-      useTimestamp = prefs.getBoolean(
-          context.getString(R.string.timestamp_track_name_key), true);
-    }
-
-    return useTimestamp;
+    return prefs.getBoolean(
+        context.getString(R.string.timestamp_track_name_key), true);
   }
 }

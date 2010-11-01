@@ -21,7 +21,16 @@ import android.test.AndroidTestCase;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Tests {@link DefaultTrackNameFactory}
+ * 
+ * @author Matthew Simmons
+ */
 public class DefaultTrackNameFactoryTest extends AndroidTestCase {
+  /**
+   * A version of the factory which allows us to supply our own answer as to
+   * whether a timestamp-based track name should be used.
+   */
   private static class MockDefaultTrackNameFactory
       extends DefaultTrackNameFactory {
     private final boolean useTimestamp;
