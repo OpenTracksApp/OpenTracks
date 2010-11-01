@@ -28,7 +28,7 @@ import java.util.Date;
 /**
  * Creates a default track name based on the current default track name policy.
  * 
- * @author simmonmt@google.com (Matthew Simmons)
+ * @author Matthew Simmons
  */
 class DefaultTrackNameFactory {
   private static final String TIMESTAMP_DATE_FORMAT = "yyyy-MM-dd HH:mm";
