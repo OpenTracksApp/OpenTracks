@@ -962,7 +962,8 @@ public class TrackRecordingService extends Service implements LocationListener {
     Uri trackUri = providerUtils.insertTrack(track);
     recordingTrackId = Long.parseLong(trackUri.getLastPathSegment());
     track.setId(recordingTrackId);
-    track.setName(getNewTrackName(this, recordingTrackId, startTime));
+    track.setName(new DefaultTrackNameFactory(this).newTrackName(
+        recordingTrackId, startTime));
     providerUtils.updateTrack(track);
 
     currentWaypointId = insertStatisticsMarker(null);
@@ -981,14 +982,6 @@ public class TrackRecordingService extends Service implements LocationListener {
         getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0); 
     setAutoResumeTrackRetries(sharedPreferences, 0);
     return recordingTrackId;
-  }
-
-  private static String getNewTrackName(Context context, long trackId, 
-      long startTime) {
-    Date startDate = new Date(startTime);
-    return String.format("%s %s",
-        DateFormat.getDateFormat(context).format(startDate),
-        DateFormat.getTimeFormat(context).format(startDate));
   }
   
   TripStatistics getTripStatistics() {
