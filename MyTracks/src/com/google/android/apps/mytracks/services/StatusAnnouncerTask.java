@@ -76,10 +76,10 @@ public class StatusAnnouncerTask implements PeriodicTask {
   private final PhoneStateListener phoneListener = new PhoneStateListener() {
     @Override
     public void onCallStateChanged(int state, String incomingNumber) {
-      speechAllowed  = (state == TelephonyManager.CALL_STATE_IDLE);
+      speechAllowed = state == TelephonyManager.CALL_STATE_IDLE;
 
       if (!speechAllowed && tts.isSpeaking()) {
-        // Stop speaking if we are
+        // If we're already speaking, stop it.
         tts.stop();
       }
     }
@@ -116,8 +116,8 @@ public class StatusAnnouncerTask implements PeriodicTask {
       int languageAvailability = tts.isLanguageAvailable(speechLanguage);
       if (languageAvailability == TextToSpeech.LANG_MISSING_DATA ||
           languageAvailability == TextToSpeech.LANG_NOT_SUPPORTED) {
-        // English is probably supported
-        // TODO: Somehow use announcement strings from English too
+        // English is probably supported.
+        // TODO: Somehow use announcement strings from English too.
         Log.w(MyTracksConstants.TAG, "Default language not available, using English.");
         speechLanguage = Locale.ENGLISH;
       }
@@ -232,7 +232,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
 
   @Override
   public void shutdown() {
-    // Stop listening to phone state
+    // Stop listening to phone state.
     TelephonyManager telephony =
         (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
     telephony.listen(phoneListener, PhoneStateListener.LISTEN_NONE);
