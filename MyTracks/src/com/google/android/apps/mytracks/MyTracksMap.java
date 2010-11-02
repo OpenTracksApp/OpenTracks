@@ -702,7 +702,7 @@ public class MyTracksMap extends MapActivity
    */
   public void setSelectedTrack(final long trackId) {
     Log.d(MyTracksConstants.TAG, "MyTracksMap.setSelectedTrack: "
-        + selectedTrackId + " -> " + trackId);
+        + "selectedtTrackId = " + selectedTrackId + ", trackId = " + trackId);
 
     if (selectedTrackId == trackId) {
       // Selected track did not change, nothing to do.
@@ -1006,7 +1006,7 @@ public class MyTracksMap extends MapActivity
           getString(R.string.selected_track_key), -1));
     }
     
-    // Show end marker if the track has been selected and is no recording.
+    // Show end marker if the track has been selected and is not recording.
     // Note: This check must be *after* a call to setSelectedTrack(...) above.
     if (isATrackSelected()) {
       mapOverlay.setShowEndMarker(!isRecordingSelected());
