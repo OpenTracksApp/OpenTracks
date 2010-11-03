@@ -345,7 +345,7 @@ public interface MyTracksProviderUtils {
      * Creates an instance of {@link MyTracksProviderUtils}.
      */
     protected MyTracksProviderUtils newForContext(Context context) {
-      return new MyTracksProviderUtilsImpl(context);
+      return new MyTracksProviderUtilsImpl(context.getContentResolver());
     }
   }
 }

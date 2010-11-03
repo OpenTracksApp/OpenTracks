@@ -43,7 +43,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
   /**
    * The rate at which announcements are spoken.
    */
-  private static final float TTS_SPEECH_RATE = 0.9f;
+  static final float TTS_SPEECH_RATE = 0.9f;
 
   /**
    * A pointer to the service context.
@@ -58,7 +58,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
   /**
    * The interface to the text to speech engine.
    */
-  private final TextToSpeech tts;
+  private TextToSpeech tts;
 
   /**
    * The response recieved from the TTS engine ater initialization.
@@ -85,21 +85,13 @@ public class StatusAnnouncerTask implements PeriodicTask {
     }
   };
 
-  /**
-   * Constructs the announcer and start the TTS engine.
-   */
   public StatusAnnouncerTask(Context context) {
-    this.context = context;
-    this.stringUtils = new StringUtils(context);
+    this(context, new StringUtils(context));
+  }
 
-    // We can't have this class also be the listener, otherwise it's unsafe to
-    // reference it in Cupcake (even if we don't instantiate it).
-    tts = new TextToSpeech(context, new OnInitListener() {
-      @Override
-      public void onInit(int status) {
-        onTtsInit(status);
-      }
-    });
+  public StatusAnnouncerTask(Context context, StringUtils stringUtils) {
+    this.context = context;
+    this.stringUtils = stringUtils;
   }
 
   /**
@@ -129,11 +121,13 @@ public class StatusAnnouncerTask implements PeriodicTask {
   }
 
   /**
+   * {@inheritDoc}
+   *
    * Announces the trip status.
    */
   @Override
   public void run(TrackRecordingService service) {
-    if (!ready) {
+    if (!ready || tts == null) {
       Log.e(MyTracksConstants.TAG, "StatusAnnouncer Tts not ready.");
       return;
     }
@@ -159,7 +153,8 @@ public class StatusAnnouncerTask implements PeriodicTask {
    *
    * @return The string that will be read to the user
    */
-  private String getAnnouncement(final TripStatistics stats) {
+  // @VisibleForTesting
+  protected String getAnnouncement(TripStatistics stats) {
     SharedPreferences preferences =
         context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
     boolean metricUnits = true;
@@ -223,23 +218,53 @@ public class StatusAnnouncerTask implements PeriodicTask {
 
   @Override
   public void start() {
-    // Register ourselves as a listener so we won't speak during a call.
+    if (tts == null) {
+      // We can't have this class also be the listener, otherwise it's unsafe to
+      // reference it in Cupcake (even if we don't instantiate it).
+      tts = newTextToSpeech(context, new OnInitListener() {
+        @Override
+        public void onInit(int status) {
+          onTtsInit(status);
+        }
+      });
+    }
     speechAllowed = true;
-    TelephonyManager telephony =
-        (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-    telephony.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
+
+    // Register ourselves as a listener so we won't speak during a call.
+    listenToPhoneState(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
   }
 
   @Override
   public void shutdown() {
     // Stop listening to phone state.
-    TelephonyManager telephony =
-        (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-    telephony.listen(phoneListener, PhoneStateListener.LISTEN_NONE);
+    listenToPhoneState(phoneListener, PhoneStateListener.LISTEN_NONE);
 
     tts.shutdown();
+    tts = null;
   }
 
+  /**
+   * Wrapper for instantiating a {@link TextToSpeech} object, which causes
+   * several issues during testing.
+   */
+  // @VisibleForTesting
+  protected TextToSpeech newTextToSpeech(Context ctx, OnInitListener onInitListener) {
+    return new TextToSpeech(ctx, onInitListener);
+  }
+
+  /**
+   * Wrapper for calls to the 100%-unmockable {@link TelephonyManager#listen}.
+   */
+  // @VisibleForTesting
+  protected void listenToPhoneState(PhoneStateListener listener, int events) {
+    TelephonyManager telephony =
+        (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+    telephony.listen(listener, events);
+  }
+
+  /**
+   * Returns the volume stream to use for controlling announcement volume.
+   */
   public static int getVolumeStream() {
     return TextToSpeech.Engine.DEFAULT_STREAM;
   }

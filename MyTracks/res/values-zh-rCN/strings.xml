@@ -328,6 +328,7 @@ limitations under the License.
   <string name="seconds">秒</string>
 
 
+
   <!-- Distance -->
 
 
@@ -381,6 +382,14 @@ limitations under the License.
   <string name="about_version">版本:</string>
   <string name="about_email">技术支持</string>
   <string name="about_support">技术支持:</string>
+
+
+
+
+
+
+
+
 
 
 
