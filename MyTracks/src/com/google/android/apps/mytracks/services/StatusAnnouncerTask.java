@@ -27,6 +27,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import java.util.Locale;
@@ -64,6 +66,26 @@ public class StatusAnnouncerTask implements PeriodicTask {
   private boolean ready = false;
 
   /**
+   * Whether we're allowed to speak right now.
+   */
+  private boolean speechAllowed;
+
+  /**
+   * Listener which updates {@link #speechAllowed} when the phone state changes.
+   */
+  private final PhoneStateListener phoneListener = new PhoneStateListener() {
+    @Override
+    public void onCallStateChanged(int state, String incomingNumber) {
+      speechAllowed = state == TelephonyManager.CALL_STATE_IDLE;
+
+      if (!speechAllowed && tts.isSpeaking()) {
+        // If we're already speaking, stop it.
+        tts.stop();
+      }
+    }
+  };
+
+  /**
    * Constructs the announcer and start the TTS engine.
    */
   public StatusAnnouncerTask(Context context) {
@@ -94,8 +116,8 @@ public class StatusAnnouncerTask implements PeriodicTask {
       int languageAvailability = tts.isLanguageAvailable(speechLanguage);
       if (languageAvailability == TextToSpeech.LANG_MISSING_DATA ||
           languageAvailability == TextToSpeech.LANG_NOT_SUPPORTED) {
-        // English is probably supported
-        // TODO: Somehow use announcement strings from English too
+        // English is probably supported.
+        // TODO: Somehow use announcement strings from English too.
         Log.w(MyTracksConstants.TAG, "Default language not available, using English.");
         speechLanguage = Locale.ENGLISH;
       }
@@ -113,6 +135,12 @@ public class StatusAnnouncerTask implements PeriodicTask {
   public void run(TrackRecordingService service) {
     if (!ready) {
       Log.e(MyTracksConstants.TAG, "StatusAnnouncer Tts not ready.");
+      return;
+    }
+
+    if (!speechAllowed) {
+      Log.i(MyTracksConstants.TAG,
+          "Not making announcement - not allowed at this time");
       return;
     }
 
@@ -193,12 +221,23 @@ public class StatusAnnouncerTask implements PeriodicTask {
         context.getString(speedLabel));
   }
 
-  public void shutdown() {
-    tts.shutdown();
+  @Override
+  public void start() {
+    // Register ourselves as a listener so we won't speak during a call.
+    speechAllowed = true;
+    TelephonyManager telephony =
+        (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+    telephony.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
   }
 
   @Override
-  public void start() {
+  public void shutdown() {
+    // Stop listening to phone state.
+    TelephonyManager telephony =
+        (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+    telephony.listen(phoneListener, PhoneStateListener.LISTEN_NONE);
+
+    tts.shutdown();
   }
 
   public static int getVolumeStream() {

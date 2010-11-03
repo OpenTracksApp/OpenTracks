@@ -28,7 +28,7 @@ import java.util.Date;
 /**
  * Creates a default track name based on the current default track name policy.
  * 
- * @author simmonmt@google.com (Matthew Simmons)
+ * @author Matthew Simmons
  */
 class DefaultTrackNameFactory {
   private static final String TIMESTAMP_DATE_FORMAT = "yyyy-MM-dd HH:mm";
@@ -60,13 +60,7 @@ class DefaultTrackNameFactory {
   protected boolean useTimestampTrackName() {
     SharedPreferences prefs =
         context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
-
-    boolean useTimestamp = false;
-    if (prefs != null) {
-      useTimestamp = prefs.getBoolean(
-          context.getString(R.string.timestamp_track_name_key), true);
-    }
-
-    return useTimestamp;
+    return prefs.getBoolean(
+        context.getString(R.string.timestamp_track_name_key), true);
   }
 }

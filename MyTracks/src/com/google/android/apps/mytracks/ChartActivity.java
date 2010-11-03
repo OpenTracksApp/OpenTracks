@@ -298,13 +298,13 @@ public class ChartActivity extends Activity implements
       public void onChange(boolean selfChange) {
         Log.d(MyTracksConstants.TAG, "ChartActivity: ContentObserver.onChange");
         // Check for any new locations and append them to the currently
-        // recording track:
-        if (!MyTracks.getInstance().isRecording()) {
+        // recording track.
+        if (recordingTrackId < 0) {
           // No track is being recorded. We should not be here.
           return;
         }
         if (selectedTrackId != recordingTrackId) {
-          // no track, or one other than the recording track is selected, don't
+          // No track, or one other than the recording track is selected, don't
           // bother.
           return;
         }

@@ -103,8 +103,8 @@ limitations under the License.
     <CheckBoxPreference
         android:key="@string/timestamp_track_name_key"
         android:title="@string/settings_timestamp_track_name"
-        android:summaryOn="@string/settings_timestamp_track_name_on"
-        android:summaryOff="@string/settings_timestamp_track_name_off"
+        android:summaryOn="@string/settings_timestamp_track_name_summary_on"
+        android:summaryOff="@string/settings_timestamp_track_name_summary_off"
         android:defaultValue="true" />
 
   </PreferenceScreen>

@@ -468,8 +468,7 @@ public class GpxImporter extends DefaultHandler {
 
     // initialize start time with time of first track point
     if (statsBuilder == null) {
-      statsBuilder = new TripStatisticsBuilder();
-      statsBuilder.resumeAt(time);
+      statsBuilder = new TripStatisticsBuilder(time);
     }
   }
 

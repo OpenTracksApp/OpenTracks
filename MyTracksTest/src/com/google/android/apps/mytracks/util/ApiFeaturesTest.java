@@ -75,4 +75,8 @@ public class ApiFeaturesTest extends TestCase {
     features.setApiLevel(8);
     assertTrue(features.hasModernSignalStrength());
   }
+  
+  public void testGetApiPlatformAdapter() {
+    assertNotNull(features.getApiPlatformAdapter());
+  }
 }
