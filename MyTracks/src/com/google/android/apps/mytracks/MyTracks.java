@@ -18,6 +18,10 @@ package com.google.android.apps.mytracks;
 import com.google.android.accounts.Account;
 import com.google.android.apps.mymaps.MyMapsConstants;
 import com.google.android.apps.mymaps.MyMapsList;
+import static com.google.android.apps.mytracks.DialogManager.DIALOG_PROGRESS;
+import static com.google.android.apps.mytracks.DialogManager.DIALOG_SEND_TO_GOOGLE;
+import static com.google.android.apps.mytracks.DialogManager.DIALOG_IMPORT_PROGRESS;
+import static com.google.android.apps.mytracks.DialogManager.DIALOG_WRITE_PROGRESS;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
@@ -107,9 +111,8 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   }
 
   /*
-   * Authentication:
+   * Authentication
    */
-
   private AuthManager auth;
   private final HashMap<String, AuthManager> authMap =
       new HashMap<String, AuthManager>();
@@ -277,7 +280,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
         new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
     layout.setLayoutParams(params);
     navControls =
-      new NavControls(this, layout, leftIcons, rightIcons, changeTab);
+        new NavControls(this, layout, leftIcons, rightIcons, changeTab);
     navControls.show();
     tabHost.addView(layout);
     layout.setOnTouchListener(this);
@@ -345,7 +348,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   @Override
   protected void onStop() {
     Log.d(MyTracksConstants.TAG, "MyTracks.onStop");
-    // Clean up any temporary GPX and KML files.
+    // Clean up any temporary track files.
     (new TempFileCleaner()).clean();
     super.onStop();
   }
@@ -381,8 +384,8 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    */
 
   @Override
-  protected Dialog onCreateDialog(int id) {
-    return dialogManager.onCreateDialog(id);
+  protected Dialog onCreateDialog(int id, Bundle args) {
+    return dialogManager.onCreateDialog(id, args);
   }
 
   @Override
@@ -423,17 +426,17 @@ public class MyTracks extends TabActivity implements OnTouchListener,
           authenticate(results, MyTracksConstants.SEND_TO_GOOGLE,
               MyMapsConstants.MAPSHOP_SERVICE);
         } else {
-          dismissDialogSafely(DialogManager.DIALOG_PROGRESS);
+          dismissDialogSafely(DIALOG_PROGRESS);
         }
         break;
       }
       case MyTracksConstants.GET_LOGIN: {
         if (resultCode == RESULT_OK && auth != null) {
           if (!auth.authResult(resultCode, results)) {
-            dismissDialogSafely(DialogManager.DIALOG_PROGRESS);
+            dismissDialogSafely(DIALOG_PROGRESS);
           }
         } else {
-          dismissDialogSafely(DialogManager.DIALOG_PROGRESS);
+          dismissDialogSafely(DIALOG_PROGRESS);
         }
         break;
       }
@@ -489,7 +492,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
           authenticate(results,
               MyTracksConstants.AUTHENTICATE_TO_TRIX, "writely");
         } else {
-          dismissDialogSafely(DialogManager.DIALOG_PROGRESS);
+          dismissDialogSafely(DIALOG_PROGRESS);
         }
         break;
       }
@@ -500,7 +503,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
               R.string.progress_message_authenticating_docs);
           authenticate(results, MyTracksConstants.SEND_TO_DOCS, "wise");
         } else {
-          dismissDialogSafely(DialogManager.DIALOG_PROGRESS);
+          dismissDialogSafely(DIALOG_PROGRESS);
         }
         break;
       }
@@ -515,7 +518,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
           Runnable onCompletion = new Runnable() {
             public void run() {
               setProgressValue(100);
-              dismissDialogSafely(DialogManager.DIALOG_PROGRESS);
+              dismissDialogSafely(DIALOG_PROGRESS);
               runOnUiThread(new Runnable() {
                 public void run() {
                   sendToDocsMessage = sender.getStatusMessage();
@@ -528,13 +531,13 @@ public class MyTracks extends TabActivity implements OnTouchListener,
           sender.setOnCompletion(onCompletion);
           sender.run();
         } else {
-          dismissDialogSafely(DialogManager.DIALOG_PROGRESS);
+          dismissDialogSafely(DIALOG_PROGRESS);
         }
         break;
       }
       case MyTracksConstants.SEND_TO_GOOGLE_DIALOG: {
         shareRequested = false;
-        showDialogSafely(DialogManager.DIALOG_SEND_TO_GOOGLE);
+        showDialogSafely(DIALOG_SEND_TO_GOOGLE);
         break;
       }
       case MyTracksConstants.SEND_TO_GOOGLE: {
@@ -575,7 +578,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
                 onActivityResult(MyTracksConstants.AUTHENTICATE_TO_DOCS,
                     RESULT_OK, new Intent());
               } else {
-                dismissDialogSafely(DialogManager.DIALOG_PROGRESS);
+                dismissDialogSafely(DIALOG_PROGRESS);
                 runOnUiThread(new Runnable() {
                   public void run() {
                     handleMapsFinish();
@@ -592,7 +595,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
           Handler handler = new Handler(handlerThread.getLooper());
           handler.post(sender);
         } else {
-          dismissDialogSafely(DialogManager.DIALOG_PROGRESS);
+          dismissDialogSafely(DIALOG_PROGRESS);
         }
         break;
       }
@@ -622,7 +625,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
             shareLinkToMyMap(selectedTrack.getMapId());
           } else {
             shareRequested = true;
-            showDialogSafely(DialogManager.DIALOG_SEND_TO_GOOGLE);
+            showDialogSafely(DIALOG_SEND_TO_GOOGLE);
           }
         }
         break;
@@ -736,7 +739,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   }
 
   private void importGpxFile(final String fileName) {
-    showDialogSafely(DialogManager.DIALOG_IMPORT_PROGRESS);
+    showDialogSafely(DIALOG_IMPORT_PROGRESS);
     Thread t = new Thread() {
       @Override
       public void run() {
@@ -773,7 +776,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
         } finally {
           runOnUiThread(new Runnable() {
             public void run() {
-              dismissDialog(DialogManager.DIALOG_IMPORT_PROGRESS);
+              dismissDialog(DIALOG_IMPORT_PROGRESS);
             }
           });
         }
@@ -1048,7 +1051,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
                 @Override
                 public void handleAccountSelected(Account account) {
                   if (account == null) {
-                    dismissDialogSafely(DialogManager.DIALOG_PROGRESS);
+                    dismissDialogSafely(DIALOG_PROGRESS);
                     return;
                   }
                   doLogin(results, requestCode, service, account);
@@ -1141,7 +1144,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     }
     setProgressValue(0);
     clearProgressMessage();
-    showDialogSafely(DialogManager.DIALOG_PROGRESS);
+    showDialogSafely(DIALOG_PROGRESS);
     if (sendToGoogleDialog.getSendToMyMaps()) {
       if (!sendToGoogleDialog.getCreateNewMap()) {
         Intent listIntent = new Intent(this, MyMapsList.class);
@@ -1282,12 +1285,12 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * @param trackId The id of the track to be sent
    */
   public void saveTrack(long trackId, TrackFileFormat format) {
-    showDialogSafely(DialogManager.DIALOG_WRITE_PROGRESS);
+    showDialogSafely(DIALOG_WRITE_PROGRESS);
     final TrackWriter writer =
         TrackWriterFactory.newWriter(this, providerUtils, trackId, format);
     writer.setOnCompletion(new Runnable() {
       public void run() {
-        dismissDialogSafely(DialogManager.DIALOG_WRITE_PROGRESS);
+        dismissDialogSafely(DIALOG_WRITE_PROGRESS);
         showMessageDialog(writer.getErrorMessage(), writer.wasSuccess());
       }
     });
@@ -1302,7 +1305,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * @param trackId The id of the track to be sent
    */
   public void sendTrack(long trackId, final TrackFileFormat format) {
-    showDialogSafely(DialogManager.DIALOG_WRITE_PROGRESS);
+    showDialogSafely(DIALOG_WRITE_PROGRESS);
     final TrackWriter writer =
         TrackWriterFactory.newWriter(this, providerUtils, trackId, format);
 
@@ -1314,7 +1317,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     writer.setDirectory(dir);
     writer.setOnCompletion(new Runnable() {
       public void run() {
-        dismissDialogSafely(DialogManager.DIALOG_WRITE_PROGRESS);
+        dismissDialogSafely(DIALOG_WRITE_PROGRESS);
         if (!writer.wasSuccess()) {
           showMessageDialog(writer.getErrorMessage(), writer.wasSuccess());
         } else {
@@ -1372,9 +1375,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     return accountChooser;
   }
 
-  /**
-   * @return the sendToMyMapsMapId
-   */
   public String getSendToMyMapsMapId() {
     return sendToMyMapsMapId;
   }

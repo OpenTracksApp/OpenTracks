@@ -21,6 +21,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
@@ -51,7 +52,7 @@ public class DialogManager {
     this.activity = activity;
   }
   
-  protected Dialog onCreateDialog(int id) {
+  protected Dialog onCreateDialog(int id, Bundle args) {
     switch (id) {
       case DIALOG_PROGRESS:
         progressDialog = new ProgressDialog(activity);

@@ -29,6 +29,10 @@ public class TempFileCleaner {
   }
   
   public void clean() {
+    if (!Environment.getExternalStorageState().equals(
+        Environment.MEDIA_MOUNTED)) {
+      return;  // Can't do anything now.
+    }
     cleanTmpDirectory("csv");
     cleanTmpDirectory("gpx");
     cleanTmpDirectory("kml");
@@ -36,13 +40,14 @@ public class TempFileCleaner {
   }
 
   private void cleanTmpDirectory(String name) {
-    if (!Environment.getExternalStorageState().equals(
-        Environment.MEDIA_MOUNTED)) {
-      return;  // Can't do anything now.
-    }
     String sep = System.getProperty("file.separator");
-    File dir = new File(
-        Environment.getExternalStorageDirectory() + sep + name + sep + "tmp");
+    cleanTmpDirectory(
+        new File(
+            Environment.getExternalStorageDirectory() + sep + name + sep
+            + "tmp"));
+  }
+
+  private void cleanTmpDirectory(File dir) {
     if (!dir.exists()) {
       return;
     }
