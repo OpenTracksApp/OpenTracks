@@ -52,8 +52,10 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.text.format.DateFormat;
 import android.util.Log;
 
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -985,16 +987,17 @@ public class TrackRecordingService extends Service implements LocationListener {
       throw new IllegalStateException("A track is already in progress!");
     }
     
+    long startTime = System.currentTimeMillis();
+
     Track track = new Track();
     TripStatistics trackStats = track.getStatistics();
-    track.setName("new");
-    long startTime = System.currentTimeMillis();
     trackStats.setStartTime(startTime);
     track.setStartId(-1);
     Uri trackUri = providerUtils.insertTrack(track);
     recordingTrackId = Long.parseLong(trackUri.getLastPathSegment());
     track.setId(recordingTrackId);
-    track.setName(String.format(getString(R.string.new_track), recordingTrackId));
+    track.setName(new DefaultTrackNameFactory(this).newTrackName(
+        recordingTrackId, startTime));
     isRecording = true;
     isMoving = true;
     
