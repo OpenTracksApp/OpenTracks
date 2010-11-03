@@ -118,7 +118,7 @@ public class MyTracksMap extends MapActivity
   private double variation;
 
   /**
-   * From the shared preferences:
+   * From the shared preferences.
    */
   private int minRequiredAccuracy =
       MyTracksSettings.DEFAULT_MIN_REQUIRED_ACCURACY;
@@ -135,8 +135,8 @@ public class MyTracksMap extends MapActivity
   private Location currentLocation;
 
   /**
-   * A thread with a looper. Post to updateTrackHandler to execute Runnables on
-   * this thread.
+   * A thread with a looper. Post to updateTrackHandler to execute
+   * {@link Runnable}s on this thread.
    */
   private HandlerThread updateTrackThread;
 
@@ -146,6 +146,8 @@ public class MyTracksMap extends MapActivity
   private Handler updateTrackHandler;
 
   private MyTracksProviderUtils providerUtils;
+
+  private SharedPreferences sharedPreferences;
  
   /**
    * A runnable that updates the track from the provider (looking for points
@@ -331,12 +333,6 @@ public class MyTracksMap extends MapActivity
       @Override
       public void onChange(boolean selfChange) {
         Log.d(MyTracksConstants.TAG, "MyTracksMap: ContentObserver.onChange");
-        // Check for any new locations and append them to the currently
-        // recording track:
-        if (!MyTracks.getInstance().isRecording()) {
-          // No track is being recorded. We should not be here.
-          return;
-        }
         if (!isRecordingSelected()) {
           // No track, or one other than the recording track is selected,
           // don't bother.
@@ -361,30 +357,25 @@ public class MyTracksMap extends MapActivity
       }
     };
 
-    // Read shared preferences and register change listener:
-    SharedPreferences preferences =
-        getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
-    if (preferences != null) {
-      minRequiredAccuracy = preferences.getInt(
-          getString(R.string.min_required_accuracy_key),
-          MyTracksSettings.DEFAULT_MIN_REQUIRED_ACCURACY);
-      recordingTrackId =
-          preferences.getLong(getString(R.string.recording_track_key), -1);
-      long selectedTrackId =
-          preferences.getLong(getString(R.string.selected_track_key), -1);
-      if (selectedTrackId >= 0) {
-        setSelectedTrack(selectedTrackId);
-      }
+    // Read shared preferences and register change listener.
+    sharedPreferences = getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+    if (sharedPreferences != null) {
+      reloadSharedPreferences(sharedPreferences, null);
       updateOptionsButton();
-      preferences.registerOnSharedPreferenceChangeListener(this);
+      sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
   }
 
   @Override
   protected void onDestroy() {
     Log.d(MyTracksConstants.TAG, "MyTracksMap.onDestroy");
+
     if (updateTrackThread != null) {
-      updateTrackThread.quit();
+      ApiFeatures.getInstance().getApiPlatformAdapter().stopHandlerThread(
+          updateTrackThread);
+    }
+    if (sharedPreferences != null) {
+      sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
     }
     
     super.onDestroy();
@@ -451,6 +442,9 @@ public class MyTracksMap extends MapActivity
     Log.d(MyTracksConstants.TAG, "MyTracksMap.onResume");
     super.onResume();
 
+    // Reload all preferences as they might have changed since last run.
+    reloadSharedPreferences(sharedPreferences, null);
+    
     // Make sure any updates that might have happened are propagated to the
     // Map overlay:
     observer.onChange(false);
@@ -707,11 +701,14 @@ public class MyTracksMap extends MapActivity
    * @param trackId a given track id
    */
   public void setSelectedTrack(final long trackId) {
+    Log.d(MyTracksConstants.TAG, "MyTracksMap.setSelectedTrack: "
+        + "selectedtTrackId = " + selectedTrackId + ", trackId = " + trackId);
+
     if (selectedTrackId == trackId) {
       // Selected track did not change, nothing to do.
       mapOverlay.setTrackDrawingEnabled(isATrackSelected());
-      mapView.invalidate();
       updateOptionsButton();
+      mapView.invalidate();
       return;
     }
 
@@ -786,7 +783,7 @@ public class MyTracksMap extends MapActivity
           menu.setHeaderTitle(R.string.tracklist_this_track);
           menu.add(0, MyTracksConstants.MENU_EDIT, 0,
               R.string.tracklist_edit_track);
-          if (!MyTracks.getInstance().isRecording() || !isRecordingSelected()) {
+          if (!isRecordingSelected()) {
             menu.add(0, MyTracksConstants.MENU_SEND_TO_GOOGLE, 0,
                 R.string.tracklist_send_to_google);
             SubMenu share = menu.addSubMenu(0, MyTracksConstants.MENU_SHARE, 0,
@@ -906,30 +903,13 @@ public class MyTracksMap extends MapActivity
   @Override
   public void onSharedPreferenceChanged(
       final SharedPreferences sharedPreferences, final String key) {
+    Log.d(MyTracksConstants.TAG,
+        "MyTracksMap.onSharedPreferenceChanged: " + key);
     if (key != null) {
       uiHandler.post(new Runnable() {
         @Override
         public void run() {
-          if (key.equals(getString(R.string.min_required_accuracy_key))) {
-            minRequiredAccuracy = sharedPreferences.getInt(
-                getString(R.string.min_required_accuracy_key),
-                MyTracksSettings.DEFAULT_MIN_REQUIRED_ACCURACY);
-          } else if (key.equals(getString(R.string.selected_track_key))) {
-            long selectedTrackId =
-                sharedPreferences.getLong(
-                    getString(R.string.selected_track_key),
-                    -1);
-            setSelectedTrack(selectedTrackId);
-          } else if (key.equals(getString(R.string.recording_track_key))) {
-            recordingTrackId =
-                sharedPreferences.getLong(
-                    getString(R.string.recording_track_key),
-                    -1);
-            if (isATrackSelected()) {
-              mapOverlay.setShowEndMarker(!isRecordingSelected());
-              mapView.postInvalidate();
-            }
-          }
+          reloadSharedPreferences(sharedPreferences, key);
         }
       });
     }
@@ -1008,6 +988,31 @@ public class MyTracksMap extends MapActivity
       // do nothing
     }
   };
+
+  private void reloadSharedPreferences(SharedPreferences sharedPreferences,
+      String key) {
+    if (key == null ||
+        key.equals(getString(R.string.min_required_accuracy_key))) {
+      minRequiredAccuracy = sharedPreferences.getInt(
+          getString(R.string.min_required_accuracy_key),
+          MyTracksSettings.DEFAULT_MIN_REQUIRED_ACCURACY);
+    }
+    if (key == null || key.equals(getString(R.string.recording_track_key))) {
+      recordingTrackId = sharedPreferences.getLong(
+          getString(R.string.recording_track_key), -1);
+    }
+    if (key == null || key.equals(getString(R.string.selected_track_key))) {
+      setSelectedTrack(sharedPreferences.getLong(
+          getString(R.string.selected_track_key), -1));
+    }
+    
+    // Show end marker if the track has been selected and is not recording.
+    // Note: This check must be *after* a call to setSelectedTrack(...) above.
+    if (isATrackSelected()) {
+      mapOverlay.setShowEndMarker(!isRecordingSelected());
+      mapView.postInvalidate();
+    }
+  }
 
   private void readAllNewTrackPoints() {
     int numPoints = mapOverlay.getNumLocations();
