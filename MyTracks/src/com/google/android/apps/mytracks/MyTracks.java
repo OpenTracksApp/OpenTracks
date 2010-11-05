@@ -1291,6 +1291,10 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     this.chartActivity = chartActivity;
   }
 
+  public DialogManager getDialogManager() {
+    return dialogManager;
+  }
+
   public String getSendToMyMapsMapId() {
     return sendToMyMapsMapId;
   }
