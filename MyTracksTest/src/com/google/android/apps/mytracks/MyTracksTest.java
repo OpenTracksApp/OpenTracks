@@ -24,6 +24,8 @@ import android.net.Uri;
 import android.test.ActivityInstrumentationTestCase2;
 
 import java.io.File;
+import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * A unit test for {@link MyTracks} activity.
@@ -101,6 +103,8 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     long selectedTrackId = getActivity().getSharedPreferences().getLong(
         getActivity().getString(R.string.selected_track_key), -1);
     assertEquals(selectedTrackId, getActivity().getSelectedTrackId());
+    
+   // TODO: Finish this test.
   }
   
   public void testInitialization_viewActionWithInvalidData() throws Exception {
@@ -121,6 +125,8 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     long selectedTrackId = getActivity().getSharedPreferences().getLong(
         getActivity().getString(R.string.selected_track_key), -1);
     assertEquals(selectedTrackId, getActivity().getSelectedTrackId());
+    
+    // TODO: Finish this test.
   }
   
   public void testRecording_startAndStop() throws Exception {
@@ -168,17 +174,22 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
    * Waits until the UI thread becomes idle.
    */
   private void waitForIdle() throws InterruptedException {
+    // Note: We can't use getInstrumentation().waitForIdleSync() here.  
     final Object semaphore = new Object();
     synchronized (semaphore) {
+      final AtomicBoolean isIdle = new AtomicBoolean();
       getInstrumentation().waitForIdle(new Runnable() {
         @Override
         public void run() {
           synchronized (semaphore) {
+            isIdle.set(true);
             semaphore.notify();
           }
         }
       });
-      semaphore.wait();
+      while (!isIdle.get()) {
+        semaphore.wait();
+      }
     }
   }
 
@@ -186,6 +197,7 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
    * Clears {selected,recording}TrackId in the {@link SharedPreferences}.
    */
   private void clearSelectedAndRecordingTracks() {
+    // TODO: Consider clearing all preferences.
     Editor editor = getActivity().getSharedPreferences().edit();
     editor.putLong(getActivity().getString(R.string.selected_track_key), -1);
     editor.putLong(getActivity().getString(R.string.recording_track_key), -1);
@@ -200,11 +212,11 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
    * @return the recording track ID.
    */
   private long awaitRecordingStatus(long timeout, boolean isRecording)
-      throws InterruptedException {
+      throws TimeoutException, InterruptedException {
     long startTime = System.nanoTime();
     while (getActivity().isRecording() != isRecording) {
       if (System.nanoTime() - startTime > timeout * 1000000) {
-        throw new InterruptedException("Timeout while waiting for recording!");
+        throw new TimeoutException("Timeout while waiting for recording!");
       }
       Thread.sleep(20);
     }
