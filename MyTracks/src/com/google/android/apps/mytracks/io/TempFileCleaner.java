@@ -25,7 +25,14 @@ import java.io.File;
  */
 public class TempFileCleaner {
   
+  private long currentTimeMillis;
+
   public TempFileCleaner() {
+    currentTimeMillis = System.currentTimeMillis();
+  }
+
+  public TempFileCleaner(long time) {
+    currentTimeMillis = time;
   }
   
   public void clean() {
@@ -47,17 +54,20 @@ public class TempFileCleaner {
             + "tmp"));
   }
 
-  private void cleanTmpDirectory(File dir) {
+  // VisibleForTesting
+  protected int cleanTmpDirectory(File dir) {
     if (!dir.exists()) {
-      return;
+      return 0;
     }
     File[] list = dir.listFiles();
-    long now = System.currentTimeMillis();
-    long oldest = now - 1000 * 3600;
+    int count = 0;
+    long oldest = currentTimeMillis - 1000 * 3600;
     for (File f : list) {
       if (f.lastModified() < oldest) {
         f.delete();
+        count++;
       }
     }
+    return count;
   }
 }
