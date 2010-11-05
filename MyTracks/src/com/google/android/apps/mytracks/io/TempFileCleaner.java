@@ -27,15 +27,16 @@ public class TempFileCleaner {
   
   private long currentTimeMillis;
 
-  public TempFileCleaner() {
-    currentTimeMillis = System.currentTimeMillis();
+  public static void clean() {
+    (new TempFileCleaner(System.currentTimeMillis())).cleanImpl();
   }
-
-  public TempFileCleaner(long time) {
+  
+  // @VisibleForTesting
+  TempFileCleaner(long time) {
     currentTimeMillis = time;
   }
   
-  public void clean() {
+  private void cleanImpl() {
     if (!Environment.getExternalStorageState().equals(
         Environment.MEDIA_MOUNTED)) {
       return;  // Can't do anything now.
@@ -54,15 +55,14 @@ public class TempFileCleaner {
             + "tmp"));
   }
 
-  // VisibleForTesting
-  protected int cleanTmpDirectory(File dir) {
+  // @VisibleForTesting
+  int cleanTmpDirectory(File dir) {
     if (!dir.exists()) {
       return 0;
     }
-    File[] list = dir.listFiles();
     int count = 0;
     long oldest = currentTimeMillis - 1000 * 3600;
-    for (File f : list) {
+    for (File f : dir.listFiles()) {
       if (f.lastModified() < oldest) {
         f.delete();
         count++;

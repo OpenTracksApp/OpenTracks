@@ -34,7 +34,7 @@ public class TempFileCleanerTest extends AndroidTestCase {
 
   public void test_noDir() {
     File dir = AndroidMock.createMock(File.class, "/no_file");
-    TempFileCleaner cleaner = new TempFileCleaner();
+    TempFileCleaner cleaner = new TempFileCleaner(0);
     expect(dir.exists()).andStubReturn(false);
     AndroidMock.replay(dir);
     assertEquals(0, cleaner.cleanTmpDirectory(dir));
@@ -43,7 +43,7 @@ public class TempFileCleanerTest extends AndroidTestCase {
 
   public void test_emptyDir() {
     File dir = AndroidMock.createMock(File.class, "/no_file");
-    TempFileCleaner cleaner = new TempFileCleaner();
+    TempFileCleaner cleaner = new TempFileCleaner(0);
     expect(dir.exists()).andStubReturn(true);
     expect(dir.listFiles()).andStubReturn(new File[0]);
     AndroidMock.replay(dir);
