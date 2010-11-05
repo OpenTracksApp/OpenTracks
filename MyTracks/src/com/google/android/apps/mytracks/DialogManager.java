@@ -24,6 +24,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager.BadTokenException;
 
 /**
  * A class to handle a dialog related events for My Tracks.
@@ -164,4 +165,67 @@ public class DialogManager {
   public SendToGoogleDialog getSendToGoogleDialog() {
     return sendToGoogleDialog;
   }
+
+  /**
+   * Shows a dialog with the given message.
+   * Does it on the UI thread.
+   *
+   * @param success if true, displays an info icon/title, otherwise an error
+   *        icon/title
+   * @param message resource string id
+   */
+  public void showMessageDialog(final int message, final boolean success) {
+    activity.runOnUiThread(new Runnable() {
+      public void run() {
+        AlertDialog dialog = null;
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setMessage(activity.getString(message));
+        builder.setNegativeButton(activity.getString(R.string.ok), null);
+        builder.setIcon(success ? android.R.drawable.ic_dialog_info :
+          android.R.drawable.ic_dialog_alert);
+        builder.setTitle(success ? R.string.success : R.string.error);
+        dialog = builder.create();
+        dialog.show();
+      }
+    });
+  }
+
+  /**
+   * Just like showDialog, but will catch a BadTokenException that sometimes
+   * (very rarely) gets thrown. This might happen if the user hits the "back"
+   * button immediately after sending tracks to google.
+   *
+   * @param id the dialog id
+   */
+  public void showDialogSafely(final int id) {
+    activity.runOnUiThread(new Runnable() {
+      public void run() {
+        try {
+          activity.showDialog(id);
+        } catch (BadTokenException e) {
+          Log.w(MyTracksConstants.TAG,
+              "Could not display dialog with id " + id, e);
+        } catch (IllegalStateException e) {
+          Log.w(MyTracksConstants.TAG,
+              "Could not display dialog with id " + id, e);
+        }
+      }
+    });
+  }
+
+  /**
+   * Dismisses the progress dialog if it is showing. Executed on the UI thread.
+   */
+  public void dismissDialogSafely(final int id) {
+    activity.runOnUiThread(new Runnable() {
+      public void run() {
+        try {
+          activity.dismissDialog(id);
+        } catch (IllegalArgumentException e) {
+          // This will be thrown if this dialog was not shown before.
+        }
+      }
+    });
+  }
+
 }

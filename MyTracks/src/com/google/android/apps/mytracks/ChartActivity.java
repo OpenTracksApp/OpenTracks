@@ -455,7 +455,7 @@ public class ChartActivity extends Activity implements
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case MyTracksConstants.MENU_CHART_SETTINGS:
-        MyTracks.getInstance().showDialogSafely(
+        MyTracks.getInstance().getDialogManager().showDialogSafely(
             DialogManager.DIALOG_CHART_SETTINGS);
         return true;
     }
