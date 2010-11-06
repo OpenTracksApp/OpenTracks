@@ -32,12 +32,12 @@ public class ChartsExtendedEncoder {
 
   public static String getEncodedValue(int scaled) {
     int index1 = scaled / CHARTSERVER_EXTENDED_SINGLE_CHARACTER_VALUES;
-    int index2 = scaled % CHARTSERVER_EXTENDED_SINGLE_CHARACTER_VALUES;
-
-    if (index1 >= CHARTSERVER_EXTENDED_SINGLE_CHARACTER_VALUES) {
+    if (index1 < 0 || index1 >= CHARTSERVER_EXTENDED_SINGLE_CHARACTER_VALUES) {
       return MISSING_POINT_EXTENDED_ENCODING;
     }
-    if (index2 >= CHARTSERVER_EXTENDED_SINGLE_CHARACTER_VALUES) {
+
+    int index2 = scaled % CHARTSERVER_EXTENDED_SINGLE_CHARACTER_VALUES;
+    if (index2 < 0 || index2 >= CHARTSERVER_EXTENDED_SINGLE_CHARACTER_VALUES) {
       return MISSING_POINT_EXTENDED_ENCODING;
     }
 
