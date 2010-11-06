@@ -1023,15 +1023,16 @@ public class MyTracksMap extends MapActivity
       loadSelectedTrack();
       return;
     }
-
+    // Keep a copy of selectedTrackId, because it can change asynchronously.
+    long currentSelectedTrackId = selectedTrackId;
     long lastStoredLocationId =
-        providerUtils.getLastLocationId(selectedTrackId);
+        providerUtils.getLastLocationId(currentSelectedTrackId);
     int samplingFrequency = -1;
     Location location = new Location("");
-    for (;;) {
+    while (currentSelectedTrackId == selectedTrackId) {
       Cursor cursor = null;
       try {
-        cursor = providerUtils.getLocationsCursor(selectedTrackId,
+        cursor = providerUtils.getLocationsCursor(currentSelectedTrackId,
             lastSeenLocationId + 1, TRACKPOINT_BUFFER_SIZE, false);
         if (cursor == null || !cursor.moveToFirst()) {
           // No (more) data
@@ -1053,6 +1054,14 @@ public class MyTracksMap extends MapActivity
             long numTotalPoints = lastStoredLocationId - firstSeenLocationId;
             samplingFrequency = (int) (1 + numTotalPoints
                 / MyTracksConstants.TARGET_DISPLAYED_TRACK_POINTS);
+            // TODO: This shouldn't happen after adding currentSelectedTrackId,
+            // but just to be safe until we have 100% confidence.
+            if (samplingFrequency <= 0) {
+              Log.w(MyTracksConstants.TAG,
+                  "readAllNewTrackPoints: samplingFreq <= 0, numTotalPoints = "
+                  + numTotalPoints + ", trackId = " + currentSelectedTrackId);
+              samplingFrequency = 1;
+            }
           }
 
           providerUtils.fillLocation(cursor, location);
@@ -1069,7 +1078,8 @@ public class MyTracksMap extends MapActivity
           }
 
           numPoints++;
-        } while (cursor.moveToNext());
+        } while (cursor.moveToNext() &&
+            currentSelectedTrackId == selectedTrackId);
       } finally {
         if (cursor != null) {
           cursor.close();
