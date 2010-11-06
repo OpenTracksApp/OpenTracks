@@ -54,6 +54,15 @@ public class TrackRecordingServiceTest
   private MyTracksProviderUtils providerUtils;
   private SharedPreferences sharedPreferences;
   
+  /*
+   * In order to support starting and binding to the service in the same
+   * unit test, we provide a workaround, as the original class doesn't allow
+   * to bind after the service has been previously started.
+   */
+
+  private boolean bound;
+  private Intent serviceIntent;
+  
   public TrackRecordingServiceTest() {
     super(TrackRecordingService.class);
   }
@@ -88,6 +97,31 @@ public class TrackRecordingServiceTest
     }
   }
   
+  @Override
+  protected IBinder bindService(Intent intent) {
+    if (getService() != null) {
+      if (bound) {
+        throw new IllegalStateException(
+            "Service: " + getService() + " is already bound");
+      }
+      bound = true;
+      serviceIntent = intent.cloneFilter();
+      return getService().onBind(intent);
+    } else {
+      return super.bindService(intent);
+    }
+  }
+
+  @Override
+  protected void shutdownService() {
+    if (bound) {
+      assertNotNull(getService());
+      getService().onUnbind(serviceIntent);
+      bound = false;
+    }
+    super.shutdownService();
+  }
+
   @Override
   protected void setUp() throws Exception {
     super.setUp();
