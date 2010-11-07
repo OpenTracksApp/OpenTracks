@@ -22,6 +22,7 @@ import com.google.android.apps.mytracks.io.TrackWriterFactory;
 import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
 import com.google.android.maps.mytracks.R;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -46,7 +47,7 @@ public class ExportAllTracks {
   public static final int KML_OPTION_INDEX = 1;
   public static final int CSV_OPTION_INDEX = 2;
 
-  private final Context context;
+  private final Activity activity;
   private WakeLock wakeLock;
   private ProgressDialog progress;
 
@@ -70,11 +71,11 @@ public class ExportAllTracks {
         }
       };
 
-  public ExportAllTracks(Context c) {
-    this.context = c;
+  public ExportAllTracks(Activity activity) {
+    this.activity = activity;
     Log.i(MyTracksConstants.TAG, "ExportAllTracks: Starting");
 
-    AlertDialog.Builder builder = new AlertDialog.Builder(c);
+    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
     builder.setSingleChoiceItems(R.array.export_formats, 0, itemClick);
     builder.setPositiveButton(R.string.ok, positiveClick);
     builder.setNegativeButton(R.string.cancel, null);
@@ -107,11 +108,11 @@ public class ExportAllTracks {
    */
   private void aquireLocksAndExport() {
     SharedPreferences prefs =
-        context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+        activity.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
     long recordingTrackId = -1;
     if (prefs != null) {
       recordingTrackId =
-    	  prefs.getLong(context.getString(R.string.recording_track_key), -1);
+    	  prefs.getLong(activity.getString(R.string.recording_track_key), -1);
     }
     if (recordingTrackId != -1) {
       acquireWakeLock();
@@ -127,12 +128,12 @@ public class ExportAllTracks {
       Log.i(MyTracksConstants.TAG, "ExportAllTracks: Releasing wake lock.");
     }
     Log.i(MyTracksConstants.TAG, "ExportAllTracks: Done");
-    Toast.makeText(context, R.string.export_done, Toast.LENGTH_SHORT).show();
+    Toast.makeText(activity, R.string.export_done, Toast.LENGTH_SHORT).show();
   }
 
   private void makeProgressDialog(final int trackCount) {
-    String exportMsg = context.getString(R.string.tracklist_btn_export_all);
-    progress = new ProgressDialog(context);
+    String exportMsg = activity.getString(R.string.tracklist_btn_export_all);
+    progress = new ProgressDialog(activity);
     progress.setIcon(android.R.drawable.ic_dialog_info);
     progress.setTitle(exportMsg);
     progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -150,7 +151,7 @@ public class ExportAllTracks {
     Cursor cursor = null;
     try {
       MyTracksProviderUtils providerUtils =
-          MyTracksProviderUtils.Factory.get(context);
+          MyTracksProviderUtils.Factory.get(activity);
       cursor = providerUtils.getTracksCursor("");
       if (cursor == null) {
         return;
@@ -160,7 +161,7 @@ public class ExportAllTracks {
       Log.i(MyTracksConstants.TAG,
           "ExportAllTracks: Exporting: " + cursor.getCount() + " tracks.");
       int idxTrackId = cursor.getColumnIndexOrThrow(TracksColumns._ID);
-      MyTracks.getInstance().runOnUiThread(new Runnable() {
+      activity.runOnUiThread(new Runnable() {
         public void run() {
           makeProgressDialog(trackCount);
         }
@@ -168,7 +169,7 @@ public class ExportAllTracks {
 
       for (int i = 0; cursor.moveToNext(); i++) {
         final int status = i;
-        MyTracks.getInstance().runOnUiThread(new Runnable() {
+        activity.runOnUiThread(new Runnable() {
           public void run() {
             synchronized (this) {
               if (progress == null) {
@@ -182,13 +183,13 @@ public class ExportAllTracks {
         long id = cursor.getLong(idxTrackId);
         Log.i(MyTracksConstants.TAG, "ExportAllTracks: exporting: " + id);
         TrackWriter writer =
-            TrackWriterFactory.newWriter(context, providerUtils, id, format);
+            TrackWriterFactory.newWriter(activity, providerUtils, id, format);
         writer.writeTrack();
 
         if (!writer.wasSuccess()) {
           // Abort the whole export on the first error.
           int error = writer.getErrorMessage();
-          Toast.makeText(context, error, Toast.LENGTH_LONG).show();
+          Toast.makeText(activity, error, Toast.LENGTH_LONG).show();
           return;
         }
       }
@@ -213,7 +214,7 @@ public class ExportAllTracks {
     Log.i(MyTracksConstants.TAG, "ExportAllTracks: Aquiring wake lock.");
     try {
       PowerManager pm =
-          (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+          (PowerManager) activity.getSystemService(Context.POWER_SERVICE);
       if (pm == null) {
         Log.e(MyTracksConstants.TAG,
             "ExportAllTracks: Power manager not found!");
