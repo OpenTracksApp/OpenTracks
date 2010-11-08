@@ -27,18 +27,18 @@ import android.view.View;
 import android.view.WindowManager.BadTokenException;
 
 /**
- * A class to handle a dialog related events for My Tracks.
+ * A class to handle all dialog related events for My Tracks.
  * 
  * @author Sandor Dornbush
  */
 public class DialogManager {
 
-  public static final int DIALOG_PROGRESS = 1;
+  public static final int DIALOG_CHART_SETTINGS = 1;
   public static final int DIALOG_IMPORT_PROGRESS = 2;
-  public static final int DIALOG_WRITE_PROGRESS = 3;
+  public static final int DIALOG_PROGRESS = 3;
   public static final int DIALOG_SEND_TO_GOOGLE = 4;
   public static final int DIALOG_SEND_TO_GOOGLE_RESULT = 5;
-  public static final int DIALOG_CHART_SETTINGS = 6;
+  public static final int DIALOG_WRITE_PROGRESS = 6;
 
   private ProgressDialog progressDialog;
   private ProgressDialog importProgressDialog;
@@ -55,15 +55,9 @@ public class DialogManager {
   
   protected Dialog onCreateDialog(int id, Bundle args) {
     switch (id) {
-      case DIALOG_PROGRESS:
-        progressDialog = new ProgressDialog(activity);
-        progressDialog.setIcon(android.R.drawable.ic_dialog_info);
-        progressDialog.setTitle(activity.getString(R.string.progress_title));
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDialog.setMessage("");
-        progressDialog.setMax(100);
-        progressDialog.setProgress(10);
-        return progressDialog;
+      case DIALOG_CHART_SETTINGS:
+        chartSettingsDialog = new ChartSettingsDialog(activity);
+        return chartSettingsDialog;
       case DIALOG_IMPORT_PROGRESS:
         importProgressDialog = new ProgressDialog(activity);
         importProgressDialog.setIcon(android.R.drawable.ic_dialog_info);
@@ -73,15 +67,15 @@ public class DialogManager {
         importProgressDialog.setMessage(
             activity.getString(R.string.import_progress_message));
         return importProgressDialog;
-      case DIALOG_WRITE_PROGRESS:
-        writeProgressDialog = new ProgressDialog(activity);
-        writeProgressDialog.setIcon(android.R.drawable.ic_dialog_info);
-        writeProgressDialog.setTitle(
-            activity.getString(R.string.progress_title));
-        writeProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        writeProgressDialog.setMessage(
-            activity.getString(R.string.write_progress_message));
-        return writeProgressDialog;
+      case DIALOG_PROGRESS:
+        progressDialog = new ProgressDialog(activity);
+        progressDialog.setIcon(android.R.drawable.ic_dialog_info);
+        progressDialog.setTitle(activity.getString(R.string.progress_title));
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setMessage("");
+        progressDialog.setMax(100);
+        progressDialog.setProgress(10);
+        return progressDialog;
       case DIALOG_SEND_TO_GOOGLE:
         sendToGoogleDialog = new SendToGoogleDialog(activity);
         return sendToGoogleDialog;
@@ -100,9 +94,15 @@ public class DialogManager {
         });
         sendToGoogleResultDialog = builder.create();
         return sendToGoogleResultDialog;
-      case DIALOG_CHART_SETTINGS:
-        chartSettingsDialog = new ChartSettingsDialog(activity);
-        return chartSettingsDialog;
+      case DIALOG_WRITE_PROGRESS:
+        writeProgressDialog = new ProgressDialog(activity);
+        writeProgressDialog.setIcon(android.R.drawable.ic_dialog_info);
+        writeProgressDialog.setTitle(
+            activity.getString(R.string.progress_title));
+        writeProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        writeProgressDialog.setMessage(
+            activity.getString(R.string.write_progress_message));
+        return writeProgressDialog;
     }
     return null;
   }

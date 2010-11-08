@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -102,9 +102,9 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   private static MyTracks instance;
 
   private ChartActivity chartActivity;
-  
+
   /*
-   * Authentication.
+   * Authentication
    */
   private AuthManager auth;
   private final HashMap<String, AuthManager> authMap =
@@ -159,7 +159,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * Utilities to deal with the database.
    */
   private MyTracksProviderUtils providerUtils;
-  
+
   private SharedPreferences sharedPreferences;
 
   /**
@@ -190,7 +190,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       trackRecordingService = null;
     }
   };
-  
+
   /**
    * Whether {@link #serviceConnection} is bound or not.
    */
@@ -226,11 +226,11 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   /**
    * Checks whether we have a track recording session in progress.
    * In some cases, when the service has crashed or has been restarted
-   * by the system, we fall back to the shared preferences. 
-   * 
+   * by the system, we fall back to the shared preferences.
+   *
    * @return true if the activity is bound to the track recording service and
    *         the service is recording a track or in case the service is down,
-   *         based on settings from the shared preferences. 
+   *         based on settings from the shared preferences.
    */
   public boolean isRecording() {
     if (trackRecordingService == null) {
@@ -241,12 +241,12 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       return trackRecordingService.isRecording();
     } catch (RemoteException e) {
       Log.e(MyTracksConstants.TAG, "MyTracks: Remote exception.", e);
-  
+
       // Fall back to alternative check method.
       return isRecordingBasedOnSharedPreferences();
     }
   }
-  
+
   private boolean isRecordingBasedOnSharedPreferences() {
     // TrackRecordingServices guarantees that recordingTrackId is set to
     // -1 if the track has been stopped.
@@ -345,7 +345,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       Log.d(MyTracksConstants.TAG, "Received an intent with no action.");
     }
   }
-  
+
   @Override
   protected void onDestroy() {
     Log.d(MyTracksConstants.TAG, "MyTracks.onDestroy");
@@ -1046,7 +1046,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       doLogin(results, requestCode, service, null);
     }
   }
-  
+
   private void doLogin(final Intent results, final int requestCode,
       final String service, final Account account) {
     auth.doLogin(new Runnable() {
@@ -1056,7 +1056,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       }
     }, account);
   }
-  
+
   private void startRecordingNewTrack(
       ITrackRecordingService trackRecordingService) {
     try {
@@ -1324,11 +1324,11 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   public String getSendToMyMapsMapId() {
     return sendToMyMapsMapId;
   }
-  
+
   public boolean getSendToGoogleSuccess() {
     return sendToMyMapsSuccess && sendToDocsSuccess;
   }
-  
+
   // @VisibleForTesting
   long getRecordingTrackId() {
     return recordingTrackId;
