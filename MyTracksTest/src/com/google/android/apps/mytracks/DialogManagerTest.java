@@ -24,7 +24,7 @@ import android.test.ActivityInstrumentationTestCase2;
  * @author Sandor Dornbush
  */
 public class DialogManagerTest
-extends ActivityInstrumentationTestCase2<MyTracks> {
+    extends ActivityInstrumentationTestCase2<MyTracks> {
 
   public DialogManagerTest() {
     super(MyTracks.class);
