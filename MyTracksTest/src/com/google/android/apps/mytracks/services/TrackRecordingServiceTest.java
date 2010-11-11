@@ -46,6 +46,11 @@ import java.util.List;
  * Tests for the MyTracks track recording service.
  * 
  * @author Bartlomiej Niechwiej
+ * 
+ * TODO: The original class, ServiceTestCase, has a few limitations, e.g.
+ * it's not possible to properly shutdown the service, unless tearDown()
+ * is called, which prevents from testing multiple scenarios in a single
+ * test (see runFunctionTest for more details).
  */
 public class TrackRecordingServiceTest
     extends ServiceTestCase<TrackRecordingService> {
@@ -554,13 +559,50 @@ public class TrackRecordingServiceTest
   public void testWithProperties_defaultMinRecordingDist() throws Exception {
     functionalTest(R.string.min_recording_distance_key, 2);
   }
+
+  @MediumTest
+  public void testWithProperties_noSignalSamplingFreq() throws Exception {
+    functionalTest(R.string.signal_sampling_frequency_key, (Object) null);
+  }
+
+  @MediumTest
+  public void testWithProperties_defaultSignalSamplingFreq() throws Exception {
+    functionalTest(R.string.signal_sampling_frequency_key, 1);
+  }
+
+  @MediumTest
+  public void testWithProperties_noSplitFreq() throws Exception {
+    functionalTest(R.string.split_frequency_key, (Object) null);
+  }
+
+  @MediumTest
+  public void testWithProperties_defaultSplitFreqByDist() throws Exception {
+    functionalTest(R.string.split_frequency_key, 5);
+  }
+ 
+  @MediumTest
+  public void testWithProperties_defaultSplitFreqByTime() throws Exception {
+    functionalTest(R.string.split_frequency_key, -2);
+  }
+
+  @MediumTest
+  public void testWithProperties_noMetricUnits() throws Exception {
+    functionalTest(R.string.metric_units_key, (Object) null);
+  }
+
+  @MediumTest
+  public void testWithProperties_metricUnitsEnabled() throws Exception {
+    functionalTest(R.string.metric_units_key, true);
+  }
+
+  @MediumTest
+  public void testWithProperties_metricUnitsDisabled() throws Exception {
+    functionalTest(R.string.metric_units_key, false);
+  }
   
   // TODO: Add the following tests:
-  // R.string.metric_units_key
   // R.string.min_recording_interval_key
   // R.string.min_required_accuracy_key
-  // R.string.signal_sampling_frequency_key
-  // R.string.split_frequency_key
   
   private ITrackRecordingService bindAndGetService(Intent intent) {
     ITrackRecordingService service = ITrackRecordingService.Stub.asInterface(
@@ -607,7 +649,10 @@ public class TrackRecordingServiceTest
     editor.putLong(context.getString(R.string.recording_track_key), id);
     editor.commit();
   }
-  
+
+  // TODO: We support multiple values for readability, however this test's
+  // base class doesn't properly shutdown the service, so it's not possible
+  // to pass more than 1 value at a time.
   private void functionalTest(int resourceId, Object ...values)
       throws Exception {
     final String key = context.getString(resourceId);
@@ -621,6 +666,8 @@ public class TrackRecordingServiceTest
         editor.putLong(key, (Long) value);
       } else if (value instanceof Integer) {
         editor.putInt(key, (Integer) value);
+      } else if (value instanceof Boolean) {
+        editor.putBoolean(key, (Boolean) value);
       } else if (value == null) {
         // Do nothing, as clear above has already removed this property.
       }
@@ -644,6 +691,8 @@ public class TrackRecordingServiceTest
     assertEquals(id, sharedPreferences.getLong(
         context.getString(R.string.recording_track_key), -1));
     assertEquals(id, service.getRecordingTrackId());
+    
+    // TODO: Add a few locations, insert markers, etc.
     
     // Stop the track.  Validate if it has correct data.
     service.endCurrentTrack();

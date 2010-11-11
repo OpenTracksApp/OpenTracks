@@ -52,6 +52,11 @@ public class PeriodicTaskExecuter {
    * @param interval The interval in milliseconds
    */
   public void scheduleTask(long interval) {
+    // TODO: Decouple service from this class once and forever.
+    if (!service.isRecording()) {
+      return;
+    }
+    
     timer.cancel();
     timer.purge();
     timer = new Timer();
