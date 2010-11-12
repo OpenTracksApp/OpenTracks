@@ -206,7 +206,8 @@ public class NavControls {
 
   private void shiftIcons(boolean isLeft) {
     // Increment or decrement by one, with wrap around
-    currentIcons = (currentIcons + leftIcons.length() + (isLeft ? -1 : 1)) % leftIcons.length();
+    currentIcons = (currentIcons + leftIcons.length() +
+        (isLeft ? -1 : 1)) % leftIcons.length();
     prevImage.setIcon(leftIcons.getDrawable(currentIcons));
     nextImage.setIcon(rightIcons.getDrawable(currentIcons));
   }

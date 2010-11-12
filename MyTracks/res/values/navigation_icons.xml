@@ -16,14 +16,14 @@ limitations under the License.
 -->
 <resources>
   <array name="left_icons">
-  	<item>@drawable/left_arrow_chart_stateful</item>
+    <item>@drawable/left_arrow_chart_stateful</item>
     <item>@drawable/left_arrow_track_stateful</item>
     <item>@drawable/left_arrow_stats_stateful</item>
   </array>
 
   <array name="right_icons">
     <item>@drawable/right_arrow_stats_stateful</item>
-  	<item>@drawable/right_arrow_chart_stateful</item>
+    <item>@drawable/right_arrow_chart_stateful</item>
     <item>@drawable/right_arrow_track_stateful</item>
   </array>
 </resources>
