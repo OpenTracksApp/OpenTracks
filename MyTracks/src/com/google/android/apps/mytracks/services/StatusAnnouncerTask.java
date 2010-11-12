@@ -239,8 +239,10 @@ public class StatusAnnouncerTask implements PeriodicTask {
     // Stop listening to phone state.
     listenToPhoneState(phoneListener, PhoneStateListener.LISTEN_NONE);
 
-    tts.shutdown();
-    tts = null;
+    if (tts != null) {
+      tts.shutdown();
+      tts = null;
+    }
   }
 
   /**

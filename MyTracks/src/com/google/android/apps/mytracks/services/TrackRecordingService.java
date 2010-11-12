@@ -663,9 +663,11 @@ public class TrackRecordingService extends Service implements LocationListener {
       restoreStats(recordingTrack);
       isRecording = true;
     } else {
-      // Make sure we have consistent state in shared preferences.
-      Log.w(MyTracksConstants.TAG, "TrackRecordingService.onCreate: Resetting "
-          + "an orphaned recording track: " + recordingTrackId);
+      if (recordingTrackId != -1) {
+        // Make sure we have consistent state in shared preferences.
+        Log.w(MyTracksConstants.TAG, "TrackRecordingService.onCreate: "
+            + "Resetting an orphaned recording track = " + recordingTrackId);
+      }
       prefManager.setRecordingTrack(recordingTrackId = -1);
     }
     showNotification();
@@ -677,7 +679,9 @@ public class TrackRecordingService extends Service implements LocationListener {
    * the announcements, otherwise this method is no-op.
    */
   private void setUpAnnouncer() {
-    if (announcementFrequency != -1) {
+    Log.d(MyTracksConstants.TAG, "TrackRecordingService.setUpAnnouncer: "
+        + announcementExecuter);
+    if (announcementFrequency != -1 && recordingTrackId != -1) {
       if (announcementExecuter == null) {
         StatusAnnouncerFactory statusAnnouncerFactory =
             new StatusAnnouncerFactory(ApiFeatures.getInstance());
@@ -687,6 +691,18 @@ public class TrackRecordingService extends Service implements LocationListener {
         announcementExecuter = new PeriodicTaskExecuter(announcer, this);
       }
       announcementExecuter.scheduleTask(announcementFrequency * 60000);
+    }
+  }
+  
+  private void shutdownAnnouncer() {
+    Log.d(MyTracksConstants.TAG, "TrackRecordingService.shutdownAnnouncer: "
+        + announcementExecuter);
+    if (announcementExecuter != null) {
+      try {
+        announcementExecuter.shutdown();
+      } finally {
+        announcementExecuter = null;
+      }
     }
   }
 
@@ -701,9 +717,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     isRecording = false;
     showNotification();
     unregisterLocationListener();
-    if (announcementExecuter != null) {
-      announcementExecuter.shutdown();
-    }
+    shutdownAnnouncer();
     splitManager.shutdown();
     super.onDestroy();
   }
@@ -936,6 +950,7 @@ public class TrackRecordingService extends Service implements LocationListener {
           }
          
           isRecording = false;
+          shutdownAnnouncer();
           Track recordingTrack = providerUtils.getTrack(recordingTrackId);
           if (recordingTrack != null) {
             TripStatistics stats = recordingTrack.getStatistics();
@@ -1042,10 +1057,7 @@ public class TrackRecordingService extends Service implements LocationListener {
   public void setAnnouncementFrequency(int announcementFrequency) {
     this.announcementFrequency = announcementFrequency;
     if (announcementFrequency == -1) {
-      if (announcementExecuter != null) {
-        announcementExecuter.shutdown();
-        announcementExecuter = null;
-      }
+      shutdownAnnouncer();
     } else {
       setUpAnnouncer();
     }

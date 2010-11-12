@@ -46,6 +46,11 @@ import java.util.List;
  * Tests for the MyTracks track recording service.
  * 
  * @author Bartlomiej Niechwiej
+ * 
+ * TODO: The original class, ServiceTestCase, has a few limitations, e.g.
+ * it's not possible to properly shutdown the service, unless tearDown()
+ * is called, which prevents from testing multiple scenarios in a single
+ * test (see runFunctionTest for more details).
  */
 public class TrackRecordingServiceTest
     extends ServiceTestCase<TrackRecordingService> {
@@ -141,6 +146,9 @@ public class TrackRecordingServiceTest
     
     sharedPreferences = context.getSharedPreferences(
         MyTracksSettings.SETTINGS_NAME, 0);
+    // Let's use default values.
+    sharedPreferences.edit().clear().commit();
+    
     // Disable auto resume by default.
     updateAutoResumePrefs(0, -1);
     // No recording track.
@@ -376,32 +384,7 @@ public class TrackRecordingServiceTest
   public void testIntegration_completeRecordingSession() throws Exception {
     List<Track> tracks = providerUtils.getAllTracks();
     assertTrue(tracks.isEmpty());
-    
-    ITrackRecordingService service = bindAndGetService(createStartIntent());
-    assertFalse(service.isRecording());
-    
-    // Start a track.
-    long id = service.startNewTrack();
-    assertTrue(id >= 0);
-    assertTrue(service.isRecording());
-    Track track = providerUtils.getTrack(id);
-    assertNotNull(track);
-    assertEquals(id, track.getId());
-    assertEquals(id, sharedPreferences.getLong(
-        context.getString(R.string.recording_track_key), -1));
-    assertEquals(id, service.getRecordingTrackId());
-    
-    // Stop the track.  Validate if it has correct data.
-    service.endCurrentTrack();
-    assertFalse(service.isRecording());
-    assertEquals(-1, service.getRecordingTrackId());
-    track = providerUtils.getTrack(id);
-    assertNotNull(track);
-    assertEquals(id, track.getId());
-    TripStatistics tripStatistics = track.getStatistics();
-    assertNotNull(tripStatistics);
-    assertTrue(tripStatistics.getStartTime() > 0);
-    assertTrue(tripStatistics.getStopTime() >= tripStatistics.getStartTime());
+    fullRecordingSession();
   }
   
   @MediumTest
@@ -547,6 +530,80 @@ public class TrackRecordingServiceTest
     assertEquals(1, service.insertWaypointMarker(waypoint));
   }
   
+  @MediumTest
+  public void testWithProperties_noAnnouncementFreq() throws Exception {
+    functionalTest(R.string.announcement_frequency_key, (Object) null);
+  }
+
+  @MediumTest
+  public void testWithProperties_defaultAnnouncementFreq() throws Exception {
+    functionalTest(R.string.announcement_frequency_key, 1);
+  }
+  
+  @MediumTest
+  public void testWithProperties_noMaxRecordingDist() throws Exception {
+    functionalTest(R.string.max_recording_distance_key, (Object) null);
+  }
+
+  @MediumTest
+  public void testWithProperties_defaultMaxRecordingDist() throws Exception {
+    functionalTest(R.string.max_recording_distance_key, 5);
+  }
+
+  @MediumTest
+  public void testWithProperties_noMinRecordingDist() throws Exception {
+    functionalTest(R.string.min_recording_distance_key, (Object) null);
+  }
+
+  @MediumTest
+  public void testWithProperties_defaultMinRecordingDist() throws Exception {
+    functionalTest(R.string.min_recording_distance_key, 2);
+  }
+
+  @MediumTest
+  public void testWithProperties_noSignalSamplingFreq() throws Exception {
+    functionalTest(R.string.signal_sampling_frequency_key, (Object) null);
+  }
+
+  @MediumTest
+  public void testWithProperties_defaultSignalSamplingFreq() throws Exception {
+    functionalTest(R.string.signal_sampling_frequency_key, 1);
+  }
+
+  @MediumTest
+  public void testWithProperties_noSplitFreq() throws Exception {
+    functionalTest(R.string.split_frequency_key, (Object) null);
+  }
+
+  @MediumTest
+  public void testWithProperties_defaultSplitFreqByDist() throws Exception {
+    functionalTest(R.string.split_frequency_key, 5);
+  }
+ 
+  @MediumTest
+  public void testWithProperties_defaultSplitFreqByTime() throws Exception {
+    functionalTest(R.string.split_frequency_key, -2);
+  }
+
+  @MediumTest
+  public void testWithProperties_noMetricUnits() throws Exception {
+    functionalTest(R.string.metric_units_key, (Object) null);
+  }
+
+  @MediumTest
+  public void testWithProperties_metricUnitsEnabled() throws Exception {
+    functionalTest(R.string.metric_units_key, true);
+  }
+
+  @MediumTest
+  public void testWithProperties_metricUnitsDisabled() throws Exception {
+    functionalTest(R.string.metric_units_key, false);
+  }
+  
+  // TODO: Add the following tests:
+  // R.string.min_recording_interval_key
+  // R.string.min_required_accuracy_key
+  
   private ITrackRecordingService bindAndGetService(Intent intent) {
     ITrackRecordingService service = ITrackRecordingService.Stub.asInterface(
         bindService(intent));
@@ -591,5 +648,62 @@ public class TrackRecordingServiceTest
     Editor editor = sharedPreferences.edit();
     editor.putLong(context.getString(R.string.recording_track_key), id);
     editor.commit();
+  }
+
+  // TODO: We support multiple values for readability, however this test's
+  // base class doesn't properly shutdown the service, so it's not possible
+  // to pass more than 1 value at a time.
+  private void functionalTest(int resourceId, Object ...values)
+      throws Exception {
+    final String key = context.getString(resourceId);
+    for (Object value : values) {
+      // Remove all properties and set the property for the given key. 
+      Editor editor = sharedPreferences.edit();
+      editor.clear();
+      if (value instanceof String) {
+        editor.putString(key, (String) value); 
+      } else if (value instanceof Long) {
+        editor.putLong(key, (Long) value);
+      } else if (value instanceof Integer) {
+        editor.putInt(key, (Integer) value);
+      } else if (value instanceof Boolean) {
+        editor.putBoolean(key, (Boolean) value);
+      } else if (value == null) {
+        // Do nothing, as clear above has already removed this property.
+      }
+      editor.commit();
+      
+      fullRecordingSession();
+    }
+  }
+  
+  private void fullRecordingSession() throws Exception {
+    ITrackRecordingService service = bindAndGetService(createStartIntent());
+    assertFalse(service.isRecording());
+    
+    // Start a track.
+    long id = service.startNewTrack();
+    assertTrue(id >= 0);
+    assertTrue(service.isRecording());
+    Track track = providerUtils.getTrack(id);
+    assertNotNull(track);
+    assertEquals(id, track.getId());
+    assertEquals(id, sharedPreferences.getLong(
+        context.getString(R.string.recording_track_key), -1));
+    assertEquals(id, service.getRecordingTrackId());
+    
+    // TODO: Add a few locations, insert markers, etc.
+    
+    // Stop the track.  Validate if it has correct data.
+    service.endCurrentTrack();
+    assertFalse(service.isRecording());
+    assertEquals(-1, service.getRecordingTrackId());
+    track = providerUtils.getTrack(id);
+    assertNotNull(track);
+    assertEquals(id, track.getId());
+    TripStatistics tripStatistics = track.getStatistics();
+    assertNotNull(tripStatistics);
+    assertTrue(tripStatistics.getStartTime() > 0);
+    assertTrue(tripStatistics.getStopTime() >= tripStatistics.getStartTime());
   }
 }

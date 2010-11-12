@@ -73,6 +73,11 @@ public class SplitManager {
    * Calculates the next distance that a split should be inserted at.
    */
   public void calculateNextSplit() {
+    // TODO: Decouple service from this class once and forever.
+    if (!service.isRecording()) {
+      return;
+    }
+    
     if (splitFrequency >= 0) {
       nextSplitDistance = Double.MAX_VALUE;
       Log.d(MyTracksConstants.TAG,
@@ -121,6 +126,12 @@ public class SplitManager {
    */
   public void setSplitFrequency(int splitFrequency) {
     this.splitFrequency = splitFrequency;
+    
+    // TODO: Decouple service from this class once and forever.
+    if (!service.isRecording()) {
+      return;
+    }
+    
     if (splitFrequency < 1) {
       if (splitExecuter != null) {
         splitExecuter.shutdown();
