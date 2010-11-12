@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.view.MotionEvent;
@@ -62,8 +63,7 @@ public class NavControls {
       addView(icon);
     }
 
-    public void setIcon(int iconId) {
-      Drawable drawable = getContext().getResources().getDrawable(iconId);
+    public void setIcon(Drawable drawable) {
       icon.setImageDrawable(drawable);
       icon.setVisibility(View.VISIBLE);
     }
@@ -102,21 +102,21 @@ public class NavControls {
 
   private final TouchLayout prevImage;
   private final TouchLayout nextImage;
-  private final int[] leftIcons;
-  private final int[] rightIcons;
+  private final TypedArray leftIcons;
+  private final TypedArray rightIcons;
   private final Runnable touchRunnable;
 
   private boolean isVisible = false;
   private int currentIcons;
 
   public NavControls(Context context, ViewGroup container,
-      int[] leftIcons, int[] rightIcons,
+      TypedArray leftIcons, TypedArray rightIcons,
       Runnable touchRunnable) {
     this.leftIcons = leftIcons;
     this.rightIcons = rightIcons;
     this.touchRunnable = touchRunnable;
 
-    if (leftIcons.length != rightIcons.length || leftIcons.length < 1) {
+    if (leftIcons.length() != rightIcons.length() || leftIcons.length() < 1) {
       throw new IllegalArgumentException("Invalid icons specified");
     }
     if (touchRunnable == null) {
@@ -145,8 +145,8 @@ public class NavControls {
     container.addView(prevImage);
     container.addView(nextImage);
 
-    prevImage.setIcon(leftIcons[0]);
-    nextImage.setIcon(rightIcons[0]);
+    prevImage.setIcon(leftIcons.getDrawable(0));
+    nextImage.setIcon(rightIcons.getDrawable(0));
     this.currentIcons = 0;
   }
 
@@ -206,8 +206,8 @@ public class NavControls {
 
   private void shiftIcons(boolean isLeft) {
     // Increment or decrement by one, with wrap around
-    currentIcons = (currentIcons + leftIcons.length + (isLeft ? -1 : 1)) % leftIcons.length;
-    prevImage.setIcon(leftIcons[currentIcons]);
-    nextImage.setIcon(rightIcons[currentIcons]);
+    currentIcons = (currentIcons + leftIcons.length() + (isLeft ? -1 : 1)) % leftIcons.length();
+    prevImage.setIcon(leftIcons.getDrawable(currentIcons));
+    nextImage.setIcon(rightIcons.getDrawable(currentIcons));
   }
 }
