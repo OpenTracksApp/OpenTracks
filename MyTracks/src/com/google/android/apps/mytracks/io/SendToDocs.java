@@ -209,7 +209,7 @@ public class SendToDocs {
       androidClient = GDataClientFactory.getGDataClient(activity);
       SpreadsheetsClient gdataClient = new SpreadsheetsClient(androidClient,
           new XmlMapsGDataParserFactory(new AndroidXmlParserFactory()));
-      wiseWrapper.setClient(androidClient, gdataClient);
+      wiseWrapper.setClient(gdataClient);
       Log.d(MyTracksConstants.TAG,
           "GData connection prepared: " + this.writelyAuth);
       String sheetTitle = "My Tracks";
@@ -220,7 +220,7 @@ public class SendToDocs {
 
       DocumentsClient docsGdataClient = new DocumentsClient(androidClient,
           new XmlMapsGDataParserFactory(new AndroidXmlParserFactory()));
-      writelyWrapper.setClient(androidClient, docsGdataClient);
+      writelyWrapper.setClient(docsGdataClient);
 
       // First try to find the spreadsheet:
       if (!getSpreadsheetId(writelyWrapper, sheetTitle)) {
@@ -302,9 +302,7 @@ public class SendToDocs {
       return false;
     } finally {
       if (androidClient != null) {
-        Log.e(MyTracksConstants.TAG, "closing the android client");
         androidClient.close();
-        Log.e(MyTracksConstants.TAG, "closed the android client");
       }
     }
     return true;

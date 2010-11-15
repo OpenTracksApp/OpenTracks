@@ -17,21 +17,17 @@ package com.google.android.apps.mytracks.io.gdata;
 
 import com.google.android.apps.mytracks.MyTracksConstants;
 import com.google.android.apps.mytracks.io.AuthManager;
-import com.google.wireless.gdata.client.GDataClient;
 import com.google.wireless.gdata.client.GDataServiceClient;
 import com.google.wireless.gdata.client.HttpException;
 import com.google.wireless.gdata.parser.ParseException;
 import com.google.wireless.gdata2.ConflictDetectedException;
 import com.google.wireless.gdata2.client.AuthenticationException;
 
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.util.Log;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -99,8 +95,6 @@ public class GDataWrapper {
   private AuthManager auth;
   private boolean retryOnAuthFailure;
   
-  private int count = 0;
-
   public GDataWrapper() {
     errorType = ERROR_NO_ERROR;
     errorMessage = null;
@@ -108,8 +102,7 @@ public class GDataWrapper {
     retryOnAuthFailure = false;
   }
 
-  public void setClient(GDataClient androidGDataClient,
-      GDataServiceClient gdataServiceClient) {
+  public void setClient(GDataServiceClient gdataServiceClient) {
     this.gdataServiceClient = gdataServiceClient;
   }
 
@@ -148,42 +141,14 @@ public class GDataWrapper {
     return false;
   }
 
-  /** 
-   * Invalidates and refreshes the auth token.  Blocks until the refresh has
-   * completed or until we deem the refresh as having timed out.
+  /**
+   * Execute a given function or query.  If one is executed, errorType and
+   * errorMessage will contain the result/status of the function/query.
    * 
-   * @return true If the invalidate/refresh succeeds, false if it fails or
-   *   times out.
+   * @return true if function or query was non-null.  false if both were null.
    */
-  private boolean invalidateAndRefreshAuthToken() {
-    Log.d(MyTracksConstants.TAG, "Retrying due to auth failure");
-    FutureTask<?> whenFinishedFuture = new FutureTask<Object>(new Runnable() {
-      public void run() {}
-    }, null);
-
-    auth.invalidateAndRefresh(whenFinishedFuture);
-
-    try {
-      Log.d(MyTracksConstants.TAG, "waiting for invalidate");
-      whenFinishedFuture.get(5, TimeUnit.SECONDS);
-      Log.d(MyTracksConstants.TAG, "invalidate finished");
-    } catch (InterruptedException e) {
-      Log.e(MyTracksConstants.TAG, "Failed to invalidate", e);
-      return false;
-    } catch (ExecutionException e) {
-      Log.e(MyTracksConstants.TAG, "Failed to invalidate", e);
-      return false;
-    } catch (TimeoutException e) {
-      Log.e(MyTracksConstants.TAG, "Invalidate didn't complete in time", e);
-      return false;
-    } finally {
-      whenFinishedFuture.cancel(false);
-    }
-    
-    return true;
-  }
-
-  private boolean runOneActual(final AuthenticatedFunction function, final QueryFunction query) {
+  private boolean runOneActual(final AuthenticatedFunction function, 
+      final QueryFunction query) {
     try {
       if (function != null) {
         function.run(this.auth.getAuthToken());
@@ -191,11 +156,6 @@ public class GDataWrapper {
         query.query(gdataServiceClient);
       } else {
         return false;
-      }
-      
-      if (count == 0) {
-        count++;
-        throw new AuthenticationException("mts auth fail fake");
       }
 
       errorType = ERROR_NO_ERROR;
@@ -239,6 +199,41 @@ public class GDataWrapper {
     return true;
   }
 
+  /** 
+   * Invalidates and refreshes the auth token.  Blocks until the refresh has
+   * completed or until we deem the refresh as having timed out.
+   * 
+   * @return true If the invalidate/refresh succeeds, false if it fails or
+   *   times out.
+   */
+  private boolean invalidateAndRefreshAuthToken() {
+    Log.d(MyTracksConstants.TAG, "Retrying due to auth failure");
+    FutureTask<?> whenFinishedFuture = new FutureTask<Object>(new Runnable() {
+      public void run() {}
+    }, null);
+
+    auth.invalidateAndRefresh(whenFinishedFuture);
+
+    try {
+      Log.d(MyTracksConstants.TAG, "waiting for invalidate");
+      whenFinishedFuture.get(5, TimeUnit.SECONDS);
+      Log.d(MyTracksConstants.TAG, "invalidate finished");
+    } catch (InterruptedException e) {
+      Log.e(MyTracksConstants.TAG, "Failed to invalidate", e);
+      return false;
+    } catch (ExecutionException e) {
+      Log.e(MyTracksConstants.TAG, "Failed to invalidate", e);
+      return false;
+    } catch (TimeoutException e) {
+      Log.e(MyTracksConstants.TAG, "Invalidate didn't complete in time", e);
+      return false;
+    } finally {
+      whenFinishedFuture.cancel(false);
+    }
+    
+    return true;
+  }
+
   public int getErrorType() {
     return errorType;
   }
@@ -251,10 +246,6 @@ public class GDataWrapper {
     this.auth = auth;
   }
   
-  public AuthManager getAuthManager() {
-    return auth;
-  }
-
   public void setRetryOnAuthFailure(boolean retry) {
     retryOnAuthFailure = retry;
   }
