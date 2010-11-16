@@ -87,7 +87,8 @@ public class GDataWrapper {
   // An unknown error occurred.
   public static final int ERROR_UNKNOWN = 100;
   
-  private static final int NUM_RETRIES = 1;
+  private static final int AUTH_TOKEN_INVALIDATE_REFRESH_NUM_RETRIES = 1;
+  private static final int AUTH_TOKEN_INVALIDATE_REFRESH_TIMEOUT = 5000;
 
   private String errorMessage;
   private int errorType;
@@ -108,20 +109,20 @@ public class GDataWrapper {
 
   public boolean runAuthenticatedFunction(
       final AuthenticatedFunction function) {
-    return runOne(function, null);
+    return runCommon(function, null);
   }
 
   public boolean runQuery(final QueryFunction query) {
-    return runOne(null, query);
+    return runCommon(null, query);
   }
 
   /**
    * Runs an arbitrary piece of code.
    */
-  private boolean runOne(final AuthenticatedFunction function,
+  private boolean runCommon(final AuthenticatedFunction function,
       final QueryFunction query) {
-    for (int i = 0; i <= NUM_RETRIES; i++) {
-      if (!runOneActual(function, query)) {
+    for (int i = 0; i <= AUTH_TOKEN_INVALIDATE_REFRESH_NUM_RETRIES; i++) {
+      if (!runOne(function, query)) {
         return false;
       }
 
@@ -136,7 +137,7 @@ public class GDataWrapper {
         }
       }
       
-      Log.d(MyTracksConstants.TAG, "retrying runOne");
+      Log.d(MyTracksConstants.TAG, "retrying function/query");
     }
     return false;
   }
@@ -147,7 +148,7 @@ public class GDataWrapper {
    * 
    * @return true if function or query was non-null.  false if both were null.
    */
-  private boolean runOneActual(final AuthenticatedFunction function, 
+  private boolean runOne(final AuthenticatedFunction function, 
       final QueryFunction query) {
     try {
       if (function != null) {
@@ -216,22 +217,22 @@ public class GDataWrapper {
 
     try {
       Log.d(MyTracksConstants.TAG, "waiting for invalidate");
-      whenFinishedFuture.get(5, TimeUnit.SECONDS);
+      whenFinishedFuture.get(AUTH_TOKEN_INVALIDATE_REFRESH_TIMEOUT, 
+          TimeUnit.MILLISECONDS);
       Log.d(MyTracksConstants.TAG, "invalidate finished");
+      return true;
+
     } catch (InterruptedException e) {
       Log.e(MyTracksConstants.TAG, "Failed to invalidate", e);
-      return false;
     } catch (ExecutionException e) {
       Log.e(MyTracksConstants.TAG, "Failed to invalidate", e);
-      return false;
     } catch (TimeoutException e) {
       Log.e(MyTracksConstants.TAG, "Invalidate didn't complete in time", e);
-      return false;
     } finally {
       whenFinishedFuture.cancel(false);
     }
     
-    return true;
+    return false;
   }
 
   public int getErrorType() {
