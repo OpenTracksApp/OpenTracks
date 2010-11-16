@@ -34,7 +34,7 @@ import android.util.Log;
 import java.util.Locale;
 
 /**
- * This class will periodically announce the user's trip statitics.
+ * This class will periodically announce the user's trip statistics.
  *
  * @author Sandor Dornbush
  */
@@ -61,7 +61,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
   private TextToSpeech tts;
 
   /**
-   * The response recieved from the TTS engine ater initialization.
+   * The response received from the TTS engine after initialization.
    */
   private boolean ready = false;
 

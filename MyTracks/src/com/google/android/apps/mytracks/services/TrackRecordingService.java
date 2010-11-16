@@ -166,17 +166,17 @@ public class TrackRecordingService extends Service implements LocationListener {
   /**
    * Is the service currently recording a track?
    */
-  private boolean isRecording = false;
+  private boolean isRecording;
 
   /**
    * Last good location the service has received from the location listener
    */
-  private Location lastLocation = null;
+  private Location lastLocation;
 
   /**
    * Last valid location (i.e. not a marker) that was recorded.
    */
-  private Location lastValidLocation = null;
+  private Location lastValidLocation;
 
   /**
    * The frequency of status announcements.
@@ -617,14 +617,19 @@ public class TrackRecordingService extends Service implements LocationListener {
    *
    * @param key the key that changed (may be null to update all preferences)
    */
-  public void onSharedPreferenceChanged(String key) {
+  public void onSharedPreferenceChanged(final String key) {
     Log.d(MyTracksConstants.TAG,
         "TrackRecordingService.onSharedPreferenceChanged");
-    prefManager.onSharedPreferenceChanged(key);
+    handler.post(new Runnable() {
+      @Override
+      public void run() {
+        prefManager.onSharedPreferenceChanged(key);
 
-    if (isRecording) {
-      registerLocationListener();
-    }
+        if (isRecording) {
+          registerLocationListener();
+        }
+      }
+    });
   }
 
   /*
@@ -682,15 +687,23 @@ public class TrackRecordingService extends Service implements LocationListener {
     Log.d(MyTracksConstants.TAG, "TrackRecordingService.setUpAnnouncer: "
         + announcementExecuter);
     if (announcementFrequency != -1 && recordingTrackId != -1) {
-      if (announcementExecuter == null) {
-        StatusAnnouncerFactory statusAnnouncerFactory =
-            new StatusAnnouncerFactory(ApiFeatures.getInstance());
-        PeriodicTask announcer = statusAnnouncerFactory.create(this);
-        if (announcer == null) return;
-
-        announcementExecuter = new PeriodicTaskExecuter(announcer, this);
-      }
-      announcementExecuter.scheduleTask(announcementFrequency * 60000);
+      handler.post(new Runnable() {
+        @Override
+        public void run() {
+          if (announcementExecuter == null) {
+            StatusAnnouncerFactory statusAnnouncerFactory =
+                new StatusAnnouncerFactory(ApiFeatures.getInstance());
+            PeriodicTask announcer = statusAnnouncerFactory.create(
+                TrackRecordingService.this);
+            if (announcer == null) {
+              return;
+            }
+            announcementExecuter = new PeriodicTaskExecuter(announcer,
+                TrackRecordingService.this);
+          }
+          announcementExecuter.scheduleTask(announcementFrequency * 60000);
+        }
+      });
     }
   }
   

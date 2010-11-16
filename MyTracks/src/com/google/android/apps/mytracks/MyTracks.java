@@ -1343,4 +1343,9 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   static void clearInstance() {
     instance = null;
   }
+  
+  // @VisibleForTesting
+  ITrackRecordingService getTrackRecordingService() {
+    return trackRecordingService;
+  }
 }

@@ -42,13 +42,9 @@ public class PreferenceManager {
   private final String signalSamplingFrequencyKey;
   private final String splitFrequencyKey;
 
-  private final SharedPreferences sharedPreferences;
-
   public PreferenceManager(TrackRecordingService service) {
     this.service = service;
-    this.sharedPreferences =
-        service.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
-    if (sharedPreferences == null) {
+    if (getSharedPreferences() == null) {
       Log.w(MyTracksConstants.TAG,
           "TrackRecordingService: Couldn't get shared preferences.");
       throw new IllegalStateException("Couldn't get shared preferences");
@@ -85,6 +81,7 @@ public class PreferenceManager {
    * @param key the key that changed (may be null to update all preferences)
    */
   public void onSharedPreferenceChanged(String key) {
+    SharedPreferences sharedPreferences = getSharedPreferences();
     if (key == null || key.equals(minRecordingDistanceKey)) {
       service.setMinRecordingDistance(
           sharedPreferences.getInt(
@@ -163,14 +160,18 @@ public class PreferenceManager {
   }
   
   public void setAutoResumeTrackCurrentRetry(int retryAttempts) {
-    SharedPreferences.Editor editor = sharedPreferences.edit();
+    SharedPreferences.Editor editor = getSharedPreferences().edit();
     editor.putInt(autoResumeTrackCurrentRetryKey, retryAttempts);
     editor.commit();
   }
 
   public void setRecordingTrack(long id) {
-    Editor editor = sharedPreferences.edit();
+    Editor editor = getSharedPreferences().edit();
     editor.putLong(recordingTrackKey, id);
     editor.commit();
+  }
+
+  private SharedPreferences getSharedPreferences() { 
+    return service.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
   }
 }
