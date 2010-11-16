@@ -122,10 +122,7 @@ public class GDataWrapper {
   private boolean runCommon(final AuthenticatedFunction function,
       final QueryFunction query) {
     for (int i = 0; i <= AUTH_TOKEN_INVALIDATE_REFRESH_NUM_RETRIES; i++) {
-      if (!runOne(function, query)) {
-        return false;
-      }
-
+      runOne(function, query);
       if (errorType == ERROR_NO_ERROR) {
         return true;
       }
@@ -145,10 +142,8 @@ public class GDataWrapper {
   /**
    * Execute a given function or query.  If one is executed, errorType and
    * errorMessage will contain the result/status of the function/query.
-   * 
-   * @return true if function or query was non-null.  false if both were null.
    */
-  private boolean runOne(final AuthenticatedFunction function, 
+  private void runOne(final AuthenticatedFunction function, 
       final QueryFunction query) {
     try {
       if (function != null) {
@@ -156,12 +151,13 @@ public class GDataWrapper {
       } else if (query != null) {
         query.query(gdataServiceClient);
       } else {
-        return false;
+        throw new IllegalArgumentException(
+            "invalid invocation of runOne; one of function/query " +
+            "must be non-null");
       }
 
       errorType = ERROR_NO_ERROR;
       errorMessage = null;
-      return true;
 
     } catch (AuthenticationException e) {
       Log.e(MyTracksConstants.TAG, "Exception", e);
@@ -196,8 +192,6 @@ public class GDataWrapper {
       errorType = ERROR_CONFLICT;
       errorMessage = e.getMessage();
     }
-    
-    return true;
   }
 
   /** 
@@ -209,6 +203,8 @@ public class GDataWrapper {
    */
   private boolean invalidateAndRefreshAuthToken() {
     Log.d(MyTracksConstants.TAG, "Retrying due to auth failure");
+    // This FutureTask doesn't do anything -- it exists simply to be
+    // blocked upon using get().
     FutureTask<?> whenFinishedFuture = new FutureTask<Object>(new Runnable() {
       public void run() {}
     }, null);
