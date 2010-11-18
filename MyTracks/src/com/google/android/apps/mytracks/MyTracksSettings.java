@@ -26,10 +26,10 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.Preference.OnPreferenceClickListener;
 
 /**
  * An activity that let's the user see and edit the settings.
@@ -158,7 +158,7 @@ public class MyTracksSettings extends PreferenceActivity {
     getPreferenceManager().getSharedPreferences()
         .unregisterOnSharedPreferenceChangeListener(backupListener);
 
-    super.onPause();
+    super.onDestroy();
   }
 
   /**
