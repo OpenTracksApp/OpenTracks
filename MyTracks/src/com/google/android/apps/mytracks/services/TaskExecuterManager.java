@@ -20,18 +20,18 @@ import com.google.android.apps.mytracks.MyTracksConstants;
 import android.util.Log;
 
 /**
- * This class will manage a period task executer.
+ * This class manages a period task executer.
  *
  * @author Sandor Dornbush
  */
 public class TaskExecuterManager {
 
   private int frequency;
-  private PeriodicTask task;
+  private final PeriodicTask task;
   private PeriodicTaskExecuter executer;
 
   public TaskExecuterManager(int frequency, PeriodicTask task,
-	  TrackRecordingService service) {
+      TrackRecordingService service) {
     this.task = task;
     setFrequency(frequency, service);
   }

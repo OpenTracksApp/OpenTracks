@@ -359,7 +359,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     // to the user.
     Log.d(MyTracksConstants.TAG, "MyTracks.onResume");
     tryBindTrackRecordingService();
-    dialogManager = new DialogManager(this);
     super.onResume();
   }
 
