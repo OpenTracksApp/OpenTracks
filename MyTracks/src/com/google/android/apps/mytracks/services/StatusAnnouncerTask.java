@@ -261,7 +261,9 @@ public class StatusAnnouncerTask implements PeriodicTask {
   protected void listenToPhoneState(PhoneStateListener listener, int events) {
     TelephonyManager telephony =
         (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-    telephony.listen(listener, events);
+    if (telephony != null) {
+      telephony.listen(listener, events);
+    }
   }
 
   /**

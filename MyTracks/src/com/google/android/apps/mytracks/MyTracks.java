@@ -202,17 +202,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
 
   private NavControls navControls;
 
-  /** Icons shown on the left for each tab. */
-  private final int leftIcons[] =
-      { R.drawable.left_arrow_chart_stateful,
-        R.drawable.left_arrow_track_stateful,
-        R.drawable.left_arrow_stats_stateful };
-  /** Icons shown on the right for each tab. */
-  private final int rightIcons[] =
-      { R.drawable.right_arrow_stats_stateful,
-        R.drawable.right_arrow_chart_stateful,
-        R.drawable.right_arrow_track_stateful };
-
   private final Runnable changeTab = new Runnable() {
     public void run() {
       getTabHost().setCurrentTab(navControls.getCurrentIcons());
@@ -266,7 +255,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     providerUtils = MyTracksProviderUtils.Factory.get(this);
     menuManager = new MenuManager(this);
     sharedPreferences = getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
-    dialogManager = new DialogManager(this);
 
     // The volume we want to control is the Text-To-Speech volume
     int volumeStream =
@@ -298,7 +286,10 @@ public class MyTracks extends TabActivity implements OnTouchListener,
         new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
     layout.setLayoutParams(params);
     navControls =
-        new NavControls(this, layout, leftIcons, rightIcons, changeTab);
+        new NavControls(this, layout,
+            getResources().obtainTypedArray(R.array.left_icons),
+            getResources().obtainTypedArray(R.array.right_icons),
+            changeTab);
     navControls.show();
     tabHost.addView(layout);
     layout.setOnTouchListener(this);
@@ -367,6 +358,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     // to the user.
     Log.d(MyTracksConstants.TAG, "MyTracks.onResume");
     tryBindTrackRecordingService();
+    dialogManager = new DialogManager(this);
     super.onResume();
   }
 
