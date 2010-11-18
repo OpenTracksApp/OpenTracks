@@ -31,10 +31,10 @@ import com.google.android.apps.mytracks.io.AuthManagerFactory;
 import com.google.android.apps.mytracks.io.GpxImporter;
 import com.google.android.apps.mytracks.io.SendToDocs;
 import com.google.android.apps.mytracks.io.SendToMyMaps;
-import com.google.android.apps.mytracks.io.SendToMyMaps.OnSendCompletedListener;
 import com.google.android.apps.mytracks.io.TempFileCleaner;
 import com.google.android.apps.mytracks.io.TrackWriter;
 import com.google.android.apps.mytracks.io.TrackWriterFactory;
+import com.google.android.apps.mytracks.io.SendToMyMaps.OnSendCompletedListener;
 import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.StatusAnnouncerFactory;
@@ -173,8 +173,8 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       ITrackRecordingService trackRecordingService =
           ITrackRecordingService.Stub.asInterface(service);
       try {
-        // TODO: Send a start service intent and broadcast service started message
-        // to avoid the hack below and a race condition.
+        // TODO: Send a start service intent and broadcast service started
+        // message to avoid the hack below and a race condition.
         if (startNewTrackRequested) {
           startNewTrackRequested = false;
           startRecordingNewTrack(trackRecordingService);
@@ -248,9 +248,8 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   }
 
   private boolean isRecordingBasedOnSharedPreferences() {
-    // TrackRecordingServices guarantees that recordingTrackId is set to
+    // TrackRecordingService guarantees that recordingTrackId is set to
     // -1 if the track has been stopped.
-    // TODO: Refresh recordingTrackId.
     return recordingTrackId >= 0;
   }
 
@@ -701,57 +700,17 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   }
 
   @Override
-  public void onSharedPreferenceChanged(
-      SharedPreferences sharedPreferences, String key) {
-    // The service itself cannot listen to changes (not supported by Android for
-    // services that run in a separate process). So we'll notify it manually:
-    if (key != null && trackRecordingService != null) {
-      try {
-        trackRecordingService.sharedPreferenceChanged(key);
-      } catch (RemoteException e) {
-        Log.w(MyTracksConstants.TAG,
-            "MyTracks: Cannot notify track recording service of changes "
-            + "to shared preferences: ", e);
-      }
-    }
+  public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+      String key) {
     if (key != null && key.equals(getString(R.string.selected_track_key))) {
-      selectedTrackId =
-          sharedPreferences.getLong(getString(R.string.selected_track_key), -1);
+      selectedTrackId = sharedPreferences.getLong(
+          getString(R.string.selected_track_key), -1);
+    }
+    if (key != null && key.equals(getString(R.string.recording_track_key))) {
+      recordingTrackId = sharedPreferences.getLong(
+          getString(R.string.recording_track_key), -1);
     }
   }
-
-  /**
-   * Simulates the recording of a random location.
-   * This is for debugging and testing only. Useful if there is no GPS signal
-   * available.
-   */
-//  public void recordRandomLocation() {
-//    if (trackRecordingService != null) {
-//      Location loc = new Location("gps");
-//      double latitude = 37.5 + random.nextDouble() / 1000;
-//      double longitude = -120.0 + random.nextDouble() / 1000;
-//      loc.setLatitude(latitude);
-//      loc.setLongitude(longitude);
-//      loc.setAltitude(random.nextDouble() * 100);
-//      loc.setTime(System.currentTimeMillis());
-//      loc.setSpeed(random.nextFloat());
-//      MyTracksMap map =
-//          (MyTracksMap) getLocalActivityManager().getActivity("tab1");
-//      if (map != null) {
-//        map.onLocationChanged(loc);
-//      }
-//      StatsActivity stats =
-//          (StatsActivity) getLocalActivityManager().getActivity("tab2");
-//      if (stats != null) {
-//        stats.onLocationChanged(loc);
-//      }
-//      try {
-//        trackRecordingService.recordLocation(loc);
-//      } catch (RemoteException e) {
-//        Log.e(MyTracksConstants.TAG, "MyTracks", e);
-//      }
-//    }
-//  }
 
   /**
    * Resets status information for sending to MyMaps/Docs.
@@ -1061,8 +1020,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       ITrackRecordingService trackRecordingService) {
     try {
       recordingTrackId = trackRecordingService.startNewTrack();
-      // TODO: This is a hack to propagate recordingTrackId in multiprocess env.
-      setRecordingTrackId(recordingTrackId);
       // Select the recording track.
       setSelectedTrackId(recordingTrackId);
       Toast.makeText(this, getString(R.string.status_now_recording),
@@ -1104,8 +1061,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       Intent intent = new Intent(MyTracks.this, MyTracksDetails.class);
       intent.putExtra("trackid", recordingTrackId);
       intent.putExtra("hasCancelButton", false);
-      // TODO: This is a hack to propagate recordingTrackId in multiprocess env.
-      setRecordingTrackId(recordingTrackId = -1);
       startActivity(intent);
     }
     tryUnbindTrackRecordingService();
@@ -1156,29 +1111,16 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * @param trackId the id of the track
    */
   public void setSelectedTrackId(final long trackId) {
-    runOnUiThread(new Runnable() {
-      public void run() {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putLong(getString(R.string.selected_track_key), trackId);
-        editor.commit();
-      }
-    });
+    sharedPreferences
+        .edit()
+        .putLong(getString(R.string.selected_track_key), trackId)
+        .commit();
   }
 
   long getSelectedTrackId() {
     return selectedTrackId;
   }
   
-  private void setRecordingTrackId(final long trackId) {
-    runOnUiThread(new Runnable() {
-      public void run() {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putLong(getString(R.string.recording_track_key), trackId);
-        editor.commit();
-      }
-    });
-  }
-
   /**
    * Binds to track recording service if it is running.
    */

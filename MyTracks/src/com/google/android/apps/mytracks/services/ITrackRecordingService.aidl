@@ -84,13 +84,4 @@ interface ITrackRecordingService {
    * Deletes all the stored tracks.
    */
   void deleteAllTracks();
-
-  /**
-   * Notifies the service that its preferences may have been changed.
-   * This is necessary because the service running on a separate process cannot
-   * listen to the changes itself.
-   *
-   * @param key the preference key which may have changed
-   */
-  void sharedPreferenceChanged(in String key);
 }

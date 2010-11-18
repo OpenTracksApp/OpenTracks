@@ -15,9 +15,9 @@
  */
 package com.google.android.apps.mytracks.services;
 
-import android.util.Log;
-
 import com.google.android.apps.mytracks.MyTracksConstants;
+
+import android.util.Log;
 
 /**
  * This class will manage a period task executer.
@@ -26,13 +26,12 @@ import com.google.android.apps.mytracks.MyTracksConstants;
  */
 public class TaskExecuterManager {
 
-  int frequency;
-  PeriodicTask task;
-  PeriodicTaskExecuter executer;
+  private int frequency;
+  private PeriodicTask task;
+  private PeriodicTaskExecuter executer;
 
-  public TaskExecuterManager(int frequency,
-                             PeriodicTask task,
-                             TrackRecordingService service) {
+  public TaskExecuterManager(int frequency, PeriodicTask task,
+	  TrackRecordingService service) {
     this.task = task;
     setFrequency(frequency, service);
   }
@@ -69,12 +68,21 @@ public class TaskExecuterManager {
   }
 
   /**
-   * Restore the task at the current frequency.
+   * Restores the task at the current frequency.
    */
   public void restore() {
     if (frequency > 0) {
       task.start();
       executer.scheduleTask(frequency * 60000);
+    }
+  }
+  
+  /**
+   * Shuts down this executer.
+   */
+  public void shutdown() {
+    if (executer != null) {
+      executer.shutdown();
     }
   }
 }

@@ -13,7 +13,6 @@
                android:value="AEdPqrEAAAAIi-_QiwoRSc9_bAC9cmuNXTQyU8ajJmGtKdhskQ" />
 
     <provider android:name="com.google.android.apps.mytracks.content.MyTracksProvider"
-              android:process=":trackrecord"
               android:authorities="com.google.android.maps.mytracks" />
 
     <activity android:name="com.google.android.apps.mytracks.MyTracks"
@@ -70,7 +69,6 @@
               android:label="@string/welcome"/>
 
     <service android:name="com.google.android.apps.mytracks.services.TrackRecordingService"
-             android:process=":trackrecord"
              android:label="Track Recording Service"
              android:icon="@drawable/arrow_320"
              android:enabled="true"
