@@ -937,33 +937,7 @@ public class TrackRecordingService extends Service implements LocationListener {
 
         @Override
         public void endCurrentTrack() {
-          Log.d(MyTracksConstants.TAG, "TrackRecordingService.endCurrentTrack");
-          if (recordingTrackId == -1 || !isRecording) {
-            throw new IllegalStateException("No recording track in progress!");
-          }
-
-          shutdownAnnouncer();
-          isRecording = false;
-          Track recordingTrack = providerUtils.getTrack(recordingTrackId);
-          if (recordingTrack != null) {
-            TripStatistics stats = recordingTrack.getStatistics();
-            stats.setStopTime(System.currentTimeMillis());
-            stats.setTotalTime(stats.getStopTime() - stats.getStartTime());
-            long lastRecordedLocationId =
-                providerUtils.getLastLocationId(recordingTrackId);
-            ContentValues values = new ContentValues();
-            if (lastRecordedLocationId >= 0
-                && recordingTrack.getStopId() >= 0) {
-              values.put(TracksColumns.STOPID, lastRecordedLocationId);
-            }
-            values.put(TracksColumns.STOPTIME, stats.getStopTime());
-            values.put(TracksColumns.TOTALTIME, stats.getTotalTime());
-            getContentResolver().update(TracksColumns.CONTENT_URI, values,
-                "_id=" + recordingTrack.getId(), null);
-          }
-          showNotification();
-          prefManager.setRecordingTrack(recordingTrackId = -1);
-          releaseWakeLock();
+          TrackRecordingService.this.endCurrentTrack();
         }
 
         @Override
@@ -1020,6 +994,36 @@ public class TrackRecordingService extends Service implements LocationListener {
     prefManager.setRecordingTrack(recordingTrackId);
     
     return recordingTrackId;
+  }
+
+  private void endCurrentTrack() {
+    Log.d(MyTracksConstants.TAG, "TrackRecordingService.endCurrentTrack");
+    if (recordingTrackId == -1 || !isRecording) {
+      throw new IllegalStateException("No recording track in progress!");
+    }
+
+    shutdownAnnouncer();
+    isRecording = false;
+    Track recordingTrack = providerUtils.getTrack(recordingTrackId);
+    if (recordingTrack != null) {
+      TripStatistics stats = recordingTrack.getStatistics();
+      stats.setStopTime(System.currentTimeMillis());
+      stats.setTotalTime(stats.getStopTime() - stats.getStartTime());
+      long lastRecordedLocationId =
+          providerUtils.getLastLocationId(recordingTrackId);
+      ContentValues values = new ContentValues();
+      if (lastRecordedLocationId >= 0
+          && recordingTrack.getStopId() >= 0) {
+        values.put(TracksColumns.STOPID, lastRecordedLocationId);
+      }
+      values.put(TracksColumns.STOPTIME, stats.getStopTime());
+      values.put(TracksColumns.TOTALTIME, stats.getTotalTime());
+      getContentResolver().update(TracksColumns.CONTENT_URI, values,
+          "_id=" + recordingTrack.getId(), null);
+    }
+    showNotification();
+    prefManager.setRecordingTrack(recordingTrackId = -1);
+    releaseWakeLock();
   }
 
   public TripStatistics getTripStatistics() {
