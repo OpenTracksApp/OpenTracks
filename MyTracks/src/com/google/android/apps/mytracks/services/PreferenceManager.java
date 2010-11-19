@@ -20,7 +20,7 @@ import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.maps.mytracks.R;
 
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.util.Log;
 
 /**
@@ -28,8 +28,9 @@ import android.util.Log;
  * 
  * @author Sandor Dornbush
  */
-public class PreferenceManager {
+public class PreferenceManager implements OnSharedPreferenceChangeListener {
   private TrackRecordingService service;
+  private SharedPreferences sharedPreferences;
   private final String announcementFrequencyKey;
   private final String autoResumeTrackCurrentRetryKey;
   private final String autoResumeTrackTimeoutKey;
@@ -42,17 +43,16 @@ public class PreferenceManager {
   private final String signalSamplingFrequencyKey;
   private final String splitFrequencyKey;
 
-  private final SharedPreferences sharedPreferences;
-
   public PreferenceManager(TrackRecordingService service) {
     this.service = service;
-    this.sharedPreferences =
-        service.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+    this.sharedPreferences = service.getSharedPreferences(
+        MyTracksSettings.SETTINGS_NAME, 0);
     if (sharedPreferences == null) {
       Log.w(MyTracksConstants.TAG,
           "TrackRecordingService: Couldn't get shared preferences.");
       throw new IllegalStateException("Couldn't get shared preferences");
     }
+    sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     
     announcementFrequencyKey =
         service.getString(R.string.announcement_frequency_key);
@@ -76,6 +76,9 @@ public class PreferenceManager {
         service.getString(R.string.signal_sampling_frequency_key);
     splitFrequencyKey =
         service.getString(R.string.split_frequency_key);
+    
+    // Refresh all properties.
+    onSharedPreferenceChanged(sharedPreferences, null);
   }
 
   /**
@@ -84,7 +87,9 @@ public class PreferenceManager {
    *
    * @param key the key that changed (may be null to update all preferences)
    */
-  public void onSharedPreferenceChanged(String key) {
+  @Override
+  public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+      String key) {
     if (key == null || key.equals(minRecordingDistanceKey)) {
       service.setMinRecordingDistance(
           sharedPreferences.getInt(
@@ -163,14 +168,16 @@ public class PreferenceManager {
   }
   
   public void setAutoResumeTrackCurrentRetry(int retryAttempts) {
-    SharedPreferences.Editor editor = sharedPreferences.edit();
-    editor.putInt(autoResumeTrackCurrentRetryKey, retryAttempts);
-    editor.commit();
+    sharedPreferences
+        .edit()
+        .putInt(autoResumeTrackCurrentRetryKey, retryAttempts)
+        .commit();
   }
 
   public void setRecordingTrack(long id) {
-    Editor editor = sharedPreferences.edit();
-    editor.putLong(recordingTrackKey, id);
-    editor.commit();
+    sharedPreferences
+        .edit()
+        .putLong(recordingTrackKey, id)
+        .commit();
   }
 }

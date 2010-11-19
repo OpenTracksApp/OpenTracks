@@ -103,7 +103,7 @@ public class TrackRecordingService extends Service implements LocationListener {
    * recorded points (as compared to each location fix). It's used to overlay
    * waypoints precisely in the elevation profile chart.
    */
-  private double length = 0;
+  private double length;
 
   /**
    * Status announcer executer.
@@ -118,7 +118,7 @@ public class TrackRecordingService extends Service implements LocationListener {
    * The interval in milliseconds that we have requested to be notified of gps
    * readings.
    */
-  private long currentRecordingInterval = 0;
+  private long currentRecordingInterval;
 
   /**
    * The policy used to decide how often we should request gps updates.
@@ -166,17 +166,17 @@ public class TrackRecordingService extends Service implements LocationListener {
   /**
    * Is the service currently recording a track?
    */
-  private boolean isRecording = false;
+  private boolean isRecording;
 
   /**
    * Last good location the service has received from the location listener
    */
-  private Location lastLocation = null;
+  private Location lastLocation;
 
   /**
    * Last valid location (i.e. not a marker) that was recorded.
    */
-  private Location lastValidLocation = null;
+  private Location lastValidLocation;
 
   /**
    * The frequency of status announcements.
@@ -606,28 +606,6 @@ public class TrackRecordingService extends Service implements LocationListener {
   }
 
   /*
-   * SharedPreferencesChangeListener interface implementation. Note that
-   * services don't currently receive this event (Android platform limitation).
-   * This should be called from an activity whenever settings change.
-   */
-
-  /**
-   * Notifies that preferences have changed.
-   * Call this with key == null to update all preferences in one call.
-   *
-   * @param key the key that changed (may be null to update all preferences)
-   */
-  public void onSharedPreferenceChanged(String key) {
-    Log.d(MyTracksConstants.TAG,
-        "TrackRecordingService.onSharedPreferenceChanged");
-    prefManager.onSharedPreferenceChanged(key);
-
-    if (isRecording) {
-      registerLocationListener();
-    }
-  }
-
-  /*
    * Application lifetime events: ============================
    */
 
@@ -647,7 +625,6 @@ public class TrackRecordingService extends Service implements LocationListener {
         new TaskExecuterManager(-1, strengthTaskFactory.create(this), this);
 
     prefManager = new PreferenceManager(this);
-    prefManager.onSharedPreferenceChanged(null);
     registerLocationListener();
     acquireWakeLock();
     /**
@@ -682,15 +659,23 @@ public class TrackRecordingService extends Service implements LocationListener {
     Log.d(MyTracksConstants.TAG, "TrackRecordingService.setUpAnnouncer: "
         + announcementExecuter);
     if (announcementFrequency != -1 && recordingTrackId != -1) {
-      if (announcementExecuter == null) {
-        StatusAnnouncerFactory statusAnnouncerFactory =
-            new StatusAnnouncerFactory(ApiFeatures.getInstance());
-        PeriodicTask announcer = statusAnnouncerFactory.create(this);
-        if (announcer == null) return;
-
-        announcementExecuter = new PeriodicTaskExecuter(announcer, this);
-      }
-      announcementExecuter.scheduleTask(announcementFrequency * 60000);
+      handler.post(new Runnable() {
+        @Override
+        public void run() {
+          if (announcementExecuter == null) {
+            StatusAnnouncerFactory statusAnnouncerFactory =
+                new StatusAnnouncerFactory(ApiFeatures.getInstance());
+            PeriodicTask announcer = statusAnnouncerFactory.create(
+                TrackRecordingService.this);
+            if (announcer == null) {
+              return;
+            }
+            announcementExecuter = new PeriodicTaskExecuter(announcer,
+                TrackRecordingService.this);
+          }
+          announcementExecuter.scheduleTask(announcementFrequency * 60000);
+        }
+      });
     }
   }
   
@@ -718,6 +703,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     showNotification();
     unregisterLocationListener();
     shutdownAnnouncer();
+    signalManager.shutdown();
     splitManager.shutdown();
     super.onDestroy();
   }
@@ -949,8 +935,8 @@ public class TrackRecordingService extends Service implements LocationListener {
             throw new IllegalStateException("No recording track in progress!");
           }
          
-          isRecording = false;
           shutdownAnnouncer();
+          isRecording = false;
           Track recordingTrack = providerUtils.getTrack(recordingTrackId);
           if (recordingTrack != null) {
             TripStatistics stats = recordingTrack.getStatistics();
@@ -984,13 +970,6 @@ public class TrackRecordingService extends Service implements LocationListener {
         @Override
         public void recordLocation(Location loc) {
           onLocationChanged(loc);
-        }
-
-        @Override
-        public void sharedPreferenceChanged(String key) {
-          Log.d(MyTracksConstants.TAG,
-              "TrackRecordingService.sharedPreferenceChanged: " + key);
-          onSharedPreferenceChanged(key);
         }
       };
 

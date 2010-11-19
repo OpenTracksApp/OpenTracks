@@ -13,7 +13,6 @@
                android:value="AEdPqrEAAAAIi-_QiwoRSc9_bAC9cmuNXTQyU8ajJmGtKdhskQ" />
 
     <provider android:name="com.google.android.apps.mytracks.content.MyTracksProvider"
-              android:process=":trackrecord"
               android:authorities="com.google.android.maps.mytracks" />
 
     <activity android:name="com.google.android.apps.mytracks.MyTracks"
@@ -70,7 +69,6 @@
               android:label="@string/welcome"/>
 
     <service android:name="com.google.android.apps.mytracks.services.TrackRecordingService"
-             android:process=":trackrecord"
              android:label="Track Recording Service"
              android:icon="@drawable/arrow_320"
              android:enabled="true"
@@ -104,6 +102,19 @@
 
   <!-- Permissions for misc services -->
   <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+  
+  <!-- Features required -->
+  <uses-feature android:name="android.hardware.location" android:required="true"/>
+  <uses-feature android:name="android.hardware.location.gps" android:required="true"/>
+  <uses-feature android:name="android.hardware.touchscreen" android:required="true"/>
+
+  <!-- Features optional -->
+  <uses-feature android:name="android.hardware.bluetooth" android:required="false"/>
+  <uses-feature android:name="android.hardware.location.network" android:required="false"/>
+  <uses-feature android:name="android.hardware.sensor.compass" android:required="false"/>
+  <uses-feature android:name="android.hardware.telephony" android:required="false"/>
+  <uses-feature android:name="android.hardware.telephony.gsm" android:required="false"/>
+  <uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="false"/>
 
   <uses-sdk android:minSdkVersion="3"/>
   <supports-screens
