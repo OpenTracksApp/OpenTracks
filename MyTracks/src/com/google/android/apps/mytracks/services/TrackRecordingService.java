@@ -295,7 +295,7 @@ public class TrackRecordingService extends Service implements LocationListener {
    * Tries to acquire a partial wake lock if not already acquired. Logs errors
    * and gives up trying in case the wake lock cannot be acquired.
    */
-  public void acquireWakeLock() {
+  private void acquireWakeLock() {
     try {
       PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
       if (pm == null) {
@@ -323,6 +323,16 @@ public class TrackRecordingService extends Service implements LocationListener {
       Log.e(MyTracksConstants.TAG,
           "TrackRecordingService: Caught unexpected exception: "
           + e.getMessage(), e);
+    }
+  }
+
+  /**
+   * Releases the wake lock if it's currently held.
+   */
+  private void releaseWakeLock() {
+    if (wakeLock != null && wakeLock.isHeld()) {
+      wakeLock.release();
+      wakeLock = null;
     }
   }
 
@@ -626,7 +636,6 @@ public class TrackRecordingService extends Service implements LocationListener {
 
     prefManager = new PreferenceManager(this);
     registerLocationListener();
-    acquireWakeLock();
     /**
      * After 5 min, check every minute that location listener still is
      * registered and spit out additional debugging info to the logs:
@@ -696,15 +705,13 @@ public class TrackRecordingService extends Service implements LocationListener {
     Log.d(MyTracksConstants.TAG, "TrackRecordingService.onDestroy");
     checkLocationListener.cancel();
     timer.cancel();
-    if (wakeLock != null && wakeLock.isHeld()) {
-      wakeLock.release();
-    }
     isRecording = false;
     showNotification();
     unregisterLocationListener();
     shutdownAnnouncer();
     signalManager.shutdown();
     splitManager.shutdown();
+    releaseWakeLock();
     super.onDestroy();
   }
 
@@ -934,7 +941,7 @@ public class TrackRecordingService extends Service implements LocationListener {
           if (recordingTrackId == -1 || !isRecording) {
             throw new IllegalStateException("No recording track in progress!");
           }
-         
+
           shutdownAnnouncer();
           isRecording = false;
           Track recordingTrack = providerUtils.getTrack(recordingTrackId);
@@ -956,6 +963,7 @@ public class TrackRecordingService extends Service implements LocationListener {
           }
           showNotification();
           prefManager.setRecordingTrack(recordingTrackId = -1);
+          releaseWakeLock();
         }
 
         @Override
@@ -980,6 +988,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     }
     
     long startTime = System.currentTimeMillis();
+    acquireWakeLock();
 
     Track track = new Track();
     TripStatistics trackStats = track.getStatistics();
