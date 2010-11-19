@@ -35,7 +35,6 @@ public class AggregatedStatsActivity extends Activity implements
 
   public AggregatedStatsActivity() {
     this.utils = new StatsUtilities(this);
-    this.tracksProvider = MyTracksProviderUtils.Factory.get(this);
   }
 
   @Override
@@ -57,6 +56,8 @@ public class AggregatedStatsActivity extends Activity implements
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    this.tracksProvider = MyTracksProviderUtils.Factory.get(this);
 
     // We don't need a window title bar:
     requestWindowFeature(Window.FEATURE_NO_TITLE);
