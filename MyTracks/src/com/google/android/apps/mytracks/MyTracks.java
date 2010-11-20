@@ -1045,13 +1045,15 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    */
   public void stopRecording() {
     if (trackRecordingService != null) {
+      // Save the track id as the shared preference will overwrite the recording track id.
+      long currentTrackId = recordingTrackId;
       try {
         trackRecordingService.endCurrentTrack();
       } catch (RemoteException e) {
         Log.e(MyTracksConstants.TAG, "Unable to stop recording.", e);
       }
       Intent intent = new Intent(MyTracks.this, MyTracksDetails.class);
-      intent.putExtra("trackid", recordingTrackId);
+      intent.putExtra("trackid", currentTrackId);
       intent.putExtra("hasCancelButton", false);
       startActivity(intent);
     }
