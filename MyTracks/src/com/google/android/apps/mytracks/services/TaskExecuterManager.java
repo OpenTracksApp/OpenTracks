@@ -49,7 +49,8 @@ public class TaskExecuterManager {
    */
   public void setFrequency(int frequency, TrackRecordingService service) {
     this.frequency = frequency;
-    Log.i(MyTracksConstants.TAG, "Frequency set to: " + frequency);
+    Log.i(MyTracksConstants.TAG, "Frequency set to " + frequency
+        + " for task " + task.getClass().getSimpleName());
 
     if (frequency == -1) {
       if (executer != null) {

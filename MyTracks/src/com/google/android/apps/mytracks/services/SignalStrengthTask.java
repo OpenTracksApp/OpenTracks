@@ -44,7 +44,8 @@ public class SignalStrengthTask extends PhoneStateListener
   public SignalStrengthTask(Context c) {
     context = c;
   }
-  
+
+  @Override
   public void start() {
     manager =
       (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -176,6 +177,7 @@ public class SignalStrengthTask extends PhoneStateListener
     }
   }
 
+  @Override
   public void shutdown() {
     if (manager != null) {
       manager.listen(this, PhoneStateListener.LISTEN_NONE);

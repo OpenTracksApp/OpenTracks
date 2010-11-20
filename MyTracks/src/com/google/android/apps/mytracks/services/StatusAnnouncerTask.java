@@ -218,6 +218,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
 
   @Override
   public void start() {
+    Log.i(MyTracksConstants.TAG, "Starting TTS");
     if (tts == null) {
       // We can't have this class also be the listener, otherwise it's unsafe to
       // reference it in Cupcake (even if we don't instantiate it).
@@ -243,6 +244,8 @@ public class StatusAnnouncerTask implements PeriodicTask {
       tts.shutdown();
       tts = null;
     }
+
+    Log.i(MyTracksConstants.TAG, "TTS shut down");
   }
 
   /**
