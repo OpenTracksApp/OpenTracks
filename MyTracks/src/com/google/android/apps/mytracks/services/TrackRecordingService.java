@@ -103,7 +103,7 @@ public class TrackRecordingService extends Service implements LocationListener {
    * recorded points (as compared to each location fix). It's used to overlay
    * waypoints precisely in the elevation profile chart.
    */
-  private double length = 0;
+  private double length;
 
   /**
    * Status announcer executer.
@@ -118,7 +118,7 @@ public class TrackRecordingService extends Service implements LocationListener {
    * The interval in milliseconds that we have requested to be notified of gps
    * readings.
    */
-  private long currentRecordingInterval = 0;
+  private long currentRecordingInterval;
 
   /**
    * The policy used to decide how often we should request gps updates.
@@ -166,17 +166,17 @@ public class TrackRecordingService extends Service implements LocationListener {
   /**
    * Is the service currently recording a track?
    */
-  private boolean isRecording = false;
+  private boolean isRecording;
 
   /**
    * Last good location the service has received from the location listener
    */
-  private Location lastLocation = null;
+  private Location lastLocation;
 
   /**
    * Last valid location (i.e. not a marker) that was recorded.
    */
-  private Location lastValidLocation = null;
+  private Location lastValidLocation;
 
   /**
    * The frequency of status announcements.
@@ -295,7 +295,7 @@ public class TrackRecordingService extends Service implements LocationListener {
    * Tries to acquire a partial wake lock if not already acquired. Logs errors
    * and gives up trying in case the wake lock cannot be acquired.
    */
-  public void acquireWakeLock() {
+  private void acquireWakeLock() {
     try {
       PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
       if (pm == null) {
@@ -323,6 +323,16 @@ public class TrackRecordingService extends Service implements LocationListener {
       Log.e(MyTracksConstants.TAG,
           "TrackRecordingService: Caught unexpected exception: "
           + e.getMessage(), e);
+    }
+  }
+
+  /**
+   * Releases the wake lock if it's currently held.
+   */
+  private void releaseWakeLock() {
+    if (wakeLock != null && wakeLock.isHeld()) {
+      wakeLock.release();
+      wakeLock = null;
     }
   }
 
@@ -606,28 +616,6 @@ public class TrackRecordingService extends Service implements LocationListener {
   }
 
   /*
-   * SharedPreferencesChangeListener interface implementation. Note that
-   * services don't currently receive this event (Android platform limitation).
-   * This should be called from an activity whenever settings change.
-   */
-
-  /**
-   * Notifies that preferences have changed.
-   * Call this with key == null to update all preferences in one call.
-   *
-   * @param key the key that changed (may be null to update all preferences)
-   */
-  public void onSharedPreferenceChanged(String key) {
-    Log.d(MyTracksConstants.TAG,
-        "TrackRecordingService.onSharedPreferenceChanged");
-    prefManager.onSharedPreferenceChanged(key);
-
-    if (isRecording) {
-      registerLocationListener();
-    }
-  }
-
-  /*
    * Application lifetime events: ============================
    */
 
@@ -647,9 +635,7 @@ public class TrackRecordingService extends Service implements LocationListener {
         new TaskExecuterManager(-1, strengthTaskFactory.create(this), this);
 
     prefManager = new PreferenceManager(this);
-    prefManager.onSharedPreferenceChanged(null);
     registerLocationListener();
-    acquireWakeLock();
     /**
      * After 5 min, check every minute that location listener still is
      * registered and spit out additional debugging info to the logs:
@@ -681,24 +667,25 @@ public class TrackRecordingService extends Service implements LocationListener {
   private void setUpAnnouncer() {
     Log.d(MyTracksConstants.TAG, "TrackRecordingService.setUpAnnouncer: "
         + announcementExecuter);
-    if (announcementFrequency == -1 || recordingTrackId == -1) {
-      shutdownAnnouncer();
-      return;
-    }
-    handler.post(new Runnable() {
-      public void run() {
-        if (announcementExecuter == null) {
-          StatusAnnouncerFactory statusAnnouncerFactory =
-              new StatusAnnouncerFactory(ApiFeatures.getInstance());
-          PeriodicTask announcer = statusAnnouncerFactory.create(TrackRecordingService.this);
-          if (announcer == null) return;
-  
-          announcer.start();
-          announcementExecuter = new PeriodicTaskExecuter(announcer, TrackRecordingService.this);
+    if (announcementFrequency != -1 && recordingTrackId != -1) {
+      handler.post(new Runnable() {
+        @Override
+        public void run() {
+          if (announcementExecuter == null) {
+            StatusAnnouncerFactory statusAnnouncerFactory =
+                new StatusAnnouncerFactory(ApiFeatures.getInstance());
+            PeriodicTask announcer = statusAnnouncerFactory.create(
+                TrackRecordingService.this);
+            if (announcer == null) {
+              return;
+            }
+            announcementExecuter = new PeriodicTaskExecuter(announcer,
+                TrackRecordingService.this);
+          }
+          announcementExecuter.scheduleTask(announcementFrequency * 60000);
         }
-        announcementExecuter.scheduleTask(announcementFrequency * 60000);
-      }
-    });
+      });
+    }
   }
   
   private void shutdownAnnouncer() {
@@ -718,14 +705,13 @@ public class TrackRecordingService extends Service implements LocationListener {
     Log.d(MyTracksConstants.TAG, "TrackRecordingService.onDestroy");
     checkLocationListener.cancel();
     timer.cancel();
-    if (wakeLock != null && wakeLock.isHeld()) {
-      wakeLock.release();
-    }
     isRecording = false;
     showNotification();
     unregisterLocationListener();
     shutdownAnnouncer();
+    signalManager.shutdown();
     splitManager.shutdown();
+    releaseWakeLock();
     super.onDestroy();
   }
 
@@ -951,32 +937,7 @@ public class TrackRecordingService extends Service implements LocationListener {
 
         @Override
         public void endCurrentTrack() {
-          Log.d(MyTracksConstants.TAG, "TrackRecordingService.endCurrentTrack");
-          if (recordingTrackId == -1 || !isRecording) {
-            throw new IllegalStateException("No recording track in progress!");
-          }
-         
-          isRecording = false;
-          shutdownAnnouncer();
-          Track recordingTrack = providerUtils.getTrack(recordingTrackId);
-          if (recordingTrack != null) {
-            TripStatistics stats = recordingTrack.getStatistics();
-            stats.setStopTime(System.currentTimeMillis());
-            stats.setTotalTime(stats.getStopTime() - stats.getStartTime());
-            long lastRecordedLocationId =
-                providerUtils.getLastLocationId(recordingTrackId);
-            ContentValues values = new ContentValues();
-            if (lastRecordedLocationId >= 0
-                && recordingTrack.getStopId() >= 0) {
-              values.put(TracksColumns.STOPID, lastRecordedLocationId);
-            }
-            values.put(TracksColumns.STOPTIME, stats.getStopTime());
-            values.put(TracksColumns.TOTALTIME, stats.getTotalTime());
-            getContentResolver().update(TracksColumns.CONTENT_URI, values,
-                "_id=" + recordingTrack.getId(), null);
-          }
-          showNotification();
-          prefManager.setRecordingTrack(recordingTrackId = -1);
+          TrackRecordingService.this.endCurrentTrack();
         }
 
         @Override
@@ -992,13 +953,6 @@ public class TrackRecordingService extends Service implements LocationListener {
         public void recordLocation(Location loc) {
           onLocationChanged(loc);
         }
-
-        @Override
-        public void sharedPreferenceChanged(String key) {
-          Log.d(MyTracksConstants.TAG,
-              "TrackRecordingService.sharedPreferenceChanged: " + key);
-          onSharedPreferenceChanged(key);
-        }
       };
 
   public long startNewTrack() {
@@ -1008,6 +962,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     }
     
     long startTime = System.currentTimeMillis();
+    acquireWakeLock();
 
     Track track = new Track();
     TripStatistics trackStats = track.getStatistics();
@@ -1041,6 +996,36 @@ public class TrackRecordingService extends Service implements LocationListener {
     return recordingTrackId;
   }
 
+  private void endCurrentTrack() {
+    Log.d(MyTracksConstants.TAG, "TrackRecordingService.endCurrentTrack");
+    if (recordingTrackId == -1 || !isRecording) {
+      throw new IllegalStateException("No recording track in progress!");
+    }
+
+    shutdownAnnouncer();
+    isRecording = false;
+    Track recordingTrack = providerUtils.getTrack(recordingTrackId);
+    if (recordingTrack != null) {
+      TripStatistics stats = recordingTrack.getStatistics();
+      stats.setStopTime(System.currentTimeMillis());
+      stats.setTotalTime(stats.getStopTime() - stats.getStartTime());
+      long lastRecordedLocationId =
+          providerUtils.getLastLocationId(recordingTrackId);
+      ContentValues values = new ContentValues();
+      if (lastRecordedLocationId >= 0
+          && recordingTrack.getStopId() >= 0) {
+        values.put(TracksColumns.STOPID, lastRecordedLocationId);
+      }
+      values.put(TracksColumns.STOPTIME, stats.getStopTime());
+      values.put(TracksColumns.TOTALTIME, stats.getTotalTime());
+      getContentResolver().update(TracksColumns.CONTENT_URI, values,
+          "_id=" + recordingTrack.getId(), null);
+    }
+    showNotification();
+    prefManager.setRecordingTrack(recordingTrackId = -1);
+    releaseWakeLock();
+  }
+
   public TripStatistics getTripStatistics() {
     return statsBuilder.getStatistics();
   }
@@ -1063,8 +1048,6 @@ public class TrackRecordingService extends Service implements LocationListener {
 
   public void setAnnouncementFrequency(int announcementFrequency) {
     this.announcementFrequency = announcementFrequency;
-    Log.d(MyTracksConstants.TAG, "TrackRecordingService.setAnnouncerFrequency:"
-        + this.announcementFrequency);
     if (announcementFrequency == -1) {
       shutdownAnnouncer();
     } else {

@@ -600,9 +600,26 @@ public class TrackRecordingServiceTest
     functionalTest(R.string.metric_units_key, false);
   }
   
-  // TODO: Add the following tests:
-  // R.string.min_recording_interval_key
-  // R.string.min_required_accuracy_key
+  @MediumTest
+  public void testWithProperties_noMinRecordingInterval() throws Exception {
+    functionalTest(R.string.min_recording_interval_key, (Object) null);
+  }
+
+  @MediumTest
+  public void testWithProperties_defaultMinRecordingInterval()
+      throws Exception {
+    functionalTest(R.string.min_recording_interval_key, 3);
+  }
+
+  @MediumTest
+  public void testWithProperties_noMinRequiredAccuracy() throws Exception {
+    functionalTest(R.string.min_required_accuracy_key, (Object) null);
+  }
+  
+  @MediumTest
+  public void testWithProperties_defaultMinRequiredAccuracy() throws Exception {
+    functionalTest(R.string.min_required_accuracy_key, 500);
+  }
   
   private ITrackRecordingService bindAndGetService(Intent intent) {
     ITrackRecordingService service = ITrackRecordingService.Stub.asInterface(
@@ -691,8 +708,27 @@ public class TrackRecordingServiceTest
     assertEquals(id, sharedPreferences.getLong(
         context.getString(R.string.recording_track_key), -1));
     assertEquals(id, service.getRecordingTrackId());
-    
-    // TODO: Add a few locations, insert markers, etc.
+
+    // Insert a few points, markers and statistics.
+    long startTime = System.currentTimeMillis();
+    for (int i = 0; i < 30; i++) {
+      Location loc = new Location("gps");
+      loc.setLongitude(35.0f + i / 10.0f);
+      loc.setLatitude(45.0f - i / 5.0f);
+      loc.setAccuracy(5);
+      loc.setSpeed(10);
+      loc.setTime(startTime + i * 10000);
+      loc.setBearing(3.0f);
+      service.recordLocation(loc);
+      
+      if (i % 10 == 0) {
+        service.insertStatisticsMarker(loc);
+      } else if (i % 7 == 0) {
+        Waypoint waypoint = new Waypoint();
+        waypoint.setLocation(loc);
+        service.insertWaypointMarker(waypoint);
+      }
+    }
     
     // Stop the track.  Validate if it has correct data.
     service.endCurrentTrack();

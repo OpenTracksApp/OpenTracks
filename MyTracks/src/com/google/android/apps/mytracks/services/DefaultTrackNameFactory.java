@@ -20,7 +20,6 @@ import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.text.format.Time;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

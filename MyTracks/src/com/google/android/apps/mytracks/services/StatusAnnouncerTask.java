@@ -34,7 +34,7 @@ import android.util.Log;
 import java.util.Locale;
 
 /**
- * This class will periodically announce the user's trip statitics.
+ * This class will periodically announce the user's trip statistics.
  *
  * @author Sandor Dornbush
  */
@@ -98,7 +98,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
    * Called when the TTS engine is initialized.
    */
   private void onTtsInit(int status) {
-    Log.i(MyTracksConstants.TAG, "StatusAnnouncerTask.TTS init: " + status);
+    Log.i(MyTracksConstants.TAG, "TrackRecordingService.TTS init: " + status);
     this.ready = (status == TextToSpeech.SUCCESS);
 
     if (ready) {
@@ -261,7 +261,9 @@ public class StatusAnnouncerTask implements PeriodicTask {
   protected void listenToPhoneState(PhoneStateListener listener, int events) {
     TelephonyManager telephony =
         (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-    telephony.listen(listener, events);
+    if (telephony != null) {
+      telephony.listen(listener, events);
+    }
   }
 
   /**

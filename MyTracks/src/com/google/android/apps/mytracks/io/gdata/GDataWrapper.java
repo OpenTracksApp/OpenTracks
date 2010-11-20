@@ -17,7 +17,6 @@ package com.google.android.apps.mytracks.io.gdata;
 
 import com.google.android.apps.mytracks.MyTracksConstants;
 import com.google.android.apps.mytracks.io.AuthManager;
-import com.google.wireless.gdata.client.GDataClient;
 import com.google.wireless.gdata.client.GDataServiceClient;
 import com.google.wireless.gdata.client.HttpException;
 import com.google.wireless.gdata.parser.ParseException;
@@ -28,6 +27,10 @@ import android.util.Log;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 
 /**
@@ -83,44 +86,64 @@ public class GDataWrapper {
   public static final int ERROR_CLEANED_UP = 7;
   // An unknown error occurred.
   public static final int ERROR_UNKNOWN = 100;
+  
+  private static final int AUTH_TOKEN_INVALIDATE_REFRESH_NUM_RETRIES = 1;
+  private static final int AUTH_TOKEN_INVALIDATE_REFRESH_TIMEOUT = 5000;
 
   private String errorMessage;
   private int errorType;
-  private GDataClient androidGDataClient;
   private GDataServiceClient gdataServiceClient;
   private AuthManager auth;
   private boolean retryOnAuthFailure;
-  private int retriesPending;
-  private boolean cleanupCalled;
-
+  
   public GDataWrapper() {
     errorType = ERROR_NO_ERROR;
     errorMessage = null;
     auth = null;
     retryOnAuthFailure = false;
-    retriesPending = 0;
-    cleanupCalled = false;
   }
 
-  public void setClient(GDataClient androidGDataClient,
-      GDataServiceClient gdataServiceClient) {
-    this.androidGDataClient = androidGDataClient;
+  public void setClient(GDataServiceClient gdataServiceClient) {
     this.gdataServiceClient = gdataServiceClient;
   }
 
   public boolean runAuthenticatedFunction(
       final AuthenticatedFunction function) {
-    return runOne(function, null);
+    return runCommon(function, null);
   }
 
   public boolean runQuery(final QueryFunction query) {
-    return runOne(null, query);
+    return runCommon(null, query);
   }
 
   /**
    * Runs an arbitrary piece of code.
    */
-  private boolean runOne(final AuthenticatedFunction function,
+  private boolean runCommon(final AuthenticatedFunction function,
+      final QueryFunction query) {
+    for (int i = 0; i <= AUTH_TOKEN_INVALIDATE_REFRESH_NUM_RETRIES; i++) {
+      runOne(function, query);
+      if (errorType == ERROR_NO_ERROR) {
+        return true;
+      }
+
+      Log.d(MyTracksConstants.TAG, "GData error encountered: " + errorMessage);
+      if (errorType == ERROR_AUTH && auth != null) {
+        if (!retryOnAuthFailure || !invalidateAndRefreshAuthToken()) {
+          return false;
+        }
+      }
+      
+      Log.d(MyTracksConstants.TAG, "retrying function/query");
+    }
+    return false;
+  }
+
+  /**
+   * Execute a given function or query.  If one is executed, errorType and
+   * errorMessage will contain the result/status of the function/query.
+   */
+  private void runOne(final AuthenticatedFunction function, 
       final QueryFunction query) {
     try {
       if (function != null) {
@@ -128,11 +151,14 @@ public class GDataWrapper {
       } else if (query != null) {
         query.query(gdataServiceClient);
       } else {
-        return false;
+        throw new IllegalArgumentException(
+            "invalid invocation of runOne; one of function/query " +
+            "must be non-null");
       }
+
       errorType = ERROR_NO_ERROR;
       errorMessage = null;
-      return true;
+
     } catch (AuthenticationException e) {
       Log.e(MyTracksConstants.TAG, "Exception", e);
       errorType = ERROR_AUTH;
@@ -166,32 +192,42 @@ public class GDataWrapper {
       errorType = ERROR_CONFLICT;
       errorMessage = e.getMessage();
     }
+  }
 
-    Log.d(MyTracksConstants.TAG, "GData error encountered: " + errorMessage);
-    if (errorType == ERROR_AUTH && auth != null) {
-      Runnable whenFinished = null;
-      if (retryOnAuthFailure) {
-        retriesPending++;
-        // This is a little odd.  This method cannot return in the the thread
-        // that called the original runQuery(). We should look at reworking this
-        // API.
-        whenFinished = new Runnable() {
-          public void run() {
-            retriesPending--;
-            try {
-              runOne(function, query);
-            } catch (IllegalStateException ise) {
-              // This can happen if the connection pool was shut down.
-              Log.e(MyTracksConstants.TAG, "Failed to rerun query.", ise);
-            }
-            if (cleanupCalled && retriesPending == 0) {
-              cleanUp();
-            }
-          }
-        };
-      }
-      auth.invalidateAndRefresh(whenFinished);
+  /** 
+   * Invalidates and refreshes the auth token.  Blocks until the refresh has
+   * completed or until we deem the refresh as having timed out.
+   * 
+   * @return true If the invalidate/refresh succeeds, false if it fails or
+   *   times out.
+   */
+  private boolean invalidateAndRefreshAuthToken() {
+    Log.d(MyTracksConstants.TAG, "Retrying due to auth failure");
+    // This FutureTask doesn't do anything -- it exists simply to be
+    // blocked upon using get().
+    FutureTask<?> whenFinishedFuture = new FutureTask<Object>(new Runnable() {
+      public void run() {}
+    }, null);
+
+    auth.invalidateAndRefresh(whenFinishedFuture);
+
+    try {
+      Log.d(MyTracksConstants.TAG, "waiting for invalidate");
+      whenFinishedFuture.get(AUTH_TOKEN_INVALIDATE_REFRESH_TIMEOUT, 
+          TimeUnit.MILLISECONDS);
+      Log.d(MyTracksConstants.TAG, "invalidate finished");
+      return true;
+
+    } catch (InterruptedException e) {
+      Log.e(MyTracksConstants.TAG, "Failed to invalidate", e);
+    } catch (ExecutionException e) {
+      Log.e(MyTracksConstants.TAG, "Failed to invalidate", e);
+    } catch (TimeoutException e) {
+      Log.e(MyTracksConstants.TAG, "Invalidate didn't complete in time", e);
+    } finally {
+      whenFinishedFuture.cancel(false);
     }
+    
     return false;
   }
 
@@ -203,21 +239,10 @@ public class GDataWrapper {
     return errorMessage;
   }
 
-  // cleanUp must be called when done using this wrapper to close the client.
-  // Note that the cleanup will be delayed if auth failure retries were
-  // requested and there is a pending retry.
-  public void cleanUp() {
-    cleanupCalled = true;
-    if (retriesPending == 0) {
-      androidGDataClient.close();
-      androidGDataClient = null;
-    }
-  }
-
   public void setAuthManager(AuthManager auth) {
     this.auth = auth;
   }
-
+  
   public void setRetryOnAuthFailure(boolean retry) {
     retryOnAuthFailure = retry;
   }

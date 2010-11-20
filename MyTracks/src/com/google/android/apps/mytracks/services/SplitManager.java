@@ -125,6 +125,8 @@ public class SplitManager {
    * @param splitFrequency The frequency in time or distance
    */
   public void setSplitFrequency(int splitFrequency) {
+    Log.d(MyTracksConstants.TAG,
+        "setSplitFrequency: splitFrequency = " + splitFrequency);
     this.splitFrequency = splitFrequency;
     
     // TODO: Decouple service from this class once and forever.
