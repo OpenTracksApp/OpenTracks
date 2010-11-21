@@ -61,7 +61,6 @@ public class TaskExecuterManager {
       }
     } else {
       if (executer == null) {
-        task.start();
         executer = new PeriodicTaskExecuter(task, service);
       }
       executer.scheduleTask(frequency * 60000);
@@ -73,11 +72,10 @@ public class TaskExecuterManager {
    */
   public void restore() {
     if (frequency > 0) {
-      task.start();
       executer.scheduleTask(frequency * 60000);
     }
   }
-  
+
   /**
    * Shuts down this executer.
    */

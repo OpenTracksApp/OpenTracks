@@ -44,6 +44,8 @@ public class PeriodicTaskExecuter {
                               TrackRecordingService service) {
     this.task = task;
     this.service = service;
+
+    task.start();
   }
 
   /**

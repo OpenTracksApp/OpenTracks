@@ -681,7 +681,6 @@ public class TrackRecordingService extends Service implements LocationListener {
             }
 
             // TODO: Either use TaskExecuterManager everywhere, or get rid of it
-            announcer.start();
             announcementExecuter = new PeriodicTaskExecuter(announcer,
                 TrackRecordingService.this);
           }

@@ -133,7 +133,7 @@ public class SplitManager {
     if (!service.isRecording()) {
       return;
     }
-    
+
     if (splitFrequency < 1) {
       if (splitExecuter != null) {
         splitExecuter.shutdown();
@@ -143,7 +143,6 @@ public class SplitManager {
     if (splitFrequency > 0) {
       if (splitExecuter == null) {
         TimeSplitTask splitter = new TimeSplitTask();
-        splitter.start();
         splitExecuter = new PeriodicTaskExecuter(splitter, service);
       }
       splitExecuter.scheduleTask(splitFrequency * 60000);
