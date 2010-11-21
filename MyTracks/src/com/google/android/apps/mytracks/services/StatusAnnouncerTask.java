@@ -43,6 +43,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
   /**
    * The rate at which announcements are spoken.
    */
+  // @VisibleForTesting
   static final float TTS_SPEECH_RATE = 0.9f;
 
   /**
@@ -99,7 +100,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
    */
   private void onTtsInit(int status) {
     Log.i(MyTracksConstants.TAG, "TrackRecordingService.TTS init: " + status);
-    this.ready = (status == TextToSpeech.SUCCESS);
+    this.ready = status == TextToSpeech.SUCCESS;
 
     if (ready) {
       // Force the language to be the same as the string we will be speaking,

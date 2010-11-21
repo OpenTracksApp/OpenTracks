@@ -97,7 +97,7 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
    * like this, but basically the issue is that TextToSpeech cannot be mocked
    * without running its constructor, its constructor runs async operations
    * which call other methods (and then if the methods are part of a mock we'd
-   * have to set a behaviour, but we can't 'cause the object hasn't been fully
+   * have to set a behavior, but we can't 'cause the object hasn't been fully
    * built yet).
    * The logic is that calls made during the constructor (when tts is not yet
    * set) will go up to the original class, but after tts is set we'll forward
