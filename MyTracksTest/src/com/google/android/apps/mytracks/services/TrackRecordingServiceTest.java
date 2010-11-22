@@ -188,9 +188,15 @@ public class TrackRecordingServiceTest
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertEquals(123, service.getRecordingTrackId());
   }
-  
+
+  // TODO: shutdownService() has a bug and doesn't set mServiceCreated
+  // to false, thus preventing from a second call to onCreate().
+  // Report the bug to Android team.  Until then, the following tests
+  // and checks must be commented out.
+  //
+  // TODO: If fixed, remove "disabled" prefix from the test name.
   @MediumTest
-  public void testResumeAfterReboot_simulateReboot() throws Exception {
+  public void disabledTestResumeAfterReboot_simulateReboot() throws Exception {
     updateAutoResumePrefs(0, 10);
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertFalse(service.isRecording());
@@ -201,7 +207,7 @@ public class TrackRecordingServiceTest
     assertEquals(id, service.getRecordingTrackId());
     shutdownService();
     assertEquals(id, sharedPreferences.getLong(
-        context.getString(R.string.recording_track_key), -1));    
+        context.getString(R.string.recording_track_key), -1));
 
     // Start the service in "resume" mode (simulates the on-reboot action).
     Intent startIntent = createStartIntent();
@@ -209,12 +215,7 @@ public class TrackRecordingServiceTest
     startService(startIntent);
     assertNotNull(getService());
     
-    // TODO: shutdownService() has a bug and doesn't set mServiceCreated
-    // to false, thus preventing from a second call to onCreate().
-    // Report the bug to Android team.  Until then, the following check
-    // must be commented out.
-    
-    // assertTrue(getService().isRecording());
+    assertTrue(getService().isRecording());
   }
 
   @MediumTest

@@ -705,15 +705,22 @@ public class TrackRecordingService extends Service implements LocationListener {
   @Override
   public void onDestroy() {
     Log.d(MyTracksConstants.TAG, "TrackRecordingService.onDestroy");
-    checkLocationListener.cancel();
-    timer.cancel();
+
     isRecording = false;
     showNotification();
+    prefManager.shutdown();
+    prefManager = null;
+    checkLocationListener.cancel();
+    timer.cancel();
+    timer.purge();
     unregisterLocationListener();
     shutdownAnnouncer();
     signalManager.shutdown();
+    signalManager = null;
     splitManager.shutdown();
+    splitManager = null;
     releaseWakeLock();
+    
     super.onDestroy();
   }
 
