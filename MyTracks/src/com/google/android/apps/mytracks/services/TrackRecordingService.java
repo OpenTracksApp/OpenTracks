@@ -130,7 +130,7 @@ public class TrackRecordingService extends Service implements LocationListener {
    * Task invoked by a timer periodically to make sure the location listener is
    * still registered.
    */
-  private final TimerTask checkLocationListener = new TimerTask() {
+  private TimerTask checkLocationListener = new TimerTask() {
     @Override
     public void run() {
       // It's always safe to assume that if isRecording() is true, it implies
@@ -705,15 +705,24 @@ public class TrackRecordingService extends Service implements LocationListener {
   @Override
   public void onDestroy() {
     Log.d(MyTracksConstants.TAG, "TrackRecordingService.onDestroy");
-    checkLocationListener.cancel();
-    timer.cancel();
+
     isRecording = false;
     showNotification();
+    prefManager.shutdown();
+    prefManager = null;
+    binder = null;
+    checkLocationListener.cancel();
+    checkLocationListener = null;
+    timer.cancel();
+    timer.purge();
     unregisterLocationListener();
     shutdownAnnouncer();
     signalManager.shutdown();
+    signalManager = null;
     splitManager.shutdown();
+    splitManager = null;
     releaseWakeLock();
+    
     super.onDestroy();
   }
 
@@ -891,7 +900,7 @@ public class TrackRecordingService extends Service implements LocationListener {
   /**
    * The ITrackRecordingService is defined through IDL.
    */
-  private final ITrackRecordingService.Stub binder =
+  private ITrackRecordingService.Stub binder =
       new ITrackRecordingService.Stub() {
         @Override
         public boolean isRecording() {

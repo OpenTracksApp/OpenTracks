@@ -90,6 +90,12 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
       String key) {
+    if (service == null) {
+      Log.w(MyTracksConstants.TAG,
+          "onSharedPreferenceChanged: a preference change (key = " + key
+          + ") after a call to shutdown()");
+      return;
+    }
     if (key == null || key.equals(minRecordingDistanceKey)) {
       service.setMinRecordingDistance(
           sharedPreferences.getInt(
@@ -179,5 +185,10 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
         .edit()
         .putLong(recordingTrackKey, id)
         .commit();
+  }
+  
+  public void shutdown() {
+    sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+    service = null;
   }
 }
