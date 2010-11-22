@@ -189,7 +189,6 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
   
   public void shutdown() {
     sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
-    sharedPreferences = null;
     service = null;
   }
 }
