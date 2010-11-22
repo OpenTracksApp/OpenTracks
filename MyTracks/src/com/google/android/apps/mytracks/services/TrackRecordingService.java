@@ -710,7 +710,6 @@ public class TrackRecordingService extends Service implements LocationListener {
     showNotification();
     prefManager.shutdown();
     prefManager = null;
-    binder = null;
     checkLocationListener.cancel();
     checkLocationListener = null;
     timer.cancel();
@@ -721,6 +720,15 @@ public class TrackRecordingService extends Service implements LocationListener {
     signalManager = null;
     splitManager.shutdown();
     splitManager = null;
+
+    // Make sure we have no indirect references to this service.
+    locationManager = null;
+    notificationManager = null;
+    providerUtils = null;
+    binder.detachFromService();
+    binder = null;
+
+    // This should be the last operation.
     releaseWakeLock();
     
     super.onDestroy();
@@ -896,75 +904,98 @@ public class TrackRecordingService extends Service implements LocationListener {
     updateCurrentWaypoint();
     return Long.parseLong(uri.getLastPathSegment());
   }
-
+  
+  private ServiceBinder binder = new ServiceBinder(this);
+  
   /**
-   * The ITrackRecordingService is defined through IDL.
+   * TODO: There is a bug in Android that leaks Binder instances.  This bug is
+   * especially visible if we have a non-static class, as there is no way to
+   * nullify reference to the outer class (the service).
+   * A workaround is to use a static class and explicitly clear service
+   * and detach it from the underlying Binder.  With this approach, we minimize
+   * the leak to 24 bytes per each service instance. 
+   *
+   * For more details, see the following bug:
+   * http://code.google.com/p/android/issues/detail?id=6426.
    */
-  private ITrackRecordingService.Stub binder =
-      new ITrackRecordingService.Stub() {
-        @Override
-        public boolean isRecording() {
-          return TrackRecordingService.this.isRecording();
-        }
+  private static class ServiceBinder extends ITrackRecordingService.Stub {
+    private TrackRecordingService service;
+    
+    public ServiceBinder(TrackRecordingService service) {
+      this.service = service;
+    }
+    
+    /**
+     * Clears the reference to the outer class to minimize the leak.
+     */
+    public void detachFromService() {
+      this.service = null;
+      attachInterface(null, null);
+    }
+    
+    @Override
+    public boolean isRecording() {
+      return service.isRecording();
+    }
 
-        @Override
-        public long getRecordingTrackId() {
-          return recordingTrackId;
-        }
+    @Override
+    public long getRecordingTrackId() {
+      return service.recordingTrackId;
+    }
 
-        @Override
-        public boolean hasRecorded() {
-          return providerUtils.getLastTrackId() >= 0;
-        }
+    @Override
+    public boolean hasRecorded() {
+      return service.providerUtils.getLastTrackId() >= 0;
+    }
 
-        @Override
-        public long startNewTrack() {
-          return TrackRecordingService.this.startNewTrack();
-        }
+    @Override
+    public long startNewTrack() {
+      return service.startNewTrack();
+    }
 
-        /**
-         * Insert the given waypoint marker. Users can insert waypoint markers
-         * to tag locations with a name, description, category etc.
-         *
-         * @param waypoint a waypoint
-         * @return the unique id of the inserted marker
-         */
-        @Override
-        public long insertWaypointMarker(Waypoint waypoint) {
-          return TrackRecordingService.this.insertWaypointMarker(waypoint);
-        }
+    /**
+     * Insert the given waypoint marker. Users can insert waypoint markers
+     * to tag locations with a name, description, category etc.
+     *
+     * @param waypoint a waypoint
+     * @return the unique id of the inserted marker
+     */
+    @Override
+    public long insertWaypointMarker(Waypoint waypoint) {
+      return service.insertWaypointMarker(waypoint);
+    }
 
-        /**
-         * Insert a statistics marker. A statistics marker holds the stats for
-         * the last segment up to this marker.
-         *
-         * @param location the location where to insert
-         * @return the unique id of the inserted marker
-         */
-        @Override
-        public long insertStatisticsMarker(Location location) {
-          return TrackRecordingService.this.insertStatisticsMarker(location);
-        }
+    /**
+     * Insert a statistics marker. A statistics marker holds the stats for
+     * the last segment up to this marker.
+     *
+     * @param location the location where to insert
+     * @return the unique id of the inserted marker
+     */
+    @Override
+    public long insertStatisticsMarker(Location location) {
+      return service.insertStatisticsMarker(location);
+    }
 
-        @Override
-        public void endCurrentTrack() {
-          TrackRecordingService.this.endCurrentTrack();
-        }
+    @Override
+    public void endCurrentTrack() {
+      service.endCurrentTrack();
+    }
 
-        @Override
-        public void deleteAllTracks() {
-          if (isRecording()) {
-            throw new IllegalStateException(
-                "Cannot delete all tracks while recording!");
-          }
-          providerUtils.deleteAllTracks();
-        }
+    @Override
+    public void deleteAllTracks() {
+      if (isRecording()) {
+        throw new IllegalStateException(
+            "Cannot delete all tracks while recording!");
+      }
+      service.providerUtils.deleteAllTracks();
+    }
 
-        @Override
-        public void recordLocation(Location loc) {
-          onLocationChanged(loc);
-        }
-      };
+    @Override
+    public void recordLocation(Location loc) {
+      service.onLocationChanged(loc);
+    }
+  }
 
   public long startNewTrack() {
     Log.d(MyTracksConstants.TAG, "TrackRecordingService.startNewTrack");
