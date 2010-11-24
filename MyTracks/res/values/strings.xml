@@ -480,7 +480,10 @@ limitations under the License.
   <string name="heart_rate_monitor_enabled">Heart rate monitor enabled</string>
 
   <!-- Manifest description (not seen inside the app) -->
-  <string name="notification_permission_summary">Be notified about track recording start/stop.</string>
-  <string name="read_tracks_permission_summary">Be able to read track data, such as points and waypoints</string>
-  <string name="write_tracks_permission_summary">Be able to write track data, such start recording and add waypoints</string>
+  <string name="notification_permission_label">receive track recording notifications</string>
+  <string name="read_tracks_permission_label">read recorded track data</string>
+  <string name="write_tracks_permission_label">write recorded track data, start/stop recording tracks</string>
+  <string name="notification_permission_description">Be notified when a track starts or stops being recorded.</string>
+  <string name="read_tracks_permission_description">Be able to read track data, such as points and waypoints.</string>
+  <string name="write_tracks_permission_description">Be able to write track data, such as starting recording or adding waypoints.</string>
 </resources>
