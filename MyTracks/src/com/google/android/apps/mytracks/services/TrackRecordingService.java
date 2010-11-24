@@ -69,7 +69,21 @@ public class TrackRecordingService extends Service implements LocationListener {
       "http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png";
 
   static final int MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS = 3;
-  
+
+  // Broadcast-related constants
+  private static final String NOTIFICATION_PERMISSION =
+      "com.google.android.apps.mytracks.TRACK_NOTIFICATIONS";
+  private static final String START_TRACK_ACTION =
+      "com.google.android.apps.mytracks.TRACK_STARTED";
+  private static final String PAUSE_TRACK_ACTION =
+      "com.google.android.apps.mytracks.TRACK_PAUSED";
+  private static final String RESUME_TRACK_ACTION =
+      "com.google.android.apps.mytracks.TRACK_RESUMED";
+  private static final String STOP_TRACK_ACTION =
+      "com.google.android.apps.mytracks.TRACK_STOPPED";
+  private static final String TRACK_ID_EXTRA =
+      "com.google.android.apps.mytracks.TRACK_ID";
+
   private NotificationManager notificationManager;
   private LocationManager locationManager;
   private WakeLock wakeLock;
@@ -1003,7 +1017,10 @@ public class TrackRecordingService extends Service implements LocationListener {
         getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0), 0);
     // Persist the current recording track.
     prefManager.setRecordingTrack(recordingTrackId);
-    
+
+    // Notify the world that we're now recording
+    sendTrackBroadcast(START_TRACK_ACTION);
+
     return recordingTrackId;
   }
 
@@ -1035,6 +1052,16 @@ public class TrackRecordingService extends Service implements LocationListener {
     showNotification();
     prefManager.setRecordingTrack(recordingTrackId = -1);
     releaseWakeLock();
+
+    // Notify the world that we're no longer recording.
+    sendTrackBroadcast(STOP_TRACK_ACTION);
+  }
+
+  private void sendTrackBroadcast(String action) {
+    Intent broadcastIntent = new Intent();
+    broadcastIntent.setAction(action);
+    broadcastIntent.putExtra(TRACK_ID_EXTRA, recordingTrackId);
+    sendBroadcast(broadcastIntent, NOTIFICATION_PERMISSION);
   }
 
   public TripStatistics getTripStatistics() {
