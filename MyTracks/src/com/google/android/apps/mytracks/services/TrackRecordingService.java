@@ -725,7 +725,8 @@ public class TrackRecordingService extends Service implements LocationListener {
     locationManager = null;
     notificationManager = null;
     providerUtils = null;
-    binder.detachFromService();
+    // TODO: Emergency fix to avoid NPE for buggy activities.
+    //binder.detachFromService();
     binder = null;
 
     // This should be the last operation.
