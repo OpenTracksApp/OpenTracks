@@ -407,6 +407,11 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   }
 
   @Override
+  protected Dialog onCreateDialog(int id) {
+	return dialogManager.onCreateDialog(id, null);
+  }
+
+  @Override
   protected void onPrepareDialog(int id, Dialog dialog) {
     super.onPrepareDialog(id, dialog);
     dialogManager.onPrepareDialog(id, dialog);
