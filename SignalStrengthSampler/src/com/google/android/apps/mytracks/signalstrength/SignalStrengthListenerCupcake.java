@@ -13,14 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+package com.google.android.apps.mytracks.signalstrength;
 
-package com.google.android.apps.mytracks.services;
-
-import com.google.android.apps.mytracks.MyTracksConstants;
-import com.google.android.apps.mytracks.content.Waypoint;
+import static com.google.android.apps.mytracks.signalstrength.SignalStrengthConstants.*;
 
 import android.content.Context;
-import android.location.Location;
 import android.telephony.CellLocation;
 import android.telephony.NeighboringCellInfo;
 import android.telephony.PhoneStateListener;
@@ -31,67 +28,49 @@ import java.util.List;
 
 /**
  * A class to monitor the network signal strength.
+ * 
+ * TODO: i18n
  *
  * @author Sandor Dornbush
  */
-public class SignalStrengthTask extends PhoneStateListener
-    implements PeriodicTask {
-
+public class SignalStrengthListenerCupcake extends PhoneStateListener
+    implements SignalStrengthListener {
   private final Context context;
+  private final SignalStrengthCallback callback;
+
   private TelephonyManager manager;
   private int signalStrength = -1;
 
-  public SignalStrengthTask(Context c) {
-    context = c;
+  public SignalStrengthListenerCupcake(Context context, SignalStrengthCallback callback) {
+    this.context = context;
+    this.callback = callback;
   }
 
   @Override
-  public void start() {
-    manager =
-      (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+  public void register() {
+    manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
     if (manager == null) {
-      Log.e(MyTracksConstants.TAG, "Cannot get telephony manager.");
+      Log.e(TAG, "Cannot get telephony manager.");
     } else {
       manager.listen(this, getListenEvents());
     }
   }
 
   protected int getListenEvents() {
-    return PhoneStateListener.LISTEN_SIGNAL_STRENGTHS;
+    return PhoneStateListener.LISTEN_SIGNAL_STRENGTH;
   }
 
   @Override
-  public void onSignalStrengthChanged(int asu) {
-    this.signalStrength = asu;
-    Log.d(MyTracksConstants.TAG, "Signal Strength: " + signalStrength);
+  public void onSignalStrengthChanged(int signalStrength) {
+    Log.d(TAG, "Signal Strength: " + signalStrength);
+    this.signalStrength = signalStrength;
+
+    notifySignalSampled();
   }
 
-  @Override
-  public void run(TrackRecordingService service) {
-    Log.d(MyTracksConstants.TAG, "Adding signal marker");
-    Location location = service.getLastLocation();
-    if (manager == null) {
-      Log.d(MyTracksConstants.TAG, "Adding signal marker: marker null");
-      return;
-    }
-    if (location == null) {
-      Log.d(MyTracksConstants.TAG, "Adding signal marker: location null");
-      return;
-    }
-    Waypoint wpt = new Waypoint();
-    wpt.setName("Signal Strength");
-    wpt.setType(Waypoint.TYPE_WAYPOINT);
-    wpt.setTrackId(service.getRecordingTrackId());
+  protected void notifySignalSampled() {
     int networkType = manager.getNetworkType();
-    wpt.setIcon(getIcon(networkType));
-    wpt.setLocation(location);
-    wpt.setDescription(getDescription());
-    long waypointId = service.insertWaypointMarker(wpt);
-    if (waypointId >= 0) {
-      Log.d(MyTracksConstants.TAG, "Added signal marker");
-    } else {
-      Log.e(MyTracksConstants.TAG, "Cannot insert waypoint marker?");
-    }
+    callback.onSignalStrengthSampled(getDescription(), getIcon(networkType));
   }
 
   /**
@@ -138,7 +117,7 @@ public class SignalStrengthTask extends PhoneStateListener
     sb.append('\n');
 
     List<NeighboringCellInfo> infos = manager.getNeighboringCellInfo();
-    Log.i(MyTracksConstants.TAG, "Found " + infos.size() + " cells.");
+    Log.i(TAG, "Found " + infos.size() + " cells.");
     if (infos.size() > 0) {
       sb.append("Neighbors: ");
       for (NeighboringCellInfo info : infos) {
@@ -178,7 +157,7 @@ public class SignalStrengthTask extends PhoneStateListener
   }
 
   @Override
-  public void shutdown() {
+  public void unregister() {
     if (manager != null) {
       manager.listen(this, PhoneStateListener.LISTEN_NONE);
       manager = null;
@@ -191,5 +170,9 @@ public class SignalStrengthTask extends PhoneStateListener
 
   protected Context getContext() {
     return context;
+  }
+
+  public SignalStrengthCallback getSignalStrengthCallback() {
+    return callback;
   }
 }

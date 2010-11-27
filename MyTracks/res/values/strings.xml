@@ -201,9 +201,6 @@ limitations under the License.
   <string name="settings_share_url_only_summary_on">Only the URL of the map will be sent when sharing</string>
   <string name="settings_share_url_only_summary_off">The contents of the track will also be included when sharing</string>
 
-  <string name="settings_signal_sampling_frequency">Signal sampling frequency</string>
-  <string name="settings_signal_sampling_frequency_summary">Time between two recordings of the phone\'s signal strength</string>
-
   <string name="settings_split_frequency">Split frequency</string>
   <string name="settings_split_frequency_summary">Maximum time or distance after which a new split marker will be inserted</string>
 
@@ -446,14 +443,6 @@ limitations under the License.
   <!-- Check Units -->
   <string name="check_units_title">Units of Measure Notice</string>
   <string name="check_units_message">By default units are metric. Would you like to change that setting?</string>
-
-  <!-- Signal Strength -->
-  <string name="error_rate"> Error Rate: %1$d</string>
-  <string name="signal_to_noise_ratio"> Signal to Noise Ratio: %1$d</string>
-  <string name="ecio"> Ec/lo: %1$.1f dB</string>
-  <string name="gsm_strength">GSM Strength: %1$d</string>
-  <string name="cdma_strength">CDMA Strength: %1$d dBm</string>
-  <string name="evdo_strength">EVDO Strength: %1$d dBm</string>
 
   <!-- Fake preference keys - never saved, but show options in the preferences screen -->
   <string name="method_bluetooth">Bluetooth</string>

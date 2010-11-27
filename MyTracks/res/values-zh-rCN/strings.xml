@@ -201,9 +201,6 @@ limitations under the License.
   <string name="settings_share_url_only_summary_on">在分享时只发送地图的 URL</string>
   <string name="settings_share_url_only_summary_off">在分享时也包括轨迹的内容</string>
 
-  <string name="settings_signal_sampling_frequency">信号采样频率</string>
-  <string name="settings_signal_sampling_frequency_summary">记录电话信号强度的时间间隔</string>
-
   <string name="settings_split_frequency">切割频度</string>
   <string name="settings_split_frequency_summary">插入新切割标记所需要达到的最大时间或距离</string>
 
@@ -451,14 +448,6 @@ limitations under the License.
   <string name="check_units_title">测量单位提示</string>
   <string name="check_units_message">默认单位均为公制. 你想要修改此设置吗?</string>
 
-  <!-- Signal Strength -->
-  <string name="error_rate"> 错误率: %1$d</string>
-  <string name="signal_to_noise_ratio"> 信噪比: %1$d</string>
-  <string name="ecio"> Ec/lo: %1$.1f dB</string>
-  <string name="gsm_strength">GSM 强度 %1$d</string>
-  <string name="cdma_strength">CDMA 强度 %1$d dBm</string>
-  <string name="evdo_strength">EVDO 强度 %1$d dBm</string>
-
   <!-- Fake preference keys - never saved, but show options in the preferences screen -->
   <string name="method_bluetooth">蓝牙</string>
   <string name="bluetooth_options">蓝牙设置</string>
@@ -466,12 +455,6 @@ limitations under the License.
   <string name="bluetooth_pairing_summary">打开 Android 的蓝牙设置关联设备</string>
 
   <string name="sensor_options">感应器选项</string>
-
-
-
-
-
-
 
   <!-- Bluetooth Sensor -->
   <string name="bluetooth_connected">连接到 %s</string>

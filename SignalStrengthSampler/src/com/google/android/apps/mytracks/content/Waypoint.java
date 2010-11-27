@@ -15,8 +15,6 @@
  */
 package com.google.android.apps.mytracks.content;
 
-import com.google.android.apps.mytracks.stats.TripStatistics;
-
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -49,9 +47,9 @@ public final class Waypoint implements Parcelable {
       waypoint.type = source.readInt();
       waypoint.startId = source.readLong();
       waypoint.stopId = source.readLong();
-      byte hasStats = source.readByte();
-      if (hasStats > 0) {
-        waypoint.stats = source.readParcelable(classLoader);
+      if (source.readByte() > 0) {
+        throw new UnsupportedOperationException(
+            "No support for reading waypoints with stats");
       }
       byte hasLocation = source.readByte();
       if (hasLocation > 0) {
@@ -85,14 +83,6 @@ public final class Waypoint implements Parcelable {
   /** Stop track point id */
   private long stopId = -1;
 
-  private TripStatistics stats = new TripStatistics();
-
-  /** The length of the track, without smoothing. */
-  private double length;
-
-  /** The total duration of the track (not from the last waypoint) */
-  private long duration;
-
   public void writeToParcel(Parcel dest, int flags) {
     dest.writeLong(id);
     dest.writeString(name);
@@ -103,10 +93,7 @@ public final class Waypoint implements Parcelable {
     dest.writeInt(type);
     dest.writeLong(startId);
     dest.writeLong(stopId);
-    dest.writeByte(stats == null ? (byte) 0 : (byte) 1);
-    if (stats != null) {
-      dest.writeParcelable(stats, 0);
-    }
+    dest.writeByte((byte) 0);  // No stats
     dest.writeByte(location == null ? (byte) 0 : (byte) 1);
     if (location != null) {
       dest.writeParcelable(location, 0);
@@ -198,32 +185,5 @@ public final class Waypoint implements Parcelable {
 
   public void setLocation(Location location) {
     this.location = location;
-  }
-
-  public TripStatistics getStatistics() {
-    return stats;
-  }
-
-  public void setStatistics(TripStatistics stats) {
-    this.stats = stats;
-  }
-
-  // WARNING: These fields are used for internal state keeping. You probably
-  // want to look at getStatistics instead.
-
-  public double getLength() {
-    return length;
-  }
-
-  public void setLength(double length) {
-    this.length = length;
-  }
-
-  public long getDuration() {
-    return duration;
-  }
-
-  public void setDuration(long duration) {
-    this.duration = duration;
   }
 }

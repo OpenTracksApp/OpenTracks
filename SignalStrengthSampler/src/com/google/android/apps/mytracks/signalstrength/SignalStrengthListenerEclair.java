@@ -14,10 +14,9 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks.services;
+package com.google.android.apps.mytracks.signalstrength;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
-import com.google.android.maps.mytracks.R;
+import static com.google.android.apps.mytracks.signalstrength.SignalStrengthConstants.*;
 
 import android.content.Context;
 import android.telephony.PhoneStateListener;
@@ -27,20 +26,29 @@ import android.util.Log;
 
 /**
  * A class to monitor the network signal strength.
+ * 
+ * TODO: i18n
  *
  * @author Sandor Dornbush
  */
-public class SignalStrengthTaskModern extends SignalStrengthTask {
+public class SignalStrengthListenerEclair extends SignalStrengthListenerCupcake {
 
   private SignalStrength signalStrength = null;
 
-  public SignalStrengthTaskModern(Context c) {
-    super(c);
+  public SignalStrengthListenerEclair(Context ctx, SignalStrengthCallback callback) {
+    super(ctx, callback);
   }
 
   @Override
   protected int getListenEvents() {
     return PhoneStateListener.LISTEN_SIGNAL_STRENGTHS;
+  }
+
+  @Override
+  public void onSignalStrengthsChanged(SignalStrength signalStrength) {
+    Log.d(TAG, "Signal Strength Modern: " + signalStrength);
+    this.signalStrength = signalStrength;
+    notifySignalSampled();
   }
 
   /**
@@ -145,11 +153,5 @@ public class SignalStrengthTaskModern extends SignalStrengthTask {
   private void appendSignal(double signal, int signalFormat, StringBuffer sb) {
     sb.append(getContext().getString(signalFormat, signal));
     sb.append("\n");
-  }
-
-  @Override
-  public void onSignalStrengthsChanged(SignalStrength signalStrength) {
-    Log.d(MyTracksConstants.TAG, "Signal Strength Modern: " + signalStrength);
-    this.signalStrength = signalStrength;
   }
 }

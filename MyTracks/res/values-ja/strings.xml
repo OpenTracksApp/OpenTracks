@@ -194,9 +194,6 @@ limitations under the License.
   <string name="settings_share_url_only_summary_on">共有時にマップのURLのみ送信します</string>
   <string name="settings_share_url_only_summary_off">共有時にトラックのコンテントが含まれます</string>
 
-  <string name="settings_signal_sampling_frequency">信号サンプリング周波数</string>
-  <string name="settings_signal_sampling_frequency_summary">端末の信号強度記録の時間間隔</string>
-
   <string name="settings_split_frequency">分割頻度</string>
   <string name="settings_split_frequency_summary">分割マーカを挿入する時間または距離の間隔</string>
   <string name="pace_label">ペース</string>
@@ -384,12 +381,4 @@ limitations under the License.
   <!-- Check Units -->
   <string name="check_units_title">計測単位についてのご注意</string>
   <string name="check_units_message">デフォルトの単位はメートルです．設定を変更しますか?</string>
-
-  <!-- Signal Strength -->
-  <string name="error_rate"> 誤り率: %1$d</string>
-  <string name="signal_to_noise_ratio"> S/N比: %1$d</string>
-  <string name="ecio"> Ec/Io比: %1$.1f dB</string>
-  <string name="gsm_strength">GSM 強度: %1$d</string>
-  <string name="cdma_strength">CDMA 強度: %1$d dBm</string>
-  <string name="evdo_strength">EVDO 強度: %1$d dBm</string>
 </resources>

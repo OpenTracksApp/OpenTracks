@@ -123,7 +123,6 @@ public class TrackRecordingService extends Service implements LocationListener {
    * Status announcer executer.
    */
   private PeriodicTaskExecuter announcementExecuter;
-  private TaskExecuterManager signalManager;
   private SplitManager splitManager;
 
   private PreferenceManager prefManager;
@@ -425,7 +424,6 @@ public class TrackRecordingService extends Service implements LocationListener {
     statsBuilder = new TripStatisticsBuilder(stats.getStartTime());
     setUpAnnouncer();
 
-    signalManager.restore();
     splitManager.restore();
     length = 0;
     lastValidLocation = null;
@@ -643,11 +641,6 @@ public class TrackRecordingService extends Service implements LocationListener {
     locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
     splitManager = new SplitManager(this);
 
-    SignalStrengthTaskFactory strengthTaskFactory =
-        new SignalStrengthTaskFactory(ApiFeatures.getInstance());
-    signalManager =
-        new TaskExecuterManager(-1, strengthTaskFactory.create(this), this);
-
     prefManager = new PreferenceManager(this);
     registerLocationListener();
     /**
@@ -730,8 +723,6 @@ public class TrackRecordingService extends Service implements LocationListener {
     timer.purge();
     unregisterLocationListener();
     shutdownAnnouncer();
-    signalManager.shutdown();
-    signalManager = null;
     splitManager.shutdown();
     splitManager = null;
 
@@ -863,15 +854,25 @@ public class TrackRecordingService extends Service implements LocationListener {
       throw new IllegalStateException(
           "Unable to insert waypoint marker while not recording!");
     }
-    
-    if (waypoint.getLocation() != null) {
-      waypoint.setLength(length);
-      waypoint.setDuration(waypoint.getLocation().getTime()
-          - statsBuilder.getStatistics().getStartTime());
-      Uri uri = providerUtils.insertWaypoint(waypoint);
-      return Long.parseLong(uri.getLastPathSegment());
+
+    if (waypoint.getLocation() == null) {
+      if (lastValidLocation == null) {
+        Log.w(MyTracksConstants.TAG, "Cannot insert waypoint with no location");
+        return -1;
+      }
+
+      waypoint.setLocation(lastValidLocation);
     }
-    return -1;
+
+    if (waypoint.getTrackId() < 0) {
+      waypoint.setTrackId(recordingTrackId);
+    }
+
+    waypoint.setLength(length);
+    waypoint.setDuration(waypoint.getLocation().getTime()
+        - statsBuilder.getStatistics().getStartTime());
+    Uri uri = providerUtils.insertWaypoint(waypoint);
+    return Long.parseLong(uri.getLastPathSegment());
   }
 
   /**
@@ -1041,7 +1042,6 @@ public class TrackRecordingService extends Service implements LocationListener {
     showNotification();
     registerLocationListener();
     splitManager.restore();
-    signalManager.restore();
 
     // Reset the number of auto-resume retries.
     setAutoResumeTrackRetries(
@@ -1167,9 +1167,5 @@ public class TrackRecordingService extends Service implements LocationListener {
 
   public SplitManager getSplitManager() {
     return splitManager;
-  }
-
-  public TaskExecuterManager getSignalManager() {
-    return signalManager;
   }
 }

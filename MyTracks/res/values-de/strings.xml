@@ -184,9 +184,6 @@ limitations under the License.
   <string name="settings_share_url_only_summary_on">Beim teilen mit Freunden wird nur die Karten URL gesendet.</string>
   <string name="settings_share_url_only_summary_off">Beim teilen mit Freunden wird der GPS Track selbst gesendet.</string>
 
-  <string name="settings_signal_sampling_frequency">Empfangsstärke Aufzeichnungsfrequenz</string>
-  <string name="settings_signal_sampling_frequency_summary">Dauer zwischen zwei Aufzeichnungen der Telefonempfangsstärke.</string>
-
   <string name="settings_split_frequency">Zerteilungs Frequenz</string>
   <string name="settings_split_frequency_summary">Längste Dauer oder Entfernung nach der automatisch ein Marker eingefügt wird.</string>
   <string name="pace_label">Tempo</string>

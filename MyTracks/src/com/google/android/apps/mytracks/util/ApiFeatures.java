@@ -107,10 +107,6 @@ public class ApiFeatures {
 
     return true;
   }
-
-  public boolean hasModernSignalStrength() {
-    return getApiLevel() >= 7;
-  }
   
   // Visible for testing.
   protected int getApiLevel() {

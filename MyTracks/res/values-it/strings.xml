@@ -193,9 +193,6 @@ limitations under the License.
   <string name="settings_share_url_only_summary_on">Solo l\'URL della mappa sarà inviata quando condividi un percorso</string>
   <string name="settings_share_url_only_summary_off">Anche il contenuto del percorso sarà inviato quando condividi un persorso</string>
 
-  <string name="settings_signal_sampling_frequency">Frequenza di campionamento</string>
-  <string name="settings_signal_sampling_frequency_summary">Tempo fra due registrazioni della qualità del segnale cellulare</string>
-
   <string name="settings_split_frequency">Frequenza di divisione</string>
   <string name="settings_split_frequency_summary">Tempo o distanza massima dopo di cui il percorso verrà diviso</string>
   <string name="pace_label">Andatura</string>

@@ -562,16 +562,6 @@ public class TrackRecordingServiceTest
   }
 
   @MediumTest
-  public void testWithProperties_noSignalSamplingFreq() throws Exception {
-    functionalTest(R.string.signal_sampling_frequency_key, (Object) null);
-  }
-
-  @MediumTest
-  public void testWithProperties_defaultSignalSamplingFreq() throws Exception {
-    functionalTest(R.string.signal_sampling_frequency_key, 1);
-  }
-
-  @MediumTest
   public void testWithProperties_noSplitFreq() throws Exception {
     functionalTest(R.string.split_frequency_key, (Object) null);
   }

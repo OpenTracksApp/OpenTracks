@@ -187,9 +187,6 @@ limitations under the License.
   <string name="settings_share_url_only_summary_on">Seule l\'adresse URL de la carte sera envoyée lors du partage</string>
   <string name="settings_share_url_only_summary_off">Le contenu du parcours sera également inclus lors du partage</string>
 
-  <string name="settings_signal_sampling_frequency">Échantillonnage du signal</string>
-  <string name="settings_signal_sampling_frequency_summary">Intervalle de temps entre deux enregistrements de la force du signal</string>
-
   <string name="settings_split_frequency">Fréquence de séparation</string>
   <string name="settings_split_frequency_summary">Temps ou distance minimum avant l\'insertion d\'un marqueur de séparation</string>
   <string name="pace_label">Rythme</string>
