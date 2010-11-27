@@ -49,5 +49,8 @@ public class SignalStrengthPreferences extends PreferenceActivity {
             return true;
           }
         });
+
+    // TODO: Check that my tracks is installed - if not, give a warning and
+    //       offer to go to the android market.
   }
 }

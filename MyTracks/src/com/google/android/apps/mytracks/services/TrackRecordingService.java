@@ -70,18 +70,18 @@ public class TrackRecordingService extends Service implements LocationListener {
 
   static final int MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS = 3;
 
-  // Broadcast-related constants
-  private static final String NOTIFICATION_PERMISSION =
+  // Broadcast-related constants.
+  static final String NOTIFICATION_PERMISSION =
       "com.google.android.apps.mytracks.TRACK_NOTIFICATIONS";
-  private static final String START_TRACK_ACTION =
+  static final String START_TRACK_ACTION =
       "com.google.android.apps.mytracks.TRACK_STARTED";
-  private static final String PAUSE_TRACK_ACTION =
+  static final String PAUSE_TRACK_ACTION =
       "com.google.android.apps.mytracks.TRACK_PAUSED";
-  private static final String RESUME_TRACK_ACTION =
+  static final String RESUME_TRACK_ACTION =
       "com.google.android.apps.mytracks.TRACK_RESUMED";
-  private static final String STOP_TRACK_ACTION =
+  static final String STOP_TRACK_ACTION =
       "com.google.android.apps.mytracks.TRACK_STOPPED";
-  private static final String TRACK_ID_EXTRA =
+  static final String TRACK_ID_EXTRA =
       "com.google.android.apps.mytracks.TRACK_ID";
 
   private NotificationManager notificationManager;
@@ -1049,8 +1049,8 @@ public class TrackRecordingService extends Service implements LocationListener {
     // Persist the current recording track.
     prefManager.setRecordingTrack(recordingTrackId);
 
-    // Notify the world that we're now recording
-    sendTrackBroadcast(START_TRACK_ACTION);
+    // Notify the world that we're now recording.
+    sendTrackBroadcast(START_TRACK_ACTION, recordingTrackId);
 
     return recordingTrackId;
   }
@@ -1081,17 +1081,19 @@ public class TrackRecordingService extends Service implements LocationListener {
           "_id=" + recordingTrack.getId(), null);
     }
     showNotification();
+    long recordedTrackId = recordingTrackId;
     prefManager.setRecordingTrack(recordingTrackId = -1);
     releaseWakeLock();
 
     // Notify the world that we're no longer recording.
-    sendTrackBroadcast(STOP_TRACK_ACTION);
+    sendTrackBroadcast(STOP_TRACK_ACTION, recordedTrackId);
   }
 
-  private void sendTrackBroadcast(String action) {
-    Intent broadcastIntent = new Intent();
-    broadcastIntent.setAction(action);
-    broadcastIntent.putExtra(TRACK_ID_EXTRA, recordingTrackId);
+  private void sendTrackBroadcast(String action, long trackId) {
+    Intent broadcastIntent =
+        new Intent()
+            .setAction(action)
+            .putExtra(TRACK_ID_EXTRA, trackId);
     sendBroadcast(broadcastIntent, NOTIFICATION_PERMISSION);
   }
 

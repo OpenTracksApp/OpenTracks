@@ -113,23 +113,29 @@
   <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
   <!-- Exported permissions (for other apps to use our features) -->
+  <!-- Permission to get track start/end broadcasts -->
   <permission android:name="com.google.android.apps.mytracks.TRACK_NOTIFICATIONS"
               android:permissionGroup="android.permission-group.LOCATION"
               android:label="@string/notification_permission_label"
               android:description="@string/notification_permission_description"
               android:protectionLevel="normal" />
+  <!-- Permission to read raw track data (points, etc.) -->
   <permission android:name="com.google.android.apps.mytracks.READ_TRACK_DATA"
               android:permissionGroup="android.permission-group.LOCATION"
               android:label="@string/read_tracks_permission_label"
               android:description="@string/read_tracks_permission_description"
               android:protectionLevel="dangerous" />
+  <!-- Permission to write track data, either raw or by making service calls -->
   <permission android:name="com.google.android.apps.mytracks.WRITE_TRACK_DATA"
               android:permissionGroup="android.permission-group.LOCATION"
               android:label="@string/write_tracks_permission_label"
               android:description="@string/write_tracks_permission_description"
               android:protectionLevel="dangerous" />
+
+  <!-- We read and write raw track data, obviously. -->
   <uses-permission android:name="com.google.android.apps.mytracks.READ_TRACK_DATA" />
   <uses-permission android:name="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
+  <uses-permission android:name="com.google.android.apps.mytracks.TRACK_NOTIFICATIONS" />
 
   <!-- Features required -->
   <uses-feature android:name="android.hardware.location" android:required="true"/>
