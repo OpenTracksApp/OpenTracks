@@ -62,7 +62,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
-import android.os.RemoteException;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -228,7 +227,9 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     }
     try {
       return trackRecordingService.isRecording();
-    } catch (RemoteException e) {
+      // TODO: We catch Exception, because after eliminating the service process
+      // all exceptions it may throw are no longer wrapped in a RemoteException.
+    } catch (Exception e) {
       Log.e(MyTracksConstants.TAG, "MyTracks: Remote exception.", e);
 
       // Fall back to alternative check method.
@@ -403,6 +404,11 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   @Override
   protected Dialog onCreateDialog(int id, Bundle args) {
     return dialogManager.onCreateDialog(id, args);
+  }
+
+  @Override
+  protected Dialog onCreateDialog(int id) {
+    return dialogManager.onCreateDialog(id, null);
   }
 
   @Override
@@ -908,7 +914,9 @@ public class MyTracks extends TabActivity implements OnTouchListener,
           Log.e(MyTracksConstants.TAG, "Cannot insert waypoint marker?");
           return -4;
         }
-      } catch (RemoteException e) {
+        // TODO: We catch Exception, because after eliminating the service process
+        // all exceptions it may throw are no longer wrapped in a RemoteException.
+      } catch (Exception e) {
         Toast.makeText(this, R.string.error_unable_to_insert_marker,
             Toast.LENGTH_LONG).show();
         Log.e(MyTracksConstants.TAG, "Cannot insert waypoint marker.", e);
@@ -948,7 +956,9 @@ public class MyTracks extends TabActivity implements OnTouchListener,
           Log.e(MyTracksConstants.TAG, "Cannot insert statistics marker?");
           return -4;
         }
-      } catch (RemoteException e) {
+        // TODO: We catch Exception, because after eliminating the service process
+        // all exceptions it may throw are no longer wrapped in a RemoteException.
+      } catch (Exception e) {
         Toast.makeText(this, R.string.error_unable_to_insert_marker,
             Toast.LENGTH_LONG).show();
         Log.e(MyTracksConstants.TAG, "Cannot insert statistics marker?", e);
@@ -1016,7 +1026,9 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       setSelectedTrackId(recordingTrackId);
       Toast.makeText(this, getString(R.string.status_now_recording),
           Toast.LENGTH_SHORT).show();
-    } catch (RemoteException e) {
+      // TODO: We catch Exception, because after eliminating the service process
+      // all exceptions it may throw are no longer wrapped in a RemoteException.
+    } catch (Exception e) {
       Toast.makeText(this,
           getString(R.string.error_unable_to_start_recording),
           Toast.LENGTH_SHORT).show();
@@ -1049,7 +1061,9 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       long currentTrackId = recordingTrackId;
       try {
         trackRecordingService.endCurrentTrack();
-      } catch (RemoteException e) {
+        // TODO: We catch Exception, because after eliminating the service process
+        // all exceptions it may throw are no longer wrapped in a RemoteException.
+      } catch (Exception e) {
         Log.e(MyTracksConstants.TAG, "Unable to stop recording.", e);
       }
       Intent intent = new Intent(MyTracks.this, MyTracksDetails.class);

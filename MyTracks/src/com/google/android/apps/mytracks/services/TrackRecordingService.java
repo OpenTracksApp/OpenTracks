@@ -936,21 +936,33 @@ public class TrackRecordingService extends Service implements LocationListener {
     
     @Override
     public boolean isRecording() {
+      if (service == null) {
+        throw new IllegalStateException("The service has been already detached!");
+      }
       return service.isRecording();
     }
 
     @Override
     public long getRecordingTrackId() {
+      if (service == null) {
+        throw new IllegalStateException("The service has been already detached!");
+      }      
       return service.recordingTrackId;
     }
 
     @Override
     public boolean hasRecorded() {
+      if (service == null) {
+        throw new IllegalStateException("The service has been already detached!");
+      }      
       return service.providerUtils.getLastTrackId() >= 0;
     }
 
     @Override
     public long startNewTrack() {
+      if (service == null) {
+        throw new IllegalStateException("The service has been already detached!");
+      }
       return service.startNewTrack();
     }
 
@@ -963,6 +975,9 @@ public class TrackRecordingService extends Service implements LocationListener {
      */
     @Override
     public long insertWaypointMarker(Waypoint waypoint) {
+      if (service == null) {
+        throw new IllegalStateException("The service has been already detached!");
+      }
       return service.insertWaypointMarker(waypoint);
     }
 
@@ -975,25 +990,36 @@ public class TrackRecordingService extends Service implements LocationListener {
      */
     @Override
     public long insertStatisticsMarker(Location location) {
+      if (service == null) {
+        throw new IllegalStateException("The service has been already detached!");
+      }
       return service.insertStatisticsMarker(location);
     }
 
     @Override
     public void endCurrentTrack() {
+      if (service == null) {
+        throw new IllegalStateException("The service has been already detached!");
+      }
       service.endCurrentTrack();
     }
 
     @Override
     public void deleteAllTracks() {
+      if (service == null) {
+        throw new IllegalStateException("The service has been already detached!");
+      }
       if (isRecording()) {
-        throw new IllegalStateException(
-            "Cannot delete all tracks while recording!");
+        throw new IllegalStateException("Cannot delete all tracks while recording!");
       }
       service.providerUtils.deleteAllTracks();
     }
 
     @Override
     public void recordLocation(Location loc) {
+      if (service == null) {
+        throw new IllegalStateException("The service has been already detached!");
+      }      
       service.onLocationChanged(loc);
     }
   }
