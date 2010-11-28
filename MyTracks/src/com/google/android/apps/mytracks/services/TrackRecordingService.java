@@ -70,20 +70,6 @@ public class TrackRecordingService extends Service implements LocationListener {
 
   static final int MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS = 3;
 
-  // Broadcast-related constants.
-  static final String NOTIFICATION_PERMISSION =
-      "com.google.android.apps.mytracks.TRACK_NOTIFICATIONS";
-  static final String START_TRACK_ACTION =
-      "com.google.android.apps.mytracks.TRACK_STARTED";
-  static final String PAUSE_TRACK_ACTION =
-      "com.google.android.apps.mytracks.TRACK_PAUSED";
-  static final String RESUME_TRACK_ACTION =
-      "com.google.android.apps.mytracks.TRACK_RESUMED";
-  static final String STOP_TRACK_ACTION =
-      "com.google.android.apps.mytracks.TRACK_STOPPED";
-  static final String TRACK_ID_EXTRA =
-      "com.google.android.apps.mytracks.TRACK_ID";
-
   private NotificationManager notificationManager;
   private LocationManager locationManager;
   private WakeLock wakeLock;
@@ -1017,7 +1003,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     if (recordingTrackId != -1 || isRecording) {
       throw new IllegalStateException("A track is already in progress!");
     }
-    
+
     long startTime = System.currentTimeMillis();
     acquireWakeLock();
 
@@ -1050,7 +1036,8 @@ public class TrackRecordingService extends Service implements LocationListener {
     prefManager.setRecordingTrack(recordingTrackId);
 
     // Notify the world that we're now recording.
-    sendTrackBroadcast(START_TRACK_ACTION, recordingTrackId);
+    sendTrackBroadcast(
+        R.string.track_started_broadcast_action, recordingTrackId);
 
     return recordingTrackId;
   }
@@ -1086,15 +1073,17 @@ public class TrackRecordingService extends Service implements LocationListener {
     releaseWakeLock();
 
     // Notify the world that we're no longer recording.
-    sendTrackBroadcast(STOP_TRACK_ACTION, recordedTrackId);
+    sendTrackBroadcast(
+        R.string.track_stopped_broadcast_action, recordedTrackId);
   }
 
-  private void sendTrackBroadcast(String action, long trackId) {
+  private void sendTrackBroadcast(int actionResId, long trackId) {
     Intent broadcastIntent =
         new Intent()
-            .setAction(action)
-            .putExtra(TRACK_ID_EXTRA, trackId);
-    sendBroadcast(broadcastIntent, NOTIFICATION_PERMISSION);
+            .setAction(getString(actionResId))
+            .putExtra(getString(R.string.track_id_broadcast_extra), trackId);
+    sendBroadcast(broadcastIntent,
+        getString(R.string.broadcast_notifications_permission));
   }
 
   public TripStatistics getTripStatistics() {

@@ -364,8 +364,8 @@ public class TrackRecordingServiceTest
     // My Tracks (go figure).
     // Reference: http://code.google.com/p/android/issues/detail?id=5521
     BlockingBroadcastReceiver startReceiver = new BlockingBroadcastReceiver();
-    context.registerReceiver(startReceiver,
-        new IntentFilter(TrackRecordingService.START_TRACK_ACTION));
+    String startAction = context.getString(R.string.track_started_broadcast_action);
+    context.registerReceiver(startReceiver, new IntentFilter(startAction));
 
     List<Track> tracks = providerUtils.getAllTracks();
     assertTrue(tracks.isEmpty());
@@ -388,11 +388,9 @@ public class TrackRecordingServiceTest
     List<Intent> receivedIntents = startReceiver.getReceivedIntents();
     assertEquals(1, receivedIntents.size());
     Intent broadcastIntent = receivedIntents.get(0);
-    assertEquals(
-        TrackRecordingService.START_TRACK_ACTION,
-        broadcastIntent.getAction());
-    assertEquals(id,
-        broadcastIntent.getLongExtra(TrackRecordingService.TRACK_ID_EXTRA, -1));
+    assertEquals(startAction, broadcastIntent.getAction());
+    assertEquals(id, broadcastIntent.getLongExtra(
+        context.getString(R.string.track_id_broadcast_extra), -1));
 
     context.unregisterReceiver(startReceiver);
   }
@@ -419,8 +417,8 @@ public class TrackRecordingServiceTest
   public void testEndCurrentTrack_alreadyRecording() throws Exception {
     // See comment above if this fails randomly.
     BlockingBroadcastReceiver stopReceiver = new BlockingBroadcastReceiver();
-    context.registerReceiver(stopReceiver,
-        new IntentFilter(TrackRecordingService.STOP_TRACK_ACTION));
+    String stopAction = context.getString(R.string.track_stopped_broadcast_action);
+    context.registerReceiver(stopReceiver, new IntentFilter(stopAction));
 
     createDummyTrack(123, -1, true);
 
@@ -439,11 +437,9 @@ public class TrackRecordingServiceTest
     List<Intent> receivedIntents = stopReceiver.getReceivedIntents();
     assertEquals(1, receivedIntents.size());
     Intent broadcastIntent = receivedIntents.get(0);
-    assertEquals(
-        TrackRecordingService.STOP_TRACK_ACTION,
-        broadcastIntent.getAction());
-    assertEquals(123,
-        broadcastIntent.getLongExtra(TrackRecordingService.TRACK_ID_EXTRA, -1));
+    assertEquals(stopAction, broadcastIntent.getAction());
+    assertEquals(123, broadcastIntent.getLongExtra(
+        context.getString(R.string.track_id_broadcast_extra), -1));
 
     context.unregisterReceiver(stopReceiver);
   }
