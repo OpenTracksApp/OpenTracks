@@ -21,6 +21,11 @@
                         android:summaryOn="@string/settings_auto_start_summary_on"
                         android:summaryOff="@string/settings_auto_start_summary_off"
                         android:defaultValue="false" />
+    <CheckBoxPreference android:key="@string/settings_auto_stop_key"
+                        android:title="@string/settings_auto_stop"
+                        android:summaryOn="@string/settings_auto_stop_summary_on"
+                        android:summaryOff="@string/settings_auto_stop_summary_off"
+                        android:defaultValue="true" />
 
     <ListPreference
         android:key="@string/settings_min_signal_sampling_period_key"

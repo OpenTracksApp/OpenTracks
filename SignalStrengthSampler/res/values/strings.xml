@@ -21,6 +21,9 @@
   <string name="settings_auto_start">Automatic start</string>
   <string name="settings_auto_start_summary_on">Automatically start inserting signal strength waypoints whenever My Tracks starts recording a track.</string>
   <string name="settings_auto_start_summary_off">You will need to manually start signal sampling using the controls below.</string>
+  <string name="settings_auto_stop">Automatic stop</string>
+  <string name="settings_auto_stop_summary_on">Automatically stop inserting signal strength waypoints whenever My Tracks stops recording a track.</string>
+  <string name="settings_auto_stop_summary_off">You will need to manually stop signal sampling using the controls below.</string>
   <string name="settings_min_signal_sampling_period">Min. sampling period</string>
   <string name="settings_min_signal_sampling_period_summary">Minimum time between two recordings of the phone\'s signal strength</string>
 
@@ -44,6 +47,7 @@
 
   <!-- Non-translatable strings -->
   <string name="settings_auto_start_key">autoStartSampling</string>
+  <string name="settings_auto_stop_key">autoStopSampling</string>
   <string name="settings_min_signal_sampling_period_key">signalSamplingFrequency</string>
   <string name="settings_control_start_key">startSamplingControl</string>
   <string name="settings_control_stop_key">stopSamplingControl</string>

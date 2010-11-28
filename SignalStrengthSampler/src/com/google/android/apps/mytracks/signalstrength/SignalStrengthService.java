@@ -58,10 +58,9 @@ public class SignalStrengthService extends Service
   public void onCreate() {
     super.onCreate();
 
-    mytracksServiceComponent =
-      new ComponentName(
-          getString(R.string.mytracks_service_package),
-          getString(R.string.mytracks_service_class));
+    mytracksServiceComponent = new ComponentName(
+        getString(R.string.mytracks_service_package),
+        getString(R.string.mytracks_service_class));
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
     signalListenerFactory = new SignalStrengthListenerFactory();
   }
