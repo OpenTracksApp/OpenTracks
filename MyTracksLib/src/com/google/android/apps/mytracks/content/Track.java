@@ -34,7 +34,7 @@ import java.util.ArrayList;
 public class Track implements Parcelable {
 
   /**
-   * Creator for a Track object
+   * Creator for a Track object.
    */
   public static class Creator implements Parcelable.Creator<Track> {
 

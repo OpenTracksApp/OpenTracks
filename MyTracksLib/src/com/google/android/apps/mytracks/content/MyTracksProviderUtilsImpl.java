@@ -15,6 +15,7 @@
  */
 package com.google.android.apps.mytracks.content;
 
+import static com.google.android.apps.mytracks.lib.MyTracksLibConstants.*;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 
 import android.content.ContentResolver;
@@ -475,17 +476,16 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       final Waypoint nextWaypoint =
           getNextStatisticsWaypointAfter(deletedWaypoint);
       if (nextWaypoint != null) {
-        Log.d(MyTracksProvider.TAG, "Correcting marker " + nextWaypoint.getId()
+        Log.d(TAG, "Correcting marker " + nextWaypoint.getId()
             + " after deleted marker " + deletedWaypoint.getId());
         nextWaypoint.getStatistics().merge(deletedWaypoint.getStatistics());
         nextWaypoint.setDescription(
             descriptionGenerator.generateWaypointDescription(nextWaypoint));
         if (!updateWaypoint(nextWaypoint)) {
-          Log.w(MyTracksProvider.TAG, "Update of marker was unsuccessful.");
+          Log.w(TAG, "Update of marker was unsuccessful.");
         }
       } else {
-        Log.d(MyTracksProvider.TAG,
-            "No statistics marker after the deleted one was found.");
+        Log.d(TAG, "No statistics marker after the deleted one was found.");
       }
     }
     contentResolver.delete(
@@ -510,7 +510,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
         return createWaypoint(cursor);
       }
     } catch (RuntimeException e) {
-      Log.w(MyTracksProvider.TAG, "Caught unexpected exception.", e);
+      Log.w(TAG, "Caught unexpected exception.", e);
     } finally {
       if (cursor != null) {
         cursor.close();
@@ -529,7 +529,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
           null /*selectionArgs*/);
       return rows == 1;
     } catch (RuntimeException e) {
-      Log.e(MyTracksProvider.TAG, "Caught unexpected exception.", e);
+      Log.e(TAG, "Caught unexpected exception.", e);
     }
     return false;
   }
@@ -549,7 +549,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
         return createLocation(cursor);
       }
     } catch (RuntimeException e) {
-      Log.w(MyTracksProvider.TAG, "Caught an unexpeceted exception.", e);
+      Log.w(TAG, "Caught an unexpeceted exception.", e);
     } finally {
       if (cursor != null) {
         cursor.close();
@@ -573,7 +573,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
         return createTrack(cursor);
       }
     } catch (RuntimeException e) {
-      Log.w(MyTracksProvider.TAG, "Caught unexpected exception.", e);
+      Log.w(TAG, "Caught unexpected exception.", e);
     } finally {
       if (cursor != null) {
         cursor.close();
@@ -601,7 +601,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
           return createWaypoint(cursor);
         }
       } catch (RuntimeException e) {
-        Log.w(MyTracksProvider.TAG, "Caught an unexpected exception.", e);
+        Log.w(TAG, "Caught an unexpected exception.", e);
       } finally {
         cursor.close();
       }
@@ -623,7 +623,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
           return createWaypoint(cursor);
         }
       } catch (RuntimeException e) {
-        Log.w(MyTracksProvider.TAG, "Caught an unexpected exception.", e);
+        Log.w(TAG, "Caught an unexpected exception.", e);
       } finally {
         cursor.close();
       }
@@ -647,7 +647,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
               cursor.getColumnIndexOrThrow(TrackPointsColumns._ID));
         }
       } catch (RuntimeException e) {
-        Log.w(MyTracksProvider.TAG, "Caught an unexpected exception.", e);
+        Log.w(TAG, "Caught an unexpected exception.", e);
       } finally {
         cursor.close();
       }
@@ -671,7 +671,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
               cursor.getColumnIndexOrThrow(WaypointsColumns._ID));
         }
       } catch (RuntimeException e) {
-        Log.w(MyTracksProvider.TAG, "Caught an unexpected exception.", e);
+        Log.w(TAG, "Caught an unexpected exception.", e);
       } finally {
         cursor.close();
       }
@@ -695,7 +695,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
               cursor.getColumnIndexOrThrow(WaypointsColumns._ID));
         }
       } catch (RuntimeException e) {
-        Log.w(MyTracksProvider.TAG, "Caught an unexpected exception.", e);
+        Log.w(TAG, "Caught an unexpected exception.", e);
       } finally {
         cursor.close();
       }
@@ -714,7 +714,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
         return createTrack(cursor);
       }
     } catch (RuntimeException e) {
-      Log.w(MyTracksProvider.TAG, "Caught an unexpected exception.", e);
+      Log.w(TAG, "Caught an unexpected exception.", e);
     } finally {
       if (cursor != null) {
         cursor.close();
@@ -818,7 +818,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     long lastId = -1;
     Cursor cursor = getLocationsCursor(track.getId(), -1, maxPoints, true);
     if (cursor == null) {
-      Log.w(MyTracksProvider.TAG, "Cannot get a locations cursor!");
+      Log.w(TAG, "Cannot get a locations cursor!");
       return lastId;
     }
     try {
@@ -835,7 +835,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
         } while (cursor.moveToPrevious());
       }
     } catch (RuntimeException e) {
-      Log.w(MyTracksProvider.TAG, "Caught unexpected exception.", e);
+      Log.w(TAG, "Caught unexpected exception.", e);
     } finally {
       cursor.close();
     }
@@ -851,14 +851,14 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public Uri insertTrack(Track track) {
-    Log.d(MyTracksProvider.TAG, "MyTracksProviderUtilsImpl.insertTrack");
+    Log.d(TAG, "MyTracksProviderUtilsImpl.insertTrack");
     return contentResolver.insert(TracksColumns.CONTENT_URI,
         createContentValues(track));
   }
 
   @Override
   public Uri insertTrackPoint(Location location, long trackId) {
-    Log.d(MyTracksProvider.TAG, "MyTracksProviderUtilsImpl.insertTrackPoint");
+    Log.d(TAG, "MyTracksProviderUtilsImpl.insertTrackPoint");
     return contentResolver.insert(TrackPointsColumns.CONTENT_URI,
         createContentValues(location, trackId));
   }
@@ -877,7 +877,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public Uri insertWaypoint(Waypoint waypoint) {
-    Log.d(MyTracksProvider.TAG, "MyTracksProviderUtilsImpl.insertWaypoint");
+    Log.d(TAG, "MyTracksProviderUtilsImpl.insertWaypoint");
     waypoint.setId(-1);
     return contentResolver.insert(WaypointsColumns.CONTENT_URI,
         createContentValues(waypoint));
@@ -907,7 +907,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public void updateTrack(Track track) {
-    Log.d(MyTracksProvider.TAG, "MyTracksProviderUtilsImpl.updateTrack");
+    Log.d(TAG, "MyTracksProviderUtilsImpl.updateTrack");
     contentResolver.update(TracksColumns.CONTENT_URI,
         createContentValues(track), "_id=" + track.getId(), null);
   }

@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="libs/accounts.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="src" path="MyTracksLib_src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

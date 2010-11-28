@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 Google Inc.
+ * Copyright 2009 Google Inc.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -15,8 +15,6 @@
  */
 package com.google.android.apps.mytracks.content;
 
-import static com.google.android.apps.mytracks.content.ContentTypeIds.*;
-
 import android.net.Uri;
 import android.provider.BaseColumns;
 
@@ -26,25 +24,37 @@ import android.provider.BaseColumns;
  *
  * @author Leif Hendrik Wilden
  */
-public interface TracksColumns extends BaseColumns {
+public interface WaypointsColumns extends BaseColumns {
 
   public static final Uri CONTENT_URI =
-      Uri.parse("content://com.google.android.maps.mytracks/tracks");
+      Uri.parse("content://com.google.android.maps.mytracks/waypoints");
   public static final String CONTENT_TYPE =
-      "vnd.android.cursor.dir/vnd.google.track";
+      "vnd.android.cursor.dir/vnd.google.waypoint";
   public static final String CONTENT_ITEMTYPE =
-      "vnd.android.cursor.item/vnd.google.track";
+      "vnd.android.cursor.item/vnd.google.waypoint";
   public static final String DEFAULT_SORT_ORDER = "_id";
 
   /* All columns */
   public static final String NAME = "name";
   public static final String DESCRIPTION = "description";
   public static final String CATEGORY = "category";
+  public static final String ICON = "icon";
+  public static final String TRACKID = "trackid";
+  public static final String TYPE = "type";
+  public static final String LENGTH = "length";
+  public static final String DURATION = "duration";
+  public static final String STARTTIME = "starttime";
   public static final String STARTID = "startid";
   public static final String STOPID = "stopid";
-  public static final String STARTTIME = "starttime";
-  public static final String STOPTIME = "stoptime";
-  public static final String NUMPOINTS = "numpoints";
+
+  public static final String LATITUDE = "latitude";
+  public static final String LONGITUDE = "longitude";
+  public static final String ALTITUDE = "elevation";
+  public static final String BEARING = "bearing";
+  public static final String TIME = "time";
+  public static final String ACCURACY = "accuracy";
+  public static final String SPEED = "speed";
+
   public static final String TOTALDISTANCE = "totaldistance";
   public static final String TOTALTIME = "totaltime";
   public static final String MOVINGTIME = "movingtime";
@@ -56,21 +66,4 @@ public interface TracksColumns extends BaseColumns {
   public static final String ELEVATIONGAIN = "elevationgain";
   public static final String MINGRADE = "mingrade";
   public static final String MAXGRADE = "maxgrade";
-  public static final String MINLAT = "minlat";
-  public static final String MAXLAT = "maxlat";
-  public static final String MINLON = "minlon";
-  public static final String MAXLON = "maxlon";
-  public static final String MAPID = "mapid";
-
-  public static final String[] BACKUP_COLUMNS = {
-      _ID, NAME, DESCRIPTION, CATEGORY, STARTID, STOPID, STARTTIME, STOPTIME,
-      NUMPOINTS, TOTALDISTANCE, TOTALTIME, MOVINGTIME, AVGSPEED, AVGMOVINGSPEED,
-      MAXSPEED, MINELEVATION, MAXELEVATION, ELEVATIONGAIN, MINGRADE, MAXGRADE,
-      MINLAT, MAXLAT, MINLON, MAXLON };
-  public static final byte[] BACKUP_COLUMN_TYPES = {
-      LONG_TYPE_ID, STRING_TYPE_ID, STRING_TYPE_ID, STRING_TYPE_ID,
-      LONG_TYPE_ID, LONG_TYPE_ID, LONG_TYPE_ID, LONG_TYPE_ID, INT_TYPE_ID,
-      FLOAT_TYPE_ID, LONG_TYPE_ID, LONG_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID,
-      FLOAT_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID,
-      FLOAT_TYPE_ID, INT_TYPE_ID, INT_TYPE_ID, INT_TYPE_ID, INT_TYPE_ID };
 }

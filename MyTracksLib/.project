@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>SignalStrengthSampler</name>
+	<name>MyTracksLib</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -30,11 +30,4 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>MyTracksLib_src</name>
-			<type>2</type>
-			<locationURI>_android_MyTracksLib_e2802071/src</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>

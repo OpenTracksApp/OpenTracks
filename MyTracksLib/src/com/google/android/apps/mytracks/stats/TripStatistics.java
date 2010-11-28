@@ -26,7 +26,7 @@ import android.os.Parcelable;
  *
  * @author Rodrigo Damazio
  */
-public class TripStatistics implements Parcelable {
+public class TripStatistics implements Parcelable { 
 
   /**
    * The start time for the trip. This is system time which might not match gps
