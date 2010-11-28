@@ -46,10 +46,25 @@ import java.util.List;
 public class SignalStrengthService extends Service
     implements ServiceConnection, SignalStrengthCallback, OnSharedPreferenceChangeListener {
 
+  private ComponentName mytracksServiceComponent;
+  private SharedPreferences preferences;
+  private SignalStrengthListenerFactory signalListenerFactory;
   private SignalStrengthListener signalListener;
   private ITrackRecordingService mytracksService;
   private long lastSamplingTime;
   private long samplingPeriod;
+
+  @Override
+  public void onCreate() {
+    super.onCreate();
+
+    mytracksServiceComponent =
+      new ComponentName(
+          getString(R.string.mytracks_service_package),
+          getString(R.string.mytracks_service_class));
+    preferences = PreferenceManager.getDefaultSharedPreferences(this);
+    signalListenerFactory = new SignalStrengthListenerFactory();
+  }
 
   @Override
   public void onStart(Intent intent, int startId) {
@@ -81,7 +96,7 @@ public class SignalStrengthService extends Service
 
     Log.d(TAG, "Starting sampling");
     Intent intent = new Intent();
-    intent.setComponent(MYTRACKS_SERVICE_COMPONENT);
+    intent.setComponent(mytracksServiceComponent);
     if (!bindService(intent, SignalStrengthService.this, 0)) {
       Log.e(TAG, "Couldn't bind to service.");
       return;
@@ -93,7 +108,7 @@ public class SignalStrengthService extends Service
     List<RunningServiceInfo> services = activityManager.getRunningServices(Integer.MAX_VALUE);
     for (RunningServiceInfo serviceInfo : services) {
       if (serviceInfo.pid != 0 &&
-          serviceInfo.service.equals(MYTRACKS_SERVICE_COMPONENT)) {
+          serviceInfo.service.equals(mytracksServiceComponent)) {
         return true;
       }
     }
@@ -120,13 +135,10 @@ public class SignalStrengthService extends Service
       }
 
       // We're ready to send waypoints, so register for signal sampling
-      SignalStrengthListenerFactory factory = new SignalStrengthListenerFactory();
-      signalListener = factory.create(this, this);
+      signalListener = signalListenerFactory.create(this, this);
       signalListener.register();
 
       // Register for preference changes
-      SharedPreferences preferences =
-          PreferenceManager.getDefaultSharedPreferences(this);
       samplingPeriod = Long.parseLong(preferences.getString(
           getString(R.string.settings_min_signal_sampling_period_key), "-1"));
       preferences.registerOnSharedPreferenceChangeListener(this);
@@ -177,8 +189,6 @@ public class SignalStrengthService extends Service
 
     synchronized (this) {
       // Unregister from preference change updates
-      SharedPreferences preferences =
-          PreferenceManager.getDefaultSharedPreferences(this);
       preferences.unregisterOnSharedPreferenceChangeListener(this);
 
       // Unregister from receiving signal updates
@@ -220,6 +230,14 @@ public class SignalStrengthService extends Service
   }
 
   @Override
+  public void onSharedPreferenceChanged(
+      SharedPreferences sharedPreferences, String key) {
+    if (getString(R.string.settings_min_signal_sampling_period_key).equals(key)) {
+      samplingPeriod = Long.parseLong(sharedPreferences.getString(key, "-1"));
+    }
+  }
+
+  @Override
   public IBinder onBind(Intent intent) {
     return null;
   }
@@ -236,13 +254,5 @@ public class SignalStrengthService extends Service
     intent.setClass(context, SignalStrengthService.class);
     intent.setAction(STOP_SAMPLING);
     context.startService(intent);
-  }
-
-  @Override
-  public void onSharedPreferenceChanged(
-      SharedPreferences sharedPreferences, String key) {
-    if (getString(R.string.settings_min_signal_sampling_period_key).equals(key)) {
-      samplingPeriod = Long.parseLong(sharedPreferences.getString(key, "-1"));
-    }
   }
 }

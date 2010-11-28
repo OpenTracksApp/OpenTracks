@@ -27,4 +27,9 @@ limitations under the License.
   <string name="track_resumed_broadcast_action">com.google.android.apps.mytracks.TRACK_RESUMED</string>
   <string name="track_stopped_broadcast_action">com.google.android.apps.mytracks.TRACK_STOPPED</string>
   <string name="track_id_broadcast_extra">com.google.android.apps.mytracks.TRACK_ID</string>
+
+  <!-- My Tracks service constants -->
+  <string name="mytracks_service_class">com.google.android.apps.mytracks.services.TrackRecordingService</string>
+  <string name="mytracks_service_package">com.google.android.maps.mytracks</string>
+
 </resources>

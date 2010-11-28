@@ -40,9 +40,11 @@ public class RecordingStateReceiver extends BroadcastReceiver {
     }
 
     String action = intent.getAction();
-    if (START_TRACK_ACTION.equals(action) || RESUME_TRACK_ACTION.equals(action)) {
+    if (ctx.getString(R.string.track_started_broadcast_action).equals(action) ||
+        ctx.getString(R.string.track_resumed_broadcast_action).equals(action)) {
       startService(ctx);
-    } else if (STOP_TRACK_ACTION.equals(action) || PAUSE_TRACK_ACTION.equals(action)) {
+    } else if (ctx.getString(R.string.track_stopped_broadcast_action).equals(action) ||
+               ctx.getString(R.string.track_paused_broadcast_action).equals(action)) {
       stopService(ctx);
     } else {
       Log.e(TAG, "Unknown action received: " + action);
