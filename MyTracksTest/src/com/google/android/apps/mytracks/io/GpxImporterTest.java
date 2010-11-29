@@ -19,9 +19,9 @@ import static com.google.android.testing.mocking.AndroidMock.eq;
 import static com.google.android.testing.mocking.AndroidMock.expect;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
 import com.google.android.apps.mytracks.testing.TestingProviderUtilsFactory;
 import com.google.android.testing.mocking.AndroidMock;
 import com.google.android.testing.mocking.UsesMocks;
@@ -77,7 +77,7 @@ public class GpxImporterTest extends AndroidTestCase {
     DATE_FORMAT2.setTimeZone(utc);
   }
 
-  // TODO use real files from different sources with more track points
+  // TODO: use real files from different sources with more track points.
   private static final String VALID_TEST_GPX = "<gpx><trk><name><![CDATA["
       + TRACK_NAME + "]]></name><desc><![CDATA[" + TRACK_DESC
       + "]]></desc><trkseg>" + "<trkpt lat=\"" + TRACK_LAT_1 + "\" lon=\""
@@ -93,6 +93,12 @@ public class GpxImporterTest extends AndroidTestCase {
       .replaceAll(TRACK_LAT_1, "1000.0");
   private static final String INVALID_TIME_TEST_GPX = VALID_TEST_GPX
       .replaceAll(TRACK_TIME_1, "invalid");
+  private static final String INVALID_ALTITUDE_TEST_GPX = VALID_TEST_GPX
+      .replaceAll(TRACK_ELE_1, "invalid");
+  private static final String INVALID_LATITUDE_TEST_GPX = VALID_TEST_GPX
+      .replaceAll(TRACK_LAT_1, "invalid");
+  private static final String INVALID_LONGITUDE_TEST_GPX = VALID_TEST_GPX
+      .replaceAll(TRACK_LON_1, "invalid");
 
   private static final long TRACK_ID = 1;
   private static final long TRACK_POINT_ID_1 = 1;
@@ -122,7 +128,7 @@ public class GpxImporterTest extends AndroidTestCase {
   }
 
   /**
-   * Test import success
+   * Test import success.
    */
   public void testImportSuccess() throws Exception {
     Capture<Track> trackParam = new Capture<Track>();
@@ -171,7 +177,7 @@ public class GpxImporterTest extends AndroidTestCase {
   }
 
   /**
-   * Test with invalid location - track should be deleted
+   * Test with invalid location - track should be deleted.
    */
   public void testImportLocationFailure() throws ParserConfigurationException,
       SAXException, IOException {
@@ -179,7 +185,7 @@ public class GpxImporterTest extends AndroidTestCase {
   }
 
   /**
-   * Test with invalid time - track should be deleted
+   * Test with invalid time - track should be deleted.
    */
   public void testImportTimeFailure() throws ParserConfigurationException,
       SAXException, IOException {
@@ -187,13 +193,37 @@ public class GpxImporterTest extends AndroidTestCase {
   }
 
   /**
-   * Test with invalid xml - track should be deleted
+   * Test with invalid xml - track should be deleted.
    */
   public void testImportXMLFailure() throws ParserConfigurationException,
       SAXException, IOException {
     testInvalidXML(INVALID_XML_TEST_GPX);
   }
+  
+  /**
+   * Test with invalid altitude - track should be deleted.
+   */
+  public void testImportInvalidAltitude() throws ParserConfigurationException,
+      SAXException, IOException {
+    testInvalidXML(INVALID_ALTITUDE_TEST_GPX);
+  }
 
+  /**
+   * Test with invalid latitude - track should be deleted.
+   */
+  public void testImportInvalidLatitude() throws ParserConfigurationException,
+      SAXException, IOException {
+    testInvalidXML(INVALID_LATITUDE_TEST_GPX);
+  }
+  
+  /**
+   * Test with invalid longitude - track should be deleted.
+   */
+  public void testImportInvalidLongitude() throws ParserConfigurationException,
+      SAXException, IOException {
+    testInvalidXML(INVALID_LONGITUDE_TEST_GPX);
+  }
+  
   private void testInvalidXML(String xml) throws ParserConfigurationException,
       IOException {
     expect(providerUtils.insertTrack((Track) AndroidMock.anyObject()))
