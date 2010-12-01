@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:id="@+id/menu_start_recording"
+    android:icon="@drawable/menu_record"
+    android:title="@string/start_recording"/>
+
+  <item android:id="@+id/menu_stop_recording"
+    android:icon="@drawable/menu_stop"
+    android:title="@string/stop_recording"/>
+
+  <item android:id="@+id/menu_list_tracks"
+    android:icon="@drawable/menu_list_tracks"
+    android:title="@string/list_tracks"/>
+
+  <item android:id="@+id/menu_list_markers"
+    android:icon="@drawable/menu_marker"
+    android:title="@string/list_markers"/>
+
+  <item android:id="@+id/menu_settings"
+    android:icon="@android:drawable/ic_menu_preferences"
+    android:orderInCategory="1001"
+    android:title="@string/settings"/>
+    
+  <item android:id="@+id/menu_aggregated_stats"
+    android:orderInCategory="1002"
+    android:title="@string/aggregated_stats"/>
+
+  <item android:id="@+id/menu_sensor_state"
+    android:orderInCategory="1000"
+    android:title="@string/sensor_state"/>
+    
+  <item android:id="@+id/menu_help"
+    android:icon="@android:drawable/ic_menu_info_details"
+    android:orderInCategory="1003"
+    android:title="@string/help"/>
+
+</menu>
