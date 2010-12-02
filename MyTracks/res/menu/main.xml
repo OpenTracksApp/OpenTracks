@@ -26,6 +26,7 @@
     android:title="@string/aggregated_stats"/>
 
   <item android:id="@+id/menu_sensor_state"
+    android:icon="@drawable/menu_sensor_status"
     android:orderInCategory="1000"
     android:title="@string/sensor_state"/>
     

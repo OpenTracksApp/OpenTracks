@@ -6,7 +6,6 @@ import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 
-import android.location.Location;
 import android.test.AndroidTestCase;
 
 import org.w3c.dom.Document;

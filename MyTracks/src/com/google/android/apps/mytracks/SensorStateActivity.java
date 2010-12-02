@@ -15,6 +15,7 @@
  */
 package com.google.android.apps.mytracks;
 
+import static com.google.android.apps.mytracks.MyTracksConstants.TAG;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.sensors.SensorUtils;
@@ -25,7 +26,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -69,11 +69,13 @@ public class SensorStateActivity extends Activity {
 
   public SensorStateActivity() {
     utils = new StatsUtilities(this);
+    Log.w(TAG, "SensorStateActivity()");
   }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    Log.w(TAG, "SensorStateActivity.onCreate");
 
     setContentView(R.layout.sensor_state);
 
@@ -98,7 +100,8 @@ public class SensorStateActivity extends Activity {
   protected void updateState() {
     MyTracks mt = MyTracks.getInstance();
 
-    ITrackRecordingService service = mt.getTrackRecordingService();
+    ITrackRecordingService service =
+    	mt == null ? null : mt.getTrackRecordingService();
     if (service == null) {
       Log.d(MyTracksConstants.TAG, "Could not get track recording service.");
       updateSensorState(Sensor.SensorState.NONE);
@@ -134,21 +137,12 @@ public class SensorStateActivity extends Activity {
     sensorTime.setText(SensorUtils.getStateAsString(state, this));
   }
 
-  private void updateSensorData(Sensor.SensorDataSet sds) {
-    CheckBox heartRateMonitor =
-        (CheckBox) findViewById(R.id.heart_rate_monitor_enabled);
-    CheckBox powerMeter =
-        (CheckBox) findViewById(R.id.power_meter_enabled);
+  protected void updateSensorData(Sensor.SensorDataSet sds) {
     if (sds == null) {
       utils.setUnknown(R.id.sensor_data_time_register);
       utils.setUnknown(R.id.cadence_state_register);
       utils.setUnknown(R.id.power_state_register);
-      utils.setUnknown(R.id.power_meter_state_register);
-      powerMeter.setChecked(false);
-
       utils.setUnknown(R.id.heart_rate_register);
-      utils.setUnknown(R.id.heart_rate_monitor_state_register);
-      heartRateMonitor.setChecked(false);
       return;
     }
 
@@ -156,46 +150,44 @@ public class SensorStateActivity extends Activity {
         ((TextView) findViewById(R.id.sensor_data_time_register));
     sensorTime.setText(
         TIMESTAMP_FORMAT.format(new Date(sds.getCreationTime())));
-    /*
-    sensorTime.setTextColor(sd.isValid()
-        ? R.color.stat_label_text
-        : R.color.red);
-        */
 
-    utils.setText(R.id.power_meter_state_register,
-        SensorUtils.getStateAsString(
-            sds.hasPower()
-                ? sds.getPower().getState()
-                : Sensor.SensorState.NONE,
-            this));
-    boolean power = sds.hasPower() && sds.getPower().hasValue();
-    powerMeter.setChecked(power);
-    if (power) {
-      utils.setText(R.id.power_state_register, "" + sds.getPower().getValue());
+    if (sds.hasPower() && sds.getPower().hasValue()
+        && sds.getPower().getState() == Sensor.SensorState.SENDING) {
+      utils.setText(R.id.power_state_register, 
+    		  Integer.toString(sds.getPower().getValue()));
     } else {
-      utils.setUnknown(R.id.power_state_register);
+      utils.setText(R.id.power_state_register,
+          SensorUtils.getStateAsString(
+              sds.hasPower()
+                  ? sds.getPower().getState()
+                  : Sensor.SensorState.NONE,
+              this));
     }
 
-    boolean cadence = sds.hasCadence() && sds.getCadence().hasValue();
-    if (cadence) {
+    if (sds.hasCadence() && sds.getCadence().hasValue()
+        && sds.getCadence().getState() == Sensor.SensorState.SENDING) {
       utils.setText(R.id.cadence_state_register,
           Integer.toString(sds.getCadence().getValue()));
     } else {
-      utils.setUnknown(R.id.cadence_state_register);
+      utils.setText(R.id.cadence_state_register,
+          SensorUtils.getStateAsString(
+              sds.hasCadence()
+                  ? sds.getCadence().getState()
+                  : Sensor.SensorState.NONE,
+              this));
     }
 
-    boolean heartRate = sds.hasHeartRate() && sds.getHeartRate().hasValue();
-    heartRateMonitor.setChecked(heartRate);
-    utils.setText(R.id.heart_rate_monitor_state_register,
-        SensorUtils.getStateAsString(
-            sds.hasHeartRate()
-                ? sds.getHeartRate().getState()
-                : Sensor.SensorState.NONE,
-            this));
-    if (heartRate) {
-      utils.setText(R.id.heart_rate_register, "" + sds.getHeartRate().getValue());
+    if (sds.hasHeartRate() && sds.getHeartRate().hasValue()
+        && sds.getHeartRate().getState() == Sensor.SensorState.SENDING) {
+      utils.setText(R.id.heart_rate_register,
+    		  Integer.toString(sds.getHeartRate().getValue()));
     } else {
-      utils.setUnknown(R.id.heart_rate_register);
+	    utils.setText(R.id.heart_rate_register,
+	        SensorUtils.getStateAsString(
+	            sds.hasHeartRate()
+	                ? sds.getHeartRate().getState()
+	                : Sensor.SensorState.NONE,
+	            this));
     }
   }
 }

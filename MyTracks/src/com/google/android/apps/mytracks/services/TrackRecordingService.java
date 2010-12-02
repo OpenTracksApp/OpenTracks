@@ -1044,33 +1044,33 @@ public class TrackRecordingService extends Service implements LocationListener {
       }      
       service.onLocationChanged(loc);
     }
-        @Override
-        public byte[] getSensorData() {
-          if (service.sensorManager == null) {
-            Log.d(MyTracksConstants.TAG, "No sensor manager for data.");
-            return null;
-          }
-          if (service.sensorManager.getSensorDataSet() == null) {
-            Log.d(MyTracksConstants.TAG, "Sensor data set is null.");
-            return null;
-          }
-          return service.sensorManager.getSensorDataSet().toByteArray();
-        }
 
-        @Override
-        public int getSensorState() {
-          if (service.sensorManager == null) {
-            Log.d(MyTracksConstants.TAG, "No sensor manager for data.");
-            return Sensor.SensorState.NONE.getNumber();
-          }
-          return service.sensorManager.getSensorState().getNumber();
-        }
+    @Override
+    public byte[] getSensorData() {
+      if (service.sensorManager == null) {
+        Log.d(MyTracksConstants.TAG, "No sensor manager for data.");
+        return null;
+      }
+      if (service.sensorManager.getSensorDataSet() == null) {
+        Log.d(MyTracksConstants.TAG, "Sensor data set is null.");
+        return null;
+      }
+      return service.sensorManager.getSensorDataSet().toByteArray();
+    }
+
+    @Override
+    public int getSensorState() {
+      if (service.sensorManager == null) {
+        Log.d(MyTracksConstants.TAG, "No sensor manager for data.");
+        return Sensor.SensorState.NONE.getNumber();
+      }
+      return service.sensorManager.getSensorState().getNumber();
+    }
   }
 
   public long startNewTrack() {
     Log.d(MyTracksConstants.TAG, "TrackRecordingService.startNewTrack");
-    if (recordingTrackId != -1 || isRecording) {
-      throw new IllegalStateException("A track is already in progress!");
+    if (recordingTrackId != -1 || isRecording) {      throw new IllegalStateException("A track is already in progress!");
     }
     
     long startTime = System.currentTimeMillis();
@@ -1138,6 +1138,11 @@ public class TrackRecordingService extends Service implements LocationListener {
     }
     showNotification();
     prefManager.setRecordingTrack(recordingTrackId = -1);
+    
+    if (sensorManager != null) {
+      sensorManager.shutdown();
+    }
+    
     releaseWakeLock();
   }
 

@@ -4,6 +4,7 @@
 	<classpathentry kind="lib" path="libs/googleloginclient-helper.jar"/>
 	<classpathentry kind="lib" path="libs/google-common.jar"/>
 	<classpathentry kind="lib" path="libs/accounts.jar"/>
+	<classpathentry kind="lib" path="libs/protobuf-java-2.3.0-lite.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="output" path="bin"/>
