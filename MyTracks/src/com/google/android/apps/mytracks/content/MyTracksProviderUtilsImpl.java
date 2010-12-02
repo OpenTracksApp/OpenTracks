@@ -199,7 +199,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     int idxAccuracy = cursor.getColumnIndexOrThrow(TrackPointsColumns.ACCURACY);
     int idxSpeed = cursor.getColumnIndexOrThrow(TrackPointsColumns.SPEED);
     int idxSensor = cursor.getColumnIndexOrThrow(TrackPointsColumns.SENSOR);
-    int idxId = cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
 
     if (!cursor.isNull(idxLatitude)) {
       location.setLatitude(1. * cursor.getInt(idxLatitude) / 1E6);
@@ -475,8 +474,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     contentResolver.delete(TracksColumns.CONTENT_URI, null, null);
     contentResolver.delete(TrackPointsColumns.CONTENT_URI,
         null, null);
-    contentResolver.delete(
-        WaypointsColumns.CONTENT_URI, null, null);
+    contentResolver.delete(WaypointsColumns.CONTENT_URI, null, null);
   }
 
   @Override
@@ -886,9 +884,8 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   @Override
   public Uri insertTrackPoint(Location location, long trackId) {
     Log.d(MyTracksProvider.TAG, "MyTracksProviderUtilsImpl.insertTrackPoint");
-    Uri u = contentResolver.insert(TrackPointsColumns.CONTENT_URI,
+    return contentResolver.insert(TrackPointsColumns.CONTENT_URI,
         createContentValues(location, trackId));
-    return u;
   }
 
   @Override

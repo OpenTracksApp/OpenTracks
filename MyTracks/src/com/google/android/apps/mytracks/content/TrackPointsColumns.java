@@ -33,7 +33,7 @@ public interface TrackPointsColumns extends BaseColumns {
       "vnd.android.cursor.dir/vnd.google.trackpoint";
   public static final String CONTENT_ITEMTYPE =
       "vnd.android.cursor.item/vnd.google.trackpoint";
-  public static final String DEFAULT_SORT_ORDER = "trackpoints._id";
+  public static final String DEFAULT_SORT_ORDER = "_id";
 
   /* All columns */
   public static final String TRACKID = "trackid";

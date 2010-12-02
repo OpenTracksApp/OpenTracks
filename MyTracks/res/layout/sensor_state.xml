@@ -67,8 +67,6 @@ limitations under the License.
         <TableRow
           android:padding="1dip">
           <TextView
-            android:id="@+id/power_label"
-            android:textSize="20dip"
             android:layout_column="1"
             android:layout_span="3"
             android:text="@string/power" />
