@@ -15,8 +15,6 @@
  */
 package com.google.android.apps.mytracks.content;
 
-import java.util.HashMap;
-
 import com.google.android.apps.mytracks.MyTracksConstants;
 
 import android.content.ContentProvider;
@@ -148,7 +146,7 @@ public class MyTracksProvider extends ContentProvider {
         Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
             + newVersion + ", adding sensor column.");
         db.execSQL("ALTER TABLE " + TRACKPOINTS_TABLE 
-          + "ADD " + TrackPointsColumns.SENSOR + " BLOB);");
+          + " ADD " + TrackPointsColumns.SENSOR + " BLOB");
       }
     }
   }

@@ -342,8 +342,14 @@ public class GpxImporter extends DefaultHandler {
 
     // create new location and set attributes
     Location loc = new Location(LocationManager.GPS_PROVIDER);
-    loc.setLatitude(Double.parseDouble(latitude));
-    loc.setLongitude(Double.parseDouble(longitude));
+    try {
+      loc.setLatitude(Double.parseDouble(latitude));
+      loc.setLongitude(Double.parseDouble(longitude));
+    } catch (NumberFormatException e) {
+      String msg = createErrorMessage(
+          "Unable to parse lat/long: " + latitude + "/" + longitude);
+      throw new SAXException(msg, e);
+    }
     return loc;
   }
 
@@ -472,9 +478,14 @@ public class GpxImporter extends DefaultHandler {
     }
   }
 
-  private void onAltitudeElementEnd() {
+  private void onAltitudeElementEnd() throws SAXException {
     if (location != null) {
-      location.setAltitude(Double.parseDouble(content));
+      try {
+        location.setAltitude(Double.parseDouble(content));
+      } catch (NumberFormatException e) {
+        String msg = createErrorMessage("Unable to parse altitude: " + content);
+        throw new SAXException(msg, e);
+      }
     }
   }
 
