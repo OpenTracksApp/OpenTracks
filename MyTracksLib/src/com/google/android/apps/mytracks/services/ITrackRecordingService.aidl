@@ -84,4 +84,18 @@ interface ITrackRecordingService {
    * Deletes all the stored tracks.
    */
   void deleteAllTracks();
+
+  /**
+   * The current sensor data.
+   * The data is returned as a byte array which is a binary version of a
+   * Sensor.SensorDataSet object.
+   * @return the current sensor data or null if there is none.
+   */
+  byte[] getSensorData();
+
+  /**
+   * The current state of the sensor manager.
+   * The value is the value of a Sensor.SensorState enum.
+   */
+  int getSensorState();
 }

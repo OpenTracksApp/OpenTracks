@@ -692,6 +692,17 @@ public class TrackRecordingServiceTest
     functionalTest(R.string.min_required_accuracy_key, 500);
   }
   
+  @MediumTest
+  public void testWithProperties_noSensorType() throws Exception {
+    functionalTest(R.string.sensor_type_key, (Object) null);
+  }
+  
+  @MediumTest
+  public void testWithProperties_zephyrSensorType() throws Exception {
+    functionalTest(R.string.sensor_type_key,
+    		context.getString(R.string.zephyr_sensor_type));
+  }
+  
   private ITrackRecordingService bindAndGetService(Intent intent) {
     ITrackRecordingService service = ITrackRecordingService.Stub.asInterface(
         bindService(intent));

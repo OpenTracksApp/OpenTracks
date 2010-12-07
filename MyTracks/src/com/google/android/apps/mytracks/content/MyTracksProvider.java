@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks.content;
 
+import com.google.android.apps.mytracks.MyTracksConstants;
+
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -38,7 +40,7 @@ import android.util.Log;
 public class MyTracksProvider extends ContentProvider {
 
   private static final String DATABASE_NAME = "mytracks.db";
-  private static final int DATABASE_VERSION = 17;
+  private static final int DATABASE_VERSION = 18;
   private static final int TRACKPOINTS = 1;
   private static final int TRACKPOINTS_ID = 2;
   private static final int TRACKS = 3;
@@ -70,7 +72,8 @@ public class MyTracksProvider extends ContentProvider {
           + TrackPointsColumns.ALTITUDE + " FLOAT, "
           + TrackPointsColumns.ACCURACY + " FLOAT, "
           + TrackPointsColumns.SPEED + " FLOAT, "
-          + TrackPointsColumns.BEARING + " FLOAT);");
+          + TrackPointsColumns.BEARING + " FLOAT, "
+          + TrackPointsColumns.SENSOR + " BLOB);");
       db.execSQL("CREATE TABLE " + TRACKS_TABLE + " ("
           + TracksColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
           + TracksColumns.NAME + " STRING, "
@@ -132,12 +135,19 @@ public class MyTracksProvider extends ContentProvider {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-      Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
-          + newVersion + ", which will destroy all old data");
-      db.execSQL("DROP TABLE IF EXISTS " + TRACKPOINTS_TABLE);
-      db.execSQL("DROP TABLE IF EXISTS " + TRACKS_TABLE);
-      db.execSQL("DROP TABLE IF EXISTS " + WAYPOINTS_TABLE);
-      onCreate(db);
+      if (oldVersion < 17) {
+        Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
+            + newVersion + ", which will destroy all old data");
+        db.execSQL("DROP TABLE IF EXISTS " + TRACKPOINTS_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + TRACKS_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + WAYPOINTS_TABLE);
+        onCreate(db);
+      } else if (oldVersion >= 17) {
+        Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
+            + newVersion + ", adding sensor column.");
+        db.execSQL("ALTER TABLE " + TRACKPOINTS_TABLE 
+          + " ADD " + TrackPointsColumns.SENSOR + " BLOB");
+      }
     }
   }
 
@@ -234,6 +244,7 @@ public class MyTracksProvider extends ContentProvider {
         throw new IllegalArgumentException("Unknown URL " + url);
     }
   }
+
 
   @Override
   public int bulkInsert(Uri url, ContentValues[] valuesBulk) {
@@ -346,6 +357,8 @@ public class MyTracksProvider extends ContentProvider {
       throw new IllegalArgumentException("Unknown URL " + url);
     }
 
+    Log.i(MyTracksConstants.TAG,
+        "Build query: " + qb.buildQuery(projection, selection, selectionArgs, null, null, sortOrder, null));
     Cursor c = qb.query(db, projection, selection, selectionArgs, null, null,
         sortOrder);
     c.setNotificationUri(getContext().getContentResolver(), url);

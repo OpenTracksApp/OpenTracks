@@ -15,12 +15,17 @@
  */
 package com.google.android.apps.mytracks;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.android.apps.mytracks.io.backup.BackupActivityHelper;
 import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
 import com.google.android.apps.mytracks.services.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.BluetoothDeviceUtils;
 import com.google.android.maps.mytracks.R;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -30,6 +35,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.provider.Settings;
 
 /**
  * An activity that let's the user see and edit the settings.
@@ -53,6 +59,7 @@ public class MyTracksSettings extends PreferenceActivity {
   public static final int DEFAULT_SPLIT_FREQUENCY = 0;
 
   private BackupPreferencesListener backupListener;
+
   private SharedPreferences preferences;
 
   /** Called when the activity is first created. */
@@ -96,6 +103,19 @@ public class MyTracksSettings extends PreferenceActivity {
         });
     updatePreferenceUnits(metricUnitsPreference.isChecked());
 
+    ListPreference sensorTypePreference =
+        (ListPreference) findPreference(getString(R.string.sensor_type_key));
+    sensorTypePreference.setOnPreferenceChangeListener(
+        new OnPreferenceChangeListener() {
+          @Override
+          public boolean onPreferenceChange(Preference preference,
+              Object newValue) {
+            updateSensorSettings((String) newValue);
+            return true;
+          }
+        });
+    updateSensorSettings(sensorTypePreference.getValue());
+    
     // Disable TTS announcement preference if not available
     if (!apiFeatures.hasTextToSpeech()) {
       IntegerListPreference announcementFrequency =
@@ -112,6 +132,7 @@ public class MyTracksSettings extends PreferenceActivity {
   protected void onResume() {
     super.onResume();
 
+    configureBluetoothPreferences();
     Preference backupNowPreference =
         findPreference(getString(R.string.backup_to_sd_key));
     Preference restoreNowPreference =
@@ -158,7 +179,15 @@ public class MyTracksSettings extends PreferenceActivity {
     getPreferenceManager().getSharedPreferences()
         .unregisterOnSharedPreferenceChangeListener(backupListener);
 
-    super.onDestroy();
+    super.onPause();
+  }
+  private void updateSensorSettings(String sensorType) {
+    boolean usesBluetooth =
+        getString(R.string.zephyr_sensor_type).equals(sensorType);
+    findPreference(
+        getString(R.string.bluetooth_sensor_key)).setEnabled(usesBluetooth);
+    findPreference(
+        getString(R.string.bluetooth_pairing_key)).setEnabled(usesBluetooth);
   }
 
   /**
@@ -193,5 +222,45 @@ public class MyTracksSettings extends PreferenceActivity {
     splitFrequency.setEntries(isMetric
         ? R.array.split_frequency_options
         : R.array.split_frequency_options_ft);
+  }
+
+
+  /**
+   * Configures preference actions related to bluetooth.
+   */
+  private void configureBluetoothPreferences() {
+    if (BluetoothDeviceUtils.isBluetoothMethodSupported()) {
+      // Populate the list of bluetooth devices
+      populateBluetoothDeviceList();
+
+      // Make the pair devices preference go to the system preferences
+      findPreference(getString(R.string.bluetooth_pairing_key))
+          .setOnPreferenceClickListener(new OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference preference) {
+              Intent settingsIntent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
+              startActivity(settingsIntent);
+              return false;
+            }
+          });
+    }
+  }
+
+  /**
+   * Populates the list preference with all available bluetooth devices.
+   */
+  private void populateBluetoothDeviceList() {
+    // Build the list of entries and their values
+    List<String> entries = new ArrayList<String>();
+    List<String> entryValues = new ArrayList<String>();
+
+    // The actual devices
+    BluetoothDeviceUtils.getInstance().populateDeviceLists(entries, entryValues);
+
+    CharSequence[] entriesArray = entries.toArray(new CharSequence[entries.size()]);
+    CharSequence[] entryValuesArray = entryValues.toArray(new CharSequence[entryValues.size()]);
+    ListPreference devicesPreference =
+        (ListPreference) findPreference(getString(R.string.bluetooth_sensor_key));
+    devicesPreference.setEntryValues(entryValuesArray);
+    devicesPreference.setEntries(entriesArray);
   }
 }

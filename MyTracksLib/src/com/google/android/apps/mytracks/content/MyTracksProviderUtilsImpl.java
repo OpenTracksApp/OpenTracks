@@ -16,7 +16,9 @@
 package com.google.android.apps.mytracks.content;
 
 import static com.google.android.apps.mytracks.lib.MyTracksLibConstants.*;
+import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.protobuf.InvalidProtocolBufferException;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -74,6 +76,12 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     }
     if (location.hasSpeed()) {
       values.put(TrackPointsColumns.SPEED, location.getSpeed());
+    }
+    if (location instanceof MyTracksLocation) {
+      MyTracksLocation mtLocation = (MyTracksLocation) location;
+      if (mtLocation.getSensorDataSet() != null) {
+        values.put(TrackPointsColumns.SENSOR, mtLocation.getSensorDataSet().toByteArray());
+      }
     }
     return values;
   }
@@ -172,7 +180,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public Location createLocation(Cursor cursor) {
-    Location location = new Location("");
+    Location location = new MyTracksLocation("");
     fillLocation(cursor, location);
     return location;
   }
@@ -189,6 +197,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     int idxBearing = cursor.getColumnIndexOrThrow(TrackPointsColumns.BEARING);
     int idxAccuracy = cursor.getColumnIndexOrThrow(TrackPointsColumns.ACCURACY);
     int idxSpeed = cursor.getColumnIndexOrThrow(TrackPointsColumns.SPEED);
+    int idxSensor = cursor.getColumnIndexOrThrow(TrackPointsColumns.SENSOR);
 
     if (!cursor.isNull(idxLatitude)) {
       location.setLatitude(1. * cursor.getInt(idxLatitude) / 1E6);
@@ -210,6 +219,18 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     }
     if (!cursor.isNull(idxAccuracy)) {
       location.setAccuracy(cursor.getFloat(idxAccuracy));
+    }
+    if (location instanceof MyTracksLocation &&
+        !cursor.isNull(idxSensor)) {
+      MyTracksLocation mtLocation = (MyTracksLocation) location;
+      // TODO get the right buffer.
+      Sensor.SensorDataSet sensorData;
+      try {
+        sensorData = Sensor.SensorDataSet.parseFrom(cursor.getBlob(idxSensor));
+        mtLocation.setSensorData(sensorData);
+      } catch (InvalidProtocolBufferException e) {
+        Log.w(TAG, "Failed to parse sensor data.", e);
+      }
     }
   }
 
@@ -450,7 +471,8 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   @Override
   public void deleteAllTracks() {
     contentResolver.delete(TracksColumns.CONTENT_URI, null, null);
-    contentResolver.delete(TrackPointsColumns.CONTENT_URI, null, null);
+    contentResolver.delete(TrackPointsColumns.CONTENT_URI,
+        null, null);
     contentResolver.delete(WaypointsColumns.CONTENT_URI, null, null);
   }
 
@@ -464,7 +486,8 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     }
     contentResolver.delete(WaypointsColumns.CONTENT_URI,
         WaypointsColumns.TRACKID + "=" + trackId, null);
-    contentResolver.delete(TracksColumns.CONTENT_URI, "_id=" + trackId, null);
+    contentResolver.delete(
+        TracksColumns.CONTENT_URI, "_id=" + trackId, null);
   }
 
   @Override

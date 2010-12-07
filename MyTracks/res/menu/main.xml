@@ -22,10 +22,14 @@
     android:title="@string/settings"/>
     
   <item android:id="@+id/menu_aggregated_stats"
-    android:icon="@android:drawable/ic_menu_info_details"
     android:orderInCategory="1002"
     android:title="@string/aggregated_stats"/>
 
+  <item android:id="@+id/menu_sensor_state"
+    android:icon="@drawable/menu_sensor_status"
+    android:orderInCategory="1000"
+    android:title="@string/sensor_state"/>
+    
   <item android:id="@+id/menu_help"
     android:icon="@android:drawable/ic_menu_info_details"
     android:orderInCategory="1003"

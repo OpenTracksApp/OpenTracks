@@ -103,6 +103,11 @@ public class ExtremityMonitor {
   public void setMax(double max) {
     this.max = max;
   }
+
+  public boolean hasData() {
+    return min != Double.POSITIVE_INFINITY
+        && max != Double.NEGATIVE_INFINITY;
+  }
   
   @Override
   public String toString() {

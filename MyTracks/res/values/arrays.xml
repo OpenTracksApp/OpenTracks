@@ -390,4 +390,16 @@ limitations under the License.
     <item>CSV</item>
     <item>TCX</item>
   </array>
+
+  <array name="sensor_type_options">
+    <item>None</item>
+    <item>Zephyr Bluetooth</item>
+  </array>
+
+  <!-- DO NOT TRANSLATE -->
+  <array name="sensor_type_values">
+    <item>@string/none</item>
+    <item>@string/zephyr_sensor_type</item>
+  </array>
+
 </resources>

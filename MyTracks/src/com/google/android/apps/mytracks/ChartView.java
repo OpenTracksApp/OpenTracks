@@ -87,7 +87,10 @@ public class ChartView extends View {
    */
   public static final int ELEVATION_SERIES = 0;
   public static final int SPEED_SERIES = 1;
-  public static final int NUM_SERIES = 2;
+  public static final int POWER_SERIES = 2;
+  public static final int CADENCE_SERIES = 3;
+  public static final int HEART_RATE_SERIES = 4;
+  public static final int NUM_SERIES = 5;
   private ChartValueSeries[] series;
 
   private final ExtremityMonitor xMonitor = new ExtremityMonitor();
@@ -172,38 +175,44 @@ public class ChartView extends View {
     series = new ChartValueSeries[NUM_SERIES];
 
     // Create the paints
-    Paint fillPaint1 = new Paint();
-    fillPaint1.setStyle(Style.FILL);
-    fillPaint1.setColor(context.getResources().getColor(R.color.green));
-    fillPaint1.setAntiAlias(true);
-
-    Paint fillPaint2 = new Paint();
-    fillPaint2.setStyle(Style.FILL);
-    fillPaint2.setColor(
-        context.getResources().getColor(R.color.blue_transparent));
-    fillPaint2.setAntiAlias(true);
-
-    Paint strokePaint = new Paint();
-    strokePaint.setStyle(Style.STROKE);
-    strokePaint.setColor(context.getResources().getColor(R.color.blue));
-    strokePaint.setAntiAlias(true);
+    Paint fillPaint = new Paint();
+    fillPaint.setStyle(Style.FILL);
+    fillPaint.setColor(context.getResources().getColor(R.color.green));
+    fillPaint.setAntiAlias(true);
 
     // Create the value series
     series[ELEVATION_SERIES] =
         new ChartValueSeries(context,
                              "###,###",
-                             fillPaint1,
+                             fillPaint,
                              null,
                              100,
                              R.string.elevation);
 
-    series[SPEED_SERIES] =
-        new ChartValueSeries(context,
-                             "###,###.0",
-                             fillPaint2,
-                             strokePaint,
-                             5,
-                             R.string.speed);
+    series[SPEED_SERIES] = getSeries(context, R.color.blue_transparent,
+        R.color.blue, "###,###.0", R.string.speed);
+    series[POWER_SERIES] = getSeries(context, R.color.red_transparent,
+        R.color.red, "###,###", R.string.power);
+    series[POWER_SERIES].setAbsoluteMax(1500);
+    series[CADENCE_SERIES] = getSeries(context, R.color.purple_transparent,
+        R.color.purple, "###,###", R.string.cadence);
+    series[HEART_RATE_SERIES] = getSeries(context, R.color.yellow_transparent,
+        R.color.yellow, "###,###", R.string.heart_rate);
+  }
+
+  private ChartValueSeries getSeries(Context context,
+      int fillColor, int strokeColor, String format, int seriesName) {
+    Paint fillPaint = new Paint();
+    fillPaint.setStyle(Style.FILL);
+    fillPaint.setColor(context.getResources().getColor(fillColor));
+    fillPaint.setAntiAlias(true);
+
+    Paint strokePaint = new Paint();
+    strokePaint.setStyle(Style.STROKE);
+    strokePaint.setColor(context.getResources().getColor(strokeColor));
+    strokePaint.setAntiAlias(true);
+    return new ChartValueSeries(context, format, fillPaint, strokePaint, 5,
+        seriesName);
   }
 
   public void clearWaypoints() {
@@ -266,13 +275,25 @@ public class ChartView extends View {
    */
   public synchronized void addDataPoint(double[] theData) {
     data.add(theData);
+    addDataPointInternal(theData);
+    updateDimensions();
+    setupPath();
+  }
+
+  private void addDataPointInternal(double[] theData) {
     xMonitor.update(theData[0]);
     int min = Math.min(series.length, theData.length - 1);
     for (int i = 0; i < min; i++) {
-      series[i].update(theData[i + 1]);
+      if (!Double.isNaN(theData[i + 1])) {
+        series[i].update(theData[i + 1]);
+      }
     }
-    updateDimensions();
-    setupPath();
+    // Fill in the extra's if needed.
+    for (int i = theData.length; i < series.length; i++) {
+      if (series[i].hasData()) {
+        series[i].update(0);
+      }
+    }
   }
 
   /**
@@ -284,11 +305,7 @@ public class ChartView extends View {
     data.addAll(theData);
     for (int i = 0; i < theData.size(); i++) {
       double d[] = theData.get(i);
-      xMonitor.update(d[0]);
-      int min = Math.min(series.length, d.length - 1);
-      for (int j = 0; j < min; j++) {
-        series[j].update(d[j + 1]);
-      }
+      addDataPointInternal(d);
     }
     updateDimensions();
     setupPath();
@@ -526,7 +543,7 @@ public class ChartView extends View {
 
     // Draw the data series
     for (ChartValueSeries cvs : series) {
-      if (cvs.isEnabled()) {
+      if (cvs.isEnabled() && cvs.hasData()) {
         cvs.drawPath(c);
       }
     }
@@ -560,7 +577,7 @@ public class ChartView extends View {
     c.translate(getScrollX(), 0);
     drawYAxis(c);
     for (ChartValueSeries cvs : series) {
-      if (cvs.isEnabled()) {
+      if (cvs.isEnabled() && cvs.hasData()) {
         drawYLabels(cvs, c);
       }
     }
@@ -576,13 +593,13 @@ public class ChartView extends View {
   private void drawSeriesTitles(Canvas c) {
     int sections = 1;
     for (ChartValueSeries cvs : series) {
-      if (cvs.isEnabled()) {
+      if (cvs.isEnabled() && cvs.hasData()) {
         sections++;
       }
     }
     int j = 0;
     for (ChartValueSeries cvs : series) {
-      if (cvs.isEnabled()) {
+      if (cvs.isEnabled() && cvs.hasData()) {
         int y = (int) (w * zoomLevel * ((double) (++j) / sections));
         c.drawText(cvs.getTitle(), y, TOP_BORDER, cvs.getPaint());
       }
@@ -601,11 +618,11 @@ public class ChartView extends View {
       return;
     }
 
-    int min = Math.min(series.length, data.get(0).length - 1);
-
     // All of the data points to the respective series.
     for (int i = 0; i < data.size(); i++) {
       double[] d = data.get(i);
+      int min = Math.min(series.length, d.length - 1);
+
       for (int j = 0; j < min; j++) {
         ChartValueSeries cvs = series[j];
         Path path = cvs.getPath();
@@ -616,16 +633,35 @@ public class ChartView extends View {
     // Close the path.
     int yCorner = TOP_BORDER + effectiveHeight;
     int xCorner = getX(data.get(0)[0]);
+    int min = series.length;
     for (int j = 0; j < min; j++) {
       ChartValueSeries cvs = series[j];
       Path path = cvs.getPath();
-      // Bottom right corner
-      path.lineTo(getX(data.get(data.size() - 1)[0]), yCorner);
-      // Bottom left corner
-      path.lineTo(xCorner, yCorner);
-      // Top right corner
-      path.lineTo(xCorner, getY(cvs, data.get(0)[j + 1]));
+      int first = getFirstPointPopulatedIndex(j + 1);
+      if (first != -1) {
+        // Bottom right corner
+        path.lineTo(getX(data.get(data.size() - 1)[0]), yCorner);
+        // Bottom left corner
+        path.lineTo(xCorner, yCorner);
+        // Top right corner
+        path.lineTo(xCorner, getY(cvs, data.get(first)[j + 1]));
+      }
     }
+  }
+ 
+  /**
+   * Find the index of the first point which has a series populated.
+   * @param seriesIndex The index of the value series to search for.
+   * @return The index in the first data for the point in the series that has series
+   *         index value populated or -1 if none is found.
+   */
+  private int getFirstPointPopulatedIndex(int seriesIndex) {
+    for (int i = 0; i < data.size(); i++) {
+      if (data.get(i).length > seriesIndex) {
+        return i;
+      }
+    }
+    return -1;
   }
 
   /**

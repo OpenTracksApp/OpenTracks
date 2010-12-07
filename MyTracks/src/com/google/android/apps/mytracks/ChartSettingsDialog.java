@@ -35,8 +35,7 @@ import android.widget.RadioGroup;
  */
 public class ChartSettingsDialog extends Dialog {
   private RadioButton distance;
-  private CheckBox elevation;
-  private CheckBox speed;
+  private CheckBox[] series;
 
   public ChartSettingsDialog(Context context) {
     super(context);
@@ -61,8 +60,18 @@ public class ChartSettingsDialog extends Dialog {
     });
 
     distance = (RadioButton) findViewById(R.id.chart_settings_by_distance);
-    elevation = (CheckBox) findViewById(R.id.chart_settings_elevation);
-    speed = (CheckBox) findViewById(R.id.chart_settings_speed);
+    
+    series = new CheckBox[ChartView.NUM_SERIES];
+    series[ChartView.ELEVATION_SERIES] =
+        (CheckBox) findViewById(R.id.chart_settings_elevation);
+    series[ChartView.SPEED_SERIES] =
+        (CheckBox) findViewById(R.id.chart_settings_speed);
+    series[ChartView.POWER_SERIES] =
+        (CheckBox) findViewById(R.id.chart_settings_power);
+    series[ChartView.CADENCE_SERIES] =
+        (CheckBox) findViewById(R.id.chart_settings_cadence);
+    series[ChartView.HEART_RATE_SERIES] =
+        (CheckBox) findViewById(R.id.chart_settings_heart_rate);
   }
 
   public void setup(ChartActivity chart) {
@@ -74,8 +83,9 @@ public class ChartSettingsDialog extends Dialog {
     rd.check(chart.getMode() == Mode.BY_DISTANCE
              ? R.id.chart_settings_by_distance
              : R.id.chart_settings_by_time);
-    elevation.setChecked(chart.isSeriesEnabled(ChartView.ELEVATION_SERIES));
-    speed.setChecked(chart.isSeriesEnabled(ChartView.SPEED_SERIES));
+    for (int i = 0; i < ChartView.NUM_SERIES; i++) {
+      series[i].setChecked(chart.isSeriesEnabled(i));
+    }
   }
 
   private void handleOk() {
@@ -83,8 +93,9 @@ public class ChartSettingsDialog extends Dialog {
     chart.setMode(distance.isChecked() ? Mode.BY_DISTANCE : Mode.BY_TIME);
 
     // TODO: check that something is visible.
-    chart.setSeriesEnabled(ChartView.ELEVATION_SERIES, elevation.isChecked());
-    chart.setSeriesEnabled(ChartView.SPEED_SERIES, speed.isChecked());
+    for (int i = 0; i < ChartView.NUM_SERIES; i++) {
+      chart.setSeriesEnabled(i, series[i].isChecked());
+    }
 
     dismiss();
   }

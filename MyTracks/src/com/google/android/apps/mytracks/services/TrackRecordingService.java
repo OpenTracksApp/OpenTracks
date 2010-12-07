@@ -20,11 +20,16 @@ import static com.google.android.apps.mytracks.MyTracksConstants.RESUME_TRACK_EX
 import com.google.android.apps.mytracks.MyTracks;
 import com.google.android.apps.mytracks.MyTracksConstants;
 import com.google.android.apps.mytracks.MyTracksSettings;
+import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
+import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
+import com.google.android.apps.mytracks.services.sensors.SensorManager;
+import com.google.android.apps.mytracks.services.sensors.SensorManagerFactory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.ApiFeatures;
@@ -111,6 +116,8 @@ public class TrackRecordingService extends Service implements LocationListener {
   private PeriodicTaskExecuter announcementExecuter;
   private SplitManager splitManager;
 
+  private SensorManager sensorManager;
+  
   private PreferenceManager prefManager;
   
   /**
@@ -214,7 +221,14 @@ public class TrackRecordingService extends Service implements LocationListener {
 
     // Insert the new location:
     try {
-      Uri pointUri = providerUtils.insertTrackPoint(location, trackId);
+      Location locationToInsert = location;
+      if (sensorManager != null && sensorManager.isEnabled()) {
+        SensorDataSet sd = sensorManager.getSensorDataSet();
+        if (sd != null && sensorManager.isDataValid()) {
+          locationToInsert = new MyTracksLocation(location, sd);
+        }
+      }
+      Uri pointUri = providerUtils.insertTrackPoint(locationToInsert, trackId);
       int pointId = Integer.parseInt(pointUri.getLastPathSegment());
 
       // Update the current track:
@@ -523,11 +537,15 @@ public class TrackRecordingService extends Service implements LocationListener {
       if (lastLocation != null) {
         distanceToLast = location.distanceTo(lastLocation);
       }
+      boolean hasSensorData = sensorManager != null
+          && sensorManager.isEnabled()
+          && sensorManager.getSensorDataSet() != null
+          && sensorManager.isDataValid();
 
       // If the user has been stationary for two recording just record the first
       // two and ignore the rest. This code will only have an effect if the
       // maxRecordingDistance = 0
-      if (distanceToLast == 0) {
+      if (distanceToLast == 0 && !hasSensorData) {
         if (isMoving) {
           Log.d(MyTracksConstants.TAG, "Found two identical locations.");
           isMoving = false;
@@ -547,7 +565,8 @@ public class TrackRecordingService extends Service implements LocationListener {
           Log.d(MyTracksConstants.TAG,
               "Not recording. More than two identical locations.");
         }
-      } else if (distanceToLastRecorded > minRecordingDistance) {
+      } else if (distanceToLastRecorded > minRecordingDistance
+          || hasSensorData) {
         if (lastLocation != null && !isMoving) {
           // Last location was the last stationary location. Need to go back and
           // add it.
@@ -627,9 +646,11 @@ public class TrackRecordingService extends Service implements LocationListener {
     locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
     splitManager = new SplitManager(this);
 
+    sensorManager = SensorManagerFactory.getSensorManager(this);
     prefManager = new PreferenceManager(this);
     registerLocationListener();
-    /**
+
+    /*
      * After 5 min, check every minute that location listener still is
      * registered and spit out additional debugging info to the logs:
      */
@@ -711,6 +732,10 @@ public class TrackRecordingService extends Service implements LocationListener {
     shutdownAnnouncer();
     splitManager.shutdown();
     splitManager = null;
+    if (sensorManager != null) {
+      sensorManager.onDestroy();
+      sensorManager = null;
+    }
 
     // Make sure we have no indirect references to this service.
     locationManager = null;
@@ -1022,6 +1047,28 @@ public class TrackRecordingService extends Service implements LocationListener {
       }      
       service.onLocationChanged(loc);
     }
+
+    @Override
+    public byte[] getSensorData() {
+      if (service.sensorManager == null) {
+        Log.d(MyTracksConstants.TAG, "No sensor manager for data.");
+        return null;
+      }
+      if (service.sensorManager.getSensorDataSet() == null) {
+        Log.d(MyTracksConstants.TAG, "Sensor data set is null.");
+        return null;
+      }
+      return service.sensorManager.getSensorDataSet().toByteArray();
+    }
+
+    @Override
+    public int getSensorState() {
+      if (service.sensorManager == null) {
+        Log.d(MyTracksConstants.TAG, "No sensor manager for data.");
+        return Sensor.SensorState.NONE.getNumber();
+      }
+      return service.sensorManager.getSensorState().getNumber();
+    }
   }
 
   public long startNewTrack() {
@@ -1054,6 +1101,9 @@ public class TrackRecordingService extends Service implements LocationListener {
     showNotification();
     registerLocationListener();
     splitManager.restore();
+    if (sensorManager != null) {
+      sensorManager.onStartTrack();
+    }
 
     // Reset the number of auto-resume retries.
     setAutoResumeTrackRetries(
@@ -1096,6 +1146,11 @@ public class TrackRecordingService extends Service implements LocationListener {
     showNotification();
     long recordedTrackId = recordingTrackId;
     prefManager.setRecordingTrack(recordingTrackId = -1);
+    
+    if (sensorManager != null) {
+      sensorManager.shutdown();
+    }
+    
     releaseWakeLock();
 
     // Notify the world that we're no longer recording.

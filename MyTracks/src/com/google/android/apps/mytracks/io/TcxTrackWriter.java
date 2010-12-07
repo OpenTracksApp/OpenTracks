@@ -15,8 +15,11 @@
  */
 package com.google.android.apps.mytracks.io;
 
+import com.google.android.apps.mytracks.content.MyTracksLocation;
+import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
 
 import android.location.Location;
@@ -141,6 +144,37 @@ public class TcxTrackWriter implements TrackFormatWriter {
     pw.print(location.getAltitude());
     pw.println("</AltitudeMeters>");
 
+    if (location instanceof MyTracksLocation) {
+      SensorDataSet sensorData = ((MyTracksLocation) location).getSensorDataSet();
+      if (sensorData != null) {
+        if (sensorData.hasHeartRate()
+            && sensorData.getHeartRate().getState() == Sensor.SensorState.SENDING
+            && sensorData.getHeartRate().hasValue()) {
+          pw.print("          <HeartRateBpm>");
+          pw.print("<Value>");
+          pw.print(sensorData.getHeartRate().getValue());
+          pw.print("</Value>");
+          pw.println("</HeartRateBpm>");
+        }
+        if (sensorData.hasPower()
+            && sensorData.getPower().getState() == Sensor.SensorState.SENDING
+            && sensorData.getPower().hasValue()) {
+          pw.print("          <Extensions>");
+          pw.print("<TPX xmlns=\"http://www.garmin.com/xmlschemas/ActivityExtension/v2\">");
+          pw.print("<Watts>");
+          pw.print(sensorData.getPower().getValue());
+          pw.print("</Watts>");
+          pw.println("</TPX></Extensions>");
+        }
+        if (sensorData.hasCadence()
+            && sensorData.getCadence().getState() == Sensor.SensorState.SENDING
+            && sensorData.getCadence().hasValue()) {
+          pw.print("          <Cadence>");
+          pw.print(sensorData.getCadence().getValue());
+          pw.println("</Cadence>");
+        }
+      }
+    }
     pw.println("        </Trackpoint>");
   }
 

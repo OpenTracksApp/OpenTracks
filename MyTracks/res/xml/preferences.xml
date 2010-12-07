@@ -101,6 +101,29 @@ limitations under the License.
 
   </PreferenceScreen>
 
+  <!-- Sensors -->
+  <PreferenceScreen android:title="@string/sensor_options">
+    <ListPreference android:key="@string/sensor_type_key"
+        android:title="@string/settings_sensor_type"
+        android:summary="@string/settings_sensor_type_summary"
+        android:entries="@array/sensor_type_options"
+        android:entryValues="@array/sensor_type_values"
+        android:defaultValue="@string/none"/>
+
+    <!-- Bluetooth -->
+    <PreferenceCategory android:title="@string/bluetooth_options">
+      <ListPreference android:key="@string/bluetooth_sensor_key"
+                      android:title="@string/bluetooth_sensor_title"
+                      android:summary="@string/bluetooth_sensor_summary"
+                      android:defaultValue="any" />
+
+      <Preference android:key="@string/bluetooth_pairing_key"
+                  android:title="@string/bluetooth_pairing"
+                  android:summary="@string/bluetooth_pairing_summary"
+                  android:persistent="false" />
+    </PreferenceCategory>
+  </PreferenceScreen>
+
   <!-- Sharing settings -->
   <PreferenceScreen android:title="@string/settings_sharing">
     <CheckBoxPreference

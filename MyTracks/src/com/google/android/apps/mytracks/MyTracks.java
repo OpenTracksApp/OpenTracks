@@ -1128,7 +1128,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   long getSelectedTrackId() {
     return selectedTrackId;
   }
-  
+
   /**
    * Binds to track recording service if it is running.
    */
