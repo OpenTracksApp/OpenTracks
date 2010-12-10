@@ -54,7 +54,8 @@ limitations under the License.
   <uses-feature android:name="android.hardware.telephony" android:required="true"/>
   <uses-feature android:name="android.hardware.telephony.gsm" android:required="false"/>
   <uses-sdk android:minSdkVersion="3" />
-  <supports-screens android:largeScreens="true"
+  <supports-screens android:xlargeScreens="true"
+                    android:largeScreens="true"
                     android:normalScreens="true"
                     android:smallScreens="true"
                     android:anyDensity="true" />
