@@ -103,6 +103,21 @@ limitations under the License.
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/speed"/>
+          <CheckBox android:id="@+id/chart_settings_power"
+            android:checked="true"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/power"/>
+          <CheckBox android:id="@+id/chart_settings_cadence"
+            android:checked="true"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cadence"/>
+          <CheckBox android:id="@+id/chart_settings_heart_rate"
+            android:checked="true"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/heart_rate"/>
         </LinearLayout>
       </TableRow>
     </TableLayout>

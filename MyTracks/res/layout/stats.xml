@@ -42,15 +42,10 @@ limitations under the License.
       <TableRow
         android:background="@color/stat_label_background">
         <TextView
-          android:gravity="right"
+          style="@style/StatsRegister.Big"
           android:id="@+id/speed_register"
           android:layout_column="1"
-          android:layout_marginBottom="-13dip"
-          android:layout_marginTop="-13dip"
-          android:layout_span="4"
-          android:text="@string/unknown"
-          android:textColor="@color/stat_label_text"
-          android:textSize="50sp" />
+          android:layout_span="4"/>
         <LinearLayout
           android:gravity="bottom"
           android:layout_column="5"
@@ -62,24 +57,12 @@ limitations under the License.
             android:layout_width="fill_parent" />
           <TextView
             android:id="@+id/speed_unit_label_top"
-            android:gravity="bottom"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="2dip"
-            android:layout_marginTop="2dip"
-            android:layout_width="wrap_content"
-            android:textColor="@color/stat_label_text" />
+	          style="@style/StatsUnit" />
           <TextView
-            android:background="@color/black"
-            android:layout_height="3dip"
-            android:layout_width="fill_parent" />
+	          style="@style/StatsDivider" />
           <TextView
             android:id="@+id/speed_unit_label_bottom"
-            android:gravity="bottom"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="2dip"
-            android:layout_marginTop="2dip"
-            android:layout_width="wrap_content"
-            android:textColor="@color/stat_label_text" />
+	          style="@style/StatsUnit" />
         </LinearLayout>
       </TableRow>
 
@@ -100,43 +83,25 @@ limitations under the License.
       <TableRow
         android:background="@color/stat_label_background">
         <TextView
-          android:gravity="right"
+          style="@style/StatsRegister"
           android:id="@+id/total_distance_register"
-          android:layout_column="1"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
-          android:text="@string/unknown"
-          android:textColor="@color/stat_label_text"
-          android:textSize="40sp" />
+          android:layout_column="1" />
         <TextView
-          android:gravity="left"
           android:id="@+id/total_distance_unit_label"
           android:layout_column="2"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
-          android:text="@string/mile"
-          android:textColor="@color/stat_label_text" />
+	        style="@style/StatsUnitSolo" />
         <!-- TODO 4/08/2009
         The following is a bad hack to get a spacer the same size as the
         text.  Ideally this should just be a View, however I don't know how to
         set the view height properly.  fill_parent on this element causes as
         NullPointerException. This same filler is repeated on each line.-->
         <TextView
-          android:background="@color/black"
-          android:layout_column="3"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
-          android:layout_width="5dip"
-          android:textSize="40sp" />
+          style="@style/StatsSpacer"
+          android:layout_column="3"/>
         <TextView
-          android:gravity="right"
           android:id="@+id/max_speed_register"
-          android:layout_column="4"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
-          android:text="@string/unknown"
-          android:textColor="@color/stat_label_text"
-          android:textSize="40sp" />
+          style="@style/StatsRegister"
+          android:layout_column="4" />
         <LinearLayout
           android:gravity="bottom"
           android:layout_column="5"
@@ -145,24 +110,12 @@ limitations under the License.
           android:orientation="vertical">
           <TextView
             android:id="@+id/max_speed_unit_label_top"
-            android:gravity="bottom"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="-1dip"
-            android:layout_marginTop="-1dip"
-            android:layout_width="wrap_content"
-            android:textColor="@color/stat_label_text" />
+            style="@style/StatsUnit" />
           <TextView
-            android:background="@color/black"
-            android:layout_height="3dip"
-            android:layout_width="fill_parent" />
+	          style="@style/StatsDivider" />
           <TextView
             android:id="@+id/max_speed_unit_label_bottom"
-            android:gravity="bottom"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="-1dip"
-            android:layout_marginTop="-1dip"
-            android:layout_width="wrap_content"
-            android:textColor="@color/stat_label_text" />
+            style="@style/StatsUnit" />
         </LinearLayout>
       </TableRow>
 
@@ -182,33 +135,19 @@ limitations under the License.
       <TableRow
         android:background="@color/stat_label_background">
         <TextView
-          android:gravity="right"
           android:id="@+id/total_time_register"
           android:layout_column="1"
           android:layout_height="wrap_content"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
           android:layout_span="2"
           android:layout_width="fill_parent"
-          android:text="@string/unknown"
-          android:textColor="@color/stat_label_text"
-          android:textSize="40sp" />
+          style="@style/StatsRegister" />
         <TextView
-          android:background="@color/black"
-          android:layout_column="3"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
-          android:layout_width="5dip"
-          android:textSize="40sp" />
+          style="@style/StatsSpacer"
+          android:layout_column="3"/>
         <TextView
-          android:gravity="right"
           android:id="@+id/average_speed_register"
           android:layout_column="4"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
-          android:text="@string/unknown"
-          android:textColor="@color/stat_label_text"
-          android:textSize="40sp" />
+          style="@style/StatsRegister" />
         <LinearLayout
           android:gravity="bottom"
           android:layout_column="5"
@@ -217,24 +156,12 @@ limitations under the License.
           android:orientation="vertical">
           <TextView
             android:id="@+id/average_speed_unit_label_top"
-            android:gravity="bottom"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="-1dip"
-            android:layout_marginTop="-1dip"
-            android:layout_width="wrap_content"
-            android:textColor="@color/stat_label_text" />
+            style="@style/StatsUnit" />
           <TextView
-            android:background="@color/black"
-            android:layout_height="3dip"
-            android:layout_width="fill_parent" />
+	          style="@style/StatsDivider" />
           <TextView
             android:id="@+id/average_speed_unit_label_bottom"
-            android:gravity="bottom"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="-1dip"
-            android:layout_marginTop="-1dip"
-            android:layout_width="wrap_content"
-            android:textColor="@color/stat_label_text" />
+            style="@style/StatsUnit" />
         </LinearLayout>
       </TableRow>
 
@@ -254,33 +181,18 @@ limitations under the License.
       <TableRow
         android:background="@color/stat_label_background">
         <TextView
-          android:gravity="right"
           android:id="@+id/moving_time_register"
           android:layout_column="1"
           android:layout_height="wrap_content"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
           android:layout_span="2"
           android:layout_width="fill_parent"
-          android:text="@string/unknown"
-          android:textColor="@color/stat_label_text"
-          android:textSize="40sp" />
+          style="@style/StatsRegister" />
         <TextView
-          android:background="@color/black"
-          android:layout_column="3"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
-          android:layout_width="5dip"
-          android:textSize="40sp" />
+          style="@style/StatsSpacer"
+          android:layout_column="3"/>
         <TextView
-          android:gravity="right"
           android:id="@+id/average_moving_speed_register"
-          android:layout_column="4"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
-          android:text="@string/unknown"
-          android:textColor="@color/stat_label_text"
-          android:textSize="40sp" />
+          style="@style/StatsRegister" />
         <LinearLayout
           android:gravity="bottom"
           android:layout_column="5"
@@ -289,24 +201,14 @@ limitations under the License.
           android:orientation="vertical">
           <TextView
             android:id="@+id/average_moving_speed_unit_label_top"
-            android:gravity="bottom"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="-1dip"
-            android:layout_marginTop="-1dip"
-            android:layout_width="wrap_content"
-            android:textColor="@color/stat_label_text" />
+            style="@style/StatsUnit" />
           <TextView
-            android:background="@color/black"
+	          style="@style/StatsDivider" />
             android:layout_height="3dip"
             android:layout_width="fill_parent" />
           <TextView
             android:id="@+id/average_moving_speed_unit_label_bottom"
-            android:gravity="bottom"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="-1dip"
-            android:layout_marginTop="-1dip"
-            android:layout_width="wrap_content"
-            android:textColor="@color/stat_label_text" />
+            style="@style/StatsUnit" />
         </LinearLayout>
       </TableRow>
 
@@ -326,46 +228,24 @@ limitations under the License.
       <TableRow
         android:background="@color/stat_label_background">
         <TextView
-          android:gravity="right"
           android:id="@+id/elevation_register"
           android:layout_column="1"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
-          android:text="@string/unknown"
-          android:textColor="@color/stat_label_text"
-          android:textSize="40sp" />
+          style="@style/StatsRegister" />
         <TextView
-          android:gravity="left"
           android:id="@+id/elevation_unit_label"
           android:layout_column="2"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
-          android:text="@string/feet"
-          android:textColor="@color/stat_label_text"/>
+          style="@style/StatsUnitSolo" />
         <TextView
-          android:background="@color/black"
-          android:layout_column="3"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
-          android:layout_width="5dip"
-          android:textSize="40sp" />
+          style="@style/StatsSpacer"
+          android:layout_column="3"/>
         <TextView
-          android:gravity="right"
           android:id="@+id/elevation_gain_register"
           android:layout_column="4"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
-          android:text="@string/unknown"
-          android:textColor="@color/stat_label_text"
-          android:textSize="40sp" />
+          style="@style/StatsRegister" />
         <TextView
-          android:gravity="right"
           android:id="@+id/elevation_gain_unit_label"
           android:layout_column="5"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
-          android:text="@string/feet"
-          android:textColor="@color/stat_label_text" />
+          style="@style/StatsUnitSolo" />
       </TableRow>
 
       <!-- Min and max elevation -->
@@ -384,46 +264,24 @@ limitations under the License.
       <TableRow
         android:background="@color/stat_label_background">
         <TextView
-          android:gravity="right"
           android:id="@+id/min_elevation_register"
           android:layout_column="1"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
-          android:text="@string/unknown"
-          android:textColor="@color/stat_label_text"
-          android:textSize="40sp" />
+          style="@style/StatsRegister" />
         <TextView
-          android:gravity="left"
           android:id="@+id/min_elevation_unit_label"
           android:layout_column="2"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
-          android:text="@string/feet"
-          android:textColor="@color/stat_label_text" />
+          style="@style/StatsUnitSolo" />
         <TextView
-          android:background="@color/black"
-          android:layout_column="3"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
-          android:layout_width="5dip"
-          android:textSize="40sp" />
+          style="@style/StatsSpacer"
+          android:layout_column="3"/>
         <TextView
-          android:gravity="right"
           android:id="@+id/max_elevation_register"
           android:layout_column="4"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
-          android:text="@string/unknown"
-          android:textColor="@color/stat_label_text"
-          android:textSize="40sp" />
+          style="@style/StatsRegister" />
         <TextView
-          android:gravity="right"
           android:id="@+id/max_elevation_unit_label"
           android:layout_column="5"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
-          android:text="@string/feet"
-          android:textColor="@color/stat_label_text" />
+          style="@style/StatsUnitSolo" />
       </TableRow>
 
       <!-- Min and max grade -->
@@ -442,36 +300,18 @@ limitations under the License.
       <TableRow
         android:background="@color/stat_label_background">
         <TextView
-          android:gravity="right"
           android:id="@+id/min_grade_register"
           android:layout_column="1"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
-          android:layout_width="fill_parent"
           android:layout_span="2"
-          android:text="@string/unknown"
-          android:textColor="@color/stat_label_text"
-          android:textSize="40sp" />
+          style="@style/StatsRegister" />
         <TextView
-          android:background="@color/black"
-          android:layout_column="3"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
-          android:layout_width="5dip"
-          android:textSize="40sp" />
+          style="@style/StatsSpacer"
+          android:layout_column="3"/>
         <TextView
-          android:gravity="right"
           android:id="@+id/max_grade_register"
           android:layout_column="4"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
-          android:layout_width="fill_parent"
           android:layout_span="2"
-          android:text="@string/unknown"
-          android:textColor="@color/stat_label_text"
-          android:textSize="40sp" />
+          style="@style/StatsRegister" />
       </TableRow>
 
       <!-- Latitude and Longitude -->
@@ -488,36 +328,19 @@ limitations under the License.
       <TableRow
         android:background="@color/stat_label_background">
         <TextView
-          android:gravity="right"
           android:id="@+id/latitude_register"
           android:layout_column="1"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="-5dip"
-          android:layout_marginTop="-5dip"
-          android:layout_width="fill_parent"
           android:layout_span="2"
-          android:text="@string/unknown"
-          android:textColor="@color/stat_label_text"
-          android:textSize="25sp" />
+          style="@style/StatsRegister.Small" />
         <TextView
-          android:background="@color/black"
+          style="@style/StatsSpacer"
           android:layout_column="3"
-          android:layout_marginBottom="-9dip"
-          android:layout_marginTop="-9dip"
-          android:layout_width="5dip"
           android:textSize="25sp" />
         <TextView
-          android:gravity="right"
           android:id="@+id/longitude_register"
           android:layout_column="4"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="-5dip"
-          android:layout_marginTop="-5dip"
-          android:layout_width="fill_parent"
           android:layout_span="2"
-          android:text="@string/unknown"
-          android:textColor="@color/stat_label_text"
-          android:textSize="25sp" />
+          style="@style/StatsRegister.Small" />
       </TableRow>
 
     </TableLayout>

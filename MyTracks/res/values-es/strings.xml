@@ -187,9 +187,6 @@ limitations under the License.
   <string name="settings_share_url_only_summary_on">Sólo el URL del mapa será enviado al compartir</string>
   <string name="settings_share_url_only_summary_off">Los contenidos de la pista también serán incluídos al compartir</string>
 
-  <string name="settings_signal_sampling_frequency">Frecuencia de medición de señal</string>
-  <string name="settings_signal_sampling_frequency_summary">Tiempo entre grabaciones de la intensidad de la señal del teléfono</string>
-
   <string name="settings_split_frequency">Dividir frecuencia</string>
   <string name="settings_split_frequency_summary">Tiempo o distancia máxima para insertar una nueva marca de división</string>
   <string name="pace_label">Paso</string>

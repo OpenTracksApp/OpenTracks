@@ -1,7 +1,8 @@
 // Copyright 2010 Google Inc. All Rights Reserved.
 package com.google.android.apps.mytracks.io;
 
-import android.location.Location;
+import com.google.android.apps.mytracks.content.MyTracksLocation;
+import com.google.android.apps.mytracks.content.Sensor;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -38,11 +39,11 @@ public class TcxTrackWriterTest extends TrackFormatWriterTest {
   /**
    * Asserts that the given tags describe the given points, in the same order.
    */
-  private void assertTagsMatchPoints(List<Element> tags, Location... locs) {
+  private void assertTagsMatchPoints(List<Element> tags, MyTracksLocation... locs) {
     assertEquals(locs.length, tags.size());
     for (int i = 0; i < locs.length; i++) {
       Element tag = tags.get(i);
-      Location loc = locs[i];
+      MyTracksLocation loc = locs[i];
 
       assertTagMatchesLocation(tag, loc);
     }
@@ -51,7 +52,7 @@ public class TcxTrackWriterTest extends TrackFormatWriterTest {
   /**
    * Asserts that the given tag describes the given location.
    */
-  private void assertTagMatchesLocation(Element tag, Location loc) {
+  private void assertTagMatchesLocation(Element tag, MyTracksLocation loc) {
     Element posTag = getChildElement(tag, "Position");
     assertEquals(Double.toString(loc.getLatitude()),
         getChildTextValue(posTag, "LatitudeDegrees"));
@@ -62,5 +63,16 @@ public class TcxTrackWriterTest extends TrackFormatWriterTest {
         getChildTextValue(tag, "Time"));
     assertEquals(Double.toString(loc.getAltitude()),
         getChildTextValue(tag, "AltitudeMeters"));
+    assertTrue(loc.getSensorDataSet() != null);
+    Sensor.SensorDataSet sds = loc.getSensorDataSet();
+
+    List<Element> bpm = getChildElements(tag, "HeartRateBpm", 1);
+    assertEquals(Integer.toString(sds.getHeartRate().getValue()),
+        getChildTextValue(bpm.get(0), "Value"));
+
+    List<Element> ext = getChildElements(tag, "Extensions", 1);
+    List<Element> tpx = getChildElements(ext.get(0), "TPX", 1);
+    assertEquals(Integer.toString(sds.getPower().getValue()),
+        getChildTextValue(tpx.get(0), "Watts"));
   }
 }

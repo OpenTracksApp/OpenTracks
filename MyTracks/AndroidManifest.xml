@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.google.android.maps.mytracks"
           android:installLocation="auto"
-          android:versionCode="20"
-          android:versionName="1.0.19">
+          android:versionCode="22"
+          android:versionName="1.0.21">
   <application android:icon="@drawable/arrow_icon"
                android:label="@string/app_name"
                android:backupAgent="com.google.android.apps.mytracks.io.backup.MyTracksBackupAgent">
@@ -13,7 +28,10 @@
                android:value="AEdPqrEAAAAIi-_QiwoRSc9_bAC9cmuNXTQyU8ajJmGtKdhskQ" />
 
     <provider android:name="com.google.android.apps.mytracks.content.MyTracksProvider"
-              android:authorities="com.google.android.maps.mytracks" />
+              android:authorities="com.google.android.maps.mytracks"
+              android:exported="true"
+              android:readPermission="com.google.android.apps.mytracks.READ_TRACK_DATA"
+              android:writePermission="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
 
     <activity android:name="com.google.android.apps.mytracks.MyTracks"
               android:label="My Tracks"
@@ -35,11 +53,13 @@
     </activity>
 
     <activity android:name="com.google.android.apps.mytracks.MyTracksMap"
-              android:label="MyTracks" />
+              android:label="MyTracks"
+              android:exported="false" />
 
     <activity android:name="com.google.android.apps.mymaps.MyMapsList"
               android:label="@string/map_list_title"
-              android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|fontScale" />
+              android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|fontScale"
+              android:exported="false" />
 
     <activity android:name="com.google.android.apps.mytracks.MyTracksList"
               android:label="Recorded Tracks" />
@@ -60,19 +80,26 @@
               android:label="@string/aggregated_stats" />
 
     <activity android:name="com.google.android.apps.mytracks.StatsActivity"
-              android:label="@string/statistics" />
+              android:label="@string/statistics"
+              android:exported="false" />
+
+    <activity android:name="com.google.android.apps.mytracks.SensorStateActivity"
+              android:label="@string/sensor_state" />
 
     <activity android:name="com.google.android.apps.mytracks.ChartActivity"
-              android:label="@string/elevation_label"/>
+              android:label="@string/elevation_label"
+              android:exported="false" />
 
     <activity android:name="com.google.android.apps.mytracks.WelcomeActivity"
-              android:label="@string/welcome"/>
+              android:label="@string/welcome"
+              android:exported="false" />
 
     <service android:name="com.google.android.apps.mytracks.services.TrackRecordingService"
              android:label="Track Recording Service"
              android:icon="@drawable/arrow_320"
              android:enabled="true"
-             android:exported="true" />
+             android:exported="true"
+             android:permission="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
 
     <receiver android:name="com.google.android.apps.mytracks.MyTracksReceiver">
       <intent-filter>
@@ -89,6 +116,8 @@
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.WAKE_LOCK" />
+  <uses-permission android:name="android.permission.BLUETOOTH" />
+  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
   <!-- Permissions for uploading tracks -->
   <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -102,7 +131,32 @@
 
   <!-- Permissions for misc services -->
   <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-  
+
+  <!-- Exported permissions (for other apps to use our features) -->
+  <!-- Permission to get track start/end broadcasts -->
+  <permission android:name="com.google.android.apps.mytracks.TRACK_NOTIFICATIONS"
+              android:permissionGroup="android.permission-group.LOCATION"
+              android:label="@string/notification_permission_label"
+              android:description="@string/notification_permission_description"
+              android:protectionLevel="normal" />
+  <!-- Permission to read raw track data (points, etc.) -->
+  <permission android:name="com.google.android.apps.mytracks.READ_TRACK_DATA"
+              android:permissionGroup="android.permission-group.LOCATION"
+              android:label="@string/read_tracks_permission_label"
+              android:description="@string/read_tracks_permission_description"
+              android:protectionLevel="dangerous" />
+  <!-- Permission to write track data, either raw or by making service calls -->
+  <permission android:name="com.google.android.apps.mytracks.WRITE_TRACK_DATA"
+              android:permissionGroup="android.permission-group.LOCATION"
+              android:label="@string/write_tracks_permission_label"
+              android:description="@string/write_tracks_permission_description"
+              android:protectionLevel="dangerous" />
+
+  <!-- We read and write raw track data, obviously. -->
+  <uses-permission android:name="com.google.android.apps.mytracks.READ_TRACK_DATA" />
+  <uses-permission android:name="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
+  <uses-permission android:name="com.google.android.apps.mytracks.TRACK_NOTIFICATIONS" />
+
   <!-- Features required -->
   <uses-feature android:name="android.hardware.location" android:required="true"/>
   <uses-feature android:name="android.hardware.location.gps" android:required="true"/>

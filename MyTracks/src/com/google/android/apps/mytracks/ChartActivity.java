@@ -16,11 +16,14 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.ChartView.Mode;
+import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackPointsColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
+import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.services.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
@@ -178,12 +181,12 @@ public class ChartActivity extends Activity implements
                 cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
             ArrayList<double[]> data = new ArrayList<double[]>();
             // Need two locations so we can keep track of the last location.
-            Location location = new Location("");
+            Location location = new MyTracksLocation("");
             do {
               lastSeenLocationId = cursor.getLong(idColumnIdx);
               providerUtils.fillLocation(cursor, location);
               if (MyTracksUtils.isValidLocation(location)) {
-                double[] point = new double[3];
+                double[] point = new double[6];
                 location = getDataPoint(location, track, point);
                 data.add(point);
               }
@@ -464,10 +467,14 @@ public class ChartActivity extends Activity implements
 
   /**
    * Given a location, creates a new data point for the chart. A data point is
-   * an array double[2], where:
+   * an array double[3 or 6], where:
    * data[0] = the time or distance
    * data[1] = the elevation
    * data[2] = the speed
+   * and possibly:
+   * data[3] = power
+   * data[4] = cadence
+   * data[5] = heart rate
    *
    * This must be called in order for each point.
    *
@@ -477,6 +484,35 @@ public class ChartActivity extends Activity implements
    * @return the previous location, now available for reuse
    */
   private Location getDataPoint(Location location, Track track, double[] result) {
+    if (location instanceof MyTracksLocation &&
+        ((MyTracksLocation) location).getSensorDataSet() != null) {
+      SensorDataSet sensorData = ((MyTracksLocation) location).getSensorDataSet();
+      if (sensorData.hasPower()
+          && sensorData.getPower().getState() == Sensor.SensorState.SENDING
+          && sensorData.getPower().hasValue()) {
+        result[3] = sensorData.getPower().getValue();
+      } else {
+        result[3] = Double.NaN;
+      }
+      if (sensorData.hasCadence()
+          && sensorData.getCadence().getState() == Sensor.SensorState.SENDING
+          && sensorData.getCadence().hasValue()) {
+        result[4] = sensorData.getCadence().getValue();
+      } else {
+        result[4] = Double.NaN;
+      }
+      if (sensorData.hasHeartRate()
+          && sensorData.getHeartRate().getState() == Sensor.SensorState.SENDING
+          && sensorData.getHeartRate().hasValue()) {
+        result[5] = sensorData.getHeartRate().getValue();
+      } else {
+        result[5] = Double.NaN;
+      }
+    } else {
+      result[3] = Double.NaN;
+      result[4] = Double.NaN;
+      result[5] = Double.NaN;
+    }
     switch (mode) {
       case BY_DISTANCE:
         result[0] = profileLength;
@@ -529,7 +565,7 @@ public class ChartActivity extends Activity implements
 
     if (oldLastLocation == null) {
       // No previous location, but return a blank one for reuse
-      return new Location("");
+      return new MyTracksLocation("");
     }
 
     return oldLastLocation;
@@ -576,7 +612,7 @@ public class ChartActivity extends Activity implements
       final ArrayList<double[]> theData = new ArrayList<double[]>();
       int points = 0;
       // Need two locations so we can keep track of the last location.
-      Location location = new Location("");
+      Location location = new MyTracksLocation("");
       while (lastLocationRead < track.getStopId()) {
         cursor = providerUtils.getLocationsCursor(
             selectedTrackId, lastLocationRead, bufferSize, false);
@@ -592,7 +628,8 @@ public class ChartActivity extends Activity implements
               if (MyTracksUtils.isValidLocation(location)) {
                 lastLocationRead = lastSeenLocationId =
                     cursor.getLong(idColumnIdx);
-                double[] point = new double[3];
+                // TODO Can we be smarter about choosing 3 or 6 entries?
+                double[] point = new double[6];
                 location = getDataPoint(location, track, point);
                 if (points % chartSamplingFrequency == 0) {
                   theData.add(point);

@@ -32,6 +32,7 @@ limitations under the License.
   <string name="choose_track_message">Please select the track to view</string>
   <string name="current_track">Current track</string>
   <string name="current_segment">Last segment</string>
+  <string name="sensor_state">Sensor State</string>
   <string name="aggregated_stats">Aggregated Statistics</string>
 
   <!-- Error messages -->
@@ -200,9 +201,6 @@ limitations under the License.
   <string name="settings_share_url_only">Share only URL</string>
   <string name="settings_share_url_only_summary_on">Only the URL of the map will be sent when sharing</string>
   <string name="settings_share_url_only_summary_off">The contents of the track will also be included when sharing</string>
-
-  <string name="settings_signal_sampling_frequency">Signal sampling frequency</string>
-  <string name="settings_signal_sampling_frequency_summary">Time between two recordings of the phone\'s signal strength</string>
 
   <string name="settings_split_frequency">Split frequency</string>
   <string name="settings_split_frequency_summary">Maximum time or distance after which a new split marker will be inserted</string>
@@ -447,14 +445,6 @@ limitations under the License.
   <string name="check_units_title">Units of Measure Notice</string>
   <string name="check_units_message">By default units are metric. Would you like to change that setting?</string>
 
-  <!-- Signal Strength -->
-  <string name="error_rate"> Error Rate: %1$d</string>
-  <string name="signal_to_noise_ratio"> Signal to Noise Ratio: %1$d</string>
-  <string name="ecio"> Ec/lo: %1$.1f dB</string>
-  <string name="gsm_strength">GSM Strength: %1$d</string>
-  <string name="cdma_strength">CDMA Strength: %1$d dBm</string>
-  <string name="evdo_strength">EVDO Strength: %1$d dBm</string>
-
   <!-- Fake preference keys - never saved, but show options in the preferences screen -->
   <string name="method_bluetooth">Bluetooth</string>
   <string name="bluetooth_options">Bluetooth options</string>
@@ -465,9 +455,7 @@ limitations under the License.
 
   <!-- Sensor Types => DO NOT TRANSLATE -->
   <string name="none">NONE</string>
-  <string name="ant_sensor_type">ANT</string>
-  <string name="srm_sensor_type">SRM</string>
-  <string name="athlosoft_sensor_type">ATHLOSOFT</string>
+  <string name="zephyr_sensor_type">ZEPHYR</string>
 
   <!-- Bluetooth Sensor -->
   <string name="bluetooth_connected">Connected to %s</string>
@@ -478,5 +466,20 @@ limitations under the License.
   <string name="sensor_data_time">Sensor Data Time</string>
   <string name="power_meter_enabled">Power meter enabled</string>
   <string name="heart_rate_monitor_enabled">Heart rate monitor enabled</string>
+  <string name="no_sensor_manager">No Sensor Manager</string>
+  <string name="enabled">Enabled</string>
+  <string name="connecting">Connecting</string>
+  <string name="connected">Connected</string>
+  <string name="disconnected">Disconnected</string>
+  <string name="no_sensor_service">No Sensor Service</string>
+  <string name="searching">Searching</string>
+  <string name="sending">Sending</string>
 
+  <!-- Manifest description (not seen inside the app) -->
+  <string name="notification_permission_label">receive track recording notifications</string>
+  <string name="read_tracks_permission_label">read recorded track data</string>
+  <string name="write_tracks_permission_label">write recorded track data, start/stop recording tracks</string>
+  <string name="notification_permission_description">Be notified when a track starts or stops being recorded.</string>
+  <string name="read_tracks_permission_description">Be able to read track data, such as points and waypoints.</string>
+  <string name="write_tracks_permission_description">Be able to write track data, such as starting recording or adding waypoints.</string>
 </resources>

@@ -40,7 +40,6 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
   private final String minRecordingIntervalKey;
   private final String minRequiredAccuracyKey;
   private final String recordingTrackKey;
-  private final String signalSamplingFrequencyKey;
   private final String splitFrequencyKey;
 
   public PreferenceManager(TrackRecordingService service) {
@@ -72,8 +71,6 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
         service.getString(R.string.min_required_accuracy_key);
     recordingTrackKey =
         service.getString(R.string.recording_track_key);
-    signalSamplingFrequencyKey =
-        service.getString(R.string.signal_sampling_frequency_key);
     splitFrequencyKey =
         service.getString(R.string.split_frequency_key);
     
@@ -162,10 +159,6 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
     if (key == null || key.equals(splitFrequencyKey)) {
       service.getSplitManager().setSplitFrequency(
           sharedPreferences.getInt(splitFrequencyKey, 0));
-    }
-    if (key == null || key.equals(signalSamplingFrequencyKey)) {
-      service.getSignalManager().setFrequency(
-          sharedPreferences.getInt(signalSamplingFrequencyKey, -1), service);
     }
     if (key == null || key.equals(metricUnitsKey)) {
       service.getSplitManager().setMetricUnits(

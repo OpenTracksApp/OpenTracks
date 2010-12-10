@@ -102,10 +102,6 @@ public class ApiFeatures {
     return true;
   }
 
-  public boolean hasModernSignalStrength() {
-    return getApiLevel() >= 7;
-  }
- 
   public boolean hasStrictMode() {
     return getApiLevel() >= 9;
   }

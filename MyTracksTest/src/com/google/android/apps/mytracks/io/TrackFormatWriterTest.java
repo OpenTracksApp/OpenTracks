@@ -1,10 +1,11 @@
 // Copyright 2010 Google Inc. All Rights Reserved.
 package com.google.android.apps.mytracks.io;
 
+import com.google.android.apps.mytracks.content.MyTracksLocation;
+import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 
-import android.location.Location;
 import android.test.AndroidTestCase;
 
 import org.w3c.dom.Document;
@@ -46,7 +47,7 @@ public abstract class TrackFormatWriterTest extends AndroidTestCase {
   private static final int BUFFER_SIZE = 10240;
   protected static final long TRACK_ID = 12345L;
   protected Track track;
-  protected Location location1, location2, location3, location4;
+  protected MyTracksLocation location1, location2, location3, location4;
   protected Waypoint wp1, wp2;
 
   @Override
@@ -58,10 +59,10 @@ public abstract class TrackFormatWriterTest extends AndroidTestCase {
     track.setName(TRACK_NAME);
     track.setDescription(TRACK_DESCRIPTION);
 
-    location1 = new Location("mock");
-    location2 = new Location("mock");
-    location3 = new Location("mock");
-    location4 = new Location("mock");
+    location1 = new MyTracksLocation("mock");
+    location2 = new MyTracksLocation("mock");
+    location3 = new MyTracksLocation("mock");
+    location4 = new MyTracksLocation("mock");
     populateLocations(location1, location2, location3, location4);
 
     wp1 = new Waypoint();
@@ -77,13 +78,24 @@ public abstract class TrackFormatWriterTest extends AndroidTestCase {
   /**
    * Populates the given locations with coordinates and time.
    */
-  protected void populateLocations(Location... locs) {
+  protected void populateLocations(MyTracksLocation... locs) {
     for (int i = 0; i < locs.length; i++) {
-      Location loc = locs[i];
+      MyTracksLocation loc = locs[i];
       loc.setAltitude(i * 1000);
       loc.setLatitude(i);
       loc.setLongitude(-i);
       loc.setTime(10000000 + i * 1000);
+      Sensor.SensorData.Builder hr = Sensor.SensorData.newBuilder()
+        .setValue(100 + i)
+        .setState(Sensor.SensorState.SENDING);
+      Sensor.SensorData.Builder power = Sensor.SensorData.newBuilder()
+        .setValue(400 + i)
+        .setState(Sensor.SensorState.SENDING);
+      Sensor.SensorDataSet sds =
+        Sensor.SensorDataSet.newBuilder().setHeartRate(hr.build())
+        .setPower(power)
+        .build();
+      loc.setSensorData(sds);
     }
   }
 
@@ -139,7 +151,7 @@ public abstract class TrackFormatWriterTest extends AndroidTestCase {
   }
 
   /**
-   * Returns all child elements of a given parent which gave the given name.
+   * Returns all child elements of a given parent which have the given name.
    *
    * @param parent the parent to get children from
    * @param elementName the element name to look for

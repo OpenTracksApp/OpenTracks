@@ -195,9 +195,6 @@ limitations under the License.
   <string name="settings_share_url_only_summary_on">Bara länken till kartan kommer att skickas vid delning</string>
   <string name="settings_share_url_only_summary_off">Innehållet i spåret kommer också att inkluderas vid delning</string>
 
-  <string name="settings_signal_sampling_frequency">Signalprovsfrekvens</string>
-  <string name="settings_signal_sampling_frequency_summary">Tid mellan två inspelningar av telefonens signalstyrka</string>
-
   <string name="settings_split_frequency">Delningsfrekvens</string>
   <string name="settings_split_frequency_summary">Maximala tiden eller distansen varefter en ny delningsmarkör kommer infogas</string>
   <string name="pace_label">Tempo</string>
@@ -383,12 +380,4 @@ limitations under the License.
   <!-- Check Units -->
   <string name="check_units_title">Mätenheter</string>
   <string name="check_units_message">Som standard är enheterna metriska. Vill du ändra den inställningen?</string>
-
-  <!-- Signal Strength -->
-  <string name="error_rate"> Felfrekvens: %1$d</string>
-  <string name="signal_to_noise_ratio"> Signal / brus-förhållande: %1$d</string>
-  <string name="ecio"> Ec/lo: %1$.1f dB</string>
-  <string name="gsm_strength">GSM-styrka: %1$d</string>
-  <string name="cdma_strength">CDMA-styrka: %1$d dBm</string>
-  <string name="evdo_strength">EVDO-styrka: %1$d dBm</string>
 </resources>

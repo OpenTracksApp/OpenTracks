@@ -15,17 +15,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-  <color name="gold">#FFffd700</color>
-  <color name="white">#FFFFFFFF</color>
   <color name="black">#FF000000</color>
-  <color name="lightblue">#FF00FFFF</color>
   <color name="blue">#FF0000FF</color>
   <color name="blue_transparent">#400000FF</color>
-  <color name="red">#FFFF0000</color>
-  <color name="green">#FF00AA00</color>
-  <color name="gray">#FFAAAAAA</color>
   <color name="darkgray">#FF444444</color>
+  <color name="gold">#FFffd700</color>
+  <color name="gray">#FFAAAAAA</color>
+  <color name="green">#FF00AA00</color>
+  <color name="lightblue">#FF00FFFF</color>
   <color name="opaque_shadow">#70000000</color>
+  <color name="purple">#FF401465</color>
+  <color name="purple_transparent">#40401465</color>
+  <color name="red">#FFFF0000</color>
+  <color name="red_transparent">#40FF0000</color>
   <color name="stat_label_background">#FFF0F0F0</color>
   <color name="stat_label_text">#FF0F0F0F</color>
+  <color name="white">#FFFFFFFF</color>
+  <color name="yellow">#FFF8FF00</color>
+  <color name="yellow_transparent">#40F8FF00</color>
 </resources>

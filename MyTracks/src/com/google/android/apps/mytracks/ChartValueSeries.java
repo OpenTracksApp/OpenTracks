@@ -42,6 +42,7 @@ public class ChartValueSeries {
   private double min = 0;
   private double max = 1;
   private int effectiveMax = 0;
+  private int absoluteMax = Integer.MIN_VALUE;
   private int effectiveMin = 0;
   private double spread = 0;
   private boolean enabled = true;
@@ -131,7 +132,7 @@ public class ChartValueSeries {
     if (min < 0) {
       effectiveMin -= rounding;
     }
-    spread = effectiveMax - effectiveMin;
+    spread = getMax() - effectiveMin;
   }
 
   /**
@@ -139,7 +140,7 @@ public class ChartValueSeries {
    */
   public int getMaxLabelLength() {
     String minS = format.format(effectiveMin);
-    String maxS = format.format(effectiveMax);
+    String maxS = format.format(getMax());
     return Math.max(minS.length(), maxS.length());
   }
 
@@ -151,10 +152,16 @@ public class ChartValueSeries {
   }
 
   /**
-   * @return The rounded up maximum value
+   * @return The minimum of the rounded up max value and the effective max.
    */
   public int getMax() {
-    return effectiveMax;
+    // Return the effective max if no absolute is set
+    // or the effective max is less than the absolute.
+    if ((absoluteMax == Integer.MIN_VALUE) || (effectiveMax < absoluteMax)) {
+      return effectiveMax;
+    } else {
+      return absoluteMax;
+    }
   }
 
   /**
@@ -210,5 +217,17 @@ public class ChartValueSeries {
    */
   public void setEnabled(boolean enabled) {
     this.enabled = enabled;
+  }
+
+  public int getAbsoluteMax() {
+    return absoluteMax;
+  }
+
+  public void setAbsoluteMax(int absoluteMax) {
+    this.absoluteMax = absoluteMax;
+  }
+
+  public boolean hasData() {
+    return monitor.hasData();
   }
 }

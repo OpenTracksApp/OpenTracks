@@ -17,6 +17,7 @@ package com.google.android.apps.mytracks;
 
 import com.google.android.maps.mytracks.R;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -63,8 +64,8 @@ class MenuManager {
         return true;
       }
       case R.id.menu_list_tracks: {
-        Intent startIntent = new Intent(activity, MyTracksList.class);
-        activity.startActivityForResult(startIntent, MyTracksConstants.SHOW_TRACK);
+	    activity.startActivityForResult(new Intent(activity, MyTracksList.class),
+	    		MyTracksConstants.SHOW_TRACK);
         return true;
       }
       case R.id.menu_list_markers: {
@@ -73,20 +74,17 @@ class MenuManager {
         activity.startActivityForResult(startIntent, MyTracksConstants.SHOW_WAYPOINT);
         return true;
       }
+      case R.id.menu_sensor_state: {
+        return startActivity(SensorStateActivity.class);
+      }
       case R.id.menu_settings: {
-        Intent startIntent = new Intent(activity, MyTracksSettings.class);
-        activity.startActivity(startIntent);
-        return true;
+        return startActivity(MyTracksSettings.class);
       }
       case R.id.menu_aggregated_stats: {
-        Intent startIntent = new Intent(activity, AggregatedStatsActivity.class);
-        activity.startActivity(startIntent);
-        return true;
+        return startActivity(AggregatedStatsActivity.class);
       }
       case R.id.menu_help: {
-        Intent startIntent = new Intent(activity, WelcomeActivity.class);
-        activity.startActivity(startIntent);
-        return true;
+        return startActivity(WelcomeActivity.class);
       }
       case MyTracksConstants.MENU_CLEAR_MAP: {
         activity.setSelectedTrackId(-1);
@@ -94,5 +92,10 @@ class MenuManager {
       }
     }
     return false;
+  }
+
+  private boolean startActivity(Class<? extends Activity> activityClass) {
+    activity.startActivity(new Intent(activity, activityClass));
+    return true;
   }
 }
