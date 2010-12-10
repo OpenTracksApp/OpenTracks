@@ -316,6 +316,8 @@ public class TrackWriter {
       isLastValid = isValid;
     } while (locationsCursor.moveToNext());
 
+    locationsCursor.close();
+
     if (segmentOpen) {
       writer.writeCloseSegment();
       segmentOpen = false;
