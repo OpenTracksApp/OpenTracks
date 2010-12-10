@@ -38,7 +38,7 @@ public class PreferenceBackupHelperTest extends TestCase {
    */
   private class MockPreferenceEditor implements SharedPreferences.Editor {
     private Map<String, Object> newPreferences = new HashMap<String, Object>(preferenceValues);
-    
+
     @Override
     public Editor clear() {
       newPreferences.clear();
@@ -49,6 +49,11 @@ public class PreferenceBackupHelperTest extends TestCase {
     public boolean commit() {
       preferenceValues = newPreferences;
       return true;
+    }
+
+    @Override
+    public void apply() {
+      commit();
     }
 
     @Override
