@@ -871,7 +871,7 @@ public class TrackRecordingService extends Service implements LocationListener {
         wpt.setType(Waypoint.TYPE_WAYPOINT);
         break;
       case STATISTICS:
-        insertStatisticsMarker(wpt);
+        buildStatisticsMarker(wpt);
         break;
     }
     if (!isRecording()) {
@@ -891,13 +891,13 @@ public class TrackRecordingService extends Service implements LocationListener {
   }
 
   /**
-   * Inserts a statistics marker. A statistics marker holds the stats for the
-   * last segment up to this marker.
+   * Build a statistics marker.
+   * A statistics marker holds the stats for the* last segment up to this marker.
    *
-   * @param location the location where to insert
+   * @param Waypoint The waypoint which will be populated with stats data.
    * @return the unique id of the inserted marker
    */
-  private void insertStatisticsMarker(Waypoint waypoint) {
+  private void buildStatisticsMarker(Waypoint waypoint) {
     if (!isRecording()) {
       throw new IllegalStateException(
           "Unable to insert statistics marker while not recording!");
@@ -922,10 +922,10 @@ public class TrackRecordingService extends Service implements LocationListener {
 
     waypoint.setStartId(providerUtils.getLastLocationId(recordingTrackId));
 
-    // Create a new stats keeper for the next marker
+    // Create a new stats keeper for the next marker.
     waypointStatsBuilder = new TripStatisticsBuilder(time);
-  }  
-  
+  }
+ 
   private ServiceBinder binder = new ServiceBinder(this);
   
   /**
