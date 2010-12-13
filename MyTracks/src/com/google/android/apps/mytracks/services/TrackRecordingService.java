@@ -427,7 +427,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     lastValidLocation = null;
 
     Waypoint waypoint = providerUtils.getFirstWaypoint(recordingTrackId);
-    if (waypoint != null) {
+    if (waypoint != null && waypoint.getStatistics() != null) {
       currentWaypointId = waypoint.getId();
       waypointStatsBuilder = new TripStatisticsBuilder(
           waypoint.getStatistics());

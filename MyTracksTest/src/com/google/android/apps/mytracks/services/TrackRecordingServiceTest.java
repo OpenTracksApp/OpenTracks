@@ -23,9 +23,12 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointType;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.testing.TestingProviderUtilsFactory;
 import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.maps.mytracks.R;
+import com.google.android.testing.mocking.AndroidMock;
 
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
@@ -37,6 +40,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.location.Location;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.test.RenamingDelegatingContext;
 import android.test.ServiceTestCase;
 import android.test.mock.MockContentResolver;
@@ -565,7 +569,19 @@ public class TrackRecordingServiceTest
     assertEquals(1, service.insertWaypoint(WaypointType.STATISTICS));
     assertEquals(2, service.insertWaypoint(WaypointType.STATISTICS));
     
-    // TODO: Add more checks.
+    Waypoint wpt = providerUtils.getWaypoint(1);
+    assertEquals(getContext().getString(R.string.stats_icon_url),
+        wpt.getIcon());
+    assertEquals(getContext().getString(R.string.statistics),
+        wpt.getName());
+    assertEquals(Waypoint.TYPE_STATISTICS, wpt.getType());
+    assertEquals(123, wpt.getTrackId());
+    assertEquals(0.0, wpt.getLength());
+    assertNotNull(wpt.getLocation());
+    assertNotNull(wpt.getStatistics());
+    // TODO check the rest of the params.
+
+    // TODO: Check waypoint 2.
   }
 
   @MediumTest
@@ -589,6 +605,16 @@ public class TrackRecordingServiceTest
     assertTrue(service.isRecording());
     
     assertEquals(1, service.insertWaypoint(WaypointType.MARKER));
+    Waypoint wpt = providerUtils.getWaypoint(1);
+    assertEquals(getContext().getString(R.string.waypoint_icon_url),
+        wpt.getIcon());
+    assertEquals(getContext().getString(R.string.waypoint),
+        wpt.getName());
+    assertEquals(Waypoint.TYPE_WAYPOINT, wpt.getType());
+    assertEquals(123, wpt.getTrackId());
+    assertEquals(0.0, wpt.getLength());
+    assertNotNull(wpt.getLocation());
+    assertNull(wpt.getStatistics());
   }
   
   @MediumTest
