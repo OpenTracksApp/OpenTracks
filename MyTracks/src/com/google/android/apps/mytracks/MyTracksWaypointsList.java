@@ -29,6 +29,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
@@ -166,26 +167,29 @@ public class MyTracksWaypointsList extends ListActivity
 
   @Override
   public void onClick(View v) {
+    WaypointType type;
     switch (v.getId()) {
-      case R.id.waypointslist_btn_insert_waypoint: {
-        long id = MyTracks.getInstance().insertWaypoint(WaypointType.MARKER);
-        if (id >= 0) {
-          Intent intent = new Intent(this, MyTracksWaypointDetails.class);
-          intent.putExtra("waypointid", id);
-          startActivity(intent);
-        }
+      case R.id.waypointslist_btn_insert_waypoint:
+        type = WaypointType.MARKER;
         break;
-      }
-      case R.id.waypointslist_btn_insert_statistics: {
-        long id = MyTracks.getInstance().insertWaypoint(WaypointType.STATISTICS);
-        if (id >= 0) {
-          Intent intent = new Intent(this, MyTracksWaypointDetails.class);
-          intent.putExtra("waypointid", id);
-          startActivity(intent);
-        }
+      case R.id.waypointslist_btn_insert_statistics:
+        type = WaypointType.MARKER;
         break;
-      }
-
+      default:
+        return;
+    }
+    long id;
+    try {
+      id = MyTracks.getInstance().insertWaypoint(type);
+    } catch (Exception e) {
+      Log.e(MyTracksConstants.TAG, "Cannot insert statistics marker.", e);
+      e.printStackTrace();
+      return;
+    }
+    if (id >= 0) {
+      Intent intent = new Intent(this, MyTracksWaypointDetails.class);
+      intent.putExtra("waypointid", id);
+      startActivity(intent);
     }
   }
 

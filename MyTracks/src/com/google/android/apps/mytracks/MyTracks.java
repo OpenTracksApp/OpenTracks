@@ -427,7 +427,11 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   public boolean onTrackballEvent(MotionEvent event) {
     if (isRecording()) {
       if (event.getAction() == MotionEvent.ACTION_DOWN) {
-        insertWaypoint(WaypointType.STATISTICS);
+        try {
+          insertWaypoint(WaypointType.STATISTICS);
+        } catch (Exception e) {
+          Log.e(MyTracksConstants.TAG, "Cannot insert statistics marker.", e);
+        }
         return true;
       }
     }
@@ -883,32 +887,30 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   /**
    * Inserts a waypoint marker.
    *
-   * @return the id of the inserted statistics marker, or
-   *   -1 on error
+   * @return Id of the inserted statistics marker.
+   * @throws Exception If the insertion failed.
    */
-  public long insertWaypoint(WaypointType type) {
-    if (trackRecordingService != null) {
-      try {
-        long waypointId =
-            trackRecordingService.insertWaypoint(type);
-        if (waypointId >= 0) {
-          Toast.makeText(this, R.string.status_statistics_inserted,
-              Toast.LENGTH_LONG).show();
-          return waypointId;
-        } else {
-          Toast.makeText(this, R.string.error_unable_to_insert_marker,
-              Toast.LENGTH_LONG).show();
-          Log.e(MyTracksConstants.TAG, "Cannot insert statistics marker?");
-          return -1;
-        }
-      } catch (Exception e) {
+  public long insertWaypoint(WaypointType type) throws Exception {
+    if (trackRecordingService == null) {
+      throw new IllegalStateException("The recording service is not bound.");
+    }
+    try {
+      long waypointId =
+          trackRecordingService.insertWaypoint(type);
+      if (waypointId >= 0) {
+        Toast.makeText(this, R.string.status_statistics_inserted,
+            Toast.LENGTH_LONG).show();
+        return waypointId;
+      } else {
         Toast.makeText(this, R.string.error_unable_to_insert_marker,
             Toast.LENGTH_LONG).show();
-        Log.e(MyTracksConstants.TAG, "Cannot insert statistics marker?", e);
+        throw new Exception("Insertion failed.");
       }
-      return -1;
+    } catch (Exception e) {
+      Toast.makeText(this, R.string.error_unable_to_insert_marker,
+          Toast.LENGTH_LONG).show();
+      throw e;
     }
-    return -1;
   }
 
   /**
