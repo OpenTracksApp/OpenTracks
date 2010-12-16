@@ -934,4 +934,10 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     contentResolver.update(TracksColumns.CONTENT_URI,
         createContentValues(track), "_id=" + track.getId(), null);
   }
+
+  @Override
+  public LocationIterator getLocationIterator(long trackId,
+      LocationFactory locationFactory) {
+    throw new UnsupportedOperationException();
+  }
 }

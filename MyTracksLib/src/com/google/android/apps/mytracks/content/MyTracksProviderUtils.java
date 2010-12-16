@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -309,6 +310,63 @@ public interface MyTracksProviderUtils {
    * @return a new waypoint object
    */
   Waypoint createWaypoint(Cursor cursor);
+  
+  /**
+   * A lightweight wrapper around the original {@link Iterator} with a method to clean up.
+   */
+  interface LocationIterator extends Iterator<Location> {
+    /**
+     * Should be called in case the underlying iterator hasn't reached the last record.
+     */
+    void close();
+  }
+  
+  /**
+   * A factory for creating new {@class Location}s.
+   */
+  interface LocationFactory {
+    Location createLocation();
+  }
+  
+  /**
+   * The default {@class Location}s factory, which creates a new location of 'gps' type.
+   */
+  LocationFactory DEFAULT_LOCATION_FACTORY = new LocationFactory() {
+    @Override
+    public Location createLocation() {
+      return new Location("gps");
+    }
+  };
+  
+  /**
+   * Creates a new read-only iterator over all track points for the given track. It provides
+   * a lightweight way of iterating over large tracks without failing due to the underlying cursor
+   * limitations. Since it's a read-only iterator, {@link Iterator#remove()} always throws
+   * {@class UnsupportedOperationException}.
+   * 
+   * Once constructed, the user should either iterate over all elements, or call
+   * {@link LocationIterator#close()} to make sure that all resources are properly deallocated.
+   * 
+   * Example use:
+   * <code>
+   *   ...
+   *   LocationIterator it = providerUtils.getLocationIterator(
+   *       1, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
+   *   try {
+   *     for (Location loc : it) {
+   *       ...  // Do something useful with the location.
+   *     }
+   *   } finally {
+   *     it.close();
+   *   }
+   *   ...
+   * </code>
+   * 
+   * @param trackId the ID of a track to retrieve locations for.
+   * @param locationFactory the factory for creating new locations.
+   * @return the read-only iterator over the given track's points.
+   */
+  LocationIterator getLocationIterator(long trackId, LocationFactory locationFactory);
 
   /**
    * A factory which can produce instances of {@link MyTracksProviderUtils},
