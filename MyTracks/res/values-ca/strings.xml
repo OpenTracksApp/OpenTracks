@@ -206,7 +206,7 @@ limitations under the License.
   <string name="settings_auto_resume_track_timeout_summary">Temps màxim en minuts a partir del qual l\'anterior ruta enregistrada no es reprendrà en actualitzar el telèfon</string>
 
   <string name="settings_timestamp_track_name">Data i hora com a nom de la ruta</string>
-  <string name="settings_timestamp_track_name_summary_on">El nom per defecte de la ruta serà la data i hora en què s'ha iniciat.</string>
+  <string name="settings_timestamp_track_name_summary_on">El nom per defecte de la ruta serà la data i hora en que s\'ha iniciat.</string>
   <string name="settings_timestamp_track_name_summary_off">Els noms de les rutes seran números que s\'incrementaran per a cada nova ruta.</string>
 
   <string name="pace_label">Ritme de pas</string>
@@ -351,7 +351,7 @@ limitations under the License.
   <string name="waiting">S\'està esperant...</string>
 
   <!-- End User License Agreement -->
-  <string name="eula_title">Acord de llicència d'usuari final</string>
+  <string name="eula_title">Acord de llicencia d\'usuari final</string>
   <string name="accept">Accepta</string>
   <string name="decline">Rebutja</string>
 
