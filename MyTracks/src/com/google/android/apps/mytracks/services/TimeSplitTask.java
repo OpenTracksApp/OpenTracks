@@ -16,7 +16,8 @@
 
 package com.google.android.apps.mytracks.services;
 
-import com.google.android.apps.mytracks.content.WaypointType;
+import com.google.android.apps.mytracks.content.WaypointCreationRequest;
+
 
 /**
  * A simple task to insert statistics markers every n minutes.
@@ -26,7 +27,7 @@ public class TimeSplitTask implements PeriodicTask {
 
   @Override
   public void run(TrackRecordingService service) {
-    service.insertWaypoint(WaypointType.STATISTICS);
+    service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
   }
 
   @Override

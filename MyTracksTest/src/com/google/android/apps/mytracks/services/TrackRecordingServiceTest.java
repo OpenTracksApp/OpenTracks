@@ -22,7 +22,7 @@ import com.google.android.apps.mytracks.content.MyTracksProvider;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.content.WaypointType;
+import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.maps.mytracks.R;
@@ -548,7 +548,7 @@ public class TrackRecordingServiceTest
     assertFalse(service.isRecording());
     
     try {
-      service.insertWaypoint(WaypointType.STATISTICS);
+      service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
       fail("Expecting IllegalStateException");
     } catch (IllegalStateException e) {
       // Expected.
@@ -562,8 +562,8 @@ public class TrackRecordingServiceTest
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertTrue(service.isRecording());
     
-    assertEquals(1, service.insertWaypoint(WaypointType.STATISTICS));
-    assertEquals(2, service.insertWaypoint(WaypointType.STATISTICS));
+    assertEquals(1, service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS));
+    assertEquals(2, service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS));
     
     Waypoint wpt = providerUtils.getWaypoint(1);
     assertEquals(getContext().getString(R.string.stats_icon_url),
@@ -586,7 +586,7 @@ public class TrackRecordingServiceTest
     assertFalse(service.isRecording());
     
     try {
-      service.insertWaypoint(WaypointType.MARKER);
+      service.insertWaypoint(WaypointCreationRequest.DEFAULT_MARKER);
       fail("Expecting IllegalStateException");
     } catch (IllegalStateException e) {
       // Expected.
@@ -600,7 +600,7 @@ public class TrackRecordingServiceTest
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertTrue(service.isRecording());
     
-    assertEquals(1, service.insertWaypoint(WaypointType.MARKER));
+    assertEquals(1, service.insertWaypoint(WaypointCreationRequest.DEFAULT_MARKER));
     Waypoint wpt = providerUtils.getWaypoint(1);
     assertEquals(getContext().getString(R.string.waypoint_icon_url),
         wpt.getIcon());
@@ -806,9 +806,9 @@ public class TrackRecordingServiceTest
       service.recordLocation(loc);
       
       if (i % 10 == 0) {
-        service.insertWaypoint(WaypointType.STATISTICS);
+        service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
       } else if (i % 7 == 0) {
-        service.insertWaypoint(WaypointType.MARKER);
+        service.insertWaypoint(WaypointCreationRequest.DEFAULT_MARKER);
       }
     }
     

@@ -20,7 +20,7 @@ import static com.google.android.apps.mytracks.signalstrength.SignalStrengthCons
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtilsImpl;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.content.WaypointType;
+import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.signalstrength.SignalStrengthListener.SignalStrengthCallback;
 
@@ -167,18 +167,13 @@ public class SignalStrengthService extends Service
           return;
         }
 
-        // First we create a basic waypoint.
-        waypointId = mytracksService.insertWaypoint(WaypointType.MARKER);
-       
-        // Then we fetch the actual waypoint from the provider.
-        Waypoint wpt = utils.getWaypoint(waypointId);
-        wpt.setName("Signal Strength");
-        wpt.setType(Waypoint.TYPE_WAYPOINT);
-        wpt.setIcon(icon);
-        wpt.setDescription(description);
-
-        // Finally write the modified waypoint back to the db.
-        utils.updateWaypoint(wpt);
+        // Create a waypoint.
+        WaypointCreationRequest request =
+          new WaypointCreationRequest(WaypointCreationRequest.WaypointType.MARKER);
+        request.setName("Signal Strength");
+        request.setIcon(icon);
+        request.setDescription(description);
+        waypointId = mytracksService.insertWaypoint(request);
       }
 
       if (waypointId >= 0) {

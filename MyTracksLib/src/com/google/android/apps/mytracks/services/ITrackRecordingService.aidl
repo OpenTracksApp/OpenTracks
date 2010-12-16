@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.services;
 
-import com.google.android.apps.mytracks.content.WaypointType;
+import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 
 /**
  * MyTracks service.
@@ -45,10 +45,10 @@ interface ITrackRecordingService {
   /**
    * Inserts a waypoint marker in the track being recorded.
    *
-   * @param type of the waypoint to insert
+   * @param request Details for the waypoint to be inserted.
    * @return the unique ID of the inserted marker
    */
-  long insertWaypoint(in WaypointType type);
+  long insertWaypoint(in WaypointCreationRequest request);
 
   /**
    * Inserts a location in the track being recorded.

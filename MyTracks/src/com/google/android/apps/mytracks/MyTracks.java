@@ -26,7 +26,7 @@ import com.google.android.apps.mymaps.MyMapsList;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.content.WaypointType;
+import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.io.AuthManager;
 import com.google.android.apps.mytracks.io.AuthManagerFactory;
 import com.google.android.apps.mytracks.io.GpxImporter;
@@ -63,6 +63,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -428,8 +429,10 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     if (isRecording()) {
       if (event.getAction() == MotionEvent.ACTION_DOWN) {
         try {
-          insertWaypoint(WaypointType.STATISTICS);
-        } catch (Exception e) {
+          insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
+        } catch (RemoteException e) {
+          Log.e(MyTracksConstants.TAG, "Cannot insert statistics marker.", e);
+        } catch (IllegalStateException e) {
           Log.e(MyTracksConstants.TAG, "Cannot insert statistics marker.", e);
         }
         return true;
@@ -888,25 +891,20 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * Inserts a waypoint marker.
    *
    * @return Id of the inserted statistics marker.
-   * @throws Exception If the insertion failed.
+   * @throws RemoteException 
    */
-  public long insertWaypoint(WaypointType type) throws Exception {
+  public long insertWaypoint(WaypointCreationRequest request) throws RemoteException {
     if (trackRecordingService == null) {
       throw new IllegalStateException("The recording service is not bound.");
     }
     try {
-      long waypointId =
-          trackRecordingService.insertWaypoint(type);
+      long waypointId = trackRecordingService.insertWaypoint(request);
       if (waypointId >= 0) {
         Toast.makeText(this, R.string.status_statistics_inserted,
             Toast.LENGTH_LONG).show();
-        return waypointId;
-      } else {
-        Toast.makeText(this, R.string.error_unable_to_insert_marker,
-            Toast.LENGTH_LONG).show();
-        throw new Exception("Insertion failed.");
       }
-    } catch (Exception e) {
+      return waypointId;
+    } catch (RemoteException e) {
       Toast.makeText(this, R.string.error_unable_to_insert_marker,
           Toast.LENGTH_LONG).show();
       throw e;

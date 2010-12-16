@@ -26,7 +26,7 @@ import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.content.WaypointType;
+import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.services.sensors.SensorManager;
@@ -858,25 +858,22 @@ public class TrackRecordingService extends Service implements LocationListener {
     return isRecording;
   }
 
-  public long insertWaypoint(WaypointType type) {
+  public long insertWaypoint(WaypointCreationRequest request) {
     if (!isRecording()) {
       throw new IllegalStateException(
           "Unable to insert waypoint marker while not recording!");
     }
+    if (request == null) {
+      request = WaypointCreationRequest.DEFAULT_MARKER;
+    }
     Waypoint wpt = new Waypoint();
-    switch (type) {
+    switch (request.getType()) {
       case MARKER:
-        wpt.setIcon(getString(R.string.waypoint_icon_url));
-        wpt.setName(getString(R.string.waypoint));
-        wpt.setType(Waypoint.TYPE_WAYPOINT);
+        buildMarker(wpt, request);
         break;
       case STATISTICS:
         buildStatisticsMarker(wpt);
         break;
-    }
-    if (!isRecording()) {
-      throw new IllegalStateException(
-          "Unable to insert waypoint marker while not recording!");
     }
     wpt.setTrackId(recordingTrackId);
     wpt.setLength(length);
@@ -890,6 +887,23 @@ public class TrackRecordingService extends Service implements LocationListener {
     return Long.parseLong(uri.getLastPathSegment());
   }
 
+  private void buildMarker(Waypoint wpt, WaypointCreationRequest request) {
+    wpt.setType(Waypoint.TYPE_WAYPOINT);
+    if (request.getIcon() == null) {
+      wpt.setIcon(getString(R.string.waypoint_icon_url));
+    } else {
+      wpt.setIcon(request.getIcon());
+    }
+    if (request.getName() == null) {
+      wpt.setName(getString(R.string.waypoint));
+    } else {
+      wpt.setName(request.getName());
+    }
+    if (request.getDescription() != null) {
+      wpt.setDescription(request.getDescription());
+    }
+  }
+
   /**
    * Build a statistics marker.
    * A statistics marker holds the stats for the* last segment up to this marker.
@@ -898,11 +912,6 @@ public class TrackRecordingService extends Service implements LocationListener {
    * @return the unique id of the inserted marker
    */
   private void buildStatisticsMarker(Waypoint waypoint) {
-    if (!isRecording()) {
-      throw new IllegalStateException(
-          "Unable to insert statistics marker while not recording!");
-    }
-    
     StringUtils utils = new StringUtils(TrackRecordingService.this);
 
     // Set stop and total time in the stats data
@@ -989,14 +998,14 @@ public class TrackRecordingService extends Service implements LocationListener {
     /**
      * Inserts a waypoint marker in the track being recorded.
      *
-     * @param type of the waypoint to insert
+     * @param request Details of the waypoint to insert
      * @return the unique ID of the inserted marker
      */
-    public long insertWaypoint(WaypointType type) {
+    public long insertWaypoint(WaypointCreationRequest request) {
       if (service == null) {
         throw new IllegalStateException("The service has been already detached!");
       }
-      return service.insertWaypoint(type);
+      return service.insertWaypoint(request);
     }
 
     @Override
@@ -1073,7 +1082,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     providerUtils.updateTrack(track);
     statsBuilder = new TripStatisticsBuilder(startTime);
     waypointStatsBuilder = new TripStatisticsBuilder(startTime);
-    currentWaypointId = insertWaypoint(WaypointType.STATISTICS);
+    currentWaypointId = insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
     setUpAnnouncer();
     length = 0;
     showNotification();
