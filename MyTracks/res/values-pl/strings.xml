@@ -361,6 +361,8 @@ limitations under the License.
   <string name="about_version">Wersja:</string>
   <string name="about_email">Wsparcie</string>
   <string name="about_support">Wsparcie:</string>
+  
+  <string name="about_bart">Bartłomiej Niechwiej</string>
 
   <!-- Send to Google -->
   <string name="sendtogoogle_title">Wyślij do...</string>
