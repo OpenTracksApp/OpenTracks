@@ -965,33 +965,31 @@ public class TrackRecordingService extends Service implements LocationListener {
     
     @Override
     public boolean isRecording() {
+      checkService();
+      return service.isRecording();
+    }
+
+    private void checkService() {
       if (service == null) {
         throw new IllegalStateException("The service has been already detached!");
       }
-      return service.isRecording();
     }
 
     @Override
     public long getRecordingTrackId() {
-      if (service == null) {
-        throw new IllegalStateException("The service has been already detached!");
-      }      
+      checkService();      
       return service.recordingTrackId;
     }
 
     @Override
     public boolean hasRecorded() {
-      if (service == null) {
-        throw new IllegalStateException("The service has been already detached!");
-      }      
+      checkService();      
       return service.providerUtils.getLastTrackId() >= 0;
     }
 
     @Override
     public long startNewTrack() {
-      if (service == null) {
-        throw new IllegalStateException("The service has been already detached!");
-      }
+      checkService();
       return service.startNewTrack();
     }
 
@@ -1002,25 +1000,19 @@ public class TrackRecordingService extends Service implements LocationListener {
      * @return the unique ID of the inserted marker
      */
     public long insertWaypoint(WaypointCreationRequest request) {
-      if (service == null) {
-        throw new IllegalStateException("The service has been already detached!");
-      }
+      checkService();
       return service.insertWaypoint(request);
     }
 
     @Override
     public void endCurrentTrack() {
-      if (service == null) {
-        throw new IllegalStateException("The service has been already detached!");
-      }
+      checkService();
       service.endCurrentTrack();
     }
 
     @Override
     public void deleteAllTracks() {
-      if (service == null) {
-        throw new IllegalStateException("The service has been already detached!");
-      }
+      checkService();
       if (isRecording()) {
         throw new IllegalStateException("Cannot delete all tracks while recording!");
       }
@@ -1029,14 +1021,13 @@ public class TrackRecordingService extends Service implements LocationListener {
 
     @Override
     public void recordLocation(Location loc) {
-      if (service == null) {
-        throw new IllegalStateException("The service has been already detached!");
-      }      
+      checkService();      
       service.onLocationChanged(loc);
     }
 
     @Override
     public byte[] getSensorData() {
+      checkService();      
       if (service.sensorManager == null) {
         Log.d(MyTracksConstants.TAG, "No sensor manager for data.");
         return null;
@@ -1050,6 +1041,7 @@ public class TrackRecordingService extends Service implements LocationListener {
 
     @Override
     public int getSensorState() {
+      checkService();      
       if (service.sensorManager == null) {
         Log.d(MyTracksConstants.TAG, "No sensor manager for data.");
         return Sensor.SensorState.NONE.getNumber();
