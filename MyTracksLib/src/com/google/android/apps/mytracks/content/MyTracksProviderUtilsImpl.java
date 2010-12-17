@@ -936,8 +936,8 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   @Override
-  public LocationIterator getLocationIterator(long trackId,
-      LocationFactory locationFactory) {
+  public LocationIterator getLocationIterator(long trackId, LocationFactory locationFactory) {
+    // TODO: Implement it.
     throw new UnsupportedOperationException();
   }
 }

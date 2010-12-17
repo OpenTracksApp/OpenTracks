@@ -312,7 +312,7 @@ public interface MyTracksProviderUtils {
   Waypoint createWaypoint(Cursor cursor);
   
   /**
-   * A lightweight wrapper around the original {@link Iterator} with a method to clean up.
+   * A lightweight wrapper around the original {@link Cursor} with a method to clean up.
    */
   interface LocationIterator extends Iterator<Location> {
     /**
@@ -325,11 +325,19 @@ public interface MyTracksProviderUtils {
    * A factory for creating new {@class Location}s.
    */
   interface LocationFactory {
+    /**
+     * Creates a new {@link Location} object to be populated from the underlying database record.
+     * It's up to the implementing class to decide whether to create a new instance or reuse
+     * existing to optimize for speed.
+     * 
+     * @return a {@link Location} to be populated from the database.
+     */
     Location createLocation();
   }
   
   /**
-   * The default {@class Location}s factory, which creates a new location of 'gps' type.
+   * The default {@class Location}s factory, which creates a new location of 'gps' type each
+   * time the user advances to the next element using {@link LocationIterator#next()} method.
    */
   LocationFactory DEFAULT_LOCATION_FACTORY = new LocationFactory() {
     @Override
