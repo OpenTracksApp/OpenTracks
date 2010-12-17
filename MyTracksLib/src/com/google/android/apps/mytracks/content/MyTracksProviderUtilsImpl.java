@@ -940,18 +940,18 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   public LocationIterator getLocationIterator(final long trackId, final long startTrackPointId,
       final boolean descending, final LocationFactory locationFactory) {
     return new LocationIterator() {
-      private long lastTrackPointId = startTrackPointId - 1;
-      private Cursor cursor = getCursor();
+      private long lastTrackPointId = startTrackPointId;
+      private Cursor cursor = getCursor(startTrackPointId);
       private final int idColumnIdx = cursor != null ?
           cursor.getColumnIndexOrThrow(TrackPointsColumns._ID) : -1;
           
-      private Cursor getCursor() {
-        return getLocationsCursor(trackId, lastTrackPointId + 1, 2000, descending);
+      private Cursor getCursor(long trackPointId) {
+        return getLocationsCursor(trackId, trackPointId, 2000, descending);
       }
 
       private boolean advanceCursorToNextBatch() {
         cursor.close();
-        cursor = getCursor();
+        cursor = getCursor(lastTrackPointId + (descending ? -1 : 1));
         return cursor != null && cursor.moveToNext();
       }
         
