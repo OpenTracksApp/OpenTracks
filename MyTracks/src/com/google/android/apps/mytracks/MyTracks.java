@@ -891,7 +891,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * Inserts a waypoint marker.
    *
    * @return Id of the inserted statistics marker.
-   * @throws RemoteException 
+   * @throws RemoteException If the call on the service failed.
    */
   public long insertWaypoint(WaypointCreationRequest request) throws RemoteException {
     if (trackRecordingService == null) {

@@ -889,10 +889,10 @@ public class TrackRecordingService extends Service implements LocationListener {
 
   private void buildMarker(Waypoint wpt, WaypointCreationRequest request) {
     wpt.setType(Waypoint.TYPE_WAYPOINT);
-    if (request.getIcon() == null) {
+    if (request.getIconUrl() == null) {
       wpt.setIcon(getString(R.string.waypoint_icon_url));
     } else {
-      wpt.setIcon(request.getIcon());
+      wpt.setIcon(request.getIconUrl());
     }
     if (request.getName() == null) {
       wpt.setName(getString(R.string.waypoint));

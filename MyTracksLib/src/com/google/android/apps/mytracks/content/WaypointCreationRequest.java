@@ -33,7 +33,7 @@ public class WaypointCreationRequest implements Parcelable {
   private WaypointType type;
   private String name;
   private String description;
-  private String icon;
+  private String iconUrl;
 
   public final static WaypointCreationRequest DEFAULT_MARKER =
       new WaypointCreationRequest(WaypointType.MARKER);
@@ -44,6 +44,15 @@ public class WaypointCreationRequest implements Parcelable {
     this.type = type;
   }
 
+  public WaypointCreationRequest(WaypointType type, String name,
+      String description, String iconUrl) {
+    super();
+    this.type = type;
+    this.name = name;
+    this.description = description;
+    this.iconUrl = iconUrl;
+  }
+
   public static class Creator implements Parcelable.Creator<WaypointCreationRequest> {
 
     public WaypointCreationRequest createFromParcel(Parcel source) {
@@ -52,8 +61,16 @@ public class WaypointCreationRequest implements Parcelable {
         throw new IllegalArgumentException("Could not find waypoint type: " + i);
       }
       WaypointCreationRequest request = new WaypointCreationRequest(WaypointType.values()[i]);
+      request.description = maybeReadStringToParcel(source);
+      request.iconUrl = maybeReadStringToParcel(source);
+      request.name = maybeReadStringToParcel(source);
       return request;
     }
+
+    private String maybeReadStringToParcel(Parcel parcel) {
+      return parcel.readByte() > 0 ? parcel.readString() : null;
+    }
+
 
     public WaypointCreationRequest[] newArray(int size) {
       return new WaypointCreationRequest[size];
@@ -70,37 +87,32 @@ public class WaypointCreationRequest implements Parcelable {
   @Override
   public void writeToParcel(Parcel parcel, int arg1) {
     parcel.writeInt(type.ordinal());
+    // TODO: Pack all of available bits into one byte.
+    maybeWriteStringToParcel(parcel, description);
+    maybeWriteStringToParcel(parcel, iconUrl);
+    maybeWriteStringToParcel(parcel, name);
+  }
+  
+  private void maybeWriteStringToParcel(Parcel parcel, String s) {
+    parcel.writeByte(s == null ? (byte) 0 : (byte) 1);
+    if (s != null) {
+      parcel.writeString(s);
+    }
   }
 
   public WaypointType getType() {
     return type;
   }
 
-  public void setType(WaypointType type) {
-    this.type = type;
-  }
-
   public String getName() {
     return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public String getDescription() {
     return description;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public String getIcon() {
-    return icon;
-  }
-
-  public void setIcon(String icon) {
-    this.icon = icon;
+  public String getIconUrl() {
+    return iconUrl;
   }
 }

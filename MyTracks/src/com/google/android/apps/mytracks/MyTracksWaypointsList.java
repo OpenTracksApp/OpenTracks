@@ -189,11 +189,13 @@ public class MyTracksWaypointsList extends ListActivity
       Log.e(MyTracksConstants.TAG, "Cannot insert marker.", e);
       return;
     }
-    if (id >= 0) {
-      Intent intent = new Intent(this, MyTracksWaypointDetails.class);
-      intent.putExtra(MyTracksWaypointDetails.WAYPOINT_ID_EXTRA, id);
-      startActivity(intent);
+    if (id < 0) {
+      Log.e(MyTracksConstants.TAG, "Failed to insert marker.");
+      return;
     }
+    Intent intent = new Intent(this, MyTracksWaypointDetails.class);
+    intent.putExtra(MyTracksWaypointDetails.WAYPOINT_ID_EXTRA, id);
+    startActivity(intent);
   }
 
   private void setListAdapter() {

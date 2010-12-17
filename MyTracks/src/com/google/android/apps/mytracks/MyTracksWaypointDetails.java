@@ -42,7 +42,7 @@ import android.widget.ImageView;
 public class MyTracksWaypointDetails extends Activity
     implements OnClickListener {
 
-  public static final String WAYPOINT_ID_EXTRA = "waypointid";
+  public static final String WAYPOINT_ID_EXTRA = "com.google.android.apps.mytracks.WAYPOINT_ID";
 
   /**
    * The id of the way point being edited (taken from bundle, "waypointid")
