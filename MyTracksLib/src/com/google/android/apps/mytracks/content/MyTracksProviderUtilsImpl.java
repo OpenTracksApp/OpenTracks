@@ -15,8 +15,8 @@
  */
 package com.google.android.apps.mytracks.content;
 
-import static com.google.android.apps.mytracks.lib.MyTracksLibConstants.*;
-import com.google.android.apps.mytracks.content.Sensor;
+import static com.google.android.apps.mytracks.lib.MyTracksLibConstants.TAG;
+
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.protobuf.InvalidProtocolBufferException;
 
@@ -29,6 +29,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Helper class providing easy access to locations and tracks in the
@@ -936,8 +937,53 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   @Override
-  public LocationIterator getLocationIterator(long trackId, LocationFactory locationFactory) {
-    // TODO: Implement it.
-    throw new UnsupportedOperationException();
+  public LocationIterator getLocationIterator(final long trackId,
+      final LocationFactory locationFactory) {
+    return new LocationIterator() {
+      private long lastTrackPointId = -1;
+      private Cursor cursor = getCursor();
+      private final int idColumnIdx = cursor != null ?
+          cursor.getColumnIndexOrThrow(TrackPointsColumns._ID) : -1;
+          
+      private Cursor getCursor() {
+        return getLocationsCursor(trackId, lastTrackPointId + 1, 2000, false);
+      }
+
+      private boolean advanceCursorToNextBatch() {
+        cursor.close();
+        cursor = getCursor();
+        return cursor != null && cursor.moveToNext();
+      }
+          
+      @Override
+      public boolean hasNext() {
+        return cursor != null && !cursor.isAfterLast();
+      }
+
+      @Override
+      public Location next() {
+        if (!cursor.moveToNext() || !advanceCursorToNextBatch()) {
+          throw new NoSuchElementException();
+        }
+        lastTrackPointId = cursor.getLong(idColumnIdx);
+        Location location = locationFactory.createLocation();
+        // TODO: Cache column indices.
+        fillLocation(cursor, location);
+        return location;
+      }
+
+      @Override
+      public void close() {
+        if (cursor != null) {
+          cursor.close();
+          cursor = null;
+        }
+      }
+      
+      @Override
+      public void remove() {
+        throw new UnsupportedOperationException();
+      }
+    };
   }
 }
