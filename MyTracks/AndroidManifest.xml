@@ -158,11 +158,9 @@ limitations under the License.
   <uses-permission android:name="com.google.android.apps.mytracks.TRACK_NOTIFICATIONS" />
 
   <!-- Features required -->
-  <!--
   <uses-feature android:name="android.hardware.location" android:required="true"/>
   <uses-feature android:name="android.hardware.location.gps" android:required="true"/>
   <uses-feature android:name="android.hardware.touchscreen" android:required="true"/>
-  -->
   
   <!-- Features optional -->
   <uses-feature android:name="android.hardware.bluetooth" android:required="false"/>

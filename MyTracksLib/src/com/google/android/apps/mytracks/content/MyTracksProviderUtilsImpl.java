@@ -937,16 +937,16 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   @Override
-  public LocationIterator getLocationIterator(final long trackId,
-      final LocationFactory locationFactory) {
+  public LocationIterator getLocationIterator(final long trackId, final long startTrackPointId,
+      final boolean descending, final LocationFactory locationFactory) {
     return new LocationIterator() {
-      private long lastTrackPointId = -1;
+      private long lastTrackPointId = startTrackPointId - 1;
       private Cursor cursor = getCursor();
       private final int idColumnIdx = cursor != null ?
           cursor.getColumnIndexOrThrow(TrackPointsColumns._ID) : -1;
           
       private Cursor getCursor() {
-        return getLocationsCursor(trackId, lastTrackPointId + 1, 2000, false);
+        return getLocationsCursor(trackId, lastTrackPointId + 1, 2000, descending);
       }
 
       private boolean advanceCursorToNextBatch() {
@@ -954,7 +954,12 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
         cursor = getCursor();
         return cursor != null && cursor.moveToNext();
       }
-          
+        
+      @Override
+      public long getLocationId() {
+        return lastTrackPointId;
+      }
+
       @Override
       public boolean hasNext() {
         return cursor != null && !cursor.isAfterLast();

@@ -316,6 +316,13 @@ public interface MyTracksProviderUtils {
    */
   interface LocationIterator extends Iterator<Location> {
     /**
+     * Returns ID of the most recently retrieved track point through a call to {@link #next()}.
+     * 
+     * @return the ID of the most recent track point ID.
+     */
+    long getLocationId();
+    
+    /**
      * Should be called in case the underlying iterator hasn't reached the last record.
      */
     void close();
@@ -336,8 +343,7 @@ public interface MyTracksProviderUtils {
   }
   
   /**
-   * The default {@class Location}s factory, which creates a new location of 'gps' type each
-   * time the user advances to the next element using {@link LocationIterator#next()} method.
+   * The default {@class Location}s factory, which creates a new location of 'gps' type.
    */
   LocationFactory DEFAULT_LOCATION_FACTORY = new LocationFactory() {
     @Override
@@ -352,7 +358,11 @@ public interface MyTracksProviderUtils {
    * limitations. Since it's a read-only iterator, {@link Iterator#remove()} always throws
    * {@class UnsupportedOperationException}.
    * 
-   * Once constructed, the user must call {@link LocationIterator#close()} to make sure that all
+   * Each call to {@link LocationIterator#next()} may advance to the next DB record, and if so,
+   * the iterator calls {@link LocationFactory#createLocation()} and populates it with information
+   * retrieved from the record.
+   * 
+   * When done with iteration, you must call {@link LocationIterator#close()} to make sure that all
    * resources are properly deallocated.
    * 
    * Example use:
@@ -371,10 +381,16 @@ public interface MyTracksProviderUtils {
    * </code>
    * 
    * @param trackId the ID of a track to retrieve locations for.
+   * @param startTrackPointId the ID of the first track point to load, or -1 to start from
+   *        the first point.
+   * @param descending if true the results will be returned in descending ID
+   *        order (latest location first).
    * @param locationFactory the factory for creating new locations.
+   * 
    * @return the read-only iterator over the given track's points.
    */
-  LocationIterator getLocationIterator(long trackId, LocationFactory locationFactory);
+  LocationIterator getLocationIterator(long trackId, long startTrackPointId, boolean descending,
+      LocationFactory locationFactory);
 
   /**
    * A factory which can produce instances of {@link MyTracksProviderUtils},
