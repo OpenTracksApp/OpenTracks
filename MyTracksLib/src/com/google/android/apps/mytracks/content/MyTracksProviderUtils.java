@@ -347,13 +347,13 @@ public interface MyTracksProviderUtils {
   };
   
   /**
-   * Creates a new read-only iterator over all track points for the given track. It provides
-   * a lightweight way of iterating over large tracks without failing due to the underlying cursor
+   * Creates a new read-only iterator over all track points for the given track.  It provides
+   * a lightweight way of iterating over long tracks without failing due to the underlying cursor
    * limitations. Since it's a read-only iterator, {@link Iterator#remove()} always throws
    * {@class UnsupportedOperationException}.
    * 
-   * Once constructed, the user should either iterate over all elements, or call
-   * {@link LocationIterator#close()} to make sure that all resources are properly deallocated.
+   * Once constructed, the user must call {@link LocationIterator#close()} to make sure that all
+   * resources are properly deallocated.
    * 
    * Example use:
    * <code>
