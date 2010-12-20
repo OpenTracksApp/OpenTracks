@@ -77,9 +77,11 @@ public class TrackRecordingServiceTest
   }
 
   /**
-   * A context wrapper with the user provided {@link ContentResolver}.  
+   * A context wrapper with the user provided {@link ContentResolver}.
+   * 
+   * TODO: Move to test utils package.
    */
-  private static class MockContext extends ContextWrapper {
+  public static class MockContext extends ContextWrapper {
     private final ContentResolver contentResolver;
     
     public MockContext(ContentResolver contentResolver, Context base) {
