@@ -22,6 +22,7 @@ import android.test.AndroidTestCase;
 
 /**
  * Tests for the WaypointCreationRequest class.
+ * {@link WaypointCreationRequest}
  *
  * @author Sandor Dornbush
  */
@@ -32,8 +33,7 @@ public class WaypointCreationRequestTest extends AndroidTestCase {
     Parcel p = Parcel.obtain();
     original.writeToParcel(p, 0);
     p.setDataPosition(0);
-    WaypointCreationRequest copy =
-      WaypointCreationRequest.CREATOR.createFromParcel(p);
+    WaypointCreationRequest copy = WaypointCreationRequest.CREATOR.createFromParcel(p);
     assertEquals(original.getType(), copy.getType());
     assertNull(copy.getName());
     assertNull(copy.getDescription());
@@ -46,8 +46,7 @@ public class WaypointCreationRequestTest extends AndroidTestCase {
     Parcel p = Parcel.obtain();
     original.writeToParcel(p, 0);
     p.setDataPosition(0);
-    WaypointCreationRequest copy =
-      WaypointCreationRequest.CREATOR.createFromParcel(p);
+    WaypointCreationRequest copy = WaypointCreationRequest.CREATOR.createFromParcel(p);
     assertEquals(original.getType(), copy.getType());
     assertEquals("name", copy.getName());
     assertEquals("description", copy.getDescription());
