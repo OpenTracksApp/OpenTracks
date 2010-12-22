@@ -27,6 +27,7 @@ import android.test.mock.MockContentResolver;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * A unit test for {@link MyTracksProviderUtilsImpl}.
@@ -59,12 +60,16 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
 
   public void testLocationIterator_customFactory() {
     final Location location = new Location("test_location");
+    final AtomicInteger counter = new AtomicInteger();
     testIterator(1, 15, 4, false, new LocationFactory() {
       @Override
       public Location createLocation() {
+        counter.incrementAndGet();
         return location;
       }
     });
+    // Make sure we were called exactly as many times as we had track points.
+    assertEquals(15, counter.get());
   }
   
   public void testLocationIterator_nullFactory() {
@@ -94,6 +99,10 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
   public void testLocationIterator_batchDescending() {
     testIterator(1, 50, 11, true, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
     testIterator(2, 50, 25, true, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
+  }
+  
+  public void testLocationIterator_largeTrack() {
+    testIterator(1, 20000, 2000, false, MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
   }
 
   private List<Location> testIterator(long trackId, int numPoints, int batchSize,
@@ -127,16 +136,30 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     track = providerUtils.getTrack(id);
     assertNotNull(track);
     
+    Location[] locations = new Location[numPoints];
     for (int i = 0; i < numPoints; ++i) {
       Location loc = new Location("test");
       loc.setLatitude(37.0 + (double) i / 10000.0);
       loc.setLongitude(57.0 - (double) i / 10000.0);
       loc.setAccuracy((float) i / 100.0f);
       loc.setAltitude(i * 2.5);
-      providerUtils.insertTrackPoint(loc, id);
-    }    
+      locations[i] = loc;
+    }
+    providerUtils.bulkInsertTrackPoints(locations, numPoints, id);
     
-    long lastPointId = providerUtils.getTrackPoints(track, -1);
+    // Load all inserted locations. 
+    long lastPointId = -1;
+    LocationIterator it = providerUtils.getLocationIterator(id, -1, false,
+        MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
+    try {
+      while (it.hasNext()) {
+        track.addLocation(it.next());
+        lastPointId = it.getLocationId();
+      }
+    } finally {
+      it.close();
+    }
+
     assertTrue(numPoints == 0 || lastPointId > 0);
     assertEquals(numPoints, track.getNumberOfPoints());
     assertEquals(numPoints, track.getLocations().size());
