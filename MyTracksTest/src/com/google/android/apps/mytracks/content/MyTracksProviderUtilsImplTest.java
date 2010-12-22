@@ -149,12 +149,14 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
     
     // Load all inserted locations. 
     long lastPointId = -1;
+    int counter = 0;
     LocationIterator it = providerUtils.getLocationIterator(id, -1, false,
         MyTracksProviderUtils.DEFAULT_LOCATION_FACTORY);
     try {
       while (it.hasNext()) {
-        track.addLocation(it.next());
+        it.next();
         lastPointId = it.getLocationId();
+        counter++;
       }
     } finally {
       it.close();
@@ -162,7 +164,7 @@ public class MyTracksProviderUtilsImplTest extends AndroidTestCase {
 
     assertTrue(numPoints == 0 || lastPointId > 0);
     assertEquals(numPoints, track.getNumberOfPoints());
-    assertEquals(numPoints, track.getLocations().size());
+    assertEquals(numPoints, counter);
     
     return lastPointId;
   }
