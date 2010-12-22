@@ -25,7 +25,6 @@ import com.google.android.apps.mymaps.MyMapsConstants;
 import com.google.android.apps.mymaps.MyMapsList;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.io.AuthManager;
 import com.google.android.apps.mytracks.io.AuthManagerFactory;
@@ -93,9 +92,6 @@ import org.xml.sax.SAXException;
  */
 public class MyTracks extends TabActivity implements OnTouchListener,
     OnSharedPreferenceChangeListener, ProgressIndicator {
-
-  private static final String WAYPOINT_ICON_URL =
-      "http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png";
 
   /**
    * Singleton instance
