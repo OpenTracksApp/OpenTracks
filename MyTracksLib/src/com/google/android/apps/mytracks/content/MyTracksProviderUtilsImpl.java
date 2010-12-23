@@ -878,35 +878,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   @Override
-  public long getTrackPoints(Track track, int maxPoints) {
-    long lastId = -1;
-    Cursor cursor = getLocationsCursor(track.getId(), -1, maxPoints, true);
-    if (cursor == null) {
-      Log.w(TAG, "Cannot get a locations cursor!");
-      return lastId;
-    }
-    try {
-      final int idColumnIdx =
-          cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
-      if (cursor.moveToLast()) {
-        do {
-          Location location = createLocation(cursor);
-          if (location == null) {
-            continue;
-          }
-          track.addLocation(location);
-          lastId = cursor.getLong(idColumnIdx);
-        } while (cursor.moveToPrevious());
-      }
-    } catch (RuntimeException e) {
-      Log.w(TAG, "Caught unexpected exception.", e);
-    } finally {
-      cursor.close();
-    }
-    return lastId;
-  }
-
-  @Override
   public Cursor getTracksCursor(String selection) {
     Cursor cursor = contentResolver.query(
         TracksColumns.CONTENT_URI, null, selection, null, "_id");

@@ -180,8 +180,9 @@ public interface MyTracksProviderUtils {
 
   /**
    * Finds a track by given unique track id.
-   * Note that the returned track object does not have any track points
-   * attached. Use {@link #getTrackPoints(Track, int)} to load the track points.
+   * Note that the returned track object does not have any track points attached.
+   * Use {@link #getLocationIterator(long, long, boolean, LocationFactory)} to load
+   * the track points.
    *
    * @param id desired unique track id
    * @return a Track object, or null if not found
@@ -189,23 +190,13 @@ public interface MyTracksProviderUtils {
   Track getTrack(long id);
   
   /**
-   * Retrieves all tracks without track points. If no tracks exist an empty
-   * list will be returned. Use {@link #getTrackPoints(Track, int)} to load
-   * the track points.
+   * Retrieves all tracks without track points. If no tracks exist, an empty
+   * list will be returned.  Use {@link #getLocationIterator(long, long, boolean, LocationFactory)}
+   * to load the track points.
    * 
    * @return a list of all the recorded tracks
    */
   List<Track> getAllTracks();
-
-  /**
-   * Loads the track points for a given track.
-   *
-   * @param track assumes that startId and stopId are filled in correctly
-   * @param maxPoints maximum number of points to load, or -1 for no limit
-   *        (oldest ones will be discarded)
-   * @return the id of the last location in the track
-   */
-  long getTrackPoints(Track track, int maxPoints);
 
   /**
    * Creates a cursor over the tracks provider with a given selection.
