@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+  <!-- Task frequency -->
+  <string-array name="task_frequency_options">
+    <item>Av</item>
+    <item>1 min</item>
+    <item>2 min</item>
+    <item>5 min</item>
+    <item>10 min</item>
+    <item>15 min</item>
+    <item>30 min</item>
+    <item>60 min</item>
+  </string-array>
+
+  <!-- Minimum recording distance -->
+  <string-array name="min_recording_distance_options">
+    <item>1 m</item>
+    <item>2 m</item>
+    <item>3 m</item>
+    <item>4 m</item>
+    <item>5 m (rekommenderad)</item>
+    <item>10 m</item>
+    <item>100 m</item>
+  </string-array>
+
+  <string-array name="min_recording_distance_options_ft">
+    <item>3 ft</item>
+    <item>6 ft</item>
+    <item>10 ft</item>
+    <item>13 ft</item>
+    <item>16 ft (rekommenderad)</item>
+    <item>33 ft</item>
+    <item>328 ft</item>
+  </string-array>
+
+  <!-- Maximum recording distance -->
+  <string-array name="max_recording_distance_options">
+    <item>50 m</item>
+    <item>100 m</item>
+    <item>200 m (rekommenderad)</item>
+    <item>500 m</item>
+    <item>1000 m</item>
+    <item>5000 m</item>
+  </string-array>
+
+  <string-array name="max_recording_distance_options_ft">
+    <item>164 ft</item>
+    <item>328 ft</item>
+    <item>656 ft (rekommenderad)</item>
+    <item>1640 ft</item>
+    <item>0.6 miles</item>
+    <item>3.1 miles</item>
+  </string-array>
+
+
+  <!-- Minimum recording interval -->
+  <string-array name="min_recording_interval_options">
+    <item>batterioptimerad (anpassningsbar)</item>
+    <item>hög precision (anpassningsbar)</item>
+    <item>högsta (rekommenderad)</item>
+    <item>2 s</item>
+    <item>3 s</item>
+    <item>4 s</item>
+    <item>5 s</item>
+    <item>10 s</item>
+    <item>20 s</item>
+    <item>30 s</item>
+    <item>1 min</item>
+    <item>2 min</item>
+    <item>5 min</item>
+    <item>10 min</item>
+    <item>15 min</item>
+    <item>30 min</item>
+  </string-array>
+
+  <!-- Minimum required accuracy -->
+  <string-array name="min_required_accuracy_options">
+    <item>10 m (bra GPS-signal)</item>
+    <item>20 m</item>
+    <item>50 m</item>
+    <item>100 m</item>
+    <item>200 m (rekommenderad)</item>
+    <item>500 m</item>
+    <item>1000 m</item>
+    <item>2000 m</item>
+    <item>5000 m (dålig GPS-signal)</item>
+  </string-array>
+
+  <string-array name="min_required_accuracy_options_ft">
+    <item>33 ft (bra GPS-signal)</item>
+    <item>66 ft</item>
+    <item>165 ft</item>
+    <item>328 ft</item>
+    <item>656 ft (rekommenderad)</item>
+    <item>1640 ft</item>
+    <item>0.6 miles</item>
+    <item>1.2 miles</item>
+    <item>3.1 miles (dålig GPS-signal)</item>
+  </string-array>
+
+  <!-- Split frequency -->
+  <string-array name="split_frequency_options">
+    <item>Ingen delning</item>
+    <item>100 km</item>
+    <item>50 km</item>
+    <item>25 km</item>
+    <item>10 km</item>
+    <item>5 km</item>
+    <item>1 km</item>
+    <item>60 min</item>
+    <item>30 min</item>
+    <item>15 min</item>
+    <item>10 min</item>
+    <item>5 min</item>
+    <item>2 min</item>
+    <item>1 min</item>
+  </string-array>
+
+  <string-array name="split_frequency_options_ft">
+    <item>Ingen delning</item>
+    <item>100 mi</item>
+    <item>50 mi</item>
+    <item>25 mi</item>
+    <item>10 mi</item>
+    <item>5 mi</item>
+    <item>1 mi</item>
+    <item>60 min</item>
+    <item>30 min</item>
+    <item>15 min</item>
+    <item>10 min</item>
+    <item>5 min</item>
+    <item>2 min</item>
+    <item>1 min</item>
+  </string-array>
+
+  <!-- Other non-preference arrays -->
+  <array name="activity_types">
+    <item>okänd</item>
+    <item>blandat</item>
+    <item>annat</item>
+
+    <item>löpning</item>
+    <item>väglöpning</item>
+    <item>banlöpning</item>
+    <item>spårlöpning</item>
+    <item>gång</item>
+    <item>gångsport</item>
+    <item>vandring</item>
+    <item>spårvandring</item>
+    <item>vildmarksvandring</item>
+    <item>klättring</item>
+
+    <item>cykling</item>
+    <item>vägcyckling</item>
+    <item>mountainbikeåkning</item>
+    <item>bancyckling</item>
+
+    <item>skridskoåkning</item>
+    <item>inlineåkning</item>
+    <item>skateboardåkning</item>
+
+    <item>snöskovandring</item>
+    <item>skidåkning</item>
+    <item>snowboardåkning</item>
+    <item>kälke</item>
+    <item>issegling</item>
+
+    <item>segling</item>
+    <item>paddling</item>
+    <item>kayakpaddling</item>
+    <item>rodd</item>
+    <item>motorbåtsåkning</item>
+    <item>färja</item>
+    <item>RC båt</item>
+    <item>surfning</item>
+    <item>vindsurfning</item>
+    <item>kite surfing</item>
+    <item>vattenskidåkning</item>
+    <item>wakeboardåkning</item>
+
+    <item>flygplan</item>
+    <item>sjöflygplan</item>
+    <item>kommersiellt flygplan</item>
+    <item>helikopter</item>
+    <item>varmlyftsballong</item>
+    <item>luftskepp</item>
+    <item>RC flygplan</item>
+    <item>RC helicopter</item>
+    <item>falskärmshoppning</item>
+    <item>segelflygning</item>
+    <item>hängflygning</item>
+    <item>skärmflygning</item>
+
+    <item>ridning</item>
+    <item>hästridning</item>
+    <item>åsneridning</item>
+
+    <item>köra bil</item>
+    <item>köra buss</item>
+    <item>tåg</item>
+    <item>motorcykel</item>
+    <item>motorcross</item>
+    <item>fyrhjuling</item>
+
+    <item>landsegling</item>
+    <item>frisbee</item>
+    <item>ultimate frisbee</item>
+  </array>
+
+  <array name="waypoint_types">
+    <item>bankomat</item>
+    <item>bank</item>
+    <item>bar</item>
+    <item>barbeque</item>
+    <item>byggnad</item>
+    <item>bushållplats</item>
+    <item>café</item>
+    <item>lägereld</item>
+    <item>kampingklatts</item>
+    <item>kyrka</item>
+    <item>kaffestuga</item>
+    <item>närbutik</item>
+    <item>driksvatten</item>
+    <item>fallande stenar</item>
+    <item>färja</item>
+    <item>äldplats</item>
+    <item>brandstation</item>
+    <item>fiske</item>
+    <item>bensinstation</item>
+    <item>golfbana</item>
+    <item>mataffär</item>
+    <item>hårfrissör</item>
+    <item>hamn</item>
+    <item>vandringsled</item>
+    <item>hotel</item>
+    <item>hus</item>
+    <item>information</item>
+    <item>korsning</item>
+    <item>postlåda</item>
+    <item>marknad</item>
+    <item>mötesplats</item>
+    <item>opera</item>
+    <item>parkering</item>
+    <item>postkontor</item>
+    <item>grop</item>
+    <item>polisstation</item>
+    <item>järnvägskorssning</item>
+    <item>restaurant</item>
+    <item>shopping</item>
+    <item>sevärdhet</item>
+    <item>affär</item>
+    <item>simbassäng</item>
+    <item>telefon</item>
+    <item>teater</item>
+    <item>toalett</item>
+    <item>turistinformation</item>
+    <item>tunnel</item>
+    <item>träd</item>
+    <item>vatenfall</item>
+    <item>wattenfontän</item>
+    <item>etappmål</item>
+  </array>
+</resources>
