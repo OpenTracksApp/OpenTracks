@@ -126,7 +126,7 @@ limitations under the License.
   <string name="tracklist_btn_export_all">Alle Tracks exportieren</string>
   <string name="export_done">Exportieren beendet</string>
   <string name="tracklist_pick_one">Einen Track auswählen. Lange berühren für mehr Optionen.</string>
-  <string name="tracklist_all_tracks">Alle Tracks:</string>
+  <string name="tracklist_all_tracks">Alle Tracks</string>
   <string name="tracklist_this_track">Dieser Track</string>
   <string name="tracklist_share_track">Mit Freunden teilen…</string>
   <string name="tracklist_share_link">Ein Link zur Google MyMaps-Karte</string>
@@ -167,7 +167,7 @@ limitations under the License.
   <string name="settings_not_available_summary">In dieser Android-Version nicht verfügbar</string>
  
   <string name="settings_announcement_frequency">Dauer zwischen Ansagen</string>
-  <string name="settings_announcement_frequency_summary">Kürzeste Zeit zwichen zwei Ansagen</string>
+  <string name="settings_announcement_frequency_summary">Kürzeste Zeit zwischen zwei Ansagen</string>
  
   <string name="settings_min_recording_distance">Kleinste Entfernung zwischen Punkten</string>
   <string name="settings_min_recording_distance_summary">Kleinste Entfernung zwischen zwei Positionsaufzeichnungen</string>
@@ -176,7 +176,7 @@ limitations under the License.
   <string name="settings_max_recording_distance_summary">Der Track wird in zwei geteilt, wenn zwei folgende Punkte weiter entfernt sind als hier angegeben.</string>
  
   <string name="settings_min_recording_interval">Aufzeichnungsfrequenz</string>
-  <string name="settings_min_recording_interval_summary">Kürzeste Zeit zwischen zwei Positionsaufzeichnungen.</string>
+  <string name="settings_min_recording_interval_summary">Kürzeste Zeit zwischen zwei Positionsaufzeichnungen</string>
  
   <string name="settings_min_required_accuracy">Aufzeichnung pausieren, wenn Genauigkeit kleiner als</string>
   <string name="settings_min_required_accuracy_summary">Die Aufzeichnung wird kurzfristig angehalten, wenn Deine Position nicht genauer als hier angegeben ermittelt werden kann.</string>
@@ -211,12 +211,12 @@ limitations under the License.
 
   <string name="eclair_required">Wird nur unter Android 2.0 oder höher unterstützt</string>
   <string name="settings_sensor_type">Sensortyp</string>
-  <string name="settings_sensor_type_summary">Der Typ des zu verbindenden Sensors.</string>
+  <string name="settings_sensor_type_summary">Der Typ des zu verbindenden Sensors</string>
   <string name="settings_sensor_id">Sensor-Id</string>
-  <string name="settings_sensor_id_summary">Die zum Sensor zu sendende Id.</string>
+  <string name="settings_sensor_id_summary">Die zum Sensor zu sendende Id</string>
   <string name="sensor_id_malformed">Die Id muss eine Ganzzahl sein.</string>
   <string name="bluetooth_sensor_title">Bluetooth-Sensor</string>
-  <string name="bluetooth_sensor_summary">Der zu verbindende Bluetoothsensor.</string>
+  <string name="bluetooth_sensor_summary">Der zu verbindende Bluetoothsensor</string>
   <string name="settings_modular_stats_display_title">Art der Datenanzeige</string>
   <string name="settings_modular_stats_display_summary_on">Die Daten auf verschiedene Anzeigen verteilen</string>
   <string name="settings_modular_stats_display_summary_off">Alle Daten auf einem Bildschirm anzeigen</string>
@@ -226,11 +226,11 @@ limitations under the License.
   <string name="settings_backup_to_sd">Jetzt sichern</string>
   <string name="settings_backup_to_sd_summary">Eine Kopie aller Deiner Tracks und Einstellungen auf die SD-Karte schreiben</string>
   <string name="settings_restore_from_sd">Jetzt wiederherstellen</string>
-  <string name="settings_restore_from_sd_summary">Alle Tracks und Einstellungen von der SD-Karte holen</string>
+  <string name="settings_restore_from_sd_summary">Alle Tracks und Einstellungen von der SD-Karte holen.</string>
   <string name="settings_no_backup_while_recording">Während ein Track aufgezeichnet wird, kann nicht mit der Datensicherung gearbeitet werden.</string>
 
   <!-- Backups -->
-  <string name="restore_overwrites_warning">Eine Wiederherstellung von der SD-Karte ÜBERSCHREIBT alle vorhandenen Tracks und Einstellungen. Bist Du sicher?</string>
+  <string name="restore_overwrites_warning">Eine Wiederherstellung von der SD-Karte ÜBERSCHREIBT alle vorhandenen Tracks und Einstellungen. Willst Du das wirklich?</string>
   <string name="select_backup_to_restore">Wähle die wiederherzustellende Datensicherung aus</string>
   <string name="no_backups">Keine Datensicherungen gefunden.</string>
   <string name="backup_write_progress_message">Schreibe alle Tracks und Einstellungen auf die SD-Karte. Dies kann eine Weile dauern...</string>
@@ -240,7 +240,7 @@ limitations under the License.
   <string name="mytracks_sky">GPS-Satelliten</string>
 
   <!-- MyMaps -->
-  <string name="select_map_message">Wähle eine Karte von Deinem Konto aus:</string>
+  <string name="select_map_message">Wähle eine Karte von Deinem Konto aus</string>
   <string name="create_new_map">Neue Karte erstellen…</string>
   <string name="map_list_title">An Google My Maps senden</string>
   <string name="maps_list_loading">Karten werden geladen…</string>
@@ -251,7 +251,7 @@ limitations under the License.
   <string name="share_track">Track mit Freunden teilen</string>
   <string name="delete_map">Karte vom Konto löschen</string>
   <string name="map_title">Kartentitel</string>
-  <string name="map_description">Trackbeschreibung:</string>
+  <string name="map_description">Trackbeschreibung</string>
   <string name="map_searchable_edit">Diese Karte und ihren Inhalt in Suchergebnissen sichtbar machen.</string>
   <string name="map_not_searchable_edit">Diese Karte und ihren Inhalt nicht in Suchergebnissen sichtbar machen.</string>
   <string name="map_searchable">Diese Karte und ihr Inhalt sind in Suchergebnissen sichtbar.</string>
@@ -406,19 +406,19 @@ limitations under the License.
   <string name="announce_template">My Tracks %1$s %2$.2f %3$s in %4$s mit %5$s %6$s</string>
 
   <!-- Check Units -->
-  <string name="check_units_title">Units of Measure Notice</string>
-  <string name="check_units_message">By default units are metric. Would you like to change that setting?</string>
+  <string name="check_units_title">Einheitenbenachrichtigung</string>
+  <string name="check_units_message">Voreingestellt sind metrische Einheiten. Willst Du diese Einstellung ändern?</string>
 
   <!-- Fake preference keys - never saved, but show options in the preferences screen -->
   <string name="bluetooth_options">Bluetootheinstellungen</string>
   <string name="bluetooth_pairing">Geräteverbindung</string>
-  <string name="bluetooth_pairing_summary">Öffnet Android\'s Bluetootheinstellungen, um Geräte zu verbinden</string>
-  <string name="sensor_options">Sensoreintellungen</string>
+  <string name="bluetooth_pairing_summary">Öffnet Androids Bluetootheinstellungen, um Geräte zu verbinden.</string>
+  <string name="sensor_options">Sensoreinstellungen</string>
 
   <!-- Bluetooth Sensor -->
   <string name="bluetooth_connected">Verbunden mit %s</string>
   <string name="bluetooth_connecting">Verbinde mit Bluetoothsensor ...</string>
-  <string name="bluetooth_not_connected">Bluetoothsensor nicht verbunden</string>
+  <string name="bluetooth_not_connected">Bluetoothsensor nicht verbunden.</string>
 
   <!-- Sensor State -->
   <string name="sensor_data_time">Sensor Data Time</string>
