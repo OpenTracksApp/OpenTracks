@@ -144,7 +144,7 @@ public class MyTracksProvider extends ContentProvider {
         db.execSQL("DROP TABLE IF EXISTS " + WAYPOINTS_TABLE);
         onCreate(db);
       } else {
-        // Incremental updates goes here.
+        // Incremental updates go here.
         // Each time you increase the DB version, add a corresponding if clause.
         
         // Sensor data.
