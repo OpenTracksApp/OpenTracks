@@ -159,10 +159,7 @@ limitations under the License.
     <item>Laufbahn</item>
     <item>Geländelauf</item>
     <item>Gehen</item>
-    
-    <!-- Speed walking ist mit "Schnelles Gehen" unglücklich übersetzt - vielleicht besser das unübersetzte "Speedwalking" nutzen? -->
     <item>Gehen (Sport)</item>
-    
     <item>Wandern</item>
     <item>Bergwandern</item>
     <item>Bergsteigen</item>
