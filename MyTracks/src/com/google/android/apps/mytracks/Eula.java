@@ -15,6 +15,7 @@
  */
 package com.google.android.apps.mytracks;
 
+import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.ResourceUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -77,7 +78,8 @@ class Eula {
   }
 
   private static void accept(Activity activity, SharedPreferences preferences) {
-    preferences.edit().putBoolean(PREFERENCE_EULA_ACCEPTED, true).commit();
+    ApiFeatures.getInstance().getApiPlatformAdapter().applyPreferenceChanges(
+        preferences.edit().putBoolean(PREFERENCE_EULA_ACCEPTED, true));
     Intent startIntent = new Intent(activity, WelcomeActivity.class);
     activity.startActivityForResult(startIntent, MyTracksConstants.WELCOME);
   }

@@ -2,6 +2,7 @@ package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.MyTracksConstants;
 
+import android.content.SharedPreferences.Editor;
 import android.os.StrictMode;
 import android.util.Log;
 
@@ -12,6 +13,12 @@ import android.util.Log;
  * @author Rodrigo Damazio
  */
 public class GingerbreadPlatformAdapter extends EclairPlatformAdapter {
+  @Override
+  public void applyPreferenceChanges(Editor editor) {
+    // Apply asynchronously
+    editor.apply();
+  }
+
   @Override
   public void enableStrictMode() {
     Log.d(MyTracksConstants.TAG, "Enabling strict mode");

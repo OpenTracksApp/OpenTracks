@@ -1064,10 +1064,10 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * @param trackId the id of the track
    */
   public void setSelectedTrackId(final long trackId) {
-    sharedPreferences
-        .edit()
-        .putLong(getString(R.string.selected_track_key), trackId)
-        .commit();
+    ApiFeatures.getInstance().getApiPlatformAdapter().applyPreferenceChanges(
+        sharedPreferences
+            .edit()
+            .putLong(getString(R.string.selected_track_key), trackId));
   }
 
   long getSelectedTrackId() {
