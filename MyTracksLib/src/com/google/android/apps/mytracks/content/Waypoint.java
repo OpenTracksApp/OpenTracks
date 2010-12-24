@@ -85,7 +85,7 @@ public final class Waypoint implements Parcelable {
   /** Stop track point id */
   private long stopId = -1;
 
-  private TripStatistics stats = new TripStatistics();
+  private TripStatistics stats;
 
   /** The length of the track, without smoothing. */
   private double length;

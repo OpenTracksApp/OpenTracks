@@ -17,6 +17,7 @@ package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
@@ -28,6 +29,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.RemoteException;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
@@ -87,7 +90,7 @@ public class MyTracksWaypointsList extends ListActivity
   protected void onListItemClick(ListView l, View v, int position, long id) {
     Intent result = new Intent();
     result.putExtra("trackid", trackId);
-    result.putExtra("waypointid", id);
+    result.putExtra(MyTracksWaypointDetails.WAYPOINT_ID_EXTRA, id);
     setResult(MyTracksConstants.EDIT_WAYPOINT, result);
     finish();
   }
@@ -103,7 +106,7 @@ public class MyTracksWaypointsList extends ListActivity
         case MyTracksConstants.MENU_EDIT: {
           Intent intent = new Intent(this, MyTracksWaypointDetails.class);
           intent.putExtra("trackid", trackId);
-          intent.putExtra("waypointid", waypointId);
+          intent.putExtra(MyTracksWaypointDetails.WAYPOINT_ID_EXTRA, waypointId);
           startActivity(intent);
           return true;
         }
@@ -165,27 +168,34 @@ public class MyTracksWaypointsList extends ListActivity
 
   @Override
   public void onClick(View v) {
+    WaypointCreationRequest request;
     switch (v.getId()) {
-      case R.id.waypointslist_btn_insert_waypoint: {
-        long id = MyTracks.getInstance().insertWaypointMarker();
-        if (id >= 0) {
-          Intent intent = new Intent(this, MyTracksWaypointDetails.class);
-          intent.putExtra("waypointid", id);
-          startActivity(intent);
-        }
+      case R.id.waypointslist_btn_insert_waypoint:
+        request = WaypointCreationRequest.DEFAULT_MARKER;
         break;
-      }
-      case R.id.waypointslist_btn_insert_statistics: {
-        long id = MyTracks.getInstance().insertStatisticsMarker();
-        if (id >= 0) {
-          Intent intent = new Intent(this, MyTracksWaypointDetails.class);
-          intent.putExtra("waypointid", id);
-          startActivity(intent);
-        }
+      case R.id.waypointslist_btn_insert_statistics:
+        request = WaypointCreationRequest.DEFAULT_STATISTICS;
         break;
-      }
-
+      default:
+        return;
     }
+    long id;
+    try {
+      id = MyTracks.getInstance().insertWaypoint(request);
+    } catch (RemoteException e) {
+      Log.e(MyTracksConstants.TAG, "Cannot insert marker.", e);
+      return;
+    } catch (IllegalStateException e) {
+      Log.e(MyTracksConstants.TAG, "Cannot insert marker.", e);
+      return;
+    }
+    if (id < 0) {
+      Log.e(MyTracksConstants.TAG, "Failed to insert marker.");
+      return;
+    }
+    Intent intent = new Intent(this, MyTracksWaypointDetails.class);
+    intent.putExtra(MyTracksWaypointDetails.WAYPOINT_ID_EXTRA, id);
+    startActivity(intent);
   }
 
   private void setListAdapter() {

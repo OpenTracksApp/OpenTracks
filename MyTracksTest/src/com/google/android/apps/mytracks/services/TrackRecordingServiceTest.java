@@ -22,6 +22,7 @@ import com.google.android.apps.mytracks.content.MyTracksProvider;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.maps.mytracks.R;
@@ -77,9 +78,11 @@ public class TrackRecordingServiceTest
   }
 
   /**
-   * A context wrapper with the user provided {@link ContentResolver}.  
+   * A context wrapper with the user provided {@link ContentResolver}.
+   * 
+   * TODO: Move to test utils package.
    */
-  private static class MockContext extends ContextWrapper {
+  public static class MockContext extends ContextWrapper {
     private final ContentResolver contentResolver;
     
     public MockContext(ContentResolver contentResolver, Context base) {
@@ -546,9 +549,8 @@ public class TrackRecordingServiceTest
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertFalse(service.isRecording());
     
-    Location loc = new Location("gps");
     try {
-      service.insertStatisticsMarker(loc);
+      service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
       fail("Expecting IllegalStateException");
     } catch (IllegalStateException e) {
       // Expected.
@@ -562,11 +564,22 @@ public class TrackRecordingServiceTest
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertTrue(service.isRecording());
     
-    Location loc = new Location("gps");
-    assertEquals(1, service.insertStatisticsMarker(loc));
-    assertEquals(2, service.insertStatisticsMarker(loc));
+    assertEquals(1, service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS));
+    assertEquals(2, service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS));
     
-    // TODO: Add more checks.
+    Waypoint wpt = providerUtils.getWaypoint(1);
+    assertEquals(getContext().getString(R.string.stats_icon_url),
+        wpt.getIcon());
+    assertEquals(getContext().getString(R.string.statistics),
+        wpt.getName());
+    assertEquals(Waypoint.TYPE_STATISTICS, wpt.getType());
+    assertEquals(123, wpt.getTrackId());
+    assertEquals(0.0, wpt.getLength());
+    assertNotNull(wpt.getLocation());
+    assertNotNull(wpt.getStatistics());
+    // TODO check the rest of the params.
+
+    // TODO: Check waypoint 2.
   }
 
   @MediumTest
@@ -574,27 +587,12 @@ public class TrackRecordingServiceTest
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertFalse(service.isRecording());
     
-    Location loc = new Location("gps");
-    Waypoint waypoint = new Waypoint();
-    waypoint.setId(1);
-    waypoint.setLocation(loc);
     try {
-      service.insertWaypointMarker(waypoint);
+      service.insertWaypoint(WaypointCreationRequest.DEFAULT_MARKER);
       fail("Expecting IllegalStateException");
     } catch (IllegalStateException e) {
       // Expected.
     }
-  }
-  
-  @MediumTest
-  public void testInsertWaypointMarker_invalidWaypoint() throws Exception {
-    createDummyTrack(123, -1, true);
-    
-    ITrackRecordingService service = bindAndGetService(createStartIntent());
-    assertTrue(service.isRecording());
-    
-    Waypoint waypoint = new Waypoint();
-    assertEquals(-1, service.insertWaypointMarker(waypoint));
   }
   
   @MediumTest
@@ -604,11 +602,17 @@ public class TrackRecordingServiceTest
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertTrue(service.isRecording());
     
-    Location loc = new Location("gps");
-    Waypoint waypoint = new Waypoint();
-    waypoint.setId(1);
-    waypoint.setLocation(loc);
-    assertEquals(1, service.insertWaypointMarker(waypoint));
+    assertEquals(1, service.insertWaypoint(WaypointCreationRequest.DEFAULT_MARKER));
+    Waypoint wpt = providerUtils.getWaypoint(1);
+    assertEquals(getContext().getString(R.string.waypoint_icon_url),
+        wpt.getIcon());
+    assertEquals(getContext().getString(R.string.waypoint),
+        wpt.getName());
+    assertEquals(Waypoint.TYPE_WAYPOINT, wpt.getType());
+    assertEquals(123, wpt.getTrackId());
+    assertEquals(0.0, wpt.getLength());
+    assertNotNull(wpt.getLocation());
+    assertNull(wpt.getStatistics());
   }
   
   @MediumTest
@@ -804,11 +808,9 @@ public class TrackRecordingServiceTest
       service.recordLocation(loc);
       
       if (i % 10 == 0) {
-        service.insertStatisticsMarker(loc);
+        service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
       } else if (i % 7 == 0) {
-        Waypoint waypoint = new Waypoint();
-        waypoint.setLocation(loc);
-        service.insertWaypointMarker(waypoint);
+        service.insertWaypoint(WaypointCreationRequest.DEFAULT_MARKER);
       }
     }
     

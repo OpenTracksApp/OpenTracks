@@ -25,7 +25,7 @@ import com.google.android.apps.mymaps.MyMapsConstants;
 import com.google.android.apps.mymaps.MyMapsList;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.io.AuthManager;
 import com.google.android.apps.mytracks.io.AuthManagerFactory;
 import com.google.android.apps.mytracks.io.GpxImporter;
@@ -63,6 +63,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -92,9 +93,6 @@ import org.xml.sax.SAXException;
  */
 public class MyTracks extends TabActivity implements OnTouchListener,
     OnSharedPreferenceChangeListener, ProgressIndicator {
-
-  private static final String WAYPOINT_ICON_URL =
-      "http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png";
 
   /**
    * Singleton instance
@@ -432,7 +430,13 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   public boolean onTrackballEvent(MotionEvent event) {
     if (isRecording()) {
       if (event.getAction() == MotionEvent.ACTION_DOWN) {
-        insertStatisticsMarker();
+        try {
+          insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
+        } catch (RemoteException e) {
+          Log.e(MyTracksConstants.TAG, "Cannot insert statistics marker.", e);
+        } catch (IllegalStateException e) {
+          Log.e(MyTracksConstants.TAG, "Cannot insert statistics marker.", e);
+        }
         return true;
       }
     }
@@ -888,90 +892,25 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   /**
    * Inserts a waypoint marker.
    *
-   * @return the id of the inserted statistics marker, or
-   *   -1 unable to find location
-   *   -2 track recording service is not running?
-   *   -3 remote exception when contacting track recording service
-   *   -4 inserting marker into provider failed
+   * @return Id of the inserted statistics marker.
+   * @throws RemoteException If the call on the service failed.
    */
-  public long insertWaypointMarker() {
-    Location location = getCurrentLocation();
-    if (location == null) {
+  public long insertWaypoint(WaypointCreationRequest request) throws RemoteException {
+    if (trackRecordingService == null) {
+      throw new IllegalStateException("The recording service is not bound.");
+    }
+    try {
+      long waypointId = trackRecordingService.insertWaypoint(request);
+      if (waypointId >= 0) {
+        Toast.makeText(this, R.string.status_statistics_inserted,
+            Toast.LENGTH_LONG).show();
+      }
+      return waypointId;
+    } catch (RemoteException e) {
       Toast.makeText(this, R.string.error_unable_to_insert_marker,
           Toast.LENGTH_LONG).show();
-      return -1;
+      throw e;
     }
-    if (trackRecordingService != null) {
-      try {
-        Waypoint wpt = new Waypoint();
-        wpt.setName(getString(R.string.waypoint));
-        wpt.setType(Waypoint.TYPE_WAYPOINT);
-        wpt.setTrackId(recordingTrackId);
-        wpt.setIcon(WAYPOINT_ICON_URL);
-        wpt.setLocation(location);
-        long waypointId = trackRecordingService.insertWaypointMarker(wpt);
-        if (waypointId >= 0) {
-          Toast.makeText(this, R.string.status_waypoint_inserted,
-              Toast.LENGTH_LONG).show();
-          return waypointId;
-        } else {
-          Toast.makeText(this, R.string.error_unable_to_insert_marker,
-              Toast.LENGTH_LONG).show();
-          Log.e(MyTracksConstants.TAG, "Cannot insert waypoint marker?");
-          return -4;
-        }
-        // TODO: We catch Exception, because after eliminating the service process
-        // all exceptions it may throw are no longer wrapped in a RemoteException.
-      } catch (Exception e) {
-        Toast.makeText(this, R.string.error_unable_to_insert_marker,
-            Toast.LENGTH_LONG).show();
-        Log.e(MyTracksConstants.TAG, "Cannot insert waypoint marker.", e);
-      }
-      return -3;
-    }
-    return -2;
-  }
-
-  /**
-   * Inserts a statistics marker.
-   *
-   * @return the id of the inserted statistics marker, or
-   *   -1 unable to find location
-   *   -2 track recording service is not running?
-   *   -3 remote exception when contacting track recording service
-   *   -4 inserting marker into provider failed
-   */
-  public long insertStatisticsMarker() {
-    Location location = getLastLocation();
-    if (location == null) {
-      Toast.makeText(this, R.string.error_unable_to_insert_marker,
-          Toast.LENGTH_LONG).show();
-      return -1;
-    }
-    if (trackRecordingService != null) {
-      try {
-        long waypointId =
-            trackRecordingService.insertStatisticsMarker(location);
-        if (waypointId >= 0) {
-          Toast.makeText(this, R.string.status_statistics_inserted,
-              Toast.LENGTH_LONG).show();
-          return waypointId;
-        } else {
-          Toast.makeText(this, R.string.error_unable_to_insert_marker,
-              Toast.LENGTH_LONG).show();
-          Log.e(MyTracksConstants.TAG, "Cannot insert statistics marker?");
-          return -4;
-        }
-        // TODO: We catch Exception, because after eliminating the service process
-        // all exceptions it may throw are no longer wrapped in a RemoteException.
-      } catch (Exception e) {
-        Toast.makeText(this, R.string.error_unable_to_insert_marker,
-            Toast.LENGTH_LONG).show();
-        Log.e(MyTracksConstants.TAG, "Cannot insert statistics marker?", e);
-      }
-      return -3;
-    }
-    return -2;
   }
 
   /**

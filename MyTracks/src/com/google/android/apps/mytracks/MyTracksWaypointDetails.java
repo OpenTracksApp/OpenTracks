@@ -42,6 +42,8 @@ import android.widget.ImageView;
 public class MyTracksWaypointDetails extends Activity
     implements OnClickListener {
 
+  public static final String WAYPOINT_ID_EXTRA = "com.google.android.apps.mytracks.WAYPOINT_ID";
+
   /**
    * The id of the way point being edited (taken from bundle, "waypointid")
    */
@@ -78,7 +80,7 @@ public class MyTracksWaypointDetails extends Activity
     }
 
     // Required extra when launching this intent:
-    waypointId = getIntent().getLongExtra("waypointid", -1);
+    waypointId = getIntent().getLongExtra(WAYPOINT_ID_EXTRA, -1);
     if (waypointId < 0) {
       Log.d(MyTracksConstants.TAG,
           "MyTracksWaypointsDetails intent was launched w/o waypoint id.");

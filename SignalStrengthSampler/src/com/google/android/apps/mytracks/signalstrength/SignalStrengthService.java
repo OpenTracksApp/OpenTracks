@@ -17,7 +17,10 @@ package com.google.android.apps.mytracks.signalstrength;
 
 import static com.google.android.apps.mytracks.signalstrength.SignalStrengthConstants.*;
 
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtilsImpl;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.signalstrength.SignalStrengthListener.SignalStrengthCallback;
 
@@ -53,6 +56,7 @@ public class SignalStrengthService extends Service
   private ITrackRecordingService mytracksService;
   private long lastSamplingTime;
   private long samplingPeriod;
+  private MyTracksProviderUtils utils;
 
   @Override
   public void onCreate() {
@@ -63,6 +67,7 @@ public class SignalStrengthService extends Service
         getString(R.string.mytracks_service_class));
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
     signalListenerFactory = new SignalStrengthListenerFactory();
+    utils = new MyTracksProviderUtilsImpl(this.getContentResolver());
   }
 
   @Override
@@ -154,13 +159,6 @@ public class SignalStrengthService extends Service
       return;
     }
 
-    // We don't set location or track id - My Tracks can fill those
-    Waypoint wpt = new Waypoint();
-    wpt.setName("Signal Strength");
-    wpt.setType(Waypoint.TYPE_WAYPOINT);
-    wpt.setIcon(icon);
-    wpt.setDescription(description);
-
     try {
       long waypointId;
       synchronized (this) {
@@ -169,7 +167,11 @@ public class SignalStrengthService extends Service
           return;
         }
 
-        waypointId = mytracksService.insertWaypointMarker(wpt);
+        // Create a waypoint.
+        WaypointCreationRequest request =
+            new WaypointCreationRequest(WaypointCreationRequest.WaypointType.MARKER,
+                "Signal Strength", icon, description);
+        waypointId = mytracksService.insertWaypoint(request);
       }
 
       if (waypointId >= 0) {
