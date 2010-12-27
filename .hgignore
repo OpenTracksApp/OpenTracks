@@ -1,0 +1,6 @@
+syntax:glob
+
+*/bin
+*/gen/**
+.metadata
+MyTracksTest/annotations.log
