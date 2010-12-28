@@ -197,8 +197,8 @@ public class ChartView extends View {
     series[ELEVATION_SERIES] =
         new ChartValueSeries(context,
                              "###,###",
-                             R.color.green,
-                             -1,
+                             R.color.elevation_fill,
+                             R.color.elevation_border,
                              100,
                              R.string.elevation);
 

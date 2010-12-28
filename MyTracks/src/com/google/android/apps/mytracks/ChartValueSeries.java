@@ -86,29 +86,6 @@ public class ChartValueSeries {
   }
 
   /**
-   * Constructs a new chart value series.
-   *
-   * @param context The context for the chart
-   * @param formatString The format of the decimal format for this series
-   * @param fill The paint for filling the chart
-   * @param stroke The paint for stroking the outside the chart, optional
-   * @param rounding The factor to round the values by
-   */
-  public ChartValueSeries(Context context,
-                          String formatString,
-                          Paint fill,
-                          Paint stroke,
-                          int rounding,
-                          int titleId) {
-    this.format = new DecimalFormat(formatString);
-    this.fillPaint = fill;
-    this.labelPaint = fill;
-    this.strokePaint = stroke;
-    this.rounding = rounding;
-    this.title = context.getString(titleId);
-  }
-
-  /**
    * Draws the path of the chart
    */
   public void drawPath(Canvas c) {
