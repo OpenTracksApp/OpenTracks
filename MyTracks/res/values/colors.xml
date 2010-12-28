@@ -24,13 +24,21 @@ limitations under the License.
   <color name="green">#FF00AA00</color>
   <color name="lightblue">#FF00FFFF</color>
   <color name="opaque_shadow">#70000000</color>
-  <color name="purple">#FF401465</color>
-  <color name="purple_transparent">#40401465</color>
   <color name="red">#FFFF0000</color>
-  <color name="red_transparent">#40FF0000</color>
   <color name="stat_label_background">#FFF0F0F0</color>
   <color name="stat_label_text">#FF0F0F0F</color>
   <color name="white">#FFFFFFFF</color>
-  <color name="yellow">#FFF8FF00</color>
-  <color name="yellow_transparent">#40F8FF00</color>
+
+  <!-- Chart colors by series. -->
+  <!-- Purple and a transparent purple -->
+  <color name="heartrate_border">#FF401465</color>
+  <color name="heartrate_fill">#40401465</color>
+
+  <!-- Pink and a transparent pink -->
+  <color name="cadence_border">#FFF128F3</color>
+  <color name="cadence_fill">#40F128F3</color>
+
+  <!-- red and a transparent red -->
+  <color name="power_border">#FFFF0000</color>
+  <color name="power_fill">#40FF0000</color>
 </resources>

@@ -21,6 +21,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Paint.Style;
 
 import java.text.DecimalFormat;
 
@@ -36,6 +37,7 @@ public class ChartValueSeries {
   private final Path path = new Path();
   private final Paint fillPaint;
   private final Paint strokePaint;
+  private final Paint labelPaint;
   private final int rounding;
 
   private String title;
@@ -58,12 +60,49 @@ public class ChartValueSeries {
    */
   public ChartValueSeries(Context context,
                           String formatString,
+                          int fillColor,
+                          int strokeColor,
+                          int rounding,
+                          int titleId) {
+    this.format = new DecimalFormat(formatString);
+    fillPaint = new Paint();
+    fillPaint.setStyle(Style.FILL);
+    fillPaint.setColor(context.getResources().getColor(fillColor));
+    fillPaint.setAntiAlias(true);
+    if (strokeColor != -1) {
+      strokePaint = new Paint();
+      strokePaint.setStyle(Style.STROKE);
+      strokePaint.setColor(context.getResources().getColor(strokeColor));
+      strokePaint.setAntiAlias(true);
+      // Make a copy of the stroke paint with the default thickness.
+      labelPaint = new Paint(strokePaint);
+      strokePaint.setStrokeWidth(2f);
+    } else {
+      strokePaint = null;
+      labelPaint = fillPaint;
+    }
+    this.rounding = rounding;
+    this.title = context.getString(titleId);
+  }
+
+  /**
+   * Constructs a new chart value series.
+   *
+   * @param context The context for the chart
+   * @param formatString The format of the decimal format for this series
+   * @param fill The paint for filling the chart
+   * @param stroke The paint for stroking the outside the chart, optional
+   * @param rounding The factor to round the values by
+   */
+  public ChartValueSeries(Context context,
+                          String formatString,
                           Paint fill,
                           Paint stroke,
                           int rounding,
                           int titleId) {
     this.format = new DecimalFormat(formatString);
     this.fillPaint = fill;
+    this.labelPaint = fill;
     this.strokePaint = stroke;
     this.rounding = rounding;
     this.title = context.getString(titleId);
@@ -192,6 +231,10 @@ public class ChartValueSeries {
     return (strokePaint == null)
         ? fillPaint
         : strokePaint;
+  }
+
+  public Paint getLabelPaint() {
+    return labelPaint;
   }
 
   /**

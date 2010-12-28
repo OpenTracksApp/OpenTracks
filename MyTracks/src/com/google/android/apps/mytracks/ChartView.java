@@ -66,8 +66,27 @@ public class ChartView extends View {
    * Borders, margins, dimensions (in pixels):
    */
   private int leftBorder = -1;
+
+  /**
+   * Unscaled top border of the chart. 
+   */
   private static final int TOP_BORDER = 15;
-  private static final int BOTTOM_BORDER = 135;
+  
+  /**
+   * Device scaled top border of the chart.
+   */
+  private int topBorder;
+
+  /**
+   * Unscaled bottom border of the chart. 
+   */
+  private static final float BOTTOM_BORDER = 100;
+  
+  /**
+   * Device scaled bottom border of the chart.
+   */
+  private int bottomBorder;
+  
   private static final int RIGHT_BORDER = 17;
   /** Space to leave for drawing the unit labels */
   private static final int UNIT_BORDER = 15;
@@ -174,45 +193,44 @@ public class ChartView extends View {
   public void setUpChartValueSeries(Context context) {
     series = new ChartValueSeries[NUM_SERIES];
 
-    // Create the paints
-    Paint fillPaint = new Paint();
-    fillPaint.setStyle(Style.FILL);
-    fillPaint.setColor(context.getResources().getColor(R.color.green));
-    fillPaint.setAntiAlias(true);
-
     // Create the value series
     series[ELEVATION_SERIES] =
         new ChartValueSeries(context,
                              "###,###",
-                             fillPaint,
-                             null,
+                             R.color.green,
+                             -1,
                              100,
                              R.string.elevation);
 
-    series[SPEED_SERIES] = getSeries(context, R.color.blue_transparent,
-        R.color.blue, "###,###.0", R.string.speed);
-    series[POWER_SERIES] = getSeries(context, R.color.red_transparent,
-        R.color.red, "###,###", R.string.power);
+    series[SPEED_SERIES] =
+        new ChartValueSeries(context,
+                             "###,###.0",
+                             R.color.blue_transparent,
+                             R.color.blue,
+                             5,
+                             R.string.speed);
+    series[POWER_SERIES] =
+        new ChartValueSeries(context,
+                             "###,###",
+                             R.color.power_fill,
+                             R.color.power_border,
+                             5,
+                             R.string.power);
     series[POWER_SERIES].setAbsoluteMax(1500);
-    series[CADENCE_SERIES] = getSeries(context, R.color.purple_transparent,
-        R.color.purple, "###,###", R.string.cadence);
-    series[HEART_RATE_SERIES] = getSeries(context, R.color.yellow_transparent,
-        R.color.yellow, "###,###", R.string.heart_rate);
-  }
-
-  private ChartValueSeries getSeries(Context context,
-      int fillColor, int strokeColor, String format, int seriesName) {
-    Paint fillPaint = new Paint();
-    fillPaint.setStyle(Style.FILL);
-    fillPaint.setColor(context.getResources().getColor(fillColor));
-    fillPaint.setAntiAlias(true);
-
-    Paint strokePaint = new Paint();
-    strokePaint.setStyle(Style.STROKE);
-    strokePaint.setColor(context.getResources().getColor(strokeColor));
-    strokePaint.setAntiAlias(true);
-    return new ChartValueSeries(context, format, fillPaint, strokePaint, 5,
-        seriesName);
+    series[CADENCE_SERIES] =
+        new ChartValueSeries(context,
+                             "###,###",
+                             R.color.cadence_fill,
+                             R.color.cadence_border,
+                             5,
+                             R.string.cadence);
+    series[HEART_RATE_SERIES] =
+        new ChartValueSeries(context,
+                             "###,###",
+                             R.color.heartrate_fill,
+                             R.color.heartrate_border,
+                             5,
+                             R.string.heart_rate);
   }
 
   public void clearWaypoints() {
@@ -529,7 +547,7 @@ public class ChartView extends View {
       w = c.getWidth();
       h = c.getHeight();
       effectiveWidth = Math.max(0, w - leftBorder - RIGHT_BORDER);
-      effectiveHeight = Math.max(0, h - TOP_BORDER - BOTTOM_BORDER);
+      effectiveHeight = Math.max(0, h - topBorder - bottomBorder);
       setupPath();
     }
     c.save();
@@ -558,7 +576,7 @@ public class ChartView extends View {
       c.save();
 
       final float x = getWaypointX(waypoint);
-      c.drawLine(x, h - BOTTOM_BORDER, x, TOP_BORDER, gridPaint);
+      c.drawLine(x, h - bottomBorder, x, topBorder, gridPaint);
       c.translate(x - (markerWidth / 2), markerHeight);
       if (waypoints.get(i).getType() == Waypoint.TYPE_STATISTICS) {
         statsMarker.draw(c);
@@ -601,7 +619,7 @@ public class ChartView extends View {
     for (ChartValueSeries cvs : series) {
       if (cvs.isEnabled() && cvs.hasData()) {
         int y = (int) (w * zoomLevel * ((double) (++j) / sections));
-        c.drawText(cvs.getTitle(), y, TOP_BORDER, cvs.getPaint());
+        c.drawText(cvs.getTitle(), y, topBorder, cvs.getLabelPaint());
       }
     }
   }
@@ -631,7 +649,7 @@ public class ChartView extends View {
     }
 
     // Close the path.
-    int yCorner = TOP_BORDER + effectiveHeight;
+    int yCorner = topBorder + effectiveHeight;
     int xCorner = getX(data.get(0)[0]);
     int min = series.length;
     for (int j = 0; j < min; j++) {
@@ -682,7 +700,10 @@ public class ChartView extends View {
     }
     leftBorder = 4 + 7 * maxLength;
     effectiveWidth = w - leftBorder - RIGHT_BORDER;
-    effectiveHeight = h - TOP_BORDER - BOTTOM_BORDER;
+    float density = getContext().getResources().getDisplayMetrics().density;
+    bottomBorder = (int) (density * BOTTOM_BORDER);
+    topBorder = (int) (density * TOP_BORDER);
+    effectiveHeight = h - topBorder - bottomBorder;
   }
 
   private int getX(double distance) {
@@ -690,7 +711,7 @@ public class ChartView extends View {
   }
 
   private int getY(ChartValueSeries cvs, double y) {
-    return TOP_BORDER + effectiveHeight
+    return topBorder + effectiveHeight
         - (int) ((y - cvs.getMin()) * effectiveHeight / cvs.getSpread());
   }
 
@@ -747,7 +768,7 @@ public class ChartView extends View {
             : StringUtils.formatTime((long) x);
     c.drawText(s,
                getX(x),
-               effectiveHeight + UNIT_BORDER + TOP_BORDER,
+               effectiveHeight + UNIT_BORDER + topBorder,
                labelPaint);
   }
 
@@ -763,19 +784,19 @@ public class ChartView extends View {
     if (yLabelMask[slot]) {
       desiredY = ++slot * FONT_HEIGHT;
     }
-    desiredY = TOP_BORDER + effectiveHeight + 5 - desiredY;
+    desiredY = topBorder + effectiveHeight + 5 - desiredY;
     if (slot < yLabelMask.length) {
       yLabelMask[slot] = true;
     }
     c.drawText(cvs.getFormat().format(y),
                2, desiredY,
-               cvs.getPaint());
+               cvs.getLabelPaint());
   }
 
   private void drawXAxis(Canvas canvas) {
     float rightEdge = getX(maxX);
-    canvas.drawLine(leftBorder, effectiveHeight + TOP_BORDER, rightEdge,
-        effectiveHeight + TOP_BORDER, borderPaint);
+    canvas.drawLine(leftBorder, effectiveHeight + topBorder, rightEdge,
+        effectiveHeight + topBorder, borderPaint);
     Context c = getContext();
     String s =
         (mode == Mode.BY_DISTANCE)
@@ -783,16 +804,16 @@ public class ChartView extends View {
             : c.getString(R.string.mile)) : (c.getString(R.string.min));
     canvas.drawText(s,
                     rightEdge,
-                    effectiveHeight + .2f * UNIT_BORDER + TOP_BORDER,
+                    effectiveHeight + .2f * UNIT_BORDER + topBorder,
                     labelPaint);
   }
 
   private void drawYAxis(Canvas canvas) {
-    canvas.drawLine(leftBorder, UNIT_BORDER + TOP_BORDER,
-                    leftBorder, effectiveHeight + TOP_BORDER,
+    canvas.drawLine(leftBorder, UNIT_BORDER + topBorder,
+                    leftBorder, effectiveHeight + topBorder,
                     borderPaint);
     canvas.drawRect(0, 0,
-                    leftBorder - 1, effectiveHeight + TOP_BORDER + 1,
+                    leftBorder - 1, effectiveHeight + topBorder + 1,
                     clearPaint);
     Context c = getContext();
     // TODO: This should really show units for all series.
@@ -800,7 +821,7 @@ public class ChartView extends View {
         ? c.getString(R.string.meter)
         : c.getString(R.string.feet);
     canvas.drawText(s, leftBorder - UNIT_BORDER * .2f,
-        UNIT_BORDER * .8f + TOP_BORDER, labelPaint);
+        UNIT_BORDER * .8f + topBorder, labelPaint);
   }
 
   private synchronized void drawGrid(Canvas c) {
