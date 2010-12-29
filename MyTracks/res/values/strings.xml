@@ -15,9 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-  <!-- DO NOT TRANSLATE -->
-  <string name="app_name">My Tracks</string>
-
   <!-- Used by the Menu -->
   <string name="start_recording">Record track</string>
   <string name="stop_recording">Stop recording</string>
@@ -387,16 +384,6 @@ limitations under the License.
   <string name="about_email">Support</string>
   <string name="about_support">Support:</string>
 
-  <!-- DO NOT TRANSLATE -->
-  <string name="about_googlegroups">mytracks@googlegroups.com</string>
-  <string name="about_weburl">mytracks.appspot.com</string>
-  <string name="about_copyright_message">Copyright 2009 Google Inc.</string>
-  <string name="about_bart">Bartlomiej Niechwiej</string>
-  <string name="about_dylan">Dylan Casey</string>
-  <string name="about_leif">Leif Hendrik Wilden</string>
-  <string name="about_rdamazio">Rodrigo Damazio Bovendorp</string>
-  <string name="about_sandor">Sandor Dornbush</string>
-
   <!-- Send to Google -->
   <string name="sendtogoogle_title">Send to...</string>
   <string name="sendtogoogle_google_mymaps">Google My Maps</string>
@@ -456,12 +443,6 @@ limitations under the License.
   <string name="bluetooth_pairing_summary">Open Android\'s bluetooth settings to pair a device</string>
   <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
   <string name="sensor_options">Sensor Options</string>
-
-  <!-- Sensor Types => DO NOT TRANSLATE -->
-  <string name="none">NONE</string>
-  <string name="ant_sensor_type">ANT</string>
-  <string name="srm_ant_bridge_sensor_type">SRM_ANT_BRIDGE</string>
-  <string name="zephyr_sensor_type">ZEPHYR</string>
 
   <!-- Bluetooth Sensor -->
   <string name="bluetooth_connected">Connected to %s</string>
