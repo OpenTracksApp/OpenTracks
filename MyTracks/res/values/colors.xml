@@ -21,7 +21,6 @@ limitations under the License.
   <color name="darkgray">#FF444444</color>
   <color name="gold">#FFffd700</color>
   <color name="gray">#FFAAAAAA</color>
-  <color name="green">#FF00AA00</color>
   <color name="lightblue">#FF00FFFF</color>
   <color name="opaque_shadow">#70000000</color>
   <color name="red">#FFFF0000</color>
@@ -30,6 +29,10 @@ limitations under the License.
   <color name="white">#FFFFFFFF</color>
 
   <!-- Chart colors by series. -->
+  <!-- Green and a transparent green -->
+  <color name="elevation_border">#FF00AA00</color>
+  <color name="elevation_fill">#8000AA00</color>
+
   <!-- Purple and a transparent purple -->
   <color name="heartrate_border">#FF401465</color>
   <color name="heartrate_fill">#40401465</color>
@@ -38,7 +41,7 @@ limitations under the License.
   <color name="cadence_border">#FFF128F3</color>
   <color name="cadence_fill">#40F128F3</color>
 
-  <!-- red and a transparent red -->
+  <!-- Red and a transparent red -->
   <color name="power_border">#FFFF0000</color>
   <color name="power_fill">#40FF0000</color>
 </resources>
