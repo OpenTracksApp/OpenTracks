@@ -26,18 +26,13 @@ import android.test.AndroidTestCase;
  */
 public class ChartValueSeriesTest extends AndroidTestCase {
   private ChartValueSeries series;
-  private Paint fillPaint1;
  
   @Override
   protected void setUp() throws Exception {
-    fillPaint1 = new Paint();
-    fillPaint1.setStyle(Style.FILL);
-    fillPaint1.setColor(getContext().getResources().getColor(R.color.green));
-    fillPaint1.setAntiAlias(true);
     series = new ChartValueSeries(getContext(),
         "###,###",
-        fillPaint1,
-        null,
+        R.color.elevation_fill,
+        R.color.elevation_border,
         100,
         R.string.elevation);
   }
@@ -48,7 +43,7 @@ public class ChartValueSeriesTest extends AndroidTestCase {
     assertEquals(0, series.getMin());
     assertEquals(0, series.getMax());
     assertEquals(0.0, series.getSpread());
-    assertEquals(fillPaint1, series.getPaint());
+    assertEquals(Style.STROKE, series.getPaint().getStyle());
     assertEquals(getContext().getString(R.string.elevation),
         series.getTitle());
     assertTrue(series.isEnabled());
