@@ -136,17 +136,24 @@ public class MyTracksProvider extends ContentProvider {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
       if (oldVersion < 17) {
+        // Wipe the old data.
         Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
             + newVersion + ", which will destroy all old data");
         db.execSQL("DROP TABLE IF EXISTS " + TRACKPOINTS_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + TRACKS_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + WAYPOINTS_TABLE);
         onCreate(db);
-      } else if (oldVersion >= 17) {
-        Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
-            + newVersion + ", adding sensor column.");
-        db.execSQL("ALTER TABLE " + TRACKPOINTS_TABLE 
-          + " ADD " + TrackPointsColumns.SENSOR + " BLOB");
+      } else {
+        // Incremental updates go here.
+        // Each time you increase the DB version, add a corresponding if clause.
+        
+        // Sensor data.
+        if (oldVersion <= 17) {
+          Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
+              + newVersion + ", adding sensor column.");
+          db.execSQL("ALTER TABLE " + TRACKPOINTS_TABLE 
+              + " ADD " + TrackPointsColumns.SENSOR + " BLOB");
+        }
       }
     }
   }

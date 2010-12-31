@@ -213,18 +213,15 @@ limitations under the License.
 
   <string name="eclair_required">Only supported in Android 2.0 or above</string>
   <string name="settings_sensor_type">Sensor Type</string>
-  <string name="settings_sensor_type_summary">The type of sensor to connect to.</string>
-  <string name="settings_heart_rate_ant_sensor_id">Clear ant heart rate sensor pairing.</string>
-  <string name="settings_power_ant_sensor_id">Clear ant power sensor pairing.</string>
-  <string name="settings_srm_bridge_ant_sensor_id">Clear ant srm bridge sensor pairing.</string>
-  <string name="settings_ant_not_paired">Ant sensor not paired.</string>
-  <string name="settings_ant_paired">Ant sensor paired with: %d</string>
-  <string name="sensor_id_malformed">The Id must be an integer value.</string>
+  <string name="settings_sensor_type_summary">The type of sensor to connect to</string>
+  <string name="settings_heart_rate_ant_sensor_id">Clear ANT heart rate sensor pairing</string>
+  <string name="settings_power_ant_sensor_id">Clear ANT power sensor pairing</string>
+  <string name="settings_srm_bridge_ant_sensor_id">Clear ANT srm bridge sensor pairing</string>
+  <string name="settings_ant_not_paired">ANT sensor not paired</string>
+  <string name="settings_ant_paired">ANT sensor paired with: %d</string>
   <string name="bluetooth_sensor_title">Bluetooth sensor</string>
-  <string name="bluetooth_sensor_summary">The bluetooth sensor to connect to.</string>
+  <string name="bluetooth_sensor_summary">The bluetooth sensor to connect to</string>
   <string name="settings_modular_stats_display_title">Modular Stats Display</string>
-  <string name="settings_modular_stats_display_summary_on">The stats screen is split in various modes.</string>
-  <string name="settings_modular_stats_display_summary_off">Display all stats on one screen</string>
 
   <string name="settings_backup">Backup (BETA)</string>
   <string name="settings_sd_backup">SD Card Backup</string>

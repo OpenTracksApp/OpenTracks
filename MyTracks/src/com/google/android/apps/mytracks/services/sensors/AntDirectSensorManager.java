@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.services.sensors;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import static com.google.android.apps.mytracks.MyTracksConstants.TAG;
 import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.maps.mytracks.R;
@@ -37,13 +37,13 @@ public class AntDirectSensorManager extends AntSensorManager {
   /*
    * These constants are defined by the ANT+ heart rate monitor spec.
    */
-  public static final byte HRM_CHANNEL = (byte) 0;
-  public static final byte NETWORK_NUMBER = (byte) 1;
-  public static final byte HEART_RATE_DEVICE_TYPE = (byte) 120;
-  public static final byte POWER_DEVICE_TYPE = (byte) 11;
-  public static final byte MANUFACTURER_ID = (byte) 1;
-  public static final short CHANNEL_PERIOD = (short) 8070;
-  public static final byte RF_FREQUENCY = (byte) 57;
+  public static final byte HRM_CHANNEL = 0;
+  public static final byte NETWORK_NUMBER = 1;
+  public static final byte HEART_RATE_DEVICE_TYPE = 120;
+  public static final byte POWER_DEVICE_TYPE = 11;
+  public static final byte MANUFACTURER_ID = 1;
+  public static final short CHANNEL_PERIOD = 8070;
+  public static final byte RF_FREQUENCY = 57;
 
   private short deviceNumberHRM;
 
@@ -59,8 +59,7 @@ public class AntDirectSensorManager extends AntSensorManager {
       deviceNumberHRM = 
         (short) prefs.getInt(context.getString(R.string.ant_heart_rate_sensor_id_key), 0);
     }
-    Log.i(MyTracksConstants.TAG,
-        "Pairing with heart rate monitor: " + deviceNumberHRM);
+    Log.i(TAG, "Pairing with heart rate monitor: " + deviceNumberHRM);
   }
 
   @Override
@@ -72,7 +71,7 @@ public class AntDirectSensorManager extends AntSensorManager {
         antDecodeHRM(antMessage);
         break;
       default:
-        Log.d(MyTracksConstants.TAG, "Unhandled message: " + channel);
+        Log.d(TAG, "Unhandled message: " + channel);
     }
   }
 
@@ -93,8 +92,7 @@ public class AntDirectSensorManager extends AntSensorManager {
         handleChannelId(antMessage);
         break;
       default:
-        Log.e(MyTracksConstants.TAG,
-            "Unexpected message id: " + antMessage[3]);
+        Log.e(TAG, "Unexpected message id: " + antMessage[3]);
     }
   }
 
@@ -102,7 +100,7 @@ public class AntDirectSensorManager extends AntSensorManager {
     if (deviceNumberHRM == WILDCARD) {
       getAntReceiver().ANTRequestMessage(HRM_CHANNEL,
           AntMesg.MESG_CHANNEL_ID_ID);
-      Log.d(MyTracksConstants.TAG, "Requesting channel id id.");
+      Log.d(TAG, "Requesting channel id id.");
     }
 
     setSensorState(Sensor.SensorState.CONNECTED);
@@ -122,7 +120,7 @@ public class AntDirectSensorManager extends AntSensorManager {
     deviceNumberHRM =
         (short) (((int) antMessage[3] & 0xFF  |
                   ((int) (antMessage[4] & 0xFF) << 8)) & 0xFFFF);
-    Log.i(MyTracksConstants.TAG, "Found device id: " + deviceNumberHRM);
+    Log.i(TAG, "Found device id: " + deviceNumberHRM);
 
     SharedPreferences prefs = context.getSharedPreferences(
         MyTracksSettings.SETTINGS_NAME, Context.MODE_PRIVATE);
@@ -132,16 +130,15 @@ public class AntDirectSensorManager extends AntSensorManager {
   }
 
   private void handleMessageResponse(byte[] antMessage) {
-    if (antMessage[3] == AntMesg.MESG_EVENT_ID
-        && antMessage[4] == AntDefine.EVENT_RX_SEARCH_TIMEOUT) {
+    if (antMessage[3] == AntMesg.MESG_EVENT_ID &&
+        antMessage[4] == AntDefine.EVENT_RX_SEARCH_TIMEOUT) {
       // Search timeout
-      Log.w(MyTracksConstants.TAG, "Search timed out. Unassigning channel.");
+      Log.w(TAG, "Search timed out. Unassigning channel.");
       getAntReceiver().ANTUnassignChannel((byte) 0);
       setSensorState(Sensor.SensorState.DISCONNECTED);
     } else if (antMessage[3] == AntMesg.MESG_UNASSIGN_CHANNEL_ID) {
       setSensorState(Sensor.SensorState.DISCONNECTED);
-      Log.i(MyTracksConstants.TAG,
-          "Disconnected from the sensor: " + getSensorState());
+      Log.i(TAG, "Disconnected from the sensor: " + getSensorState());
     }
   }
 

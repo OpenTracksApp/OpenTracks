@@ -48,15 +48,15 @@ public abstract class AntSensorManager extends SensorManager {
   private boolean status;
 
   // Flag to know if the ANT App was interrupted
-  // TODO this code path is not used but probably should be.
-  private boolean antInterrupted = false;
+  // TODO: This code path is not used but probably should be.
+  private boolean antInterrupted;
 
   /**
    * The data from the sensors.
    */
-  protected SensorDataSet sensorData = null;
+  protected SensorDataSet sensorData;
 
-  protected Context context = null;
+  protected Context context;
   
   private static final boolean DEBUGGING = false;
 
@@ -133,7 +133,7 @@ public abstract class AntSensorManager extends SensorManager {
       // already called before
       if (antInterrupted == false) {
         status = antReceiver.enable();
-        if (status == false) {
+        if (!status) {
           Log.e(MyTracksConstants.TAG, "Can not enable ANT interface");
         } else {
           Log.i(MyTracksConstants.TAG, "Powering on Radio");
@@ -208,8 +208,7 @@ public abstract class AntSensorManager extends SensorManager {
     }
 
     // Set search timeout to 30 seconds (low priority search))
-    if (!antReceiver.ANTSetLowPriorityChannelSearchTimeout(channelNumber,
-        (byte) 12)) {
+    if (!antReceiver.ANTSetLowPriorityChannelSearchTimeout(channelNumber, (byte) 12)) {
       return false;
     }
 

@@ -22,8 +22,8 @@ import android.preference.Preference;
 import android.util.AttributeSet;
 
 /**
- * A preference for a ANT device pairing.
- * Currently this shows the id and lets the user clear that id for future pairing.
+ * A preference for an ANT device pairing.
+ * Currently this shows the ID and lets the user clear that ID for future pairing.
  * TODO: Support pairing from this preference.
  *
  * @author Sandor Dornbush
@@ -45,9 +45,7 @@ public class AntPreference extends Preference {
     if (sensorId == 0) {
       setSummary(R.string.settings_ant_not_paired);
     } else {
-      setSummary(
-          String.format(
-              getContext().getString(R.string.settings_ant_paired), sensorId));
+      setSummary(String.format(getContext().getString(R.string.settings_ant_paired), sensorId));
     }
 
     // Add actions to allow repairing.
