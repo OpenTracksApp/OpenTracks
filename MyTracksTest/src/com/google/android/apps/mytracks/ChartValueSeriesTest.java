@@ -38,7 +38,7 @@ public class ChartValueSeriesTest extends AndroidTestCase {
   }
 
   public void testInitialConditions() {
-    assertEquals(25, series.getInterval());
+    assertEquals(0, series.getInterval());
     assertEquals(1, series.getMaxLabelLength());
     assertEquals(0, series.getMin());
     assertEquals(0, series.getMax());
@@ -58,7 +58,7 @@ public class ChartValueSeriesTest extends AndroidTestCase {
     series.update(0);
     series.update(10);
     series.updateDimension();
-    assertEquals(25, series.getInterval());
+    assertEquals(100, series.getInterval());
     assertEquals(3, series.getMaxLabelLength());
     assertEquals(0, series.getMin());
     assertEquals(100, series.getMax());
@@ -69,7 +69,7 @@ public class ChartValueSeriesTest extends AndroidTestCase {
     series.update(0);
     series.update(901);
     series.updateDimension();
-    assertEquals(200, series.getInterval());
+    assertEquals(100, series.getInterval());
     assertEquals(5, series.getMaxLabelLength());
     assertEquals(0, series.getMin());
     assertEquals(1000, series.getMax());
@@ -80,7 +80,7 @@ public class ChartValueSeriesTest extends AndroidTestCase {
     series.update(500);
     series.update(1401);
     series.updateDimension();
-    assertEquals(200, series.getInterval());
+    assertEquals(100, series.getInterval());
     assertEquals(5, series.getMaxLabelLength());
     assertEquals(500, series.getMin());
     assertEquals(1500, series.getMax());
