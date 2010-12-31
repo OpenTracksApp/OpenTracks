@@ -58,22 +58,6 @@ public class ChartValueSeries {
     private final int absoluteMax;
     private final int[] zoomLevels;
 
-    public int getIntervals() {
-      return intervals;
-    }
-
-    public int getAbsoluteMin() {
-      return absoluteMin;
-    }
-
-    public int getAbsoluteMax() {
-      return absoluteMax;
-    }
-
-    public int[] getZoomLevels() {
-      return zoomLevels;
-    }
-    
     public ZoomSettings(int intervals, int[] zoomLevels) {
       this.intervals = intervals;
       this.absoluteMin = Integer.MAX_VALUE;
@@ -100,6 +84,22 @@ public class ChartValueSeries {
         }
       }
     }
+
+    public int getIntervals() {
+      return intervals;
+    }
+
+    public int getAbsoluteMin() {
+      return absoluteMin;
+    }
+
+    public int getAbsoluteMax() {
+      return absoluteMax;
+    }
+
+    public int[] getZoomLevels() {
+      return zoomLevels;
+    }
     
     /**
      * Calculates the interval between markings given the min and max values.
@@ -109,10 +109,10 @@ public class ChartValueSeries {
      * @param min the minimum value in the series
      * @param max the maximum value in the series
      * @return the calculated interval for the given range
-     * 
-     * TODO: Use the absolute values.
      */
     public int calculateInterval(double min, double max) {
+      min = Math.min(min, absoluteMin);
+      max = Math.max(max, absoluteMax);
       for (int i = 0; i < zoomLevels.length; ++i) {
         int zoomLevel = zoomLevels[i];
         int roundedMin = (int)(min / zoomLevel) * zoomLevel;
@@ -205,6 +205,8 @@ public class ChartValueSeries {
       min = monitor.getMin();
       max = monitor.getMax();
     }
+    min = Math.min(min, zoomSettings.getAbsoluteMin());
+    max = Math.max(max, zoomSettings.getAbsoluteMax());
     
     this.interval = zoomSettings.calculateInterval(min, max);
     // Round it up.
@@ -214,7 +216,7 @@ public class ChartValueSeries {
     if (min < 0) {
       effectiveMin -= interval;
     }
-    spread = getMax() - effectiveMin;
+    spread = effectiveMax - effectiveMin;
   }
 
   /**
@@ -234,15 +236,10 @@ public class ChartValueSeries {
   }
 
   /**
-   * @return The minimum of the rounded up max value and the effective max.
-   *
-   * TODO: Move to ZoomSettings.
+   * @return The rounded up maximum value
    */
   public int getMax() {
-    // Return the effective max if no absolute is set
-    // or the effective max is less than the absolute.
-    return zoomSettings.absoluteMax == Integer.MIN_VALUE || effectiveMax < zoomSettings.absoluteMax
-        ? effectiveMax : zoomSettings.absoluteMax;
+    return effectiveMax;
   }
 
   /**

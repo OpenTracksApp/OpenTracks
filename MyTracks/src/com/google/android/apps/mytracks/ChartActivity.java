@@ -252,7 +252,7 @@ public class ChartActivity extends Activity implements
     setVolumeControlStream(volumeStream);
 
     requestWindowFeature(Window.FEATURE_NO_TITLE);
-    setContentView(R.layout.mytracks_elevation);
+    setContentView(R.layout.mytracks_charts);
     ViewGroup layout = (ViewGroup) findViewById(R.id.elevation_chart);
     cv = new ChartView(this);
     cv.setMode(this.mode);
