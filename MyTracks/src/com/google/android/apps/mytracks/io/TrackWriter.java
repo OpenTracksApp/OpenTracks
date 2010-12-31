@@ -16,9 +16,11 @@
 package com.google.android.apps.mytracks.io;
 
 import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.MyTracksUtils;
 import com.google.android.maps.mytracks.R;
@@ -266,62 +268,80 @@ public class TrackWriter {
   private void writeLocations() {
     boolean wroteFirst = false;
     boolean segmentOpen = false;
-    Location lastLoc = null, loc = null;
     boolean isLastValid = false;
-    Cursor locationsCursor =
-        providerUtils.getLocationsCursor(track.getId(), 0, -1, false);
     
-    if (locationsCursor == null || !locationsCursor.moveToFirst()) {
-      Log.w(MyTracksConstants.TAG, "Unable to get any points to write");
-      return;
-    }
-
-    do {
-      if (loc == null) loc = new Location("");
-      providerUtils.fillLocation(locationsCursor, loc);
-
-      boolean isValid = MyTracksUtils.isValidLocation(loc);
-      boolean validSegment = isValid && isLastValid;
-      if (!wroteFirst && validSegment) {
-        // Found the first two consecutive points which are valid
-        writer.writeBeginTrack(lastLoc);
-        wroteFirst = true;
-      }
-
-      if (validSegment) {
-        if (!segmentOpen) {
-          // Start a segment for this point
-          writer.writeOpenSegment();
-          segmentOpen = true;
-
-          // Write the previous point, which we had previously skipped
-          writer.writeLocation(lastLoc);
+    class TrackWriterLocationFactory implements MyTracksProviderUtils.LocationFactory {
+      Location currentLocation;
+      Location lastLocation;
+        
+      @Override
+      public Location createLocation() {
+        if (currentLocation == null) {
+          currentLocation = new MyTracksLocation("");
         }
-
-        // Write the current point
-        writer.writeLocation(loc);
-      } else {
-        if (segmentOpen) {
-          writer.writeCloseSegment();
-          segmentOpen = false;
+        return currentLocation;
+      }
+      
+      public void swapLocations() {
+        Location tmpLoc = lastLocation;
+        lastLocation = currentLocation;
+        currentLocation = tmpLoc;
+        if (currentLocation != null) {
+          currentLocation.reset();
         }
       }
-
-      // Swap loc and lastLoc (so lastLoc is reused)
-      Location tmp = lastLoc;
-      lastLoc = loc;
-      loc = tmp;
-      if (loc != null) loc.reset();
-
-      isLastValid = isValid;
-    } while (locationsCursor.moveToNext());
-
-    if (segmentOpen) {
-      writer.writeCloseSegment();
-      segmentOpen = false;
-    }
-    if (wroteFirst) {
-      writer.writeEndTrack(lastLoc);
+    };
+    
+    TrackWriterLocationFactory locationFactory = new TrackWriterLocationFactory();
+    LocationIterator it = providerUtils.getLocationIterator(track.getId(), 0, false,
+        locationFactory);
+    try {
+      if (!it.hasNext()) {
+        Log.w(MyTracksConstants.TAG, "Unable to get any points to write");
+        return;
+      }
+      while (it.hasNext()) {
+        Location loc = it.next();
+  
+        boolean isValid = MyTracksUtils.isValidLocation(loc);
+        boolean validSegment = isValid && isLastValid;
+        if (!wroteFirst && validSegment) {
+          // Found the first two consecutive points which are valid
+          writer.writeBeginTrack(locationFactory.lastLocation);
+          wroteFirst = true;
+        }
+  
+        if (validSegment) {
+          if (!segmentOpen) {
+            // Start a segment for this point
+            writer.writeOpenSegment();
+            segmentOpen = true;
+  
+            // Write the previous point, which we had previously skipped
+            writer.writeLocation(locationFactory.lastLocation);
+          }
+  
+          // Write the current point
+          writer.writeLocation(loc);
+        } else {
+          if (segmentOpen) {
+            writer.writeCloseSegment();
+            segmentOpen = false;
+          }
+        }
+  
+        locationFactory.swapLocations();
+        isLastValid = isValid;
+      }
+      if (segmentOpen) {
+        writer.writeCloseSegment();
+        segmentOpen = false;
+      }
+      if (wroteFirst) {
+        writer.writeEndTrack(locationFactory.lastLocation);
+      }
+    } finally {
+      it.close();
     }
   }
 }

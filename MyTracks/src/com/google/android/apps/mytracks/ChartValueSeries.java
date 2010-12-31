@@ -38,16 +38,95 @@ public class ChartValueSeries {
   private final Paint fillPaint;
   private final Paint strokePaint;
   private final Paint labelPaint;
-  private final int rounding;
+  private final ZoomSettings zoomSettings;
 
   private String title;
-  private double min = 0;
-  private double max = 1;
-  private int effectiveMax = 0;
-  private int absoluteMax = Integer.MIN_VALUE;
-  private int effectiveMin = 0;
-  private double spread = 0;
+  private double min;
+  private double max = 1.0;
+  private int effectiveMax;
+  private int effectiveMin;
+  private double spread;
+  private int interval;
   private boolean enabled = true;
+  
+  /**
+   * This class controls how effective min/max values of a {@link ChartValueSeries} are calculated.
+   */
+  public static class ZoomSettings {
+    private int intervals;
+    private final int absoluteMin;
+    private final int absoluteMax;
+    private final int[] zoomLevels;
+
+    public ZoomSettings(int intervals, int[] zoomLevels) {
+      this.intervals = intervals;
+      this.absoluteMin = Integer.MAX_VALUE;
+      this.absoluteMax = Integer.MIN_VALUE;
+      this.zoomLevels = zoomLevels;
+      checkArgs();
+    }
+
+    public ZoomSettings(int intervals, int absoluteMin, int absoluteMax, int[] zoomLevels) {
+      this.intervals = intervals;
+      this.absoluteMin = absoluteMin;
+      this.absoluteMax = absoluteMax;
+      this.zoomLevels = zoomLevels; 
+      checkArgs();
+    }
+    
+    private void checkArgs() {
+      if (intervals <= 0 || zoomLevels == null || zoomLevels.length == 0) {
+        throw new IllegalArgumentException("Expecing positive intervals and non-empty zoom levels");
+      }
+      for (int i = 1; i < zoomLevels.length; ++i) {
+        if (zoomLevels[i] <= zoomLevels[i - 1]) {
+          throw new IllegalArgumentException("Expecting zoom levels in ascending order");
+        }
+      }
+    }
+
+    public int getIntervals() {
+      return intervals;
+    }
+
+    public int getAbsoluteMin() {
+      return absoluteMin;
+    }
+
+    public int getAbsoluteMax() {
+      return absoluteMax;
+    }
+
+    public int[] getZoomLevels() {
+      return zoomLevels;
+    }
+    
+    /**
+     * Calculates the interval between markings given the min and max values.
+     * This function attempts to find the smallest zoom level that fits [min,max] after rounding
+     * it to the current zoom level.
+     * 
+     * @param min the minimum value in the series
+     * @param max the maximum value in the series
+     * @return the calculated interval for the given range
+     */
+    public int calculateInterval(double min, double max) {
+      min = Math.min(min, absoluteMin);
+      max = Math.max(max, absoluteMax);
+      for (int i = 0; i < zoomLevels.length; ++i) {
+        int zoomLevel = zoomLevels[i];
+        int roundedMin = (int)(min / zoomLevel) * zoomLevel;
+        if (roundedMin > min) {
+          roundedMin -= zoomLevel;
+        }
+        double interval = (max - roundedMin) / intervals;
+        if (zoomLevel >= interval) {
+          return zoomLevel;
+        }
+      }
+      return zoomLevels[zoomLevels.length - 1];
+    }
+  }
 
   /**
    * Constructs a new chart value series.
@@ -56,14 +135,12 @@ public class ChartValueSeries {
    * @param formatString The format of the decimal format for this series
    * @param fill The paint for filling the chart
    * @param stroke The paint for stroking the outside the chart, optional
-   * @param rounding The factor to round the values by
+   * @param zoomSettings The settings related to zooming
+   * 
+   * TODO: Get rid of Context and inject appropriate values instead.
    */
-  public ChartValueSeries(Context context,
-                          String formatString,
-                          int fillColor,
-                          int strokeColor,
-                          int rounding,
-                          int titleId) {
+  public ChartValueSeries(Context context, String formatString, int fillColor, int strokeColor,
+      ZoomSettings zoomSettings, int titleId) {
     this.format = new DecimalFormat(formatString);
     fillPaint = new Paint();
     fillPaint.setStyle(Style.FILL);
@@ -81,7 +158,7 @@ public class ChartValueSeries {
       strokePaint = null;
       labelPaint = fillPaint;
     }
-    this.rounding = rounding;
+    this.zoomSettings = zoomSettings;
     this.title = context.getString(titleId);
   }
 
@@ -113,20 +190,7 @@ public class ChartValueSeries {
    * @return The interval between markers
    */
   public int getInterval() {
-    // Try to find 5 even looking intervals.
-    int interval = (int) (spread / 5);
-    int minInterval = rounding / 4;
-    if (interval < minInterval) {
-      // We won't be able to find 5 even intervals.
-      return minInterval;
-    } else if (interval < rounding) {
-      // The desired interval is less than the rounding value.
-      // We will have less than 5 intervals.
-      return rounding;
-    } else {
-      // Round the interval.
-      return (interval / rounding) * rounding;
-    }
+    return interval;
   }
 
   /**
@@ -141,14 +205,18 @@ public class ChartValueSeries {
       min = monitor.getMin();
       max = monitor.getMax();
     }
+    min = Math.min(min, zoomSettings.getAbsoluteMin());
+    max = Math.max(max, zoomSettings.getAbsoluteMax());
+    
+    this.interval = zoomSettings.calculateInterval(min, max);
     // Round it up.
-    effectiveMax = ((int) (max / rounding)) * rounding + rounding;
+    effectiveMax = ((int) (max / interval)) * interval + interval;
     // Round it down.
-    effectiveMin = ((int) (min / rounding)) * rounding;
+    effectiveMin = ((int) (min / interval)) * interval;
     if (min < 0) {
-      effectiveMin -= rounding;
+      effectiveMin -= interval;
     }
-    spread = getMax() - effectiveMin;
+    spread = effectiveMax - effectiveMin;
   }
 
   /**
@@ -168,16 +236,10 @@ public class ChartValueSeries {
   }
 
   /**
-   * @return The minimum of the rounded up max value and the effective max.
+   * @return The rounded up maximum value
    */
   public int getMax() {
-    // Return the effective max if no absolute is set
-    // or the effective max is less than the absolute.
-    if ((absoluteMax == Integer.MIN_VALUE) || (effectiveMax < absoluteMax)) {
-      return effectiveMax;
-    } else {
-      return absoluteMax;
-    }
+    return effectiveMax;
   }
 
   /**
@@ -205,9 +267,7 @@ public class ChartValueSeries {
    * @return The paint for this series
    */
   Paint getPaint() {
-    return (strokePaint == null)
-        ? fillPaint
-        : strokePaint;
+    return strokePaint == null ? fillPaint : strokePaint;
   }
 
   public Paint getLabelPaint() {
@@ -237,14 +297,6 @@ public class ChartValueSeries {
    */
   public void setEnabled(boolean enabled) {
     this.enabled = enabled;
-  }
-
-  public int getAbsoluteMax() {
-    return absoluteMax;
-  }
-
-  public void setAbsoluteMax(int absoluteMax) {
-    this.absoluteMax = absoluteMax;
   }
 
   public boolean hasData() {

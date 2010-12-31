@@ -15,6 +15,7 @@
  */
 package com.google.android.apps.mytracks;
 
+import com.google.android.apps.mytracks.ChartValueSeries.ZoomSettings;
 import com.google.android.maps.mytracks.R;
 
 import android.graphics.Paint.Style;
@@ -32,12 +33,12 @@ public class ChartValueSeriesTest extends AndroidTestCase {
         "###,###",
         R.color.elevation_fill,
         R.color.elevation_border,
-        100,
+        new ZoomSettings(5, new int[] {100}),
         R.string.elevation);
   }
 
   public void testInitialConditions() {
-    assertEquals(25, series.getInterval());
+    assertEquals(0, series.getInterval());
     assertEquals(1, series.getMaxLabelLength());
     assertEquals(0, series.getMin());
     assertEquals(0, series.getMax());
@@ -57,7 +58,7 @@ public class ChartValueSeriesTest extends AndroidTestCase {
     series.update(0);
     series.update(10);
     series.updateDimension();
-    assertEquals(25, series.getInterval());
+    assertEquals(100, series.getInterval());
     assertEquals(3, series.getMaxLabelLength());
     assertEquals(0, series.getMin());
     assertEquals(100, series.getMax());
@@ -68,7 +69,7 @@ public class ChartValueSeriesTest extends AndroidTestCase {
     series.update(0);
     series.update(901);
     series.updateDimension();
-    assertEquals(200, series.getInterval());
+    assertEquals(100, series.getInterval());
     assertEquals(5, series.getMaxLabelLength());
     assertEquals(0, series.getMin());
     assertEquals(1000, series.getMax());
@@ -79,10 +80,60 @@ public class ChartValueSeriesTest extends AndroidTestCase {
     series.update(500);
     series.update(1401);
     series.updateDimension();
-    assertEquals(200, series.getInterval());
+    assertEquals(100, series.getInterval());
     assertEquals(5, series.getMaxLabelLength());
     assertEquals(500, series.getMin());
     assertEquals(1500, series.getMax());
     assertEquals(1000.0, series.getSpread());
+  }
+
+  public void testZoomSettings_invalidArgs() {
+    try {
+      new ZoomSettings(0, new int[] {10, 50, 100});
+      fail("Expected IllegalArgumentException");
+    } catch (IllegalArgumentException e) {
+      // OK.
+    }
+    try {
+      new ZoomSettings(1, null);
+      fail("Expected IllegalArgumentException");
+    } catch (IllegalArgumentException e) {
+      // OK.
+    }
+    try {
+      new ZoomSettings(1, new int[] {});
+      fail("Expected IllegalArgumentException");
+    } catch (IllegalArgumentException e) {
+      // OK.
+    }
+    try {
+      new ZoomSettings(1, new int[] {1, 3, 2});
+      fail("Expected IllegalArgumentException");
+    } catch (IllegalArgumentException e) {
+      // OK.
+    }
+  }
+  
+  public void testZoomSettings_minAligned() {
+    ZoomSettings settings = new ZoomSettings(5, new int[] {10, 50, 100});
+    assertEquals(10, settings.calculateInterval(0, 15));
+    assertEquals(10, settings.calculateInterval(0, 50));
+    assertEquals(50, settings.calculateInterval(0, 111));
+    assertEquals(50, settings.calculateInterval(0, 250));
+    assertEquals(100, settings.calculateInterval(0, 251));
+    assertEquals(100, settings.calculateInterval(0, 10000));
+  }
+
+  public void testZoomSettings_minNotAligned() {
+    ZoomSettings settings = new ZoomSettings(5, new int[] {10, 50, 100});
+    assertEquals(50, settings.calculateInterval(5, 55));
+    assertEquals(10, settings.calculateInterval(10, 60));
+    assertEquals(50, settings.calculateInterval(7, 250));
+    assertEquals(100, settings.calculateInterval(7, 257));
+    assertEquals(100, settings.calculateInterval(11, 10000));
+    
+    // A regression test.
+    settings = new ZoomSettings(5, new int[] {5, 10, 20});
+    assertEquals(10, settings.calculateInterval(-37.14, -11.89));
   }
 }
