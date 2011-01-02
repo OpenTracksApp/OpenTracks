@@ -226,6 +226,7 @@ limitations under the License.
   <string name="settings_modular_stats_display_summary_on">The stats screen is split in various modes.</string>
   <string name="settings_modular_stats_display_summary_off">Display all stats on one screen</string>
 
+  <!-- Backups -->
   <string name="settings_backup">Backup (BETA)</string>
   <string name="settings_sd_backup">SD Card Backup</string>
   <string name="settings_backup_to_sd">Backup now</string>
@@ -234,7 +235,6 @@ limitations under the License.
   <string name="settings_restore_from_sd_summary">Restore all tracks and settings from the SD card</string>
   <string name="settings_no_backup_while_recording">Cannot manipulate backups while recording a track.</string>
 
-  <!-- Backups -->
   <string name="restore_overwrites_warning">Restoring a backup from the SD card will OVERWRITE all your current tracks and settings. Are you sure?</string>
   <string name="select_backup_to_restore">Select the backup to restore</string>
   <string name="no_backups">No backups found.</string>
@@ -348,7 +348,7 @@ limitations under the License.
   <string name="min_per_mile">min/mi</string>
   <string name="per_mile">per mile</string>
 
-  <!-- Power -->
+  <!-- Sensors -->
   <string name="watts">W</string>
 
   <string name="revolutions_per_minute">rpm</string>
