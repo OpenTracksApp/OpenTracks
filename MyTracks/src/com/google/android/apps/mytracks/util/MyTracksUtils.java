@@ -21,7 +21,12 @@ import com.google.android.apps.mytracks.stats.TripStatistics;
 
 import com.google.android.maps.GeoPoint;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.Signature;
 import android.location.Location;
+import android.os.StrictMode;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -34,6 +39,7 @@ import java.util.Stack;
  * @author Leif Hendrik Wilden
  */
 public class MyTracksUtils {
+  private static final int RELEASE_SIGNATURE_HASHCODE = -1855564782;
 
   /**
    * Computes the distance on the two sphere between the point c0 and the line
@@ -246,6 +252,25 @@ public class MyTracksUtils {
                         (int) (location.getLongitude() * 1E6));
   }
 
+  /**
+   * Returns whether or not this is a release build.
+   */
+  public static boolean isRelease(Context context) {
+    try {
+      Signature [] sigs = context.getPackageManager().getPackageInfo(
+          context.getPackageName(), PackageManager.GET_SIGNATURES).signatures;
+      for (Signature sig : sigs) {
+        if (sig.hashCode() == RELEASE_SIGNATURE_HASHCODE) {
+          return true;
+        }
+      }
+    } catch (NameNotFoundException e) {
+      Log.e(MyTracksConstants.TAG, "Unable to get signatures", e);
+    }
+
+    return false;
+  }
+  
   /**
    * This is a utility class w/ only static memebers.
    */

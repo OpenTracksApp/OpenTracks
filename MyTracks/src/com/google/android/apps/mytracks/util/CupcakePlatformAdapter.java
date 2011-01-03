@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.util;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.Service;
+import android.content.SharedPreferences.Editor;
 import android.os.HandlerThread;
 
 /**
@@ -49,5 +50,15 @@ public class CupcakePlatformAdapter implements ApiPlatformAdapter {
   public boolean stopHandlerThread(HandlerThread handlerThread) {
     // Do nothing, as Cupcake doesn't provide quit().
     return false;
+  }
+
+  @Override
+  public void applyPreferenceChanges(Editor editor) {
+    editor.commit();
+  }
+
+  @Override
+  public void enableStrictMode() {
+    // Not supported
   }
 }
