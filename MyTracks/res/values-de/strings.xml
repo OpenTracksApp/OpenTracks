@@ -176,7 +176,7 @@ limitations under the License.
   <string name="settings_map_public_summary_on">Hochgeladene Karten auf maps.google.com sind für alle sichtbar.</string>
   <string name="settings_map_public_summary_off">Hochgeladene Karten auf maps.google.com werden nicht öffentlich sichtbar aufgelistet.</string>
 
-  <string name="settings_report_speed_or_pace">Geschwindigkeitsanzeige:</string> 
+  <string name="settings_report_speed_or_pace">Geschwindigkeitsanzeige:</string>
   <string name="settings_report_speed_or_pace_summary_on">Geschwindigkeit wird angezeigt.</string>
   <string name="settings_report_speed_or_pace_summary_off">Gangart wird angezeigt.</string>
 
