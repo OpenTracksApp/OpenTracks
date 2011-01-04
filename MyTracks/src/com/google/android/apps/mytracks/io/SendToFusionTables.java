@@ -36,6 +36,7 @@ import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.InputStreamContent;
 import com.google.api.client.util.Strings;
 
 import android.app.Activity;
@@ -44,6 +45,7 @@ import android.database.Cursor;
 import android.location.Location;
 import android.util.Log;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -64,9 +66,6 @@ public class SendToFusionTables implements Runnable {
 
 	/** The GData service id for Fusion Tables. */
   public static final String SERVICE_ID = "fusiontables";
-
-  /** The base url for viewing a fusion table. */
-  public static final String FUSIONTABLES_TABLE_URL = "http://www.google.com/fusiontables";
 
   /** The path for viewing a map visualization of a table. */
   private static final String FUSIONTABLES_MAP = 
@@ -121,12 +120,12 @@ public class SendToFusionTables implements Runnable {
   }
 
   public static String getMapVisualizationUrl(Track track) {
-    // TODO(leifhendrik): Determine correct bounding box and zoom level.
-    Location start = track.getLocations().get(0);
-    double lat = start != null ? start.getLatitude() : 37.0;
-    double lng = start != null ? start.getLongitude() : -121.0;
+    // TODO(leifhendrik): Determine correct bounding box and zoom level that will show the entire track.
+  	TripStatistics stats = track.getStatistics();
+  	double latE6 = stats.getBottom() + (stats.getTop() - stats.getBottom()) / 2;
+  	double lonE6 = stats.getLeft() + (stats.getRight() - stats.getLeft()) / 2;
     int z = 15;
-  	return String.format(FUSIONTABLES_MAP, track.getTableId(), lat, lng, z);
+  	return String.format(FUSIONTABLES_MAP, track.getTableId(), latE6 / 1.E6, lonE6 / 1.E6, z);
   }
 
   private void doUpload() {
@@ -281,7 +280,8 @@ public class SendToFusionTables implements Runnable {
   
         if (totalLocationsRead == 0) {
           // Put a marker at the first point of the first valid segment:
-          createNewPoint(track.getName(), track.getDescription(), loc, "large_green");
+        	String name = track.getName() + " " + context.getString(R.string.start);
+          createNewPoint(name, "", loc, "large_green");
         }
   
         // Add to the elevation profile.
@@ -328,9 +328,10 @@ public class SendToFusionTables implements Runnable {
             + stringUtils.generateTrackDescription(
                 track, distances, elevations)
             + "</p>");
-        return createNewPoint(track.getName(), track.getDescription(), lastLocation, "large_red");
+      	String name = track.getName() + " " + context.getString(R.string.end);
+        return createNewPoint(name, track.getDescription(), lastLocation, "large_red");
       }
-  
+
       return true;
     } finally {
       locationsCursor.close();
@@ -600,14 +601,13 @@ public class SendToFusionTables implements Runnable {
           throws IOException, GDataWrapper.ParseException, GDataWrapper.HttpException {
         HttpRequest request = transport.buildPostRequest();
         request.headers.contentType = "application/x-www-form-urlencoded";
-        String sql = "sql=" + URLEncoder.encode(query, "UTF-8");
-        GenericUrl url = new GenericUrl(FUSIONTABLES_BASE_FEED_URL + "?" + sql);
+        GenericUrl url = new GenericUrl(FUSIONTABLES_BASE_FEED_URL);
         request.url = url;
-        //OutputStream outputStream = new ByteArrayOutputStream();
-        //outputStream.write(Strings.toBytesUtf8(sql));
-        //outputStream.flush();
-        //request.content.writeTo(outputStream);
-        Log.d(MyTracksConstants.TAG, "Running update query: " + url.toString());
+        InputStreamContent isc = new InputStreamContent();
+        String sql = "sql=" + URLEncoder.encode(query, "UTF-8");
+        isc.inputStream = new ByteArrayInputStream(Strings.toBytesUtf8(sql));
+        request.content = isc;
+        Log.d(MyTracksConstants.TAG, "Running update query " + url.toString() + ": " + sql);
         HttpResponse response = request.execute();
         boolean success = response.isSuccessStatusCode;
         if (success) {

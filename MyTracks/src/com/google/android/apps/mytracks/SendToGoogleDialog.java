@@ -29,7 +29,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 /**
  * A dialog where the user can choose where to send the tracks to, i.e.

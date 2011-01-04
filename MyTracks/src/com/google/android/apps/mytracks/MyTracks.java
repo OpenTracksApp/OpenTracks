@@ -126,6 +126,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * Used by SendToGoogleResultDialog.
    */
 
+  public long sendToTrackId = -1;
   public boolean sendToFusionTablesSuccess = false;
   public boolean sendToDocsSuccess = false;
   public String sendToFusionTablesTableId;
@@ -149,6 +150,11 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * The id of the currently selected track.
    */
   private long selectedTrackId = -1;
+
+  /**		
+   * Does the user want to share the current track.		
+   */		
+  private boolean shareRequested = false;
 
   /**
    * Utilities to deal with the database.
@@ -549,6 +555,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
           setProgressValue(50);
           setProgressMessage(R.string.progress_message_sending_docs);
           final long trackId = results.getLongExtra("trackid", selectedTrackId);
+          sendToTrackId = trackId;
           final SendToDocs sender = new SendToDocs(this, authMap.get("wise"),
               authMap.get("writely"), trackId);
           Runnable onCompletion = new Runnable() {
@@ -559,7 +566,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
                 public void run() {
                   sendToDocsMessage = sender.getStatusMessage();
                   sendToDocsSuccess = sender.wasSuccess();
-                  handleFusionTablesFinish();
+                  handleFusionTablesFinish(trackId);
                 }
               });
             }
@@ -572,6 +579,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
         break;
       }
       case MyTracksConstants.SEND_TO_GOOGLE_DIALOG: {
+      	shareRequested = false;
         dialogManager.showDialogSafely(DIALOG_SEND_TO_GOOGLE);
         break;
       }
@@ -609,12 +617,13 @@ public class MyTracks extends TabActivity implements OnTouchListener,
                 dialogManager.dismissDialogSafely(DIALOG_PROGRESS);
                 runOnUiThread(new Runnable() {
                   public void run() {
-                    handleFusionTablesFinish();
+                    handleFusionTablesFinish(trackId);
                   }
                 });
               }
             }
           };
+          sendToTrackId = trackId;
           final SendToFusionTables sender = new SendToFusionTables(this, auth,
               trackId, this/*progressIndicator*/, onCompletion);
 
@@ -650,8 +659,9 @@ public class MyTracks extends TabActivity implements OnTouchListener,
         Track selectedTrack = providerUtils.getTrack(selectedTrackId);
         if (selectedTrack != null) {
           if (selectedTrack.getTableId().length() > 0) {
-            shareLinkToFusionTable(selectedTrack);
+            shareLinkToFusionTable(selectedTrackId);
           } else {
+          	shareRequested = true;
             dialogManager.showDialogSafely(DIALOG_SEND_TO_GOOGLE);
           }
         }
@@ -793,7 +803,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * Shares a link to a fusion table via external app (email, gmail, ...)
    * A chooser with apps that support text/plain will be shown to the user.
    */
-  public void shareLinkToFusionTable(Track track) {
+  public void shareLinkToFusionTable(long trackId) {
     Intent shareIntent = new Intent(Intent.ACTION_SEND);
     shareIntent.setType("text/plain");
     shareIntent.putExtra(Intent.EXTRA_SUBJECT,
@@ -805,12 +815,13 @@ public class MyTracks extends TabActivity implements OnTouchListener,
           getString(R.string.share_url_only_key), false);
     }
 
+    Track track = providerUtils.getTrack(trackId);
     String url = SendToFusionTables.getMapVisualizationUrl(track);
     String msg = shareUrlOnly ? url : String.format(
         getResources().getText(R.string.share_map_body_format).toString(), url);
     shareIntent.putExtra(Intent.EXTRA_TEXT, msg);
     startActivity(Intent.createChooser(shareIntent,
-        getResources().getText(R.string.share_map_subject).toString()));
+        getResources().getText(R.string.share_map).toString()));
   }
 
   /**
@@ -1223,9 +1234,14 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   /**
    * Notifies that uploading to fusion tables is finished.
    */
-  private void handleFusionTablesFinish() {
-    dialogManager.showDialogSafely(
-        DialogManager.DIALOG_SEND_TO_GOOGLE_RESULT);
+  private void handleFusionTablesFinish(long trackId) {
+  	if (shareRequested && sendToFusionTablesSuccess) {
+      // Just share
+  		Toast.makeText(this, getFusionTablesResultMessage(), Toast.LENGTH_LONG).show();
+  		shareLinkToFusionTable(trackId);
+    } else {
+      dialogManager.showDialogSafely(DialogManager.DIALOG_SEND_TO_GOOGLE_RESULT);
+    }
   }
 
   public String getFusionTablesResultMessage() {

@@ -86,7 +86,6 @@ limitations under the License.
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Created by My Tracks on Android.</string>
   <string name="fusiontable_link">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
-  <string name="new_table_title">New table</string>
 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">Points</string>
@@ -134,7 +133,7 @@ limitations under the License.
   <string name="tracklist_all_tracks">All Tracks:</string>
   <string name="tracklist_this_track">This Track</string>
   <string name="tracklist_share_track">Share with Friends...</string>
-  <string name="tracklist_share_link">A link to Google Fusion Tables</string>
+  <string name="tracklist_share_linkfusion">A link to Google Fusion Tables</string>
   <string name="tracklist_share_gpx_file">A GPX file</string>
   <string name="tracklist_share_kml_file">A KML file</string>
   <string name="tracklist_share_csv_file">A CSV file</string>
@@ -250,8 +249,8 @@ limitations under the License.
   <string name="share_map_body_format">I think you might be interested in this track:
 
       %s</string>
-  <string name="send_map_subject">I would like to share a track with you</string>
-  <string name="send_map_body_format">I think you might be interested in this track.
+  <string name="send_track_subject">I would like to share a track with you</string>
+  <string name="send_track_body_format">I think you might be interested in this track.
 
     To view this track use Google Earth or other mapping software.</string>
   <string name="share_track">Share track with friends</string>
