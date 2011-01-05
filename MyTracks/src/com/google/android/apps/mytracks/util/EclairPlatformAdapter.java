@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.util;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.Service;
+import android.content.SharedPreferences.Editor;
 import android.os.HandlerThread;
 
 /**
@@ -44,5 +45,15 @@ public class EclairPlatformAdapter implements ApiPlatformAdapter {
   @Override
   public boolean stopHandlerThread(HandlerThread handlerThread) {
     return handlerThread.quit();
+  }
+
+  @Override
+  public void applyPreferenceChanges(Editor editor) {
+    editor.commit();
+  }
+
+  @Override
+  public void enableStrictMode() {
+    // Not supported
   }
 }

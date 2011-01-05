@@ -43,9 +43,9 @@ public class SensorManagerFactoryTest extends AndroidTestCase {
 
   private void assertClassForName(Class<?> c, int i) {
     sharedPreferences.edit()
-      .putString(getContext().getString(R.string.sensor_type_key),
-          getContext().getString(i))
-      .commit();
+        .putString(getContext().getString(R.string.sensor_type_key),
+            getContext().getString(i))
+        .commit();
     SensorManager sm = SensorManagerFactory.getSensorManager(getContext());
     assertNotNull(sm);
     assertTrue(c.isInstance(sm));

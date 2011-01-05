@@ -861,18 +861,22 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     String select = TracksColumns._ID + "=" + id;
     return findTrackBy(select);
   }
-  
+
   @Override
   public List<Track> getAllTracks() {
     Cursor cursor = getTracksCursor(null);
-    if (cursor == null || !cursor.moveToFirst()) {
-      return new ArrayList<Track>();
-    }
+    ArrayList<Track> tracks = new ArrayList<Track>();
+    if (cursor != null) {
+      tracks.ensureCapacity(cursor.getCount());
 
-    List<Track> tracks = new ArrayList<Track>(cursor.getCount());
-    do {
-      tracks.add(createTrack(cursor));
-    } while(cursor.moveToNext());
+      if (cursor.moveToFirst()) {
+        do {
+          tracks.add(createTrack(cursor));
+        } while(cursor.moveToNext());
+      }
+
+      cursor.close();
+    }
 
     return tracks;
   }
