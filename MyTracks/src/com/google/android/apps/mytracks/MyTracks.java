@@ -33,9 +33,9 @@ import com.google.android.apps.mytracks.io.SendToMyMaps;
 import com.google.android.apps.mytracks.io.TempFileCleaner;
 import com.google.android.apps.mytracks.io.TrackWriter;
 import com.google.android.apps.mytracks.io.TrackWriterFactory;
+import com.google.android.apps.mytracks.io.SendToDocs;
 import com.google.android.apps.mytracks.io.SendToMyMaps.OnSendCompletedListener;
 import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
-import com.google.android.apps.mytracks.io.SendToDocs;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
@@ -93,9 +93,6 @@ import org.xml.sax.SAXException;
  */
 public class MyTracks extends TabActivity implements OnTouchListener,
     OnSharedPreferenceChangeListener, ProgressIndicator {
-  private static final String GDATA_SERVICE_NAME_TRIX = "wise";
-  private static final String GDATA_SERVICE_NAME_DOCLIST = "writely";
-
   /**
    * Singleton instance
    */
@@ -526,7 +523,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
               R.string.progress_message_authenticating_docs);
           authenticate(results,
               MyTracksConstants.AUTHENTICATE_TO_TRIX, 
-              GDATA_SERVICE_NAME_DOCLIST);
+              SendToDocs.GDATA_SERVICE_NAME_DOCLIST);
         } else {
           dialogManager.dismissDialogSafely(DIALOG_PROGRESS);
         }
@@ -538,7 +535,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
           setProgressMessage(
               R.string.progress_message_authenticating_docs);
           authenticate(results, MyTracksConstants.SEND_TO_DOCS, 
-              GDATA_SERVICE_NAME_TRIX);
+              SendToDocs.GDATA_SERVICE_NAME_TRIX);
         } else {
           dialogManager.dismissDialogSafely(DIALOG_PROGRESS);
         }
@@ -551,8 +548,8 @@ public class MyTracks extends TabActivity implements OnTouchListener,
           setProgressMessage(R.string.progress_message_sending_docs);
           final long trackId = results.getLongExtra("trackid", selectedTrackId);
           final SendToDocs sender = new SendToDocs(this, 
-              authMap.get(GDATA_SERVICE_NAME_TRIX),
-              authMap.get(GDATA_SERVICE_NAME_DOCLIST), trackId);
+              authMap.get(SendToDocs.GDATA_SERVICE_NAME_TRIX),
+              authMap.get(SendToDocs.GDATA_SERVICE_NAME_DOCLIST), trackId);
           Runnable onCompletion = new Runnable() {
             public void run() {
               setProgressValue(100);

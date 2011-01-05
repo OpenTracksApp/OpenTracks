@@ -44,6 +44,12 @@ import java.io.IOException;
  * @author Sandor Dornbush
  */
 public class SendToDocs {
+  /** The GData service name for Google Spreadsheets (aka Trix) */
+  public static final String GDATA_SERVICE_NAME_TRIX = "wise";
+  
+  /** The GData service name for the Google Docs Document List */
+  public static final String GDATA_SERVICE_NAME_DOCLIST = "writely";
+  
   private final Activity activity;
   private final AuthManager trixAuth;
   private final AuthManager docListAuth;
@@ -223,6 +229,7 @@ public class SendToDocs {
           return false;
         }
         MyTracks.getInstance().setProgressValue(80);
+        createdNewSpreadSheet = true;
 
         if (spreadsheetId == null) {
           MyTracks.getInstance().setProgressValue(85);
