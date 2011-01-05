@@ -502,7 +502,7 @@ public class TrackRecordingServiceTest
   public void testDeleteAllTracks_trackInProgress() throws Exception {
     createDummyTrack(123, -1, true);
     assertEquals(1, providerUtils.getAllTracks().size());
-    
+
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertTrue(service.isRecording());
 

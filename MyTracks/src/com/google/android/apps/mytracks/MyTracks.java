@@ -41,6 +41,7 @@ import com.google.android.apps.mytracks.services.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.FileUtils;
+import com.google.android.apps.mytracks.util.MyTracksUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -251,6 +252,11 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     Log.d(MyTracksConstants.TAG, "MyTracks.onCreate");
     super.onCreate(savedInstanceState);
     instance = this;
+    ApiFeatures apiFeatures = ApiFeatures.getInstance();
+    if (!MyTracksUtils.isRelease(this)) {
+      apiFeatures.getApiPlatformAdapter().enableStrictMode();
+    }
+
     providerUtils = MyTracksProviderUtils.Factory.get(this);
     menuManager = new MenuManager(this);
     sharedPreferences = getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
@@ -258,7 +264,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
 
     // The volume we want to control is the Text-To-Speech volume
     int volumeStream =
-        new StatusAnnouncerFactory(ApiFeatures.getInstance()).getVolumeStream();
+        new StatusAnnouncerFactory(apiFeatures).getVolumeStream();
     setVolumeControlStream(volumeStream);
 
     // We don't need a window title bar:
@@ -1058,10 +1064,10 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * @param trackId the id of the track
    */
   public void setSelectedTrackId(final long trackId) {
-    sharedPreferences
-        .edit()
-        .putLong(getString(R.string.selected_track_key), trackId)
-        .commit();
+    ApiFeatures.getInstance().getApiPlatformAdapter().applyPreferenceChanges(
+        sharedPreferences
+            .edit()
+            .putLong(getString(R.string.selected_track_key), trackId));
   }
 
   long getSelectedTrackId() {

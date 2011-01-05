@@ -393,12 +393,16 @@ limitations under the License.
 
   <array name="sensor_type_options">
     <item>None</item>
+    <item>ANT+ Sensors</item>
+    <item>SRM ANT+ Bridge</item>
     <item>Zephyr Bluetooth</item>
   </array>
 
   <!-- DO NOT TRANSLATE -->
   <array name="sensor_type_values">
     <item>@string/none</item>
+    <item>@string/ant_sensor_type</item>
+    <item>@string/srm_ant_bridge_sensor_type</item>
     <item>@string/zephyr_sensor_type</item>
   </array>
 

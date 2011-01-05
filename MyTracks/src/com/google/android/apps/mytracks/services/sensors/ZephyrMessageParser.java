@@ -35,8 +35,9 @@ public class ZephyrMessageParser implements MessageParser {
     }
     Log.w(MyTracksConstants.TAG, "Got zephyr data: " + sb);
     // The provided units are 1/16 strides per minute.
-    int cadence = SensorUtils.unsignedShortToInt(buffer, 56);
-      // Heart Rate
+    // TODO: Fix the cadence calculation.
+    // int cadence = SensorUtils.unsignedShortToInt(buffer, 56);
+    // Heart Rate
     Sensor.SensorData.Builder b = Sensor.SensorData.newBuilder()
       .setValue(buffer[12] & 0xFF)
       .setState(Sensor.SensorState.SENDING);

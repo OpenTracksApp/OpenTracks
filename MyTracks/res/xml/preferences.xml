@@ -122,6 +122,18 @@ limitations under the License.
                   android:summary="@string/bluetooth_pairing_summary"
                   android:persistent="false" />
     </PreferenceCategory>
+    
+    <com.google.android.apps.mytracks.AntPreference
+    	android:key="@string/ant_heart_rate_sensor_id_key"
+        android:title="@string/settings_heart_rate_ant_sensor_id"/>
+    
+    <com.google.android.apps.mytracks.AntPreference
+    	android:key="@string/ant_power_sensor_id_key"
+        android:title="@string/settings_power_ant_sensor_id"/>
+    
+    <com.google.android.apps.mytracks.AntPreference
+    	android:key="@string/ant_srm_bridge_sensor_id_key"
+        android:title="@string/settings_srm_bridge_ant_sensor_id"/>
   </PreferenceScreen>
 
   <!-- Sharing settings -->

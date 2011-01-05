@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.util;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.Service;
+import android.content.SharedPreferences;
 import android.os.HandlerThread;
 
 /**
@@ -57,4 +58,15 @@ public interface ApiPlatformAdapter {
    * @return true whether the handler has been stopped or not.
    */
   boolean stopHandlerThread(HandlerThread handlerThread);
+
+  /**
+   * Applies all changes done to the given preferences editor.
+   * Changes may or may not be applied immediately.
+   */
+  void applyPreferenceChanges(SharedPreferences.Editor editor);
+  
+  /**
+   * Enables strict mode where supported, only if this is a development build.
+   */
+  void enableStrictMode();
 }
