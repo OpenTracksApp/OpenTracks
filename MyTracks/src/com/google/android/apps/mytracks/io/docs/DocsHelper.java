@@ -62,8 +62,7 @@ public class DocsHelper {
   private static final String DOCS_WORKSHEETS_URL_FORMAT =
     "http://spreadsheets.google.com/feeds/worksheets/%s/private/full";
   private static final String DOCS_MY_SPREADSHEETS_FEED_URL =
-    "http://docs.google.com/feeds/documents/private/full?"
-        + "category=mine,spreadsheet";
+    "http://docs.google.com/feeds/documents/private/full?category=mine,spreadsheet";
   private static final String DOCS_SPREADSHEET_URL_FORMAT =
     "http://spreadsheets.google.com/feeds/list/%s/%s/private/full";
 
