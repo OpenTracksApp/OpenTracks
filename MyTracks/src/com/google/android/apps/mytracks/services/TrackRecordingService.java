@@ -644,7 +644,6 @@ public class TrackRecordingService extends Service implements LocationListener {
     locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
     splitManager = new SplitManager(this);
 
-    sensorManager = SensorManagerFactory.getSensorManager(this);
     prefManager = new PreferenceManager(this);
     registerLocationListener();
 
@@ -731,7 +730,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     splitManager.shutdown();
     splitManager = null;
     if (sensorManager != null) {
-      sensorManager.onDestroy();
+      sensorManager.shutdown();
       sensorManager = null;
     }
 
@@ -1080,6 +1079,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     showNotification();
     registerLocationListener();
     splitManager.restore();
+    sensorManager = SensorManagerFactory.getSensorManager(this);
     if (sensorManager != null) {
       sensorManager.onStartTrack();
     }
@@ -1128,6 +1128,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     
     if (sensorManager != null) {
       sensorManager.shutdown();
+      sensorManager = null;
     }
     
     releaseWakeLock();

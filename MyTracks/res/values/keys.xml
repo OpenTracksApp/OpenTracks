@@ -17,6 +17,9 @@ limitations under the License.
 <resources>
   <!-- Keys for application preferences - DO NOT TRANSLATE -->
   <string name="announcement_frequency_key">announcementFrequency</string>
+  <string name="ant_heart_rate_sensor_id_key">antHeartRateSensorId</string>
+  <string name="ant_power_sensor_id_key">antPowerSensorId</string>
+  <string name="ant_srm_bridge_sensor_id_key">antSRMBridgeSensorId</string>
   <string name="auto_resume_track_timeout_key">autoResumeTrackTimeout</string>
   <string name="bluetooth_device_key">bluetoothDevice</string>
   <string name="bluetooth_pairing_key">bluetoothPairing</string>
