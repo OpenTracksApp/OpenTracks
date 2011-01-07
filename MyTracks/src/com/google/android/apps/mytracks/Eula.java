@@ -26,32 +26,31 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 /**
- * Displays an EULA ("End User License Agreement") that the user has to accept
- * before using the application. Your application should call
- * {@link Eula#showEula(android.app.Activity)} in the onCreate() method of the
- * first activity. If the user accepts the EULA, it will never be shown again.
- * If the user refuses, {@link android.app.Activity#finish()} is invoked on your
- * activity.
+ * This class handles display of EULAs ("End User License Agreements") to the
+ * user.
  */
 class Eula {
   private static final String PREFERENCE_EULA_ACCEPTED = "eula.accepted";
   private static final String PREFERENCES_EULA = "eula";
 
+  private Eula() {}
+
   /**
    * Displays the EULA if necessary. This method should be called from the
-   * onCreate() method of your main Activity.
+   * onCreate() method of your main Activity.  If the user accepts, the EULA
+   * will never be displayed again.  If the user refuses, the activity will
+   * finish (exit).
    *
    * @param activity The Activity to finish if the user rejects the EULA
    */
-  static void showEula(final Activity activity) {
+  static void showEulaRequireAcceptance(final Activity activity) {
     final SharedPreferences preferences =
         activity.getSharedPreferences(PREFERENCES_EULA, Activity.MODE_PRIVATE);
     if (preferences.getBoolean(PREFERENCE_EULA_ACCEPTED, false)) {
       return;
     }
 
-    final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-    builder.setTitle(R.string.eula_title);
+    final AlertDialog.Builder builder = initDialog(activity);
     builder.setCancelable(true);
     builder.setPositiveButton(R.string.accept,
         new DialogInterface.OnClickListener() {
@@ -73,8 +72,25 @@ class Eula {
         refuse(activity);
       }
     });
-    builder.setMessage(ResourceUtils.readFile(activity, R.raw.eula));
     builder.show();
+  }
+
+  /**
+   * Display the EULA to the user in an informational context.  They won't be
+   * given the choice of accepting or declining the EULA -- we're simply
+   * displaying it for them to read.
+   */
+  static void showEula(Activity activity) {
+    AlertDialog.Builder builder = initDialog(activity);
+    builder.setPositiveButton(R.string.ok, null);
+    builder.show();
+  }
+  
+  private static AlertDialog.Builder initDialog(Activity activity) {
+    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+    builder.setTitle(R.string.eula_title);
+    builder.setMessage(ResourceUtils.readFile(activity, R.raw.eula));
+    return builder;
   }
 
   private static void accept(Activity activity, SharedPreferences preferences) {
@@ -86,8 +102,5 @@ class Eula {
 
   private static void refuse(Activity activity) {
     activity.finish();
-  }
-
-  private Eula() {
   }
 }
