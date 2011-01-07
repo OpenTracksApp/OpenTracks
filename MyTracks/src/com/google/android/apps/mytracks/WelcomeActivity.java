@@ -72,14 +72,13 @@ public class WelcomeActivity extends Activity {
   public void about() {
     LayoutInflater li = LayoutInflater.from(this);
     View view = li.inflate(R.layout.about, null);
-    final Activity activity = this;
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
     builder.setView(view);
     builder.setPositiveButton(R.string.ok, null);
     builder.setNeutralButton(R.string.license, new DialogInterface.OnClickListener() {
       @Override 
       public void onClick(DialogInterface dialog, int which) {
-        Eula.showEula(activity);
+        Eula.showEula(WelcomeActivity.this);
       }
     });
     builder.setIcon(R.drawable.arrow_icon);

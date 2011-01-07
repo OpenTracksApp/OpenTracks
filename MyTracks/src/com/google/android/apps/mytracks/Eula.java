@@ -21,6 +21,7 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -51,7 +52,6 @@ class Eula {
     }
 
     final AlertDialog.Builder builder = initDialog(activity);
-    builder.setCancelable(true);
     builder.setPositiveButton(R.string.accept,
         new DialogInterface.OnClickListener() {
           @Override
@@ -80,16 +80,17 @@ class Eula {
    * given the choice of accepting or declining the EULA -- we're simply
    * displaying it for them to read.
    */
-  static void showEula(Activity activity) {
-    AlertDialog.Builder builder = initDialog(activity);
+  static void showEula(Context context) {
+    AlertDialog.Builder builder = initDialog(context);
     builder.setPositiveButton(R.string.ok, null);
     builder.show();
   }
   
-  private static AlertDialog.Builder initDialog(Activity activity) {
-    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+  private static AlertDialog.Builder initDialog(Context context) {
+    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    builder.setCancelable(true);
     builder.setTitle(R.string.eula_title);
-    builder.setMessage(ResourceUtils.readFile(activity, R.raw.eula));
+    builder.setMessage(ResourceUtils.readFile(context, R.raw.eula));
     return builder;
   }
 
