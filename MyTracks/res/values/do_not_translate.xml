@@ -21,7 +21,7 @@ limitations under the License.
   <!-- About Dialog -->
   <string name="about_googlegroups">mytracks@googlegroups.com</string>
   <string name="about_weburl">mytracks.appspot.com</string>
-  <string name="about_privacy_weburl">google.com/privacy</string>
+  <string name="about_privacy_weburl">m.google.com/privacy</string>
   <string name="about_copyright_message">Copyright 2009 Google Inc.</string>
   <string name="about_bart">Bartlomiej Niechwiej</string>
   <string name="about_dylan">Dylan Casey</string>
