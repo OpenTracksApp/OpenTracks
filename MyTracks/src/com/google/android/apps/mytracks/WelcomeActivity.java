@@ -19,6 +19,7 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -74,6 +75,12 @@ public class WelcomeActivity extends Activity {
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
     builder.setView(view);
     builder.setPositiveButton(R.string.ok, null);
+    builder.setNeutralButton(R.string.license, new DialogInterface.OnClickListener() {
+      @Override 
+      public void onClick(DialogInterface dialog, int which) {
+        Eula.showEula(WelcomeActivity.this);
+      }
+    });
     builder.setIcon(R.drawable.arrow_icon);
     AlertDialog dialog = builder.create();
     dialog.show();
