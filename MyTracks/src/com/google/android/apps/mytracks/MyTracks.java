@@ -52,9 +52,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationManager;
@@ -211,23 +208,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
 
   public static MyTracks getInstance() {
     return instance;
-  }
-
-  /**
-   * Get the My Tracks version from the manifest.
-   *
-   * @return the version, or an empty string in case of failure.
-   */
-  public static String getMyTracksVersion(Context context) {
-    try {
-      PackageInfo pi = context.getPackageManager().getPackageInfo(
-      		"com.google.android.maps.mytracks",
-          PackageManager.GET_META_DATA);
-      return pi.versionName;
-    } catch (NameNotFoundException e) {
-      Log.w(MyTracksConstants.TAG, "Failed to get version info.", e);
-      return "";
-    }
   }
 
   /**
@@ -661,7 +641,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
           if (selectedTrack.getTableId().length() > 0) {
             shareLinkToFusionTable(selectedTrackId);
           } else {
-          	shareRequested = true;
+            shareRequested = true;
             dialogManager.showDialogSafely(DIALOG_SEND_TO_GOOGLE);
           }
         }
@@ -1112,8 +1092,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     dialogManager.showDialogSafely(DIALOG_PROGRESS);
     if (sendToGoogleDialog.getSendToFusionTables()) {
       setProgressValue(0);
-      setProgressMessage(
-          R.string.progress_message_authenticating_fusiontables);
+      setProgressMessage(R.string.progress_message_authenticating_fusiontables);
       authenticate(new Intent(), MyTracksConstants.SEND_TO_GOOGLE,
           SendToFusionTables.SERVICE_ID);
     } else {
@@ -1235,10 +1214,10 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * Notifies that uploading to fusion tables is finished.
    */
   private void handleFusionTablesFinish(long trackId) {
-  	if (shareRequested && sendToFusionTablesSuccess) {
+    if (shareRequested && sendToFusionTablesSuccess) {
       // Just share
-  		Toast.makeText(this, getFusionTablesResultMessage(), Toast.LENGTH_LONG).show();
-  		shareLinkToFusionTable(trackId);
+      Toast.makeText(this, getFusionTablesResultMessage(), Toast.LENGTH_LONG).show();
+      shareLinkToFusionTable(trackId);
     } else {
       dialogManager.showDialogSafely(DialogManager.DIALOG_SEND_TO_GOOGLE_RESULT);
     }

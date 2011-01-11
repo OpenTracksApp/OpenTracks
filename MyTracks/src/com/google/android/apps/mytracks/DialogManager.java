@@ -85,12 +85,12 @@ public class DialogManager {
         builder.setTitle("Title");
         builder.setMessage("Message");
         builder.setPositiveButton(activity.getString(R.string.ok), null);
-        builder.setNeutralButton(activity.getString(R.string.share_map),		
-            new DialogInterface.OnClickListener() {		
-              public void onClick(DialogInterface dialog, int which) {	
+        builder.setNeutralButton(activity.getString(R.string.share_track),
+            new DialogInterface.OnClickListener() {
+              public void onClick(DialogInterface dialog, int which) {
                 activity.shareLinkToFusionTable(activity.sendToTrackId);
                 dialog.dismiss();
-              }		
+              }
             });
         sendToGoogleResultDialog = builder.create();
         return sendToGoogleResultDialog;

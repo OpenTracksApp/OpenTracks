@@ -144,15 +144,13 @@ public class MyTracksProvider extends ContentProvider {
         db.execSQL("DROP TABLE IF EXISTS " + WAYPOINTS_TABLE);
         onCreate(db);
       } else {
+        Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
+            + newVersion + ", adding sensor column.");
         if (oldVersion == 17) {
-          Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
-              + newVersion + ", adding sensor column.");
           db.execSQL("ALTER TABLE " + TRACKPOINTS_TABLE 
             + " ADD " + TrackPointsColumns.SENSOR + " BLOB");
         };
         if (oldVersion >= 17) {
-          Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
-              + newVersion + ", adding tableid column.");
           db.execSQL("ALTER TABLE " + TRACKS_TABLE 
             + " ADD " + TracksColumns.TABLEID + " STRING");
         }

@@ -97,6 +97,8 @@ limitations under the License.
   <string name="success">Erfolgreich</string>
   <string name="waypoint">Wegpunkt</string>
   <string name="cancel">Abbrechen</string>
+  <string name="edit">Bearbeiten</string>
+  <string name="save">Sichern</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="start">(Anfang)</string>
@@ -201,6 +203,11 @@ limitations under the License.
 
       %s.</string>
   <string name="share_track">Track mit Freunden teilen</string>
+
+  <!-- Visibility -->
+  <string name="public_map">Öffentlich</string>
+  <string name="unlisted_map">Nicht in Suchergebnissen enthalten.</string>
+  <string name="mapslist_no_maps_available">Du hast noch keine Karten.</string>
 
   <!-- Statistics View -->
   <!-- Average Moving -->

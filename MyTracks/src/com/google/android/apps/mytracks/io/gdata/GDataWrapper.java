@@ -39,33 +39,54 @@ import java.util.concurrent.TimeoutException;
  */
 public class GDataWrapper<C> {
 
-	public static class AuthenticationException extends Exception {
-		private static final long serialVersionUID = 1L;
+  public static class AuthenticationException extends Exception {
+    private Exception exception;
+    private static final long serialVersionUID = 1L;
+    public AuthenticationException(Exception caught) {
+      this.exception = caught;
+    }
+    public Exception getException() {
+      return exception;
+    }
   };
 
-	public static class ParseException extends Exception {
-		private static final long serialVersionUID = 1L;
+  public static class ParseException extends Exception {
+    private Exception exception;
+    private static final long serialVersionUID = 1L;
+    public ParseException(Exception caught) {
+      this.exception = caught;
+    }
+    public Exception getException() {
+      return exception;
+    }
   };
 
   public static class ConflictDetectedException extends Exception {
-		private static final long serialVersionUID = 1L;
+    private Exception exception;
+    private static final long serialVersionUID = 1L;
+    public ConflictDetectedException(Exception caught) {
+      this.exception = caught;
+    }
+    public Exception getException() {
+      return exception;
+    }
   };
 
-	public static class HttpException extends Exception {
-		private static final long serialVersionUID = 1L;
-		private int statusCode;
-		private String statusMessage;
-		public HttpException(int statusCode, String statusMessage) {
-			super();
-			this.statusCode = statusCode;
-			this.statusMessage = statusMessage;
-		}
-		public int getStatusCode() {
-			return statusCode;
-		}
-		public String getStatusMessage() {
-			return statusMessage;
-		}
+  public static class HttpException extends Exception {
+    private static final long serialVersionUID = 1L;
+    private int statusCode;
+    private String statusMessage;
+    public HttpException(int statusCode, String statusMessage) {
+      super();
+      this.statusCode = statusCode;
+      this.statusMessage = statusMessage;
+    }
+    public int getStatusCode() {
+      return statusCode;
+    }
+    public String getStatusMessage() {
+      return statusMessage;
+    }
   };
 
   /**

@@ -15,7 +15,6 @@
  */
 package com.google.android.apps.mytracks.io;
 
-import com.google.android.apps.mytracks.MyTracks;
 import com.google.android.apps.mytracks.MyTracksConstants;
 import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.apps.mytracks.ProgressIndicator;
@@ -60,24 +59,29 @@ import java.util.Vector;
  */
 public class SendToFusionTables implements Runnable {
 
+  /**
+   * Listener invoked when sending to fusion tables completes.
+   */
   public interface OnSendCompletedListener {
     void onSendCompleted(String tableId, boolean success, int statusMessage);
   }
 
-	/** The GData service id for Fusion Tables. */
+  /** The GData service id for Fusion Tables. */
   public static final String SERVICE_ID = "fusiontables";
 
   /** The path for viewing a map visualization of a table. */
   private static final String FUSIONTABLES_MAP = 
-  	  "http://www.google.com/fusiontables/embedviz?" +
-  	  "viz=MAP&q=select+col0,+col1,+col2,+col3+from+%s+&h=false&" +
-  	  "lat=%f&lng=%f&z=%d&t=1&l=col2";
+      "http://www.google.com/fusiontables/embedviz?" +
+      "viz=MAP&q=select+col0,+col1,+col2,+col3+from+%s+&h=false&" +
+      "lat=%f&lng=%f&z=%d&t=1&l=col2";
 
   /** Standard base feed url for Fusion Tables. */
   private static final String FUSIONTABLES_BASE_FEED_URL =
       "http://www.google.com/fusiontables/api/query";
 
   private static final int MAX_POINTS_PER_UPLOAD = 2048;
+
+  private static final String GDATA_VERSION = "2";
 
   private final Activity context;
   private final AuthManager auth;
@@ -97,6 +101,10 @@ public class SendToFusionTables implements Runnable {
   private HttpTransport transport;
   private String tableId;
 
+  private static String MARKER_TYPE_START = "large_green";
+  private static String MARKER_TYPE_END = "large_red";
+  private static String MARKER_TYPE_WAYPOINT = "large_yellow";
+
   public SendToFusionTables(Activity context, AuthManager auth,
       long trackId, ProgressIndicator progressIndicator,
       OnSendCompletedListener onCompletion) {
@@ -109,8 +117,8 @@ public class SendToFusionTables implements Runnable {
     this.providerUtils = MyTracksProviderUtils.Factory.get(context);
     transport = GoogleTransport.create();
     GoogleHeaders headers = (GoogleHeaders) transport.defaultHeaders;
-    headers.setApplicationName("Google-MyTracks-" + MyTracks.getMyTracksVersion(context));
-    headers.gdataVersion = "2";
+    headers.setApplicationName("Google-MyTracks-" + MyTracksUtils.getMyTracksVersion(context));
+    headers.gdataVersion = GDATA_VERSION;
   }
 
   @Override
@@ -121,11 +129,11 @@ public class SendToFusionTables implements Runnable {
 
   public static String getMapVisualizationUrl(Track track) {
     // TODO(leifhendrik): Determine correct bounding box and zoom level that will show the entire track.
-  	TripStatistics stats = track.getStatistics();
-  	double latE6 = stats.getBottom() + (stats.getTop() - stats.getBottom()) / 2;
-  	double lonE6 = stats.getLeft() + (stats.getRight() - stats.getLeft()) / 2;
+    TripStatistics stats = track.getStatistics();
+    double latE6 = stats.getBottom() + (stats.getTop() - stats.getBottom()) / 2;
+    double lonE6 = stats.getLeft() + (stats.getRight() - stats.getLeft()) / 2;
     int z = 15;
-  	return String.format(FUSIONTABLES_MAP, track.getTableId(), latE6 / 1.E6, lonE6 / 1.E6, z);
+    return String.format(FUSIONTABLES_MAP, track.getTableId(), latE6 / 1.E6, lonE6 / 1.E6, z);
   }
 
   private void doUpload() {
@@ -191,17 +199,17 @@ public class SendToFusionTables implements Runnable {
    * @return the values formatted as: ('value1','value2',...,'value_n').
    */
   private static String values(String... values) {
-  	StringBuilder builder = new StringBuilder("(");
-  	for (int i = 0; i < values.length; i++) {
-  	  builder.append('\'');
-      builder.append(values[i].replaceAll("'", "xxx"));
+    StringBuilder builder = new StringBuilder("(");
+    for (int i = 0; i < values.length; i++) {
+      if (i > 0) {
+        builder.append(',');
+      }
       builder.append('\'');
-      if (i < values.length - 1) {
-  	  	builder.append(',');
-  	  }
-  	}
-  	builder.append(')');
-  	return builder.toString();
+      builder.append(values[i].replaceAll("'", "''"));
+      builder.append('\'');
+    }
+    builder.append(')');
+    return builder.toString();
   }
 
   /**
@@ -213,7 +221,7 @@ public class SendToFusionTables implements Runnable {
    * @return true in case of success.
    */
   private boolean createNewPoint(String name, String description, Location location,
-  		String marker) {
+      String marker) {
     Log.d(MyTracksConstants.TAG, "Creating a new row with a point.");
     String query = "INSERT INTO " + tableId + " (name,description,geometry,marker) VALUES "
         + values(name, description, getKmlPoint(location), marker);
@@ -229,8 +237,8 @@ public class SendToFusionTables implements Runnable {
   private boolean createNewLineString(Track track) {
     Log.d(MyTracksConstants.TAG, "Creating a new row with a point.");
     String query = "INSERT INTO " + tableId
-      + " (name,description,geometry) VALUES "
-      + values(track.getName(), track.getDescription(), getKmlLineString(track));
+        + " (name,description,geometry) VALUES "
+        + values(track.getName(), track.getDescription(), getKmlLineString(track));
     return runUpdate(query);
   }
 
@@ -248,25 +256,25 @@ public class SendToFusionTables implements Runnable {
         Log.w(MyTracksConstants.TAG, "Unable to get any points to upload");
         return false;
       }
-  
+
       totalLocationsRead = 0;
       totalLocationsPrepared = 0;
       totalLocationsUploaded = 0;
       totalLocations = locationsCursor.getCount();
       totalSegmentsUploaded = 0;
-  
+
       // Limit the number of elevation readings. Ideally we would want around 250.
       int elevationSamplingFrequency =
           Math.max(1, (int) (totalLocations / 250.0));
       Log.d(MyTracksConstants.TAG,
-            "Using elevation sampling factor: " + elevationSamplingFrequency
-            + " on " + totalLocations);
+          "Using elevation sampling factor: " + elevationSamplingFrequency
+          + " on " + totalLocations);
       double totalDistance = 0;
-  
+
       Vector<Double> distances = new Vector<Double>();
       Vector<Double> elevations = new Vector<Double>();
       DoubleBuffer elevationBuffer = new DoubleBuffer(MyTracksConstants.ELEVATION_SMOOTHING_FACTOR);
-  
+
       List<Location> locations = new ArrayList<Location>(MAX_POINTS_PER_UPLOAD);
       progressIndicator.setProgressMessage(R.string.progress_message_reading_track);
       Location lastLocation = null;
@@ -274,16 +282,16 @@ public class SendToFusionTables implements Runnable {
         if (totalLocationsRead % 100 == 0) {
           updateProgress();
         }
-  
+
         Location loc = providerUtils.createLocation(locationsCursor);
         locations.add(loc);
-  
+
         if (totalLocationsRead == 0) {
           // Put a marker at the first point of the first valid segment:
-        	String name = track.getName() + " " + context.getString(R.string.start);
-          createNewPoint(name, "", loc, "large_green");
+          String name = track.getName() + " " + context.getString(R.string.start);
+          createNewPoint(name, "", loc, MARKER_TYPE_START);
         }
-  
+
         // Add to the elevation profile.
         if (loc != null && MyTracksUtils.isValidLocation(loc)) {
           // All points go into the smoothing buffer...
@@ -293,43 +301,41 @@ public class SendToFusionTables implements Runnable {
             double dist = lastLocation.distanceTo(loc);
             totalDistance += dist;
           }
-  
+
           // ...but only a few points are really used to keep the url short.
           if (totalLocationsRead % elevationSamplingFrequency == 0) {
             distances.add(totalDistance);
             elevations.add(elevationBuffer.getAverage());
           }
         }
-  
+
         // If the location was not valid, it's a segment split, so make sure the
         // distance between the previous segment and the new one is not accounted
         // for in the next iteration.
         lastLocation = loc;
-  
+
         // Every now and then, upload the accumulated points
-        if (totalLocationsRead % MAX_POINTS_PER_UPLOAD
-            == MAX_POINTS_PER_UPLOAD - 1) {
+        if (totalLocationsRead % MAX_POINTS_PER_UPLOAD == MAX_POINTS_PER_UPLOAD - 1) {
           if (!prepareAndUploadPoints(track, locations)) {
             return false;
           }
         }
-  
+
         totalLocationsRead++;
       } while (locationsCursor.moveToNext());
-  
+
       // Do a final upload with what's left
       if (!prepareAndUploadPoints(track, locations)) {
         return false;
       }
-  
+
       // Put an end marker at the last point of the last valid segment:
       if (lastLocation != null) {
         track.setDescription("<p>" + originalDescription + "</p><p>"
-            + stringUtils.generateTrackDescription(
-                track, distances, elevations)
+            + stringUtils.generateTrackDescription(track, distances, elevations)
             + "</p>");
-      	String name = track.getName() + " " + context.getString(R.string.end);
-        return createNewPoint(name, track.getDescription(), lastLocation, "large_red");
+        String name = track.getName() + " " + context.getString(R.string.end);
+        return createNewPoint(name, track.getDescription(), lastLocation, MARKER_TYPE_END);
       }
 
       return true;
@@ -337,7 +343,7 @@ public class SendToFusionTables implements Runnable {
       locationsCursor.close();
     }
   }
-  
+
   /**
    * Appends the given location to the string in the format:
    * longitude,latitude[,altitude]
@@ -346,14 +352,14 @@ public class SendToFusionTables implements Runnable {
    * @param builder the string builder to use
    */
   private void appendCoordinate(Location location, StringBuilder builder) {
-  	builder
-  	    .append(location.getLongitude())
-  	    .append(",")
-  	    .append(location.getLatitude());
-  	if (location.hasAltitude()) {
-  		builder.append(",");
-  		builder.append(location.getAltitude());
-  	}
+    builder
+        .append(location.getLongitude())
+        .append(",")
+        .append(location.getLatitude());
+    if (location.hasAltitude()) {
+      builder.append(",");
+      builder.append(location.getAltitude());
+    }
   }
 
   /**
@@ -376,29 +382,29 @@ public class SendToFusionTables implements Runnable {
    * @return the kml.
    */
   private String getKmlLineString(Track track) {
-  	StringBuilder builder = new StringBuilder("<LineString><coordinates>");
-  	for (Location location : track.getLocations()) {
-  		appendCoordinate(location, builder);
-  		builder.append(' ');
-  	}
-  	builder.append("</coordinates></LineString>");
-  	return builder.toString();
+    StringBuilder builder = new StringBuilder("<LineString><coordinates>");
+    for (Location location : track.getLocations()) {
+      appendCoordinate(location, builder);
+      builder.append(' ');
+    }
+    builder.append("</coordinates></LineString>");
+    return builder.toString();
   }
 
   private boolean prepareAndUploadPoints(Track track, List<Location> locations) {
     progressIndicator.setProgressMessage(R.string.progress_message_preparing_track);
     updateProgress();
-  
+
     int numLocations = locations.size();
     if (numLocations < 2) {
       Log.d(MyTracksConstants.TAG, "Not preparing/uploading too few points");
       totalLocationsUploaded += numLocations;
       return true;
     }
-  
+
     // Prepare/pre-process the points
     ArrayList<Track> splitTracks = prepareLocations(track, locations);
-  
+
     // Start uploading them
     progressIndicator.setProgressMessage(R.string.progress_message_sending_fusiontables);
     for (Track splitTrack : splitTracks) {
@@ -411,7 +417,7 @@ public class SendToFusionTables implements Runnable {
       Log.d(MyTracksConstants.TAG,
           "SendToFusionTables: Prepared feature for upload w/ "
           + splitTrack.getLocations().size() + " points.");
-  
+
       // Transmit tracks via GData feed:
       // -------------------------------
       Log.d(MyTracksConstants.TAG,
@@ -421,7 +427,7 @@ public class SendToFusionTables implements Runnable {
         return false;
       }
     }
-  
+
     locations.clear();
     totalLocationsUploaded += numLocations;
     updateProgress();
@@ -439,7 +445,7 @@ public class SendToFusionTables implements Runnable {
   private ArrayList<Track> prepareLocations(
       Track track, Iterable<Location> locations) {
     ArrayList<Track> splitTracks = new ArrayList<Track>();
-  
+
     // Create segments from each full track:
     Track segment = new Track();
     TripStatistics segmentStats = segment.getStatistics();
@@ -458,11 +464,11 @@ public class SendToFusionTables implements Runnable {
       if (loc.getLatitude() > 90) {
         startNewTrackSegment = true;
       }
-  
+
       if (startNewTrackSegment) {
         // Close up the last segment.
         prepareTrackSegment(segment, splitTracks);
-  
+
         Log.d(MyTracksConstants.TAG,
             "MyTracksSendToFusionTables: Starting new track segment...");
         startNewTrackSegment = false;
@@ -472,7 +478,7 @@ public class SendToFusionTables implements Runnable {
         segment.setDescription(/* track.getDescription() */ "");
         segment.setCategory(track.getCategory());
       }
-  
+
       if (loc.getLatitude() <= 90) {
         segment.addLocation(loc);
         if (segmentStats.getStartTime() < 0) {
@@ -481,9 +487,9 @@ public class SendToFusionTables implements Runnable {
       }
       totalLocationsPrepared++;
     }
-  
+
     prepareTrackSegment(segment, splitTracks);
-  
+
     return splitTracks;
   }
 
@@ -506,13 +512,13 @@ public class SendToFusionTables implements Runnable {
         && segment.getLocations().size() > 0) {
       segmentStats.setStopTime(segment.getLocations().size() - 1);
     }
-  
+
     /*
      * Decimate to 2 meter precision. Fusion tables doesn't like too many
      * points:
      */
     MyTracksUtils.decimate(segment, 2.0);
-  
+
     /* If the track still has > 2500 points, split it in pieces: */
     final int maxPoints = 2500;
     if (segment.getLocations().size() > maxPoints) {
@@ -557,7 +563,7 @@ public class SendToFusionTables implements Runnable {
           Waypoint wpt = providerUtils.createWaypoint(c);
           Log.d(MyTracksConstants.TAG, "SendToFusionTables: Creating waypoint.");
           success = createNewPoint(wpt.getName(), wpt.getDescription(), wpt.getLocation(),
-          		"large_yellow");
+          		MARKER_TYPE_WAYPOINT);
           if (!success) {
           	break;
           }
@@ -611,20 +617,20 @@ public class SendToFusionTables implements Runnable {
         HttpResponse response = request.execute();
         boolean success = response.isSuccessStatusCode;
         if (success) {
-        	byte[] result = new byte[1024];
-        	response.getContent().read(result);
-        	String s = Strings.fromBytesUtf8(result);
-        	String[] lines = s.split(Strings.LINE_SEPARATOR);
-        	if (lines[0].equals("tableid")) {
-        		tableId = lines[1];
-        		Log.d(MyTracksConstants.TAG, "tableId = " + tableId);
-        	} else {
-        		Log.w(MyTracksConstants.TAG, "Unrecognized response: " + lines[0]);
-        	}
+          byte[] result = new byte[1024];
+          response.getContent().read(result);
+          String s = Strings.fromBytesUtf8(result);
+          String[] lines = s.split(Strings.LINE_SEPARATOR);
+          if (lines[0].equals("tableid")) {
+            tableId = lines[1];
+            Log.d(MyTracksConstants.TAG, "tableId = " + tableId);
+          } else {
+            Log.w(MyTracksConstants.TAG, "Unrecognized response: " + lines[0]);
+          }
         } else {
-        	Log.d(MyTracksConstants.TAG, "Query failed: " + response.statusMessage + " (" +
-        			response.statusCode + ")");
-        	throw new GDataWrapper.HttpException(response.statusCode, response.statusMessage);
+          Log.d(MyTracksConstants.TAG, "Query failed: " + response.statusMessage + " (" +
+              response.statusCode + ")");
+          throw new GDataWrapper.HttpException(response.statusCode, response.statusMessage);
         }
       }
     });

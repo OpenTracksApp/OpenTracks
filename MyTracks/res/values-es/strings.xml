@@ -207,6 +207,10 @@ limitations under the License.
     Para ver este recorrido usa Google Earth o algún otro software de mapeo.</string>
   <string name="share_track">Compartir recorrido con amigos</string>
 
+  <!-- Visibility -->
+  <string name="public_map">Público</string>
+  <string name="unlisted_map">No listado</string>
+  <string name="mapslist_no_maps_available">Aún no tienes ningún mapa.</string>
 
   <!-- Statistics View -->
   <!-- Average Moving -->

@@ -37,13 +37,15 @@ public class BackupColumns {
       TracksColumns.MOVINGTIME, TracksColumns.AVGSPEED, TracksColumns.AVGMOVINGSPEED,
       TracksColumns.MAXSPEED, TracksColumns.MINELEVATION, TracksColumns.MAXELEVATION,
       TracksColumns.ELEVATIONGAIN, TracksColumns.MINGRADE, TracksColumns.MAXGRADE,
-      TracksColumns.MINLAT, TracksColumns.MAXLAT, TracksColumns.MINLON, TracksColumns.MAXLON };
+      TracksColumns.MINLAT, TracksColumns.MAXLAT, TracksColumns.MINLON, TracksColumns.MAXLON,
+      TracksColumns.MAPID, TracksColumns.TABLEID};
   public static final byte[] TRACKS_BACKUP_COLUMN_TYPES = {
       LONG_TYPE_ID, STRING_TYPE_ID, STRING_TYPE_ID, STRING_TYPE_ID,
       LONG_TYPE_ID, LONG_TYPE_ID, LONG_TYPE_ID, LONG_TYPE_ID, INT_TYPE_ID,
       FLOAT_TYPE_ID, LONG_TYPE_ID, LONG_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID,
       FLOAT_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID,
-      FLOAT_TYPE_ID, INT_TYPE_ID, INT_TYPE_ID, INT_TYPE_ID, INT_TYPE_ID };
+      FLOAT_TYPE_ID, INT_TYPE_ID, INT_TYPE_ID, INT_TYPE_ID, INT_TYPE_ID, STRING_TYPE_ID,
+      STRING_TYPE_ID};
 
   public static final String[] WAYPOINTS_BACKUP_COLUMNS = {
       WaypointsColumns._ID, WaypointsColumns.TRACKID, WaypointsColumns.NAME,

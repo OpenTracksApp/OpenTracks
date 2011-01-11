@@ -103,6 +103,9 @@ limitations under the License.
   <string name="success">Lyckades</string>
   <string name="waypoint">Positionsmärke</string>
   <string name="cancel">Avbryt</string>
+  <string name="close">Stäng</string>
+  <string name="edit">Ändra</string>
+  <string name="save">Spara</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="start">(Start)</string>
@@ -202,27 +205,6 @@ limitations under the License.
   <!-- MyTracksSky -->
   <string name="mytracks_sky">GPS-satelliter</string>
 
-  <!-- My Maps -->
-  <string name="select_map_message">Välj en karta från ditt konto:</string>
-  <string name="create_new_map">Skapa en ny karta...</string>
-  <string name="map_list_title">Skicka till Google Mina Kartor</string>
-  <string name="maps_list_loading">Laddar kartor...</string>
-  <string name="maps_list_failed">Dina kartor kunde inte laddas just nu!</string>
-  <string name="open_map">Välj den här kartan</string>
-  <string name="edit_map_details">Ändra kartdetaljer</string>
-  <string name="share_map">Dela kartan med vänner</string>
-  <string name="share_track">Dela spår med vänner</string>
-  <string name="delete_map">Ta bort kartan från ditt konto</string>
-  <string name="map_title">Karttitel:</string>
-  <string name="map_description">Kartbeskrivning:</string>
-  <string name="map_searchable_edit">Gör så att kartan och dess innehåll visas i sökresultat</string>
-  <string name="map_not_searchable_edit">Låt inte kartan och dess innehåll visas i sökresultat, men de kan ändå ses av andra genom en direktlänk</string>
-  <string name="map_searchable">Kartan och dess innehåll kommer att visas i sökresultat</string>
-  <string name="map_not_searchable">Varken kartan eller dess innehåll visas i sökresultat, men de kan ändå ses av andra genom en direktlänk</string>
-  <string name="close">Stäng</string>
-  <string name="edit">Ändra</string>
-  <string name="save">Spara</string>
-
   <!-- Sharing -->
   <string name="share_map_subject">Jag vill dela en karta med dig</string>
   <string name="share_map_body_format">Jag tror att du skulle vara intresserad av den här kartan:
@@ -232,6 +214,7 @@ limitations under the License.
   <string name="send_track_body_format">Jag tror att du skulle vara intresserad av det här spåret.
 
     För att se det här spåret använd Google Earth eller något annat kartprogram.</string>
+  <string name="share_track">Dela spår med vänner</string>
 
   <!-- Visibility -->
   <string name="public_map">Publik</string>

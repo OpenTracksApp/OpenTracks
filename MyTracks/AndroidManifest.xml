@@ -56,11 +56,6 @@ limitations under the License.
               android:label="MyTracks"
               android:exported="false" />
 
-    <activity android:name="com.google.android.apps.mymaps.MyMapsList"
-              android:label="@string/map_list_title"
-              android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|fontScale"
-              android:exported="false" />
-
     <activity android:name="com.google.android.apps.mytracks.MyTracksList"
               android:label="Recorded Tracks" />
 
@@ -157,12 +152,11 @@ limitations under the License.
   <uses-permission android:name="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
   <uses-permission android:name="com.google.android.apps.mytracks.TRACK_NOTIFICATIONS" />
 
-  <!-- Features required
+  <!-- Features required -->
   <uses-feature android:name="android.hardware.location" android:required="true"/>
   <uses-feature android:name="android.hardware.location.gps" android:required="true"/>
   <uses-feature android:name="android.hardware.touchscreen" android:required="true"/>
-  -->
-  
+
   <!-- Features optional -->
   <uses-feature android:name="android.hardware.bluetooth" android:required="false"/>
   <uses-feature android:name="android.hardware.location.network" android:required="false"/>

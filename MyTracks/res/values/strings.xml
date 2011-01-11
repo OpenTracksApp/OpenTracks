@@ -106,6 +106,9 @@ limitations under the License.
   <string name="success">Success</string>
   <string name="waypoint">Waypoint</string>
   <string name="cancel">Cancel</string>
+  <string name="close">Close</string>
+  <string name="edit">Edit</string>
+  <string name="save">Save</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="start">(Start)</string>

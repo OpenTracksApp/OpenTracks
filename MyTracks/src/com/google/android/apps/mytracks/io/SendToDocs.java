@@ -329,8 +329,8 @@ public class SendToDocs {
               break;
             }
           }
-    	  } catch (ParseException e) {
-          throw new GDataWrapper.ParseException();
+        } catch (ParseException e) {
+          throw new GDataWrapper.ParseException(e);
         } catch (HttpException e) {
           throw new GDataWrapper.HttpException(e.getStatusCode(), e.getMessage());
         }
@@ -346,27 +346,27 @@ public class SendToDocs {
           throws GDataWrapper.AuthenticationException, IOException, GDataWrapper.ParseException {
         String uri = String.format(DOCS_WORKSHEETS_URL_FORMAT, spreadSheetId);
         GDataParser sheetParser;
-				try {
-					sheetParser = ((SpreadsheetsClient) client).getParserForWorksheetsFeed(uri,
-					    wiseAuth.getAuthToken());
-	        sheetParser.init();
-	        if (!sheetParser.hasMoreData()) {
-	          Log.i(MyTracksConstants.TAG, "Found no worksheets");
-	          return; // failure
-	        }
+        try {
+          sheetParser = ((SpreadsheetsClient) client).getParserForWorksheetsFeed(uri,
+              wiseAuth.getAuthToken());
+          sheetParser.init();
+          if (!sheetParser.hasMoreData()) {
+            Log.i(MyTracksConstants.TAG, "Found no worksheets");
+            return; // failure
+          }
 
-	        // just grab the first.
-	        WorksheetEntry worksheetEntry =
-	            (WorksheetEntry) sheetParser.readNextEntry(new WorksheetEntry());
+          // just grab the first.
+          WorksheetEntry worksheetEntry =
+              (WorksheetEntry) sheetParser.readNextEntry(new WorksheetEntry());
 
-	        int lastSlash = worksheetEntry.getId().lastIndexOf('/');
-	        workSheetId = worksheetEntry.getId().substring(lastSlash + 1);
+          int lastSlash = worksheetEntry.getId().lastIndexOf('/');
+          workSheetId = worksheetEntry.getId().substring(lastSlash + 1);
 
-				} catch (AuthenticationException e) {
-					throw new GDataWrapper.AuthenticationException();
-				} catch (ParseException e) {
-					throw new GDataWrapper.ParseException();
-				}
+        } catch (AuthenticationException e) {
+          throw new GDataWrapper.AuthenticationException(e);
+        } catch (ParseException e) {
+          throw new GDataWrapper.ParseException(e);
+        }
       }
     });
   }

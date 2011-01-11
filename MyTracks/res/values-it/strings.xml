@@ -104,6 +104,9 @@ limitations under the License.
   <string name="success">Successo</string>
   <string name="waypoint">Punto di passaggio</string>
   <string name="cancel">Annulla</string>
+  <string name="close">Chiudi</string>
+  <string name="edit">Modifica</string>
+  <string name="save">Salva</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="start">(Inizio)</string>
@@ -200,27 +203,6 @@ limitations under the License.
   <!-- MyTracksSky -->
   <string name="mytracks_sky">Satelliti GPS</string>
 
-  <!-- My Maps -->
-  <string name="select_map_message">Scegli una mappa dal tuo account:</string>
-  <string name="create_new_map">Crea una nuova mappa...</string>
-  <string name="map_list_title">Invia a «Le mie mappe» di Google</string>
-  <string name="maps_list_loading">Caricamento mappe in corso...</string>
-  <string name="maps_list_failed">Le tue mappe non possono momentaneamente essere caricate!</string>
-  <string name="open_map">Scegli questa mappa</string>
-  <string name="edit_map_details">Modifica dettagli della mappa</string>
-  <string name="share_map">Condividi la mappa con amici</string>
-  <string name="share_track">Condividi il percorso con amici</string>
-  <string name="delete_map">Elimina la mappa dal tuo account</string>
-  <string name="map_title">Titolo della mappa:</string>
-  <string name="map_description">Descrizione della mappa:</string>
-  <string name="map_searchable_edit">Rendi questa mappa e il suo contenuto visibili fra i risultati di ricerche</string>
-  <string name="map_not_searchable_edit">Rendi questa mappa e il suo contenuto invisibili fra i risultati di ricerche. Resteranno comunque visibili ad altri utilizzando l\'indirizzo URL esatto</string>
-  <string name="map_searchable">Questa mappa e il suo contenuto saranno visibili fra i risultati di ricerche</string>
-  <string name="map_not_searchable">Né questa mappa né il suo contenuto saranno visibili in risultati di ricerche, ma saranno comunque visibili ad altri tramite un link diretto.</string>
-  <string name="close">Chiudi</string>
-  <string name="edit">Modifica</string>
-  <string name="save">Salva</string>
-
   <!-- Sharing -->
   <string name="share_map_subject">Vorrei condividere una mappa con te</string>
   <string name="share_map_body_format">Credo che questa mappa potrebbe interessarti:
@@ -230,6 +212,7 @@ limitations under the License.
   <string name="send_track_body_format">Credo che questo percorso potrebbe interessarti.
 
     Per vedere questo percorso, usa Google Earth o un altro software di cartografia.</string>
+  <string name="share_track">Condividi il percorso con amici</string>
 
   <!-- Visibility -->
   <string name="public_map">Pubblica</string>
