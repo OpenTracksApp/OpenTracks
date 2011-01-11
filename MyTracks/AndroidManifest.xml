@@ -114,6 +114,9 @@ limitations under the License.
   <uses-permission android:name="android.permission.BLUETOOTH" />
   <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
+  <uses-permission android:name="com.dsi.ant.permission.ANT" />
+  <uses-permission android:name="com.dsi.ant.permission.ANT_ADMIN" />
+
   <!-- Permissions for uploading tracks -->
   <uses-permission android:name="android.permission.GET_ACCOUNTS" />
   <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
@@ -156,7 +159,7 @@ limitations under the License.
   <uses-feature android:name="android.hardware.location" android:required="true"/>
   <uses-feature android:name="android.hardware.location.gps" android:required="true"/>
   <uses-feature android:name="android.hardware.touchscreen" android:required="true"/>
-
+  
   <!-- Features optional -->
   <uses-feature android:name="android.hardware.bluetooth" android:required="false"/>
   <uses-feature android:name="android.hardware.location.network" android:required="false"/>
@@ -167,6 +170,7 @@ limitations under the License.
 
   <uses-sdk android:minSdkVersion="3"/>
   <supports-screens
+          android:xlargeScreens="true"
           android:largeScreens="true"
           android:normalScreens="true"
           android:smallScreens="true"

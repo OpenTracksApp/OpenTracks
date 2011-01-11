@@ -46,6 +46,7 @@ public class ExportAllTracks {
   public static final int GPX_OPTION_INDEX = 0;
   public static final int KML_OPTION_INDEX = 1;
   public static final int CSV_OPTION_INDEX = 2;
+  public static final int TCX_OPTION_INDEX = 3;
 
   private final Activity activity;
   private WakeLock wakeLock;
@@ -67,6 +68,11 @@ public class ExportAllTracks {
             case CSV_OPTION_INDEX:
               format = TrackFileFormat.CSV;
               break;
+            case TCX_OPTION_INDEX:
+              format = TrackFileFormat.TCX;
+              break;
+            default:
+              Log.w(MyTracksConstants.TAG, "Unknown export format: " + which);
           }
         }
       };

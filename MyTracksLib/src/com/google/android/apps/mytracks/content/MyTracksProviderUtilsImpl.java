@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.content;
 
-import static com.google.android.apps.mytracks.lib.MyTracksLibConstants.*;
+import static com.google.android.apps.mytracks.lib.MyTracksLibConstants.TAG;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -29,6 +29,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Helper class providing easy access to locations and tracks in the
@@ -39,6 +40,8 @@ import java.util.List;
 public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   private final ContentResolver contentResolver;
+  
+  private int defaultCursorBatchSize = 2000;
 
   public MyTracksProviderUtilsImpl(ContentResolver contentResolver) {
     this.contentResolver = contentResolver;
@@ -125,7 +128,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   private static ContentValues createContentValues(Waypoint waypoint) {
     ContentValues values = new ContentValues();
-    TripStatistics stats = waypoint.getStatistics();
 
     // Values id < 0 indicate no id is available:
     if (waypoint.getId() >= 0) {
@@ -139,21 +141,24 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     values.put(WaypointsColumns.TYPE, waypoint.getType());
     values.put(WaypointsColumns.LENGTH, waypoint.getLength());
     values.put(WaypointsColumns.DURATION, waypoint.getDuration());
-    values.put(WaypointsColumns.STARTTIME, stats.getStartTime());
     values.put(WaypointsColumns.STARTID, waypoint.getStartId());
     values.put(WaypointsColumns.STOPID, waypoint.getStopId());
 
-    values.put(WaypointsColumns.TOTALDISTANCE, stats.getTotalDistance());
-    values.put(WaypointsColumns.TOTALTIME, stats.getTotalTime());
-    values.put(WaypointsColumns.MOVINGTIME, stats.getMovingTime());
-    values.put(WaypointsColumns.AVGSPEED, stats.getAverageSpeed());
-    values.put(WaypointsColumns.AVGMOVINGSPEED, stats.getAverageMovingSpeed());
-    values.put(WaypointsColumns.MAXSPEED, stats.getMaxSpeed());
-    values.put(WaypointsColumns.MINELEVATION, stats.getMinElevation());
-    values.put(WaypointsColumns.MAXELEVATION, stats.getMaxElevation());
-    values.put(WaypointsColumns.ELEVATIONGAIN, stats.getTotalElevationGain());
-    values.put(WaypointsColumns.MINGRADE, stats.getMinGrade());
-    values.put(WaypointsColumns.MAXGRADE, stats.getMaxGrade());
+    TripStatistics stats = waypoint.getStatistics();
+    if (stats != null) {
+      values.put(WaypointsColumns.TOTALDISTANCE, stats.getTotalDistance());
+      values.put(WaypointsColumns.TOTALTIME, stats.getTotalTime());
+      values.put(WaypointsColumns.MOVINGTIME, stats.getMovingTime());
+      values.put(WaypointsColumns.AVGSPEED, stats.getAverageSpeed());
+      values.put(WaypointsColumns.AVGMOVINGSPEED, stats.getAverageMovingSpeed());
+      values.put(WaypointsColumns.MAXSPEED, stats.getMaxSpeed());
+      values.put(WaypointsColumns.MINELEVATION, stats.getMinElevation());
+      values.put(WaypointsColumns.MAXELEVATION, stats.getMaxElevation());
+      values.put(WaypointsColumns.ELEVATIONGAIN, stats.getTotalElevationGain());
+      values.put(WaypointsColumns.MINGRADE, stats.getMinGrade());
+      values.put(WaypointsColumns.MAXGRADE, stats.getMaxGrade());
+      values.put(WaypointsColumns.STARTTIME, stats.getStartTime());
+    }
 
     Location location = waypoint.getLocation();
     if (location != null) {
@@ -185,54 +190,77 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     fillLocation(cursor, location);
     return location;
   }
+
+  /**
+   * A cache of track column indices.
+   */
+  private static class CachedTrackColumnIndices {
+    public final int idxId;
+    public final int idxLatitude;
+    public final int idxLongitude;
+    public final int idxAltitude;
+    public final int idxTime; 
+    public final int idxBearing; 
+    public final int idxAccuracy;
+    public final int idxSpeed;
+    public final int idxSensor; 
   
-  @Override
-  public void fillLocation(Cursor cursor, Location location) {
+    public CachedTrackColumnIndices(Cursor cursor) {
+      idxId = cursor.getColumnIndex(TrackPointsColumns._ID);
+      idxLatitude = cursor.getColumnIndexOrThrow(TrackPointsColumns.LATITUDE);
+      idxLongitude = cursor.getColumnIndexOrThrow(TrackPointsColumns.LONGITUDE);
+      idxAltitude = cursor.getColumnIndexOrThrow(TrackPointsColumns.ALTITUDE);
+      idxTime = cursor.getColumnIndexOrThrow(TrackPointsColumns.TIME);
+      idxBearing = cursor.getColumnIndexOrThrow(TrackPointsColumns.BEARING);
+      idxAccuracy = cursor.getColumnIndexOrThrow(TrackPointsColumns.ACCURACY);
+      idxSpeed = cursor.getColumnIndexOrThrow(TrackPointsColumns.SPEED);
+      idxSensor = cursor.getColumnIndexOrThrow(TrackPointsColumns.SENSOR);
+    }
+  }
+  
+  private void fillLocation(Cursor cursor, CachedTrackColumnIndices columnIndices,
+      Location location) {
     location.reset();
-
-    int idxLatitude = cursor.getColumnIndexOrThrow(TrackPointsColumns.LATITUDE);
-    int idxLongitude =
-        cursor.getColumnIndexOrThrow(TrackPointsColumns.LONGITUDE);
-    int idxAltitude = cursor.getColumnIndexOrThrow(TrackPointsColumns.ALTITUDE);
-    int idxTime = cursor.getColumnIndexOrThrow(TrackPointsColumns.TIME);
-    int idxBearing = cursor.getColumnIndexOrThrow(TrackPointsColumns.BEARING);
-    int idxAccuracy = cursor.getColumnIndexOrThrow(TrackPointsColumns.ACCURACY);
-    int idxSpeed = cursor.getColumnIndexOrThrow(TrackPointsColumns.SPEED);
-    int idxSensor = cursor.getColumnIndexOrThrow(TrackPointsColumns.SENSOR);
-
-    if (!cursor.isNull(idxLatitude)) {
-      location.setLatitude(1. * cursor.getInt(idxLatitude) / 1E6);
+    
+    if (!cursor.isNull(columnIndices.idxLatitude)) {
+      location.setLatitude(1. * cursor.getInt(columnIndices.idxLatitude) / 1E6);
     }
-    if (!cursor.isNull(idxLongitude)) {
-      location.setLongitude(1. * cursor.getInt(idxLongitude) / 1E6);
+    if (!cursor.isNull(columnIndices.idxLongitude)) {
+      location.setLongitude(1. * cursor.getInt(columnIndices.idxLongitude) / 1E6);
     }
-    if (!cursor.isNull(idxAltitude)) {
-      location.setAltitude(cursor.getFloat(idxAltitude));
+    if (!cursor.isNull(columnIndices.idxAltitude)) {
+      location.setAltitude(cursor.getFloat(columnIndices.idxAltitude));
     }
-    if (!cursor.isNull(idxTime)) {
-      location.setTime(cursor.getLong(idxTime));
+    if (!cursor.isNull(columnIndices.idxTime)) {
+      location.setTime(cursor.getLong(columnIndices.idxTime));
     }
-    if (!cursor.isNull(idxBearing)) {
-      location.setBearing(cursor.getFloat(idxBearing));
+    if (!cursor.isNull(columnIndices.idxBearing)) {
+      location.setBearing(cursor.getFloat(columnIndices.idxBearing));
     }
-    if (!cursor.isNull(idxSpeed)) {
-      location.setSpeed(cursor.getFloat(idxSpeed));
+    if (!cursor.isNull(columnIndices.idxSpeed)) {
+      location.setSpeed(cursor.getFloat(columnIndices.idxSpeed));
     }
-    if (!cursor.isNull(idxAccuracy)) {
-      location.setAccuracy(cursor.getFloat(idxAccuracy));
+    if (!cursor.isNull(columnIndices.idxAccuracy)) {
+      location.setAccuracy(cursor.getFloat(columnIndices.idxAccuracy));
     }
     if (location instanceof MyTracksLocation &&
-        !cursor.isNull(idxSensor)) {
+        !cursor.isNull(columnIndices.idxSensor)) {
       MyTracksLocation mtLocation = (MyTracksLocation) location;
       // TODO get the right buffer.
       Sensor.SensorDataSet sensorData;
       try {
-        sensorData = Sensor.SensorDataSet.parseFrom(cursor.getBlob(idxSensor));
+        sensorData = Sensor.SensorDataSet.parseFrom(cursor.getBlob(columnIndices.idxSensor));
         mtLocation.setSensorData(sensorData);
       } catch (InvalidProtocolBufferException e) {
         Log.w(TAG, "Failed to parse sensor data.", e);
       }
     }
+  }
+  
+  @Override
+  public void fillLocation(Cursor cursor, Location location) {
+    CachedTrackColumnIndices columnIndicies = new CachedTrackColumnIndices(cursor);
+    fillLocation(cursor, columnIndicies, location);
   }
 
   @Override
@@ -383,7 +411,6 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     int idxSpeed = cursor.getColumnIndexOrThrow(WaypointsColumns.SPEED);
 
     Waypoint waypoint = new Waypoint();
-    TripStatistics stats = waypoint.getStatistics();
 
     if (!cursor.isNull(idxId)) {
       waypoint.setId(cursor.getLong(idxId));
@@ -412,41 +439,57 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     if (!cursor.isNull(idxDuration)) {
       waypoint.setDuration(cursor.getLong(idxDuration));
     }
-    if (!cursor.isNull(idxStartTime)) {
-      stats.setStartTime(cursor.getLong(idxStartTime));
-    }
     if (!cursor.isNull(idxStartId)) {
       waypoint.setStartId(cursor.getLong(idxStartId));
     }
     if (!cursor.isNull(idxStopId)) {
       waypoint.setStopId(cursor.getLong(idxStopId));
     }
+
+    TripStatistics stats = new TripStatistics();
+    boolean hasStats = false;
+    if (!cursor.isNull(idxStartTime)) {
+      stats.setStartTime(cursor.getLong(idxStartTime));
+      hasStats = true;
+    }
     if (!cursor.isNull(idxTotalDistance)) {
       stats.setTotalDistance(cursor.getFloat(idxTotalDistance));
+      hasStats = true;
     }
     if (!cursor.isNull(idxTotalTime)) {
       stats.setTotalTime(cursor.getLong(idxTotalTime));
+      hasStats = true;
     }
     if (!cursor.isNull(idxMovingTime)) {
       stats.setMovingTime(cursor.getLong(idxMovingTime));
+      hasStats = true;
     }
     if (!cursor.isNull(idxMaxSpeed)) {
       stats.setMaxSpeed(cursor.getFloat(idxMaxSpeed));
+      hasStats = true;
     }
     if (!cursor.isNull(idxMinElevation)) {
       stats.setMinElevation(cursor.getFloat(idxMinElevation));
+      hasStats = true;
     }
     if (!cursor.isNull(idxMaxElevation)) {
       stats.setMaxElevation(cursor.getFloat(idxMaxElevation));
+      hasStats = true;
     }
     if (!cursor.isNull(idxElevationGain)) {
       stats.setTotalElevationGain(cursor.getFloat(idxElevationGain));
+      hasStats = true;
     }
     if (!cursor.isNull(idxMinGrade)) {
       stats.setMinGrade(cursor.getFloat(idxMinGrade));
+      hasStats = true;
     }
     if (!cursor.isNull(idxMaxGrade)) {
       stats.setMaxGrade(cursor.getFloat(idxMaxGrade));
+      hasStats = true;
+    }
+    if (hasStats) {
+      waypoint.setStatistics(stats);
     }
 
     Location location = new Location("");
@@ -780,13 +823,12 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   public Cursor getLocationsCursor(long trackId, long minTrackPointId,
       int maxLocations, boolean descending) {
     String selection; 
-    if (minTrackPointId > 0) {
-      selection = String.format("%s=%d AND %s>=%d",
-          TrackPointsColumns.TRACKID, trackId,
-          TrackPointsColumns._ID, minTrackPointId);
+    if (minTrackPointId >= 0) {
+      selection = String.format("%s=%d AND %s%s%d",
+          TrackPointsColumns.TRACKID, trackId, TrackPointsColumns._ID,
+          descending ? "<=" : ">=", minTrackPointId);
     } else {
-      selection = String.format("%s=%d",
-          TrackPointsColumns.TRACKID, trackId);
+      selection = String.format("%s=%d", TrackPointsColumns.TRACKID, trackId);
     }
 
     String sortOrder = "_id " + (descending ? "DESC" : "ASC");
@@ -794,8 +836,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       sortOrder += " LIMIT " + maxLocations;
     }
 
-    return contentResolver.query(
-        TrackPointsColumns.CONTENT_URI, null, selection, null, sortOrder);
+    return contentResolver.query(TrackPointsColumns.CONTENT_URI, null, selection, null, sortOrder);
   }
 
   @Override
@@ -825,49 +866,24 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     String select = TracksColumns._ID + "=" + id;
     return findTrackBy(select);
   }
-  
+
   @Override
   public List<Track> getAllTracks() {
     Cursor cursor = getTracksCursor(null);
-    if (cursor == null || !cursor.moveToFirst()) {
-      return new ArrayList<Track>();
-    }
+    ArrayList<Track> tracks = new ArrayList<Track>();
+    if (cursor != null) {
+      tracks.ensureCapacity(cursor.getCount());
 
-    List<Track> tracks = new ArrayList<Track>(cursor.getCount());
-    do {
-      tracks.add(createTrack(cursor));
-    } while(cursor.moveToNext());
-
-    return tracks;
-  }
-
-  @Override
-  public long getTrackPoints(Track track, int maxPoints) {
-    long lastId = -1;
-    Cursor cursor = getLocationsCursor(track.getId(), -1, maxPoints, true);
-    if (cursor == null) {
-      Log.w(TAG, "Cannot get a locations cursor!");
-      return lastId;
-    }
-    try {
-      final int idColumnIdx =
-          cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
-      if (cursor.moveToLast()) {
+      if (cursor.moveToFirst()) {
         do {
-          Location location = createLocation(cursor);
-          if (location == null) {
-            continue;
-          }
-          track.addLocation(location);
-          lastId = cursor.getLong(idColumnIdx);
-        } while (cursor.moveToPrevious());
+          tracks.add(createTrack(cursor));
+        } while(cursor.moveToNext());
       }
-    } catch (RuntimeException e) {
-      Log.w(TAG, "Caught unexpected exception.", e);
-    } finally {
+
       cursor.close();
     }
-    return lastId;
+
+    return tracks;
   }
 
   @Override
@@ -938,5 +954,86 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     Log.d(TAG, "MyTracksProviderUtilsImpl.updateTrack");
     contentResolver.update(TracksColumns.CONTENT_URI,
         createContentValues(track), "_id=" + track.getId(), null);
+  }
+
+  @Override
+  public LocationIterator getLocationIterator(final long trackId, final long startTrackPointId,
+      final boolean descending, final LocationFactory locationFactory) {
+    if (locationFactory == null) {
+      throw new IllegalArgumentException("Expecting non-null locationFactory");
+    }
+    return new LocationIterator() {
+      private long lastTrackPointId = startTrackPointId;
+      private Cursor cursor = getCursor(startTrackPointId);
+      private final CachedTrackColumnIndices columnIndices = cursor != null ?
+          new CachedTrackColumnIndices(cursor) : null;
+          
+      private Cursor getCursor(long trackPointId) {
+        return getLocationsCursor(trackId, trackPointId, defaultCursorBatchSize, descending);
+      }
+
+      private boolean advanceCursorToNextBatch() {
+        long pointId = lastTrackPointId + (descending ? -1 : 1);
+        Log.d(TAG, "Advancing cursor point ID: " + pointId);
+        cursor.close();
+        cursor = getCursor(pointId);
+        return cursor != null;
+      }
+        
+      @Override
+      public long getLocationId() {
+        return lastTrackPointId;
+      }
+
+      @Override
+      public boolean hasNext() {
+        if (cursor == null) {
+          return false;
+        }
+        if (cursor.isAfterLast()) {
+          return false;
+        }
+        if (cursor.isLast()) {
+          // If the current batch size was less that max, we can safely return, otherwise
+          // we need to advance to the next batch.
+          return cursor.getCount() == defaultCursorBatchSize &&
+              advanceCursorToNextBatch() && !cursor.isAfterLast();
+        }
+        
+        return true;
+      }
+
+      @Override
+      public Location next() {
+        if (cursor == null ||
+            !(cursor.moveToNext() || advanceCursorToNextBatch() || cursor.moveToNext())) {
+          throw new NoSuchElementException();
+        }
+        
+        lastTrackPointId = cursor.getLong(columnIndices.idxId);
+        Location location = locationFactory.createLocation();
+        fillLocation(cursor, columnIndices, location);
+        
+        return location;
+      }
+
+      @Override
+      public void close() {
+        if (cursor != null) {
+          cursor.close();
+          cursor = null;
+        }
+      }
+      
+      @Override
+      public void remove() {
+        throw new UnsupportedOperationException();
+      }
+    };
+  }
+  
+  // @VisibleForTesting
+  void setDefaultCursorBatchSize(int defaultCursorBatchSize) {
+    this.defaultCursorBatchSize = defaultCursorBatchSize;
   }
 }

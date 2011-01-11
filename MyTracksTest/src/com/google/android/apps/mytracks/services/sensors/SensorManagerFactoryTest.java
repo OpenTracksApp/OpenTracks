@@ -28,12 +28,26 @@ public class SensorManagerFactoryTest extends AndroidTestCase {
   
   @SmallTest
   public void testCreateZephyr() throws Exception {
+    assertClassForName(ZephyrSensorManager.class, R.string.zephyr_sensor_type);
+  }
+  
+  @SmallTest
+  public void testCreateAnt() throws Exception {
+    assertClassForName(AntDirectSensorManager.class, R.string.ant_sensor_type);
+  }
+
+  @SmallTest
+  public void testCreateAntSRM() throws Exception {
+    assertClassForName(AntSRMSensorManager.class, R.string.srm_ant_bridge_sensor_type);
+  }
+
+  private void assertClassForName(Class<?> c, int i) {
     sharedPreferences.edit()
-      .putString(getContext().getString(R.string.sensor_type_key),
-          getContext().getString(R.string.zephyr_sensor_type))
-      .commit();
+        .putString(getContext().getString(R.string.sensor_type_key),
+            getContext().getString(i))
+        .commit();
     SensorManager sm = SensorManagerFactory.getSensorManager(getContext());
     assertNotNull(sm);
-    assertTrue(sm instanceof ZephyrSensorManager);
+    assertTrue(c.isInstance(sm));
   }
 }

@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.Signature;
 import android.location.Location;
 import android.util.Log;
 
@@ -38,6 +39,7 @@ import java.util.Stack;
  * @author Leif Hendrik Wilden
  */
 public class MyTracksUtils {
+  private static final int RELEASE_SIGNATURE_HASHCODE = -1855564782;
 
   /**
    * Computes the distance on the two sphere between the point c0 and the line
@@ -251,6 +253,24 @@ public class MyTracksUtils {
   }
 
   /**
+   * Returns whether or not this is a release build.
+   */
+  public static boolean isRelease(Context context) {
+    try {
+      Signature [] sigs = context.getPackageManager().getPackageInfo(
+          context.getPackageName(), PackageManager.GET_SIGNATURES).signatures;
+      for (Signature sig : sigs) {
+        if (sig.hashCode() == RELEASE_SIGNATURE_HASHCODE) {
+          return true;
+        }
+      }
+    } catch (NameNotFoundException e) {
+      Log.e(MyTracksConstants.TAG, "Unable to get signatures", e);
+    }
+    return false;
+  }
+
+  /**
    * Get the My Tracks version from the manifest.
    *
    * @return the version, or an empty string in case of failure.
@@ -258,17 +278,17 @@ public class MyTracksUtils {
   public static String getMyTracksVersion(Context context) {
     try {
       PackageInfo pi = context.getPackageManager().getPackageInfo(
-            "com.google.android.maps.mytracks",
+          "com.google.android.maps.mytracks",
           PackageManager.GET_META_DATA);
       return pi.versionName;
-    } catch (NameNotFoundException e) {
+    } catch (NameNotFoundException e)  {
       Log.w(MyTracksConstants.TAG, "Failed to get version info.", e);
       return "";
     }
   }
 
   /**
-   * This is a utility class w/ only static memebers.
+   * This is a utility class w/ only static members.
    */
   protected MyTracksUtils() {
   }

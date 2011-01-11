@@ -289,6 +289,10 @@ public class GDataWrapper<C> {
     this.auth = auth;
   }
   
+  public AuthManager getAuthManager() {
+    return auth;
+  }
+  
   public void setRetryOnAuthFailure(boolean retry) {
     retryOnAuthFailure = retry;
   }

@@ -41,8 +41,7 @@ limitations under the License.
     </LinearLayout>
   </TableRow>
 
-  <View
-    android:layout_height="2dip" />
+  <View android:layout_height="2dip" />
 
   <TableRow>
     <TextView
@@ -58,6 +57,11 @@ limitations under the License.
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"
       android:orientation="vertical">
+      <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/about_bart"
+        android:textSize="20sp" />
       <TextView
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
@@ -81,8 +85,7 @@ limitations under the License.
     </LinearLayout>
   </TableRow>
 
-  <View
-    android:layout_height="2dip" />
+  <View android:layout_height="2dip" />
 
   <TableRow>
     <TextView
@@ -101,8 +104,7 @@ limitations under the License.
       android:textSize="20sp" />
   </TableRow>
 
-  <View
-    android:layout_height="2dip" />
+  <View android:layout_height="2dip" />
 
   <TableRow>
     <TextView
@@ -121,7 +123,25 @@ limitations under the License.
       android:textSize="18sp" />
   </TableRow>
 
-  <View
-    android:layout_height="4dip" />
+  <View android:layout_height="2dip" />
+  
+  <TableRow>
+    <TextView
+      android:paddingLeft="10dip"
+      android:paddingRight="10dip"
+      android:layout_column="1"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      android:text="@string/about_privacy"
+      android:textSize="20sp" />
+    <TextView
+      android:autoLink="web"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      android:text="@string/about_privacy_weburl"
+      android:textSize="18sp" />
+  </TableRow>
+  
+  <View android:layout_height="4dip" />
 
 </TableLayout>

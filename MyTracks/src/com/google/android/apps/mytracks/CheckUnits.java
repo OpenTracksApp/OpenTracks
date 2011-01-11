@@ -16,6 +16,7 @@
 
 package com.google.android.apps.mytracks;
 
+import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -82,7 +83,8 @@ class CheckUnits {
   }
 
   private static void recordCheckPerformed(SharedPreferences preferences) {
-    preferences.edit().putBoolean(PREFERENCE_UNITS_CHECKED, true).commit();
+    ApiFeatures.getInstance().getApiPlatformAdapter().applyPreferenceChanges(
+        preferences.edit().putBoolean(PREFERENCE_UNITS_CHECKED, true));
   }
 
   private CheckUnits() {

@@ -27,6 +27,7 @@ import android.os.Build;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
@@ -77,7 +78,8 @@ public class TcxTrackWriter implements TrackFormatWriter {
     if (pw == null) {
       return;
     }
-    pw.println("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>");
+    pw.format("<?xml version=\"1.0\" encoding=\"%s\" standalone=\"no\" ?>\n",
+        Charset.defaultCharset().name());
     pw.print("<TrainingCenterDatabase ");
     pw.print("xmlns=\"http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2\" ");
     pw.print("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" ");

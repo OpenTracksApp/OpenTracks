@@ -26,6 +26,7 @@ import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.services.sensors.SensorManager;
@@ -69,9 +70,6 @@ import java.util.TimerTask;
  * @author Leif Hendrik Wilden
  */
 public class TrackRecordingService extends Service implements LocationListener {
-
-  private static final String STATISTICS_ICON_URL =
-      "http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png";
 
   static final int MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS = 3;
 
@@ -429,7 +427,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     lastValidLocation = null;
 
     Waypoint waypoint = providerUtils.getFirstWaypoint(recordingTrackId);
-    if (waypoint != null) {
+    if (waypoint != null && waypoint.getStatistics() != null) {
       currentWaypointId = waypoint.getId();
       waypointStatsBuilder = new TripStatisticsBuilder(
           waypoint.getStatistics());
@@ -646,7 +644,6 @@ public class TrackRecordingService extends Service implements LocationListener {
     locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
     splitManager = new SplitManager(this);
 
-    sensorManager = SensorManagerFactory.getSensorManager(this);
     prefManager = new PreferenceManager(this);
     registerLocationListener();
 
@@ -733,7 +730,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     splitManager.shutdown();
     splitManager = null;
     if (sensorManager != null) {
-      sensorManager.onDestroy();
+      sensorManager.shutdown();
       sensorManager = null;
     }
 
@@ -860,49 +857,61 @@ public class TrackRecordingService extends Service implements LocationListener {
     return isRecording;
   }
 
-  public long insertWaypointMarker(Waypoint waypoint) {
+  public long insertWaypoint(WaypointCreationRequest request) {
     if (!isRecording()) {
       throw new IllegalStateException(
           "Unable to insert waypoint marker while not recording!");
     }
-
-    if (waypoint.getLocation() == null) {
-      if (lastValidLocation == null) {
-        Log.w(MyTracksConstants.TAG, "Cannot insert waypoint with no location");
-        return -1;
-      }
-
-      waypoint.setLocation(lastValidLocation);
+    if (request == null) {
+      request = WaypointCreationRequest.DEFAULT_MARKER;
     }
-
-    if (waypoint.getTrackId() < 0) {
-      waypoint.setTrackId(recordingTrackId);
+    Waypoint wpt = new Waypoint();
+    switch (request.getType()) {
+      case MARKER:
+        buildMarker(wpt, request);
+        break;
+      case STATISTICS:
+        buildStatisticsMarker(wpt);
+        break;
     }
-
-    waypoint.setLength(length);
-    waypoint.setDuration(waypoint.getLocation().getTime()
-        - statsBuilder.getStatistics().getStartTime());
-    Uri uri = providerUtils.insertWaypoint(waypoint);
+    wpt.setTrackId(recordingTrackId);
+    wpt.setLength(length);
+    if (lastValidLocation != null) {
+      // A null location is ok, and expected on track start.
+      wpt.setLocation(lastLocation);
+      wpt.setDuration(lastLocation.getTime()
+          - statsBuilder.getStatistics().getStartTime());
+    }
+    Uri uri = providerUtils.insertWaypoint(wpt);
     return Long.parseLong(uri.getLastPathSegment());
   }
 
+  private void buildMarker(Waypoint wpt, WaypointCreationRequest request) {
+    wpt.setType(Waypoint.TYPE_WAYPOINT);
+    if (request.getIconUrl() == null) {
+      wpt.setIcon(getString(R.string.waypoint_icon_url));
+    } else {
+      wpt.setIcon(request.getIconUrl());
+    }
+    if (request.getName() == null) {
+      wpt.setName(getString(R.string.waypoint));
+    } else {
+      wpt.setName(request.getName());
+    }
+    if (request.getDescription() != null) {
+      wpt.setDescription(request.getDescription());
+    }
+  }
+
   /**
-   * Inserts a statistics marker. A statistics marker holds the stats for the
-   * last segment up to this marker.
+   * Build a statistics marker.
+   * A statistics marker holds the stats for the* last segment up to this marker.
    *
-   * @param location the location where to insert
+   * @param Waypoint The waypoint which will be populated with stats data.
    * @return the unique id of the inserted marker
    */
-  public long insertStatisticsMarker(Location location) {
-    if (!isRecording()) {
-      throw new IllegalStateException(
-          "Unable to insert statistics marker while not recording!");
-    }
-    
+  private void buildStatisticsMarker(Waypoint waypoint) {
     StringUtils utils = new StringUtils(TrackRecordingService.this);
-
-    // Create a new waypoint to save
-    Waypoint waypoint = new Waypoint();
 
     // Set stop and total time in the stats data
     final long time = System.currentTimeMillis();
@@ -913,24 +922,18 @@ public class TrackRecordingService extends Service implements LocationListener {
     waypoint.setDuration(time - statsBuilder.getStatistics().getStartTime());
 
     // Set the rest of the waypoint data
-    waypoint.setTrackId(recordingTrackId);
     waypoint.setType(Waypoint.TYPE_STATISTICS);
-    waypoint.setName(TrackRecordingService.this.getString(R.string.statistics));
+    waypoint.setName(getString(R.string.statistics));
     waypoint.setStatistics(waypointStatsBuilder.getStatistics());
     waypoint.setDescription(utils.generateWaypointDescription(waypoint));
-    waypoint.setLocation(location);
-    waypoint.setIcon(STATISTICS_ICON_URL);
-    waypoint.setLength(length);
+    waypoint.setIcon(getString(R.string.stats_icon_url));
 
     waypoint.setStartId(providerUtils.getLastLocationId(recordingTrackId));
-    Uri uri = providerUtils.insertWaypoint(waypoint);
 
-    // Create a new stats keeper for the next marker
+    // Create a new stats keeper for the next marker.
     waypointStatsBuilder = new TripStatisticsBuilder(time);
-    updateCurrentWaypoint();
-    return Long.parseLong(uri.getLastPathSegment());
   }
-  
+ 
   private ServiceBinder binder = new ServiceBinder(this);
   
   /**
@@ -961,79 +964,54 @@ public class TrackRecordingService extends Service implements LocationListener {
     
     @Override
     public boolean isRecording() {
+      checkService();
+      return service.isRecording();
+    }
+
+    private void checkService() {
       if (service == null) {
         throw new IllegalStateException("The service has been already detached!");
       }
-      return service.isRecording();
     }
 
     @Override
     public long getRecordingTrackId() {
-      if (service == null) {
-        throw new IllegalStateException("The service has been already detached!");
-      }      
+      checkService();      
       return service.recordingTrackId;
     }
 
     @Override
     public boolean hasRecorded() {
-      if (service == null) {
-        throw new IllegalStateException("The service has been already detached!");
-      }      
+      checkService();      
       return service.providerUtils.getLastTrackId() >= 0;
     }
 
     @Override
     public long startNewTrack() {
-      if (service == null) {
-        throw new IllegalStateException("The service has been already detached!");
-      }
+      checkService();
       return service.startNewTrack();
     }
 
     /**
-     * Insert the given waypoint marker. Users can insert waypoint markers
-     * to tag locations with a name, description, category etc.
+     * Inserts a waypoint marker in the track being recorded.
      *
-     * @param waypoint a waypoint
-     * @return the unique id of the inserted marker
+     * @param request Details of the waypoint to insert
+     * @return the unique ID of the inserted marker
      */
-    @Override
-    public long insertWaypointMarker(Waypoint waypoint) {
-      if (service == null) {
-        throw new IllegalStateException("The service has been already detached!");
-      }
-      return service.insertWaypointMarker(waypoint);
-    }
-
-    /**
-     * Insert a statistics marker. A statistics marker holds the stats for
-     * the last segment up to this marker.
-     *
-     * @param location the location where to insert
-     * @return the unique id of the inserted marker
-     */
-    @Override
-    public long insertStatisticsMarker(Location location) {
-      if (service == null) {
-        throw new IllegalStateException("The service has been already detached!");
-      }
-      return service.insertStatisticsMarker(location);
+    public long insertWaypoint(WaypointCreationRequest request) {
+      checkService();
+      return service.insertWaypoint(request);
     }
 
     @Override
     public void endCurrentTrack() {
-      if (service == null) {
-        throw new IllegalStateException("The service has been already detached!");
-      }
+      checkService();
       service.endCurrentTrack();
     }
 
     @Override
     public void deleteAllTracks() {
-      if (service == null) {
-        throw new IllegalStateException("The service has been already detached!");
-      }
+      checkService();
       if (isRecording()) {
         throw new IllegalStateException("Cannot delete all tracks while recording!");
       }
@@ -1042,14 +1020,13 @@ public class TrackRecordingService extends Service implements LocationListener {
 
     @Override
     public void recordLocation(Location loc) {
-      if (service == null) {
-        throw new IllegalStateException("The service has been already detached!");
-      }      
+      checkService();      
       service.onLocationChanged(loc);
     }
 
     @Override
     public byte[] getSensorData() {
+      checkService();      
       if (service.sensorManager == null) {
         Log.d(MyTracksConstants.TAG, "No sensor manager for data.");
         return null;
@@ -1063,6 +1040,7 @@ public class TrackRecordingService extends Service implements LocationListener {
 
     @Override
     public int getSensorState() {
+      checkService();      
       if (service.sensorManager == null) {
         Log.d(MyTracksConstants.TAG, "No sensor manager for data.");
         return Sensor.SensorState.NONE.getNumber();
@@ -1095,12 +1073,13 @@ public class TrackRecordingService extends Service implements LocationListener {
     providerUtils.updateTrack(track);
     statsBuilder = new TripStatisticsBuilder(startTime);
     waypointStatsBuilder = new TripStatisticsBuilder(startTime);
-    currentWaypointId = insertStatisticsMarker(null);
+    currentWaypointId = insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
     setUpAnnouncer();
     length = 0;
     showNotification();
     registerLocationListener();
     splitManager.restore();
+    sensorManager = SensorManagerFactory.getSensorManager(this);
     if (sensorManager != null) {
       sensorManager.onStartTrack();
     }
@@ -1149,6 +1128,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     
     if (sensorManager != null) {
       sensorManager.shutdown();
+      sensorManager = null;
     }
     
     releaseWakeLock();

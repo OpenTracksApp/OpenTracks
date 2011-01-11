@@ -23,7 +23,7 @@ import static com.google.android.apps.mytracks.DialogManager.DIALOG_WRITE_PROGRE
 import com.google.android.accounts.Account;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.io.AuthManager;
 import com.google.android.apps.mytracks.io.AuthManagerFactory;
 import com.google.android.apps.mytracks.io.GpxImporter;
@@ -39,6 +39,7 @@ import com.google.android.apps.mytracks.services.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.FileUtils;
+import com.google.android.apps.mytracks.util.MyTracksUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -60,6 +61,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -89,10 +91,6 @@ import org.xml.sax.SAXException;
  */
 public class MyTracks extends TabActivity implements OnTouchListener,
     OnSharedPreferenceChangeListener, ProgressIndicator {
-
-  private static final String WAYPOINT_ICON_URL =
-      "http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png";
-
   /**
    * Singleton instance
    */
@@ -252,6 +250,11 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     Log.d(MyTracksConstants.TAG, "MyTracks.onCreate");
     super.onCreate(savedInstanceState);
     instance = this;
+    ApiFeatures apiFeatures = ApiFeatures.getInstance();
+    if (!MyTracksUtils.isRelease(this)) {
+      apiFeatures.getApiPlatformAdapter().enableStrictMode();
+    }
+
     providerUtils = MyTracksProviderUtils.Factory.get(this);
     menuManager = new MenuManager(this);
     sharedPreferences = getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
@@ -259,7 +262,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
 
     // The volume we want to control is the Text-To-Speech volume
     int volumeStream =
-        new StatusAnnouncerFactory(ApiFeatures.getInstance()).getVolumeStream();
+        new StatusAnnouncerFactory(apiFeatures).getVolumeStream();
     setVolumeControlStream(volumeStream);
 
     // We don't need a window title bar:
@@ -310,7 +313,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     }
 
     // This will show the eula until the user accepts or quits the app.
-    Eula.showEula(this);
+    Eula.showEulaRequireAcceptance(this);
 
     // Check if we got invoked via the VIEW intent:
     Intent intent = getIntent();
@@ -425,7 +428,13 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   public boolean onTrackballEvent(MotionEvent event) {
     if (isRecording()) {
       if (event.getAction() == MotionEvent.ACTION_DOWN) {
-        insertStatisticsMarker();
+        try {
+          insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
+        } catch (RemoteException e) {
+          Log.e(MyTracksConstants.TAG, "Cannot insert statistics marker.", e);
+        } catch (IllegalStateException e) {
+          Log.e(MyTracksConstants.TAG, "Cannot insert statistics marker.", e);
+        }
         return true;
       }
     }
@@ -506,13 +515,14 @@ public class MyTracks extends TabActivity implements OnTouchListener,
         }
         break;
       }
-      case MyTracksConstants.AUTHENTICATE_TO_DOCS: {
+      case MyTracksConstants.AUTHENTICATE_TO_DOCLIST: {
         if (resultCode == RESULT_OK) {
           setProgressValue(0);
           setProgressMessage(
               R.string.progress_message_authenticating_docs);
           authenticate(results,
-              MyTracksConstants.AUTHENTICATE_TO_TRIX, "writely");
+              MyTracksConstants.AUTHENTICATE_TO_TRIX, 
+              SendToDocs.GDATA_SERVICE_NAME_DOCLIST);
         } else {
           dialogManager.dismissDialogSafely(DIALOG_PROGRESS);
         }
@@ -523,7 +533,8 @@ public class MyTracks extends TabActivity implements OnTouchListener,
           setProgressValue(30);
           setProgressMessage(
               R.string.progress_message_authenticating_docs);
-          authenticate(results, MyTracksConstants.SEND_TO_DOCS, "wise");
+          authenticate(results, MyTracksConstants.SEND_TO_DOCS, 
+              SendToDocs.GDATA_SERVICE_NAME_TRIX);
         } else {
           dialogManager.dismissDialogSafely(DIALOG_PROGRESS);
         }
@@ -535,9 +546,10 @@ public class MyTracks extends TabActivity implements OnTouchListener,
           setProgressValue(50);
           setProgressMessage(R.string.progress_message_sending_docs);
           final long trackId = results.getLongExtra("trackid", selectedTrackId);
+          final SendToDocs sender = new SendToDocs(this, 
+              authMap.get(SendToDocs.GDATA_SERVICE_NAME_TRIX),
+              authMap.get(SendToDocs.GDATA_SERVICE_NAME_DOCLIST), trackId);
           sendToTrackId = trackId;
-          final SendToDocs sender = new SendToDocs(this, authMap.get("wise"),
-              authMap.get("writely"), trackId);
           Runnable onCompletion = new Runnable() {
             public void run() {
               setProgressValue(100);
@@ -591,7 +603,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
                 }
               }
               if (dialogManager.getSendToGoogleDialog().getSendToDocs()) {
-                onActivityResult(MyTracksConstants.AUTHENTICATE_TO_DOCS,
+                onActivityResult(MyTracksConstants.AUTHENTICATE_TO_DOCLIST,
                     RESULT_OK, new Intent());
               } else {
                 dialogManager.dismissDialogSafely(DIALOG_PROGRESS);
@@ -877,90 +889,25 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   /**
    * Inserts a waypoint marker.
    *
-   * @return the id of the inserted statistics marker, or
-   *   -1 unable to find location
-   *   -2 track recording service is not running?
-   *   -3 remote exception when contacting track recording service
-   *   -4 inserting marker into provider failed
+   * @return Id of the inserted statistics marker.
+   * @throws RemoteException If the call on the service failed.
    */
-  public long insertWaypointMarker() {
-    Location location = getCurrentLocation();
-    if (location == null) {
+  public long insertWaypoint(WaypointCreationRequest request) throws RemoteException {
+    if (trackRecordingService == null) {
+      throw new IllegalStateException("The recording service is not bound.");
+    }
+    try {
+      long waypointId = trackRecordingService.insertWaypoint(request);
+      if (waypointId >= 0) {
+        Toast.makeText(this, R.string.status_statistics_inserted,
+            Toast.LENGTH_LONG).show();
+      }
+      return waypointId;
+    } catch (RemoteException e) {
       Toast.makeText(this, R.string.error_unable_to_insert_marker,
           Toast.LENGTH_LONG).show();
-      return -1;
+      throw e;
     }
-    if (trackRecordingService != null) {
-      try {
-        Waypoint wpt = new Waypoint();
-        wpt.setName(getString(R.string.waypoint));
-        wpt.setType(Waypoint.TYPE_WAYPOINT);
-        wpt.setTrackId(recordingTrackId);
-        wpt.setIcon(WAYPOINT_ICON_URL);
-        wpt.setLocation(location);
-        long waypointId = trackRecordingService.insertWaypointMarker(wpt);
-        if (waypointId >= 0) {
-          Toast.makeText(this, R.string.status_waypoint_inserted,
-              Toast.LENGTH_LONG).show();
-          return waypointId;
-        } else {
-          Toast.makeText(this, R.string.error_unable_to_insert_marker,
-              Toast.LENGTH_LONG).show();
-          Log.e(MyTracksConstants.TAG, "Cannot insert waypoint marker?");
-          return -4;
-        }
-        // TODO: We catch Exception, because after eliminating the service process
-        // all exceptions it may throw are no longer wrapped in a RemoteException.
-      } catch (Exception e) {
-        Toast.makeText(this, R.string.error_unable_to_insert_marker,
-            Toast.LENGTH_LONG).show();
-        Log.e(MyTracksConstants.TAG, "Cannot insert waypoint marker.", e);
-      }
-      return -3;
-    }
-    return -2;
-  }
-
-  /**
-   * Inserts a statistics marker.
-   *
-   * @return the id of the inserted statistics marker, or
-   *   -1 unable to find location
-   *   -2 track recording service is not running?
-   *   -3 remote exception when contacting track recording service
-   *   -4 inserting marker into provider failed
-   */
-  public long insertStatisticsMarker() {
-    Location location = getLastLocation();
-    if (location == null) {
-      Toast.makeText(this, R.string.error_unable_to_insert_marker,
-          Toast.LENGTH_LONG).show();
-      return -1;
-    }
-    if (trackRecordingService != null) {
-      try {
-        long waypointId =
-            trackRecordingService.insertStatisticsMarker(location);
-        if (waypointId >= 0) {
-          Toast.makeText(this, R.string.status_statistics_inserted,
-              Toast.LENGTH_LONG).show();
-          return waypointId;
-        } else {
-          Toast.makeText(this, R.string.error_unable_to_insert_marker,
-              Toast.LENGTH_LONG).show();
-          Log.e(MyTracksConstants.TAG, "Cannot insert statistics marker?");
-          return -4;
-        }
-        // TODO: We catch Exception, because after eliminating the service process
-        // all exceptions it may throw are no longer wrapped in a RemoteException.
-      } catch (Exception e) {
-        Toast.makeText(this, R.string.error_unable_to_insert_marker,
-            Toast.LENGTH_LONG).show();
-        Log.e(MyTracksConstants.TAG, "Cannot insert statistics marker?", e);
-      }
-      return -3;
-    }
-    return -2;
   }
 
   /**
@@ -980,7 +927,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
           service);
       authMap.put(service, auth);
     }
-    Log.d(MyTracksConstants.TAG, "Loggin in to " + service + "...");
+    Log.d(MyTracksConstants.TAG, "Logging in to " + service + "...");
     if (AuthManagerFactory.useModernAuthManager()) {
       runOnUiThread(new Runnable() {
         @Override
@@ -1096,7 +1043,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       authenticate(new Intent(), MyTracksConstants.SEND_TO_GOOGLE,
           SendToFusionTables.SERVICE_ID);
     } else {
-      onActivityResult(MyTracksConstants.AUTHENTICATE_TO_DOCS, RESULT_OK,
+      onActivityResult(MyTracksConstants.AUTHENTICATE_TO_DOCLIST, RESULT_OK,
           new Intent());
     }
   }
@@ -1108,10 +1055,10 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * @param trackId the id of the track
    */
   public void setSelectedTrackId(final long trackId) {
-    sharedPreferences
-        .edit()
-        .putLong(getString(R.string.selected_track_key), trackId)
-        .commit();
+    ApiFeatures.getInstance().getApiPlatformAdapter().applyPreferenceChanges(
+        sharedPreferences
+            .edit()
+            .putLong(getString(R.string.selected_track_key), trackId));
   }
 
   long getSelectedTrackId() {
