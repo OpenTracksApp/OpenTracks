@@ -19,7 +19,6 @@ import static com.google.android.apps.mytracks.signalstrength.SignalStrengthCons
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtilsImpl;
-import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.signalstrength.SignalStrengthListener.SignalStrengthCallback;
@@ -56,7 +55,6 @@ public class SignalStrengthService extends Service
   private ITrackRecordingService mytracksService;
   private long lastSamplingTime;
   private long samplingPeriod;
-  private MyTracksProviderUtils utils;
 
   @Override
   public void onCreate() {
@@ -67,7 +65,6 @@ public class SignalStrengthService extends Service
         getString(R.string.mytracks_service_class));
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
     signalListenerFactory = new SignalStrengthListenerFactory();
-    utils = new MyTracksProviderUtilsImpl(this.getContentResolver());
   }
 
   @Override

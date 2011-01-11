@@ -104,6 +104,7 @@ limitations under the License.
   <string name="error">Error</string>
   <string name="success">Success</string>
   <string name="waypoint">Waypoint</string>
+  <string name="license">License</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="start">(Start)</string>
@@ -378,8 +379,8 @@ limitations under the License.
   <string name="help">Help</string>
   <string name="about_team">Team:</string>
   <string name="about_version">Version:</string>
-  <string name="about_email">Support</string>
   <string name="about_support">Support:</string>
+  <string name="about_privacy">Privacy:</string>
 
   <!-- Send to Google -->
   <string name="sendtogoogle_title">Send to...</string>

@@ -315,7 +315,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     }
 
     // This will show the eula until the user accepts or quits the app.
-    Eula.showEula(this);
+    Eula.showEulaRequireAcceptance(this);
 
     // Check if we got invoked via the VIEW intent:
     Intent intent = getIntent();

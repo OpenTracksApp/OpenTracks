@@ -598,6 +598,8 @@ public class TrackRecordingService extends Service implements LocationListener {
         Log.d(MyTracksConstants.TAG, String.format(
             "Not recording. Distance to last recorded point (%f m) is less than"
             + " %d m.", distanceToLastRecorded, minRecordingDistance));
+        // Return here so that the location is NOT recorded as the last location.
+        return;
       }
     } catch (Error e) {
       // Probably important enough to rethrow.

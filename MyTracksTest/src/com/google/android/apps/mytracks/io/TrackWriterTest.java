@@ -2,31 +2,27 @@
 
 package com.google.android.apps.mytracks.io;
 
-import static org.easymock.EasyMock.eq;
 import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.isA;
-import static org.easymock.EasyMock.leq;
-import static org.easymock.EasyMock.same;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.content.MyTracksProvider;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
+import com.google.android.apps.mytracks.services.TrackRecordingServiceTest.MockContext;
 import com.google.android.apps.mytracks.testing.TestingProviderUtilsFactory;
 
 import android.content.Context;
-import android.database.MatrixCursor;
 import android.location.Location;
-import android.provider.BaseColumns;
 import android.test.AndroidTestCase;
+import android.test.RenamingDelegatingContext;
+import android.test.mock.MockContentResolver;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.OutputStream;
 
 import org.easymock.EasyMock;
-import org.easymock.IAnswer;
 import org.easymock.IArgumentMatcher;
 import org.easymock.IMocksControl;
 
@@ -138,12 +134,19 @@ public class TrackWriterTest extends AndroidTestCase {
   protected void setUp() throws Exception {
     super.setUp();
 
+    MockContentResolver mockContentResolver = new MockContentResolver();
+    RenamingDelegatingContext targetContext = new RenamingDelegatingContext(
+        getContext(), getContext(), "test.");
+    Context context = new MockContext(mockContentResolver, targetContext);
+    MyTracksProvider provider = new MyTracksProvider();
+    provider.attachInfo(context, null);
+    mockContentResolver.addProvider(MyTracksProviderUtils.AUTHORITY, provider);
+    setContext(context);
+    providerUtils = MyTracksProviderUtils.Factory.get(context);
+    oldProviderUtilsFactory = TestingProviderUtilsFactory.installWithInstance(providerUtils);
+    
     mocksControl = EasyMock.createStrictControl();
     formatWriter = mocksControl.createMock(TrackFormatWriter.class);
-    providerUtils = mocksControl.createMock(MyTracksProviderUtils.class);
-    oldProviderUtilsFactory =
-        TestingProviderUtilsFactory.installWithInstance(providerUtils);
-
     expect(formatWriter.getExtension()).andStubReturn(EXTENSION);
 
     track = new Track();
@@ -225,13 +228,6 @@ public class TrackWriterTest extends AndroidTestCase {
   public void testWriteDocument_emptyTrack() {
     writer = new TrackWriter(getContext(), providerUtils, track, formatWriter);
 
-    // Don't let it write any waypoints
-    expect(providerUtils.getWaypointsCursor(
-        TRACK_ID, 0, MyTracksConstants.MAX_LOADED_WAYPOINTS_POINTS))
-        .andStubReturn(null);
-    expect(providerUtils.getLocationsCursor(
-        eq(TRACK_ID), leq(0L), leq(0), eq(false))).andStubReturn(null);
-
     // Set expected mock behavior
     formatWriter.writeHeader();
     formatWriter.writeFooter();
@@ -253,7 +249,7 @@ public class TrackWriterTest extends AndroidTestCase {
         new Location("fake2"),
         new Location("fake3"),
         new Location("fake4"),
-        new Location("fake5"),
+        new Location("fake5")
     };
     Waypoint[] wps = { new Waypoint(), new Waypoint(), new Waypoint() };
 
@@ -262,37 +258,14 @@ public class TrackWriterTest extends AndroidTestCase {
 
     // Make location 3 invalid
     locs[2].setLatitude(100);
-
-    // Set up cursors
-    // We use fake columns since the cursor is only read by the provider utils
-    final MatrixCursor locCursor =
-        new MatrixCursor(new String[] { BaseColumns._ID }, 6);
-    for (int i = 1; i <= 6; i++) {
-      locCursor.newRow().add(i);
+    
+    assertEquals(locs.length, providerUtils.bulkInsertTrackPoints(locs, locs.length, TRACK_ID));
+    for (int i = 0;  i < wps.length; ++i) {
+      Waypoint wpt = wps[i];
+      wpt.setTrackId(TRACK_ID);
+      assertNotNull(providerUtils.insertWaypoint(wpt));
+      wpt.setId(i + 1);
     }
-    expect(providerUtils.getLocationsCursor(
-        eq(TRACK_ID), leq(0L), leq(0), eq(false))).andStubReturn(locCursor);
-    providerUtils.fillLocation(same(locCursor), isA(Location.class));
-    EasyMock.expectLastCall().andStubAnswer(new IAnswer<Void>() {
-      @Override
-      public Void answer() throws Throwable {
-        Location loc = (Location) EasyMock.getCurrentArguments()[1];
-        loc.set(locs[locCursor.getPosition()]);
-        return null;
-      }
-    });
-
-    MatrixCursor wpCursor =
-        new MatrixCursor(new String[] { BaseColumns._ID }, 3);
-    wpCursor.newRow().add(1);
-    wpCursor.newRow().add(2);
-    wpCursor.newRow().add(3);
-    expect(providerUtils.getWaypointsCursor(
-        eq(TRACK_ID), leq(0L),
-        eq(MyTracksConstants.MAX_LOADED_WAYPOINTS_POINTS)))
-        .andStubReturn(wpCursor);
-    expect(providerUtils.createWaypoint(wpCursor))
-        .andStubAnswer(stubCursorToArray(wpCursor, wps));
 
     // Begin the track
     formatWriter.writeHeader();
@@ -317,8 +290,8 @@ public class TrackWriterTest extends AndroidTestCase {
     formatWriter.writeEndTrack(locEq(locs[5]));
 
     // Expect reading/writing of the waypoints (except the first)
-    formatWriter.writeWaypoint(wps[1]);
-    formatWriter.writeWaypoint(wps[2]);
+    formatWriter.writeWaypoint(wptEq(wps[1]));
+    formatWriter.writeWaypoint(wptEq(wps[2]));
 
     formatWriter.writeFooter();
     formatWriter.close();
@@ -330,6 +303,26 @@ public class TrackWriterTest extends AndroidTestCase {
     mocksControl.verify();
   }
 
+  private static Waypoint wptEq(final Waypoint wpt) {
+    EasyMock.reportMatcher(new IArgumentMatcher() {
+      @Override
+      public boolean matches(Object wptObj2) {
+        if (wptObj2 == null || wpt == null) return wpt == wptObj2;
+        Waypoint wpt2 = (Waypoint) wptObj2;
+
+        return wpt.getId() == wpt2.getId();
+      }
+      
+      @Override
+      public void appendTo(StringBuffer buffer) {
+        buffer.append("wptEq(");
+        buffer.append(wpt);
+        buffer.append(")");
+      }
+    });
+    return null;
+  }
+  
   private static Location locEq(final Location loc) {
     EasyMock.reportMatcher(new IArgumentMatcher() {
       @Override
@@ -359,23 +352,14 @@ public class TrackWriterTest extends AndroidTestCase {
     });
     return null;
   }
-  
-  private <T> IAnswer<T> stubCursorToArray(
-      final MatrixCursor cursor, final T[] values) {
-    return new IAnswer<T>() {
-      @Override
-      public T answer() throws Throwable {
-        return values[cursor.getPosition()];
-      }
-    };
-  }
-
+   
   private void fillLocations(Location... locs) {
     assertTrue(locs.length < 90);
     for (int i = 0; i < locs.length; i++) {
       Location location = locs[i];
       location.setLatitude(i + 1);
       location.setLongitude(i + 1);
+      location.setTime(i + 1000);
     }
   }
 }
