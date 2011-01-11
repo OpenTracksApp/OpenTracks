@@ -34,6 +34,7 @@ import com.google.api.client.googleapis.GoogleTransport;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
+import com.google.api.client.http.HttpResponseException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.InputStreamContent;
 import com.google.api.client.util.Strings;
@@ -151,6 +152,10 @@ public class SendToFusionTables implements Runnable {
       // Create a new table:
       progressIndicator.setProgressMessage(R.string.progress_message_creating_fusiontable);
       success = createNewTable(track);
+      
+      if (success) {
+        success = makeTableUnlisted(tableId);
+      }
 
       // Upload all of the segments of the track plus start/end markers
       if (success) {
@@ -189,6 +194,12 @@ public class SendToFusionTables implements Runnable {
     Log.d(MyTracksConstants.TAG, "Creating a new fusion table.");
     String query = "CREATE TABLE '" + track.getName() +
         "' (name:STRING,description:STRING,geometry:LOCATION,marker:STRING)";
+    return runUpdate(query);
+  }
+
+  private boolean makeTableUnlisted(String tableId) {
+    Log.d(MyTracksConstants.TAG, "Setting visibility to unlisted.");
+    String query = "UPDATE TABLE " + tableId + " SET VISIBILITY = unlisted";
     return runUpdate(query);
   }
 
@@ -604,7 +615,8 @@ public class SendToFusionTables implements Runnable {
     wrapper.runQuery(new QueryFunction<HttpTransport>() {
       @Override
       public void query(HttpTransport client)
-          throws IOException, GDataWrapper.ParseException, GDataWrapper.HttpException {
+          throws IOException, GDataWrapper.ParseException, GDataWrapper.HttpException,
+          GDataWrapper.AuthenticationException {
         HttpRequest request = transport.buildPostRequest();
         request.headers.contentType = "application/x-www-form-urlencoded";
         GenericUrl url = new GenericUrl(FUSIONTABLES_BASE_FEED_URL);
@@ -614,24 +626,31 @@ public class SendToFusionTables implements Runnable {
         isc.inputStream = new ByteArrayInputStream(Strings.toBytesUtf8(sql));
         request.content = isc;
         Log.d(MyTracksConstants.TAG, "Running update query " + url.toString() + ": " + sql);
-        HttpResponse response = request.execute();
-        boolean success = response.isSuccessStatusCode;
-        if (success) {
-          byte[] result = new byte[1024];
-          response.getContent().read(result);
-          String s = Strings.fromBytesUtf8(result);
-          String[] lines = s.split(Strings.LINE_SEPARATOR);
-          if (lines[0].equals("tableid")) {
-            tableId = lines[1];
-            Log.d(MyTracksConstants.TAG, "tableId = " + tableId);
+        try {
+          HttpResponse response = request.execute();
+          boolean success = response.isSuccessStatusCode;
+          if (success) {
+            byte[] result = new byte[1024];
+            response.getContent().read(result);
+            String s = Strings.fromBytesUtf8(result);
+            String[] lines = s.split(Strings.LINE_SEPARATOR);
+            if (lines[0].equals("tableid")) {
+              tableId = lines[1];
+              Log.d(MyTracksConstants.TAG, "tableId = " + tableId);
+            } else {
+              Log.w(MyTracksConstants.TAG, "Unrecognized response: " + lines[0]);
+            }
           } else {
-            Log.w(MyTracksConstants.TAG, "Unrecognized response: " + lines[0]);
+            Log.d(MyTracksConstants.TAG, "Query failed: " + response.statusMessage + " (" +
+                response.statusCode + ")");
+            throw new GDataWrapper.HttpException(response.statusCode, response.statusMessage);
           }
-        } else {
-          Log.d(MyTracksConstants.TAG, "Query failed: " + response.statusMessage + " (" +
-              response.statusCode + ")");
-          throw new GDataWrapper.HttpException(response.statusCode, response.statusMessage);
+        } catch (HttpResponseException e) {
+          if (e.response.statusCode == 401) {
+            throw new GDataWrapper.AuthenticationException(e);
+          }
         }
+
       }
     });
     return wrapper.getErrorType() == GDataWrapper.ERROR_NO_ERROR;

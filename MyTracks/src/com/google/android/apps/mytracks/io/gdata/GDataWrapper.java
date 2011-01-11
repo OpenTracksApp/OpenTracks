@@ -206,7 +206,7 @@ public class GDataWrapper<C> {
       errorMessage = null;
 
     } catch (AuthenticationException e) {
-      Log.e(MyTracksConstants.TAG, "Exception", e);
+      Log.e(MyTracksConstants.TAG, "AuthenticationException", e);
       errorType = ERROR_AUTH;
       errorMessage = e.getMessage();
     } catch (HttpException e) {

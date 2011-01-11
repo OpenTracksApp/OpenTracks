@@ -86,7 +86,8 @@ public class DocsHelper {
 
     boolean result = docListWrapper.runQuery(new QueryFunction<GDataServiceClient>() {
       @Override
-      public void query(GDataServiceClient client) throws IOException {
+      public void query(GDataServiceClient client) throws IOException,
+          GDataWrapper.AuthenticationException {
         // Construct and send request
         URL url = new URL(DOCS_FEED_URL);
         URLConnection conn = url.openConnection();
@@ -171,7 +172,8 @@ public class DocsHelper {
     boolean result = docListWrapper.runQuery(new QueryFunction<GDataServiceClient>() {
       @Override
       public void query(GDataServiceClient client)
-          throws IOException, GDataWrapper.ParseException, GDataWrapper.HttpException {
+          throws IOException, GDataWrapper.ParseException, GDataWrapper.HttpException,
+          GDataWrapper.AuthenticationException {
         GDataParser listParser;
         try {
           listParser = client.getParserForFeed(Entry.class,
