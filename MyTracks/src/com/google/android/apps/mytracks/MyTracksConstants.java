@@ -50,7 +50,7 @@ public abstract class MyTracksConstants {
   public static final int FEATURE_DETAILS = 5;
   public static final int START_RECORDING = 6;
   public static final int STOP_RECORDING = 7;
-  public static final int AUTHENTICATE_TO_DOCS = 8;
+  public static final int AUTHENTICATE_TO_DOCLIST = 8;
   public static final int AUTHENTICATE_TO_TRIX = 9;
   public static final int SEND_TO_DOCS = 10;
   public static final int DELETE_TRACK = 11;

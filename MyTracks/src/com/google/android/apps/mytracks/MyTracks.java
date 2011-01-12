@@ -29,11 +29,11 @@ import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.io.AuthManager;
 import com.google.android.apps.mytracks.io.AuthManagerFactory;
 import com.google.android.apps.mytracks.io.GpxImporter;
-import com.google.android.apps.mytracks.io.SendToDocs;
 import com.google.android.apps.mytracks.io.SendToMyMaps;
 import com.google.android.apps.mytracks.io.TempFileCleaner;
 import com.google.android.apps.mytracks.io.TrackWriter;
 import com.google.android.apps.mytracks.io.TrackWriterFactory;
+import com.google.android.apps.mytracks.io.SendToDocs;
 import com.google.android.apps.mytracks.io.SendToMyMaps.OnSendCompletedListener;
 import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
@@ -93,7 +93,6 @@ import org.xml.sax.SAXException;
  */
 public class MyTracks extends TabActivity implements OnTouchListener,
     OnSharedPreferenceChangeListener, ProgressIndicator {
-
   /**
    * Singleton instance
    */
@@ -315,7 +314,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     }
 
     // This will show the eula until the user accepts or quits the app.
-    Eula.showEula(this);
+    Eula.showEulaRequireAcceptance(this);
 
     // Check if we got invoked via the VIEW intent:
     Intent intent = getIntent();
@@ -517,13 +516,14 @@ public class MyTracks extends TabActivity implements OnTouchListener,
         }
         break;
       }
-      case MyTracksConstants.AUTHENTICATE_TO_DOCS: {
+      case MyTracksConstants.AUTHENTICATE_TO_DOCLIST: {
         if (resultCode == RESULT_OK) {
           setProgressValue(0);
           setProgressMessage(
               R.string.progress_message_authenticating_docs);
           authenticate(results,
-              MyTracksConstants.AUTHENTICATE_TO_TRIX, "writely");
+              MyTracksConstants.AUTHENTICATE_TO_TRIX, 
+              SendToDocs.GDATA_SERVICE_NAME_DOCLIST);
         } else {
           dialogManager.dismissDialogSafely(DIALOG_PROGRESS);
         }
@@ -534,7 +534,8 @@ public class MyTracks extends TabActivity implements OnTouchListener,
           setProgressValue(30);
           setProgressMessage(
               R.string.progress_message_authenticating_docs);
-          authenticate(results, MyTracksConstants.SEND_TO_DOCS, "wise");
+          authenticate(results, MyTracksConstants.SEND_TO_DOCS, 
+              SendToDocs.GDATA_SERVICE_NAME_TRIX);
         } else {
           dialogManager.dismissDialogSafely(DIALOG_PROGRESS);
         }
@@ -546,8 +547,9 @@ public class MyTracks extends TabActivity implements OnTouchListener,
           setProgressValue(50);
           setProgressMessage(R.string.progress_message_sending_docs);
           final long trackId = results.getLongExtra("trackid", selectedTrackId);
-          final SendToDocs sender = new SendToDocs(this, authMap.get("wise"),
-              authMap.get("writely"), trackId);
+          final SendToDocs sender = new SendToDocs(this, 
+              authMap.get(SendToDocs.GDATA_SERVICE_NAME_TRIX),
+              authMap.get(SendToDocs.GDATA_SERVICE_NAME_DOCLIST), trackId);
           Runnable onCompletion = new Runnable() {
             public void run() {
               setProgressValue(100);
@@ -608,7 +610,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
                 }
               }
               if (dialogManager.getSendToGoogleDialog().getSendToDocs()) {
-                onActivityResult(MyTracksConstants.AUTHENTICATE_TO_DOCS,
+                onActivityResult(MyTracksConstants.AUTHENTICATE_TO_DOCLIST,
                     RESULT_OK, new Intent());
               } else {
                 dialogManager.dismissDialogSafely(DIALOG_PROGRESS);
@@ -930,7 +932,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
           service);
       authMap.put(service, auth);
     }
-    Log.d(MyTracksConstants.TAG, "Loggin in to " + service + "...");
+    Log.d(MyTracksConstants.TAG, "Logging in to " + service + "...");
     if (AuthManagerFactory.useModernAuthManager()) {
       runOnUiThread(new Runnable() {
         @Override
@@ -1052,7 +1054,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
             MyMapsConstants.MAPSHOP_SERVICE);
       }
     } else {
-      onActivityResult(MyTracksConstants.AUTHENTICATE_TO_DOCS, RESULT_OK,
+      onActivityResult(MyTracksConstants.AUTHENTICATE_TO_DOCLIST, RESULT_OK,
           new Intent());
     }
   }
