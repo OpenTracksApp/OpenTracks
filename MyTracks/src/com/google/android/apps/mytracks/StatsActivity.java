@@ -269,7 +269,7 @@ public class StatsActivity extends Activity
     super.onCreateOptionsMenu(menu);
     MenuItem currentSegment = menu.add(0,
         MyTracksConstants.MENU_CURRENT_SEGMENT, 0, R.string.current_segment);
-    currentSegment.setIcon(R.drawable.menu_by_distance);
+    currentSegment.setIcon(R.drawable.ic_menu_lastsegment);
     return true;
   }
 
