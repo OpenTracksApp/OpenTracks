@@ -181,6 +181,7 @@ public class MyTracksSettings extends PreferenceActivity {
 
     super.onPause();
   }
+
   private void updateSensorSettings(String sensorType) {
     boolean usesBluetooth =
         getString(R.string.zephyr_sensor_type).equals(sensorType);
@@ -188,6 +189,13 @@ public class MyTracksSettings extends PreferenceActivity {
         getString(R.string.bluetooth_sensor_key)).setEnabled(usesBluetooth);
     findPreference(
         getString(R.string.bluetooth_pairing_key)).setEnabled(usesBluetooth);
+
+    // Update the ANT+ sensors.
+    // TODO: Only enable on phones that have ANT+.
+    findPreference(getString(R.string.ant_heart_rate_sensor_id_key))
+        .setEnabled(getString(R.string.ant_sensor_type).equals(sensorType));
+    findPreference(getString(R.string.ant_srm_bridge_sensor_id_key))
+        .setEnabled(getString(R.string.srm_ant_bridge_sensor_type).equals(sensorType));
   }
 
   /**
