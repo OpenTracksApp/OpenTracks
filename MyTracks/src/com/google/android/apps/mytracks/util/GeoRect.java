@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mymaps;
+package com.google.android.apps.mytracks.util;
 
 import com.google.android.maps.GeoPoint;
 

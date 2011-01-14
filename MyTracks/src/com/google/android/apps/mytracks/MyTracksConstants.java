@@ -213,6 +213,9 @@ public abstract class MyTracksConstants {
     }
   }
 
+  public static final String MAPSHOP_BASE_URL =
+    "http://maps.google.com/maps/ms";
+
   /**
    * This is an abstract utility class.
    */

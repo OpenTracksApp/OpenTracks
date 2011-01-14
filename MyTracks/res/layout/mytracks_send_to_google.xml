@@ -42,7 +42,7 @@ limitations under the License.
       android:layout_marginTop="5dip"
       android:layout_marginLeft="5dip">
       <TableRow>
-        <ImageView android:src="@drawable/mymaps_icon"
+        <ImageView android:src="@drawable/googledocs_icon"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"/>
         <LinearLayout
@@ -50,24 +50,12 @@ limitations under the License.
           android:layout_height="wrap_content"
           android:orientation="vertical"
           android:layout_marginLeft="10dip">
-          <CheckBox android:id="@+id/sendtogoogle_google_mymaps"
+          <CheckBox android:id="@+id/sendtogoogle_google_fusiontables"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/sendtogoogle_google_mymaps"
+            android:text="@string/sendtogoogle_google_fusiontables"
             android:textSize="20dip"
             android:checked="true"/>
-          <RadioGroup android:id="@+id/sendtogoogle_group_mymaps"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-            <RadioButton android:id="@+id/sendtogoogle_create_new_map"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:text="@string/sendtogoogle_create_new_map"/>
-            <RadioButton android:id="@+id/sendtogoogle_pick_existing_map"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:text="@string/sendtogoogle_pick_existing_map"/>
-          </RadioGroup>
         </LinearLayout>
       </TableRow>
       <TableRow>

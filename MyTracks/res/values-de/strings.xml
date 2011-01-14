@@ -35,7 +35,7 @@ limitations under the License.
   <!-- Error messages --> 
   <string name="error_no_location_manager">Es wurde kein Dienst zur Positionsermittlung auf diesem Gerät gefunden.</string> 
   <string name="error_no_gps_location_provider">Es wurde kein GPS-Empfänger auf diesem Gerät gefunden.</string> 
-  <string name="error_sending_to_mymap">Beim Senden des Tracks an Google MyMaps ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.</string> 
+  <string name="error_sending_to_fusiontables">Beim Senden des Tracks an Google Fusion Tables ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.</string> 
   <string name="error_sending_to_docs">Beim Senden des Tracks an Google Docs ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.</string> 
   <string name="error_unable_to_start_recording">Start der Aufzeichnung fehlgeschlagen. Bitte versuche es noch einmal.</string> 
   <string name="error_unable_to_stop_recording">Anhalten unmöglich. Bitte versuche es noch einmal.</string> 
@@ -50,11 +50,10 @@ limitations under the License.
   <string name="wait_for_fix">Warte auf ein besseres GPS-Signal. Bitte stelle sicher, dass der Himmel sichtbar ist.</string> 
   <string name="status_now_recording">Ein neuer Track wird aufgezeichnet.</string> 
   <string name="status_stopped_recording">Die Aufzeichnung wurde angehalten.</string> 
-  <string name="status_new_mymap_has_been_created">Eine neue Karte wurde auf maps.google.com erstellt.</string> 
+  <string name="status_new_fusiontable_has_been_created">Eine neue Tabelle wurde auf google.com/fusiontables erstellt.</string> 
   <string name="status_tracks_have_been_uploaded">Dein Track wurde auf maps.google.com gespeichert.</string> 
   <string name="status_tracks_have_been_uploaded_to_new_doc">Dein Track wurde in einer neuen Tabelle bei docs.google.com gespeichert.</string> 
   <string name="status_tracks_have_been_uploaded_to_docs">Dein Track wurde an docs.google.com gesendet.</string> 
-  <string name="status_mymap_info">Manchmal dauert es ein paar Minuten, bis neue Tracks bei maps.google.com erscheinen.</string> 
   <string name="status_enable_gps">Hier berühren, um zu den Sicherheits- und Positionseinstellungen zu gelangen. Aktiviere \'GPS-Satelliten\'. Drücke dann den Zurück-Knopf, um hierher zurückzukehren.</string> 
   <string name="status_approximate_location">Anmerkung: Eine ungefähre Position wird angezeigt, bestimmt mittels Mobilfunkstationen und WiFi-Netzwerken.</string> 
   <string name="status_no_location">Die Position kann derzeit nicht bestimmt werden. Aktiviere mehr Positionsquellen (siehe Sicherheits- und Positionseinstellungen) und stelle sicher, dass der Himmel sichtbar ist.</string> 
@@ -66,11 +65,11 @@ limitations under the License.
   <string name="progress_message">Dein Track wird an Google gesendet...</string> 
   <string name="progress_message_reading_track">Lese Track...</string> 
   <string name="progress_message_preparing_track">Bereite Track vor...</string> 
-  <string name="progress_message_authenticating_mymaps">Anmeldung bei Google Maps...</string> 
+  <string name="progress_message_authenticating_fusiontables">Anmeldung bei Google Fusion Tables...</string> 
   <string name="progress_message_authenticating_docs">Anmeldung bei Google Docs...</string> 
   <string name="progress_message_sending_docs">Track wird an Google Docs gesendet...</string> 
-  <string name="progress_message_sending_mymaps">Track wird an Google Maps gesendet...</string> 
-  <string name="progress_message_creating_map">Neue \'Meine Karte\' wird erstellt...</string> 
+  <string name="progress_message_sending_fusiontables">Track wird an Google Fusion Tables gesendet...</string> 
+  <string name="progress_message_creating_fusiontable">Neue \'Fusion Tabelle\' wird erstellt...</string> 
   <string name="import_progress_message">Importiere GPS-Track. Das kann ein wenig dauern.</string> 
   <string name="write_progress_message">Schreibe Datei auf SD-Karte. Das kann ein wenig dauern.</string> 
   <string name="progress_message_updating_track">Aktualisiere Trackstatistik...</string> 
@@ -81,7 +80,7 @@ limitations under the License.
   <string name="track_will_be_permanently_deleted">Dieser Track und seine Wegpunkte werden endgültig von diesem Gerät gelöscht.</string> 
   <string name="marker_will_be_permanently_deleted">Dieser Wegpunkt wird endgültig von diesem Gerät gelöscht.</string> 
  
-  <!-- Text and links when uploading to Google MyMaps --> 
+  <!-- Text and links when uploading to Google Fusion Tables --> 
   <string name="new_map_description">Erstellt von My Tracks für Android.</string> 
   <string name="my_map_link">Erstellt von &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; für Android.</string> 
   <string name="new_map_title">Neue Karte</string> 
@@ -102,7 +101,10 @@ limitations under the License.
   <string name="error">Fehler</string> 
   <string name="success">Erfolgreich</string> 
   <string name="waypoint">Wegpunkt</string> 
- 
+  <string name="cancel">Abbrechen</string>
+  <string name="edit">Bearbeiten</string>
+  <string name="save">Sichern</string>
+
   <!-- Placemark labels for start and end of track --> 
   <string name="start">(Beginn)</string> 
   <string name="end">(Ende)</string> 
@@ -129,7 +131,7 @@ limitations under the License.
   <string name="tracklist_all_tracks">Alle Tracks</string> 
   <string name="tracklist_this_track">Dieser Track</string> 
   <string name="tracklist_share_track">Mit Freunden teilen…</string> 
-  <string name="tracklist_share_link">Ein Link zur Google MyMaps-Karte</string> 
+  <string name="tracklist_share_linkfusion">Ein Link zur Google Fusion Tables-Karte</string> 
   <string name="tracklist_share_gpx_file">Eine GPX-Datei</string> 
   <string name="tracklist_share_kml_file">Eine KML-Datei</string> 
   <string name="tracklist_share_csv_file">Eine CSV-Datei</string> 
@@ -236,30 +238,9 @@ limitations under the License.
  
   <!-- MyTracksSky --> 
   <string name="mytracks_sky">GPS-Satelliten</string> 
- 
-  <!-- MyMaps --> 
-  <string name="select_map_message">Wähle eine Karte von Deinem Konto aus</string> 
-  <string name="create_new_map">Neue Karte erstellen…</string> 
-  <string name="map_list_title">An Google My Maps senden</string> 
-  <string name="maps_list_loading">Karten werden geladen…</string> 
-  <string name="maps_list_failed">Deine Karten konnten im Augenblick nicht geladen werden!</string> 
-  <string name="open_map">Diese Karte auswählen</string> 
-  <string name="edit_map_details">Kartendetails bearbeiten</string> 
-  <string name="share_map">Karte mit Freunden teilen</string> 
-  <string name="share_track">Track mit Freunden teilen</string> 
-  <string name="delete_map">Karte vom Konto löschen</string> 
-  <string name="map_title">Kartentitel</string> 
-  <string name="map_description">Trackbeschreibung</string> 
-  <string name="map_searchable_edit">Diese Karte und ihren Inhalt in Suchergebnissen sichtbar machen.</string> 
-  <string name="map_not_searchable_edit">Diese Karte und ihren Inhalt nicht in Suchergebnissen sichtbar machen.</string> 
-  <string name="map_searchable">Diese Karte und ihr Inhalt sind in Suchergebnissen sichtbar.</string> 
-  <string name="map_not_searchable">Weder diese Karte noch ihr Inhalt sind in Suchergebnissen sichtbar, allerdings kann sie trotzdem von anderen durch einen direkten Link angezeigt werden.</string> 
-  <string name="close">Schließen</string> 
-  <string name="edit">Bearbeiten</string> 
-  <string name="cancel">Abbrechen</string> 
-  <string name="save">Sichern</string> 
- 
+
   <!-- Sharing --> 
+  <string name="share_map">Karte mit Freunden teilen</string>
   <string name="share_map_subject">Ich möchte gerne eine Karte mit Dir teilen.</string> 
   <string name="share_map_body_format">Vielleicht interessierst Du Dich für diese Karte:
  
@@ -267,13 +248,14 @@ limitations under the License.
   <string name="send_track_subject">Ich möchte einen GPS-Track mit Dir teilen</string> 
   <string name="send_track_body_format">Vielleicht interessierst Du Dich für diese Track:
  
-      %s.</string> 
-      
-  <!-- Visibility --> 
-  <string name="public_map">Öffentlich</string> 
-  <string name="unlisted_map">Nicht in Suchergebnissen enthalten.</string> 
-  <string name="mapslist_no_maps_available">Du hast noch keine Karten.</string> 
- 
+      %s.</string>
+  <string name="share_track">Track mit Freunden teilen</string>
+
+  <!-- Visibility -->
+  <string name="public_map">Öffentlich</string>
+  <string name="unlisted_map">Nicht in Suchergebnissen enthalten.</string>
+  <string name="mapslist_no_maps_available">Du hast noch keine Karten.</string>
+
   <!-- Statistics View --> 
   <!-- Average Moving --> 
   <string name="average_moving_speed_label">Durchschnitt in Bew.</string> 
@@ -361,8 +343,6 @@ limitations under the License.
   <!-- Send to Google --> 
   <string name="sendtogoogle_title">Senden an…</string> 
   <string name="sendtogoogle_send_now">Jetzt senden</string> 
-  <string name="sendtogoogle_create_new_map">Neue Karte erstellen</string> 
-  <string name="sendtogoogle_pick_existing_map">Eine Karte auswählen</string> 
   <string name="sendtogoogle_send_stats">Trackstatistik senden</string> 
   <string name="sendtogoogle_send_stats_and_points">Statistik und Punkte senden</string> 
  

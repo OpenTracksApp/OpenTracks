@@ -53,7 +53,6 @@ limitations under the License.
   <string name="status_tracks_have_been_uploaded">Twoja trasa został wysłana do maps.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_new_doc">Twoja trasa została wysłana do nowego arkusza na docs.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_docs">Twoja trasa została wysłana do docs.google.com.</string>
-  <string name="status_mymap_info">Trasa będzie widoczna za kilka minut.</string>
   <string name="status_enable_gps">Tapnij tutaj, aby przejść do ustawień Lokalizacji i zabezpieczeń, a następnie zaznacz Użyj satelitów GPS. Naciśnij klawisz Wstecz, aby powrócić.</string>
   <string name="status_approximate_location">Uwaga: używana jest przybliżona lokalizacja ustalona za pomocą stacji komórkowych i sieci WIFI.</string>
   <string name="status_no_location">Lokalizacja nie może być obecnie ustalona. Włącz wiecej źródeł (zobacz ustawienia Lokalizacji i zabezpieczeń) i upewnij się, że niebo jest widoczne. Spróbuj później.</string>
@@ -103,6 +102,10 @@ limitations under the License.
   <string name="error">Błąd</string>
   <string name="success">Powodzenie</string>
   <string name="waypoint">Punkt orientacyjny</string>
+  <string name="cancel">Anuluj</string>
+  <string name="close">Zamknij</string>
+  <string name="edit">Edytuj</string>
+  <string name="save">Zapisz</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="start">(Początek)</string>
@@ -233,28 +236,6 @@ limitations under the License.
   <!-- MyTracksSky -->
   <string name="mytracks_sky">Satelity GPS</string>
 
-  <!-- My Maps -->
-  <string name="select_map_message">Wybierz mapę z twojego konta:</string>
-  <string name="create_new_map">Utwórz nową mapę...</string>
-  <string name="map_list_title">Wyślij do Moich Map Google</string>
-  <string name="maps_list_loading">Wczytywanie map...</string>
-  <string name="maps_list_failed">Nie można wczytać twoich map!</string>
-  <string name="open_map">Wybierz tę mapę</string>
-  <string name="edit_map_details">Edytuj szczegóły mapy</string>
-  <string name="share_map">Podziel się mapą z przyjaciółmi</string>
-  <string name="share_track">Podziel się trasą z przyjaciółmi</string>
-  <string name="delete_map">Usuń mapę z twojego konta</string>
-  <string name="map_title">Tytuł mapy:</string>
-  <string name="map_description">Opis mapy:</string>
-  <string name="map_searchable_edit">Pokazuj tę pamę i jej zawartość w wynikach wyszukiwania</string>
-  <string name="map_not_searchable_edit">Nie pokazuj tej mapy i jej zawartości w wynikach wyszukiwania. Dostęp do mapy będzie ciągle możliwy poprzez odnośnik</string>
-  <string name="map_searchable">Ta mapa i jej zawartość będzie dostępna w wynikach wyszukiwania</string>
-  <string name="map_not_searchable">Mapa i jej zawartość nie będzie dostępna w wynikach wyszukiwania, ale będzie dostępna przez bezpośredni odnośnik</string>
-  <string name="close">Zamknij</string>
-  <string name="edit">Edytuj</string>
-  <string name="cancel">Anuluj</string>
-  <string name="save">Zapisz</string>
-
   <!-- Sharing -->
   <string name="share_map_subject">Chciałbym się z Tobą podzielić mapą</string>
   <string name="share_map_body_format">Myślę, że może Cię zainteresować ta mapa:
@@ -264,6 +245,7 @@ limitations under the License.
   <string name="send_track_body_format">Myślę, że może Cię zainteresować ta trasa.
 
     Trasę możesz obejrzeć w Google Earth lub innym programie do obsługi map.</string>
+  <string name="share_track">Podziel się trasą z przyjaciółmi</string>
 
   <!-- Visibility -->
   <string name="public_map">Publiczna</string>

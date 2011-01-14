@@ -52,7 +52,6 @@ limitations under the License.
   <string name="status_tracks_have_been_uploaded">トラックを maps.google.com に送信しました．</string>
   <string name="status_tracks_have_been_uploaded_to_new_doc">トラックを docs.google.com の新しいスプレッドシートに送信しました．</string>
   <string name="status_tracks_have_been_uploaded_to_docs">トラックを docs.google.com に送信しました．</string>
-  <string name="status_mymap_info">新しいトラックが見えるようになるまで数分程度かかります．</string>
   <string name="status_enable_gps">ここをタップして，セキュリティ &amp;位置情報 を開いて，「GPS機能をONにする」にチェックして下さい．バックボタンで戻ってください．</string>
   <string name="status_approximate_location">ご注意: 携帯電話中継局とWi-Fiネットワークから大まかな位置を特定します．</string>
   <string name="status_no_location">現在位置決定ができません．位置取得源を増やし(セキュリティ&amp;位置情報をご覧ください)，空が見えるようにして下さい．もう一度試して下さい．</string>
@@ -102,6 +101,10 @@ limitations under the License.
   <string name="error">エラー</string>
   <string name="success">成功</string>
   <string name="waypoint">ウェイポイント</string>
+  <string name="cancel">キャンセル</string>
+  <string name="close">閉じる</string>
+  <string name="edit">編集</string>
+  <string name="save">保存</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="start">(開始)</string>
@@ -201,30 +204,6 @@ limitations under the License.
   <!-- MyTracksSky -->
   <string name="mytracks_sky">GPS衛星</string>
 
-  <!-- My Maps -->
-  <string name="select_map_message">ご使用のアカウントからのマップ選択:</string>
-  <string name="create_new_map">新規マップ...</string>
-  <string name="map_list_title">Googleマイマップへの送信</string>
-  <string name="maps_list_loading">マップの読み込み中...</string>
-  <string name="maps_list_failed">マップを読み込めませんでした!</string>
-  <string name="open_map">このマップを選択</string>
-  <string name="edit_map_details">マップ詳細の編集</string>
-  <string name="share_map">マップの共有</string>
-  <string name="share_track">トラックの共有</string>
-  <string name="delete_map">アカウントからマップの削除</string>
-  <string name="map_title">マップタイトル:</string>
-  <string name="map_description">マップ説明:</string>
-
-
-  <string name="map_searchable_edit">このマップとコンテンツを検索結果に表示させる</string>
-  <string name="map_not_searchable_edit">このマップとコンテンツはどちらも検索結果に表示させない(直接URLで他の方が見ることは可能)</string>
-  <string name="map_searchable">このマップとコンテンツは検索結果に表示されます</string>
-  <string name="map_not_searchable">このマップとコンテンツはどちらも検索結果に表示されませんが，直接リンクで他の方が見ることができます．</string>
-  <string name="close">閉じる</string>
-  <string name="edit">編集</string>
-  <string name="cancel">キャンセル</string>
-  <string name="save">保存</string>
-
   <!-- Sharing -->
   <string name="share_map_subject">マップを共有したいと思います</string>
   <string name="share_map_body_format">このマップに興味を持って頂けると思います:
@@ -234,6 +213,7 @@ limitations under the License.
   <string name="send_track_body_format">このトラックに興味を持って頂けると思います．
 
     このトラックを閲覧するには，Google Earthまたは他のマッピングソフトウェアが必要です．</string>
+  <string name="share_track">トラックの共有</string>
 
   <!-- Visibility -->
   <string name="public_map">公開</string>

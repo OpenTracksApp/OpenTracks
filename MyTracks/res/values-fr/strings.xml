@@ -53,7 +53,6 @@ limitations under the License.
   <string name="status_tracks_have_been_uploaded">Votre parcours a été envoyé à maps.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_new_doc">Votre parcours a été envoyé dans un tableur à docs.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_docs">Votre parcours a été envoyé à docs.google.com.</string>
-  <string name="status_mymap_info">Votre parcours peut prendre quelques minutes avant d\'être visible.</string>
   <string name="status_enable_gps">Cliquez ici et allez dans \'Paramètres\', \'Sécurité et Localisation\' et selectionnez \'Activer les satellites GPS\'. Appuyez sur le bouton de retour pour revenir au menu.</string>
   <string name="status_approximate_location">Note : Votre position est approximative, elle a été déterminée par les antennes de téléphonie ou le réseau WiFi.</string>
   <string name="status_no_location">Votre position ne peut être déterminée. Vérifiez votre configuration dans \'Paramètres\', \'Sécurité et Localisation\'. Assurez-vous également que le ciel soit bien visible.</string>
@@ -100,6 +99,10 @@ limitations under the License.
   <string name="yes">Oui</string>
   <string name="error">Erreur</string>
   <string name="waypoint">Point de passage</string>
+  <string name="cancel">Annuler</string>
+  <string name="close">Fermer</string>
+  <string name="edit">Modifier</string>
+  <string name="save">Enregistrer</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="start">(Début)</string>
@@ -194,29 +197,8 @@ limitations under the License.
   <!-- MyTracksSky -->
   <string name="mytracks_sky">Satellites GPS</string>
 
-  <!-- MyMaps -->
-  <string name="select_map_message">Choisissez une carte de votre compte :</string>
-  <string name="create_new_map">Création d\'une nouvelle carte en cours...</string>
-  <string name="map_list_title">Envoyer à Google Mes cartes</string>
-  <string name="maps_list_loading">Chargements de vos cartes...</string>
-  <string name="maps_list_failed">Vos cartes n\'ont pu être chargées</string>
-  <string name="open_map">Sélectionnez la carte</string>
-  <string name="edit_map_details">Consulter les détails de la carte</string>
-  <string name="share_map">Partager.</string>
-  <string name="share_track">Partager des parcours.</string>
-  <string name="delete_map">Supprimer la carte de votre compte.</string>
-  <string name="map_title">Titre de la carte :</string>
-  <string name="map_description">Description de la carte :</string>
-  <string name="map_searchable_edit">Rendre cette carte et son contenu visibles dans les résultats de recherche.</string>
-  <string name="map_not_searchable_edit">Ne pas inclure cette carte et sont contenu dans les résultats de recherche.  Ils seront cependant consultables par d\'autres utilisateurs en utilisant l\'adresse URL exacte</string>
-  <string name="map_searchable">Cette carte et son contenu seront visibles dans les résultats de recherche</string>
-  <string name="map_not_searchable">Ni cette carte, ni son contenu seront visible dans les résultats de recherche, mais ils seront consultables en utilisant l\'adresse URL exacte</string>
-  <string name="close">Fermer</string>
-  <string name="edit">Modifier</string>
-  <string name="cancel">Annuler</string>
-  <string name="save">Enregistrer</string>
-
   <!-- Sharing -->
+  <string name="share_map">Partager.</string>
   <string name="share_map_subject">Je voudrais partager ma carte avec vous</string>
   <string name="share_map_body_format">Je pense que cette carte vous intéressera :
 
@@ -225,6 +207,7 @@ limitations under the License.
   <string name="send_track_body_format">Je pense que ce parcours vous intéressera.
 
     Pour voir ce parcours, utilisez Google Earth ou tout autre logiciel de cartographie.</string>
+  <string name="share_track">Partager des parcours.</string>
 
   <!-- Visibility -->
   <string name="unlisted_map">Carte non listée</string>

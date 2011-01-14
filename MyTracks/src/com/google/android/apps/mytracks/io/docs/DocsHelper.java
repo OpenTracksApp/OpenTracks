@@ -15,7 +15,6 @@
  */
 package com.google.android.apps.mytracks.io.docs;
 
-import com.google.android.apps.mymaps.MyMapsConstants;
 import com.google.android.apps.mytracks.MyTracksConstants;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.AuthManager;
@@ -82,12 +81,13 @@ public class DocsHelper {
    *     returned. 
    */
   public String createSpreadsheet(final Context context, 
-      final GDataWrapper docListWrapper, final String name) throws IOException {
+      final GDataWrapper<GDataServiceClient> docListWrapper, final String name) throws IOException {
     final AtomicReference<String> idSaver = new AtomicReference<String>();
 
-    boolean result = docListWrapper.runQuery(new QueryFunction() {
+    boolean result = docListWrapper.runQuery(new QueryFunction<GDataServiceClient>() {
       @Override
-      public void query(GDataServiceClient client) throws IOException {
+      public void query(GDataServiceClient client) throws IOException,
+          GDataWrapper.AuthenticationException {
         // Construct and send request
         URL url = new URL(DOCS_FEED_URL);
         URLConnection conn = url.openConnection();
@@ -165,34 +165,41 @@ public class DocsHelper {
    *     be returned if no spreadsheet exists by the given name.
    * @throws IOException If an error occurs during the GData request.
    */
-  public String requestSpreadsheetId(final GDataWrapper docListWrapper, 
+  public String requestSpreadsheetId(final GDataWrapper<GDataServiceClient> docListWrapper,
       final String title) throws IOException {
     final AtomicReference<String> idSaver = new AtomicReference<String>();
 
-    boolean result = docListWrapper.runQuery(new QueryFunction() {
+    boolean result = docListWrapper.runQuery(new QueryFunction<GDataServiceClient>() {
       @Override
       public void query(GDataServiceClient client)
-          throws IOException, ParseException, HttpException {
+          throws IOException, GDataWrapper.ParseException, GDataWrapper.HttpException,
+          GDataWrapper.AuthenticationException {
         GDataParser listParser;
-        listParser = client.getParserForFeed(Entry.class,
-            DOCS_MY_SPREADSHEETS_FEED_URL, 
-            docListWrapper.getAuthManager().getAuthToken());
-        listParser.init();
+        try {
+          listParser = client.getParserForFeed(Entry.class,
+              DOCS_MY_SPREADSHEETS_FEED_URL, 
+              docListWrapper.getAuthManager().getAuthToken());
+          listParser.init();
 
-        while (listParser.hasMoreData()) {
-          Entry entry = listParser.readNextEntry(null);
-          String entryTitle = entry.getTitle();
-          Log.i(MyTracksConstants.TAG, "Found docs entry: " + entryTitle);
-          if (entryTitle.equals(title)) {
-            String entryId = entry.getId();
-            int lastSlash = entryId.lastIndexOf('/');
-            idSaver.set(entryId.substring(lastSlash + 15));
-            break;
+          while (listParser.hasMoreData()) {
+            Entry entry = listParser.readNextEntry(null);
+            String entryTitle = entry.getTitle();
+            Log.i(MyTracksConstants.TAG, "Found docs entry: " + entryTitle);
+            if (entryTitle.equals(title)) {
+              String entryId = entry.getId();
+              int lastSlash = entryId.lastIndexOf('/');
+              idSaver.set(entryId.substring(lastSlash + 15));
+              break;
+            }
           }
+        } catch (ParseException e) {
+          throw new GDataWrapper.ParseException(e);
+        } catch (HttpException e) {
+          throw new GDataWrapper.HttpException(e.getStatusCode(), e.getMessage());
         }
       }
     });
-    
+
     if (!result) {
       throw newIOException(docListWrapper, 
           "Failed to retrieve spreadsheet list.");
@@ -211,30 +218,36 @@ public class DocsHelper {
    *     ID.
    * @throws IOException If an error occurs during the GData request. 
    */
-  public String getWorksheetId(final GDataWrapper trixWrapper, 
+  public String getWorksheetId(final GDataWrapper<GDataServiceClient> trixWrapper,
       final String spreadsheetId) throws IOException {
     final AtomicReference<String> idSaver = new AtomicReference<String>();
 
-    boolean result = trixWrapper.runQuery(new QueryFunction() {
+    boolean result = trixWrapper.runQuery(new QueryFunction<GDataServiceClient>() {
       @Override
       public void query(GDataServiceClient client)
-          throws AuthenticationException, IOException, ParseException {
+          throws GDataWrapper.AuthenticationException, IOException, GDataWrapper.ParseException, GDataWrapper.HttpException {
         String uri = String.format(DOCS_WORKSHEETS_URL_FORMAT, spreadsheetId);
-        GDataParser sheetParser =
-            ((SpreadsheetsClient) client).getParserForWorksheetsFeed(uri,
-                trixWrapper.getAuthManager().getAuthToken());
-        sheetParser.init();
-        if (!sheetParser.hasMoreData()) {
-          Log.i(MyTracksConstants.TAG, "Found no worksheets");
-          return;
+        GDataParser sheetParser;
+        try {
+          sheetParser = ((SpreadsheetsClient) client).getParserForWorksheetsFeed(uri,
+              trixWrapper.getAuthManager().getAuthToken());
+          sheetParser.init();
+          if (!sheetParser.hasMoreData()) {
+            Log.i(MyTracksConstants.TAG, "Found no worksheets");
+            return;
+          }
+
+          // Grab the first worksheet.
+          WorksheetEntry worksheetEntry =
+              (WorksheetEntry) sheetParser.readNextEntry(new WorksheetEntry());
+
+          int lastSlash = worksheetEntry.getId().lastIndexOf('/');
+          idSaver.set(worksheetEntry.getId().substring(lastSlash + 1));
+        } catch (ParseException e) {
+          throw new GDataWrapper.ParseException(e);
+        } catch (AuthenticationException e) {
+          throw new GDataWrapper.AuthenticationException(e);
         }
-
-        // Grab the first worksheet.
-        WorksheetEntry worksheetEntry =
-            (WorksheetEntry) sheetParser.readNextEntry(new WorksheetEntry());
-
-        int lastSlash = worksheetEntry.getId().lastIndexOf('/');
-        idSaver.set(worksheetEntry.getId().substring(lastSlash + 1));
       }
     });
     
@@ -295,7 +308,7 @@ public class DocsHelper {
 
     if (track.getMapId().length() > 0) {
       tagBuilder.append("map", String.format("%s?msa=0&msid=%s",
-          MyMapsConstants.MAPSHOP_BASE_URL, track.getMapId()));
+          MyTracksConstants.MAPSHOP_BASE_URL, track.getMapId()));
     }
     
     String postText = new StringBuilder()

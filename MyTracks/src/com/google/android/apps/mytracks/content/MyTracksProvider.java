@@ -99,7 +99,8 @@ public class MyTracksProvider extends ContentProvider {
           + TracksColumns.ELEVATIONGAIN + " FLOAT, "
           + TracksColumns.MINGRADE + " FLOAT, "
           + TracksColumns.MAXGRADE + " FLOAT, "
-          + TracksColumns.MAPID + " STRING);");
+          + TracksColumns.MAPID + " STRING, "
+          + TracksColumns.TABLEID + " STRING);");
       db.execSQL("CREATE TABLE " + WAYPOINTS_TABLE + " ("
           + WaypointsColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
           + WaypointsColumns.NAME + " STRING, "
@@ -146,13 +147,15 @@ public class MyTracksProvider extends ContentProvider {
       } else {
         // Incremental updates go here.
         // Each time you increase the DB version, add a corresponding if clause.
-        
+
         // Sensor data.
         if (oldVersion <= 17) {
           Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
-              + newVersion + ", adding sensor column.");
+              + newVersion + ", adding sensor and tableid columns.");
           db.execSQL("ALTER TABLE " + TRACKPOINTS_TABLE 
               + " ADD " + TrackPointsColumns.SENSOR + " BLOB");
+          db.execSQL("ALTER TABLE " + TRACKS_TABLE 
+            + " ADD " + TracksColumns.TABLEID + " STRING");
         }
       }
     }

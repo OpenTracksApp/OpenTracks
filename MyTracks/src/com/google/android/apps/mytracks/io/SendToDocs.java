@@ -29,6 +29,7 @@ import com.google.wireless.gdata.client.GDataClient;
 import com.google.wireless.gdata.docs.DocumentsClient;
 import com.google.wireless.gdata.docs.SpreadsheetsClient;
 import com.google.wireless.gdata.maps.xml.XmlMapsGDataParserFactory;
+import com.google.wireless.gdata.client.GDataServiceClient;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -158,11 +159,11 @@ public class SendToDocs {
    * @param track the track
    */
   private boolean uploadToDocs(Track track) {
-    GDataWrapper docListWrapper = new GDataWrapper();
+    GDataWrapper<GDataServiceClient> docListWrapper = new GDataWrapper<GDataServiceClient>();
     docListWrapper.setAuthManager(docListAuth);
     docListWrapper.setRetryOnAuthFailure(true);
     
-    GDataWrapper trixWrapper = new GDataWrapper();
+    GDataWrapper<GDataServiceClient> trixWrapper = new GDataWrapper<GDataServiceClient>();
     trixWrapper.setAuthManager(trixAuth);
     trixWrapper.setRetryOnAuthFailure(true);
 
@@ -304,5 +305,4 @@ public class SendToDocs {
     }
     return true;
   }
-
 }

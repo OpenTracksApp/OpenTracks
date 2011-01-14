@@ -29,7 +29,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 /**
  * A dialog where the user can choose where to send the tracks to, i.e.
@@ -39,10 +38,7 @@ import android.widget.RadioGroup;
  */
 public class SendToGoogleDialog extends Dialog {
 
-  private RadioGroup groupMyMaps;
-  private RadioButton createNewMapRadioButton;
-  private RadioButton pickMapRadioButton;
-  private CheckBox sendToMyMapsCheckBox;
+  private CheckBox sendToFusionTablesCheckBox;
   private CheckBox sendToDocsCheckBox;
   private RadioButton sendStatsRadioButton;
   private RadioButton sendStatsAndPointsRadioButton;
@@ -76,26 +72,19 @@ public class SendToGoogleDialog extends Dialog {
     OnCheckedChangeListener checkBoxListener = new OnCheckedChangeListener() {
       public void onCheckedChanged(CompoundButton button, boolean checked) {
         sendButton.setEnabled(
-            sendToMyMapsCheckBox.isChecked() ||
+            sendToFusionTablesCheckBox.isChecked() ||
             sendToDocsCheckBox.isChecked());
-        groupMyMaps.setVisibility(
-            sendToMyMapsCheckBox.isChecked() ? View.VISIBLE : View.INVISIBLE);
         //groupDocs.setVisibility(
         //    sendToDocsCheckBox.isChecked() ? View.VISIBLE : View.INVISIBLE);
       }
     };
 
     sendButton = (Button) findViewById(R.id.sendtogoogle_send_now);
-    groupMyMaps = (RadioGroup) findViewById(R.id.sendtogoogle_group_mymaps);
-    sendToMyMapsCheckBox =
-        (CheckBox) findViewById(R.id.sendtogoogle_google_mymaps);
-    sendToMyMapsCheckBox.setOnCheckedChangeListener(checkBoxListener);
+    sendToFusionTablesCheckBox =
+        (CheckBox) findViewById(R.id.sendtogoogle_google_fusiontables);
+    sendToFusionTablesCheckBox.setOnCheckedChangeListener(checkBoxListener);
     sendToDocsCheckBox = (CheckBox) findViewById(R.id.sendtogoogle_google_docs);
     sendToDocsCheckBox.setOnCheckedChangeListener(checkBoxListener);
-    createNewMapRadioButton =
-        (RadioButton) findViewById(R.id.sendtogoogle_create_new_map);
-    pickMapRadioButton =
-        (RadioButton) findViewById(R.id.sendtogoogle_pick_existing_map);
     sendStatsRadioButton =
         (RadioButton) findViewById(R.id.sendtogoogle_send_stats);
     sendStatsAndPointsRadioButton = (RadioButton) findViewById(
@@ -104,18 +93,12 @@ public class SendToGoogleDialog extends Dialog {
     SharedPreferences prefs =
         getContext().getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
     if (prefs != null) {
-      sendToMyMapsCheckBox.setChecked(
+      sendToFusionTablesCheckBox.setChecked(
           prefs.getBoolean(
               getContext().getString(R.string.send_to_my_maps_key), true));
       sendToDocsCheckBox.setChecked(
           prefs.getBoolean(
               getContext().getString(R.string.send_to_docs_key), true));
-      pickMapRadioButton.setChecked(
-          prefs.getBoolean(
-              getContext().getString(R.string.pick_existing_map_key), false));
-      createNewMapRadioButton.setChecked(
-          !prefs.getBoolean(
-              getContext().getString(R.string.pick_existing_map_key), false));
       sendStatsAndPointsRadioButton.setChecked(
           prefs.getBoolean(
               getContext().getString(R.string.send_stats_and_points_key),
@@ -136,13 +119,10 @@ public class SendToGoogleDialog extends Dialog {
       if (editor != null) {
         editor.putBoolean(
             getContext().getString(R.string.send_to_my_maps_key),
-            sendToMyMapsCheckBox.isChecked());
+            sendToFusionTablesCheckBox.isChecked());
         editor.putBoolean(
             getContext().getString(R.string.send_to_docs_key),
             sendToDocsCheckBox.isChecked());
-        editor.putBoolean(
-            getContext().getString(R.string.pick_existing_map_key),
-            pickMapRadioButton.isChecked());
         editor.putBoolean(
             getContext().getString(R.string.send_stats_and_points_key),
             sendStatsAndPointsRadioButton.isChecked());
@@ -152,16 +132,12 @@ public class SendToGoogleDialog extends Dialog {
     super.onStop();
   }
 
-  public boolean getSendToMyMaps() {
-    return sendToMyMapsCheckBox.isChecked();
+  public boolean getSendToFusionTables() {
+    return sendToFusionTablesCheckBox.isChecked();
   }
 
   public boolean getSendToDocs() {
     return sendToDocsCheckBox.isChecked();
-  }
-
-  public boolean getCreateNewMap() {
-    return createNewMapRadioButton.isChecked();
   }
 
   public boolean getSendStatsAndPoints() {

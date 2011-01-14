@@ -52,7 +52,6 @@ limitations under the License.
   <string name="status_tracks_have_been_uploaded">Seu caminho foi enviado para maps.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_new_doc">Seu caminho foi enviado para uma nova planilha em docs.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_docs">Seu caminho foi enviado para docs.google.com.</string>
-  <string name="status_mymap_info">"Pode demorar alguns minutor para que novos caminhos apareçam.</string>
   <string name="status_enable_gps">"Por favor pressione aqui para ir aos ajustes de segurança e localização e verifique que o GPS esteja habilitado. Pressione o botão de voltar para retornar."</string>
   <string name="status_approximate_location">Nota: Uma localização aproximada, determinada por torres de telefonia celular, está sendo mostrada.</string>
   <string name="status_no_location">Sua localização não pôde ser determinada.  Habilite fontes adicionais de localização (veja configurações de Segurança e Localização) e assegure-se de que o céu está visível.</string>
@@ -101,6 +100,10 @@ limitations under the License.
   <string name="error">Erro</string>
   <string name="success">Successo</string>
   <string name="waypoint">Ponto de passagem</string>
+  <string name="cancel">Cancelar</string>
+  <string name="close">Fechar</string>
+  <string name="edit">Editar</string>
+  <string name="save">Salvar</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="start">(Início)</string>
@@ -184,28 +187,6 @@ limitations under the License.
   <!-- MyTracksSky -->
   <string name="mytracks_sky">Satélites de GPS</string>
 
-  <!-- My Maps -->
-  <string name="select_map_message">Escolha um mapa da sua conta:</string>
-  <string name="create_new_map">Criar novo mapa...</string>
-  <string name="map_list_title">Enviar para o Google Meus Mapas</string>
-  <string name="maps_list_loading">Carregando mapas...</string>
-  <string name="maps_list_failed">Seus mapas não puderam ser carregados neste momento!</string>
-  <string name="open_map">Selecionar este Mapa</string>
-  <string name="edit_map_details">Editar detalhes do mapa</string>
-  <string name="share_map">Compartilhar mapa com amigos</string>
-  <string name="share_track">Compartilhar caminho com amigos</string>
-  <string name="delete_map">Apagar mapa da sua conta</string>
-  <string name="map_title">Título do Mapa:</string>
-  <string name="map_description">Descrição do Mapa:</string>
-  <string name="map_searchable_edit">Fazer com que o conteúdo deste mapa apareça em resultados de buscas</string>
-  <string name="map_not_searchable_edit">Não permitir que este mapa ou seu conteúdo apareçam em resultados de buscas, porém ele ainda pode ser visto por sua URL direta</string>
-  <string name="map_searchable">Este mapa e seu conteúdo vão aparecer em resultados de buscas</string>
-  <string name="map_not_searchable">Nem este mapa nem seu conteúdo vão aparecer em resultados de buscas, porém outras pessoas ainda podem vê-los se obtiverem sua URL direta</string>
-  <string name="close">Fechar</string>
-  <string name="edit">Editar</string>
-  <string name="cancel">Cancelar</string>
-  <string name="save">Salvar</string>
-
   <!-- Sharing -->
   <string name="share_map_subject">Eu gostaria de compartilhar um mapa com você</string>
   <string name="share_map_body_format">Eu acredito que você pode se interessar por este mapa:
@@ -215,6 +196,7 @@ limitations under the License.
   <string name="send_track_body_format">Eu acredito que você pode se interesasr por este caminho.
 
     Para visualizar este caminho, use o Google Earth ou outro software de mapas.</string>
+  <string name="share_track">Compartilhar caminho com amigos</string>
 
   <!-- Visibility -->
   <string name="public_map">Público</string>

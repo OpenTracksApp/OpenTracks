@@ -56,7 +56,6 @@ limitations under the License.
   <string name="status_tracks_have_been_uploaded">你的轨迹已经发送到 maps.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_new_doc">你的轨迹已经作为新的电子表格发送到 docs.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_docs">你的轨迹已经发送到 docs.google.com.</string>
-  <string name="status_mymap_info">新增的轨迹可能需要等待一段时间才会显示到页面上.</string>
   <string name="status_enable_gps">请点击这里进入\'安全和位置设置\'并勾选上\'启用 GPS 卫星\'. 然后用后退键返回.</string>
   <string name="status_approximate_location">注意: 当前显示的位置是根据无线信号和无线网络计算的近似位置.</string>
   <string name="status_no_location">目前无法定位. 请启用更多的位置来源 (在\'安全和位置设置\'中) 并确认天空是可见的. 再重试.</string>
@@ -106,6 +105,10 @@ limitations under the License.
   <string name="error">错误</string>
   <string name="success">成功</string>
   <string name="waypoint">路点</string>
+  <string name="cancel">取消</string>
+  <string name="close">关闭</string>
+  <string name="edit">编辑</string>
+  <string name="save">保存</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="start">(开始)</string>
@@ -239,28 +242,6 @@ limitations under the License.
   <!-- MyTracksSky -->
   <string name="mytracks_sky">GPS 卫星</string>
 
-  <!-- My Maps -->
-  <string name="select_map_message">从你的帐户里选择地图:</string>
-  <string name="create_new_map">创建新地图...</string>
-  <string name="map_list_title">发送到 Google My Maps</string>
-  <string name="maps_list_loading">载入地图中...</string>
-  <string name="maps_list_failed">现在无法载入你的地图!</string>
-  <string name="open_map">选择此地图</string>
-  <string name="edit_map_details">编辑地图详细信息</string>
-  <string name="share_map">与朋友分享地图</string>
-  <string name="share_track">与朋友分享轨迹</string>
-  <string name="delete_map">删除你帐号下的此地图</string>
-  <string name="map_title">地图标题:</string>
-  <string name="map_description">地图描述:</string>
-  <string name="map_searchable_edit">允许此地图及其内容出现在搜索结果中</string>
-  <string name="map_not_searchable_edit">不允许地图及其内容出现在搜索结果中, 但它的内容依然可以通过网址直接访问</string>
-  <string name="map_searchable">此地图及其内容会出现在搜索结果中</string>
-  <string name="map_not_searchable">此地图及其内容不会出现在搜索结果中, 但它的内容依然可以通过网址直接访问</string>
-  <string name="close">关闭</string>
-  <string name="edit">编辑</string>
-  <string name="cancel">取消</string>
-  <string name="save">保存</string>
-
   <!-- Sharing -->
   <string name="share_map_subject">我想与你分享一张地图</string>
   <string name="share_map_body_format">我想你可能会对这个地图感兴趣:
@@ -270,6 +251,7 @@ limitations under the License.
   <string name="send_track_body_format">我想你可能会对这条轨迹感兴趣.
 
     请用 Google Earth 或其它地图软件查看此轨迹.</string>
+  <string name="share_track">与朋友分享轨迹</string>
 
   <!-- Visibility -->
   <string name="public_map">公开</string>

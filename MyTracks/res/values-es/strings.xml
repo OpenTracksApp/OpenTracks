@@ -51,7 +51,6 @@ limitations under the License.
   <string name="status_tracks_have_been_uploaded">Su recorrido ha sido enviado a maps.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_new_doc">Su recorrido ha sido enviado a una nueva hoja de cálculo en docs.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_docs">Su recorrido ha sido enviado a docs.google.com.</string>
-  <string name="status_mymap_info">A veces nuevos recorridos pueden tardar algunos minutos en aparecer.</string>
   <string name="status_enable_gps">Por favor presione aquí para ir al menú de Seguridad y Ubicación y asegúrese que el GPS esté habilitado. Presione el botón de regreso para regresar.</string>
   <string name="status_approximate_location">Nota: Una ubicación aproximada es mostrada, basada en informacion de torres de telefonía celular y red WIFI.</string>
   <string name="status_no_location">La ubicación actual no puede ser determinada. Habilite más fuentes de datos (vea configuraciones de Seguridad y Ubicación) y asegúrese que el cielo sea visible. Inténtelo mas tarde.</string>
@@ -98,6 +97,7 @@ limitations under the License.
   <string name="yes">Sí</string>
   <string name="success">Éxito</string>
   <string name="waypoint">Señal de recorrido</string>
+  <string name="cancel">Cancelar</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="start">(Inicio)</string>
@@ -193,30 +193,10 @@ limitations under the License.
 
   <!-- MyTracksSky -->
   <string name="mytracks_sky">Satélites GPS</string>
-
-  <!-- My Maps -->
-  <string name="select_map_message">Elija un mapa de su cuenta:</string>
-  <string name="create_new_map">Crear mapa nuevo...</string>
-  <string name="map_list_title">Enviar a Google My Maps</string>
-  <string name="maps_list_loading">Cargando mapas...</string>
-  <string name="maps_list_failed">Sus mapas no pudieron ser cargados en este momento!</string>
-  <string name="open_map">Seleccione este mapa</string>
-  <string name="edit_map_details">Editar detalles del mapa</string>
-  <string name="share_map">Compartir mapa con amigos</string>
   <string name="share_track">Compartir recorrido con amigos</string>
-  <string name="delete_map">Borrar mapa de su cuenta</string>
-  <string name="map_title">Título del mapa:</string>
-  <string name="map_description">Descripción del mapa:</string>
-  <string name="map_searchable_edit">Permitir que este mapa y su contenido sean mostrados en resultados de búsqueda</string>
-  <string name="map_not_searchable_edit">No permitir que este mapa y su contenido sean mostrados en resultados de búsqueda, pero permitir acceso directo mediante su URL</string>
-  <string name="map_searchable">Este mapa y su contenido serán mostrados en resultados de búsqueda</string>
-  <string name="map_not_searchable">No mostrar ni este mapa ni sus contenidos en resultados de búsqueda, pero permitir acceso directo mediante su URL</string>
-  <string name="close">Cerrar</string>
-  <string name="edit">Editar</string>
-  <string name="cancel">Cancelar</string>
-  <string name="save">Guardar</string>
 
   <!-- Sharing -->
+  <string name="share_map">Compartir mapa con amigos</string>
   <string name="share_map_subject">Me gustaría compartir un mapa contigo</string>
   <string name="share_map_body_format">Creo que este mapa pudiera interesarte:
 
@@ -225,6 +205,7 @@ limitations under the License.
   <string name="send_track_body_format">Creo que este recorrido pudiera interesarte.
 
     Para ver este recorrido usa Google Earth o algún otro software de mapeo.</string>
+  <string name="share_track">Compartir recorrido con amigos</string>
 
   <!-- Visibility -->
   <string name="public_map">Público</string>
@@ -315,8 +296,6 @@ limitations under the License.
   <!-- Send to Google -->
   <string name="sendtogoogle_title">Enviar a...</string>
   <string name="sendtogoogle_send_now">Enviar ahora</string>
-  <string name="sendtogoogle_create_new_map">Crear un nuevo mapa</string>
-  <string name="sendtogoogle_pick_existing_map">Escoja un mapa existente</string>
   <string name="sendtogoogle_send_stats">Enviar estadísticas de recorrido</string>
   <string name="sendtogoogle_send_stats_and_points">Enviar estadísticas y puntos</string>
 

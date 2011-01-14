@@ -101,6 +101,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     values.put(TracksColumns.NAME, track.getName());
     values.put(TracksColumns.DESCRIPTION, track.getDescription());
     values.put(TracksColumns.MAPID, track.getMapId());
+    values.put(TracksColumns.TABLEID, track.getTableId());
     values.put(TracksColumns.CATEGORY, track.getCategory());
     values.put(TracksColumns.NUMPOINTS, track.getNumberOfPoints());
     values.put(TracksColumns.STARTID, track.getStartId());
@@ -269,6 +270,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     int idxDescription =
         cursor.getColumnIndexOrThrow(TracksColumns.DESCRIPTION);
     int idxMapId = cursor.getColumnIndexOrThrow(TracksColumns.MAPID);
+    int idxTableId = cursor.getColumnIndexOrThrow(TracksColumns.TABLEID);
     int idxCategory = cursor.getColumnIndexOrThrow(TracksColumns.CATEGORY);
     int idxStartId = cursor.getColumnIndexOrThrow(TracksColumns.STARTID);
     int idxStartTime = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
@@ -307,6 +309,9 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     }
     if (!cursor.isNull(idxMapId)) {
       track.setMapId(cursor.getString(idxMapId));
+    }
+    if (!cursor.isNull(idxTableId)) {
+      track.setTableId(cursor.getString(idxTableId));
     }
     if (!cursor.isNull(idxCategory)) {
       track.setCategory(cursor.getString(idxCategory));
