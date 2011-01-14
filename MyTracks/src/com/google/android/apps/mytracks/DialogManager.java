@@ -85,13 +85,13 @@ public class DialogManager {
         builder.setTitle("Title");
         builder.setMessage("Message");
         builder.setPositiveButton(activity.getString(R.string.ok), null);
-        builder.setNeutralButton(activity.getString(R.string.share_map),
+        builder.setNeutralButton(activity.getString(R.string.share_track),
             new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog, int which) {
-            activity.shareLinkToMyMap(activity.getSendToMyMapsMapId());
-            dialog.dismiss();
-          }
-        });
+              public void onClick(DialogInterface dialog, int which) {
+                activity.shareLinkToFusionTable(activity.sendToTrackId);
+                dialog.dismiss();
+              }
+            });
         sendToGoogleResultDialog = builder.create();
         return sendToGoogleResultDialog;
       case DIALOG_WRITE_PROGRESS:
@@ -119,9 +119,9 @@ public class DialogManager {
         sendToGoogleResultDialog.setIcon(success
             ? android.R.drawable.ic_dialog_info
             : android.R.drawable.ic_dialog_alert);
-        sendToGoogleResultDialog.setMessage(activity.getMapsResultMessage());
+        sendToGoogleResultDialog.setMessage(activity.getFusionTablesResultMessage());
 
-        boolean canShare = activity.getSendToMyMapsMapId() != null;
+        boolean canShare = activity.getSendToFusionTablesTableId() != null;
         View share =
             sendToGoogleResultDialog.findViewById(android.R.id.button3);
         if (share != null) {

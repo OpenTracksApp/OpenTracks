@@ -59,4 +59,5 @@ public interface TracksColumns extends BaseColumns {
   public static final String MINLON = "minlon";
   public static final String MAXLON = "maxlon";
   public static final String MAPID = "mapid";
+  public static final String TABLEID = "tableid";
 }

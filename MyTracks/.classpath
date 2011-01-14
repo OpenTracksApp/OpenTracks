@@ -7,6 +7,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry exported="true" kind="lib" path="/MyTracksLib/libs/protobuf-java-2.3.0-lite.jar"/>
+	<classpathentry kind="lib" path="libs/google-api-client-1.2.1-alpha.jar"/>
 	<classpathentry kind="src" path="MyTracksLib_src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

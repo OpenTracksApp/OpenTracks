@@ -24,6 +24,7 @@ import android.location.Location;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
@@ -58,8 +59,8 @@ public class GpxTrackWriter implements TrackFormatWriter {
   @Override
   public void writeHeader() {
     if (pw != null) {
-      pw.println("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ");
-      pw.println("standalone=\"yes\"?>");
+      pw.format("<?xml version=\"1.0\" encoding=\"%s\" standalone=\"yes\"?>\n",
+          Charset.defaultCharset().name());
       pw.println("<?xml-stylesheet type=\"text/xsl\" href=\"details.xsl\"?>");
       pw.println("<gpx");
       pw.println(" version=\"1.0\"");

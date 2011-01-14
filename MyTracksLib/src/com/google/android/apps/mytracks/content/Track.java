@@ -56,6 +56,7 @@ public class Track implements Parcelable {
         track.locations.add(loc);
       }
 
+      track.tableId = source.readString();
       return track;
     }
 
@@ -81,6 +82,7 @@ public class Track implements Parcelable {
   private String name = "";
   private String description = "";
   private String mapId = "";
+  private String tableId = "";
   private long startId = -1;
   private long stopId = -1;
   private String category = "";
@@ -104,6 +106,8 @@ public class Track implements Parcelable {
     for (int i = 0; i < numberOfPoints; ++i) {
       dest.writeParcelable(locations.get(i), 0);
     }
+    
+    dest.writeString(tableId);
   }
 
   // Getters and setters:
@@ -159,6 +163,14 @@ public class Track implements Parcelable {
 
   public void setMapId(String mapId) {
     this.mapId = mapId;
+  }
+
+  public String getTableId() {
+    return tableId;
+  }
+
+  public void setTableId(String tableId) {
+    this.tableId = tableId;
   }
 
   public String getCategory() {

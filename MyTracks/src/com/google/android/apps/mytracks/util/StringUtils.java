@@ -316,7 +316,7 @@ public class StringUtils implements DescriptionGenerator {
         + "<img border=\"0\" src=\"%s\"/>",
 
         // Line 1
-        context.getString(R.string.my_map_link),
+        context.getString(R.string.fusiontable_link),
 
         // Line 2
         context.getString(R.string.total_distance_label),

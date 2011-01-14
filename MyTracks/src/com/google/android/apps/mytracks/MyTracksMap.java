@@ -15,7 +15,6 @@
  */
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mymaps.GeoRect;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackPointsColumns;
@@ -24,6 +23,7 @@ import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.services.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.GeoRect;
 import com.google.android.apps.mytracks.util.MyTracksUtils;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -789,7 +789,7 @@ public class MyTracksMap extends MapActivity
             SubMenu share = menu.addSubMenu(0, MyTracksConstants.MENU_SHARE, 0,
                 R.string.tracklist_share_track);
             share.add(0, MyTracksConstants.MENU_SHARE_LINK, 0,
-                R.string.tracklist_share_link);
+                R.string.tracklist_share_linkfusion);
             share.add(0, MyTracksConstants.MENU_SHARE_GPX_FILE, 0,
                 R.string.tracklist_share_gpx_file);
             share.add(0, MyTracksConstants.MENU_SHARE_KML_FILE, 0,

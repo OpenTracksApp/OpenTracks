@@ -54,7 +54,6 @@ limitations under the License.
   <string name="status_tracks_have_been_uploaded">S\'ha enviat la ruta a maps.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_new_doc">S\'ha enviat la ruta a un full de càlcul a docs.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_docs">S\'ha enviat la ruta a docs.google.com.</string>
-  <string name="status_mymap_info">Poden passar uns minuts abans que les rutes noves apareguin.</string>
   <string name="status_enable_gps">Piqueu aquí per anar als paràmetres de seguretat i ubicació i activeu \'habilita els satèl·lits GPS\'. Premeu el botó d\'anar enrere per tornar.</string>
   <string name="status_approximate_location">Nota: Es mostra una ubicació determinada a partir de les xarxes sense fils i antenes telefòniques.</string>
   <string name="status_no_location">No es pot determinar la ubicació. Habiliteu més fonts d\'ubicació (vegeu els paràmetres de seguretat i ubicació) i assegureu-vos que el cel és visible. Proveu de nou més tard.</string>
@@ -104,6 +103,10 @@ limitations under the License.
   <string name="error">Error</string>
   <string name="success">Fet</string>
   <string name="waypoint">Punt de referència</string>
+  <string name="cancel">Cancel·la</string>
+  <string name="close">Tanca</string>
+  <string name="edit">Edita</string>
+  <string name="save">Desa</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="start">(Inici)</string>
@@ -241,28 +244,6 @@ limitations under the License.
   <!-- MyTracksSky -->
   <string name="mytracks_sky">Satèl·lits GPS</string>
 
-  <!-- My Maps -->
-  <string name="select_map_message">Seleccioneu un mapa del vostre compte:</string>
-  <string name="create_new_map">Crea un mapa nou...</string>
-  <string name="map_list_title">Envia a Google My Maps</string>
-  <string name="maps_list_loading">S\'estan carregant els mapes...</string>
-  <string name="maps_list_failed">No s\'han pogut carregar els vostres mapes en aquest moment</string>
-  <string name="open_map">Selecciona aquest mapa</string>
-  <string name="edit_map_details">Edita els detalls del mapa</string>
-  <string name="share_map">Comparteix el mapa amb amics</string>
-  <string name="share_track">Comparteix la ruta amb amics</string>
-  <string name="delete_map">Elimina el mapa del vostre compte</string>
-  <string name="map_title">Títol del mapa:</string>
-  <string name="map_description">Descripció del mapa:</string>
-  <string name="map_searchable_edit">Fes que aquest mapa i els seus continguts apareguen als resultats de cerca</string>
-  <string name="map_not_searchable_edit">No permetis que aquest mapa ni els seus continguts es mostrin als resultats de cerca, tot i que sí es podrà visualitzar per altres amb l\'adreça URL directa</string>
-  <string name="map_searchable">Aquest mapa i els seus continguts es mostraran als resultats de cerca</string>
-  <string name="map_not_searchable">Ni els mapes ni els seus continguts es mostraran als resultats de cerca, però podran visualitzar-se per altres a través d\'un enllaç directe.</string>
-  <string name="close">Tanca</string>
-  <string name="edit">Edita</string>
-  <string name="cancel">Cancel·la</string>
-  <string name="save">Desa</string>
-
   <!-- Sharing -->
   <string name="share_map_subject">M\'agradaria compartir un mapa amb tu</string>
   <string name="share_map_body_format">Crec que estaràs interessat en aquest mapa:
@@ -272,6 +253,7 @@ limitations under the License.
   <string name="send_track_body_format">Crec que estaràs interessat en aquesta ruta.
 
     Per verue aquesta ruta fes servir Google Earth o altre programari de mapes.</string>
+  <string name="share_track">Comparteix la ruta amb amics</string>
 
   <!-- Visibility -->
   <string name="public_map">Públic</string>

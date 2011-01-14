@@ -22,11 +22,11 @@ import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.maps.GeoPoint;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
 import android.location.Location;
-import android.os.StrictMode;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -267,12 +267,28 @@ public class MyTracksUtils {
     } catch (NameNotFoundException e) {
       Log.e(MyTracksConstants.TAG, "Unable to get signatures", e);
     }
-
     return false;
   }
-  
+
   /**
-   * This is a utility class w/ only static memebers.
+   * Get the My Tracks version from the manifest.
+   *
+   * @return the version, or an empty string in case of failure.
+   */
+  public static String getMyTracksVersion(Context context) {
+    try {
+      PackageInfo pi = context.getPackageManager().getPackageInfo(
+          "com.google.android.maps.mytracks",
+          PackageManager.GET_META_DATA);
+      return pi.versionName;
+    } catch (NameNotFoundException e)  {
+      Log.w(MyTracksConstants.TAG, "Failed to get version info.", e);
+      return "";
+    }
+  }
+
+  /**
+   * This is a utility class w/ only static members.
    */
   protected MyTracksUtils() {
   }

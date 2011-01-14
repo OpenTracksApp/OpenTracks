@@ -17,11 +17,6 @@ package com.google.android.apps.mytracks.io.gdata;
 
 import com.google.android.apps.mytracks.MyTracksConstants;
 import com.google.android.apps.mytracks.io.AuthManager;
-import com.google.wireless.gdata.client.GDataServiceClient;
-import com.google.wireless.gdata.client.HttpException;
-import com.google.wireless.gdata.parser.ParseException;
-import com.google.wireless.gdata2.ConflictDetectedException;
-import com.google.wireless.gdata2.client.AuthenticationException;
 
 import android.util.Log;
 
@@ -39,9 +34,60 @@ import java.util.concurrent.TimeoutException;
  * handling. After a query is run, the wrapper can be queried about the error
  * that occurred.
  *
+ * @param C the GData service client
  * @author Sandor Dornbush
  */
-public class GDataWrapper {
+public class GDataWrapper<C> {
+
+  public static class AuthenticationException extends Exception {
+    private Exception exception;
+    private static final long serialVersionUID = 1L;
+    public AuthenticationException(Exception caught) {
+      this.exception = caught;
+    }
+    public Exception getException() {
+      return exception;
+    }
+  };
+
+  public static class ParseException extends Exception {
+    private Exception exception;
+    private static final long serialVersionUID = 1L;
+    public ParseException(Exception caught) {
+      this.exception = caught;
+    }
+    public Exception getException() {
+      return exception;
+    }
+  };
+
+  public static class ConflictDetectedException extends Exception {
+    private Exception exception;
+    private static final long serialVersionUID = 1L;
+    public ConflictDetectedException(Exception caught) {
+      this.exception = caught;
+    }
+    public Exception getException() {
+      return exception;
+    }
+  };
+
+  public static class HttpException extends Exception {
+    private static final long serialVersionUID = 1L;
+    private int statusCode;
+    private String statusMessage;
+    public HttpException(int statusCode, String statusMessage) {
+      super();
+      this.statusCode = statusCode;
+      this.statusMessage = statusMessage;
+    }
+    public int getStatusCode() {
+      return statusCode;
+    }
+    public String getStatusMessage() {
+      return statusMessage;
+    }
+  };
 
   /**
    * A QueryFunction is passed in when executing a query. The query function of
@@ -49,8 +95,8 @@ public class GDataWrapper {
    * should execute whatever operations it desires on the client without concern
    * for whether the client will throw an error.
    */
-  public interface QueryFunction {
-    public abstract void query(GDataServiceClient client)
+  public interface QueryFunction<C> {
+    public abstract void query(C client)
         throws AuthenticationException, IOException, ParseException,
         ConflictDetectedException, HttpException;
   }
@@ -92,7 +138,7 @@ public class GDataWrapper {
 
   private String errorMessage;
   private int errorType;
-  private GDataServiceClient gdataServiceClient;
+  private C gdataServiceClient;
   private AuthManager auth;
   private boolean retryOnAuthFailure;
   
@@ -103,7 +149,7 @@ public class GDataWrapper {
     retryOnAuthFailure = false;
   }
 
-  public void setClient(GDataServiceClient gdataServiceClient) {
+  public void setClient(C gdataServiceClient) {
     this.gdataServiceClient = gdataServiceClient;
   }
 
@@ -112,7 +158,7 @@ public class GDataWrapper {
     return runCommon(function, null);
   }
 
-  public boolean runQuery(final QueryFunction query) {
+  public boolean runQuery(final QueryFunction<C> query) {
     return runCommon(null, query);
   }
 
@@ -120,7 +166,7 @@ public class GDataWrapper {
    * Runs an arbitrary piece of code.
    */
   private boolean runCommon(final AuthenticatedFunction function,
-      final QueryFunction query) {
+      final QueryFunction<C> query) {
     for (int i = 0; i <= AUTH_TOKEN_INVALIDATE_REFRESH_NUM_RETRIES; i++) {
       runOne(function, query);
       if (errorType == ERROR_NO_ERROR) {
@@ -144,7 +190,7 @@ public class GDataWrapper {
    * errorMessage will contain the result/status of the function/query.
    */
   private void runOne(final AuthenticatedFunction function, 
-      final QueryFunction query) {
+      final QueryFunction<C> query) {
     try {
       if (function != null) {
         function.run(this.auth.getAuthToken());
@@ -160,7 +206,7 @@ public class GDataWrapper {
       errorMessage = null;
 
     } catch (AuthenticationException e) {
-      Log.e(MyTracksConstants.TAG, "Exception", e);
+      Log.e(MyTracksConstants.TAG, "AuthenticationException", e);
       errorType = ERROR_AUTH;
       errorMessage = e.getMessage();
     } catch (HttpException e) {
@@ -241,6 +287,10 @@ public class GDataWrapper {
 
   public void setAuthManager(AuthManager auth) {
     this.auth = auth;
+  }
+  
+  public AuthManager getAuthManager() {
+    return auth;
   }
   
   public void setRetryOnAuthFailure(boolean retry) {
