@@ -71,9 +71,7 @@ public class ApiFeatures {
       apiPlatformAdapter = createPlatformAdapter(PLATFORM_ADAPTER_GINGERBREAD);
     } else if (getApiLevel() >= 5) {
       apiPlatformAdapter = createPlatformAdapter(PLATFORM_ADAPTER_ECLAIR);
-    }
-    
-    if (apiPlatformAdapter == null) {
+    } else {
       // Cupcake adapter is always supported, so it's safe to do static linkage.
       apiPlatformAdapter = new CupcakePlatformAdapter();
     }
@@ -81,13 +79,16 @@ public class ApiFeatures {
     Log.i(MyTracksConstants.TAG, "Using platform adapter " + apiPlatformAdapter.getClass());
   }
   
-  private ApiPlatformAdapter createPlatformAdapter(String className) {
+  private static ApiPlatformAdapter createPlatformAdapter(String className) {
     try {
       Class<?> clazz = Class.forName(className);
       return (ApiPlatformAdapter) clazz.newInstance();
-    } catch (Exception e) {
-      Log.i(MyTracksConstants.TAG, "ApiFeatures: Unable to instantiate " + className, e);
-      return null;
+    } catch (ClassNotFoundException e) {
+      throw new RuntimeException("ApiFeatures: Unable to find " + className, e);
+    } catch (InstantiationException e) {
+      throw new RuntimeException("ApiFeatures: Unable to instantiate " + className, e);
+    } catch (IllegalAccessException e) {
+      throw new RuntimeException("ApiFeatures: Unable to access " + className, e);
     }
   }
 
