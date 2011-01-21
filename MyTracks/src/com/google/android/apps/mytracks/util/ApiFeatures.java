@@ -34,6 +34,11 @@ public class ApiFeatures {
   public static final int ANDROID_API_LEVEL = Integer.parseInt(
       Build.VERSION.SDK);
   
+  private static final String PLATFORM_ADAPTER_GINGERBREAD =
+    "com.google.android.apps.mytracks.util.GingerbreadPlatformAdapter";
+  private static final String PLATFORM_ADAPTER_ECLAIR =
+    "com.google.android.apps.mytracks.util.EclairPlatformAdapter";
+  
   private static ApiFeatures instance;
   
   /**
@@ -63,14 +68,26 @@ public class ApiFeatures {
    */
   protected ApiFeatures() {
     if (getApiLevel() >= 9) {
-      apiPlatformAdapter = new GingerbreadPlatformAdapter();
+      apiPlatformAdapter = locatePlatformAdapter(PLATFORM_ADAPTER_GINGERBREAD);
     } else if (getApiLevel() >= 5) {
-      apiPlatformAdapter = new EclairPlatformAdapter();
-    } else {
-      Log.i(MyTracksConstants.TAG,
-          "ApiFeatures: Using default platform adapter");
+      apiPlatformAdapter = locatePlatformAdapter(PLATFORM_ADAPTER_ECLAIR);
+    }
+    
+    if (apiPlatformAdapter == null) {
       // Cupcake adapter is always supported, so it's safe to do static linkage.
       apiPlatformAdapter = new CupcakePlatformAdapter();
+    }
+    
+    Log.i(MyTracksConstants.TAG, "Using platform adapter " + apiPlatformAdapter.getClass());
+  }
+  
+  private ApiPlatformAdapter locatePlatformAdapter(String className) {
+    try {
+      Class<?> clazz = Class.forName(className);
+      return (ApiPlatformAdapter) clazz.newInstance();
+    } catch (Exception e) {
+      Log.i(MyTracksConstants.TAG, "ApiFeatures: Unable to instantiate " + className, e);
+      return null;
     }
   }
 
