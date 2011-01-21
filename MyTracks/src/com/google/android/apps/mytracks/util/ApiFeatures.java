@@ -68,9 +68,9 @@ public class ApiFeatures {
    */
   protected ApiFeatures() {
     if (getApiLevel() >= 9) {
-      apiPlatformAdapter = locatePlatformAdapter(PLATFORM_ADAPTER_GINGERBREAD);
+      apiPlatformAdapter = createPlatformAdapter(PLATFORM_ADAPTER_GINGERBREAD);
     } else if (getApiLevel() >= 5) {
-      apiPlatformAdapter = locatePlatformAdapter(PLATFORM_ADAPTER_ECLAIR);
+      apiPlatformAdapter = createPlatformAdapter(PLATFORM_ADAPTER_ECLAIR);
     }
     
     if (apiPlatformAdapter == null) {
@@ -81,7 +81,7 @@ public class ApiFeatures {
     Log.i(MyTracksConstants.TAG, "Using platform adapter " + apiPlatformAdapter.getClass());
   }
   
-  private ApiPlatformAdapter locatePlatformAdapter(String className) {
+  private ApiPlatformAdapter createPlatformAdapter(String className) {
     try {
       Class<?> clazz = Class.forName(className);
       return (ApiPlatformAdapter) clazz.newInstance();
