@@ -204,16 +204,6 @@ public class DatabaseDumperTest extends TestCase {
     }
   }
   
-  private String readBlob(InputStream reader, int length) throws Exception {
-    if (length == 0) {
-      return "";
-    }
-
-    byte[] blob = new byte[length];
-    assertEquals(length, reader.read(blob));
-    return new String(blob);
-  }
-
   public void testFewerRows() throws Exception {
     // Dump only the first two rows
     DatabaseDumper dumper = new DatabaseDumper(COLUMN_NAMES, COLUMN_TYPES, false);
@@ -266,5 +256,15 @@ public class DatabaseDumperTest extends TestCase {
       assertEquals(COLUMN_NAMES[i], reader.readUTF());
       assertEquals(COLUMN_TYPES[i], reader.readByte());
     }
+  }
+
+  private String readBlob(InputStream reader, int length) throws Exception {
+    if (length == 0) {
+      return "";
+    }
+
+    byte[] blob = new byte[length];
+    assertEquals(length, reader.read(blob));
+    return new String(blob);
   }
 }

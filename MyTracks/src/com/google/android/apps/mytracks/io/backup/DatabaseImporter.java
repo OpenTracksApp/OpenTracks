@@ -175,7 +175,6 @@ public class DatabaseImporter {
       }
       case ContentTypeIds.BLOB_TYPE_ID: {
         int blobLength = reader.readInt();
-        System.err.println("read blob length " + blobLength);
         if (blobLength != 0) {
           byte[] blob = new byte[blobLength];
           int readBytes = reader.read(blob, 0, blobLength);
