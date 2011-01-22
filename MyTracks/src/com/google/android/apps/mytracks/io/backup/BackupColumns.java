@@ -25,10 +25,11 @@ public class BackupColumns {
   public static final String[] POINTS_BACKUP_COLUMNS =
       { TrackPointsColumns._ID, TrackPointsColumns.TRACKID, TrackPointsColumns.LATITUDE,
         TrackPointsColumns.LONGITUDE, TrackPointsColumns.ALTITUDE, TrackPointsColumns.BEARING,
-        TrackPointsColumns.TIME, TrackPointsColumns.ACCURACY, TrackPointsColumns.SPEED };
+        TrackPointsColumns.TIME, TrackPointsColumns.ACCURACY, TrackPointsColumns.SPEED,
+        TrackPointsColumns.SENSOR };
   public static final byte[] POINTS_BACKUP_COLUMN_TYPES =
       { LONG_TYPE_ID, LONG_TYPE_ID, INT_TYPE_ID, INT_TYPE_ID, FLOAT_TYPE_ID,
-        FLOAT_TYPE_ID, LONG_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID };
+        FLOAT_TYPE_ID, LONG_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID, BLOB_TYPE_ID };
 
   public static final String[] TRACKS_BACKUP_COLUMNS = {
       TracksColumns._ID, TracksColumns.NAME, TracksColumns.DESCRIPTION, TracksColumns.CATEGORY,

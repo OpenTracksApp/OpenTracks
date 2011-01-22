@@ -27,6 +27,7 @@ public class ContentTypeIds {
   public static final byte FLOAT_TYPE_ID = 3;
   public static final byte DOUBLE_TYPE_ID = 4;
   public static final byte STRING_TYPE_ID = 5;
+  public static final byte BLOB_TYPE_ID = 6;
 
   private ContentTypeIds() { /* Not instantiable */ }
 }

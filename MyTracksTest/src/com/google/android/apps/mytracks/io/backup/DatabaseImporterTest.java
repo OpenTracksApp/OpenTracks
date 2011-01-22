@@ -24,6 +24,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import junit.framework.TestCase;
@@ -69,38 +70,27 @@ public class DatabaseImporterTest extends TestCase {
   public void testImportAllRows_readNullFields() throws Exception {
     testImportAllRows(true);
   }
-
+  
   private void testImportAllRows(boolean readNullFields) throws Exception {
     // Create a fake data stream to be read
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream(1024);
     DataOutputStream writer = new DataOutputStream(outputStream);
 
-    // Add the header
-    writer.writeInt(6);
-    writer.writeUTF("col1");
-    writer.writeByte(ContentTypeIds.INT_TYPE_ID);
-    writer.writeUTF("col2");
-    writer.writeByte(ContentTypeIds.BOOLEAN_TYPE_ID);
-    writer.writeUTF("col3");
-    writer.writeByte(ContentTypeIds.STRING_TYPE_ID);
-    writer.writeUTF("col4");
-    writer.writeByte(ContentTypeIds.FLOAT_TYPE_ID);
-    writer.writeUTF("col5");
-    writer.writeByte(ContentTypeIds.DOUBLE_TYPE_ID);
-    writer.writeUTF("col6");
-    writer.writeByte(ContentTypeIds.LONG_TYPE_ID);
+    writeFullHeader(writer);
 
     // Add the number of rows
     writer.writeInt(2);
 
     // Add a row with all fields present 
-    writer.writeLong(0x3F);
+    writer.writeLong(0x7F);
     writer.writeInt(42);
     writer.writeBoolean(true);
     writer.writeUTF("lolcat");
     writer.writeFloat(3.1415f);
     writer.writeDouble(2.72);
     writer.writeLong(123456789L);
+    writer.writeInt(4);
+    writer.writeBytes("blob");
 
     // Add a row with some missing fields
     writer.writeLong(0x15);
@@ -110,6 +100,7 @@ public class DatabaseImporterTest extends TestCase {
     if (readNullFields) writer.writeFloat(0.0f);
     writer.writeDouble(2.72);
     if (readNullFields) writer.writeLong(0L);
+    if (readNullFields) writer.writeInt(0);  // empty blob
 
     writer.flush();
 
@@ -122,7 +113,7 @@ public class DatabaseImporterTest extends TestCase {
 
     // Verify the first row
     ContentValues value = insertedValues.get(0);
-    assertEquals(value.toString(), 6, value.size());
+    assertEquals(value.toString(), 7, value.size());
 
     assertValue(42, "col1", value);
     assertValue(true, "col2", value);
@@ -130,6 +121,7 @@ public class DatabaseImporterTest extends TestCase {
     assertValue(3.1415f, "col4", value);
     assertValue(2.72, "col5", value);
     assertValue(123456789L, "col6", value);
+    assertBlobValue("blob", "col7", value);
 
     // Verify the second row
     value = insertedValues.get(1);
@@ -139,26 +131,13 @@ public class DatabaseImporterTest extends TestCase {
     assertValue("lolcat", "col3", value);
     assertValue(2.72, "col5", value);
   }
-
+  
   public void testImportAllRows_noRows() throws Exception {
     // Create a fake data stream to be read
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream(1024);
     DataOutputStream writer = new DataOutputStream(outputStream);
 
-    // Add the header
-    writer.writeInt(6);
-    writer.writeUTF("col1");
-    writer.writeByte(ContentTypeIds.INT_TYPE_ID);
-    writer.writeUTF("col2");
-    writer.writeByte(ContentTypeIds.BOOLEAN_TYPE_ID);
-    writer.writeUTF("col3");
-    writer.writeByte(ContentTypeIds.STRING_TYPE_ID);
-    writer.writeUTF("col4");
-    writer.writeByte(ContentTypeIds.FLOAT_TYPE_ID);
-    writer.writeUTF("col5");
-    writer.writeByte(ContentTypeIds.DOUBLE_TYPE_ID);
-    writer.writeUTF("col6");
-    writer.writeByte(ContentTypeIds.LONG_TYPE_ID);
+    writeFullHeader(writer);
 
     // Add the number of rows
     writer.writeInt(0);
@@ -186,20 +165,7 @@ public class DatabaseImporterTest extends TestCase {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream(1024);
     DataOutputStream writer = new DataOutputStream(outputStream);
 
-    // Add the header
-    writer.writeInt(6);
-    writer.writeUTF("col1");
-    writer.writeByte(ContentTypeIds.INT_TYPE_ID);
-    writer.writeUTF("col2");
-    writer.writeByte(ContentTypeIds.BOOLEAN_TYPE_ID);
-    writer.writeUTF("col3");
-    writer.writeByte(ContentTypeIds.STRING_TYPE_ID);
-    writer.writeUTF("col4");
-    writer.writeByte(ContentTypeIds.FLOAT_TYPE_ID);
-    writer.writeUTF("col5");
-    writer.writeByte(ContentTypeIds.DOUBLE_TYPE_ID);
-    writer.writeUTF("col6");
-    writer.writeByte(ContentTypeIds.LONG_TYPE_ID);
+    writeFullHeader(writer);
 
     // Add the number of rows
     writer.writeInt(3);
@@ -214,6 +180,7 @@ public class DatabaseImporterTest extends TestCase {
         writer.writeFloat(0.0f);
         writer.writeDouble(0.0);
         writer.writeLong(0L);
+        writer.writeInt(0);  // empty blob
       }
     }
 
@@ -225,6 +192,7 @@ public class DatabaseImporterTest extends TestCase {
     if (readNullFields) writer.writeFloat(0.0f);
     writer.writeDouble(2.72);
     if (readNullFields) writer.writeLong(0L);
+    if (readNullFields) writer.writeInt(0);  // empty blob
 
     writer.flush();
 
@@ -292,10 +260,34 @@ public class DatabaseImporterTest extends TestCase {
     }
   }
 
+  private void writeFullHeader(DataOutputStream writer) throws IOException {
+    // Add the header
+    writer.writeInt(7);
+    writer.writeUTF("col1");
+    writer.writeByte(ContentTypeIds.INT_TYPE_ID);
+    writer.writeUTF("col2");
+    writer.writeByte(ContentTypeIds.BOOLEAN_TYPE_ID);
+    writer.writeUTF("col3");
+    writer.writeByte(ContentTypeIds.STRING_TYPE_ID);
+    writer.writeUTF("col4");
+    writer.writeByte(ContentTypeIds.FLOAT_TYPE_ID);
+    writer.writeUTF("col5");
+    writer.writeByte(ContentTypeIds.DOUBLE_TYPE_ID);
+    writer.writeUTF("col6");
+    writer.writeByte(ContentTypeIds.LONG_TYPE_ID);
+    writer.writeUTF("col7");
+    writer.writeByte(ContentTypeIds.BLOB_TYPE_ID);
+  }
+
   private <T> void assertValue(T expectedValue, String name, ContentValues values) {
     @SuppressWarnings("unchecked")
     T value = (T) values.get(name);
     assertNotNull(value);
     assertEquals(expectedValue, value);
+  }
+  
+  private void assertBlobValue(String expectedValue, String name, ContentValues values ){
+    byte[] blob = values.getAsByteArray(name);
+    assertEquals(expectedValue, new String(blob));
   }
 }
