@@ -77,10 +77,8 @@ limitations under the License.
   <string name="track_will_be_permanently_deleted">El recorrido y sus señales serán borrados permanentemente de este teléfono.</string>
   <string name="marker_will_be_permanently_deleted">La señal será borrada permanentemente de este teléfono.</string>
 
-  <!-- Text and links when uploading to Google My Maps -->
-  <string name="new_map_description">"Creado por My Tracks en Android."</string>
-  <string name="my_map_link">"Creado por &lt;a href='http://mytracks.appspot.com'&gt;My Tracks&lt;/a&gt; en Android."</string>
-  <string name="new_map_title">Nuevo mapa</string>
+  <!-- Text and links when uploading to Google Fusion Tables -->
+  <string name="fusiontable_link">Creado por &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; en Android.</string>
 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">Puntos</string>
@@ -105,8 +103,8 @@ limitations under the License.
 
   <!--  TrackList -->
   <string name="tracklist_show_track">Mostrar</string>
-  <string name="tracklist_send_to_mymaps">Enviar a Google My Maps</string>
-  <string name="tracklist_send_to_new_mymap">Enviar a nuevo Google My Map</string>
+  <string name="tracklist_send_to_fusiontables">Enviar a Google Fusion Tables</string>
+  <string name="tracklist_send_to_new_fusiontable">Enviar a nueva Google Fusion Table</string>
   <string name="tracklist_send_to_docs">Enviar a Google Docs</string>
   <string name="tracklist_send_to_google">Enviar a Google...</string>
   <string name="tracklist_delete_track">Borrar del teléfono...</string>
@@ -114,7 +112,7 @@ limitations under the License.
   <string name="tracklist_write_to_sd">Guardar en tarjeta SD...</string>
   <string name="tracklist_save_as_gpx">Guardar en archivo GPX</string>
   <string name="tracklist_save_as_kml">Guardar en archivo KML</string>
-  <string name="tracklist_btn_send_all_to_mymaps">Enviar a Google My Maps</string>
+  <string name="tracklist_btn_send_all_to_fusiontables">Enviar a Google Fusion Tables</string>
   <string name="tracklist_btn_delete_all">Borrar todos los recorridos</string>
   <!-- Export All -->
   <string name="tracklist_btn_export_all">Exportar todos los recorridos</string>
@@ -123,7 +121,7 @@ limitations under the License.
   <string name="tracklist_all_tracks">Todos los recorridos:"</string>
   <string name="tracklist_this_track">Este recorrido"</string>
   <string name="tracklist_share_track">Compartir con amigos..."</string>
-  <string name="tracklist_share_link">Un link a Google My Map"</string>
+  <string name="tracklist_share_linkfusion">Un enlace a Google Fusion Tables</string>
   <string name="tracklist_share_gpx_file">Un archivo GPX"</string>
   <string name="tracklist_share_kml_file">Un archivo KML"</string>
   <string name="tracklist_clear_map">"Limpiar mapa"</string>
@@ -191,6 +189,37 @@ limitations under the License.
   <string name="settings_split_frequency_summary">Tiempo o distancia máxima para insertar una nueva marca de división</string>
   <string name="pace_label">Paso</string>
 
+  <string name="settings_auto_resume_track_timeout">Temporizador de auto-reinicio de recorrido</string>
+  <string name="settings_auto_resume_track_timeout_summary">Máximo tiempo en minutos después del cual un recorrido previamente grabado no será reiniciado después de un reinicio del teléfono</string>
+
+  <string name="settings_timestamp_track_name">Hora como nombre de recorrido</string>
+  <string name="settings_timestamp_track_name_summary_on">El nombre por defecto del recorrido será la fecha y hora del inicio del recorrido</string>
+  <string name="settings_timestamp_track_name_summary_off">Los nombre de recorrido tendrán números que se incrementarán en cada nuevo recorrido.</string>
+
+  <string name="eclair_required">Sólo soportado en Android 2.0 o superior</string>
+  <string name="settings_sensor_type">Tipo de sensor</string>
+  <string name="settings_sensor_type_summary">Tipo de sensor al que conectar</string>
+  <string name="settings_heart_rate_ant_sensor_id">Liberar conexión al sensor de corazón ANT</string>
+  <string name="settings_power_ant_sensor_id">Liberar conexión al sensor de energía ANT</string>
+  <string name="settings_srm_bridge_ant_sensor_id">Liberar conexión al sensor puente SRM ANT</string>
+  <string name="settings_ant_not_paired">Sensor ANT no conectado</string>
+  <string name="settings_ant_paired">Sensor ANT conectado con: %d</string>
+  <string name="bluetooth_sensor_title">Sensor Bluetooth</string>
+  <string name="bluetooth_sensor_summary">Sensor Bluetooth al que conectar</string>
+
+  <!-- Backups -->
+  <string name="settings_sd_backup">Backup en tarjeta SD</string>
+  <string name="settings_backup_to_sd">Hacer backup</string>
+  <string name="settings_backup_to_sd_summary">Hacer una copia total de sus recorridos y configuraciones a la tarjeta SD</string>
+  <string name="settings_restore_from_sd">Restaurar</string>
+  <string name="settings_restore_from_sd_summary">Restaurar todos los recorridos y configuraciones desde la tarjeta SD</string>
+  <string name="settings_no_backup_while_recording">No se pueden manejar backups mientras se está registrando un recorrido.</string>
+
+  <string name="restore_overwrites_warning">Restaurar un backup desde la tarjeta SD SOBREESCRIBIRÁ todos sus recorridos y configuraciones actuales. ¿Está usted seguro?</string>
+  <string name="select_backup_to_restore">Seleccionar el backup para restaurar</string>
+  <string name="no_backups">No se han encontrado backups.</string>
+  <string name="backup_write_progress_message">Guardando todos los recorridos y configuraciones a la tarjeta SD. Esto puede llevar un rato...</string>
+  <string name="backup_import_progress_message">Leyendo todos los recorridos y configuraciones desde la tarjeta SD. Esto puede llevar un rato...</string>
   <!-- MyTracksSky -->
   <string name="mytracks_sky">Satélites GPS</string>
   <string name="share_track">Compartir recorrido con amigos</string>
@@ -279,6 +308,10 @@ limitations under the License.
   <string name="total_distance_label">Distancia total</string>
   <string name="distance_label">Distancia</string>
   <string name="waiting">Esperando...</string>
+  <string name="power">Potencia</string>
+  <string name="cadence">Cadencia</string>
+  <string name="heart_rate">Ritmo cardíaco</string>
+  <string name="max_heart_rate">Máx ritmo cardíaco</string>
 
   <!-- End User License Agreement -->
   <string name="eula_title">Contrato de Licencia de Usuario Final</string>
@@ -328,5 +361,41 @@ limitations under the License.
   $6 : Speed units (mph) : Pace units (per mile)
   -->
   <string name="announce_template">My Tracks %1$s %2$.2f %3$s en %4$s a %5$s %6$s</string>
-</resources>
 
+  <!-- Check Units -->
+  <string name="check_units_title">Aviso de unidades de medida</string>
+  <string name="check_units_message">Por defecto las unidades son métricas. ¿Quiere cambiar la configuración?</string>
+
+  <!-- Fake preference keys - never saved, but show options in the preferences screen -->
+  <string name="bluetooth_options">Opciones Bluetooth</string>
+  <string name="bluetooth_pairing">Conexión de dispositivos</string>
+  <string name="bluetooth_pairing_summary">Abrir la configuración Bluetooth de Android para conectar un dispositivo</string>
+  <string name="sensor_bluetooth_options_key">Sensor Bluetooth activado</string>
+  <string name="sensor_options">Opciones del sensor</string>
+
+  <!-- Bluetooth Sensor -->
+  <string name="bluetooth_connected">Conectado a %s</string>
+  <string name="bluetooth_connecting">Sensor Bluetooth conectando ...</string>
+  <string name="bluetooth_not_connected">Sensor Bluetooth no conectado</string>
+
+  <!-- Sensor State -->
+  <string name="sensor_data_time">Hora de los datos del sensor</string>
+  <string name="power_meter_enabled">Sensor de batería activado</string>
+  <string name="heart_rate_monitor_enabled">Monitor de ritmo cardíaco activado</string>
+  <string name="no_sensor_manager">No hay un gestor de sensores</string>
+  <string name="enabled">Activado</string>
+  <string name="connecting">Conectando</string>
+  <string name="connected">Conectado</string>
+  <string name="disconnected">Desconectando</string>
+  <string name="no_sensor_service">No hay un servicio de sensores</string>
+  <string name="searching">Buscando</string>
+  <string name="sending">Enviando</string>
+
+  <!-- Manifest description (not seen inside the app) -->
+  <string name="notification_permission_label">recibir avisos de registro de recorridos</string>
+  <string name="read_tracks_permission_label">leer datos de recorridos grabados</string>
+  <string name="write_tracks_permission_label">escribir datos de recorridos grabados, iniciar/detener recorridos</string>
+  <string name="notification_permission_description">Ser notificado cuando un recorrido empieza o termina de registrarse.</string>
+  <string name="read_tracks_permission_description">Poder leer datos, como puntos de interés.</string>
+  <string name="write_tracks_permission_description">Poder escribir datos, como registrar o añadir puntos de interés.</string>
+</resources>
