@@ -213,10 +213,12 @@ limitations under the License.
  
   <string name="eclair_required">Wird nur unter Android 2.0 oder höher unterstützt</string> 
   <string name="settings_sensor_type">Sensortyp</string> 
-  <string name="settings_sensor_type_summary">Der Typ des zu verbindenden Sensors</string> 
-  <string name="settings_sensor_id">Sensor-Id</string> 
-  <string name="settings_sensor_id_summary">Die zum Sensor zu sendende Id</string> 
-  <string name="sensor_id_malformed">Die Id muss eine Ganzzahl sein.</string> 
+  <string name="settings_sensor_type_summary">Der Typ des zu verbindenden Sensors</string>
+  <string name="settings_heart_rate_ant_sensor_id">Verbindung mit ANT Herzqrequenzmesser aufheben</string>
+  <string name="settings_power_ant_sensor_id">Verbindung mit ANT Kraftmesser aufheben</string>
+  <string name="settings_srm_bridge_ant_sensor_id">Verbindung mit ANT srm bridge aufheben</string>
+  <string name="settings_ant_not_paired">ANT-Sensor nicht verbunden</string>
+  <string name="settings_ant_paired">ANT-Sensor verbunden mit: %d</string>
   <string name="bluetooth_sensor_title">Bluetooth-Sensor</string> 
   <string name="bluetooth_sensor_summary">Der zu verbindende Bluetoothsensor</string> 
   <string name="settings_modular_stats_display_title">Art der Datenanzeige</string> 
@@ -324,7 +326,7 @@ limitations under the License.
   <string name="statistics">Statistik</string> 
   <string name="total_distance_label">Gesamtentfernung</string> 
   <string name="distance_label">Entfernung</string> 
-  <string name="power">Energie</string> 
+  <string name="power">Kraft</string> 
   <string name="cadence">Kadenz</string> 
   <string name="heart_rate">Herzfrequenz</string> 
   <string name="max_heart_rate">Höchste Herzfrequenz</string> 
@@ -387,20 +389,21 @@ limitations under the License.
   <string name="check_units_title">Einheitenbenachrichtigung</string> 
   <string name="check_units_message">Voreingestellt sind metrische Einheiten. Willst Du diese Einstellung ändern?</string> 
  
-  <!-- Fake preference keys - never saved, but show options in the preferences screen --> 
-  <string name="bluetooth_options">Bluetootheinstellungen</string> 
+  <!-- Fake preference keys - never saved, but show options in the preferences screen -->
+  <string name="method_bluetooth">Bluetooth</string>
+  <string name="bluetooth_options">Bluetooth-Einstellungen</string> 
   <string name="bluetooth_pairing">Geräteverbindung</string> 
-  <string name="bluetooth_pairing_summary">Öffnet Androids Bluetootheinstellungen, um Geräte zu verbinden.</string> 
-  <string name="sensor_options">Sensoreinstellungen</string> 
+  <string name="bluetooth_pairing_summary">Öffnet Androids Bluetooth-Einstellungen, um Geräte zu verbinden.</string> 
+  <string name="sensor_options">Sensor-Einstellungen</string> 
  
   <!-- Bluetooth Sensor --> 
   <string name="bluetooth_connected">Verbunden mit %s</string> 
-  <string name="bluetooth_connecting">Verbinde mit Bluetoothsensor ...</string> 
-  <string name="bluetooth_not_connected">Bluetoothsensor nicht verbunden.</string> 
+  <string name="bluetooth_connecting">Verbinde mit Bluetooth-Sensor ...</string> 
+  <string name="bluetooth_not_connected">Bluetooth-Sensor nicht verbunden.</string> 
  
   <!-- Sensor State --> 
-  <string name="sensor_data_time">Sensor Data Time</string> 
-  <string name="power_meter_enabled">Energiemessung aktiviert</string> 
+  <string name="sensor_data_time">Uhrzeit</string> 
+  <string name="power_meter_enabled">Kraftmesser aktiviert</string> 
   <string name="heart_rate_monitor_enabled">Herzfrequenzmessung aktiviert</string> 
   <string name="no_sensor_manager">Keine Sensoren verfügbar</string> 
   <string name="enabled">Aktiviert</string> 
