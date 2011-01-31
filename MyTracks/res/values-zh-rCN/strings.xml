@@ -15,9 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-
-
-
   <!-- Used by the Menu -->
   <string name="start_recording">记录轨迹</string>
   <string name="stop_recording">停止记录</string>
@@ -52,7 +49,7 @@ limitations under the License.
   <string name="wait_for_fix">等待更准确的 GPS 定位. 请确定可以看见天空.</string>
   <string name="status_now_recording">现在开始记录新的轨迹.</string>
   <string name="status_stopped_recording">停止记录你的轨迹.</string>
-  <string name="status_new_mymap_has_been_created">已在 maps.google.com 创建新 Google My Map.</string>
+  <string name="status_new_fusiontable_has_been_created">已在 maps.google.com 创建新 Google Fusion Table.</string>
   <string name="status_tracks_have_been_uploaded">你的轨迹已经发送到 maps.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_new_doc">你的轨迹已经作为新的电子表格发送到 docs.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_docs">你的轨迹已经发送到 docs.google.com.</string>
@@ -67,11 +64,11 @@ limitations under the License.
   <string name="progress_message">发送你的轨迹到 Google.</string>
   <string name="progress_message_reading_track">读取轨迹中...</string>
   <string name="progress_message_preparing_track">准备轨迹中...</string>
-  <string name="progress_message_authenticating_mymaps">登录 Google Maps 中...</string>
+  <string name="progress_message_authenticating_fusiontables">登录 Google Fusion Tables 中...</string>
   <string name="progress_message_authenticating_docs">登录 Google Docs 中...</string>
   <string name="progress_message_sending_docs">发送轨迹到 Google Docs 中...</string>
-  <string name="progress_message_sending_mymaps">发送轨迹到 Google Maps 中...</string>
-  <string name="progress_message_creating_map">创建新的 My Map 中...</string>
+  <string name="progress_message_sending_fusiontables">发送轨迹到 Google Fusion Tables 中...</string>
+  <string name="progress_message_creating_fusiontable">创建新的 Fusion Table 中...</string>
   <string name="import_progress_message">导入 GPS 轨迹中. 请稍候.</string>
   <string name="write_progress_message">写入文件到 SD 卡中. 请稍候.</string>
   <string name="progress_message_updating_track">更新轨迹统计信息中...</string>
@@ -116,8 +113,8 @@ limitations under the License.
 
   <!--  TrackList -->
   <string name="tracklist_show_track">显示</string>
-  <string name="tracklist_send_to_mymaps">发送到 Google My Maps</string>
-  <string name="tracklist_send_to_new_mymap">发送到新建 Google My Map</string>
+  <string name="tracklist_send_to_fusiontables">发送到 Google Fusion Table</string>
+  <string name="tracklist_send_to_new_fusiontable">发送到新建 Google Fusion Table</string>
   <string name="tracklist_send_to_docs">发送到 Google Docs</string>
   <string name="tracklist_send_to_google">发送到 Google...</string>
   <string name="tracklist_delete_track">从手机上删除...</string>
@@ -127,7 +124,7 @@ limitations under the License.
   <string name="tracklist_save_as_kml">保存为 KML 文件</string>
   <string name="tracklist_save_as_csv">保存为 CSV 文件</string>
   <string name="tracklist_save_as_tcx">保存为 TCX 文件</string>
-  <string name="tracklist_btn_send_all_to_mymaps">发送到 Google My Maps</string>
+  <string name="tracklist_btn_send_all_to_fusiontables">发送到 Google Fusion Tables</string>
   <string name="tracklist_btn_delete_all">删除所有轨迹</string>
   <!-- Export All -->
   <string name="tracklist_btn_export_all">导出所有轨迹</string>
@@ -221,9 +218,6 @@ limitations under the License.
   <string name="bluetooth_sensor_title">蓝牙感应器</string>
   <string name="bluetooth_sensor_summary">要连接到的蓝牙感应器</string>
 
-
-
-
   <string name="settings_backup">备份 (测试版)</string>
   <string name="settings_sd_backup">SD 存储卡备份</string>
   <string name="settings_backup_to_sd">立即备份</string>
@@ -306,31 +300,15 @@ limitations under the License.
   <string name="second">秒</string>
   <string name="seconds">秒</string>
 
-
-
   <!-- Distance -->
-
-
   <string name="kilometers_long">千米</string>
-
-
   <string name="miles_long">英里</string>
 
   <!-- Speed and Pace -->
-
   <string name="kilometer_per_hour_long">千米每小时</string>
-
   <string name="per_kilometer">每千米</string>
-
   <string name="mile_per_hour_long">英里每小时</string>
-
   <string name="per_mile">每英里</string>
-
-
-
-
-
-
 
   <!-- Stats Labels -->
   <string name="moving_time_label">移动时间</string>
@@ -346,7 +324,6 @@ limitations under the License.
   <string name="cadence">节奏</string>
   <string name="heart_rate">心率</string>
   <string name="max_heart_rate">最大心率</string>
-
   <string name="waiting">请稍候...</string>
 
   <!-- End User License Agreement -->
@@ -362,27 +339,8 @@ limitations under the License.
   <string name="about_email">技术支持</string>
   <string name="about_support">技术支持:</string>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   <!-- Send to Google -->
   <string name="sendtogoogle_title">发送到...</string>
-
-
   <string name="sendtogoogle_send_now">立即发送</string>
   <string name="sendtogoogle_create_new_map">创建新地图</string>
   <string name="sendtogoogle_pick_existing_map">选择已有地图</string>
@@ -435,7 +393,6 @@ limitations under the License.
   <string name="bluetooth_options">蓝牙设置</string>
   <string name="bluetooth_pairing">设备关联</string>
   <string name="bluetooth_pairing_summary">打开 Android 的蓝牙设置关联设备</string>
-
   <string name="sensor_options">感应器选项</string>
 
   <!-- Bluetooth Sensor -->
@@ -447,5 +404,4 @@ limitations under the License.
   <string name="sensor_data_time">感应器数据时间</string>
   <string name="power_meter_enabled">电源计量器已启用</string>
   <string name="heart_rate_monitor_enabled">心率监视器已启用</string>
-
 </resources>
