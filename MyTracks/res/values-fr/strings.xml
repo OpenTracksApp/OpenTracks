@@ -34,7 +34,7 @@ limitations under the License.
   <!-- Error messages -->
   <string name="error_no_location_manager">Aucune source de localisation n\'a été trouvée sur ce système !</string>
   <string name="error_no_gps_location_provider">Aucune source GPS de localisation n\'a été trouvée sur ce système.</string>
-  <string name="error_sending_to_mymap">Il y a eu une erreur lors de l\'envoi de votre parcours à Google Mes cartes. Réessayez plus tard SVP.</string>
+  <string name="error_sending_to_fusiontables">Il y a eu une erreur lors de l\'envoi de votre parcours à Google Fusion Tables. Réessayez plus tard SVP.</string>
   <string name="error_sending_to_docs">Il y a eu une erreur lors de l\'envoi de votre parcours à Google Docs. Réessayez plus tard SVP.</string>
   <string name="error_unable_to_start_recording">Impossible de débuter l\'enregistrement. Réessayez.</string>
   <string name="error_unable_to_stop_recording">Impossible de stopper l\'enregistrement. Réessayez.</string>

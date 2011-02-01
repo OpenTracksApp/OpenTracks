@@ -34,7 +34,7 @@ limitations under the License.
   <!-- Error messages -->
   <string name="error_no_location_manager">Ingen platshanterare hittades på denna enhet!</string>
   <string name="error_no_gps_location_provider">Ingen GPS-positioneringstjänst hittades på denna enhet.</string>
-  <string name="error_sending_to_mymap">Det uppstod ett fel i sändningen av ditt spår till Google Mina Kartor. Försök igen senare.</string>
+  <string name="error_sending_to_fusiontables">Det uppstod ett fel i sändningen av ditt spår till Google Fusion Tables. Försök igen senare.</string>
   <string name="error_sending_to_docs">Det uppstod ett fel i sändningen av ditt spår till Google Dokument. Försök igen senare.</string>
   <string name="error_unable_to_start_recording">Kan inte starta inspelningen. Försök igen.</string>
   <string name="error_unable_to_stop_recording">Kan inte stoppa inspelningen. Försök igen.</string>

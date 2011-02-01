@@ -99,7 +99,7 @@ public class SendToDocs {
   }
 
   private void doUpload() {
-    statusMessage = activity.getString(R.string.error_sending_to_mymap);
+    statusMessage = activity.getString(R.string.error_sending_to_fusiontables);
     success = false;
 
     try {

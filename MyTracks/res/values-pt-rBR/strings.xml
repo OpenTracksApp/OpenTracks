@@ -33,7 +33,7 @@ limitations under the License.
   <!-- Error messages -->
   <string name="error_no_location_manager">Gerenciador de localização não encontrado neste dispositivo!"</string>
   <string name="error_no_gps_location_provider">"Provedor de posição de GPS não encontrado neste dispositivo."</string>
-  <string name="error_sending_to_mymap">Ocorreu um erro ao enviar seu caminho para o Google Meu Mapa. Por favor tente novamente mais tarde."</string>
+  <string name="error_sending_to_fusiontables">Ocorreu um erro ao enviar seu caminho para o Google Fusion Tables. Por favor tente novamente mais tarde."</string>
   <string name="error_sending_to_docs">Ocorreu um erro ao enviar seu caminho para o Google Docs. Por favor tente novamente mais tarde."</string>
   <string name="error_unable_to_start_recording">Impossível iniciar a gravação. Tente novamente.</string>
   <string name="error_unable_to_stop_recording">Impossível interromper a gravação. Tente novamente.</string>

@@ -574,28 +574,34 @@ public class SendToFusionTables implements Runnable {
     // same time.
   	boolean success = true;
     Cursor c = null;
-    c = providerUtils.getWaypointsCursor(
-        track.getId(), 0,
-        MyTracksConstants.MAX_LOADED_WAYPOINTS_POINTS);
-    if (c != null) {
-      if (c.moveToFirst()) {
-        // This will skip the 1st waypoint (it carries the stats for the
-        // last segment).
-        while (c.moveToNext()) {
-          Waypoint wpt = providerUtils.createWaypoint(c);
-          Log.d(MyTracksConstants.TAG, "SendToFusionTables: Creating waypoint.");
-          success = createNewPoint(wpt.getName(), wpt.getDescription(), wpt.getLocation(),
-          		MARKER_TYPE_WAYPOINT);
-          if (!success) {
-          	break;
+    try {
+      c = providerUtils.getWaypointsCursor(
+          track.getId(), 0,
+          MyTracksConstants.MAX_LOADED_WAYPOINTS_POINTS);
+      if (c != null) {
+        if (c.moveToFirst()) {
+          // This will skip the 1st waypoint (it carries the stats for the
+          // last segment).
+          while (c.moveToNext()) {
+            Waypoint wpt = providerUtils.createWaypoint(c);
+            Log.d(MyTracksConstants.TAG, "SendToFusionTables: Creating waypoint.");
+            success = createNewPoint(wpt.getName(), wpt.getDescription(), wpt.getLocation(),
+            		MARKER_TYPE_WAYPOINT);
+            if (!success) {
+            	break;
+            }
           }
         }
       }
+      if (!success) {
+        Log.w(MyTracksConstants.TAG, "SendToFusionTables: upload waypoints failed.");
+      }
+      return success;
+    } finally {
+      if (c != null) {
+        c.close();
+      }
     }
-    if (!success) {
-      Log.w(MyTracksConstants.TAG, "SendToFusionTables: upload waypoints failed.");
-    }
-    return success;
   }
 
   /**

@@ -35,7 +35,7 @@ limitations under the License.
   <!-- Error messages -->
   <string name="error_no_location_manager">Nessuna fonte di posizione trovata su questo dispositivo.</string>
   <string name="error_no_gps_location_provider">Nessuna fonte di posizione GPS trovata su questo dispositivo.</string>
-  <string name="error_sending_to_mymap">Si è verificato un errore nell\'invio del percorso a «Le mie mappe». Per favore riprova più tardi.</string>
+  <string name="error_sending_to_fusiontables">Si è verificato un errore nell\'invio del percorso a Google Fusion Tables. Per favore riprova più tardi.</string>
   <string name="error_sending_to_docs">Si è verificato un errore nell\'invio del percorso a Google Docs. Per favore riporva più tardi.</string>
   <string name="error_unable_to_start_recording">Impossibile iniziare la registrazione. Riprova.</string>
   <string name="error_unable_to_stop_recording">Impossibile fermare la registrazione. Riprova.</string>

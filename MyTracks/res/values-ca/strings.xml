@@ -35,7 +35,7 @@ limitations under the License.
   <!-- Error messages -->
   <string name="error_no_location_manager">No s\'ha trobat cap gestor d\'ubicacions en aquest dispositiu.</string>
   <string name="error_no_gps_location_provider">No s\'ha trobat cap proveïdor d\'ubicació GPS en aquest dispositiu.</string>
-  <string name="error_sending_to_mymap">S\'ha produït un error quan s\'enviava la ruta a Google My Map. Proveu més tard.</string>
+  <string name="error_sending_to_fusiontables">S\'ha produït un error quan s\'enviava la ruta a Google Fusion Tables. Proveu més tard.</string>
   <string name="error_sending_to_docs">S\'ha prdouït un error quan s\'enviava la ruta a Google Docs. Proveu més tard.</string>
   <string name="error_unable_to_start_recording">No es pot iniciar l\'enregistrament. Proveu de nou.</string>
   <string name="error_unable_to_stop_recording">No es pot aturar l\'enregistrament. Proveu de nou.</string>
@@ -65,11 +65,11 @@ limitations under the License.
   <string name="progress_message">S\'està enviant la ruta a Google.</string>
   <string name="progress_message_reading_track">S\'està llegint la ruta...</string>
   <string name="progress_message_preparing_track">S\'està preparant la ruta...</string>
-  <string name="progress_message_authenticating_mymaps">S\'està  to Google Maps...</string>
+  <string name="progress_message_authenticating_fusiontables">S\'està  to Google Fusion Tables...</string>
   <string name="progress_message_authenticating_docs">S\'està autenticant a Google Docs...</string>
   <string name="progress_message_sending_docs">S\'està enviant la ruta a Google Docs...</string>
-  <string name="progress_message_sending_mymaps">S\'està enviant a Google Maps...</string>
-  <string name="progress_message_creating_map">S\'està creant un My Map nou...</string>
+  <string name="progress_message_sending_fusiontables">S\'està enviant a Google Fusion Tables...</string>
+  <string name="progress_message_creating_fusiontable">S\'està creant un Fusion Table nou...</string>
   <string name="import_progress_message">S\'està imporant una ruta GPS. Això pot trigar una estona.</string>
   <string name="write_progress_message">S\'està escrivint a la targeta SD. Això pot trigar una estona.</string>
   <string name="progress_message_updating_track">S\'estan actualitzant les estadístiques de la ruta...</string>
@@ -114,8 +114,8 @@ limitations under the License.
 
   <!--  TrackList -->
   <string name="tracklist_show_track">Mostra</string>
-  <string name="tracklist_send_to_mymaps">Envia a Google My Maps</string>
-  <string name="tracklist_send_to_new_mymap">Envia a un Google My Map nou</string>
+  <string name="tracklist_send_to_fusiontables">Envia a Google Fusion Tables</string>
+  <string name="tracklist_send_to_new_fusiontable">Envia a un Google Fusion Table nou</string>
   <string name="tracklist_send_to_docs">Envia a Google Docs</string>
   <string name="tracklist_send_to_google">Envia a Google...</string>
   <string name="tracklist_delete_track">Elimina del telèfon...</string>
@@ -125,7 +125,7 @@ limitations under the License.
   <string name="tracklist_save_as_kml">Anomena i desa com un fitxer KML</string>
   <string name="tracklist_save_as_csv">Anomena i desa com un fitxer CSV</string>
   <string name="tracklist_save_as_tcx">Anomena i desa com un fitxer TCX</string>
-  <string name="tracklist_btn_send_all_to_mymaps">Envia a Google My Maps</string>
+  <string name="tracklist_btn_send_all_to_fusiontables">Envia a Google Fusion Tables</string>
   <string name="tracklist_btn_delete_all">Elimina totes les rutes</string>
   <!-- Export All -->
   <string name="tracklist_btn_export_all">Exporta totes les rutes</string>
