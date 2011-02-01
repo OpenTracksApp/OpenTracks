@@ -82,8 +82,7 @@ limitations under the License.
  
   <!-- Text and links when uploading to Google Fusion Tables --> 
   <string name="new_map_description">Erstellt von My Tracks für Android.</string> 
-  <string name="my_map_link">Erstellt von &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; für Android.</string> 
-  <string name="new_map_title">Neue Karte</string> 
+  <string name="fusiontable_link">Erstellt von &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; für Android.</string> 
  
   <!-- Formatting of track and marker descriptions --> 
   <string name="points">Punkte</string> 
@@ -111,8 +110,8 @@ limitations under the License.
  
   <!--  TrackList --> 
   <string name="tracklist_show_track">Anzeigen</string> 
-  <string name="tracklist_send_to_mymaps">An eine Google MyMaps-Karte senden</string> 
-  <string name="tracklist_send_to_new_mymap">An eine neue Google MyMaps-Karte senden</string> 
+  <string name="tracklist_send_to_fusiontables">An eine Google Fusion Tables-Karte senden</string>
+  <string name="tracklist_send_to_new_fusiontable">An eine neue Google Fusion Tables-Karte senden</string> 
   <string name="tracklist_send_to_docs">An Google Docs senden</string> 
   <string name="tracklist_send_to_google">An Google senden…</string> 
   <string name="tracklist_delete_track">Vom Gerät löschen…</string> 
@@ -122,9 +121,9 @@ limitations under the License.
   <string name="tracklist_save_as_kml">KML-Datei exportieren</string> 
   <string name="tracklist_save_as_csv">CSV-Datei exportieren</string> 
   <string name="tracklist_save_as_tcx">TCX-Datei exportieren</string> 
-  <string name="tracklist_btn_send_all_to_mymaps">An Google MyMaps senden</string> 
+  <string name="tracklist_btn_send_all_to_fusiontables">An Google Fusion Tables senden</string> 
   <string name="tracklist_btn_delete_all">Alle Tracks löschen</string> 
-  <!-- Export All --> 
+  <!-- Export All -->
   <string name="tracklist_btn_export_all">Alle Tracks exportieren</string> 
   <string name="export_done">Exportieren beendet</string> 
   <string name="tracklist_pick_one">Einen Track auswählen. Lange berühren für mehr Optionen.</string> 
@@ -214,9 +213,6 @@ limitations under the License.
   <string name="eclair_required">Wird nur unter Android 2.0 oder höher unterstützt</string> 
   <string name="settings_sensor_type">Sensortyp</string> 
   <string name="settings_sensor_type_summary">Der Typ des zu verbindenden Sensors</string> 
-  <string name="settings_sensor_id">Sensor-Id</string> 
-  <string name="settings_sensor_id_summary">Die zum Sensor zu sendende Id</string> 
-  <string name="sensor_id_malformed">Die Id muss eine Ganzzahl sein.</string> 
   <string name="bluetooth_sensor_title">Bluetooth-Sensor</string> 
   <string name="bluetooth_sensor_summary">Der zu verbindende Bluetoothsensor</string> 
   <string name="settings_modular_stats_display_title">Art der Datenanzeige</string> 
@@ -338,7 +334,7 @@ limitations under the License.
   <!-- About --> 
   <string name="about">Über</string> 
   <string name="help">Hilfe</string> 
-  <string name="about_email">Unterstützung</string> 
+  <string name="about_support">Unterstützung</string> 
  
   <!-- Send to Google --> 
   <string name="sendtogoogle_title">Senden an…</string> 

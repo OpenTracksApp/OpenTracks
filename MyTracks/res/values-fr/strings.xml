@@ -49,7 +49,7 @@ limitations under the License.
   <string name="wait_for_fix">Attente du signal GPS. Assurez-vous que le ciel est bien visible.</string>
   <string name="status_now_recording">Parcours en cours d\'enregistrement.</string>
   <string name="status_stopped_recording">Enregistrement du parcours terminé.</string>
-  <string name="status_new_mymap_has_been_created">Une nouvelle carte Google \'Mes cartes\' vient d\'être créée sur maps.google.com.</string>
+  <!-- <string name="status_new_fusiontable_has_been_created">Une nouvelle carte Google \'Mes cartes\' vient d\'être créée sur maps.google.com.</string> -->
   <string name="status_tracks_have_been_uploaded">Votre parcours a été envoyé à maps.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_new_doc">Votre parcours a été envoyé dans un tableur à docs.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_docs">Votre parcours a été envoyé à docs.google.com.</string>
@@ -64,11 +64,11 @@ limitations under the License.
   <string name="progress_message">Envoi du parcours à Google...</string>
   <string name="progress_message_reading_track">Lecture du parcours...</string>
   <string name="progress_message_preparing_track">Préparation du parcours</string>
-  <string name="progress_message_authenticating_mymaps">Authentification à Google Mes cartes...</string>
+  <!-- <string name="progress_message_authenticating_fusiontables">Authentification à Google Mes cartes...</string> -->
   <string name="progress_message_authenticating_docs">Authentification à Google Docs...</string>
   <string name="progress_message_sending_docs">Envoi du parcours vers Google Docs...</string>
-  <string name="progress_message_sending_mymaps">Envoi du parcours vers Google Mes cartes...</string>
-  <string name="progress_message_creating_map">Création d\'une nouvelle carte...</string>
+  <!-- <string name="progress_message_sending_fusiontables">Envoi du parcours vers Google Mes cartes...</string> -->
+  <!-- <string name="progress_message_creating_fusiontable">Création d\'une nouvelle carte...</string> -->
   <string name="import_progress_message">Importation du parcours GPS. Patientez SVP.</string>
   <string name="write_progress_message">Enregistrement du fichier sur la carte SD. Patientez SVP.</string>
   <string name="progress_message_updating_track">Mise à jour des statistiques du parcours...</string>
@@ -81,8 +81,7 @@ limitations under the License.
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="new_map_description">Créée par My Tracks sous Android.</string>
-  <string name="my_map_link">Créée par &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; sous Android.</string>
-  <string name="new_map_title">Nouvelle carte</string>
+  <string name="fusiontable_link">Créée par &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; sous Android.</string>
 
   <!-- Formatting of track and marker descriptions -->
   <string name="recorded_date">Enregistré</string>
@@ -110,8 +109,8 @@ limitations under the License.
 
   <!--  TrackList -->
   <string name="tracklist_show_track">Afficher</string>
-  <string name="tracklist_send_to_mymaps">Envoyer à Google Mes cartes</string>
-  <string name="tracklist_send_to_new_mymap">Envoyer et créer un nouvelle carte Google Mes cartes</string>
+  <!-- <string name="tracklist_send_to_fusiontables">Envoyer à Google Mes cartes</string> -->
+  <!-- <string name="tracklist_send_to_new_fusiontable">Envoyer et créer un nouvelle carte Google Mes cartes</string> -->
   <string name="tracklist_send_to_docs">Envoyer à Google Docs</string>
   <string name="tracklist_send_to_google">Envoyer à Google...</string>
   <string name="tracklist_delete_track">Effacer du téléphone...</string>
@@ -119,14 +118,14 @@ limitations under the License.
   <string name="tracklist_write_to_sd">Enregistrer sur la carte SD...</string>
   <string name="tracklist_save_as_gpx">Enregistrer en fichier GPX </string>
   <string name="tracklist_save_as_kml">Enregistrer en fichier KML</string>
-  <string name="tracklist_btn_send_all_to_mymaps">Envoyer à Google Mes cartes</string>
+  <!-- <string name="tracklist_btn_send_all_to_fusiontables">Envoyer à Google Mes cartes</string> -->
   <string name="tracklist_btn_export_all">Exporter tous les parcours</string>
   <string name="tracklist_btn_delete_all">Tout supprimer</string>
   <string name="tracklist_pick_one">Choisissez un parcours. Faites un appui prolongé pour plus d\'options.</string>
   <string name="tracklist_all_tracks">Tous les parcours:</string>
   <string name="tracklist_this_track">Ce parcours</string>
   <string name="tracklist_share_track">Partager...</string>
-  <string name="tracklist_share_link">Lien sur Google Mes cartes</string>
+  <!-- <string name="tracklist_share_linkfusion">Lien sur Google Mes cartes</string> -->
   <string name="tracklist_share_gpx_file">Fichier GPX</string>
   <string name="tracklist_share_kml_file">Fichier KML</string>
   <string name="tracklist_clear_map">Effacer la carte</string>
@@ -293,8 +292,6 @@ limitations under the License.
   <!-- Send to Google -->
   <string name="sendtogoogle_title">Envoyer à</string>
   <string name="sendtogoogle_send_now">Envoyer maintenant</string>
-  <string name="sendtogoogle_create_new_map">Créer une nouvelle carte</string>
-  <string name="sendtogoogle_pick_existing_map">Choisir une carte</string>
   <string name="sendtogoogle_send_stats">Envoyer les statistiques du parcours</string>
   <string name="sendtogoogle_send_stats_and_points">Envoyer les statistiques et les balises</string>
 
