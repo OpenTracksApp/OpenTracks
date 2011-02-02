@@ -22,15 +22,15 @@ limitations under the License.
   <string name="switch_to_map">地図モード</string>
   <string name="mylocation">現在地</string>
   <string name="list_tracks">トラック</string>
-  <string name="list_markers">マーカ</string>
+  <string name="list_markers">マーカー</string>
   <string name="delete_all_tracks">全トラック消去</string>
   <string name="settings">設定</string>
   <string name="elevation">標高</string>
   <string name="choose_track_message">表示するトラックを選択して下さい</string>
   <string name="current_track">現在のトラック</string>
   <string name="current_segment">最終セグメント</string>
-  <string name="sensor_state">センサ情報</string>
-  <string name="aggregated_stats">集計統計情報</string>
+  <string name="sensor_state">センサー情報</string>
+  <string name="aggregated_stats">集計情報</string>
 
   <!-- Error messages -->
   <string name="error_no_location_manager">この端末でロケーションマネージャを発見できませんでした．</string>
@@ -44,7 +44,7 @@ limitations under the License.
   <string name="error_generic">エラーが発生しました．もう一度試して下さい．</string>
   <string name="error_track_does_not_exist">トラックが存在しません．</string>
   <string name="error_out_of_memory">大きなファイルです(500KB未満でなければなりません)．終了します．</string>
-  <string name="error_unable_to_insert_marker">マーカの挿入ができません．位置決定ができません．</string>
+  <string name="error_unable_to_insert_marker">マーカーの挿入ができません．位置決定ができません．</string>
 
   <!-- Status messages -->
   <string name="wait_for_fix">GPS位置精度がよくなるまで待機しています．空が見えるところにいて下さい．</string>
@@ -57,8 +57,8 @@ limitations under the License.
   <string name="status_enable_gps">ここをタップして「位置情報とセキュリティの設定」を開いて「GPS機能を使用」にチェックして下さい．バックボタンで戻ってください．</string>
   <string name="status_approximate_location">ご注意: 携帯電話中継局とWi-Fiネットワークから大まかな位置を特定します．</string>
   <string name="status_no_location">現在位置決定ができません．位置取得源を増やし(位置情報とセキュリティの設定 をご覧ください)、空が見えるようにして下さい．もう一度試して下さい．</string>
-  <string name="status_waypoint_inserted">ウェイポイントマーカを挿入しました．</string>
-  <string name="status_statistics_inserted">統計マーカを挿入しました．</string>
+  <string name="status_waypoint_inserted">ウェイポイントマーカーを挿入しました．</string>
+  <string name="status_statistics_inserted">統計マーカーを挿入しました．</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">お待ちください...</string>
@@ -76,11 +76,11 @@ limitations under the License.
 
   <!-- Used by DeleteAllDataHandler -->
   <string name="are_you_sure_question">よろしいですか?</string>
-  <string name="all_data_will_be_permanently_deleted">全てのトラックとマーカをこの端末から削除します．</string>
-  <string name="track_will_be_permanently_deleted">トラックとマーカをこの端末から完全に削除します．</string>
-  <string name="marker_will_be_permanently_deleted">マーカをこの端末から完全に削除します．</string>
+  <string name="all_data_will_be_permanently_deleted">全てのトラックとマーカーをこの端末から削除します．</string>
+  <string name="track_will_be_permanently_deleted">トラックとマーカーをこの端末から完全に削除します．</string>
+  <string name="marker_will_be_permanently_deleted">マーカーをこの端末から完全に削除します．</string>
 
-  <!-- Text and links when uploading to Google My Maps -->
+  <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Android用My Tracksで作成</string>
   <string name="fusiontable_link">Android用&lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt;で作成しました．</string>
 
@@ -88,8 +88,8 @@ limitations under the License.
   <string name="points">ポイント</string>
   <string name="recorded_date">記録日</string>
   <string name="category">活動タイプ</string>
-  <string name="waypoint_category">マーカタイプ</string>
-  <string name="part">(Part %d)</string>
+  <string name="waypoint_category">マーカータイプ</string>
+  <string name="part">(パート %d)</string>
 
   <!-- Used by the track recording service -->
   <string name="recording_your_track">トラックを保存中...</string>
@@ -142,26 +142,26 @@ limitations under the License.
   <string name="tracklist_clear_map">マップの消去</string>
 
   <!-- Waypoints list -->
-  <string name="waypointslist_btn_delete_all">全てのマーカの削除</string>
-  <string name="waypointslist_this_waypoint">このマーカ</string>
+  <string name="waypointslist_btn_delete_all">全てのマーカーの削除</string>
+  <string name="waypointslist_this_waypoint">このマーカー</string>
   <string name="waypointslist_delete_waypoint">削除</string>
   <string name="waypointslist_edit_waypoint">詳細編集</string>
   <string name="waypointslist_show_waypoint">マップに表示</string>
   <string name="waypointslist_btn_insert_waypoint">ウェイポイントの挿入</string>
   <string name="waypointslist_btn_insert_statistics">統計情報の挿入</string>
-  <string name="waypointslist_pick_one">マーカを選択します．オプションを表示するには長押しして下さい．</string>
+  <string name="waypointslist_pick_one">マーカーを選択します．オプションを表示するには長押しして下さい．</string>
 
   <!-- MyTracks Details -->
   <string name="trackdetails_title">トラック詳細</string>
   <string name="trackdetails_name">トラック名</string>
   <string name="trackdetails_description">トラック説明</string>
-  <string name="trackdetails_category">活動タイプ(ハイキング, サイクリング、ランニング, 登山...)</string>
+  <string name="trackdetails_category">活動タイプ(ハイキング, サイクリング、ランニング、登山...)</string>
 
   <!-- MyTracks Waypoint Details -->
-  <string name="waypointdetails_title">マーカ詳細</string>
-  <string name="waypointdetails_name">マーカ名</string>
-  <string name="waypointdetails_description">マーカ説明</string>
-  <string name="waypointdetails_category">マーカタイプ(建物, 洞穴, 名所...)</string>
+  <string name="waypointdetails_title">マーカー詳細</string>
+  <string name="waypointdetails_name">マーカー名</string>
+  <string name="waypointdetails_description">マーカー説明</string>
+  <string name="waypointdetails_category">マーカータイプ(建物、洞穴、名所...)</string>
 
   <!-- MyTracks Settings -->
   <string name="mytracks_settings">My Tracks設定</string>
@@ -203,10 +203,11 @@ limitations under the License.
   <string name="settings_share_url_only_summary_off">共有時にトラックのコンテントが含まれます</string>
 
   <string name="settings_split_frequency">分割頻度</string>
-  <string name="settings_split_frequency_summary">分割マーカを挿入する時間または距離の間隔</string>
+  <string name="settings_split_frequency_summary">分割マーカーを挿入する時間または距離の間隔</string>
 
   <string name="settings_auto_resume_track_timeout">記録自動再開の制限時間</string>
   <string name="settings_auto_resume_track_timeout_summary">指定時間(分単位)以内なら端末再起動時に以前のトラック記録を再開します．</string>
+
   <string name="settings_timestamp_track_name">日時をトラック名にする</string>
   <string name="settings_timestamp_track_name_summary_on">デフォルトのトラック名をトラック開始日時にします．</string>
   <string name="settings_timestamp_track_name_summary_off">トラック名を昇順の数字にします．</string>
@@ -214,15 +215,15 @@ limitations under the License.
   <string name="pace_label">ペース</string>
 
   <string name="eclair_required">Android 2.0以上でのみサポート</string>
-  <string name="settings_sensor_type">センサタイプ</string>
+  <string name="settings_sensor_type">センサータイプ</string>
   <string name="settings_sensor_type_summary">接続先センサーのタイプ</string>
-  <string name="settings_heart_rate_ant_sensor_id">ANT心拍数センサとのペアリング解消</string>
-  <string name="settings_power_ant_sensor_id">ANT心拍強度センサとのペアリング解消</string>
-  <string name="settings_srm_bridge_ant_sensor_id">ANT SRMブリッジセンサとのペアリング解消</string>
-  <string name="settings_ant_not_paired">ANTセンサとペアリングしていません</string>
-  <string name="settings_ant_paired">ANTセンサとペアリング中: %d</string>
-  <string name="bluetooth_sensor_title">Bluetoothセンサ</string>
-  <string name="bluetooth_sensor_summary">接続先Bluetoothセンサ</string>
+  <string name="settings_heart_rate_ant_sensor_id">ANT心拍数センサーとのペアリング解消</string>
+  <string name="settings_power_ant_sensor_id">ANT心拍強度センサーとのペアリング解消</string>
+  <string name="settings_srm_bridge_ant_sensor_id">ANT SRMブリッジセンサーとのペアリング解消</string>
+  <string name="settings_ant_not_paired">ANTセンサーとペアリングしていません</string>
+  <string name="settings_ant_paired">ANTセンサーとペアリング: %d</string>
+  <string name="bluetooth_sensor_title">Bluetoothセンサー</string>
+  <string name="bluetooth_sensor_summary">接続先Bluetoothセンサー</string>
   <string name="settings_modular_stats_display_title">モジュール統計表示 </string>
 
   <!-- Backups -->
@@ -234,7 +235,7 @@ limitations under the License.
   <string name="settings_restore_from_sd_summary">SDカードから全てのトラックと設定を復元します</string>
   <string name="settings_no_backup_while_recording">トラック記録中はバックアップ操作はできません．</string>
 
-  <string name="restore_overwrites_warning">SDカードからの復元を実行すると、現在のトラックと設定は全て上書きされてしまいます．よろしいですか?</string>
+  <string name="restore_overwrites_warning">SDカードからの復元を実行すると、現在のトラックと設定は *全て上書き* されてしまいます．よろしいですか?</string>
   <string name="select_backup_to_restore">復元するバックアップの選択</string>
   <string name="no_backups">バックアップがありません．</string>
   <string name="backup_write_progress_message">SDカードに全てのトラックと設定をバックアップしています．しばらくかかることがあります...</string>
@@ -361,6 +362,7 @@ limitations under the License.
   <string name="about_team">チーム:</string>
   <string name="about_version">バージョン:</string>
   <string name="about_support">サポート:</string>
+  <string name="about_privacy">プライバシー:</string>
 
   <!-- Send to Google -->
   <string name="sendtogoogle_title">送信...</string>
@@ -418,23 +420,23 @@ limitations under the License.
   <string name="bluetooth_pairing">ペアリング</string>
   <string name="bluetooth_pairing_summary">ペアリングを行うには「Bluetooth設定」を開いて下さい</string>
   <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
-  <string name="sensor_options">センサオプション</string>
+  <string name="sensor_options">センサーオプション</string>
 
   <!-- Bluetooth Sensor -->
   <string name="bluetooth_connected">%sに接続しました</string>
-  <string name="bluetooth_connecting">Bluetoothセンサ接続中...</string>
-  <string name="bluetooth_not_connected">Bluetoothセンサに接続していません</string>
+  <string name="bluetooth_connecting">Bluetoothセンサー接続中...</string>
+  <string name="bluetooth_not_connected">Bluetoothセンサーに接続していません</string>
 
   <!-- Sensor State -->
-  <string name="sensor_data_time">Sensor Data Time</string>
-  <string name="power_meter_enabled">Power meter enabled</string>
+  <string name="sensor_data_time">計測日時</string>
+  <string name="power_meter_enabled">パワーメーター有効</string>
   <string name="heart_rate_monitor_enabled">心拍数モニタ有効</string>
-  <string name="no_sensor_manager">センサマネージャがありません</string>
+  <string name="no_sensor_manager">センサーマネージャがありません</string>
   <string name="enabled">有効</string>
   <string name="connecting">接続中</string>
   <string name="connected">接続</string>
   <string name="disconnected">解除</string>
-  <string name="no_sensor_service">センササービスがありません</string>
+  <string name="no_sensor_service">センサーサービスがありません</string>
   <string name="searching">検索中</string>
   <string name="sending">送信中</string>
 
