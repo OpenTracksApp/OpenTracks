@@ -34,7 +34,6 @@ import com.google.api.client.googleapis.GoogleTransport;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
-import com.google.api.client.http.HttpResponseException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.InputStreamContent;
 import com.google.api.client.util.Strings;
@@ -43,8 +42,6 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.location.Location;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.util.Log;
 
 import java.io.ByteArrayInputStream;
