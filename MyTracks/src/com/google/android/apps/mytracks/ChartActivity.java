@@ -101,7 +101,7 @@ public class ChartActivity extends Activity implements
   /*
    * UI elements:
    */
-  private ChartView cv;
+  private ChartView chartView;
   private MenuItem chartSettingsMenuItem;
   private LinearLayout busyPane;
   private ZoomControls zoomControls;
@@ -118,10 +118,10 @@ public class ChartActivity extends Activity implements
     @Override
     public void run() {
       busyPane.setVisibility(View.GONE);
-      zoomControls.setIsZoomInEnabled(cv.canZoomIn());
-      zoomControls.setIsZoomOutEnabled(cv.canZoomOut());
-      cv.setShowPointer(selectedTrackIsRecording());
-      cv.invalidate();
+      zoomControls.setIsZoomInEnabled(chartView.canZoomIn());
+      zoomControls.setIsZoomOutEnabled(chartView.canZoomOut());
+      chartView.setShowPointer(selectedTrackIsRecording());
+      chartView.invalidate();
     }
   };
 
@@ -158,12 +158,12 @@ public class ChartActivity extends Activity implements
   private Handler updateTrackHandler;
 
   /**
-   * A runnable that update the profile from the provider.
+   * A runnable that updates the profile from the provider.
    */
   private final Runnable updateTrackRunnable = new Runnable() {
     @Override
     public void run() {
-      updateTrackPoints();
+      readNewTrackPoints();
     }
   };
 
@@ -180,13 +180,13 @@ public class ChartActivity extends Activity implements
         metricUnits =
             sharedPreferences.getBoolean(getString(R.string.metric_units_key),
                 true);
-        cv.setMetricUnits(metricUnits);
+        chartView.setMetricUnits(metricUnits);
         readProfileAsync();
       } else if (key.equals(getString(R.string.report_speed_key))) {
         reportSpeed =
             sharedPreferences.getBoolean(getString(R.string.report_speed_key),
                 true);
-        cv.setReportSpeed(reportSpeed, this);
+        chartView.setReportSpeed(reportSpeed, this);
         readProfileAsync();
       } else if (key.equals(getString(R.string.recording_track_key))) {
         recordingTrackId =
@@ -212,11 +212,11 @@ public class ChartActivity extends Activity implements
     requestWindowFeature(Window.FEATURE_NO_TITLE);
     setContentView(R.layout.mytracks_charts);
     ViewGroup layout = (ViewGroup) findViewById(R.id.elevation_chart);
-    cv = new ChartView(this);
-    cv.setMode(this.mode);
+    chartView = new ChartView(this);
+    chartView.setMode(this.mode);
     LayoutParams params =
         new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
-    layout.addView(cv, params);
+    layout.addView(chartView, params);
 
     SharedPreferences preferences =
         getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
@@ -227,10 +227,10 @@ public class ChartActivity extends Activity implements
           preferences.getLong(getString(R.string.recording_track_key), -1);
       metricUnits = preferences.getBoolean(getString(R.string.metric_units_key),
           true);
-      cv.setMetricUnits(metricUnits);
+      chartView.setMetricUnits(metricUnits);
       reportSpeed = preferences.getBoolean(getString(R.string.report_speed_key),
           true);
-      cv.setReportSpeed(reportSpeed, this);
+      chartView.setReportSpeed(reportSpeed, this);
       preferences.registerOnSharedPreferenceChangeListener(this);
     }
 
@@ -290,7 +290,7 @@ public class ChartActivity extends Activity implements
             ChartActivity.this.runOnUiThread(new Runnable() {
               @Override
               public void run() {
-                cv.invalidate();
+                chartView.invalidate();
               }
             });
           }
@@ -342,21 +342,21 @@ public class ChartActivity extends Activity implements
   }
 
   private void zoomIn() {
-    cv.zoomIn();
-    zoomControls.setIsZoomInEnabled(cv.canZoomIn());
-    zoomControls.setIsZoomOutEnabled(cv.canZoomOut());
+    chartView.zoomIn();
+    zoomControls.setIsZoomInEnabled(chartView.canZoomIn());
+    zoomControls.setIsZoomOutEnabled(chartView.canZoomOut());
   }
 
   private void zoomOut() {
-    cv.zoomOut();
-    zoomControls.setIsZoomInEnabled(cv.canZoomIn());
-    zoomControls.setIsZoomOutEnabled(cv.canZoomOut());
+    chartView.zoomOut();
+    zoomControls.setIsZoomInEnabled(chartView.canZoomIn());
+    zoomControls.setIsZoomOutEnabled(chartView.canZoomOut());
   }
 
   public void setMode(Mode newMode) {
     if (this.mode != newMode) {
       this.mode = newMode;
-      cv.setMode(this.mode);
+      chartView.setMode(this.mode);
       readProfileAsync();
     }
   }
@@ -366,12 +366,12 @@ public class ChartActivity extends Activity implements
   }
 
   public void setSeriesEnabled(int index, boolean enabled) {
-    cv.getChartValueSeries(index).setEnabled(enabled);
+    chartView.getChartValueSeries(index).setEnabled(enabled);
     runOnUiThread(updateChart);
   }
 
   public boolean isSeriesEnabled(int index) {
-    return cv.getChartValueSeries(index).isEnabled();
+    return chartView.getChartValueSeries(index).isEnabled();
   }
 
   private void readWaypoints() {
@@ -379,7 +379,7 @@ public class ChartActivity extends Activity implements
       return;
     }
     Cursor cursor = null;
-    cv.clearWaypoints();
+    chartView.clearWaypoints();
     try {
       // We will silently drop extra waypoints to make the app responsive.
       cursor =
@@ -389,7 +389,7 @@ public class ChartActivity extends Activity implements
         if (cursor.moveToFirst()) {
           do {
             Waypoint wpt = providerUtils.createWaypoint(cursor);
-            cv.addWaypoint(wpt);
+            chartView.addWaypoint(wpt);
           } while (cursor.moveToNext());
         }
       }
@@ -533,7 +533,7 @@ public class ChartActivity extends Activity implements
    * Sets the chart data points reading from the provider. This is non-blocking.
    */
   private void readProfileAsync() {
-    cv.reset();
+    chartView.reset();
     updateTrackHandler.post(new Runnable() {
       public void run() {
         runOnUiThread(showSpinner);
@@ -606,7 +606,7 @@ public class ChartActivity extends Activity implements
       }
       runOnUiThread(new Runnable() {
         public void run() {
-          cv.setDataPoints(theData);
+          chartView.setDataPoints(theData);
         }
       });
     } catch (RuntimeException e) {
@@ -619,9 +619,11 @@ public class ChartActivity extends Activity implements
   }
 
   /**
+   * Read all new track points.
+   *
    * The reading methods are synchronized so that we don't read points multiple times.
    */
-  private synchronized void updateTrackPoints() {
+  private synchronized void readNewTrackPoints() {
     Log.i(MyTracksConstants.TAG, "MyTracks: Updating chart last seen: " + lastSeenLocationId);
     Track track = providerUtils.getTrack(recordingTrackId);
     if (track == null) {
@@ -632,7 +634,7 @@ public class ChartActivity extends Activity implements
     try {
       cursor = providerUtils.getLocationsCursor(recordingTrackId,
           lastSeenLocationId + 1,
-          MyTracksConstants.MAX_DISPLAYED_TRACK_POINTS - cv.getData().size(),
+          MyTracksConstants.MAX_DISPLAYED_TRACK_POINTS - chartView.getData().size(),
           true);
       if (cursor != null) {
         if (cursor.moveToLast()) {
@@ -650,7 +652,7 @@ public class ChartActivity extends Activity implements
               data.add(point);
             }
           } while (cursor.moveToPrevious());
-          cv.addDataPoints(data);
+          chartView.addDataPoints(data);
         }
       }
     } catch (RuntimeException e) {
@@ -661,7 +663,7 @@ public class ChartActivity extends Activity implements
       }
       uiHandler.post(new Runnable() {
         public void run() {
-          cv.invalidate();
+          chartView.invalidate();
         }
       });
     }
