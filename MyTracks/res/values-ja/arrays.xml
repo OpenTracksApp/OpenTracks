@@ -151,6 +151,14 @@ limitations under the License.
     <item>1 分</item>
   </string-array>
 
+  <!-- Auto-resume track timeout -->
+  <string-array name="auto_resume_track_timeout_options">
+    <item>なし</item>
+    <item>5 分</item>
+    <item>10 分</item>
+    <item>15 分</item>
+    <item>常時</item>
+  </string-array>
 
   <!-- Other non-preference arrays -->
   <array name="activity_types">
@@ -249,12 +257,12 @@ limitations under the License.
     <item>ゴルフ場</item>
     <item>雑貨店</item>
     <item>美容室</item>
-    <item>散髪屋</item>
+    <item>船着き場</item>
     <item>ハイキング道</item>
     <item>ホテル</item>
     <item>家</item>
-    <item>情報</item>
-    <item>交差</item>
+    <item>案内所</item>
+    <item>交差点</item>
     <item>メールボックス</item>
     <item>市場</item>
     <item>集合場所</item>
