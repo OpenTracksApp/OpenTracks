@@ -169,7 +169,7 @@ public class SendToFusionTables implements Runnable {
     boolean success = true;
     try {
       progressIndicator.setProgressValue(PROGRESS_INITIALIZATION);
-      progressIndicator.setProgressMessage(R.string.progress_message_initializing);
+      progressIndicator.setProgressMessage(R.string.progress_message_reading_track);
 
       // Get the track meta-data
       Track track = providerUtils.getTrack(trackId);
@@ -183,7 +183,7 @@ public class SendToFusionTables implements Runnable {
       }
 
       progressIndicator.setProgressValue(PROGRESS_UPLOAD_DATA_MIN);
-      progressIndicator.setProgressMessage(R.string.progress_message_uploading_track_data);
+      progressIndicator.setProgressMessage(R.string.progress_message_sending_fusiontables);
 
       // Upload all of the segments of the track plus start/end markers
       if (!uploadAllTrackPoints(track, originalDescription)) {
@@ -191,7 +191,6 @@ public class SendToFusionTables implements Runnable {
       }
       
       progressIndicator.setProgressValue(PROGRESS_UPLOAD_WAYPOINTS);
-      progressIndicator.setProgressMessage(R.string.progress_message_uploading_waypoints);
 
       // Upload all the waypoints.
       if (!uploadWaypoints(track)) {
@@ -231,7 +230,7 @@ public class SendToFusionTables implements Runnable {
 
   private boolean makeTableUnlisted(String tableId) {
     Log.d(MyTracksConstants.TAG, "Setting visibility to unlisted.");
-    String query = "UPDATE TABLE " + tableId + " SET VISIBILITY = unlisted";
+    String query = "UPDATE TABLE " + tableId + " SET VISIBILITY = UNLISTED";
     return runUpdate(query);
   }
 
