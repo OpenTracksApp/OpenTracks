@@ -48,7 +48,7 @@ limitations under the License.
   <string name="wait_for_fix">GPS位置精度がよくなるまで待機しています．空が見えるところにいて下さい．</string>
   <string name="status_now_recording">新しいトラックを記録中です．</string>
   <string name="status_stopped_recording">トラック記録を停止しました．</string>
-  <!-- <string name="status_new_fusiontable_has_been_created">新しいGoogleマイマップを google.com/fusiontables に作成しました．</string> -->
+  <string name="status_new_fusiontable_has_been_created">新しいGoogleマイマップを google.com/fusiontables に作成しました．</string>
   <string name="status_tracks_have_been_uploaded">トラックを maps.google.com に送信しました．</string>
   <string name="status_tracks_have_been_uploaded_to_new_doc">トラックを docs.google.com の新しいスプレッドシートに送信しました．</string>
   <string name="status_tracks_have_been_uploaded_to_docs">トラックを docs.google.com に送信しました．</string>
@@ -63,11 +63,11 @@ limitations under the License.
   <string name="progress_message">トラックをGoogleに送信しました．</string>
   <string name="progress_message_reading_track">トラックを読んでいます...</string>
   <string name="progress_message_preparing_track">トラックを準備しています...</string>
-  <!-- <string name="progress_message_authenticating_fusiontables">Googleマップの認証しています...</string> -->
+  <string name="progress_message_authenticating_fusiontables">Googleマップの認証しています...</string>
   <string name="progress_message_authenticating_docs">Google Docsへの認証を行っています...</string>
   <string name="progress_message_sending_docs">トラックをGoogle Docsに送信しています...</string>
-  <!-- <string name="progress_message_sending_fusiontables">トラックをGoogleマップに送信しています...</string> -->
-  <!-- <string name="progress_message_creating_fusiontable">新しいマイマップを生成しています...</string> -->
+  <string name="progress_message_sending_fusiontables">トラックをGoogleマップに送信しています...</string>
+  <string name="progress_message_creating_fusiontable">新しいマイマップを生成しています...</string>
   <string name="import_progress_message">GPSトラックをインポートしています．若干時間がかかります．</string>
   <string name="write_progress_message">SDカードにデータを書き込んでいます．若干時間がかかります．</string>
   <string name="progress_message_updating_track">トラック統計情報を更新しています...</string>
@@ -87,7 +87,6 @@ limitations under the License.
   <string name="recorded_date">記録</string>
   <string name="category">活動タイプ</string>
   <string name="waypoint_category">マーカタイプ</string>
-  <string name="part">(Part %d)</string>
 
   <!-- Used by the track recording service -->
   <string name="recording_your_track">トラックを保存中...</string>
@@ -96,7 +95,6 @@ limitations under the License.
   <!-- Common -->
   <string name="no">いいえ</string>
   <string name="yes">はい</string>
-  <string name="ok">OK</string>
   <string name="error">エラー</string>
   <string name="success">成功</string>
   <string name="waypoint">ウェイポイント</string>
@@ -111,8 +109,8 @@ limitations under the License.
 
   <!--  TrackList -->
   <string name="tracklist_show_track">表示</string>
-  <!-- <string name="tracklist_send_to_new_fusiontable">Google Fusion Tablesへ送信</string> -->
-  <!-- <string name="tracklist_send_to_new_fusiontable">新規Googleマイマップへ送信</string> -->
+  <string name="tracklist_send_to_new_fusiontable">Google Fusion Tablesへ送信</string>
+  <string name="tracklist_send_to_new_fusiontable">新規Googleマイマップへ送信</string>
   <string name="tracklist_send_to_docs">Google Docsへ送信</string>
   <string name="tracklist_send_to_google">Googleへ送信...</string>
   <string name="tracklist_delete_track">端末から削除...</string>
@@ -130,7 +128,7 @@ limitations under the License.
   <string name="tracklist_all_tracks">全てのトラック:</string>
   <string name="tracklist_this_track">このトラック</string>
   <string name="tracklist_share_track">共有...</string>
-  <!-- <string name="tracklist_share_linkfusion">Googleマイマップへのリンク</string> -->
+  <string name="tracklist_share_linkfusion">Googleマイマップへのリンク</string>
   <string name="tracklist_share_gpx_file">GPXファイル</string>
   <string name="tracklist_share_kml_file">KMLファイル</string>
   <string name="tracklist_share_csv_file">CSVファイル</string>
@@ -166,7 +164,6 @@ limitations under the License.
 
   <string name="settings_announcement_frequency">定期通知</string>
   <string name="settings_announcement_frequency_summary">音声通知間隔の最小時間</string>
-  
 
   <string name="settings_min_recording_distance">ポイント間の最短距離</string>
   <string name="settings_min_recording_distance_summary">位置記録間の最短距離</string>
@@ -268,21 +265,13 @@ limitations under the License.
   <string name="seconds">秒</string>
 
   <!-- Distance -->
-  <string name="meter">m</string>
-  <string name="kilometer">km</string>
   <string name="kilometers_long">キロメータ</string>
-  <string name="feet">ft</string>
-  <string name="mile">mi</string>
   <string name="miles_long">マイル</string>
 
   <!-- Speed and Pace -->
-  <string name="kilometer_per_hour">km/h</string>
   <string name="kilometer_per_hour_long">キロメータ毎時</string>
-  <string name="min_per_kilometer">min/km</string>
   <string name="per_kilometer">毎キロメータ</string>
-  <string name="mile_per_hour">mi/h</string>
   <string name="mile_per_hour_long">マイル毎時</string>
-  <string name="min_per_mile">min/mi</string>
   <string name="per_mile">毎マイル</string>
 
   <!-- Stats Labels -->
@@ -295,7 +284,6 @@ limitations under the License.
   <string name="statistics">統計</string>
   <string name="total_distance_label">合計距離</string>
   <string name="distance_label">距離</string>
-  <string name="unknown">-</string>
   <string name="waiting">待機中...</string>
 
   <!-- End User License Agreement -->
@@ -312,8 +300,7 @@ limitations under the License.
 
   <!-- Send to Google -->
   <string name="sendtogoogle_title">送信...</string>
-  <!-- <string name="sendtogoogle_google_fusiontables">Googleマイマップ</string> -->
-  <string name="sendtogoogle_google_docs">Google Docs</string>
+  <string name="sendtogoogle_google_fusiontables">Googleマイマップ</string>
   <string name="sendtogoogle_send_now">今すぐ送信</string>
   <string name="sendtogoogle_send_stats">トラック統計情報送信</string>
   <string name="sendtogoogle_send_stats_and_points">統計情報とポイント送信</string>
@@ -339,7 +326,6 @@ limitations under the License.
 
   <!-- Welcome -->
   <string name="welcome">ようこそ</string>
-  <string name="welcome_read_later">Ok</string>
   <string name="welcome_about">My Tracksについて</string>
 
   <!-- Announcement -->
