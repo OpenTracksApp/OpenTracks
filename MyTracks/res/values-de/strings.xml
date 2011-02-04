@@ -15,14 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 --> 
 <resources> 
- 
   <!-- Used by the Menu --> 
   <string name="start_recording">Track aufzeichnen</string> 
   <string name="stop_recording">Aufzeichnung anhalten</string> 
   <string name="switch_to_sat">Satellitenansicht</string> 
   <string name="switch_to_map">Kartenansicht</string> 
   <string name="mylocation">Mein Aufenthaltsort</string> 
-  <string name="list_markers">Wegpunkte</string> 
+  <string name="list_markers">Wegpunkte</string>
   <string name="delete_all_tracks">Alle Tracks löschen</string> 
   <string name="settings">Einstellungen</string> 
   <string name="elevation">Höhe</string> 
@@ -82,7 +81,7 @@ limitations under the License.
  
   <!-- Text and links when uploading to Google Fusion Tables --> 
   <string name="new_map_description">Erstellt von My Tracks für Android.</string> 
-  <string name="fusiontable_link">Erstellt von &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; für Android.</string> 
+  <string name="fusiontable_link">Erstellt von &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; für Android.</string>
  
   <!-- Formatting of track and marker descriptions --> 
   <string name="points">Punkte</string> 
@@ -92,7 +91,7 @@ limitations under the License.
   <string name="part">(Teil %d)</string> 
  
   <!-- Used by the track recording service --> 
-  <string name="recording_your_track">Dein Track wird aufgezeichnet…</string> 
+  <string name="recording_your_track">Dein Track wird aufgezeichnet…</string>
  
   <!-- Common --> 
   <string name="no">Nein</string> 
@@ -100,12 +99,13 @@ limitations under the License.
   <string name="error">Fehler</string> 
   <string name="success">Erfolgreich</string> 
   <string name="waypoint">Wegpunkt</string> 
+  <string name="license">Lizenz</string>
   <string name="cancel">Abbrechen</string>
+  <string name="close">Schließen</string>
   <string name="edit">Bearbeiten</string>
   <string name="save">Sichern</string>
 
   <!-- Placemark labels for start and end of track --> 
-  <string name="start">(Beginn)</string> 
   <string name="end">(Ende)</string> 
  
   <!--  TrackList --> 
@@ -212,11 +212,17 @@ limitations under the License.
  
   <string name="eclair_required">Wird nur unter Android 2.0 oder höher unterstützt</string> 
   <string name="settings_sensor_type">Sensortyp</string> 
-  <string name="settings_sensor_type_summary">Der Typ des zu verbindenden Sensors</string> 
+  <string name="settings_sensor_type_summary">Der Typ des zu verbindenden Sensors</string>
+  <string name="settings_heart_rate_ant_sensor_id">Verbindung mit ANT Herzqrequenzmesser aufheben</string>
+  <string name="settings_power_ant_sensor_id">Verbindung mit ANT Kraftmesser aufheben</string>
+  <string name="settings_srm_bridge_ant_sensor_id">Verbindung mit ANT srm bridge aufheben</string>
+  <string name="settings_ant_not_paired">ANT-Sensor nicht verbunden</string>
+  <string name="settings_ant_paired">ANT-Sensor verbunden mit: %d</string>
   <string name="bluetooth_sensor_title">Bluetooth-Sensor</string> 
   <string name="bluetooth_sensor_summary">Der zu verbindende Bluetoothsensor</string> 
   <string name="settings_modular_stats_display_title">Art der Datenanzeige</string> 
  
+  <!-- Backups --> 
   <string name="settings_backup">Datensicherung (BETA)</string> 
   <string name="settings_sd_backup">SD-Karten-Sicherung</string> 
   <string name="settings_backup_to_sd">Jetzt sichern</string> 
@@ -225,7 +231,6 @@ limitations under the License.
   <string name="settings_restore_from_sd_summary">Alle Tracks und Einstellungen von der SD-Karte holen.</string> 
   <string name="settings_no_backup_while_recording">Während ein Track aufgezeichnet wird, kann nicht mit der Datensicherung gearbeitet werden.</string> 
  
-  <!-- Backups --> 
   <string name="restore_overwrites_warning">Eine Wiederherstellung von der SD-Karte ÜBERSCHREIBT alle vorhandenen Tracks und Einstellungen. Willst Du das wirklich?</string> 
   <string name="select_backup_to_restore">Wähle die wiederherzustellende Datensicherung aus</string> 
   <string name="no_backups">Keine Datensicherungen gefunden.</string> 
@@ -300,16 +305,16 @@ limitations under the License.
   <string name="seconds">Sekunden</string> 
  
   <!-- Distance --> 
-  <string name="feet">Fuß</string> 
-  <string name="kilometers_long">Kilometer</string> 
+  <string name="kilometers_long">Kilometer</string>
+  <string name="feet">Fuß</string>
   <string name="miles_long">Meilen</string> 
  
-  <!-- Speed and Pace --> 
-  <string name="kilometer_per_hour_long">Kilometer pro Stunde</string> 
+  <!-- Speed and Pace -->
+  <string name="kilometer_per_hour_long">Kilometer pro Stunde</string>
   <string name="per_kilometer">pro Kilometer</string> 
-  <string name="mile_per_hour_long">Meilen pro Stunde</string> 
+  <string name="mile_per_hour_long">Meilen pro Stunde</string>
   <string name="per_mile">pro Meile</string> 
- 
+
   <!-- Stats Labels --> 
   <string name="moving_time_label">Zeit in Bewegung</string> 
   <string name="total_time_label">Gesamtzeit</string> 
@@ -320,7 +325,7 @@ limitations under the License.
   <string name="statistics">Statistik</string> 
   <string name="total_distance_label">Gesamtentfernung</string> 
   <string name="distance_label">Entfernung</string> 
-  <string name="power">Energie</string> 
+  <string name="power">Kraft</string> 
   <string name="cadence">Kadenz</string> 
   <string name="heart_rate">Herzfrequenz</string> 
   <string name="max_heart_rate">Höchste Herzfrequenz</string> 
@@ -334,10 +339,12 @@ limitations under the License.
   <!-- About --> 
   <string name="about">Über</string> 
   <string name="help">Hilfe</string> 
-  <string name="about_support">Unterstützung</string> 
+  <string name="about_support">Unterstützung:</string>
+  <string name="about_privacy">Datenschutz:</string>
  
-  <!-- Send to Google --> 
-  <string name="sendtogoogle_title">Senden an…</string> 
+  <!-- Send to Google -->
+  <string name="sendtogoogle_title">Senden an…</string>
+  <string name="sendtogoogle_google_docs">Google Text &amp; Tabellen</string>
   <string name="sendtogoogle_send_now">Jetzt senden</string> 
   <string name="sendtogoogle_send_stats">Trackstatistik senden</string> 
   <string name="sendtogoogle_send_stats_and_points">Statistik und Punkte senden</string> 
@@ -365,6 +372,7 @@ limitations under the License.
  
   <!-- Welcome --> 
   <string name="welcome">Willkommen</string> 
+  <string name="welcome_read_later">OK</string>
   <string name="welcome_about">Über My Tracks</string> 
  
   <!-- Announcement --> 
@@ -383,20 +391,20 @@ limitations under the License.
   <string name="check_units_title">Einheitenbenachrichtigung</string> 
   <string name="check_units_message">Voreingestellt sind metrische Einheiten. Willst Du diese Einstellung ändern?</string> 
  
-  <!-- Fake preference keys - never saved, but show options in the preferences screen --> 
-  <string name="bluetooth_options">Bluetootheinstellungen</string> 
+  <!-- Fake preference keys - never saved, but show options in the preferences screen -->
+  <string name="bluetooth_options">Bluetooth-Einstellungen</string> 
   <string name="bluetooth_pairing">Geräteverbindung</string> 
-  <string name="bluetooth_pairing_summary">Öffnet Androids Bluetootheinstellungen, um Geräte zu verbinden.</string> 
-  <string name="sensor_options">Sensoreinstellungen</string> 
+  <string name="bluetooth_pairing_summary">Öffnet Androids Bluetooth-Einstellungen, um Geräte zu verbinden.</string> 
+  <string name="sensor_options">Sensor-Einstellungen</string> 
  
   <!-- Bluetooth Sensor --> 
   <string name="bluetooth_connected">Verbunden mit %s</string> 
-  <string name="bluetooth_connecting">Verbinde mit Bluetoothsensor ...</string> 
-  <string name="bluetooth_not_connected">Bluetoothsensor nicht verbunden.</string> 
+  <string name="bluetooth_connecting">Verbinde mit Bluetooth-Sensor ...</string> 
+  <string name="bluetooth_not_connected">Bluetooth-Sensor nicht verbunden.</string> 
  
   <!-- Sensor State --> 
-  <string name="sensor_data_time">Sensor Data Time</string> 
-  <string name="power_meter_enabled">Energiemessung aktiviert</string> 
+  <string name="sensor_data_time">Uhrzeit</string> 
+  <string name="power_meter_enabled">Kraftmesser aktiviert</string> 
   <string name="heart_rate_monitor_enabled">Herzfrequenzmessung aktiviert</string> 
   <string name="no_sensor_manager">Keine Sensoren verfügbar</string> 
   <string name="enabled">Aktiviert</string> 

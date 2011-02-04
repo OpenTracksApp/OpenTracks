@@ -30,13 +30,14 @@ import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 import com.google.api.client.googleapis.GoogleHeaders;
-import com.google.api.client.googleapis.GoogleTransport;
+import com.google.api.client.googleapis.MethodOverrideIntercepter;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpResponseException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.InputStreamContent;
+import com.google.api.client.javanet.NetHttpTransport;
 import com.google.api.client.util.Strings;
 
 import android.app.Activity;
@@ -106,6 +107,12 @@ public class SendToFusionTables implements Runnable {
   private static String MARKER_TYPE_END = "large_red";
   private static String MARKER_TYPE_WAYPOINT = "large_yellow";
 
+  static {
+    // We manually assign the transport to avoid having HttpTransport try to
+    // load it via reflection (which breaks due to ProGuard).
+    HttpTransport.setLowLevelHttpTransport(new NetHttpTransport());
+  }
+
   public SendToFusionTables(Activity context, AuthManager auth,
       long trackId, ProgressIndicator progressIndicator,
       OnSendCompletedListener onCompletion) {
@@ -116,10 +123,14 @@ public class SendToFusionTables implements Runnable {
     this.onCompletion = onCompletion;
     this.stringUtils = new StringUtils(context);
     this.providerUtils = MyTracksProviderUtils.Factory.get(context);
-    transport = GoogleTransport.create();
-    GoogleHeaders headers = (GoogleHeaders) transport.defaultHeaders;
+
+    GoogleHeaders headers = new GoogleHeaders();
     headers.setApplicationName("Google-MyTracks-" + MyTracksUtils.getMyTracksVersion(context));
     headers.gdataVersion = GDATA_VERSION;
+
+    transport = new HttpTransport();
+    MethodOverrideIntercepter.setAsFirstFor(transport);
+    transport.defaultHeaders = headers;
   }
 
   @Override

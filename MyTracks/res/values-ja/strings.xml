@@ -98,7 +98,6 @@ limitations under the License.
   <!-- Common -->
   <string name="no">いいえ</string>
   <string name="yes">はい</string>
-  <string name="ok">OK</string>
   <string name="error">エラー</string>
   <string name="success">成功</string>
   <string name="waypoint">ウェイポイント</string>
@@ -311,28 +310,14 @@ limitations under the License.
   <string name="milliseconds">ミリ秒</string>
 
   <!-- Distance -->
-  <!-- string name="meter">m</string --> <!-- duplicate -->
-  <!-- string name="kilometer">km</string --> <!-- duplicate -->
   <string name="kilometers_long">キロメータ</string>
-  <!-- string name="feet">ft</string --> <!-- duplicate -->
-  <!-- string name="mile">mi</string --> <!-- duplicate -->
   <string name="miles_long">マイル</string>
 
   <!-- Speed and Pace -->
-  <!-- string name="kilometer_per_hour">km/h</string --> <!-- duplicate -->
   <string name="kilometer_per_hour_long">キロメータ毎時</string>
-  <!-- string name="min_per_kilometer">min/km</string --> <!-- duplicate -->
   <string name="per_kilometer">毎キロメータ</string>
-  <!-- string name="mile_per_hour">mi/h</string --> <!-- duplicate -->
   <string name="mile_per_hour_long">マイル毎時</string>
-  <!-- string name="min_per_mile">min/mi</string --> <!-- duplicate -->
   <string name="per_mile">毎マイル</string>
-
-  <!-- Sensors -->
-  <!-- string name="watts">W</string --> <!-- duplicate -->
-
-  <!-- string name="revolutions_per_minute">rpm</string --> <!-- duplicate -->
-  <!-- string name="bpm">bpm</string --> <!-- duplicate -->
 
   <!-- Stats Labels -->
   <string name="moving_time_label">移動時間</string>
@@ -366,8 +351,7 @@ limitations under the License.
 
   <!-- Send to Google -->
   <string name="sendtogoogle_title">送信...</string>
-  <!-- string name="sendtogoogle_google_fusiontables">Google Fusion Tables</string --> <!-- duplicate -->
-  <!-- string name="sendtogoogle_google_docs">Google Docs</string --> <!-- duplicate -->
+  <string name="sendtogoogle_google_fusiontables">Googleマイマップ</string>
   <string name="sendtogoogle_send_now">今すぐ送信</string>
   <string name="sendtogoogle_send_stats">トラック統計情報送信</string>
   <string name="sendtogoogle_send_stats_and_points">統計情報とポイント送信</string>
@@ -395,7 +379,6 @@ limitations under the License.
 
   <!-- Welcome -->
   <string name="welcome">ようこそ</string>
-  <!-- string name="welcome_read_later">Ok</string --> <!-- duplicate -->
   <string name="welcome_about">My Tracksについて</string>
 
   <!-- Announcement -->
