@@ -163,49 +163,7 @@ public class ChartActivity extends Activity implements
   private final Runnable updateTrackRunnable = new Runnable() {
     @Override
     public void run() {
-      Log.d(MyTracksConstants.TAG, "MyTracks: Updating chart.");
-      Track track = providerUtils.getTrack(recordingTrackId);
-      if (track == null) {
-        Log.w(MyTracksConstants.TAG, "MyTracks: track not found");
-        return;
-      }
-      Cursor cursor = null;
-      try {
-        cursor = providerUtils.getLocationsCursor(recordingTrackId,
-            lastSeenLocationId + 1,
-            MyTracksConstants.MAX_DISPLAYED_TRACK_POINTS - cv.getData().size(),
-            true);
-        if (cursor != null) {
-          if (cursor.moveToLast()) {
-            final int idColumnIdx =
-                cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
-            ArrayList<double[]> data = new ArrayList<double[]>();
-            // Need two locations so we can keep track of the last location.
-            Location location = new MyTracksLocation("");
-            do {
-              lastSeenLocationId = cursor.getLong(idColumnIdx);
-              providerUtils.fillLocation(cursor, location);
-              if (MyTracksUtils.isValidLocation(location)) {
-                double[] point = new double[6];
-                location = getDataPoint(location, track, point);
-                data.add(point);
-              }
-            } while (cursor.moveToPrevious());
-            cv.addDataPoints(data);
-          }
-        }
-      } catch (RuntimeException e) {
-        Log.w(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
-      } finally {
-        if (cursor != null) {
-          cursor.close();
-        }
-        uiHandler.post(new Runnable() {
-          public void run() {
-            cv.invalidate();
-          }
-        });
-      }
+      updateTrackPoints();
     }
   };
 
@@ -589,8 +547,9 @@ public class ChartActivity extends Activity implements
   /**
    * Reads the track profile from the provider. This is a blocking function and
    * should not be run from the UI thread.
+   * The reading methods are synchronized so that we don't read points multiple times.
    */
-  private void readProfile() {
+  private synchronized void readProfile() {
     profileLength = 0;
     lastLocation = null;
     startTime = -1;
@@ -657,5 +616,55 @@ public class ChartActivity extends Activity implements
         cursor.close();
       }
     }
+  }
+
+  /**
+   * The reading methods are synchronized so that we don't read points multiple times.
+   */
+  private synchronized void updateTrackPoints() {
+    Log.i(MyTracksConstants.TAG, "MyTracks: Updating chart last seen: " + lastSeenLocationId);
+    Track track = providerUtils.getTrack(recordingTrackId);
+    if (track == null) {
+      Log.w(MyTracksConstants.TAG, "MyTracks: track not found");
+      return;
+    }
+    Cursor cursor = null;
+    try {
+      cursor = providerUtils.getLocationsCursor(recordingTrackId,
+          lastSeenLocationId + 1,
+          MyTracksConstants.MAX_DISPLAYED_TRACK_POINTS - cv.getData().size(),
+          true);
+      if (cursor != null) {
+        if (cursor.moveToLast()) {
+          final int idColumnIdx =
+              cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
+          ArrayList<double[]> data = new ArrayList<double[]>();
+          // Need two locations so we can keep track of the last location.
+          Location location = new MyTracksLocation("");
+          do {
+            lastSeenLocationId = cursor.getLong(idColumnIdx);
+            providerUtils.fillLocation(cursor, location);
+            if (MyTracksUtils.isValidLocation(location)) {
+              double[] point = new double[6];
+              location = getDataPoint(location, track, point);
+              data.add(point);
+            }
+          } while (cursor.moveToPrevious());
+          cv.addDataPoints(data);
+        }
+      }
+    } catch (RuntimeException e) {
+      Log.w(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
+    } finally {
+      if (cursor != null) {
+        cursor.close();
+      }
+      uiHandler.post(new Runnable() {
+        public void run() {
+          cv.invalidate();
+        }
+      });
+    }
+    Log.i(MyTracksConstants.TAG, "MyTracks: Updated chart last seen: " + lastSeenLocationId);
   }
 }
