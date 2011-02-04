@@ -49,7 +49,7 @@ limitations under the License.
   <string name="wait_for_fix">等待更准确的 GPS 定位. 请确定可以看见天空.</string>
   <string name="status_now_recording">现在开始记录新的轨迹.</string>
   <string name="status_stopped_recording">停止记录你的轨迹.</string>
-  <string name="status_new_fusiontable_has_been_created">已在 maps.google.com 创建新 Google Fusion Table.</string>
+  <string name="status_new_fusiontable_has_been_created">已在 google.com/fusiontables 创建新 Google Fusion Table.</string>
   <string name="status_tracks_have_been_uploaded">你的轨迹已经发送到 maps.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_new_doc">你的轨迹已经作为新的电子表格发送到 docs.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_docs">你的轨迹已经发送到 docs.google.com.</string>
@@ -81,8 +81,7 @@ limitations under the License.
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="new_map_description">由 Android 上的 My Tracks 生成.</string>
-  <string name="my_map_link">由 Android 上的 &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; 生成.</string>
-  <string name="new_map_title">新地图</string>
+  <string name="fusiontable_link">由 Android 上的 &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; 生成.</string>
 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">点数</string>
@@ -133,7 +132,7 @@ limitations under the License.
   <string name="tracklist_all_tracks">全部轨迹:</string>
   <string name="tracklist_this_track">此轨迹</string>
   <string name="tracklist_share_track">与朋友分享...</string>
-  <string name="tracklist_share_link">链接到 Google My Map</string>
+  <string name="tracklist_share_linkfusion">链接到 Google Fusion Table</string>
   <string name="tracklist_share_gpx_file">GPX 文件</string>
   <string name="tracklist_share_kml_file">KML 文件</string>
   <string name="tracklist_share_csv_file">CSV 文件</string>
@@ -212,9 +211,6 @@ limitations under the License.
   <string name="eclair_required">只在 Android 2.0 及以上版本支持</string>
   <string name="settings_sensor_type">感应器类型</string>
   <string name="settings_sensor_type_summary">要连接到的感应器类型</string>
-  <string name="settings_sensor_id">感应器ID</string>
-  <string name="settings_sensor_id_summary">发送到感应器的ID.</string>
-  <string name="sensor_id_malformed">ID必须是一个整数值.</string>
   <string name="bluetooth_sensor_title">蓝牙感应器</string>
   <string name="bluetooth_sensor_summary">要连接到的蓝牙感应器</string>
 
@@ -336,14 +332,11 @@ limitations under the License.
   <string name="help">帮助</string>
   <string name="about_team">开发团队:</string>
   <string name="about_version">版本:</string>
-  <string name="about_email">技术支持</string>
   <string name="about_support">技术支持:</string>
 
   <!-- Send to Google -->
   <string name="sendtogoogle_title">发送到...</string>
   <string name="sendtogoogle_send_now">立即发送</string>
-  <string name="sendtogoogle_create_new_map">创建新地图</string>
-  <string name="sendtogoogle_pick_existing_map">选择已有地图</string>
   <string name="sendtogoogle_send_stats">发送轨迹统计信息</string>
   <string name="sendtogoogle_send_stats_and_points">发送统计信息和路点</string>
 

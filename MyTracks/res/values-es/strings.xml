@@ -47,7 +47,7 @@ limitations under the License.
   <string name="wait_for_fix">Esperando una ubicación mas exacta del GPS. Asegúrese que el cielo sea visible.</string>
   <string name="status_now_recording">Grabando un nuevo recorrido.</string>
   <string name="status_stopped_recording">Grabacíon interrumpida.</string>
-  <string name="status_new_mymap_has_been_created">Un mapa Google My Map nuevo has sido creado en maps.google.com.</string>
+  <string name="status_new_fusiontable_has_been_created">Un mapa Google Fusion Tables nuevo has sido creado en google.com/fusiontables.</string>
   <string name="status_tracks_have_been_uploaded">Su recorrido ha sido enviado a maps.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_new_doc">Su recorrido ha sido enviado a una nueva hoja de cálculo en docs.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_docs">Su recorrido ha sido enviado a docs.google.com.</string>
@@ -62,11 +62,11 @@ limitations under the License.
   <string name="progress_message">Enviando su recorrido a Google.</string>
   <string name="progress_message_reading_track">Leyendo recorrido...</string>
   <string name="progress_message_preparing_track">Preparando recorrido...</string>
-  <string name="progress_message_authenticating_mymaps">Autenticando con Google Maps...</string>
+  <string name="progress_message_authenticating_fusiontables">Autenticando con Google Fusion Tables...</string>
   <string name="progress_message_authenticating_docs">Autenticando con Google Docs...</string>
   <string name="progress_message_sending_docs">Enviando recorrido a Google Docs...</string>
-  <string name="progress_message_sending_mymaps">Enviando recorrido a Google Maps...</string>
-  <string name="progress_message_creating_map">Creando nuevo mapa My Map...</string>
+  <string name="progress_message_sending_fusiontables">Enviando recorrido a Google Fusion Tables...</string>
+  <string name="progress_message_creating_fusiontable">Creando nuevo mapa Fusion Tables...</string>
   <string name="import_progress_message">Importando un recorrido GPS. Esto puede tardar.</string>
   <string name="write_progress_message">Escribiendo archivo a tarjeta SD. Esto puede tardar.</string>
   <string name="progress_message_updating_track">Actualizando estadísticas del recorrido...</string>
@@ -321,8 +321,6 @@ limitations under the License.
   <!-- About -->
   <string name="about">Sobre</string>
   <string name="help">Ayuda</string>
-  <string name="about_email">Soporte técnico</string>
-
   <string name="about_team">Equipo:</string>
   <string name="about_support">Soporte técnico:</string>
 

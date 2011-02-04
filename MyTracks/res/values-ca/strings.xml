@@ -50,7 +50,7 @@ limitations under the License.
   <string name="wait_for_fix">S\'està esperant per tenir una posició GPS fixa. Assegureu-vos que el cel és visible.</string>
   <string name="status_now_recording">Ara s\'està enregistrant una ruta nova.</string>
   <string name="status_stopped_recording">S\'ha aturat l\'enregistrament de la ruta.</string>
-  <string name="status_new_mymap_has_been_created">S\'ha creat un Google My Map nou a maps.google.com.</string>
+  <string name="status_new_fusiontable_has_been_created">S\'ha creat un Google Fusion Table nou a google.com/fusiontables.</string>
   <string name="status_tracks_have_been_uploaded">S\'ha enviat la ruta a maps.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_new_doc">S\'ha enviat la ruta a un full de càlcul a docs.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_docs">S\'ha enviat la ruta a docs.google.com.</string>
@@ -82,8 +82,7 @@ limitations under the License.
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="new_map_description">Creat per My Tracks a l\'Android.</string>
-  <string name="my_map_link">Creat per &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; a l\'Android.</string>
-  <string name="new_map_title">Mapa nou</string>
+  <string name="fusiontable_link">Creat per &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; a l\'Android.</string>
 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">Punts</string>
@@ -134,7 +133,7 @@ limitations under the License.
   <string name="tracklist_all_tracks">Totes les rutes:</string>
   <string name="tracklist_this_track">Aquesta ruta</string>
   <string name="tracklist_share_track">Comparteix amb amics...</string>
-  <string name="tracklist_share_link">Un enllaç a Google My Map</string>
+  <string name="tracklist_share_linkfusion">Un enllaç a Google Fusion Table</string>
   <string name="tracklist_share_gpx_file">Un fitxer GPX</string>
   <string name="tracklist_share_kml_file">Un fitxer KML</string>
   <string name="tracklist_share_csv_file">Un fitxer CSV</string>
@@ -217,14 +216,9 @@ limitations under the License.
   <string name="eclair_required">Suportat només en Android 2.0 i superior</string>
   <string name="settings_sensor_type">Tipus de sensor</string>
   <string name="settings_sensor_type_summary">El tipus de sensor al qual es connecta.</string>
-  <string name="settings_sensor_id">Identificador del sensor</string>
-  <string name="settings_sensor_id_summary">L\'identificador enviat als sensors.</string>
-  <string name="sensor_id_malformed">L\'identificador ha de ser un valor sencer.</string>
   <string name="bluetooth_sensor_title">Sensor bluetooth</string>
   <string name="bluetooth_sensor_summary">El sensor bluetooth al qual es connecta.</string>
   <string name="settings_modular_stats_display_title">Pantalla d\'estadístiques modulars</string>
-  <string name="settings_modular_stats_display_summary_on">La pantalla d\'estadístiques es divideix en mòduls diferents.</string>
-  <string name="settings_modular_stats_display_summary_off">Mostra totes les estadístiques en una sola pantalla.</string>
 
   <string name="settings_backup">Còpia de seguretat (BETA)</string>
   <string name="settings_sd_backup">Còpia de seguretat a la targeta SD</string>
@@ -342,14 +336,11 @@ limitations under the License.
   <string name="help">Ajuda</string>
   <string name="about_team">Equip:</string>
   <string name="about_version">Versió:</string>
-  <string name="about_email">Assistència</string>
   <string name="about_support">Assistència:</string>
 
   <!-- Send to Google -->
   <string name="sendtogoogle_title">Envia a...</string>
   <string name="sendtogoogle_send_now">Envia ara</string>
-  <string name="sendtogoogle_create_new_map">Crea un mapa nou</string>
-  <string name="sendtogoogle_pick_existing_map">Seleccioneu un mapa existent</string>
   <string name="sendtogoogle_send_stats">Envia les estadístiques de la ruta</string>
   <string name="sendtogoogle_send_stats_and_points">Envia les estadístiques i els punts</string>
 
@@ -394,14 +385,6 @@ limitations under the License.
   <!-- Check Units -->
   <string name="check_units_title">Avís de les unitats de mesura</string>
   <string name="check_units_message">Les unitats són mètriques per defecte. Voleu canviar aquest paràmetre?</string>
-
-  <!-- Signal Strength -->
-  <string name="error_rate"> Rati d\'error: %1$d</string>
-  <string name="signal_to_noise_ratio"> Relació senyal/soroll: %1$d</string>
-  <string name="ecio"> Ec/lo: %1$.1f dB</string>
-  <string name="gsm_strength">Intensistat GSM: %1$d</string>
-  <string name="cdma_strength">Intensitat CDMA: %1$d dBm</string>
-  <string name="evdo_strength">Intensitat EVDO: %1$d dBm</string>
 
   <!-- Fake preference keys - never saved, but show options in the preferences screen -->
   <string name="bluetooth_options">Opcions del Bluetooth</string>
