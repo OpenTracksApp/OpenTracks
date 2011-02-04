@@ -223,7 +223,7 @@ limitations under the License.
   <string name="settings_ant_not_paired">ANTセンサーとペアリングしていません</string>
   <string name="settings_ant_paired">ANTセンサーとペアリング: %d</string>
   <string name="bluetooth_sensor_title">Bluetoothセンサー</string>
-  <string name="bluetooth_sensor_summary">Bluetoothセンサー接続先</string>
+  <string name="bluetooth_sensor_summary">接続先Bluetoothセンサー</string>
   <string name="settings_modular_stats_display_title">モジュール統計表示 </string>
 
   <!-- Backups -->
@@ -311,28 +311,28 @@ limitations under the License.
   <string name="milliseconds">ミリ秒</string>
 
   <!-- Distance -->
-  <string name="meter">m</string>
-  <string name="kilometer">km</string>
+  <!-- string name="meter">m</string --> <!-- duplicate -->
+  <!-- string name="kilometer">km</string --> <!-- duplicate -->
   <string name="kilometers_long">キロメータ</string>
-  <string name="feet">ft</string>
-  <string name="mile">mi</string>
+  <!-- string name="feet">ft</string --> <!-- duplicate -->
+  <!-- string name="mile">mi</string --> <!-- duplicate -->
   <string name="miles_long">マイル</string>
 
   <!-- Speed and Pace -->
-  <string name="kilometer_per_hour">km/h</string>
+  <!-- string name="kilometer_per_hour">km/h</string --> <!-- duplicate -->
   <string name="kilometer_per_hour_long">キロメータ毎時</string>
-  <string name="min_per_kilometer">min/km</string>
+  <!-- string name="min_per_kilometer">min/km</string --> <!-- duplicate -->
   <string name="per_kilometer">毎キロメータ</string>
-  <string name="mile_per_hour">mi/h</string>
+  <!-- string name="mile_per_hour">mi/h</string --> <!-- duplicate -->
   <string name="mile_per_hour_long">マイル毎時</string>
-  <string name="min_per_mile">min/mi</string>
+  <!-- string name="min_per_mile">min/mi</string --> <!-- duplicate -->
   <string name="per_mile">毎マイル</string>
 
   <!-- Sensors -->
-  <string name="watts">W</string>
+  <!-- string name="watts">W</string --> <!-- duplicate -->
 
-  <string name="revolutions_per_minute">rpm</string>
-  <string name="bpm">bpm</string>
+  <!-- string name="revolutions_per_minute">rpm</string --> <!-- duplicate -->
+  <!-- string name="bpm">bpm</string --> <!-- duplicate -->
 
   <!-- Stats Labels -->
   <string name="moving_time_label">移動時間</string>
@@ -366,8 +366,8 @@ limitations under the License.
 
   <!-- Send to Google -->
   <string name="sendtogoogle_title">送信...</string>
-  <string name="sendtogoogle_google_fusiontables">Google Fusion Tables</string>
-  <string name="sendtogoogle_google_docs">Google Docs</string>
+  <!-- string name="sendtogoogle_google_fusiontables">Google Fusion Tables</string --> <!-- duplicate -->
+  <!-- string name="sendtogoogle_google_docs">Google Docs</string --> <!-- duplicate -->
   <string name="sendtogoogle_send_now">今すぐ送信</string>
   <string name="sendtogoogle_send_stats">トラック統計情報送信</string>
   <string name="sendtogoogle_send_stats_and_points">統計情報とポイント送信</string>
@@ -395,7 +395,7 @@ limitations under the License.
 
   <!-- Welcome -->
   <string name="welcome">ようこそ</string>
-  <string name="welcome_read_later">Ok</string>
+  <!-- string name="welcome_read_later">Ok</string --> <!-- duplicate -->
   <string name="welcome_about">My Tracksについて</string>
 
   <!-- Announcement -->
@@ -415,7 +415,7 @@ limitations under the License.
   <string name="check_units_message">デフォルトの単位はメートルです．設定を変更しますか?</string>
 
   <!-- Fake preference keys - never saved, but show options in the preferences screen -->
-  <string name="method_bluetooth">Bluetooth</string>
+  <!-- string name="method_bluetooth">Bluetooth</string --> <!-- duplicate -->
   <string name="bluetooth_options">Bluetoothオプション</string>
   <string name="bluetooth_pairing">ペアリング</string>
   <string name="bluetooth_pairing_summary">ペアリングを行うには「Bluetooth設定」を開いて下さい</string>
