@@ -223,7 +223,7 @@ limitations under the License.
   <string name="settings_ant_not_paired">ANTセンサーとペアリングしていません</string>
   <string name="settings_ant_paired">ANTセンサーとペアリング: %d</string>
   <string name="bluetooth_sensor_title">Bluetoothセンサー</string>
-  <string name="bluetooth_sensor_summary">接続先Bluetoothセンサー</string>
+  <string name="bluetooth_sensor_summary">Bluetoothセンサー接続先</string>
   <string name="settings_modular_stats_display_title">モジュール統計表示 </string>
 
   <!-- Backups -->
