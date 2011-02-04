@@ -64,7 +64,6 @@ limitations under the License.
   <string name="progress_title">Please wait...</string>
   <string name="progress_message">Sending your track to Google.</string>
   <string name="progress_message_reading_track">Reading track...</string>
-  <string name="progress_message_preparing_track">Preparing track...</string>
   <string name="progress_message_authenticating_fusiontables">Authenticating to Google Fusion Tables...</string>
   <string name="progress_message_authenticating_docs">Authenticating to Google Docs...</string>
   <string name="progress_message_sending_docs">Sending track to Google Docs...</string>
