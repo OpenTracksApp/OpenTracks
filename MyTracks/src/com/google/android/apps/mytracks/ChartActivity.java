@@ -60,6 +60,7 @@ import java.util.ArrayList;
 public class ChartActivity extends Activity implements
     SharedPreferences.OnSharedPreferenceChangeListener {
 
+  private final static int BUFFER_SIZE = 1024;
   private double profileLength = 0;
 
   private boolean metricUnits = true;
@@ -547,13 +548,11 @@ public class ChartActivity extends Activity implements
   /**
    * Reads the track profile from the provider. This is a blocking function and
    * should not be run from the UI thread.
-   * The reading methods are synchronized so that we don't read points multiple times.
    */
-  private synchronized void readProfile() {
+  private void readProfile() {
     profileLength = 0;
     lastLocation = null;
     startTime = -1;
-    Cursor cursor = null;
     if (selectedTrackId < 0) {
       return;
     }
@@ -561,26 +560,77 @@ public class ChartActivity extends Activity implements
     if (track == null) {
       return;
     }
-    long lastLocationRead = track.getStartId();
-    long totalLocations = track.getStopId() - track.getStartId();
+    lastSeenLocationId = track.getStartId();
+    final ArrayList<double[]> theData = readPointsToList(track);
+    if (theData == null) {
+      return;
+    }
+    runOnUiThread(new Runnable() {
+      public void run() {
+        chartView.setDataPoints(theData);
+      }
+    });
+  }
 
-    // Limit the number of chart readings. Ideally we would want around 1024.
-    int chartSamplingFrequency = Math.max(1, (int) (totalLocations / 1024.0));
-    int bufferSize = 1024;
+  /**
+   * Read all new track points.
+   */
+  private void readNewTrackPoints() {
+    Log.i(MyTracksConstants.TAG, "MyTracks: Updating chart last seen: " + lastSeenLocationId);
+    Track track = providerUtils.getTrack(recordingTrackId);
+    if (track == null) {
+      Log.w(MyTracksConstants.TAG, "MyTracks: track not found");
+      return;
+    }
+    final ArrayList<double[]> theData = readPointsToList(track);
+    if (theData == null) {
+      return;
+    }
+    chartView.addDataPoints(theData);
+    uiHandler.post(new Runnable() {
+      public void run() {
+        chartView.invalidate();
+      }
+    });
+    Log.i(MyTracksConstants.TAG, "MyTracks: Updated chart last seen: " + lastSeenLocationId);
+  }
+
+  /**
+   * Get the frequency at which points should be displayed.
+   * Limit the number of chart readings. Ideally we would want around 1024.
+   * @param track The track which will be displayed.
+   * @return The inverse of the frequency of points to be displayed.
+   */
+  private int getSamplingFrequency(Track track) {
+    long totalLocations = track.getStopId() - track.getStartId();
+    return Math.max(1, (int) (totalLocations / 1024.0));
+  }
+
+  private Cursor getLocationsCursor(long lastLocationRead) {
+    return providerUtils.getLocationsCursor(selectedTrackId, lastLocationRead, BUFFER_SIZE, false);
+  }
+
+  /**
+   * Read all of the points to a list.
+   * @param track The track which will be displayed.
+   * @return
+   */
+  private ArrayList<double[]> readPointsToList(Track track) {
+    Cursor cursor = null;
+    long lastLocationRead = track.getStartId();
+    int points = 0;
+    int chartSamplingFrequency = getSamplingFrequency(track);
+    ArrayList<double[]> result = new ArrayList<double[]>();
+    // Need two locations so we can keep track of the last location.
+    Location location = new MyTracksLocation("");
     try {
-      final ArrayList<double[]> theData = new ArrayList<double[]>();
-      int points = 0;
-      // Need two locations so we can keep track of the last location.
-      Location location = new MyTracksLocation("");
-      while (lastLocationRead < track.getStopId()) {
-        cursor = providerUtils.getLocationsCursor(
-            selectedTrackId, lastLocationRead, bufferSize, false);
+      while (lastSeenLocationId < track.getStopId()) {
+        cursor = getLocationsCursor(lastLocationRead);
         if (cursor != null) {
           elevationBuffer.reset();
           speedBuffer.reset();
           if (cursor.moveToFirst()) {
-            final int idColumnIdx =
-                cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
+            final int idColumnIdx = cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
             while (cursor.moveToNext()) {
               points++;
               providerUtils.fillLocation(cursor, location);
@@ -591,82 +641,27 @@ public class ChartActivity extends Activity implements
                 double[] point = new double[6];
                 location = getDataPoint(location, track, point);
                 if (points % chartSamplingFrequency == 0) {
-                  theData.add(point);
+                  result.add(point);
                 }
               }
             }
           } else {
-            lastLocationRead += bufferSize;
+            lastLocationRead += BUFFER_SIZE;
           }
         } else {
-          lastLocationRead += bufferSize;
+          lastLocationRead += BUFFER_SIZE;
         }
         cursor.close();
         cursor = null;
       }
-      runOnUiThread(new Runnable() {
-        public void run() {
-          chartView.setDataPoints(theData);
-        }
-      });
-    } catch (RuntimeException e) {
-      Log.w(MyTracksConstants.TAG, "Caught unexpected exception.", e);
-    } finally {
-      if (cursor != null) {
-        cursor.close();
-      }
-    }
-  }
-
-  /**
-   * Read all new track points.
-   *
-   * The reading methods are synchronized so that we don't read points multiple times.
-   */
-  private synchronized void readNewTrackPoints() {
-    Log.i(MyTracksConstants.TAG, "MyTracks: Updating chart last seen: " + lastSeenLocationId);
-    Track track = providerUtils.getTrack(recordingTrackId);
-    if (track == null) {
-      Log.w(MyTracksConstants.TAG, "MyTracks: track not found");
-      return;
-    }
-    Cursor cursor = null;
-    try {
-      cursor = providerUtils.getLocationsCursor(recordingTrackId,
-          lastSeenLocationId + 1,
-          MyTracksConstants.MAX_DISPLAYED_TRACK_POINTS - chartView.getData().size(),
-          true);
-      if (cursor != null) {
-        if (cursor.moveToLast()) {
-          final int idColumnIdx =
-              cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
-          ArrayList<double[]> data = new ArrayList<double[]>();
-          // Need two locations so we can keep track of the last location.
-          Location location = new MyTracksLocation("");
-          do {
-            lastSeenLocationId = cursor.getLong(idColumnIdx);
-            providerUtils.fillLocation(cursor, location);
-            if (MyTracksUtils.isValidLocation(location)) {
-              double[] point = new double[6];
-              location = getDataPoint(location, track, point);
-              data.add(point);
-            }
-          } while (cursor.moveToPrevious());
-          chartView.addDataPoints(data);
-        }
-      }
+      return result;
     } catch (RuntimeException e) {
       Log.w(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
+      return null;
     } finally {
       if (cursor != null) {
         cursor.close();
       }
-      uiHandler.post(new Runnable() {
-        public void run() {
-          chartView.invalidate();
-        }
-      });
     }
-    Log.i(MyTracksConstants.TAG, "MyTracks: Updated chart last seen: " + lastSeenLocationId);
   }
 }
