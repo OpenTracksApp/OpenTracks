@@ -666,7 +666,7 @@ public class SendToFusionTables implements Runnable {
         request.content = isc;
 
         Log.d(MyTracksConstants.TAG, "Running update query " + url.toString() + ": " + sql);
-        HttpResponse response = null;
+        HttpResponse response;
         try {
           response = request.execute();
         } catch (HttpResponseException e) {
