@@ -34,6 +34,7 @@ import com.google.api.client.googleapis.MethodOverrideIntercepter;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
+import com.google.api.client.http.HttpResponseException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.InputStreamContent;
 import com.google.api.client.javanet.NetHttpTransport;
@@ -665,7 +666,12 @@ public class SendToFusionTables implements Runnable {
         request.content = isc;
 
         Log.d(MyTracksConstants.TAG, "Running update query " + url.toString() + ": " + sql);
-        HttpResponse response = request.execute();
+        HttpResponse response = null;
+        try {
+          response = request.execute();
+        } catch (HttpResponseException e) {
+          throw new GDataWrapper.HttpException(e.response.statusCode, e.getMessage());
+        }
         boolean success = response.isSuccessStatusCode;
         if (success) {
           byte[] result = new byte[1024];
