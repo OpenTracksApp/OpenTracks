@@ -562,9 +562,6 @@ public class ChartActivity extends Activity implements
     }
     lastSeenLocationId = track.getStartId();
     final ArrayList<double[]> theData = readPointsToList(track);
-    if (theData == null) {
-      return;
-    }
     runOnUiThread(new Runnable() {
       public void run() {
         chartView.setDataPoints(theData);
@@ -582,11 +579,7 @@ public class ChartActivity extends Activity implements
       Log.w(MyTracksConstants.TAG, "MyTracks: track not found");
       return;
     }
-    final ArrayList<double[]> theData = readPointsToList(track);
-    if (theData == null) {
-      return;
-    }
-    chartView.addDataPoints(theData);
+    chartView.addDataPoints(readPointsToList(track));
     uiHandler.post(new Runnable() {
       public void run() {
         chartView.invalidate();
@@ -613,7 +606,7 @@ public class ChartActivity extends Activity implements
   /**
    * Read all of the points to a list.
    * @param track The track which will be displayed.
-   * @return
+   * @return 
    */
   private ArrayList<double[]> readPointsToList(Track track) {
     Cursor cursor = null;
@@ -655,9 +648,6 @@ public class ChartActivity extends Activity implements
         cursor = null;
       }
       return result;
-    } catch (RuntimeException e) {
-      Log.w(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
-      return null;
     } finally {
       if (cursor != null) {
         cursor.close();
