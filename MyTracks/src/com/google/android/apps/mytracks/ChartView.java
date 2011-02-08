@@ -216,7 +216,7 @@ public class ChartView extends View {
                              R.color.speed_fill,
                              R.color.speed_border,
                              new ZoomSettings(MAX_INTERVALS, 0, Integer.MIN_VALUE,
-                                 new int[] {5, 10, 20, 50}),
+                                 new int[] {1, 5, 10, 20, 50}),
                              R.string.speed);
     series[POWER_SERIES] =
         new ChartValueSeries(context,
@@ -610,7 +610,8 @@ public class ChartView extends View {
     
     c.translate(getScrollX(), 0);
     drawYAxis(c);
-    final int spacer = 5;
+    float density = getContext().getResources().getDisplayMetrics().density;
+    final int spacer = (int) (5 * density);
     int x = leftBorder - spacer;
     for (ChartValueSeries cvs : series) {
       if (cvs.isEnabled() && cvs.hasData()) {
@@ -726,9 +727,10 @@ public class ChartView extends View {
         maxLength += cvs.getMaxLabelLength();
       }
     }
-    leftBorder = 4 + 8 * maxLength;
-    effectiveWidth = w - leftBorder - RIGHT_BORDER;
     float density = getContext().getResources().getDisplayMetrics().density;
+    // TODO: This should be function of the number of variables displayed.
+    leftBorder = (int) (density * (4 + 8 * maxLength));
+    effectiveWidth = w - leftBorder - RIGHT_BORDER;
     bottomBorder = (int) (density * BOTTOM_BORDER);
     topBorder = (int) (density * TOP_BORDER);
     effectiveHeight = h - topBorder - bottomBorder;
@@ -739,8 +741,9 @@ public class ChartView extends View {
   }
 
   private int getY(ChartValueSeries cvs, double y) {
+    int effectiveSpread = cvs.getInterval() * MAX_INTERVALS;
     return topBorder + effectiveHeight
-        - (int) ((y - cvs.getMin()) * effectiveHeight / cvs.getSpread());
+        - (int) ((y - cvs.getMin()) * effectiveHeight / effectiveSpread);
   }
 
   private void drawXLabels(Canvas c) {
