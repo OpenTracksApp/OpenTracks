@@ -610,7 +610,7 @@ public class ChartActivity extends Activity implements
    */
   private ArrayList<double[]> readPointsToList(Track track) {
     Cursor cursor = null;
-    long lastLocationRead = track.getStartId();
+    long lastLocationRead = lastSeenLocationId;
     int points = 0;
     int chartSamplingFrequency = getSamplingFrequency(track);
     ArrayList<double[]> result = new ArrayList<double[]>();
