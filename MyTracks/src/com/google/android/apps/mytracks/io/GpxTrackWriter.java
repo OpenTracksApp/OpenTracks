@@ -38,16 +38,21 @@ import java.util.TimeZone;
 public class GpxTrackWriter implements TrackFormatWriter {
 
   static final int LATLONG_FORMAT = Location.FORMAT_DEGREES;
-  static final DecimalFormat ELEVATION_FORMAT =
+  static final DecimalFormat ELEVATION_FORMATTER =
       new DecimalFormat("#.#");
-  static final SimpleDateFormat TIMESTAMP_FORMAT =
+  static final SimpleDateFormat TIMESTAMP_FORMATTER =
       new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
   static {
-    TIMESTAMP_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
+    TIMESTAMP_FORMATTER.setTimeZone(TimeZone.getTimeZone("UTC"));
   }
 
   private PrintWriter pw = null;
   private Track track;
+
+  private String formatLocation(Location l) {
+    return "lat=\"" + Location.convert(l.getLatitude(), LATLONG_FORMAT)
+      + "\" lon=\"" + Location.convert(l.getLongitude(), LATLONG_FORMAT) + "\"";
+  }
 
   @Override
   public void prepare(Track track, OutputStream out) {
@@ -122,12 +127,10 @@ public class GpxTrackWriter implements TrackFormatWriter {
   @Override
   public void writeLocation(Location l) {
     if (pw != null) {
-      pw.println("<trkpt lat=\""
-          + Location.convert(l.getLatitude(), LATLONG_FORMAT) + "\" lon=\""
-          + Location.convert(l.getLongitude(), LATLONG_FORMAT) + "\">");
+      pw.println("<trkpt " + formatLocation(l) + ">");
       Date d = new Date(l.getTime());
-      pw.println("<ele>" + ELEVATION_FORMAT.format(l.getAltitude()) + "</ele>");
-      pw.println("<time>" + TIMESTAMP_FORMAT.format(d) + "</time>");
+      pw.println("<ele>" + ELEVATION_FORMATTER.format(l.getAltitude()) + "</ele>");
+      pw.println("<time>" + TIMESTAMP_FORMATTER.format(d) + "</time>");
       pw.println("</trkpt>");
     }
   }
@@ -145,11 +148,9 @@ public class GpxTrackWriter implements TrackFormatWriter {
     if (pw != null) {
       Location l = waypoint.getLocation();
       if (l != null) {
-        pw.println("<wpt lat=\""
-            + Location.convert(l.getLatitude(), LATLONG_FORMAT) + "\" lon=\""
-            + Location.convert(l.getLongitude(), LATLONG_FORMAT) + "\">");
-        pw.println("<ele>" + ELEVATION_FORMAT.format(l.getAltitude()) + "</ele>");
-        pw.println("<time>" + TIMESTAMP_FORMAT.format(l.getTime()) + "</time>");
+        pw.println("<wpt " + formatLocation(l) + ">");
+        pw.println("<ele>" + ELEVATION_FORMATTER.format(l.getAltitude()) + "</ele>");
+        pw.println("<time>" + TIMESTAMP_FORMATTER.format(l.getTime()) + "</time>");
         pw.println("<name>" + StringUtils.stringAsCData(waypoint.getName())
             + "</name>");
         pw.println("<desc>"
