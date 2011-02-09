@@ -255,9 +255,8 @@ public class TrackWriter {
   void writeDocument() {
     Log.d(MyTracksConstants.TAG, "Started writing track.");
     writer.writeHeader();
-    // TODO: Fix ordering (in GPX waypoints should come first)
-    writeLocations();
     writeWaypoints(track.getId());
+    writeLocations();
     writer.writeFooter();
     writer.close();
     success = true;
