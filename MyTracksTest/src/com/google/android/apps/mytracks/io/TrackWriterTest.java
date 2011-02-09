@@ -267,8 +267,13 @@ public class TrackWriterTest extends AndroidTestCase {
       wpt.setId(i + 1);
     }
 
-    // Begin the track
     formatWriter.writeHeader();
+
+    // Expect reading/writing of the waypoints (except the first)
+    formatWriter.writeWaypoint(wptEq(wps[1]));
+    formatWriter.writeWaypoint(wptEq(wps[2]));
+
+    // Begin the track
     formatWriter.writeBeginTrack(locEq(locs[0]));
 
     // Write locations 1-2
@@ -288,10 +293,6 @@ public class TrackWriterTest extends AndroidTestCase {
 
     // End the track
     formatWriter.writeEndTrack(locEq(locs[5]));
-
-    // Expect reading/writing of the waypoints (except the first)
-    formatWriter.writeWaypoint(wptEq(wps[1]));
-    formatWriter.writeWaypoint(wptEq(wps[2]));
 
     formatWriter.writeFooter();
     formatWriter.close();
