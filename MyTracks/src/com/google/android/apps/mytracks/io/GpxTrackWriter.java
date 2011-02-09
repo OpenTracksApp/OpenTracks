@@ -67,14 +67,14 @@ public class GpxTrackWriter implements TrackFormatWriter {
           Charset.defaultCharset().name());
       pw.println("<?xml-stylesheet type=\"text/xsl\" href=\"details.xsl\"?>");
       pw.println("<gpx");
-      pw.println(" version=\"1.0\"");
+      pw.println(" version=\"1.1\"");
       pw.println(" creator=\"My Tracks for the G1 running Android\"");
       pw.println(" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
-      pw.println(" xmlns=\"http://www.topografix.com/GPX/1/0\"");
+      pw.println(" xmlns=\"http://www.topografix.com/GPX/1/1\"");
       pw.print(" xmlns:topografix=\"http://www.topografix.com/GPX/Private/"
           + "TopoGrafix/0/1\"");
-      pw.print(" xsi:schemaLocation=\"http://www.topografix.com/GPX/1/0 ");
-      pw.print("http://www.topografix.com/GPX/1/0/gpx.xsd ");
+      pw.print(" xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 ");
+      pw.print("http://www.topografix.com/GPX/1/1/gpx.xsd ");
       pw.print("http://www.topografix.com/GPX/Private/TopoGrafix/0/1 ");
       pw.println("http://www.topografix.com/GPX/Private/TopoGrafix/0/1/"
           + "topografix.xsd\">");
@@ -98,7 +98,7 @@ public class GpxTrackWriter implements TrackFormatWriter {
       pw.println("<desc>" + StringUtils.stringAsCData(track.getDescription())
           + "</desc>");
       pw.println("<number>" + track.getId() + "</number>");
-      pw.println("<topografix:color>c0c0c0</topografix:color>");
+      pw.println("<extensions><topografix:color>c0c0c0</topografix:color></extensions>");
     }
   }
 
