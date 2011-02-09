@@ -26,6 +26,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -36,6 +37,9 @@ import java.util.TimeZone;
  */
 public class GpxTrackWriter implements TrackFormatWriter {
 
+  static final int LATLONG_FORMAT = Location.FORMAT_DEGREES;
+  static final DecimalFormat ELEVATION_FORMAT =
+      new DecimalFormat("#.#");
   static final SimpleDateFormat TIMESTAMP_FORMAT =
       new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
   static {
@@ -118,10 +122,11 @@ public class GpxTrackWriter implements TrackFormatWriter {
   @Override
   public void writeLocation(Location l) {
     if (pw != null) {
-      pw.println("<trkpt lat=\"" + l.getLatitude() + "\" lon=\""
-          + l.getLongitude() + "\">");
+      pw.println("<trkpt lat=\""
+          + Location.convert(l.getLatitude(), LATLONG_FORMAT) + "\" lon=\""
+          + Location.convert(l.getLongitude(), LATLONG_FORMAT) + "\">");
       Date d = new Date(l.getTime());
-      pw.println("<ele>" + l.getAltitude() + "</ele>");
+      pw.println("<ele>" + ELEVATION_FORMAT.format(l.getAltitude()) + "</ele>");
       pw.println("<time>" + TIMESTAMP_FORMAT.format(d) + "</time>");
       pw.println("</trkpt>");
     }
@@ -141,14 +146,15 @@ public class GpxTrackWriter implements TrackFormatWriter {
       // TODO: The gpx spec says waypoints should come *before* tracks
       Location l = waypoint.getLocation();
       if (l != null) {
-        pw.println("<wpt lat=\"" + l.getLatitude() + "\" lon=\""
-            + l.getLongitude() + "\">");
+        pw.println("<wpt lat=\""
+            + Location.convert(l.getLatitude(), LATLONG_FORMAT) + "\" lon=\""
+            + Location.convert(l.getLongitude(), LATLONG_FORMAT) + "\">");
+        pw.println("<ele>" + ELEVATION_FORMAT.format(l.getAltitude()) + "</ele>");
+        pw.println("<time>" + TIMESTAMP_FORMAT.format(l.getTime()) + "</time>");
         pw.println("<name>" + StringUtils.stringAsCData(waypoint.getName())
             + "</name>");
         pw.println("<desc>"
             + StringUtils.stringAsCData(waypoint.getDescription()) + "</desc>");
-        pw.println("<time>" + TIMESTAMP_FORMAT.format(l.getTime()) + "</time>");
-        pw.println("<ele>" + l.getAltitude() + "</ele>");
         pw.println("</wpt>");
       }
     }

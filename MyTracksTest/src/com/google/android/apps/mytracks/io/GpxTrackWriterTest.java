@@ -75,12 +75,17 @@ public class GpxTrackWriterTest extends TrackFormatWriterTest {
    * Asserts that the given tag describes the given location.
    */
   private void assertTagMatchesLocation(Element tag, Location loc) {
-    assertEquals(Double.toString(loc.getLatitude()), tag.getAttribute("lat"));
-    assertEquals(Double.toString(loc.getLongitude()), tag.getAttribute("lon"));
+    assertEquals(
+        Location.convert(loc.getLatitude(), GpxTrackWriter.LATLONG_FORMAT),
+        tag.getAttribute("lat"));
+    assertEquals(
+        Location.convert(loc.getLongitude(), GpxTrackWriter.LATLONG_FORMAT),
+        tag.getAttribute("lon"));
     assertEquals(
         GpxTrackWriter.TIMESTAMP_FORMAT.format(new Date(loc.getTime())),
         getChildTextValue(tag, "time"));
-    assertEquals(Double.toString(loc.getAltitude()),
+    assertEquals(
+        GpxTrackWriter.ELEVATION_FORMAT.format(loc.getAltitude()),
         getChildTextValue(tag, "ele"));
   }
 }
