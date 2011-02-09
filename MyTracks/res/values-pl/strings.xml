@@ -34,7 +34,7 @@ limitations under the License.
   <!-- Error messages -->
   <string name="error_no_location_manager">Brak menedżera lokalizacji na urządzeniu!</string>
   <string name="error_no_gps_location_provider">Brak dostawcy lokalizacji GPS na urządzeniu.</string>
-  <string name="error_sending_to_mymap">Podczas przesyłania pliku do Moich Map Google pojawił się błąd. Spróbuj ponownie później.</string>
+  <string name="error_sending_to_fusiontables">Podczas przesyłania pliku do Moich Map Google pojawił się błąd. Spróbuj ponownie później.</string>
   <string name="error_sending_to_docs">Podczas przesyłania pliku do Dokumentów Google pojawił się błąd. Spróbuj ponownie później.</string>
   <string name="error_unable_to_start_recording">Nie można rozpocząć rejestrowania. Spróbuj ponownie.</string>
   <string name="error_unable_to_stop_recording">Nie można zakończyć rejestrowania. Spróbuj ponownie.</string>
@@ -49,7 +49,7 @@ limitations under the License.
   <string name="wait_for_fix">Oczekiwanie na lepsze ustalenie pozycji GPS. Upewnij się, że niebo jest widoczne.</string>
   <string name="status_now_recording">Rejestrowanie nowej trasy.</string>
   <string name="status_stopped_recording">Zatrzymano rejestrowanie nowej trasy.</string>
-  <string name="status_new_mymap_has_been_created">Utworzona nową Mapę Google na maps.google.com.</string>
+  <!-- <string name="status_new_fusiontable_has_been_created">Utworzona nową Mapę Google na maps.google.com.</string> -->
   <string name="status_tracks_have_been_uploaded">Twoja trasa został wysłana do maps.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_new_doc">Twoja trasa została wysłana do nowego arkusza na docs.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_docs">Twoja trasa została wysłana do docs.google.com.</string>
@@ -64,11 +64,11 @@ limitations under the License.
   <string name="progress_message">Przesyłanie trasy do Google.</string>
   <string name="progress_message_reading_track">Czytanie trasy...</string>
   <string name="progress_message_preparing_track">Przygotowywanie trasy...</string>
-  <string name="progress_message_authenticating_mymaps">Uwierzytelnianie w Mapach Google...</string>
+  <!-- <string name="progress_message_authenticating_fusiontables">Uwierzytelnianie w Mapach Google...</string> -->
   <string name="progress_message_authenticating_docs">Uwierzytelnianie w Dokumentach Google...</string>
   <string name="progress_message_sending_docs">Przesyłanie trasy do Dokumentów Google...</string>
-  <string name="progress_message_sending_mymaps">Przesyłanie trasy do Map Google...</string>
-  <string name="progress_message_creating_map">Tworzenie nowej Mojej Mapy...</string>
+  <!-- <string name="progress_message_sending_fusiontables">Przesyłanie trasy do Map Google...</string> -->
+  <!-- <string name="progress_message_creating_fusiontable">Tworzenie nowej Mojej Mapy...</string> -->
   <string name="import_progress_message">Importowanie trasy GPS. Poczekaj chwilę.</string>
   <string name="write_progress_message">Zapisywanie pliku na kartę SD. Poczekaj chwilę.</string>
   <string name="progress_message_updating_track">Aktualizacja statystyk trasy...</string>
@@ -81,8 +81,7 @@ limitations under the License.
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="new_map_description">Utworzono za pomocą My Tracks na Android.</string>
-  <string name="my_map_link">Utworzona przez &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; na Android.</string>
-  <string name="new_map_title">Nowa mapa</string>
+  <string name="fusiontable_link">Utworzona przez &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; na Android.</string>
 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">Punkty</string>
@@ -113,8 +112,8 @@ limitations under the License.
 
   <!--  TrackList -->
   <string name="tracklist_show_track">Pokaż</string>
-  <string name="tracklist_send_to_mymaps">Wyślij do Moich Map Google</string>
-  <string name="tracklist_send_to_new_mymap">Wyślij do Moich Map Google jako nową mapę</string>
+  <!-- <string name="tracklist_send_to_fusiontables">Wyślij do Moich Map Google</string> -->
+  <!-- <string name="tracklist_send_to_new_fusiontable">Wyślij do Moich Map Google jako nową mapę</string> -->
   <string name="tracklist_send_to_docs">Wyślij do Dokumentów Google</string>
   <string name="tracklist_send_to_google">Wyślij do Google...</string>
   <string name="tracklist_delete_track">Usuń z telefonu...</string>
@@ -123,7 +122,7 @@ limitations under the License.
   <string name="tracklist_save_as_gpx">Zapisz plik GPX</string>
   <string name="tracklist_save_as_kml">Zapisz plik KML</string>
   <string name="tracklist_save_as_csv">Zapisz plik CSV</string>
-  <string name="tracklist_btn_send_all_to_mymaps">Wyślij do Moich Map Google</string>
+  <!-- <string name="tracklist_btn_send_all_to_fusiontables">Wyślij do Moich Map Google</string> -->
   <string name="tracklist_btn_delete_all">Usuń wszystkie trasy</string>
   <!-- Export All -->
   <string name="tracklist_btn_export_all">Eksportuj wszystkie trasy</string>
@@ -132,7 +131,7 @@ limitations under the License.
   <string name="tracklist_all_tracks">Wszystkie trasy:</string>
   <string name="tracklist_this_track">Ta trasa</string>
   <string name="tracklist_share_track">Podziel się z przyjaciółmi...</string>
-  <string name="tracklist_share_link">Link do Moich Map Google</string>
+  <!-- <string name="tracklist_share_linkfusion">Link do Moich Map Google</string> -->
   <string name="tracklist_share_gpx_file">Plik GPX</string>
   <string name="tracklist_share_kml_file">PLik KML</string>
   <string name="tracklist_share_csv_file">Plik CSV</string>
@@ -209,14 +208,9 @@ limitations under the License.
   <string name="eclair_required">Dostępne tylko w wersji Android 2.0 lub nowszej</string>
   <string name="settings_sensor_type">Typ Czujnika</string>
   <string name="settings_sensor_type_summary">Typ czujnika do podłączenia.</string>
-  <string name="settings_sensor_id">Id Czujnika</string>
-  <string name="settings_sensor_id_summary">Identyfikator wysyłany do czujników.</string>
-  <string name="sensor_id_malformed">Identyfikator musi być liczbą całkowitą.</string>
   <string name="bluetooth_sensor_title">Czujnik bluetooth</string>
   <string name="bluetooth_sensor_summary">Czujnik bluetooth do podłączenia.</string>
   <string name="settings_modular_stats_display_title">Widok Statystyk Modularnych</string>
-  <string name="settings_modular_stats_display_summary_on">Ekran statystyk jest podzielony w zależności od trybu.</string>
-  <string name="settings_modular_stats_display_summary_off">Wyświetl wszystkie statystyki na jednym ekranie.</string>
 
   <string name="settings_backup">Kopia zapasowa (BETA)</string>
   <string name="settings_sd_backup">Kopia zapasowa na kartę SD</string>
@@ -341,18 +335,14 @@ limitations under the License.
   <string name="help">Pomoc</string>
   <string name="about_team">Zespół:</string>
   <string name="about_version">Wersja:</string>
-  <string name="about_email">Wsparcie</string>
   <string name="about_support">Wsparcie:</string>
-  
   <string name="about_bart">Bartłomiej Niechwiej</string>
 
   <!-- Send to Google -->
   <string name="sendtogoogle_title">Wyślij do...</string>
-  <string name="sendtogoogle_google_mymaps">Moje Mapy Google</string>
+  <!-- <string name="sendtogoogle_google_fusiontables">Moje Mapy Google</string> -->
   <string name="sendtogoogle_google_docs">Dokumenty Google</string>
   <string name="sendtogoogle_send_now">Wyślij teraz</string>
-  <string name="sendtogoogle_create_new_map">Utwórz nową mapę</string>
-  <string name="sendtogoogle_pick_existing_map">Wybierz istniejąca mapę</string>
   <string name="sendtogoogle_send_stats">Wyślij statystyki trasy</string>
   <string name="sendtogoogle_send_stats_and_points">Wyślij statystyki i punkty</string>
 
