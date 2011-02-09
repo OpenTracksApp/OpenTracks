@@ -212,7 +212,7 @@ public class GDataWrapper<C> {
     } catch (HttpException e) {
       Log.e(MyTracksConstants.TAG, "HttpException", e);
       errorMessage = e.getMessage();
-      if (errorMessage.contains("401")) {
+      if (errorMessage != null && errorMessage.contains("401")) {
         errorType = ERROR_AUTH;
       } else {
         errorType = ERROR_CONNECTION;
@@ -224,7 +224,7 @@ public class GDataWrapper<C> {
     } catch (IOException e) {
       Log.e(MyTracksConstants.TAG, "Exception", e);
       errorMessage = e.getMessage();
-      if (errorMessage.contains("503")) {
+      if (errorMessage != null && errorMessage.contains("503")) {
         errorType = ERROR_INTERNAL;
       } else {
         errorType = ERROR_CONNECTION;

@@ -670,7 +670,7 @@ public class SendToFusionTables implements Runnable {
         try {
           response = request.execute();
         } catch (HttpResponseException e) {
-          throw new GDataWrapper.HttpException(e.response.statusCode, e.getMessage());
+          throw new GDataWrapper.HttpException(e.response.statusCode, e.response.statusMessage);
         }
         boolean success = response.isSuccessStatusCode;
         if (success) {
