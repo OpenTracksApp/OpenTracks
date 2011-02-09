@@ -82,10 +82,10 @@ public class GpxTrackWriterTest extends TrackFormatWriterTest {
         Location.convert(loc.getLongitude(), GpxTrackWriter.LATLONG_FORMAT),
         tag.getAttribute("lon"));
     assertEquals(
-        GpxTrackWriter.TIMESTAMP_FORMAT.format(new Date(loc.getTime())),
+        GpxTrackWriter.TIMESTAMP_FORMATTER.format(new Date(loc.getTime())),
         getChildTextValue(tag, "time"));
     assertEquals(
-        GpxTrackWriter.ELEVATION_FORMAT.format(loc.getAltitude()),
+        GpxTrackWriter.ELEVATION_FORMATTER.format(loc.getAltitude()),
         getChildTextValue(tag, "ele"));
   }
 }
