@@ -143,7 +143,6 @@ public class GpxTrackWriter implements TrackFormatWriter {
   @Override
   public void writeWaypoint(Waypoint waypoint) {
     if (pw != null) {
-      // TODO: The gpx spec says waypoints should come *before* tracks
       Location l = waypoint.getLocation();
       if (l != null) {
         pw.println("<wpt lat=\""
