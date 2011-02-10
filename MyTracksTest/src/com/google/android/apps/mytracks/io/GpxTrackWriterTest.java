@@ -30,62 +30,41 @@ public class GpxTrackWriterTest extends TrackFormatWriterTest {
     assertEquals(Long.toString(TRACK_ID),
         getChildTextValue(trackTag, "number"));
     List<Element> segmentTags = getChildElements(trackTag, "trkseg", 2);
-    Element segment1Tag = segmentTags.get(0);
-    Element segment2Tag = segmentTags.get(1);
-    List<Element> seg1PointTags = getChildElements(segment1Tag, "trkpt", 2);
-    List<Element> seg2PointTags = getChildElements(segment2Tag, "trkpt", 2);
-    assertTagsMatchPoints(seg1PointTags, location1, location2);
-    assertTagsMatchPoints(seg2PointTags, location3, location4);
+    List<Element> segPointTags = getChildElements(segmentTags.get(0), "trkpt", 2);
+    assertTagMatchesLocation(segPointTags.get(0),
+        "0", "0", "1970-01-01T02:46:40Z", "0");
+    assertTagMatchesLocation(segPointTags.get(1),
+        "1", "-1", "1970-01-01T02:46:41Z", "5000000");
+
+    segPointTags = getChildElements(segmentTags.get(1), "trkpt", 2);
+    assertTagMatchesLocation(segPointTags.get(0),
+        "2", "-2", "1970-01-01T02:46:42Z", "10000000");
+    assertTagMatchesLocation(segPointTags.get(1),
+        "3", "-3", "1970-01-01T02:46:43Z", "15000000");
+
     List<Element> waypointTags = getChildElements(gpxTag, "wpt", 2);
-    assertTagsMatchWaypoints(waypointTags, wp1, wp2);
+    Element wptTag = waypointTags.get(0);
+    assertEquals(WAYPOINT1_NAME, getChildTextValue(wptTag, "name"));
+    assertEquals(WAYPOINT1_DESCRIPTION, getChildTextValue(wptTag, "desc"));
+    assertTagMatchesLocation(wptTag,
+        "1", "-1", "1970-01-01T02:46:41Z", "5000000");
+
+    wptTag = waypointTags.get(1);
+    assertEquals(WAYPOINT2_NAME, getChildTextValue(wptTag, "name"));
+    assertEquals(WAYPOINT2_DESCRIPTION, getChildTextValue(wptTag, "desc"));
+    assertTagMatchesLocation(wptTag,
+        "2", "-2", "1970-01-01T02:46:42Z", "10000000");
   }
 
   /**
-   * Asserts that the given tags describe the given waypoints, in the same
-   * order.
+   * Asserts that the given tag describes the location given by the
+   * Strings lat, lon, time, and ele.
    */
-  protected void assertTagsMatchWaypoints(List<Element> tags, Waypoint... wps) {
-    assertEquals(wps.length, tags.size());
-    for (int i = 0; i < wps.length; i++) {
-      Element tag = tags.get(i);
-      Waypoint wp = wps[i];
-      Location loc = wp.getLocation();
-
-      assertTagMatchesLocation(tag, loc);
-
-      assertEquals(wp.getName(), getChildTextValue(tag, "name"));
-      assertEquals(wp.getDescription(), getChildTextValue(tag, "desc"));
-    }
-  }
-
-  /**
-   * Asserts that the given tags describe the given points, in the same order.
-   */
-  protected void assertTagsMatchPoints(List<Element> tags, Location... locs) {
-    assertEquals(locs.length, tags.size());
-    for (int i = 0; i < locs.length; i++) {
-      Element tag = tags.get(i);
-      Location loc = locs[i];
-
-      assertTagMatchesLocation(tag, loc);
-    }
-  }
-
-  /**
-   * Asserts that the given tag describes the given location.
-   */
-  private void assertTagMatchesLocation(Element tag, Location loc) {
-    assertEquals(
-        Location.convert(loc.getLatitude(), GpxTrackWriter.LATLONG_FORMAT),
-        tag.getAttribute("lat"));
-    assertEquals(
-        Location.convert(loc.getLongitude(), GpxTrackWriter.LATLONG_FORMAT),
-        tag.getAttribute("lon"));
-    assertEquals(
-        GpxTrackWriter.TIMESTAMP_FORMATTER.format(new Date(loc.getTime())),
-        getChildTextValue(tag, "time"));
-    assertEquals(
-        GpxTrackWriter.ELEVATION_FORMATTER.format(loc.getAltitude()),
-        getChildTextValue(tag, "ele"));
+  private void assertTagMatchesLocation(Element tag, String lat,
+      String lon, String time, String ele) {
+    assertEquals(lat, tag.getAttribute("lat"));
+    assertEquals(lon, tag.getAttribute("lon"));
+    assertEquals(time, getChildTextValue(tag, "time"));
+    assertEquals(ele, getChildTextValue(tag, "ele"));
   }
 }

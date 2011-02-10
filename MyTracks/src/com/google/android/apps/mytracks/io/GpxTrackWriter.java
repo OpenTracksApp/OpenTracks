@@ -37,10 +37,10 @@ import java.util.TimeZone;
  */
 public class GpxTrackWriter implements TrackFormatWriter {
 
-  static final int LATLONG_FORMAT = Location.FORMAT_DEGREES;
-  static final DecimalFormat ELEVATION_FORMATTER =
+  private static final int LATLONG_FORMAT = Location.FORMAT_DEGREES;
+  private static final DecimalFormat ELEVATION_FORMATTER =
       new DecimalFormat("#.#");
-  static final SimpleDateFormat TIMESTAMP_FORMATTER =
+  private static final SimpleDateFormat TIMESTAMP_FORMATTER =
       new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
   static {
     TIMESTAMP_FORMATTER.setTimeZone(TimeZone.getTimeZone("UTC"));
