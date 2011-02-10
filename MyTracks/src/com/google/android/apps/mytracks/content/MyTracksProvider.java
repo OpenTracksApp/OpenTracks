@@ -372,7 +372,7 @@ public class MyTracksProvider extends ContentProvider {
       throw new IllegalArgumentException("Unknown URL " + url);
     }
 
-    if (ApiFeatures.getInstance().canUseSQLiteQueryBuilderTwice()) {
+    if (ApiFeatures.getInstance().canReuseSQLiteQueryBuilder()) {
       Log.i(MyTracksConstants.TAG,
           "Build query: " + qb.buildQuery(projection, selection, selectionArgs, 
           null, null, sortOrder, null));

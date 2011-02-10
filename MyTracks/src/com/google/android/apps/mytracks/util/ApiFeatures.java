@@ -115,7 +115,7 @@ public class ApiFeatures {
    * it'll regenerate the query for the second call, and will screw it
    * up.  Specifically, it'll add extra parens which don't belong.
    */
-  public boolean canUseSQLiteQueryBuilderTwice() {
+  public boolean canReuseSQLiteQueryBuilder() {
     return getApiLevel() > 4;
   }
 
