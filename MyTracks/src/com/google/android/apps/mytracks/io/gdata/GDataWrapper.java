@@ -210,9 +210,10 @@ public class GDataWrapper<C> {
       errorType = ERROR_AUTH;
       errorMessage = e.getMessage();
     } catch (HttpException e) {
-      Log.e(MyTracksConstants.TAG, "HttpException, code " + e.getStatusCode(), e);
+      Log.e(MyTracksConstants.TAG, 
+          "HttpException, code " + e.getStatusCode() + " message " + e.getMessage(), e);
       errorMessage = e.getMessage();
-      if (errorMessage != null && errorMessage.contains("401")) {
+      if (e.getStatusCode() == 401) {
         errorType = ERROR_AUTH;
       } else {
         errorType = ERROR_CONNECTION;
