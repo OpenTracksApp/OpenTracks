@@ -106,6 +106,18 @@ public class ApiFeatures {
   public boolean hasStrictMode() {
     return getApiLevel() >= 9;
   }
+  
+  /**
+   * There's a bug (#1587) in Cupcake and Donut which prevents you from
+   * using a SQLiteQueryBuilder twice.  That is, if you call buildQuery
+   * on a given instance (to log the statement for debugging), and then
+   * call query on the same instance to make it actually do the query,
+   * it'll regenerate the query for the second call, and will screw it
+   * up.  Specifically, it'll add extra parens which don't belong.
+   */
+  public boolean canReuseSQLiteQueryBuilder() {
+    return getApiLevel() > 4;
+  }
 
   // Visible for testing.
   protected int getApiLevel() {
