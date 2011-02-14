@@ -140,9 +140,19 @@ limitations under the License.
   <string name="tracklist_share_tcx_file">A TCX file</string>
   <string name="tracklist_clear_map">Clear map</string>
   <!-- Import All -->
-  <string name="tracklist_btn_import_all">Import from SD</string>
-  <string name="import_done">Import finished</string>
-  <string name="import_empty">No files found in /sdcard/MyTracks/gpx/</string>
+  <string name="tracklist_btn_import_all">Import all</string>
+  <string name="import_done">Import finished, imported</string>
+  <!-- Format:
+  $1 : Successful imports
+  $2 : Attempted imports
+  $3 : MyTracks directory
+  -->
+  <string name="import_done">Imported %1$d of %2$d GPX files found in /sdcard/%3$s/gpx/</string>
+  <!-- Format:
+  $1 : MyTracks directory
+  -->
+  <string name="import_empty">No files found in /sdcard/%1$s/gpx/</string>
+  <string name="import_error">Import error for file</string>
 
   <!-- Waypoints list -->
   <string name="waypointslist_btn_delete_all">Delete all markers</string>

@@ -15,6 +15,11 @@
  */
 package com.google.android.apps.mytracks;
 
+import com.google.android.apps.mytracks.content.TracksColumns;
+import com.google.android.apps.mytracks.util.StringUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
+import com.google.android.maps.mytracks.R;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,21 +27,16 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
-import android.view.Window;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnCreateContextMenuListener;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-
-import com.google.android.apps.mytracks.content.TracksColumns;
-import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.apps.mytracks.util.UnitConversions;
-import com.google.android.maps.mytracks.R;
 
 /**
  * A list activity displaying all the recorded tracks. There's a context
