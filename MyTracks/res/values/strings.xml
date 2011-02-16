@@ -145,14 +145,11 @@ limitations under the License.
   <!-- Format:
   $1 : Successful imports
   $2 : Attempted imports
-  $3 : MyTracks directory
+  $3 : MyTracks gpx path
   -->
-  <string name="import_done">Imported %1$d of %2$d GPX files found in /sdcard/%3$s/gpx/</string>
-  <!-- Format:
-  $1 : MyTracks directory
-  -->
-  <string name="import_empty">No files found in /sdcard/%1$s/gpx/</string>
-  <string name="import_error">Import error for file</string>
+  <string name="import_done">Imported %1$d of %2$d GPX files from %3$s</string>
+  <string name="import_empty">No GPX files found in %s. SD card may be unreadable or directory may not contain GPX files.</string>
+  <string name="import_error">Import error for file %s</string>
 
   <!-- Waypoints list -->
   <string name="waypointslist_btn_delete_all">Delete all markers</string>
