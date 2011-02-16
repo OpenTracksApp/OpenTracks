@@ -178,6 +178,10 @@ public class MyTracksList extends ListActivity
         new ExportAllTracks(this);
         break;
       }
+      case R.id.tracklist_btn_import_all: {
+        new ImportAllTracks(this);
+        break;
+      }
     }
   }
 
@@ -195,6 +199,7 @@ public class MyTracksList extends ListActivity
 
     findViewById(R.id.tracklist_btn_delete_all).setOnClickListener(this);
     findViewById(R.id.tracklist_btn_export_all).setOnClickListener(this);
+    findViewById(R.id.tracklist_btn_import_all).setOnClickListener(this);
 
     SharedPreferences preferences =
         getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);

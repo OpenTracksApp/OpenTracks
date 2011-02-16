@@ -125,9 +125,9 @@ limitations under the License.
   <string name="tracklist_save_as_csv">Save a CSV file</string>
   <string name="tracklist_save_as_tcx">Save a TCX file</string>
   <string name="tracklist_btn_send_all_to_fusiontables">Send to Google Fusion Tables</string>
-  <string name="tracklist_btn_delete_all">Delete all tracks</string>
+  <string name="tracklist_btn_delete_all">Delete all</string>
   <!-- Export All -->
-  <string name="tracklist_btn_export_all">Export all tracks</string>
+  <string name="tracklist_btn_export_all">Export all</string>
   <string name="export_done">Export finished</string>
   <string name="tracklist_pick_one">Pick a track. Press&amp;hold for more options.</string>
   <string name="tracklist_all_tracks">All Tracks:</string>
@@ -139,6 +139,17 @@ limitations under the License.
   <string name="tracklist_share_csv_file">A CSV file</string>
   <string name="tracklist_share_tcx_file">A TCX file</string>
   <string name="tracklist_clear_map">Clear map</string>
+  <!-- Import All -->
+  <string name="tracklist_btn_import_all">Import all</string>
+  <string name="import_done">Import finished, imported</string>
+  <!-- Format:
+  $1 : Successful imports
+  $2 : Attempted imports
+  $3 : MyTracks gpx path
+  -->
+  <string name="import_done">Imported %1$d of %2$d GPX files from %3$s</string>
+  <string name="import_empty">No GPX files found in %s. SD card may be unreadable or directory may not contain GPX files.</string>
+  <string name="import_error">Import error for file %s</string>
 
   <!-- Waypoints list -->
   <string name="waypointslist_btn_delete_all">Delete all markers</string>

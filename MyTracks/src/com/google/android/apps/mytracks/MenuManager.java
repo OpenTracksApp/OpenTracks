@@ -42,7 +42,7 @@ class MenuManager {
 
   public void onPrepareOptionsMenu(Menu menu, boolean hasRecorded,
       boolean isRecording, boolean hasSelectedTrack) {
-    menu.findItem(R.id.menu_list_tracks).setEnabled(hasRecorded);
+    menu.findItem(R.id.menu_list_tracks);
     menu.findItem(R.id.menu_list_markers)
         .setEnabled(hasRecorded && hasSelectedTrack);
     menu.findItem(R.id.menu_start_recording)

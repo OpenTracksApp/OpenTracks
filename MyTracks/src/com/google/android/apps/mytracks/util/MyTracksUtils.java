@@ -21,12 +21,15 @@ import com.google.android.apps.mytracks.stats.TripStatistics;
 
 import com.google.android.maps.GeoPoint;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
 import android.location.Location;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -285,6 +288,42 @@ public class MyTracksUtils {
       Log.w(MyTracksConstants.TAG, "Failed to get version info.", e);
       return "";
     }
+  }
+  
+  /**
+   * Tries to acquire a partial wake lock if not already acquired. Logs errors
+   * and gives up trying in case the wake lock cannot be acquired.
+   */
+  public static WakeLock acquireWakeLock(Activity activity, WakeLock wakeLock) {
+    Log.i(MyTracksConstants.TAG, "MyTracksUtils: Acquiring wake lock.");
+    try {
+      PowerManager pm = (PowerManager) activity
+          .getSystemService(Context.POWER_SERVICE);
+      if (pm == null) {
+        Log.e(MyTracksConstants.TAG, "MyTracksUtils: Power manager not found!");
+        return wakeLock;
+      }
+      if (wakeLock == null) {
+        wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+            MyTracksConstants.TAG);
+        if (wakeLock == null) {
+          Log.e(MyTracksConstants.TAG,
+              "MyTracksUtils: Could not create wake lock (null).");
+        }
+        return wakeLock;
+      }
+      if (!wakeLock.isHeld()) {
+        wakeLock.acquire();
+        if (!wakeLock.isHeld()) {
+          Log.e(MyTracksConstants.TAG,
+              "MyTracksUtils: Could not acquire wake lock.");
+        }
+      }
+    } catch (RuntimeException e) {
+      Log.e(MyTracksConstants.TAG,
+          "MyTracksUtils: Caught unexpected exception: " + e.getMessage(), e);
+    }
+    return wakeLock;
   }
 
   /**
