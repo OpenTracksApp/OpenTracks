@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.stats;
 
 import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.MyTracksSettings;
 
 import android.location.Location;
 import android.util.Log;
@@ -89,6 +90,9 @@ public class TripStatisticsBuilder {
    */
   private long totalLocations = 0;
 
+  private int minRecordingDistance =
+      MyTracksSettings.DEFAULT_MIN_RECORDING_DISTANCE;
+
   /**
    * Creates a new trip starting at the given time.
    * 
@@ -146,7 +150,7 @@ public class TripStatisticsBuilder {
 
     // Don't do anything if we didn't move since last fix:
     double distance = lastLocation.distanceTo(currentLocation);
-    if (distance < MyTracksConstants.MAX_NO_MOVEMENT_DISTANCE &&
+    if (distance < minRecordingDistance &&
         currentSpeed < MyTracksConstants.MAX_NO_MOVEMENT_SPEED) {
       lastLocation = currentLocation;
       return false;
@@ -358,5 +362,9 @@ public class TripStatisticsBuilder {
   public TripStatistics getStatistics() {
     // Take a snapshot - we don't want anyone messing with our internals
     return new TripStatistics(data);
+  }
+
+  public void setMinRecordingDistance(int minRecordingDistance) {
+    this.minRecordingDistance = minRecordingDistance;
   }
 }
