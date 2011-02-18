@@ -54,7 +54,7 @@ limitations under the License.
   <string name="status_tracks_have_been_uploaded">S\'ha enviat la ruta a maps.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_new_doc">S\'ha enviat la ruta a un full de càlcul a docs.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_docs">S\'ha enviat la ruta a docs.google.com.</string>
-  <string name="status_enable_gps">Piqueu aquí per anar als paràmetres de seguretat i ubicació i activeu \'habilita els satèl·lits GPS\'. Premeu el botó d\'anar enrere per tornar.</string>
+  <string name="status_enable_gps">Toqueu aquí per anar als paràmetres de seguretat i ubicació i activeu \'habilita els satèl·lits GPS\'. Premeu el botó d\'anar enrere per tornar.</string>
   <string name="status_approximate_location">Nota: Es mostra una ubicació determinada a partir de les xarxes sense fils i antenes telefòniques.</string>
   <string name="status_no_location">No es pot determinar la ubicació. Habiliteu més fonts d\'ubicació (vegeu els paràmetres de seguretat i ubicació) i assegureu-vos que el cel és visible. Proveu de nou més tard.</string>
   <string name="status_waypoint_inserted">S\'ha inserit un marcader de punt de ruta.</string>
@@ -171,7 +171,7 @@ limitations under the License.
   <string name="settings_not_available_summary">No es troba disponible a la vostra versió de l\'Android</string>
 
   <string name="settings_announcement_frequency">Freqüència d\'avís</string>
-  <string name="settings_announcement_frequency_summary">Temps mínin entre dos avisos de veu</string>
+  <string name="settings_announcement_frequency_summary">Temps mínim entre dos avisos de veu</string>
 
   <string name="settings_min_recording_distance">Distància mínima entre punts</string>
   <string name="settings_min_recording_distance_summary">La distància més petita entre dos punts enregistrats de la vostra posició</string>
@@ -182,7 +182,7 @@ limitations under the License.
   <string name="settings_min_recording_interval">Temps mínim entre punts</string>
   <string name="settings_min_recording_interval_summary">Interval de temps mínim entre dos enregistraments de la vostra posició</string>
 
-  <string name="settings_min_required_accuracy">Precisió míima</string>
+  <string name="settings_min_required_accuracy">Precisió mínima</string>
   <string name="settings_min_required_accuracy_summary">S\'aturarà l\'enregistrament si la vostra posició no és així de precisa com a mínim</string>
 
   <string name="settings_metric_units">Fes servir unitats mètriques</string>
@@ -240,13 +240,13 @@ limitations under the License.
 
   <!-- Sharing -->
   <string name="share_map_subject">M\'agradaria compartir un mapa amb tu</string>
-  <string name="share_map_body_format">Crec que estaràs interessat en aquest mapa:
+  <string name="share_map_body_format">Em sembla que estaràs interessat en aquest mapa:
 
       %s</string>
   <string name="send_track_subject">M\'agradaria compartir una ruta amb tu</string>
-  <string name="send_track_body_format">Crec que estaràs interessat en aquesta ruta.
+  <string name="send_track_body_format">Em sembla que estaràs interessat en aquesta ruta.
 
-    Per verue aquesta ruta fes servir Google Earth o altre programari de mapes.</string>
+    Per veure aquesta ruta fes servir Google Earth o altre programari de mapes.</string>
   <string name="share_track">Comparteix la ruta amb amics</string>
 
   <!-- Visibility -->
@@ -256,8 +256,8 @@ limitations under the License.
 
   <!-- Statistics View -->
   <!-- Average Moving -->
-  <string name="average_moving_speed_label">Average Moving Speed</string>
-  <string name="average_moving_pace_label">Average Moving Pace</string>
+  <string name="average_moving_speed_label">Velocitat mitjana en moviment</string>
+  <string name="average_moving_pace_label">Ritme mitjà en moviment</string>
 
   <!-- Average -->
   <string name="average_speed_label">Velocitat mitjana</string>
