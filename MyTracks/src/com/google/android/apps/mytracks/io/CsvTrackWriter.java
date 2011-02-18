@@ -23,6 +23,7 @@ import android.location.Location;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
@@ -44,9 +45,13 @@ import java.util.TimeZone;
  * @author Rodrigo Damazio
  */
 public class CsvTrackWriter implements TrackFormatWriter {
+
+  static final NumberFormat SHORT_FORMAT = NumberFormat.getInstance();
   static final SimpleDateFormat TIMESTAMP_FORMAT =
       new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
   static {
+	SHORT_FORMAT.setMaximumFractionDigits(4);
     TIMESTAMP_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
   }
 
@@ -94,8 +99,8 @@ public class CsvTrackWriter implements TrackFormatWriter {
         Double.toString(location.getLongitude()),
         Double.toString(location.getAltitude()),
         Double.toString(location.getBearing()),
-        Double.toString(location.getAccuracy()),
-        Double.toString(location.getSpeed()),
+        SHORT_FORMAT.format(location.getAccuracy()),
+        SHORT_FORMAT.format(location.getSpeed()),
         null, null,
         Integer.toString(segmentIdx));
   }
@@ -110,8 +115,8 @@ public class CsvTrackWriter implements TrackFormatWriter {
         Double.toString(location.getLongitude()),
         Double.toString(location.getAltitude()),
         Double.toString(location.getBearing()),
-        Double.toString(location.getAccuracy()),
-        Double.toString(location.getSpeed()),
+        SHORT_FORMAT.format(location.getAccuracy()),
+        SHORT_FORMAT.format(location.getSpeed()),
         waypoint.getName(),
         waypoint.getDescription(),
         null);
