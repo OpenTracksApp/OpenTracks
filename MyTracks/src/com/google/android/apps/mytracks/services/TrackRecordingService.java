@@ -420,6 +420,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     
     TripStatistics stats = track.getStatistics();
     statsBuilder = new TripStatisticsBuilder(stats.getStartTime());
+    statsBuilder.setMinRecordingDistance(minRecordingDistance);
     setUpAnnouncer();
 
     splitManager.restore();
@@ -436,6 +437,7 @@ public class TrackRecordingService extends Service implements LocationListener {
       waypointStatsBuilder = new TripStatisticsBuilder(stats.getStartTime());
       currentWaypointId = -1;
     }
+    waypointStatsBuilder.setMinRecordingDistance(minRecordingDistance);
 
     Cursor cursor = null;
     try {
@@ -1077,7 +1079,9 @@ public class TrackRecordingService extends Service implements LocationListener {
     
     providerUtils.updateTrack(track);
     statsBuilder = new TripStatisticsBuilder(startTime);
+    statsBuilder.setMinRecordingDistance(minRecordingDistance);
     waypointStatsBuilder = new TripStatisticsBuilder(startTime);
+    waypointStatsBuilder.setMinRecordingDistance(minRecordingDistance);
     currentWaypointId = insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
     setUpAnnouncer();
     length = 0;
@@ -1195,8 +1199,10 @@ public class TrackRecordingService extends Service implements LocationListener {
 
   public void setMinRecordingDistance(int minRecordingDistance) {
     this.minRecordingDistance = minRecordingDistance;
-    this.statsBuilder.setMinRecordingDistance(minRecordingDistance);
-    this.waypointStatsBuilder.setMinRecordingDistance(minRecordingDistance);
+    if (statsBuilder != null && waypointStatsBuilder != null) {
+      statsBuilder.setMinRecordingDistance(minRecordingDistance);
+      waypointStatsBuilder.setMinRecordingDistance(minRecordingDistance);
+    }
   }
 
   public int getMinRequiredAccuracy() {
