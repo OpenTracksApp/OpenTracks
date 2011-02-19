@@ -62,6 +62,8 @@ import android.util.Log;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * A background service that registers a location listener and records track
@@ -186,6 +188,8 @@ public class TrackRecordingService extends Service implements LocationListener {
    * The frequency of status announcements.
    */
   private int announcementFrequency = -1;
+
+  private ExecutorService executerServce;
 
   /*
    * Utility functions
@@ -477,9 +481,18 @@ public class TrackRecordingService extends Service implements LocationListener {
   /*
    * Location listener implementation: =================================
    */
-
   @Override
-  public void onLocationChanged(Location location) {
+  public void onLocationChanged(final Location location) {
+    this.executerServce.submit(
+      new Runnable() {
+        @Override
+        public void run() {
+          onLocationChangedAsync(location);
+        }
+      });
+  }
+
+  private void onLocationChangedAsync(Location location) {
     Log.d(MyTracksConstants.TAG, "TrackRecordingService.onLocationChanged");
 
     try {
@@ -675,6 +688,7 @@ public class TrackRecordingService extends Service implements LocationListener {
       prefManager.setRecordingTrack(recordingTrackId = -1);
     }
     showNotification();
+    executerServce = Executors.newSingleThreadExecutor();
   }
 
   /**
