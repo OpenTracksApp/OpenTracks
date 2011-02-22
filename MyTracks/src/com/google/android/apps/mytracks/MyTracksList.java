@@ -83,7 +83,7 @@ public class MyTracksList extends ListActivity
             SubMenu share = menu.addSubMenu(0, MyTracksConstants.MENU_SHARE, 0,
                 R.string.tracklist_share_track);
             share.add(0, MyTracksConstants.MENU_SHARE_LINK, 0,
-                R.string.tracklist_share_linkfusion);
+                R.string.tracklist_share_link);
             share.add(0, MyTracksConstants.MENU_SHARE_GPX_FILE, 0,
                 R.string.tracklist_share_gpx_file);
             share.add(0, MyTracksConstants.MENU_SHARE_KML_FILE, 0,

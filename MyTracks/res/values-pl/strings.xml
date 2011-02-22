@@ -131,7 +131,6 @@ limitations under the License.
   <string name="tracklist_all_tracks">Wszystkie trasy:</string>
   <string name="tracklist_this_track">Ta trasa</string>
   <string name="tracklist_share_track">Podziel się z przyjaciółmi...</string>
-  <!-- <string name="tracklist_share_linkfusion">Link do Moich Map Google</string> -->
   <string name="tracklist_share_gpx_file">Plik GPX</string>
   <string name="tracklist_share_kml_file">PLik KML</string>
   <string name="tracklist_share_csv_file">Plik CSV</string>

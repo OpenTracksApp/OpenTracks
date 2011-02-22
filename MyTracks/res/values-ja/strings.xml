@@ -133,7 +133,6 @@ limitations under the License.
   <string name="tracklist_all_tracks">全てのトラック:</string>
   <string name="tracklist_this_track">このトラック</string>
   <string name="tracklist_share_track">共有...</string>
-  <string name="tracklist_share_linkfusion">Google Fusion Tablesへのリンク</string>
   <string name="tracklist_share_gpx_file">GPXファイル</string>
   <string name="tracklist_share_kml_file">KMLファイル</string>
   <string name="tracklist_share_csv_file">CSVファイル</string>

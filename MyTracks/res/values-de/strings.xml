@@ -129,8 +129,7 @@ limitations under the License.
   <string name="tracklist_pick_one">Einen Track auswählen. Lange berühren für mehr Optionen.</string> 
   <string name="tracklist_all_tracks">Alle Tracks</string> 
   <string name="tracklist_this_track">Dieser Track</string> 
-  <string name="tracklist_share_track">Mit Freunden teilen…</string> 
-  <string name="tracklist_share_linkfusion">Ein Link zur Google Fusion Tables-Karte</string> 
+  <string name="tracklist_share_track">Mit Freunden teilen…</string>
   <string name="tracklist_share_gpx_file">Eine GPX-Datei</string> 
   <string name="tracklist_share_kml_file">Eine KML-Datei</string> 
   <string name="tracklist_share_csv_file">Eine CSV-Datei</string> 

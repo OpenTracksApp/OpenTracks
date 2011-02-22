@@ -129,7 +129,7 @@ limitations under the License.
   <string name="tracklist_all_tracks">Tutti i percorsi:</string>
   <string name="tracklist_this_track">Questo percorso</string>
   <string name="tracklist_share_track">Condividi con amici...</string>
-  <!-- <string name="tracklist_share_linkfusion">Un link alla mappa in «Le mie mappe» di Google</string> -->
+  <string name="tracklist_share_link">Un link alla mappa</string>
   <string name="tracklist_share_gpx_file">Un file GPX</string>
   <string name="tracklist_share_kml_file">Un file KML</string>
   <string name="tracklist_clear_map">Cancella la mappa</string>
