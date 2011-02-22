@@ -1,12 +1,12 @@
 /*
  * Copyright 2009 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -18,10 +18,14 @@ package com.google.android.apps.mytracks.services.sensors;
 import static com.google.android.apps.mytracks.MyTracksConstants.TAG;
 import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.apps.mytracks.content.Sensor;
+import com.google.android.apps.mytracks.services.sensors.ant.AntChannelIdMessage;
+import com.google.android.apps.mytracks.services.sensors.ant.AntChannelResponseMessage;
 import com.google.android.maps.mytracks.R;
 
 import com.dsi.ant.AntDefine;
 import com.dsi.ant.AntMesg;
+import com.dsi.ant.exception.AntInterfaceException;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -49,62 +53,70 @@ public class AntDirectSensorManager extends AntSensorManager {
 
   public AntDirectSensorManager(Context context) {
     super(context);
-    
+
     deviceNumberHRM = WILDCARD;
 
     // First read the the device id that we will be pairing with.
     SharedPreferences prefs = context.getSharedPreferences(
         MyTracksSettings.SETTINGS_NAME, 0);
     if (prefs != null) {
-      deviceNumberHRM = 
+      deviceNumberHRM =
         (short) prefs.getInt(context.getString(R.string.ant_heart_rate_sensor_id_key), 0);
     }
-    Log.i(TAG, "Pairing with heart rate monitor: " + deviceNumberHRM);
+    Log.i(TAG, "Will pair with heart rate monitor: " + deviceNumberHRM);
   }
 
   @Override
-  public void handleMessage(byte[] antMessage) {
-    int channel =
-      antMessage[AntMesg.MESG_DATA_OFFSET] & AntDefine.CHANNEL_NUMBER_MASK;
+  protected boolean handleMessage(byte messageId, byte[] messageData) {
+    if (super.handleMessage(messageId, messageData)) {
+      return true;
+    }
+
+    int channel = messageData[0] & AntDefine.CHANNEL_NUMBER_MASK;
     switch (channel) {
       case HRM_CHANNEL:
-        antDecodeHRM(antMessage);
+        antDecodeHRM(messageId, messageData);
         break;
       default:
         Log.d(TAG, "Unhandled message: " + channel);
     }
+
+    return true;
   }
 
   /**
    * Decode an ant heart rate monitor message.
-   * @param antMessage The byte array received from the heart rate monitor.
+   * @param messageData The byte array received from the heart rate monitor.
    */
-  private void antDecodeHRM(byte[] antMessage) {
-    // message ID == broadcast
-    switch (antMessage[AntMesg.MESG_ID_OFFSET]) {
+  private void antDecodeHRM(int messageId, byte[] messageData) {
+    switch (messageId) {
       case AntMesg.MESG_BROADCAST_DATA_ID:
-        handleBroadcastData(antMessage);
+        handleBroadcastData(messageData);
         break;
       case AntMesg.MESG_RESPONSE_EVENT_ID:
-        handleMessageResponse(antMessage);
+        handleMessageResponse(messageData);
         break;
       case AntMesg.MESG_CHANNEL_ID_ID:
-        handleChannelId(antMessage);
+        handleChannelId(messageData);
         break;
       default:
-        Log.e(TAG, "Unexpected message id: " + antMessage[3]);
+        Log.e(TAG, "Unexpected message id: " + messageId);
     }
   }
 
   private void handleBroadcastData(byte[] antMessage) {
     if (deviceNumberHRM == WILDCARD) {
-      getAntReceiver().ANTRequestMessage(HRM_CHANNEL,
-          AntMesg.MESG_CHANNEL_ID_ID);
+      try {
+        getAntReceiver().ANTRequestMessage(HRM_CHANNEL,
+            AntMesg.MESG_CHANNEL_ID_ID);
+      } catch (AntInterfaceException e) {
+        Log.e(TAG, "ANT error handling broadcast data", e);
+      }
       Log.d(TAG, "Requesting channel id id.");
     }
 
     setSensorState(Sensor.SensorState.CONNECTED);
-    int bpm = (int) antMessage[10] & 0xFF;
+    int bpm = (int) antMessage[8] & 0xFF;
     Sensor.SensorData.Builder b = Sensor.SensorData.newBuilder()
       .setValue(bpm)
       .setState(Sensor.SensorState.SENDING);
@@ -115,11 +127,9 @@ public class AntDirectSensorManager extends AntSensorManager {
       .build();
   }
 
-  void handleChannelId(byte[] antMessage) {
-    // Store the device id.
-    deviceNumberHRM =
-        (short) (((int) antMessage[3] & 0xFF  |
-                  ((int) (antMessage[4] & 0xFF) << 8)) & 0xFFFF);
+  void handleChannelId(byte[] rawMessage) {
+    AntChannelIdMessage message = new AntChannelIdMessage(rawMessage);
+    deviceNumberHRM = message.getDeviceNumber();
     Log.i(TAG, "Found device id: " + deviceNumberHRM);
 
     SharedPreferences prefs = context.getSharedPreferences(
@@ -129,26 +139,31 @@ public class AntDirectSensorManager extends AntSensorManager {
     editor.commit();
   }
 
-  private void handleMessageResponse(byte[] antMessage) {
-    if (antMessage[3] == AntMesg.MESG_EVENT_ID &&
-        antMessage[4] == AntDefine.EVENT_RX_SEARCH_TIMEOUT) {
-      // Search timeout
-      Log.w(TAG, "Search timed out. Unassigning channel.");
-      getAntReceiver().ANTUnassignChannel((byte) 0);
-      setSensorState(Sensor.SensorState.DISCONNECTED);
-    } else if (antMessage[3] == AntMesg.MESG_UNASSIGN_CHANNEL_ID) {
-      setSensorState(Sensor.SensorState.DISCONNECTED);
-      Log.i(TAG, "Disconnected from the sensor: " + getSensorState());
+  private void handleMessageResponse(byte[] rawMessage) {
+    AntChannelResponseMessage message = new AntChannelResponseMessage(rawMessage);
+    switch (message.getMessageId()) {
+      case AntMesg.MESG_EVENT_ID:
+        if (message.getMessageCode() == AntDefine.EVENT_RX_SEARCH_TIMEOUT) {
+          // Search timeout
+          Log.w(TAG, "Search timed out. Unassigning channel.");
+          try {
+            getAntReceiver().ANTUnassignChannel((byte) 0);
+          } catch (AntInterfaceException e) {
+            Log.e(TAG, "ANT error unassigning channel", e);
+          }
+          setSensorState(Sensor.SensorState.DISCONNECTED);
+        }
+        break;
+
+      case AntMesg.MESG_UNASSIGN_CHANNEL_ID:
+        setSensorState(Sensor.SensorState.DISCONNECTED);
+        Log.i(TAG, "Disconnected from the sensor: " + getSensorState());
+        break;
     }
   }
 
-  /**
-   * Open a channel to the SRM head unit.
-   */
-  @Override
-  public void setupChannel() {
-    super.setupChannel();
-    antChannelSetup(NETWORK_NUMBER,
+  @Override protected void setupAntSensorChannels() {
+    setupAntSensorChannel(NETWORK_NUMBER,
         HRM_CHANNEL,
         deviceNumberHRM,
         HEART_RATE_DEVICE_TYPE,
@@ -156,7 +171,6 @@ public class AntDirectSensorManager extends AntSensorManager {
         CHANNEL_PERIOD,
         RF_FREQUENCY,
         (byte) 0);
-    setSensorState(Sensor.SensorState.CONNECTING);
   }
 
   public short getDeviceNumberHRM() {

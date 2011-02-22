@@ -1,12 +1,12 @@
 /*
  * Copyright 2009 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -22,6 +22,8 @@ import com.google.android.maps.mytracks.R;
 
 import com.dsi.ant.AntDefine;
 import com.dsi.ant.AntMesg;
+import com.dsi.ant.exception.AntInterfaceException;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -104,8 +106,12 @@ public class AntSRMSensorManager extends AntSensorManager {
 
   private void handleBroadcastData(byte[] antMessage) {
     if (deviceId == WILDCARD) {
-       getAntReceiver().ANTRequestMessage(channel, AntMesg.MESG_CHANNEL_ID_ID);
-      Log.d(MyTracksConstants.TAG, "Requesting channel id id.");
+      try {
+        Log.d(MyTracksConstants.TAG, "Requesting channel id id.");
+        getAntReceiver().ANTRequestMessage(channel, AntMesg.MESG_CHANNEL_ID_ID);
+      } catch (AntInterfaceException e) {
+        Log.e(MyTracksConstants.TAG, "Failed to request channel id id", e);
+      }
     }
     setSensorState(Sensor.SensorState.CONNECTED);
     switch(antMessage[MESSAGE_TYPE_INDEX]) {
@@ -138,7 +144,11 @@ public class AntSRMSensorManager extends AntSensorManager {
         && antMessage[4] == AntDefine.EVENT_RX_SEARCH_TIMEOUT) {
       // Search timeout
       Log.w(MyTracksConstants.TAG, "Search timed out. Unassigning channel.");
-      getAntReceiver().ANTUnassignChannel(channel);
+      try {
+        getAntReceiver().ANTUnassignChannel(channel);
+      } catch (AntInterfaceException e) {
+        Log.e(MyTracksConstants.TAG, "Failed to unassign ANT channel", e);
+      }
       setSensorState(Sensor.SensorState.DISCONNECTED);
     } else if (antMessage[3] == AntMesg.MESG_UNASSIGN_CHANNEL_ID) {
       setSensorState(Sensor.SensorState.DISCONNECTED);
@@ -207,12 +217,10 @@ public class AntSRMSensorManager extends AntSensorManager {
     sensorData = builder.build();
   }
 
-  /**
-   * Open a channel to the SRM head unit.
-   */
   @Override
-  public void setupChannel() {
-    antChannelSetup(NETWORK_NUMBER,
+  protected void setupAntSensorChannels() {
+    lastMessageId = 0;
+    setupAntSensorChannel(NETWORK_NUMBER,
         channel,
         deviceId,
         DEVICE_TYPE,
@@ -220,7 +228,5 @@ public class AntSRMSensorManager extends AntSensorManager {
         CHANNEL_PERIOD,
         RF_FREQUENCY,
         (byte) 0);
-    lastMessageId = 0;
-    setSensorState(Sensor.SensorState.CONNECTING);
   }
 }

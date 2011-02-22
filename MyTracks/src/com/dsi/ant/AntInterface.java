@@ -13,88 +13,101 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
- package com.dsi.ant;
+package com.dsi.ant;
 
+import java.util.Arrays;
+
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 
-
-// TODO: Auto-generated Javadoc
+import com.dsi.ant.exception.*;
 
 /**
  * Public API for controlling the Ant Service. AntInterface is a proxy
  * object for controlling the Ant Service via IPC. Creating a AntInterface
  * object will create a binding with the Ant service.
- * 
+ *
  * @hide
  */
 public class AntInterface {
 
     /** The Log Tag. */
     public static final String TAG = "ANTInterface";
-    
+
     /** Enable debug logging. */
-    public static boolean DEBUG = false;
+    public static boolean DEBUG = true;
 
     /** Search string to find ANT Radio Proxy Service in the Android Marketplace */
     private static final String MARKET_SEARCH_TEXT_DEFAULT = "ANT Radio Service Dynastream Innovations Inc";
-    
+
+    /** Name of the ANT Radio shared library */
+    private static final String ANT_LIBRARY_NAME = "com.dsi.ant.antradio_library";
+
     /** Inter-process communication with the ANT Radio Proxy Service. */
-    public static IAnt sAntReceiver = null;
-    public static IServiceSettings sServiceSettingsReceiver = null;
-    
+    private static IAnt_6 sAntReceiver = null;
+
     /** Singleton instance of this class. */
     private static AntInterface INSTANCE;
-    
+
     /** Used when obtaining a reference to the singleton instance. */
     private static Object INSTANCE_LOCK = new Object();
-    
+
     /** The context to use. */
     private static Context sContext = null;
-    
+
     /** Listens to changes to service connection status. */
     private static ServiceListener sServiceListener;
-    
+
     /** Is the ANT Radio Proxy Service connected. */
     private static boolean sServiceConnected = false;
-    private static boolean sServiceSettingsConnected = false;
 
+    /** The version code (eg. 1) of ANTLib used by the ANT application service */
     private static int mServiceLibraryVersionCode = 0;
-    
+
+    /** Has support for ANT already been checked */
+    private static boolean mCheckedAntSupported = false;
+
+    /** Is ANT supported on this device */
+    private static boolean mAntSupported = false;
+
     /**
      * An interface for notifying AntInterface IPC clients when they have
      * been connected to the ANT service.
      *
      * @see ServiceEvent
      */
-     public interface ServiceListener 
-     {
-         /**
-          * Called to notify the client when this proxy object has been
-          * connected to the ANT service. Clients must wait for
-          * this callback before making IPC calls on the ANT
-          * service.
-          */
-         public void onServiceConnected();
+    public interface ServiceListener
+    {
+        /**
+         * Called to notify the client when this proxy object has been
+         * connected to the ANT service. Clients must wait for
+         * this callback before making IPC calls on the ANT
+         * service.
+         */
+        public void onServiceConnected();
 
-         /**
-          * Called to notify the client that this proxy object has been
-          * disconnected from the ANT service. Clients must not
-          * make IPC calls on the ANT service after this callback.
-          * This callback will currently only occur if the application hosting
-          * the BluetoothAg service, but may be called more often in future.
-          */
-         public void onServiceDisconnected();
-     }
+        /**
+         * Called to notify the client that this proxy object has been
+         * disconnected from the ANT service. Clients must not
+         * make IPC calls on the ANT service after this callback.
+         * This callback will currently only occur if the application hosting
+         * the BluetoothAg service, but may be called more often in future.
+         */
+        public void onServiceDisconnected();
+    }
 
-     
-  //Constructor
+
+    //Constructor
     /**
      * Instantiates a new ant interface.
      *
@@ -111,23 +124,30 @@ public class AntInterface {
 
     /**
      * Gets the single instance of AntInterface, creating it if it doesn't exist.
+     * Only the initial request for an instance will have context and listener set to the requested objects.
      *
-     * @param context the context.
+     * @param context the context used to bind to the remote service.
      * @param listener the listener to be notified of status changes.
      * @return the AntInterface instance.
      * @since 1.0
      */
-    public static AntInterface getInstance(Context context,ServiceListener listener) 
+    public static AntInterface getInstance(Context context,ServiceListener listener)
     {
         if(DEBUG)   Log.d(TAG, "getInstance");
 
-        synchronized (INSTANCE_LOCK) 
+        synchronized (INSTANCE_LOCK)
         {
-            if (INSTANCE == null) 
+            if(!hasAntSupport(context))
+            {
+                if(DEBUG) Log.d(TAG, "getInstance: ANT not supported");
+
+                return null;
+            }
+
+            if (INSTANCE == null)
             {
                 if(DEBUG)   Log.d(TAG, "getInstance: Creating new instance");
-                
-                // TODO: rohan: bug, each new request for an instance will not have context and listener set to the requested objects
+
                 INSTANCE = new AntInterface(context,listener);
             }
             else
@@ -142,7 +162,7 @@ public class AntInterface {
                 if(!INSTANCE.initService())
                 {
                     Log.e(TAG, "getInstance: No connection to proxy service");
-                    
+
                     INSTANCE.destroy();
                     INSTANCE = null;
                 }
@@ -185,10 +205,10 @@ public class AntInterface {
     public static void goToMarket(Context pContext)
     {
         if(DEBUG) Log.d(TAG, "goToMarket");
-        
+
         goToMarket(pContext, MARKET_SEARCH_TEXT_DEFAULT);
     }
-    
+
     /**
      * Class for interacting with the ANT interface.
      */
@@ -200,38 +220,12 @@ public class AntInterface {
             // service through an IDL interface, so get a client-side
             // representation of that from the raw service object.
             if(DEBUG)   Log.d(TAG, "sIAntConnection onServiceConnected()");
-            sAntReceiver = IAnt.Stub.asInterface(pService);
+            sAntReceiver = IAnt_6.Stub.asInterface(pService);
 
             sServiceConnected = true;
 
-            try
-            {
-                mServiceLibraryVersionCode = sAntReceiver.getServiceLibraryVersionCode();
-            }
-            catch(RemoteException e)
-            {
-                Log.e(TAG, "sIAntConnection onServiceConnected: Could not get service library version");
-            }
-
-            switch(mServiceLibraryVersionCode)
-            {
-                // Fall through from newer versions
-                case 5:
-                {
-                    if(!sServiceSettingsConnected)
-                    {
-                        boolean boundServiceSettings = sContext.bindService(new Intent(IServiceSettings.class.getName()), sIServiceSettingsConnection, Context.BIND_AUTO_CREATE);
-                        Log.i(TAG, "sIAntConnection onServiceConnected: Bound with ANT Service Settings: " + boundServiceSettings);
-                    }
-                    else
-                    {
-                        if(DEBUG)   Log.d(TAG, "sIAntConnection onServiceConnected: Already initialised Service Settings connection");
-                    }
-                }
-            }
-            
             // Notify the attached application if it is registered
-            if (sServiceListener != null) 
+            if (sServiceListener != null)
             {
                 sServiceListener.onServiceConnected();
             }
@@ -248,9 +242,10 @@ public class AntInterface {
             sAntReceiver = null;
 
             sServiceConnected = false;
+            mServiceLibraryVersionCode = 0;
 
             // Notify the attached application if it is registered
-            if (sServiceListener != null) 
+            if (sServiceListener != null)
             {
                 sServiceListener.onServiceDisconnected();
             }
@@ -266,37 +261,6 @@ public class AntInterface {
     };
 
     /**
-     * Class for interacting with the ANT interface through the ANTLib version 5 functions.
-     */
-    private static ServiceConnection sIServiceSettingsConnection = new ServiceConnection() {
-        public void onServiceConnected(ComponentName pClassName, IBinder pService) {
-            // This is called when the connection with the service has been
-            // established, giving us the service object we can use to
-            // interact with the service.  We are communicating with our
-            // service through an IDL interface, so get a client-side
-            // representation of that from the raw service object.
-            if(DEBUG)   Log.d(TAG, "sIServiceSettingsConnection onServiceConnected()");
-            sServiceSettingsReceiver = IServiceSettings.Stub.asInterface(pService);
-
-            sServiceSettingsConnected = true;
-        }
-
-        public void onServiceDisconnected(ComponentName pClassName) {
-            // This is called when the connection with the service has been
-            // unexpectedly disconnected -- that is, its process crashed.
-            if(DEBUG)   Log.d(TAG, "sIServiceSettingsConnection onServiceDisconnected()");
-            sServiceSettingsReceiver = null;
-
-            sServiceSettingsConnected = false;
-
-            // Try and rebind to the service
-            INSTANCE.releaseService();
-            INSTANCE.initService();
-        }
-    };
-    
-    
-    /**
      * Binds this activity to the ANT service.
      *
      * @return true, if successful
@@ -308,41 +272,36 @@ public class AntInterface {
 
         if(!sServiceConnected)
         {
-            ret = sContext.bindService(new Intent(IAnt.class.getName()), sIAntConnection, Context.BIND_AUTO_CREATE);
-            Log.i(TAG, "initService(): Bound with ANT service: " + ret);
+            ret = sContext.bindService(new Intent(IAnt_6.class.getName()), sIAntConnection, Context.BIND_AUTO_CREATE);
+            if(DEBUG) Log.i(TAG, "initService(): Bound with ANT service: " + ret);
         }
         else
         {
             if(DEBUG)   Log.d(TAG, "initService: already initialised service");
             ret = true;
         }
-     
+
         return ret;
     }
-    
+
     /** Unbinds this activity from the ANT service. */
     private void releaseService() {
-      if(DEBUG)   Log.d(TAG, "releaseService() entered");
-      
-      if(sServiceConnected)
-      {
-          sContext.unbindService(sIAntConnection);
-          sServiceConnected = false;
-      }
-      
-      if(sServiceSettingsConnected)
-      {
-          sContext.unbindService(sIServiceSettingsConnection);
-          sServiceSettingsConnected = false;
-      }
+        if(DEBUG)   Log.d(TAG, "releaseService() entered");
 
-      if(DEBUG)   Log.d(TAG, "releaseService() unbound.");
+        // TODO Make sure can handle multiple calls to onDestroy
+        if(sServiceConnected)
+        {
+            sContext.unbindService(sIAntConnection);
+            sServiceConnected = false;
+        }
+
+        if(DEBUG)   Log.d(TAG, "releaseService() unbound.");
     }
 
     /**
      * True if this activity can communicate with the ANT service.
      *
-     * @return true, if is service connected
+     * @return true, if service is connected
      * @since 1.2
      */
     public boolean isServiceConnected()
@@ -368,193 +327,209 @@ public class AntInterface {
     }
 
 
-    /**
-     * Ant service connection lost.
-     */
-    private void antServiceConnectionLost()
-    {
-        Log.e(TAG, "Connection to ANT service lost");
-    }
-    
-    /**
-     * Ant service connection to settings binder lost.
-     */
-    private void antServiceSettingsConnectionLost()
-    {
-        Log.e(TAG, "Connection to ANT service settings lost");
-    }
-    
-    
     ////-------------------------------------------------
-    
+
     /**
      * Enable.
      *
-     * @return true, if successful
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.0
      */
-    public boolean enable()
+    public void enable() throws AntInterfaceException
     {
-        if(DEBUG)   Log.d(TAG, "enable");
-
         if(!sServiceConnected)
         {
-            // Haven't received 'onConnected' notification yet
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            result = sAntReceiver.enable();
-        } catch (RemoteException ex) {
-            antServiceConnectionLost();
+        try
+        {
+            if(!sAntReceiver.enable())
+            {
+                throw new AntInterfaceException();
+            }
         }
-        return result;
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
     }
-    
+
     /**
      * Disable.
      *
-     * @return true, if successful
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.0
      */
-    public boolean disable()
+    public void disable() throws AntInterfaceException
     {
-        if(DEBUG)   Log.d(TAG, "disable");
-
         if(!sServiceConnected)
         {
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            result = sAntReceiver.disable();
-        } catch (RemoteException ex) {
-            antServiceConnectionLost();
+        try
+        {
+            if(!sAntReceiver.disable())
+            {
+                throw new AntInterfaceException();
+            }
         }
-        return result;
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
     }
-    
+
     /**
      * Checks if is enabled.
      *
-     * @return true, if is enabled
+     * @return true, if is enabled.
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.0
      */
-    public boolean isEnabled()
+    public boolean isEnabled() throws AntInterfaceException
     {
-        if(DEBUG)   Log.d(TAG, "isEnabled");
-
         if(!sServiceConnected)
         {
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            result = sAntReceiver.isEnabled();
-        } catch (RemoteException ex) {
-            antServiceConnectionLost();
+        try
+        {
+            return sAntReceiver.isEnabled();
         }
-        return result;
-    }        
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
+    }
 
     /**
      * ANT tx message.
      *
      * @param message the message
-     * @return true, if successful
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.0
      */
-    public boolean ANTTxMessage(byte[] message)
+    public void ANTTxMessage(byte[] message) throws AntInterfaceException
     {
-        if(DEBUG)   Log.d(TAG, "ANTTxMessage");
+        if(DEBUG) Log.d(TAG, "ANTTxMessage");
 
         if(!sServiceConnected)
         {
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            result = sAntReceiver.ANTTxMessage(message);
-        } catch (RemoteException ex) {
-            antServiceConnectionLost();
+        try
+        {
+            if(!sAntReceiver.ANTTxMessage(message))
+            {
+                throw new AntInterfaceException();
+            }
         }
-        return result;
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
     }
 
     /**
      * ANT reset system.
      *
-     * @return true, if successful
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.0
      */
-    public boolean ANTResetSystem()
+    public void ANTResetSystem() throws AntInterfaceException
     {
         if(!sServiceConnected)
         {
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            result = sAntReceiver.ANTResetSystem();
-        } catch (RemoteException ex) {
-            antServiceConnectionLost();
+        try
+        {
+            if(!sAntReceiver.ANTResetSystem())
+            {
+                throw new AntInterfaceException();
+            }
         }
-        return result;
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
     }
-    
+
     /**
      * ANT unassign channel.
      *
      * @param channelNumber the channel number
-     * @return true, if successful
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.0
      */
-    public boolean ANTUnassignChannel(byte channelNumber)
+    public void ANTUnassignChannel(byte channelNumber) throws AntInterfaceException
     {
         if(!sServiceConnected)
         {
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            result = sAntReceiver.ANTUnassignChannel(channelNumber);
-        } catch (RemoteException ex) {
-            antServiceConnectionLost();
+        try
+        {
+            if(!sAntReceiver.ANTUnassignChannel(channelNumber))
+            {
+                throw new AntInterfaceException();
+            }
         }
-        return result;
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
     }
-    
+
     /**
      * ANT assign channel.
      *
      * @param channelNumber the channel number
      * @param channelType the channel type
      * @param networkNumber the network number
-     * @return true, if successful
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.0
      */
-    public boolean ANTAssignChannel(byte channelNumber, byte channelType, byte networkNumber)
+    public void ANTAssignChannel(byte channelNumber, byte channelType, byte networkNumber) throws AntInterfaceException
     {
         if(!sServiceConnected)
         {
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            result = sAntReceiver.ANTAssignChannel(channelNumber, channelType, networkNumber);
-        } catch (RemoteException ex) {
-            antServiceConnectionLost();
+        try
+        {
+            if(!sAntReceiver.ANTAssignChannel(channelNumber, channelType, networkNumber))
+            {
+                throw new AntInterfaceException();
+            }
         }
-        return result;
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
     }
-    
+
     /**
      * ANT set channel id.
      *
@@ -562,170 +537,210 @@ public class AntInterface {
      * @param deviceNumber the device number
      * @param deviceType the device type
      * @param txType the tx type
-     * @return true, if successful
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.0
      */
-    public boolean ANTSetChannelId(byte channelNumber, short deviceNumber, byte deviceType, byte txType)
+    public void ANTSetChannelId(byte channelNumber, short deviceNumber, byte deviceType, byte txType) throws AntInterfaceException
     {
         if(!sServiceConnected)
         {
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            result = sAntReceiver.ANTSetChannelId(channelNumber, deviceNumber, deviceType, txType);
-        } catch (RemoteException ex) {
-            antServiceConnectionLost();
+        try
+        {
+            if(!sAntReceiver.ANTSetChannelId(channelNumber, deviceNumber, deviceType, txType))
+            {
+                throw new AntInterfaceException();
+            }
         }
-        return result;
-    } 
-    
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
+    }
+
     /**
      * ANT set channel period.
      *
      * @param channelNumber the channel number
      * @param channelPeriod the channel period
-     * @return true, if successful
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.0
      */
-    public boolean ANTSetChannelPeriod(byte channelNumber, short channelPeriod)
+    public void ANTSetChannelPeriod(byte channelNumber, short channelPeriod) throws AntInterfaceException
     {
         if(!sServiceConnected)
         {
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            result = sAntReceiver.ANTSetChannelPeriod(channelNumber, channelPeriod);
-        } catch (RemoteException ex) {
-            antServiceConnectionLost();
+        try
+        {
+            if(!sAntReceiver.ANTSetChannelPeriod(channelNumber, channelPeriod))
+            {
+                throw new AntInterfaceException();
+            }
         }
-        return result;
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
     }
-    
+
     /**
      * ANT set channel rf freq.
      *
      * @param channelNumber the channel number
      * @param radioFrequency the radio frequency
-     * @return true, if successful
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.0
      */
-    public boolean ANTSetChannelRFFreq(byte channelNumber, byte radioFrequency)
+    public void ANTSetChannelRFFreq(byte channelNumber, byte radioFrequency) throws AntInterfaceException
     {
         if(!sServiceConnected)
         {
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            result = sAntReceiver.ANTSetChannelRFFreq(channelNumber, radioFrequency);
-        } catch (RemoteException ex) {
-            antServiceConnectionLost();
+        try
+        {
+            if(!sAntReceiver.ANTSetChannelRFFreq(channelNumber, radioFrequency))
+            {
+                throw new AntInterfaceException();
+            }
         }
-        return result;
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
     }
-    
+
     /**
      * ANT set channel search timeout.
      *
      * @param channelNumber the channel number
      * @param searchTimeout the search timeout
-     * @return true, if successful
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.0
      */
-    public boolean ANTSetChannelSearchTimeout(byte channelNumber, byte searchTimeout)
+    public void ANTSetChannelSearchTimeout(byte channelNumber, byte searchTimeout) throws AntInterfaceException
     {
         if(!sServiceConnected)
         {
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            result = sAntReceiver.ANTSetChannelSearchTimeout(channelNumber, searchTimeout);
-        } catch (RemoteException ex) {
-            antServiceConnectionLost();
+        try
+        {
+            if(!sAntReceiver.ANTSetChannelSearchTimeout(channelNumber, searchTimeout))
+            {
+                throw new AntInterfaceException();
+            }
         }
-        return result;
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
     }
-    
+
     /**
      * ANT set low priority channel search timeout.
      *
      * @param channelNumber the channel number
      * @param searchTimeout the search timeout
-     * @return true, if successful
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.0
      */
-    public boolean ANTSetLowPriorityChannelSearchTimeout(byte channelNumber, byte searchTimeout)
+    public void ANTSetLowPriorityChannelSearchTimeout(byte channelNumber, byte searchTimeout) throws AntInterfaceException
     {
         if(!sServiceConnected)
         {
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            result = sAntReceiver.ANTSetLowPriorityChannelSearchTimeout(channelNumber, searchTimeout);
-        } catch (RemoteException ex) {
-            antServiceConnectionLost();
+        try
+        {
+            if(!sAntReceiver.ANTSetLowPriorityChannelSearchTimeout(channelNumber, searchTimeout))
+            {
+                throw new AntInterfaceException();
+            }
         }
-        return result;
-    } 
-    
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
+    }
+
     /**
      * ANT set proximity search.
      *
      * @param channelNumber the channel number
      * @param searchThreshold the search threshold
-     * @return true, if successful
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.0
      */
-    public boolean ANTSetProximitySearch(byte channelNumber, byte searchThreshold)
+    public void ANTSetProximitySearch(byte channelNumber, byte searchThreshold) throws AntInterfaceException
     {
         if(!sServiceConnected)
         {
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            result = sAntReceiver.ANTSetProximitySearch(channelNumber, searchThreshold);
-        } catch (RemoteException ex) {
-            antServiceConnectionLost();
+        try
+        {
+            if(!sAntReceiver.ANTSetProximitySearch(channelNumber, searchThreshold))
+            {
+                throw new AntInterfaceException();
+            }
         }
-        return result;
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
     }
-   
+
     /**
      * ANT set channel transmit power
      * @param channelNumber the channel number
      * @param txPower the transmit power level
-     * @return true, if successful
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.0
      */
-    public boolean ANTSetChannelTxPower(byte channelNumber, byte txPower)
+    public void ANTSetChannelTxPower(byte channelNumber, byte txPower) throws AntInterfaceException
     {
-       if(!sServiceConnected)
-       {
-           return false;
-       }
-       
-       boolean result = false;
-       try {
-           result = sAntReceiver.ANTSetChannelTxPower(channelNumber, txPower);
-       } catch (RemoteException ex)
-       {
-           antServiceConnectionLost();
-       }
-       return result;
+        if(!sServiceConnected)
+        {
+            throw new AntServiceNotConnectedException();
+        }
+
+        try
+        {
+            if(!sAntReceiver.ANTSetChannelTxPower(channelNumber, txPower))
+            {
+                throw new AntInterfaceException();
+            }
+        }
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
     }
-    
-    
+
     /**
      * ANT add channel id.
      *
@@ -734,50 +749,62 @@ public class AntInterface {
      * @param deviceType the device type
      * @param txType the tx type
      * @param listIndex the list index
-     * @return true, if successful
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.0
      */
-    public boolean ANTAddChannelId(byte channelNumber, short deviceNumber, byte deviceType, byte txType, byte listIndex)
+    public void ANTAddChannelId(byte channelNumber, short deviceNumber, byte deviceType, byte txType, byte listIndex) throws AntInterfaceException
     {
         if(!sServiceConnected)
         {
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            result = sAntReceiver.ANTAddChannelId(channelNumber, deviceNumber, deviceType, txType, listIndex);
-        } catch (RemoteException ex) {
-            antServiceConnectionLost();
+        try
+        {
+            if(!sAntReceiver.ANTAddChannelId(channelNumber, deviceNumber, deviceType, txType, listIndex))
+            {
+                throw new AntInterfaceException();
+            }
         }
-        return result;
-    } 
-    
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
+    }
+
     /**
      * ANT config list.
      *
      * @param channelNumber the channel number
      * @param listSize the list size
      * @param exclude the exclude
-     * @return true, if successful
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.0
      */
-    public boolean ANTConfigList(byte channelNumber, byte listSize, byte exclude)
+    public void ANTConfigList(byte channelNumber, byte listSize, byte exclude) throws AntInterfaceException
     {
         if(!sServiceConnected)
         {
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            result = sAntReceiver.ANTConfigList(channelNumber, listSize, exclude);
-        } catch (RemoteException ex) {
-            antServiceConnectionLost();
+        try
+        {
+            if(!sAntReceiver.ANTConfigList(channelNumber, listSize, exclude))
+            {
+                throw new AntInterfaceException();
+            }
         }
-        return result;
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
     }
-    
+
     /**
      * ANT config event buffering.
      *
@@ -785,213 +812,266 @@ public class AntInterface {
      * @param screenOnFlushBufferThreshold the screen on flush buffer threshold
      * @param screenOffFlushTimerInterval the screen off flush timer interval
      * @param screenOffFlushBufferThreshold the screen off flush buffer threshold
-     * @return true, if successful
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.3
      */
-    public boolean ANTConfigEventBuffering(short screenOnFlushTimerInterval, short screenOnFlushBufferThreshold, short screenOffFlushTimerInterval, short screenOffFlushBufferThreshold)
+    public void ANTConfigEventBuffering(short screenOnFlushTimerInterval, short screenOnFlushBufferThreshold, short screenOffFlushTimerInterval, short screenOffFlushBufferThreshold) throws AntInterfaceException
     {
         if(!sServiceConnected)
         {
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            result = sAntReceiver.ANTConfigEventBuffering((int)screenOnFlushTimerInterval, (int)screenOnFlushBufferThreshold, (int)screenOffFlushTimerInterval, (int)screenOffFlushBufferThreshold);
-        } catch (RemoteException ex) {
-            antServiceConnectionLost();
+        try
+        {
+            if(!sAntReceiver.ANTConfigEventBuffering((int)screenOnFlushTimerInterval, (int)screenOnFlushBufferThreshold, (int)screenOffFlushTimerInterval, (int)screenOffFlushBufferThreshold))
+            {
+                throw new AntInterfaceException();
+            }
         }
-        return result;
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
     }
-    
+
     /**
      * ANT disable event buffering.
      *
-     * @return true, if successful
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.1
      */
-    public boolean ANTDisableEventBuffering()
+    public void ANTDisableEventBuffering() throws AntInterfaceException
     {
         if(!sServiceConnected)
         {
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            result = sAntReceiver.ANTDisableEventBuffering();
-        } catch (RemoteException ex) {
-            antServiceConnectionLost();
+        try
+        {
+            if(!sAntReceiver.ANTDisableEventBuffering())
+            {
+                throw new AntInterfaceException();
+            }
         }
-        return result;
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
     }
-    
+
     /**
      * ANT open channel.
      *
      * @param channelNumber the channel number
-     * @return true, if successful
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.0
      */
-    public boolean ANTOpenChannel(byte channelNumber)
+    public void ANTOpenChannel(byte channelNumber) throws AntInterfaceException
     {
         if(!sServiceConnected)
         {
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            result = sAntReceiver.ANTOpenChannel(channelNumber);
-        } catch (RemoteException ex) {
-            antServiceConnectionLost();
+        try
+        {
+            if(!sAntReceiver.ANTOpenChannel(channelNumber))
+            {
+                throw new AntInterfaceException();
+            }
         }
-        return result;
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
     }
-    
+
     /**
      * ANT close channel.
      *
      * @param channelNumber the channel number
-     * @return true, if successful
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.0
      */
-    public boolean ANTCloseChannel(byte channelNumber)
+    public void ANTCloseChannel(byte channelNumber) throws AntInterfaceException
     {
         if(!sServiceConnected)
         {
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            result = sAntReceiver.ANTCloseChannel(channelNumber);
-        } catch (RemoteException ex) {
-            antServiceConnectionLost();
+        try
+        {
+            if(!sAntReceiver.ANTCloseChannel(channelNumber))
+            {
+                throw new AntInterfaceException();
+            }
         }
-        return result;
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
     }
-    
+
     /**
      * ANT request message.
      *
      * @param channelNumber the channel number
      * @param messageID the message id
-     * @return true, if successful
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.0
      */
-    public boolean ANTRequestMessage(byte channelNumber, byte messageID)
+    public void ANTRequestMessage(byte channelNumber, byte messageID) throws AntInterfaceException
     {
         if(!sServiceConnected)
         {
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            result = sAntReceiver.ANTRequestMessage(channelNumber, messageID);
-        } catch (RemoteException ex) {
-            antServiceConnectionLost();
+        try
+        {
+            if(!sAntReceiver.ANTRequestMessage(channelNumber, messageID))
+            {
+                throw new AntInterfaceException();
+            }
         }
-        return result;
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
     }
-    
+
     /**
      * ANT send broadcast data.
      *
      * @param channelNumber the channel number
      * @param txBuffer the tx buffer
-     * @return true, if successful
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.0
      */
-    public boolean ANTSendBroadcastData(byte channelNumber, byte[] txBuffer)
+    public void ANTSendBroadcastData(byte channelNumber, byte[] txBuffer) throws AntInterfaceException
     {
         if(!sServiceConnected)
         {
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            result = sAntReceiver.ANTSendBroadcastData(channelNumber, txBuffer);
-        } catch (RemoteException ex) {
-            antServiceConnectionLost();
+        try
+        {
+            if(!sAntReceiver.ANTSendBroadcastData(channelNumber, txBuffer))
+            {
+                throw new AntInterfaceException();
+            }
         }
-        return result;
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
     }
-    
+
     /**
      * ANT send acknowledged data.
      *
      * @param channelNumber the channel number
      * @param txBuffer the tx buffer
-     * @return true, if successful
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.0
      */
-    public boolean ANTSendAcknowledgedData(byte channelNumber, byte[] txBuffer)
+    public void ANTSendAcknowledgedData(byte channelNumber, byte[] txBuffer) throws AntInterfaceException
     {
         if(!sServiceConnected)
         {
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            result = sAntReceiver.ANTSendAcknowledgedData(channelNumber, txBuffer);
-        } catch (RemoteException ex) {
-            antServiceConnectionLost();
+        try
+        {
+            if(!sAntReceiver.ANTSendAcknowledgedData(channelNumber, txBuffer))
+            {
+                throw new AntInterfaceException();
+            }
         }
-        return result;
-    } 
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
+    }
 
     /**
      * ANT send burst transfer packet.
      *
      * @param control the control
      * @param txBuffer the tx buffer
-     * @return true, if successful
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.0
      */
-    public boolean ANTSendBurstTransferPacket(byte control, byte[] txBuffer)
+    public void ANTSendBurstTransferPacket(byte control, byte[] txBuffer) throws AntInterfaceException
     {
         if(!sServiceConnected)
         {
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            result = sAntReceiver.ANTSendBurstTransferPacket(control, txBuffer);
-        } catch (RemoteException ex) {
-            antServiceConnectionLost();
+        try
+        {
+            if(!sAntReceiver.ANTSendBurstTransferPacket(control, txBuffer))
+            {
+                throw new AntInterfaceException();
+            }
         }
-        return result;
-    } 
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
+    }
 
     /**
      * Transmits the given data on channelNumber as part of a burst message.
-     * 
+     *
      * @param channelNumber Which channel to transmit on.
      * @param txBuffer The data to send.
      * @param initialPacket Which packet in the burst sequence does the data begin in, 1 is the first.
      * @param containsEndOfBurst Is this the last of the data to be sent in burst.
      * @return The number of bytes still to be sent (approximately).  0 if success.
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      */
-    public int ANTSendBurstTransfer(byte channelNumber, byte[] txBuffer)
+    public int ANTSendBurstTransfer(byte channelNumber, byte[] txBuffer) throws AntInterfaceException
     {
-        int result = txBuffer.length;
-        
-        if(sServiceConnected)
+        if(!sServiceConnected)
         {
-            try {
-                result = sAntReceiver.ANTSendBurstTransfer(channelNumber, txBuffer);
-            } catch (RemoteException ex) {
-                antServiceConnectionLost();
-            }
+            throw new AntServiceNotConnectedException();
         }
-        return result;
+
+        try
+        {
+            return sAntReceiver.ANTSendBurstTransfer(channelNumber, txBuffer);
+        }
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
     }
-    
+
     /**
      * ANT send partial burst.
      *
@@ -999,136 +1079,238 @@ public class AntInterface {
      * @param txBuffer the tx buffer
      * @param initialPacket the initial packet
      * @param containsEndOfBurst the contains end of burst
-     * @return the int
+     * @return The number of bytes still to be sent (approximately).  0 if success.
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.0
      */
-    public int ANTSendPartialBurst(byte channelNumber, byte[] txBuffer, int initialPacket, boolean containsEndOfBurst)
+    public int ANTSendPartialBurst(byte channelNumber, byte[] txBuffer, int initialPacket, boolean containsEndOfBurst) throws AntInterfaceException
     {
-        int result = txBuffer.length;
-        
-        if(sServiceConnected)
+        if(!sServiceConnected)
         {
-            try {
-                result = sAntReceiver.ANTTransmitBurst(channelNumber, txBuffer, initialPacket, containsEndOfBurst);
-            } catch (RemoteException ex) {
-                antServiceConnectionLost();
-            }
+            throw new AntServiceNotConnectedException();
         }
-        return result;
+
+        try
+        {
+            return sAntReceiver.ANTTransmitBurst(channelNumber, txBuffer, initialPacket, containsEndOfBurst);
+        }
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
     }
 
     /**
      * Returns the version code (eg. 1) of ANTLib used by the ANT application service
      *
-     * @return the service library version code
-     * @throws RemoteException the remote exception
+     * @return the service library version code, or 0 on error.
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.2
      */
-    public int getServiceLibraryVersionCode() throws RemoteException
+    public int getServiceLibraryVersionCode()  throws AntInterfaceException
     {
+        if(!sServiceConnected)
+        {
+            throw new AntServiceNotConnectedException();
+        }
+
         if(mServiceLibraryVersionCode == 0)
         {
-            mServiceLibraryVersionCode = sAntReceiver.getServiceLibraryVersionCode();
+            try
+            {
+                mServiceLibraryVersionCode = sAntReceiver.getServiceLibraryVersionCode();
+            }
+            catch(RemoteException e)
+            {
+                throw new AntRemoteException(e);
+            }
         }
-        
+
         return mServiceLibraryVersionCode;
     }
-    
+
     /**
      * Returns the version name (eg "1.0") of ANTLib used by the ANT application service
      *
-     * @return the service library version name
-     * @throws RemoteException the remote exception
+     * @return the service library version name, or null on error.
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
      * @since 1.2
      */
-    public String getServiceLibraryVersionName() throws RemoteException
+    public String getServiceLibraryVersionName()  throws AntInterfaceException
     {
-        return sAntReceiver.getServiceLibraryVersionName();
-    }
-    
-    
-    //
-    //  -------------------  The below functions are for debugging/development and will likely disappear.
-    //
-    
-    /**
-     * Turn verbose logging on or off in the service.
-     *
-     * @param debug Whether debug logging should be enabled.
-     * @return true, if successful
-     * @since 1.4
-     */
-    public boolean debugLogging(boolean debug)
-    {
-        if(DEBUG)   Log.d(TAG, "debugLogging");
-
-        if(!sServiceSettingsConnected)
+        if(!sServiceConnected)
         {
-            // Haven't received 'onConnected' notification yet
-            return false;
+            throw new AntServiceNotConnectedException();
         }
 
-        boolean result = false;
-        try {
-            sServiceSettingsReceiver.debugLogging(debug);
-            result = true;
-        } catch (RemoteException ex) {
-            antServiceSettingsConnectionLost();
-        }
-        return result;
-    }
-    
-    /**
-     * Set how many ANT packets should be combined in one request to the hardware during a burst transfer.
-     *
-     * @param numPackets Combined packet count.
-     * @return true, if successful
-     * @since 1.4
-     */
-    boolean setNumCombinedBurstPackets(int numPackets)
-    {
-        if(DEBUG)   Log.d(TAG, "setNumCombinedBurstPackets");
-
-        if(!sServiceSettingsConnected)
+        try
         {
-            // Haven't received 'onConnected' notification yet
-            return false;
+            return sAntReceiver.getServiceLibraryVersionName();
         }
-
-        boolean result = false;
-        try {
-            sServiceSettingsReceiver.setNumCombinedBurstPackets(numPackets);
-            result = true;
-        } catch (RemoteException ex) {
-            antServiceSettingsConnectionLost();
-        }
-        
-        return result;
-    }
-    
-    /**
-     * Get the maximum number of ANT packets which will be combined in one request to the hardware during a burst transfer.
-     *
-     * @return The number of combined packets, or -1 on failure.
-     * @since 1.4
-     */
-    int getNumCombinedBurstPackets()
-    {
-    	if(DEBUG)   Log.d(TAG, "getNumCombinedBurstPackets");
-
-        if(!sServiceSettingsConnected)
+        catch(RemoteException e)
         {
-            // Haven't received 'onConnected' notification yet
-            return -1;
+            throw new AntRemoteException(e);
+        }
+    }
+
+    /**
+     * Take control of the ANT Radio.
+     *
+     * @return True if control has been granted, false if another application has control or the request failed.
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
+     * @since 1.5
+     */
+    public boolean claimInterface() throws AntInterfaceException
+    {
+        if(!sServiceConnected)
+        {
+            throw new AntServiceNotConnectedException();
         }
 
-        int result = -1;
-        try {
-            result = sServiceSettingsReceiver.getNumCombinedBurstPackets();
-        } catch (RemoteException ex) {
-            antServiceSettingsConnectionLost();
+        try
+        {
+            return sAntReceiver.claimInterface();
         }
-        
-        return result;
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
+    }
+
+    /**
+     * Give up control of the ANT Radio.
+     *
+     * @return True if control has been given up, false if this application did not have control.
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
+     * @since 1.5
+     */
+    public boolean releaseInterface() throws AntInterfaceException
+    {
+        if(!sServiceConnected)
+        {
+            throw new AntServiceNotConnectedException();
+        }
+
+        try
+        {
+            return sAntReceiver.releaseInterface();
+        }
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
+    }
+
+    /**
+     * Claims the interface if it is available.  If not the user will be prompted (on the notification bar) if a force claim should be done.
+     * If the ANT Interface is claimed, an AntInterfaceIntent.ANT_INTERFACE_CLAIMED_ACTION intent will be sent, with the current applications pid.
+     *
+     * @param String appName The name if this application, to show to the user.
+     * @returns false if a claim interface request notification already exists.
+     * @throws IllegalArgumentException
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
+     * @since 1.5
+     */
+    public boolean requestForceClaimInterface(String appName) throws AntInterfaceException
+    {
+        if((null == appName) || ("" == appName))
+        {
+            throw new IllegalArgumentException();
+        }
+
+        if(!sServiceConnected)
+        {
+            throw new AntServiceNotConnectedException();
+        }
+
+        try
+        {
+            return sAntReceiver.requestForceClaimInterface(appName);
+        }
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
+    }
+
+    /**
+     * Clears the notification asking the user if they would like to seize control of the ANT Radio.
+     *
+     * @returns false if this process is not requesting to claim the interface.
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
+     * @since 1.5
+     */
+    public boolean stopRequestForceClaimInterface() throws AntInterfaceException
+    {
+        if(!sServiceConnected)
+        {
+            throw new AntServiceNotConnectedException();
+        }
+
+        try
+        {
+            return sAntReceiver.stopRequestForceClaimInterface();
+        }
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
+    }
+
+    /**
+     * Check if the calling application has control of the ANT Radio.
+     *
+     * @return True if control is currently granted.
+     * @throws AntInterfaceException
+     * @throws AntServiceNotConnectedException
+     * @throws AntRemoteException
+     * @since 1.5
+     */
+    public boolean hasClaimedInterface() throws AntInterfaceException
+    {
+        if(!sServiceConnected)
+        {
+            throw new AntServiceNotConnectedException();
+        }
+
+        try
+        {
+            return sAntReceiver.hasClaimedInterface();
+        }
+        catch(RemoteException e)
+        {
+            throw new AntRemoteException(e);
+        }
+    }
+
+    /**
+     * Check if this device has support for ANT.
+     *
+     * @return True if the device supports ANT (may still require ANT Radio Service be installed).
+     * @since 1.5
+     */
+    public static boolean hasAntSupport(Context pContext)
+    {
+        if(!mCheckedAntSupported)
+        {
+            mAntSupported = Arrays.asList(pContext.getPackageManager().getSystemSharedLibraryNames()).contains(ANT_LIBRARY_NAME);
+            mCheckedAntSupported = true;
+        }
+
+        return mAntSupported;
     }
 }

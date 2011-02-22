@@ -29,14 +29,6 @@ package com.dsi.ant;
 public class AntDefine {
 	
     //////////////////////////////////////////////
-    // Library Version Information
-    //////////////////////////////////////////////
-    public static final int    ANT_LIBRARY_VERSION_CODE = 5;
-    public static final int    ANT_LIBRARY_VERSION_MAJOR = 1;
-    public static final int    ANT_LIBRARY_VERSION_MINOR = 4;
-    public static final String ANT_LIBRARY_VERSION_NAME = String.valueOf(ANT_LIBRARY_VERSION_MAJOR) + "." + String.valueOf(ANT_LIBRARY_VERSION_MINOR);
-
-    //////////////////////////////////////////////
     // Valid Configuration Values
     //////////////////////////////////////////////
     public static final byte MIN_BIN = 0;

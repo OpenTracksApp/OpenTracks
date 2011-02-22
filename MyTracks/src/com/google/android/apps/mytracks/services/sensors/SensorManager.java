@@ -41,7 +41,7 @@ public abstract class SensorManager {
   public static final int RETRY_PERIOD = 30000;
 
   private Sensor.SensorState sensorState = Sensor.SensorState.NONE;
-  
+
   private long sensorStateTimestamp = 0;
 
   /**
@@ -89,7 +89,11 @@ public abstract class SensorManager {
     timer.schedule(checkSensorManager, RETRY_PERIOD, RETRY_PERIOD);
   }
 
-  public abstract void setupChannel();
+  /**
+   * This method is used to set up any necessary connections to underlying
+   * sensor hardware.
+   */
+  protected abstract void setupChannel();
 
   public void shutdown() {
     timer.cancel();
