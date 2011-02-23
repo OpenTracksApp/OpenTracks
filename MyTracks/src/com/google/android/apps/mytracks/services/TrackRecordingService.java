@@ -897,7 +897,14 @@ public class TrackRecordingService extends Service implements LocationListener {
     }
     wpt.setTrackId(recordingTrackId);
     wpt.setLength(length);
-    if (lastValidLocation != null) {
+    if (lastValidLocation == null) {
+      // A null location is ok, and expected on track start.
+      // Make it an impossible location.
+      Location l = new Location("");
+      l.setLatitude(100);
+      l.setLongitude(200);
+      wpt.setLocation(l);
+    } else {
       // A null location is ok, and expected on track start.
       wpt.setLocation(lastLocation);
       wpt.setDuration(lastLocation.getTime()

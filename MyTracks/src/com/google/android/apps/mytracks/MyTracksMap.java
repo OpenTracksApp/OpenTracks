@@ -201,7 +201,10 @@ public class MyTracksMap extends MapActivity
             MyTracksConstants.MAX_DISPLAYED_WAYPOINTS_POINTS);
         if (cursor != null && cursor.moveToFirst()) {
           do {
-            mapOverlay.addWaypoint(providerUtils.createWaypoint(cursor));
+            Waypoint waypoint = providerUtils.createWaypoint(cursor);
+            if (MyTracksUtils.isValidLocation(waypoint.getLocation())) {
+			  mapOverlay.addWaypoint(waypoint);
+            }
           } while (cursor.moveToNext());
         }
       } catch (RuntimeException e) {
