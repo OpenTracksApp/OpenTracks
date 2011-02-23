@@ -56,6 +56,11 @@ limitations under the License.
               android:label="MyTracks"
               android:exported="false" />
 
+    <activity android:name="com.google.android.apps.mytracks.MyMapsList"
+              android:label="@string/map_list_title"
+              android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|fontScale"
+              android:exported="false" />
+
     <activity android:name="com.google.android.apps.mytracks.MyTracksList"
               android:label="Recorded Tracks" />
 

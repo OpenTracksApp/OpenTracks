@@ -29,11 +29,13 @@ import com.google.android.apps.mytracks.io.AuthManagerFactory;
 import com.google.android.apps.mytracks.io.GpxImporter;
 import com.google.android.apps.mytracks.io.SendToDocs;
 import com.google.android.apps.mytracks.io.SendToFusionTables;
+import com.google.android.apps.mytracks.io.SendToFusionTables.OnSendCompletedListener;
+import com.google.android.apps.mytracks.io.SendToMyMaps;
 import com.google.android.apps.mytracks.io.TempFileCleaner;
 import com.google.android.apps.mytracks.io.TrackWriter;
 import com.google.android.apps.mytracks.io.TrackWriterFactory;
-import com.google.android.apps.mytracks.io.SendToFusionTables.OnSendCompletedListener;
 import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
+import com.google.android.apps.mytracks.io.mymaps.MapsService;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
@@ -67,9 +69,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.Toast;
@@ -122,8 +124,11 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    */
 
   public long sendToTrackId = -1;
+  public boolean sendToMyMapsSuccess = false;
   public boolean sendToFusionTablesSuccess = false;
   public boolean sendToDocsSuccess = false;
+  public String sendToMyMapsMapId;
+  public String sendToMyMapsMessage = "";
   public String sendToFusionTablesTableId;
   public String sendToFusionTablesMessage = "";
   public String sendToDocsMessage = "";
@@ -446,27 +451,8 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       final Intent results) {
     TrackFileFormat exportFormat = null;
     switch (requestCode) {
-      case MyTracksConstants.GET_MAP: {
-        if (resultCode == RESULT_OK) {
-          results.putExtra("trackid", selectedTrackId);
-          if (results.hasExtra("tableid")) {
-            sendToFusionTablesTableId = results.getStringExtra("tableid");
-          }
-          setProgressMessage(
-              R.string.progress_message_authenticating_fusiontables);
-          authenticate(results, MyTracksConstants.SEND_TO_GOOGLE,
-              SendToFusionTables.SERVICE_ID);
-        } else {
-          dialogManager.dismissDialogSafely(DIALOG_PROGRESS);
-        }
-        break;
-      }
       case MyTracksConstants.GET_LOGIN: {
-        if (resultCode == RESULT_OK && auth != null) {
-          if (!auth.authResult(resultCode, results)) {
-            dialogManager.dismissDialogSafely(DIALOG_PROGRESS);
-          }
-        } else {
+        if (resultCode != RESULT_OK || auth == null || !auth.authResult(resultCode, results)) {
           dialogManager.dismissDialogSafely(DIALOG_PROGRESS);
         }
         break;
@@ -515,67 +501,48 @@ public class MyTracks extends TabActivity implements OnTouchListener,
         }
         break;
       }
-      case MyTracksConstants.AUTHENTICATE_TO_DOCLIST: {
-        if (resultCode == RESULT_OK) {
-          setProgressValue(0);
-          setProgressMessage(
-              R.string.progress_message_authenticating_docs);
-          authenticate(results,
-              MyTracksConstants.AUTHENTICATE_TO_TRIX, 
-              SendToDocs.GDATA_SERVICE_NAME_DOCLIST);
-        } else {
-          dialogManager.dismissDialogSafely(DIALOG_PROGRESS);
-        }
-        break;
-      }
-      case MyTracksConstants.AUTHENTICATE_TO_TRIX: {
-        if (resultCode == RESULT_OK) {
-          setProgressValue(30);
-          setProgressMessage(
-              R.string.progress_message_authenticating_docs);
-          authenticate(results, MyTracksConstants.SEND_TO_DOCS, 
-              SendToDocs.GDATA_SERVICE_NAME_TRIX);
-        } else {
-          dialogManager.dismissDialogSafely(DIALOG_PROGRESS);
-        }
-        break;
-      }
-      case MyTracksConstants.SEND_TO_DOCS: {
-        if (results != null && resultCode == RESULT_OK) {
-          Log.d(MyTracksConstants.TAG, "Sending to Docs....");
-          setProgressValue(50);
-          setProgressMessage(R.string.progress_message_sending_docs);
-          final long trackId = results.getLongExtra("trackid", selectedTrackId);
-          final SendToDocs sender = new SendToDocs(this, 
-              authMap.get(SendToDocs.GDATA_SERVICE_NAME_TRIX),
-              authMap.get(SendToDocs.GDATA_SERVICE_NAME_DOCLIST), trackId);
-          sendToTrackId = trackId;
-          Runnable onCompletion = new Runnable() {
-            public void run() {
-              setProgressValue(100);
-              dialogManager.dismissDialogSafely(DIALOG_PROGRESS);
-              runOnUiThread(new Runnable() {
-                public void run() {
-                  sendToDocsMessage = sender.getStatusMessage();
-                  sendToDocsSuccess = sender.wasSuccess();
-                  handleFusionTablesFinish(trackId);
-                }
-              });
-            }
-          };
-          sender.setOnCompletion(onCompletion);
-          sender.run();
-        } else {
-          dialogManager.dismissDialogSafely(DIALOG_PROGRESS);
-        }
-        break;
-      }
       case MyTracksConstants.SEND_TO_GOOGLE_DIALOG: {
-      	shareRequested = false;
+        shareRequested = false;
         dialogManager.showDialogSafely(DIALOG_SEND_TO_GOOGLE);
         break;
       }
-      case MyTracksConstants.SEND_TO_GOOGLE: {
+      case MyTracksConstants.GET_MAP: {
+        // User picked a map to upload to
+        if (resultCode == RESULT_OK) {
+          results.putExtra("trackid", selectedTrackId);
+          if (results.hasExtra("mapid")) {
+            sendToMyMapsMapId = results.getStringExtra("mapid");
+          }
+          authenticateToGoogleMaps(results);
+        } else {
+          onSendToGoogleDone();
+        }
+        break;
+      }
+      case MyTracksConstants.AUTHENTICATE_TO_MY_MAPS: {
+        // Authenticated with Google My Maps
+        if (results != null && resultCode == RESULT_OK) {
+          final String mapId;
+          final long trackId;
+          if (results.hasExtra("mapid")) {
+            mapId = results.getStringExtra("mapid");
+          } else {
+            mapId = "new";
+          }
+          if (results.hasExtra("trackid")) {
+            trackId = results.getLongExtra("trackid", -1);
+          } else {
+            trackId = selectedTrackId;
+          }
+
+          sendToGoogleMaps(trackId, mapId);
+        } else {
+          onSendToGoogleDone();
+        }
+        break;
+      }
+      case MyTracksConstants.AUTHENTICATE_TO_FUSION_TABLES: {
+        // Authenticated with Google Fusion Tables
         if (results != null && resultCode == RESULT_OK) {
           final long trackId;
           if (results.hasExtra("trackid")) {
@@ -583,48 +550,29 @@ public class MyTracks extends TabActivity implements OnTouchListener,
           } else {
             trackId = selectedTrackId;
           }
-          OnSendCompletedListener onCompletion = new OnSendCompletedListener() {
-            @Override
-            public void onSendCompleted(String tableId, boolean success,
-                int statusMessage) {
-              sendToFusionTablesMessage = getString(statusMessage);
-              sendToFusionTablesSuccess = success;
-              if (sendToFusionTablesSuccess) {
-                sendToFusionTablesTableId = tableId;
-                // Update the table id for this track:
-                try {
-                  Track track = providerUtils.getTrack(trackId);
-                  track.setTableId(tableId);
-                  providerUtils.updateTrack(track);
-                } catch (RuntimeException e) {
-                  // If that fails whatever reasons we'll just log an error, but
-                  // continue.
-                  Log.w(MyTracksConstants.TAG, "Updating table id failed.", e);
-                }
-              }
-              if (dialogManager.getSendToGoogleDialog().getSendToDocs()) {
-                onActivityResult(MyTracksConstants.AUTHENTICATE_TO_DOCLIST,
-                    RESULT_OK, new Intent());
-              } else {
-                dialogManager.dismissDialogSafely(DIALOG_PROGRESS);
-                runOnUiThread(new Runnable() {
-                  public void run() {
-                    handleFusionTablesFinish(trackId);
-                  }
-                });
-              }
-            }
-          };
-          sendToTrackId = trackId;
-          final SendToFusionTables sender = new SendToFusionTables(this, auth,
-              trackId, this/*progressIndicator*/, onCompletion);
 
-          HandlerThread handlerThread = new HandlerThread("SendToFusionTables");
-          handlerThread.start();
-          Handler handler = new Handler(handlerThread.getLooper());
-          handler.post(sender);
+          sendToFusionTables(trackId);
         } else {
-          dialogManager.dismissDialogSafely(DIALOG_PROGRESS);
+          onSendToGoogleDone();
+        }
+        break;
+      }
+      case MyTracksConstants.AUTHENTICATE_TO_DOCLIST: {
+        // Authenticated with Google Docs
+        if (resultCode == RESULT_OK) {
+          authenticateToGoogleTrix();
+        } else {
+          onSendToGoogleDone();
+        }
+        break;
+      }
+      case MyTracksConstants.AUTHENTICATE_TO_TRIX: {
+        // Authenticated with Trix
+        if (resultCode == RESULT_OK) {
+          final long trackId = results.getLongExtra("trackid", selectedTrackId);
+          sendToGoogleDocs(trackId);
+        } else {
+          onSendToGoogleDone();
         }
         break;
       }
@@ -650,8 +598,10 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       case MyTracksConstants.SHARE_LINK: {
         Track selectedTrack = providerUtils.getTrack(selectedTrackId);
         if (selectedTrack != null) {
-          if (selectedTrack.getTableId().length() > 0) {
-            shareLinkToFusionTable(selectedTrackId);
+          if (!selectedTrack.getMapId().isEmpty()) {
+            shareLinkToMap(MapsService.buildMapUrl(selectedTrack.getMapId()));
+          } else if (!selectedTrack.getTableId().isEmpty()) {
+            shareLinkToMap(getFusionTablesUrl(selectedTrackId));
           } else {
             shareRequested = true;
             dialogManager.showDialogSafely(DIALOG_SEND_TO_GOOGLE);
@@ -720,6 +670,9 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * Resets status information for sending to MyMaps/Docs.
    */
   public void resetSendToGoogleStatus() {
+    sendToMyMapsMapId = null;
+    sendToMyMapsMessage = "";
+    sendToMyMapsSuccess = true;
     sendToFusionTablesMessage = "";
     sendToFusionTablesSuccess = true;
     sendToDocsMessage = "";
@@ -792,10 +745,10 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   }
 
   /**
-   * Shares a link to a fusion table via external app (email, gmail, ...)
+   * Shares a link to a My Map or Fusion Table via external app (email, gmail, ...)
    * A chooser with apps that support text/plain will be shown to the user.
    */
-  public void shareLinkToFusionTable(long trackId) {
+  public void shareLinkToMap(String url) {
     Intent shareIntent = new Intent(Intent.ACTION_SEND);
     shareIntent.setType("text/plain");
     shareIntent.putExtra(Intent.EXTRA_SUBJECT,
@@ -807,8 +760,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
           getString(R.string.share_url_only_key), false);
     }
 
-    Track track = providerUtils.getTrack(trackId);
-    String url = SendToFusionTables.getMapVisualizationUrl(track);
     String msg = shareUrlOnly ? url : String.format(
         getResources().getText(R.string.share_map_body_format).toString(), url);
     shareIntent.putExtra(Intent.EXTRA_TEXT, msg);
@@ -1027,6 +978,8 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * Initiates the process to send tracks to google.
    * This is called once the user has selected sending options via the
    * SendToGoogleDialog.
+   * 
+   * TODO: Change this whole flow to an actual state machine.
    */
   public void sendToGoogle() {
     SendToGoogleDialog sendToGoogleDialog =
@@ -1037,15 +990,251 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     setProgressValue(0);
     clearProgressMessage();
     dialogManager.showDialogSafely(DIALOG_PROGRESS);
-    if (sendToGoogleDialog.getSendToFusionTables()) {
-      setProgressValue(0);
-      setProgressMessage(R.string.progress_message_authenticating_fusiontables);
-      authenticate(new Intent(), MyTracksConstants.SEND_TO_GOOGLE,
-          SendToFusionTables.SERVICE_ID);
-    } else {
-      onActivityResult(MyTracksConstants.AUTHENTICATE_TO_DOCLIST, RESULT_OK,
-          new Intent());
+
+    if (sendToGoogleDialog.getSendToMyMaps()) {
+      sendToGoogleMapsOrPickMap(sendToGoogleDialog);
+    } else if (sendToGoogleDialog.getSendToFusionTables()) {
+      authenticateToFusionTables(null);
+    } else if (sendToGoogleDialog.getSendToDocs()) {
+      authenticateToGoogleDocs();
+    } else  {
+      Log.w(MyTracksConstants.TAG, "Nowhere to upload to");
+      onSendToGoogleDone();
     }
+  }
+
+  private void sendToGoogleMapsOrPickMap(SendToGoogleDialog sendToGoogleDialog) {
+    if (!sendToGoogleDialog.getCreateNewMap()) {
+      // Ask the user to choose a map to upload into
+      Intent listIntent = new Intent(this, MyMapsList.class);
+      startActivityForResult(listIntent, MyTracksConstants.GET_MAP);
+      // The callback for GET_MAP calls authenticateToGoogleMaps
+    } else {
+      authenticateToGoogleMaps(null);
+    }
+  }
+
+  private void authenticateToGoogleMaps(Intent results) {
+    if (results == null) { results = new Intent(); }
+
+    setProgressValue(0);
+    setProgressMessage(
+        R.string.progress_message_authenticating_mymaps);
+    authenticate(results, MyTracksConstants.AUTHENTICATE_TO_MY_MAPS,
+        MapsService.getServiceName());
+    // AUTHENTICATE_TO_MY_MAPS callback calls sendToGoogleMaps
+  }
+
+  private void sendToGoogleMaps(final long trackId, String mapId) {
+    SendToMyMaps.OnSendCompletedListener onCompletion = new SendToMyMaps.OnSendCompletedListener() {
+      @Override
+      public void onSendCompleted(String mapId, boolean success, int statusMessage) {
+        sendToMyMapsMessage = getString(statusMessage);
+        sendToMyMapsSuccess = success;
+        if (sendToMyMapsSuccess) {
+          sendToMyMapsMapId = mapId;
+          // Update the map id for this track:
+          try {
+            Track track = providerUtils.getTrack(trackId);
+            track.setMapId(mapId);
+            providerUtils.updateTrack(track);
+          } catch (RuntimeException e) {
+            // If that fails whatever reasons we'll just log an error, but
+            // continue.
+            Log.w(MyTracksConstants.TAG, "Updating map id failed.", e);
+          }
+        }
+
+        onSendToGoogleMapsDone();
+      }
+    };
+    final SendToMyMaps sender = new SendToMyMaps(this, mapId, auth,
+        trackId, this /*progressIndicator*/, onCompletion);
+
+    HandlerThread handlerThread = new HandlerThread("SendToMyMaps");
+    handlerThread.start();
+    Handler handler = new Handler(handlerThread.getLooper());
+    handler.post(sender);
+  }
+
+  private void onSendToGoogleMapsDone() {
+    SendToGoogleDialog sendToGoogleDialog = dialogManager.getSendToGoogleDialog();
+    if (sendToGoogleDialog.getSendToFusionTables()) {
+      authenticateToFusionTables(null);
+    } else if (sendToGoogleDialog.getSendToDocs()) {
+      authenticateToGoogleDocs();
+    } else {
+      onSendToGoogleDone();
+    }
+  }
+
+  private void authenticateToFusionTables(Intent results) {
+    if (results == null) { results = new Intent(); }
+
+    setProgressValue(0);
+    setProgressMessage(R.string.progress_message_authenticating_fusiontables);
+    authenticate(results, MyTracksConstants.AUTHENTICATE_TO_FUSION_TABLES,
+        SendToFusionTables.SERVICE_ID);
+    // AUTHENTICATE_TO_FUSION_TABLES callback calls sendToFusionTables
+  }
+
+  private void sendToFusionTables(final long trackId) {
+    OnSendCompletedListener onCompletion = new OnSendCompletedListener() {
+      @Override
+      public void onSendCompleted(String tableId, boolean success,
+          int statusMessage) {
+        sendToFusionTablesMessage = getString(statusMessage);
+        sendToFusionTablesSuccess = success;
+        if (sendToFusionTablesSuccess) {
+          sendToFusionTablesTableId = tableId;
+          // Update the table id for this track:
+          try {
+            Track track = providerUtils.getTrack(trackId);
+            track.setTableId(tableId);
+            providerUtils.updateTrack(track);
+          } catch (RuntimeException e) {
+            // If that fails whatever reasons we'll just log an error, but
+            // continue.
+            Log.w(MyTracksConstants.TAG, "Updating table id failed.", e);
+          }
+        }
+        
+        onSendToFusionTablesDone();
+      }
+    };
+    sendToTrackId = trackId;
+    final SendToFusionTables sender = new SendToFusionTables(this, auth,
+        trackId, this/*progressIndicator*/, onCompletion);
+
+    HandlerThread handlerThread = new HandlerThread("SendToFusionTables");
+    handlerThread.start();
+    Handler handler = new Handler(handlerThread.getLooper());
+    handler.post(sender);
+  }
+
+  private void onSendToFusionTablesDone() {
+    SendToGoogleDialog sendToGoogleDialog = dialogManager.getSendToGoogleDialog();
+    if (sendToGoogleDialog.getSendToDocs()) {
+      authenticateToGoogleDocs();
+    } else {
+      onSendToGoogleDone();
+    }
+  }
+
+  private void authenticateToGoogleDocs() {
+    setProgressValue(0);
+    setProgressMessage(
+        R.string.progress_message_authenticating_docs);
+    authenticate(new Intent(),
+        MyTracksConstants.AUTHENTICATE_TO_DOCLIST,
+        SendToDocs.GDATA_SERVICE_NAME_DOCLIST);
+    // AUTHENTICATE_TO_DOCLIST callback calls authenticateToGoogleTrix
+  }
+
+  private void authenticateToGoogleTrix() {
+    setProgressValue(30);
+    setProgressMessage(
+        R.string.progress_message_authenticating_docs);
+    authenticate(new Intent(),
+        MyTracksConstants.AUTHENTICATE_TO_TRIX,
+        SendToDocs.GDATA_SERVICE_NAME_TRIX);
+    // AUTHENTICATE_TO_TRIX callback calls sendToGoogleDocs
+  }
+
+  private void sendToGoogleDocs(final long trackId) {
+    Log.d(MyTracksConstants.TAG, "Sending to Docs....");
+    setProgressValue(50);
+    setProgressMessage(R.string.progress_message_sending_docs);
+    final SendToDocs sender = new SendToDocs(this, 
+        authMap.get(SendToDocs.GDATA_SERVICE_NAME_TRIX),
+        authMap.get(SendToDocs.GDATA_SERVICE_NAME_DOCLIST), trackId);
+    sendToTrackId = trackId;
+    Runnable onCompletion = new Runnable() {
+      public void run() {
+        setProgressValue(100);
+        dialogManager.dismissDialogSafely(DIALOG_PROGRESS);
+        sendToDocsMessage = sender.getStatusMessage();
+        sendToDocsSuccess = sender.wasSuccess();
+
+        onSendToGoogleDocsDone();
+      }
+    };
+    sender.setOnCompletion(onCompletion);
+    sender.run();
+  }
+
+  private void onSendToGoogleDocsDone() {
+    onSendToGoogleDone();
+  }
+
+  private void onSendToGoogleDone() {
+    SendToGoogleDialog sendToGoogleDialog = dialogManager.getSendToGoogleDialog();
+    final boolean sentToMyMaps = sendToGoogleDialog.getSendToMyMaps();
+    final boolean sentToFusionTables = sendToGoogleDialog.getSendToFusionTables();
+
+    dialogManager.dismissDialogSafely(DIALOG_PROGRESS);
+    runOnUiThread(new Runnable() {
+      public void run() {
+        if (shareRequested) {
+          Toast.makeText(MyTracks.this, getSendToGoogleResultMessage(), Toast.LENGTH_LONG)
+              .show();
+
+          if (shareLinkToMap(sentToMyMaps, sentToFusionTables)) {
+            return;
+          }
+        }
+
+        // If anything failed or sharing was not requested, show the dialog
+        dialogManager.showDialogSafely(
+            DialogManager.DIALOG_SEND_TO_GOOGLE_RESULT);
+      }
+    });
+  }
+
+  boolean shareLinkToMap(boolean sentToMyMaps, boolean sentToFusionTables) {
+    String url = null;
+    if (sentToMyMaps && sendToMyMapsSuccess) {
+      // Prefer a link to My Maps
+      url = MapsService.buildMapUrl(sendToMyMapsMapId);
+    } else if (sentToFusionTables && sendToFusionTablesSuccess) {
+      // Otherwise try using the link to fusion tables
+      url = getFusionTablesUrl(sendToTrackId);
+    }
+
+    if (url != null) {
+      shareLinkToMap(url);
+      return true;
+    }
+
+    return false;
+  }
+
+  protected String getFusionTablesUrl(long sendToTrackId2) {
+    Track track = providerUtils.getTrack(sendToTrackId);
+    return SendToFusionTables.getMapVisualizationUrl(track);
+  }
+
+  String getSendToGoogleResultMessage() {
+    StringBuilder message = new StringBuilder();
+    SendToGoogleDialog sendToGoogleDialog =
+      dialogManager.getSendToGoogleDialog();
+    if (sendToGoogleDialog.getSendToMyMaps()) {
+      message.append(sendToMyMapsMessage);
+    }
+    if (sendToGoogleDialog.getSendToFusionTables()) {
+      message.append(sendToFusionTablesMessage);
+    }
+    if (sendToGoogleDialog.getSendToDocs()) {
+      if (message.length() > 0) {
+        message.append(' ');
+      }
+      message.append(sendToDocsMessage);
+    }
+    if (sendToMyMapsSuccess && sendToFusionTablesSuccess && sendToDocsSuccess) {
+      message.append(' ');
+      message.append(getString(R.string.status_mymap_info));
+    }
+    return message.toString();
   }
 
   /**
@@ -1157,35 +1346,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     writer.writeTrackAsync();
   }
 
-  /**
-   * Notifies that uploading to fusion tables is finished.
-   */
-  private void handleFusionTablesFinish(long trackId) {
-    if (shareRequested && sendToFusionTablesSuccess) {
-      // Just share
-      Toast.makeText(this, getFusionTablesResultMessage(), Toast.LENGTH_LONG).show();
-      shareLinkToFusionTable(trackId);
-    } else {
-      dialogManager.showDialogSafely(DialogManager.DIALOG_SEND_TO_GOOGLE_RESULT);
-    }
-  }
-
-  public String getFusionTablesResultMessage() {
-    StringBuilder message = new StringBuilder();
-    SendToGoogleDialog sendToGoogleDialog =
-      dialogManager.getSendToGoogleDialog();
-    if (sendToGoogleDialog.getSendToFusionTables()) {
-      message.append(sendToFusionTablesMessage);
-    }
-    if (sendToGoogleDialog.getSendToDocs()) {
-      if (message.length() > 0) {
-        message.append(' ');
-      }
-      message.append(sendToDocsMessage);
-    }
-    return message.toString();
-  }
-
   public AccountChooser getAccountChooser() {
     return accountChooser;
   }
@@ -1200,6 +1360,10 @@ public class MyTracks extends TabActivity implements OnTouchListener,
 
   public DialogManager getDialogManager() {
     return dialogManager;
+  }
+
+  public String getSendToMyMapsMapId() {
+    return sendToMyMapsMapId;
   }
 
   public String getSendToFusionTablesTableId() {
