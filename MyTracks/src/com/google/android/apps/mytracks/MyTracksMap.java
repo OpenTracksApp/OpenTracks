@@ -203,7 +203,7 @@ public class MyTracksMap extends MapActivity
           do {
             Waypoint waypoint = providerUtils.createWaypoint(cursor);
             if (MyTracksUtils.isValidLocation(waypoint.getLocation())) {
-			  mapOverlay.addWaypoint(waypoint);
+              mapOverlay.addWaypoint(waypoint);
             }
           } while (cursor.moveToNext());
         }
