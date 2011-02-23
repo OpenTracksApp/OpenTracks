@@ -107,7 +107,7 @@ public class ApiFeatures {
     return getApiLevel() >= 9;
   }
   
-  public boolean supportsAudioFocus() {
+  public boolean isAudioFocusSupported() {
     return getApiLevel() >= 8;
   }
   

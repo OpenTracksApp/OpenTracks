@@ -38,12 +38,17 @@ public class FroyoStatusAnnouncerTask
     implements OnUtteranceCompletedListener, OnAudioFocusChangeListener {
   
   private AudioManager audioManager;
+  private final static HashMap<String, String> SPEACH_PARAMS = new HashMap<String, String>();
+  static {
+    SPEACH_PARAMS.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "not_used");
+  }
 
   public FroyoStatusAnnouncerTask(Context context) {
     super(context);
     audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
   }
 
+  @Override
   protected void onTtsInit(int status) {
     super.onTtsInit(status);
     if (status == TextToSpeech.SUCCESS) {
@@ -51,14 +56,16 @@ public class FroyoStatusAnnouncerTask
     }
   }
 
+  @Override
   protected void speakAnnouncment(String announcement) {
-    audioManager.requestAudioFocus(this,
+    int result = audioManager.requestAudioFocus(this,
           TextToSpeech.Engine.DEFAULT_STREAM, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
+    if (result == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
+      Log.w(TAG, "FroyoStatusAnnouncerTask: Request audio focus failed.");
+    }
     // We don't care about the id.
     // It is supplied here to force onUtteranceCompleted to be called.
-    HashMap<String, String> params = new HashMap<String, String>();
-    params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "not_used");
-    tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, params);
+    tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, SPEACH_PARAMS);
   }
 
   @Override
