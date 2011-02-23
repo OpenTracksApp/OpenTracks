@@ -1097,7 +1097,7 @@ public class TrackRecordingService extends Service implements LocationListener {
         recordingTrackId, startTime));
     isRecording = true;
     isMoving = true;
-    
+
     providerUtils.updateTrack(track);
     statsBuilder = new TripStatisticsBuilder(startTime);
     statsBuilder.setMinRecordingDistance(minRecordingDistance);

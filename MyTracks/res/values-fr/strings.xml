@@ -127,7 +127,6 @@ limitations under the License.
   <string name="tracklist_all_tracks">Tous les parcours:</string>
   <string name="tracklist_this_track">Ce parcours</string>
   <string name="tracklist_share_track">Partager...</string>
-  <string name="tracklist_share_linkfusion">Lien sur Google Fusion Tables</string>
   <string name="tracklist_share_gpx_file">Fichier GPX</string>
   <string name="tracklist_share_kml_file">Fichier KML</string>
   <string name="tracklist_clear_map">Effacer la carte</string>

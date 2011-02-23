@@ -50,26 +50,26 @@ public abstract class MyTracksConstants {
   public static final int FEATURE_DETAILS = 5;
   public static final int START_RECORDING = 6;
   public static final int STOP_RECORDING = 7;
-  public static final int AUTHENTICATE_TO_DOCLIST = 8;
-  public static final int AUTHENTICATE_TO_TRIX = 9;
-  public static final int SEND_TO_DOCS = 10;
-  public static final int DELETE_TRACK = 11;
-  public static final int SEND_TO_GOOGLE = 12;
-  public static final int SEND_TO_GOOGLE_DIALOG = 13;
-  public static final int SHARE_LINK = 14;
-  public static final int SHARE_GPX_FILE = 15;
-  public static final int SHARE_KML_FILE = 16;
-  public static final int SHARE_CSV_FILE = 17;
-  public static final int SHARE_TCX_FILE = 18;
-  public static final int EDIT_DETAILS = 19;
-  public static final int SAVE_GPX_FILE = 20;
-  public static final int SAVE_KML_FILE = 21;
-  public static final int SAVE_CSV_FILE = 22;
-  public static final int SAVE_TCX_FILE = 23;
-  public static final int CLEAR_MAP = 24;
-  public static final int SHOW_WAYPOINT = 25;
-  public static final int EDIT_WAYPOINT = 26;
-  public static final int WELCOME = 27;
+  public static final int AUTHENTICATE_TO_MY_MAPS = 8;
+  public static final int AUTHENTICATE_TO_FUSION_TABLES = 9;
+  public static final int AUTHENTICATE_TO_DOCLIST = 10;
+  public static final int AUTHENTICATE_TO_TRIX = 11;
+  public static final int DELETE_TRACK = 13;
+  public static final int SEND_TO_GOOGLE_DIALOG = 14;
+  public static final int SHARE_LINK = 15;
+  public static final int SHARE_GPX_FILE = 16;
+  public static final int SHARE_KML_FILE = 17;
+  public static final int SHARE_CSV_FILE = 18;
+  public static final int SHARE_TCX_FILE = 19;
+  public static final int EDIT_DETAILS = 20;
+  public static final int SAVE_GPX_FILE = 21;
+  public static final int SAVE_KML_FILE = 22;
+  public static final int SAVE_CSV_FILE = 23;
+  public static final int SAVE_TCX_FILE = 24;
+  public static final int CLEAR_MAP = 25;
+  public static final int SHOW_WAYPOINT = 26;
+  public static final int EDIT_WAYPOINT = 27;
+  public static final int WELCOME = 28;
 
   /*
    * Menu ids:
