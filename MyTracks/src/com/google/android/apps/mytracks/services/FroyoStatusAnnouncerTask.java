@@ -38,9 +38,9 @@ public class FroyoStatusAnnouncerTask
     implements OnUtteranceCompletedListener, OnAudioFocusChangeListener {
   
   private AudioManager audioManager;
-  private final static HashMap<String, String> SPEACH_PARAMS = new HashMap<String, String>();
+  private final static HashMap<String, String> SPEECH_PARAMS = new HashMap<String, String>();
   static {
-    SPEACH_PARAMS.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "not_used");
+    SPEECH_PARAMS.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "not_used");
   }
 
   public FroyoStatusAnnouncerTask(Context context) {
@@ -63,9 +63,9 @@ public class FroyoStatusAnnouncerTask
     if (result == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
       Log.w(TAG, "FroyoStatusAnnouncerTask: Request audio focus failed.");
     }
-    // We don't care about the id.
+    // We don't care about the utterance id.
     // It is supplied here to force onUtteranceCompleted to be called.
-    tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, SPEACH_PARAMS);
+    tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, SPEECH_PARAMS);
   }
 
   @Override
