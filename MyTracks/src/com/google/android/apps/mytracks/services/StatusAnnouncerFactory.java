@@ -41,7 +41,11 @@ public class StatusAnnouncerFactory {
    */
   public PeriodicTask create(Context context) {
     if (hasTts) {
-      return new StatusAnnouncerTask(context);
+      if (ApiFeatures.getInstance().isAudioFocusSupported()) {
+        return new FroyoStatusAnnouncerTask(context);
+      } else {
+        return new StatusAnnouncerTask(context);
+      }
     } else {
       return null;
     }

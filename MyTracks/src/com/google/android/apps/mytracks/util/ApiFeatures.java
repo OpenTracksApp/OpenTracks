@@ -107,6 +107,10 @@ public class ApiFeatures {
     return getApiLevel() >= 9;
   }
   
+  public boolean isAudioFocusSupported() {
+    return getApiLevel() >= 8;
+  }
+  
   /**
    * There's a bug (#1587) in Cupcake and Donut which prevents you from
    * using a SQLiteQueryBuilder twice.  That is, if you call buildQuery
