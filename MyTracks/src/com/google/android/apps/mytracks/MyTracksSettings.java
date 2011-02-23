@@ -107,7 +107,7 @@ public class MyTracksSettings extends PreferenceActivity {
         });
     updatePreferenceUnits(metricUnitsPreference.isChecked());
 
-    customizeSensorTypePreferences();
+    customizeSensorOptionsPreferences();
 
     // Disable TTS announcement preference if not available
     if (!apiFeatures.hasTextToSpeech()) {
@@ -121,7 +121,7 @@ public class MyTracksSettings extends PreferenceActivity {
     }
   }
 
-  private void customizeSensorTypePreferences() {
+  private void customizeSensorOptionsPreferences() {
     ListPreference sensorTypePreference =
         (ListPreference) findPreference(getString(R.string.sensor_type_key));
     sensorTypePreference.setOnPreferenceChangeListener(
