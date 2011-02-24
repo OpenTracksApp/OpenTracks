@@ -17,8 +17,8 @@ limitations under the License.
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.google.android.maps.mytracks"
           android:installLocation="auto"
-          android:versionCode="24"
-          android:versionName="1.1.1">
+          android:versionCode="25"
+          android:versionName="1.1.2">
   <application android:icon="@drawable/arrow_icon"
                android:label="@string/app_name"
                android:backupAgent="com.google.android.apps.mytracks.io.backup.MyTracksBackupAgent">
@@ -54,6 +54,11 @@ limitations under the License.
 
     <activity android:name="com.google.android.apps.mytracks.MyTracksMap"
               android:label="MyTracks"
+              android:exported="false" />
+
+    <activity android:name="com.google.android.apps.mytracks.MyMapsList"
+              android:label="@string/map_list_title"
+              android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|fontScale"
               android:exported="false" />
 
     <activity android:name="com.google.android.apps.mytracks.MyTracksList"

@@ -16,11 +16,14 @@
 package com.google.android.apps.mytracks;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.google.android.apps.mytracks.io.backup.BackupActivityHelper;
 import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
 import com.google.android.apps.mytracks.services.StatusAnnouncerFactory;
+import com.google.android.apps.mytracks.services.sensors.ant.AntUtils;
 import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.BluetoothDeviceUtils;
 import com.google.android.maps.mytracks.R;
@@ -35,6 +38,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceScreen;
 import android.provider.Settings;
 
 /**
@@ -103,6 +107,21 @@ public class MyTracksSettings extends PreferenceActivity {
         });
     updatePreferenceUnits(metricUnitsPreference.isChecked());
 
+    customizeSensorOptionsPreferences();
+
+    // Disable TTS announcement preference if not available
+    if (!apiFeatures.hasTextToSpeech()) {
+      IntegerListPreference announcementFrequency =
+          (IntegerListPreference) findPreference(
+              getString(R.string.announcement_frequency_key));
+      announcementFrequency.setEnabled(false);
+      announcementFrequency.setValue("-1");
+      announcementFrequency.setSummary(
+          R.string.settings_not_available_summary);
+    }
+  }
+
+  private void customizeSensorOptionsPreferences() {
     ListPreference sensorTypePreference =
         (ListPreference) findPreference(getString(R.string.sensor_type_key));
     sensorTypePreference.setOnPreferenceChangeListener(
@@ -115,16 +134,37 @@ public class MyTracksSettings extends PreferenceActivity {
           }
         });
     updateSensorSettings(sensorTypePreference.getValue());
-    
-    // Disable TTS announcement preference if not available
-    if (!apiFeatures.hasTextToSpeech()) {
-      IntegerListPreference announcementFrequency =
-          (IntegerListPreference) findPreference(
-              getString(R.string.announcement_frequency_key));
-      announcementFrequency.setEnabled(false);
-      announcementFrequency.setValue("-1");
-      announcementFrequency.setSummary(
-          R.string.settings_not_available_summary);
+
+    if (!AntUtils.hasAntSupport(this)) {
+      // The sensor options screen has a few ANT-specific options which we
+      // need to remove.  First, we need to remove the ANT sensor types.
+      // Second, we need to remove the ANT unpairing options.
+
+      Set<Integer> toRemove = new HashSet<Integer>();
+
+      String[] antValues = getResources().getStringArray(R.array.ant_sensor_type_values);
+      for (String antValue : antValues) {
+        toRemove.add(sensorTypePreference.findIndexOfValue(antValue));
+      }
+
+      CharSequence[] entries = sensorTypePreference.getEntries();
+      CharSequence[] entryValues = sensorTypePreference.getEntryValues();
+
+      CharSequence[] filteredEntries = new CharSequence[entries.length - toRemove.size()];
+      CharSequence[] filteredEntryValues = new CharSequence[filteredEntries.length];
+      for (int i = 0, last = 0; i < entries.length; i++) {
+        if (!toRemove.contains(i)) {
+          filteredEntries[last] = entries[i];
+          filteredEntryValues[last++] = entryValues[i];
+        }
+      }
+
+      sensorTypePreference.setEntries(filteredEntries);
+      sensorTypePreference.setEntryValues(filteredEntryValues);
+
+      PreferenceScreen sensorOptionsScreen =
+          (PreferenceScreen) findPreference(getString(R.string.sensor_options_key));
+      sensorOptionsScreen.removePreference(findPreference(getString(R.string.ant_options_key)));
     }
   }
 
@@ -217,7 +257,7 @@ public class MyTracksSettings extends PreferenceActivity {
     final ListPreference splitFrequency =
         (ListPreference) findPreference(
             getString(R.string.split_frequency_key));
-    
+
     minRecordingDistance.setEntries(isMetric
         ? R.array.min_recording_distance_options
         : R.array.min_recording_distance_options_ft);

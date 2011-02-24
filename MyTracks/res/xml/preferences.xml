@@ -102,7 +102,8 @@ limitations under the License.
   </PreferenceScreen>
 
   <!-- Sensors -->
-  <PreferenceScreen android:title="@string/sensor_options">
+  <PreferenceScreen android:title="@string/sensor_options"
+      android:key="@string/sensor_options_key">
     <ListPreference android:key="@string/sensor_type_key"
         android:title="@string/settings_sensor_type"
         android:summary="@string/settings_sensor_type_summary"
@@ -122,20 +123,22 @@ limitations under the License.
                   android:summary="@string/bluetooth_pairing_summary"
                   android:persistent="false" />
     </PreferenceCategory>
-    
-    <com.google.android.apps.mytracks.AntPreference
-    	android:key="@string/ant_heart_rate_sensor_id_key"
-        android:title="@string/settings_heart_rate_ant_sensor_id"/>
 
+    <PreferenceCategory android:title="@string/ant_options"
+      android:key="@string/ant_options_key">
+	    <com.google.android.apps.mytracks.AntPreference
+	    	android:key="@string/ant_heart_rate_sensor_id_key"
+	        android:title="@string/settings_heart_rate_ant_sensor_id"/>
 <!--
-    <com.google.android.apps.mytracks.AntPreference
-    	android:key="@string/ant_power_sensor_id_key"
-        android:title="@string/settings_power_ant_sensor_id"/>
+	    <com.google.android.apps.mytracks.AntPreference
+	    	android:key="@string/ant_power_sensor_id_key"
+	        android:title="@string/settings_power_ant_sensor_id"/>
 -->
-    
-    <com.google.android.apps.mytracks.AntPreference
-    	android:key="@string/ant_srm_bridge_sensor_id_key"
-        android:title="@string/settings_srm_bridge_ant_sensor_id"/>
+
+	    <com.google.android.apps.mytracks.AntPreference
+	    	android:key="@string/ant_srm_bridge_sensor_id_key"
+	        android:title="@string/settings_srm_bridge_ant_sensor_id"/>
+    </PreferenceCategory>
   </PreferenceScreen>
 
   <!-- Sharing settings -->

@@ -28,7 +28,7 @@ import com.google.android.maps.mytracks.R;
 import com.google.wireless.gdata.client.GDataClient;
 import com.google.wireless.gdata.docs.DocumentsClient;
 import com.google.wireless.gdata.docs.SpreadsheetsClient;
-import com.google.wireless.gdata.maps.xml.XmlMapsGDataParserFactory;
+import com.google.wireless.gdata.docs.XmlDocsGDataParserFactory;
 import com.google.wireless.gdata.client.GDataServiceClient;
 
 import android.app.Activity;
@@ -99,6 +99,7 @@ public class SendToDocs {
   }
 
   private void doUpload() {
+    // TODO
     statusMessage = activity.getString(R.string.error_sending_to_fusiontables);
     success = false;
 
@@ -173,7 +174,7 @@ public class SendToDocs {
     try {
       androidClient = GDataClientFactory.getGDataClient(activity);
       SpreadsheetsClient gdataClient = new SpreadsheetsClient(androidClient,
-          new XmlMapsGDataParserFactory(new AndroidXmlParserFactory()));
+          new XmlDocsGDataParserFactory(new AndroidXmlParserFactory()));
       trixWrapper.setClient(gdataClient);
       Log.d(MyTracksConstants.TAG,
           "GData connection prepared: " + this.docListAuth);
@@ -184,7 +185,7 @@ public class SendToDocs {
       }
 
       DocumentsClient docsGdataClient = new DocumentsClient(androidClient,
-          new XmlMapsGDataParserFactory(new AndroidXmlParserFactory()));
+          new XmlDocsGDataParserFactory(new AndroidXmlParserFactory()));
       docListWrapper.setClient(docsGdataClient);
 
       // First try to find the spreadsheet:

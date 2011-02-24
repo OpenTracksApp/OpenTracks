@@ -133,7 +133,6 @@ limitations under the License.
   <string name="tracklist_all_tracks">Totes les rutes:</string>
   <string name="tracklist_this_track">Aquesta ruta</string>
   <string name="tracklist_share_track">Comparteix amb amics...</string>
-  <string name="tracklist_share_linkfusion">Un enllaç a Google Fusion Table</string>
   <string name="tracklist_share_gpx_file">Un fitxer GPX</string>
   <string name="tracklist_share_kml_file">Un fitxer KML</string>
   <string name="tracklist_share_csv_file">Un fitxer CSV</string>
