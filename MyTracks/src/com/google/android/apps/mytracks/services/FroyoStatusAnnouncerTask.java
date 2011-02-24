@@ -20,7 +20,6 @@ import static com.google.android.apps.mytracks.MyTracksConstants.TAG;
 
 import android.content.Context;
 import android.media.AudioManager;
-import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
 import android.util.Log;
@@ -33,15 +32,23 @@ import java.util.HashMap;
  *
  * @author Sandor Dornbush
  */
-public class FroyoStatusAnnouncerTask
-    extends StatusAnnouncerTask
-    implements OnUtteranceCompletedListener, OnAudioFocusChangeListener {
-  
-  private AudioManager audioManager;
+public class FroyoStatusAnnouncerTask extends StatusAnnouncerTask {
   private final static HashMap<String, String> SPEECH_PARAMS = new HashMap<String, String>();
   static {
     SPEECH_PARAMS.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "not_used");
   }
+
+  private final AudioManager audioManager;
+  private final OnUtteranceCompletedListener utteranceListener =
+      new OnUtteranceCompletedListener() {
+        @Override
+        public void onUtteranceCompleted(String utteranceId) {
+          if (audioManager != null) {
+            Log.d(TAG, "FroyoStatusAnnouncerTask: Abandoning audio focus.");
+            audioManager.abandonAudioFocus(null);
+          }
+        }
+      };
 
   public FroyoStatusAnnouncerTask(Context context) {
     super(context);
@@ -52,30 +59,20 @@ public class FroyoStatusAnnouncerTask
   protected void onTtsInit(int status) {
     super.onTtsInit(status);
     if (status == TextToSpeech.SUCCESS) {
-      tts.setOnUtteranceCompletedListener(this);
+      tts.setOnUtteranceCompletedListener(utteranceListener);
     }
   }
 
   @Override
   protected void speakAnnouncment(String announcement) {
-    int result = audioManager.requestAudioFocus(this,
-          TextToSpeech.Engine.DEFAULT_STREAM, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
+    int result = audioManager.requestAudioFocus(null,
+          TextToSpeech.Engine.DEFAULT_STREAM,
+          AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
     if (result == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
       Log.w(TAG, "FroyoStatusAnnouncerTask: Request audio focus failed.");
     }
     // We don't care about the utterance id.
     // It is supplied here to force onUtteranceCompleted to be called.
     tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, SPEECH_PARAMS);
-  }
-
-  @Override
-  public void onUtteranceCompleted(String utteranceId) {
-    Log.d(TAG, "FroyoStatusAnnouncerTask: Abandoning audio focus.");
-    audioManager.abandonAudioFocus(this);
-  }
-
-  @Override
-  public void onAudioFocusChange(int focusChange) {
-    // We don't care.
   }
 }

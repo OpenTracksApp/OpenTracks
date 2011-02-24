@@ -64,6 +64,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -598,9 +599,9 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       case MyTracksConstants.SHARE_LINK: {
         Track selectedTrack = providerUtils.getTrack(selectedTrackId);
         if (selectedTrack != null) {
-          if (!selectedTrack.getMapId().isEmpty()) {
+          if (!TextUtils.isEmpty(selectedTrack.getMapId())) {
             shareLinkToMap(MapsService.buildMapUrl(selectedTrack.getMapId()));
-          } else if (!selectedTrack.getTableId().isEmpty()) {
+          } else if (!TextUtils.isEmpty(selectedTrack.getTableId())) {
             shareLinkToMap(getFusionTablesUrl(selectedTrackId));
           } else {
             shareRequested = true;
