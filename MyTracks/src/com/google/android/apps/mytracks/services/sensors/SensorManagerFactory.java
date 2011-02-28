@@ -1,12 +1,12 @@
 /*
  * Copyright 2009 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -15,7 +15,8 @@
  */
 package com.google.android.apps.mytracks.services.sensors;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import static com.google.android.apps.mytracks.MyTracksConstants.TAG;
+
 import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.maps.mytracks.R;
 
@@ -29,9 +30,7 @@ import android.util.Log;
  * @author Sandor Dornbush
  */
 public class SensorManagerFactory {
-
-  private SensorManagerFactory() {
-  }
+  private SensorManagerFactory() {}
 
   /**
    * Get a new sensor manager.
@@ -44,9 +43,9 @@ public class SensorManagerFactory {
     if (prefs == null) {
       return null;
     }
-    
+
     String sensor = prefs.getString(context.getString(R.string.sensor_type_key), null);
-    Log.i(MyTracksConstants.TAG, "Creating sensor of type: " + sensor);
+    Log.i(TAG, "Creating sensor of type: " + sensor);
 
     if (sensor == null) {
       return null;
@@ -57,7 +56,7 @@ public class SensorManagerFactory {
     } else if (sensor.equals(context.getString(R.string.zephyr_sensor_type))) {
       return new ZephyrSensorManager(context);
     } else  {
-      Log.w(MyTracksConstants.TAG, "Unable to find sensor type: " + sensor);
+      Log.w(TAG, "Unable to find sensor type: " + sensor);
       return null;
     }
   }
