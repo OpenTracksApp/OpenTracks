@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -25,9 +25,10 @@ import android.location.Location;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.text.DecimalFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 /**
@@ -36,22 +37,33 @@ import java.util.TimeZone;
  * @author Sandor Dornbush
  */
 public class GpxTrackWriter implements TrackFormatWriter {
+  private static final String TIMESTAMP_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
-  private static final int LATLONG_FORMAT = Location.FORMAT_DEGREES;
-  private static final DecimalFormat ELEVATION_FORMATTER =
-      new DecimalFormat("#.#");
-  private static final SimpleDateFormat TIMESTAMP_FORMATTER =
-      new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-  static {
-    TIMESTAMP_FORMATTER.setTimeZone(TimeZone.getTimeZone("UTC"));
-  }
-
+  private final NumberFormat elevationFormatter;
+  private final NumberFormat coordinateFormatter;
+  private final SimpleDateFormat timestampFormatter;
   private PrintWriter pw = null;
   private Track track;
 
+  public GpxTrackWriter() {
+    // GPX readers expect to see fractional numbers with US-style punctuation.
+    // That is, they want periods for decimal points, rather than commas.
+    elevationFormatter = NumberFormat.getInstance(Locale.US);
+    elevationFormatter.setMaximumFractionDigits(1);
+    elevationFormatter.setGroupingUsed(false);
+
+    coordinateFormatter = NumberFormat.getInstance(Locale.US);
+    coordinateFormatter.setMaximumFractionDigits(5);
+    coordinateFormatter.setMaximumIntegerDigits(3);
+    coordinateFormatter.setGroupingUsed(false);
+
+    timestampFormatter = new SimpleDateFormat(TIMESTAMP_FORMAT);
+    timestampFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+  }
+
   private String formatLocation(Location l) {
-    return "lat=\"" + Location.convert(l.getLatitude(), LATLONG_FORMAT)
-      + "\" lon=\"" + Location.convert(l.getLongitude(), LATLONG_FORMAT) + "\"";
+    return "lat=\"" + coordinateFormatter.format(l.getLatitude())
+      + "\" lon=\"" + coordinateFormatter.format(l.getLongitude()) + "\"";
   }
 
   @Override
@@ -129,8 +141,8 @@ public class GpxTrackWriter implements TrackFormatWriter {
     if (pw != null) {
       pw.println("<trkpt " + formatLocation(l) + ">");
       Date d = new Date(l.getTime());
-      pw.println("<ele>" + ELEVATION_FORMATTER.format(l.getAltitude()) + "</ele>");
-      pw.println("<time>" + TIMESTAMP_FORMATTER.format(d) + "</time>");
+      pw.println("<ele>" + elevationFormatter.format(l.getAltitude()) + "</ele>");
+      pw.println("<time>" + timestampFormatter.format(d) + "</time>");
       pw.println("</trkpt>");
     }
   }
@@ -149,8 +161,8 @@ public class GpxTrackWriter implements TrackFormatWriter {
       Location l = waypoint.getLocation();
       if (l != null) {
         pw.println("<wpt " + formatLocation(l) + ">");
-        pw.println("<ele>" + ELEVATION_FORMATTER.format(l.getAltitude()) + "</ele>");
-        pw.println("<time>" + TIMESTAMP_FORMATTER.format(l.getTime()) + "</time>");
+        pw.println("<ele>" + elevationFormatter.format(l.getAltitude()) + "</ele>");
+        pw.println("<time>" + timestampFormatter.format(l.getTime()) + "</time>");
         pw.println("<name>" + StringUtils.stringAsCData(waypoint.getName())
             + "</name>");
         pw.println("<desc>"
