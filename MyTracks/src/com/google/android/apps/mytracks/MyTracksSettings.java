@@ -354,16 +354,32 @@ public class MyTracksSettings extends PreferenceActivity {
 
   /** Callback for when user confirms resetting all settings. */
   private void onResetPreferencesConfirmed() {
-    Log.i(TAG, "Resetting all settings");
+    // Change preferences in a separate thread.
+    new Thread() {
+      @Override
+      public void run() {
+        Log.i(TAG, "Resetting all settings");
 
-    // Actually wipe preferences.
-    preferences.edit().clear().commit();
+        // Actually wipe preferences (and save synchronously).
+        preferences.edit().clear().commit();
 
-    Toast.makeText(this, R.string.settings_reset_done, Toast.LENGTH_SHORT).show();
+        // Give UI feedback in the UI thread.
+        runOnUiThread(new Runnable() {
+          @Override
+          public void run() {
+            // Give feedback to the user.
+            Toast.makeText(
+                MyTracksSettings.this,
+                R.string.settings_reset_done,
+                Toast.LENGTH_SHORT).show();
 
-    // Restart the settings activity so all changes are loaded.
-    Intent intent = getIntent();
-    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    startActivity(intent);
+            // Restart the settings activity so all changes are loaded.
+            Intent intent = getIntent();
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+          }
+        });
+      }
+    }.start();
   }
 }
