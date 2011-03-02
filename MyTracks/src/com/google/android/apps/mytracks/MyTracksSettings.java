@@ -15,10 +15,7 @@
  */
 package com.google.android.apps.mytracks;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import static com.google.android.apps.mytracks.MyTracksConstants.TAG;
 
 import com.google.android.apps.mytracks.io.backup.BackupActivityHelper;
 import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
@@ -28,18 +25,28 @@ import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.BluetoothDeviceUtils;
 import com.google.android.maps.mytracks.R;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
+import android.util.Log;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * An activity that let's the user see and edit the settings.
@@ -119,6 +126,16 @@ public class MyTracksSettings extends PreferenceActivity {
       announcementFrequency.setSummary(
           R.string.settings_not_available_summary);
     }
+
+    // Hook up action for resetting all settings
+    Preference resetPreference = findPreference(getString(R.string.reset_key));
+    resetPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+      @Override
+      public boolean onPreferenceClick(Preference arg0) {
+        onResetPreferencesClick();
+        return true;
+      }
+    });
   }
 
   private void customizeSensorOptionsPreferences() {
@@ -177,19 +194,24 @@ public class MyTracksSettings extends PreferenceActivity {
         findPreference(getString(R.string.backup_to_sd_key));
     Preference restoreNowPreference =
         findPreference(getString(R.string.restore_from_sd_key));
+    Preference resetPreference = findPreference(getString(R.string.reset_key));
 
-    // If recording, disable backup/restore
+    // If recording, disable backup/restore/reset
     // (we don't want to get to inconsistent states)
     boolean recording =
         preferences.getLong(getString(R.string.recording_track_key), -1) != -1;
     backupNowPreference.setEnabled(!recording);
     restoreNowPreference.setEnabled(!recording);
+    resetPreference.setEnabled(!recording);
     backupNowPreference.setSummary(
-        recording ? R.string.settings_no_backup_while_recording
+        recording ? R.string.settings_not_while_recording
                   : R.string.settings_backup_to_sd_summary);
     restoreNowPreference.setSummary(
-        recording ? R.string.settings_no_backup_while_recording
+        recording ? R.string.settings_not_while_recording
                   : R.string.settings_restore_from_sd_summary);
+    resetPreference.setSummary(
+        recording ? R.string.settings_not_while_recording
+                  : R.string.settings_reset_summary);
 
     // Add actions to the backup preferences
     backupNowPreference.setOnPreferenceClickListener(
@@ -310,5 +332,38 @@ public class MyTracksSettings extends PreferenceActivity {
         (ListPreference) findPreference(getString(R.string.bluetooth_sensor_key));
     devicesPreference.setEntryValues(entryValuesArray);
     devicesPreference.setEntries(entriesArray);
+  }
+
+  /** Callback for when user asks to reset all settings. */
+  private void onResetPreferencesClick() {
+    AlertDialog dialog = new AlertDialog.Builder(this)
+        .setCancelable(true)
+        .setTitle(R.string.settings_reset)
+        .setMessage(R.string.settings_reset_dialog_message)
+        .setPositiveButton(android.R.string.ok,
+            new OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int button) {
+                onResetPreferencesConfirmed();
+              }
+            })
+        .setNegativeButton(android.R.string.cancel, null)
+        .create();
+    dialog.show();
+  }
+
+  /** Callback for when user confirms resetting all settings. */
+  private void onResetPreferencesConfirmed() {
+    Log.i(TAG, "Resetting all settings");
+
+    // Actually wipe preferences.
+    preferences.edit().clear().commit();
+
+    Toast.makeText(this, R.string.settings_reset_done, Toast.LENGTH_SHORT).show();
+
+    // Restart the settings activity so all changes are loaded.
+    Intent intent = getIntent();
+    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    startActivity(intent);
   }
 }

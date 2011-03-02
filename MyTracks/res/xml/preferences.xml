@@ -173,4 +173,10 @@ limitations under the License.
           android:persistent="false" />
     </PreferenceCategory>
   </PreferenceScreen>
+
+  <!-- Reset to defaults -->
+  <Preference android:title="@string/settings_reset"
+              android:key="@string/reset_key"
+              android:summary="@string/settings_reset_summary"
+              android:persistent="false" />
 </PreferenceScreen>

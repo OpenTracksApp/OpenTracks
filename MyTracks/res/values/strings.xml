@@ -194,6 +194,7 @@ limitations under the License.
   <string name="settings_sharing">Sharing</string>
 
   <string name="settings_not_available_summary">Not available in your version of Android</string>
+  <string name="settings_not_while_recording">Not available while recording a track</string>
 
   <string name="settings_announcement_frequency">Announcement frequency</string>
   <string name="settings_announcement_frequency_summary">Minimum time between two voice announcements</string>
@@ -236,6 +237,11 @@ limitations under the License.
   <string name="settings_timestamp_track_name_summary_on">The default track name will be the date and time at the start of the track</string>
   <string name="settings_timestamp_track_name_summary_off">Track names will have numbers which increment for each new track.</string>
 
+  <string name="settings_reset">Reset to defaults</string>
+  <string name="settings_reset_summary">Revert all your settings to the default values</string>
+  <string name="settings_reset_dialog_message">All your settings will be erased and reverted to the default values. Saved tracks will be preserved. Are you sure?</string>
+  <string name="settings_reset_done">All settings have been reverted to their defaults.</string>
+
   <string name="pace_label">Pace</string>
 
   <string name="eclair_required">Only supported in Android 2.0 or above</string>
@@ -257,7 +263,6 @@ limitations under the License.
   <string name="settings_backup_to_sd_summary">Write a full copy of all your tracks and settings to the SD card</string>
   <string name="settings_restore_from_sd">Restore now</string>
   <string name="settings_restore_from_sd_summary">Restore all tracks and settings from the SD card</string>
-  <string name="settings_no_backup_while_recording">Cannot manipulate backups while recording a track.</string>
 
   <string name="restore_overwrites_warning">Restoring a backup from the SD card will OVERWRITE all your current tracks and settings. Are you sure?</string>
   <string name="select_backup_to_restore">Select the backup to restore</string>
