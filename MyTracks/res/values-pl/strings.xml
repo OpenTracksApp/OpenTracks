@@ -217,7 +217,6 @@ limitations under the License.
   <string name="settings_backup_to_sd_summary">Tworzy kopię zapasową wszystkich tras i ustawień i zapisuje je na karcie SD</string>
   <string name="settings_restore_from_sd">Odtwórz z kopii</string>
   <string name="settings_restore_from_sd_summary">Odtwarza wszystkie trasy i ustawienia z kopii zapasowej z karty SD</string>
-  <string name="settings_no_backup_while_recording">Nie można tworzyć/odtwarzać kopii zapasowej podczas rejestrowania trasy.</string>
 
   <!-- Backups -->
   <string name="restore_overwrites_warning">Odtworzenie z kopii zapasowej z karty SD zastąpi wszystkie bieżące trasy i ustawienia. Jesteś tego pewien?</string>

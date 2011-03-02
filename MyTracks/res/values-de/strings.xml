@@ -228,7 +228,6 @@ limitations under the License.
   <string name="settings_backup_to_sd_summary">Eine Kopie aller Deiner Tracks und Einstellungen auf die SD-Karte schreiben</string> 
   <string name="settings_restore_from_sd">Jetzt wiederherstellen</string> 
   <string name="settings_restore_from_sd_summary">Alle Tracks und Einstellungen von der SD-Karte holen.</string> 
-  <string name="settings_no_backup_while_recording">Während ein Track aufgezeichnet wird, kann nicht mit der Datensicherung gearbeitet werden.</string> 
  
   <string name="restore_overwrites_warning">Eine Wiederherstellung von der SD-Karte ÜBERSCHREIBT alle vorhandenen Tracks und Einstellungen. Willst Du das wirklich?</string> 
   <string name="select_backup_to_restore">Wähle die wiederherzustellende Datensicherung aus</string> 
