@@ -132,7 +132,6 @@ limitations under the License.
   <string name="tracklist_all_tracks">全部轨迹:</string>
   <string name="tracklist_this_track">此轨迹</string>
   <string name="tracklist_share_track">与朋友分享...</string>
-  <string name="tracklist_share_linkfusion">链接到 Google Fusion Table</string>
   <string name="tracklist_share_gpx_file">GPX 文件</string>
   <string name="tracklist_share_kml_file">KML 文件</string>
   <string name="tracklist_share_csv_file">CSV 文件</string>

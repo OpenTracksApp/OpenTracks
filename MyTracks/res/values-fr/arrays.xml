@@ -201,7 +201,7 @@ limitations under the License.
     <item>kayak</item>
     <item>bateau à moteur</item>
     <item>ferry</item>
-    <item>boat télécommandé</item>
+    <item>bateau télécommandé</item>
     <item>surf</item>
     <item>planche à voile</item>
     <item>kite surf</item>
@@ -304,4 +304,11 @@ limitations under the License.
     <item>point de passage</item>
   </array>
 
+  <array name="sensor_type_options">
+    <item>Aucun</item>
+    <item>Capteur ANT+</item>
+    <item>Pont SRM ANT+</item>
+    <item>Bluetooth Zephyr</item>
+  </array>
+ 
 </resources>

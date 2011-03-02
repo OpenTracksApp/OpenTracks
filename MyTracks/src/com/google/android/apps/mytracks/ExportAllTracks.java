@@ -20,18 +20,17 @@ import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.TrackWriter;
 import com.google.android.apps.mytracks.io.TrackWriterFactory;
 import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
+import com.google.android.apps.mytracks.util.MyTracksUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
 import android.widget.Toast;
@@ -121,7 +120,7 @@ public class ExportAllTracks {
     	  prefs.getLong(activity.getString(R.string.recording_track_key), -1);
     }
     if (recordingTrackId != -1) {
-      acquireWakeLock();
+      wakeLock = MyTracksUtils.acquireWakeLock(activity, wakeLock);
     }
 
     // Now we can safely export everything.
@@ -209,42 +208,6 @@ public class ExportAllTracks {
           progress = null;
         }
       }
-    }
-  }
-
-  /**
-   * Tries to acquire a partial wake lock if not already acquired. Logs errors
-   * and gives up trying in case the wake lock cannot be acquired.
-   */
-  private void acquireWakeLock() {
-    Log.i(MyTracksConstants.TAG, "ExportAllTracks: Aquiring wake lock.");
-    try {
-      PowerManager pm =
-          (PowerManager) activity.getSystemService(Context.POWER_SERVICE);
-      if (pm == null) {
-        Log.e(MyTracksConstants.TAG,
-            "ExportAllTracks: Power manager not found!");
-        return;
-      }
-      if (wakeLock == null) {
-        wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
-            MyTracksConstants.TAG);
-        if (wakeLock == null) {
-          Log.e(MyTracksConstants.TAG,
-              "ExportAllTracks: Could not create wake lock (null).");
-          return;
-        }
-      }
-      if (!wakeLock.isHeld()) {
-        wakeLock.acquire();
-        if (!wakeLock.isHeld()) {
-          Log.e(MyTracksConstants.TAG,
-              "ExportAllTracks: Could not acquire wake lock.");
-        }
-      }
-    } catch (RuntimeException e) {
-      Log.e(MyTracksConstants.TAG,
-          "ExportAllTracks: Caught unexpected exception: " + e.getMessage(), e);
     }
   }
 }

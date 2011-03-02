@@ -59,7 +59,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
   /**
    * The interface to the text to speech engine.
    */
-  private TextToSpeech tts;
+  protected TextToSpeech tts;
 
   /**
    * The response received from the TTS engine after initialization.
@@ -98,7 +98,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
   /**
    * Called when the TTS engine is initialized.
    */
-  private void onTtsInit(int status) {
+  protected void onTtsInit(int status) {
     Log.i(MyTracksConstants.TAG, "TrackRecordingService.TTS init: " + status);
     this.ready = status == TextToSpeech.SUCCESS;
 
@@ -146,6 +146,10 @@ public class StatusAnnouncerTask implements PeriodicTask {
 
     String announcement = getAnnouncement(service.getTripStatistics());
     Log.d(MyTracksConstants.TAG, "Announcement: " + announcement);
+    speakAnnouncment(announcement);
+  }
+
+  protected void speakAnnouncment(String announcement) {
     tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, null);
   }
 

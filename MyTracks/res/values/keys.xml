@@ -36,6 +36,7 @@ limitations under the License.
   <string name="send_stats_and_points_key">sendStatsAndPoints</string>
   <string name="send_to_docs_key">sendToDocs</string>
   <string name="send_to_my_maps_key">sendToMyMaps</string>
+  <string name="send_to_fusion_tables_key">sendToFusionTables</string>
   <string name="sensor_type_key">sensorType</string>
   <string name="share_url_only_key">shareUrlOnly</string>
   <string name="split_frequency_key">splitFrequency</string>
@@ -49,4 +50,8 @@ limitations under the License.
   <!-- Keys for non-persisted preferences - DO NOT TRANSLATE -->
   <string name="backup_to_sd_key">backupToSd</string>
   <string name="restore_from_sd_key">restoreFromSd</string>
+
+  <!-- Inoperative keys used for the location of preferences items -->
+  <string name="sensor_options_key">sensorOptions</string>
+  <string name="ant_options_key">antOptions</string>
 </resources>

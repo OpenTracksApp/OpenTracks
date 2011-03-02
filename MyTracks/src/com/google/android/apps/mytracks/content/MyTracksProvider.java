@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks.content;
 
 import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.util.ApiFeatures;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -371,8 +372,11 @@ public class MyTracksProvider extends ContentProvider {
       throw new IllegalArgumentException("Unknown URL " + url);
     }
 
-    Log.i(MyTracksConstants.TAG,
-        "Build query: " + qb.buildQuery(projection, selection, selectionArgs, null, null, sortOrder, null));
+    if (ApiFeatures.getInstance().canReuseSQLiteQueryBuilder()) {
+      Log.i(MyTracksConstants.TAG,
+          "Build query: " + qb.buildQuery(projection, selection, selectionArgs, 
+          null, null, sortOrder, null));
+    }
     Cursor c = qb.query(db, projection, selection, selectionArgs, null, null,
         sortOrder);
     c.setNotificationUri(getContext().getContentResolver(), url);

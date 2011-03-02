@@ -229,7 +229,10 @@ public class GpxImporter extends DefaultHandler {
   @Override
   public void endElement(String uri, String localName, String name)
       throws SAXException {
-    if (!isInTrackElement) { return; }
+    if (!isInTrackElement) {
+      content = null;
+      return;
+    }
 
     // process these elements only as sub-elements of track
     if (localName.equals(TAG_TRACK_POINT)) {
@@ -360,6 +363,10 @@ public class GpxImporter extends DefaultHandler {
    */
   private void onTrackPointElementEnd() throws SAXException {
     if (MyTracksUtils.isValidLocation(location)) {
+      if (statsBuilder == null) {
+        // first point did not have a time, start stats builder without it
+        statsBuilder = new TripStatisticsBuilder(0);
+      }
       statsBuilder.addLocation(location, location.getTime());
 
       // insert in db
@@ -455,18 +462,18 @@ public class GpxImporter extends DefaultHandler {
 
       // check for negative time change
       if (timeDifference < 0) {
-        String msg = createErrorMessage("Found negative time change.");
-        throw new SAXException(msg);
-      }
+        Log.w(MyTracksConstants.TAG, "Found negative time change.");
+      } else {
 
-      // We don't have a speed and bearing in GPX, make something up from
-      // the last two points.
-      // TODO GPS points tend to have some inherent imprecision,
-      // speed and bearing will likely be off, so the statistics for things like
-      // max speed will also be off.
-      float speed = location.distanceTo(lastLocation) * 1000.0f / timeDifference;
-      location.setSpeed(speed);
-      location.setBearing(lastSegmentLocation.bearingTo(location));
+        // We don't have a speed and bearing in GPX, make something up from
+        // the last two points.
+        // TODO GPS points tend to have some inherent imprecision,
+        // speed and bearing will likely be off, so the statistics for things like
+        // max speed will also be off.
+        float speed = location.distanceTo(lastLocation) * 1000.0f / timeDifference;
+        location.setSpeed(speed);
+        location.setBearing(lastSegmentLocation.bearingTo(location));
+      }
     }
 
     // Fill in the time

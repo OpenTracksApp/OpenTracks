@@ -15,13 +15,14 @@
  */
 package com.google.android.apps.mytracks.services.sensors;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import static com.google.android.apps.mytracks.MyTracksConstants.TAG;
+
+import com.google.android.apps.mytracks.content.Sensor;
 
 import android.util.Log;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
-import com.google.android.apps.mytracks.content.Sensor;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Manage the connection to a sensor.
@@ -41,7 +42,7 @@ public abstract class SensorManager {
   public static final int RETRY_PERIOD = 30000;
 
   private Sensor.SensorState sensorState = Sensor.SensorState.NONE;
-  
+
   private long sensorStateTimestamp = 0;
 
   /**
@@ -50,19 +51,17 @@ public abstract class SensorManager {
   private TimerTask checkSensorManager = new TimerTask() {
     @Override
     public void run() {
-      Log.i(MyTracksConstants.TAG,
-          "SensorManager state: " + getSensorState());
+      Log.i(TAG, "SensorManager state: " + getSensorState());
       switch (getSensorState()) {
         case CONNECTING:
           long age = System.currentTimeMillis() - getSensorStateTimestamp();
           if (age > 2 * RETRY_PERIOD) {
-            Log.i(MyTracksConstants.TAG, "Retrying connecting SensorManager.");
+            Log.i(TAG, "Retrying connecting SensorManager.");
             setupChannel();
           }
           break;
         case DISCONNECTED:
-          Log.i(MyTracksConstants.TAG,
-              "Re-registering disconnected SensoManager.");
+          Log.i(TAG, "Re-registering disconnected SensorManager.");
           setupChannel();
           break;
       }
@@ -89,7 +88,11 @@ public abstract class SensorManager {
     timer.schedule(checkSensorManager, RETRY_PERIOD, RETRY_PERIOD);
   }
 
-  public abstract void setupChannel();
+  /**
+   * This method is used to set up any necessary connections to underlying
+   * sensor hardware.
+   */
+  protected abstract void setupChannel();
 
   public void shutdown() {
     timer.cancel();

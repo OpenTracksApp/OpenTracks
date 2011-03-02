@@ -22,12 +22,15 @@ package com.dsi.ant;
  */
 public interface AntInterfaceIntent {
 	
-	public static final String STATUS      = "com.dsi.ant.rx.intent.STATUS";	
-	public static final String ANT_MESSAGE = "com.dsi.ant.intent.ANT_MESSAGE";
+	public static final String STATUS                    = "com.dsi.ant.rx.intent.STATUS";	
+	public static final String ANT_MESSAGE               = "com.dsi.ant.intent.ANT_MESSAGE";
+	public static final String ANT_INTERFACE_CLAIMED_PID = "com.dsi.ant.intent.ANT_INTERFACE_CLAIMED_PID";
 
 	public static final String ANT_ENABLED_ACTION    = "com.dsi.ant.intent.action.ANT_ENABLED";
 	public static final String ANT_DISABLED_ACTION   = "com.dsi.ant.intent.action.ANT_DISABLED";
 	public static final String ANT_RESET_ACTION      = "com.dsi.ant.intent.action.ANT_RESET";
+	
+	public static final String ANT_INTERFACE_CLAIMED_ACTION = "com.dsi.ant.intent.action.ANT_INTERFACE_CLAIMED_ACTION";
 	
 	public static final String ANT_RX_MESSAGE_ACTION = "com.dsi.ant.intent.action.ANT_RX_MESSAGE_ACTION";
 

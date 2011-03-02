@@ -33,12 +33,7 @@ public class ApiFeatures {
    */
   public static final int ANDROID_API_LEVEL = Integer.parseInt(
       Build.VERSION.SDK);
-  
-  private static final String PLATFORM_ADAPTER_GINGERBREAD =
-    "com.google.android.apps.mytracks.util.GingerbreadPlatformAdapter";
-  private static final String PLATFORM_ADAPTER_ECLAIR =
-    "com.google.android.apps.mytracks.util.EclairPlatformAdapter";
-  
+
   private static ApiFeatures instance;
   
   /**
@@ -67,29 +62,17 @@ public class ApiFeatures {
    * Allow subclasses for mocking, but no direct instantiation.
    */
   protected ApiFeatures() {
+    // It is safe to import unsupported classes as long as we only actually
+    // load the class when supported.
     if (getApiLevel() >= 9) {
-      apiPlatformAdapter = createPlatformAdapter(PLATFORM_ADAPTER_GINGERBREAD);
+      apiPlatformAdapter = new GingerbreadPlatformAdapter();
     } else if (getApiLevel() >= 5) {
-      apiPlatformAdapter = createPlatformAdapter(PLATFORM_ADAPTER_ECLAIR);
+      apiPlatformAdapter = new EclairPlatformAdapter();
     } else {
-      // Cupcake adapter is always supported, so it's safe to do static linkage.
       apiPlatformAdapter = new CupcakePlatformAdapter();
     }
-    
+
     Log.i(MyTracksConstants.TAG, "Using platform adapter " + apiPlatformAdapter.getClass());
-  }
-  
-  private static ApiPlatformAdapter createPlatformAdapter(String className) {
-    try {
-      Class<?> clazz = Class.forName(className);
-      return (ApiPlatformAdapter) clazz.newInstance();
-    } catch (ClassNotFoundException e) {
-      throw new RuntimeException("ApiFeatures: Unable to find " + className, e);
-    } catch (InstantiationException e) {
-      throw new RuntimeException("ApiFeatures: Unable to instantiate " + className, e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException("ApiFeatures: Unable to access " + className, e);
-    }
   }
 
   public ApiPlatformAdapter getApiPlatformAdapter() {
@@ -122,6 +105,22 @@ public class ApiFeatures {
 
   public boolean hasStrictMode() {
     return getApiLevel() >= 9;
+  }
+  
+  public boolean isAudioFocusSupported() {
+    return getApiLevel() >= 8;
+  }
+  
+  /**
+   * There's a bug (#1587) in Cupcake and Donut which prevents you from
+   * using a SQLiteQueryBuilder twice.  That is, if you call buildQuery
+   * on a given instance (to log the statement for debugging), and then
+   * call query on the same instance to make it actually do the query,
+   * it'll regenerate the query for the second call, and will screw it
+   * up.  Specifically, it'll add extra parens which don't belong.
+   */
+  public boolean canReuseSQLiteQueryBuilder() {
+    return getApiLevel() > 4;
   }
 
   // Visible for testing.

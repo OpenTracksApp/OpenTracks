@@ -88,7 +88,10 @@ public class DialogManager {
         builder.setNeutralButton(activity.getString(R.string.share_track),
             new DialogInterface.OnClickListener() {
               public void onClick(DialogInterface dialog, int which) {
-                activity.shareLinkToFusionTable(activity.sendToTrackId);
+                SendToGoogleDialog sendToGoogleDialog = getSendToGoogleDialog();
+                final boolean sentToMyMaps = sendToGoogleDialog.getSendToMyMaps();
+                final boolean sentToFusionTables = sendToGoogleDialog.getSendToFusionTables();
+                activity.shareLinkToMap(sentToMyMaps, sentToFusionTables);
                 dialog.dismiss();
               }
             });
@@ -119,9 +122,11 @@ public class DialogManager {
         sendToGoogleResultDialog.setIcon(success
             ? android.R.drawable.ic_dialog_info
             : android.R.drawable.ic_dialog_alert);
-        sendToGoogleResultDialog.setMessage(activity.getFusionTablesResultMessage());
+        sendToGoogleResultDialog.setMessage(activity.getSendToGoogleResultMessage());
 
-        boolean canShare = activity.getSendToFusionTablesTableId() != null;
+        boolean canShare =
+            activity.getSendToFusionTablesTableId() != null &&
+            activity.getSendToMyMapsMapId() != null;
         View share =
             sendToGoogleResultDialog.findViewById(android.R.id.button3);
         if (share != null) {

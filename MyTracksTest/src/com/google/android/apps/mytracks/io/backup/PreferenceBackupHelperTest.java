@@ -20,6 +20,7 @@ import android.content.SharedPreferences.Editor;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import junit.framework.TestCase;
 
@@ -81,6 +82,11 @@ public class PreferenceBackupHelperTest extends TestCase {
       return put(key, value);
     }
 
+    @Override
+    public Editor putStringSet(String key, Set<String> value) {
+      return put(key, value);
+    }
+
     private <T> Editor put(String key, T value) {
       newPreferences.put(key, value);
       return this;
@@ -134,6 +140,11 @@ public class PreferenceBackupHelperTest extends TestCase {
 
     @Override
     public String getString(String key, String defValue) {
+      return get(key, defValue);
+    }
+
+    @Override
+    public Set<String> getStringSet(String key, Set<String> defValue) {
       return get(key, defValue);
     }
 

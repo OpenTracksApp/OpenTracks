@@ -50,6 +50,12 @@ limitations under the License.
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_weight="1"/>
+    <Button android:id="@+id/tracklist_btn_import_all"
+      android:layout_width="wrap_content"
+      android:layout_height="48dip"
+      android:layout_gravity="left|top"
+      android:text="@string/tracklist_btn_import_all"
+      android:textSize="14dip"/>
     <Button android:id="@+id/tracklist_btn_export_all"
       android:layout_width="wrap_content"
       android:layout_height="48dip"

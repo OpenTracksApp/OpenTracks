@@ -201,7 +201,10 @@ public class MyTracksMap extends MapActivity
             MyTracksConstants.MAX_DISPLAYED_WAYPOINTS_POINTS);
         if (cursor != null && cursor.moveToFirst()) {
           do {
-            mapOverlay.addWaypoint(providerUtils.createWaypoint(cursor));
+            Waypoint waypoint = providerUtils.createWaypoint(cursor);
+            if (MyTracksUtils.isValidLocation(waypoint.getLocation())) {
+              mapOverlay.addWaypoint(waypoint);
+            }
           } while (cursor.moveToNext());
         }
       } catch (RuntimeException e) {
@@ -789,7 +792,7 @@ public class MyTracksMap extends MapActivity
             SubMenu share = menu.addSubMenu(0, MyTracksConstants.MENU_SHARE, 0,
                 R.string.tracklist_share_track);
             share.add(0, MyTracksConstants.MENU_SHARE_LINK, 0,
-                R.string.tracklist_share_linkfusion);
+                R.string.tracklist_share_link);
             share.add(0, MyTracksConstants.MENU_SHARE_GPX_FILE, 0,
                 R.string.tracklist_share_gpx_file);
             share.add(0, MyTracksConstants.MENU_SHARE_KML_FILE, 0,

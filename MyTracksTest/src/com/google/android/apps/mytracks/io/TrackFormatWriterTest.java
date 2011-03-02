@@ -81,7 +81,7 @@ public abstract class TrackFormatWriterTest extends AndroidTestCase {
   protected void populateLocations(MyTracksLocation... locs) {
     for (int i = 0; i < locs.length; i++) {
       MyTracksLocation loc = locs[i];
-      loc.setAltitude(i * 1000);
+      loc.setAltitude(i * 5000000);
       loc.setLatitude(i);
       loc.setLongitude(-i);
       loc.setTime(10000000 + i * 1000);

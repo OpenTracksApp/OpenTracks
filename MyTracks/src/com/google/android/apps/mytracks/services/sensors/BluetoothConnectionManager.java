@@ -16,7 +16,8 @@
 
 package com.google.android.apps.mytracks.services.sensors;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import static com.google.android.apps.mytracks.MyTracksConstants.TAG;
+
 import com.google.android.apps.mytracks.content.Sensor;
 
 import android.bluetooth.BluetoothAdapter;
@@ -85,7 +86,7 @@ public class BluetoothConnectionManager {
    */
   private synchronized void setState(Sensor.SensorState state) {
     // TODO pretty print this.
-    Log.d(MyTracksConstants.TAG, "setState(" + state + ")");
+    Log.d(TAG, "setState(" + state + ")");
     this.state = state;
 
     // Give the new state to the Handler so the UI Activity can update
@@ -104,7 +105,7 @@ public class BluetoothConnectionManager {
    * in listening (server) mode. Called by the Activity onResume()
    */
   public synchronized void start() {
-    Log.d(MyTracksConstants.TAG, "BluetoothConnectionManager.start()");
+    Log.d(TAG, "BluetoothConnectionManager.start()");
 
     // Cancel any thread attempting to make a connection
     if (connectThread != null) {
@@ -127,7 +128,7 @@ public class BluetoothConnectionManager {
    * @param device The BluetoothDevice to connect
    */
   public synchronized void connect(BluetoothDevice device) {
-    Log.d(MyTracksConstants.TAG, "connect to: " + device);
+    Log.d(TAG, "connect to: " + device);
 
     // Cancel any thread attempting to make a connection
     if (state == Sensor.SensorState.CONNECTING) {
@@ -157,7 +158,7 @@ public class BluetoothConnectionManager {
    */
   public synchronized void connected(BluetoothSocket socket,
       BluetoothDevice device) {
-    Log.d(MyTracksConstants.TAG, "connected");
+    Log.d(TAG, "connected");
 
     // Cancel the thread that completed the connection
     if (connectThread != null) {
@@ -189,7 +190,7 @@ public class BluetoothConnectionManager {
    * Stop all threads
    */
   public synchronized void stop() {
-    Log.d(MyTracksConstants.TAG, "stop()");
+    Log.d(TAG, "stop()");
     if (connectThread != null) {
       connectThread.cancel();
       connectThread = null;
@@ -226,7 +227,7 @@ public class BluetoothConnectionManager {
    */
   private void connectionFailed() {
     setState(Sensor.SensorState.DISCONNECTED);
-    Log.i(MyTracksConstants.TAG, "Bluetooth connection failed.");
+    Log.i(TAG, "Bluetooth connection failed.");
   }
 
   /**
@@ -234,7 +235,7 @@ public class BluetoothConnectionManager {
    */
   private void connectionLost() {
     setState(Sensor.SensorState.DISCONNECTED);
-    Log.i(MyTracksConstants.TAG, "Bluetooth connection lost.");
+    Log.i(TAG, "Bluetooth connection lost.");
   }
 
   /**
@@ -255,7 +256,7 @@ public class BluetoothConnectionManager {
       try {
         tmp = getSocket();
       } catch (IOException e) {
-        Log.e(MyTracksConstants.TAG, "create() failed", e);
+        Log.e(TAG, "create() failed", e);
       }
       socket = tmp;
     }
@@ -268,22 +269,22 @@ public class BluetoothConnectionManager {
         insecure.setAccessible(true);
         return (BluetoothSocket) insecure.invoke(device, 1);
       } catch (SecurityException e) {
-        Log.e(MyTracksConstants.TAG, "Unable to get insecure connect.", e);
+        Log.e(TAG, "Unable to get insecure connect.", e);
       } catch (NoSuchMethodException e) {
-        Log.e(MyTracksConstants.TAG, "Unable to get insecure connect.", e);
+        Log.e(TAG, "Unable to get insecure connect.", e);
       } catch (IllegalArgumentException e) {
-        Log.e(MyTracksConstants.TAG, "Unable to get insecure connect.", e);
+        Log.e(TAG, "Unable to get insecure connect.", e);
       } catch (IllegalAccessException e) {
-        Log.e(MyTracksConstants.TAG, "Unable to get insecure connect.", e);
+        Log.e(TAG, "Unable to get insecure connect.", e);
       } catch (InvocationTargetException e) {
-        Log.e(MyTracksConstants.TAG, "Unable to get insecure connect.", e);
+        Log.e(TAG, "Unable to get insecure connect.", e);
       }
       return device.createRfcommSocketToServiceRecord(SPP_UUID);
     }
 
     @Override
     public void run() {
-      Log.d(MyTracksConstants.TAG, "BEGIN mConnectThread");
+      Log.d(TAG, "BEGIN mConnectThread");
 
       // Always cancel discovery because it will slow down a connection
       adapter.cancelDiscovery();
@@ -299,8 +300,7 @@ public class BluetoothConnectionManager {
         try {
           socket.close();
         } catch (IOException e2) {
-          Log.e(MyTracksConstants.TAG,
-              "unable to close() socket during connection failure", e2);
+          Log.e(TAG, "unable to close() socket during connection failure", e2);
         }
         // Start the service over to restart listening mode
         BluetoothConnectionManager.this.start();
@@ -320,7 +320,7 @@ public class BluetoothConnectionManager {
       try {
         socket.close();
       } catch (IOException e) {
-        Log.e(MyTracksConstants.TAG, "close() of connect socket failed", e);
+        Log.e(TAG, "close() of connect socket failed", e);
       }
     }
   }
@@ -335,7 +335,7 @@ public class BluetoothConnectionManager {
     private final OutputStream mmOutStream;
 
     public ConnectedThread(BluetoothSocket socket) {
-      Log.d(MyTracksConstants.TAG, "create ConnectedThread");
+      Log.d(TAG, "create ConnectedThread");
       btSocket = socket;
       InputStream tmpIn = null;
       OutputStream tmpOut = null;
@@ -345,7 +345,7 @@ public class BluetoothConnectionManager {
         tmpIn = socket.getInputStream();
         tmpOut = socket.getOutputStream();
       } catch (IOException e) {
-        Log.e(MyTracksConstants.TAG, "temp sockets not created", e);
+        Log.e(TAG, "temp sockets not created", e);
       }
 
       mmInStream = tmpIn;
@@ -354,7 +354,7 @@ public class BluetoothConnectionManager {
 
     @Override
     public void run() {
-      Log.i(MyTracksConstants.TAG, "BEGIN mConnectedThread");
+      Log.i(TAG, "BEGIN mConnectedThread");
       byte[] buffer = new byte[parser.getFrameSize()];
       int bytes;
       int offset = 0;
@@ -383,11 +383,10 @@ public class BluetoothConnectionManager {
               // re-align
               offset = parser.getFrameSize() - index;
               System.arraycopy(buffer, index, buffer, 0, offset);
-              Log.w(MyTracksConstants.TAG, "Misaligned data, found new message at " +
-                   index + " recovering...");
+              Log.w(TAG, "Misaligned data, found new message at " + index + " recovering...");
               continue;
             }
-            Log.w(MyTracksConstants.TAG, "Could not find valid data, dropping data");
+            Log.w(TAG, "Could not find valid data, dropping data");
             offset = 0;
             continue;
           }
@@ -398,7 +397,7 @@ public class BluetoothConnectionManager {
           handler.obtainMessage(MESSAGE_READ, bytes, -1, buffer)
               .sendToTarget();
         } catch (IOException e) {
-          Log.e(MyTracksConstants.TAG, "disconnected", e);
+          Log.e(TAG, "disconnected", e);
           connectionLost();
           break;
         }
@@ -417,7 +416,7 @@ public class BluetoothConnectionManager {
         // Share the sent message back to the UI Activity
         handler.obtainMessage(MESSAGE_WRITE, -1, -1, buffer).sendToTarget();
       } catch (IOException e) {
-        Log.e(MyTracksConstants.TAG, "Exception during write", e);
+        Log.e(TAG, "Exception during write", e);
       }
     }
 
@@ -425,7 +424,7 @@ public class BluetoothConnectionManager {
       try {
         btSocket.close();
       } catch (IOException e) {
-        Log.e(MyTracksConstants.TAG, "close() of connect socket failed", e);
+        Log.e(TAG, "close() of connect socket failed", e);
       }
     }
   }
