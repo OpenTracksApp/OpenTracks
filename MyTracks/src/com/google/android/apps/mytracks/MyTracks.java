@@ -1180,6 +1180,24 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     final boolean sentToFusionTables = sendToGoogleDialog.getSendToFusionTables();
     dialogManager.dismissDialogSafely(DIALOG_PROGRESS);
 
+    // We've finished sending the track to the user-selected services.  Now
+    // we tell them the results of the upload, and optionally share the track.
+    // There are a few different paths through this code:
+    //
+    // 1. The user pre-requested a share (shareRequested == true).  We're going
+    //    to display the result dialog *without* the share button (the share
+    //    listener will be null).  The OK button listener will initiate the
+    //    share.
+    //
+    // 2. The user did not pre-request a share, but the set of services to
+    //    which we succeeded in uploading the track are compatible with
+    //    sharing.  We'll display a share button (the share listener will be
+    //    non-null), and will share the link if the user clicks it.
+    //
+    // 3. The user did not pre-request a share, and the set of services to
+    //    which we succeeded in uploading the track are incompatible with
+    //    sharing.  We won't display a share button.
+
     final boolean canShare = getSendToFusionTablesTableId() != null
         || getSendToMyMapsMapId() != null;
 
@@ -1195,8 +1213,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
 
     DialogInterface.OnClickListener onOkListener = (canShare && shareRequested)
         ? doShareListener : null;
-
-    // If the share listener is null, the share button will not be displayed.
     DialogInterface.OnClickListener onShareListener = (canShare && !shareRequested)
         ? doShareListener : null;
 

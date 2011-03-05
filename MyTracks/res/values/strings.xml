@@ -278,7 +278,7 @@ limitations under the License.
   <string name="maps_list_failed">Your maps could not be loaded at this time!</string>
   <string name="open_map">Select this Map</string>
   <string name="edit_map_details">Edit Map Details</string>
-  <string name="share_track">Share Track with Friends</string>
+  <string name="share_track">Share Track</string>
   <string name="delete_map">Delete Map from your Account</string>
   <string name="map_title">Map Title:</string>
   <string name="map_description">Map Description:</string>
@@ -297,7 +297,6 @@ limitations under the License.
   <string name="send_track_body_format">I think you might be interested in this track.
 
     To view this track use Google Earth or other mapping software.</string>
-  <string name="share_track">Share track with friends</string>
 
   <!-- Visibility -->
   <string name="public_map">Public</string>
@@ -410,11 +409,8 @@ limitations under the License.
   <!-- Send to Google -->
   <string name="sendtogoogle_title">Send to...</string>
   <string name="sendtogoogle_google_fusiontables">Google Fusion Tables</string>
-  <string name="sendtogoogle_google_fusiontables_url">google.com/fusiontables</string>
   <string name="sendtogoogle_google_mymaps">Google My Maps</string>
-  <string name="sendtogoogle_google_mymaps_url">maps.google.com</string>
   <string name="sendtogoogle_google_docs">Google Docs</string>
-  <string name="sendtogoogle_google_docs_url">docs.google.com</string>
   <string name="sendtogoogle_send_now">Send now</string>
   <string name="sendtogoogle_create_new_map">Create a new map</string>
   <string name="sendtogoogle_pick_existing_map">Pick an existing map</string>

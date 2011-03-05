@@ -20,30 +20,30 @@ It will be instantiated by a custom ListAdapter - once for each service to
 which track data was uploaded.
 -->
 <TableRow
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content">
-  <ImageView
-  	android:id="@+id/send_to_google_result_icon"
-  	android:src="@drawable/success"
-  	android:layout_width="wrap_content"
-  	android:layout_height="fill_parent"
-  	android:layout_gravity="top"/>
-  <LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-    <TextView
-      android:id="@+id/send_to_google_result_name"
+    android:layout_height="wrap_content">
+  <ImageView
+      android:id="@+id/send_to_google_result_icon"
+      android:src="@drawable/success"
+      android:layout_width="wrap_content"
+      android:layout_height="fill_parent"
+      android:layout_gravity="top"/>
+  <LinearLayout
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="Google Docs"
-      style="?android:attr/textAppearanceMedium"/>
+      android:orientation="vertical">
     <TextView
-      android:id="@+id/send_to_google_result_url"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="http://google.com"
-      style="?android:attr/textAppearanceSmall"/>
+        android:id="@+id/send_to_google_result_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Google Docs"
+        style="?android:attr/textAppearanceMedium"/>
+    <TextView
+        android:id="@+id/send_to_google_result_url"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="http://google.com"
+        style="?android:attr/textAppearanceSmall"/>
   </LinearLayout>
 </TableRow>

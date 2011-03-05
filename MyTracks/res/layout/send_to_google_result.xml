@@ -20,46 +20,46 @@ It is used to summarize the results of uploading track data to one or more
 services.
 -->
 <LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="fill_parent"
-  android:layout_height="wrap_content"
-  android:paddingTop="5dip"
-  android:paddingBottom="5dip"
-  android:paddingLeft="14dip"
-  android:paddingRight="14dip"
-  android:orientation="vertical">
-  <TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:text="@string/status_track_upload_status"
-    style="?android:attr/textAppearanceLarge"/>
+    android:paddingTop="5dip"
+    android:paddingBottom="5dip"
+    android:paddingLeft="14dip"
+    android:paddingRight="14dip"
+    android:orientation="vertical">
+  <TextView
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/status_track_upload_status"
+      style="?android:attr/textAppearanceLarge"/>
   <TableLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal">
-    <!-- We don't want a divider, so we set its color to transparent. -->
-    <!-- We do this explicitly, rather than with a color resource, because -->
-    <!-- an apparent bug causes the divider to be wildly misrendered on -->
-    <!-- a Mini X10 running 2.1. -->
-  	<ListView
-  	  android:id="@+id/send_to_google_result_list"
-      android:clickable="false"
-      android:paddingTop="10dip"
-      android:paddingBottom="10dip"
-      android:divider="#00000000"/>
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="center_horizontal">
+      <!-- We don't want a divider, so we set its color to transparent. -->
+      <!-- We do this explicitly, rather than with a color resource, because -->
+      <!-- an apparent bug causes the divider to be wildly misrendered on -->
+      <!-- a Mini X10 running 2.1. -->
+   	<ListView
+        android:id="@+id/send_to_google_result_list"
+        android:clickable="false"
+        android:paddingTop="10dip"
+        android:paddingBottom="10dip"
+        android:divider="#00000000"/>
   </TableLayout>
   <TextView
-    android:id="@+id/send_to_google_result_comment"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/status_mymap_info"
-    android:visibility="gone"
-    style="?android:attr/textAppearanceSmall"/>
+      android:id="@+id/send_to_google_result_comment"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/status_mymap_info"
+      android:visibility="gone"
+      style="?android:attr/textAppearanceSmall"/>
   <TextView
-    android:id="@+id/send_to_google_result_error"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/error_please_try_again_later"
-    android:visibility="gone"
-    style="?android:attr/textAppearanceLarge"/>
+      android:id="@+id/send_to_google_result_error"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/error_please_try_again_later"
+      android:visibility="gone"
+      style="?android:attr/textAppearanceLarge"/>
 </LinearLayout>

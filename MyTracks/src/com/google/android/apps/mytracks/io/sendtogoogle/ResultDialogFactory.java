@@ -19,6 +19,7 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.view.View;
 import android.widget.ListView;
@@ -89,7 +90,7 @@ public class ResultDialogFactory {
   private static View makeDialogContent(Activity activity, List<SendResult> results,
       boolean success) {
     ResultListAdapter resultListAdapter = new ResultListAdapter(activity,
-        R.layout.send_to_google_result_fragment, results);
+        R.layout.send_to_google_result_list_item, results);
 
     View content = activity.getLayoutInflater().inflate(R.layout.send_to_google_result, null);
     ListView resultList = (ListView) content.findViewById(R.id.send_to_google_result_list);

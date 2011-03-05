@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import java.util.List;
@@ -44,7 +45,7 @@ class ResultListAdapter extends ArrayAdapter<SendResult> {
     if (view == null) {
       LayoutInflater inflater
           = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-      view = inflater.inflate(R.layout.send_to_google_result_fragment, null);
+      view = inflater.inflate(R.layout.send_to_google_result_list_item, null);
     }
 
     SendResult result = getItem(position);
