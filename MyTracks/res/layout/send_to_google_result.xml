@@ -37,11 +37,11 @@ services.
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:gravity="center_horizontal">
-      <!-- We don't want a divider, so we set its color to transparent. -->
-      <!-- We do this explicitly, rather than with a color resource, because -->
-      <!-- an apparent bug causes the divider to be wildly misrendered on -->
-      <!-- a Mini X10 running 2.1. -->
-   	<ListView
+    <!-- We don't want a divider, so we set its color to transparent. -->
+    <!-- We do this explicitly, rather than with a color resource, because -->
+    <!-- an apparent bug causes the divider to be wildly misrendered on -->
+    <!-- a Mini X10 running 2.1. -->
+    <ListView
         android:id="@+id/send_to_google_result_list"
         android:clickable="false"
         android:paddingTop="10dip"

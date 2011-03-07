@@ -1189,7 +1189,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     //    listener will be null).  The OK button listener will initiate the
     //    share.
     //
-    // 2. The user did not pre-request a share, but the set of services to
+    // 2. The user did not pre-request a share, and the set of services to
     //    which we succeeded in uploading the track are compatible with
     //    sharing.  We'll display a share button (the share listener will be
     //    non-null), and will share the link if the user clicks it.
