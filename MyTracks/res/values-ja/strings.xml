@@ -161,7 +161,7 @@ limitations under the License.
   $2 : Attempted imports
   $3 : MyTracks gpx path
   -->
-  <string name="import_done">Imported %1$d of %2$d GPX files from %3$s</string>
+  <string name="import_done">%3$s からGPXファイル %2$d の %1$d をインポートしました</string>
   <string name="import_empty">%s ではGPXファイルがありません．SDカードを読み込めないかディレクトリにGPXファイルが無いかも知れません．</string>
   <string name="import_error">ファイル %s のインポートエラー</string>
 
@@ -216,7 +216,7 @@ limitations under the License.
 
   <string name="settings_map_public">マップの公開</string>
   <string name="settings_map_public_summary_on">アップロードされたマップはmaps.google.comで誰でも閲覧できます</string>
-  <string name="settings_map_public_summary_off">アップロードされたマップはmaps.google.comのリストに公開されません．</string>
+  <string name="settings_map_public_summary_off">アップロードされたマップはmaps.google.comのリストに公開されません</string>
 
   <string name="settings_report_speed_or_pace">速度表示</string>
   <string name="settings_report_speed_or_pace_summary_on">速度が表示されます</string>
