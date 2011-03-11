@@ -902,7 +902,7 @@ public class TrackRecordingService extends Service implements LocationListener {
       // Make it an impossible location.
       Location l = new Location("");
       l.setLatitude(100);
-      l.setLongitude(200);
+      l.setLongitude(180);
       wpt.setLocation(l);
     } else {
       // A null location is ok, and expected on track start.
