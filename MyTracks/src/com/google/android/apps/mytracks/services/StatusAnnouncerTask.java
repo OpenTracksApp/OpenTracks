@@ -1,12 +1,12 @@
 /*
  * Copyright 2009 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -128,6 +128,25 @@ public class StatusAnnouncerTask implements PeriodicTask {
    */
   @Override
   public void run(TrackRecordingService service) {
+    if (service == null) {
+      Log.e(MyTracksConstants.TAG, "StatusAnnouncer TrackRecordingService not initialized");
+      return;
+    }
+
+    runWithStatistics(service.getTripStatistics());
+  }
+
+  /**
+   * This method exists as a convenience for testing code, allowing said code
+   * to avoid needing to instantiate an entire {@link TrackRecordingService}
+   * just to test the announcer.
+   */
+  protected void runWithStatistics(TripStatistics statistics) {
+    if (statistics == null) {
+      Log.e(MyTracksConstants.TAG, "StatusAnnouncer stats not initialized.");
+      return;
+    }
+
     if (!ready || tts == null) {
       Log.e(MyTracksConstants.TAG, "StatusAnnouncer Tts not ready.");
       return;
@@ -139,12 +158,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
       return;
     }
 
-    if (service == null || service.getTripStatistics() == null) {
-      Log.e(MyTracksConstants.TAG, "StatusAnnouncer stats not initialized.");
-      return;
-    }
-
-    String announcement = getAnnouncement(service.getTripStatistics());
+    String announcement = getAnnouncement(statistics);
     Log.d(MyTracksConstants.TAG, "Announcement: " + announcement);
     speakAnnouncment(announcement);
   }
@@ -165,7 +179,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
     boolean metricUnits = true;
     boolean reportSpeed = true;
     if (preferences != null) {
-      metricUnits = 
+      metricUnits =
           preferences.getBoolean(context.getString(R.string.metric_units_key),
               true);
       reportSpeed =
