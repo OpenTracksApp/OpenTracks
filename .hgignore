@@ -1,0 +1,8 @@
+syntax:glob
+
+*/bin
+*/gen/**
+*/proguard/**
+.metadata
+MyTracksTest/annotations.log
+MyTracks/src/com/google/android/apps/mytracks/io/mymaps
