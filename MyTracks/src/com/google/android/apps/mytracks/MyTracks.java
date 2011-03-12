@@ -36,6 +36,10 @@ import com.google.android.apps.mytracks.io.TrackWriter;
 import com.google.android.apps.mytracks.io.TrackWriterFactory;
 import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.io.mymaps.MapsService;
+import com.google.android.apps.mytracks.io.sendtogoogle.ResultDialogFactory;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendDialog;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendResult;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendType;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
@@ -77,7 +81,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -139,9 +145,9 @@ public class MyTracks extends TabActivity implements OnTouchListener,
 
   private ITrackRecordingService trackRecordingService;
 
-  /**		
-   * Does the user want to share the current track.		
-   */		
+  /**
+   * Does the user want to share the current track.
+   */
   private boolean shareRequested = false;
 
   /**
@@ -909,11 +915,11 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * Initiates the process to send tracks to google.
    * This is called once the user has selected sending options via the
    * SendToGoogleDialog.
-   * 
+   *
    * TODO: Change this whole flow to an actual state machine.
    */
   public void sendToGoogle() {
-    SendToGoogleDialog sendToGoogleDialog =
+    SendDialog sendToGoogleDialog =
         dialogManager.getSendToGoogleDialog();
     if (sendToGoogleDialog == null) {
       return;
@@ -934,7 +940,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     }
   }
 
-  private void sendToGoogleMapsOrPickMap(SendToGoogleDialog sendToGoogleDialog) {
+  private void sendToGoogleMapsOrPickMap(SendDialog sendToGoogleDialog) {
     if (!sendToGoogleDialog.getCreateNewMap()) {
       // Ask the user to choose a map to upload into
       Intent listIntent = new Intent(this, MyMapsList.class);
@@ -989,7 +995,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   }
 
   private void onSendToGoogleMapsDone() {
-    SendToGoogleDialog sendToGoogleDialog = dialogManager.getSendToGoogleDialog();
+    SendDialog sendToGoogleDialog = dialogManager.getSendToGoogleDialog();
     if (sendToGoogleDialog.getSendToFusionTables()) {
       authenticateToFusionTables(null);
     } else if (sendToGoogleDialog.getSendToDocs()) {
@@ -1029,7 +1035,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
             Log.w(MyTracksConstants.TAG, "Updating table id failed.", e);
           }
         }
-        
+
         onSendToFusionTablesDone();
       }
     };
@@ -1044,7 +1050,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   }
 
   private void onSendToFusionTablesDone() {
-    SendToGoogleDialog sendToGoogleDialog = dialogManager.getSendToGoogleDialog();
+    SendDialog sendToGoogleDialog = dialogManager.getSendToGoogleDialog();
     if (sendToGoogleDialog.getSendToDocs()) {
       authenticateToGoogleDocs();
     } else {
@@ -1076,7 +1082,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     Log.d(MyTracksConstants.TAG, "Sending to Docs....");
     setProgressValue(50);
     setProgressMessage(R.string.progress_message_sending_docs);
-    final SendToDocs sender = new SendToDocs(this, 
+    final SendToDocs sender = new SendToDocs(this,
         authMap.get(SendToDocs.GDATA_SERVICE_NAME_TRIX),
         authMap.get(SendToDocs.GDATA_SERVICE_NAME_DOCLIST), trackId);
     sendToTrackId = trackId;
@@ -1099,30 +1105,53 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   }
 
   private void onSendToGoogleDone() {
-    SendToGoogleDialog sendToGoogleDialog = dialogManager.getSendToGoogleDialog();
+    SendDialog sendToGoogleDialog = dialogManager.getSendToGoogleDialog();
     final boolean sentToMyMaps = sendToGoogleDialog.getSendToMyMaps();
     final boolean sentToFusionTables = sendToGoogleDialog.getSendToFusionTables();
-
     dialogManager.dismissDialogSafely(DIALOG_PROGRESS);
-    runOnUiThread(new Runnable() {
-      public void run() {
-        if (shareRequested) {
-          Toast.makeText(MyTracks.this, getSendToGoogleResultMessage(), Toast.LENGTH_LONG)
-              .show();
 
-          if (shareLinkToMap(sentToMyMaps, sentToFusionTables)) {
-            return;
-          }
+    // We've finished sending the track to the user-selected services.  Now
+    // we tell them the results of the upload, and optionally share the track.
+    // There are a few different paths through this code:
+    //
+    // 1. The user pre-requested a share (shareRequested == true).  We're going
+    //    to display the result dialog *without* the share button (the share
+    //    listener will be null).  The OK button listener will initiate the
+    //    share.
+    //
+    // 2. The user did not pre-request a share, and the set of services to
+    //    which we succeeded in uploading the track are compatible with
+    //    sharing.  We'll display a share button (the share listener will be
+    //    non-null), and will share the link if the user clicks it.
+    //
+    // 3. The user did not pre-request a share, and the set of services to
+    //    which we succeeded in uploading the track are incompatible with
+    //    sharing.  We won't display a share button.
+
+    final boolean canShare = getSendToFusionTablesTableId() != null
+        || getSendToMyMapsMapId() != null;
+
+    DialogInterface.OnClickListener doShareListener = null;
+    if (canShare) {
+      doShareListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+          shareLinkToMap(sentToMyMaps, sentToFusionTables);
         }
+      };
+    }
 
-        // If anything failed or sharing was not requested, show the dialog
-        dialogManager.showDialogSafely(
-            DialogManager.DIALOG_SEND_TO_GOOGLE_RESULT);
-      }
-    });
+    DialogInterface.OnClickListener onOkListener = (canShare && shareRequested)
+        ? doShareListener : null;
+    DialogInterface.OnClickListener onShareListener = (canShare && !shareRequested)
+        ? doShareListener : null;
+
+    AlertDialog sendToGoogleResultDialog = ResultDialogFactory.makeDialog(this,
+        makeSendToGoogleResults(sendToGoogleDialog), onOkListener, onShareListener);
+    DialogManager.showDialogSafely(this, sendToGoogleResultDialog);
   }
 
-  boolean shareLinkToMap(boolean sentToMyMaps, boolean sentToFusionTables) {
+  private boolean shareLinkToMap(boolean sentToMyMaps, boolean sentToFusionTables) {
     String url = null;
     if (sentToMyMaps && sendToMyMapsSuccess) {
       // Prefer a link to My Maps
@@ -1145,27 +1174,24 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     return SendToFusionTables.getMapVisualizationUrl(track);
   }
 
-  String getSendToGoogleResultMessage() {
-    StringBuilder message = new StringBuilder();
-    SendToGoogleDialog sendToGoogleDialog =
-      dialogManager.getSendToGoogleDialog();
-    if (sendToGoogleDialog.getSendToMyMaps()) {
-      message.append(sendToMyMapsMessage);
+  /**
+   * Creates a list of {@link SendResult} instances based on the set of
+   * services selected in {@link SendDialog} and the results as known to
+   * this class.
+   */
+  private List<SendResult> makeSendToGoogleResults(SendDialog dialog) {
+    List<SendResult> results = new ArrayList<SendResult>();
+    if (dialog.getSendToMyMaps()) {
+      results.add(new SendResult(SendType.MYMAPS, sendToMyMapsSuccess));
     }
-    if (sendToGoogleDialog.getSendToFusionTables()) {
-      message.append(sendToFusionTablesMessage);
+    if (dialog.getSendToFusionTables()) {
+      results.add(new SendResult(SendType.FUSION_TABLES, sendToFusionTablesSuccess));
     }
-    if (sendToGoogleDialog.getSendToDocs()) {
-      if (message.length() > 0) {
-        message.append(' ');
-      }
-      message.append(sendToDocsMessage);
+    if (dialog.getSendToDocs()) {
+      results.add(new SendResult(SendType.DOCS, sendToDocsSuccess));
     }
-    if (sendToMyMapsSuccess && sendToFusionTablesSuccess && sendToDocsSuccess) {
-      message.append(' ');
-      message.append(getString(R.string.status_mymap_info));
-    }
-    return message.toString();
+
+    return results;
   }
 
   void clearSelectedTrack() {
@@ -1293,7 +1319,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   }
 
   public boolean getSendToGoogleSuccess() {
-    return sendToFusionTablesSuccess && sendToDocsSuccess;
+    return sendToMyMapsSuccess && sendToFusionTablesSuccess && sendToDocsSuccess;
   }
 
   // @VisibleForTesting
@@ -1305,12 +1331,12 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   SharedPreferences getSharedPreferences() {
     return sharedPreferences;
   }
-  
+
   // @VisibleForTesting
   static void clearInstance() {
     instance = null;
   }
-  
+
   // @VisibleForTesting
   ITrackRecordingService getTrackRecordingService() {
     return trackRecordingService;

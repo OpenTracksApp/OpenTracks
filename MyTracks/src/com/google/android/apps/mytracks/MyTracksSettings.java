@@ -232,10 +232,14 @@ public class MyTracksSettings extends PreferenceActivity {
 
     // Update the ANT+ sensors.
     // TODO: Only enable on phones that have ANT+.
-    findPreference(getString(R.string.ant_heart_rate_sensor_id_key))
-        .setEnabled(getString(R.string.ant_sensor_type).equals(sensorType));
-    findPreference(getString(R.string.ant_srm_bridge_sensor_id_key))
-        .setEnabled(getString(R.string.srm_ant_bridge_sensor_type).equals(sensorType));
+    Preference antHrm = findPreference(getString(R.string.ant_heart_rate_sensor_id_key));
+    Preference antSrm = findPreference(getString(R.string.ant_srm_bridge_sensor_id_key));
+    if (antHrm != null && antSrm != null) {
+      antHrm
+          .setEnabled(getString(R.string.ant_sensor_type).equals(sensorType));
+      antSrm
+          .setEnabled(getString(R.string.srm_ant_bridge_sensor_type).equals(sensorType));
+    }
   }
 
   /**

@@ -18,7 +18,7 @@ limitations under the License.
           package="com.google.android.maps.mytracks"
           android:installLocation="auto"
           android:versionCode="25"
-          android:versionName="1.1.2">
+          android:versionName="1.1.3rc1">
   <application android:icon="@drawable/arrow_icon"
                android:label="@string/app_name"
                android:backupAgent="com.google.android.apps.mytracks.io.backup.MyTracksBackupAgent">
@@ -110,7 +110,7 @@ limitations under the License.
 
   <!-- Permissions to initialize service -->
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-  
+
   <!-- Permissions for recording tracks and showing maps -->
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />

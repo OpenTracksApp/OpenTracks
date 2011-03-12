@@ -172,7 +172,7 @@ public class SendToFusionTables implements Runnable {
   private void doUpload() {
     ((GoogleHeaders) transport.defaultHeaders).setGoogleLogin(auth.getAuthToken());
     int statusMessageId = R.string.error_sending_to_fusiontables;
-    boolean success = true;
+    boolean success = false;
     try {
       progressIndicator.setProgressValue(PROGRESS_INITIALIZATION);
       progressIndicator.setProgressMessage(R.string.progress_message_reading_track);
@@ -204,10 +204,11 @@ public class SendToFusionTables implements Runnable {
       }
 
       statusMessageId = R.string.status_new_fusiontable_has_been_created;
+      success = true;
       Log.d(MyTracksConstants.TAG, "SendToFusionTables: Done: " + success);
       progressIndicator.setProgressValue(PROGRESS_COMPLETE);
-    } finally {
 
+    } finally {
       final boolean finalSuccess = success;
       final int finalStatusMessageId = statusMessageId;
       context.runOnUiThread(new Runnable() {

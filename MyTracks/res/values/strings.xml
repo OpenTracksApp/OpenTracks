@@ -35,9 +35,10 @@ limitations under the License.
   <!-- Error messages -->
   <string name="error_no_location_manager">No location manager was found on this device!</string>
   <string name="error_no_gps_location_provider">No GPS location provider was found on this device.</string>
-  <string name="error_sending_to_mymap">There was an error while sending your track to Google My Map. Please try again later.</string>
-  <string name="error_sending_to_fusiontables">There was an error while sending your track to Google Fusion Tables. Please try again later.</string>
-  <string name="error_sending_to_docs">There was an error while sending your track to Google Docs. Please try again later.</string>
+  <string name="error_sending_to_mymap">There was an error while sending your track to Google My Map.</string>
+  <string name="error_sending_to_fusiontables">There was an error while sending your track to Google Fusion Tables.</string>
+  <string name="error_sending_to_docs">There was an error while sending your track to Google Docs.</string>
+  <string name="error_please_try_again_later">Please try again later.</string>
   <string name="error_unable_to_start_recording">Unable to start recording. Try again.</string>
   <string name="error_unable_to_stop_recording">Unable to stop recording. Try again.</string>
   <string name="error_unable_to_read_file">Unable to read from file.</string>
@@ -56,12 +57,13 @@ limitations under the License.
   <string name="status_tracks_have_been_uploaded">Your track has been sent to maps.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_new_doc">Your track has been sent to a new spreadsheet at docs.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_docs">Your track has been sent to docs.google.com.</string>
-  <string name="status_mymap_info">It may sometimes take a few minutes before new tracks appear.</string>
+  <string name="status_mymap_info">It may take a few minutes before new tracks appear.</string>
   <string name="status_enable_gps">Please tap here to go to Security and Location Settings and check \'enable GPS satellites\'. Press back button to return.</string>
   <string name="status_approximate_location">Note: An approximate location as determined from cell towers and WIFI networks is shown.</string>
   <string name="status_no_location">A location can currently not be determined. Enable more location sources (see Security and Location Settings) and make sure the sky is visible. Try again later.</string>
   <string name="status_waypoint_inserted">A way point marker was inserted.</string>
   <string name="status_statistics_inserted">A statistics marker was inserted.</string>
+  <string name="status_track_upload_status">Upload status:</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Please wait...</string>
@@ -276,7 +278,7 @@ limitations under the License.
   <string name="maps_list_failed">Your maps could not be loaded at this time!</string>
   <string name="open_map">Select this Map</string>
   <string name="edit_map_details">Edit Map Details</string>
-  <string name="share_track">Share Track with Friends</string>
+  <string name="share_track">Share Track</string>
   <string name="delete_map">Delete Map from your Account</string>
   <string name="map_title">Map Title:</string>
   <string name="map_description">Map Description:</string>
@@ -295,7 +297,6 @@ limitations under the License.
   <string name="send_track_body_format">I think you might be interested in this track.
 
     To view this track use Google Earth or other mapping software.</string>
-  <string name="share_track">Share track with friends</string>
 
   <!-- Visibility -->
   <string name="public_map">Public</string>

@@ -34,4 +34,9 @@ limitations under the License.
   <string name="ant_sensor_type">ANT</string>
   <string name="srm_ant_bridge_sensor_type">SRM_ANT_BRIDGE</string>
   <string name="zephyr_sensor_type">ZEPHYR</string>
+
+  <!-- Send to Google URLs -->
+  <string name="sendtogoogle_google_fusiontables_url">google.com/fusiontables</string>
+  <string name="sendtogoogle_google_mymaps_url">maps.google.com</string>
+  <string name="sendtogoogle_google_docs_url">docs.google.com</string>
 </resources>
