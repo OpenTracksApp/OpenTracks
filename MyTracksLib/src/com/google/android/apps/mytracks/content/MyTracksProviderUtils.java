@@ -301,7 +301,7 @@ public interface MyTracksProviderUtils {
    * @return a new waypoint object
    */
   Waypoint createWaypoint(Cursor cursor);
-  
+
   /**
    * A lightweight wrapper around the original {@link Cursor} with a method to clean up.
    */
@@ -312,13 +312,14 @@ public interface MyTracksProviderUtils {
      * @return the ID of the most recent track point ID.
      */
     long getLocationId();
-    
+
     /**
      * Should be called in case the underlying iterator hasn't reached the last record.
+     * Calling it if it has reached the last record is a no-op.
      */
     void close();
   }
-  
+
   /**
    * A factory for creating new {@class Location}s.
    */
