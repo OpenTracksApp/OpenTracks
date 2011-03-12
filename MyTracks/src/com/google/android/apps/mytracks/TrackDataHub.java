@@ -266,11 +266,11 @@ public class TrackDataHub {
     started = true;
 
     sharedPreferences.registerOnSharedPreferenceChangeListener(preferenceListener);
-    selectedTrackId = sharedPreferences.getLong(context.getString(R.string.selected_track_key), -1);
-    recordingTrackId = sharedPreferences.getLong(context.getString(R.string.recording_track_key), -1);
+    selectedTrackId = sharedPreferences.getLong(SELECTED_TRACK_KEY, -1);
+    recordingTrackId = sharedPreferences.getLong(RECORDING_TRACK_KEY, -1);
     useMetricUnits = sharedPreferences.getBoolean(METRIC_UNITS_KEY, true);
     reportSpeed = sharedPreferences.getBoolean(SPEED_REPORTING_KEY, true);
-    minRequiredAccuracy = sharedPreferences.getInt(RECORDING_TRACK_KEY,
+    minRequiredAccuracy = sharedPreferences.getInt(MIN_REQUIRED_ACCURACY_KEY,
         MyTracksSettings.DEFAULT_MIN_REQUIRED_ACCURACY);
 
     if (recordingTrackId > 0) {
