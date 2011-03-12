@@ -256,7 +256,6 @@ limitations under the License.
   <string name="settings_backup_to_sd_summary">SDカードに全てのトラックと設定をバックアップします</string>
   <string name="settings_restore_from_sd">今すぐ復元</string>
   <string name="settings_restore_from_sd_summary">SDカードから全てのトラックと設定を復元します</string>
-  <string name="settings_no_backup_while_recording">トラック記録中はバックアップ操作はできません．</string>
 
   <string name="restore_overwrites_warning">SDカードからの復元を実行すると、現在のトラックと設定は *全て上書き* されてしまいます．よろしいですか?</string>
   <string name="select_backup_to_restore">復元するバックアップの選択</string>

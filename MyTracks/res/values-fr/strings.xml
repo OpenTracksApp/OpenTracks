@@ -213,8 +213,6 @@ limitations under the License.
   <string name="settings_backup_to_sd_summary">Copier tous vos parcours et paramètres sur la carte SD</string>
   <string name="settings_restore_from_sd">Restaurer</string>
   <string name="settings_restore_from_sd_summary">Restaurer tous les parcours et paramètres depuis la carte SD</string>
-  <string name="settings_no_backup_while_recording">Sauvegarde impossible lors de l\'enregistrement d\'un parcours.</string>
-
 
   <string name="restore_overwrites_warning">Restaurer une sauvegarde depuis la carte SD écrasera tous vos parcours et paramètres actuels.</string>
   <string name="select_backup_to_restore">Choisissez la sauvegarde à restaurer</string>
