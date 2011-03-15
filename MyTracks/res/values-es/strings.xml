@@ -212,7 +212,6 @@ limitations under the License.
   <string name="settings_backup_to_sd_summary">Hacer una copia total de sus recorridos y configuraciones a la tarjeta SD</string>
   <string name="settings_restore_from_sd">Restaurar</string>
   <string name="settings_restore_from_sd_summary">Restaurar todos los recorridos y configuraciones desde la tarjeta SD</string>
-  <string name="settings_no_backup_while_recording">No se pueden manejar backups mientras se está registrando un recorrido.</string>
 
   <string name="restore_overwrites_warning">Restaurar un backup desde la tarjeta SD SOBREESCRIBIRÁ todos sus recorridos y configuraciones actuales. ¿Está usted seguro?</string>
   <string name="select_backup_to_restore">Seleccionar el backup para restaurar</string>
