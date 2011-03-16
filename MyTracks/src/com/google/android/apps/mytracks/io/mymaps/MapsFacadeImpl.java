@@ -2,6 +2,7 @@
 package com.google.android.apps.mytracks.io.mymaps;
 
 import com.google.android.maps.GeoPoint;
+import com.google.android.maps.mytracks.R;
 import com.google.wireless.gdata.client.GDataClient;
 import com.google.wireless.gdata.client.HttpException;
 import com.google.wireless.gdata.data.Entry;
@@ -29,14 +30,14 @@ class MapsFacadeImpl implements MapsFacade {
   private static final String START_ICON_URL =
     "http://maps.google.com/mapfiles/ms/micons/green-dot.png";
   
+  private final Context context;
   private final MyMapsGDataWrapper wrapper;
   private final MyMapsGDataConverter gdataConverter;
-  private final MapsStringsProvider stringProvider;
   private final String authToken;
 
   public MapsFacadeImpl(Context context, GDataClient gdataClient,
-      MapsStringsProvider stringProvider, String authToken) {
-    this.stringProvider = stringProvider;
+      String authToken) {
+    this.context = context;
     this.authToken = authToken;
 
     wrapper = new MyMapsGDataWrapper(context, gdataClient);
@@ -101,7 +102,7 @@ class MapsFacadeImpl implements MapsFacade {
         MyMapsMapMetadata metaData = new MyMapsMapMetadata();
         metaData.setTitle(title);
         metaData.setDescription(description + " - "
-            + category + " - " + stringProvider.getNewMapDescription());
+            + category + " - " + context.getString(R.string.new_map_description));
         metaData.setSearchable(isPublic);
         Entry entry = MyMapsGDataConverter.getMapEntryForMetadata(metaData);
         Log.d(MyMapsConstants.TAG, "Title: " + entry.getTitle());
@@ -172,8 +173,8 @@ class MapsFacadeImpl implements MapsFacade {
       iconUrl = END_ICON_URL;
     }
     String title = trackName + " "
-        + (isStart ? stringProvider.getStart()
-                   : stringProvider.getEnd());
+        + (isStart ? context.getString(R.string.start)
+                   : context.getString(R.string.end));
     String description = isStart ? "" : trackDescription;
     return buildMyMapsPlacemarkFeature(title, description, iconUrl, geoPoint);
   }

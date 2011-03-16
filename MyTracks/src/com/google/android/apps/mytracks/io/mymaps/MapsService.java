@@ -25,9 +25,8 @@ public class MapsService {
   public static MapsFacade newClient(
       Activity context,
       GDataClient gDataClient,
-      MapsStringsProvider stringProvider,
       String authToken) {
-    return new MapsFacadeImpl(context, gDataClient, stringProvider, authToken);
+    return new MapsFacadeImpl(context, gDataClient, authToken);
   }
 
   /** Returns the service name to authenticate to for providing the authentication token above. */
