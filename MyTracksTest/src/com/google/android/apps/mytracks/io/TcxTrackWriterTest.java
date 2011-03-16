@@ -4,11 +4,13 @@ package com.google.android.apps.mytracks.io;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.Sensor;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.TimeZone;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import java.util.Date;
-import java.util.List;
 
 /**
  * Tests for the GPX track exporter.
@@ -16,9 +18,18 @@ import java.util.List;
  * @author Sandor Dornbush
  */
 public class TcxTrackWriterTest extends TrackFormatWriterTest {
+  private DateFormat timestampFormatter;
+
+  @Override
+  public void setUp() throws Exception {
+    super.setUp();
+
+    timestampFormatter = new SimpleDateFormat(TcxTrackWriter.TIMESTAMP_FORMAT);
+    timestampFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+  }
 
   public void testXmlOutput() throws Exception {
-    TrackFormatWriter writer = new TcxTrackWriter();
+    TrackFormatWriter writer = new TcxTrackWriter(null);
     String result = writeTrack(writer);
     Document doc = parseXmlDocument(result);
 
@@ -58,8 +69,8 @@ public class TcxTrackWriterTest extends TrackFormatWriterTest {
         getChildTextValue(posTag, "LatitudeDegrees"));
     assertEquals(Double.toString(loc.getLongitude()),
         getChildTextValue(posTag, "LongitudeDegrees"));
-    assertEquals(
-        TcxTrackWriter.TIMESTAMP_FORMAT.format(new Date(loc.getTime())),
+
+    assertEquals(timestampFormatter.format(loc.getTime()),
         getChildTextValue(tag, "Time"));
     assertEquals(Double.toString(loc.getAltitude()),
         getChildTextValue(tag, "AltitudeMeters"));
