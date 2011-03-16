@@ -1,6 +1,7 @@
 // Copyright 2011 Google Inc. All Rights Reserved.
 package com.google.android.apps.mytracks.io.mymaps;
 
+import com.google.android.apps.mytracks.io.AuthManager;
 import com.google.wireless.gdata.client.GDataClient;
 
 import android.app.Activity;
@@ -25,8 +26,8 @@ public class MapsService {
   public static MapsFacade newClient(
       Activity context,
       GDataClient gDataClient,
-      String authToken) {
-    return new MapsFacadeImpl(context, gDataClient, authToken);
+      AuthManager auth) {
+    return new MapsFacadeImpl(context, gDataClient, auth);
   }
 
   /** Returns the service name to authenticate to for providing the authentication token above. */

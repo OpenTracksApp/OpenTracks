@@ -1,7 +1,7 @@
 // Copyright 2010 Google Inc. All Rights Reserved.
 package com.google.android.apps.mytracks.io.mymaps;
 
-import com.google.android.apps.mytracks.io.mymaps.MapsFacade.AuthenticationRefresher;
+import com.google.android.apps.mytracks.io.AuthManager;
 import com.google.android.common.gdata.AndroidXmlParserFactory;
 import com.google.wireless.gdata.client.GDataClient;
 import com.google.wireless.gdata.client.HttpException;
@@ -56,6 +56,7 @@ class MyMapsGDataWrapper {
   public static final int ERROR_UNKNOWN = 100;
 
   private final GDataClient androidGdataClient;
+  private final AuthManager auth;
   private final MapsClient client;
 
   private String errorMessage;
@@ -63,10 +64,10 @@ class MyMapsGDataWrapper {
   private boolean retryOnAuthFailure;
   private int retriesPending;
   private boolean cleanupCalled;
-  private AuthenticationRefresher authenticationRefresher;
 
-  public MyMapsGDataWrapper(Context context, GDataClient gdataClient) {
+  public MyMapsGDataWrapper(Context context, GDataClient gdataClient, AuthManager auth) {
     androidGdataClient = gdataClient;
+    this.auth = auth;
     client =
         new MapsClient(androidGdataClient, new XmlMapsGDataParserFactory(
             new AndroidXmlParserFactory()));
@@ -123,7 +124,7 @@ class MyMapsGDataWrapper {
       e.printStackTrace();
     }
     Log.d(MyMapsConstants.TAG, "GData error encountered: " + errorMessage);
-    if (errorType == ERROR_AUTH && authenticationRefresher != null) {
+    if (errorType == ERROR_AUTH && auth != null) {
       Runnable whenFinished = null;
       if (retryOnAuthFailure) {
         retriesPending++;
@@ -138,7 +139,7 @@ class MyMapsGDataWrapper {
           }
         };
       }
-      authenticationRefresher.invalidateAndRefresh(whenFinished);
+      auth.invalidateAndRefresh(whenFinished);
     }
     return false;
   }
@@ -159,10 +160,6 @@ class MyMapsGDataWrapper {
       androidGdataClient.close();
     }
     cleanupCalled = true;
-  }
-
-  public void setAuthenticationRefresher(AuthenticationRefresher refresher) {
-    this.authenticationRefresher = refresher;
   }
 
   public void setRetryOnAuthFailure(boolean retry) {

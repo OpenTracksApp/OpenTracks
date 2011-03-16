@@ -12,15 +12,6 @@ import java.util.Collection;
  */
 public interface MapsFacade {
 
-  /** Interface used for refreshing authentication credentials. */
-  public interface AuthenticationRefresher {
-    /** Refreshes authentication credentials, then calls done. */
-    void invalidateAndRefresh(Runnable done);
-  }
-
-  /** Sets the authentication refresher to use. */
-  void setAuthenticationRefresher(AuthenticationRefresher refresher);
-
   /**
    * Interface for receiving data back from getMapsList.
    * All calls to the interface will happen before getMapsList returns.

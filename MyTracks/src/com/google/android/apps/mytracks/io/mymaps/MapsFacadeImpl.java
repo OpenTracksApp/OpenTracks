@@ -1,6 +1,7 @@
 // Copyright 2011 Google Inc. All Rights Reserved.
 package com.google.android.apps.mytracks.io.mymaps;
 
+import com.google.android.apps.mytracks.io.AuthManager;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.mytracks.R;
 import com.google.wireless.gdata.client.GDataClient;
@@ -36,11 +37,11 @@ class MapsFacadeImpl implements MapsFacade {
   private final String authToken;
 
   public MapsFacadeImpl(Context context, GDataClient gdataClient,
-      String authToken) {
+      AuthManager auth) {
     this.context = context;
-    this.authToken = authToken;
+    this.authToken = auth.getAuthToken();
 
-    wrapper = new MyMapsGDataWrapper(context, gdataClient);
+    wrapper = new MyMapsGDataWrapper(context, gdataClient, auth);
     wrapper.setRetryOnAuthFailure(true);
 
     try {
@@ -48,11 +49,6 @@ class MapsFacadeImpl implements MapsFacade {
     } catch (XmlPullParserException e) {
       throw new IllegalStateException("Unable to create maps data converter", e);
     }
-  }
-
-  @Override
-  public void setAuthenticationRefresher(AuthenticationRefresher refresher) {
-    wrapper.setAuthenticationRefresher(refresher);
   }
 
   @Override
