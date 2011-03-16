@@ -29,7 +29,7 @@ public class TcxTrackWriterTest extends TrackFormatWriterTest {
   }
 
   public void testXmlOutput() throws Exception {
-    TrackFormatWriter writer = new TcxTrackWriter();
+    TrackFormatWriter writer = new TcxTrackWriter(null);
     String result = writeTrack(writer);
     Document doc = parseXmlDocument(result);
 

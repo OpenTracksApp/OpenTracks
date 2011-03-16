@@ -15,7 +15,6 @@
  */
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.apps.mytracks.MyTracks;
 import com.google.android.apps.mytracks.MyTracksConstants;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
@@ -264,20 +263,13 @@ public class MyTracksUtils {
       return false;
     }
 
-    for (Signature sig: packageInfo.signatures) {
+    for (Signature sig : packageInfo.signatures) {
       if (sig.hashCode() == RELEASE_SIGNATURE_HASHCODE) {
         return true;
       }
     }
 
     return false;
-  }
-
-  /**
-   * @see isRelease(Context)
-   */
-  public static boolean isRelease() {
-    return isRelease(MyTracks.getInstance());
   }
 
   /**
@@ -291,26 +283,18 @@ public class MyTracksUtils {
   }
 
   /**
-   * @see getMyTracksVersion(Context)
-   */
-  public static String getMyTracksVersion() {
-    return getMyTracksVersion(MyTracks.getInstance());
-  }
-
-  /**
    * Return the My Tracks version code from the manifest.
    *
    * @return the version code, or an empty string in case of failure.
    */
-  public static int getMyTracksVersionCode() {
-    PackageInfo packageInfo = getPackageInfo(MyTracks.getInstance(),
-        PackageManager.GET_META_DATA);
+  public static int getMyTracksVersionCode(Context context) {
+    PackageInfo packageInfo = getPackageInfo(context, PackageManager.GET_META_DATA);
     return packageInfo == null ? -1 : packageInfo.versionCode;
   }
 
   private static PackageInfo getPackageInfo(Context context, int flags) {
     if (context == null) {
-      Log.w(MyTracksConstants.TAG, "No context found when attempting to get version");
+      Log.w(MyTracksConstants.TAG, "No context found when attempting to get PackageInfo");
       return null;
     }
     try {

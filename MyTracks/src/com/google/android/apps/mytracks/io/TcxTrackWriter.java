@@ -23,6 +23,7 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.util.MyTracksUtils;
 
+import android.content.Context;
 import android.location.Location;
 import android.os.Build;
 
@@ -58,11 +59,14 @@ public class TcxTrackWriter implements TrackFormatWriter {
   private static final String TCX_TYPE_INTERNAL = "Internal";
 
   private final SimpleDateFormat timestampFormatter;
+  private final Context context;
 
   private PrintWriter pw = null;
   private Track track;
 
-  public TcxTrackWriter() {
+  public TcxTrackWriter(Context context) {
+    this.context = context;
+
     timestampFormatter = new SimpleDateFormat(TIMESTAMP_FORMAT);
     timestampFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
   }
@@ -232,14 +236,14 @@ public class TcxTrackWriter implements TrackFormatWriter {
     // it.  The TCX schema tightly defined the Version tag, so we can't put it
     // there.  They've similarly constrained the PartNumber tag, so it can't go
     // there either.
-    pw.format("<Name>My Tracks %s by Google</Name>\n", MyTracksUtils.getMyTracksVersion());
+    pw.format("<Name>My Tracks %s by Google</Name>\n", MyTracksUtils.getMyTracksVersion(context));
 
     pw.println("<Build>");
     pw.println("<Version>");
-    pw.format("<VersionMajor>%d</VersionMajor>\n", MyTracksUtils.getMyTracksVersionCode());
+    pw.format("<VersionMajor>%d</VersionMajor>\n", MyTracksUtils.getMyTracksVersionCode(context));
     pw.println("<VersionMinor>0</VersionMinor>");
     pw.println("</Version>");
-    pw.format("<Type>%s</Type>\n", MyTracksUtils.isRelease() ? TCX_TYPE_RELEASE
+    pw.format("<Type>%s</Type>\n", MyTracksUtils.isRelease(context) ? TCX_TYPE_RELEASE
         : TCX_TYPE_INTERNAL);
     pw.println("</Build>");
     pw.format("<LangID>%s</LangID>\n", Locale.getDefault().getLanguage());
@@ -254,6 +258,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
   }
 
   private String categoryToTcxSport(String category) {
+    category = category.trim();
     if (category.equalsIgnoreCase(TCX_SPORT_RUNNING)) {
       return TCX_SPORT_RUNNING;
     } else if (category.equalsIgnoreCase(TCX_SPORT_BIKING)) {
