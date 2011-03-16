@@ -4,7 +4,6 @@ package com.google.android.apps.mytracks.io.mymaps;
 import com.google.android.apps.mytracks.io.AuthManager;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.mytracks.R;
-import com.google.wireless.gdata.client.GDataClient;
 import com.google.wireless.gdata.client.HttpException;
 import com.google.wireless.gdata.data.Entry;
 import com.google.wireless.gdata.parser.GDataParser;
@@ -15,17 +14,17 @@ import android.location.Location;
 import android.text.TextUtils;
 import android.util.Log;
 
-import org.xmlpull.v1.XmlPullParserException;
-
 import java.io.IOException;
 import java.util.Collection;
+
+import org.xmlpull.v1.XmlPullParserException;
 
 /**
  * Implementation of the Maps access abstraction.
  *
  * @author Rodrigo Damazio
  */
-class MapsFacadeImpl implements MapsFacade {
+public class MapsFacadeImpl implements MapsFacade {
   private static final String END_ICON_URL =
     "http://maps.google.com/mapfiles/ms/micons/red-dot.png";
   private static final String START_ICON_URL =
@@ -36,12 +35,11 @@ class MapsFacadeImpl implements MapsFacade {
   private final MyMapsGDataConverter gdataConverter;
   private final String authToken;
 
-  public MapsFacadeImpl(Context context, GDataClient gdataClient,
-      AuthManager auth) {
+  public MapsFacadeImpl(Context context, AuthManager auth) {
     this.context = context;
     this.authToken = auth.getAuthToken();
 
-    wrapper = new MyMapsGDataWrapper(context, gdataClient, auth);
+    wrapper = new MyMapsGDataWrapper(context, auth);
     wrapper.setRetryOnAuthFailure(true);
 
     try {
@@ -49,6 +47,10 @@ class MapsFacadeImpl implements MapsFacade {
     } catch (XmlPullParserException e) {
       throw new IllegalStateException("Unable to create maps data converter", e);
     }
+  }
+
+  public static String buildMapUrl(String mapId) {
+    return MapsClient.buildMapUrl(mapId);
   }
 
   @Override

@@ -36,6 +36,10 @@ class MapsClient extends GDataServiceClient {
     return MyMapsConstants.SERVICE_NAME;
   }
 
+  public static String buildMapUrl(String mapId) {
+    return MyMapsConstants.MAPSHOP_BASE_URL + "?msa=0&msid=" + mapId;
+  }
+
   public static String getMapsFeed() {
     if (DEBUG) {
       Log.d("Maps Client", "Requesting map feed:");

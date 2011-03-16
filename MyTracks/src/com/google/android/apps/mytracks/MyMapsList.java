@@ -18,9 +18,9 @@ package com.google.android.apps.mytracks;
 import com.google.android.accounts.Account;
 import com.google.android.apps.mytracks.io.AuthManager;
 import com.google.android.apps.mytracks.io.AuthManagerFactory;
-import com.google.android.apps.mytracks.io.MyMapsFactory;
 import com.google.android.apps.mytracks.io.mymaps.MapsFacade;
-import com.google.android.apps.mytracks.io.mymaps.MapsService;
+import com.google.android.apps.mytracks.io.mymaps.MapsFacadeImpl;
+import com.google.android.apps.mytracks.io.mymaps.MyMapsConstants;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -84,7 +84,7 @@ public class MyMapsList extends Activity implements MapsFacade.MapsListCallback 
     super.onCreate(icicle);
 
     auth = AuthManagerFactory.getAuthManager(this, GET_LOGIN, null, true,
-        MapsService.getServiceName());
+        MyMapsConstants.SERVICE_NAME);
 
     setContentView(R.layout.list);
 
@@ -125,7 +125,7 @@ public class MyMapsList extends Activity implements MapsFacade.MapsListCallback 
     auth.doLogin(new Runnable() {
       public void run() {
         // Runs in UI thread.
-        mapsClient = MyMapsFactory.newMapsClient(MyMapsList.this, auth);
+        mapsClient = new MapsFacadeImpl(MyMapsList.this, auth);
 
         startLookup();
       }
@@ -200,7 +200,7 @@ public class MyMapsList extends Activity implements MapsFacade.MapsListCallback 
         shareIntent.putExtra(Intent.EXTRA_TEXT, String.format(
             getText(R.string.share_map_body_format).toString(),
             listItem[1],
-            MapsService.buildMapUrl(listItem[0])));
+            MapsFacadeImpl.buildMapUrl(listItem[0])));
         startActivity(Intent.createChooser(shareIntent,
             getText(R.string.share_map).toString()));
         return true;

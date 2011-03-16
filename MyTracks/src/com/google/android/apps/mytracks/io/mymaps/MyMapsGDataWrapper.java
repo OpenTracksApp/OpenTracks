@@ -2,6 +2,7 @@
 package com.google.android.apps.mytracks.io.mymaps;
 
 import com.google.android.apps.mytracks.io.AuthManager;
+import com.google.android.apps.mytracks.io.gdata.GDataClientFactory;
 import com.google.android.common.gdata.AndroidXmlParserFactory;
 import com.google.wireless.gdata.client.GDataClient;
 import com.google.wireless.gdata.client.HttpException;
@@ -65,8 +66,8 @@ class MyMapsGDataWrapper {
   private int retriesPending;
   private boolean cleanupCalled;
 
-  public MyMapsGDataWrapper(Context context, GDataClient gdataClient, AuthManager auth) {
-    androidGdataClient = gdataClient;
+  public MyMapsGDataWrapper(Context context, AuthManager auth) {
+    androidGdataClient = GDataClientFactory.getGDataClient(context);
     this.auth = auth;
     client =
         new MapsClient(androidGdataClient, new XmlMapsGDataParserFactory(

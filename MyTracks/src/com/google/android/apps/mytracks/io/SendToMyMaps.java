@@ -23,6 +23,7 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.mymaps.MapsFacade;
 import com.google.android.apps.mytracks.io.mymaps.MapsFacade.WaypointData;
+import com.google.android.apps.mytracks.io.mymaps.MapsFacadeImpl;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.MyTracksUtils;
@@ -111,7 +112,7 @@ public class SendToMyMaps implements Runnable {
       track.setDescription("<p>" + track.getDescription() + "</p><p>"
           + stringUtils.generateTrackDescription(track, null, null) + "</p>");
 
-      mapsClient = MyMapsFactory.newMapsClient(context, auth);
+      mapsClient = new MapsFacadeImpl(context, auth);
   
       // Create a new map if necessary:
       boolean isNewMap = mapId.equals(NEW_MAP_ID);
