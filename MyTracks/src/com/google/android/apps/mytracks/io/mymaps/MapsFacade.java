@@ -1,6 +1,8 @@
 // Copyright 2011 Google Inc. All Rights Reserved.
 package com.google.android.apps.mytracks.io.mymaps;
 
+import com.google.android.apps.mytracks.content.Waypoint;
+
 import android.location.Location;
 
 import java.util.Collection;
@@ -55,22 +57,6 @@ public interface MapsFacade {
   boolean uploadMarker(String mapId, String trackName, String trackDescription,
       Location location, boolean isStart);
 
-  /** Plain data class for waypoints. */
-  public class WaypointData {
-    public String title;
-    public String description;
-    public String iconUrl;
-    public Location location;
-
-    public WaypointData(String title, String description, String iconUrl,
-        Location location) {
-      this.title = title;
-      this.description = description;
-      this.iconUrl = iconUrl;
-      this.location = location;
-    }
-  }
-
   /**
    * Uploads a series of waypoints to the given map.
    *
@@ -78,7 +64,7 @@ public interface MapsFacade {
    * @param waypoints the waypoints to upload
    * @return true on success, false otherwise
    */
-  boolean uploadWaypoints(String mapId, Iterable<WaypointData> waypoints);
+  boolean uploadWaypoints(String mapId, Iterable<Waypoint> waypoints);
 
   /**
    * Uploads a series of points to the given map.

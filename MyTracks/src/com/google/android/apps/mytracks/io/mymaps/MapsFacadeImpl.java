@@ -1,6 +1,7 @@
 // Copyright 2011 Google Inc. All Rights Reserved.
 package com.google.android.apps.mytracks.io.mymaps;
 
+import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.AuthManager;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.mytracks.R;
@@ -209,7 +210,7 @@ public class MapsFacadeImpl implements MapsFacade {
    */
   @Override
   public boolean uploadWaypoints(
-      final String mapId, final Iterable<WaypointData> waypoints) {
+      final String mapId, final Iterable<Waypoint> waypoints) {
     return wrapper.runQuery(new MyMapsGDataWrapper.QueryFunction() {
       public void query(MapsClient client) {
         // TODO(rdamazio): Stream through the waypoints in chunks.
@@ -219,10 +220,10 @@ public class MapsFacadeImpl implements MapsFacade {
         String featureFeed = MapsClient.getFeaturesFeed(mapId);
 
         try {
-          for (WaypointData waypoint : waypoints) {
+          for (Waypoint waypoint : waypoints) {
             MyMapsFeature feature = buildMyMapsPlacemarkFeature(
-                waypoint.title, waypoint.description, waypoint.iconUrl,
-                getGeoPoint(waypoint.location));
+                waypoint.getName(), waypoint.getDescription(), waypoint.getIcon(),
+                getGeoPoint(waypoint.getLocation()));
             Entry entry = gdataConverter.getEntryForFeature(feature);
 
             Log.d(MyMapsConstants.TAG,
