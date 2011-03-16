@@ -35,7 +35,7 @@ import com.google.android.apps.mytracks.io.TempFileCleaner;
 import com.google.android.apps.mytracks.io.TrackWriter;
 import com.google.android.apps.mytracks.io.TrackWriterFactory;
 import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
-import com.google.android.apps.mytracks.io.mymaps.MapsFacadeImpl;
+import com.google.android.apps.mytracks.io.mymaps.MapsFacade;
 import com.google.android.apps.mytracks.io.mymaps.MyMapsConstants;
 import com.google.android.apps.mytracks.io.sendtogoogle.ResultDialogFactory;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendDialog;
@@ -607,7 +607,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
         Track selectedTrack = providerUtils.getTrack(selectedTrackId);
         if (selectedTrack != null) {
           if (!TextUtils.isEmpty(selectedTrack.getMapId())) {
-            shareLinkToMap(MapsFacadeImpl.buildMapUrl(selectedTrack.getMapId()));
+            shareLinkToMap(MapsFacade.buildMapUrl(selectedTrack.getMapId()));
           } else if (!TextUtils.isEmpty(selectedTrack.getTableId())) {
             shareLinkToMap(getFusionTablesUrl(selectedTrackId));
           } else {
@@ -1226,7 +1226,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     String url = null;
     if (sentToMyMaps && sendToMyMapsSuccess) {
       // Prefer a link to My Maps
-      url = MapsFacadeImpl.buildMapUrl(sendToMyMapsMapId);
+      url = MapsFacade.buildMapUrl(sendToMyMapsMapId);
     } else if (sentToFusionTables && sendToFusionTablesSuccess) {
       // Otherwise try using the link to fusion tables
       url = getFusionTablesUrl(sendToTrackId);
