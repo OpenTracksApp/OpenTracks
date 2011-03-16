@@ -1,12 +1,12 @@
 /*
  * Copyright 2010 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -17,10 +17,11 @@ package com.google.android.apps.mytracks.io;
 
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.Sensor;
+import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
+import com.google.android.apps.mytracks.util.MyTracksUtils;
 
 import android.location.Location;
 import android.os.Build;
@@ -30,6 +31,7 @@ import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 /**
@@ -37,20 +39,32 @@ import java.util.TimeZone;
  * As defined by:
  * http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2
  *
+ * The TCX file written by this class has been verified as compatible with
+ * Garmin Training Center 3.5.3.
+ *
  * @author Sandor Dornbush
  */
 public class TcxTrackWriter implements TrackFormatWriter {
+  protected static final String TIMESTAMP_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+
+  // These are the only sports allowed by the TCX v2 specification for fields
+  // of type Sport_t.
+  private static final String TCX_SPORT_BIKING = "Biking";
+  private static final String TCX_SPORT_RUNNING = "Running";
+  private static final String TCX_SPORT_OTHER = "Other";
+
+  // Values for fields of type Build_t/Type.
+  private static final String TCX_TYPE_RELEASE = "Release";
+  private static final String TCX_TYPE_INTERNAL = "Internal";
+
+  private final SimpleDateFormat timestampFormatter;
 
   private PrintWriter pw = null;
   private Track track;
 
-  static final SimpleDateFormat TIMESTAMP_FORMAT =
-      new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-  static {
-    TIMESTAMP_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
-  }
-
   public TcxTrackWriter() {
+    timestampFormatter = new SimpleDateFormat(TIMESTAMP_FORMAT);
+    timestampFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
   }
 
   @Override
@@ -93,16 +107,13 @@ public class TcxTrackWriter implements TrackFormatWriter {
     if (pw == null) {
       return;
     }
+
+    String startTime = timestampFormatter.format(track.getStatistics().getStartTime());
+
     pw.println("  <Activities>");
-    pw.print("    <Activity Sport=\"");
-    if (track.getCategory() != null) {
-      pw.print(track.getCategory());
-    }
-    pw.println("\">");
-    pw.print("      <Id>");
-    pw.print(TIMESTAMP_FORMAT.format(track.getStatistics().getStartTime()));
-    pw.println("</Id>");
-    pw.println("      <Lap>");
+    pw.format("    <Activity Sport=\"%s\">\n", categoryToTcxSport(track.getCategory()));
+    pw.format("      <Id>%s</Id>\n", startTime);
+    pw.format("      <Lap StartTime=\"%s\">\n", startTime);
     pw.print("        <TotalTimeSeconds>");
     pw.print(track.getStatistics().getTotalTime() / 1000);
     pw.println("</TotalTimeSeconds>");
@@ -113,7 +124,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
     // Calories are a required element just put in 0.
     pw.print("<Calories>0</Calories>");
     pw.println("<Intensity>Active</Intensity>");
-    pw.println("<TriggerMethod>Manual</TriggerMethod>)");
+    pw.println("<TriggerMethod>Manual</TriggerMethod>");
   }
 
   @Override
@@ -130,7 +141,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
     }
     pw.println("        <Trackpoint>");
     Date d = new Date(location.getTime());
-    pw.println("          <Time>" + TIMESTAMP_FORMAT.format(d) + "</Time>");
+    pw.println("          <Time>" + timestampFormatter.format(d) + "</Time>");
     pw.println("          <Position>");
 
     pw.print("            <LatitudeDegrees>");
@@ -194,10 +205,18 @@ public class TcxTrackWriter implements TrackFormatWriter {
     }
     pw.println("      </Lap>");
     pw.print("      <Creator xsi:type=\"Device_t\">");
-    pw.print("<Name>");
-    pw.print(Build.MODEL);
-    pw.print("</Name>");
-    pw.println("</Creator>)");
+    pw.format("<Name>%s</Name>\n", Build.MODEL);
+
+    // The following code is correct.  ID is inconsistently capitalized in the
+    // TCX schema.
+    pw.println("<UnitId>0</UnitId>");
+    pw.println("<ProductID>0</ProductID>");
+
+    pw.println("<Version>");
+    pw.println("<VersionMajor>0</VersionMajor>");
+    pw.println("<VersionMinor>0</VersionMinor>");
+    pw.println("</Version>");
+    pw.println("</Creator>");
     pw.println("    </Activity>");
     pw.println("  </Activities>");
   }
@@ -207,8 +226,24 @@ public class TcxTrackWriter implements TrackFormatWriter {
     if (pw == null) {
       return;
     }
-    pw.print("  <Author xsi:type=\"Application_t\">");
-    pw.print("<Name>My Tracks by Google</Name>");
+    pw.println("  <Author xsi:type=\"Application_t\">");
+
+    // We put the version in the name because there isn't a better place for
+    // it.  The TCX schema tightly defined the Version tag, so we can't put it
+    // there.  They've similarly constrained the PartNumber tag, so it can't go
+    // there either.
+    pw.format("<Name>My Tracks %s by Google</Name>\n", MyTracksUtils.getMyTracksVersion());
+
+    pw.println("<Build>");
+    pw.println("<Version>");
+    pw.format("<VersionMajor>%d</VersionMajor>\n", MyTracksUtils.getMyTracksVersionCode());
+    pw.println("<VersionMinor>0</VersionMinor>");
+    pw.println("</Version>");
+    pw.format("<Type>%s</Type>\n", MyTracksUtils.isRelease() ? TCX_TYPE_RELEASE
+        : TCX_TYPE_INTERNAL);
+    pw.println("</Build>");
+    pw.format("<LangID>%s</LangID>\n", Locale.getDefault().getLanguage());
+    pw.println("<PartNumber>000-00000-00</PartNumber>");
     pw.println("</Author>");
     pw.println("</TrainingCenterDatabase>");
   }
@@ -216,5 +251,15 @@ public class TcxTrackWriter implements TrackFormatWriter {
   @Override
   public void writeWaypoint(Waypoint waypoint) {
     // TODO Write out the waypoints somewhere.
+  }
+
+  private String categoryToTcxSport(String category) {
+    if (category.equalsIgnoreCase(TCX_SPORT_RUNNING)) {
+      return TCX_SPORT_RUNNING;
+    } else if (category.equalsIgnoreCase(TCX_SPORT_BIKING)) {
+      return TCX_SPORT_BIKING;
+    } else {
+      return TCX_SPORT_OTHER;
+    }
   }
 }
