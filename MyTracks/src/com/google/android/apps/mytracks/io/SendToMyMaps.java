@@ -22,7 +22,6 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.mymaps.MapsFacade;
-import com.google.android.apps.mytracks.io.mymaps.MapsFacade.WaypointData;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.MyTracksUtils;
@@ -111,7 +110,7 @@ public class SendToMyMaps implements Runnable {
       track.setDescription("<p>" + track.getDescription() + "</p><p>"
           + stringUtils.generateTrackDescription(track, null, null) + "</p>");
 
-      mapsClient = MyMapsFactory.newMapsClient(context, auth);
+      mapsClient = new MapsFacade(context, auth);
   
       // Create a new map if necessary:
       boolean isNewMap = mapId.equals(NEW_MAP_ID);
@@ -148,11 +147,10 @@ public class SendToMyMaps implements Runnable {
             if (c.getCount() > 1 && c.moveToFirst()) {
               // This will skip the 1st waypoint (it carries the stats for the
               // last segment).
-              ArrayList<WaypointData> waypoints = new ArrayList<WaypointData>(c.getCount() - 1);
+              ArrayList<Waypoint> waypoints = new ArrayList<Waypoint>(c.getCount() - 1);
               while (c.moveToNext()) {
                 Waypoint wpt = providerUtils.createWaypoint(c);
-                waypoints.add(new WaypointData(
-                    wpt.getName(), wpt.getDescription(), wpt.getIcon(), wpt.getLocation()));
+                waypoints.add(wpt);
               }
 
               success = mapsClient.uploadWaypoints(mapId, waypoints);
