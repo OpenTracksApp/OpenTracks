@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.apps.mytracks.ChartView.Mode;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
@@ -200,7 +202,7 @@ public class ChartActivity extends Activity implements
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    Log.w(Constants.TAG, "ChartActivity.onCreate");
+    Log.w(TAG, "ChartActivity.onCreate");
     super.onCreate(savedInstanceState);
     MyTracks.getInstance().setChartActivity(this);
     providerUtils = MyTracksProviderUtils.Factory.get(this);
@@ -258,7 +260,7 @@ public class ChartActivity extends Activity implements
     observer = new ContentObserver(contentHandler) {
       @Override
       public void onChange(boolean selfChange) {
-        Log.d(Constants.TAG, "ChartActivity: ContentObserver.onChange");
+        Log.d(TAG, "ChartActivity: ContentObserver.onChange");
         // Check for any new locations and append them to the currently
         // recording track.
         if (recordingTrackId < 0) {
@@ -279,7 +281,7 @@ public class ChartActivity extends Activity implements
     waypointObserver = new ContentObserver(contentHandler) {
       @Override
       public void onChange(boolean selfChange) {
-        Log.d(Constants.TAG,
+        Log.d(TAG,
             "MyTracksMap: ContentObserver.onChange waypoints");
         if (selectedTrackId < 0) {
           return;
@@ -395,7 +397,7 @@ public class ChartActivity extends Activity implements
         }
       }
     } catch (RuntimeException e) {
-      Log.w(Constants.TAG, "Caught an unexpected exception.", e);
+      Log.w(TAG, "Caught an unexpected exception.", e);
     } finally {
       if (cursor != null) {
         cursor.close();
@@ -492,7 +494,7 @@ public class ChartActivity extends Activity implements
         result[0] = (location.getTime() - startTime);
         break;
       default:
-        Log.w(Constants.TAG, "ChartActivity unknown mode: " + mode);
+        Log.w(TAG, "ChartActivity unknown mode: " + mode);
     }
 
     elevationBuffer.setNext(metricUnits
@@ -573,10 +575,10 @@ public class ChartActivity extends Activity implements
    * Read all new track points.
    */
   private void readNewTrackPoints() {
-    Log.i(Constants.TAG, "MyTracks: Updating chart last seen: " + lastSeenLocationId);
+    Log.i(TAG, "MyTracks: Updating chart last seen: " + lastSeenLocationId);
     Track track = providerUtils.getTrack(recordingTrackId);
     if (track == null) {
-      Log.w(Constants.TAG, "MyTracks: track not found");
+      Log.w(TAG, "MyTracks: track not found");
       return;
     }
     chartView.addDataPoints(readPointsToList(track));
@@ -585,7 +587,7 @@ public class ChartActivity extends Activity implements
         chartView.invalidate();
       }
     });
-    Log.i(Constants.TAG, "MyTracks: Updated chart last seen: " + lastSeenLocationId);
+    Log.i(TAG, "MyTracks: Updated chart last seen: " + lastSeenLocationId);
   }
 
   /**

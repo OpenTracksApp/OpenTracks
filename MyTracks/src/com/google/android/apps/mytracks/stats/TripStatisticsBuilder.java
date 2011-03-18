@@ -16,6 +16,8 @@
 
 package com.google.android.apps.mytracks.stats;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.MyTracksSettings;
 
@@ -126,7 +128,7 @@ public class TripStatisticsBuilder {
    */
   public boolean addLocation(Location currentLocation, long systemTime) {
     if (paused) {
-      Log.w(Constants.TAG,
+      Log.w(TAG,
           "Tried to account for location while track is paused");
       return false;
     }
@@ -208,7 +210,7 @@ public class TripStatisticsBuilder {
     // We are now sure the user is moving.
     long timeDifference = updateTime - lastLocationTime;
     if (timeDifference < 0) {
-      Log.e(Constants.TAG,
+      Log.e(TAG,
           "Found negative time change: " + timeDifference);
     }
     data.addMovingTime(timeDifference);
@@ -224,7 +226,7 @@ public class TripStatisticsBuilder {
         data.setMaxSpeed(movingSpeed);
       }
     } else {
-      Log.d(Constants.TAG,
+      Log.d(TAG,
           "TripStatistics ignoring big change: Raw Speed: " + speed
           + " old: " + lastLocationSpeed + " [" + toString() + "]");
     }

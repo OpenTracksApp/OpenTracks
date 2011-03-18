@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtilsImpl;
 import com.google.android.apps.mytracks.content.Track;
@@ -112,24 +114,24 @@ public class StatsActivity extends Activity
 
     public UIUpdateThread() {
       super();
-      Log.i(Constants.TAG, "Created UI update thread");
+      Log.i(TAG, "Created UI update thread");
     }
 
     @Override
     public void run() {
-      Log.i(Constants.TAG, "Started UI update thread");
+      Log.i(TAG, "Started UI update thread");
       while (MyTracks.getInstance().isRecording()) {
         long sleeptime = 1000;
         runOnUiThread(updateResults);
         try {
           Thread.sleep(sleeptime);
         } catch (InterruptedException e) {
-          Log.w(Constants.TAG,
+          Log.w(TAG,
               "StatsActivity: Caught exception on sleep.", e);
           break;
         }
       }
-      Log.w(Constants.TAG, "UIUpdateThread finished.");
+      Log.w(TAG, "UIUpdateThread finished.");
     }
   }
 
@@ -155,7 +157,7 @@ public class StatsActivity extends Activity
     observer = new ContentObserver(contentHandler) {
       @Override
       public void onChange(boolean selfChange) {
-        Log.d(Constants.TAG, "StatsActivity: ContentObserver.onChange");
+        Log.d(TAG, "StatsActivity: ContentObserver.onChange");
         restoreStats();
         super.onChange(selfChange);
       }
@@ -217,7 +219,7 @@ public class StatsActivity extends Activity
   @Override
   public void onSharedPreferenceChanged(
       final SharedPreferences sharedPreferences, final String key) {
-    Log.d(Constants.TAG,
+    Log.d(TAG,
         "StatsActivity: onSharedPreferences changed " + key);
     if (key != null) {
       runOnUiThread(new Runnable() {
@@ -255,7 +257,7 @@ public class StatsActivity extends Activity
             utils.updateUnits();
             utils.setSpeedLabel(
                 R.id.speed_label, R.string.speed, R.string.pace_label);
-            Log.w(Constants.TAG, "Setting speed labels");
+            Log.w(TAG, "Setting speed labels");
             utils.setSpeedLabels();
             restoreStats();
           }
@@ -333,7 +335,7 @@ public class StatsActivity extends Activity
             Toast.LENGTH_LONG).show();
         return;
       } else {
-        Log.d(Constants.TAG, "StatsActivity: Using location provider "
+        Log.d(TAG, "StatsActivity: Using location provider "
             + gpsProvider.getName());
       }
       locationManager.requestLocationUpdates(gpsProvider.getName(),
