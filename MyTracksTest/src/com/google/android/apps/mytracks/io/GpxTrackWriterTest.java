@@ -1,14 +1,9 @@
 // Copyright 2010 Google Inc. All Rights Reserved.
 package com.google.android.apps.mytracks.io;
 
-import com.google.android.apps.mytracks.content.Waypoint;
-
-import android.location.Location;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import java.util.Date;
 import java.util.List;
 
 /**

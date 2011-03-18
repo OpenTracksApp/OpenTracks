@@ -193,12 +193,14 @@ public class MyTracksProvider extends ContentProvider {
   @Override
   public int delete(Uri url, String where, String[] selectionArgs) {
     String table;
+    boolean shouldVacuum = false;
     switch (urlMatcher.match(url)) {
       case TRACKPOINTS:
         table = TRACKPOINTS_TABLE;
         break;
       case TRACKS:
         table = TRACKS_TABLE;
+        shouldVacuum = true;
         break;
       case WAYPOINTS:
         table = WAYPOINTS_TABLE;
@@ -210,6 +212,13 @@ public class MyTracksProvider extends ContentProvider {
     Log.w(MyTracksProvider.TAG, "provider delete in " + table + "!");
     int count = db.delete(table, where, selectionArgs);
     getContext().getContentResolver().notifyChange(url, null, true);
+
+    if (shouldVacuum) {
+      // If a potentially large amount of data was deleted, we want to reclaim its space.
+      Log.i(TAG, "Vacuuming the database");
+      db.execSQL("VACUUM");
+    }
+
     return count;
   }
 

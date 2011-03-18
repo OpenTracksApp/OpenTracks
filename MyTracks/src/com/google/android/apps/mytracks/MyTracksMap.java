@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackPointsColumns;
@@ -208,7 +210,7 @@ public class MyTracksMap extends MapActivity
           } while (cursor.moveToNext());
         }
       } catch (RuntimeException e) {
-        Log.w(Constants.TAG, "Caught an unexpected exception.", e);
+        Log.w(TAG, "Caught an unexpected exception.", e);
       } finally {
         if (cursor != null) {
           cursor.close();
@@ -285,7 +287,7 @@ public class MyTracksMap extends MapActivity
 
   @Override
   public void onCreate(Bundle bundle) {
-    Log.d(Constants.TAG, "MyTracksMap.onCreate");
+    Log.d(TAG, "MyTracksMap.onCreate");
     super.onCreate(bundle);
 
     // The volume we want to control is the Text-To-Speech volume
@@ -335,7 +337,7 @@ public class MyTracksMap extends MapActivity
     observer = new ContentObserver(contentHandler) {
       @Override
       public void onChange(boolean selfChange) {
-        Log.d(Constants.TAG, "MyTracksMap: ContentObserver.onChange");
+        Log.d(TAG, "MyTracksMap: ContentObserver.onChange");
         if (!isRecordingSelected()) {
           // No track, or one other than the recording track is selected,
           // don't bother.
@@ -350,7 +352,7 @@ public class MyTracksMap extends MapActivity
     waypointObserver = new ContentObserver(contentHandler) {
       @Override
       public void onChange(boolean selfChange) {
-        Log.d(Constants.TAG,
+        Log.d(TAG,
             "MyTracksMap: ContentObserver.onChange waypoints");
         if (!isATrackSelected()) {
           return;
@@ -371,7 +373,7 @@ public class MyTracksMap extends MapActivity
 
   @Override
   protected void onDestroy() {
-    Log.d(Constants.TAG, "MyTracksMap.onDestroy");
+    Log.d(TAG, "MyTracksMap.onDestroy");
 
     if (updateTrackThread != null) {
       ApiFeatures.getInstance().getApiPlatformAdapter().stopHandlerThread(
@@ -407,7 +409,7 @@ public class MyTracksMap extends MapActivity
   protected void onStart() {
     // Called after onCreate or onStop.
     // Will be followed by onRestart.
-    Log.d(Constants.TAG, "MyTracksMap.onStart");
+    Log.d(TAG, "MyTracksMap.onStart");
     super.onStart();
   }
 
@@ -416,7 +418,7 @@ public class MyTracksMap extends MapActivity
     // Called when activity is no longer visible to user.
     // Next either onStart, onDestroy or nothing will be called.
     // This method may never be called in low memory situations.
-    Log.d(Constants.TAG, "MyTracksMap.onStop");
+    Log.d(TAG, "MyTracksMap.onStop");
     super.onStop();
   }
 
@@ -424,7 +426,7 @@ public class MyTracksMap extends MapActivity
   protected void onRestart() {
     // Called when the current activity is being re-displayed.
     // Will be followed by onResume.
-    Log.d(Constants.TAG, "MyTracksMap.onRestart");
+    Log.d(TAG, "MyTracksMap.onRestart");
     super.onRestart();
   }
 
@@ -432,7 +434,7 @@ public class MyTracksMap extends MapActivity
   protected void onPause() {
     // Called when activity is going into the background, but has not (yet) been
     // killed. Shouldn't block longer than approx. 2 seconds.
-    Log.d(Constants.TAG, "MyTracksMap.onPause");
+    Log.d(TAG, "MyTracksMap.onPause");
     unregisterLocationAndSensorListeners();
     unregisterContentObservers();
     super.onPause();
@@ -442,7 +444,7 @@ public class MyTracksMap extends MapActivity
   protected void onResume() {
     // Called when the current activity is being displayed or re-displayed
     // to the user.
-    Log.d(Constants.TAG, "MyTracksMap.onResume");
+    Log.d(TAG, "MyTracksMap.onResume");
     super.onResume();
 
     // Reload all preferences as they might have changed since last run.
@@ -477,7 +479,7 @@ public class MyTracksMap extends MapActivity
 
   @Override
   protected void onSaveInstanceState(Bundle outState) {
-    Log.d(Constants.TAG, "MyTracksMap.onSaveInstanceState");
+    Log.d(TAG, "MyTracksMap.onSaveInstanceState");
     outState.putBoolean(KEY_HAVE_GOOD_FIX, haveGoodFix);
     outState.putBoolean(KEY_KEEP_MY_LOCATION_VISIBLE, keepMyLocationVisible);
     if (currentLocation != null) {
@@ -488,7 +490,7 @@ public class MyTracksMap extends MapActivity
 
   @Override
   protected void onRestoreInstanceState(Bundle bundle) {
-    Log.d(Constants.TAG, "MyTracksMap.onRestoreInstanceState");
+    Log.d(TAG, "MyTracksMap.onRestoreInstanceState");
     if (bundle != null) {
       super.onRestoreInstanceState(bundle);
       haveGoodFix = bundle.getBoolean(KEY_HAVE_GOOD_FIX, false);
@@ -528,7 +530,7 @@ public class MyTracksMap extends MapActivity
         alert(getString(R.string.error_no_gps_location_provider));
         return;
       } else {
-        Log.d(Constants.TAG, "MyTracksMap: Using location provider "
+        Log.d(TAG, "MyTracksMap: Using location provider "
             + gpsProvider.getName());
       }
       locationManager.requestLocationUpdates(gpsProvider.getName(),
@@ -539,7 +541,7 @@ public class MyTracksMap extends MapActivity
       } catch (RuntimeException e) {
         // If anything at all goes wrong with getting a cell location do not
         // abort. Cell location is not essential to this app.
-        Log.w(Constants.TAG,
+        Log.w(TAG,
             "Could not register network location listener.");
       }
     }
@@ -550,7 +552,7 @@ public class MyTracksMap extends MapActivity
     if (compass == null) {
       return;
     }
-    Log.d(Constants.TAG,
+    Log.d(TAG,
         "MyTracksMap: Now registering sensor listeners.");
     sensorManager.registerListener(
         sensorListener, compass, SensorManager.SENSOR_DELAY_UI);
@@ -561,12 +563,12 @@ public class MyTracksMap extends MapActivity
    */
   void unregisterLocationAndSensorListeners() {
     if (locationManager != null) {
-      Log.d(Constants.TAG,
+      Log.d(TAG,
           "MyTracksMap: Now unregistering location listeners.");
       locationManager.removeUpdates(locationListener);
     }
     if (sensorManager != null) {
-      Log.d(Constants.TAG,
+      Log.d(TAG,
           "MyTracksMap: Now unregistering sensor listeners.");
       sensorManager.unregisterListener(sensorListener);
     }
@@ -704,7 +706,7 @@ public class MyTracksMap extends MapActivity
    * @param trackId a given track id
    */
   public void setSelectedTrack(final long trackId) {
-    Log.d(Constants.TAG, "MyTracksMap.setSelectedTrack: "
+    Log.d(TAG, "MyTracksMap.setSelectedTrack: "
         + "selectedTrackId = " + selectedTrackId + ", trackId = " + trackId);
 
     if (selectedTrackId == trackId) {
@@ -763,7 +765,7 @@ public class MyTracksMap extends MapActivity
         timestamp);
     variation = field.getDeclination();
 
-    Log.d(Constants.TAG,
+    Log.d(TAG,
         "MyTracksMap: Variation reset to " + variation + " degrees.");
   }
 
@@ -906,7 +908,7 @@ public class MyTracksMap extends MapActivity
   @Override
   public void onSharedPreferenceChanged(
       final SharedPreferences sharedPreferences, final String key) {
-    Log.d(Constants.TAG,
+    Log.d(TAG,
         "MyTracksMap.onSharedPreferenceChanged: " + key);
     if (key != null) {
       uiHandler.post(new Runnable() {
@@ -954,7 +956,7 @@ public class MyTracksMap extends MapActivity
         }
         showCurrentLocation();
       } else {
-        Log.d(Constants.TAG,
+        Log.d(TAG,
             "MyTracksMap: Network location update received.");
       }
     }
@@ -1060,7 +1062,7 @@ public class MyTracksMap extends MapActivity
             // TODO: This shouldn't happen after adding currentSelectedTrackId,
             // but just to be safe until we have 100% confidence.
             if (samplingFrequency <= 0) {
-              Log.w(Constants.TAG,
+              Log.w(TAG,
                   "readAllNewTrackPoints: samplingFreq <= 0, numTotalPoints = "
                   + numTotalPoints + ", trackId = " + currentSelectedTrackId);
               samplingFrequency = 1;

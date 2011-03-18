@@ -16,6 +16,8 @@
 
 package com.google.android.apps.mytracks.services;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.apps.mytracks.stats.TripStatistics;
@@ -99,7 +101,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
    * Called when the TTS engine is initialized.
    */
   protected void onTtsInit(int status) {
-    Log.i(Constants.TAG, "TrackRecordingService.TTS init: " + status);
+    Log.i(TAG, "TrackRecordingService.TTS init: " + status);
     this.ready = status == TextToSpeech.SUCCESS;
 
     if (ready) {
@@ -111,7 +113,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
           languageAvailability == TextToSpeech.LANG_NOT_SUPPORTED) {
         // English is probably supported.
         // TODO: Somehow use announcement strings from English too.
-        Log.w(Constants.TAG, "Default language not available, using English.");
+        Log.w(TAG, "Default language not available, using English.");
         speechLanguage = Locale.ENGLISH;
       }
       tts.setLanguage(speechLanguage);
@@ -128,8 +130,26 @@ public class StatusAnnouncerTask implements PeriodicTask {
    */
   @Override
   public void run(TrackRecordingService service) {
+    if (service == null) {
+      Log.e(TAG, "StatusAnnouncer TrackRecordingService not initialized");
+      return;
+    }
+
+    runWithStatistics(service.getTripStatistics());
+  }
+
+  /**
+   * This method exists as a convenience for testing code, allowing said code
+   * to avoid needing to instantiate an entire {@link TrackRecordingService}
+   * just to test the announcer.
+   */
+  protected void runWithStatistics(TripStatistics statistics) {
+    if (statistics == null) {
+      Log.e(TAG, "StatusAnnouncer stats not initialized.");
+      return;
+    }
     if (!ready || tts == null) {
-      Log.e(Constants.TAG, "StatusAnnouncer Tts not ready.");
+      Log.e(TAG, "StatusAnnouncer Tts not ready.");
       return;
     }
 
@@ -139,12 +159,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
       return;
     }
 
-    if (service == null || service.getTripStatistics() == null) {
-      Log.e(Constants.TAG, "StatusAnnouncer stats not initialized.");
-      return;
-    }
-
-    String announcement = getAnnouncement(service.getTripStatistics());
+    String announcement = getAnnouncement(statistics);
     Log.d(Constants.TAG, "Announcement: " + announcement);
     speakAnnouncment(announcement);
   }

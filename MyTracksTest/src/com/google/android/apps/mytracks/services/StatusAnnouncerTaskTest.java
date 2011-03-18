@@ -1,12 +1,12 @@
 /*
  * Copyright 2010 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -255,7 +255,6 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
   @UsesMocks({
     StatusAnnouncerTask.class,
     StringUtils.class,
-    TrackRecordingService.class,
   })
   @Override
   protected void setUp() throws Exception {
@@ -390,9 +389,6 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
   public void testRun() throws Exception {
     // Expect service data calls
     TripStatistics stats = new TripStatistics();
-    TrackRecordingService service =
-        AndroidMock.createMock(TrackRecordingService.class);
-    expect(service.getTripStatistics()).andStubReturn(stats);
 
     // Expect announcement building call
     expect(mockTask.getAnnouncement(same(stats))).andStubReturn(ANNOUNCEMENT);
@@ -407,75 +403,63 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
             .andReturn(TextToSpeech.SUCCESS);
 
     // Run the announcement
-    AndroidMock.replay(tts, stringUtils, service);
-    task.run(service);
-    AndroidMock.verify(mockTask, tts, stringUtils, service);
+    AndroidMock.replay(tts, stringUtils);
+    task.runWithStatistics(stats);
+    AndroidMock.verify(mockTask, tts, stringUtils);
   }
 
   public void testRun_notReady() throws Exception {
-    TrackRecordingService service =
-        AndroidMock.createMock(TrackRecordingService.class);
-
     // Put task in "not ready" state
     startTask(TextToSpeech.ERROR);
 
     // Run the announcement
-    AndroidMock.replay(tts, stringUtils, service);
-    task.run(service);
-    AndroidMock.verify(mockTask, tts, stringUtils, service);
+    AndroidMock.replay(tts, stringUtils);
+    task.runWithStatistics(null);
+    AndroidMock.verify(mockTask, tts, stringUtils);
   }
 
   public void testRun_duringCall() throws Exception {
-    TrackRecordingService service =
-        AndroidMock.createMock(TrackRecordingService.class);
-  
     startTask(TextToSpeech.SUCCESS);
 
     expect(tts.isSpeaking()).andStubReturn(false);
 
     // Run the announcement
-    AndroidMock.replay(tts, stringUtils, service);
+    AndroidMock.replay(tts, stringUtils);
     PhoneStateListener phoneListener = phoneListenerCapture.getValue();
     phoneListener.onCallStateChanged(TelephonyManager.CALL_STATE_OFFHOOK, null);
-    task.run(service);
-    AndroidMock.verify(mockTask, tts, stringUtils, service);
+    task.runWithStatistics(null);
+    AndroidMock.verify(mockTask, tts, stringUtils);
   }
 
   public void testRun_ringWhileSpeaking() throws Exception {
-    TrackRecordingService service =
-        AndroidMock.createMock(TrackRecordingService.class);
-
     startTask(TextToSpeech.SUCCESS);
 
     expect(tts.isSpeaking()).andStubReturn(true);
     expect(tts.stop()).andReturn(TextToSpeech.SUCCESS);
 
-    AndroidMock.replay(tts, stringUtils, service);
+    AndroidMock.replay(tts, stringUtils);
 
     // Update the state to ringing - this should stop the current announcement.
     PhoneStateListener phoneListener = phoneListenerCapture.getValue();
     phoneListener.onCallStateChanged(TelephonyManager.CALL_STATE_RINGING, null);
 
     // Run the announcement - this should do nothing.
-    task.run(service);
+    task.runWithStatistics(null);
 
-    AndroidMock.verify(mockTask, tts, stringUtils, service);
+    AndroidMock.verify(mockTask, tts, stringUtils);
   }
 
   public void testRun_whileRinging() throws Exception {
-    TrackRecordingService service =
-      AndroidMock.createMock(TrackRecordingService.class);
-
     startTask(TextToSpeech.SUCCESS);
 
     expect(tts.isSpeaking()).andStubReturn(false);
 
     // Run the announcement
-    AndroidMock.replay(tts, stringUtils, service);
+    AndroidMock.replay(tts, stringUtils);
     PhoneStateListener phoneListener = phoneListenerCapture.getValue();
     phoneListener.onCallStateChanged(TelephonyManager.CALL_STATE_RINGING, null);
-    task.run(service);
-    AndroidMock.verify(mockTask, tts, stringUtils, service);
+    task.runWithStatistics(null);
+    AndroidMock.verify(mockTask, tts, stringUtils);
   }
 
   public void testRun_noService() throws Exception {
@@ -489,16 +473,13 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
 
   public void testRun_noStats() throws Exception {
     // Expect service data calls
-    TrackRecordingService service =
-        AndroidMock.createMock(TrackRecordingService.class);
-    expect(service.getTripStatistics()).andStubReturn(null);
 
     startTask(TextToSpeech.SUCCESS);
 
     // Run the announcement
-    AndroidMock.replay(tts, stringUtils, service);
-    task.run(service);
-    AndroidMock.verify(mockTask, tts, stringUtils, service);
+    AndroidMock.replay(tts, stringUtils);
+    task.runWithStatistics(null);
+    AndroidMock.verify(mockTask, tts, stringUtils);
   }
 
   private void startTask(int state) {

@@ -15,6 +15,7 @@
  */
 package com.google.android.apps.mytracks.services;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
 import static com.google.android.apps.mytracks.Constants.RESUME_TRACK_EXTRA_NAME;
 
 import com.google.android.apps.mytracks.MyTracks;
@@ -269,7 +270,7 @@ public class TrackRecordingService extends Service implements LocationListener {
       // Insert failed, most likely because of SqlLite error code 5
       // (SQLite_BUSY). This is expected to happen extremely rarely (if our
       // listener gets invoked twice at about the same time).
-      Log.w(Constants.TAG,
+      Log.w(TAG,
           "Caught SQLiteException: " + e.getMessage(), e);
       return false;
     }
@@ -314,15 +315,15 @@ public class TrackRecordingService extends Service implements LocationListener {
     try {
       PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
       if (pm == null) {
-        Log.e(Constants.TAG,
+        Log.e(TAG,
             "TrackRecordingService: Power manager not found!");
         return;
       }
       if (wakeLock == null) {
         wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
-            Constants.TAG);
+            TAG);
         if (wakeLock == null) {
-          Log.e(Constants.TAG,
+          Log.e(TAG,
               "TrackRecordingService: Could not create wake lock (null).");
           return;
         }
@@ -330,12 +331,12 @@ public class TrackRecordingService extends Service implements LocationListener {
       if (!wakeLock.isHeld()) {
         wakeLock.acquire();
         if (!wakeLock.isHeld()) {
-          Log.e(Constants.TAG,
+          Log.e(TAG,
               "TrackRecordingService: Could not acquire wake lock.");
         }
       }
     } catch (RuntimeException e) {
-      Log.e(Constants.TAG,
+      Log.e(TAG,
           "TrackRecordingService: Caught unexpected exception: "
           + e.getMessage(), e);
     }
@@ -376,11 +377,11 @@ public class TrackRecordingService extends Service implements LocationListener {
 
   public void registerLocationListener() {
     if (locationManager == null) {
-      Log.e(Constants.TAG,
+      Log.e(TAG,
           "TrackRecordingService: Do not have any location manager.");
       return;
     }
-    Log.d(Constants.TAG,
+    Log.d(TAG,
         "Preparing to register location listener w/ TrackRecordingService...");
     try {
       long desiredInterval = locationListenerPolicy.getDesiredPollingInterval();
@@ -390,23 +391,23 @@ public class TrackRecordingService extends Service implements LocationListener {
           // , 0 /* minDistance, get all updates to properly time pauses */
           TrackRecordingService.this);
       currentRecordingInterval = desiredInterval;
-      Log.d(Constants.TAG,
+      Log.d(TAG,
           "...location listener now registered w/ TrackRecordingService @ "
           + currentRecordingInterval);
     } catch (RuntimeException e) {
-      Log.e(Constants.TAG,
+      Log.e(TAG,
           "Could not register location listener: " + e.getMessage(), e);
     }
   }
 
   public void unregisterLocationListener() {
     if (locationManager == null) {
-      Log.e(Constants.TAG,
+      Log.e(TAG,
           "TrackRecordingService: Do not have any location manager.");
       return;
     }
     locationManager.removeUpdates(this);
-    Log.d(Constants.TAG,
+    Log.d(TAG,
         "Location listener now unregistered w/ TrackRecordingService.");
   }
   
@@ -419,7 +420,7 @@ public class TrackRecordingService extends Service implements LocationListener {
   }
 
   private void restoreStats(Track track) {
-    Log.d(Constants.TAG,
+    Log.d(TAG,
         "Restoring stats of track with ID: " + track.getId());
     
     TripStatistics stats = track.getStatistics();
@@ -465,10 +466,10 @@ public class TrackRecordingService extends Service implements LocationListener {
         statsBuilder.pauseAt(stats.getStopTime());
         statsBuilder.resumeAt(System.currentTimeMillis());
       } else {
-        Log.e(Constants.TAG, "Could not get track points cursor.");
+        Log.e(TAG, "Could not get track points cursor.");
       }
     } catch (RuntimeException e) {
-      Log.e(Constants.TAG, "Error while restoring track.", e);
+      Log.e(TAG, "Error while restoring track.", e);
     } finally {
       if (cursor != null) {
         cursor.close();
@@ -493,12 +494,12 @@ public class TrackRecordingService extends Service implements LocationListener {
   }
 
   private void onLocationChangedAsync(Location location) {
-    Log.d(Constants.TAG, "TrackRecordingService.onLocationChanged");
+    Log.d(TAG, "TrackRecordingService.onLocationChanged");
 
     try {
       // Don't record if the service has been asked to pause recording:
       if (!isRecording) {
-        Log.w(Constants.TAG,
+        Log.w(TAG,
             "Not recording because recording has been paused.");
         return;
       }
@@ -506,14 +507,14 @@ public class TrackRecordingService extends Service implements LocationListener {
       // This should never happen, but just in case (we really don't want the
       // service to crash):
       if (location == null) {
-        Log.w(Constants.TAG,
+        Log.w(TAG,
             "Location changed, but location is null.");
         return;
       }
 
       // Don't record if the accuracy is too bad:
       if (location.getAccuracy() > minRequiredAccuracy) {
-        Log.d(Constants.TAG,
+        Log.d(TAG,
             "Not recording. Bad accuracy.");
         return;
       }
@@ -521,7 +522,7 @@ public class TrackRecordingService extends Service implements LocationListener {
       // At least one track must be available for appending points:
       recordingTrack = getRecordingTrack();
       if (recordingTrack == null) {
-        Log.d(Constants.TAG,
+        Log.d(TAG,
             "Not recording. No track to append to available.");
         return;
       }
@@ -555,7 +556,7 @@ public class TrackRecordingService extends Service implements LocationListener {
       // maxRecordingDistance = 0
       if (distanceToLast == 0 && !hasSensorData) {
         if (isMoving) {
-          Log.d(Constants.TAG, "Found two identical locations.");
+          Log.d(TAG, "Found two identical locations.");
           isMoving = false;
           if (lastLocation != null && lastRecordedLocation != null
               && !lastRecordedLocation.equals(lastLocation)) {
@@ -570,7 +571,7 @@ public class TrackRecordingService extends Service implements LocationListener {
             lastRecordedLocationId++;
           }
         } else {
-          Log.d(Constants.TAG,
+          Log.d(TAG,
               "Not recording. More than two identical locations.");
         }
       } else if (distanceToLastRecorded > minRecordingDistance
@@ -595,7 +596,7 @@ public class TrackRecordingService extends Service implements LocationListener {
                 && recordingTrack.getStartId() >= 0;
         if (startNewSegment) {
           // Insert a separator point to indicate start of new track:
-          Log.d(Constants.TAG, "Inserting a separator.");
+          Log.d(TAG, "Inserting a separator.");
           Location separator = new Location(Constants.GPS_PROVIDER);
           separator.setLongitude(0);
           separator.setLatitude(100);
@@ -608,7 +609,7 @@ public class TrackRecordingService extends Service implements LocationListener {
           return;
         }
       } else {
-        Log.d(Constants.TAG, String.format(
+        Log.d(TAG, String.format(
             "Not recording. Distance to last recorded point (%f m) is less than"
             + " %d m.", distanceToLastRecorded, minRecordingDistance));
         // Return here so that the location is NOT recorded as the last location.
@@ -616,11 +617,11 @@ public class TrackRecordingService extends Service implements LocationListener {
       }
     } catch (Error e) {
       // Probably important enough to rethrow.
-      Log.e(Constants.TAG, "Error in onLocationChanged", e);
+      Log.e(TAG, "Error in onLocationChanged", e);
       throw e;
     } catch (RuntimeException e) {
       // Safe usually to trap exceptions.
-      Log.e(Constants.TAG,
+      Log.e(TAG,
           "Trapping exception in onLocationChanged", e);
       throw e;
     }
@@ -657,7 +658,7 @@ public class TrackRecordingService extends Service implements LocationListener {
   @Override
   public void onCreate() {
     super.onCreate();
-    Log.d(Constants.TAG, "TrackRecordingService.onCreate");
+    Log.d(TAG, "TrackRecordingService.onCreate");
     providerUtils = MyTracksProviderUtils.Factory.get(this);
     notificationManager =
         (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -682,7 +683,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     } else {
       if (recordingTrackId != -1) {
         // Make sure we have consistent state in shared preferences.
-        Log.w(Constants.TAG, "TrackRecordingService.onCreate: "
+        Log.w(TAG, "TrackRecordingService.onCreate: "
             + "Resetting an orphaned recording track = " + recordingTrackId);
       }
       prefManager.setRecordingTrack(recordingTrackId = -1);
@@ -697,7 +698,7 @@ public class TrackRecordingService extends Service implements LocationListener {
    * the announcements, otherwise this method is no-op.
    */
   private void setUpAnnouncer() {
-    Log.d(Constants.TAG, "TrackRecordingService.setUpAnnouncer: "
+    Log.d(TAG, "TrackRecordingService.setUpAnnouncer: "
         + announcementExecuter);
     if (announcementFrequency != -1 && recordingTrackId != -1) {
       handler.post(new Runnable() {
@@ -723,7 +724,7 @@ public class TrackRecordingService extends Service implements LocationListener {
   }
   
   private void shutdownAnnouncer() {
-    Log.d(Constants.TAG, "TrackRecordingService.shutdownAnnouncer: "
+    Log.d(TAG, "TrackRecordingService.shutdownAnnouncer: "
         + announcementExecuter);
     if (announcementExecuter != null) {
       try {
@@ -736,7 +737,7 @@ public class TrackRecordingService extends Service implements LocationListener {
 
   @Override
   public void onDestroy() {
-    Log.d(Constants.TAG, "TrackRecordingService.onDestroy");
+    Log.d(TAG, "TrackRecordingService.onDestroy");
 
     isRecording = false;
     showNotification();
@@ -770,19 +771,19 @@ public class TrackRecordingService extends Service implements LocationListener {
 
   @Override
   public IBinder onBind(Intent intent) {
-    Log.d(Constants.TAG, "TrackRecordingService.onBind");
+    Log.d(TAG, "TrackRecordingService.onBind");
     return binder;
   }
 
   @Override
   public boolean onUnbind(Intent intent) {
-    Log.d(Constants.TAG, "TrackRecordingService.onUnbind");
+    Log.d(TAG, "TrackRecordingService.onUnbind");
     return super.onUnbind(intent);
   }
 
   @Override
   public boolean stopService(Intent name) {
-    Log.d(Constants.TAG, "TrackRecordingService.stopService");
+    Log.d(TAG, "TrackRecordingService.stopService");
     unregisterLocationListener();
     return super.stopService(name);
   }
@@ -799,17 +800,17 @@ public class TrackRecordingService extends Service implements LocationListener {
   }
 
   private void handleStartCommand(Intent intent, int startId) {
-    Log.d(Constants.TAG,
+    Log.d(TAG,
         "TrackRecordingService.handleStartCommand: " + startId);
 
     // Check if called on phone reboot with resume intent.
     if (intent != null &&
         intent.getBooleanExtra(RESUME_TRACK_EXTRA_NAME, false)) {
-      Log.d(Constants.TAG, "TrackRecordingService: requested resume");
+      Log.d(TAG, "TrackRecordingService: requested resume");
       
       // Make sure that the current track exists and is fresh enough.
       if (recordingTrack == null || !shouldResumeTrack(recordingTrack)) {
-        Log.i(Constants.TAG,
+        Log.i(TAG,
             "TrackRecordingService: Not resuming, because the previous track ("
             + recordingTrack + ") doesn't exist or is too old");
         isRecording = false;
@@ -818,19 +819,19 @@ public class TrackRecordingService extends Service implements LocationListener {
         return;
       }
       
-      Log.i(Constants.TAG, "TrackRecordingService: resuming");
+      Log.i(TAG, "TrackRecordingService: resuming");
     }
   }
   
   private void setAutoResumeTrackRetries(
       SharedPreferences sharedPreferences, int retryAttempts) {
-    Log.d(Constants.TAG,
+    Log.d(TAG,
         "Updating auto-resume retry attempts to: " + retryAttempts);
     prefManager.setAutoResumeTrackCurrentRetry(retryAttempts);
   }
   
   private boolean shouldResumeTrack(Track track) {
-    Log.d(Constants.TAG, "shouldResumeTrack: autoResumeTrackTimeout = "
+    Log.d(TAG, "shouldResumeTrack: autoResumeTrackTimeout = "
         + autoResumeTrackTimeout);
 
     // Check if we haven't exceeded the maximum number of retry attempts.
@@ -838,11 +839,11 @@ public class TrackRecordingService extends Service implements LocationListener {
         getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0); 
     int retries = sharedPreferences.getInt(
         getString(R.string.auto_resume_track_current_retry_key), 0);
-    Log.d(Constants.TAG,
+    Log.d(TAG,
         "shouldResumeTrack: Attempting to auto-resume the track ("
         + (retries + 1) + "/" + MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS + ")");
     if (retries >= MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS) {
-      Log.i(Constants.TAG,
+      Log.i(TAG,
           "shouldResumeTrack: Not resuming because exceeded the maximum "
           + "number of auto-resume retries");
       return false;
@@ -854,12 +855,12 @@ public class TrackRecordingService extends Service implements LocationListener {
     // Check for special cases.
     if (autoResumeTrackTimeout == 0) {
       // Never resume.  
-      Log.d(Constants.TAG,
+      Log.d(TAG,
           "shouldResumeTrack: Auto-resume disabled (never resume)");
       return false;
     } else if (autoResumeTrackTimeout == -1) {
       // Always resume.
-      Log.d(Constants.TAG,
+      Log.d(TAG,
           "shouldResumeTrack: Auto-resume forced (always resume)");
       return true;
     }
@@ -867,7 +868,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     // Check if the last modified time is within the acceptable range.
     long lastModified =
         track.getStatistics() != null ? track.getStatistics().getStopTime() : 0;
-    Log.d(Constants.TAG,
+    Log.d(TAG,
         "shouldResumeTrack: lastModified = " + lastModified
         + ", autoResumeTrackTimeout: " + autoResumeTrackTimeout);
     return lastModified > 0 && System.currentTimeMillis() - lastModified <=
@@ -897,7 +898,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     }
     wpt.setTrackId(recordingTrackId);
     wpt.setLength(length);
-    if (lastValidLocation == null
+    if (lastLocation == null
         || statsBuilder == null || statsBuilder.getStatistics() == null) {
       // A null location is ok, and expected on track start.
       // Make it an impossible location.
@@ -1056,11 +1057,11 @@ public class TrackRecordingService extends Service implements LocationListener {
     public byte[] getSensorData() {
       checkService();      
       if (service.sensorManager == null) {
-        Log.d(Constants.TAG, "No sensor manager for data.");
+        Log.d(TAG, "No sensor manager for data.");
         return null;
       }
       if (service.sensorManager.getSensorDataSet() == null) {
-        Log.d(Constants.TAG, "Sensor data set is null.");
+        Log.d(TAG, "Sensor data set is null.");
         return null;
       }
       return service.sensorManager.getSensorDataSet().toByteArray();
@@ -1070,7 +1071,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     public int getSensorState() {
       checkService();      
       if (service.sensorManager == null) {
-        Log.d(Constants.TAG, "No sensor manager for data.");
+        Log.d(TAG, "No sensor manager for data.");
         return Sensor.SensorState.NONE.getNumber();
       }
       return service.sensorManager.getSensorState().getNumber();
@@ -1078,7 +1079,7 @@ public class TrackRecordingService extends Service implements LocationListener {
   }
 
   public long startNewTrack() {
-    Log.d(Constants.TAG, "TrackRecordingService.startNewTrack");
+    Log.d(TAG, "TrackRecordingService.startNewTrack");
     if (recordingTrackId != -1 || isRecording) {
       throw new IllegalStateException("A track is already in progress!");
     }
@@ -1128,7 +1129,7 @@ public class TrackRecordingService extends Service implements LocationListener {
   }
 
   private void endCurrentTrack() {
-    Log.d(Constants.TAG, "TrackRecordingService.endCurrentTrack");
+    Log.d(TAG, "TrackRecordingService.endCurrentTrack");
     if (recordingTrackId == -1 || !isRecording) {
       throw new IllegalStateException("No recording track in progress!");
     }

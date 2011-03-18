@@ -1,20 +1,23 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks;
+package com.google.android.apps.mytracks.io.sendtogoogle;
 
+import com.google.android.apps.mytracks.DialogManager;
+import com.google.android.apps.mytracks.MyTracks;
+import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Dialog;
@@ -37,7 +40,7 @@ import android.widget.RadioGroup;
  *
  * @author Leif Hendrik Wilden
  */
-public class SendToGoogleDialog extends Dialog {
+public class SendDialog extends Dialog {
 
   private RadioGroup groupMyMaps;
   private RadioButton createNewMapRadioButton;
@@ -49,7 +52,7 @@ public class SendToGoogleDialog extends Dialog {
   private RadioButton sendStatsAndPointsRadioButton;
   private Button sendButton;
 
-  public SendToGoogleDialog(Context context) {
+  public SendDialog(Context context) {
     super(context);
   }
 
@@ -81,8 +84,6 @@ public class SendToGoogleDialog extends Dialog {
             sendToFusionTablesCheckBox.isChecked() ||
             sendToDocsCheckBox.isChecked());
         groupMyMaps.setVisibility(sendToMyMapsCheckBox.isChecked() ? View.VISIBLE : View.INVISIBLE);
-        //groupDocs.setVisibility(
-        //    sendToDocsCheckBox.isChecked() ? View.VISIBLE : View.INVISIBLE);
       }
     };
 
