@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks;
 
-import static com.google.android.apps.mytracks.MyTracksConstants.TAG;
+import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
@@ -343,37 +343,37 @@ public class MyTracksMap extends MapActivity
         public void onCreateContextMenu(ContextMenu menu, View v,
             ContextMenuInfo menuInfo) {
           menu.setHeaderTitle(R.string.tracklist_this_track);
-          menu.add(0, MyTracksConstants.MENU_EDIT, 0,
+          menu.add(0, Constants.MENU_EDIT, 0,
               R.string.tracklist_edit_track);
           if (!dataHub.isRecordingSelected()) {
-            menu.add(0, MyTracksConstants.MENU_SEND_TO_GOOGLE, 0,
+            menu.add(0, Constants.MENU_SEND_TO_GOOGLE, 0,
                 R.string.tracklist_send_to_google);
-            SubMenu share = menu.addSubMenu(0, MyTracksConstants.MENU_SHARE, 0,
+            SubMenu share = menu.addSubMenu(0, Constants.MENU_SHARE, 0,
                 R.string.tracklist_share_track);
-            share.add(0, MyTracksConstants.MENU_SHARE_LINK, 0,
+            share.add(0, Constants.MENU_SHARE_LINK, 0,
                 R.string.tracklist_share_link);
-            share.add(0, MyTracksConstants.MENU_SHARE_GPX_FILE, 0,
+            share.add(0, Constants.MENU_SHARE_GPX_FILE, 0,
                 R.string.tracklist_share_gpx_file);
-            share.add(0, MyTracksConstants.MENU_SHARE_KML_FILE, 0,
+            share.add(0, Constants.MENU_SHARE_KML_FILE, 0,
                 R.string.tracklist_share_kml_file);
-            share.add(0, MyTracksConstants.MENU_SHARE_CSV_FILE, 0,
+            share.add(0, Constants.MENU_SHARE_CSV_FILE, 0,
                 R.string.tracklist_share_csv_file);
-            share.add(0, MyTracksConstants.MENU_SHARE_TCX_FILE, 0,
+            share.add(0, Constants.MENU_SHARE_TCX_FILE, 0,
                 R.string.tracklist_share_tcx_file);
             SubMenu save = menu.addSubMenu(0,
-                MyTracksConstants.MENU_WRITE_TO_SD_CARD, 0,
+                Constants.MENU_WRITE_TO_SD_CARD, 0,
                 R.string.tracklist_write_to_sd);
-            save.add(0, MyTracksConstants.MENU_SAVE_GPX_FILE, 0,
+            save.add(0, Constants.MENU_SAVE_GPX_FILE, 0,
                 R.string.tracklist_save_as_gpx);
-            save.add(0, MyTracksConstants.MENU_SAVE_KML_FILE, 0,
+            save.add(0, Constants.MENU_SAVE_KML_FILE, 0,
                 R.string.tracklist_save_as_kml);
-            save.add(0, MyTracksConstants.MENU_SAVE_CSV_FILE, 0,
+            save.add(0, Constants.MENU_SAVE_CSV_FILE, 0,
                 R.string.tracklist_save_as_csv);
-            save.add(0, MyTracksConstants.MENU_SAVE_TCX_FILE, 0,
+            save.add(0, Constants.MENU_SAVE_TCX_FILE, 0,
                 R.string.tracklist_save_as_tcx);
-            menu.add(0, MyTracksConstants.MENU_CLEAR_MAP, 0,
+            menu.add(0, Constants.MENU_CLEAR_MAP, 0,
                 R.string.tracklist_clear_map);
-            menu.add(0, MyTracksConstants.MENU_DELETE, 0,
+            menu.add(0, Constants.MENU_DELETE, 0,
                 R.string.tracklist_delete_track);
           }
         }
@@ -383,7 +383,7 @@ public class MyTracksMap extends MapActivity
   public boolean onMenuItemSelected(int featureId, MenuItem item) {
     if (!super.onMenuItemSelected(featureId, item)) {
       MyTracks.getInstance().onActivityResult(
-          MyTracksConstants.getActionFromMenuId(item.getItemId()), RESULT_OK,
+          Constants.getActionFromMenuId(item.getItemId()), RESULT_OK,
           new Intent());
       return true;
     }
@@ -393,10 +393,10 @@ public class MyTracksMap extends MapActivity
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     super.onCreateOptionsMenu(menu);
-    myLocation = menu.add(0, MyTracksConstants.MENU_MY_LOCATION, 0,
+    myLocation = menu.add(0, Constants.MENU_MY_LOCATION, 0,
         R.string.mylocation);
     myLocation.setIcon(android.R.drawable.ic_menu_mylocation);
-    toggleLayers = menu.add(0, MyTracksConstants.MENU_TOGGLE_LAYERS, 0,
+    toggleLayers = menu.add(0, Constants.MENU_TOGGLE_LAYERS, 0,
         R.string.switch_to_sat);
     toggleLayers.setIcon(android.R.drawable.ic_menu_mapmode);
     return true;
@@ -412,7 +412,7 @@ public class MyTracksMap extends MapActivity
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
-      case MyTracksConstants.MENU_MY_LOCATION: {
+      case Constants.MENU_MY_LOCATION: {
         dataHub.forceUpdateLocation();
         keepMyLocationVisible = true;
         if (mapView.getZoomLevel() < 18) {
@@ -420,7 +420,7 @@ public class MyTracksMap extends MapActivity
         }
         return true;
       }
-      case MyTracksConstants.MENU_TOGGLE_LAYERS: {
+      case Constants.MENU_TOGGLE_LAYERS: {
         mapView.setSatellite(!mapView.isSatellite());
         return true;
       }
@@ -497,7 +497,7 @@ public class MyTracksMap extends MapActivity
 
   @Override
   public void onCurrentLocationChanged(Location location) {
-    if (!location.getProvider().equals(MyTracksConstants.GPS_PROVIDER)) {
+    if (!location.getProvider().equals(Constants.GPS_PROVIDER)) {
       Log.d(TAG,
           "MyTracksMap: Network location update received (provider '" + location.getProvider() + "'.");
     }

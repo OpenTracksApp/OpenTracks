@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.content;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.util.ApiFeatures;
 
 import android.content.ContentProvider;
@@ -382,7 +382,7 @@ public class MyTracksProvider extends ContentProvider {
     }
 
     if (ApiFeatures.getInstance().canReuseSQLiteQueryBuilder()) {
-      Log.i(MyTracksConstants.TAG,
+      Log.i(Constants.TAG,
           "Build query: " + qb.buildQuery(projection, selection, selectionArgs, 
           null, null, sortOrder, null));
     }

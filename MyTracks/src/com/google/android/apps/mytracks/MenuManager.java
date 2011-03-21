@@ -64,14 +64,14 @@ class MenuManager {
         return true;
       }
       case R.id.menu_list_tracks: {
-	    activity.startActivityForResult(new Intent(activity, MyTracksList.class),
-	    		MyTracksConstants.SHOW_TRACK);
+	    activity.startActivityForResult(new Intent(activity, TrackList.class),
+	    		Constants.SHOW_TRACK);
         return true;
       }
       case R.id.menu_list_markers: {
-        Intent startIntent = new Intent(activity, MyTracksWaypointsList.class);
+        Intent startIntent = new Intent(activity, WaypointsList.class);
         startIntent.putExtra("trackid", activity.getSelectedTrackId());
-        activity.startActivityForResult(startIntent, MyTracksConstants.SHOW_WAYPOINT);
+        activity.startActivityForResult(startIntent, Constants.SHOW_WAYPOINT);
         return true;
       }
       case R.id.menu_sensor_state: {
@@ -86,7 +86,7 @@ class MenuManager {
       case R.id.menu_help: {
         return startActivity(WelcomeActivity.class);
       }
-      case MyTracksConstants.MENU_CLEAR_MAP: {
+      case Constants.MENU_CLEAR_MAP: {
         activity.clearSelectedTrack();
         return true;
       }

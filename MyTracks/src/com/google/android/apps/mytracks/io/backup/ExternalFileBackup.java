@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.io.backup;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.apps.mytracks.content.TrackPointsColumns;
 import com.google.android.apps.mytracks.content.TracksColumns;
@@ -88,7 +88,7 @@ class ExternalFileBackup {
   private File getBackupsDirectory(boolean create) {
     String dirName = fileUtils.buildExternalDirectoryPath(BACKUPS_SUBDIR);
     final File dir = new File(dirName);
-    Log.d(MyTracksConstants.TAG, "Dir: " + dir.getAbsolutePath());
+    Log.d(Constants.TAG, "Dir: " + dir.getAbsolutePath());
     if (create) {
       // Try to create - if that fails, return null
       return fileUtils.ensureDirectoryExists(dir) ? dir : null;
@@ -147,7 +147,7 @@ class ExternalFileBackup {
    * Synchronously writes a backup to the given file.
    */
   private void writeToFile(File outputFile) throws IOException {
-    Log.d(MyTracksConstants.TAG,
+    Log.d(Constants.TAG,
         "Writing backup to file " + outputFile.getAbsolutePath());
 
     // Create all the auxiliary classes that will do the writing
@@ -219,7 +219,7 @@ class ExternalFileBackup {
    * Synchronously restores the backup from the given file.
    */
   private void restoreFromFile(File inputFile) throws IOException {
-    Log.d(MyTracksConstants.TAG,
+    Log.d(Constants.TAG,
         "Restoring from file " + inputFile.getAbsolutePath());
 
     PreferenceBackupHelper preferencesHelper = new PreferenceBackupHelper();

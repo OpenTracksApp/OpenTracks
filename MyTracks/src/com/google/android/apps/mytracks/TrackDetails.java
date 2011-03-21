@@ -37,7 +37,7 @@ import android.widget.EditText;
  *
  * @author Leif Hendrik Wilden
  */
-public class MyTracksDetails extends Activity implements OnClickListener {
+public class TrackDetails extends Activity implements OnClickListener {
 
   /**
    * The id of the track being edited (taken from bundle, "trackid")
@@ -56,7 +56,7 @@ public class MyTracksDetails extends Activity implements OnClickListener {
     // Required extra when launching this intent:
     trackId = getIntent().getLongExtra("trackid", -1);
     if (trackId < 0) {
-      Log.d(MyTracksConstants.TAG,
+      Log.d(Constants.TAG,
           "MyTracksDetails intent was launched w/o track id.");
       finish();
       return;

@@ -235,7 +235,7 @@ public class StatsUtilities {
   }
 
   public void setSpeedLabel(int id, int speedString, int paceString) {
-    Log.w(MyTracksConstants.TAG, "Setting view " + id +
+    Log.w(Constants.TAG, "Setting view " + id +
           " to " + reportSpeed +
           " speed: " + speedString +
           " pace: " + paceString);
@@ -243,7 +243,7 @@ public class StatsUtilities {
     if (tv != null) {
       tv.setText(reportSpeed ?  speedString : paceString);
     } else {
-      Log.w(MyTracksConstants.TAG, "Could not find id: " + id);
+      Log.w(Constants.TAG, "Could not find id: " + id);
     }
   }
 

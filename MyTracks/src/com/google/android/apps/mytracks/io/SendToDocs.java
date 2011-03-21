@@ -16,7 +16,7 @@
 package com.google.android.apps.mytracks.io;
 
 import com.google.android.apps.mytracks.MyTracks;
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
@@ -82,7 +82,7 @@ public class SendToDocs {
       metricUnits = true;
     }
 
-    Log.d(MyTracksConstants.TAG,
+    Log.d(Constants.TAG,
         "Sending to Google Docs: trackId = " + trackId);
     handlerThread = new HandlerThread("SendToGoogleDocs");
     handlerThread.start();
@@ -105,7 +105,7 @@ public class SendToDocs {
 
     try {
       if (trackId == -1) {
-        Log.w(MyTracksConstants.TAG, "Cannot get track id.");
+        Log.w(Constants.TAG, "Cannot get track id.");
         return;
       }
 
@@ -113,14 +113,14 @@ public class SendToDocs {
       Track track =
           MyTracksProviderUtils.Factory.get(activity).getTrack(trackId);
       if (track == null) {
-        Log.w(MyTracksConstants.TAG, "Cannot get track.");
+        Log.w(Constants.TAG, "Cannot get track.");
         return;
       }
 
       // Transmit track stats via GData feed:
       // -------------------------------
 
-      Log.d(MyTracksConstants.TAG, "SendToDocs: Uploading to spreadsheet");
+      Log.d(Constants.TAG, "SendToDocs: Uploading to spreadsheet");
       success = uploadToDocs(track);
       if (success) {
         if (createdNewSpreadSheet) {
@@ -133,7 +133,7 @@ public class SendToDocs {
       } else {
         statusMessage = activity.getString(R.string.error_sending_to_docs);
       }
-      Log.d(MyTracksConstants.TAG, "SendToDocs: Done.");
+      Log.d(Constants.TAG, "SendToDocs: Done.");
     } finally {
       if (onCompletion != null) {
         activity.runOnUiThread(onCompletion);
@@ -176,7 +176,7 @@ public class SendToDocs {
       SpreadsheetsClient gdataClient = new SpreadsheetsClient(androidClient,
           new XmlDocsGDataParserFactory(new AndroidXmlParserFactory()));
       trixWrapper.setClient(gdataClient);
-      Log.d(MyTracksConstants.TAG,
+      Log.d(Constants.TAG,
           "GData connection prepared: " + this.docListAuth);
       String sheetTitle = "My Tracks";
 
@@ -194,7 +194,7 @@ public class SendToDocs {
         spreadsheetId = docsHelper.requestSpreadsheetId(docListWrapper, 
             sheetTitle);
       } catch (IOException e) {
-        Log.i(MyTracksConstants.TAG, "Spreadsheet lookup failed.", e);
+        Log.i(Constants.TAG, "Spreadsheet lookup failed.", e);
         return false;
       }
 
@@ -205,14 +205,14 @@ public class SendToDocs {
         try {
           Thread.sleep(5000);
         } catch (InterruptedException e) {
-          Log.e(MyTracksConstants.TAG, "Sleep interrupted", e);
+          Log.e(Constants.TAG, "Sleep interrupted", e);
         }
         
         try {
           spreadsheetId = docsHelper.requestSpreadsheetId(docListWrapper, 
               sheetTitle);
         } catch (IOException e) {
-          Log.i(MyTracksConstants.TAG, "2nd spreadsheet lookup failed.", e);
+          Log.i(Constants.TAG, "2nd spreadsheet lookup failed.", e);
           return false;
         }
       }
@@ -220,13 +220,13 @@ public class SendToDocs {
       // We were unable to find an existing spreadsheet, so create a new one.
       MyTracks.getInstance().setProgressValue(70);
       if (spreadsheetId == null) {
-        Log.i(MyTracksConstants.TAG, "Creating new spreadsheet: " + sheetTitle);
+        Log.i(Constants.TAG, "Creating new spreadsheet: " + sheetTitle);
 
         try {
           spreadsheetId = docsHelper.createSpreadsheet(activity, docListWrapper,
               sheetTitle);
         } catch (IOException e) {
-          Log.i(MyTracksConstants.TAG, "Failed to create new spreadsheet "
+          Log.i(Constants.TAG, "Failed to create new spreadsheet "
               + sheetTitle, e);
           return false;
         }
@@ -239,19 +239,19 @@ public class SendToDocs {
           // reported an error. Seems to be a know bug,
           // see http://code.google.com/p/gdata-issues/issues/detail?id=929
           // Try to find the created spreadsheet:
-          Log.w(MyTracksConstants.TAG,
+          Log.w(Constants.TAG,
               "Create might have failed. Trying to find created document.");
           try {
             Thread.sleep(5000);
           } catch (InterruptedException e) {
-            Log.e(MyTracksConstants.TAG, "Sleep interrupted", e);
+            Log.e(Constants.TAG, "Sleep interrupted", e);
           }
 
           try {
             spreadsheetId = docsHelper.requestSpreadsheetId(docListWrapper, 
                 sheetTitle);
           } catch (IOException e) {
-            Log.i(MyTracksConstants.TAG, "Failed create-failed lookup", e);
+            Log.i(Constants.TAG, "Failed create-failed lookup", e);
             return false;
           }
 
@@ -261,19 +261,19 @@ public class SendToDocs {
             try {
               Thread.sleep(5000);
             } catch (InterruptedException e) {
-              Log.e(MyTracksConstants.TAG, "Sleep interrupted", e);
+              Log.e(Constants.TAG, "Sleep interrupted", e);
             }
             
             try {
               spreadsheetId = docsHelper.requestSpreadsheetId(docListWrapper, 
                   sheetTitle);
             } catch (IOException e) {
-              Log.i(MyTracksConstants.TAG, "Failed create-failed relookup", e);
+              Log.i(Constants.TAG, "Failed create-failed relookup", e);
               return false;
             }
           }
           if (spreadsheetId == null) {
-            Log.i(MyTracksConstants.TAG,
+            Log.i(Constants.TAG,
                 "Creating new spreadsheet really failed.");
             return false;
           }
@@ -287,7 +287,7 @@ public class SendToDocs {
           throw new IOException("Worksheet ID lookup returned empty");
         }
       } catch (IOException e) {
-        Log.i(MyTracksConstants.TAG, "Looking up worksheet id failed.", e);
+        Log.i(Constants.TAG, "Looking up worksheet id failed.", e);
         return false;
       }
 
@@ -295,9 +295,9 @@ public class SendToDocs {
 
       docsHelper.addTrackRow(activity, trixAuth, spreadsheetId, worksheetId, 
           track, metricUnits);
-      Log.i(MyTracksConstants.TAG, "Done uploading to docs.");
+      Log.i(Constants.TAG, "Done uploading to docs.");
     } catch (IOException e) {
-      Log.e(MyTracksConstants.TAG, "Unable to upload docs.", e);
+      Log.e(Constants.TAG, "Unable to upload docs.", e);
       return false;
     } finally {
       if (androidClient != null) {

@@ -16,7 +16,7 @@
 
 package com.google.android.apps.mytracks.services;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 
 import android.util.Log;
 
@@ -77,7 +77,7 @@ public class PeriodicTaskExecuter {
     }
 
     Date start = new Date(next);
-    Log.i(MyTracksConstants.TAG,
+    Log.i(Constants.TAG,
         task.getClass().getSimpleName() + " scheduled to start at " + start
         + " every " + interval + " milliseconds.");
     timer.scheduleAtFixedRate(new PeriodicTimerTask(), start, interval);
@@ -87,7 +87,7 @@ public class PeriodicTaskExecuter {
    * Cleans up this object.
    */
   public void shutdown() {
-    Log.i(MyTracksConstants.TAG,
+    Log.i(Constants.TAG,
         task.getClass().getSimpleName() + " shutting down.");
     if (timer != null) {
       timer.cancel();

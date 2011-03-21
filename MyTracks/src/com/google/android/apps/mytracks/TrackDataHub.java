@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks;
 
-import static com.google.android.apps.mytracks.MyTracksConstants.TAG;
+import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.TrackDataListener.ProviderState;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
@@ -359,7 +359,7 @@ public class TrackDataHub {
 
     final long now = System.currentTimeMillis();
     Location loc = locationManager.getLastKnownLocation(
-        MyTracksConstants.GPS_PROVIDER);
+        Constants.GPS_PROVIDER);
     if (loc == null || loc.getTime() < now - MAX_LOCATION_AGE_MS) {
       // We don't have a recent GPS fix, just use cell towers if available
       loc = locationManager.getLastKnownLocation(
@@ -502,25 +502,25 @@ public class TrackDataHub {
     // Listen to compass
     Sensor compass = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
     if (compass != null) {
-      Log.d(MyTracksConstants.TAG,
+      Log.d(Constants.TAG,
           "TrackDataHub: Now registering sensor listeners.");
       sensorManager.registerListener(compassListener, compass, SensorManager.SENSOR_DELAY_UI);
     }
 
     // Listen to GPS
     LocationProvider gpsProvider =
-        locationManager.getProvider(MyTracksConstants.GPS_PROVIDER);
+        locationManager.getProvider(Constants.GPS_PROVIDER);
     if (gpsProvider == null) {
       Toast.makeText(context, R.string.error_no_gps_location_provider, Toast.LENGTH_LONG).show();
       hasProviderEnabled = false;
       return;
     } else {
-      Log.d(MyTracksConstants.TAG, "TrackDataHub: Using location provider "
+      Log.d(Constants.TAG, "TrackDataHub: Using location provider "
           + gpsProvider.getName());
     }
     locationManager.requestLocationUpdates(gpsProvider.getName(),
         0 /*minTime*/, 0 /*minDist*/, locationListener);
-    hasProviderEnabled = locationManager.isProviderEnabled(MyTracksConstants.GPS_PROVIDER);
+    hasProviderEnabled = locationManager.isProviderEnabled(Constants.GPS_PROVIDER);
 
     // Listen to network location
     try {
@@ -529,7 +529,7 @@ public class TrackDataHub {
     } catch (RuntimeException e) {
       // If anything at all goes wrong with getting a cell location do not
       // abort. Cell location is not essential to this app.
-      Log.w(MyTracksConstants.TAG,
+      Log.w(Constants.TAG,
           "Could not register network location listener.");
     }
   }
@@ -777,7 +777,7 @@ public class TrackDataHub {
   private void notifyWaypointUpdated(final TrackDataListener... listeners) {
     // Always reload all the waypoints.
     final Cursor cursor = providerUtils.getWaypointsCursor(
-        selectedTrackId, 0, MyTracksConstants.MAX_DISPLAYED_WAYPOINTS_POINTS);
+        selectedTrackId, 0, Constants.MAX_DISPLAYED_WAYPOINTS_POINTS);
 
     listenerHandler.post(new Runnable() {
       @Override
@@ -857,7 +857,7 @@ public class TrackDataHub {
     long minPointId = keepState ? lastSeenLocationId + 1 : 0;
     long maxPointId = keepState ? -1 : lastSeenLocationId;
 
-    if (numLoadedPoints >= MyTracksConstants.MAX_DISPLAYED_TRACK_POINTS) {
+    if (numLoadedPoints >= Constants.MAX_DISPLAYED_TRACK_POINTS) {
       // We're about to exceed the maximum allowed number of points, so reload
       // the whole track with fewer points (the sampling frequency will be
       // lower). We do this for every listener even if we were loading just for
@@ -931,7 +931,7 @@ public class TrackDataHub {
         // frequency.
         long numTotalPoints = lastStoredLocationId - localFirstSeenLocationId;
         pointSamplingFrequency =
-            (int) (1 + numTotalPoints / MyTracksConstants.TARGET_DISPLAYED_TRACK_POINTS);
+            (int) (1 + numTotalPoints / Constants.TARGET_DISPLAYED_TRACK_POINTS);
       }
 
       // Include a point if it fits one of the following criteria:

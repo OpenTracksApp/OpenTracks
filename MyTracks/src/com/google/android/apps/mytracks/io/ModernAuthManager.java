@@ -23,7 +23,7 @@ import com.google.android.accounts.AuthenticatorException;
 import com.google.android.accounts.OperationCanceledException;
 import com.google.android.apps.mytracks.AccountChooser;
 import com.google.android.apps.mytracks.MyTracks;
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -104,20 +104,20 @@ public class ModernAuthManager implements AuthManager {
             if (result.containsKey(AccountManager.KEY_INTENT)) {
               Intent intent = (Intent) result.get(AccountManager.KEY_INTENT);
               clearNewTaskFlag(intent);
-              activity.startActivityForResult(intent, MyTracksConstants.GET_LOGIN);
+              activity.startActivityForResult(intent, Constants.GET_LOGIN);
               return;
             }
 
             authToken = result.getString(
                 AccountManager.KEY_AUTHTOKEN);
-            Log.e(MyTracksConstants.TAG, "Got auth token.");
+            Log.e(Constants.TAG, "Got auth token.");
             runWhenFinished();
           } catch (OperationCanceledException e) {
-            Log.e(MyTracksConstants.TAG, "Operation Canceled", e);
+            Log.e(Constants.TAG, "Operation Canceled", e);
           } catch (IOException e) {
-            Log.e(MyTracksConstants.TAG, "IOException", e);
+            Log.e(Constants.TAG, "IOException", e);
           } catch (AuthenticatorException e) {
-            Log.e(MyTracksConstants.TAG, "Authentication Failed", e);
+            Log.e(Constants.TAG, "Authentication Failed", e);
           }
         }
     }, null /* handler */);
@@ -149,9 +149,9 @@ public class ModernAuthManager implements AuthManager {
     if (results != null) {
       authToken = results.getStringExtra(
           AccountManager.KEY_AUTHTOKEN);
-      Log.w(MyTracksConstants.TAG, "authResult: " + authToken);
+      Log.w(Constants.TAG, "authResult: " + authToken);
     } else {
-      Log.e(MyTracksConstants.TAG, "No auth result results!!");
+      Log.e(Constants.TAG, "No auth result results!!");
     }
     runWhenFinished();
     return authToken != null;
@@ -181,7 +181,7 @@ public class ModernAuthManager implements AuthManager {
 
     activity.runOnUiThread(new Runnable() {
       public void run() {
-        accountManager.invalidateAuthToken(MyTracksConstants.ACCOUNT_TYPE,
+        accountManager.invalidateAuthToken(Constants.ACCOUNT_TYPE,
             authToken);
         MyTracks.getInstance().getAccountChooser().chooseAccount(activity,
             new AccountChooser.AccountHandler() {

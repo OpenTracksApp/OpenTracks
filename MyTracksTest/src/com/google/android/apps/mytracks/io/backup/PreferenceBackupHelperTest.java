@@ -82,7 +82,6 @@ public class PreferenceBackupHelperTest extends TestCase {
       return put(key, value);
     }
 
-    @Override
     public Editor putStringSet(String key, Set<String> value) {
       return put(key, value);
     }
@@ -143,7 +142,6 @@ public class PreferenceBackupHelperTest extends TestCase {
       return get(key, defValue);
     }
 
-    @Override
     public Set<String> getStringSet(String key, Set<String> defValue) {
       return get(key, defValue);
     }

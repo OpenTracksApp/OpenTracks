@@ -16,7 +16,7 @@
 package com.google.android.apps.mytracks.io.backup;
 
 import com.google.android.apps.mytracks.MyTracks;
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -97,7 +97,7 @@ public class BackupActivityHelper {
           backup.writeToDefaultFile();
           showToast(R.string.io_write_finished);
         } catch (IOException e) {
-          Log.e(MyTracksConstants.TAG, "Failed to write backup", e);
+          Log.e(Constants.TAG, "Failed to write backup", e);
           showToast(R.string.io_write_failed);
         } finally {
           dismissDialog(progressDialog);
@@ -199,7 +199,7 @@ public class BackupActivityHelper {
           backup.restoreFromDate(date);
           showToast(R.string.io_read_finished);
         } catch (IOException e) {
-          Log.e(MyTracksConstants.TAG, "Failed to restore backup", e);
+          Log.e(Constants.TAG, "Failed to restore backup", e);
           showToast(R.string.io_read_failed);
         } finally {
           dismissDialog(progressDialog);

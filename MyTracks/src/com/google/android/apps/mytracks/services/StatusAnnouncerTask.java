@@ -1,12 +1,12 @@
 /*
  * Copyright 2009 Google Inc.
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -16,7 +16,9 @@
 
 package com.google.android.apps.mytracks.services;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import static com.google.android.apps.mytracks.Constants.TAG;
+
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.StringUtils;
@@ -99,7 +101,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
    * Called when the TTS engine is initialized.
    */
   protected void onTtsInit(int status) {
-    Log.i(MyTracksConstants.TAG, "TrackRecordingService.TTS init: " + status);
+    Log.i(TAG, "TrackRecordingService.TTS init: " + status);
     this.ready = status == TextToSpeech.SUCCESS;
 
     if (ready) {
@@ -111,7 +113,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
           languageAvailability == TextToSpeech.LANG_NOT_SUPPORTED) {
         // English is probably supported.
         // TODO: Somehow use announcement strings from English too.
-        Log.w(MyTracksConstants.TAG, "Default language not available, using English.");
+        Log.w(TAG, "Default language not available, using English.");
         speechLanguage = Locale.ENGLISH;
       }
       tts.setLanguage(speechLanguage);
@@ -129,7 +131,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
   @Override
   public void run(TrackRecordingService service) {
     if (service == null) {
-      Log.e(MyTracksConstants.TAG, "StatusAnnouncer TrackRecordingService not initialized");
+      Log.e(TAG, "StatusAnnouncer TrackRecordingService not initialized");
       return;
     }
 
@@ -143,23 +145,22 @@ public class StatusAnnouncerTask implements PeriodicTask {
    */
   protected void runWithStatistics(TripStatistics statistics) {
     if (statistics == null) {
-      Log.e(MyTracksConstants.TAG, "StatusAnnouncer stats not initialized.");
+      Log.e(TAG, "StatusAnnouncer stats not initialized.");
       return;
     }
-
     if (!ready || tts == null) {
-      Log.e(MyTracksConstants.TAG, "StatusAnnouncer Tts not ready.");
+      Log.e(TAG, "StatusAnnouncer Tts not ready.");
       return;
     }
 
     if (!speechAllowed) {
-      Log.i(MyTracksConstants.TAG,
+      Log.i(Constants.TAG,
           "Not making announcement - not allowed at this time");
       return;
     }
 
     String announcement = getAnnouncement(statistics);
-    Log.d(MyTracksConstants.TAG, "Announcement: " + announcement);
+    Log.d(Constants.TAG, "Announcement: " + announcement);
     speakAnnouncment(announcement);
   }
 
@@ -179,7 +180,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
     boolean metricUnits = true;
     boolean reportSpeed = true;
     if (preferences != null) {
-      metricUnits =
+      metricUnits = 
           preferences.getBoolean(context.getString(R.string.metric_units_key),
               true);
       reportSpeed =
@@ -218,7 +219,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
         speed = String.format("%.1f", s);
       } else {
         double pace = 3600000.0 / s;
-        Log.w(MyTracksConstants.TAG,
+        Log.w(Constants.TAG,
               "Converted speed: " + s + " to pace: " + pace);
         speed = stringUtils.formatTimeLong((long) pace);
       }
@@ -237,7 +238,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
 
   @Override
   public void start() {
-    Log.i(MyTracksConstants.TAG, "Starting TTS");
+    Log.i(Constants.TAG, "Starting TTS");
     if (tts == null) {
       // We can't have this class also be the listener, otherwise it's unsafe to
       // reference it in Cupcake (even if we don't instantiate it).
@@ -264,7 +265,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
       tts = null;
     }
 
-    Log.i(MyTracksConstants.TAG, "TTS shut down");
+    Log.i(Constants.TAG, "TTS shut down");
   }
 
   /**

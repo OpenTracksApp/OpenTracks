@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.services;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.maps.mytracks.R;
 
@@ -47,7 +47,7 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
     this.sharedPreferences = service.getSharedPreferences(
         MyTracksSettings.SETTINGS_NAME, 0);
     if (sharedPreferences == null) {
-      Log.w(MyTracksConstants.TAG,
+      Log.w(Constants.TAG,
           "TrackRecordingService: Couldn't get shared preferences.");
       throw new IllegalStateException("Couldn't get shared preferences");
     }
@@ -88,7 +88,7 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
       String key) {
     if (service == null) {
-      Log.w(MyTracksConstants.TAG,
+      Log.w(Constants.TAG,
           "onSharedPreferenceChanged: a preference change (key = " + key
           + ") after a call to shutdown()");
       return;
@@ -98,7 +98,7 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
           sharedPreferences.getInt(
               minRecordingDistanceKey,
               MyTracksSettings.DEFAULT_MIN_RECORDING_DISTANCE));
-      Log.d(MyTracksConstants.TAG,
+      Log.d(Constants.TAG,
           "TrackRecordingService: minRecordingDistance = "
           + service.getMinRecordingDistance());
     }

@@ -103,7 +103,7 @@ public class MyTracksOverlay extends Overlay {
     this.waypoints = new ArrayList<Waypoint>();
     this.points = new ArrayList<CachedLocation>(1024);
     this.pendingPoints = new ArrayBlockingQueue<CachedLocation>(
-        MyTracksConstants.MAX_DISPLAYED_TRACK_POINTS, true);
+        Constants.MAX_DISPLAYED_TRACK_POINTS, true);
 
     // TODO: Can we use a FrameAnimation or similar here rather
     // than individual resources for each arrow direction?
@@ -460,7 +460,7 @@ public class MyTracksOverlay extends Overlay {
 
     if (waypoint != null &&
         dmin < 15000000 / Math.pow(2, mapView.getZoomLevel())) {
-      Intent intent = new Intent(context, MyTracksWaypointDetails.class);
+      Intent intent = new Intent(context, WaypointDetails.class);
       intent.putExtra("waypointid", waypoint.getId());
       context.startActivity(intent);
       return true;

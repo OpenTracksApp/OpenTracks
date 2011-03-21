@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.io.docs;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.AuthManager;
 import com.google.android.apps.mytracks.io.gdata.GDataWrapper;
@@ -144,7 +144,7 @@ public class DocsHelper {
         
         String id = result.substring(
             idStringStart + DOCS_SPREADSHEET_URL.length(), idTagCloseIndex);
-        Log.i(MyTracksConstants.TAG, "Created new spreadsheet: " + id);
+        Log.i(Constants.TAG, "Created new spreadsheet: " + id);
         idSaver.set(id);
       }});
     
@@ -184,7 +184,7 @@ public class DocsHelper {
           while (listParser.hasMoreData()) {
             Entry entry = listParser.readNextEntry(null);
             String entryTitle = entry.getTitle();
-            Log.i(MyTracksConstants.TAG, "Found docs entry: " + entryTitle);
+            Log.i(Constants.TAG, "Found docs entry: " + entryTitle);
             if (entryTitle.equals(title)) {
               String entryId = entry.getId();
               int lastSlash = entryId.lastIndexOf('/');
@@ -233,7 +233,7 @@ public class DocsHelper {
               trixWrapper.getAuthManager().getAuthToken());
           sheetParser.init();
           if (!sheetParser.hasMoreData()) {
-            Log.i(MyTracksConstants.TAG, "Found no worksheets");
+            Log.i(Constants.TAG, "Found no worksheets");
             return;
           }
 
@@ -308,7 +308,7 @@ public class DocsHelper {
 
     if (track.getMapId().length() > 0) {
       tagBuilder.append("map", String.format("%s?msa=0&msid=%s",
-          MyTracksConstants.MAPSHOP_BASE_URL, track.getMapId()));
+          Constants.MAPSHOP_BASE_URL, track.getMapId()));
     }
     
     String postText = new StringBuilder()
@@ -319,14 +319,14 @@ public class DocsHelper {
         .append("</entry>")
         .toString();
 
-    Log.i(MyTracksConstants.TAG,
+    Log.i(Constants.TAG,
         "Inserting at: " + spreadsheetId + " => " + worksheetUri);
 
-    Log.i(MyTracksConstants.TAG, postText);
+    Log.i(Constants.TAG, postText);
     
     writeRowData(trixAuth, worksheetUri, postText);
 
-    Log.i(MyTracksConstants.TAG, "Post finished.");
+    Log.i(Constants.TAG, "Post finished.");
   }
 
   /**
@@ -358,7 +358,7 @@ public class DocsHelper {
     String line;
     while ((line = rd.readLine()) != null) {
       // Process line.
-      Log.i(MyTracksConstants.TAG, "r: " + line);
+      Log.i(Constants.TAG, "r: " + line);
     }
     wr.close();
     rd.close();

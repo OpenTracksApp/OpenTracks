@@ -15,16 +15,16 @@
  */
 package com.google.android.apps.mytracks.services.sensors;
 
-import static com.google.android.apps.mytracks.MyTracksConstants.TAG;
-
-import com.dsi.ant.AntDefine;
-import com.dsi.ant.AntMesg;
-import com.dsi.ant.exception.AntInterfaceException;
+import static com.google.android.apps.mytracks.Constants.TAG;
 import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.services.sensors.ant.AntChannelIdMessage;
 import com.google.android.apps.mytracks.services.sensors.ant.AntChannelResponseMessage;
 import com.google.android.maps.mytracks.R;
+
+import com.dsi.ant.AntDefine;
+import com.dsi.ant.AntMesg;
+import com.dsi.ant.exception.AntInterfaceException;
 
 import android.content.Context;
 import android.content.SharedPreferences;

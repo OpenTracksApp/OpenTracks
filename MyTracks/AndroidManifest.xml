@@ -17,8 +17,8 @@ limitations under the License.
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.google.android.maps.mytracks"
           android:installLocation="auto"
-          android:versionCode="25"
-          android:versionName="1.1.3rc1">
+          android:versionCode="26"
+          android:versionName="1.1.4rc1">
   <application android:icon="@drawable/arrow_icon"
                android:label="@string/app_name"
                android:backupAgent="com.google.android.apps.mytracks.io.backup.MyTracksBackupAgent">
@@ -61,16 +61,16 @@ limitations under the License.
               android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|fontScale"
               android:exported="false" />
 
-    <activity android:name="com.google.android.apps.mytracks.MyTracksList"
+    <activity android:name="com.google.android.apps.mytracks.TrackList"
               android:label="Recorded Tracks" />
 
-    <activity android:name="com.google.android.apps.mytracks.MyTracksWaypointsList"
+    <activity android:name="com.google.android.apps.mytracks.WaypointsList"
               android:label="Recorded Waypoints" />
 
-    <activity android:name="com.google.android.apps.mytracks.MyTracksDetails"
+    <activity android:name="com.google.android.apps.mytracks.TrackDetails"
               android:label="@string/trackdetails_title" />
 
-    <activity android:name="com.google.android.apps.mytracks.MyTracksWaypointDetails"
+    <activity android:name="com.google.android.apps.mytracks.WaypointDetails"
               android:label="@string/waypointdetails_title" />
 
     <activity android:name="com.google.android.apps.mytracks.MyTracksSettings"

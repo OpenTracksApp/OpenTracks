@@ -15,14 +15,14 @@
  */
 package com.google.android.apps.mytracks.io;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import static com.google.android.apps.mytracks.Constants.TAG;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.apps.mytracks.ProgressIndicator;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.mymaps.MapsFacade;
-import com.google.android.apps.mytracks.io.mymaps.MapsFacade.WaypointData;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.MyTracksUtils;
@@ -93,7 +93,7 @@ public class SendToMyMaps implements Runnable {
 
   @Override
   public void run() {
-    Log.d(MyTracksConstants.TAG, "Sending to MyMaps: trackId = " + trackId);
+    Log.d(TAG, "Sending to MyMaps: trackId = " + trackId);
     doUpload();
   }
 
@@ -111,7 +111,7 @@ public class SendToMyMaps implements Runnable {
       track.setDescription("<p>" + track.getDescription() + "</p><p>"
           + stringUtils.generateTrackDescription(track, null, null) + "</p>");
 
-      mapsClient = MyMapsFactory.newMapsClient(context, auth);
+      mapsClient = new MapsFacade(context, auth);
   
       // Create a new map if necessary:
       boolean isNewMap = mapId.equals(NEW_MAP_ID);
@@ -142,17 +142,16 @@ public class SendToMyMaps implements Runnable {
       if (success) {
         Cursor c = providerUtils.getWaypointsCursor(
             track.getId(), 0,
-            MyTracksConstants.MAX_LOADED_WAYPOINTS_POINTS);
+            Constants.MAX_LOADED_WAYPOINTS_POINTS);
         if (c != null) {
           try {
             if (c.getCount() > 1 && c.moveToFirst()) {
               // This will skip the 1st waypoint (it carries the stats for the
               // last segment).
-              ArrayList<WaypointData> waypoints = new ArrayList<WaypointData>(c.getCount() - 1);
+              ArrayList<Waypoint> waypoints = new ArrayList<Waypoint>(c.getCount() - 1);
               while (c.moveToNext()) {
                 Waypoint wpt = providerUtils.createWaypoint(c);
-                waypoints.add(new WaypointData(
-                    wpt.getName(), wpt.getDescription(), wpt.getIcon(), wpt.getLocation()));
+                waypoints.add(wpt);
               }
 
               success = mapsClient.uploadWaypoints(mapId, waypoints);
@@ -165,8 +164,7 @@ public class SendToMyMaps implements Runnable {
         }
 
         if (!success) {
-          Log.w(MyTracksConstants.TAG,
-              "SendToMyMaps: upload waypoints failed.");
+          Log.w(TAG, "SendToMyMaps: upload waypoints failed.");
         }
       }
   
@@ -175,7 +173,7 @@ public class SendToMyMaps implements Runnable {
             ? R.string.status_new_mymap_has_been_created
             : R.string.status_tracks_have_been_uploaded;
       }
-      Log.d(MyTracksConstants.TAG, "SendToMyMaps: Done: " + success);
+      Log.d(TAG, "SendToMyMaps: Done: " + success);
       progressIndicator.setProgressValue(100);
     } finally {
       if (mapsClient != null) {
@@ -210,7 +208,7 @@ public class SendToMyMaps implements Runnable {
         providerUtils.getLocationsCursor(track.getId(), 0, -1, false);
     try {
       if (!locationsCursor.moveToFirst()) {
-        Log.w(MyTracksConstants.TAG, "Unable to get any points to upload");
+        Log.w(TAG, "Unable to get any points to upload");
         return false;
       }
   
@@ -223,7 +221,7 @@ public class SendToMyMaps implements Runnable {
       // Limit the number of elevation readings. Ideally we would want around 250.
       int elevationSamplingFrequency =
           Math.max(1, (int) (totalLocations / 250.0));
-      Log.d(MyTracksConstants.TAG,
+      Log.d(TAG,
             "Using elevation sampling factor: " + elevationSamplingFrequency
             + " on " + totalLocations);
       double totalDistance = 0;
@@ -231,7 +229,7 @@ public class SendToMyMaps implements Runnable {
       Vector<Double> distances = new Vector<Double>();
       Vector<Double> elevations = new Vector<Double>();
       DoubleBuffer elevationBuffer =
-          new DoubleBuffer(MyTracksConstants.ELEVATION_SMOOTHING_FACTOR);
+          new DoubleBuffer(Constants.ELEVATION_SMOOTHING_FACTOR);
   
       List<Location> locations = new ArrayList<Location>(MAX_POINTS_PER_UPLOAD);
       progressIndicator.setProgressMessage(
@@ -312,7 +310,7 @@ public class SendToMyMaps implements Runnable {
   
     int numLocations = locations.size();
     if (numLocations < 2) {
-      Log.d(MyTracksConstants.TAG, "Not preparing/uploading too few points");
+      Log.d(TAG, "Not preparing/uploading too few points");
       totalLocationsUploaded += numLocations;
       return true;
     }
@@ -330,16 +328,16 @@ public class SendToMyMaps implements Runnable {
                 context.getString(R.string.part), totalSegmentsUploaded));
       }
       totalSegmentsUploaded++;
-      Log.d(MyTracksConstants.TAG,
+      Log.d(TAG,
           "SendToMyMaps: Prepared feature for upload w/ "
           + splitTrack.getLocations().size() + " points.");
   
       // Transmit tracks via GData feed:
       // -------------------------------
-      Log.d(MyTracksConstants.TAG,
+      Log.d(TAG,
             "SendToMyMaps: Uploading to map " + mapId + " w/ auth " + auth);
       if (!mapsClient.uploadTrackPoints(mapId, splitTrack.getName(), splitTrack.getLocations())) {
-        Log.e(MyTracksConstants.TAG, "Uploading failed");
+        Log.e(TAG, "Uploading failed");
         return false;
       }
     }
@@ -385,7 +383,7 @@ public class SendToMyMaps implements Runnable {
         // Close up the last segment.
         prepareTrackSegment(segment, splitTracks);
   
-        Log.d(MyTracksConstants.TAG,
+        Log.d(TAG,
             "MyTracksSendToMyMaps: Starting new track segment...");
         startNewTrackSegment = false;
         segment = new Track();

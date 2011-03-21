@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.services;
 
-import static com.google.android.apps.mytracks.MyTracksConstants.RESUME_TRACK_EXTRA_NAME;
+import static com.google.android.apps.mytracks.Constants.RESUME_TRACK_EXTRA_NAME;
 
 import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.apps.mytracks.content.MyTracksProvider;

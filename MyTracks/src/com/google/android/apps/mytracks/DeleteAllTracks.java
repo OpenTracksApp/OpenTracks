@@ -34,12 +34,12 @@ import android.util.Log;
  *
  * @author Leif Hendrik Wilden
  */
-public class MyTracksDeleteAllTracks extends Handler {
+public class DeleteAllTracks extends Handler {
 
   private final Context context;
   private final Runnable done;
 
-  public MyTracksDeleteAllTracks(Context context, Runnable done) {
+  public DeleteAllTracks(Context context, Runnable done) {
     this.context = context;
     this.done = done;
   }
@@ -58,7 +58,7 @@ public class MyTracksDeleteAllTracks extends Handler {
         new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int i) {
             dialog.dismiss();
-            Log.w(MyTracksConstants.TAG, "deleting all!");
+            Log.w(Constants.TAG, "deleting all!");
             MyTracksProviderUtils.Factory.get(context).deleteAllTracks();
             SharedPreferences prefs =
                 context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);

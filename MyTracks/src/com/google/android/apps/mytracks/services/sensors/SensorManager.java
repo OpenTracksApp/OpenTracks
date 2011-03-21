@@ -15,14 +15,13 @@
  */
 package com.google.android.apps.mytracks.services.sensors;
 
-import static com.google.android.apps.mytracks.MyTracksConstants.TAG;
-
-import com.google.android.apps.mytracks.content.Sensor;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.util.Log;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.content.Sensor;
 
 /**
  * Manage the connection to a sensor.
@@ -51,17 +50,19 @@ public abstract class SensorManager {
   private TimerTask checkSensorManager = new TimerTask() {
     @Override
     public void run() {
-      Log.i(TAG, "SensorManager state: " + getSensorState());
+      Log.i(Constants.TAG,
+          "SensorManager state: " + getSensorState());
       switch (getSensorState()) {
         case CONNECTING:
           long age = System.currentTimeMillis() - getSensorStateTimestamp();
           if (age > 2 * RETRY_PERIOD) {
-            Log.i(TAG, "Retrying connecting SensorManager.");
+            Log.i(Constants.TAG, "Retrying connecting SensorManager.");
             setupChannel();
           }
           break;
         case DISCONNECTED:
-          Log.i(TAG, "Re-registering disconnected SensorManager.");
+          Log.i(Constants.TAG,
+              "Re-registering disconnected SensoManager.");
           setupChannel();
           break;
       }

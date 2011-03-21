@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.services;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 
 import android.util.Log;
 
@@ -49,14 +49,14 @@ public class TaskExecuterManager {
    */
   public void setFrequency(int frequency, TrackRecordingService service) {
     this.frequency = frequency;
-    Log.i(MyTracksConstants.TAG, "Frequency set to " + frequency
+    Log.i(Constants.TAG, "Frequency set to " + frequency
         + " for task " + task.getClass().getSimpleName());
 
     if (frequency == -1) {
       if (executer != null) {
         executer.shutdown();
         executer = null;
-        Log.i(MyTracksConstants.TAG,
+        Log.i(Constants.TAG,
             "Shut down service: " + task.getClass().getSimpleName());
       }
     } else {

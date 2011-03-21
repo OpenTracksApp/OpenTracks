@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks;
 
-import static com.google.android.apps.mytracks.MyTracksConstants.TAG;
+import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
@@ -175,14 +175,14 @@ public class StatsActivity extends Activity implements TrackDataListener {
   public boolean onCreateOptionsMenu(Menu menu) {
     super.onCreateOptionsMenu(menu);
     MenuItem currentSegment = menu.add(0,
-        MyTracksConstants.MENU_CURRENT_SEGMENT, 0, R.string.current_segment);
+        Constants.MENU_CURRENT_SEGMENT, 0, R.string.current_segment);
     currentSegment.setIcon(R.drawable.ic_menu_lastsegment);
     return true;
   }
 
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
-    MenuItem item = menu.findItem(MyTracksConstants.MENU_CURRENT_SEGMENT);
+    MenuItem item = menu.findItem(Constants.MENU_CURRENT_SEGMENT);
     if (item != null) {
       item.setTitle(showCurrentSegment
           ? getString(R.string.current_track)
@@ -194,7 +194,7 @@ public class StatsActivity extends Activity implements TrackDataListener {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
-      case MyTracksConstants.MENU_CURRENT_SEGMENT:
+      case Constants.MENU_CURRENT_SEGMENT:
         showCurrentSegment = !showCurrentSegment;
         // TODO: Re-read only the data that interests us
         return true;

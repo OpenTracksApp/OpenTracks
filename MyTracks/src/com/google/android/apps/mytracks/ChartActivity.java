@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks;
 
-import static com.google.android.apps.mytracks.MyTracksConstants.TAG;
+import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.ChartView.Mode;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
@@ -55,9 +55,9 @@ import java.util.ArrayList;
 public class ChartActivity extends Activity implements TrackDataListener {
 
   private final DoubleBuffer elevationBuffer =
-      new DoubleBuffer(MyTracksConstants.ELEVATION_SMOOTHING_FACTOR);
+      new DoubleBuffer(Constants.ELEVATION_SMOOTHING_FACTOR);
   private final DoubleBuffer speedBuffer =
-      new DoubleBuffer(MyTracksConstants.SPEED_SMOOTHING_FACTOR);
+      new DoubleBuffer(Constants.SPEED_SMOOTHING_FACTOR);
   private final ArrayList<double[]> pendingPoints = new ArrayList<double[]>();
 
   private TrackDataHub dataHub;
@@ -186,7 +186,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
   public boolean onCreateOptionsMenu(Menu menu) {
     super.onCreateOptionsMenu(menu);
     chartSettingsMenuItem =
-        menu.add(0, MyTracksConstants.MENU_CHART_SETTINGS, 0,
+        menu.add(0, Constants.MENU_CHART_SETTINGS, 0,
             R.string.chart_settings);
     chartSettingsMenuItem.setIcon(R.drawable.chart_settings);
     return true;
@@ -195,7 +195,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
-      case MyTracksConstants.MENU_CHART_SETTINGS:
+      case Constants.MENU_CHART_SETTINGS:
         MyTracks.getInstance().getDialogManager().showDialogSafely(
             DialogManager.DIALOG_CHART_SETTINGS);
         return true;

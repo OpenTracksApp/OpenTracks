@@ -40,7 +40,7 @@ public class AggregatedStatsActivity extends Activity implements
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
           String key) {
-    Log.d(MyTracksConstants.TAG, "StatsActivity: onSharedPreferences changed "
+    Log.d(Constants.TAG, "StatsActivity: onSharedPreferences changed "
             + key);
     if (key != null) {
       if (key.equals(R.string.metric_units_key)) {

@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.apps.mytracks.io.sendtogoogle.SendDialog;
 import com.google.android.maps.mytracks.R;
 
@@ -96,7 +98,7 @@ public class DialogManager {
         activity.resetSendToGoogleStatus();
         break;
       case DIALOG_CHART_SETTINGS:
-        Log.d(MyTracksConstants.TAG, "MyTracks.onPrepare chart dialog");
+        Log.d(TAG, "MyTracks.onPrepare chart dialog");
         chartSettingsDialog.setup(activity.getChartActivity());
         break;
     }
@@ -170,11 +172,9 @@ public class DialogManager {
         try {
           activity.showDialog(id);
         } catch (BadTokenException e) {
-          Log.w(MyTracksConstants.TAG,
-              "Could not display dialog with id " + id, e);
+          Log.w(TAG, "Could not display dialog with id " + id, e);
         } catch (IllegalStateException e) {
-          Log.w(MyTracksConstants.TAG,
-              "Could not display dialog with id " + id, e);
+          Log.w(TAG, "Could not display dialog with id " + id, e);
         }
       }
     });
@@ -190,9 +190,9 @@ public class DialogManager {
         try {
           dialog.show();
         } catch (BadTokenException e) {
-          Log.w(MyTracksConstants.TAG, "Could not display dialog", e);
+          Log.w(TAG, "Could not display dialog", e);
         } catch (IllegalStateException e) {
-          Log.w(MyTracksConstants.TAG, "Could not display dialog", e);
+          Log.w(TAG, "Could not display dialog", e);
         }
       }
     });

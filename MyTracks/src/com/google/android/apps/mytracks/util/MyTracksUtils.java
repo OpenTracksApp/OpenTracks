@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 
@@ -146,7 +146,7 @@ public class MyTracksUtils {
       }
       idx++;
     }
-    Log.d(MyTracksConstants.TAG, "Decimating " + n + " points to " + i
+    Log.d(Constants.TAG, "Decimating " + n + " points to " + i
         + " w/ tolerance = " + tolerance);
   }
 
@@ -268,7 +268,7 @@ public class MyTracksUtils {
         }
       }
     } catch (NameNotFoundException e) {
-      Log.e(MyTracksConstants.TAG, "Unable to get signatures", e);
+      Log.e(Constants.TAG, "Unable to get signatures", e);
     }
     return false;
   }
@@ -285,7 +285,7 @@ public class MyTracksUtils {
           PackageManager.GET_META_DATA);
       return pi.versionName;
     } catch (NameNotFoundException e)  {
-      Log.w(MyTracksConstants.TAG, "Failed to get version info.", e);
+      Log.w(Constants.TAG, "Failed to get version info.", e);
       return "";
     }
   }
@@ -295,19 +295,19 @@ public class MyTracksUtils {
    * and gives up trying in case the wake lock cannot be acquired.
    */
   public static WakeLock acquireWakeLock(Activity activity, WakeLock wakeLock) {
-    Log.i(MyTracksConstants.TAG, "MyTracksUtils: Acquiring wake lock.");
+    Log.i(Constants.TAG, "MyTracksUtils: Acquiring wake lock.");
     try {
       PowerManager pm = (PowerManager) activity
           .getSystemService(Context.POWER_SERVICE);
       if (pm == null) {
-        Log.e(MyTracksConstants.TAG, "MyTracksUtils: Power manager not found!");
+        Log.e(Constants.TAG, "MyTracksUtils: Power manager not found!");
         return wakeLock;
       }
       if (wakeLock == null) {
         wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
-            MyTracksConstants.TAG);
+            Constants.TAG);
         if (wakeLock == null) {
-          Log.e(MyTracksConstants.TAG,
+          Log.e(Constants.TAG,
               "MyTracksUtils: Could not create wake lock (null).");
         }
         return wakeLock;
@@ -315,12 +315,12 @@ public class MyTracksUtils {
       if (!wakeLock.isHeld()) {
         wakeLock.acquire();
         if (!wakeLock.isHeld()) {
-          Log.e(MyTracksConstants.TAG,
+          Log.e(Constants.TAG,
               "MyTracksUtils: Could not acquire wake lock.");
         }
       }
     } catch (RuntimeException e) {
-      Log.e(MyTracksConstants.TAG,
+      Log.e(Constants.TAG,
           "MyTracksUtils: Caught unexpected exception: " + e.getMessage(), e);
     }
     return wakeLock;

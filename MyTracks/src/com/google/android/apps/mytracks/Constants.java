@@ -20,7 +20,7 @@ package com.google.android.apps.mytracks;
  *
  * @author Leif Hendrik Wilden
  */
-public abstract class MyTracksConstants {
+public abstract class Constants {
 
   /**
    * Should be used by all log statements
@@ -188,32 +188,32 @@ public abstract class MyTracksConstants {
 
   public static int getActionFromMenuId(int menuId) {
     switch (menuId) {
-      case MyTracksConstants.MENU_SEND_TO_GOOGLE:
-        return MyTracksConstants.SEND_TO_GOOGLE_DIALOG;
-      case MyTracksConstants.MENU_EDIT:
-        return MyTracksConstants.EDIT_DETAILS;
-      case MyTracksConstants.MENU_DELETE:
-        return MyTracksConstants.DELETE_TRACK;
-      case MyTracksConstants.MENU_SHARE_LINK:
-        return MyTracksConstants.SHARE_LINK;
-      case MyTracksConstants.MENU_SHARE_KML_FILE:
-        return MyTracksConstants.SHARE_KML_FILE;
-      case MyTracksConstants.MENU_SHARE_GPX_FILE:
-        return MyTracksConstants.SHARE_GPX_FILE;
-      case MyTracksConstants.MENU_SHARE_CSV_FILE:
-        return MyTracksConstants.SHARE_CSV_FILE;
-      case MyTracksConstants.MENU_SHARE_TCX_FILE:
-        return MyTracksConstants.SHARE_TCX_FILE;
-      case MyTracksConstants.MENU_SAVE_GPX_FILE:
-        return MyTracksConstants.SAVE_GPX_FILE;
-      case MyTracksConstants.MENU_SAVE_KML_FILE:
-        return MyTracksConstants.SAVE_KML_FILE;
-      case MyTracksConstants.MENU_SAVE_CSV_FILE:
-        return MyTracksConstants.SAVE_CSV_FILE;
-      case MyTracksConstants.MENU_SAVE_TCX_FILE:
-        return MyTracksConstants.SAVE_TCX_FILE;
-      case MyTracksConstants.MENU_CLEAR_MAP:
-        return MyTracksConstants.CLEAR_MAP;
+      case Constants.MENU_SEND_TO_GOOGLE:
+        return Constants.SEND_TO_GOOGLE_DIALOG;
+      case Constants.MENU_EDIT:
+        return Constants.EDIT_DETAILS;
+      case Constants.MENU_DELETE:
+        return Constants.DELETE_TRACK;
+      case Constants.MENU_SHARE_LINK:
+        return Constants.SHARE_LINK;
+      case Constants.MENU_SHARE_KML_FILE:
+        return Constants.SHARE_KML_FILE;
+      case Constants.MENU_SHARE_GPX_FILE:
+        return Constants.SHARE_GPX_FILE;
+      case Constants.MENU_SHARE_CSV_FILE:
+        return Constants.SHARE_CSV_FILE;
+      case Constants.MENU_SHARE_TCX_FILE:
+        return Constants.SHARE_TCX_FILE;
+      case Constants.MENU_SAVE_GPX_FILE:
+        return Constants.SAVE_GPX_FILE;
+      case Constants.MENU_SAVE_KML_FILE:
+        return Constants.SAVE_KML_FILE;
+      case Constants.MENU_SAVE_CSV_FILE:
+        return Constants.SAVE_CSV_FILE;
+      case Constants.MENU_SAVE_TCX_FILE:
+        return Constants.SAVE_TCX_FILE;
+      case Constants.MENU_CLEAR_MAP:
+        return Constants.CLEAR_MAP;
       default:
         return -1;
     }
@@ -225,5 +225,5 @@ public abstract class MyTracksConstants {
   /**
    * This is an abstract utility class.
    */
-  protected MyTracksConstants() { }
+  protected Constants() { }
 }

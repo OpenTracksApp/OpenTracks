@@ -16,7 +16,7 @@
 
 package com.google.android.apps.mytracks.services;
 
-import static com.google.android.apps.mytracks.MyTracksConstants.TAG;
+import static com.google.android.apps.mytracks.Constants.TAG;
 
 import android.content.Context;
 import android.media.AudioManager;
