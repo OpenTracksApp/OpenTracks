@@ -905,8 +905,7 @@ public class TrackDataHub {
     MyTracksProviderUtils.DoubleBufferedLocationFactory locationFactory =
         new MyTracksProviderUtils.DoubleBufferedLocationFactory();
     LocationIterator it = providerUtils.getLocationIterator(
-        currentSelectedTrackId, minPointId, false,
-        locationFactory);
+        currentSelectedTrackId, minPointId, false, locationFactory);
 
     while (it.hasNext()) {
       if (currentSelectedTrackId != selectedTrackId) {
@@ -965,27 +964,33 @@ public class TrackDataHub {
       int pointSamplingFrequency,
       TrackDataListener[] listeners) {
     boolean isValid = LocationUtils.isValidLocation(location);
-    if (isValid) {
-      // Include a point if it fits one of the following criteria:
-      // - Has the mod for the sampling frequency (includes first point).
-      // - Is the last point and we are not recording this track.
-      if (numLoadedPoints % pointSamplingFrequency == 0 ||
-         (!isRecordingSelected() && locationId == lastStoredLocationId)) {
-        // No need to allocate a new location (we can safely reuse the existing).
-        for (TrackDataListener listener : listeners) {
-          listener.onNewTrackPoint(location);
-        }
-      } else {
-        for (TrackDataListener listener : listeners) {
-          listener.onSampledOutTrackPoint(location);
-        }
-      }
-    } else {
-      // Report segment splits separately.
+    if (!isValid) {
+      // Invalid points are segment splits - report those separately.
       // TODO: Always send last valid point before and first valid point after a split
       for (TrackDataListener listener : listeners) {
         listener.onSegmentSplit();
       }
+      return;
+    }
+
+    // Include a point if it fits one of the following criteria:
+    // - Has the mod for the sampling frequency (includes first point).
+    // - Is the last point and we are not recording this track.
+    boolean includeInSample =
+        (numLoadedPoints % pointSamplingFrequency == 0 ||
+         (!isRecordingSelected() && locationId == lastStoredLocationId));
+
+    if (!includeInSample) {
+      for (TrackDataListener listener : listeners) {
+        listener.onSampledOutTrackPoint(location);
+      }
+      return;
+    }
+
+    // Point is valid and included in sample.
+    for (TrackDataListener listener : listeners) {
+      // No need to allocate a new location (we can safely reuse the existing).
+      listener.onNewTrackPoint(location);
     }
   }
 
