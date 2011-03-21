@@ -16,7 +16,7 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.util.MyTracksUtils;
+import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
@@ -45,7 +45,7 @@ import java.util.concurrent.BlockingQueue;
  *
  * @author Leif Hendrik Wilden
  */
-public class MyTracksOverlay extends Overlay {
+public class MapOverlay extends Overlay {
 
   private final Drawable[] arrows;
   private final int arrowWidth, arrowHeight;
@@ -92,12 +92,12 @@ public class MyTracksOverlay extends Overlay {
      * Constructor for a potentially valid cached location.
      */
     public CachedLocation(Location location) {
-      this.valid = MyTracksUtils.isValidLocation(location);
-      this.geoPoint = valid ? MyTracksUtils.getGeoPoint(location) : null; 
+      this.valid = LocationUtils.isValidLocation(location);
+      this.geoPoint = valid ? LocationUtils.getGeoPoint(location) : null; 
     }
   };
 
-  public MyTracksOverlay(Context context) {
+  public MapOverlay(Context context) {
     this.context = context;
     
     this.waypoints = new ArrayList<Waypoint>();
@@ -278,7 +278,7 @@ public class MyTracksOverlay extends Overlay {
     synchronized (waypoints) {;
       for (Waypoint wpt : waypoints) {
         Location loc = wpt.getLocation();
-        drawElement(canvas, projection, MyTracksUtils.getGeoPoint(loc),
+        drawElement(canvas, projection, LocationUtils.getGeoPoint(loc),
             wpt.getType() == Waypoint.TYPE_STATISTICS ? statsMarker
                 : waypointMarker, -(markerWidth / 2) + 3, -markerHeight);
       }
@@ -292,7 +292,7 @@ public class MyTracksOverlay extends Overlay {
     }
 
     Point pt = drawElement(canvas, projection,
-        MyTracksUtils.getGeoPoint(myLocation), arrows[lastHeading],
+        LocationUtils.getGeoPoint(myLocation), arrows[lastHeading],
         -(arrowWidth / 2) + 3, -(arrowHeight / 2));
     // Draw the error circle.
     float radius = projection.metersToEquatorPixels(myLocation.getAccuracy());
@@ -441,7 +441,7 @@ public class MyTracksOverlay extends Overlay {
       return false;
     }
 
-    final Location tapLocation = MyTracksUtils.getLocation(p);
+    final Location tapLocation = LocationUtils.getLocation(p);
     double dmin = Double.MAX_VALUE;
     Waypoint waypoint = null;
     synchronized (waypoints) {

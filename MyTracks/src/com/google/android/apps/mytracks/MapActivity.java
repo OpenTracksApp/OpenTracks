@@ -24,9 +24,8 @@ import com.google.android.apps.mytracks.services.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.GeoRect;
-import com.google.android.apps.mytracks.util.MyTracksUtils;
+import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.mytracks.R;
@@ -56,7 +55,7 @@ import android.widget.TextView;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public class MyTracksMap extends MapActivity
+public class MapActivity extends com.google.android.maps.MapActivity
     implements View.OnTouchListener, View.OnClickListener,
         TrackDataListener {
 
@@ -85,7 +84,7 @@ public class MyTracksMap extends MapActivity
 
   private RelativeLayout screen;
   private MapView mapView;
-  private MyTracksOverlay mapOverlay;
+  private MapOverlay mapOverlay;
   private LinearLayout messagePane;
   private TextView messageText;
   private LinearLayout busyPane;
@@ -118,7 +117,7 @@ public class MyTracksMap extends MapActivity
 
   @Override
   public void onCreate(Bundle bundle) {
-    Log.d(TAG, "MyTracksMap.onCreate");
+    Log.d(TAG, "MapActivity.onCreate");
     super.onCreate(bundle);
 
     // The volume we want to control is the Text-To-Speech volume
@@ -141,7 +140,7 @@ public class MyTracksMap extends MapActivity
     screen = (RelativeLayout) findViewById(R.id.screen);
     mapView = (MapView) findViewById(R.id.map);
     mapView.requestFocus();
-    mapOverlay = new MyTracksOverlay(this);
+    mapOverlay = new MapOverlay(this);
     mapView.getOverlays().add(mapOverlay);
     mapView.setOnTouchListener(this);
     mapView.setBuiltInZoomControls(true);
@@ -156,7 +155,7 @@ public class MyTracksMap extends MapActivity
 
   @Override
   protected void onRestoreInstanceState(Bundle bundle) {
-    Log.d(TAG, "MyTracksMap.onRestoreInstanceState");
+    Log.d(TAG, "MapActivity.onRestoreInstanceState");
     if (bundle != null) {
       super.onRestoreInstanceState(bundle);
       keepMyLocationVisible =
@@ -174,7 +173,7 @@ public class MyTracksMap extends MapActivity
 
   @Override
   protected void onStart() {
-    Log.d(TAG, "MyTracksMap.onStart");
+    Log.d(TAG, "MapActivity.onStart");
     super.onStart();
 
     dataHub.registerTrackDataListener(this);
@@ -182,7 +181,7 @@ public class MyTracksMap extends MapActivity
 
   @Override
   protected void onSaveInstanceState(Bundle outState) {
-    Log.d(TAG, "MyTracksMap.onSaveInstanceState");
+    Log.d(TAG, "MapActivity.onSaveInstanceState");
     outState.putBoolean(KEY_KEEP_MY_LOCATION_VISIBLE, keepMyLocationVisible);
     if (currentLocation != null) {
       outState.putParcelable(KEY_CURRENT_LOCATION, currentLocation);
@@ -192,7 +191,7 @@ public class MyTracksMap extends MapActivity
 
   @Override
   protected void onStop() {
-    Log.d(TAG, "MyTracksMap.onStop");
+    Log.d(TAG, "MapActivity.onStop");
 
     dataHub.unregisterTrackDataListener(this);
 
@@ -236,7 +235,7 @@ public class MyTracksMap extends MapActivity
     GeoRect r = new GeoRect(center, latSpan, lonSpan);
     r.top += margin;
 
-    GeoPoint geoPoint = MyTracksUtils.getGeoPoint(location);
+    GeoPoint geoPoint = LocationUtils.getGeoPoint(location);
     return r.contains(geoPoint);
   }
 
@@ -251,7 +250,7 @@ public class MyTracksMap extends MapActivity
     mapOverlay.setMyLocation(currentLocation);
     mapView.postInvalidate();
     if (keepMyLocationVisible && !locationIsVisible(currentLocation)) {
-      GeoPoint geoPoint = MyTracksUtils.getGeoPoint(currentLocation);
+      GeoPoint geoPoint = LocationUtils.getGeoPoint(currentLocation);
       MapController controller = mapView.getController();
       controller.animateTo(geoPoint);
     }
@@ -290,7 +289,7 @@ public class MyTracksMap extends MapActivity
       GeoPoint center = new GeoPoint(
           bottom + latSpanE6 / 2,
           left + lonSpanE6 / 2);
-      if (MyTracksUtils.isValidGeoPoint(center)) {
+      if (LocationUtils.isValidGeoPoint(center)) {
         mapView.getController().setCenter(center);
         mapView.getController().zoomToSpan(latSpanE6, lonSpanE6);
       }
@@ -482,7 +481,7 @@ public class MyTracksMap extends MapActivity
           messagePane.setVisibility(View.VISIBLE);
 
           if (bindClick) {
-            messagePane.setOnClickListener(MyTracksMap.this);
+            messagePane.setOnClickListener(MapActivity.this);
           } else {
             messagePane.setOnClickListener(null);
           }
@@ -499,7 +498,7 @@ public class MyTracksMap extends MapActivity
   public void onCurrentLocationChanged(Location location) {
     if (!location.getProvider().equals(Constants.GPS_PROVIDER)) {
       Log.d(TAG,
-          "MyTracksMap: Network location update received (provider '" + location.getProvider() + "'.");
+          "MapActivity: Network location update received (provider '" + location.getProvider() + "'.");
     }
 
     currentLocation = location;
@@ -522,7 +521,7 @@ public class MyTracksMap extends MapActivity
 
   @Override
   public void onNewWaypoint(Waypoint waypoint) {
-    if (MyTracksUtils.isValidLocation(waypoint.getLocation())) {
+    if (LocationUtils.isValidLocation(waypoint.getLocation())) {
       // TODO: Optimize locking inside addWaypoint
       mapOverlay.addWaypoint(waypoint);
     }

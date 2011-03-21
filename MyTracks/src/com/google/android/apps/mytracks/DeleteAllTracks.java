@@ -61,7 +61,7 @@ public class DeleteAllTracks extends Handler {
             Log.w(Constants.TAG, "deleting all!");
             MyTracksProviderUtils.Factory.get(context).deleteAllTracks();
             SharedPreferences prefs =
-                context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+                context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
             SharedPreferences.Editor editor = prefs.edit();
             // TODO: Go through data manager
             editor.putLong(context.getString(R.string.selected_track_key), -1);

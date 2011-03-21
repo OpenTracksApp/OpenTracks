@@ -20,7 +20,7 @@ import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.TrackWriter;
 import com.google.android.apps.mytracks.io.TrackWriterFactory;
 import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
-import com.google.android.apps.mytracks.util.MyTracksUtils;
+import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -113,14 +113,14 @@ public class ExportAllTracks {
    */
   private void aquireLocksAndExport() {
     SharedPreferences prefs =
-        activity.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+        activity.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     long recordingTrackId = -1;
     if (prefs != null) {
       recordingTrackId =
     	  prefs.getLong(activity.getString(R.string.recording_track_key), -1);
     }
     if (recordingTrackId != -1) {
-      wakeLock = MyTracksUtils.acquireWakeLock(activity, wakeLock);
+      wakeLock = SystemUtils.acquireWakeLock(activity, wakeLock);
     }
 
     // Now we can safely export everything.

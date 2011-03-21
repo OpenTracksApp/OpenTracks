@@ -47,7 +47,7 @@ import com.google.android.apps.mytracks.services.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.FileUtils;
-import com.google.android.apps.mytracks.util.MyTracksUtils;
+import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -246,14 +246,14 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     super.onCreate(savedInstanceState);
     instance = this;
     ApiFeatures apiFeatures = ApiFeatures.getInstance();
-    if (!MyTracksUtils.isRelease(this)) {
+    if (!SystemUtils.isRelease(this)) {
       apiFeatures.getApiPlatformAdapter().enableStrictMode();
     }
 
     providerUtils = MyTracksProviderUtils.Factory.get(this);
     dataHub = new TrackDataHub(this, providerUtils);
     menuManager = new MenuManager(this);
-    sharedPreferences = getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+    sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
     dialogManager = new DialogManager(this);
 
     // The volume we want to control is the Text-To-Speech volume
@@ -269,7 +269,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     tabHost.addTab(tabHost.newTabSpec("tab1")
         .setIndicator("Map", res.getDrawable(
             android.R.drawable.ic_menu_mapmode))
-        .setContent(new Intent(this, MyTracksMap.class)));
+        .setContent(new Intent(this, MapActivity.class)));
     tabHost.addTab(tabHost.newTabSpec("tab2")
         .setIndicator("Stats", res.getDrawable(R.drawable.menu_stats))
         .setContent(new Intent(this, StatsActivity.class)));
@@ -462,8 +462,8 @@ public class MyTracks extends TabActivity implements OnTouchListener,
         if (results != null) {
           final long waypointId = results.getLongExtra("waypointid", -1);
           if (waypointId >= 0) {
-            MyTracksMap map =
-                (MyTracksMap) getLocalActivityManager().getActivity("tab1");
+            MapActivity map =
+                (MapActivity) getLocalActivityManager().getActivity("tab1");
             if (map != null) {
               getTabHost().setCurrentTab(0);
               map.showWaypoint(waypointId);

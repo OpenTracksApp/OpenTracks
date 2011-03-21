@@ -54,28 +54,14 @@ import java.util.Set;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public class MyTracksSettings extends PreferenceActivity {
-
-  public static final String SETTINGS_NAME = "MyTracksSettings";
-
-  /*
-   * Default values - keep in sync with those in preferences.xml.
-   */
-  public static final int DEFAULT_AUTO_RESUME_TRACK_TIMEOUT = 10;  // In min.
-  public static final int DEFAULT_ANNOUNCEMENT_FREQUENCY = -1;
-  public static final int DEFAULT_MAX_RECORDING_DISTANCE = 200;
-  public static final int DEFAULT_MIN_RECORDING_DISTANCE = 5;
-  public static final int DEFAULT_MIN_RECORDING_INTERVAL = 0;
-  public static final int DEFAULT_MIN_REQUIRED_ACCURACY = 200;
-  public static final int DEFAULT_SPLIT_FREQUENCY = 0;
+public class SettingsActivity extends PreferenceActivity {
 
   private BackupPreferencesListener backupListener;
-
   private SharedPreferences preferences;
 
   /** Called when the activity is first created. */
   @Override
-  public void onCreate(Bundle icicle) {
+  protected void onCreate(Bundle icicle) {
     super.onCreate(icicle);
 
     // The volume we want to control is the Text-To-Speech volume
@@ -86,7 +72,7 @@ public class MyTracksSettings extends PreferenceActivity {
 
     // Tell it where to read/write preferences
     PreferenceManager preferenceManager = getPreferenceManager();
-    preferenceManager.setSharedPreferencesName(SETTINGS_NAME);
+    preferenceManager.setSharedPreferencesName(Constants.SETTINGS_NAME);
     preferenceManager.setSharedPreferencesMode(0);
 
     // Set up automatic preferences backup
@@ -219,7 +205,7 @@ public class MyTracksSettings extends PreferenceActivity {
           @Override
           public boolean onPreferenceClick(Preference preference) {
             BackupActivityHelper backupHelper =
-                new BackupActivityHelper(MyTracksSettings.this);
+                new BackupActivityHelper(SettingsActivity.this);
             backupHelper.writeBackup();
             return true;
           }
@@ -229,7 +215,7 @@ public class MyTracksSettings extends PreferenceActivity {
           @Override
           public boolean onPreferenceClick(Preference preference) {
             BackupActivityHelper backupHelper =
-                new BackupActivityHelper(MyTracksSettings.this);
+                new BackupActivityHelper(SettingsActivity.this);
             backupHelper.restoreBackup();
             return true;
           }
@@ -373,7 +359,7 @@ public class MyTracksSettings extends PreferenceActivity {
           public void run() {
             // Give feedback to the user.
             Toast.makeText(
-                MyTracksSettings.this,
+                SettingsActivity.this,
                 R.string.settings_reset_done,
                 Toast.LENGTH_SHORT).show();
 

@@ -27,7 +27,7 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.util.ApiFeatures;
-import com.google.android.apps.mytracks.util.MyTracksUtils;
+import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.ContentResolver;
@@ -251,7 +251,7 @@ public class TrackDataHub {
     listenerHandlerThread.start();
     listenerHandler = new Handler(listenerHandlerThread.getLooper());
 
-    sharedPreferences = ctx.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+    sharedPreferences = ctx.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     preferenceListener = new HubSharedPreferenceListener();
 
     sensorManager = (SensorManager) ctx.getSystemService(Context.SENSOR_SERVICE);
@@ -286,7 +286,7 @@ public class TrackDataHub {
     useMetricUnits = sharedPreferences.getBoolean(METRIC_UNITS_KEY, true);
     reportSpeed = sharedPreferences.getBoolean(SPEED_REPORTING_KEY, true);
     minRequiredAccuracy = sharedPreferences.getInt(MIN_REQUIRED_ACCURACY_KEY,
-        MyTracksSettings.DEFAULT_MIN_REQUIRED_ACCURACY);
+        Constants.DEFAULT_MIN_REQUIRED_ACCURACY);
 
     if (recordingTrackId > 0) {
       Intent startIntent = new Intent(context, TrackRecordingService.class);
@@ -608,7 +608,7 @@ public class TrackDataHub {
       recordingTrackId = sharedPreferences.getLong(RECORDING_TRACK_KEY, -1);
     } else if (key.equals(MIN_REQUIRED_ACCURACY_KEY)) {
       minRequiredAccuracy = sharedPreferences.getInt(RECORDING_TRACK_KEY,
-          MyTracksSettings.DEFAULT_MIN_REQUIRED_ACCURACY);
+          Constants.DEFAULT_MIN_REQUIRED_ACCURACY);
     } else if (key.equals(METRIC_UNITS_KEY)) {
       useMetricUnits = sharedPreferences.getBoolean(METRIC_UNITS_KEY, true);
       notifyUnitsChanged();
@@ -805,7 +805,7 @@ public class TrackDataHub {
           if (cursor != null && cursor.moveToFirst()) {
             do {
               Waypoint waypoint = providerUtils.createWaypoint(cursor);
-              if (!MyTracksUtils.isValidLocation(waypoint.getLocation())) {
+              if (!LocationUtils.isValidLocation(waypoint.getLocation())) {
                 continue;
               }
     
@@ -964,7 +964,7 @@ public class TrackDataHub {
       int numLoadedPoints,
       int pointSamplingFrequency,
       TrackDataListener[] listeners) {
-    boolean isValid = MyTracksUtils.isValidLocation(location);
+    boolean isValid = LocationUtils.isValidLocation(location);
     if (isValid) {
       // Include a point if it fits one of the following criteria:
       // - Has the mod for the sampling frequency (includes first point).

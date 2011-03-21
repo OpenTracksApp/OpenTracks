@@ -16,7 +16,6 @@
 package com.google.android.apps.mytracks.services;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.maps.mytracks.R;
 
 import android.content.SharedPreferences;
@@ -45,7 +44,7 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
   public PreferenceManager(TrackRecordingService service) {
     this.service = service;
     this.sharedPreferences = service.getSharedPreferences(
-        MyTracksSettings.SETTINGS_NAME, 0);
+        Constants.SETTINGS_NAME, 0);
     if (sharedPreferences == null) {
       Log.w(Constants.TAG,
           "TrackRecordingService: Couldn't get shared preferences.");
@@ -97,7 +96,7 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
       service.setMinRecordingDistance(
           sharedPreferences.getInt(
               minRecordingDistanceKey,
-              MyTracksSettings.DEFAULT_MIN_RECORDING_DISTANCE));
+              Constants.DEFAULT_MIN_RECORDING_DISTANCE));
       Log.d(Constants.TAG,
           "TrackRecordingService: minRecordingDistance = "
           + service.getMinRecordingDistance());
@@ -105,12 +104,12 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
     if (key == null || key.equals(maxRecordingDistanceKey)) {
       service.setMaxRecordingDistance(sharedPreferences.getInt(
           maxRecordingDistanceKey,
-          MyTracksSettings.DEFAULT_MAX_RECORDING_DISTANCE));
+          Constants.DEFAULT_MAX_RECORDING_DISTANCE));
     }
     if (key == null || key.equals(minRecordingIntervalKey)) {
       int minRecordingInterval = sharedPreferences.getInt(
           minRecordingIntervalKey,
-          MyTracksSettings.DEFAULT_MIN_RECORDING_INTERVAL);
+          Constants.DEFAULT_MIN_RECORDING_INTERVAL);
       switch (minRecordingInterval) {
         case -2:
           // Battery Miser
@@ -136,7 +135,7 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
     if (key == null || key.equals(minRequiredAccuracyKey)) {
       service.setMinRequiredAccuracy(sharedPreferences.getInt(
           minRequiredAccuracyKey,
-          MyTracksSettings.DEFAULT_MIN_REQUIRED_ACCURACY));
+          Constants.DEFAULT_MIN_REQUIRED_ACCURACY));
     }
     if (key == null || key.equals(announcementFrequencyKey)) {
       service.setAnnouncementFrequency(
@@ -145,7 +144,7 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
     if (key == null || key.equals(autoResumeTrackTimeoutKey)) {
       service.setAutoResumeTrackTimeout(sharedPreferences.getInt(
           autoResumeTrackTimeoutKey,
-          MyTracksSettings.DEFAULT_AUTO_RESUME_TRACK_TIMEOUT));
+          Constants.DEFAULT_AUTO_RESUME_TRACK_TIMEOUT));
     }
     if (key == null || key.equals(recordingTrackKey)) {
       long recordingTrackId = sharedPreferences.getLong(recordingTrackKey, -1);

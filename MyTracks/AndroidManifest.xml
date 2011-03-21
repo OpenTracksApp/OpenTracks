@@ -52,7 +52,7 @@ limitations under the License.
       </intent-filter>
     </activity>
 
-    <activity android:name="com.google.android.apps.mytracks.MyTracksMap"
+    <activity android:name="com.google.android.apps.mytracks.MapActivity"
               android:label="MyTracks"
               android:exported="false" />
 
@@ -73,7 +73,7 @@ limitations under the License.
     <activity android:name="com.google.android.apps.mytracks.WaypointDetails"
               android:label="@string/waypointdetails_title" />
 
-    <activity android:name="com.google.android.apps.mytracks.MyTracksSettings"
+    <activity android:name="com.google.android.apps.mytracks.SettingsActivity"
               android:label="@string/mytracks_settings" />
 
     <activity android:name="com.google.android.apps.mytracks.AggregatedStatsActivity"
@@ -101,7 +101,7 @@ limitations under the License.
              android:exported="true"
              android:permission="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
 
-    <receiver android:name="com.google.android.apps.mytracks.MyTracksReceiver">
+    <receiver android:name="com.google.android.apps.mytracks.BootReceiver">
       <intent-filter>
         <action android:name="android.intent.action.BOOT_COMPLETED" />
 	  </intent-filter>

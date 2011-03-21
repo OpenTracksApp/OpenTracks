@@ -78,7 +78,7 @@ class MenuManager {
         return startActivity(SensorStateActivity.class);
       }
       case R.id.menu_settings: {
-        return startActivity(MyTracksSettings.class);
+        return startActivity(SettingsActivity.class);
       }
       case R.id.menu_aggregated_stats: {
         return startActivity(AggregatedStatsActivity.class);

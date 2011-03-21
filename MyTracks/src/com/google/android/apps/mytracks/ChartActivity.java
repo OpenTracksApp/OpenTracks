@@ -27,7 +27,7 @@ import com.google.android.apps.mytracks.services.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.ApiFeatures;
-import com.google.android.apps.mytracks.util.MyTracksUtils;
+import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
@@ -356,7 +356,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
 
   @Override
   public void onNewTrackPoint(Location loc) {
-    if (MyTracksUtils.isValidLocation(loc)) {
+    if (LocationUtils.isValidLocation(loc)) {
       double[] point = new double[6];
       fillDataPoint(loc, point);
       pendingPoints.add(point);

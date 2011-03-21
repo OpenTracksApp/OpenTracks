@@ -16,7 +16,6 @@
 package com.google.android.apps.mytracks.io;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.apps.mytracks.ProgressIndicator;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
@@ -25,8 +24,9 @@ import com.google.android.apps.mytracks.io.gdata.GDataWrapper;
 import com.google.android.apps.mytracks.io.gdata.GDataWrapper.QueryFunction;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.MyTracksUtils;
+import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
+import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 import com.google.api.client.googleapis.GoogleHeaders;
@@ -141,7 +141,7 @@ public class SendToFusionTables implements Runnable {
     this.providerUtils = MyTracksProviderUtils.Factory.get(context);
 
     GoogleHeaders headers = new GoogleHeaders();
-    headers.setApplicationName("Google-MyTracks-" + MyTracksUtils.getMyTracksVersion(context));
+    headers.setApplicationName("Google-MyTracks-" + SystemUtils.getMyTracksVersion(context));
     headers.gdataVersion = GDATA_VERSION;
 
     transport = new HttpTransport();
@@ -296,7 +296,7 @@ public class SendToFusionTables implements Runnable {
 
   private boolean uploadAllTrackPoints(final Track track, String originalDescription) {
 
-    SharedPreferences preferences = context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+    SharedPreferences preferences = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     boolean metricUnits = true;
     if (preferences != null) {
       metricUnits = preferences.getBoolean(context.getString(R.string.metric_units_key), true);
@@ -344,7 +344,7 @@ public class SendToFusionTables implements Runnable {
         }
 
         // Add to the elevation profile.
-        if (loc != null && MyTracksUtils.isValidLocation(loc)) {
+        if (loc != null && LocationUtils.isValidLocation(loc)) {
           // All points go into the smoothing buffer...
           elevationBuffer.setNext(metricUnits ? loc.getAltitude()
               : loc.getAltitude() * UnitConversions.M_TO_FT);
@@ -566,12 +566,12 @@ public class SendToFusionTables implements Runnable {
      * Decimate to 2 meter precision. Fusion tables doesn't like too many
      * points:
      */
-    MyTracksUtils.decimate(segment, 2.0);
+    LocationUtils.decimate(segment, 2.0);
 
     /* If the track still has > 2500 points, split it in pieces: */
     final int maxPoints = 2500;
     if (segment.getLocations().size() > maxPoints) {
-      splitTracks.addAll(MyTracksUtils.split(segment, maxPoints));
+      splitTracks.addAll(LocationUtils.split(segment, maxPoints));
     } else if (segment.getLocations().size() >= 2) {
       splitTracks.add(segment);
     }

@@ -138,7 +138,7 @@ public class WaypointsList extends ListActivity
         (Button) findViewById(R.id.waypointslist_btn_insert_statistics);
     insertStatisticsButton.setOnClickListener(this);
     SharedPreferences preferences =
-        getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+        getSharedPreferences(Constants.SETTINGS_NAME, 0);
 
     // TODO: Get rid of selected and recording track IDs
     long selectedTrackId = -1;

@@ -67,7 +67,7 @@ public class AggregatedStatsActivity extends Activity implements
     sv.setScrollBarStyle(ScrollView.SCROLLBARS_OUTSIDE_INSET);
 
     SharedPreferences preferences = getSharedPreferences(
-            MyTracksSettings.SETTINGS_NAME, 0);
+            Constants.SETTINGS_NAME, 0);
     if (preferences != null) {
       metricUnits = preferences.getBoolean(getString(R.string.metric_units_key), true);
       preferences.registerOnSharedPreferenceChangeListener(this);

@@ -16,7 +16,7 @@
 
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.apps.mytracks.MyTracksSettings;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.maps.mytracks.R;
@@ -50,7 +50,7 @@ public class ChartURLGenerator {
   public static String getChartUrl(Vector<Double> distances,
       Vector<Double> elevations, Track track, Context context) {
     SharedPreferences preferences =
-        context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+        context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     boolean metricUnits = true;
     if (preferences != null) {
       metricUnits = preferences.getBoolean(
