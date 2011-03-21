@@ -436,6 +436,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   public void onActivityResult(int requestCode, int resultCode,
       final Intent results) {
     TrackFileFormat exportFormat = null;
+    final long trackId = results.getLongExtra("trackid", dataHub.getSelectedTrackId());
     switch (requestCode) {
       case Constants.GET_LOGIN: {
         if (resultCode != RESULT_OK || auth == null || !auth.authResult(resultCode, results)) {
@@ -445,7 +446,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       }
       case Constants.SHOW_TRACK: {
         if (results != null) {
-          final long trackId = results.getLongExtra("trackid", -1);
           if (trackId >= 0) {
             dataHub.loadTrack(trackId);
 
@@ -474,14 +474,12 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       }
       case Constants.DELETE_TRACK: {
         if (results != null && resultCode == RESULT_OK) {
-          final long trackId = results.getLongExtra("trackid", dataHub.getSelectedTrackId());
           deleteTrack(trackId);
         }
         break;
       }
       case Constants.EDIT_DETAILS: {
         if (results != null && resultCode == RESULT_OK) {
-          final long trackId = results.getLongExtra("trackid", dataHub.getSelectedTrackId());
           Intent intent = new Intent(this, TrackDetails.class);
           intent.putExtra("trackid", trackId);
           startActivity(intent);
@@ -510,16 +508,10 @@ public class MyTracks extends TabActivity implements OnTouchListener,
         // Authenticated with Google My Maps
         if (results != null && resultCode == RESULT_OK) {
           final String mapId;
-          final long trackId;
           if (results.hasExtra("mapid")) {
             mapId = results.getStringExtra("mapid");
           } else {
             mapId = "new";
-          }
-          if (results.hasExtra("trackid")) {
-            trackId = results.getLongExtra("trackid", -1);
-          } else {
-            trackId = dataHub.getSelectedTrackId();
           }
 
           sendToGoogleMaps(trackId, mapId);
@@ -531,13 +523,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       case Constants.AUTHENTICATE_TO_FUSION_TABLES: {
         // Authenticated with Google Fusion Tables
         if (results != null && resultCode == RESULT_OK) {
-          final long trackId;
-          if (results.hasExtra("trackid")) {
-            trackId = results.getLongExtra("trackid", -1);
-          } else {
-            trackId = dataHub.getSelectedTrackId();
-          }
-
           sendToFusionTables(trackId);
         } else {
           onSendToGoogleDone();
@@ -556,7 +541,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       case Constants.AUTHENTICATE_TO_TRIX: {
         // Authenticated with Trix
         if (resultCode == RESULT_OK) {
-          final long trackId = results.getLongExtra("trackid", dataHub.getSelectedTrackId());
           sendToGoogleDocs(trackId);
         } else {
           onSendToGoogleDone();
@@ -576,7 +560,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
         if (exportFormat == null) { exportFormat = TrackFileFormat.TCX; }
 
         if (results != null && resultCode == Activity.RESULT_OK) {
-          final long trackId = results.getLongExtra("trackid", dataHub.getSelectedTrackId());
           if (trackId >= 0) {
             saveTrack(trackId, exportFormat);
           }
@@ -609,7 +592,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
         if (exportFormat == null) { exportFormat = TrackFileFormat.TCX; }
 
         if (results != null && resultCode == Activity.RESULT_OK) {
-          final long trackId = results.getLongExtra("trackid", dataHub.getSelectedTrackId());
           if (trackId >= 0) {
             sendTrack(trackId, exportFormat);
           }

@@ -89,7 +89,6 @@ public class ChartActivity extends Activity implements TrackDataListener {
   private final Runnable updateChart = new Runnable() {
     @Override
     public void run() {
-      Log.e(TAG, "Gone", new Throwable());
       busyPane.setVisibility(View.GONE);
       zoomControls.setIsZoomInEnabled(chartView.canZoomIn());
       zoomControls.setIsZoomOutEnabled(chartView.canZoomOut());
@@ -136,17 +135,17 @@ public class ChartActivity extends Activity implements TrackDataListener {
   }
 
   @Override
-  protected void onStop() {
-    dataHub.unregisterTrackDataListener(this);
-
-    super.onStop();
-  }
-
-  @Override
   protected void onStart() {
     super.onStart();
 
     dataHub.registerTrackDataListener(this);
+  }
+
+  @Override
+  protected void onStop() {
+    dataHub.unregisterTrackDataListener(this);
+
+    super.onStop();
   }
 
   private void zoomIn() {
@@ -301,8 +300,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
     }
 
     // Keep a copy so the location can be reused.
-    // TODO: Make the Data Manager use double-buffering
-    lastLocation = new Location(location);
+    lastLocation = location;
 
     if (result != null) {
       result[0] = timeOrDistance;

@@ -126,6 +126,13 @@ public class StatsActivity extends Activity implements TrackDataListener {
   }
 
   @Override
+  protected void onStart() {
+    dataHub.registerTrackDataListener(this);
+
+    super.onStart();
+  }
+
+  @Override
   protected void onStop() {
     dataHub.unregisterTrackDataListener(this);
 
@@ -135,13 +142,6 @@ public class StatsActivity extends Activity implements TrackDataListener {
     }
 
     super.onStop();
-  }
-
-  @Override
-  protected void onStart() {
-    dataHub.registerTrackDataListener(this);
-
-    super.onStart();
   }
 
   @Override

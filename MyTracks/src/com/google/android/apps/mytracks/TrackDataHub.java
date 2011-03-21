@@ -18,9 +18,7 @@ package com.google.android.apps.mytracks;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.TrackDataListener.ProviderState;
-import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationFactory;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackPointsColumns;
@@ -78,7 +76,7 @@ public class TrackDataHub {
 
   // Application services
   private final Context context;
-  private MyTracksProviderUtils providerUtils;
+  private final MyTracksProviderUtils providerUtils;
 
   // System services
   private final SensorManager sensorManager;
@@ -87,12 +85,12 @@ public class TrackDataHub {
   private final ContentResolver contentResolver;
 
   // Internal listeners (to receive data from the system)
-  private ContentObserver pointObserver;
-  private ContentObserver waypointObserver;
-  private ContentObserver trackObserver;
-  private LocationListener locationListener;
-  private OnSharedPreferenceChangeListener preferenceListener;
-  private SensorEventListener compassListener;
+  private final ContentObserver pointObserver;
+  private final ContentObserver waypointObserver;
+  private final ContentObserver trackObserver;
+  private final LocationListener locationListener;
+  private final OnSharedPreferenceChangeListener preferenceListener;
+  private final SensorEventListener compassListener;
 
   // External listeners (to pass data to activities)
   private final Set<TrackDataListener> registeredListeners =
@@ -100,8 +98,8 @@ public class TrackDataHub {
 
   // Get content notifications on the main thread, send listener callbacks in another.
   // This ensures listener calls are serialized.
-  private HandlerThread listenerHandlerThread;
-  private Handler listenerHandler;
+  private final HandlerThread listenerHandlerThread;
+  private final Handler listenerHandler;
   private boolean started;
 
   // Cached preference values
@@ -124,6 +122,38 @@ public class TrackDataHub {
   private long recordingTrackId;
   private int numLoadedPoints;
   private boolean hasProviderEnabled;
+
+  /** Callback for when the tracks table is updated. */
+  private class TrackObserverCallback implements Runnable {
+    @Override
+    public void run() {
+      notifyTrackUpdated(getRegisteredListenerArray());
+    }
+  }
+
+  /** Callback for when the waypoints table is updated. */
+  private class WaypointObserverCallback implements Runnable {
+    @Override
+    public void run() {
+      notifyWaypointUpdated(getRegisteredListenerArray());
+    }
+  }
+
+  /** Callback for when the points table is updated. */
+  private class PointObserverCallback implements Runnable {
+    @Override
+    public void run() {
+      notifyPointsUpdated(true, getRegisteredListenerArray());
+    }
+  }
+
+  /** Listener for when preferences change. */
+  private class HubSharedPreferenceListener implements OnSharedPreferenceChangeListener {
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+      notifyPreferenceChanged(key);
+    }
+  }
 
   /**
    * Generic content observer which will call a given {@link Runnable} in the
@@ -158,6 +188,55 @@ public class TrackDataHub {
     }
   }
 
+  /** Listener for the current location (independent from track data). */
+  private class CurrentLocationListener implements
+      LocationListener {
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+      if (!LocationManager.GPS_PROVIDER.equals(provider)) return;
+
+      hasProviderEnabled = (status == LocationProvider.AVAILABLE);
+      notifyFixType();
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+      if (!LocationManager.GPS_PROVIDER.equals(provider)) return;
+
+      hasProviderEnabled = true;
+      notifyFixType();
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+      if (!LocationManager.GPS_PROVIDER.equals(provider)) return;
+
+      hasProviderEnabled = false;
+      notifyFixType();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+      notifyLocationChanged(location);
+    }
+  }
+
+  /** Listener for compass readings. */
+  private class CompassListener implements
+      SensorEventListener {
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+      lastSeenMagneticHeading = event.values[0];
+      maybeUpdateDeclination();
+      notifyHeadingChanged(getRegisteredListenerArray());
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+      // Do nothing
+    }
+  }
+
   public TrackDataHub(Context ctx, MyTracksProviderUtils providerUtils) {
     this.context = ctx;
     this.providerUtils = providerUtils;
@@ -173,13 +252,7 @@ public class TrackDataHub {
     listenerHandler = new Handler(listenerHandlerThread.getLooper());
 
     sharedPreferences = ctx.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
-    preferenceListener = new OnSharedPreferenceChangeListener() {
-      @Override
-      public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-          String key) {
-        notifyPreferenceChanged(key);
-      }
-    };
+    preferenceListener = new HubSharedPreferenceListener();
 
     sensorManager = (SensorManager) ctx.getSystemService(Context.SENSOR_SERVICE);
     locationManager =
@@ -187,70 +260,12 @@ public class TrackDataHub {
 
     contentResolver = ctx.getContentResolver();
     Handler contentHandler = new Handler();
-    pointObserver = new TrackContentObserver(contentHandler,
-        new Runnable() {
-          @Override
-          public void run() {
-            notifyPointsUpdated(true, getRegisteredListenerArray());
-          }
-        });
-    waypointObserver = new TrackContentObserver(contentHandler,
-        new Runnable() {
-          @Override
-          public void run() {
-            notifyWaypointUpdated(getRegisteredListenerArray());
-          }
-        });
-    trackObserver = new TrackContentObserver(contentHandler,
-        new Runnable() {
-          @Override
-          public void run() {
-            notifyTrackUpdated(getRegisteredListenerArray());
-          }
-        });
-    compassListener = new SensorEventListener() {
-      @Override
-      public void onSensorChanged(SensorEvent event) {
-        lastSeenMagneticHeading = event.values[0];
-        maybeUpdateDeclination();
-        notifyHeadingChanged(getRegisteredListenerArray());
-      }
+    pointObserver = new TrackContentObserver(contentHandler, new PointObserverCallback());
+    waypointObserver = new TrackContentObserver(contentHandler, new WaypointObserverCallback());
+    trackObserver = new TrackContentObserver(contentHandler, new TrackObserverCallback());
 
-      @Override
-      public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        // Do nothing
-      }
-    };
-    locationListener = new LocationListener() {
-      @Override
-      public void onStatusChanged(String provider, int status, Bundle extras) {
-        if (!LocationManager.GPS_PROVIDER.equals(provider)) return;
-
-        hasProviderEnabled = (status == LocationProvider.AVAILABLE);
-        notifyFixType();
-      }
-
-      @Override
-      public void onProviderEnabled(String provider) {
-        if (!LocationManager.GPS_PROVIDER.equals(provider)) return;
-
-        hasProviderEnabled = true;
-        notifyFixType();
-      }
-
-      @Override
-      public void onProviderDisabled(String provider) {
-        if (!LocationManager.GPS_PROVIDER.equals(provider)) return;
-
-        hasProviderEnabled = false;
-        notifyFixType();
-      }
-
-      @Override
-      public void onLocationChanged(Location location) {
-        notifyLocationChanged(location);
-      }
-    };
+    compassListener = new CompassListener();
+    locationListener = new CurrentLocationListener();
   }
 
   /**
@@ -887,21 +902,11 @@ public class TrackDataHub {
     int pointSamplingFrequency = -1;
 
     // Create a double-buffering location provider.
+    MyTracksProviderUtils.DoubleBufferedLocationFactory locationFactory =
+        new MyTracksProviderUtils.DoubleBufferedLocationFactory();
     LocationIterator it = providerUtils.getLocationIterator(
-        currentSelectedTrackId, minPointId, false, new LocationFactory() {
-          private final Location locs[] = new MyTracksLocation[] {
-            new MyTracksLocation("gps"),
-            new MyTracksLocation("gps")
-          };
-
-          private int lastLoc = 0;
-
-          @Override
-          public Location createLocation() {
-            lastLoc = (lastLoc + 1) % locs.length;
-            return locs[lastLoc];
-          }
-        });
+        currentSelectedTrackId, minPointId, false,
+        locationFactory);
 
     while (it.hasNext()) {
       if (currentSelectedTrackId != selectedTrackId) {
@@ -934,26 +939,8 @@ public class TrackDataHub {
             (int) (1 + numTotalPoints / Constants.TARGET_DISPLAYED_TRACK_POINTS);
       }
 
-      // Include a point if it fits one of the following criteria:
-      // - Has the mod for the sampling frequency (includes first point).
-      // - Is the last point and we are not recording this track.
-      boolean isValid = MyTracksUtils.isValidLocation(location);
-      if (isValid &&
-          (localNumLoadedPoints % pointSamplingFrequency == 0 ||
-           (!isRecordingSelected() && locationId == lastStoredLocationId))) {
-        // No need to allocate a new location (we can safely reuse the existing).
-        for (TrackDataListener listener : listeners) {
-          listener.onNewTrackPoint(location);
-        }
-      }
-
-      // Report segment splits separately.
-      if (!isValid) {
-        // TODO: Always send last valid point before and first valid point after a split
-        for (TrackDataListener listener : listeners) {
-          listener.onSegmentSplit();
-        }
-      }
+      notifyNewPoint(location, locationId, lastStoredLocationId,
+          localNumLoadedPoints, pointSamplingFrequency, listeners);
 
       localNumLoadedPoints++;
       localLastSeenLocationId = locationId;
@@ -968,6 +955,37 @@ public class TrackDataHub {
 
     for (TrackDataListener listener : listeners) {
       listener.onNewTrackPointsDone();
+    }
+  }
+
+  private void notifyNewPoint(Location location,
+      long locationId,
+      long lastStoredLocationId,
+      int numLoadedPoints,
+      int pointSamplingFrequency,
+      TrackDataListener[] listeners) {
+    boolean isValid = MyTracksUtils.isValidLocation(location);
+    if (isValid) {
+      // Include a point if it fits one of the following criteria:
+      // - Has the mod for the sampling frequency (includes first point).
+      // - Is the last point and we are not recording this track.
+      if (numLoadedPoints % pointSamplingFrequency == 0 ||
+         (!isRecordingSelected() && locationId == lastStoredLocationId)) {
+        // No need to allocate a new location (we can safely reuse the existing).
+        for (TrackDataListener listener : listeners) {
+          listener.onNewTrackPoint(location);
+        }
+      } else {
+        for (TrackDataListener listener : listeners) {
+          listener.onSampledOutTrackPoint(location);
+        }
+      }
+    } else {
+      // Report segment splits separately.
+      // TODO: Always send last valid point before and first valid point after a split
+      for (TrackDataListener listener : listeners) {
+        listener.onSegmentSplit();
+      }
     }
   }
 

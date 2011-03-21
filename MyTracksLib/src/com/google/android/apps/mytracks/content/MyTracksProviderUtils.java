@@ -343,6 +343,24 @@ public interface MyTracksProviderUtils {
       return new Location("gps");
     }
   };
+
+  /**
+   * A location factory which uses two location instances (one for the current location,
+   * and one for the previous), useful when we need to keep the last location.
+   */
+  public class DoubleBufferedLocationFactory implements LocationFactory {
+    private final Location locs[] = new MyTracksLocation[] {
+      new MyTracksLocation("gps"),
+      new MyTracksLocation("gps")
+    };
+    private int lastLoc = 0;
+
+    @Override
+    public Location createLocation() {
+      lastLoc = (lastLoc + 1) % locs.length;
+      return locs[lastLoc];
+    }
+  }
   
   /**
    * Creates a new read-only iterator over all track points for the given track.  It provides

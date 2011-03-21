@@ -155,12 +155,21 @@ public class MyTracksMap extends MapActivity
   }
 
   @Override
-  protected void onStop() {
-    Log.d(TAG, "MyTracksMap.onStop");
-
-    dataHub.unregisterTrackDataListener(this);
-
-    super.onStop();
+  protected void onRestoreInstanceState(Bundle bundle) {
+    Log.d(TAG, "MyTracksMap.onRestoreInstanceState");
+    if (bundle != null) {
+      super.onRestoreInstanceState(bundle);
+      keepMyLocationVisible =
+          bundle.getBoolean(KEY_KEEP_MY_LOCATION_VISIBLE, false);
+      if (bundle.containsKey(KEY_CURRENT_LOCATION)) {
+        currentLocation = (Location) bundle.getParcelable(KEY_CURRENT_LOCATION);
+        if (currentLocation != null) {
+          showCurrentLocation();
+        }
+      } else {
+        currentLocation = null;
+      }
+    }
   }
 
   @Override
@@ -182,21 +191,12 @@ public class MyTracksMap extends MapActivity
   }
 
   @Override
-  protected void onRestoreInstanceState(Bundle bundle) {
-    Log.d(TAG, "MyTracksMap.onRestoreInstanceState");
-    if (bundle != null) {
-      super.onRestoreInstanceState(bundle);
-      keepMyLocationVisible =
-          bundle.getBoolean(KEY_KEEP_MY_LOCATION_VISIBLE, false);
-      if (bundle.containsKey(KEY_CURRENT_LOCATION)) {
-        currentLocation = (Location) bundle.getParcelable(KEY_CURRENT_LOCATION);
-        if (currentLocation != null) {
-          showCurrentLocation();
-        }
-      } else {
-        currentLocation = null;
-      }
-    }
+  protected void onStop() {
+    Log.d(TAG, "MyTracksMap.onStop");
+
+    dataHub.unregisterTrackDataListener(this);
+
+    super.onStop();
   }
 
   // Utility functions:
