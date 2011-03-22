@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.util;
 
-import static com.google.android.apps.mytracks.MyTracksConstants.TAG;
+import static com.google.android.apps.mytracks.Constants.TAG;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.Service;

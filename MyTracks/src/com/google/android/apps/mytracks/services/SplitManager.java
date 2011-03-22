@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.services;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.util.UnitConversions;
 
@@ -81,7 +81,7 @@ public class SplitManager {
     
     if (splitFrequency >= 0) {
       nextSplitDistance = Double.MAX_VALUE;
-      Log.d(MyTracksConstants.TAG,
+      Log.d(Constants.TAG,
             "SplitManager: Distance splits disabled.");
       return;
     }
@@ -94,7 +94,7 @@ public class SplitManager {
     int index = (int) (dist / splitFrequency);
     index -= 1;
     nextSplitDistance = splitFrequency * index;
-    Log.d(MyTracksConstants.TAG,
+    Log.d(Constants.TAG,
           "SplitManager: Next split distance: " + nextSplitDistance);
   }
 
@@ -126,7 +126,7 @@ public class SplitManager {
    * @param splitFrequency The frequency in time or distance
    */
   public void setSplitFrequency(int splitFrequency) {
-    Log.d(MyTracksConstants.TAG,
+    Log.d(Constants.TAG,
         "setSplitFrequency: splitFrequency = " + splitFrequency);
     this.splitFrequency = splitFrequency;
     

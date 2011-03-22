@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 
 import android.os.Environment;
 
@@ -49,7 +49,7 @@ public class FileUtils {
     StringBuilder dirNameBuilder = new StringBuilder();
     dirNameBuilder.append(Environment.getExternalStorageDirectory());
     dirNameBuilder.append(File.separatorChar);
-    dirNameBuilder.append(MyTracksConstants.SDCARD_TOP_DIR);
+    dirNameBuilder.append(Constants.SDCARD_TOP_DIR);
     for (String component : components) {
       dirNameBuilder.append(File.separatorChar);
       dirNameBuilder.append(component);

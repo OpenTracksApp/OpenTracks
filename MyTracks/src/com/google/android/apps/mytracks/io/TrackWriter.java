@@ -15,14 +15,14 @@
  */
 package com.google.android.apps.mytracks.io;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.util.FileUtils;
-import com.google.android.apps.mytracks.util.MyTracksUtils;
+import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -160,16 +160,16 @@ public class TrackWriter {
     String fileName = fileUtils.buildUniqueFileName(
         directory, track.getName(), writer.getExtension());
     if (fileName == null) {
-      Log.e(MyTracksConstants.TAG,
+      Log.e(Constants.TAG,
           "Unable to get a unique filename for " + fileName);
       return false;
     }
 
-    Log.i(MyTracksConstants.TAG, "Writing track to: " + fileName);
+    Log.i(Constants.TAG, "Writing track to: " + fileName);
     try {
       writer.prepare(track, newOutputStream(fileName));
     } catch (FileNotFoundException e) {
-      Log.e(MyTracksConstants.TAG, "Failed to open output file.", e);
+      Log.e(Constants.TAG, "Failed to open output file.", e);
       errorMessage = R.string.io_write_failed;
       return false;
     }
@@ -187,12 +187,12 @@ public class TrackWriter {
     }
 
     if (!fileUtils.isSdCardAvailable()) {
-      Log.i(MyTracksConstants.TAG, "Could not find SD card.");
+      Log.i(Constants.TAG, "Could not find SD card.");
       errorMessage = R.string.io_no_external_storage_found;
       return false;
     }
     if (!fileUtils.ensureDirectoryExists(directory)) {
-      Log.i(MyTracksConstants.TAG, "Could not create export directory.");
+      Log.i(Constants.TAG, "Could not create export directory.");
       errorMessage = R.string.io_create_dir_failed;
       return false;
     }
@@ -230,7 +230,7 @@ public class TrackWriter {
     // same time.
     Cursor cursor = null;
     cursor = providerUtils.getWaypointsCursor(trackId, 0,
-        MyTracksConstants.MAX_LOADED_WAYPOINTS_POINTS);
+        Constants.MAX_LOADED_WAYPOINTS_POINTS);
     if (cursor != null) {
       try {
         if (cursor.moveToFirst()) {
@@ -253,14 +253,14 @@ public class TrackWriter {
    * Does the actual work of writing the track to the now open file.
    */
   void writeDocument() {
-    Log.d(MyTracksConstants.TAG, "Started writing track.");
+    Log.d(Constants.TAG, "Started writing track.");
     writer.writeHeader();
     writeWaypoints(track.getId());
     writeLocations();
     writer.writeFooter();
     writer.close();
     success = true;
-    Log.d(MyTracksConstants.TAG, "Done writing track.");
+    Log.d(Constants.TAG, "Done writing track.");
     errorMessage = R.string.io_write_finished;
   }
 
@@ -296,13 +296,13 @@ public class TrackWriter {
         locationFactory);
     try {
       if (!it.hasNext()) {
-        Log.w(MyTracksConstants.TAG, "Unable to get any points to write");
+        Log.w(Constants.TAG, "Unable to get any points to write");
         return;
       }
       while (it.hasNext()) {
         Location loc = it.next();
   
-        boolean isValid = MyTracksUtils.isValidLocation(loc);
+        boolean isValid = LocationUtils.isValidLocation(loc);
         boolean validSegment = isValid && isLastValid;
         if (!wroteFirst && validSegment) {
           // Found the first two consecutive points which are valid

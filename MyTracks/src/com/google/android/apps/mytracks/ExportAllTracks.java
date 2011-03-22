@@ -20,7 +20,7 @@ import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.TrackWriter;
 import com.google.android.apps.mytracks.io.TrackWriterFactory;
 import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
-import com.google.android.apps.mytracks.util.MyTracksUtils;
+import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -71,14 +71,14 @@ public class ExportAllTracks {
               format = TrackFileFormat.TCX;
               break;
             default:
-              Log.w(MyTracksConstants.TAG, "Unknown export format: " + which);
+              Log.w(Constants.TAG, "Unknown export format: " + which);
           }
         }
       };
 
   public ExportAllTracks(Activity activity) {
     this.activity = activity;
-    Log.i(MyTracksConstants.TAG, "ExportAllTracks: Starting");
+    Log.i(Constants.TAG, "ExportAllTracks: Starting");
 
     AlertDialog.Builder builder = new AlertDialog.Builder(activity);
     builder.setSingleChoiceItems(R.array.export_formats, 0, itemClick);
@@ -113,14 +113,14 @@ public class ExportAllTracks {
    */
   private void aquireLocksAndExport() {
     SharedPreferences prefs =
-        activity.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+        activity.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     long recordingTrackId = -1;
     if (prefs != null) {
       recordingTrackId =
     	  prefs.getLong(activity.getString(R.string.recording_track_key), -1);
     }
     if (recordingTrackId != -1) {
-      wakeLock = MyTracksUtils.acquireWakeLock(activity, wakeLock);
+      wakeLock = SystemUtils.acquireWakeLock(activity, wakeLock);
     }
 
     // Now we can safely export everything.
@@ -130,9 +130,9 @@ public class ExportAllTracks {
     // TODO check what happens if we started recording after getting this lock.
     if (wakeLock != null && wakeLock.isHeld()) {
       wakeLock.release();
-      Log.i(MyTracksConstants.TAG, "ExportAllTracks: Releasing wake lock.");
+      Log.i(Constants.TAG, "ExportAllTracks: Releasing wake lock.");
     }
-    Log.i(MyTracksConstants.TAG, "ExportAllTracks: Done");
+    Log.i(Constants.TAG, "ExportAllTracks: Done");
     Toast.makeText(activity, R.string.export_done, Toast.LENGTH_SHORT).show();
   }
 
@@ -163,7 +163,7 @@ public class ExportAllTracks {
       }
 
       final int trackCount = cursor.getCount();
-      Log.i(MyTracksConstants.TAG,
+      Log.i(Constants.TAG,
           "ExportAllTracks: Exporting: " + cursor.getCount() + " tracks.");
       int idxTrackId = cursor.getColumnIndexOrThrow(TracksColumns._ID);
       activity.runOnUiThread(new Runnable() {
@@ -186,7 +186,7 @@ public class ExportAllTracks {
         });
 
         long id = cursor.getLong(idxTrackId);
-        Log.i(MyTracksConstants.TAG, "ExportAllTracks: exporting: " + id);
+        Log.i(Constants.TAG, "ExportAllTracks: exporting: " + id);
         TrackWriter writer =
             TrackWriterFactory.newWriter(activity, providerUtils, id, format);
         writer.writeTrack();

@@ -15,16 +15,17 @@
  */
 package com.google.android.apps.mytracks.services.sensors;
 
-import static com.google.android.apps.mytracks.MyTracksConstants.TAG;
+import static com.google.android.apps.mytracks.Constants.TAG;
 
-import com.dsi.ant.AntDefine;
-import com.dsi.ant.AntMesg;
-import com.dsi.ant.exception.AntInterfaceException;
-import com.google.android.apps.mytracks.MyTracksSettings;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.services.sensors.ant.AntChannelIdMessage;
 import com.google.android.apps.mytracks.services.sensors.ant.AntChannelResponseMessage;
 import com.google.android.maps.mytracks.R;
+
+import com.dsi.ant.AntDefine;
+import com.dsi.ant.AntMesg;
+import com.dsi.ant.exception.AntInterfaceException;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -58,7 +59,7 @@ public class AntDirectSensorManager extends AntSensorManager {
 
     // First read the the device id that we will be pairing with.
     SharedPreferences prefs = context.getSharedPreferences(
-        MyTracksSettings.SETTINGS_NAME, 0);
+        Constants.SETTINGS_NAME, 0);
     if (prefs != null) {
       deviceNumberHRM =
         (short) prefs.getInt(context.getString(R.string.ant_heart_rate_sensor_id_key), 0);
@@ -133,7 +134,7 @@ public class AntDirectSensorManager extends AntSensorManager {
     Log.i(TAG, "Found device id: " + deviceNumberHRM);
 
     SharedPreferences prefs = context.getSharedPreferences(
-        MyTracksSettings.SETTINGS_NAME, Context.MODE_PRIVATE);
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     SharedPreferences.Editor editor = prefs.edit();
     editor.putInt(context.getString(R.string.ant_heart_rate_sensor_id_key), deviceNumberHRM);
     editor.commit();

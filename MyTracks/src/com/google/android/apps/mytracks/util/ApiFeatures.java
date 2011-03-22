@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 
 import android.os.Build;
 import android.util.Log;
@@ -72,7 +72,7 @@ public class ApiFeatures {
       apiPlatformAdapter = new CupcakePlatformAdapter();
     }
 
-    Log.i(MyTracksConstants.TAG, "Using platform adapter " + apiPlatformAdapter.getClass());
+    Log.i(Constants.TAG, "Using platform adapter " + apiPlatformAdapter.getClass());
   }
 
   public ApiPlatformAdapter getApiPlatformAdapter() {

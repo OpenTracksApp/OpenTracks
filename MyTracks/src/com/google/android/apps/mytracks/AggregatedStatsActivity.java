@@ -40,7 +40,7 @@ public class AggregatedStatsActivity extends Activity implements
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
           String key) {
-    Log.d(MyTracksConstants.TAG, "StatsActivity: onSharedPreferences changed "
+    Log.d(Constants.TAG, "StatsActivity: onSharedPreferences changed "
             + key);
     if (key != null) {
       if (key.equals(R.string.metric_units_key)) {
@@ -67,7 +67,7 @@ public class AggregatedStatsActivity extends Activity implements
     sv.setScrollBarStyle(ScrollView.SCROLLBARS_OUTSIDE_INSET);
 
     SharedPreferences preferences = getSharedPreferences(
-            MyTracksSettings.SETTINGS_NAME, 0);
+            Constants.SETTINGS_NAME, 0);
     if (preferences != null) {
       metricUnits = preferences.getBoolean(getString(R.string.metric_units_key), true);
       preferences.registerOnSharedPreferenceChangeListener(this);

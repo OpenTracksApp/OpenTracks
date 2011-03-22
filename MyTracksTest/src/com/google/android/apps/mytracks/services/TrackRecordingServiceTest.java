@@ -15,9 +15,9 @@
  */
 package com.google.android.apps.mytracks.services;
 
-import static com.google.android.apps.mytracks.MyTracksConstants.RESUME_TRACK_EXTRA_NAME;
+import static com.google.android.apps.mytracks.Constants.RESUME_TRACK_EXTRA_NAME;
 
-import com.google.android.apps.mytracks.MyTracksSettings;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProvider;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
@@ -152,7 +152,7 @@ public class TrackRecordingServiceTest
     providerUtils = MyTracksProviderUtils.Factory.get(context);
 
     sharedPreferences = context.getSharedPreferences(
-        MyTracksSettings.SETTINGS_NAME, 0);
+        Constants.SETTINGS_NAME, 0);
     // Let's use default values.
     sharedPreferences.edit().clear().commit();
 

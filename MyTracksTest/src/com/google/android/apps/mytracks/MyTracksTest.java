@@ -165,7 +165,7 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     
     // Watch for MyTracksDetails activity. 
     ActivityMonitor monitor = getInstrumentation().addMonitor(
-        MyTracksDetails.class.getName(), null, false);
+        TrackDetails.class.getName(), null, false);
 
     // Now, stop the track and make sure that it is still selected, but
     // no longer recording.
@@ -173,7 +173,7 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     
     // Check if we got back MyTracksDetails activity. 
     Activity activity = getInstrumentation().waitForMonitor(monitor);
-    assertTrue(activity instanceof MyTracksDetails);
+    assertTrue(activity instanceof TrackDetails);
     
     // TODO: Update track name and other properties and test if they were
     // properly saved.

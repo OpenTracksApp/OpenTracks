@@ -15,11 +15,11 @@
  */
 package com.google.android.apps.mytracks.io;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
-import com.google.android.apps.mytracks.util.MyTracksUtils;
+import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 
 import android.location.Location;
@@ -174,7 +174,7 @@ public class GpxImporter extends DefaultHandler {
       parser.parse(is, handler);
 
       long end = System.currentTimeMillis();
-      Log.d(MyTracksConstants.TAG, "Total import time: " + (end - start) + "ms");
+      Log.d(Constants.TAG, "Total import time: " + (end - start) + "ms");
 
       trackIds = handler.getImportedTrackIds();
     } finally {
@@ -362,7 +362,7 @@ public class GpxImporter extends DefaultHandler {
    * @throws SAXException - thrown if track point is invalid
    */
   private void onTrackPointElementEnd() throws SAXException {
-    if (MyTracksUtils.isValidLocation(location)) {
+    if (LocationUtils.isValidLocation(location)) {
       if (statsBuilder == null) {
         // first point did not have a time, start stats builder without it
         statsBuilder = new TripStatisticsBuilder(0);
@@ -462,7 +462,7 @@ public class GpxImporter extends DefaultHandler {
 
       // check for negative time change
       if (timeDifference < 0) {
-        Log.w(MyTracksConstants.TAG, "Found negative time change.");
+        Log.w(Constants.TAG, "Found negative time change.");
       } else {
 
         // We don't have a speed and bearing in GPX, make something up from

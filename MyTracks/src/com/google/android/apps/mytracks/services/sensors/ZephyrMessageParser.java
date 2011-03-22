@@ -15,11 +15,10 @@
  */
 package com.google.android.apps.mytracks.services.sensors;
 
-import static com.google.android.apps.mytracks.MyTracksConstants.TAG;
-
-import com.google.android.apps.mytracks.content.Sensor;
-
 import android.util.Log;
+
+import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.content.Sensor;
 
 /**
  * An implementation of a SensorData parser for Zephyr HRM.
@@ -34,7 +33,7 @@ public class ZephyrMessageParser implements MessageParser {
     for (int i = 0; i < buffer.length; i++) {
       sb.append(String.format("%02X", buffer[i]));
     }
-    Log.w(TAG, "Got zephyr data: " + sb);
+    Log.w(Constants.TAG, "Got zephyr data: " + sb);
     // The provided units are 1/16 strides per minute.
     // TODO: Fix the cadence calculation.
     // int cadence = SensorUtils.unsignedShortToInt(buffer, 56);
@@ -50,7 +49,7 @@ public class ZephyrMessageParser implements MessageParser {
       .setCreationTime(System.currentTimeMillis())
       .setHeartRate(b)
       .build();
-
+    
     return sds;
   }
 

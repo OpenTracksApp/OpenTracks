@@ -49,7 +49,7 @@ import android.widget.TextView;
  *
  * @author Leif Hendrik Wilden
  */
-public class MyTracksWaypointsList extends ListActivity
+public class WaypointsList extends ListActivity
     implements View.OnClickListener {
 
   private int contextPosition = -1;
@@ -59,7 +59,6 @@ public class MyTracksWaypointsList extends ListActivity
   private Button insertWaypointButton = null;
   private Button insertStatisticsButton = null;
   private long recordingTrackId = -1;
-  private long selectedTrackId = -1;
   private MyTracksProviderUtils providerUtils;
 
   private Cursor waypointsCursor = null;
@@ -72,14 +71,14 @@ public class MyTracksWaypointsList extends ListActivity
           AdapterView.AdapterContextMenuInfo info =
               (AdapterView.AdapterContextMenuInfo) menuInfo;
           contextPosition = info.position;
-          waypointId = MyTracksWaypointsList.this.listView.getAdapter()
+          waypointId = WaypointsList.this.listView.getAdapter()
               .getItemId(contextPosition);
           int type = providerUtils.getWaypoint(info.id).getType();
-          menu.add(0, MyTracksConstants.MENU_SHOW, 0,
+          menu.add(0, Constants.MENU_SHOW, 0,
               R.string.waypointslist_show_waypoint);
-          menu.add(0, MyTracksConstants.MENU_EDIT, 0,
+          menu.add(0, Constants.MENU_EDIT, 0,
               R.string.waypointslist_edit_waypoint);
-          menu.add(0, MyTracksConstants.MENU_DELETE, 0,
+          menu.add(0, Constants.MENU_DELETE, 0,
               R.string.waypointslist_delete_waypoint).setEnabled(
                   recordingTrackId < 0 || type == Waypoint.TYPE_WAYPOINT ||
                   info.id != providerUtils.getLastWaypointId(recordingTrackId));
@@ -90,8 +89,8 @@ public class MyTracksWaypointsList extends ListActivity
   protected void onListItemClick(ListView l, View v, int position, long id) {
     Intent result = new Intent();
     result.putExtra("trackid", trackId);
-    result.putExtra(MyTracksWaypointDetails.WAYPOINT_ID_EXTRA, id);
-    setResult(MyTracksConstants.EDIT_WAYPOINT, result);
+    result.putExtra(WaypointDetails.WAYPOINT_ID_EXTRA, id);
+    setResult(Constants.EDIT_WAYPOINT, result);
     finish();
   }
 
@@ -99,18 +98,18 @@ public class MyTracksWaypointsList extends ListActivity
   public boolean onMenuItemSelected(int featureId, MenuItem item) {
     if (!super.onMenuItemSelected(featureId, item)) {
       switch (item.getItemId()) {
-        case MyTracksConstants.MENU_SHOW: {
+        case Constants.MENU_SHOW: {
           onListItemClick(null, null, 0, waypointId);
           return true;
         }
-        case MyTracksConstants.MENU_EDIT: {
-          Intent intent = new Intent(this, MyTracksWaypointDetails.class);
+        case Constants.MENU_EDIT: {
+          Intent intent = new Intent(this, WaypointDetails.class);
           intent.putExtra("trackid", trackId);
-          intent.putExtra(MyTracksWaypointDetails.WAYPOINT_ID_EXTRA, waypointId);
+          intent.putExtra(WaypointDetails.WAYPOINT_ID_EXTRA, waypointId);
           startActivity(intent);
           return true;
         }
-        case MyTracksConstants.MENU_DELETE: {
+        case Constants.MENU_DELETE: {
           deleteWaypoint(waypointId);
         }
       }
@@ -139,7 +138,10 @@ public class MyTracksWaypointsList extends ListActivity
         (Button) findViewById(R.id.waypointslist_btn_insert_statistics);
     insertStatisticsButton.setOnClickListener(this);
     SharedPreferences preferences =
-        getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+        getSharedPreferences(Constants.SETTINGS_NAME, 0);
+
+    // TODO: Get rid of selected and recording track IDs
+    long selectedTrackId = -1;
     if (preferences != null) {
       recordingTrackId =
           preferences.getLong(getString(R.string.recording_track_key), -1);
@@ -183,18 +185,18 @@ public class MyTracksWaypointsList extends ListActivity
     try {
       id = MyTracks.getInstance().insertWaypoint(request);
     } catch (RemoteException e) {
-      Log.e(MyTracksConstants.TAG, "Cannot insert marker.", e);
+      Log.e(Constants.TAG, "Cannot insert marker.", e);
       return;
     } catch (IllegalStateException e) {
-      Log.e(MyTracksConstants.TAG, "Cannot insert marker.", e);
+      Log.e(Constants.TAG, "Cannot insert marker.", e);
       return;
     }
     if (id < 0) {
-      Log.e(MyTracksConstants.TAG, "Failed to insert marker.");
+      Log.e(Constants.TAG, "Failed to insert marker.");
       return;
     }
-    Intent intent = new Intent(this, MyTracksWaypointDetails.class);
-    intent.putExtra(MyTracksWaypointDetails.WAYPOINT_ID_EXTRA, id);
+    Intent intent = new Intent(this, WaypointDetails.class);
+    intent.putExtra(WaypointDetails.WAYPOINT_ID_EXTRA, id);
     startActivity(intent);
   }
 
@@ -259,7 +261,7 @@ public class MyTracksWaypointsList extends ListActivity
           public void onClick(DialogInterface dialog, int i) {
             dialog.dismiss();
             providerUtils.deleteWaypoint(waypointId,
-                new StringUtils(MyTracksWaypointsList.this));
+                new StringUtils(WaypointsList.this));
           }
         });
     builder.setNegativeButton(getString(R.string.no),

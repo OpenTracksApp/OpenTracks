@@ -15,8 +15,7 @@
  */
 package com.google.android.apps.mytracks.io;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
-import com.google.android.apps.mytracks.MyTracksSettings;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.ProgressIndicator;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
@@ -25,8 +24,9 @@ import com.google.android.apps.mytracks.io.gdata.GDataWrapper;
 import com.google.android.apps.mytracks.io.gdata.GDataWrapper.QueryFunction;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.MyTracksUtils;
+import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
+import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 import com.google.api.client.googleapis.GoogleHeaders;
@@ -141,7 +141,7 @@ public class SendToFusionTables implements Runnable {
     this.providerUtils = MyTracksProviderUtils.Factory.get(context);
 
     GoogleHeaders headers = new GoogleHeaders();
-    headers.setApplicationName("Google-MyTracks-" + MyTracksUtils.getMyTracksVersion(context));
+    headers.setApplicationName("Google-MyTracks-" + SystemUtils.getMyTracksVersion(context));
     headers.gdataVersion = GDATA_VERSION;
 
     transport = new HttpTransport();
@@ -151,7 +151,7 @@ public class SendToFusionTables implements Runnable {
 
   @Override
   public void run() {
-    Log.d(MyTracksConstants.TAG, "Sending to Fusion tables: trackId = " + trackId);
+    Log.d(Constants.TAG, "Sending to Fusion tables: trackId = " + trackId);
     doUpload();
   }
 
@@ -172,7 +172,7 @@ public class SendToFusionTables implements Runnable {
   private void doUpload() {
     ((GoogleHeaders) transport.defaultHeaders).setGoogleLogin(auth.getAuthToken());
     int statusMessageId = R.string.error_sending_to_fusiontables;
-    boolean success = false;
+    boolean success = true;
     try {
       progressIndicator.setProgressValue(PROGRESS_INITIALIZATION);
       progressIndicator.setProgressMessage(R.string.progress_message_reading_track);
@@ -204,11 +204,10 @@ public class SendToFusionTables implements Runnable {
       }
 
       statusMessageId = R.string.status_new_fusiontable_has_been_created;
-      success = true;
-      Log.d(MyTracksConstants.TAG, "SendToFusionTables: Done: " + success);
+      Log.d(Constants.TAG, "SendToFusionTables: Done: " + success);
       progressIndicator.setProgressValue(PROGRESS_COMPLETE);
-
     } finally {
+
       final boolean finalSuccess = success;
       final int finalStatusMessageId = statusMessageId;
       context.runOnUiThread(new Runnable() {
@@ -229,14 +228,14 @@ public class SendToFusionTables implements Runnable {
    * @return true in case of success.
    */
   private boolean createNewTable(Track track) {
-    Log.d(MyTracksConstants.TAG, "Creating a new fusion table.");
+    Log.d(Constants.TAG, "Creating a new fusion table.");
     String query = "CREATE TABLE '" + sqlEscape(track.getName()) +
         "' (name:STRING,description:STRING,geometry:LOCATION,marker:STRING)";
     return runUpdate(query);
   }
 
   private boolean makeTableUnlisted(String tableId) {
-    Log.d(MyTracksConstants.TAG, "Setting visibility to unlisted.");
+    Log.d(Constants.TAG, "Setting visibility to unlisted.");
     String query = "UPDATE TABLE " + tableId + " SET VISIBILITY = UNLISTED";
     return runUpdate(query);
   }
@@ -275,7 +274,7 @@ public class SendToFusionTables implements Runnable {
    */
   private boolean createNewPoint(String name, String description, Location location,
       String marker) {
-    Log.d(MyTracksConstants.TAG, "Creating a new row with a point.");
+    Log.d(Constants.TAG, "Creating a new row with a point.");
     String query = "INSERT INTO " + tableId + " (name,description,geometry,marker) VALUES "
         + values(name, description, getKmlPoint(location), marker);
     return runUpdate(query);
@@ -288,7 +287,7 @@ public class SendToFusionTables implements Runnable {
    * @return true in case of success.
    */
   private boolean createNewLineString(Track track) {
-    Log.d(MyTracksConstants.TAG, "Creating a new row with a point.");
+    Log.d(Constants.TAG, "Creating a new row with a point.");
     String query = "INSERT INTO " + tableId
         + " (name,description,geometry) VALUES "
         + values(track.getName(), track.getDescription(), getKmlLineString(track));
@@ -297,7 +296,7 @@ public class SendToFusionTables implements Runnable {
 
   private boolean uploadAllTrackPoints(final Track track, String originalDescription) {
 
-    SharedPreferences preferences = context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+    SharedPreferences preferences = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     boolean metricUnits = true;
     if (preferences != null) {
       metricUnits = preferences.getBoolean(context.getString(R.string.metric_units_key), true);
@@ -306,7 +305,7 @@ public class SendToFusionTables implements Runnable {
     Cursor locationsCursor = providerUtils.getLocationsCursor(track.getId(), 0, -1, false);
     try {
       if (!locationsCursor.moveToFirst()) {
-        Log.w(MyTracksConstants.TAG, "Unable to get any points to upload");
+        Log.w(Constants.TAG, "Unable to get any points to upload");
         return false;
       }
 
@@ -319,14 +318,14 @@ public class SendToFusionTables implements Runnable {
       // Limit the number of elevation readings. Ideally we would want around 250.
       int elevationSamplingFrequency =
           Math.max(1, (int) (totalLocations / 250.0));
-      Log.d(MyTracksConstants.TAG,
+      Log.d(Constants.TAG,
           "Using elevation sampling factor: " + elevationSamplingFrequency
           + " on " + totalLocations);
       double totalDistance = 0;
 
       Vector<Double> distances = new Vector<Double>();
       Vector<Double> elevations = new Vector<Double>();
-      DoubleBuffer elevationBuffer = new DoubleBuffer(MyTracksConstants.ELEVATION_SMOOTHING_FACTOR);
+      DoubleBuffer elevationBuffer = new DoubleBuffer(Constants.ELEVATION_SMOOTHING_FACTOR);
 
       List<Location> locations = new ArrayList<Location>(MAX_POINTS_PER_UPLOAD);
       Location lastLocation = null;
@@ -345,7 +344,7 @@ public class SendToFusionTables implements Runnable {
         }
 
         // Add to the elevation profile.
-        if (loc != null && MyTracksUtils.isValidLocation(loc)) {
+        if (loc != null && LocationUtils.isValidLocation(loc)) {
           // All points go into the smoothing buffer...
           elevationBuffer.setNext(metricUnits ? loc.getAltitude()
               : loc.getAltitude() * UnitConversions.M_TO_FT);
@@ -448,7 +447,7 @@ public class SendToFusionTables implements Runnable {
 
     int numLocations = locations.size();
     if (numLocations < 2) {
-      Log.d(MyTracksConstants.TAG, "Not preparing/uploading too few points");
+      Log.d(Constants.TAG, "Not preparing/uploading too few points");
       totalLocationsUploaded += numLocations;
       return true;
     }
@@ -464,16 +463,16 @@ public class SendToFusionTables implements Runnable {
                 context.getString(R.string.part), totalSegmentsUploaded));
       }
       totalSegmentsUploaded++;
-      Log.d(MyTracksConstants.TAG,
+      Log.d(Constants.TAG,
           "SendToFusionTables: Prepared feature for upload w/ "
           + splitTrack.getLocations().size() + " points.");
 
       // Transmit tracks via GData feed:
       // -------------------------------
-      Log.d(MyTracksConstants.TAG,
+      Log.d(Constants.TAG,
             "SendToFusionTables: Uploading to table " + tableId + " w/ auth " + auth);
       if (!uploadTrackPoints(splitTrack)) {
-        Log.e(MyTracksConstants.TAG, "Uploading failed");
+        Log.e(Constants.TAG, "Uploading failed");
         return false;
       }
     }
@@ -519,7 +518,7 @@ public class SendToFusionTables implements Runnable {
         // Close up the last segment.
         prepareTrackSegment(segment, splitTracks);
 
-        Log.d(MyTracksConstants.TAG,
+        Log.d(Constants.TAG,
             "MyTracksSendToFusionTables: Starting new track segment...");
         startNewTrackSegment = false;
         segment = new Track();
@@ -567,12 +566,12 @@ public class SendToFusionTables implements Runnable {
      * Decimate to 2 meter precision. Fusion tables doesn't like too many
      * points:
      */
-    MyTracksUtils.decimate(segment, 2.0);
+    LocationUtils.decimate(segment, 2.0);
 
     /* If the track still has > 2500 points, split it in pieces: */
     final int maxPoints = 2500;
     if (segment.getLocations().size() > maxPoints) {
-      splitTracks.addAll(MyTracksUtils.split(segment, maxPoints));
+      splitTracks.addAll(LocationUtils.split(segment, maxPoints));
     } else if (segment.getLocations().size() >= 2) {
       splitTracks.add(segment);
     }
@@ -582,7 +581,7 @@ public class SendToFusionTables implements Runnable {
     int numLocations = splitTrack.getLocations().size();
     if (numLocations < 2) {
       // Need at least two points for a polyline:
-      Log.w(MyTracksConstants.TAG, "Not uploading too few points");
+      Log.w(Constants.TAG, "Not uploading too few points");
       return true;
     }
     return createNewLineString(splitTrack);
@@ -605,14 +604,14 @@ public class SendToFusionTables implements Runnable {
     try {
       c = providerUtils.getWaypointsCursor(
           track.getId(), 0,
-          MyTracksConstants.MAX_LOADED_WAYPOINTS_POINTS);
+          Constants.MAX_LOADED_WAYPOINTS_POINTS);
       if (c != null) {
         if (c.moveToFirst()) {
           // This will skip the 1st waypoint (it carries the stats for the
           // last segment).
           while (c.moveToNext()) {
             Waypoint wpt = providerUtils.createWaypoint(c);
-            Log.d(MyTracksConstants.TAG, "SendToFusionTables: Creating waypoint.");
+            Log.d(Constants.TAG, "SendToFusionTables: Creating waypoint.");
             success = createNewPoint(wpt.getName(), wpt.getDescription(), wpt.getLocation(),
             		MARKER_TYPE_WAYPOINT);
             if (!success) {
@@ -622,7 +621,7 @@ public class SendToFusionTables implements Runnable {
         }
       }
       if (!success) {
-        Log.w(MyTracksConstants.TAG, "SendToFusionTables: upload waypoints failed.");
+        Log.w(Constants.TAG, "SendToFusionTables: upload waypoints failed.");
       }
       return success;
     } finally {
@@ -657,7 +656,7 @@ public class SendToFusionTables implements Runnable {
     wrapper.setAuthManager(auth);
     wrapper.setRetryOnAuthFailure(true);
     wrapper.setClient(transport);
-    Log.d(MyTracksConstants.TAG, "GData connection prepared: " + this.auth);
+    Log.d(Constants.TAG, "GData connection prepared: " + this.auth);
     wrapper.runQuery(new QueryFunction<HttpTransport>() {
       @Override
       public void query(HttpTransport client)
@@ -672,7 +671,7 @@ public class SendToFusionTables implements Runnable {
         isc.inputStream = new ByteArrayInputStream(Strings.toBytesUtf8(sql));
         request.content = isc;
 
-        Log.d(MyTracksConstants.TAG, "Running update query " + url.toString() + ": " + sql);
+        Log.d(Constants.TAG, "Running update query " + url.toString() + ": " + sql);
         HttpResponse response;
         try {
           response = request.execute();
@@ -687,12 +686,12 @@ public class SendToFusionTables implements Runnable {
           String[] lines = s.split(Strings.LINE_SEPARATOR);
           if (lines[0].equals("tableid")) {
             tableId = lines[1];
-            Log.d(MyTracksConstants.TAG, "tableId = " + tableId);
+            Log.d(Constants.TAG, "tableId = " + tableId);
           } else {
-            Log.w(MyTracksConstants.TAG, "Unrecognized response: " + lines[0]);
+            Log.w(Constants.TAG, "Unrecognized response: " + lines[0]);
           }
         } else {
-          Log.d(MyTracksConstants.TAG, "Query failed: " + response.statusMessage + " (" +
+          Log.d(Constants.TAG, "Query failed: " + response.statusMessage + " (" +
               response.statusCode + ")");
           throw new GDataWrapper.HttpException(response.statusCode, response.statusMessage);
         }

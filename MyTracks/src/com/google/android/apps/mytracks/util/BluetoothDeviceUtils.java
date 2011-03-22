@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
@@ -158,14 +158,14 @@ public abstract class BluetoothDeviceUtils {
   public static BluetoothDeviceUtils getInstance() {
     if (instance == null) {
       if (!isBluetoothMethodSupported()) {
-        Log.d(MyTracksConstants.TAG, "Using dummy bluetooth utils");
+        Log.d(Constants.TAG, "Using dummy bluetooth utils");
         instance = new DummyImpl();
       } else {
-        Log.d(MyTracksConstants.TAG, "Using real bluetooth utils");
+        Log.d(Constants.TAG, "Using real bluetooth utils");
         try {
           instance = new RealImpl();
         } catch (IllegalStateException ise) {
-          Log.w(MyTracksConstants.TAG, "Oops, I mean, using dummy bluetooth utils", ise);
+          Log.w(Constants.TAG, "Oops, I mean, using dummy bluetooth utils", ise);
           instance = new DummyImpl();
         }
       }

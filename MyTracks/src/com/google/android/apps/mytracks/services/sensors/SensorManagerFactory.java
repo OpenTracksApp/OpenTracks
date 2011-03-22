@@ -1,12 +1,12 @@
 /*
  * Copyright 2009 Google Inc.
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -15,9 +15,7 @@
  */
 package com.google.android.apps.mytracks.services.sensors;
 
-import static com.google.android.apps.mytracks.MyTracksConstants.TAG;
-
-import com.google.android.apps.mytracks.MyTracksSettings;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -30,7 +28,9 @@ import android.util.Log;
  * @author Sandor Dornbush
  */
 public class SensorManagerFactory {
-  private SensorManagerFactory() {}
+
+  private SensorManagerFactory() {
+  }
 
   /**
    * Get a new sensor manager.
@@ -39,13 +39,13 @@ public class SensorManagerFactory {
    */
   public static SensorManager getSensorManager(Context context) {
     SharedPreferences prefs =
-        context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+        context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     if (prefs == null) {
       return null;
     }
-
+    
     String sensor = prefs.getString(context.getString(R.string.sensor_type_key), null);
-    Log.i(TAG, "Creating sensor of type: " + sensor);
+    Log.i(Constants.TAG, "Creating sensor of type: " + sensor);
 
     if (sensor == null) {
       return null;
@@ -56,7 +56,7 @@ public class SensorManagerFactory {
     } else if (sensor.equals(context.getString(R.string.zephyr_sensor_type))) {
       return new ZephyrSensorManager(context);
     } else  {
-      Log.w(TAG, "Unable to find sensor type: " + sensor);
+      Log.w(Constants.TAG, "Unable to find sensor type: " + sensor);
       return null;
     }
   }

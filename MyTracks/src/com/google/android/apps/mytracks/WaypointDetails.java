@@ -39,7 +39,7 @@ import android.widget.ImageView;
  *
  * @author Leif Hendrik Wilden
  */
-public class MyTracksWaypointDetails extends Activity
+public class WaypointDetails extends Activity
     implements OnClickListener {
 
   public static final String WAYPOINT_ID_EXTRA = "com.google.android.apps.mytracks.WAYPOINT_ID";
@@ -65,7 +65,7 @@ public class MyTracksWaypointDetails extends Activity
 
     utils = new StatsUtilities(this);
     SharedPreferences preferences =
-        getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+        getSharedPreferences(Constants.SETTINGS_NAME, 0);
     if (preferences != null) {
       boolean useMetric =
           preferences.getBoolean(getString(R.string.metric_units_key), true);
@@ -82,7 +82,7 @@ public class MyTracksWaypointDetails extends Activity
     // Required extra when launching this intent:
     waypointId = getIntent().getLongExtra(WAYPOINT_ID_EXTRA, -1);
     if (waypointId < 0) {
-      Log.d(MyTracksConstants.TAG,
+      Log.d(Constants.TAG,
           "MyTracksWaypointsDetails intent was launched w/o waypoint id.");
       finish();
       return;

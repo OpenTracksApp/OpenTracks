@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.io;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 
 import android.app.Activity;
 import android.os.Build;
@@ -46,11 +46,11 @@ public class AuthManagerFactory {
   public static AuthManager getAuthManager(Activity activity, int code,
       Bundle extras, boolean requireGoogle, String service) {
     if (useModernAuthManager()) {
-      Log.i(MyTracksConstants.TAG,
+      Log.i(Constants.TAG,
           "Creating modern auth manager: " + service);
       return new ModernAuthManager(activity, code, extras, requireGoogle, service);
     } else {
-      Log.i(MyTracksConstants.TAG,
+      Log.i(Constants.TAG,
           "Creating legacy auth manager: " + service);
       return new AuthManagerOld(activity, code, extras, requireGoogle, service);
     }

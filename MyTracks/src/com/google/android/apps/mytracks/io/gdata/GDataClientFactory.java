@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.io.gdata;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 import com.google.wireless.gdata.client.GDataClient;
 
 import android.content.Context;
@@ -43,7 +43,7 @@ public class GDataClientFactory {
     } catch (LinkageError e) {
       // On all other platforms use the client implementation packaged in the
       // apk.
-      Log.i(MyTracksConstants.TAG, "Using mytracks AndroidGDataClient.", e);
+      Log.i(Constants.TAG, "Using mytracks AndroidGDataClient.", e);
       return new com.google.android.apps.mytracks.io.gdata.AndroidGDataClient();
     }
   }

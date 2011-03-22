@@ -59,7 +59,7 @@ public class AccountChooser {
   public void chooseAccount(final Activity activity,
       final AccountHandler handler) {
     final Account[] accounts = AccountManager.get(activity)
-        .getAccountsByType(MyTracksConstants.ACCOUNT_TYPE);
+        .getAccountsByType(Constants.ACCOUNT_TYPE);
     if (accounts.length < 1) {
       alertNoAccounts(activity, handler);
       return;
@@ -76,7 +76,7 @@ public class AccountChooser {
     }
     
     // Let the user choose.
-    Log.e(MyTracksConstants.TAG, "Multiple matching accounts found.");
+    Log.e(Constants.TAG, "Multiple matching accounts found.");
     final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
     builder.setTitle(R.string.choose_account_title);
     builder.setCancelable(false);
@@ -112,7 +112,7 @@ public class AccountChooser {
    */
   private void alertNoAccounts(final Activity activity,
       final AccountHandler handler) {
-    Log.e(MyTracksConstants.TAG, "No matching accounts found.");
+    Log.e(Constants.TAG, "No matching accounts found.");
     final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
     builder.setTitle(R.string.no_account_found_title);
     builder.setMessage(R.string.no_account_found);

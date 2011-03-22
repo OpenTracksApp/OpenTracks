@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.io.gdata;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.io.AuthManager;
 
 import android.util.Log;
@@ -173,14 +173,14 @@ public class GDataWrapper<C> {
         return true;
       }
 
-      Log.d(MyTracksConstants.TAG, "GData error encountered: " + errorMessage);
+      Log.d(Constants.TAG, "GData error encountered: " + errorMessage);
       if (errorType == ERROR_AUTH && auth != null) {
         if (!retryOnAuthFailure || !invalidateAndRefreshAuthToken()) {
           return false;
         }
       }
       
-      Log.d(MyTracksConstants.TAG, "retrying function/query");
+      Log.d(Constants.TAG, "retrying function/query");
     }
     return false;
   }
@@ -206,11 +206,11 @@ public class GDataWrapper<C> {
       errorMessage = null;
 
     } catch (AuthenticationException e) {
-      Log.e(MyTracksConstants.TAG, "AuthenticationException", e);
+      Log.e(Constants.TAG, "AuthenticationException", e);
       errorType = ERROR_AUTH;
       errorMessage = e.getMessage();
     } catch (HttpException e) {
-      Log.e(MyTracksConstants.TAG, 
+      Log.e(Constants.TAG, 
           "HttpException, code " + e.getStatusCode() + " message " + e.getMessage(), e);
       errorMessage = e.getMessage();
       if (e.getStatusCode() == 401) {
@@ -219,11 +219,11 @@ public class GDataWrapper<C> {
         errorType = ERROR_CONNECTION;
       }
     } catch (FileNotFoundException e) {
-      Log.e(MyTracksConstants.TAG, "Exception", e);
+      Log.e(Constants.TAG, "Exception", e);
       errorType = ERROR_AUTH;
       errorMessage = e.getMessage();
     } catch (IOException e) {
-      Log.e(MyTracksConstants.TAG, "Exception", e);
+      Log.e(Constants.TAG, "Exception", e);
       errorMessage = e.getMessage();
       if (errorMessage != null && errorMessage.contains("503")) {
         errorType = ERROR_INTERNAL;
@@ -231,11 +231,11 @@ public class GDataWrapper<C> {
         errorType = ERROR_CONNECTION;
       }
     } catch (ParseException e) {
-      Log.e(MyTracksConstants.TAG, "Exception", e);
+      Log.e(Constants.TAG, "Exception", e);
       errorType = ERROR_LOCAL;
       errorMessage = e.getMessage();
     } catch (ConflictDetectedException e) {
-      Log.e(MyTracksConstants.TAG, "Exception", e);
+      Log.e(Constants.TAG, "Exception", e);
       errorType = ERROR_CONFLICT;
       errorMessage = e.getMessage();
     }
@@ -249,7 +249,7 @@ public class GDataWrapper<C> {
    *   times out.
    */
   private boolean invalidateAndRefreshAuthToken() {
-    Log.d(MyTracksConstants.TAG, "Retrying due to auth failure");
+    Log.d(Constants.TAG, "Retrying due to auth failure");
     // This FutureTask doesn't do anything -- it exists simply to be
     // blocked upon using get().
     FutureTask<?> whenFinishedFuture = new FutureTask<Object>(new Runnable() {
@@ -259,18 +259,18 @@ public class GDataWrapper<C> {
     auth.invalidateAndRefresh(whenFinishedFuture);
 
     try {
-      Log.d(MyTracksConstants.TAG, "waiting for invalidate");
+      Log.d(Constants.TAG, "waiting for invalidate");
       whenFinishedFuture.get(AUTH_TOKEN_INVALIDATE_REFRESH_TIMEOUT, 
           TimeUnit.MILLISECONDS);
-      Log.d(MyTracksConstants.TAG, "invalidate finished");
+      Log.d(Constants.TAG, "invalidate finished");
       return true;
 
     } catch (InterruptedException e) {
-      Log.e(MyTracksConstants.TAG, "Failed to invalidate", e);
+      Log.e(Constants.TAG, "Failed to invalidate", e);
     } catch (ExecutionException e) {
-      Log.e(MyTracksConstants.TAG, "Failed to invalidate", e);
+      Log.e(Constants.TAG, "Failed to invalidate", e);
     } catch (TimeoutException e) {
-      Log.e(MyTracksConstants.TAG, "Invalidate didn't complete in time", e);
+      Log.e(Constants.TAG, "Invalidate didn't complete in time", e);
     } finally {
       whenFinishedFuture.cancel(false);
     }
