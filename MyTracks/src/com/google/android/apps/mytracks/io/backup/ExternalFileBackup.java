@@ -16,7 +16,6 @@
 package com.google.android.apps.mytracks.io.backup;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.apps.mytracks.content.TrackPointsColumns;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
@@ -201,7 +200,7 @@ class ExternalFileBackup {
 
       // Dump preferences
       SharedPreferences preferences =
-          context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+          context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
       preferencesHelper.exportPreferences(preferences, outWriter);
     } catch (IOException e) {
       // We tried to delete the partially created file, but do nothing
@@ -253,7 +252,7 @@ class ExternalFileBackup {
 
       // Restore preferences
       SharedPreferences preferences =
-          context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+          context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
       preferencesHelper.importPreferences(reader, preferences);
     } finally {
       compressedStream.close();

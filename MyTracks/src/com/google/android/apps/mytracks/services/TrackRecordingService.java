@@ -20,7 +20,6 @@ import static com.google.android.apps.mytracks.Constants.RESUME_TRACK_EXTRA_NAME
 
 import com.google.android.apps.mytracks.MyTracks;
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Sensor;
@@ -36,7 +35,7 @@ import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.ApiPlatformAdapter;
-import com.google.android.apps.mytracks.util.MyTracksUtils;
+import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -81,13 +80,13 @@ public class TrackRecordingService extends Service implements LocationListener {
   private WakeLock wakeLock;
 
   private int minRecordingDistance =
-      MyTracksSettings.DEFAULT_MIN_RECORDING_DISTANCE;
+      Constants.DEFAULT_MIN_RECORDING_DISTANCE;
   private int maxRecordingDistance =
-      MyTracksSettings.DEFAULT_MAX_RECORDING_DISTANCE;
+      Constants.DEFAULT_MAX_RECORDING_DISTANCE;
   private int minRequiredAccuracy =
-      MyTracksSettings.DEFAULT_MIN_REQUIRED_ACCURACY;
+      Constants.DEFAULT_MIN_REQUIRED_ACCURACY;
   private int autoResumeTrackTimeout =
-      MyTracksSettings.DEFAULT_AUTO_RESUME_TRACK_TIMEOUT; 
+      Constants.DEFAULT_AUTO_RESUME_TRACK_TIMEOUT; 
   
   private long recordingTrackId = -1;
 
@@ -215,7 +214,7 @@ public class TrackRecordingService extends Service implements LocationListener {
 
     // Keep track of length along recorded track (needed when a waypoint is
     // inserted):
-    if (MyTracksUtils.isValidLocation(location)) {
+    if (LocationUtils.isValidLocation(location)) {
       if (lastValidLocation != null) {
         length += location.distanceTo(lastValidLocation);
       }
@@ -453,7 +452,7 @@ public class TrackRecordingService extends Service implements LocationListener {
         if (cursor.moveToLast()) {
           do {
             Location location = providerUtils.createLocation(cursor);
-            if (MyTracksUtils.isValidLocation(location)) {
+            if (LocationUtils.isValidLocation(location)) {
               statsBuilder.addLocation(location, location.getTime());
               if (lastValidLocation != null) {
                 length += location.distanceTo(lastValidLocation);
@@ -629,7 +628,7 @@ public class TrackRecordingService extends Service implements LocationListener {
   }
 
   private void addLocationToStats(Location location) {
-    if (MyTracksUtils.isValidLocation(location)) {
+    if (LocationUtils.isValidLocation(location)) {
       long now = System.currentTimeMillis();
       statsBuilder.addLocation(location, now);
       waypointStatsBuilder.addLocation(location, now);
@@ -836,7 +835,7 @@ public class TrackRecordingService extends Service implements LocationListener {
 
     // Check if we haven't exceeded the maximum number of retry attempts.
     SharedPreferences sharedPreferences =
-        getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0); 
+        getSharedPreferences(Constants.SETTINGS_NAME, 0); 
     int retries = sharedPreferences.getInt(
         getString(R.string.auto_resume_track_current_retry_key), 0);
     Log.d(TAG,
@@ -1117,7 +1116,7 @@ public class TrackRecordingService extends Service implements LocationListener {
 
     // Reset the number of auto-resume retries.
     setAutoResumeTrackRetries(
-        getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0), 0);
+        getSharedPreferences(Constants.SETTINGS_NAME, 0), 0);
     // Persist the current recording track.
     prefManager.setRecordingTrack(recordingTrackId);
 

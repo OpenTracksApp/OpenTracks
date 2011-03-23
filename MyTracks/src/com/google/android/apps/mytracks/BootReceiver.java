@@ -41,17 +41,17 @@ import android.util.Log;
  * 
  * @author Bartlomiej Niechwiej
  */
-public class MyTracksReceiver extends BroadcastReceiver {
+public class BootReceiver extends BroadcastReceiver {
 
   @Override
   public void onReceive(Context context, Intent intent) {
-    Log.d(TAG, "MyTracksReceiver.onReceive: " + intent.getAction());
+    Log.d(TAG, "BootReceiver.onReceive: " + intent.getAction());
     if (ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
       Intent startIntent = new Intent(context, TrackRecordingService.class);
       startIntent.putExtra(RESUME_TRACK_EXTRA_NAME, true);
       context.startService(startIntent);
     } else {
-      Log.w(TAG, "MyTracksReceiver: unsupported action");
+      Log.w(TAG, "BootReceiver: unsupported action");
     }
   }
 }

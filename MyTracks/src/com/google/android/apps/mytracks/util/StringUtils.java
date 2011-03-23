@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.apps.mytracks.MyTracksSettings;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.DescriptionGenerator;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
@@ -245,7 +245,7 @@ public class StringUtils implements DescriptionGenerator {
       Vector<Double> elevations) {
     boolean displaySpeed = true;
     SharedPreferences preferences =
-        context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+        context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     if (preferences != null) {
       displaySpeed =
           preferences.getBoolean(context.getString(R.string.report_speed_key), true);

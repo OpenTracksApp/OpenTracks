@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.services;
 
-import com.google.android.apps.mytracks.MyTracksSettings;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -58,7 +58,7 @@ class DefaultTrackNameFactory {
   /** Determines whether the preferences allow a timestamp-based track name */
   protected boolean useTimestampTrackName() {
     SharedPreferences prefs =
-        context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+        context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     return prefs.getBoolean(
         context.getString(R.string.timestamp_track_name_key), true);
   }

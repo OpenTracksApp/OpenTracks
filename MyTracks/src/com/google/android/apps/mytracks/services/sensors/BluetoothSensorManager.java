@@ -16,7 +16,6 @@
 package com.google.android.apps.mytracks.services.sensors;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.maps.mytracks.R;
 
@@ -82,7 +81,7 @@ public class BluetoothSensorManager extends SensorManager {
       return;
     }
     SharedPreferences prefs =
-        context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+        context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     String address =
       prefs.getString(context.getString(R.string.bluetooth_sensor_key), null);
     if (address == null) {

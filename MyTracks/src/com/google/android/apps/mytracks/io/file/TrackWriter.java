@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.io;
+package com.google.android.apps.mytracks.io.file;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
@@ -22,7 +22,7 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.util.FileUtils;
-import com.google.android.apps.mytracks.util.MyTracksUtils;
+import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -302,7 +302,7 @@ public class TrackWriter {
       while (it.hasNext()) {
         Location loc = it.next();
   
-        boolean isValid = MyTracksUtils.isValidLocation(loc);
+        boolean isValid = LocationUtils.isValidLocation(loc);
         boolean validSegment = isValid && isLastValid;
         if (!wroteFirst && validSegment) {
           // Found the first two consecutive points which are valid

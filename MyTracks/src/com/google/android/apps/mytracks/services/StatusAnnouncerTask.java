@@ -19,7 +19,6 @@ package com.google.android.apps.mytracks.services;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
@@ -176,7 +175,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
   // @VisibleForTesting
   protected String getAnnouncement(TripStatistics stats) {
     SharedPreferences preferences =
-        context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+        context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     boolean metricUnits = true;
     boolean reportSpeed = true;
     if (preferences != null) {

@@ -141,6 +141,12 @@ public abstract class Constants {
   public static final int MAX_LOADED_TRACK_POINTS = 20000;
 
   /**
+   * Maximum number of track points ever loaded at once from the provider into
+   * memory in a single call to read points.
+   */
+  public static final int MAX_LOADED_TRACK_POINTS_PER_BATCH = 1000;
+
+  /**
    * Maximum number of way points displayed by the map overlay.
    */
   public static final int MAX_DISPLAYED_WAYPOINTS_POINTS = 128;
@@ -215,6 +221,20 @@ public abstract class Constants {
 
   public static final String MAPSHOP_BASE_URL =
     "http://maps.google.com/maps/ms";
+
+  /*
+   * Default values - keep in sync with those in preferences.xml.
+   */
+
+  public static final int DEFAULT_ANNOUNCEMENT_FREQUENCY = -1;
+  public static final int DEFAULT_AUTO_RESUME_TRACK_TIMEOUT = 10;  // In min.
+  public static final int DEFAULT_MAX_RECORDING_DISTANCE = 200;
+  public static final int DEFAULT_MIN_RECORDING_DISTANCE = 5;
+  public static final int DEFAULT_MIN_RECORDING_INTERVAL = 0;
+  public static final int DEFAULT_MIN_REQUIRED_ACCURACY = 200;
+  public static final int DEFAULT_SPLIT_FREQUENCY = 0;
+
+  public static final String SETTINGS_NAME = "SettingsActivity";
 
   /**
    * This is an abstract utility class.
