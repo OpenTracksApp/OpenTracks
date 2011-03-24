@@ -16,7 +16,6 @@
 package com.google.android.apps.mytracks.services.sensors;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.maps.mytracks.R;
 
@@ -71,7 +70,7 @@ public class AntSRMSensorManager extends AntSensorManager {
 
     // First read the the device id that we will be announcing.
     SharedPreferences prefs = context.getSharedPreferences(
-        MyTracksSettings.SETTINGS_NAME, 0);
+        Constants.SETTINGS_NAME, 0);
     if (prefs != null) {
       deviceId = (byte) prefs.getInt(
           context.getString(R.string.ant_srm_bridge_sensor_id_key),
@@ -133,7 +132,7 @@ public class AntSRMSensorManager extends AntSensorManager {
     Log.i(Constants.TAG, "Found device id: " + deviceId);
 
     SharedPreferences prefs = context.getSharedPreferences(
-        MyTracksSettings.SETTINGS_NAME, Context.MODE_PRIVATE);
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     SharedPreferences.Editor editor = prefs.edit();
     editor.putInt(context.getString(R.string.ant_srm_bridge_sensor_id_key), deviceId);
     editor.commit();

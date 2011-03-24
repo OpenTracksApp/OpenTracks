@@ -15,9 +15,9 @@
  */
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.DialogManager;
 import com.google.android.apps.mytracks.MyTracks;
-import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Dialog;
@@ -107,7 +107,7 @@ public class SendDialog extends Dialog {
         R.id.sendtogoogle_send_stats_and_points);
 
     SharedPreferences prefs =
-        getContext().getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+        getContext().getSharedPreferences(Constants.SETTINGS_NAME, 0);
     if (prefs != null) {
       sendToMyMapsCheckBox.setChecked(
           prefs.getBoolean(
@@ -138,7 +138,7 @@ public class SendDialog extends Dialog {
   @Override
   protected void onStop() {
     SharedPreferences prefs =
-        getContext().getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+        getContext().getSharedPreferences(Constants.SETTINGS_NAME, 0);
     if (prefs != null) {
       Editor editor = prefs.edit();
       if (editor != null) {

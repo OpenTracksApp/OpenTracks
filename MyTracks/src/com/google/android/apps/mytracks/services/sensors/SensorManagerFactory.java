@@ -16,7 +16,6 @@
 package com.google.android.apps.mytracks.services.sensors;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -40,7 +39,7 @@ public class SensorManagerFactory {
    */
   public static SensorManager getSensorManager(Context context) {
     SharedPreferences prefs =
-        context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+        context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     if (prefs == null) {
       return null;
     }

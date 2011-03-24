@@ -202,7 +202,7 @@ public class TrackList extends ListActivity
     findViewById(R.id.tracklist_btn_import_all).setOnClickListener(this);
 
     SharedPreferences preferences =
-        getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+        getSharedPreferences(Constants.SETTINGS_NAME, 0);
     preferences.registerOnSharedPreferenceChangeListener(this);
     metricUnits =
         preferences.getBoolean(getString(R.string.metric_units_key), true);

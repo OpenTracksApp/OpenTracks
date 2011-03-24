@@ -19,7 +19,7 @@ package com.google.android.apps.mytracks.stats;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.MyTracksSettings;
+import com.google.android.apps.mytracks.SettingsActivity;
 
 import android.location.Location;
 import android.util.Log;
@@ -93,7 +93,7 @@ public class TripStatisticsBuilder {
   private long totalLocations = 0;
 
   private int minRecordingDistance =
-      MyTracksSettings.DEFAULT_MIN_RECORDING_DISTANCE;
+      Constants.DEFAULT_MIN_RECORDING_DISTANCE;
 
   /**
    * Creates a new trip starting at the given time.

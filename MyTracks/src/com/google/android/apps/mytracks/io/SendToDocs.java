@@ -17,7 +17,6 @@ package com.google.android.apps.mytracks.io;
 
 import com.google.android.apps.mytracks.MyTracks;
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.MyTracksSettings;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.docs.DocsHelper;
@@ -73,7 +72,7 @@ public class SendToDocs {
     this.trackId = trackId;
 
     SharedPreferences preferences = activity.getSharedPreferences(
-        MyTracksSettings.SETTINGS_NAME, 0);
+        Constants.SETTINGS_NAME, 0);
     if (preferences != null) {
       metricUnits =
           preferences.getBoolean(activity.getString(R.string.metric_units_key),
