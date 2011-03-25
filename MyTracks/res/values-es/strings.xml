@@ -52,10 +52,10 @@ limitations under the License.
   <string name="status_tracks_have_been_uploaded_to_new_doc">Su recorrido ha sido enviado a una nueva hoja de cálculo de docs.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_docs">Su recorrido ha sido enviado a docs.google.com.</string>
   <string name="status_enable_gps">Por favor, presione aquí para ir al menú de Seguridad y Ubicación, y asegúrese que el GPS esté habilitado. Presione el botón "atrás" para regresar.</string>
-  <string name="status_approximate_location">Nota: Una ubicación aproximada es mostrada, basada en informacion de torres de telefonía celular y red WIFI.</string>
-  <string name="status_no_location">La ubicación actual no puede ser determinada. Habilite más fuentes de datos (vea configuraciones de Seguridad y Ubicación) y asegúrese que el cielo sea visible. Inténtelo mas tarde.</string>
-  <string name="status_waypoint_inserted">Una señal de recorrido fue insertada.</string>
-  <string name="status_statistics_inserted">Una señal con estadísticas fue insertada.</string>
+  <string name="status_approximate_location">Nota: Una ubicación aproximada es determinada a partir de torres de telefonía celular y redes WIFI.</string>
+  <string name="status_no_location">No puede ser determinada la ubicación actual. Habilite más fuentes de datos (vea las configuraciones de Seguridad y Ubicación) y asegúrese que el cielo sea visible. Inténtelo mas tarde.</string>
+  <string name="status_waypoint_inserted">Un marcador de recorrido fue insertado.</string>
+  <string name="status_statistics_inserted">Un marcador de estadísticas fue insertado.</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Por favor espere...</string>
