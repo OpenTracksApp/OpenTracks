@@ -21,15 +21,7 @@ import com.google.android.apps.mytracks.stats.TripStatistics;
 
 import com.google.android.maps.GeoPoint;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.pm.Signature;
 import android.location.Location;
-import android.os.PowerManager;
-import android.os.PowerManager.WakeLock;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -41,9 +33,7 @@ import java.util.Stack;
  * 
  * @author Leif Hendrik Wilden
  */
-public class MyTracksUtils {
-  private static final int RELEASE_SIGNATURE_HASHCODE = -1855564782;
-
+public class LocationUtils {
   /**
    * Computes the distance on the two sphere between the point c0 and the line
    * segment c1 to c2.
@@ -117,7 +107,7 @@ public class MyTracksUtils {
         current = stack.pop();
         maxDist = 0;
         for (idx = current[0] + 1; idx < current[1]; ++idx) {
-          dist = MyTracksUtils.distance(
+          dist = LocationUtils.distance(
               locations.get(idx),
               locations.get(current[0]),
               locations.get(current[1]));
@@ -256,79 +246,8 @@ public class MyTracksUtils {
   }
 
   /**
-   * Returns whether or not this is a release build.
-   */
-  public static boolean isRelease(Context context) {
-    try {
-      Signature [] sigs = context.getPackageManager().getPackageInfo(
-          context.getPackageName(), PackageManager.GET_SIGNATURES).signatures;
-      for (Signature sig : sigs) {
-        if (sig.hashCode() == RELEASE_SIGNATURE_HASHCODE) {
-          return true;
-        }
-      }
-    } catch (NameNotFoundException e) {
-      Log.e(Constants.TAG, "Unable to get signatures", e);
-    }
-    return false;
-  }
-
-  /**
-   * Get the My Tracks version from the manifest.
-   *
-   * @return the version, or an empty string in case of failure.
-   */
-  public static String getMyTracksVersion(Context context) {
-    try {
-      PackageInfo pi = context.getPackageManager().getPackageInfo(
-          "com.google.android.maps.mytracks",
-          PackageManager.GET_META_DATA);
-      return pi.versionName;
-    } catch (NameNotFoundException e)  {
-      Log.w(Constants.TAG, "Failed to get version info.", e);
-      return "";
-    }
-  }
-  
-  /**
-   * Tries to acquire a partial wake lock if not already acquired. Logs errors
-   * and gives up trying in case the wake lock cannot be acquired.
-   */
-  public static WakeLock acquireWakeLock(Activity activity, WakeLock wakeLock) {
-    Log.i(Constants.TAG, "MyTracksUtils: Acquiring wake lock.");
-    try {
-      PowerManager pm = (PowerManager) activity
-          .getSystemService(Context.POWER_SERVICE);
-      if (pm == null) {
-        Log.e(Constants.TAG, "MyTracksUtils: Power manager not found!");
-        return wakeLock;
-      }
-      if (wakeLock == null) {
-        wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
-            Constants.TAG);
-        if (wakeLock == null) {
-          Log.e(Constants.TAG,
-              "MyTracksUtils: Could not create wake lock (null).");
-        }
-        return wakeLock;
-      }
-      if (!wakeLock.isHeld()) {
-        wakeLock.acquire();
-        if (!wakeLock.isHeld()) {
-          Log.e(Constants.TAG,
-              "MyTracksUtils: Could not acquire wake lock.");
-        }
-      }
-    } catch (RuntimeException e) {
-      Log.e(Constants.TAG,
-          "MyTracksUtils: Caught unexpected exception: " + e.getMessage(), e);
-    }
-    return wakeLock;
-  }
-
-  /**
    * This is a utility class w/ only static members.
    */
-  protected MyTracksUtils() {
+  private LocationUtils() {
   }
 }

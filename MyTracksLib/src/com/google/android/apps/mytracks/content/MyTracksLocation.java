@@ -36,8 +36,8 @@ public class MyTracksLocation extends Location {
     this.sensorDataSet = sd;
   }
 
-  public MyTracksLocation(String string) {
-    super(string);
+  public MyTracksLocation(String provider) {
+    super(provider);
   }
 
   public Sensor.SensorDataSet getSensorDataSet() {

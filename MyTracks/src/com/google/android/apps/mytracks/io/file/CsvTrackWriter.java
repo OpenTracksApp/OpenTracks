@@ -13,11 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.io;
+package com.google.android.apps.mytracks.io.file;
 
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
+import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
 
 import android.location.Location;
 

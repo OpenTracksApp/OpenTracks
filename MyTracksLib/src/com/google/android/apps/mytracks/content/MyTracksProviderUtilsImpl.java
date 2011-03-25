@@ -1024,7 +1024,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
           cursor = null;
         }
       }
-      
+
       @Override
       public void remove() {
         throw new UnsupportedOperationException();

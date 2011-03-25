@@ -39,17 +39,17 @@ import java.util.List;
  * 
  * @author Bartlomiej Niechwiej
  */
-public class MyTracksOverlayTest extends AndroidTestCase {
+public class MapOverlayTest extends AndroidTestCase {
   private Canvas canvas;
   private MockMyTracksOverlay myTracksOverlay;
   private MapView mockView;
   private Projection mockProjection;
   
   /**
-   * A mock version of {@code MyTracksOverlay} that does not use
+   * A mock version of {@code MapOverlay} that does not use
    * {@class MapView}. 
    */
-  private class MockMyTracksOverlay extends MyTracksOverlay {
+  private class MockMyTracksOverlay extends MapOverlay {
     public MockMyTracksOverlay(Context context) {
       super(context);
     }

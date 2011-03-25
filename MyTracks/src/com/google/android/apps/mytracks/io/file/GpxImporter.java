@@ -13,13 +13,13 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.io;
+package com.google.android.apps.mytracks.io.file;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
-import com.google.android.apps.mytracks.util.MyTracksUtils;
+import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 
 import android.location.Location;
@@ -362,7 +362,7 @@ public class GpxImporter extends DefaultHandler {
    * @throws SAXException - thrown if track point is invalid
    */
   private void onTrackPointElementEnd() throws SAXException {
-    if (MyTracksUtils.isValidLocation(location)) {
+    if (LocationUtils.isValidLocation(location)) {
       if (statsBuilder == null) {
         // first point did not have a time, start stats builder without it
         statsBuilder = new TripStatisticsBuilder(0);

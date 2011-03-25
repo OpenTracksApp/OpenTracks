@@ -13,15 +13,15 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.io;
+package com.google.android.apps.mytracks.io.file;
 
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
-import com.google.android.apps.mytracks.util.MyTracksUtils;
+import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
+import com.google.android.apps.mytracks.util.SystemUtils;
 
 import android.content.Context;
 import android.location.Location;
@@ -236,7 +236,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
     // it.  The TCX schema tightly defined the Version tag, so we can't put it
     // there.  They've similarly constrained the PartNumber tag, so it can't go
     // there either.
-    pw.format("<Name>My Tracks %s by Google</Name>\n", MyTracksUtils.getMyTracksVersion(context));
+    pw.format("<Name>My Tracks %s by Google</Name>\n", SystemUtils.getMyTracksVersion(context));
 
     pw.println("<Build>");
 
@@ -246,11 +246,11 @@ public class TcxTrackWriter implements TrackFormatWriter {
     // signify that this build is newer than the one associated with the
     // version code given in VersionMajor.
     pw.println("<Version>");
-    pw.format("<VersionMajor>%d</VersionMajor>\n", MyTracksUtils.getMyTracksVersion(context));
-    pw.format("<VersionMinor>%d</VersionMinor>\n", MyTracksUtils.isRelease(context) ? 0 : 1);
+    pw.format("<VersionMajor>%s</VersionMajor>\n", SystemUtils.getMyTracksVersion(context));
+    pw.format("<VersionMinor>%d</VersionMinor>\n", SystemUtils.isRelease(context) ? 0 : 1);
     pw.println("</Version>");
 
-    pw.format("<Type>%s</Type>\n", MyTracksUtils.isRelease(context) ? TCX_TYPE_RELEASE
+    pw.format("<Type>%s</Type>\n", SystemUtils.isRelease(context) ? TCX_TYPE_RELEASE
         : TCX_TYPE_INTERNAL);
     pw.println("</Build>");
     pw.format("<LangID>%s</LangID>\n", Locale.getDefault().getLanguage());

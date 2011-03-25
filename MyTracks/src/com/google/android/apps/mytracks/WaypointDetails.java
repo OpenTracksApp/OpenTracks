@@ -65,7 +65,7 @@ public class WaypointDetails extends Activity
 
     utils = new StatsUtilities(this);
     SharedPreferences preferences =
-        getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+        getSharedPreferences(Constants.SETTINGS_NAME, 0);
     if (preferences != null) {
       boolean useMetric =
           preferences.getBoolean(getString(R.string.metric_units_key), true);

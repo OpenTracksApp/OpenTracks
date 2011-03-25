@@ -1,7 +1,8 @@
 // Copyright 2010 Google Inc. All Rights Reserved.
-package com.google.android.apps.mytracks.io;
+package com.google.android.apps.mytracks.io.file;
 
 import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.io.file.KmlTrackWriter;
 import com.google.android.apps.mytracks.util.StringUtils;
 
 import android.location.Location;

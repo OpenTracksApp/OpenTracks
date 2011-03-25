@@ -1,5 +1,8 @@
 // Copyright 2010 Google Inc. All Rights Reserved.
-package com.google.android.apps.mytracks.io;
+package com.google.android.apps.mytracks.io.file;
+
+import com.google.android.apps.mytracks.io.file.GpxTrackWriter;
+import com.google.android.apps.mytracks.io.file.TrackFormatWriter;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

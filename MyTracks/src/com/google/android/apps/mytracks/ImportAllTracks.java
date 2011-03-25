@@ -16,9 +16,9 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.io.GpxImporter;
+import com.google.android.apps.mytracks.io.file.GpxImporter;
 import com.google.android.apps.mytracks.util.FileUtils;
-import com.google.android.apps.mytracks.util.MyTracksUtils;
+import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -82,13 +82,13 @@ public class ImportAllTracks {
    * track. Acquire a wake lock if there is no current track.
    */
   private void aquireLocksAndImport() {
-    SharedPreferences prefs = activity.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+    SharedPreferences prefs = activity.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     long recordingTrackId = -1;
     if (prefs != null) {
       recordingTrackId = prefs.getLong(activity.getString(R.string.recording_track_key), -1);
     }
     if (recordingTrackId != -1) {
-      wakeLock = MyTracksUtils.acquireWakeLock(activity, wakeLock);
+      wakeLock = SystemUtils.acquireWakeLock(activity, wakeLock);
     }
 
     // Now we can safely import everything.
