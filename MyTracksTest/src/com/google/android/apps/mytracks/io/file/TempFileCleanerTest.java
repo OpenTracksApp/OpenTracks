@@ -13,9 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.io;
+package com.google.android.apps.mytracks.io.file;
 
 import static com.google.android.testing.mocking.AndroidMock.expect;
+
+import com.google.android.apps.mytracks.io.file.TempFileCleaner;
 import com.google.android.testing.mocking.AndroidMock;
 import com.google.android.testing.mocking.UsesMocks;
 
