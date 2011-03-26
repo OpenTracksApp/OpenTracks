@@ -10,9 +10,6 @@ from mytracks.parser import StringsParser
 import mytracks.history 
 
 class Validator(object):
-  '''
-  classdocs
-  '''
 
   def __init__(self, languages):
     '''
