@@ -5,3 +5,5 @@ syntax:glob
 */proguard/**
 .metadata
 MyTracksTest/annotations.log
+**/*.pyc
+**/*.pyo

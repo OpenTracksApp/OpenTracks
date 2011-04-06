@@ -96,6 +96,7 @@ limitations under the License.
   <!-- Common -->
   <string name="no">Não</string>
   <string name="yes">Sim</string>
+  <!-- KEEP_PARENT name="ok" rev="7cbb95c69f35" -->
   <string name="error">Erro</string>
   <string name="success">Successo</string>
   <string name="waypoint">Ponto de passagem</string>
