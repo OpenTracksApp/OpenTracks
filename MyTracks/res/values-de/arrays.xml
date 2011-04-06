@@ -48,7 +48,6 @@ limitations under the License.
     <item>328 Fuß</item>
   </string-array>
 
-
   <!-- Maximum recording distance -->
   <string-array name="max_recording_distance_options">
     <item>50 m</item>
@@ -113,9 +112,9 @@ limitations under the License.
     <item>3,1 Meilen (sehr schlechtes GPS-Signal)</item>
   </string-array>
 
-  <!-- Split frequency -->
-  <string-array name="split_frequency_options">
-    <item>Nicht zerteilen</item>
+  <!-- Task frequency -->
+  <string-array name="task_frequency_options">
+    <item>Aus</item>
     <item>100 km</item>
     <item>50 km</item>
     <item>25 km</item>
@@ -132,7 +131,7 @@ limitations under the License.
   </string-array>
 
   <string-array name="split_frequency_options_ft">
-    <item>Nicht zerteilen</item>
+    <item>Aus</item>
     <item>100 Meilen</item>
     <item>50 Meilen</item>
     <item>25 Meilen</item>

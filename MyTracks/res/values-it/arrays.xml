@@ -15,18 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-  <!-- Task frequency -->
-  <string-array name="task_frequency_options">
-    <item>Disattivato</item>
-    <item>1 min</item>
-    <item>2 min</item>
-    <item>5 min</item>
-    <item>10 min</item>
-    <item>15 min</item>
-    <item>30 min</item>
-    <item>60 min</item>
-  </string-array>
-
   <!-- Minimum recording distance -->
   <string-array name="min_recording_distance_options">
     <item>1 m</item>
@@ -112,9 +100,9 @@ limitations under the License.
     <item>3.1 mi (segnale GPS debole)</item>
   </string-array>
 
-  <!-- Split frequency -->
-  <string-array name="split_frequency_options">
-    <item>Non dividere</item>
+  <!-- Task frequency -->
+  <string-array name="task_frequency_options">
+    <item>Disattivato</item>
     <item>100 km</item>
     <item>50 km</item>
     <item>25 km</item>
@@ -130,8 +118,8 @@ limitations under the License.
     <item>1 min</item>
   </string-array>
 
-  <string-array name="split_frequency_options_ft">
-    <item>Non dividere</item>
+  <string-array name="task_frequency_options_ft">
+    <item>Disattivato</item>
     <item>100 mi</item>
     <item>50 mi</item>
     <item>25 mi</item>

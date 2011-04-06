@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.services;
+package com.google.android.apps.mytracks.services.tasks;
 
 import static com.google.android.testing.mocking.AndroidMock.capture;
 import static com.google.android.testing.mocking.AndroidMock.eq;

@@ -61,10 +61,29 @@ public class PeriodicTaskExecuter {
    * Restores the manager.
    */
   public void restore() {
-    if ((isTimeFrequency()) && (timerExecuter != null)) {
-      timerExecuter.scheduleTask(taskFrequency * 60000);
+    // TODO: Decouple service from this class once and forever.
+    if (!service.isRecording()) {
+      return;
     }
-    calculateNextTaskDistance();
+
+    if (!isTimeFrequency()) {
+      if (timerExecuter != null) {
+        timerExecuter.shutdown();
+        timerExecuter = null;
+      }
+    }
+    if (taskFrequency == 0) {
+      return;
+    }
+    if (isTimeFrequency()) {
+      if (timerExecuter == null) {
+        timerExecuter = new TimerTaskExecuter(task, service);
+      }
+      timerExecuter.scheduleTask(taskFrequency * 60000);
+    } else {
+      // For distance based splits.
+      calculateNextTaskDistance();
+    }
   }
 
   /**
@@ -140,30 +159,7 @@ public class PeriodicTaskExecuter {
   public void setTaskFrequency(int taskFrequency) {
     Log.d(TAG, "setTaskFrequency: taskFrequency = " + taskFrequency);
     this.taskFrequency = taskFrequency;
-    
-    // TODO: Decouple service from this class once and forever.
-    if (!service.isRecording()) {
-      return;
-    }
-
-    if (!isTimeFrequency()) {
-      if (timerExecuter != null) {
-        timerExecuter.shutdown();
-        timerExecuter = null;
-      }
-    }
-    if (taskFrequency == 0) {
-      return;
-    }
-    if (isTimeFrequency()) {
-      if (timerExecuter == null) {
-        timerExecuter = new TimerTaskExecuter(task, service);
-      }
-      timerExecuter.scheduleTask(taskFrequency * 60000);
-    } else {
-      // For distance based splits.
-      calculateNextTaskDistance();
-    }
+    restore();
   }
 
   public void setMetricUnits(boolean metricUnits) {

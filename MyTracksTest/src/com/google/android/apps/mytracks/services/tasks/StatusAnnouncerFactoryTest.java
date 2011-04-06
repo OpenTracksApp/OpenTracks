@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.services;
+package com.google.android.apps.mytracks.services.tasks;
 
 import com.google.android.apps.mytracks.services.tasks.PeriodicTask;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;

@@ -24,7 +24,7 @@ import com.google.android.apps.mytracks.services.TrackRecordingService;
  * A simple task to insert statistics markers every n minutes.
  * @author Sandor Dornbush
  */
-public class TimeSplitTask implements PeriodicTask {
+public class SplitTask implements PeriodicTask {
 
   @Override
   public void run(TrackRecordingService service) {
