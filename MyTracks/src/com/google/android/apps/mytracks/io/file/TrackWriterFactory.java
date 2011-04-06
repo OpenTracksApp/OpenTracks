@@ -106,7 +106,7 @@ public class TrackWriterFactory {
       MyTracksProviderUtils providerUtils,
       Track track, TrackFileFormat format) {
     TrackFormatWriter writer = format.newFormatWriter(context);
-    return new TrackWriter(context, providerUtils, track, writer);
+    return new TrackWriterImpl(context, providerUtils, track, writer);
   }
 
   private TrackWriterFactory() { }

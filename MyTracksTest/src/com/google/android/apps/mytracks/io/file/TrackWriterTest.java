@@ -10,7 +10,7 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
 import com.google.android.apps.mytracks.io.file.TrackFormatWriter;
-import com.google.android.apps.mytracks.io.file.TrackWriter;
+import com.google.android.apps.mytracks.io.file.TrackWriterImpl;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceTest.MockContext;
 import com.google.android.apps.mytracks.testing.TestingProviderUtilsFactory;
 
@@ -35,10 +35,10 @@ import org.easymock.IMocksControl;
  */
 public class TrackWriterTest extends AndroidTestCase {
   /**
-   * {@link TrackWriter} subclass which mocks out methods called from
-   * {@link TrackWriter#openFile}.
+   * {@link TrackWriterImpl} subclass which mocks out methods called from
+   * {@link TrackWriterImpl#openFile}.
    */
-  private static final class OpenFileTrackWriter extends TrackWriter {
+  private static final class OpenFileTrackWriter extends TrackWriterImpl {
     private final ByteArrayOutputStream stream;
     private final boolean canWrite;
 
@@ -46,9 +46,9 @@ public class TrackWriterTest extends AndroidTestCase {
      * Constructor.
      *
      * @param stream the stream to return from
-     *        {@link TrackWriter#newOutputStream}, or null to throw a
+     *        {@link TrackWriterImpl#newOutputStream}, or null to throw a
      *        {@link FileNotFoundException}
-     * @param canWrite the value that {@link TrackWriter#canWriteFile} will
+     * @param canWrite the value that {@link TrackWriterImpl#canWriteFile} will
      *        return
      */
     private OpenFileTrackWriter(Context context,
@@ -80,16 +80,16 @@ public class TrackWriterTest extends AndroidTestCase {
   }
 
   /**
-   * {@link TrackWriter} subclass which mocks out methods called from
-   * {@link TrackWriter#writeTrack}.
+   * {@link TrackWriterImpl} subclass which mocks out methods called from
+   * {@link TrackWriterImpl#writeTrack}.
    */
-  private final class WriteTracksTrackWriter extends TrackWriter {
+  private final class WriteTracksTrackWriter extends TrackWriterImpl {
     private final boolean openResult;
 
     /**
      * Constructor.
      *
-     * @param openResult the return value for {@link TrackWriter#openFile}
+     * @param openResult the return value for {@link TrackWriterImpl#openFile}
      */
     private WriteTracksTrackWriter(Context context,
         MyTracksProviderUtils providerUtils, Track track,
@@ -123,7 +123,7 @@ public class TrackWriterTest extends AndroidTestCase {
 
   private Track track;
   private TrackFormatWriter formatWriter;
-  private TrackWriter writer;
+  private TrackWriterImpl writer;
   private IMocksControl mocksControl;
   private MyTracksProviderUtils providerUtils;
   private Factory oldProviderUtilsFactory;
@@ -228,7 +228,7 @@ public class TrackWriterTest extends AndroidTestCase {
   }
 
   public void testWriteDocument_emptyTrack() {
-    writer = new TrackWriter(getContext(), providerUtils, track, formatWriter);
+    writer = new TrackWriterImpl(getContext(), providerUtils, track, formatWriter);
 
     // Set expected mock behavior
     formatWriter.writeHeader();
@@ -243,7 +243,7 @@ public class TrackWriterTest extends AndroidTestCase {
   }
 
   public void testWriteDocument() {
-    writer = new TrackWriter(getContext(), providerUtils, track, formatWriter);
+    writer = new TrackWriterImpl(getContext(), providerUtils, track, formatWriter);
 
     final Location[] locs = {
         new Location("fake0"),
