@@ -88,26 +88,26 @@ class WriteProgressController {
   }
 
   private final TrackWriter.OnCompletionListener writerCompleteListener =
-    new TrackWriter.OnCompletionListener() {
-      @Override
-      public void onComplete() {
-        DialogManager.dismissDialogSafely(activity, dialog);
+      new TrackWriter.OnCompletionListener() {
+        @Override
+        public void onComplete() {
+          DialogManager.dismissDialogSafely(activity, dialog);
 
-        if (onCompletionListener != null) {
-          onCompletionListener.onComplete(writer);
+          if (onCompletionListener != null) {
+            onCompletionListener.onComplete(writer);
+          }
         }
-      }
-    };
+      };
 
   private final TrackWriter.OnWriteListener writerWriteListener =
-    new TrackWriter.OnWriteListener() {
-      @Override
-      public void onWrite(int number, int max) {
-        if (number % 500 == 0) {
-          dialog.setIndeterminate(false);
-          dialog.setMax(max);
-          dialog.setProgress(Math.min(number, max));
+      new TrackWriter.OnWriteListener() {
+        @Override
+        public void onWrite(int number, int max) {
+          if (number % 500 == 0) {
+            dialog.setIndeterminate(false);
+            dialog.setMax(max);
+            dialog.setProgress(Math.min(number, max));
+          }
         }
-      }
-    };
+      };
 }

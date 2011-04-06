@@ -41,6 +41,7 @@ public class MockTrackWriter implements TrackWriter {
 
   @Override
   public void setDirectory(File directory) {
+    throw new RuntimeException("not implemented");
   }
 
   @Override

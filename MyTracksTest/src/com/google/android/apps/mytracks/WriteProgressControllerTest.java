@@ -24,6 +24,9 @@ import android.test.ActivityInstrumentationTestCase2;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * @author Matthew Simmons
+ */
 public class WriteProgressControllerTest extends ActivityInstrumentationTestCase2<MyTracks> {
   public WriteProgressControllerTest() {
     super(MyTracks.class);
