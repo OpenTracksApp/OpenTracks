@@ -37,6 +37,11 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 /**
+ * This class exports tracks to the SD card.  It is intended to be format-
+ * neutral -- it handles creating the output file and reading the track to be
+ * exported, but requires an instance of {@link TrackFormatWriter} to actually
+ * format the data.
+ *
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
  */
