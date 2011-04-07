@@ -26,7 +26,7 @@ import android.media.AudioManager;
  *
  * @author Rodrigo Damazio
  */
-public class StatusAnnouncerFactory {
+public class StatusAnnouncerFactory implements PeriodicTaskFactory {
 
   private final boolean hasTts;
 
@@ -34,10 +34,8 @@ public class StatusAnnouncerFactory {
     this.hasTts = apiFeatures.hasTextToSpeech();
   }
 
-  /**
-   * Creates a periodic task which does voice announcements.
-   *
-   * @return the task, or null if announcements are not supported
+  /* (non-Javadoc)
+   * @see com.google.android.apps.mytracks.services.tasks.PeriodicTaskFactory#create(android.content.Context)
    */
   public PeriodicTask create(Context context) {
     if (hasTts) {

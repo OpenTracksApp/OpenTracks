@@ -13,39 +13,22 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 package com.google.android.apps.mytracks.services.tasks;
-
-import com.google.android.apps.mytracks.content.WaypointCreationRequest;
-import com.google.android.apps.mytracks.services.TrackRecordingService;
 
 import android.content.Context;
 
-
 /**
- * A simple task to insert statistics markers periodically.
+ * An interface for classes that can create periodic tasks.
+ *
  * @author Sandor Dornbush
  */
-public class SplitTask implements PeriodicTask {
+public interface PeriodicTaskFactory {
 
-  @Override
-  public void run(TrackRecordingService service) {
-    service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
-  }
+  /**
+   * Creates a periodic task which does voice announcements.
+   *
+   * @return the task, or null if task is not supported
+   */
+  abstract PeriodicTask create(Context context);
 
-  @Override
-  public void shutdown() {
-  }
-
-  @Override
-  public void start() {
-  }
-  
-  public static class Factory implements PeriodicTaskFactory {
-
-    @Override
-    public PeriodicTask create(Context context) {
-      return new SplitTask();
-    }
-  }
 }

@@ -31,7 +31,7 @@ import com.google.android.apps.mytracks.services.TrackRecordingService;
  *
  * @author Sandor Dornbush
  */
-public class TimerTaskExecuter {
+public class TimerTaskExecutor {
 
   private final PeriodicTask task;
   private final TrackRecordingService service;
@@ -42,7 +42,7 @@ public class TimerTaskExecuter {
    */
   private Timer timer;
 
-  public TimerTaskExecuter(PeriodicTask task,
+  public TimerTaskExecutor(PeriodicTask task,
                            TrackRecordingService service) {
     this.task = task;
     this.service = service;

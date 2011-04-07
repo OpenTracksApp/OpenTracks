@@ -27,7 +27,7 @@ import android.util.Log;
  *
  * @author Sandor Dornbush
  */
-public class PeriodicTaskExecuter {
+public class PeriodicTaskExecutor {
 
   /**
    * The frequency of the task.
@@ -42,19 +42,21 @@ public class PeriodicTaskExecuter {
   private double nextTaskDistance = 0;
 
   /**
-   * Time based executer.
+   * Time based executor.
    */
-  private TimerTaskExecuter timerExecuter = null;
+  private TimerTaskExecutor timerExecutor = null;
 
   private boolean metricUnits;
 
   private final TrackRecordingService service;
 
-  private final PeriodicTask task;
+  private final PeriodicTaskFactory factory;
 
-  public PeriodicTaskExecuter(TrackRecordingService service, PeriodicTask task) {
+  private PeriodicTask task;
+
+  public PeriodicTaskExecutor(TrackRecordingService service, PeriodicTaskFactory factory) {
     this.service = service;
-    this.task = task;
+    this.factory = factory;
   }
 
   /**
@@ -65,21 +67,30 @@ public class PeriodicTaskExecuter {
     if (!service.isRecording()) {
       return;
     }
-
+    
     if (!isTimeFrequency()) {
-      if (timerExecuter != null) {
-        timerExecuter.shutdown();
-        timerExecuter = null;
+      if (timerExecutor != null) {
+        timerExecutor.shutdown();
+        timerExecutor = null;
       }
     }
     if (taskFrequency == 0) {
       return;
     }
+    
+    // Try to make the task.
+    task = factory.create(service);
+    // Returning null is ok.
+    if (task == null) {
+      return;
+    }
+    task.start();
+
     if (isTimeFrequency()) {
-      if (timerExecuter == null) {
-        timerExecuter = new TimerTaskExecuter(task, service);
+      if (timerExecutor == null) {
+        timerExecutor = new TimerTaskExecutor(task, service);
       }
-      timerExecuter.scheduleTask(taskFrequency * 60000);
+      timerExecutor.scheduleTask(taskFrequency * 60000);
     } else {
       // For distance based splits.
       calculateNextTaskDistance();
@@ -90,8 +101,13 @@ public class PeriodicTaskExecuter {
    * Shuts down the manager.
    */
   public void shutdown() {
-    if (timerExecuter != null) {
-      timerExecuter.shutdown();
+    if (task != null) {
+      task.shutdown();
+      task = null;
+    }
+    if (timerExecutor != null) {
+      timerExecutor.shutdown();
+      timerExecutor = null;
     }
   }
 
@@ -100,7 +116,7 @@ public class PeriodicTaskExecuter {
    */
   void calculateNextTaskDistance() {
     // TODO: Decouple service from this class once and forever.
-    if (!service.isRecording()) {
+    if (!service.isRecording() || task == null) {
       return;
     }
     
@@ -125,7 +141,7 @@ public class PeriodicTaskExecuter {
    * Updates executer with new trip statistics.
    */
   public void update() {
-    if (!isDistanceFrequency()) {
+    if (!isDistanceFrequency() || task == null) {
       return;
     }
     // Convert the distance in meters to km or mi.

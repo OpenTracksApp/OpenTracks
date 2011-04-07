@@ -58,7 +58,7 @@ public class StatusAnnouncerFactoryTest extends AndroidTestCase {
 
   public void testCreate() {
     apiFeatures.setHasTextToSpeech(true);
-    StatusAnnouncerFactory factory =
+    PeriodicTaskFactory factory =
         new StatusAnnouncerFactory(apiFeatures);
     PeriodicTask task = factory.create(getContext());
     assertTrue(task instanceof StatusAnnouncerTask);
@@ -66,7 +66,7 @@ public class StatusAnnouncerFactoryTest extends AndroidTestCase {
 
   public void testCreate_notAvailable() {
     apiFeatures.setHasTextToSpeech(false);
-    StatusAnnouncerFactory factory =
+    PeriodicTaskFactory factory =
         new StatusAnnouncerFactory(apiFeatures);
     PeriodicTask task = factory.create(getContext());
     assertNull(task);

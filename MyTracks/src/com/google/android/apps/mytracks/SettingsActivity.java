@@ -280,6 +280,9 @@ public class SettingsActivity extends PreferenceActivity {
     setTaskOptions(isMetric, R.string.split_frequency_key);
   }
 
+  /**
+   * Set the user visible options for a periodic task.
+   */
   private void setTaskOptions(boolean isMetric, int listId) {
     final ListPreference taskFrequency =
         (ListPreference) findPreference(getString(listId));
@@ -287,7 +290,6 @@ public class SettingsActivity extends PreferenceActivity {
         ? R.array.task_frequency_options
         : R.array.task_frequency_options_ft);
   }
-
 
   /**
    * Configures preference actions related to bluetooth.

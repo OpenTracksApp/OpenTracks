@@ -116,7 +116,7 @@ limitations under the License.
   </array>
 
   <string-array name="ant_sensor_type_values">
-  	<item>@string/ant_sensor_type</item>
-  	<item>@string/srm_ant_bridge_sensor_type</item>
+    <item>@string/ant_sensor_type</item>
+    <item>@string/srm_ant_bridge_sensor_type</item>
   </string-array>
 </resources>
