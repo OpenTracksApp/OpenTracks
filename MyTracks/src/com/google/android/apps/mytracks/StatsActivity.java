@@ -133,9 +133,7 @@ public class StatsActivity extends Activity implements TrackDataListener {
     dataHub.registerTrackDataListener(this, EnumSet.of(
         ListenerDataType.SELECTED_TRACK_CHANGED,
         ListenerDataType.TRACK_UPDATES,
-        ListenerDataType.WAYPOINT_UPDATES,
         ListenerDataType.LOCATION_UPDATES,
-        ListenerDataType.COMPASS_UPDATES,
         ListenerDataType.DISPLAY_PREFERENCES));
 
     super.onStart();
