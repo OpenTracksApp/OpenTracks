@@ -20,6 +20,7 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 
 /**
  * Given a {@link TrackWriter}, this class manages the process of writing the
@@ -66,6 +67,7 @@ class WriteProgressController {
     dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
     dialog.setMessage(activity.getString(R.string.write_progress_message));
     dialog.setIndeterminate(true);
+    dialog.setOnCancelListener(dialogCancelListener);
 
     writer.setOnCompletionListener(writerCompleteListener);
     writer.setOnWriteListener(writerWriteListener);
@@ -86,6 +88,14 @@ class WriteProgressController {
   ProgressDialog getDialog() {
     return dialog;
   }
+
+  private final DialogInterface.OnCancelListener dialogCancelListener =
+    new DialogInterface.OnCancelListener() {
+      @Override
+      public void onCancel(DialogInterface dialog) {
+        writer.stopWriteTrack();
+      }
+    };
 
   private final TrackWriter.OnCompletionListener writerCompleteListener =
       new TrackWriter.OnCompletionListener() {

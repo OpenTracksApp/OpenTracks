@@ -57,6 +57,7 @@ class TrackWriterImpl implements TrackWriter {
   private File file = null;
   private OnCompletionListener onCompletionListener;
   private OnWriteListener onWriteListener;
+  private Thread writeThread;
 
   TrackWriterImpl(Context context, MyTracksProviderUtils providerUtils,
       Track track, TrackFormatWriter writer) {
@@ -89,26 +90,58 @@ class TrackWriterImpl implements TrackWriter {
 
   @Override
   public void writeTrackAsync() {
-    Thread t = new Thread() {
+    writeThread = new Thread() {
       @Override
       public void run() {
-        writeTrack();
+        doWriteTrack();
       }
     };
-    t.start();
+    writeThread.start();
   }
 
   @Override
   public void writeTrack() {
+    writeTrackAsync();
+    try {
+      writeThread.join();
+    } catch (InterruptedException e) {
+      Log.e(Constants.TAG, "Interrupted waiting for write to complete", e);
+    }
+  }
+
+  private void doWriteTrack() {
     // Open the input and output
     success = false;
     errorMessage = R.string.error_track_does_not_exist;
     if (track != null) {
       if (openFile()) {
-        writeDocument();
+        try {
+          writeDocument();
+        } catch (InterruptedException e) {
+          Log.i(Constants.TAG, "The track write was interrupted");
+          if (file != null) {
+            file.delete();
+          }
+          success = false;
+          errorMessage = R.string.error_operation_cancelled;
+        }
       }
     }
     finished();
+  }
+
+  public void stopWriteTrack() {
+    if (writeThread != null && writeThread.isAlive()) {
+      Log.i(Constants.TAG, "Attempting to stop track write");
+      writeThread.interrupt();
+
+      try {
+        writeThread.join();
+        Log.i(Constants.TAG, "Track write stopped");
+      } catch (InterruptedException e) {
+        Log.e(Constants.TAG, "Failed to wait for writer to stop", e);
+      }
+    }
   }
 
   @Override
@@ -253,7 +286,7 @@ class TrackWriterImpl implements TrackWriter {
   /**
    * Does the actual work of writing the track to the now open file.
    */
-  void writeDocument() {
+  void writeDocument() throws InterruptedException {
     Log.d(Constants.TAG, "Started writing track.");
     writer.writeHeader();
     writeWaypoints(track.getId());
@@ -265,7 +298,7 @@ class TrackWriterImpl implements TrackWriter {
     errorMessage = R.string.io_write_finished;
   }
 
-  private void writeLocations() {
+  private void writeLocations() throws InterruptedException {
     boolean wroteFirst = false;
     boolean segmentOpen = false;
     boolean isLastValid = false;
@@ -303,6 +336,9 @@ class TrackWriterImpl implements TrackWriter {
       int pointNumber = 0;
       while (it.hasNext()) {
         Location loc = it.next();
+        if (Thread.interrupted()) {
+          throw new InterruptedException();
+        }
 
         pointNumber++;
 

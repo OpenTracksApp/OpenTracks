@@ -60,6 +60,11 @@ public class MockTrackWriter implements TrackWriter {
   }
 
   @Override
+  public void stopWriteTrack() {
+    throw new UnsupportedOperationException("not implemented");
+  }
+
+  @Override
   public boolean wasSuccess() {
     return false;
   }
