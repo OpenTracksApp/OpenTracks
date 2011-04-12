@@ -14,11 +14,12 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks.services;
+package com.google.android.apps.mytracks.services.tasks;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
@@ -101,7 +102,8 @@ public class StatusAnnouncerTask implements PeriodicTask {
    */
   protected void onTtsInit(int status) {
     Log.i(TAG, "TrackRecordingService.TTS init: " + status);
-    this.ready = status == TextToSpeech.SUCCESS;
+    // TTS should be valid here but NPE exceptions were reported to the market.
+    this.ready = status == TextToSpeech.SUCCESS && tts != null;
 
     if (ready) {
       // Force the language to be the same as the string we will be speaking,

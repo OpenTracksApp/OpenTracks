@@ -31,6 +31,9 @@ import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.services.sensors.SensorManager;
 import com.google.android.apps.mytracks.services.sensors.SensorManagerFactory;
+import com.google.android.apps.mytracks.services.tasks.PeriodicTaskExecutor;
+import com.google.android.apps.mytracks.services.tasks.SplitTask;
+import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.ApiFeatures;
@@ -111,10 +114,10 @@ public class TrackRecordingService extends Service implements LocationListener {
   private double length;
 
   /**
-   * Status announcer executer.
+   * Status announcer executor.
    */
-  private PeriodicTaskExecuter announcementExecuter;
-  private SplitManager splitManager;
+  private PeriodicTaskExecutor announcementExecutor;
+  private PeriodicTaskExecutor splitExecutor;
 
   private SensorManager sensorManager;
   
@@ -185,11 +188,9 @@ public class TrackRecordingService extends Service implements LocationListener {
   private Location lastValidLocation;
 
   /**
-   * The frequency of status announcements.
+   * A service to run tasks outside of the main thread.
    */
-  private int announcementFrequency = -1;
-
-  private ExecutorService executerServce;
+  private ExecutorService executorService;
 
   /*
    * Utility functions
@@ -273,7 +274,8 @@ public class TrackRecordingService extends Service implements LocationListener {
           "Caught SQLiteException: " + e.getMessage(), e);
       return false;
     }
-    splitManager.updateSplits();
+    announcementExecutor.update();
+    splitExecutor.update();
     return true;
   }
 
@@ -425,9 +427,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     TripStatistics stats = track.getStatistics();
     statsBuilder = new TripStatisticsBuilder(stats.getStartTime());
     statsBuilder.setMinRecordingDistance(minRecordingDistance);
-    setUpAnnouncer();
 
-    splitManager.restore();
     length = 0;
     lastValidLocation = null;
 
@@ -475,7 +475,8 @@ public class TrackRecordingService extends Service implements LocationListener {
       }
     }
 
-    splitManager.calculateNextSplit();
+    announcementExecutor.restore();
+    splitExecutor.restore();
   }
 
   /*
@@ -483,7 +484,7 @@ public class TrackRecordingService extends Service implements LocationListener {
    */
   @Override
   public void onLocationChanged(final Location location) {
-    this.executerServce.submit(
+    executorService.submit(
       new Runnable() {
         @Override
         public void run() {
@@ -662,8 +663,8 @@ public class TrackRecordingService extends Service implements LocationListener {
     notificationManager =
         (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-    splitManager = new SplitManager(this);
 
+    setUpTaskExecutors();
     prefManager = new PreferenceManager(this);
     registerLocationListener();
 
@@ -688,49 +689,29 @@ public class TrackRecordingService extends Service implements LocationListener {
       prefManager.setRecordingTrack(recordingTrackId = -1);
     }
     showNotification();
-    executerServce = Executors.newSingleThreadExecutor();
+    executorService = Executors.newSingleThreadExecutor();
   }
 
   /**
-   * Creates an {@link Executer} and schedules {@class SafeStatusAnnouncerTask}.
-   * The announcer requires a TTS service and user should have enabled
-   * the announcements, otherwise this method is no-op.
+   * Creates the periodic task executors.
    */
-  private void setUpAnnouncer() {
-    Log.d(TAG, "TrackRecordingService.setUpAnnouncer: "
-        + announcementExecuter);
-    if (announcementFrequency != -1 && recordingTrackId != -1) {
-      handler.post(new Runnable() {
-        @Override
-        public void run() {
-          if (announcementExecuter == null) {
-            StatusAnnouncerFactory statusAnnouncerFactory =
-                new StatusAnnouncerFactory(ApiFeatures.getInstance());
-            PeriodicTask announcer = statusAnnouncerFactory.create(
-                TrackRecordingService.this);
-            if (announcer == null) {
-              return;
-            }
-
-            // TODO: Either use TaskExecuterManager everywhere, or get rid of it
-            announcementExecuter = new PeriodicTaskExecuter(announcer,
-                TrackRecordingService.this);
-          }
-          announcementExecuter.scheduleTask(announcementFrequency * 60000);
-        }
-      });
-    }
+  private void setUpTaskExecutors() {
+    announcementExecutor = new PeriodicTaskExecutor(
+        this, new StatusAnnouncerFactory(ApiFeatures.getInstance()));
+    splitExecutor = new PeriodicTaskExecutor(this, new SplitTask.Factory());
   }
   
-  private void shutdownAnnouncer() {
-    Log.d(TAG, "TrackRecordingService.shutdownAnnouncer: "
-        + announcementExecuter);
-    if (announcementExecuter != null) {
-      try {
-        announcementExecuter.shutdown();
-      } finally {
-        announcementExecuter = null;
-      }
+  private void shutdownTaskExecutors() {
+    Log.d(TAG, "TrackRecordingService.shutdownExecuters");
+    try {
+      announcementExecutor.shutdown();
+    } finally {
+      announcementExecutor = null;
+    }
+    try {
+      splitExecutor.shutdown();
+    } finally {
+      splitExecutor = null;
     }
   }
 
@@ -747,9 +728,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     timer.cancel();
     timer.purge();
     unregisterLocationListener();
-    shutdownAnnouncer();
-    splitManager.shutdown();
-    splitManager = null;
+    shutdownTaskExecutors();
     if (sensorManager != null) {
       sensorManager.shutdown();
       sensorManager = null;
@@ -1104,11 +1083,9 @@ public class TrackRecordingService extends Service implements LocationListener {
     waypointStatsBuilder = new TripStatisticsBuilder(startTime);
     waypointStatsBuilder.setMinRecordingDistance(minRecordingDistance);
     currentWaypointId = insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
-    setUpAnnouncer();
     length = 0;
     showNotification();
     registerLocationListener();
-    splitManager.restore();
     sensorManager = SensorManagerFactory.getSensorManager(this);
     if (sensorManager != null) {
       sensorManager.onStartTrack();
@@ -1123,6 +1100,8 @@ public class TrackRecordingService extends Service implements LocationListener {
     // Notify the world that we're now recording.
     sendTrackBroadcast(
         R.string.track_started_broadcast_action, recordingTrackId);
+    announcementExecutor.restore();
+    splitExecutor.restore();
 
     return recordingTrackId;
   }
@@ -1133,7 +1112,8 @@ public class TrackRecordingService extends Service implements LocationListener {
       throw new IllegalStateException("No recording track in progress!");
     }
 
-    shutdownAnnouncer();
+    announcementExecutor.shutdown();
+    splitExecutor.shutdown();
     isRecording = false;
     Track recordingTrack = providerUtils.getTrack(recordingTrackId);
     if (recordingTrack != null) {
@@ -1193,19 +1173,6 @@ public class TrackRecordingService extends Service implements LocationListener {
     this.recordingTrackId = recordingTrackId;
   }
 
-  public int getAnnouncementFrequency() {
-    return announcementFrequency;
-  }
-
-  public void setAnnouncementFrequency(int announcementFrequency) {
-    this.announcementFrequency = announcementFrequency;
-    if (announcementFrequency == -1) {
-      shutdownAnnouncer();
-    } else {
-      setUpAnnouncer();
-    }
-  }
-
   public int getMaxRecordingDistance() {
     return maxRecordingDistance;
   }
@@ -1251,7 +1218,16 @@ public class TrackRecordingService extends Service implements LocationListener {
     this.autoResumeTrackTimeout = autoResumeTrackTimeout;
   }
 
-  public SplitManager getSplitManager() {
-    return splitManager;
+  public void setAnnouncementFrequency(int announcementFrequency) {
+    announcementExecutor.setTaskFrequency(announcementFrequency);
+  }
+
+  public void setSplitFrequency(int frequency) {
+    splitExecutor.setTaskFrequency(frequency);
+  }
+
+  public void setMetricUnits(boolean metric) {
+    announcementExecutor.setMetricUnits(metric);
+    splitExecutor.setMetricUnits(metric);
   }
 }

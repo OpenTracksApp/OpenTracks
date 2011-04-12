@@ -14,9 +14,9 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks.services;
+package com.google.android.apps.mytracks.services.tasks;
 
-import com.google.android.apps.mytracks.Constants;
+import static com.google.android.apps.mytracks.Constants.TAG;
 
 import android.util.Log;
 
@@ -24,12 +24,14 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.google.android.apps.mytracks.services.TrackRecordingService;
+
 /**
- * This class will periodically announce the user's trip statistics.
+ * This class will periodically perform a task.
  *
  * @author Sandor Dornbush
  */
-public class PeriodicTaskExecuter {
+public class TimerTaskExecutor {
 
   private final PeriodicTask task;
   private final TrackRecordingService service;
@@ -40,8 +42,8 @@ public class PeriodicTaskExecuter {
    */
   private Timer timer;
 
-  public PeriodicTaskExecuter(PeriodicTask task,
-                              TrackRecordingService service) {
+  public TimerTaskExecutor(PeriodicTask task,
+                           TrackRecordingService service) {
     this.task = task;
     this.service = service;
   }
@@ -77,8 +79,7 @@ public class PeriodicTaskExecuter {
     }
 
     Date start = new Date(next);
-    Log.i(Constants.TAG,
-        task.getClass().getSimpleName() + " scheduled to start at " + start
+    Log.i(TAG, task.getClass().getSimpleName() + " scheduled to start at " + start
         + " every " + interval + " milliseconds.");
     timer.scheduleAtFixedRate(new PeriodicTimerTask(), start, interval);
   }
@@ -87,8 +88,7 @@ public class PeriodicTaskExecuter {
    * Cleans up this object.
    */
   public void shutdown() {
-    Log.i(Constants.TAG,
-        task.getClass().getSimpleName() + " shutting down.");
+    Log.i(TAG, task.getClass().getSimpleName() + " shutting down.");
     if (timer != null) {
       timer.cancel();
       timer.purge();

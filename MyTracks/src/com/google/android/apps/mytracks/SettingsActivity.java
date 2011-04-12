@@ -19,8 +19,8 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.io.backup.BackupActivityHelper;
 import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
-import com.google.android.apps.mytracks.services.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.services.sensors.ant.AntUtils;
+import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.BluetoothDeviceUtils;
 import com.google.android.maps.mytracks.R;
@@ -266,9 +266,6 @@ public class SettingsActivity extends PreferenceActivity {
     final ListPreference minRequiredAccuracy =
         (ListPreference) findPreference(
             getString(R.string.min_required_accuracy_key));
-    final ListPreference splitFrequency =
-        (ListPreference) findPreference(
-            getString(R.string.split_frequency_key));
 
     minRecordingDistance.setEntries(isMetric
         ? R.array.min_recording_distance_options
@@ -279,11 +276,20 @@ public class SettingsActivity extends PreferenceActivity {
     minRequiredAccuracy.setEntries(isMetric
         ? R.array.min_required_accuracy_options
         : R.array.min_required_accuracy_options_ft);
-    splitFrequency.setEntries(isMetric
-        ? R.array.split_frequency_options
-        : R.array.split_frequency_options_ft);
+    setTaskOptions(isMetric, R.string.announcement_frequency_key);
+    setTaskOptions(isMetric, R.string.split_frequency_key);
   }
 
+  /**
+   * Set the user visible options for a periodic task.
+   */
+  private void setTaskOptions(boolean isMetric, int listId) {
+    final ListPreference taskFrequency =
+        (ListPreference) findPreference(getString(listId));
+    taskFrequency.setEntries(isMetric
+        ? R.array.task_frequency_options
+        : R.array.task_frequency_options_ft);
+  }
 
   /**
    * Configures preference actions related to bluetooth.
