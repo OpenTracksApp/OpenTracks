@@ -41,22 +41,22 @@ public class MockTrackWriter implements TrackWriter {
 
   @Override
   public void setDirectory(File directory) {
-    throw new RuntimeException("not implemented");
+    throw new UnsupportedOperationException("not implemented");
   }
 
   @Override
   public String getAbsolutePath() {
-    throw new RuntimeException("not implemented");
+    throw new UnsupportedOperationException("not implemented");
   }
 
   @Override
   public void writeTrackAsync() {
-    throw new RuntimeException("not implemented");
+    throw new UnsupportedOperationException("not implemented");
   }
 
   @Override
   public void writeTrack() {
-    throw new RuntimeException("not implemented");
+    throw new UnsupportedOperationException("not implemented");
   }
 
   @Override

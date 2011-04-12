@@ -25,6 +25,8 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
+ * Tests {@link WriteProgressController}.
+ *
  * @author Matthew Simmons
  */
 public class WriteProgressControllerTest extends ActivityInstrumentationTestCase2<MyTracks> {
