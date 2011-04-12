@@ -25,7 +25,6 @@ import com.google.android.apps.mytracks.content.TrackPointsColumns;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
-import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.maps.mytracks.R;
@@ -281,17 +280,7 @@ public class TrackDataHub {
     started = true;
 
     sharedPreferences.registerOnSharedPreferenceChangeListener(preferenceListener);
-    selectedTrackId = sharedPreferences.getLong(SELECTED_TRACK_KEY, -1);
-    recordingTrackId = sharedPreferences.getLong(RECORDING_TRACK_KEY, -1);
-    useMetricUnits = sharedPreferences.getBoolean(METRIC_UNITS_KEY, true);
-    reportSpeed = sharedPreferences.getBoolean(SPEED_REPORTING_KEY, true);
-    minRequiredAccuracy = sharedPreferences.getInt(MIN_REQUIRED_ACCURACY_KEY,
-        Constants.DEFAULT_MIN_REQUIRED_ACCURACY);
-
-    if (recordingTrackId > 0) {
-      Intent startIntent = new Intent(context, TrackRecordingService.class);
-      context.startService(startIntent);
-    }
+    loadSharedPreferences();
 
     // This may or may not register internal listeners, depending on whether
     // we already had external listeners.
@@ -300,6 +289,15 @@ public class TrackDataHub {
     // If there were listeners already registered, make sure they become up-to-date.
     // TODO: This should really only send new data (in a start-stop-start cycle).
     reloadDataFor(getRegisteredListenerArray());
+  }
+
+  private void loadSharedPreferences() {
+    selectedTrackId = sharedPreferences.getLong(SELECTED_TRACK_KEY, -1);
+    recordingTrackId = sharedPreferences.getLong(RECORDING_TRACK_KEY, -1);
+    useMetricUnits = sharedPreferences.getBoolean(METRIC_UNITS_KEY, true);
+    reportSpeed = sharedPreferences.getBoolean(SPEED_REPORTING_KEY, true);
+    minRequiredAccuracy = sharedPreferences.getInt(MIN_REQUIRED_ACCURACY_KEY,
+        Constants.DEFAULT_MIN_REQUIRED_ACCURACY);
   }
 
   /**
@@ -396,26 +394,31 @@ public class TrackDataHub {
 
   /** Returns the ID of the currently-selected track. */
   public long getSelectedTrackId() {
-    checkStarted();
+    if (!started) {
+      loadSharedPreferences();
+    }
     return selectedTrackId;
   }
 
   /** Returns whether there's a track currently selected. */
   public boolean isATrackSelected() {
-    checkStarted();
-    return selectedTrackId > 0;
+    return getSelectedTrackId() > 0;
   }
 
   /** Returns whether we're currently recording a track. */
   public boolean isRecording() {
-    checkStarted();
+    if (!started) {
+      loadSharedPreferences();
+    }
     return recordingTrackId > 0;
   }
 
   /** Returns whether the selected track is still being recorded. */
   public boolean isRecordingSelected() {
-    checkStarted();
-    return isRecording() && recordingTrackId == selectedTrackId;
+    if (!started) {
+      loadSharedPreferences();
+    }
+    return recordingTrackId > 0 && recordingTrackId == selectedTrackId;
   }
 
   /**

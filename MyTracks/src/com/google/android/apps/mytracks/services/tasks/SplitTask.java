@@ -28,6 +28,9 @@ import android.content.Context;
  */
 public class SplitTask implements PeriodicTask {
 
+  private SplitTask() {
+  }
+
   @Override
   public void run(TrackRecordingService service) {
     service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
@@ -41,6 +44,9 @@ public class SplitTask implements PeriodicTask {
   public void start() {
   }
   
+  /**
+   * Create new SplitTasks.
+   */
   public static class Factory implements PeriodicTaskFactory {
 
     @Override

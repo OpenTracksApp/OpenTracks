@@ -362,6 +362,12 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     Log.d(TAG, "MyTracks.onStart");
     super.onStart();
     dataHub.start();
+
+    // Ensure that service is running if we're supposed to be recording
+    if (dataHub.isRecording()) {
+      Intent startIntent = new Intent(this, TrackRecordingService.class);
+      startService(startIntent);
+    }
   }
 
   /*

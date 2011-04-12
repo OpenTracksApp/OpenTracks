@@ -696,8 +696,6 @@ public class TrackRecordingService extends Service implements LocationListener {
    * Creates the periodic task executors.
    */
   private void setUpTaskExecutors() {
-    Log.d(TAG, "TrackRecordingService.setUpTasks: "
-        + announcementExecutor);
     announcementExecutor = new PeriodicTaskExecutor(
         this, new StatusAnnouncerFactory(ApiFeatures.getInstance()));
     splitExecutor = new PeriodicTaskExecutor(this, new SplitTask.Factory());

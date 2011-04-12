@@ -34,9 +34,7 @@ public class StatusAnnouncerFactory implements PeriodicTaskFactory {
     this.hasTts = apiFeatures.hasTextToSpeech();
   }
 
-  /* (non-Javadoc)
-   * @see com.google.android.apps.mytracks.services.tasks.PeriodicTaskFactory#create(android.content.Context)
-   */
+  @Override
   public PeriodicTask create(Context context) {
     if (hasTts) {
       if (ApiFeatures.getInstance().isAudioFocusSupported()) {

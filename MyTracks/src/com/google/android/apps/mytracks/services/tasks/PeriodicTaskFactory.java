@@ -29,6 +29,5 @@ public interface PeriodicTaskFactory {
    *
    * @return the task, or null if task is not supported
    */
-  abstract PeriodicTask create(Context context);
-
+  PeriodicTask create(Context context);
 }
