@@ -441,8 +441,13 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   @Override
   public void onActivityResult(int requestCode, int resultCode,
       final Intent results) {
+    Log.d(TAG, "MyTracks.onActivityResult");
     TrackFileFormat exportFormat = null;
-    final long trackId = results.getLongExtra("trackid", dataHub.getSelectedTrackId());
+    long trackId = dataHub.getSelectedTrackId();
+    if (results != null) {
+      trackId = results.getLongExtra("trackid", trackId);
+    }
+
     switch (requestCode) {
       case Constants.GET_LOGIN: {
         if (resultCode != RESULT_OK || auth == null || !auth.authResult(resultCode, results)) {
