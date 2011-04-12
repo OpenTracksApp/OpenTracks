@@ -121,7 +121,7 @@ public class TrackDataHub {
 
   /** Set of internal listeners which are already registered. */
   private final Set<ListenerDataType> registeredInternalListeners =
-    EnumSet.noneOf(ListenerDataType.class);
+      EnumSet.noneOf(ListenerDataType.class);
 
   /** Map of external listener to its registration details. */
   private final Map<TrackDataListener, ListenerRegistration> registeredListeners =
@@ -298,10 +298,6 @@ public class TrackDataHub {
 
   /**
    * Default constructor.
-   *
-   * @param ctx
-   * @param preferences
-   * @param providerUtils
    */
   public TrackDataHub(Context ctx, SharedPreferences preferences,
       MyTracksProviderUtils providerUtils) {
@@ -310,12 +306,8 @@ public class TrackDataHub {
 
   /**
    * Injection constructor.
-   *
-   * @param ctx
-   * @param dataSources
-   * @param preferences
-   * @param providerUtils
    */
+  // @VisibleForTesting
   TrackDataHub(Context ctx, TrackDataSources dataSources, SharedPreferences preferences,
       MyTracksProviderUtils providerUtils) {
     this.context = ctx;

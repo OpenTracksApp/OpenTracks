@@ -387,7 +387,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     try {
       long desiredInterval = locationListenerPolicy.getDesiredPollingInterval();
       locationManager.requestLocationUpdates(
-          Constants.GPS_PROVIDER, desiredInterval,
+          LocationManager.GPS_PROVIDER, desiredInterval,
           locationListenerPolicy.getMinDistance(),
           // , 0 /* minDistance, get all updates to properly time pauses */
           TrackRecordingService.this);
@@ -597,7 +597,7 @@ public class TrackRecordingService extends Service implements LocationListener {
         if (startNewSegment) {
           // Insert a separator point to indicate start of new track:
           Log.d(TAG, "Inserting a separator.");
-          Location separator = new Location(Constants.GPS_PROVIDER);
+          Location separator = new Location(LocationManager.GPS_PROVIDER);
           separator.setLongitude(0);
           separator.setLatitude(100);
           separator.setTime(lastRecordedLocation.getTime());

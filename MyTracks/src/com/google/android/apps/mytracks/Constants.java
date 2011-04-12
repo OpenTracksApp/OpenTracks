@@ -26,17 +26,6 @@ public abstract class Constants {
    * Should be used by all log statements
    */
   public static final String TAG = "MyTracks";
-
-  /**
-   * Name of the gps location provider:
-   */
-  public static final String GPS_PROVIDER = "gps";
-
-  /** Maximum age of a GPS location to be considered current. */
-  public static final long MAX_LOCATION_AGE_MS = 60 * 1000;  // 1 minute
-
-  /** Maximum age of a network location to be considered current. */
-  public static final long MAX_NETWORK_AGE_MS = 1000 * 60 * 10;  // 10 minutes
   
   /**
    * Name of the top-level directory inside the SD card where our files will
@@ -179,6 +168,12 @@ public abstract class Constants {
    * 2g = 19.6 m/s^2 = 0.0002 m/ms^2 = 0.02 m/(m*ms)
    */
   public static final double MAX_ACCELERATION = 0.02;
+
+  /** Maximum age of a GPS location to be considered current. */
+  public static final long MAX_LOCATION_AGE_MS = 60 * 1000;  // 1 minute
+
+  /** Maximum age of a network location to be considered current. */
+  public static final long MAX_NETWORK_AGE_MS = 1000 * 60 * 10;  // 10 minutes
 
   /**
    * The type of account that we can use for gdata uploads.

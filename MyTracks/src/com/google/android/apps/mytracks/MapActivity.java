@@ -33,6 +33,7 @@ import com.google.android.maps.mytracks.R;
 
 import android.content.Intent;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -504,7 +505,7 @@ public class MapActivity extends com.google.android.maps.MapActivity
 
   @Override
   public void onCurrentLocationChanged(Location location) {
-    if (!location.getProvider().equals(Constants.GPS_PROVIDER)) {
+    if (!location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
       Log.d(TAG,
           "MapActivity: Network location update received (provider '" + location.getProvider() + "'.");
     }

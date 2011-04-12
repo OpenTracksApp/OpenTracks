@@ -104,9 +104,9 @@ class TrackDataSourcesImpl implements TrackDataSources {
   @Override
   public void requestLocationUpdates(LocationListener listener) {
     // Check if the provider exists.
-    LocationProvider gpsProvider = locationManager.getProvider(Constants.GPS_PROVIDER);
+    LocationProvider gpsProvider = locationManager.getProvider(LocationManager.GPS_PROVIDER);
     if (gpsProvider == null) {
-      listener.onProviderDisabled(Constants.GPS_PROVIDER);
+      listener.onProviderDisabled(LocationManager.GPS_PROVIDER);
       locationManager.removeUpdates(listener);
       return;
     }
@@ -140,7 +140,7 @@ class TrackDataSourcesImpl implements TrackDataSources {
     // TODO: Let's look at more advanced algorithms to determine the best
     // current location.
 
-    Location loc = locationManager.getLastKnownLocation(Constants.GPS_PROVIDER);
+    Location loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
     final long now = System.currentTimeMillis();
     if (loc == null || loc.getTime() < now - MAX_LOCATION_AGE_MS) {
       // We don't have a recent GPS fix, just use cell towers if available
