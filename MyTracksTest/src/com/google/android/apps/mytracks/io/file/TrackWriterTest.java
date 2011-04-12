@@ -6,9 +6,9 @@ import static org.easymock.EasyMock.expect;
 
 import com.google.android.apps.mytracks.content.MyTracksProvider;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
 import com.google.android.apps.mytracks.io.file.TrackFormatWriter;
 import com.google.android.apps.mytracks.io.file.TrackWriterImpl;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceTest.MockContext;
@@ -146,7 +146,7 @@ public class TrackWriterTest extends AndroidTestCase {
     setContext(context);
     providerUtils = MyTracksProviderUtils.Factory.get(context);
     oldProviderUtilsFactory = TestingProviderUtilsFactory.installWithInstance(providerUtils);
-    
+
     mocksControl = EasyMock.createStrictControl();
     formatWriter = mocksControl.createMock(TrackFormatWriter.class);
     expect(formatWriter.getExtension()).andStubReturn(EXTENSION);
@@ -166,12 +166,13 @@ public class TrackWriterTest extends AndroidTestCase {
     writer = new WriteTracksTrackWriter(getContext(), providerUtils, track,
         formatWriter, true);
 
-    // Expect the completion callback to be run
-    Runnable completionCallback = mocksControl.createMock(Runnable.class);
-    completionCallback.run();
+    // Expect the completion listener to be run
+    TrackWriter.OnCompletionListener completionListener
+        = mocksControl.createMock(TrackWriter.OnCompletionListener.class);
+    completionListener.onComplete();
 
     mocksControl.replay();
-    writer.setOnCompletion(completionCallback);
+    writer.setOnCompletionListener(completionListener);
     writer.writeTrack();
 
     assertEquals(1, writeDocumentCalls);
@@ -183,19 +184,20 @@ public class TrackWriterTest extends AndroidTestCase {
     writer = new WriteTracksTrackWriter(getContext(), providerUtils, track,
         formatWriter, false);
 
-    // Expect the completion callback to be run
-    Runnable completionCallback = mocksControl.createMock(Runnable.class);
-    completionCallback.run();
+    // Expect the completion listener to be run
+    TrackWriter.OnCompletionListener completionListener
+        = mocksControl.createMock(TrackWriter.OnCompletionListener.class);
+    completionListener.onComplete();
 
     mocksControl.replay();
-    writer.setOnCompletion(completionCallback);
+    writer.setOnCompletionListener(completionListener);
     writer.writeTrack();
 
     assertEquals(0, writeDocumentCalls);
     assertEquals(1, openFileCalls);
     mocksControl.verify();
   }
-  
+
   public void testOpenFile() {
     final ByteArrayOutputStream stream = new ByteArrayOutputStream();
     writer = new OpenFileTrackWriter(
@@ -260,7 +262,7 @@ public class TrackWriterTest extends AndroidTestCase {
 
     // Make location 3 invalid
     locs[2].setLatitude(100);
-    
+
     assertEquals(locs.length, providerUtils.bulkInsertTrackPoints(locs, locs.length, TRACK_ID));
     for (int i = 0;  i < wps.length; ++i) {
       Waypoint wpt = wps[i];
@@ -315,7 +317,7 @@ public class TrackWriterTest extends AndroidTestCase {
 
         return wpt.getId() == wpt2.getId();
       }
-      
+
       @Override
       public void appendTo(StringBuffer buffer) {
         buffer.append("wptEq(");
@@ -325,7 +327,7 @@ public class TrackWriterTest extends AndroidTestCase {
     });
     return null;
   }
-  
+
   private static Location locEq(final Location loc) {
     EasyMock.reportMatcher(new IArgumentMatcher() {
       @Override
@@ -345,7 +347,7 @@ public class TrackWriterTest extends AndroidTestCase {
             && loc.getLongitude() == loc2.getLongitude()
             && loc.getTime() == loc2.getTime();
       }
-      
+
       @Override
       public void appendTo(StringBuffer buffer) {
         buffer.append("locEq(");
@@ -355,7 +357,7 @@ public class TrackWriterTest extends AndroidTestCase {
     });
     return null;
   }
-   
+
   private void fillLocations(Location... locs) {
     assertTrue(locs.length < 90);
     for (int i = 0; i < locs.length; i++) {

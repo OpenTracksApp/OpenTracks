@@ -39,11 +39,9 @@ public class DialogManager {
   public static final int DIALOG_IMPORT_PROGRESS = 2;
   public static final int DIALOG_PROGRESS = 3;
   public static final int DIALOG_SEND_TO_GOOGLE = 4;
-  public static final int DIALOG_WRITE_PROGRESS = 5;
 
   private ProgressDialog progressDialog;
   private ProgressDialog importProgressDialog;
-  private ProgressDialog writeProgressDialog;
   private SendDialog sendToGoogleDialog;
   private ChartSettingsDialog chartSettingsDialog;
 
@@ -79,15 +77,6 @@ public class DialogManager {
       case DIALOG_SEND_TO_GOOGLE:
         sendToGoogleDialog = new SendDialog(activity);
         return sendToGoogleDialog;
-      case DIALOG_WRITE_PROGRESS:
-        writeProgressDialog = new ProgressDialog(activity);
-        writeProgressDialog.setIcon(android.R.drawable.ic_dialog_info);
-        writeProgressDialog.setTitle(
-            activity.getString(R.string.progress_title));
-        writeProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        writeProgressDialog.setMessage(
-            activity.getString(R.string.write_progress_message));
-        return writeProgressDialog;
     }
     return null;
   }
@@ -213,4 +202,19 @@ public class DialogManager {
     });
   }
 
+  /**
+   * The equivalent of {@link #dismissDialogSafely(int)}, but for a specific
+   * dialog instance.
+   */
+  public static void dismissDialogSafely(Activity activity, final Dialog dialog) {
+    activity.runOnUiThread(new Runnable() {
+      public void run() {
+        try {
+          dialog.dismiss();
+        } catch (IllegalArgumentException e) {
+          // This will be thrown if this dialog was not shown before.
+        }
+      }
+    });
+  }
 }

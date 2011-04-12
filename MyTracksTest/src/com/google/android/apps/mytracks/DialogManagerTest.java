@@ -69,13 +69,4 @@ public class DialogManagerTest
     assertNotNull(d);
     assertTrue(d instanceof SendDialog);
   }
-
-  public void test_onCreateWriteProgress() {
-    Dialog d =
-        getActivity().onCreateDialog(
-            DialogManager.DIALOG_WRITE_PROGRESS, null);
-    assertNotNull(d);
-    assertTrue(d instanceof ProgressDialog);
-  }
-
 }

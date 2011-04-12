@@ -27,12 +27,31 @@ import java.io.File;
  * @author Rodrigo Damazio
  */
 public interface TrackWriter {
+  /** This listener is used to signal completion of track write */
+  public interface OnCompletionListener {
+    public void onComplete();
+  }
+
+  /** This listener is used to signal track writes. */
+  public interface OnWriteListener {
+    /**
+     * This method is invoked whenever a location within a track is written.
+     * @param number the location number
+     * @param max the maximum number of locations, for calculation of
+     *     completion percentage
+     */
+    public void onWrite(int number, int max);
+  }
+
   /**
-   * Sets a completion callback.
-   *
-   * @param onCompletion Runnable that will be executed when finished
+   * Sets listener to be invoked when the writer has finished.
    */
-  void setOnCompletion(Runnable onCompletion);
+  void setOnCompletionListener(OnCompletionListener onCompletionListener);
+
+  /**
+   * Sets a listener to be invoked for each location writer.
+   */
+  void setOnWriteListener(OnWriteListener onWriteListener);
 
   /**
    * Sets a custom directory where the file will be written.

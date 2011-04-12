@@ -45,17 +45,18 @@ import java.io.OutputStream;
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
  */
-public class TrackWriterImpl implements TrackWriter {
+class TrackWriterImpl implements TrackWriter {
   private final Context context;
   private final MyTracksProviderUtils providerUtils;
   private final Track track;
   private final TrackFormatWriter writer;
   private final FileUtils fileUtils;
-  private Runnable onCompletion = null;
   private boolean success = false;
   private int errorMessage = -1;
   private File directory = null;
   private File file = null;
+  private OnCompletionListener onCompletionListener;
+  private OnWriteListener onWriteListener;
 
   TrackWriterImpl(Context context, MyTracksProviderUtils providerUtils,
       Track track, TrackFormatWriter writer) {
@@ -67,8 +68,13 @@ public class TrackWriterImpl implements TrackWriter {
   }
 
   @Override
-  public void setOnCompletion(Runnable onCompletion) {
-    this.onCompletion = onCompletion;
+  public void setOnCompletionListener(OnCompletionListener onCompletionListener) {
+    this.onCompletionListener = onCompletionListener;
+  }
+
+  @Override
+  public void setOnWriteListener(OnWriteListener onWriteListener) {
+    this.onWriteListener = onWriteListener;
   }
 
   @Override
@@ -121,8 +127,13 @@ public class TrackWriterImpl implements TrackWriter {
    */
 
   private void finished() {
-    if (onCompletion != null) {
-      runOnUiThread(onCompletion);
+    if (onCompletionListener != null) {
+      runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+          onCompletionListener.onComplete();
+        }
+      });
       return;
     }
   }
@@ -289,8 +300,11 @@ public class TrackWriterImpl implements TrackWriter {
         Log.w(Constants.TAG, "Unable to get any points to write");
         return;
       }
+      int pointNumber = 0;
       while (it.hasNext()) {
         Location loc = it.next();
+
+        pointNumber++;
 
         boolean isValid = LocationUtils.isValidLocation(loc);
         boolean validSegment = isValid && isLastValid;
@@ -312,6 +326,9 @@ public class TrackWriterImpl implements TrackWriter {
 
           // Write the current point
           writer.writeLocation(loc);
+          if (onWriteListener != null) {
+            onWriteListener.onWrite(pointNumber, track.getNumberOfPoints());
+          }
         } else {
           if (segmentOpen) {
             writer.writeCloseSegment();

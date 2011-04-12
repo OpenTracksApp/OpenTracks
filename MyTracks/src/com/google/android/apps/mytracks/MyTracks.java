@@ -19,7 +19,6 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 import static com.google.android.apps.mytracks.DialogManager.DIALOG_IMPORT_PROGRESS;
 import static com.google.android.apps.mytracks.DialogManager.DIALOG_PROGRESS;
 import static com.google.android.apps.mytracks.DialogManager.DIALOG_SEND_TO_GOOGLE;
-import static com.google.android.apps.mytracks.DialogManager.DIALOG_WRITE_PROGRESS;
 
 import com.google.android.accounts.Account;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
@@ -1227,17 +1226,15 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * @param trackId The id of the track to be sent
    */
   public void saveTrack(long trackId, TrackFileFormat format) {
-    dialogManager.showDialogSafely(DIALOG_WRITE_PROGRESS);
-    final TrackWriter writer =
-        TrackWriterFactory.newWriter(this, providerUtils, trackId, format);
-    writer.setOnCompletion(new Runnable() {
-      public void run() {
-        dialogManager.dismissDialogSafely(DIALOG_WRITE_PROGRESS);
-        dialogManager.showMessageDialog(writer.getErrorMessage(),
-            writer.wasSuccess());
+    TrackWriter writer = TrackWriterFactory.newWriter(this, providerUtils, trackId, format);
+    WriteProgressController controller = new WriteProgressController(this, writer);
+    controller.setOnCompletionListener(new WriteProgressController.OnCompletionListener() {
+      @Override
+      public void onComplete(TrackWriter writer) {
+        dialogManager.showMessageDialog(writer.getErrorMessage(), writer.wasSuccess());
       }
     });
-    writer.writeTrackAsync();
+    controller.startWrite();
   }
 
   /**
@@ -1248,9 +1245,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * @param trackId The id of the track to be sent
    */
   public void sendTrack(long trackId, final TrackFileFormat format) {
-    dialogManager.showDialogSafely(DIALOG_WRITE_PROGRESS);
-    final TrackWriter writer =
-        TrackWriterFactory.newWriter(this, providerUtils, trackId, format);
+    TrackWriter writer = TrackWriterFactory.newWriter(this, providerUtils, trackId, format);
 
     FileUtils fileUtils = new FileUtils();
     String extension = format.getExtension();
@@ -1258,28 +1253,31 @@ public class MyTracks extends TabActivity implements OnTouchListener,
 
     File dir = new File(dirName);
     writer.setDirectory(dir);
-    writer.setOnCompletion(new Runnable() {
-      public void run() {
-        dialogManager.dismissDialogSafely(DIALOG_WRITE_PROGRESS);
+
+    WriteProgressController controller = new WriteProgressController(this, writer);
+    controller.setOnCompletionListener(new WriteProgressController.OnCompletionListener() {
+      @Override
+      public void onComplete(TrackWriter writer) {
         if (!writer.wasSuccess()) {
-          dialogManager.showMessageDialog(writer.getErrorMessage(),
-              writer.wasSuccess());
-        } else {
-          Intent shareIntent = new Intent(Intent.ACTION_SEND);
-          shareIntent.putExtra(Intent.EXTRA_SUBJECT,
-              getResources().getText(R.string.send_track_subject).toString());
-          shareIntent.putExtra(Intent.EXTRA_TEXT,
-              getResources().getText(R.string.send_track_body_format)
-              .toString());
-          shareIntent.setType(format.getMimeType());
-          Uri u = Uri.fromFile(new File(writer.getAbsolutePath()));
-          shareIntent.putExtra(Intent.EXTRA_STREAM, u);
-          startActivity(Intent.createChooser(shareIntent,
-              getResources().getText(R.string.share_track).toString()));
+          dialogManager.showMessageDialog(writer.getErrorMessage(), writer.wasSuccess());
+          return;
         }
+
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT,
+            getResources().getText(R.string.send_track_subject).toString());
+        shareIntent.putExtra(Intent.EXTRA_TEXT,
+            getResources().getText(R.string.send_track_body_format)
+            .toString());
+        shareIntent.setType(format.getMimeType());
+        Uri u = Uri.fromFile(new File(writer.getAbsolutePath()));
+        shareIntent.putExtra(Intent.EXTRA_STREAM, u);
+        startActivity(Intent.createChooser(shareIntent,
+            getResources().getText(R.string.share_track).toString()));
       }
     });
-    writer.writeTrackAsync();
+
+    controller.startWrite();
   }
 
   public AccountChooser getAccountChooser() {
