@@ -15,16 +15,16 @@
  */
 package com.google.android.apps.mytracks.services.sensors.ant;
 
-import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.content.Sensor;
-import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
-import com.google.android.apps.mytracks.services.sensors.SensorManager;
+import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.dsi.ant.AntDefine;
 import com.dsi.ant.AntInterface;
 import com.dsi.ant.AntInterfaceIntent;
 import com.dsi.ant.AntMesg;
 import com.dsi.ant.exception.AntInterfaceException;
+import com.google.android.apps.mytracks.content.Sensor;
+import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
+import com.google.android.apps.mytracks.services.sensors.SensorManager;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -84,7 +84,7 @@ public abstract class AntSensorManager extends SensorManager {
     @Override
     public void onReceive(Context context, Intent intent) {
       String antAction = intent.getAction();
-      Log.i(Constants.TAG, "enter status onReceive" + antAction);
+      Log.i(TAG, "enter status onReceive" + antAction);
     }
   };
 
@@ -93,12 +93,12 @@ public abstract class AntSensorManager extends SensorManager {
     @Override
     public void onReceive(Context context, Intent intent) {
       String antAction = intent.getAction();
-      Log.i(Constants.TAG, "enter data onReceive" + antAction);
+      Log.i(TAG, "enter data onReceive" + antAction);
 
       if (antAction.equals(AntInterfaceIntent.ANT_RX_MESSAGE_ACTION)) {
         byte[] antMessage = intent.getByteArrayExtra(AntInterfaceIntent.ANT_MESSAGE);
         if (DEBUGGING) {
-          Log.d(Constants.TAG, "Received RX message " + messageToString(antMessage));
+          Log.d(TAG, "Received RX message " + messageToString(antMessage));
         }
 
         handleMessage(antMessage);
@@ -119,7 +119,7 @@ public abstract class AntSensorManager extends SensorManager {
 
     @Override
     public void onServiceDisconnected() {
-      Log.d(Constants.TAG, "ANT interface reports disconnection");
+      Log.d(TAG, "ANT interface reports disconnection");
     }
   };
 
@@ -129,14 +129,14 @@ public abstract class AntSensorManager extends SensorManager {
 
   @Override
   public void onDestroy() {
-    Log.i(Constants.TAG, "destroying AntSensorManager");
+    Log.i(TAG, "destroying AntSensorManager");
     context.unregisterReceiver(statusReceiver);
     context.unregisterReceiver(dataReceiver);
 
     try {
       antReceiver.releaseInterface();
     } catch (AntInterfaceException e) {
-      Log.e(Constants.TAG, "failed to release ANT interface", e);
+      Log.e(TAG, "failed to release ANT interface", e);
     }
 
     antReceiver.destroy();
@@ -177,7 +177,7 @@ public abstract class AntSensorManager extends SensorManager {
     antReceiver = AntInterface.getInstance(context, antServiceListener);
 
     if (antReceiver == null) {
-      Log.e(Constants.TAG, "Failed to get ANT Receiver");
+      Log.e(TAG, "Failed to get ANT Receiver");
       return;
     }
 
@@ -190,11 +190,11 @@ public abstract class AntSensorManager extends SensorManager {
    * to initiate any ANT commands.
    */
   private synchronized void serviceConnected() {
-    Log.d(Constants.TAG, "ANT service connected");
+    Log.d(TAG, "ANT service connected");
 
     try {
       if (!antReceiver.claimInterface()) {
-        Log.e(Constants.TAG, "failed to claim ANT interface");
+        Log.e(TAG, "failed to claim ANT interface");
         return;
       }
 
@@ -202,14 +202,14 @@ public abstract class AntSensorManager extends SensorManager {
         // Make sure not to call AntInterface.enable() again, if it has been
         // already called before
         if (antInterrupted == false) {
-          Log.i(Constants.TAG, "Powering on Radio");
+          Log.i(TAG, "Powering on Radio");
           antReceiver.enable();
         }
       } else {
-        Log.i(Constants.TAG, "Radio already enabled");
+        Log.i(TAG, "Radio already enabled");
       }
     } catch (AntInterfaceException e) {
-      Log.e(Constants.TAG, "failed to enable ANT", e);
+      Log.e(TAG, "failed to enable ANT", e);
     }
 
     try {
@@ -220,7 +220,7 @@ public abstract class AntSensorManager extends SensorManager {
       // that message.
       antReceiver.ANTResetSystem();
     } catch (AntInterfaceException e) {
-      Log.e(Constants.TAG, "failed to reset ANT (expected exception)", e);
+      Log.e(TAG, "failed to reset ANT (expected exception)", e);
     }
   }
 
@@ -232,7 +232,7 @@ public abstract class AntSensorManager extends SensorManager {
   protected void handleMessage(byte[] antMessage) {
     int len = antMessage[0];
     if (len != antMessage.length - 2 || antMessage.length <= 2) {
-      Log.e(Constants.TAG, "Invalid message: " + messageToString(antMessage));
+      Log.e(TAG, "Invalid message: " + messageToString(antMessage));
       return;
     }
 
@@ -253,7 +253,7 @@ public abstract class AntSensorManager extends SensorManager {
    */
   protected boolean handleMessage(byte messageId, byte[] messageData) {
     if (messageId == AntMesg.MESG_STARTUP_MESG_ID) {
-      Log.d(Constants.TAG, String.format(
+      Log.d(TAG, String.format(
           "Received startup message (reason %02x); initializing channel",
           new AntStartupMessage(messageData).getMessage()));
       setupAntSensorChannels();
@@ -305,13 +305,13 @@ public abstract class AntSensorManager extends SensorManager {
       return true;
 
     } catch (AntInterfaceException e) {
-      Log.e(Constants.TAG, "failed to setup ANT channel", e);
+      Log.e(TAG, "failed to setup ANT channel", e);
       return false;
     }
   }
 
   private void registerForAntIntents() {
-    Log.i(Constants.TAG, "Registering for ant intents.");
+    Log.i(TAG, "Registering for ant intents.");
     // Register for ANT intent broadcasts.
     IntentFilter statusIntentFilter = new IntentFilter();
     statusIntentFilter.addAction(AntInterfaceIntent.ANT_ENABLED_ACTION);

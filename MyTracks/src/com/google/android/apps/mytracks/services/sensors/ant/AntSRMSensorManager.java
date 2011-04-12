@@ -15,14 +15,15 @@
  */
 package com.google.android.apps.mytracks.services.sensors.ant;
 
-import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.content.Sensor;
-import com.google.android.apps.mytracks.services.sensors.SensorUtils;
-import com.google.android.maps.mytracks.R;
+import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.dsi.ant.AntDefine;
 import com.dsi.ant.AntMesg;
 import com.dsi.ant.exception.AntInterfaceException;
+import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.content.Sensor;
+import com.google.android.apps.mytracks.services.sensors.SensorUtils;
+import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -85,7 +86,7 @@ public class AntSRMSensorManager extends AntSensorManager {
     byte recievedChannel = (byte) (antMessage[AntMesg.MESG_DATA_OFFSET]
                                & AntDefine.CHANNEL_NUMBER_MASK);
     if (recievedChannel != channel) {
-      Log.d(Constants.TAG, "Unexpected channel: " + recievedChannel);
+      Log.d(TAG, "Unexpected channel: " + recievedChannel);
       return;
     }
     switch (antMessage[AntMesg.MESG_ID_OFFSET]) {
@@ -99,18 +100,17 @@ public class AntSRMSensorManager extends AntSensorManager {
         handleChannelId(antMessage);
         break;
       default:
-        Log.e(Constants.TAG,
-            "Unexpected message id: " + antMessage[3]);
+        Log.e(TAG, "Unexpected message id: " + antMessage[3]);
     }
   }
 
   private void handleBroadcastData(byte[] antMessage) {
     if (deviceId == WILDCARD) {
       try {
-        Log.d(Constants.TAG, "Requesting channel id id.");
+        Log.d(TAG, "Requesting channel id id.");
         getAntReceiver().ANTRequestMessage(channel, AntMesg.MESG_CHANNEL_ID_ID);
       } catch (AntInterfaceException e) {
-        Log.e(Constants.TAG, "Failed to request channel id id", e);
+        Log.e(TAG, "Failed to request channel id id", e);
       }
     }
     setSensorState(Sensor.SensorState.CONNECTED);
@@ -122,15 +122,14 @@ public class AntSRMSensorManager extends AntSensorManager {
         parseSensorData(antMessage);
         break;
       default:
-        Log.e(Constants.TAG,
-            "Unexpected message type: " + antMessage[MESSAGE_TYPE_INDEX]);
+        Log.e(TAG, "Unexpected message type: " + antMessage[MESSAGE_TYPE_INDEX]);
     }
   }
 
   private void handleChannelId(byte[] antMessage) {
     // Store the device id.
     deviceId = antMessage[3];
-    Log.i(Constants.TAG, "Found device id: " + deviceId);
+    Log.i(TAG, "Found device id: " + deviceId);
 
     SharedPreferences prefs = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
@@ -143,38 +142,34 @@ public class AntSRMSensorManager extends AntSensorManager {
     if (antMessage[3] == AntMesg.MESG_EVENT_ID
         && antMessage[4] == AntDefine.EVENT_RX_SEARCH_TIMEOUT) {
       // Search timeout
-      Log.w(Constants.TAG, "Search timed out. Unassigning channel.");
+      Log.w(TAG, "Search timed out. Unassigning channel.");
       try {
         getAntReceiver().ANTUnassignChannel(channel);
       } catch (AntInterfaceException e) {
-        Log.e(Constants.TAG, "Failed to unassign ANT channel", e);
+        Log.e(TAG, "Failed to unassign ANT channel", e);
       }
       setSensorState(Sensor.SensorState.DISCONNECTED);
     } else if (antMessage[3] == AntMesg.MESG_UNASSIGN_CHANNEL_ID) {
       setSensorState(Sensor.SensorState.DISCONNECTED);
-      Log.i(Constants.TAG,
-          "Disconnected from the sensor: " + getSensorState());
+      Log.i(TAG, "Disconnected from the sensor: " + getSensorState());
     }
   }
 
   private void parseSensorData(byte[] antMessage) {
     if (antMessage.length != 11) {
-      Log.e(Constants.TAG,
-          "Unexpected ant message length: " + antMessage.length);
+      Log.e(TAG, "Unexpected ant message length: " + antMessage.length);
       return;
     }
 
     int newMessageId = antMessage[MESSAGE_ID_INDEX] & 0xFF;
     if (lastMessageId == newMessageId) {
       // Repeated message.
-      Log.i(Constants.TAG,
-          String.format("SRM ignoring repeat: 0x%X", newMessageId));
+      Log.i(TAG, String.format("SRM ignoring repeat: 0x%X", newMessageId));
       return;
     }
     if (newMessageId < lastMessageId) {
       if (!(newMessageId < 20 && lastMessageId > 200)) {
-        Log.i(Constants.TAG,
-            String.format("SRM ignoring repeat: 0x%X", newMessageId));
+        Log.i(TAG, String.format("SRM ignoring repeat: 0x%X", newMessageId));
         return;
       } // else assume the byte overflowed to 0.
     }
