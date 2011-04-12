@@ -13,12 +13,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.services.sensors;
+package com.google.android.apps.mytracks.services.sensors.ant;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
-import com.google.android.apps.mytracks.services.sensors.ant.AntStartupMessage;
+import com.google.android.apps.mytracks.services.sensors.SensorManager;
 
 import com.dsi.ant.AntDefine;
 import com.dsi.ant.AntInterface;
