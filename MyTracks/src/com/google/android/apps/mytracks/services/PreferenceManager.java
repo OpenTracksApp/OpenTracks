@@ -156,11 +156,11 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
       }
     }
     if (key == null || key.equals(splitFrequencyKey)) {
-      service.getSplitManager().setSplitFrequency(
+      service.setSplitFrequency(
           sharedPreferences.getInt(splitFrequencyKey, 0));
     }
     if (key == null || key.equals(metricUnitsKey)) {
-      service.getSplitManager().setMetricUnits(
+      service.setMetricUnits(
           sharedPreferences.getBoolean(metricUnitsKey, true));
     }
   }

@@ -48,8 +48,8 @@ limitations under the License.
         android:key="@string/split_frequency_key"
         android:title="@string/settings_split_frequency"
         android:summary="@string/settings_split_frequency_summary"
-        android:entries="@array/split_frequency_options"
-        android:entryValues="@array/split_frequency_values"
+        android:entries="@array/task_frequency_options"
+        android:entryValues="@array/task_frequency_values"
         android:defaultValue="0" />
 
     <com.google.android.apps.mytracks.IntegerListPreference

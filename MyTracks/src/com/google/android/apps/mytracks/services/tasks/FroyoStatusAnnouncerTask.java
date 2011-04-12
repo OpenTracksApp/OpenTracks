@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks.services;
+package com.google.android.apps.mytracks.services.tasks;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
 
@@ -25,6 +25,7 @@ import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
 import android.util.Log;
 
 import java.util.HashMap;
+
 
 /**
  * This class will periodically announce the user's trip statistics for Froyo and future handsets.

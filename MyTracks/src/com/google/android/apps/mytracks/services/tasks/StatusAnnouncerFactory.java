@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.services;
+package com.google.android.apps.mytracks.services.tasks;
 
 import com.google.android.apps.mytracks.util.ApiFeatures;
 
@@ -26,7 +26,7 @@ import android.media.AudioManager;
  *
  * @author Rodrigo Damazio
  */
-public class StatusAnnouncerFactory {
+public class StatusAnnouncerFactory implements PeriodicTaskFactory {
 
   private final boolean hasTts;
 
@@ -34,11 +34,7 @@ public class StatusAnnouncerFactory {
     this.hasTts = apiFeatures.hasTextToSpeech();
   }
 
-  /**
-   * Creates a periodic task which does voice announcements.
-   *
-   * @return the task, or null if announcements are not supported
-   */
+  @Override
   public PeriodicTask create(Context context) {
     if (hasTts) {
       if (ApiFeatures.getInstance().isAudioFocusSupported()) {
