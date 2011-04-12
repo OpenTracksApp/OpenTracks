@@ -13,8 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.services;
+package com.google.android.apps.mytracks.services.tasks;
 
+import com.google.android.apps.mytracks.services.tasks.PeriodicTask;
+import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
+import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerTask;
 import com.google.android.apps.mytracks.util.ApiFeatures;
 
 import android.media.AudioManager;
@@ -55,7 +58,7 @@ public class StatusAnnouncerFactoryTest extends AndroidTestCase {
 
   public void testCreate() {
     apiFeatures.setHasTextToSpeech(true);
-    StatusAnnouncerFactory factory =
+    PeriodicTaskFactory factory =
         new StatusAnnouncerFactory(apiFeatures);
     PeriodicTask task = factory.create(getContext());
     assertTrue(task instanceof StatusAnnouncerTask);
@@ -63,7 +66,7 @@ public class StatusAnnouncerFactoryTest extends AndroidTestCase {
 
   public void testCreate_notAvailable() {
     apiFeatures.setHasTextToSpeech(false);
-    StatusAnnouncerFactory factory =
+    PeriodicTaskFactory factory =
         new StatusAnnouncerFactory(apiFeatures);
     PeriodicTask task = factory.create(getContext());
     assertNull(task);

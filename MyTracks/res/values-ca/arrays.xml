@@ -112,9 +112,9 @@ limitations under the License.
     <item>3.1 miles (senyal GPS pobre)</item>
   </string-array>
 
-  <!-- Split frequency -->
-  <string-array name="split_frequency_options">
-    <item>Sense divisió</item>
+  <!-- Task frequency -->
+  <string-array name="task_frequency_options">
+    <item>Inactiu</item>
     <item>100 km</item>
     <item>50 km</item>
     <item>25 km</item>
@@ -130,8 +130,8 @@ limitations under the License.
     <item>1 min</item>
   </string-array>
 
-  <string-array name="split_frequency_options_ft">
-    <item>No splitting</item>
+  <string-array name="task_frequency_options_ft">
+    <item>Inactiu</item>
     <item>100 mi</item>
     <item>50 mi</item>
     <item>25 mi</item>
@@ -286,6 +286,8 @@ limitations under the License.
 
   <array name="sensor_type_options">
     <item>Cap</item>
+    <item>ANT+ Sensors</item>
+    <item>SRM ANT+ Bridge</item>
     <item>Zephyr Bluetooth</item>
   </array>
 

@@ -21,7 +21,7 @@ import com.google.android.apps.mytracks.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.services.StatusAnnouncerFactory;
+import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.GeoRect;

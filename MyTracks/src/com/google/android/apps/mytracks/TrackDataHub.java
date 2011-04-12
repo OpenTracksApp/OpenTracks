@@ -798,7 +798,7 @@ public class TrackDataHub {
     if (RECORDING_TRACK_KEY.equals(key)) {
       recordingTrackId = preferences.getLong(RECORDING_TRACK_KEY, -1);
     } else if (MIN_REQUIRED_ACCURACY_KEY.equals(key)) {
-      minRequiredAccuracy = preferences.getInt(RECORDING_TRACK_KEY,
+      minRequiredAccuracy = preferences.getInt(MIN_REQUIRED_ACCURACY_KEY,
           Constants.DEFAULT_MIN_REQUIRED_ACCURACY);
     } else if (METRIC_UNITS_KEY.equals(key)) {
       useMetricUnits = preferences.getBoolean(METRIC_UNITS_KEY, true);
