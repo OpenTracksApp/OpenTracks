@@ -1158,9 +1158,9 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     return false;
   }
 
-  protected String getFusionTablesUrl(long sendToTrackId2) {
-    Track track = providerUtils.getTrack(sendToTrackId);
-    return SendToFusionTables.getMapVisualizationUrl(track);
+  protected String getFusionTablesUrl(long trackId) {
+    Track track = providerUtils.getTrack(trackId);
+    return track == null ? "" : SendToFusionTables.getMapVisualizationUrl(track);
   }
 
   /**
