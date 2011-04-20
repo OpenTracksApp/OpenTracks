@@ -528,7 +528,7 @@ public class ChartView extends View {
           if (nearestWaypoint != null && dmin < 100) {
             Intent intent =
                 new Intent(getContext(), WaypointDetails.class);
-            intent.putExtra("waypointid", nearestWaypoint.getId());
+            intent.putExtra(WaypointDetails.WAYPOINT_ID_EXTRA, nearestWaypoint.getId());
             getContext().startActivity(intent);
             return true;
           }
