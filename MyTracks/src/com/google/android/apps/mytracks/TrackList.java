@@ -197,8 +197,13 @@ public class TrackList extends ListActivity
     listView = getListView();
     listView.setOnCreateContextMenuListener(contextMenuListener);
 
-    findViewById(R.id.tracklist_btn_delete_all).setOnClickListener(this);
-    findViewById(R.id.tracklist_btn_export_all).setOnClickListener(this);
+    View deleteAll = findViewById(R.id.tracklist_btn_delete_all);
+    View exportAll = findViewById(R.id.tracklist_btn_export_all);
+    boolean notRecording = !MyTracks.getInstance().isRecording();
+    deleteAll.setOnClickListener(this);
+    deleteAll.setEnabled(notRecording);
+    exportAll.setOnClickListener(this);
+    exportAll.setEnabled(notRecording);
     findViewById(R.id.tracklist_btn_import_all).setOnClickListener(this);
 
     SharedPreferences preferences =
