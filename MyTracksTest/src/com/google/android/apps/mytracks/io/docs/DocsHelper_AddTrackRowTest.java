@@ -18,31 +18,31 @@ package com.google.android.apps.mytracks.io.docs;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.AuthManager;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.maps.mytracks.R;
 import com.google.android.testing.mocking.AndroidMock;
 import com.google.android.testing.mocking.UsesMocks;
-import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.test.mock.MockContext;
 import android.test.mock.MockResources;
 
-import junit.framework.TestCase;
-
 import java.io.IOException;
+
+import junit.framework.TestCase;
 
 /**
  * Tests for {@link DocsHelper#addTrackRow}
- * 
+ *
  * @author Matthew Simmons
  */
 public class DocsHelper_AddTrackRowTest extends TestCase {
   private static final long TIME = 1288721514000L;
-  
+
   private static class StringWritingDocsHelper extends DocsHelper {
     String writtenSheetUri = null;
     String writtenData = null;
-    
+
     @Override
     protected void writeRowData(AuthManager trixAuth, String worksheetUri,
         String postText) {
@@ -54,7 +54,7 @@ public class DocsHelper_AddTrackRowTest extends TestCase {
   public void testAddTrackRow_imperial() throws Exception {
     StringWritingDocsHelper docsHelper = new StringWritingDocsHelper();
     addTrackRow(docsHelper, false);
-    
+
     String expectedData =
       "<entry xmlns='http://www.w3.org/2005/Atom' "
       + "xmlns:gsx='http://schemas.google.com/spreadsheets/2006/extended'>"
@@ -81,11 +81,11 @@ public class DocsHelper_AddTrackRowTest extends TestCase {
       + "</entry>";
 
     assertEquals(
-        "http://spreadsheets.google.com/feeds/list/ssid/wsid/private/full", 
+        "http://spreadsheets.google.com/feeds/list/ssid/wsid/private/full",
         docsHelper.writtenSheetUri);
     assertEquals(expectedData, docsHelper.writtenData);
   }
-  
+
   public void testAddTrackRow_metric() throws Exception {
     StringWritingDocsHelper docsHelper = new StringWritingDocsHelper();
     addTrackRow(docsHelper, true);
@@ -100,18 +100,17 @@ public class DocsHelper_AddTrackRowTest extends TestCase {
         "<gsx:speedunit><![CDATA[kph]]></gsx:speedunit>"));
     assertTrue(docsHelper.writtenData.contains(
         "<gsx:elevationunit><![CDATA[meter]]></gsx:elevationunit>"));
-    
+
     assertTrue(docsHelper.writtenData.contains(
         "<gsx:distance><![CDATA[20.00]]></gsx:distance>"));
   }
 
-  @UsesMocks({AuthManager.class, MockContext.class, MockResources.class, 
-    Track.class})
   /** Adds a row to the spreadsheet, using the provided helper. */
-  private void addTrackRow(DocsHelper docsHelper, boolean useMetric) 
+  @UsesMocks({AuthManager.class, MockResources.class, Track.class})
+  private void addTrackRow(DocsHelper docsHelper, boolean useMetric)
       throws IOException {
-    Resources mockResources = AndroidMock.createMock(MockResources.class);
-    
+    final Resources mockResources = AndroidMock.createMock(MockResources.class);
+
     if (useMetric) {
       AndroidMock.expect(mockResources.getString(R.string.kilometer))
           .andReturn("km");
@@ -128,15 +127,17 @@ public class DocsHelper_AddTrackRowTest extends TestCase {
           .andReturn("feet");
     }
     AndroidMock.replay(mockResources);
-    
-    Context mockContext = AndroidMock.createMock(MockContext.class);
-    AndroidMock.expect(mockContext.getResources())
-        .andReturn(mockResources).anyTimes();
-    AndroidMock.replay(mockContext);
+
+    Context mockContext = new MockContext() {
+      @Override
+      public Resources getResources() {
+        return mockResources;
+      }
+    };
 
     AuthManager mockAuthManager = AndroidMock.createMock(AuthManager.class);
     AndroidMock.replay(mockAuthManager);
-    
+
     TripStatistics stats = new TripStatistics();
     stats.setStartTime(TIME);
     stats.setTotalTime(5000);
@@ -146,14 +147,14 @@ public class DocsHelper_AddTrackRowTest extends TestCase {
     stats.setTotalElevationGain(6000);
     stats.setMinElevation(-500);
     stats.setMaxElevation(550);
-    
+
     Track track = new Track();
     track.setName("trackName");
     track.setDescription("trackDescription");
     track.setMapId("trackMapId");
     track.setStatistics(stats);
-    
-    docsHelper.addTrackRow(mockContext, mockAuthManager, "ssid", "wsid", 
+
+    docsHelper.addTrackRow(mockContext, mockAuthManager, "ssid", "wsid",
         track, useMetric);
   }
 }

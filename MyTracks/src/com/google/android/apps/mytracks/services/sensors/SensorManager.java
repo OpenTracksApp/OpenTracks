@@ -20,7 +20,7 @@ import java.util.TimerTask;
 
 import android.util.Log;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Sensor;
 
 /**
@@ -50,18 +50,18 @@ public abstract class SensorManager {
   private TimerTask checkSensorManager = new TimerTask() {
     @Override
     public void run() {
-      Log.i(MyTracksConstants.TAG,
+      Log.i(Constants.TAG,
           "SensorManager state: " + getSensorState());
       switch (getSensorState()) {
         case CONNECTING:
           long age = System.currentTimeMillis() - getSensorStateTimestamp();
           if (age > 2 * RETRY_PERIOD) {
-            Log.i(MyTracksConstants.TAG, "Retrying connecting SensorManager.");
+            Log.i(Constants.TAG, "Retrying connecting SensorManager.");
             setupChannel();
           }
           break;
         case DISCONNECTED:
-          Log.i(MyTracksConstants.TAG,
+          Log.i(Constants.TAG,
               "Re-registering disconnected SensoManager.");
           setupChannel();
           break;

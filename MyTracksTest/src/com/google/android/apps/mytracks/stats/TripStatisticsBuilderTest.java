@@ -2,7 +2,7 @@
 
 package com.google.android.apps.mytracks.stats;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 
 import android.location.Location;
 
@@ -56,18 +56,18 @@ public class TripStatisticsBuilderTest extends TestCase {
       assertEquals(10000 * i, stats.getTotalTime());
       assertEquals(10000 * i, stats.getMovingTime());
       assertEquals(i, builder.getSmoothedElevation(),
-                   MyTracksConstants.ELEVATION_SMOOTHING_FACTOR / 2);
+                   Constants.ELEVATION_SMOOTHING_FACTOR / 2);
       assertEquals(0.0, stats.getMinElevation());
       assertEquals(i, stats.getMaxElevation(),
-                   MyTracksConstants.ELEVATION_SMOOTHING_FACTOR / 2);
+                   Constants.ELEVATION_SMOOTHING_FACTOR / 2);
       assertEquals(i, stats.getTotalElevationGain(),
-                   MyTracksConstants.ELEVATION_SMOOTHING_FACTOR);
+                   Constants.ELEVATION_SMOOTHING_FACTOR);
 
-      if (i > MyTracksConstants.SPEED_SMOOTHING_FACTOR) {
+      if (i > Constants.SPEED_SMOOTHING_FACTOR) {
         assertEquals(11.1f, stats.getMaxSpeed(), 0.1);
       }
-      if ((i > MyTracksConstants.GRADE_SMOOTHING_FACTOR)
-          && (i > MyTracksConstants.ELEVATION_SMOOTHING_FACTOR)) {
+      if ((i > Constants.GRADE_SMOOTHING_FACTOR)
+          && (i > Constants.ELEVATION_SMOOTHING_FACTOR)) {
         assertEquals(0.009, stats.getMinGrade(), 0.0001);
         assertEquals(0.009, stats.getMaxGrade(), 0.0001);
       }
@@ -97,9 +97,9 @@ public class TripStatisticsBuilderTest extends TestCase {
   public void testElevationGain() throws Exception {
     for (double i = 0; i < 1000; i++) {
       double expectedGain;
-      if (i < (MyTracksConstants.ELEVATION_SMOOTHING_FACTOR - 1)) {
+      if (i < (Constants.ELEVATION_SMOOTHING_FACTOR - 1)) {
         expectedGain = 0;
-      } else if (i < MyTracksConstants.ELEVATION_SMOOTHING_FACTOR) {
+      } else if (i < Constants.ELEVATION_SMOOTHING_FACTOR) {
         expectedGain = 0.5;
       } else {
         expectedGain = 1.0;
@@ -110,9 +110,9 @@ public class TripStatisticsBuilderTest extends TestCase {
       TripStatistics data = builder.getStatistics();
       assertEquals(0.0, data.getMinElevation(), 0.0);
       assertEquals(i, data.getMaxElevation(),
-                   MyTracksConstants.ELEVATION_SMOOTHING_FACTOR);
+                   Constants.ELEVATION_SMOOTHING_FACTOR);
       assertEquals(i, data.getTotalElevationGain(),
-                   MyTracksConstants.ELEVATION_SMOOTHING_FACTOR);
+                   Constants.ELEVATION_SMOOTHING_FACTOR);
     }
   }
 
@@ -122,8 +122,8 @@ public class TripStatisticsBuilderTest extends TestCase {
       // buffer.
       builder.updateElevation(i);
       builder.updateGrade(100, 100);
-      if ((i > MyTracksConstants.GRADE_SMOOTHING_FACTOR)
-          && (i > MyTracksConstants.ELEVATION_SMOOTHING_FACTOR)) {
+      if ((i > Constants.GRADE_SMOOTHING_FACTOR)
+          && (i > Constants.ELEVATION_SMOOTHING_FACTOR)) {
         assertEquals(1.0, builder.getStatistics().getMaxGrade());
         assertEquals(1.0, builder.getStatistics().getMinGrade());
       }
@@ -133,8 +133,8 @@ public class TripStatisticsBuilderTest extends TestCase {
       // buffer.
       builder.updateElevation(i);
       builder.updateGrade(100, -100);
-      if ((i > MyTracksConstants.GRADE_SMOOTHING_FACTOR)
-          && (i > MyTracksConstants.ELEVATION_SMOOTHING_FACTOR)) {
+      if ((i > Constants.GRADE_SMOOTHING_FACTOR)
+          && (i > Constants.ELEVATION_SMOOTHING_FACTOR)) {
         assertEquals(1.0, builder.getStatistics().getMaxGrade());
         assertEquals(-1.0, builder.getStatistics().getMinGrade());
       }
@@ -176,7 +176,7 @@ public class TripStatisticsBuilderTest extends TestCase {
     for (int i = 0; i < 1000; i++) {
       builder.updateSpeed(i + 1000, 4.0, i, 4.0);
       assertEquals((i + 1) * 1000, builder.getStatistics().getMovingTime());
-      if (i > MyTracksConstants.SPEED_SMOOTHING_FACTOR) {
+      if (i > Constants.SPEED_SMOOTHING_FACTOR) {
         assertEquals(4.0, builder.getStatistics().getMaxSpeed());
       }
     }

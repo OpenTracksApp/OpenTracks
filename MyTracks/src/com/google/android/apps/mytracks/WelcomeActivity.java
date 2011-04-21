@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.util.MyTracksUtils;
+import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -82,6 +82,6 @@ public class WelcomeActivity extends Activity {
     AlertDialog dialog = builder.create();
     dialog.show();
     ((TextView) dialog.findViewById(R.id.about_version_register)).
-        setText(MyTracksUtils.getMyTracksVersion(this));
+        setText(SystemUtils.getMyTracksVersion(this));
   }
 }

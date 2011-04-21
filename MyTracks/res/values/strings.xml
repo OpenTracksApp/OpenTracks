@@ -35,14 +35,17 @@ limitations under the License.
   <!-- Error messages -->
   <string name="error_no_location_manager">No location manager was found on this device!</string>
   <string name="error_no_gps_location_provider">No GPS location provider was found on this device.</string>
-  <string name="error_sending_to_fusiontables">There was an error while sending your track to Google Fusion Tables. Please try again later.</string>
-  <string name="error_sending_to_docs">There was an error while sending your track to Google Docs. Please try again later.</string>
+  <string name="error_sending_to_mymap">There was an error while sending your track to Google My Map.</string>
+  <string name="error_sending_to_fusiontables">There was an error while sending your track to Google Fusion Tables.</string>
+  <string name="error_sending_to_docs">There was an error while sending your track to Google Docs.</string>
+  <string name="error_please_try_again_later">Please try again later.</string>
   <string name="error_unable_to_start_recording">Unable to start recording. Try again.</string>
   <string name="error_unable_to_stop_recording">Unable to stop recording. Try again.</string>
   <string name="error_unable_to_read_file">Unable to read from file.</string>
   <string name="error_invalid_gpx_format">File does not have a valid GPX format.</string>
   <string name="error_generic">An error occurred. Please try again.</string>
   <string name="error_track_does_not_exist">Track does not exist.</string>
+  <string name="error_operation_cancelled">The operation was cancelled.</string>
   <string name="error_out_of_memory">This file is too big (must be less than 500 KB). Aborting.</string>
   <string name="error_unable_to_insert_marker">Unable to insert marker. No location fix available.</string>
 
@@ -50,23 +53,30 @@ limitations under the License.
   <string name="wait_for_fix">Waiting for a better GPS fix. Make sure the sky is visible.</string>
   <string name="status_now_recording">Now recording a new track.</string>
   <string name="status_stopped_recording">Stopped recording your track.</string>
+  <string name="status_new_mymap_has_been_created">A new Google My Map has been created at maps.google.com.</string>
   <string name="status_new_fusiontable_has_been_created">A new Google Fusion table has been created at google.com/fusiontables.</string>
   <string name="status_tracks_have_been_uploaded">Your track has been sent to maps.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_new_doc">Your track has been sent to a new spreadsheet at docs.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_docs">Your track has been sent to docs.google.com.</string>
+  <string name="status_mymap_info">It may take a few minutes before new tracks appear.</string>
   <string name="status_enable_gps">Please tap here to go to Security and Location Settings and check \'enable GPS satellites\'. Press back button to return.</string>
   <string name="status_approximate_location">Note: An approximate location as determined from cell towers and WIFI networks is shown.</string>
   <string name="status_no_location">A location can currently not be determined. Enable more location sources (see Security and Location Settings) and make sure the sky is visible. Try again later.</string>
   <string name="status_waypoint_inserted">A way point marker was inserted.</string>
   <string name="status_statistics_inserted">A statistics marker was inserted.</string>
+  <string name="status_track_upload_status">Upload status:</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Please wait...</string>
   <string name="progress_message">Sending your track to Google.</string>
   <string name="progress_message_reading_track">Reading track...</string>
+  <string name="progress_message_preparing_track">Preparing track...</string>
   <string name="progress_message_authenticating_fusiontables">Authenticating to Google Fusion Tables...</string>
+  <string name="progress_message_authenticating_mymaps">Authenticating to Google Maps...</string>
   <string name="progress_message_authenticating_docs">Authenticating to Google Docs...</string>
   <string name="progress_message_sending_docs">Sending track to Google Docs...</string>
+  <string name="progress_message_sending_mymaps">Sending track to Google Maps...</string>
+  <string name="progress_message_creating_map">Creating new My Map...</string>
   <string name="progress_message_sending_fusiontables">Sending track to Fusion Tables...</string>
   <string name="progress_message_creating_fusiontable">Creating new Fusion table...</string>
   <string name="import_progress_message">Importing a GPS track. This may take a while.</string>
@@ -82,6 +92,10 @@ limitations under the License.
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Created by My Tracks on Android.</string>
   <string name="fusiontable_link">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
+
+  <!-- Text and links when uploading to Google My Maps -->
+  <string name="my_map_link">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
+  <string name="new_map_title">New map</string>
 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">Points</string>
@@ -113,6 +127,8 @@ limitations under the License.
 
   <!--  TrackList -->
   <string name="tracklist_show_track">Show</string>
+  <string name="tracklist_send_to_mymaps">Send to Google My Maps</string>
+  <string name="tracklist_send_to_new_mymap">Send to New Google My Map</string>
   <string name="tracklist_send_to_fusiontables">Send to Google Fusion Tables</string>
   <string name="tracklist_send_to_new_fusiontable">Send to New Google Fusion Table</string>
   <string name="tracklist_send_to_docs">Send to Google Docs</string>
@@ -125,6 +141,7 @@ limitations under the License.
   <string name="tracklist_save_as_csv">Save a CSV file</string>
   <string name="tracklist_save_as_tcx">Save a TCX file</string>
   <string name="tracklist_btn_send_all_to_fusiontables">Send to Google Fusion Tables</string>
+  <string name="tracklist_btn_send_all_to_mymaps">Send to Google My Maps</string>
   <string name="tracklist_btn_delete_all">Delete all</string>
   <!-- Export All -->
   <string name="tracklist_btn_export_all">Export all</string>
@@ -133,7 +150,7 @@ limitations under the License.
   <string name="tracklist_all_tracks">All Tracks:</string>
   <string name="tracklist_this_track">This Track</string>
   <string name="tracklist_share_track">Share with Friends...</string>
-  <string name="tracklist_share_linkfusion">A link to Google Fusion Tables</string>
+  <string name="tracklist_share_link">A link to the map</string>
   <string name="tracklist_share_gpx_file">A GPX file</string>
   <string name="tracklist_share_kml_file">A KML file</string>
   <string name="tracklist_share_csv_file">A CSV file</string>
@@ -180,6 +197,7 @@ limitations under the License.
   <string name="settings_sharing">Sharing</string>
 
   <string name="settings_not_available_summary">Not available in your version of Android</string>
+  <string name="settings_not_while_recording">Not available while recording a track</string>
 
   <string name="settings_announcement_frequency">Announcement frequency</string>
   <string name="settings_announcement_frequency_summary">Minimum time between two voice announcements</string>
@@ -222,6 +240,11 @@ limitations under the License.
   <string name="settings_timestamp_track_name_summary_on">The default track name will be the date and time at the start of the track</string>
   <string name="settings_timestamp_track_name_summary_off">Track names will have numbers which increment for each new track.</string>
 
+  <string name="settings_reset">Reset to defaults</string>
+  <string name="settings_reset_summary">Revert all your settings to the default values</string>
+  <string name="settings_reset_dialog_message">All your settings will be erased and reverted to the default values. Saved tracks will be preserved. Are you sure?</string>
+  <string name="settings_reset_done">All settings have been reverted to their defaults.</string>
+
   <string name="pace_label">Pace</string>
 
   <string name="eclair_required">Only supported in Android 2.0 or above</string>
@@ -229,7 +252,7 @@ limitations under the License.
   <string name="settings_sensor_type_summary">The type of sensor to connect to</string>
   <string name="settings_heart_rate_ant_sensor_id">Clear ANT heart rate sensor pairing</string>
   <string name="settings_power_ant_sensor_id">Clear ANT power sensor pairing</string>
-  <string name="settings_srm_bridge_ant_sensor_id">Clear ANT srm bridge sensor pairing</string>
+  <string name="settings_srm_bridge_ant_sensor_id">Clear ANT SRM bridge sensor pairing</string>
   <string name="settings_ant_not_paired">ANT sensor not paired</string>
   <string name="settings_ant_paired">ANT sensor paired with: %d</string>
   <string name="bluetooth_sensor_title">Bluetooth sensor</string>
@@ -243,7 +266,6 @@ limitations under the License.
   <string name="settings_backup_to_sd_summary">Write a full copy of all your tracks and settings to the SD card</string>
   <string name="settings_restore_from_sd">Restore now</string>
   <string name="settings_restore_from_sd_summary">Restore all tracks and settings from the SD card</string>
-  <string name="settings_no_backup_while_recording">Cannot manipulate backups while recording a track.</string>
 
   <string name="restore_overwrites_warning">Restoring a backup from the SD card will OVERWRITE all your current tracks and settings. Are you sure?</string>
   <string name="select_backup_to_restore">Select the backup to restore</string>
@@ -253,6 +275,23 @@ limitations under the License.
 
   <!-- MyTracksSky -->
   <string name="mytracks_sky">GPS Satellites</string>
+
+  <!-- My Maps -->
+  <string name="select_map_message">Pick a map from your account:</string>
+  <string name="create_new_map">Create new map...</string>
+  <string name="map_list_title">Send to Google My Maps</string>
+  <string name="maps_list_loading">Loading maps...</string>
+  <string name="maps_list_failed">Your maps could not be loaded at this time!</string>
+  <string name="open_map">Select this Map</string>
+  <string name="edit_map_details">Edit Map Details</string>
+  <string name="share_track">Share Track</string>
+  <string name="delete_map">Delete Map from your Account</string>
+  <string name="map_title">Map Title:</string>
+  <string name="map_description">Map Description:</string>
+  <string name="map_searchable_edit">Make this map and its contents show up in search results</string>
+  <string name="map_not_searchable_edit">Do not let this map or its contents show up in search results, though they may still be viewed be others through the direct URL</string>
+  <string name="map_searchable">This map and its contents will show in search results</string>
+  <string name="map_not_searchable">Neither this map nor its contents will show in search results, but they may still be viewed by others through a direct link</string>
 
   <!-- Sharing -->
   <string name="share_map">Share map with friends</string>
@@ -264,7 +303,6 @@ limitations under the License.
   <string name="send_track_body_format">I think you might be interested in this track.
 
     To view this track use Google Earth or other mapping software.</string>
-  <string name="share_track">Share track with friends</string>
 
   <!-- Visibility -->
   <string name="public_map">Public</string>
@@ -377,8 +415,11 @@ limitations under the License.
   <!-- Send to Google -->
   <string name="sendtogoogle_title">Send to...</string>
   <string name="sendtogoogle_google_fusiontables">Google Fusion Tables</string>
+  <string name="sendtogoogle_google_mymaps">Google My Maps</string>
   <string name="sendtogoogle_google_docs">Google Docs</string>
   <string name="sendtogoogle_send_now">Send now</string>
+  <string name="sendtogoogle_create_new_map">Create a new map</string>
+  <string name="sendtogoogle_pick_existing_map">Pick an existing map</string>
   <string name="sendtogoogle_send_stats">Send track statistics</string>
   <string name="sendtogoogle_send_stats_and_points">Send statistics and points</string>
 
@@ -430,6 +471,7 @@ limitations under the License.
   <string name="bluetooth_pairing">Device pairing</string>
   <string name="bluetooth_pairing_summary">Open Android\'s bluetooth settings to pair a device</string>
   <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
+  <string name="ant_options">ANT options</string>
   <string name="sensor_options">Sensor Options</string>
 
   <!-- Bluetooth Sensor -->

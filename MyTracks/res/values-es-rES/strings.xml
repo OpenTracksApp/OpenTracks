@@ -47,7 +47,6 @@ limitations under the License.
   <string name="tracklist_save_as_tcx">Guardar en archivo TCX</string>
   <string name="tracklist_btn_send_all_to_fusiontables">Enviar a Google Fusion Tables</string>
   <!-- Export All -->
-  <string name="tracklist_share_linkfusion">Un enlace a Google Fusion Tables</string>
   <string name="tracklist_share_csv_file">Un archivo CSV</string>
   <string name="tracklist_share_tcx_file">Un archivo TCX</string>
 

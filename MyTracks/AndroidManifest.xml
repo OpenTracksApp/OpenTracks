@@ -17,8 +17,8 @@ limitations under the License.
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.google.android.maps.mytracks"
           android:installLocation="auto"
-          android:versionCode="24"
-          android:versionName="1.1.1">
+          android:versionCode="27"
+          android:versionName="1.1.4">
   <application android:icon="@drawable/arrow_icon"
                android:label="@string/app_name"
                android:backupAgent="com.google.android.apps.mytracks.io.backup.MyTracksBackupAgent">
@@ -52,23 +52,28 @@ limitations under the License.
       </intent-filter>
     </activity>
 
-    <activity android:name="com.google.android.apps.mytracks.MyTracksMap"
+    <activity android:name="com.google.android.apps.mytracks.MapActivity"
               android:label="MyTracks"
               android:exported="false" />
 
-    <activity android:name="com.google.android.apps.mytracks.MyTracksList"
+    <activity android:name="com.google.android.apps.mytracks.MyMapsList"
+              android:label="@string/map_list_title"
+              android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|fontScale"
+              android:exported="false" />
+
+    <activity android:name="com.google.android.apps.mytracks.TrackList"
               android:label="Recorded Tracks" />
 
-    <activity android:name="com.google.android.apps.mytracks.MyTracksWaypointsList"
+    <activity android:name="com.google.android.apps.mytracks.WaypointsList"
               android:label="Recorded Waypoints" />
 
-    <activity android:name="com.google.android.apps.mytracks.MyTracksDetails"
+    <activity android:name="com.google.android.apps.mytracks.TrackDetails"
               android:label="@string/trackdetails_title" />
 
-    <activity android:name="com.google.android.apps.mytracks.MyTracksWaypointDetails"
+    <activity android:name="com.google.android.apps.mytracks.WaypointDetails"
               android:label="@string/waypointdetails_title" />
 
-    <activity android:name="com.google.android.apps.mytracks.MyTracksSettings"
+    <activity android:name="com.google.android.apps.mytracks.SettingsActivity"
               android:label="@string/mytracks_settings" />
 
     <activity android:name="com.google.android.apps.mytracks.AggregatedStatsActivity"
@@ -96,7 +101,7 @@ limitations under the License.
              android:exported="true"
              android:permission="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
 
-    <receiver android:name="com.google.android.apps.mytracks.MyTracksReceiver">
+    <receiver android:name="com.google.android.apps.mytracks.BootReceiver">
       <intent-filter>
         <action android:name="android.intent.action.BOOT_COMPLETED" />
 	  </intent-filter>
@@ -105,7 +110,7 @@ limitations under the License.
 
   <!-- Permissions to initialize service -->
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-  
+
   <!-- Permissions for recording tracks and showing maps -->
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -159,14 +164,15 @@ limitations under the License.
   <!-- Features required -->
   <uses-feature android:name="android.hardware.location" android:required="true"/>
   <uses-feature android:name="android.hardware.location.gps" android:required="true"/>
-  <uses-feature android:name="android.hardware.touchscreen" android:required="true"/>
-  
+
   <!-- Features optional -->
   <uses-feature android:name="android.hardware.bluetooth" android:required="false"/>
+  <uses-feature android:name="android.hardware.faketouch" android:required="false"/>
   <uses-feature android:name="android.hardware.location.network" android:required="false"/>
   <uses-feature android:name="android.hardware.sensor.compass" android:required="false"/>
   <uses-feature android:name="android.hardware.telephony" android:required="false"/>
   <uses-feature android:name="android.hardware.telephony.gsm" android:required="false"/>
+  <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
   <uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="false"/>
 
   <uses-sdk android:minSdkVersion="3"/>

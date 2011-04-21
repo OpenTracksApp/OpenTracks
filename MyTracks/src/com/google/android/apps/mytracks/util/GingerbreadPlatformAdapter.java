@@ -1,6 +1,6 @@
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 
 import android.content.SharedPreferences.Editor;
 import android.os.StrictMode;
@@ -21,7 +21,7 @@ public class GingerbreadPlatformAdapter extends EclairPlatformAdapter {
 
   @Override
   public void enableStrictMode() {
-    Log.d(MyTracksConstants.TAG, "Enabling strict mode");
+    Log.d(Constants.TAG, "Enabling strict mode");
     StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
         .detectDiskWrites()
         .detectNetwork()
@@ -30,7 +30,6 @@ public class GingerbreadPlatformAdapter extends EclairPlatformAdapter {
     StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
         .detectAll()
         .penaltyLog()
-        .penaltyDeath()
         .build());
   }
 }

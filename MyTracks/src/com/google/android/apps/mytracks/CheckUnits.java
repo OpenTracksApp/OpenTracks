@@ -78,7 +78,7 @@ class CheckUnits {
 
   private static void accept(Context context, SharedPreferences preferences) {
     recordCheckPerformed(preferences);
-    Intent startIntent = new Intent(context, MyTracksSettings.class);
+    Intent startIntent = new Intent(context, SettingsActivity.class);
     context.startActivity(startIntent);
   }
 

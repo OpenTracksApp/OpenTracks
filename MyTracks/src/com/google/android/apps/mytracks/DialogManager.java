@@ -1,12 +1,12 @@
 /*
  * Copyright 2010 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -15,20 +15,22 @@
  */
 package com.google.android.apps.mytracks;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
+
+import com.google.android.apps.mytracks.io.sendtogoogle.SendDialog;
 import com.google.android.maps.mytracks.R;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.WindowManager.BadTokenException;
 
 /**
  * A class to handle all dialog related events for My Tracks.
- * 
+ *
  * @author Sandor Dornbush
  */
 public class DialogManager {
@@ -37,14 +39,10 @@ public class DialogManager {
   public static final int DIALOG_IMPORT_PROGRESS = 2;
   public static final int DIALOG_PROGRESS = 3;
   public static final int DIALOG_SEND_TO_GOOGLE = 4;
-  public static final int DIALOG_SEND_TO_GOOGLE_RESULT = 5;
-  public static final int DIALOG_WRITE_PROGRESS = 6;
 
   private ProgressDialog progressDialog;
   private ProgressDialog importProgressDialog;
-  private ProgressDialog writeProgressDialog;
-  private SendToGoogleDialog sendToGoogleDialog;
-  private AlertDialog sendToGoogleResultDialog;
+  private SendDialog sendToGoogleDialog;
   private ChartSettingsDialog chartSettingsDialog;
 
   private MyTracks activity;
@@ -52,7 +50,7 @@ public class DialogManager {
   public DialogManager(MyTracks activity) {
     this.activity = activity;
   }
-  
+
   protected Dialog onCreateDialog(int id, Bundle args) {
     switch (id) {
       case DIALOG_CHART_SETTINGS:
@@ -77,32 +75,8 @@ public class DialogManager {
         progressDialog.setProgress(10);
         return progressDialog;
       case DIALOG_SEND_TO_GOOGLE:
-        sendToGoogleDialog = new SendToGoogleDialog(activity);
+        sendToGoogleDialog = new SendDialog(activity);
         return sendToGoogleDialog;
-      case DIALOG_SEND_TO_GOOGLE_RESULT:
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setIcon(android.R.drawable.ic_dialog_info);
-        builder.setTitle("Title");
-        builder.setMessage("Message");
-        builder.setPositiveButton(activity.getString(R.string.ok), null);
-        builder.setNeutralButton(activity.getString(R.string.share_track),
-            new DialogInterface.OnClickListener() {
-              public void onClick(DialogInterface dialog, int which) {
-                activity.shareLinkToFusionTable(activity.sendToTrackId);
-                dialog.dismiss();
-              }
-            });
-        sendToGoogleResultDialog = builder.create();
-        return sendToGoogleResultDialog;
-      case DIALOG_WRITE_PROGRESS:
-        writeProgressDialog = new ProgressDialog(activity);
-        writeProgressDialog.setIcon(android.R.drawable.ic_dialog_info);
-        writeProgressDialog.setTitle(
-            activity.getString(R.string.progress_title));
-        writeProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        writeProgressDialog.setMessage(
-            activity.getString(R.string.write_progress_message));
-        return writeProgressDialog;
     }
     return null;
   }
@@ -112,24 +86,8 @@ public class DialogManager {
       case DIALOG_SEND_TO_GOOGLE:
         activity.resetSendToGoogleStatus();
         break;
-      case DIALOG_SEND_TO_GOOGLE_RESULT:
-        boolean success = activity.getSendToGoogleSuccess();
-        sendToGoogleResultDialog.setTitle(
-            success ? R.string.success : R.string.error);
-        sendToGoogleResultDialog.setIcon(success
-            ? android.R.drawable.ic_dialog_info
-            : android.R.drawable.ic_dialog_alert);
-        sendToGoogleResultDialog.setMessage(activity.getFusionTablesResultMessage());
-
-        boolean canShare = activity.getSendToFusionTablesTableId() != null;
-        View share =
-            sendToGoogleResultDialog.findViewById(android.R.id.button3);
-        if (share != null) {
-          share.setVisibility(canShare ? View.VISIBLE : View.GONE);
-        }
-        break;
       case DIALOG_CHART_SETTINGS:
-        Log.d(MyTracksConstants.TAG, "MyTracks.onPrepare chart dialog");
+        Log.d(TAG, "MyTracks.onPrepare chart dialog");
         chartSettingsDialog.setup(activity.getChartActivity());
         break;
     }
@@ -146,7 +104,7 @@ public class DialogManager {
       }
     });
   }
-  
+
   public void setProgressValue(final int percent) {
     activity.runOnUiThread(new Runnable() {
       public void run() {
@@ -162,7 +120,7 @@ public class DialogManager {
   /**
    * @return the sendToGoogleDialog
    */
-  public SendToGoogleDialog getSendToGoogleDialog() {
+  public SendDialog getSendToGoogleDialog() {
     return sendToGoogleDialog;
   }
 
@@ -191,9 +149,9 @@ public class DialogManager {
   }
 
   /**
-   * Just like showDialog, but will catch a BadTokenException that sometimes
-   * (very rarely) gets thrown. This might happen if the user hits the "back"
-   * button immediately after sending tracks to google.
+   * Just like showDialog, but will catch a {@link BadTokenException} that
+   * sometimes (very rarely) gets thrown. This might happen if the user hits
+   * the "back" button immediately after sending tracks to google.
    *
    * @param id the dialog id
    */
@@ -203,11 +161,27 @@ public class DialogManager {
         try {
           activity.showDialog(id);
         } catch (BadTokenException e) {
-          Log.w(MyTracksConstants.TAG,
-              "Could not display dialog with id " + id, e);
+          Log.w(TAG, "Could not display dialog with id " + id, e);
         } catch (IllegalStateException e) {
-          Log.w(MyTracksConstants.TAG,
-              "Could not display dialog with id " + id, e);
+          Log.w(TAG, "Could not display dialog with id " + id, e);
+        }
+      }
+    });
+  }
+
+  /**
+   * The equivalent of {@link #showDialogSafely(int)}, but for a specific
+   * dialog instance.
+   */
+  public static void showDialogSafely(Activity activity, final Dialog dialog) {
+    activity.runOnUiThread(new Runnable() {
+      public void run() {
+        try {
+          dialog.show();
+        } catch (BadTokenException e) {
+          Log.w(TAG, "Could not display dialog", e);
+        } catch (IllegalStateException e) {
+          Log.w(TAG, "Could not display dialog", e);
         }
       }
     });
@@ -228,4 +202,19 @@ public class DialogManager {
     });
   }
 
+  /**
+   * The equivalent of {@link #dismissDialogSafely(int)}, but for a specific
+   * dialog instance.
+   */
+  public static void dismissDialogSafely(Activity activity, final Dialog dialog) {
+    activity.runOnUiThread(new Runnable() {
+      public void run() {
+        try {
+          dialog.dismiss();
+        } catch (IllegalArgumentException e) {
+          // This will be thrown if this dialog was not shown before.
+        }
+      }
+    });
+  }
 }

@@ -45,7 +45,7 @@ public class AntInterface {
     public static final String TAG = "ANTInterface";
 
     /** Enable debug logging. */
-    public static boolean DEBUG = true;
+    public static boolean DEBUG = false;
 
     /** Search string to find ANT Radio Proxy Service in the Android Marketplace */
     private static final String MARKET_SEARCH_TEXT_DEFAULT = "ANT Radio Service Dynastream Innovations Inc";

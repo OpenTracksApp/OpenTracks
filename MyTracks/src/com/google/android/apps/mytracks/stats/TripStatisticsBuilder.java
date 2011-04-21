@@ -16,8 +16,10 @@
 
 package com.google.android.apps.mytracks.stats;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
-import com.google.android.apps.mytracks.MyTracksSettings;
+import static com.google.android.apps.mytracks.Constants.TAG;
+
+import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.SettingsActivity;
 
 import android.location.Location;
 import android.util.Log;
@@ -65,25 +67,25 @@ public class TripStatisticsBuilder {
    * A buffer of the last speed readings in meters/second.
    */
   private final DoubleBuffer speedBuffer =
-      new DoubleBuffer(MyTracksConstants.SPEED_SMOOTHING_FACTOR);
+      new DoubleBuffer(Constants.SPEED_SMOOTHING_FACTOR);
 
   /**
    * A buffer of the recent elevation readings in meters.
    */
   private final DoubleBuffer elevationBuffer =
-      new DoubleBuffer(MyTracksConstants.ELEVATION_SMOOTHING_FACTOR);
+      new DoubleBuffer(Constants.ELEVATION_SMOOTHING_FACTOR);
 
   /**
    * A buffer of the distance between recent gps readings in meters.
    */
   private final DoubleBuffer distanceBuffer =
-      new DoubleBuffer(MyTracksConstants.DISTANCE_SMOOTHING_FACTOR);
+      new DoubleBuffer(Constants.DISTANCE_SMOOTHING_FACTOR);
 
   /**
    * A buffer of the recent grade calculations.
    */
   private final DoubleBuffer gradeBuffer =
-      new DoubleBuffer(MyTracksConstants.GRADE_SMOOTHING_FACTOR);
+      new DoubleBuffer(Constants.GRADE_SMOOTHING_FACTOR);
 
   /**
    * The total number of locations in this trip.
@@ -91,7 +93,7 @@ public class TripStatisticsBuilder {
   private long totalLocations = 0;
 
   private int minRecordingDistance =
-      MyTracksSettings.DEFAULT_MIN_RECORDING_DISTANCE;
+      Constants.DEFAULT_MIN_RECORDING_DISTANCE;
 
   /**
    * Creates a new trip starting at the given time.
@@ -126,7 +128,7 @@ public class TripStatisticsBuilder {
    */
   public boolean addLocation(Location currentLocation, long systemTime) {
     if (paused) {
-      Log.w(MyTracksConstants.TAG,
+      Log.w(TAG,
           "Tried to account for location while track is paused");
       return false;
     }
@@ -151,7 +153,7 @@ public class TripStatisticsBuilder {
     // Don't do anything if we didn't move since last fix:
     double distance = lastLocation.distanceTo(currentLocation);
     if (distance < minRecordingDistance &&
-        currentSpeed < MyTracksConstants.MAX_NO_MOVEMENT_SPEED) {
+        currentSpeed < Constants.MAX_NO_MOVEMENT_SPEED) {
       lastLocation = currentLocation;
       return false;
     }
@@ -208,7 +210,7 @@ public class TripStatisticsBuilder {
     // We are now sure the user is moving.
     long timeDifference = updateTime - lastLocationTime;
     if (timeDifference < 0) {
-      Log.e(MyTracksConstants.TAG,
+      Log.e(TAG,
           "Found negative time change: " + timeDifference);
     }
     data.addMovingTime(timeDifference);
@@ -224,7 +226,7 @@ public class TripStatisticsBuilder {
         data.setMaxSpeed(movingSpeed);
       }
     } else {
-      Log.d(MyTracksConstants.TAG,
+      Log.d(TAG,
           "TripStatistics ignoring big change: Raw Speed: " + speed
           + " old: " + lastLocationSpeed + " [" + toString() + "]");
     }
@@ -263,7 +265,7 @@ public class TripStatisticsBuilder {
     // likely. Ignore any speeds that imply accelaration greater than 2g's
     // Really who can accelerate faster?
     double speedDifference = Math.abs(lastLocationSpeed - speed);
-    if (speedDifference > MyTracksConstants.MAX_ACCELERATION * timeDifference) {
+    if (speedDifference > Constants.MAX_ACCELERATION * timeDifference) {
       return false;
     }
 
@@ -275,7 +277,7 @@ public class TripStatisticsBuilder {
     double smoothedDiff = Math.abs(smoothedSpeed - speed);
     return !speedBuffer.isFull() ||
         (speed < smoothedSpeed * 10
-         && smoothedDiff < MyTracksConstants.MAX_ACCELERATION * timeDifference);
+         && smoothedDiff < Constants.MAX_ACCELERATION * timeDifference);
   }
 
   /**

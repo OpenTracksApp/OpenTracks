@@ -131,7 +131,6 @@ limitations under the License.
   <string name="tracklist_all_tracks">Alla spår:</string>
   <string name="tracklist_this_track">Det här spåret</string>
   <string name="tracklist_share_track">Dela med vänner...</string>
-  <!-- <string name="tracklist_share_linkfusion">En länk till Google Mina Kartor</string> -->
   <string name="tracklist_share_gpx_file">En GPX-fil</string>
   <string name="tracklist_share_kml_file">En KML-fil</string>
   <string name="tracklist_share_csv_file">En CSV-fil</string>

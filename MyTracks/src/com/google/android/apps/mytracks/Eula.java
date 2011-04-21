@@ -98,7 +98,7 @@ class Eula {
     ApiFeatures.getInstance().getApiPlatformAdapter().applyPreferenceChanges(
         preferences.edit().putBoolean(PREFERENCE_EULA_ACCEPTED, true));
     Intent startIntent = new Intent(activity, WelcomeActivity.class);
-    activity.startActivityForResult(startIntent, MyTracksConstants.WELCOME);
+    activity.startActivityForResult(startIntent, Constants.WELCOME);
   }
 
   private static void refuse(Activity activity) {

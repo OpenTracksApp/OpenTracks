@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks;
 
-import static com.google.android.apps.mytracks.MyTracksConstants.TAG;
+import static com.google.android.apps.mytracks.Constants.TAG;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.sensors.SensorUtils;
@@ -103,7 +103,7 @@ public class SensorStateActivity extends Activity {
     ITrackRecordingService service =
     	mt == null ? null : mt.getTrackRecordingService();
     if (service == null) {
-      Log.d(MyTracksConstants.TAG, "Could not get track recording service.");
+      Log.d(Constants.TAG, "Could not get track recording service.");
       updateSensorState(Sensor.SensorState.NONE);
       updateSensorData(null);
       return;
@@ -116,9 +116,9 @@ public class SensorStateActivity extends Activity {
         updateSensorData(sds);
       }
     } catch (RemoteException e) {
-      Log.e(MyTracksConstants.TAG, "Could not read sensor data.", e);
+      Log.e(Constants.TAG, "Could not read sensor data.", e);
     } catch (InvalidProtocolBufferException e) {
-      Log.e(MyTracksConstants.TAG, "Could not read sensor data.", e);
+      Log.e(Constants.TAG, "Could not read sensor data.", e);
     }
     updateSensorData(sds);
 
@@ -126,7 +126,7 @@ public class SensorStateActivity extends Activity {
       int i = service.getSensorState();
       updateSensorState(Sensor.SensorState.valueOf(i));
     } catch (RemoteException e) {
-      Log.e(MyTracksConstants.TAG, "Could not read sensor state.", e);
+      Log.e(Constants.TAG, "Could not read sensor state.", e);
       updateSensorState(Sensor.SensorState.NONE);
     }
   }

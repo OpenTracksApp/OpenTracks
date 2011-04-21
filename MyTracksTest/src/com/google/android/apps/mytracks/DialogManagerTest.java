@@ -1,12 +1,12 @@
 /*
  * Copyright 2010 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -15,7 +15,8 @@
  */
 package com.google.android.apps.mytracks;
 
-import android.app.AlertDialog;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendDialog;
+
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.test.ActivityInstrumentationTestCase2;
@@ -66,23 +67,6 @@ public class DialogManagerTest
     Dialog d =
         getActivity().onCreateDialog(DialogManager.DIALOG_SEND_TO_GOOGLE, null);
     assertNotNull(d);
-    assertTrue(d instanceof SendToGoogleDialog);
+    assertTrue(d instanceof SendDialog);
   }
-
-  public void test_onCreateSendToGoogleResult() {
-    Dialog d =
-        getActivity().onCreateDialog(
-            DialogManager.DIALOG_SEND_TO_GOOGLE_RESULT, null);
-    assertNotNull(d);
-    assertTrue(d instanceof AlertDialog);
-  }
-
-  public void test_onCreateWriteProgress() {
-    Dialog d =
-        getActivity().onCreateDialog(
-            DialogManager.DIALOG_WRITE_PROGRESS, null);
-    assertNotNull(d);
-    assertTrue(d instanceof ProgressDialog);
-  }
-
 }

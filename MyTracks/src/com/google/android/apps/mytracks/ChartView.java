@@ -527,8 +527,8 @@ public class ChartView extends View {
           }
           if (nearestWaypoint != null && dmin < 100) {
             Intent intent =
-                new Intent(getContext(), MyTracksWaypointDetails.class);
-            intent.putExtra("waypointid", nearestWaypoint.getId());
+                new Intent(getContext(), WaypointDetails.class);
+            intent.putExtra(WaypointDetails.WAYPOINT_ID_EXTRA, nearestWaypoint.getId());
             getContext().startActivity(intent);
             return true;
           }
@@ -728,7 +728,7 @@ public class ChartView extends View {
       }
     }
     float density = getContext().getResources().getDisplayMetrics().density;
-    // TODO: This should be function of the number of variables displayed.
+    maxLength = Math.max(maxLength, 1);
     leftBorder = (int) (density * (4 + 8 * maxLength));
     effectiveWidth = w - leftBorder - RIGHT_BORDER;
     bottomBorder = (int) (density * BOTTOM_BORDER);

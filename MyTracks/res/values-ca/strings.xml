@@ -133,7 +133,6 @@ limitations under the License.
   <string name="tracklist_all_tracks">Totes les rutes:</string>
   <string name="tracklist_this_track">Aquesta ruta</string>
   <string name="tracklist_share_track">Comparteix amb amics...</string>
-  <string name="tracklist_share_linkfusion">Un enllaç a Google Fusion Table</string>
   <string name="tracklist_share_gpx_file">Un fitxer GPX</string>
   <string name="tracklist_share_kml_file">Un fitxer KML</string>
   <string name="tracklist_share_csv_file">Un fitxer CSV</string>
@@ -226,7 +225,6 @@ limitations under the License.
   <string name="settings_backup_to_sd_summary">Escriu una còpia completa de totes les rutes i els paràmetres a la targeta SD</string>
   <string name="settings_restore_from_sd">Restaura ara</string>
   <string name="settings_restore_from_sd_summary">Restaura totes les rutes i els paràmetres des de la targeta SD.</string>
-  <string name="settings_no_backup_while_recording">No es poden gestionar les còpies de seguretat mentre s\'enregistra una ruta.</string>
 
   <!-- Backups -->
   <string name="restore_overwrites_warning">La restauració d\'una còpia de seguretat des de la targeta SD sobreescriurà totes les rutes i paràmetres. Esteu segur?</string>

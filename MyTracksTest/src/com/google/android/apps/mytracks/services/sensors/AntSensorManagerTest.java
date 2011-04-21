@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks.services.sensors;
 
+import com.google.android.apps.mytracks.services.sensors.ant.AntSensorManager;
+
 import android.test.AndroidTestCase;
 import android.test.MoreAsserts;
 

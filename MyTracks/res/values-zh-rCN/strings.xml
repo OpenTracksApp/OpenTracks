@@ -132,7 +132,6 @@ limitations under the License.
   <string name="tracklist_all_tracks">全部轨迹:</string>
   <string name="tracklist_this_track">此轨迹</string>
   <string name="tracklist_share_track">与朋友分享...</string>
-  <string name="tracklist_share_linkfusion">链接到 Google Fusion Table</string>
   <string name="tracklist_share_gpx_file">GPX 文件</string>
   <string name="tracklist_share_kml_file">KML 文件</string>
   <string name="tracklist_share_csv_file">CSV 文件</string>
@@ -220,7 +219,6 @@ limitations under the License.
   <string name="settings_backup_to_sd_summary">将你所有轨迹和设置的完整备份写入到 SD 存储卡</string>
   <string name="settings_restore_from_sd">立即恢复</string>
   <string name="settings_restore_from_sd_summary">从 SD 存储卡恢复所有轨迹和设置</string>
-  <string name="settings_no_backup_while_recording">在记录轨迹时无法处理备份数据.</string>
 
   <!-- Backups -->
   <string name="restore_overwrites_warning">从 SD 存储卡恢复备份数据将覆盖掉你当前的所有轨迹和设置. 确定要继续吗?</string>

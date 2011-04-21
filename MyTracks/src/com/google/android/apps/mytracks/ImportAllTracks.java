@@ -16,9 +16,9 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.io.GpxImporter;
+import com.google.android.apps.mytracks.io.file.GpxImporter;
 import com.google.android.apps.mytracks.util.FileUtils;
-import com.google.android.apps.mytracks.util.MyTracksUtils;
+import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -60,7 +60,7 @@ public class ImportAllTracks {
 
   public ImportAllTracks(Activity activity) {
     this.activity = activity;
-    Log.i(MyTracksConstants.TAG, "ImportAllTracks: Starting");
+    Log.i(Constants.TAG, "ImportAllTracks: Starting");
     fileUtils = new FileUtils();
     gpxPath = fileUtils.buildExternalDirectoryPath("gpx");
     HandlerThread handlerThread;
@@ -82,13 +82,13 @@ public class ImportAllTracks {
    * track. Acquire a wake lock if there is no current track.
    */
   private void aquireLocksAndImport() {
-    SharedPreferences prefs = activity.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+    SharedPreferences prefs = activity.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     long recordingTrackId = -1;
     if (prefs != null) {
       recordingTrackId = prefs.getLong(activity.getString(R.string.recording_track_key), -1);
     }
     if (recordingTrackId != -1) {
-      wakeLock = MyTracksUtils.acquireWakeLock(activity, wakeLock);
+      wakeLock = SystemUtils.acquireWakeLock(activity, wakeLock);
     }
 
     // Now we can safely import everything.
@@ -98,10 +98,10 @@ public class ImportAllTracks {
     // TODO check what happens if we started recording after getting this lock.
     if (wakeLock != null && wakeLock.isHeld()) {
       wakeLock.release();
-      Log.i(MyTracksConstants.TAG, "ImportAllTracks: Releasing wake lock.");
+      Log.i(Constants.TAG, "ImportAllTracks: Releasing wake lock.");
     }
 
-    Log.i(MyTracksConstants.TAG, "ImportAllTracks: Done");
+    Log.i(Constants.TAG, "ImportAllTracks: Done");
     AlertDialog.Builder builder = new AlertDialog.Builder(activity);
     if (gpxFileCount == 0) {
       builder.setMessage(activity.getString(R.string.import_empty, gpxPath + "/"));
@@ -141,7 +141,7 @@ public class ImportAllTracks {
       return;
     }
 
-    Log.i(MyTracksConstants.TAG, "ImportAllTracks: Importing: " + gpxFileCount + " tracks.");
+    Log.i(Constants.TAG, "ImportAllTracks: Importing: " + gpxFileCount + " tracks.");
     activity.runOnUiThread(new Runnable() {
       public void run() {
         makeProgressDialog(gpxFileCount);
@@ -180,19 +180,19 @@ public class ImportAllTracks {
    * notifications and returns false on failure.
    */
   private boolean importFile(File gpxFile, MyTracksProviderUtils providerUtils) {
-    Log.i(MyTracksConstants.TAG, "ImportAllTracks: importing: " + gpxFile.getName());
+    Log.i(Constants.TAG, "ImportAllTracks: importing: " + gpxFile.getName());
     try {
       GpxImporter.importGPXFile(new FileInputStream(gpxFile), providerUtils);
       return true;
     } catch (FileNotFoundException e) {
-      Log.w(MyTracksConstants.TAG, "GPX file wasn't found/went missing: "
+      Log.w(Constants.TAG, "GPX file wasn't found/went missing: "
           + gpxFile.getAbsolutePath(), e);
     } catch (ParserConfigurationException e) {
-      Log.w(MyTracksConstants.TAG, "Error parsing file: " + gpxFile.getAbsolutePath(), e);
+      Log.w(Constants.TAG, "Error parsing file: " + gpxFile.getAbsolutePath(), e);
     } catch (SAXException e) {
-      Log.w(MyTracksConstants.TAG, "Error parsing file: " + gpxFile.getAbsolutePath(), e);
+      Log.w(Constants.TAG, "Error parsing file: " + gpxFile.getAbsolutePath(), e);
     } catch (IOException e) {
-      Log.w(MyTracksConstants.TAG, "Error reading file: " + gpxFile.getAbsolutePath(), e);
+      Log.w(Constants.TAG, "Error reading file: " + gpxFile.getAbsolutePath(), e);
     }
     Toast.makeText(activity, activity.getString(R.string.import_error, gpxFile.getName()),
         Toast.LENGTH_LONG).show();

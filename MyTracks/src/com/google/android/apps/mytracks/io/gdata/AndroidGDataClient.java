@@ -187,6 +187,7 @@ public class AndroidGDataClient implements GDataClient {
     while (redirectsLeft > 0) {
 
       HttpUriRequest request = creator.createRequest(uri);
+      request.addHeader("User-Agent", "Android-GData");
       request.addHeader("Accept-Encoding", "gzip");
 
       // only add the auth token if not null (to allow for GData feeds that do

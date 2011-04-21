@@ -25,37 +25,37 @@ limitations under the License.
   <string name="delete_all_tracks">Borrar todos los recorridos</string>
   <string name="settings">Configuraciones</string>
   <string name="elevation">Elevación</string>
-  <string name="choose_track_message">Por favor seleccione el recorrido que desea ver</string>
+  <string name="choose_track_message">Por favor, seleccione el recorrido que desea ver</string>
   <string name="current_track">Recorrido actual</string>
   <string name="current_segment">Último segmento</string>
 
   <!-- Error messages -->
-  <string name="error_no_location_manager">Ningún administrador de ubicación fue hallado en este aparato! </string>
-  <string name="error_no_gps_location_provider">Ningún proveedor GPS de ubicación fue hallado en este aparato.</string>
-  <string name="error_sending_to_fusiontables">Hubo un error al mandar su recorrido a Google Fusion Tables. Por favor inténtelo de nuevo más tarde.</string>
-  <string name="error_sending_to_docs">Hubo un error al mandar su recorrido a Google Docs. Por favor inténtelo de nuevo más tarde.</string>
-  <string name="error_unable_to_start_recording">No pude empezar a grabar. Por favor inténtelo de nuevo. </string>
-  <string name="error_unable_to_stop_recording">No pude dejar de grabar. Por favor inténtelo de nuevo.</string>
+  <string name="error_no_location_manager">Ningún administrador de ubicación fue hallado en este dispositivo! </string>
+  <string name="error_no_gps_location_provider">Ningún proveedor de ubicación GPS fue hallado en este dispositivo.</string>
+  <string name="error_sending_to_fusiontables">Se produjo un error al enviar su recorrido a Google Fusion Tables.</string>
+  <string name="error_sending_to_docs">Se produjo un error al enviar su recorrido a Google Docs.</string>
+  <string name="error_unable_to_start_recording">No se puede iniciar la grabación. Inténtelo de nuevo. </string>
+  <string name="error_unable_to_stop_recording">No se puede detener la grabación. Inténtelo de nuevo.</string>
   <string name="error_unable_to_read_file">No pude leer del archivo.</string>
   <string name="error_invalid_gpx_format">El archivo no tiene un format GPX válido.</string>
-  <string name="error_generic">Error.  Por favor inténtelo de nuevo.</string>
+  <string name="error_generic">A ocurrido un error. Por favor, inténtelo de nuevo.</string>
   <string name="error_track_does_not_exist">El recorrido no existe.</string>
   <string name="error_out_of_memory">El archivo es demasiado grande (tiene que ser menor a 500 KB). Abortando.</string>
-  <string name="error_unable_to_insert_marker">No pude insertar la señal. La ubicación no esta disponible.</string>
+  <string name="error_unable_to_insert_marker">No se puede insertar el marcador. La ubicación no está disponible.</string>
 
   <!-- Status messages -->
   <string name="wait_for_fix">Esperando una ubicación mas exacta del GPS. Asegúrese que el cielo sea visible.</string>
   <string name="status_now_recording">Grabando un nuevo recorrido.</string>
-  <string name="status_stopped_recording">Grabacíon interrumpida.</string>
-  <string name="status_new_fusiontable_has_been_created">Un mapa Google Fusion Tables nuevo has sido creado en google.com/fusiontables.</string>
+  <string name="status_stopped_recording">Grabación interrumpida.</string>
+  <string name="status_new_fusiontable_has_been_created">Una nueva tabla de Google Fusion ha sido creada en google.com/fusiontables.</string>
   <string name="status_tracks_have_been_uploaded">Su recorrido ha sido enviado a maps.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">Su recorrido ha sido enviado a una nueva hoja de cálculo en docs.google.com.</string>
+  <string name="status_tracks_have_been_uploaded_to_new_doc">Su recorrido ha sido enviado a una nueva hoja de cálculo de docs.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_docs">Su recorrido ha sido enviado a docs.google.com.</string>
-  <string name="status_enable_gps">Por favor presione aquí para ir al menú de Seguridad y Ubicación y asegúrese que el GPS esté habilitado. Presione el botón de regreso para regresar.</string>
-  <string name="status_approximate_location">Nota: Una ubicación aproximada es mostrada, basada en informacion de torres de telefonía celular y red WIFI.</string>
-  <string name="status_no_location">La ubicación actual no puede ser determinada. Habilite más fuentes de datos (vea configuraciones de Seguridad y Ubicación) y asegúrese que el cielo sea visible. Inténtelo mas tarde.</string>
-  <string name="status_waypoint_inserted">Una señal de recorrido fue insertada.</string>
-  <string name="status_statistics_inserted">Una señal con estadísticas fue insertada.</string>
+  <string name="status_enable_gps">Por favor, presione aquí para ir al menú de Seguridad y Ubicación, y asegúrese que el GPS esté habilitado. Presione el botón "atrás" para regresar.</string>
+  <string name="status_approximate_location">Nota: Una ubicación aproximada es determinada a partir de torres de telefonía celular y redes WIFI.</string>
+  <string name="status_no_location">No puede ser determinada la ubicación actual. Habilite más fuentes de datos (vea las configuraciones de Seguridad y Ubicación) y asegúrese que el cielo sea visible. Inténtelo mas tarde.</string>
+  <string name="status_waypoint_inserted">Un marcador de recorrido fue insertado.</string>
+  <string name="status_statistics_inserted">Un marcador de estadísticas fue insertado.</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Por favor espere...</string>
@@ -121,7 +121,6 @@ limitations under the License.
   <string name="tracklist_all_tracks">Todos los recorridos:"</string>
   <string name="tracklist_this_track">Este recorrido"</string>
   <string name="tracklist_share_track">Compartir con amigos..."</string>
-  <string name="tracklist_share_linkfusion">Un enlace a Google Fusion Tables</string>
   <string name="tracklist_share_gpx_file">Un archivo GPX"</string>
   <string name="tracklist_share_kml_file">Un archivo KML"</string>
   <string name="tracklist_clear_map">"Limpiar mapa"</string>
@@ -213,7 +212,6 @@ limitations under the License.
   <string name="settings_backup_to_sd_summary">Hacer una copia total de sus recorridos y configuraciones a la tarjeta SD</string>
   <string name="settings_restore_from_sd">Restaurar</string>
   <string name="settings_restore_from_sd_summary">Restaurar todos los recorridos y configuraciones desde la tarjeta SD</string>
-  <string name="settings_no_backup_while_recording">No se pueden manejar backups mientras se está registrando un recorrido.</string>
 
   <string name="restore_overwrites_warning">Restaurar un backup desde la tarjeta SD SOBREESCRIBIRÁ todos sus recorridos y configuraciones actuales. ¿Está usted seguro?</string>
   <string name="select_backup_to_restore">Seleccionar el backup para restaurar</string>

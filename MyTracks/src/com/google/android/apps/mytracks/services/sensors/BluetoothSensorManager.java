@@ -15,8 +15,7 @@
  */
 package com.google.android.apps.mytracks.services.sensors;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
-import com.google.android.apps.mytracks.MyTracksSettings;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.maps.mytracks.R;
 
@@ -66,7 +65,7 @@ public class BluetoothSensorManager extends SensorManager {
   }
 
   private void setupSensor() {
-    Log.d(MyTracksConstants.TAG, "setupSensor()");
+    Log.d(Constants.TAG, "setupSensor()");
 
     // Initialize the BluetoothSensorAdapter to perform bluetooth connections.
     connectionManager = new BluetoothConnectionManager(messageHandler, parser);
@@ -78,17 +77,17 @@ public class BluetoothSensorManager extends SensorManager {
 
   public void setupChannel() {
     if (!isEnabled() || connectionManager == null) {
-      Log.w(MyTracksConstants.TAG, "Disabled manager onStartTrack");
+      Log.w(Constants.TAG, "Disabled manager onStartTrack");
       return;
     }
     SharedPreferences prefs =
-        context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+        context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     String address =
       prefs.getString(context.getString(R.string.bluetooth_sensor_key), null);
     if (address == null) {
       return;
     }
-    Log.w(MyTracksConstants.TAG, "Connecting to bluetooth sensor: " + address);
+    Log.w(Constants.TAG, "Connecting to bluetooth sensor: " + address);
     // Get the BluetoothDevice object
     BluetoothDevice device = bluetoothAdapter.getRemoteDevice(address);
     // Attempt to connect to the device
@@ -102,7 +101,7 @@ public class BluetoothSensorManager extends SensorManager {
       // already
       if (connectionManager.getState() == Sensor.SensorState.NONE) {
         // Start the Bluetooth sensor services
-        Log.w(MyTracksConstants.TAG, "Disabled manager onStartTrack");
+        Log.w(Constants.TAG, "Disabled manager onStartTrack");
         connectionManager.start();
       }
     }
@@ -132,7 +131,7 @@ public class BluetoothSensorManager extends SensorManager {
       switch (msg.what) {
         case BluetoothConnectionManager.MESSAGE_STATE_CHANGE:
           // TODO should we update the SensorManager state var?
-          Log.i(MyTracksConstants.TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
+          Log.i(Constants.TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
           break;
         case BluetoothConnectionManager.MESSAGE_WRITE:
           break;
@@ -141,15 +140,15 @@ public class BluetoothSensorManager extends SensorManager {
           try {
             readBuf = (byte[]) msg.obj;
             sensorDataSet = parser.parseBuffer(readBuf);
-            Log.d(MyTracksConstants.TAG, "MESSAGE_READ: " + sensorDataSet.toString());
+            Log.d(Constants.TAG, "MESSAGE_READ: " + sensorDataSet.toString());
           } catch (IllegalArgumentException iae) {
             sensorDataSet = null;
-            Log.i(MyTracksConstants.TAG,
+            Log.i(Constants.TAG,
                 "Got bad sensor data: " + new String(readBuf, 0, readBuf.length),
                 iae);
           } catch (RuntimeException re) {
             sensorDataSet = null;
-            Log.i(MyTracksConstants.TAG, "Unexpected exception on read.", re);
+            Log.i(Constants.TAG, "Unexpected exception on read.", re);
           }
           break;
         case BluetoothConnectionManager.MESSAGE_DEVICE_NAME:
