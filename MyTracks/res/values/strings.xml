@@ -158,7 +158,6 @@ limitations under the License.
   <string name="tracklist_clear_map">Clear map</string>
   <!-- Import All -->
   <string name="tracklist_btn_import_all">Import all</string>
-  <string name="import_done">Import finished, imported</string>
   <!-- Format:
   $1 : Successful imports
   $2 : Attempted imports

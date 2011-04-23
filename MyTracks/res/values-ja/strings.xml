@@ -154,7 +154,6 @@ limitations under the License.
   <string name="tracklist_clear_map">マップのクリア</string>
   <!-- Import All -->
   <string name="tracklist_btn_import_all">全てインポート</string>
-  <string name="import_done">インポート終了</string>
   <!-- Format:
   $1 : Successful imports
   $2 : Attempted imports
