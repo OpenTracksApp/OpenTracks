@@ -51,10 +51,6 @@ public class Track implements Parcelable {
       track.stats = source.readParcelable(classLoader);
 
       track.numberOfPoints = source.readInt();
-      for (int i = 0; i < track.numberOfPoints; ++i) {
-        Location loc = source.readParcelable(classLoader);
-        track.locations.add(loc);
-      }
 
       track.tableId = source.readString();
       return track;
@@ -103,9 +99,6 @@ public class Track implements Parcelable {
     dest.writeParcelable(stats, 0);
 
     dest.writeInt(numberOfPoints);
-    for (int i = 0; i < numberOfPoints; ++i) {
-      dest.writeParcelable(locations.get(i), 0);
-    }
     
     dest.writeString(tableId);
   }
