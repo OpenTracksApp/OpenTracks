@@ -16,7 +16,7 @@ limitations under the License.
 -->
 <appwidget-provider
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:initialLayout="@layout/mytracks_appwidget"
+  android:initialLayout="@layout/appwidget"
   android:minHeight="72dp"
   android:minWidth="294dp"
   android:updatePeriodMillis="0" />

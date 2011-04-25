@@ -47,4 +47,8 @@ limitations under the License.
   <!-- Purple and a transparent purple -->
   <color name="power_border">#FF401465</color>
   <color name="power_fill">#40401465</color>
+
+  <!-- AppWidget colors -->
+  <color name="appwidget_text">#EDEDED</color>
+  <color name="appwidget_hr">#99999999</color>
 </resources>

@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.widgets;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
-import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -39,7 +38,7 @@ import com.google.android.maps.mytracks.R;
  *
  * @author Paul R. Saxman
  */
-public class MyTracksAppWidgetProvider extends AppWidgetProvider {
+public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
   @Override
   public void onReceive(Context context, Intent intent) {
     super.onReceive(context, intent);
@@ -64,10 +63,10 @@ public class MyTracksAppWidgetProvider extends AppWidgetProvider {
     }
 
     AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-    ComponentName widget = new ComponentName(context,
-        MyTracksAppWidgetProvider.class);
+    ComponentName widget =
+        new ComponentName(context, AppWidgetProvider.class);
     RemoteViews views = new RemoteViews(context.getPackageName(),
-        R.layout.mytracks_appwidget);
+        R.layout.appwidget);
 
     int[] appWidgetIds = appWidgetManager.getAppWidgetIds(widget);
     for (int appWidgetId : appWidgetIds) {
@@ -85,25 +84,26 @@ public class MyTracksAppWidgetProvider extends AppWidgetProvider {
    * @param action The action broadcast from the track service
    */
   protected void updateViewButton(RemoteViews views, Context context, String action) {
-    if (context.getString(R.string.track_started_broadcast_action).equals(action)
-        || context.getString(R.string.track_updated_broadcast_action).equals(action)) {
+    if (context.getString(R.string.track_started_broadcast_action).equals(action)) {
+      // If a new track is started by this appwidget or elsewhere,
+      // toggle the button to active and have it disable the track if pressed.
       Intent intent = new Intent(context, TrackRecordingService.class);
       intent.setAction(context.getString(R.string.end_current_track_action));
       PendingIntent pendingIntent = PendingIntent.getService(context, 0,
           intent, PendingIntent.FLAG_UPDATE_CURRENT);
-      views.setImageViewResource(R.id.mytracks_appwidget_button,
-          R.drawable.widget_button_enabled);
-      views.setOnClickPendingIntent(R.id.mytracks_appwidget_button,
-          pendingIntent);
+      views.setImageViewResource(R.id.appwidget_button,
+          R.drawable.appwidget_button_enabled);
+      views.setOnClickPendingIntent(R.id.appwidget_button, pendingIntent);
     } else {
+      // If a track is stopped by this appwidget or elsewhere,
+      // toggle the button to inactive and have it start a new track if pressed.
       Intent intent = new Intent(context, TrackRecordingService.class);
       intent.setAction(context.getString(R.string.start_new_track_action));
       PendingIntent pendingIntent = PendingIntent.getService(context, 0,
           intent, PendingIntent.FLAG_UPDATE_CURRENT);
-      views.setImageViewResource(R.id.mytracks_appwidget_button,
-          R.drawable.widget_button_disabled);
-      views.setOnClickPendingIntent(R.id.mytracks_appwidget_button,
-          pendingIntent);
+      views.setImageViewResource(R.id.appwidget_button,
+          R.drawable.appwidget_button_disabled);
+      views.setOnClickPendingIntent(R.id.appwidget_button, pendingIntent);
     }
   }
 
@@ -117,36 +117,37 @@ public class MyTracksAppWidgetProvider extends AppWidgetProvider {
    */
   protected void updateViewTrackStatistics(RemoteViews views, Track track,
       Context context) {
-    String distance = "NA";
-    String time = "NA";
-    String speed = "NA";
-
-    if (track != null) {
-      // TODO(saxman) Re-enable once good strategy for displaying details is found.
-      // Since we have a track, display stats details if stats pressed
-//      Intent i = new Intent(context, StatsActivity.class);
-//      PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, i, 0);
-//      views.setOnClickPendingIntent(R.id.statistics, pendingIntent);
-
-      TripStatistics stats = track.getStatistics();
-
-      // convert meters to kilometers
-      distance = StringUtils.formatDecimal(stats.getTotalDistance() / 1000)
-          + " " + context.getString(R.string.kilometer);
-
-      // convert ms to minutes
-      time = StringUtils.formatDecimal(stats.getMovingTime() / 60000d)
-          + " mins";
-
-      if (!Double.isNaN(stats.getAverageMovingSpeed())) {
-        // convert m/s to km/h
-        speed = StringUtils.formatDecimal(stats.getAverageMovingSpeed() * 3.6)
-            + " " + context.getString(R.string.kilometer_per_hour);
-      }
+    if (track == null) {
+      views.setTextViewText(R.id.appwidget_distance_text, "NA");
+      views.setTextViewText(R.id.appwidget_time_text, "NA");
+      views.setTextViewText(R.id.appwidget_speed_text, "NA");
+      return;
     }
 
-    views.setTextViewText(R.id.mytracks_appwidget_distance_text, distance);
-    views.setTextViewText(R.id.mytracks_appwidget_time_text, time);
-    views.setTextViewText(R.id.mytracks_appwidget_speed_text, speed);
+    // TODO(saxman) Display stats details when track stats view is pressed.
+    // Intent i = new Intent(context, StatsActivity.class);
+    // PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, i, 0);
+    // views.setOnClickPendingIntent(R.id.appwidget_track_statistics, pendingIntent);
+
+    TripStatistics stats = track.getStatistics();
+
+    // convert meters to kilometers
+    String distance = StringUtils.formatSingleDecimalPlace(stats.getTotalDistance() / 1000)
+        + " " + context.getString(R.string.kilometer);
+
+    // convert ms to minutes
+    String time = StringUtils.formatSingleDecimalPlace(stats.getMovingTime() / 60000d)
+        + " mins";
+
+    String speed = "NA";
+    if (!Double.isNaN(stats.getAverageMovingSpeed())) {
+      // convert m/s to km/h
+      speed = StringUtils.formatSingleDecimalPlace(stats.getAverageMovingSpeed() * 3.6)
+          + " " + context.getString(R.string.kilometer_per_hour);
+    }
+
+    views.setTextViewText(R.id.appwidget_distance_text, distance);
+    views.setTextViewText(R.id.appwidget_time_text, time);
+    views.setTextViewText(R.id.appwidget_speed_text, speed);
   }
 }

@@ -66,7 +66,7 @@ public class StringUtils implements DescriptionGenerator {
     return formatTimeInternal(time, true);
   }
 
-  private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.#");
+  private static final DecimalFormat SINGLE_DECIMAL_PLACE_FORMAT = new DecimalFormat("#.#");
 
   /**
    * Formats a double precision number as decimal number with a single decimal
@@ -76,8 +76,8 @@ public class StringUtils implements DescriptionGenerator {
    * @return A string representation of a decimal number, derived from the input
    *         double, with a single decimal place
    */
-  public static final String formatDecimal(double number) {
-    return DECIMAL_FORMAT.format(number);
+  public static final String formatSingleDecimalPlace(double number) {
+    return SINGLE_DECIMAL_PLACE_FORMAT.format(number);
   }
 
   /**
