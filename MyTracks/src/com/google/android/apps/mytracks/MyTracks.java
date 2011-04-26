@@ -1273,8 +1273,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
         shareIntent.setType(format.getMimeType());
         Uri u = Uri.fromFile(new File(writer.getAbsolutePath()));
         shareIntent.putExtra(Intent.EXTRA_STREAM, u);
-        MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(MyTracks.this);
-        Track track = myTracksProviderUtils.getTrack(trackId);
+        Track track = providerUtils.getTrack(trackId);
         shareIntent.putExtra(TRACK_EXTRA, track);
         startActivity(Intent.createChooser(shareIntent,
             getResources().getText(R.string.share_track).toString()));
