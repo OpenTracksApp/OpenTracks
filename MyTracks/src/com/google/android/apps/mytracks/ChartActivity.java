@@ -350,6 +350,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
   public void onTrackUpdated(Track track) {
     if (track == null || track.getStatistics() == null) {
       trackMaxSpeed = 0.0;
+      return;
     }
 
     trackMaxSpeed = track.getStatistics().getMaxSpeed();
