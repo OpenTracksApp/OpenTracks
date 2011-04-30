@@ -510,78 +510,102 @@ public class ChartView extends View {
   @Override
   protected void onDraw(Canvas c) {
     synchronized (data) {
-      if (w != c.getWidth() || h != c.getHeight()) {
-        // Dimensions have changed (for example due to orientation change).
-        w = c.getWidth();
-        h = c.getHeight();
-        effectiveWidth = Math.max(0, w - leftBorder - RIGHT_BORDER);
-        effectiveHeight = Math.max(0, h - topBorder - bottomBorder);
-        setUpPath();
-      }
+      updateEffectiveDimensionsIfChanged(c);
+
+      // Keep original state.
       c.save();
+
       c.drawColor(Color.WHITE);
-      if (data.size() < 1) {
+
+      if (data.isEmpty()) {
+        // No data, draw only axes
         drawXAxis(c);
         drawYAxis(c);
         c.restore();
         return;
       }
 
+      // Clip to graph drawing space
       c.save();
-      c.clipRect(leftBorder + 1 + getScrollX(), topBorder + 1,
-          w - RIGHT_BORDER + getScrollX() - 1, h - bottomBorder - 1);
+      clipToGraphSpace(c);
 
+      // Draw the grid and the data on it.
       drawGrid(c);
+      drawDataSeries(c);
+      drawWaypoints(c);
 
-      // Draw the data series.
-      for (ChartValueSeries cvs : series) {
-        if (cvs.isEnabled() && cvs.hasData()) {
-          cvs.drawPath(c);
-        }
-      }
-
-      // Draw the waypoints.
-      for (int i = 1; i < waypoints.size(); i++) {
-        final Waypoint waypoint = waypoints.get(i);
-        if (waypoint.getLocation() == null) {
-          continue;
-        }
-        c.save();
-
-        final float x = getWaypointX(waypoint);
-        c.drawLine(x, h - bottomBorder, x, topBorder, gridPaint);
-        c.translate(x - markerWidth / 2, markerHeight);
-        if (waypoints.get(i).getType() == Waypoint.TYPE_STATISTICS) {
-          statsMarker.draw(c);
-        } else {
-          waypointMarker.draw(c);
-        }
-        c.restore();
-      }
-
+      // Go back to full canvas drawing.
       c.restore();
 
-      // Draw the axis and labels.
-      drawXLabels(c);
-      drawXAxis(c);
-      drawSeriesTitles(c);
+      // Draw the axes and their labels.
+      drawAxesAndLabels(c);
 
-      c.translate(getScrollX(), 0);
-      drawYAxis(c);
-      float density = getContext().getResources().getDisplayMetrics().density;
-      final int spacer = (int) (5 * density);
-      int x = leftBorder - spacer;
-      for (ChartValueSeries cvs : series) {
-        if (cvs.isEnabled() && cvs.hasData()) {
-          x -= drawYLabels(cvs, c, x) + spacer;
-        }
+      // Go back to original state.
+      c.restore();
+
+      // Draw the pointer
+      if (showPointer) {
+        drawPointer(c);
+      }
+    }
+  }
+
+  private void clipToGraphSpace(Canvas c) {
+    c.clipRect(leftBorder + 1 + getScrollX(), topBorder + 1,
+        w - RIGHT_BORDER + getScrollX() - 1, h - bottomBorder - 1);
+  }
+
+  private void drawAxesAndLabels(Canvas c) {
+    // Draw the axis and labels.
+    drawXLabels(c);
+    drawXAxis(c);
+    drawSeriesTitles(c);
+
+    c.translate(getScrollX(), 0);
+    drawYAxis(c);
+    float density = getContext().getResources().getDisplayMetrics().density;
+    final int spacer = (int) (5 * density);
+    int x = leftBorder - spacer;
+    for (ChartValueSeries cvs : series) {
+      if (cvs.isEnabled() && cvs.hasData()) {
+        x -= drawYLabels(cvs, c, x) + spacer;
+      }
+    }
+  }
+
+  private void drawPointer(Canvas c) {
+    c.translate(getX(maxX) - pointer.getIntrinsicWidth() / 2,
+                getY(series[0], data.get(data.size() - 1)[1])
+                - pointer.getIntrinsicHeight() / 2 - 12);
+    pointer.draw(c);
+  }
+
+  private void drawWaypoints(Canvas c) {
+    // Draw the waypoints.
+    for (int i = 1; i < waypoints.size(); i++) {
+      final Waypoint waypoint = waypoints.get(i);
+      if (waypoint.getLocation() == null) {
+        continue;
+      }
+      c.save();
+
+      final float x = getWaypointX(waypoint);
+      c.drawLine(x, h - bottomBorder, x, topBorder, gridPaint);
+      c.translate(x - markerWidth / 2, markerHeight);
+      if (waypoints.get(i).getType() == Waypoint.TYPE_STATISTICS) {
+        statsMarker.draw(c);
+      } else {
+        waypointMarker.draw(c);
       }
       c.restore();
-      if (showPointer && !data.isEmpty()) {
-        c.translate(getX(maxX) - pointer.getIntrinsicWidth() / 2,
-                    getY(series[0], data.get(data.size() - 1)[1])
-                    - pointer.getIntrinsicHeight() / 2 - 12);
-        pointer.draw(c);
+    }
+  }
+
+  private void drawDataSeries(Canvas c) {
+    // Draw the data series.
+    for (ChartValueSeries cvs : series) {
+      if (cvs.isEnabled() && cvs.hasData()) {
+        cvs.drawPath(c);
       }
     }
   }
@@ -603,7 +627,7 @@ public class ChartView extends View {
   }
 
   /**
-   * Sets up the path that is used to draw the histogram in onDraw(). The path
+   * Sets up the path that is used to draw the chart in onDraw(). The path
    * needs to be updated any time after the data or histogram dimensions change.
    */
   private void setUpPath() {
@@ -611,45 +635,53 @@ public class ChartView extends View {
       for (ChartValueSeries cvs : series) {
         cvs.getPath().reset();
       }
-      if (data.isEmpty()) {
-        return;
-      }
 
-      // All of the data points to the respective series.
-      // TODO: Come up with a better sampling than Math.max(1, (maxZoomLevel - zoomLevel + 1) / 2);
-      int sampling = 1;
-      for (int i = 0; i < data.size(); i += sampling) {
-        double[] d = data.get(i);
-        int min = Math.min(series.length, d.length - 1);
-        for (int j = 0; j < min; ++j) {
-          ChartValueSeries cvs = series[j];
-          Path path = cvs.getPath();
-          int x = getX(d[0]);
-          int y = getY(cvs, d[j + 1]);
-          if (i == 0) {
-            path.moveTo(x, y);
-          } else {
-            path.lineTo(x, y);
-          }
-        }
+      if (!data.isEmpty()) {
+        drawPath();
+        closePath();
       }
+    }
+  }
 
-      // Close the path.
-      int yCorner = topBorder + effectiveHeight;
-      int xCorner = getX(data.get(0)[0]);
-      int min = series.length;
-      for (int j = 0; j < min; j++) {
+  /** Actually draws the data points as a path. */
+  private void drawPath() {
+    // All of the data points to the respective series.
+    // TODO: Come up with a better sampling than Math.max(1, (maxZoomLevel - zoomLevel + 1) / 2);
+    int sampling = 1;
+    for (int i = 0; i < data.size(); i += sampling) {
+      double[] d = data.get(i);
+      int min = Math.min(series.length, d.length - 1);
+      for (int j = 0; j < min; ++j) {
         ChartValueSeries cvs = series[j];
         Path path = cvs.getPath();
-        int first = getFirstPointPopulatedIndex(j + 1);
-        if (first != -1) {
-          // Bottom right corner
-          path.lineTo(getX(data.get(data.size() - 1)[0]), yCorner);
-          // Bottom left corner
-          path.lineTo(xCorner, yCorner);
-          // Top right corner
-          path.lineTo(xCorner, getY(cvs, data.get(first)[j + 1]));
+        int x = getX(d[0]);
+        int y = getY(cvs, d[j + 1]);
+        if (i == 0) {
+          path.moveTo(x, y);
+        } else {
+          path.lineTo(x, y);
         }
+      }
+    }
+  }
+
+  /** Closes the drawn path so it looks like a solid graph. */
+  private void closePath() {
+    // Close the path.
+    int yCorner = topBorder + effectiveHeight;
+    int xCorner = getX(data.get(0)[0]);
+    int min = series.length;
+    for (int j = 0; j < min; j++) {
+      ChartValueSeries cvs = series[j];
+      Path path = cvs.getPath();
+      int first = getFirstPointPopulatedIndex(j + 1);
+      if (first != -1) {
+        // Bottom right corner
+        path.lineTo(getX(data.get(data.size() - 1)[0]), yCorner);
+        // Bottom left corner
+        path.lineTo(xCorner, yCorner);
+        // Top right corner
+        path.lineTo(xCorner, getY(cvs, data.get(first)[j + 1]));
       }
     }
   }
@@ -691,10 +723,24 @@ public class ChartView extends View {
     float density = getContext().getResources().getDisplayMetrics().density;
     maxLength = Math.max(maxLength, 1);
     leftBorder = (int) (density * (4 + 8 * maxLength));
-    effectiveWidth = w - leftBorder - RIGHT_BORDER;
     bottomBorder = (int) (density * BOTTOM_BORDER);
     topBorder = (int) (density * TOP_BORDER);
-    effectiveHeight = h - topBorder - bottomBorder;
+    updateEffectiveDimensions();
+  }
+
+  private void updateEffectiveDimensions() {
+    effectiveWidth = Math.max(0, w - leftBorder - RIGHT_BORDER);
+    effectiveHeight = Math.max(0, h - topBorder - bottomBorder);
+  }
+
+  private void updateEffectiveDimensionsIfChanged(Canvas c) {
+    if (w != c.getWidth() || h != c.getHeight()) {
+      // Dimensions have changed (for example due to orientation change).
+      w = c.getWidth();
+      h = c.getHeight();
+      updateEffectiveDimensions();
+      setUpPath();
+    }
   }
 
   private int getX(double distance) {
@@ -795,10 +841,6 @@ public class ChartView extends View {
   }
 
   private void drawGrid(Canvas c) {
-    if (data.isEmpty()) {
-      return;
-    }
-
     float rightEdge = getX(maxX);
     for (int i = 1; i < MAX_INTERVALS; ++i) {
       int y = i * effectiveHeight / MAX_INTERVALS + topBorder;
