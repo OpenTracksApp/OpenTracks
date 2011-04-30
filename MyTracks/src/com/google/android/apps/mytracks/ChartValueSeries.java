@@ -1,12 +1,12 @@
 /*
  * Copyright 2009 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -48,7 +48,7 @@ public class ChartValueSeries {
   private double spread;
   private int interval;
   private boolean enabled = true;
-  
+
   /**
    * This class controls how effective min/max values of a {@link ChartValueSeries} are calculated.
    */
@@ -70,10 +70,10 @@ public class ChartValueSeries {
       this.intervals = intervals;
       this.absoluteMin = absoluteMin;
       this.absoluteMax = absoluteMax;
-      this.zoomLevels = zoomLevels; 
+      this.zoomLevels = zoomLevels;
       checkArgs();
     }
-    
+
     private void checkArgs() {
       if (intervals <= 0 || zoomLevels == null || zoomLevels.length == 0) {
         throw new IllegalArgumentException("Expecing positive intervals and non-empty zoom levels");
@@ -100,12 +100,12 @@ public class ChartValueSeries {
     public int[] getZoomLevels() {
       return zoomLevels;
     }
-    
+
     /**
      * Calculates the interval between markings given the min and max values.
      * This function attempts to find the smallest zoom level that fits [min,max] after rounding
      * it to the current zoom level.
-     * 
+     *
      * @param min the minimum value in the series
      * @param max the maximum value in the series
      * @return the calculated interval for the given range
@@ -136,7 +136,7 @@ public class ChartValueSeries {
    * @param fill The paint for filling the chart
    * @param stroke The paint for stroking the outside the chart, optional
    * @param zoomSettings The settings related to zooming
-   * 
+   *
    * TODO: Get rid of Context and inject appropriate values instead.
    */
   public ChartValueSeries(Context context, String formatString, int fillColor, int strokeColor,
@@ -207,7 +207,7 @@ public class ChartValueSeries {
     }
     min = Math.min(min, zoomSettings.getAbsoluteMin());
     max = Math.max(max, zoomSettings.getAbsoluteMax());
-    
+
     this.interval = zoomSettings.calculateInterval(min, max);
     // Round it up.
     effectiveMax = ((int) (max / interval)) * interval + interval;

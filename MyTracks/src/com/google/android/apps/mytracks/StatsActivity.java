@@ -253,9 +253,14 @@ public class StatsActivity extends Activity implements TrackDataListener {
   }
 
   @Override
-  public void onCurrentLocationChanged(Location loc) {
+  public void onCurrentLocationChanged(final Location loc) {
     if (dataHub.isRecordingSelected()) {
-      showLocation(loc);
+      runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+          showLocation(loc);
+        }
+      });
     }
   }
 
@@ -269,7 +274,12 @@ public class StatsActivity extends Activity implements TrackDataListener {
     switch (state) {
       case DISABLED:
       case NO_FIX:
-        showUnknownLocation();
+        runOnUiThread(new Runnable() {
+          @Override
+          public void run() {
+            showUnknownLocation();
+          }
+        });
         break;
     }
   }

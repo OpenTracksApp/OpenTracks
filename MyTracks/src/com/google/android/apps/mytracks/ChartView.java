@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -28,9 +28,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
+import android.graphics.Path;
 import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -66,36 +66,38 @@ public class ChartView extends View {
   private int maxZoomLevel = 10;
 
   private static final int MAX_INTERVALS = 5;
-  
+
   /*
    * Borders, margins, dimensions (in pixels):
    */
   private int leftBorder = -1;
 
   /**
-   * Unscaled top border of the chart. 
+   * Unscaled top border of the chart.
    */
   private static final int TOP_BORDER = 15;
-  
+
   /**
    * Device scaled top border of the chart.
    */
   private int topBorder;
 
   /**
-   * Unscaled bottom border of the chart. 
+   * Unscaled bottom border of the chart.
    */
   private static final float BOTTOM_BORDER = 40;
-  
+
   /**
    * Device scaled bottom border of the chart.
    */
   private int bottomBorder;
-  
+
   private static final int RIGHT_BORDER = 17;
+
   /** Space to leave for drawing the unit labels */
   private static final int UNIT_BORDER = 15;
   private static final int FONT_HEIGHT = 10;
+
   private int w = 0;
   private int h = 0;
   private int effectiveWidth = 0;
@@ -118,11 +120,11 @@ public class ChartView extends View {
   private ChartValueSeries[] series;
 
   private final ExtremityMonitor xMonitor = new ExtremityMonitor();
-  private final NumberFormat xFormat = new DecimalFormat("###,###");
-  private final NumberFormat xShortFormat = new DecimalFormat("#.0");
+  private static final NumberFormat X_FORMAT = new DecimalFormat("###,###");
+  private static final NumberFormat X_SHORT_FORMAT = new DecimalFormat("#.0");
 
   /*
-   * Paints etc. used when drawing the histogram:
+   * Paints etc. used when drawing the chart:
    */
   private final Paint borderPaint = new Paint();
   private final Paint labelPaint = new Paint();
@@ -174,7 +176,7 @@ public class ChartView extends View {
 
     gridBarPaint.set(gridPaint);
     gridBarPaint.setPathEffect(new DashPathEffect(new float[] {3, 2}, 0));
-    
+
     clearPaint.setStyle(Style.FILL);
     clearPaint.setColor(context.getResources().getColor(R.color.white));
     clearPaint.setAntiAlias(false);
@@ -271,49 +273,12 @@ public class ChartView extends View {
                                               : R.string.pace_label));
   }
 
-  /**
-   * Gets the data that is displayed by the chart.
-   *
-   * @return an array list with data points
-   */
-  public ArrayList<double[]> getData() {
-    return data;
-  }
-
-  /**
-   * Sets the data that is to be displayed by the chart.
-   *
-   * @param theData an array list of data points
-   */
-  public synchronized void setDataPoints(ArrayList<double[]> theData) {
-    scrollTo(0, 0);
-    zoomLevel = 1;
-    data.clear();
-    xMonitor.reset();
-    for (ChartValueSeries cvs : series) {
-      cvs.reset();
-    }
-    addDataPoints(theData);
-  }
-
-  /**
-   * Adds a new data point to the chart.
-   *
-   * @param theData a data point
-   */
-  public synchronized void addDataPoint(double[] theData) {
-    data.add(theData);
-    addDataPointInternal(theData);
-    updateDimensions();
-    setUpPath();
-  }
-
   private void addDataPointInternal(double[] theData) {
     xMonitor.update(theData[0]);
     int min = Math.min(series.length, theData.length - 1);
-    for (int i = 0; i < min; i++) {
-      if (!Double.isNaN(theData[i + 1])) {
-        series[i].update(theData[i + 1]);
+    for (int i = 1; i <= min; i++) {
+      if (!Double.isNaN(theData[i])) {
+        series[i - 1].update(theData[i]);
       }
     }
     // Fill in the extra's if needed.
@@ -329,25 +294,32 @@ public class ChartView extends View {
    *
    * @param theData an array list of data points to be added
    */
-  public synchronized void addDataPoints(ArrayList<double[]> theData) {
-    data.addAll(theData);
-    for (int i = 0; i < theData.size(); i++) {
-      double d[] = theData.get(i);
-      addDataPointInternal(d);
+  public void addDataPoints(ArrayList<double[]> theData) {
+    synchronized (data) {
+      data.addAll(theData);
+      for (int i = 0; i < theData.size(); i++) {
+        double d[] = theData.get(i);
+        addDataPointInternal(d);
+      }
+      updateDimensions();
+      setUpPath();
     }
-    updateDimensions();
-    setUpPath();
   }
 
   /**
    * Clears all data.
-   * Call this only from the UI thread!
    */
-  public synchronized void reset() {
-    data.clear();
-    zoomLevel = 1;
+  public void reset() {
+    synchronized (data) {
+      data.clear();
+      xMonitor.reset();
+      zoomLevel = 1;
+      updateDimensions();
+    }
+  }
+
+  public void resetScroll() {
     scrollTo(0, 0);
-    updateDimensions();
   }
 
   /**
@@ -393,13 +365,6 @@ public class ChartView extends View {
   }
 
   /**
-   * @return the current zoom level (1 equals to showing all data points)
-   */
-  public int getZoomLevel() {
-    return zoomLevel;
-  }
-
-  /**
    * Initiates flinging.
    *
    * @param velocityX start velocity (pixels per second)
@@ -425,14 +390,6 @@ public class ChartView extends View {
       scrollX = available;
     }
     scrollTo(scrollX, 0);
-  }
-
-  /**
-   * Sets the scroll position of the chart. This will trigger a redraw.
-   */
-  @Override
-  public void scrollTo(int x, int y) {
-    super.scrollTo(x, y);
   }
 
   /**
@@ -551,79 +508,81 @@ public class ChartView extends View {
   }
 
   @Override
-  protected synchronized void onDraw(Canvas c) {
-    if (w != c.getWidth() || h != c.getHeight()) {
-      // Dimensions have changed (for example due to orientation change).
-      w = c.getWidth();
-      h = c.getHeight();
-      effectiveWidth = Math.max(0, w - leftBorder - RIGHT_BORDER);
-      effectiveHeight = Math.max(0, h - topBorder - bottomBorder);
-      setUpPath();
-    }
-    c.save();
-    c.drawColor(Color.WHITE);
-    if (data.size() < 1) {
-      drawXAxis(c);
-      drawYAxis(c);
-      c.restore();
-      return;
-    }
-    
-    c.save();
-    c.clipRect(leftBorder + 1 + getScrollX(), topBorder + 1,
-        w - RIGHT_BORDER + getScrollX() - 1, h - bottomBorder - 1);
-
-    drawGrid(c);
-    
-    // Draw the data series.
-    for (ChartValueSeries cvs : series) {
-      if (cvs.isEnabled() && cvs.hasData()) {
-        cvs.drawPath(c);
-      }
-    }
-    
-    // Draw the waypoints.
-    for (int i = 1; i < waypoints.size(); i++) {
-      final Waypoint waypoint = waypoints.get(i);
-      if (waypoint.getLocation() == null) {
-        continue;
+  protected void onDraw(Canvas c) {
+    synchronized (data) {
+      if (w != c.getWidth() || h != c.getHeight()) {
+        // Dimensions have changed (for example due to orientation change).
+        w = c.getWidth();
+        h = c.getHeight();
+        effectiveWidth = Math.max(0, w - leftBorder - RIGHT_BORDER);
+        effectiveHeight = Math.max(0, h - topBorder - bottomBorder);
+        setUpPath();
       }
       c.save();
+      c.drawColor(Color.WHITE);
+      if (data.size() < 1) {
+        drawXAxis(c);
+        drawYAxis(c);
+        c.restore();
+        return;
+      }
 
-      final float x = getWaypointX(waypoint);
-      c.drawLine(x, h - bottomBorder, x, topBorder, gridPaint);
-      c.translate(x - markerWidth / 2, markerHeight);
-      if (waypoints.get(i).getType() == Waypoint.TYPE_STATISTICS) {
-        statsMarker.draw(c);
-      } else {
-        waypointMarker.draw(c);
+      c.save();
+      c.clipRect(leftBorder + 1 + getScrollX(), topBorder + 1,
+          w - RIGHT_BORDER + getScrollX() - 1, h - bottomBorder - 1);
+
+      drawGrid(c);
+
+      // Draw the data series.
+      for (ChartValueSeries cvs : series) {
+        if (cvs.isEnabled() && cvs.hasData()) {
+          cvs.drawPath(c);
+        }
+      }
+
+      // Draw the waypoints.
+      for (int i = 1; i < waypoints.size(); i++) {
+        final Waypoint waypoint = waypoints.get(i);
+        if (waypoint.getLocation() == null) {
+          continue;
+        }
+        c.save();
+
+        final float x = getWaypointX(waypoint);
+        c.drawLine(x, h - bottomBorder, x, topBorder, gridPaint);
+        c.translate(x - markerWidth / 2, markerHeight);
+        if (waypoints.get(i).getType() == Waypoint.TYPE_STATISTICS) {
+          statsMarker.draw(c);
+        } else {
+          waypointMarker.draw(c);
+        }
+        c.restore();
+      }
+
+      c.restore();
+
+      // Draw the axis and labels.
+      drawXLabels(c);
+      drawXAxis(c);
+      drawSeriesTitles(c);
+
+      c.translate(getScrollX(), 0);
+      drawYAxis(c);
+      float density = getContext().getResources().getDisplayMetrics().density;
+      final int spacer = (int) (5 * density);
+      int x = leftBorder - spacer;
+      for (ChartValueSeries cvs : series) {
+        if (cvs.isEnabled() && cvs.hasData()) {
+          x -= drawYLabels(cvs, c, x) + spacer;
+        }
       }
       c.restore();
-    }
-
-    c.restore();
-    
-    // Draw the axis and labels.
-    drawXLabels(c);
-    drawXAxis(c);
-    drawSeriesTitles(c);
-    
-    c.translate(getScrollX(), 0);
-    drawYAxis(c);
-    float density = getContext().getResources().getDisplayMetrics().density;
-    final int spacer = (int) (5 * density);
-    int x = leftBorder - spacer;
-    for (ChartValueSeries cvs : series) {
-      if (cvs.isEnabled() && cvs.hasData()) {
-        x -= drawYLabels(cvs, c, x) + spacer;
+      if (showPointer && !data.isEmpty()) {
+        c.translate(getX(maxX) - pointer.getIntrinsicWidth() / 2,
+                    getY(series[0], data.get(data.size() - 1)[1])
+                    - pointer.getIntrinsicHeight() / 2 - 12);
+        pointer.draw(c);
       }
-    }
-    c.restore();
-    if (showPointer && !data.isEmpty()) {
-      c.translate(getX(maxX) - pointer.getIntrinsicWidth() / 2,
-                  getY(series[0], data.get(data.size() - 1)[1])
-                  - pointer.getIntrinsicHeight() / 2 - 12);
-      pointer.draw(c);
     }
   }
 
@@ -647,52 +606,54 @@ public class ChartView extends View {
    * Sets up the path that is used to draw the histogram in onDraw(). The path
    * needs to be updated any time after the data or histogram dimensions change.
    */
-  private synchronized void setUpPath() {
-    for (ChartValueSeries cvs : series) {
-      cvs.getPath().reset();
-    }
-    if (data.isEmpty()) {
-      return;
-    }
+  private void setUpPath() {
+    synchronized (data) {
+      for (ChartValueSeries cvs : series) {
+        cvs.getPath().reset();
+      }
+      if (data.isEmpty()) {
+        return;
+      }
 
-    // All of the data points to the respective series.
-    // TODO: Come up with a better sampling than Math.max(1, (maxZoomLevel - zoomLevel + 1) / 2);
-    int sampling = 1;
-    for (int i = 0; i < data.size(); i += sampling) {
-      double[] d = data.get(i);
-      int min = Math.min(series.length, d.length - 1);
-      for (int j = 0; j < min; ++j) {
+      // All of the data points to the respective series.
+      // TODO: Come up with a better sampling than Math.max(1, (maxZoomLevel - zoomLevel + 1) / 2);
+      int sampling = 1;
+      for (int i = 0; i < data.size(); i += sampling) {
+        double[] d = data.get(i);
+        int min = Math.min(series.length, d.length - 1);
+        for (int j = 0; j < min; ++j) {
+          ChartValueSeries cvs = series[j];
+          Path path = cvs.getPath();
+          int x = getX(d[0]);
+          int y = getY(cvs, d[j + 1]);
+          if (i == 0) {
+            path.moveTo(x, y);
+          } else {
+            path.lineTo(x, y);
+          }
+        }
+      }
+
+      // Close the path.
+      int yCorner = topBorder + effectiveHeight;
+      int xCorner = getX(data.get(0)[0]);
+      int min = series.length;
+      for (int j = 0; j < min; j++) {
         ChartValueSeries cvs = series[j];
         Path path = cvs.getPath();
-        int x = getX(d[0]);
-        int y = getY(cvs, d[j + 1]);
-        if (i == 0) {
-          path.moveTo(x, y);
-        } else {
-          path.lineTo(x, y);
+        int first = getFirstPointPopulatedIndex(j + 1);
+        if (first != -1) {
+          // Bottom right corner
+          path.lineTo(getX(data.get(data.size() - 1)[0]), yCorner);
+          // Bottom left corner
+          path.lineTo(xCorner, yCorner);
+          // Top right corner
+          path.lineTo(xCorner, getY(cvs, data.get(first)[j + 1]));
         }
       }
     }
-
-    // Close the path.
-    int yCorner = topBorder + effectiveHeight;
-    int xCorner = getX(data.get(0)[0]);
-    int min = series.length;
-    for (int j = 0; j < min; j++) {
-      ChartValueSeries cvs = series[j];
-      Path path = cvs.getPath();
-      int first = getFirstPointPopulatedIndex(j + 1);
-      if (first != -1) {
-        // Bottom right corner
-        path.lineTo(getX(data.get(data.size() - 1)[0]), yCorner);
-        // Bottom left corner
-        path.lineTo(xCorner, yCorner);
-        // Top right corner
-        path.lineTo(xCorner, getY(cvs, data.get(first)[j + 1]));
-      }
-    }
   }
- 
+
   /**
    * Find the index of the first point which has a series populated.
    * @param seriesIndex The index of the value series to search for.
@@ -709,7 +670,7 @@ public class ChartView extends View {
   }
 
   /**
-   * Update the histogram dimensions.
+   * Update the chart dimensions.
    */
   private void updateDimensions() {
     maxX = xMonitor.getMax();
@@ -785,7 +746,7 @@ public class ChartView extends View {
     }
     String s =
         (mode == Mode.BY_DISTANCE)
-            ? (shortFormat ? xShortFormat.format(x) : xFormat.format(x))
+            ? (shortFormat ? X_SHORT_FORMAT.format(x) : X_FORMAT.format(x))
             : StringUtils.formatTime((long) x);
     c.drawText(s,
                getX(x),
@@ -826,18 +787,18 @@ public class ChartView extends View {
       int y = i * effectiveHeight / MAX_INTERVALS + topBorder;
       canvas.drawLine(leftBorder - 5, y, leftBorder, y, gridPaint);
     }
-    
+
     Context c = getContext();
     // TODO: This should really show units for all series.
     String s = metricUnits ? c.getString(R.string.meter) : c.getString(R.string.feet);
     canvas.drawText(s, leftBorder - UNIT_BORDER * .2f, UNIT_BORDER * .8f + topBorder, labelPaint);
   }
-  
-  private synchronized void drawGrid(Canvas c) {
+
+  private void drawGrid(Canvas c) {
     if (data.isEmpty()) {
       return;
     }
-    
+
     float rightEdge = getX(maxX);
     for (int i = 1; i < MAX_INTERVALS; ++i) {
       int y = i * effectiveHeight / MAX_INTERVALS + topBorder;

@@ -259,13 +259,13 @@ public class ChartActivity extends Activity implements TrackDataListener {
     // TODO: Account for segment splits?
     switch (mode) {
       case BY_DISTANCE:
-        timeOrDistance = profileLength;
+        timeOrDistance = profileLength / 1000.0;
         if (lastLocation != null) {
           double d = lastLocation.distanceTo(location);
           if (metricUnits) {
-            profileLength += d / 1000.0;
+            profileLength += d;
           } else {
-            profileLength += d * UnitConversions.KM_TO_MI / 1000.0;
+            profileLength += d * UnitConversions.KM_TO_MI;
           }
         }
         break;
@@ -361,9 +361,16 @@ public class ChartActivity extends Activity implements TrackDataListener {
     lastLocation = null;
     startTime = -1;
     elevationBuffer.reset();
-    speedBuffer.reset();
     chartView.reset();
+    speedBuffer.reset();
     pendingPoints.clear();
+
+    runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        chartView.resetScroll();
+      }
+    });
   }
 
   @Override
