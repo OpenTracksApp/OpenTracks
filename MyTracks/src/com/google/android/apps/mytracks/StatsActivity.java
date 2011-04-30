@@ -250,15 +250,6 @@ public class StatsActivity extends Activity implements TrackDataListener {
       thread.interrupt();
       thread = null;
     }
-
-    if (track == null || track.getStatistics() == null) {
-      runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-          utils.setAllToUnknown();
-        }
-      });
-    }
   }
 
   @Override
@@ -288,6 +279,11 @@ public class StatsActivity extends Activity implements TrackDataListener {
     runOnUiThread(new Runnable() {
       @Override
       public void run() {
+        if (track == null || track.getStatistics() == null) {
+          utils.setAllToUnknown();
+          return;
+        }
+
         startTime = track.getStatistics().getStartTime();
         if (!dataHub.isRecordingSelected()) {
           utils.setTime(R.id.total_time_register,

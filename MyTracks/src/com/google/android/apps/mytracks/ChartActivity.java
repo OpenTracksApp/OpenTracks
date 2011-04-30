@@ -338,7 +338,6 @@ public class ChartActivity extends Activity implements TrackDataListener {
 
   @Override
   public void onSelectedTrackChanged(Track track, boolean isRecording) {
-    Log.e(TAG, "Visible", new Throwable());
     runOnUiThread(new Runnable() {
       @Override
       public void run() {
@@ -349,6 +348,10 @@ public class ChartActivity extends Activity implements TrackDataListener {
 
   @Override
   public void onTrackUpdated(Track track) {
+    if (track == null || track.getStatistics() == null) {
+      trackMaxSpeed = 0.0;
+    }
+
     trackMaxSpeed = track.getStatistics().getMaxSpeed();
   }
 
