@@ -45,6 +45,7 @@ limitations under the License.
   <string name="error_invalid_gpx_format">File does not have a valid GPX format.</string>
   <string name="error_generic">An error occurred. Please try again.</string>
   <string name="error_track_does_not_exist">Track does not exist.</string>
+  <string name="error_operation_cancelled">The operation was cancelled.</string>
   <string name="error_out_of_memory">This file is too big (must be less than 500 KB). Aborting.</string>
   <string name="error_unable_to_insert_marker">Unable to insert marker. No location fix available.</string>
 
@@ -157,7 +158,6 @@ limitations under the License.
   <string name="tracklist_clear_map">Clear map</string>
   <!-- Import All -->
   <string name="tracklist_btn_import_all">Import all</string>
-  <string name="import_done">Import finished, imported</string>
   <!-- Format:
   $1 : Successful imports
   $2 : Attempted imports

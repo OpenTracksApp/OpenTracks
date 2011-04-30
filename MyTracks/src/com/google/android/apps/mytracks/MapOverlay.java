@@ -461,7 +461,7 @@ public class MapOverlay extends Overlay {
     if (waypoint != null &&
         dmin < 15000000 / Math.pow(2, mapView.getZoomLevel())) {
       Intent intent = new Intent(context, WaypointDetails.class);
-      intent.putExtra("waypointid", waypoint.getId());
+      intent.putExtra(WaypointDetails.WAYPOINT_ID_EXTRA, waypoint.getId());
       context.startActivity(intent);
       return true;
     }

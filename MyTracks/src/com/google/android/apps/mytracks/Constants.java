@@ -187,6 +187,14 @@ public abstract class Constants {
   public static final String RESUME_TRACK_EXTRA_NAME =
       "com.google.android.apps.mytracks.RESUME_TRACK";
 
+  /**
+   * The name of the extra intent property that holds the track information
+   * when sharing with friends
+   */
+  public static final String TRACK_EXTRA = 
+      "com.google.android.apps.mytracks.TRACK";
+  
+
   public static int getActionFromMenuId(int menuId) {
     switch (menuId) {
       case Constants.MENU_SEND_TO_GOOGLE:

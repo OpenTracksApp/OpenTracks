@@ -5,17 +5,8 @@ import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.io.file.TrackFormatWriter;
 
 import android.test.AndroidTestCase;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -28,6 +19,14 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.FactoryConfigurationError;
 import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
  * Base class for track format writer tests, which sets up a fake track and
@@ -105,9 +104,9 @@ public abstract class TrackFormatWriterTest extends AndroidTestCase {
    * track in {@link #track}.
    *
    * @param writer the writer to write to
-   * @return the written contents 
+   * @return the written contents
    */
-  protected String writeTrack(TrackFormatWriter writer) {
+  protected String writeTrack(TrackFormatWriter writer) throws Exception {
     OutputStream output = new ByteArrayOutputStream(BUFFER_SIZE);
     writer.prepare(track, output);
     writer.writeHeader();

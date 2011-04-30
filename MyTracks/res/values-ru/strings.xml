@@ -157,7 +157,6 @@ limitations under the License.
   <string name="tracklist_clear_map">Очистить карту</string>
   <!-- Import All -->
   <string name="tracklist_btn_import_all">Импорт всех</string>
-  <string name="import_done">Импорт закончен</string>
   <!-- Format:
   $1 : Successful imports
   $2 : Attempted imports

@@ -1,6 +1,8 @@
 package com.google.android.apps.mytracks.services.sensors;
 
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.services.sensors.ant.AntDirectSensorManager;
+import com.google.android.apps.mytracks.services.sensors.ant.AntSRMSensorManager;
 import com.google.android.maps.mytracks.R;
 
 import android.content.SharedPreferences;

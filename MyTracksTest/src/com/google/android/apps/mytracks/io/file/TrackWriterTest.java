@@ -9,10 +9,9 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.io.file.TrackFormatWriter;
-import com.google.android.apps.mytracks.io.file.TrackWriterImpl;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceTest.MockContext;
 import com.google.android.apps.mytracks.testing.TestingProviderUtilsFactory;
+import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
 import android.location.Location;
@@ -25,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.OutputStream;
 
 import org.easymock.EasyMock;
+import org.easymock.IAnswer;
 import org.easymock.IArgumentMatcher;
 import org.easymock.IMocksControl;
 
@@ -180,6 +180,43 @@ public class TrackWriterTest extends AndroidTestCase {
     mocksControl.verify();
   }
 
+  public void testWriteTrack_cancelled() throws Exception {
+    final ByteArrayOutputStream stream = new ByteArrayOutputStream();
+    writer = new OpenFileTrackWriter(
+        getContext(), providerUtils, track, formatWriter, stream, true);
+
+    formatWriter.prepare(track, stream);
+
+    final Location[] locs = {
+        new Location("fake0"),
+        new Location("fake1"),
+    };
+    fillLocations(locs);
+    assertEquals(locs.length, providerUtils.bulkInsertTrackPoints(locs, locs.length, TRACK_ID));
+
+    formatWriter.writeHeader();
+    formatWriter.writeBeginTrack(locEq(locs[0]));
+    formatWriter.writeOpenSegment();
+
+    formatWriter.writeLocation(locEq(locs[0]));
+    //EasyMock.expectLastCall().andThrow(new InterruptedException());
+    EasyMock.expectLastCall().andAnswer(new IAnswer<Object>() {
+      @Override
+      public Object answer() throws Throwable {
+        throw new InterruptedException();
+      }
+    });
+
+    mocksControl.replay();
+
+    writer.writeTrack();
+
+    mocksControl.verify();
+
+    assertFalse(writer.wasSuccess());
+    assertEquals(R.string.error_operation_cancelled, writer.getErrorMessage());
+  }
+
   public void testWriteTrack_openFails() {
     writer = new WriteTracksTrackWriter(getContext(), providerUtils, track,
         formatWriter, false);
@@ -229,7 +266,7 @@ public class TrackWriterTest extends AndroidTestCase {
     mocksControl.verify();
   }
 
-  public void testWriteDocument_emptyTrack() {
+  public void testWriteDocument_emptyTrack() throws Exception {
     writer = new TrackWriterImpl(getContext(), providerUtils, track, formatWriter);
 
     // Set expected mock behavior
@@ -244,7 +281,7 @@ public class TrackWriterTest extends AndroidTestCase {
     mocksControl.verify();
   }
 
-  public void testWriteDocument() {
+  public void testWriteDocument() throws Exception {
     writer = new TrackWriterImpl(getContext(), providerUtils, track, formatWriter);
 
     final Location[] locs = {

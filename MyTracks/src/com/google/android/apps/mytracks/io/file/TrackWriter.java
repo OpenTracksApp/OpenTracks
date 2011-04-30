@@ -76,6 +76,11 @@ public interface TrackWriter {
   void writeTrack();
 
   /**
+   * Stop any in-progress writes
+   */
+  void stopWriteTrack();
+
+  /**
    * Returns true if the write completed successfully.
    */
   boolean wasSuccess();
