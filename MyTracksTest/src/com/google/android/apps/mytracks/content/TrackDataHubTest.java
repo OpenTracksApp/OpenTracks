@@ -28,7 +28,7 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TrackDataListener;
-import com.google.android.apps.mytracks.content.TrackDataSources;
+import com.google.android.apps.mytracks.content.DataSourcesWrapper;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
@@ -69,7 +69,8 @@ public class TrackDataHubTest extends AndroidTestCase {
   private static final long TRACK_ID = 42;
   private MyTracksProviderUtils providerUtils;
   private TrackDataHub hub;
-  private TrackDataSources dataSources;
+  private TrackDataListeners listeners;
+  private DataSourcesWrapper dataSources;
   private SharedPreferences prefs;
   private TrackDataListener listener1;
   private TrackDataListener listener2;
@@ -89,9 +90,10 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     prefs = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     providerUtils = AndroidMock.createMock("providerUtils", MyTracksProviderUtils.class);
-    dataSources = AndroidMock.createNiceMock("dataSources", TrackDataSources.class);
+    dataSources = AndroidMock.createNiceMock("dataSources", DataSourcesWrapper.class);
 
-    hub = new TrackDataHub(context, dataSources, prefs, providerUtils) {
+    listeners = new TrackDataListeners();
+    hub = new TrackDataHub(context, dataSources, listeners, prefs, providerUtils) {
       @Override
       protected void runInListenerThread(Runnable runnable) {
         // Run everything in the same thread.

@@ -23,8 +23,6 @@ import android.location.Location;
 /**
  * Listener for track data, for both initial and incremental loading.
  *
- * TODO: Allow listening to just part of the data received here.
- *
  * @author Rodrigo Damazio
  */
 public interface TrackDataListener {

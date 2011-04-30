@@ -42,7 +42,7 @@ import android.widget.Toast;
  *
  * @author Rodrigo Damazio
  */
-class TrackDataSourcesImpl implements TrackDataSources {
+class DataSourcesWrapperImpl implements DataSourcesWrapper {
   // System services
   private final SensorManager sensorManager;
   private final LocationManager locationManager;
@@ -50,7 +50,7 @@ class TrackDataSourcesImpl implements TrackDataSources {
   private final SharedPreferences sharedPreferences;
   private final Context context;
 
-  TrackDataSourcesImpl(Context context, SharedPreferences sharedPreferences) {
+  DataSourcesWrapperImpl(Context context, SharedPreferences sharedPreferences) {
     this.context = context;
     this.sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
     this.locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
