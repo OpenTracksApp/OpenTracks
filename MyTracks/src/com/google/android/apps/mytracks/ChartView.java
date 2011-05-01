@@ -550,13 +550,14 @@ public class ChartView extends View {
     }
   }
 
+  /** Clips the given canvas to the area where the graph lines should be drawn. */
   private void clipToGraphSpace(Canvas c) {
     c.clipRect(leftBorder + 1 + getScrollX(), topBorder + 1,
         w - RIGHT_BORDER + getScrollX() - 1, h - bottomBorder - 1);
   }
 
+  /** Draws the axes and their labels into th e given canvas. */
   private void drawAxesAndLabels(Canvas c) {
-    // Draw the axis and labels.
     drawXLabels(c);
     drawXAxis(c);
     drawSeriesTitles(c);
@@ -573,6 +574,7 @@ public class ChartView extends View {
     }
   }
 
+  /** Draws the current pointer into the given canvas. */
   private void drawPointer(Canvas c) {
     c.translate(getX(maxX) - pointer.getIntrinsicWidth() / 2,
                 getY(series[0], data.get(data.size() - 1)[1])
@@ -580,8 +582,8 @@ public class ChartView extends View {
     pointer.draw(c);
   }
 
+  /** Draws the waypoints into the given canvas. */
   private void drawWaypoints(Canvas c) {
-    // Draw the waypoints.
     for (int i = 1; i < waypoints.size(); i++) {
       final Waypoint waypoint = waypoints.get(i);
       if (waypoint.getLocation() == null) {
@@ -601,8 +603,8 @@ public class ChartView extends View {
     }
   }
 
+  /** Draws the data series into the given canvas. */
   private void drawDataSeries(Canvas c) {
-    // Draw the data series.
     for (ChartValueSeries cvs : series) {
       if (cvs.isEnabled() && cvs.hasData()) {
         cvs.drawPath(c);
@@ -610,6 +612,7 @@ public class ChartView extends View {
     }
   }
 
+  /** Draws the colored titles for the data series. */
   private void drawSeriesTitles(Canvas c) {
     int sections = 1;
     for (ChartValueSeries cvs : series) {
@@ -637,14 +640,14 @@ public class ChartView extends View {
       }
 
       if (!data.isEmpty()) {
-        drawPath();
-        closePath();
+        drawPaths();
+        closePaths();
       }
     }
   }
 
   /** Actually draws the data points as a path. */
-  private void drawPath() {
+  private void drawPaths() {
     // All of the data points to the respective series.
     // TODO: Come up with a better sampling than Math.max(1, (maxZoomLevel - zoomLevel + 1) / 2);
     int sampling = 1;
@@ -666,7 +669,7 @@ public class ChartView extends View {
   }
 
   /** Closes the drawn path so it looks like a solid graph. */
-  private void closePath() {
+  private void closePaths() {
     // Close the path.
     int yCorner = topBorder + effectiveHeight;
     int xCorner = getX(data.get(0)[0]);
@@ -687,10 +690,11 @@ public class ChartView extends View {
   }
 
   /**
-   * Find the index of the first point which has a series populated.
-   * @param seriesIndex The index of the value series to search for.
+   * Finds the index of the first point which has a series populated.
+   *
+   * @param seriesIndex The index of the value series to search for
    * @return The index in the first data for the point in the series that has series
-   *         index value populated or -1 if none is found.
+   *         index value populated or -1 if none is found
    */
   private int getFirstPointPopulatedIndex(int seriesIndex) {
     for (int i = 0; i < data.size(); i++) {
@@ -702,7 +706,7 @@ public class ChartView extends View {
   }
 
   /**
-   * Update the chart dimensions.
+   * Updates the chart dimensions.
    */
   private void updateDimensions() {
     maxX = xMonitor.getMax();
@@ -728,11 +732,16 @@ public class ChartView extends View {
     updateEffectiveDimensions();
   }
 
+  /** Updates the effective dimensions where the graph will be drawn. */
   private void updateEffectiveDimensions() {
     effectiveWidth = Math.max(0, w - leftBorder - RIGHT_BORDER);
     effectiveHeight = Math.max(0, h - topBorder - bottomBorder);
   }
 
+  /**
+   * Updates the effective dimensions where the graph will be drawn, only if the
+   * dimensions of the given canvas have changed since the last call.
+   */
   private void updateEffectiveDimensionsIfChanged(Canvas c) {
     if (w != c.getWidth() || h != c.getHeight()) {
       // Dimensions have changed (for example due to orientation change).
@@ -753,6 +762,7 @@ public class ChartView extends View {
         - (int) ((y - cvs.getMin()) * effectiveHeight / effectiveSpread);
   }
 
+  /** Draws the labels on the X axis into the given canvas. */
   private void drawXLabels(Canvas c) {
     double interval = (int) (maxX / zoomLevel / 4);
     boolean shortFormat = false;
@@ -777,6 +787,7 @@ public class ChartView extends View {
     }
   }
 
+  /** Draws the labels on the Y axis into the given canvas. */
   private float drawYLabels(ChartValueSeries cvs, Canvas c, int x) {
     int interval = cvs.getInterval();
     float maxTextWidth = 0;
@@ -786,6 +797,7 @@ public class ChartView extends View {
     return maxTextWidth;
   }
 
+  /** Draws a single label on the X axis. */
   private void drawXLabel(Canvas c, double x, boolean shortFormat) {
     if (x < 0) {
       return;
@@ -800,6 +812,7 @@ public class ChartView extends View {
                labelPaint);
   }
 
+  /** Draws a single label on the Y axis. */
   private float drawYLabel(ChartValueSeries cvs, Canvas c, int x, int y) {
     int desiredY = (int) ((y - cvs.getMin()) * effectiveHeight /
         (cvs.getInterval() * MAX_INTERVALS));
@@ -811,6 +824,7 @@ public class ChartView extends View {
     return p.measureText(text);
   }
 
+  /** Draws the actual X axis line and its label. */
   private void drawXAxis(Canvas canvas) {
     float rightEdge = getX(maxX);
     final int y = effectiveHeight + topBorder;
@@ -822,6 +836,7 @@ public class ChartView extends View {
     canvas.drawText(s, rightEdge, effectiveHeight + .2f * UNIT_BORDER + topBorder, labelPaint);
   }
 
+  /** Draws the actual Y axis line and its label. */
   private void drawYAxis(Canvas canvas) {
     canvas.drawRect(0, 0,
         leftBorder - 1, effectiveHeight + topBorder + UNIT_BORDER + 1,
@@ -840,6 +855,7 @@ public class ChartView extends View {
     canvas.drawText(s, leftBorder - UNIT_BORDER * .2f, UNIT_BORDER * .8f + topBorder, labelPaint);
   }
 
+  /** Draws the grid for the graph. */
   private void drawGrid(Canvas c) {
     float rightEdge = getX(maxX);
     for (int i = 1; i < MAX_INTERVALS; ++i) {
