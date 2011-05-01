@@ -57,6 +57,8 @@ public class SensorManagerFactory {
       return new AntSRMSensorManager(context);
     } else if (sensor.equals(context.getString(R.string.zephyr_sensor_type))) {
       return new ZephyrSensorManager(context);
+    } else if (sensor.equals(context.getString(R.string.polar_sensor_type))) {
+      return new PolarSensorManager(context);
     } else  {
       Log.w(Constants.TAG, "Unable to find sensor type: " + sensor);
       return null;
