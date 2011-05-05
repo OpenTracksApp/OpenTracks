@@ -934,29 +934,15 @@ public class TrackDataHub {
     // Always keep the sampling frequency - if it changes we'll do a full reload above anyway.
     lastSamplingFrequency = pointSamplingFrequency;
 
-    // Update the listener state
-    // TODO: Optimize this (sampledOutListeners should be a subset of sampledListeners, plus
-    //       getRegistration does a lookup for every listener, and this is in the critical path).
-    updateListenersState(sampledListeners,
-        currentSelectedTrackId, localLastSeenLocationId, pointSamplingFrequency);
-    updateListenersState(sampledOutListeners,
-        currentSelectedTrackId, localLastSeenLocationId, pointSamplingFrequency);
-
     for (TrackDataListener listener : sampledListeners) {
       listener.onNewTrackPointsDone();
-    }
-  }
 
-  private void updateListenersState(Set<TrackDataListener> sampledListeners,
-      long trackId, long lastPointId, int samplingFrequency) {
-    synchronized (listeners) {
-      for (TrackDataListener listener : sampledListeners) {
-        ListenerRegistration registration = listeners.getRegistration(listener);
-        if (registration != null) {
-          registration.lastTrackId = trackId;
-          registration.lastPointId = lastPointId;
-          registration.lastSamplingFrequency = samplingFrequency;
-        }
+      // Update the listener state
+      ListenerRegistration registration = listeners.getRegistration(listener);
+      if (registration != null) {
+        registration.lastTrackId = currentSelectedTrackId;
+        registration.lastPointId = localLastSeenLocationId;
+        registration.lastSamplingFrequency = pointSamplingFrequency;
       }
     }
   }
