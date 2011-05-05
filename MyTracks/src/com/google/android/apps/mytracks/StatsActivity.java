@@ -28,6 +28,7 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -260,6 +261,10 @@ public class StatsActivity extends Activity implements TrackDataListener {
 
   @Override
   public void onCurrentLocationChanged(final Location loc) {
+    if (!loc.getProvider().equals(LocationManager.GPS_PROVIDER)) {
+      return;
+    }
+
     if (dataHub.isRecordingSelected()) {
       runOnUiThread(new Runnable() {
         @Override

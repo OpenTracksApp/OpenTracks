@@ -508,8 +508,7 @@ public class MapActivity extends com.google.android.maps.MapActivity
   @Override
   public void onCurrentLocationChanged(Location location) {
     if (!location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
-      Log.d(TAG,
-          "MapActivity: Network location update received (provider '" + location.getProvider() + "'.");
+      return;
     }
 
     currentLocation = location;
