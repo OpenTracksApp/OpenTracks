@@ -178,9 +178,9 @@ public class MapActivity extends com.google.android.maps.MapActivity
   }
 
   @Override
-  protected void onStart() {
+  protected void onResume() {
     Log.d(TAG, "MapActivity.onStart");
-    super.onStart();
+    super.onResume();
 
     dataHub.registerTrackDataListener(this, EnumSet.of(
         ListenerDataType.SELECTED_TRACK_CHANGED,
@@ -201,12 +201,12 @@ public class MapActivity extends com.google.android.maps.MapActivity
   }
 
   @Override
-  protected void onStop() {
+  protected void onPause() {
     Log.d(TAG, "MapActivity.onStop");
 
     dataHub.unregisterTrackDataListener(this);
 
-    super.onStop();
+    super.onPause();
   }
 
   // Utility functions:
@@ -508,8 +508,7 @@ public class MapActivity extends com.google.android.maps.MapActivity
   @Override
   public void onCurrentLocationChanged(Location location) {
     if (!location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
-      Log.d(TAG,
-          "MapActivity: Network location update received (provider '" + location.getProvider() + "'.");
+      return;
     }
 
     currentLocation = location;

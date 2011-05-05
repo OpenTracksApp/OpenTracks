@@ -103,7 +103,7 @@ public class TrackDataHub {
 
     @Override
     public void notifyPointsUpdated() {
-      TrackDataHub.this.notifyPointsUpdated(true,
+      TrackDataHub.this.notifyPointsUpdated(true, 0,
           getListenersFor(ListenerDataType.POINT_UPDATES),
           getListenersFor(ListenerDataType.SAMPLED_OUT_POINT_UPDATES));
     }
@@ -170,16 +170,16 @@ public class TrackDataHub {
 
   // Cached GPS readings
   private Location lastSeenLocation;
-  private boolean hasProviderEnabled;
+  private boolean hasProviderEnabled = true;
   private boolean hasFix;
   private boolean hasGoodFix;
 
   // Transient state about the selected track
   private long selectedTrackId;
-  private long recordingTrackId;
   private long firstSeenLocationId;
   private long lastSeenLocationId;
   private int numLoadedPoints;
+  private int lastSamplingFrequency;
 
   /**
    * Default constructor.
@@ -238,7 +238,6 @@ public class TrackDataHub {
 
   private void loadSharedPreferences() {
     selectedTrackId = preferences.getLong(SELECTED_TRACK_KEY, -1);
-    recordingTrackId = preferences.getLong(RECORDING_TRACK_KEY, -1);
     useMetricUnits = preferences.getBoolean(METRIC_UNITS_KEY, true);
     reportSpeed = preferences.getBoolean(SPEED_REPORTING_KEY, true);
     minRequiredAccuracy = preferences.getInt(MIN_REQUIRED_ACCURACY_KEY,
@@ -339,7 +338,7 @@ public class TrackDataHub {
     if (!started) {
       loadSharedPreferences();
     }
-    return recordingTrackId > 0;
+    return preferences.getLong(RECORDING_TRACK_KEY, -1) > 0;
   }
 
   /** Returns whether the selected track is still being recorded. */
@@ -347,7 +346,8 @@ public class TrackDataHub {
     if (!started) {
       loadSharedPreferences();
     }
-    return recordingTrackId > 0 && recordingTrackId == selectedTrackId;
+    long recordingTrackId = preferences.getLong(RECORDING_TRACK_KEY, -1);
+    return recordingTrackId  > 0 && recordingTrackId == selectedTrackId;
   }
 
   /**
@@ -414,7 +414,11 @@ public class TrackDataHub {
    * Reloads all track data received so far into the specified listeners.
    */
   public void reloadDataForListener(TrackDataListener listener) {
-    reloadDataForListener(listeners.getRegistration(listener));
+    ListenerRegistration registration;
+    synchronized (listeners) {
+      registration = listeners.getRegistration(listener);
+    }
+    reloadDataForListener(registration);
   }
 
   /**
@@ -425,21 +429,29 @@ public class TrackDataHub {
       Log.w(TAG, "Not started, not reloading");
       return;
     }
+    if (registration == null) {
+      return;
+    }
 
     runInListenerThread(new Runnable() {
       @SuppressWarnings("unchecked")
       @Override
       public void run() {
+        // Reload everything if either it's a different track, or the track has been resampled
+        // (this also covers the case of a new registration).
+        boolean reloadAll = registration.lastTrackId != selectedTrackId ||
+                            registration.lastSamplingFrequency != lastSamplingFrequency;
+        Log.d(TAG, "Doing a " + (reloadAll ? "full" : "partial") + " reload for " + registration);
+
         TrackDataListener listener = registration.listener;
         Set<TrackDataListener> listenerSet = Collections.singleton(listener);
 
         if (registration.isInterestedIn(ListenerDataType.DISPLAY_PREFERENCES)) {
-          // Ignore the return values here, we're already sending the full data set anyway
-          listener.onUnitsChanged(useMetricUnits);
-          listener.onReportSpeedChanged(reportSpeed);
+          reloadAll |= listener.onUnitsChanged(useMetricUnits);
+          reloadAll |= listener.onReportSpeedChanged(reportSpeed);
         }
 
-        if (registration.isInterestedIn(ListenerDataType.SELECTED_TRACK_CHANGED)) {
+        if (reloadAll && registration.isInterestedIn(ListenerDataType.SELECTED_TRACK_CHANGED)) {
           notifySelectedTrackChanged(selectedTrackId, listenerSet);
         }
 
@@ -452,8 +464,10 @@ public class TrackDataHub {
         boolean interestedInSampledOutPoints =
             registration.isInterestedIn(ListenerDataType.SAMPLED_OUT_POINT_UPDATES);
         if (interestedInPoints || interestedInSampledOutPoints) {
-          notifyPointsCleared(listenerSet);
+          if (reloadAll) notifyPointsCleared(listenerSet);
+
           notifyPointsUpdated(false,
+              reloadAll ? 0 : registration.lastPointId + 1,
               listenerSet,
               interestedInSampledOutPoints ? listenerSet : Collections.EMPTY_SET);
         }
@@ -481,13 +495,15 @@ public class TrackDataHub {
    * Reloads all track data received so far into the specified listeners.
    */
   private void loadDataForAllListeners() {
-    if (!listeners.hasListeners()) {
-      Log.d(TAG, "No listeners, not reloading");
-      return;
-    }
     if (!started) {
       Log.w(TAG, "Not started, not reloading");
       return;
+    }
+    synchronized (listeners) {
+      if (!listeners.hasListeners()) {
+        Log.d(TAG, "No listeners, not reloading");
+        return;
+      }
     }
 
     runInListenerThread(new Runnable() {
@@ -510,7 +526,7 @@ public class TrackDataHub {
         Set<TrackDataListener> sampledOutPointListeners =
             getListenersFor(ListenerDataType.SAMPLED_OUT_POINT_UPDATES);
         notifyPointsCleared(pointListeners);
-        notifyPointsUpdated(true, pointListeners, sampledOutPointListeners);
+        notifyPointsUpdated(true, 0, pointListeners, sampledOutPointListeners);
 
         notifyWaypointUpdated(getListenersFor(ListenerDataType.WAYPOINT_UPDATES));
         
@@ -532,9 +548,7 @@ public class TrackDataHub {
    * @param key the key to the preference that changed
    */
   private void notifyPreferenceChanged(String key) {
-    if (RECORDING_TRACK_KEY.equals(key)) {
-      recordingTrackId = preferences.getLong(RECORDING_TRACK_KEY, -1);
-    } else if (MIN_REQUIRED_ACCURACY_KEY.equals(key)) {
+    if (MIN_REQUIRED_ACCURACY_KEY.equals(key)) {
       minRequiredAccuracy = preferences.getInt(MIN_REQUIRED_ACCURACY_KEY,
           Constants.DEFAULT_MIN_REQUIRED_ACCURACY);
     } else if (METRIC_UNITS_KEY.equals(key)) {
@@ -559,7 +573,9 @@ public class TrackDataHub {
         for (TrackDataListener listener : displayListeners) {
           // TODO: Do the reloading just once for all interested listeners
           if (listener.onReportSpeedChanged(reportSpeed)) {
-            reloadDataForListener(listeners.getRegistration(listener));
+            synchronized (listeners) {
+              reloadDataForListener(listeners.getRegistration(listener));
+            }
           }
         }
       }
@@ -577,7 +593,9 @@ public class TrackDataHub {
 
         for (TrackDataListener listener : displayListeners) {
           if (listener.onUnitsChanged(useMetricUnits)) {
-            reloadDataForListener(listeners.getRegistration(listener));
+            synchronized (listeners) {
+              reloadDataForListener(listeners.getRegistration(listener));
+            }
           }
         }
       }
@@ -796,23 +814,20 @@ public class TrackDataHub {
   /**
    * Notifies the given listeners about track points in the given ID range.
    *
-   * @param minPointId the first point ID to notify, inclusive
-   * @param maxPointId the last poind ID to notify, inclusive
    * @param keepState whether to load and save state about the already-notified points.
    *        If true, only new points are reported.
    *        If false, then the whole track will be loaded, without affecting the store.
-   * @param listeners the listeners to notify
-   * @param trackDataListeners 
+   * @param minPointId the first point ID to notify, inclusive
    */
   private void notifyPointsUpdated(final boolean keepState,
-      final Set<TrackDataListener> sampledListeners,
+      final long minPointId, final Set<TrackDataListener> sampledListeners,
       final Set<TrackDataListener> sampledOutListeners) {
     if (sampledListeners.isEmpty() && sampledOutListeners.isEmpty()) return;
 
     runInListenerThread(new Runnable() {
       @Override
       public void run() {
-        notifyPointsUpdatedSync(keepState, sampledListeners, sampledOutListeners);
+        notifyPointsUpdatedSync(keepState, minPointId, sampledListeners, sampledOutListeners);
       }
     });
   }
@@ -821,12 +836,14 @@ public class TrackDataHub {
    * Asynchronous version of the above method.
    */
   private void notifyPointsUpdatedSync(boolean keepState,
-      Set<TrackDataListener> sampledListeners,
+      long minPointId, Set<TrackDataListener> sampledListeners,
       Set<TrackDataListener> sampledOutListeners) {
     // If we're loading state, start from after the last seen point up to the last recorded one
     // (all new points)
     // If we're not loading state, then notify about all the previously-seen points.
-    long minPointId = keepState ? lastSeenLocationId + 1 : 0;
+    if (minPointId <= 0) {
+      minPointId = keepState ? lastSeenLocationId + 1 : 0;
+    }
     long maxPointId = keepState ? -1 : lastSeenLocationId;
 
     // TODO: Move (re)sampling to a separate class.
@@ -914,8 +931,33 @@ public class TrackDataHub {
       lastSeenLocationId = localLastSeenLocationId;
     }
 
+    // Always keep the sampling frequency - if it changes we'll do a full reload above anyway.
+    lastSamplingFrequency = pointSamplingFrequency;
+
+    // Update the listener state
+    // TODO: Optimize this (sampledOutListeners should be a subset of sampledListeners, plus
+    //       getRegistration does a lookup for every listener, and this is in the critical path).
+    updateListenersState(sampledListeners,
+        currentSelectedTrackId, localLastSeenLocationId, pointSamplingFrequency);
+    updateListenersState(sampledOutListeners,
+        currentSelectedTrackId, localLastSeenLocationId, pointSamplingFrequency);
+
     for (TrackDataListener listener : sampledListeners) {
       listener.onNewTrackPointsDone();
+    }
+  }
+
+  private void updateListenersState(Set<TrackDataListener> sampledListeners,
+      long trackId, long lastPointId, int samplingFrequency) {
+    synchronized (listeners) {
+      for (TrackDataListener listener : sampledListeners) {
+        ListenerRegistration registration = listeners.getRegistration(listener);
+        if (registration != null) {
+          registration.lastTrackId = trackId;
+          registration.lastPointId = lastPointId;
+          registration.lastSamplingFrequency = samplingFrequency;
+        }
+      }
     }
   }
 

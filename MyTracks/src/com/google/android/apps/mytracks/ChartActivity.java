@@ -139,8 +139,8 @@ public class ChartActivity extends Activity implements TrackDataListener {
   }
 
   @Override
-  protected void onStart() {
-    super.onStart();
+  protected void onResume() {
+    super.onResume();
 
     dataHub.registerTrackDataListener(this, EnumSet.of(
         ListenerDataType.SELECTED_TRACK_CHANGED,
@@ -151,10 +151,10 @@ public class ChartActivity extends Activity implements TrackDataListener {
   }
 
   @Override
-  protected void onStop() {
+  protected void onPause() {
     dataHub.unregisterTrackDataListener(this);
 
-    super.onStop();
+    super.onPause();
   }
 
   private void zoomIn() {
@@ -418,6 +418,9 @@ public class ChartActivity extends Activity implements TrackDataListener {
 
   @Override
   public boolean onUnitsChanged(boolean metric) {
+    boolean changed = metric != this.metricUnits;
+    if (!changed) return false;
+
     this.metricUnits = metric;
 
     chartView.setMetricUnits(metric);
@@ -427,6 +430,9 @@ public class ChartActivity extends Activity implements TrackDataListener {
 
   @Override
   public boolean onReportSpeedChanged(boolean reportSpeed) {
+    boolean changed = reportSpeed != this.reportSpeed;
+    if (!changed) return false;
+
     this.reportSpeed = reportSpeed;
 
     chartView.setReportSpeed(reportSpeed, this);

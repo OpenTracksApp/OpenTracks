@@ -478,6 +478,14 @@ public class TrackDataHubTest extends AndroidTestCase {
     // TODO: test loading a track, getting updates, loading another, unloading
   }
 
+  public void testRelisten() {
+    // TODO: test re-registering an old points listener
+  }
+
+  public void testRelisten_changed() {
+    // TODO: test register, get points, unregister, change track, register
+  }
+
   private void expectStart() {
     dataSources.registerOnSharedPreferenceChangeListener(capture(preferenceListenerCapture));
   }

@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 /**
  * Manager for the external data listeners and their listening types.
@@ -39,7 +40,11 @@ class TrackDataListeners {
   static class ListenerRegistration {
     final TrackDataListener listener;
     final EnumSet<ListenerDataType> types;
-    // TODO: Add the last-notified point ID here, to allow pausing/resuming.
+
+    // State that was last notified to the listener, for resuming after a pause.
+    long lastTrackId;
+    long lastPointId;
+    int lastSamplingFrequency;
 
     public ListenerRegistration(TrackDataListener listener,
         EnumSet<ListenerDataType> types) {
@@ -50,11 +55,25 @@ class TrackDataListeners {
     public boolean isInterestedIn(ListenerDataType type) {
       return types.contains(type);
     }
+
+    @Override
+    public String toString() {
+      return "ListenerRegistration [listener=" + listener + ", types=" + types
+          + ", lastTrackId=" + lastTrackId + ", lastPointId=" + lastPointId
+          + ", lastSamplingFrequency=" + lastSamplingFrequency + "]";
+    }
   }
 
   /** Map of external listener to its registration details. */
   private final Map<TrackDataListener, ListenerRegistration> registeredListeners =
       new HashMap<TrackDataListener, ListenerRegistration>();
+
+  /**
+   * Map of external paused listener to its registration details.
+   * This will automatically discard listeners which are GCed.
+   */
+  private final WeakHashMap<TrackDataListener, ListenerRegistration> oldListeners =
+      new WeakHashMap<TrackDataListener, ListenerRegistration>();
 
   /** Map of data type to external listeners interested in it. */
   private final Map<ListenerDataType, Set<TrackDataListener>> listenerSetsPerType =
@@ -77,10 +96,13 @@ class TrackDataListeners {
    */
   public ListenerRegistration registerTrackDataListener(final TrackDataListener listener, EnumSet<ListenerDataType> dataTypes) {
     Log.d(TAG, "Registered track data listener: " + listener);
-    ListenerRegistration registration = new ListenerRegistration(listener, dataTypes);
-
-    if (registeredListeners.get(listener) != null) {
+    if (registeredListeners.containsKey(listener)) {
       throw new IllegalStateException("Listener already registered");
+    }
+
+    ListenerRegistration registration = oldListeners.remove(listener);
+    if (registration == null) {
+      registration = new ListenerRegistration(listener, dataTypes);
     }
     registeredListeners.put(listener, registration);
 
@@ -111,10 +133,17 @@ class TrackDataListeners {
     for (ListenerDataType type : match.types) {
       listenerSetsPerType.get(type).remove(listener);
     }
+
+    // Keep it around in case it's re-registered soon
+    oldListeners.put(listener, match);
   }
 
   public ListenerRegistration getRegistration(TrackDataListener listener) {
-    return registeredListeners.get(listener);
+    ListenerRegistration registration = registeredListeners.get(listener);
+    if (registration == null) {
+      registration = oldListeners.get(listener);
+    }
+    return registration;
   }
 
   public Set<TrackDataListener> getListenersFor(ListenerDataType type) {
