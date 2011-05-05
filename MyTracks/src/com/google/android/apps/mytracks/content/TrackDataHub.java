@@ -170,7 +170,7 @@ public class TrackDataHub {
 
   // Cached GPS readings
   private Location lastSeenLocation;
-  private boolean hasProviderEnabled;
+  private boolean hasProviderEnabled = true;
   private boolean hasFix;
   private boolean hasGoodFix;
 
