@@ -176,7 +176,6 @@ public class TrackDataHub {
 
   // Transient state about the selected track
   private long selectedTrackId;
-  private long recordingTrackId;
   private long firstSeenLocationId;
   private long lastSeenLocationId;
   private int numLoadedPoints;
@@ -239,7 +238,6 @@ public class TrackDataHub {
 
   private void loadSharedPreferences() {
     selectedTrackId = preferences.getLong(SELECTED_TRACK_KEY, -1);
-    recordingTrackId = preferences.getLong(RECORDING_TRACK_KEY, -1);
     useMetricUnits = preferences.getBoolean(METRIC_UNITS_KEY, true);
     reportSpeed = preferences.getBoolean(SPEED_REPORTING_KEY, true);
     minRequiredAccuracy = preferences.getInt(MIN_REQUIRED_ACCURACY_KEY,
@@ -340,7 +338,7 @@ public class TrackDataHub {
     if (!started) {
       loadSharedPreferences();
     }
-    return recordingTrackId > 0;
+    return preferences.getLong(RECORDING_TRACK_KEY, -1) > 0;
   }
 
   /** Returns whether the selected track is still being recorded. */
@@ -348,7 +346,8 @@ public class TrackDataHub {
     if (!started) {
       loadSharedPreferences();
     }
-    return recordingTrackId > 0 && recordingTrackId == selectedTrackId;
+    long recordingTrackId = preferences.getLong(RECORDING_TRACK_KEY, -1);
+    return recordingTrackId  > 0 && recordingTrackId == selectedTrackId;
   }
 
   /**
@@ -549,9 +548,7 @@ public class TrackDataHub {
    * @param key the key to the preference that changed
    */
   private void notifyPreferenceChanged(String key) {
-    if (RECORDING_TRACK_KEY.equals(key)) {
-      recordingTrackId = preferences.getLong(RECORDING_TRACK_KEY, -1);
-    } else if (MIN_REQUIRED_ACCURACY_KEY.equals(key)) {
+    if (MIN_REQUIRED_ACCURACY_KEY.equals(key)) {
       minRequiredAccuracy = preferences.getInt(MIN_REQUIRED_ACCURACY_KEY,
           Constants.DEFAULT_MIN_REQUIRED_ACCURACY);
     } else if (METRIC_UNITS_KEY.equals(key)) {
