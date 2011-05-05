@@ -45,6 +45,7 @@ class TrackDataListeners {
     long lastTrackId;
     long lastPointId;
     int lastSamplingFrequency;
+    int numLoadedPoints;
 
     public ListenerRegistration(TrackDataListener listener,
         EnumSet<ListenerDataType> types) {
@@ -60,7 +61,8 @@ class TrackDataListeners {
     public String toString() {
       return "ListenerRegistration [listener=" + listener + ", types=" + types
           + ", lastTrackId=" + lastTrackId + ", lastPointId=" + lastPointId
-          + ", lastSamplingFrequency=" + lastSamplingFrequency + "]";
+          + ", lastSamplingFrequency=" + lastSamplingFrequency
+          + ", numLoadedPoints=" + numLoadedPoints + "]";
     }
   }
 

@@ -103,7 +103,7 @@ public class TrackDataHub {
 
     @Override
     public void notifyPointsUpdated() {
-      TrackDataHub.this.notifyPointsUpdated(true, 0,
+      TrackDataHub.this.notifyPointsUpdated(true, 0, 0,
           getListenersFor(ListenerDataType.POINT_UPDATES),
           getListenersFor(ListenerDataType.SAMPLED_OUT_POINT_UPDATES));
     }
@@ -232,7 +232,6 @@ public class TrackDataHub {
     loadSharedPreferences();
 
     // If there were listeners already registered, make sure they become up-to-date.
-    // TODO: This should really only send new data (in a start-stop-start cycle).
     loadDataForAllListeners();
   }
 
@@ -468,6 +467,7 @@ public class TrackDataHub {
 
           notifyPointsUpdated(false,
               reloadAll ? 0 : registration.lastPointId + 1,
+              reloadAll ? 0 : registration.numLoadedPoints,
               listenerSet,
               interestedInSampledOutPoints ? listenerSet : Collections.EMPTY_SET);
         }
@@ -526,7 +526,7 @@ public class TrackDataHub {
         Set<TrackDataListener> sampledOutPointListeners =
             getListenersFor(ListenerDataType.SAMPLED_OUT_POINT_UPDATES);
         notifyPointsCleared(pointListeners);
-        notifyPointsUpdated(true, 0, pointListeners, sampledOutPointListeners);
+        notifyPointsUpdated(true, 0, 0, pointListeners, sampledOutPointListeners);
 
         notifyWaypointUpdated(getListenersFor(ListenerDataType.WAYPOINT_UPDATES));
         
@@ -816,18 +816,22 @@ public class TrackDataHub {
    *
    * @param keepState whether to load and save state about the already-notified points.
    *        If true, only new points are reported.
-   *        If false, then the whole track will be loaded, without affecting the store.
-   * @param minPointId the first point ID to notify, inclusive
+   *        If false, then the whole track will be loaded, without affecting the state.
+   * @param minPointId the first point ID to notify, inclusive, or 0 to determine from
+   *        internal state
+   * @param previousNumPoints the number of points to assume were previously loaded for
+   *        these listeners, or 0 to assume it's the kept state
    */
   private void notifyPointsUpdated(final boolean keepState,
-      final long minPointId, final Set<TrackDataListener> sampledListeners,
+      final long minPointId, final int previousNumPoints,
+      final Set<TrackDataListener> sampledListeners,
       final Set<TrackDataListener> sampledOutListeners) {
     if (sampledListeners.isEmpty() && sampledOutListeners.isEmpty()) return;
 
     runInListenerThread(new Runnable() {
       @Override
       public void run() {
-        notifyPointsUpdatedSync(keepState, minPointId, sampledListeners, sampledOutListeners);
+        notifyPointsUpdatedSync(keepState, minPointId, previousNumPoints, sampledListeners, sampledOutListeners);
       }
     });
   }
@@ -836,7 +840,8 @@ public class TrackDataHub {
    * Asynchronous version of the above method.
    */
   private void notifyPointsUpdatedSync(boolean keepState,
-      long minPointId, Set<TrackDataListener> sampledListeners,
+      long minPointId, int previousNumPoints,
+      Set<TrackDataListener> sampledListeners,
       Set<TrackDataListener> sampledOutListeners) {
     // If we're loading state, start from after the last seen point up to the last recorded one
     // (all new points)
@@ -863,6 +868,7 @@ public class TrackDataHub {
       }
       maxPointId = -1;
       minPointId = 0;
+      previousNumPoints = 0;
       keepState = true;
 
       for (TrackDataListener listener : sampledListeners) {
@@ -874,7 +880,10 @@ public class TrackDataHub {
     long currentSelectedTrackId = selectedTrackId;
 
     // If we're ignoring state, start from the beginning of the track
-    int localNumLoadedPoints = keepState ? numLoadedPoints : 0;
+    int localNumLoadedPoints = previousNumPoints;
+    if (previousNumPoints <= 0) {
+      localNumLoadedPoints = keepState ? numLoadedPoints : 0;
+    }
     long localFirstSeenLocationId = keepState ? firstSeenLocationId : 0;
     long localLastSeenLocationId = minPointId;
     long lastStoredLocationId = providerUtils.getLastLocationId(currentSelectedTrackId);
@@ -943,6 +952,7 @@ public class TrackDataHub {
         registration.lastTrackId = currentSelectedTrackId;
         registration.lastPointId = localLastSeenLocationId;
         registration.lastSamplingFrequency = pointSamplingFrequency;
+        registration.numLoadedPoints = localNumLoadedPoints;
       }
     }
   }
