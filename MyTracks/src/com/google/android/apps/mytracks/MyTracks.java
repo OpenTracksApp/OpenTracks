@@ -16,7 +16,6 @@
 package com.google.android.apps.mytracks;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
-import static com.google.android.apps.mytracks.Constants.TRACK_EXTRA;
 import static com.google.android.apps.mytracks.DialogManager.DIALOG_IMPORT_PROGRESS;
 import static com.google.android.apps.mytracks.DialogManager.DIALOG_PROGRESS;
 import static com.google.android.apps.mytracks.DialogManager.DIALOG_SEND_TO_GOOGLE;
@@ -1246,7 +1245,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    *
    * @param trackId The id of the track to be sent
    */
-  public void sendTrack(final long trackId, final TrackFileFormat format) {
+  public void sendTrack(long trackId, final TrackFileFormat format) {
     TrackWriter writer = TrackWriterFactory.newWriter(this, providerUtils, trackId, format);
 
     FileUtils fileUtils = new FileUtils();
@@ -1274,8 +1273,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
         shareIntent.setType(format.getMimeType());
         Uri u = Uri.fromFile(new File(writer.getAbsolutePath()));
         shareIntent.putExtra(Intent.EXTRA_STREAM, u);
-        Track track = providerUtils.getTrack(trackId);
-        shareIntent.putExtra(TRACK_EXTRA, track);
         startActivity(Intent.createChooser(shareIntent,
             getResources().getText(R.string.share_track).toString()));
       }
