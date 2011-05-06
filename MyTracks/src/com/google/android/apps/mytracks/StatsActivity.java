@@ -19,16 +19,15 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
+import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -261,15 +260,15 @@ public class StatsActivity extends Activity implements TrackDataListener {
 
   @Override
   public void onCurrentLocationChanged(final Location loc) {
-    if (!loc.getProvider().equals(LocationManager.GPS_PROVIDER)) {
-      return;
-    }
-
     if (dataHub.isRecordingSelected()) {
       runOnUiThread(new Runnable() {
         @Override
         public void run() {
-          showLocation(loc);
+          if (loc != null) {
+            showLocation(loc);
+          } else {
+            showUnknownLocation();
+          }
         }
       });
     }

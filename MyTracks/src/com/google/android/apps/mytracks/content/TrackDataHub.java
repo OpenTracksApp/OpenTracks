@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks.content;
 
 import static com.google.android.apps.mytracks.Constants.MAX_LOCATION_AGE_MS;
+import static com.google.android.apps.mytracks.Constants.MAX_NETWORK_AGE_MS;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.Constants;
@@ -346,7 +347,7 @@ public class TrackDataHub {
       loadSharedPreferences();
     }
     long recordingTrackId = preferences.getLong(RECORDING_TRACK_KEY, -1);
-    return recordingTrackId  > 0 && recordingTrackId == selectedTrackId;
+    return recordingTrackId > 0 && recordingTrackId == selectedTrackId;
   }
 
   /**
@@ -463,11 +464,20 @@ public class TrackDataHub {
         boolean interestedInSampledOutPoints =
             registration.isInterestedIn(ListenerDataType.SAMPLED_OUT_POINT_UPDATES);
         if (interestedInPoints || interestedInSampledOutPoints) {
-          if (reloadAll) notifyPointsCleared(listenerSet);
+          long minPointId = 0;
+          int previousNumPoints = 0;
+          if (reloadAll) {
+            // Clear existing points and send them all again
+            notifyPointsCleared(listenerSet);
+          } else {
+            // Send only new points
+            minPointId = registration.lastPointId + 1;
+            previousNumPoints = registration.numLoadedPoints;
+          }
 
           notifyPointsUpdated(false,
-              reloadAll ? 0 : registration.lastPointId + 1,
-              reloadAll ? 0 : registration.numLoadedPoints,
+              minPointId,
+              previousNumPoints,
               listenerSet,
               interestedInSampledOutPoints ? listenerSet : Collections.EMPTY_SET);
         }
@@ -650,7 +660,7 @@ public class TrackDataHub {
    * @param forceUpdate whether to force the notifications to happen
    * @param listeners the listeners to notify
    */
-  private void notifyLocationChanged(final Location location, boolean forceUpdate,
+  private void notifyLocationChanged(Location location, boolean forceUpdate,
       final Set<TrackDataListener> listeners) {
     if (location == null) return;
     if (listeners.isEmpty()) return;
@@ -660,24 +670,54 @@ public class TrackDataHub {
     boolean oldHasFix = hasFix;
     boolean oldHasGoodFix = hasGoodFix;
 
-    // We consider a good fix to be a recent one with reasonable accuracy.
+    long now = System.currentTimeMillis();
     if (isGpsLocation) {
-      lastSeenLocation = location;
-      hasFix = (location != null && System.currentTimeMillis() - location.getTime() <= MAX_LOCATION_AGE_MS);
+      // We consider a good fix to be a recent one with reasonable accuracy.
+      hasFix = !isLocationOld(location, now, MAX_LOCATION_AGE_MS);
       hasGoodFix = (location != null && location.getAccuracy() <= minRequiredAccuracy);
-      if (hasFix != oldHasFix || hasGoodFix != oldHasGoodFix || forceUpdate) {
-        notifyFixType();
+    } else {
+      if (!isLocationOld(lastSeenLocation, now, MAX_LOCATION_AGE_MS)) {
+        // This is a network location, but we have a recent/valid GPS location, just ignore this.
+        return;
+      }
+
+      // We haven't gotten a GPS location in a while (or at all), assume we have no fix anymore.
+      hasFix = false;
+      hasGoodFix = false;
+
+      // If the network location is recent, we'll use that.
+      if (isLocationOld(location, now, MAX_NETWORK_AGE_MS)) {
+        // Alas, we have no clue where we are.
+        location = null;
       }
     }
 
+    if (hasFix != oldHasFix || hasGoodFix != oldHasGoodFix || forceUpdate) {
+      notifyFixType();
+    }
+
+    lastSeenLocation = location;
+    final Location finalLoc = location;
     runInListenerThread(new Runnable() {
       @Override
       public void run() {
         for (TrackDataListener listener : listeners) {
-          listener.onCurrentLocationChanged(location);
+          listener.onCurrentLocationChanged(finalLoc);
         }
       }
     });
+  }
+
+  /**
+   * Returns true if the given location is either invalid or too old.
+   *
+   * @param location the location to test
+   * @param now the current timestamp in milliseconds
+   * @param maxAge the maximum age in milliseconds
+   * @return true if it's invalid or too old, false otherwise
+   */
+  private static boolean isLocationOld(Location location, long now, long maxAge) {
+    return !LocationUtils.isValidLocation(location) || now - location.getTime() > maxAge;
   }
 
   /**

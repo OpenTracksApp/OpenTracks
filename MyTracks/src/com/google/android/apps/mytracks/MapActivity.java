@@ -255,17 +255,18 @@ public class MapActivity extends com.google.android.maps.MapActivity
    * the current location is outside the visible area.
    */
   private void showCurrentLocation() {
-    if (currentLocation == null || mapOverlay == null || mapView == null) {
+    if (mapOverlay == null || mapView == null) {
       return;
     }
+
     mapOverlay.setMyLocation(currentLocation);
     mapView.postInvalidate();
-    if (keepMyLocationVisible && !locationIsVisible(currentLocation)) {
+
+    if (currentLocation != null && keepMyLocationVisible && !locationIsVisible(currentLocation)) {
       GeoPoint geoPoint = LocationUtils.getGeoPoint(currentLocation);
       MapController controller = mapView.getController();
       controller.animateTo(geoPoint);
     }
-
   }
 
   @Override
@@ -507,10 +508,6 @@ public class MapActivity extends com.google.android.maps.MapActivity
 
   @Override
   public void onCurrentLocationChanged(Location location) {
-    if (!location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
-      return;
-    }
-
     currentLocation = location;
     showCurrentLocation();
   }
