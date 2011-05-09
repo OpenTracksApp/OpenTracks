@@ -27,7 +27,6 @@ import com.google.android.apps.mytracks.content.Sensor;
  */
 public class ZephyrMessageParser implements MessageParser {
 
-  @Override
   public Sensor.SensorDataSet parseBuffer(byte[] buffer) {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < buffer.length; i++) {
@@ -35,36 +34,42 @@ public class ZephyrMessageParser implements MessageParser {
     }
     Log.w(Constants.TAG, "Got zephyr data: " + sb);
     // The provided units are 1/16 strides per minute.
-    // TODO: Fix the cadence calculation.
-    // int cadence = SensorUtils.unsignedShortToInt(buffer, 56);
     // Heart Rate
-    Sensor.SensorData.Builder b = Sensor.SensorData.newBuilder()
-      .setValue(buffer[12] & 0xFF)
-      .setState(Sensor.SensorState.SENDING);
+    Sensor.SensorData.Builder heartrate = Sensor.SensorData.newBuilder()
+    .setValue(buffer[12] & 0xFF)
+    .setState(Sensor.SensorState.SENDING);
+    // Changes Nico Laum (Power and Cadence)
+    Sensor.SensorData.Builder power = Sensor.SensorData.newBuilder()
+	    .setValue(buffer[11] & 0xFF)
+	    .setState(Sensor.SensorState.SENDING);
+    Sensor.SensorData.Builder cadence = Sensor.SensorData.newBuilder()
+	    .setValue(SensorUtils.unsignedShortToIntLittleEndian(buffer, 56)/16)
+	    .setState(Sensor.SensorState.SENDING);
+    
       // Cadence
       //.setCadence(cadence / 16)
       //.build();
     Sensor.SensorDataSet sds =
       Sensor.SensorDataSet.newBuilder()
       .setCreationTime(System.currentTimeMillis())
-      .setHeartRate(b)
+      .setPower(power)
+      .setHeartRate(heartrate)
+      .setCadence(cadence)
       .build();
     
     return sds;
   }
 
-  @Override
   public boolean isValid(byte[] buffer) {
-    // TODO crc etc.
-    return buffer[0] == 0x02 && buffer[59] == 0x03;
+	  // Changes Nico Laum
+	  // Check STX, ETX and CRC Checksum
+    return (buffer[0] == 0x02 && buffer[59] == 0x03 && (SensorUtils.getCrc8(buffer, 3, 57) == (int) (buffer[58] & 0xFF)));
   }
 
-  @Override
   public int getFrameSize() {
     return 60;
   }
 
-  @Override
   public int findNextAlignment(byte[] buffer) {
     // TODO test or understand this code.
     for (int i = 0; i < buffer.length - 1; i++) {
