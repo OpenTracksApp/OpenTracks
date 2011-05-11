@@ -30,7 +30,7 @@ public class SensorUtils {
 
   private SensorUtils() {
   }
-
+  
   /**
    * Extract one unsigned short from a big endian byte array.
    * 
@@ -66,10 +66,10 @@ public class SensorUtils {
    * @param end the position in the byte array where the payload ends
    * @return CRC8 value
    */
-  public static int getCrc8(byte[] buffer, int start, int end) {
-    int crc = 0x0;
+  public static byte getCrc8(byte[] buffer, int start, int length) {
+    byte crc = 0x0;
 
-    for (int i = start; i < (end + 1); i++) {
+    for (int i = start; i < (start + length); i++) {
       crc = crc8PushByte(crc, buffer[i]);
     }
     return crc;
@@ -81,14 +81,18 @@ public class SensorUtils {
    * @param crc int of crc value
    * @param add the next byte to add to the CRC8 calculation
    */
-  private static int crc8PushByte(int crc, byte add) {
-    int addInt = (add & 0x000000FF);
-    crc = crc ^ addInt;
+  private static byte crc8PushByte(byte crc, byte add) {
+    crc = (byte) (crc ^ add);
+    
     for (int i = 0; i < 8; i++) {
-      if ((crc & 0x00000001) != 0x00000000) {
-        crc = (crc >> 1) ^ 0x0000008C;
+      if ((crc & 0x1) != 0x0) {
+		// we have to do the OxFF mask because the right shift is
+		// supposed to shift in a 0
+    	// as crc gets implicitly casted to a
+		// signed int by >> it may be filled with 1s
+        crc = (byte) (((crc & 0xFF) >> 1) ^ 0x8C);
       } else {
-        crc = (crc >> 1);
+        crc = (byte) ((crc & 0xFF) >> 1);
       }
     }
     return crc;

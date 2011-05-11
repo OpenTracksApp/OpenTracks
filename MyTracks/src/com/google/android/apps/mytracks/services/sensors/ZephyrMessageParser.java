@@ -27,6 +27,10 @@ import com.google.android.apps.mytracks.content.Sensor;
  */
 public class ZephyrMessageParser implements MessageParser {
 
+	public static final int ZEPHYR_HXM_BYTE_STX = 0;
+	public static final int ZEPHYR_HXM_BYTE_CRC = 58;
+	public static final int ZEPHYR_HXM_BYTE_ETX = 59;
+	
   @Override
   public Sensor.SensorDataSet parseBuffer(byte[] buffer) {
     StringBuilder sb = new StringBuilder();
@@ -36,11 +40,11 @@ public class ZephyrMessageParser implements MessageParser {
     Log.w(Constants.TAG, "Got zephyr data: " + sb);
     // Heart Rate
     Sensor.SensorData.Builder heartrate = Sensor.SensorData.newBuilder()
-        .setValue(buffer[12] & 0xFF)
+        .setValue(buffer[12])
         .setState(Sensor.SensorState.SENDING);
     // Changes Nico Laum (Power and Cadence)
     Sensor.SensorData.Builder power = Sensor.SensorData.newBuilder()
-	    .setValue(buffer[11] & 0xFF)
+	    .setValue(buffer[11])
 	    .setState(Sensor.SensorState.SENDING);
     Sensor.SensorData.Builder cadence = Sensor.SensorData.newBuilder()
 	    .setValue(SensorUtils.unsignedShortToIntLittleEndian(buffer, 56) / 16)
@@ -59,10 +63,13 @@ public class ZephyrMessageParser implements MessageParser {
 
   @Override
   public boolean isValid(byte[] buffer) {
-    // Check STX, ETX and CRC Checksum
-    return buffer[0] == 0x02
-        && buffer[59] == 0x03
-        && SensorUtils.getCrc8(buffer, 3, 57) == (int) (buffer[58] & 0xFF);
+	if (buffer.length > ZEPHYR_HXM_BYTE_ETX) {
+	  // Check STX (Start of Text), ETX (End of Text) and CRC Checksum
+	  return buffer[ZEPHYR_HXM_BYTE_STX] == 0x02
+	  && buffer[ZEPHYR_HXM_BYTE_ETX] == 0x03
+	  && SensorUtils.getCrc8(buffer, 3, 55) == buffer[ZEPHYR_HXM_BYTE_CRC];
+	} else
+		return false;
   }
 
   @Override
