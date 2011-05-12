@@ -86,10 +86,8 @@ public class SensorUtils {
     
     for (int i = 0; i < 8; i++) {
       if ((crc & 0x1) != 0x0) {
-		// we have to do the OxFF mask because the right shift is
-		// supposed to shift in a 0
-    	// as crc gets implicitly casted to a
-		// signed int by >> it may be filled with 1s
+	// Using a 0xFF bit assures that 0-bits are introduced during the shift operation. 
+	// Otherwise, implicit casts to signed int could shift in 1-bits if the signed bit is 1.
         crc = (byte) (((crc & 0xFF) >> 1) ^ 0x8C);
       } else {
         crc = (byte) ((crc & 0xFF) >> 1);
