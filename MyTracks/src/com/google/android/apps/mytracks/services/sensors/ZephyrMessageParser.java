@@ -27,9 +27,9 @@ import com.google.android.apps.mytracks.content.Sensor;
  */
 public class ZephyrMessageParser implements MessageParser {
 
-    public static final int ZEPHYR_HXM_BYTE_STX = 0;
-    public static final int ZEPHYR_HXM_BYTE_CRC = 58;
-    public static final int ZEPHYR_HXM_BYTE_ETX = 59;
+  public static final int ZEPHYR_HXM_BYTE_STX = 0;
+  public static final int ZEPHYR_HXM_BYTE_CRC = 58;
+  public static final int ZEPHYR_HXM_BYTE_ETX = 59;
 	
   @Override
   public Sensor.SensorDataSet parseBuffer(byte[] buffer) {
@@ -63,13 +63,11 @@ public class ZephyrMessageParser implements MessageParser {
 
   @Override
   public boolean isValid(byte[] buffer) {
-    if (buffer.length > ZEPHYR_HXM_BYTE_ETX) {
-      // Check STX (Start of Text), ETX (End of Text) and CRC Checksum
-      return buffer[ZEPHYR_HXM_BYTE_STX] == 0x02
-      && buffer[ZEPHYR_HXM_BYTE_ETX] == 0x03
-      && SensorUtils.getCrc8(buffer, 3, 55) == buffer[ZEPHYR_HXM_BYTE_CRC];
-    } else
-      return false;
+    // Check STX (Start of Text), ETX (End of Text) and CRC Checksum
+    return buffer.length > ZEPHYR_HXM_BYTE_ETX
+        && buffer[ZEPHYR_HXM_BYTE_STX] == 0x02
+        && buffer[ZEPHYR_HXM_BYTE_ETX] == 0x03
+        && SensorUtils.getCrc8(buffer, 3, 55) == buffer[ZEPHYR_HXM_BYTE_CRC];
   }
 
   @Override
