@@ -924,7 +924,7 @@ public class TrackDataHub {
     if (previousNumPoints <= 0) {
       localNumLoadedPoints = keepState ? numLoadedPoints : 0;
     }
-    long localFirstSeenLocationId = keepState ? firstSeenLocationId : 0;
+    long localFirstSeenLocationId = keepState ? firstSeenLocationId : -1;
     long localLastSeenLocationId = minPointId;
     long lastStoredLocationId = providerUtils.getLastLocationId(currentSelectedTrackId);
     int pointSamplingFrequency = -1;
