@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2010 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<resources>
+  <string name="app_name">Signal strength sampler for My Tracks</string>
+
+  <string name="settings_sampling">Sampling settings</string>
+  <string name="settings_auto_start">Automatic start</string>
+  <string name="settings_auto_start_summary_on">Automatically start inserting signal strength waypoints whenever My Tracks starts recording a track.</string>
+  <string name="settings_auto_start_summary_off">You will need to manually start signal sampling using the controls below.</string>
+  <string name="settings_auto_stop">Automatic stop</string>
+  <string name="settings_auto_stop_summary_on">Automatically stop inserting signal strength waypoints whenever My Tracks stops recording a track.</string>
+  <string name="settings_auto_stop_summary_off">You will need to manually stop signal sampling using the controls below.</string>
+  <string name="settings_min_signal_sampling_period">Min. sampling period</string>
+  <string name="settings_min_signal_sampling_period_summary">Minimum time between two recordings of the phone\'s signal strength</string>
+
+  <string name="settings_control">Sampling control</string>
+  <string name="settings_control_start">Start sampling</string>
+  <string name="settings_control_start_summary">Starts sampling signal strength immediately, if My Tracks is recording. Sampling will stop once My Tracks stops recording.</string>
+  <string name="settings_control_stop">Stop sampling</string>
+  <string name="settings_control_stop_summary">Stops sampling signal strength if sampling is currently active.</string>
+
+  <string name="started_sampling">Started sampling cell signal strength.</string>
+  <string name="stopped_sampling">Stopped sampling cell signal strength.</string>
+  <string name="unknown">-</string>
+
+  <!-- Signal Strength -->
+  <string name="error_rate"> Error Rate: %1$d</string>
+  <string name="signal_to_noise_ratio"> Signal to Noise Ratio: %1$d</string>
+  <string name="ecio"> Ec/lo: %1$.1f dB</string>
+  <string name="gsm_strength">GSM Strength: %1$d</string>
+  <string name="cdma_strength">CDMA Strength: %1$d dBm</string>
+  <string name="evdo_strength">EVDO Strength: %1$d dBm</string>
+
+  <!-- Non-translatable strings -->
+  <string name="settings_auto_start_key">autoStartSampling</string>
+  <string name="settings_auto_stop_key">autoStopSampling</string>
+  <string name="settings_min_signal_sampling_period_key">signalSamplingFrequency</string>
+  <string name="settings_control_start_key">startSamplingControl</string>
+  <string name="settings_control_stop_key">stopSamplingControl</string>
+</resources>
