@@ -892,8 +892,8 @@ public class TrackDataHub {
     long maxPointId = keepState ? -1 : lastSeenLocationId;
 
     // TODO: Move (re)sampling to a separate class.
-    if (numLoadedPoints >= Constants.MAX_DISPLAYED_TRACK_POINTS) {
-      // We're about to exceed the maximum allowed number of points, so reload
+    if (numLoadedPoints >= Constants.TARGET_DISPLAYED_TRACK_POINTS) {
+      // We're about to exceed the maximum desired number of points, so reload
       // the whole track with fewer points (the sampling frequency will be
       // lower). We do this for every listener even if we were loading just for
       // a few of them (why miss the oportunity?).
@@ -924,7 +924,7 @@ public class TrackDataHub {
     if (previousNumPoints <= 0) {
       localNumLoadedPoints = keepState ? numLoadedPoints : 0;
     }
-    long localFirstSeenLocationId = keepState ? firstSeenLocationId : 0;
+    long localFirstSeenLocationId = keepState ? firstSeenLocationId : -1;
     long localLastSeenLocationId = minPointId;
     long lastStoredLocationId = providerUtils.getLastLocationId(currentSelectedTrackId);
     int pointSamplingFrequency = -1;
@@ -1017,21 +1017,21 @@ public class TrackDataHub {
     // Include a point if it fits one of the following criteria:
     // - Has the mod for the sampling frequency (includes first point).
     // - Is the last point and we are not recording this track.
+    boolean recordingSelected = isRecordingSelected();
     boolean includeInSample =
         (numLoadedPoints % pointSamplingFrequency == 0 ||
-         (!isRecordingSelected() && locationId == lastStoredLocationId));
+         (!recordingSelected && locationId == lastStoredLocationId));
 
     if (!includeInSample) {
       for (TrackDataListener listener : sampledOutListeners) {
         listener.onSampledOutTrackPoint(location);
       }
-      return;
-    }
-
-    // Point is valid and included in sample.
-    for (TrackDataListener listener : sampledListeners) {
-      // No need to allocate a new location (we can safely reuse the existing).
-      listener.onNewTrackPoint(location);
+    } else {
+      // Point is valid and included in sample.
+      for (TrackDataListener listener : sampledListeners) {
+        // No need to allocate a new location (we can safely reuse the existing).
+        listener.onNewTrackPoint(location);
+      }
     }
   }
 
