@@ -163,4 +163,8 @@ class TrackDataListeners {
   public boolean hasListeners() {
     return !registeredListeners.isEmpty();
   }
+
+  public int getNumListeners() {
+    return registeredListeners.size();
+  }
 }

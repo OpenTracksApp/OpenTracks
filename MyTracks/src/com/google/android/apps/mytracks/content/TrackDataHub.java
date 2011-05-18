@@ -21,6 +21,7 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.DataSourceManager.DataSourceListener;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils.DoubleBufferedLocationFactory;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.content.TrackDataListener.ProviderState;
 import com.google.android.apps.mytracks.content.TrackDataListeners.ListenerRegistration;
@@ -47,7 +48,10 @@ import java.util.Set;
  * Track data hub, which receives data (both live and recorded) from many
  * different sources and distributes it to those interested after some standard
  * processing.
- * 
+ *
+ * TODO: Simplify the threading model here, it's overly complex and it's not obvious why
+ *       certain race conditions won't happen.
+ *
  * @author Rodrigo Damazio
  */
 public class TrackDataHub {
@@ -181,6 +185,7 @@ public class TrackDataHub {
   private long lastSeenLocationId;
   private int numLoadedPoints;
   private int lastSamplingFrequency;
+  private DoubleBufferedLocationFactory locationFactory;
 
   /**
    * Default constructor.
@@ -203,6 +208,7 @@ public class TrackDataHub {
     this.providerUtils = providerUtils;
     this.dataSources = dataSources;
     this.dataSourceManager = new DataSourceManager(dataSourceListener, dataSources);
+    this.locationFactory = new DoubleBufferedLocationFactory();
 
     SELECTED_TRACK_KEY = context.getString(R.string.selected_track_key);
     RECORDING_TRACK_KEY = context.getString(R.string.recording_track_key);
@@ -369,11 +375,20 @@ public class TrackDataHub {
     selectedTrackId = trackId;
 
     // Force it to reload data from the beginning.
+    Log.d(TAG, "Loading track");
+    resetState();
+
+    loadDataForAllListeners();
+  }
+
+  /**
+   * Resets the internal state of what data has already been loaded into listeners.
+   */
+  private void resetState() {
     firstSeenLocationId = -1;
     lastSeenLocationId = -1;
     numLoadedPoints = 0;
-
-    loadDataForAllListeners();
+    lastSamplingFrequency = -1;
   }
 
   /**
@@ -401,6 +416,13 @@ public class TrackDataHub {
   public void unregisterTrackDataListener(TrackDataListener listener) {
     synchronized (listeners) {
       listeners.unregisterTrackDataListener(listener);
+      
+      if (!listeners.hasListeners()) {
+        // We lost our last listener, don't bother keeping the listener state.
+        // If any of the old listeners happens to be re-added, we'll use state from its
+        // old registration instead.
+        resetState();
+      }
 
       // Don't load any data or start internal listeners if start() hasn't been
       // called. When it is called, we'll do both things.
@@ -417,12 +439,14 @@ public class TrackDataHub {
     ListenerRegistration registration;
     synchronized (listeners) {
       registration = listeners.getRegistration(listener);
+      reloadDataForListener(registration);
     }
-    reloadDataForListener(registration);
   }
 
   /**
    * Reloads all track data received so far into the specified listeners.
+   * 
+   * Assumes it's called from a block that synchronizes on {@link #listeners}.
    */
   private void reloadDataForListener(final ListenerRegistration registration) {
     if (!started) {
@@ -432,6 +456,11 @@ public class TrackDataHub {
     if (registration == null) {
       return;
     }
+
+    // If a listener happens to be added after this method but before the Runnable below is
+    // executed, it will have triggered a separate call to load data only up to the point this
+    // listener got to. This is ensured by being synchronized on listeners.
+    final boolean isOnlyListener = (listeners.getNumListeners() == 1);
 
     runInListenerThread(new Runnable() {
       @SuppressWarnings("unchecked")
@@ -466,6 +495,7 @@ public class TrackDataHub {
         if (interestedInPoints || interestedInSampledOutPoints) {
           long minPointId = 0;
           int previousNumPoints = 0;
+
           if (reloadAll) {
             // Clear existing points and send them all again
             notifyPointsCleared(listenerSet);
@@ -475,7 +505,9 @@ public class TrackDataHub {
             previousNumPoints = registration.numLoadedPoints;
           }
 
-          notifyPointsUpdated(false,
+          // If this is the only listener we have registered, keep the state that we serve to it as
+          // a reference for other future listeners.
+          notifyPointsUpdated(isOnlyListener,
               minPointId,
               previousNumPoints,
               listenerSet,
@@ -877,7 +909,7 @@ public class TrackDataHub {
   }
 
   /**
-   * Asynchronous version of the above method.
+   * Synchronous version of the above method.
    */
   private void notifyPointsUpdatedSync(boolean keepState,
       long minPointId, int previousNumPoints,
@@ -929,9 +961,6 @@ public class TrackDataHub {
     long lastStoredLocationId = providerUtils.getLastLocationId(currentSelectedTrackId);
     int pointSamplingFrequency = -1;
 
-    // Create a double-buffering location provider.
-    MyTracksProviderUtils.DoubleBufferedLocationFactory locationFactory =
-        new MyTracksProviderUtils.DoubleBufferedLocationFactory();
     LocationIterator it = providerUtils.getLocationIterator(
         currentSelectedTrackId, minPointId, false, locationFactory);
 
