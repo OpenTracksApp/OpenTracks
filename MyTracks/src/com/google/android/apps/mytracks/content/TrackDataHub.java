@@ -219,6 +219,8 @@ public class TrackDataHub {
     listenerHandlerThread = new HandlerThread("trackDataContentThread");
     listenerHandlerThread.start();
     listenerHandler = new Handler(listenerHandlerThread.getLooper());
+
+    resetState();
   }
 
   /**
@@ -416,13 +418,6 @@ public class TrackDataHub {
   public void unregisterTrackDataListener(TrackDataListener listener) {
     synchronized (listeners) {
       listeners.unregisterTrackDataListener(listener);
-      
-      if (!listeners.hasListeners()) {
-        // We lost our last listener, don't bother keeping the listener state.
-        // If any of the old listeners happens to be re-added, we'll use state from its
-        // old registration instead.
-        resetState();
-      }
 
       // Don't load any data or start internal listeners if start() hasn't been
       // called. When it is called, we'll do both things.
@@ -931,9 +926,7 @@ public class TrackDataHub {
       // a few of them (why miss the oportunity?).
 
       Log.i(TAG, "Resampling point set after " + numLoadedPoints + " points.");
-      firstSeenLocationId = -1;
-      lastSeenLocationId = -1;
-      numLoadedPoints = 0;
+      resetState();
       synchronized (listeners) {
         sampledListeners = getListenersFor(ListenerDataType.POINT_UPDATES);
         sampledOutListeners = getListenersFor(ListenerDataType.SAMPLED_OUT_POINT_UPDATES);
@@ -990,6 +983,9 @@ public class TrackDataHub {
       if (pointSamplingFrequency == -1) {
         // Now we already have at least one point, calculate the sampling
         // frequency.
+        // It should be noted that a non-obvious consequence of this sampling is that
+        // no matter how many points we get in the newest batch, we'll never exceed
+        // MAX_DISPLAYED_TRACK_POINTS = 2 * TARGET_DISPLAYED_TRACK_POINTS before resampling.
         long numTotalPoints = lastStoredLocationId - localFirstSeenLocationId;
         pointSamplingFrequency =
             (int) (1 + numTotalPoints / Constants.TARGET_DISPLAYED_TRACK_POINTS);
