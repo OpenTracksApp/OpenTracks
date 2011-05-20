@@ -18,7 +18,7 @@ package com.google.android.apps.mytracks.services.sensors;
 import android.content.Context;
 
 /**
- * PolarSensorManager - Straight copy from ZephyrSensorManager, renamed, of course.
+ * PolarSensorManager - A sensor manager for Polar heart rate monitors.
  */
 
 public class PolarSensorManager extends BluetoothSensorManager {

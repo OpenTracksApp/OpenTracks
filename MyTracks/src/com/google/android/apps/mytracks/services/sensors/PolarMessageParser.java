@@ -15,44 +15,74 @@
  */
 package com.google.android.apps.mytracks.services.sensors;
 
-import android.util.Log;
-
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Sensor;
 
 /**
- * An implementation of a SensorData parser for Polar Wearlink Bluetooth HRM.
+ * An implementation of a Sensor MessageParser for Polar Wearlink Bluetooth HRM.
  *
+ *  Polar Bluetooth Wearlink packet example;
+ *   Hdr Len Chk Seq Status HeartRate RRInterval_16-bits
+ *    FE  08  F7  06   F1      48          03 64
+ *   where; 
+ *      Hdr always = 254 (0xFE), 
+ *      Chk = 255 - Len
+ *      Seq range 0 to 15
+ *      Status = Upper nibble may be battery voltage
+ *               bit 0 is Beat Detection flag.
+ *               
+ *  Additional packet examples;
+ *    FE 08 F7 06 F1 48 03 64           
+ *    FE 0A F5 06 F1 48 03 64 03 70
+ *    
  * @author John R. Gerthoffer
  */
 public class PolarMessageParser implements MessageParser {
-  // Last Heart Rate value storage (in case of corrupt buffer)
+
   private int lastHeartRate = 0;                   
+
+  /**
+   * Applies Polar packet validation rules to buffer.
+   *   Polar packets are checked for following;
+   *     offset 0 = header byte, 254 (0xFE).
+   *     offset 1 = packet length byte, 8, 10, 12, 14.
+   *     offset 2 = check byte, 255 - packet length.
+   *     offset 3 = sequence byte, range from 0 to 15.
+   *     
+   * @param an array of bytes to parse
+   * @param buffer offset to beginning of packet.  
+   * @return whether buffer has a valid packet at offset i
+   */
+  private boolean packetValid (byte[] buffer, int i) {
+    boolean headerValid = (buffer[i] & 0xFF) == 0xFE;
+    boolean checkbyteValid = (buffer[i + 2] & 0xFF) == (0xFF - (buffer[i + 1] & 0xFF));
+    boolean sequenceValid = (buffer[i + 3] & 0xFF) < 16;
+    
+    return headerValid && checkbyteValid && sequenceValid;
+  }
   
   @Override
   public Sensor.SensorDataSet parseBuffer(byte[] buffer) {
-    StringBuilder sb = new StringBuilder();
+
     int heartRate = 0;
+    boolean heartrateValid = false; 
     
-    // Due to a memory inconsistency issue, the packet does not always start at buffer[0].
-    // While it works stepping thru in debug mode, it is not consistent when running real-time.
-    // Note: After changing the BluetoothConnectionManager to pass a copy of 'buffer', 
-    //       the problem was resolved!  Passing a buffer copy in threaded comm's is typical in my experience.  
-
     // Minimum length Polar packets is 8, so stop search 8 bytes before buffer ends.
-    heartRate = lastHeartRate;                          // Default to use last value. (If our buffer is corrupted).
     for (int i = 0; i < buffer.length - 8; i++) {
-      boolean bHdrOK = ((buffer[i] & 0xFF) == 0xFE); 
-      boolean bChkOK = ((buffer[i+2] & 0xFF) == (0xFF - (buffer[i+1] & 0xFF))); 
-      boolean bSeqOK = ((buffer[i+3] & 0xFF) < 16); 
-      boolean bStatusOK = ((buffer[i+4] & 0xFF) > 128); // I've seen 0xF1 or 0xE1. 
-
-      if (bHdrOK && bChkOK && bSeqOK && bStatusOK) {
+      heartrateValid = packetValid(buffer,i); 
+      if (heartrateValid)  {
         heartRate = buffer[i + 5] & 0xFF;
-        lastHeartRate = heartRate;                      // Remember good value for next time.
-        break;						                    // Let's go store our data.  
+        break; 
       }
     }
+
+    // If our buffer is corrupted, use decaying last good value.
+    if(!heartrateValid) {
+      heartRate = (int) (lastHeartRate * 0.8);  
+      if(heartRate < 50)
+        heartRate = 0;
+    }
+
+    lastHeartRate = heartRate;                          // Remember good value for next time.
 
     // Heart Rate
     Sensor.SensorData.Builder b = Sensor.SensorData.newBuilder()
@@ -60,39 +90,23 @@ public class PolarMessageParser implements MessageParser {
       .setState(Sensor.SensorState.SENDING);
 
     Sensor.SensorDataSet sds =
-      Sensor.SensorDataSet.newBuilder()
-      .setCreationTime(System.currentTimeMillis())
-      .setHeartRate(b)
-      .build();
+    Sensor.SensorDataSet.newBuilder()
+    .setCreationTime(System.currentTimeMillis())
+    .setHeartRate(b)
+    .build();
     
     return sds;
   }
 
   /**
-   * Applies packet validation rule to buffer
-   * Parsing rule for a good Polar HRM packet;
-   *   boolean goodHdr = ((buffer[0] & 0xFF) == 0xFE);
-   *   boolean goodChk = ((buffer[2] & 0xFF) == (0xFF - (buffer[1] & 0xFF)));
-   *   goodPacket = goodHdr && goodChk;
+   * Applies packet validation rules to buffer
    *     
    * @param an array of bytes to parse
    * @return whether buffer has a valid packet starting at index zero
    */
   @Override
   public boolean isValid(byte[] buffer) {
-	/**
-	 *  Polar Bluetooth Wearlink packet example;
-	 *   Hdr Len Chk Seq Status HeartRate RRInterval_16-bits
-     *    FE  08  F7  06   F1      48          03 64
-     *   where Hdr always = 0xFE, Chk = 0xFF - Len
-     *               
-     *  Additional packet examples;
-     *    FE 08 F7 06 F1 48 03 64           
-     *    FE 0A F5 06 F1 48 03 64 03 70
-	 */
-    boolean goodHdr = ((buffer[0] & 0xFF) == 0xFE);
-    boolean goodChk = ((buffer[2] & 0xFF) == (0xFF - (buffer[1] & 0xFF)));
-    return goodHdr && goodChk;    
+    return packetValid(buffer,0);
   }
 
   /**
@@ -110,18 +124,15 @@ public class PolarMessageParser implements MessageParser {
 
   /**
    * Searches buffer for the beginning of a valid packet.
-   * Parsing rule for a good Polar HRM packet;
-   *   boolean goodHdr = ((buffer[0] & 0xFF) == 0xFE);
-   *   boolean goodChk = ((buffer[2] & 0xFF) == (0xFF - (buffer[1] & 0xFF)));
-   *   goodPacket = goodHdr && goodChk;
    *     
    * @param an array of bytes to parse
+   * @return index to beginning of good packet, or -1 if none found.
    */
   @Override
   public int findNextAlignment(byte[] buffer) {
     // Minimum length Polar packets is 8, so stop search 8 bytes before buffer ends.
     for (int i = 0; i < buffer.length - 8; i++) {
-      if (((buffer[i] & 0xFF) == 0xFE) && ((buffer[i+2] & 0xFF) == (0xFF - (buffer[i+1] & 0xFF)))) {
+      if (packetValid(buffer,i)) {
 	    return i;
       }
     }
