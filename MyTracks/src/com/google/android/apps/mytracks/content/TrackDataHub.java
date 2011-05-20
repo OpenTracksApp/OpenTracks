@@ -15,11 +15,13 @@
  */
 package com.google.android.apps.mytracks.content;
 
+import static com.google.android.apps.mytracks.Constants.DEFAULT_MIN_REQUIRED_ACCURACY;
+import static com.google.android.apps.mytracks.Constants.MAX_DISPLAYED_WAYPOINTS_POINTS;
+import static com.google.android.apps.mytracks.Constants.TARGET_DISPLAYED_TRACK_POINTS;
 import static com.google.android.apps.mytracks.Constants.MAX_LOCATION_AGE_MS;
 import static com.google.android.apps.mytracks.Constants.MAX_NETWORK_AGE_MS;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.DataSourceManager.DataSourceListener;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.DoubleBufferedLocationFactory;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
@@ -62,6 +64,9 @@ public class TrackDataHub {
   private final String MIN_REQUIRED_ACCURACY_KEY;
   private final String METRIC_UNITS_KEY;
   private final String SPEED_REPORTING_KEY;
+
+  // Overridable constants
+  private final int targetNumPoints;
 
   /** Types of data that we can expose. */
   public static enum ListenerDataType {
@@ -193,7 +198,7 @@ public class TrackDataHub {
   public TrackDataHub(Context ctx, SharedPreferences preferences,
       MyTracksProviderUtils providerUtils) {
     this(ctx, new DataSourcesWrapperImpl(ctx, preferences), new TrackDataListeners(),
-         preferences, providerUtils);
+         preferences, providerUtils, TARGET_DISPLAYED_TRACK_POINTS);
   }
 
   /**
@@ -201,12 +206,13 @@ public class TrackDataHub {
    */
   // @VisibleForTesting
   TrackDataHub(Context ctx, DataSourcesWrapper dataSources, TrackDataListeners listeners,
-      SharedPreferences preferences, MyTracksProviderUtils providerUtils) {
+      SharedPreferences preferences, MyTracksProviderUtils providerUtils, int targetNumPoints) {
     this.context = ctx;
     this.listeners = listeners;
     this.preferences = preferences;
     this.providerUtils = providerUtils;
     this.dataSources = dataSources;
+    this.targetNumPoints = targetNumPoints;
     this.dataSourceManager = new DataSourceManager(dataSourceListener, dataSources);
     this.locationFactory = new DoubleBufferedLocationFactory();
 
@@ -249,7 +255,7 @@ public class TrackDataHub {
     useMetricUnits = preferences.getBoolean(METRIC_UNITS_KEY, true);
     reportSpeed = preferences.getBoolean(SPEED_REPORTING_KEY, true);
     minRequiredAccuracy = preferences.getInt(MIN_REQUIRED_ACCURACY_KEY,
-        Constants.DEFAULT_MIN_REQUIRED_ACCURACY);
+        DEFAULT_MIN_REQUIRED_ACCURACY);
   }
 
   /**
@@ -566,7 +572,7 @@ public class TrackDataHub {
         notifyPointsUpdated(true, 0, 0, pointListeners, sampledOutPointListeners);
 
         notifyWaypointUpdated(getListenersFor(ListenerDataType.WAYPOINT_UPDATES));
-        
+
         if (lastSeenLocation != null) {
           notifyLocationChanged(lastSeenLocation, true,
               getListenersFor(ListenerDataType.LOCATION_UPDATES));
@@ -587,7 +593,7 @@ public class TrackDataHub {
   private void notifyPreferenceChanged(String key) {
     if (MIN_REQUIRED_ACCURACY_KEY.equals(key)) {
       minRequiredAccuracy = preferences.getInt(MIN_REQUIRED_ACCURACY_KEY,
-          Constants.DEFAULT_MIN_REQUIRED_ACCURACY);
+          DEFAULT_MIN_REQUIRED_ACCURACY);
     } else if (METRIC_UNITS_KEY.equals(key)) {
       useMetricUnits = preferences.getBoolean(METRIC_UNITS_KEY, true);
       notifyUnitsChanged();
@@ -824,7 +830,7 @@ public class TrackDataHub {
 
     // Always reload all the waypoints.
     final Cursor cursor = providerUtils.getWaypointsCursor(
-        selectedTrackId, 0L, Constants.MAX_DISPLAYED_WAYPOINTS_POINTS);
+        selectedTrackId, 0L, MAX_DISPLAYED_WAYPOINTS_POINTS);
 
     runInListenerThread(new Runnable() {
       @Override
@@ -919,7 +925,7 @@ public class TrackDataHub {
     long maxPointId = keepState ? -1 : lastSeenLocationId;
 
     // TODO: Move (re)sampling to a separate class.
-    if (numLoadedPoints >= Constants.TARGET_DISPLAYED_TRACK_POINTS) {
+    if (numLoadedPoints >= targetNumPoints) {
       // We're about to exceed the maximum desired number of points, so reload
       // the whole track with fewer points (the sampling frequency will be
       // lower). We do this for every listener even if we were loading just for
@@ -987,8 +993,7 @@ public class TrackDataHub {
         // no matter how many points we get in the newest batch, we'll never exceed
         // MAX_DISPLAYED_TRACK_POINTS = 2 * TARGET_DISPLAYED_TRACK_POINTS before resampling.
         long numTotalPoints = lastStoredLocationId - localFirstSeenLocationId;
-        pointSamplingFrequency =
-            (int) (1 + numTotalPoints / Constants.TARGET_DISPLAYED_TRACK_POINTS);
+        pointSamplingFrequency = (int) (1 + numTotalPoints / targetNumPoints);
       }
 
       notifyNewPoint(location, locationId, lastStoredLocationId,

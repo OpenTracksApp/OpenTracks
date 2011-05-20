@@ -63,6 +63,8 @@ import org.easymock.IAnswer;
 public class TrackDataHubTest extends AndroidTestCase {
 
   private static final long TRACK_ID = 42L;
+  private static final int TARGET_POINTS = 50;
+
   private MyTracksProviderUtils providerUtils;
   private TrackDataHub hub;
   private TrackDataListeners listeners;
@@ -89,7 +91,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     dataSources = AndroidMock.createNiceMock("dataSources", DataSourcesWrapper.class);
 
     listeners = new TrackDataListeners();
-    hub = new TrackDataHub(context, dataSources, listeners, prefs, providerUtils) {
+    hub = new TrackDataHub(context, dataSources, listeners, prefs, providerUtils, TARGET_POINTS) {
       @Override
       protected void runInListenerThread(Runnable runnable) {
         // Run everything in the same thread.
@@ -627,11 +629,11 @@ public class TrackDataHubTest extends AndroidTestCase {
     dataSources.registerContentObserver(
         eq(TrackPointsColumns.CONTENT_URI), eq(false), capture(observerCapture));
 
-    FixedSizeLocationIterator locationIterator = new FixedSizeLocationIterator(1, 20000, 4, 253, 700, 712);
+    FixedSizeLocationIterator locationIterator = new FixedSizeLocationIterator(1, 200, 4, 25, 71, 120);
     expect(providerUtils.getLocationIterator(
         eq(TRACK_ID), eq(0L), eq(false), isA(LocationFactory.class)))
         .andReturn(locationIterator);
-    expect(providerUtils.getLastLocationId(TRACK_ID)).andReturn(20000L);
+    expect(providerUtils.getLastLocationId(TRACK_ID)).andReturn(200L);
 
     listener1.clearTrackPoints();
     listener2.clearTrackPoints();
@@ -660,12 +662,12 @@ public class TrackDataHubTest extends AndroidTestCase {
     dataSources.registerContentObserver(
         eq(TrackPointsColumns.CONTENT_URI), eq(false), capture(observerCapture));
 
-    // Deliver 3000 points (no sampling happens)
-    FixedSizeLocationIterator locationIterator = new FixedSizeLocationIterator(1, 3000, 5);
+    // Deliver 30 points (no sampling happens)
+    FixedSizeLocationIterator locationIterator = new FixedSizeLocationIterator(1, 30, 5);
     expect(providerUtils.getLocationIterator(
         eq(TRACK_ID), eq(0L), eq(false), isA(LocationFactory.class)))
         .andReturn(locationIterator);
-    expect(providerUtils.getLastLocationId(TRACK_ID)).andReturn(3000L);
+    expect(providerUtils.getLastLocationId(TRACK_ID)).andReturn(30L);
 
     listener1.clearTrackPoints();
     locationIterator.expectLocationsDelivered(listener1);
@@ -678,13 +680,13 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     verifyAndReset();
 
-    // Now deliver 3000 more (incrementally sampled)
+    // Now deliver 30 more (incrementally sampled)
     ContentObserver observer = observerCapture.getValue();
-    locationIterator = new FixedSizeLocationIterator(3001, 3000);
+    locationIterator = new FixedSizeLocationIterator(31, 30);
     expect(providerUtils.getLocationIterator(
-        eq(TRACK_ID), eq(3001L), eq(false), isA(LocationFactory.class)))
+        eq(TRACK_ID), eq(31L), eq(false), isA(LocationFactory.class)))
         .andReturn(locationIterator);
-    expect(providerUtils.getLastLocationId(TRACK_ID)).andReturn(6000L);
+    expect(providerUtils.getLastLocationId(TRACK_ID)).andReturn(60L);
 
     locationIterator.expectSampledLocationsDelivered(listener1, 2, false);
     listener1.onNewTrackPointsDone();
@@ -695,12 +697,12 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     verifyAndReset();
 
-    // Now another 3000 (triggers resampling)
-    locationIterator = new FixedSizeLocationIterator(1, 9000);
+    // Now another 30 (triggers resampling)
+    locationIterator = new FixedSizeLocationIterator(1, 90);
     expect(providerUtils.getLocationIterator(
         eq(TRACK_ID), eq(0L), eq(false), isA(LocationFactory.class)))
         .andReturn(locationIterator);
-    expect(providerUtils.getLastLocationId(TRACK_ID)).andReturn(9000L);
+    expect(providerUtils.getLastLocationId(TRACK_ID)).andReturn(90L);
 
     listener1.clearTrackPoints();
     locationIterator.expectSampledLocationsDelivered(listener1, 2, false);
