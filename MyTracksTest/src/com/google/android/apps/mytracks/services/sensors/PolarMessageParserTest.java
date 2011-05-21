@@ -11,7 +11,6 @@ public class PolarMessageParserTest extends TestCase {
   public void testIsValid() {
     // A complete and valid Polar HxM packet
     //   FE08F701D1001104FE08F702D1001104
-//  byte[] buf = { 254,8,247,1,209,0,17,4,254,8,247,2,209,0,17,4 };
     byte[] buf = { 0xFE,0x08,0xF7,0x01,0xD1,0x00,0x11,0x04,0xFE,0x08,0xF7,0x02,0xD1,0x00,0x11,0x04 };
 
     buf[0] = 0x03;                          // Invalidate header
