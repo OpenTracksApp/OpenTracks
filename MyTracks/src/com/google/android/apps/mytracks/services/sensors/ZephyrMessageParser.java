@@ -40,7 +40,7 @@ public class ZephyrMessageParser implements MessageParser {
     Log.w(Constants.TAG, "Got zephyr data: " + sb);
     // Heart Rate
     Sensor.SensorData.Builder heartrate = Sensor.SensorData.newBuilder()
-        .setValue(buffer[12])
+        .setValue(buffer[12] & 0xFF)
         .setState(Sensor.SensorState.SENDING);
     // Changes Nico Laum (Power and Cadence)
     Sensor.SensorData.Builder power = Sensor.SensorData.newBuilder()
