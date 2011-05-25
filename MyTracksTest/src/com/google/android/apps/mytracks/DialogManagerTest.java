@@ -38,13 +38,6 @@ public class DialogManagerTest
     assertNull(MyTracks.getInstance());
   }
 
-  public void test_onCreateChartSettings() {
-    Dialog d =
-        getActivity().onCreateDialog(DialogManager.DIALOG_CHART_SETTINGS, null);
-    assertNotNull(d);
-    assertTrue(d instanceof ChartSettingsDialog);
-  }
-
   public void test_onCreateImportProgress() {
     Dialog d =
         getActivity().onCreateDialog(
@@ -61,12 +54,5 @@ public class DialogManagerTest
     ProgressDialog pd = (ProgressDialog) d;
     assertEquals(100, pd.getMax());
     assertEquals(10, pd.getProgress());
-  }
-
-  public void test_onCreateSendToGoogle() {
-    Dialog d =
-        getActivity().onCreateDialog(DialogManager.DIALOG_SEND_TO_GOOGLE, null);
-    assertNotNull(d);
-    assertTrue(d instanceof SendDialog);
   }
 }

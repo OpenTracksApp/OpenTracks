@@ -90,6 +90,13 @@ limitations under the License.
               android:label="@string/elevation_label"
               android:exported="false" />
 
+    <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.SendActivity"
+              android:label="@string/sendtogoogle_title"
+              android:theme="@android:style/Theme.Translucent" />
+    <activity android:name="com.google.android.apps.mytracks.io.file.SaveActivity"
+              android:label="@string/tracklist_write_to_sd"
+              android:theme="@android:style/Theme.Translucent" />
+
     <activity android:name="com.google.android.apps.mytracks.WelcomeActivity"
               android:label="@string/welcome"
               android:exported="false" />

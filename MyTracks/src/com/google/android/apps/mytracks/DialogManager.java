@@ -24,6 +24,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager.BadTokenException;
@@ -37,7 +39,6 @@ public class DialogManager {
 
   public static final int DIALOG_IMPORT_PROGRESS = 2;
   public static final int DIALOG_PROGRESS = 3;
-  public static final int DIALOG_SEND_TO_GOOGLE = 4;
 
   private ProgressDialog progressDialog;
   private ProgressDialog importProgressDialog;
@@ -69,19 +70,8 @@ public class DialogManager {
         progressDialog.setMax(100);
         progressDialog.setProgress(10);
         return progressDialog;
-      case DIALOG_SEND_TO_GOOGLE:
-        sendToGoogleDialog = new SendDialog(activity);
-        return sendToGoogleDialog;
     }
     return null;
-  }
-
-  protected void onPrepareDialog(int id, Dialog dialog) {
-    switch (id) {
-      case DIALOG_SEND_TO_GOOGLE:
-        activity.resetSendToGoogleStatus();
-        break;
-    }
   }
 
   public void setProgressMessage(final String message) {
@@ -126,19 +116,24 @@ public class DialogManager {
   public void showMessageDialog(final int message, final boolean success) {
     activity.runOnUiThread(new Runnable() {
       public void run() {
-        AlertDialog dialog = null;
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setMessage(activity.getString(message));
-        builder.setNegativeButton(activity.getString(R.string.ok), null);
-        builder.setIcon(success ? android.R.drawable.ic_dialog_info :
-          android.R.drawable.ic_dialog_alert);
-        builder.setTitle(success ? R.string.success : R.string.error);
-        dialog = builder.create();
-        dialog.show();
+        showMessageDialog(activity, message, success, null);
       }
     });
   }
 
+  public static void showMessageDialog(
+      Context ctx, int message, boolean success, DialogInterface.OnClickListener okListener) {
+    AlertDialog dialog = null;
+    AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+    builder.setMessage(message);
+    builder.setNeutralButton(R.string.ok, okListener);
+    builder.setIcon(success ? android.R.drawable.ic_dialog_info :
+        android.R.drawable.ic_dialog_alert);
+    builder.setTitle(success ? R.string.success : R.string.error);
+    dialog = builder.create();
+    dialog.show();
+  }
+  
   /**
    * Just like showDialog, but will catch a {@link BadTokenException} that
    * sometimes (very rarely) gets thrown. This might happen if the user hits

@@ -29,7 +29,7 @@ import android.util.Log;
  * @author Sandor Dornbush
  */
 public class AccountChooser {
- 
+
   /**
    * The last selected account.
    */
@@ -68,13 +68,13 @@ public class AccountChooser {
       handler.handleAccountSelected(accounts[0]);
       return;
     }
-    
+
     // TODO This should be read out of a preference.
     if (selectedAccount != null) {
       handler.handleAccountSelected(selectedAccount);
       return;
     }
-    
+
     // Let the user choose.
     Log.e(Constants.TAG, "Multiple matching accounts found.");
     final AlertDialog.Builder builder = new AlertDialog.Builder(activity);

@@ -13,10 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks;
+package com.google.android.apps.mytracks.io.file;
 
-import com.google.android.apps.mytracks.io.file.MockTrackWriter;
+import com.google.android.apps.mytracks.MyTracks;
 import com.google.android.apps.mytracks.io.file.TrackWriter;
+import com.google.android.apps.mytracks.io.file.WriteProgressController;
 
 import android.app.ProgressDialog;
 import android.test.ActivityInstrumentationTestCase2;
@@ -60,7 +61,7 @@ public class WriteProgressControllerTest extends ActivityInstrumentationTestCase
         getActivity(), mockWriter);
     controller.setOnCompletionListener(new WriteProgressController.OnCompletionListener() {
       @Override
-      public void onComplete(TrackWriter writer) {
+      public void onComplete() {
         controllerDoneRef.set(true);
       }
     });
