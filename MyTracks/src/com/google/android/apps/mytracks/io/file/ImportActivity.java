@@ -158,8 +158,10 @@ public class ImportActivity extends Activity {
       public void onClick(DialogInterface arg0, int arg1) {
         long lastTrackId = trackIds[trackIds.length - 1];
         Uri trackUri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, lastTrackId);
+
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setDataAndType(trackUri, TracksColumns.CONTENT_ITEMTYPE);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
       }
