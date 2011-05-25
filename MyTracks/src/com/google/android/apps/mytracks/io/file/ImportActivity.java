@@ -20,6 +20,7 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 import com.google.android.apps.mytracks.DialogManager;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.TracksColumns;
+import com.google.android.apps.mytracks.util.UriUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -65,21 +66,16 @@ public class ImportActivity extends Activity {
 
     Intent intent = getIntent();
     String action = intent.getAction();
-    if (!Intent.ACTION_VIEW.equals(action) &&
-        !Intent.ACTION_ATTACH_DATA.equals(action)) {
-      Log.e(TAG, "Received an intent with unsupported action: " + intent);
+    Uri data = intent.getData();
+    if (!(Intent.ACTION_VIEW.equals(action) || Intent.ACTION_ATTACH_DATA.equals(action))
+        || !UriUtils.isFileUri(data)) {
+      Log.e(TAG, "Received an intent with unsupported action or data: " + intent);
       finish();
       return;
     }
 
-    if (!"file".equals(intent.getScheme())) {
-      Log.e(TAG, "Received a VIEW intent with unsupported scheme " + intent.getScheme());
-      finish();
-      return;
-    }
-
-    Log.i(TAG, "Received a VIEW intent with file scheme. Importing.");
-    startTrackImport(intent.getData().getPath());
+    Log.i(TAG, "Importing GPX file at " + data);
+    startTrackImport(data.getPath());
   }
 
   private void startTrackImport(final String fileName) {

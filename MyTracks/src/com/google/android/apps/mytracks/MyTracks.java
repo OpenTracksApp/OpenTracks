@@ -26,6 +26,7 @@ import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.UriUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -39,6 +40,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -275,9 +277,11 @@ public class MyTracks extends TabActivity implements OnTouchListener {
 
     Intent intent = getIntent();
     String action = intent.getAction();
+    Uri data = intent.getData();
     if ((Intent.ACTION_VIEW.equals(action) || Intent.ACTION_EDIT.equals(action))
-        && TracksColumns.CONTENT_ITEMTYPE.equals(intent.getType())) {
-      long trackId = ContentUris.parseId(intent.getData());
+        && TracksColumns.CONTENT_ITEMTYPE.equals(intent.getType())
+        && UriUtils.matchesContentUri(data, TracksColumns.CONTENT_URI)) {
+      long trackId = ContentUris.parseId(data);
       dataHub.loadTrack(trackId);
     }
   }

@@ -122,11 +122,21 @@ limitations under the License.
     <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.SendActivity"
               android:label="@string/sendtogoogle_title"
               android:theme="@android:style/Theme.Translucent.NoTitleBar"
-              android:noHistory="true" />
+              android:noHistory="true">
+      <intent-filter>
+        <action android:name="android.intent.action.SEND" />
+        <data android:mimeType="vnd.android.cursor.item/vnd.google.track" />
+      </intent-filter>
+    </activity>
     <activity android:name="com.google.android.apps.mytracks.io.file.SaveActivity"
               android:label="@string/tracklist_write_to_sd"
               android:theme="@android:style/Theme.Translucent.NoTitleBar"
-              android:noHistory="true" />
+              android:noHistory="true">
+      <intent-filter>
+        <action android:name="android.intent.action.SAVE" />
+        <data android:mimeType="vnd.android.cursor.item/vnd.google.track" />
+      </intent-filter>
+    </activity>
     <activity android:name="com.google.android.apps.mytracks.io.file.ImportActivity"
               android:label="@string/import_title"
               android:theme="@android:style/Theme.Translucent.NoTitleBar"

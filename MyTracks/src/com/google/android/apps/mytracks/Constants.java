@@ -33,6 +33,9 @@ public abstract class Constants {
    */
   public static final String SDCARD_TOP_DIR = "MyTracks";
 
+  // Intent actions
+  public static final String ACTION_SAVE = "android.intent.action.SAVE";
+
   /*
    * onActivityResult request codes:
    */

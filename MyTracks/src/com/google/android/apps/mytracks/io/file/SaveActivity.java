@@ -15,20 +15,27 @@
  */
 package com.google.android.apps.mytracks.io.file;
 
+import static com.google.android.apps.mytracks.Constants.ACTION_SAVE;
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.DialogManager;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
+import com.google.android.apps.mytracks.util.UriUtils;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 
 import java.io.File;
 
@@ -38,7 +45,6 @@ import java.io.File;
  * @author Rodrigo Damazio
  */
 public class SaveActivity extends Activity {
-  public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_SHARE_FILE = "share_file";
   public static final String EXTRA_FILE_FORMAT = "file_format";
 
@@ -60,7 +66,19 @@ public class SaveActivity extends Activity {
     super.onStart();
 
     Intent intent = getIntent();
-    trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1);
+    String action = intent.getAction();
+    String type = intent.getType();
+    Uri data = intent.getData();
+    if (!ACTION_SAVE.equals(action) ||
+        !TracksColumns.CONTENT_ITEMTYPE.equals(type) ||
+        !UriUtils.matchesContentUri(data, TracksColumns.CONTENT_URI)) {
+      Log.e(TAG, "Got bad save intent: " + intent);
+      finish();
+      return;
+    }
+
+    trackId = ContentUris.parseId(data);
+
     int formatIdx = intent.getIntExtra(EXTRA_FILE_FORMAT, -1);
     format = TrackFileFormat.values()[formatIdx];
     shareFile = intent.getBooleanExtra(EXTRA_SHARE_FILE, false);
@@ -162,8 +180,11 @@ public class SaveActivity extends Activity {
         shareFile = true;
     }
 
+    Uri uri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId);
+
     Intent intent = new Intent(ctx, SaveActivity.class);
-    intent.putExtra(EXTRA_TRACK_ID, trackId);
+    intent.setAction(ACTION_SAVE);
+    intent.setDataAndType(uri, TracksColumns.CONTENT_ITEMTYPE);
     intent.putExtra(EXTRA_FILE_FORMAT, exportFormat.ordinal());
     intent.putExtra(EXTRA_SHARE_FILE, shareFile);
     ctx.startActivity(intent);

@@ -25,6 +25,7 @@ import com.google.android.apps.mytracks.MyMapsList;
 import com.google.android.apps.mytracks.ProgressIndicator;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.AuthManager;
 import com.google.android.apps.mytracks.io.AuthManagerFactory;
 import com.google.android.apps.mytracks.io.SendToDocs;
@@ -33,16 +34,19 @@ import com.google.android.apps.mytracks.io.SendToFusionTables.OnSendCompletedLis
 import com.google.android.apps.mytracks.io.SendToMyMaps;
 import com.google.android.apps.mytracks.io.mymaps.MapsFacade;
 import com.google.android.apps.mytracks.io.mymaps.MyMapsConstants;
+import com.google.android.apps.mytracks.util.UriUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -60,7 +64,6 @@ import java.util.List;
  */
 public class SendActivity extends Activity implements ProgressIndicator {
   public static final String EXTRA_SHARE_LINK = "share_link";
-  public static final String EXTRA_TRACK_ID = "track_id";
 
   // Services
   private MyTracksProviderUtils providerUtils;
@@ -108,7 +111,19 @@ public class SendActivity extends Activity implements ProgressIndicator {
     super.onStart();
     resetState();
 
-    sendTrackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1);
+    Intent intent = getIntent();
+    String action = intent.getAction();
+    String type = intent.getType();
+    Uri data = intent.getData();
+    if (!Intent.ACTION_SEND.equals(action) ||
+        !TracksColumns.CONTENT_ITEMTYPE.equals(type) ||
+        !UriUtils.matchesContentUri(data, TracksColumns.CONTENT_URI)) {
+      Log.e(TAG, "Got bad send intent: " + intent);
+      finish();
+      return;
+    }
+
+    sendTrackId = ContentUris.parseId(data);
 
     sendDialog = new SendDialog(this);
     sendDialog.setOwnerActivity(this);
@@ -625,8 +640,11 @@ public class SendActivity extends Activity implements ProgressIndicator {
   }
 
   public static void sendToGoogle(Context ctx, long trackId, boolean shareLink) {
+    Uri uri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId);
+
     Intent intent = new Intent(ctx, SendActivity.class);
-    intent.putExtra(SendActivity.EXTRA_TRACK_ID, trackId);
+    intent.setAction(Intent.ACTION_SEND);
+    intent.setDataAndType(uri, TracksColumns.CONTENT_ITEMTYPE);
     intent.putExtra(SendActivity.EXTRA_SHARE_LINK, shareLink);
     ctx.startActivity(intent);
   }
