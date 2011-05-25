@@ -16,12 +16,11 @@
 package com.google.android.apps.mytracks;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
-import static com.google.android.apps.mytracks.DialogManager.DIALOG_IMPORT_PROGRESS;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.TrackDataHub;
+import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
-import com.google.android.apps.mytracks.io.file.GpxImporter;
 import com.google.android.apps.mytracks.io.file.TempFileCleaner;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
@@ -32,9 +31,9 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.TabActivity;
 import android.content.ComponentName;
+import android.content.ContentUris;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -55,21 +54,12 @@ import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.Toast;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
 /**
  * The super activity that embeds our sub activities.
  *
  * @author Leif Hendrik Wilden
  */
-public class MyTracks extends TabActivity implements OnTouchListener,
-    ProgressIndicator {
+public class MyTracks extends TabActivity implements OnTouchListener {
   private TrackDataHub dataHub;
 
   /*
@@ -230,73 +220,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
 
     // This will show the eula until the user accepts or quits the app.
     Eula.showEulaRequireAcceptance(this);
-
-    // Check if we got invoked via the VIEW intent:
-    Intent intent = getIntent();
-    String action;
-    if (intent != null && (action = intent.getAction()) != null) {
-      if (action.equals(Intent.ACTION_MAIN)) {
-        // Do nothing.
-      } else if (action.equals(Intent.ACTION_VIEW)) {
-        if (intent.getScheme() != null && intent.getScheme().equals("file")) {
-          Log.w(TAG, "Received a VIEW intent with file scheme. Importing.");
-          importGpxFile(intent.getData().getPath());
-        } else {
-          Log.w(TAG, "Received a VIEW intent with unsupported scheme " + intent.getScheme());
-        }
-      } else {
-        Log.w(TAG, "Received an intent with unsupported action " + action);
-      }
-    } else {
-      Log.d(TAG, "Received an intent with no action.");
-    }
-  }
-
-  private void importGpxFile(final String fileName) {
-    dialogManager.showDialogSafely(DIALOG_IMPORT_PROGRESS);
-    Thread t = new Thread() {
-      @Override
-      public void run() {
-        int message = R.string.success;
-
-        long[] trackIdsImported = null;
-
-        try {
-          try {
-            InputStream is = new FileInputStream(fileName);
-            trackIdsImported = GpxImporter.importGPXFile(is, providerUtils);
-          } catch (SAXException e) {
-            Log.e(TAG, "Caught an unexpected exception.", e);
-            message = R.string.error_generic;
-          } catch (ParserConfigurationException e) {
-            Log.e(TAG, "Caught an unexpected exception.", e);
-            message = R.string.error_generic;
-          } catch (IOException e) {
-            Log.e(TAG, "Caught an unexpected exception.", e);
-            message = R.string.error_unable_to_read_file;
-          } catch (NullPointerException e) {
-            Log.e(TAG, "Caught an unexpected exception.", e);
-            message = R.string.error_invalid_gpx_format;
-          } catch (OutOfMemoryError e) {
-            Log.e(TAG, "Caught an unexpected exception.", e);
-            message = R.string.error_out_of_memory;
-          }
-          if (trackIdsImported != null && trackIdsImported.length > 0) {
-            // select last track from import file
-            dataHub.loadTrack(trackIdsImported[trackIdsImported.length - 1]);
-          } else {
-            dialogManager.showMessageDialog(message, false/* success */);
-          }
-        } finally {
-          runOnUiThread(new Runnable() {
-            public void run() {
-              dismissDialog(DIALOG_IMPORT_PROGRESS);
-            }
-          });
-        }
-      }
-    };
-    t.start();
   }
 
   @Override
@@ -349,6 +272,14 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       Intent startIntent = new Intent(this, TrackRecordingService.class);
       startService(startIntent);
     }
+
+    Intent intent = getIntent();
+    String action = intent.getAction();
+    if ((Intent.ACTION_VIEW.equals(action) || Intent.ACTION_EDIT.equals(action))
+        && TracksColumns.CONTENT_ITEMTYPE.equals(intent.getType())) {
+      long trackId = ContentUris.parseId(intent.getData());
+      dataHub.loadTrack(trackId);
+    }
   }
 
   /*
@@ -374,21 +305,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     return menuManager.onOptionsItemSelected(item)
         ? true
         : super.onOptionsItemSelected(item);
-  }
-
-  /*
-   * Dialog events:
-   * ==============
-   */
-
-  @Override
-  protected Dialog onCreateDialog(int id, Bundle args) {
-    return dialogManager.onCreateDialog(id, args);
-  }
-
-  @Override
-  protected Dialog onCreateDialog(int id) {
-    return dialogManager.onCreateDialog(id, null);
   }
 
   /*
@@ -486,22 +402,6 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       navControls.show();
     }
     return false;
-  }
-  // ProgressIndicator implementation
-
-  @Override
-  public void setProgressMessage(int resId) {
-    dialogManager.setProgressMessage(getString(resId));
-  }
-
-  @Override
-  public void clearProgressMessage() {
-    dialogManager.setProgressMessage("");
-  }
-
-  @Override
-  public void setProgressValue(final int percent) {
-    dialogManager.setProgressValue(percent);
   }
 
   /**

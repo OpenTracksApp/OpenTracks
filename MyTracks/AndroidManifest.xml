@@ -46,17 +46,6 @@ limitations under the License.
         <category android:name="android.intent.category.BROWSABLE" />
         <data android:mimeType="vnd.android.cursor.item/vnd.google.track" />
       </intent-filter>
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-        <action android:name="android.intent.action.ATTACH_DATA" />
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <data android:scheme="file" />
-        <data android:mimeType="application/gpx+xml" />
-        <data android:mimeType="application/gpx" />
-        <data android:mimeType="application/vnd.google-earth.gpx" />
-        <data android:mimeType="application/vnd.google-earth.gpx+xml" />
-      </intent-filter>
     </activity>
 
     <activity android:name="com.google.android.apps.mytracks.MapActivity"
@@ -138,6 +127,22 @@ limitations under the License.
               android:label="@string/tracklist_write_to_sd"
               android:theme="@android:style/Theme.Translucent.NoTitleBar"
               android:noHistory="true" />
+    <activity android:name="com.google.android.apps.mytracks.io.file.ImportActivity"
+              android:label="@string/import_title"
+              android:theme="@android:style/Theme.Translucent.NoTitleBar"
+              android:noHistory="true">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <action android:name="android.intent.action.ATTACH_DATA" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="file" />
+        <data android:mimeType="application/gpx+xml" />
+        <data android:mimeType="application/gpx" />
+        <data android:mimeType="application/vnd.google-earth.gpx" />
+        <data android:mimeType="application/vnd.google-earth.gpx+xml" />
+      </intent-filter>
+    </activity>
 
     <activity android:name="com.google.android.apps.mytracks.WelcomeActivity"
               android:label="@string/welcome"

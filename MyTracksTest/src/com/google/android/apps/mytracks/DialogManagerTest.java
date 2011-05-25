@@ -15,8 +15,6 @@
  */
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.io.sendtogoogle.SendDialog;
-
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.test.ActivityInstrumentationTestCase2;
@@ -44,15 +42,5 @@ public class DialogManagerTest
             DialogManager.DIALOG_IMPORT_PROGRESS, null);
     assertNotNull(d);
     assertTrue(d instanceof ProgressDialog);
-  }
-
-  public void test_onCreateProgress() {
-    Dialog d =
-        getActivity().onCreateDialog(DialogManager.DIALOG_PROGRESS, null);
-    assertNotNull(d);
-    assertTrue(d instanceof ProgressDialog);
-    ProgressDialog pd = (ProgressDialog) d;
-    assertEquals(100, pd.getMax());
-    assertEquals(10, pd.getProgress());
   }
 }
