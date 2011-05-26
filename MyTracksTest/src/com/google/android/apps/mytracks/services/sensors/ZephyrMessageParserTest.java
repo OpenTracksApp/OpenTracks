@@ -26,20 +26,23 @@ public class ZephyrMessageParserTest extends TestCase {
 
   public void testParseBuffer() {
     byte[] buf = new byte[60];
-    buf[12] = 50;
+    // Heartrate (-1 =^ 255 unsigned byte)
+    buf[12] = -1;
+    // Power
     buf[11] = 51;
-    buf[56] = 32;
-    buf[57] = 0;
+    // Cadence (=^ 255*16 strides/min)
+    buf[56] = -1;
+    buf[57] = 15;
     Sensor.SensorDataSet sds = parser.parseBuffer(buf);
     assertTrue(sds.hasHeartRate());
     assertTrue(sds.getHeartRate().getState() == Sensor.SensorState.SENDING);
-    assertEquals(50, sds.getHeartRate().getValue());
+    assertEquals(255, sds.getHeartRate().getValue());
     assertTrue(sds.hasPower());
     assertTrue(sds.getPower().getState() == Sensor.SensorState.SENDING);
     assertEquals(51, sds.getPower().getValue());
     assertTrue(sds.hasCadence());
     assertTrue(sds.getCadence().getState() == Sensor.SensorState.SENDING);
-    assertEquals(2, sds.getCadence().getValue());
+    assertEquals(255, sds.getCadence().getValue());
   }
 
   public void testFindNextAlignment() {
