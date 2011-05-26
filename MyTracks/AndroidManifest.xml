@@ -128,6 +128,7 @@ limitations under the License.
         <data android:mimeType="vnd.android.cursor.item/vnd.google.track" />
       </intent-filter>
     </activity>
+
     <activity android:name="com.google.android.apps.mytracks.io.file.SaveActivity"
               android:label="@string/tracklist_write_to_sd"
               android:theme="@android:style/Theme.Translucent.NoTitleBar"
@@ -137,6 +138,7 @@ limitations under the License.
         <data android:mimeType="vnd.android.cursor.item/vnd.google.track" />
       </intent-filter>
     </activity>
+
     <activity android:name="com.google.android.apps.mytracks.io.file.ImportActivity"
               android:label="@string/import_title"
               android:theme="@android:style/Theme.Translucent.NoTitleBar"
