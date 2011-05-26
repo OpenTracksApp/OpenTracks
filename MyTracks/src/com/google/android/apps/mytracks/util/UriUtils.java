@@ -27,18 +27,26 @@ import java.util.List;
 public class UriUtils {
 
   public static boolean matchesContentUri(Uri uri, Uri baseContentUri) {
-    if (uri == null) return false;
+    if (uri == null) {
+      return false;
+    }
 
     // Check that scheme and authority are the same.
-    if (!uri.getScheme().equals(baseContentUri.getScheme())) return false;
-    if (!uri.getAuthority().equals(baseContentUri.getAuthority())) return false;
+    if (!uri.getScheme().equals(baseContentUri.getScheme()) ||
+        !uri.getAuthority().equals(baseContentUri.getAuthority())) {
+      return false;
+    }
 
     // Checks that all the base path components are in the URI.
     List<String> uriPathSegments = uri.getPathSegments();
     List<String> basePathSegments = baseContentUri.getPathSegments();
-    if (basePathSegments.size() > uriPathSegments.size()) return false;
+    if (basePathSegments.size() > uriPathSegments.size()) {
+      return false;
+    }
     for (int i = 0; i < basePathSegments.size(); i++) {
-      if (!uriPathSegments.get(i).equals(basePathSegments.get(i))) return false;
+      if (!uriPathSegments.get(i).equals(basePathSegments.get(i))) {
+        return false;
+      }
     }
 
     return true;

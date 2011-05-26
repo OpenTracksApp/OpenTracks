@@ -134,7 +134,7 @@ limitations under the License.
               android:theme="@android:style/Theme.Translucent.NoTitleBar"
               android:noHistory="true">
       <intent-filter>
-        <action android:name="android.intent.action.SAVE" />
+        <action android:name="@string/save_intent_action" />
         <data android:mimeType="vnd.android.cursor.item/vnd.google.track" />
       </intent-filter>
     </activity>
