@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks;
 import static com.google.android.apps.mytracks.Constants.TAG;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
+import com.google.android.apps.mytracks.services.TrackRecordingServiceBinder;
 import com.google.android.apps.mytracks.services.sensors.SensorUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -45,6 +46,7 @@ public class SensorStateActivity extends Activity {
   private static final long REFRESH_PERIOD_MS = 250;
 
   private final StatsUtilities utils;
+  private TrackRecordingServiceBinder serviceBinder;
 
   /**
    * This timer periodically invokes the refresh timer task.
@@ -79,6 +81,8 @@ public class SensorStateActivity extends Activity {
 
     setContentView(R.layout.sensor_state);
 
+    serviceBinder = TrackRecordingServiceBinder.getInstance(this);
+    serviceBinder.bindService(stateUpdater);
     updateState();
   }
 
@@ -97,11 +101,13 @@ public class SensorStateActivity extends Activity {
     timer = null;
   }
 
-  protected void updateState() {
-    MyTracks mt = MyTracks.getInstance();
+  @Override
+  protected void onDestroy() {
+    serviceBinder.unbindService();
+  }
 
-    ITrackRecordingService service =
-    	mt == null ? null : mt.getTrackRecordingService();
+  protected void updateState() {
+    ITrackRecordingService service = serviceBinder.getServiceIfBound();
     if (service == null) {
       Log.d(Constants.TAG, "Could not get track recording service.");
       updateSensorState(Sensor.SensorState.NONE);

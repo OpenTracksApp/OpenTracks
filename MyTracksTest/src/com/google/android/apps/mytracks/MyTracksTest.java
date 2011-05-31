@@ -36,56 +36,48 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author Bartlomiej Niechwiej
  */
 public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
+  private SharedPreferences sharedPreferences;
+
   public MyTracksTest() {
     super(MyTracks.class);
-  }
-
-  @Override
-  protected void setUp() throws Exception {
-    super.setUp();
-    MyTracks.clearInstance();
-    assertNull(MyTracks.getInstance());
   }
 
   @Override
   protected void tearDown() throws Exception {
     clearSelectedAndRecordingTracks();
     waitForIdle();
+
     super.tearDown();
   }
-  
+
   public void testInitialization_mainAction() {
     // Make sure we can start MyTracks and the activity doesn't start recording.
-    assertNotNull(getActivity());
-    assertNotNull(MyTracks.getInstance());
-    assertNotNull(getActivity().getSharedPreferences());
-    
+    assertInitialized();
+
     // Check if not recording.
     assertFalse(getActivity().isRecording());
-    assertEquals(-1, getActivity().getRecordingTrackId());
-    long selectedTrackId = getActivity().getSharedPreferences().getLong(
+    assertEquals(-1, getRecordingTrackId());
+    long selectedTrackId = getSharedPreferences().getLong(
         getActivity().getString(R.string.selected_track_key), -1);
     assertEquals(selectedTrackId, getActivity().getSelectedTrackId());
   }
-  
+
   public void testInitialization_viewActionWithNoData() {
     // Simulate start with ACTION_VIEW intent.
     Intent startIntent = new Intent();
     startIntent.setAction(Intent.ACTION_VIEW);
     setActivityIntent(startIntent);
-    
-    assertNotNull(getActivity());
-    assertNotNull(MyTracks.getInstance());
-    assertNotNull(getActivity().getSharedPreferences());
-    
+
+    assertInitialized();
+
     // Check if not recording.
     assertFalse(getActivity().isRecording());
-    assertEquals(-1, getActivity().getRecordingTrackId());
-    long selectedTrackId = getActivity().getSharedPreferences().getLong(
+    assertEquals(-1, getRecordingTrackId());
+    long selectedTrackId = getSharedPreferences().getLong(
         getActivity().getString(R.string.selected_track_key), -1);
     assertEquals(selectedTrackId, getActivity().getSelectedTrackId());
   }
-  
+
   public void testInitialization_viewActionWithValidData() throws Exception {
     // Simulate start with ACTION_VIEW intent.
     Intent startIntent = new Intent();
@@ -93,24 +85,22 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     Uri uri = Uri.fromFile(File.createTempFile("valid", ".gpx"));
 
     // TODO: Add a valid GPX.
-    
+
     startIntent.setData(uri);
     setActivityIntent(startIntent);
-    
-    assertNotNull(getActivity());
-    assertNotNull(MyTracks.getInstance());
-    assertNotNull(getActivity().getSharedPreferences());
-    
+
+    assertInitialized();
+
     // Check if not recording.
     assertFalse(getActivity().isRecording());
-    assertEquals(-1, getActivity().getRecordingTrackId());
-    long selectedTrackId = getActivity().getSharedPreferences().getLong(
+    assertEquals(-1, getRecordingTrackId());
+    long selectedTrackId = getSharedPreferences().getLong(
         getActivity().getString(R.string.selected_track_key), -1);
     assertEquals(selectedTrackId, getActivity().getSelectedTrackId());
-    
-   // TODO: Finish this test.
+
+    // TODO: Finish this test.
   }
-  
+
   public void testInitialization_viewActionWithInvalidData() throws Exception {
     // Simulate start with ACTION_VIEW intent.
     Intent startIntent = new Intent();
@@ -118,34 +108,29 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     Uri uri = Uri.fromFile(File.createTempFile("invalid", ".gpx"));
     startIntent.setData(uri);
     setActivityIntent(startIntent);
-    
-    assertNotNull(getActivity());
-    assertNotNull(MyTracks.getInstance());
-    assertNotNull(getActivity().getSharedPreferences());
-    
+
+    assertInitialized();
+
     // Check if not recording.
     assertFalse(getActivity().isRecording());
-    assertEquals(-1, getActivity().getRecordingTrackId());
-    long selectedTrackId = getActivity().getSharedPreferences().getLong(
+    assertEquals(-1, getRecordingTrackId());
+    long selectedTrackId = getSharedPreferences().getLong(
         getActivity().getString(R.string.selected_track_key), -1);
     assertEquals(selectedTrackId, getActivity().getSelectedTrackId());
-    
+
     // TODO: Finish this test.
   }
-  
+
   public void testRecording_startAndStop() throws Exception {
-    // Make sure we can start MyTracks and the activity doesn't start recording.
-    assertNotNull(getActivity());
-    assertNotNull(MyTracks.getInstance());
-    assertNotNull(getActivity().getSharedPreferences());
+    assertInitialized();
 
     // Check if not recording.
     clearSelectedAndRecordingTracks();    
     waitForIdle();
 
     assertFalse(getActivity().isRecording());
-    assertEquals(-1, getActivity().getRecordingTrackId());
-    long selectedTrackId = getActivity().getSharedPreferences().getLong(
+    assertEquals(-1, getRecordingTrackId());
+    long selectedTrackId = getSharedPreferences().getLong(
         getActivity().getString(R.string.selected_track_key), -1);
     assertEquals(selectedTrackId, getActivity().getSelectedTrackId());
 
@@ -153,16 +138,16 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     getActivity().startRecording();
     long recordingTrackId = awaitRecordingStatus(5000, true);
     assertTrue(recordingTrackId >= 0);
-    
+
     // Wait until we are done and make sure that selectedTrack = recordingTrack.
     waitForIdle();
-    assertEquals(recordingTrackId, getActivity().getSharedPreferences().getLong(
+    assertEquals(recordingTrackId, getSharedPreferences().getLong(
         getActivity().getString(R.string.recording_track_key), -1));
-    selectedTrackId = getActivity().getSharedPreferences().getLong(
+    selectedTrackId = getSharedPreferences().getLong(
         getActivity().getString(R.string.selected_track_key), -1);
     assertEquals(recordingTrackId, selectedTrackId);
     assertEquals(selectedTrackId, getActivity().getSelectedTrackId());
-    
+
     // Watch for MyTracksDetails activity. 
     ActivityMonitor monitor = getInstrumentation().addMonitor(
         TrackDetails.class.getName(), null, false);
@@ -170,14 +155,14 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     // Now, stop the track and make sure that it is still selected, but
     // no longer recording.
     getActivity().stopRecording();
-    
+
     // Check if we got back MyTracksDetails activity. 
     Activity activity = getInstrumentation().waitForMonitor(monitor);
     assertTrue(activity instanceof TrackDetails);
-    
+
     // TODO: Update track name and other properties and test if they were
     // properly saved.
-    
+
     // Simulate a click on Save button.
     Button save = (Button) activity.findViewById(R.id.trackdetails_save);
     save.performClick();
@@ -185,13 +170,18 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     // Check the remaining properties.
     recordingTrackId = awaitRecordingStatus(5000, false);
     assertEquals(-1, recordingTrackId);
-    assertEquals(recordingTrackId, getActivity().getRecordingTrackId());
-    assertEquals(recordingTrackId, getActivity().getSharedPreferences().getLong(
+    assertEquals(recordingTrackId, getRecordingTrackId());
+    assertEquals(recordingTrackId, getSharedPreferences().getLong(
         getActivity().getString(R.string.recording_track_key), -1));
     // Make sure this is the same track as the last recording track ID.
     assertEquals(selectedTrackId, getActivity().getSelectedTrackId());
   }
-  
+
+  private void assertInitialized() {
+    assertNotNull(getActivity());
+    assertNotNull(MyTracks.getInstance());
+  }
+
   /**
    * Waits until the UI thread becomes idle.
    */
@@ -216,13 +206,13 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
   }
 
   /**
-   * Clears {selected,recording}TrackId in the {@link SharedPreferences}.
+   * Clears {selected,recording}TrackId in the {@link getSharedPreferences()}.
    */
   private void clearSelectedAndRecordingTracks() {
-    Editor editor = getActivity().getSharedPreferences().edit();
+    Editor editor = getSharedPreferences().edit();
     editor.putLong(getActivity().getString(R.string.selected_track_key), -1);
     editor.putLong(getActivity().getString(R.string.recording_track_key), -1);
-    
+
     editor.clear();
     editor.commit();
   }
@@ -245,6 +235,17 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     }
     waitForIdle();
     assertEquals(isRecording, getActivity().isRecording());
-    return getActivity().getRecordingTrackId();
+    return getRecordingTrackId();
+  }
+
+  private long getRecordingTrackId() {
+    return getSharedPreferences().getLong(getActivity().getString(R.string.recording_track_key), -1);
+  }
+
+  private SharedPreferences getSharedPreferences() {
+    if (sharedPreferences == null) {
+      sharedPreferences = getActivity().getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    }
+    return sharedPreferences;
   }
 }

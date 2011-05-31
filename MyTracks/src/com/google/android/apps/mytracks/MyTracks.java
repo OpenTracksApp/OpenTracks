@@ -23,26 +23,23 @@ import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.io.file.TempFileCleaner;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
-import com.google.android.apps.mytracks.services.TrackRecordingService;
+import com.google.android.apps.mytracks.services.TrackRecordingServiceBinder;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.util.ApiFeatures;
-import com.google.android.apps.mytracks.util.UriUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
+import com.google.android.apps.mytracks.util.UriUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.TabActivity;
-import android.content.ComponentName;
 import android.content.ContentUris;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 import android.view.Menu;
@@ -60,6 +57,7 @@ import android.widget.Toast;
  * The super activity that embeds our sub activities.
  *
  * @author Leif Hendrik Wilden
+ * @author Rodrigo Damazio
  */
 public class MyTracks extends TabActivity implements OnTouchListener {
   private TrackDataHub dataHub;
@@ -80,48 +78,12 @@ public class MyTracks extends TabActivity implements OnTouchListener {
    */
   private boolean startNewTrackRequested = false;
 
-  private ITrackRecordingService trackRecordingService;
-
   /**
    * Utilities to deal with the database.
    */
   private MyTracksProviderUtils providerUtils;
 
-  private SharedPreferences sharedPreferences;
-
-  /**
-   * The connection to the track recording service.
-   */
-  private final ServiceConnection serviceConnection = new ServiceConnection() {
-    @Override
-    public void onServiceConnected(ComponentName className, IBinder service) {
-      Log.d(Constants.TAG, "MyTracks: Service now connected.");
-      // Delay setting the service until we are done with initialization.
-      ITrackRecordingService trackRecordingService =
-          ITrackRecordingService.Stub.asInterface(service);
-      try {
-        // TODO: Send a start service intent and broadcast service started
-        // message to avoid the hack below and a race condition.
-        if (startNewTrackRequested) {
-          startNewTrackRequested = false;
-          startRecordingNewTrack(trackRecordingService);
-        }
-      } finally {
-        MyTracks.this.trackRecordingService = trackRecordingService;
-      }
-    }
-
-    @Override
-    public void onServiceDisconnected(ComponentName className) {
-      Log.d(TAG, "MyTracks: Service now disconnected.");
-      trackRecordingService = null;
-    }
-  };
-
-  /**
-   * Whether {@link #serviceConnection} is bound or not.
-   */
-  private boolean isBound = false;
+  private TrackRecordingServiceBinder serviceBinder;
 
   /*
    * Tabs/View navigation:
@@ -135,6 +97,18 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     }
   };
 
+  private final Runnable serviceBindCallback = new Runnable() {
+    @Override
+    public void run() {
+      synchronized (serviceBinder) {
+        ITrackRecordingService service = serviceBinder.getServiceIfBound();
+        if (startNewTrackRequested && service != null) {
+          startRecordingNewTrack(service);
+        }
+      }
+    }
+  };
+
   /**
    * Checks whether we have a track recording session in progress.
    * In some cases, when the service has crashed or has been restarted
@@ -145,6 +119,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
    *         based on settings from the shared preferences.
    */
   public boolean isRecording() {
+    ITrackRecordingService trackRecordingService = serviceBinder.getServiceIfBound();
     if (trackRecordingService == null) {
       // Fall back to alternative check method.
       return dataHub.isRecording();
@@ -177,10 +152,10 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     }
 
     providerUtils = MyTracksProviderUtils.Factory.get(this);
-    sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
-    dataHub = new TrackDataHub(this, sharedPreferences, providerUtils);
+    dataHub = new TrackDataHub(this, providerUtils);
     menuManager = new MenuManager(this);
     dialogManager = new DialogManager(this);
+    serviceBinder = TrackRecordingServiceBinder.getInstance(this);
 
     // The volume we want to control is the Text-To-Speech volume
     int volumeStream =
@@ -230,7 +205,6 @@ public class MyTracks extends TabActivity implements OnTouchListener {
 
     dataHub.destroy();
 
-    tryUnbindTrackRecordingService();
     super.onDestroy();
   }
 
@@ -250,7 +224,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     // Called when activity is going into the background, but has not (yet) been
     // killed. Shouldn't block longer than approx. 2 seconds.
     Log.d(TAG, "MyTracks.onPause");
-    tryUnbindTrackRecordingService();
+    serviceBinder.unbindService();
     super.onPause();
   }
 
@@ -259,7 +233,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     // Called when the current activity is being displayed or re-displayed
     // to the user.
     Log.d(TAG, "MyTracks.onResume");
-    tryBindTrackRecordingService();
+    serviceBinder.bindService(serviceBindCallback);
     super.onResume();
   }
 
@@ -271,8 +245,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
 
     // Ensure that service is running if we're supposed to be recording
     if (dataHub.isRecording()) {
-      Intent startIntent = new Intent(this, TrackRecordingService.class);
-      startService(startIntent);
+      serviceBinder.startService();
     }
 
     Intent intent = getIntent();
@@ -445,6 +418,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
    * @throws RemoteException If the call on the service failed.
    */
   public long insertWaypoint(WaypointCreationRequest request) throws RemoteException {
+    ITrackRecordingService trackRecordingService = serviceBinder.getServiceIfBound();
     if (trackRecordingService == null) {
       throw new IllegalStateException("The recording service is not bound.");
     }
@@ -485,14 +459,16 @@ public class MyTracks extends TabActivity implements OnTouchListener {
    * Starts the track recording service (if not already running) and binds to
    * it. Starts recording a new track.
    */
-  public void startRecording() {
-    if (trackRecordingService == null) {
+  void startRecording() {
+    synchronized (serviceBinder) {
       startNewTrackRequested = true;
-      Intent startIntent = new Intent(this, TrackRecordingService.class);
-      startService(startIntent);
-      tryBindTrackRecordingService();
-    } else {
-      startRecordingNewTrack(trackRecordingService);
+      serviceBinder.startService();
+
+      // Binding was already requested before, it either already happened
+      // (in which case running the callback manually triggers the actual recording start)
+      // or it will happen in the future
+      // (in which case running the callback now will have no effect).
+      serviceBindCallback.run();
     }
   }
 
@@ -501,8 +477,10 @@ public class MyTracks extends TabActivity implements OnTouchListener {
    * "Stopped recording" and pop up the Track Details activity.
    */
   public void stopRecording() {
+    ITrackRecordingService trackRecordingService = serviceBinder.getServiceIfBound();
     if (trackRecordingService != null) {
       // Save the track id as the shared preference will overwrite the recording track id.
+      SharedPreferences sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
       long currentTrackId = sharedPreferences.getLong(getString(R.string.recording_track_key), -1);
       try {
         trackRecordingService.endCurrentTrack();
@@ -519,14 +497,10 @@ public class MyTracks extends TabActivity implements OnTouchListener {
         startActivity(intent);
       }
     }
-    tryUnbindTrackRecordingService();
-    try {
-      stopService(new Intent(MyTracks.this, TrackRecordingService.class));
-    } catch (SecurityException e) {
-      Log.e(TAG, "Encountered a security exception when trying to stop service.", e);
-    }
-    trackRecordingService = null;
+
+    serviceBinder.stopService();
   }
+
   void clearSelectedTrack() {
     dataHub.unloadCurrentTrack();
   }
@@ -535,52 +509,8 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     return dataHub.getSelectedTrackId();
   }
 
-  /**
-   * Binds to track recording service if it is running.
-   */
-  private void tryBindTrackRecordingService() {
-    Log.d(TAG,
-        "MyTracks: Trying to bind to track recording service...");
-    bindService(new Intent(this, TrackRecordingService.class),
-        serviceConnection, 0);
-    Log.d(TAG, "MyTracks: ...bind finished!");
-    isBound = true;
-  }
-
-  /**
-   * Tries to unbind the track recording service. Catches exception silently in
-   * case service is not registered anymore.
-   */
-  private void tryUnbindTrackRecordingService() {
-    if (isBound) {
-      Log.d(TAG, "MyTracks: Trying to unbind from track recording service...");
-      try {
-        unbindService(serviceConnection);
-        Log.d(TAG, "MyTracks: ...unbind finished!");
-      } catch (IllegalArgumentException e) {
-        Log.d(TAG, "MyTracks: Tried unbinding, but service was not registered.", e);
-      }
-      isBound = false;
-    }
-  }
-
   public DialogManager getDialogManager() {
     return dialogManager;
-  }
-
-  // @VisibleForTesting
-  long getRecordingTrackId() {
-    return sharedPreferences.getLong(getString(R.string.recording_track_key), -1);
-  }
-  
-  // @VisibleForTesting
-  SharedPreferences getSharedPreferences() {
-    return sharedPreferences;
-  }
-  
-  // @VisibleForTesting
-  ITrackRecordingService getTrackRecordingService() {
-    return trackRecordingService;
   }
 
   public TrackDataHub getDataHub() {
@@ -592,9 +522,5 @@ public class MyTracks extends TabActivity implements OnTouchListener {
 
   public static MyTracks getInstance() {
     return instance;
-  }
-
-  public static void clearInstance() {
-    instance = null;
   }
 }

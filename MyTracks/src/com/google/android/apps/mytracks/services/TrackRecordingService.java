@@ -785,7 +785,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     if (intent != null &&
         intent.getBooleanExtra(RESUME_TRACK_EXTRA_NAME, false)) {
       Log.d(TAG, "TrackRecordingService: requested resume");
-      
+
       // Make sure that the current track exists and is fresh enough.
       if (recordingTrack == null || !shouldResumeTrack(recordingTrack)) {
         Log.i(TAG,
@@ -796,7 +796,7 @@ public class TrackRecordingService extends Service implements LocationListener {
         stopSelfResult(startId);
         return;
       }
-      
+
       Log.i(TAG, "TrackRecordingService: resuming");
     }
   }

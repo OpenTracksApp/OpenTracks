@@ -22,6 +22,7 @@ import static com.google.android.apps.mytracks.Constants.MAX_LOCATION_AGE_MS;
 import static com.google.android.apps.mytracks.Constants.MAX_NETWORK_AGE_MS;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.DataSourceManager.DataSourceListener;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.DoubleBufferedLocationFactory;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
@@ -195,10 +196,17 @@ public class TrackDataHub {
   /**
    * Default constructor.
    */
-  public TrackDataHub(Context ctx, SharedPreferences preferences,
+  public TrackDataHub(Context ctx, MyTracksProviderUtils providerUtils) {
+    this(ctx, ctx.getSharedPreferences(Constants.SETTINGS_NAME, 0), providerUtils);
+  }
+
+  /**
+   * Intermediate constructor, used only for passing preferences into arguments.
+   */
+  private TrackDataHub(Context ctx, SharedPreferences preferences,
       MyTracksProviderUtils providerUtils) {
     this(ctx, new DataSourcesWrapperImpl(ctx, preferences), new TrackDataListeners(),
-         preferences, providerUtils, TARGET_DISPLAYED_TRACK_POINTS);
+        preferences, providerUtils, TARGET_DISPLAYED_TRACK_POINTS);
   }
 
   /**
