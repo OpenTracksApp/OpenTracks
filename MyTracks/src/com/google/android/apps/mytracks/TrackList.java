@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendActivity;
+import com.google.android.apps.mytracks.services.ServiceStateHelper;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
@@ -78,7 +79,7 @@ public class TrackList extends ListActivity
               R.string.tracklist_show_track);
           menu.add(0, Constants.MENU_EDIT, 0,
               R.string.tracklist_edit_track);
-          if (!MyTracks.getInstance().isRecording()
+          if (!ServiceStateHelper.isRecording(TrackList.this, null)
               || trackId != recordingTrackId) {
             menu.add(0, Constants.MENU_SEND_TO_GOOGLE, 0,
                 R.string.tracklist_send_to_google);
@@ -213,17 +214,18 @@ public class TrackList extends ListActivity
     listView = getListView();
     listView.setOnCreateContextMenuListener(contextMenuListener);
 
+    SharedPreferences preferences =
+        getSharedPreferences(Constants.SETTINGS_NAME, 0);
+
     View deleteAll = findViewById(R.id.tracklist_btn_delete_all);
     View exportAll = findViewById(R.id.tracklist_btn_export_all);
-    boolean notRecording = !MyTracks.getInstance().isRecording();
+    boolean notRecording = !ServiceStateHelper.isRecording(this, preferences);
     deleteAll.setOnClickListener(this);
     deleteAll.setEnabled(notRecording);
     exportAll.setOnClickListener(this);
     exportAll.setEnabled(notRecording);
     findViewById(R.id.tracklist_btn_import_all).setOnClickListener(this);
 
-    SharedPreferences preferences =
-        getSharedPreferences(Constants.SETTINGS_NAME, 0);
     preferences.registerOnSharedPreferenceChangeListener(this);
     metricUnits =
         preferences.getBoolean(getString(R.string.metric_units_key), true);

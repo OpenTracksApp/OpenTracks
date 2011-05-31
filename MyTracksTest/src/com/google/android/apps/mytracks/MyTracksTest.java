@@ -15,6 +15,7 @@
  */
 package com.google.android.apps.mytracks;
 
+import com.google.android.apps.mytracks.services.ServiceStateHelper;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -55,7 +56,7 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     assertInitialized();
 
     // Check if not recording.
-    assertFalse(getActivity().isRecording());
+    assertFalse(isRecording());
     assertEquals(-1, getRecordingTrackId());
     long selectedTrackId = getSharedPreferences().getLong(
         getActivity().getString(R.string.selected_track_key), -1);
@@ -71,7 +72,7 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     assertInitialized();
 
     // Check if not recording.
-    assertFalse(getActivity().isRecording());
+    assertFalse(isRecording());
     assertEquals(-1, getRecordingTrackId());
     long selectedTrackId = getSharedPreferences().getLong(
         getActivity().getString(R.string.selected_track_key), -1);
@@ -92,7 +93,7 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     assertInitialized();
 
     // Check if not recording.
-    assertFalse(getActivity().isRecording());
+    assertFalse(isRecording());
     assertEquals(-1, getRecordingTrackId());
     long selectedTrackId = getSharedPreferences().getLong(
         getActivity().getString(R.string.selected_track_key), -1);
@@ -112,7 +113,7 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     assertInitialized();
 
     // Check if not recording.
-    assertFalse(getActivity().isRecording());
+    assertFalse(isRecording());
     assertEquals(-1, getRecordingTrackId());
     long selectedTrackId = getSharedPreferences().getLong(
         getActivity().getString(R.string.selected_track_key), -1);
@@ -128,7 +129,7 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     clearSelectedAndRecordingTracks();    
     waitForIdle();
 
-    assertFalse(getActivity().isRecording());
+    assertFalse(isRecording());
     assertEquals(-1, getRecordingTrackId());
     long selectedTrackId = getSharedPreferences().getLong(
         getActivity().getString(R.string.selected_track_key), -1);
@@ -227,14 +228,14 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
   private long awaitRecordingStatus(long timeout, boolean isRecording)
       throws TimeoutException, InterruptedException {
     long startTime = System.nanoTime();
-    while (getActivity().isRecording() != isRecording) {
+    while (isRecording() != isRecording) {
       if (System.nanoTime() - startTime > timeout * 1000000) {
         throw new TimeoutException("Timeout while waiting for recording!");
       }
       Thread.sleep(20);
     }
     waitForIdle();
-    assertEquals(isRecording, getActivity().isRecording());
+    assertEquals(isRecording, isRecording());
     return getRecordingTrackId();
   }
 
@@ -247,5 +248,9 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
       sharedPreferences = getActivity().getSharedPreferences(Constants.SETTINGS_NAME, 0);
     }
     return sharedPreferences;
+  }
+
+  private boolean isRecording() {
+    return ServiceStateHelper.isRecording(getActivity(), getSharedPreferences());
   }
 }

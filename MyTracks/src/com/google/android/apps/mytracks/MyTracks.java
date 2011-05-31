@@ -23,6 +23,7 @@ import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.io.file.TempFileCleaner;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
+import com.google.android.apps.mytracks.services.ServiceStateHelper;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceBinder;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.util.ApiFeatures;
@@ -103,38 +104,17 @@ public class MyTracks extends TabActivity implements OnTouchListener {
       synchronized (serviceBinder) {
         ITrackRecordingService service = serviceBinder.getServiceIfBound();
         if (startNewTrackRequested && service != null) {
+          Log.i(TAG, "Starting recording");
+          startNewTrackRequested = false;
           startRecordingNewTrack(service);
+        } else {
+          Log.w(TAG, "Not yet starting recording");
         }
       }
     }
   };
 
-  /**
-   * Checks whether we have a track recording session in progress.
-   * In some cases, when the service has crashed or has been restarted
-   * by the system, we fall back to the shared preferences.
-   *
-   * @return true if the activity is bound to the track recording service and
-   *         the service is recording a track or in case the service is down,
-   *         based on settings from the shared preferences.
-   */
-  public boolean isRecording() {
-    ITrackRecordingService trackRecordingService = serviceBinder.getServiceIfBound();
-    if (trackRecordingService == null) {
-      // Fall back to alternative check method.
-      return dataHub.isRecording();
-    }
-    try {
-      return trackRecordingService.isRecording();
-      // TODO: We catch Exception, because after eliminating the service process
-      // all exceptions it may throw are no longer wrapped in a RemoteException.
-    } catch (Exception e) {
-      Log.e(TAG, "MyTracks: Remote exception.", e);
-
-      // Fall back to alternative check method.
-      return dataHub.isRecording();
-    }
-  }
+  private SharedPreferences preferences;
 
   /*
    * Application lifetime events:
@@ -152,7 +132,8 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     }
 
     providerUtils = MyTracksProviderUtils.Factory.get(this);
-    dataHub = new TrackDataHub(this, providerUtils);
+    preferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    dataHub = new TrackDataHub(this, preferences, providerUtils);
     menuManager = new MenuManager(this);
     dialogManager = new DialogManager(this);
     serviceBinder = TrackRecordingServiceBinder.getInstance(this);
@@ -244,7 +225,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     dataHub.start();
 
     // Ensure that service is running if we're supposed to be recording
-    if (dataHub.isRecording()) {
+    if (ServiceStateHelper.isRecording(this, preferences)) {
       serviceBinder.startService();
     }
 
@@ -273,7 +254,8 @@ public class MyTracks extends TabActivity implements OnTouchListener {
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
     menuManager.onPrepareOptionsMenu(menu, providerUtils.getLastTrack() != null,
-        isRecording(), dataHub.isATrackSelected());
+        ServiceStateHelper.isRecording(this, preferences),
+        dataHub.isATrackSelected());
     return super.onPrepareOptionsMenu(menu);
   }
 
@@ -291,7 +273,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
 
   @Override
   public boolean onTrackballEvent(MotionEvent event) {
-    if (isRecording()) {
+    if (ServiceStateHelper.isRecording(this, preferences)) {
       if (event.getAction() == MotionEvent.ACTION_DOWN) {
         try {
           insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
@@ -436,7 +418,6 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     }
   }
 
-
   private void startRecordingNewTrack(
       ITrackRecordingService trackRecordingService) {
     try {
@@ -507,10 +488,6 @@ public class MyTracks extends TabActivity implements OnTouchListener {
 
   long getSelectedTrackId() {
     return dataHub.getSelectedTrackId();
-  }
-
-  public DialogManager getDialogManager() {
-    return dialogManager;
   }
 
   public TrackDataHub getDataHub() {

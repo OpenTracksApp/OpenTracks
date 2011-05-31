@@ -17,12 +17,11 @@ package com.google.android.apps.mytracks.content;
 
 import static com.google.android.apps.mytracks.Constants.DEFAULT_MIN_REQUIRED_ACCURACY;
 import static com.google.android.apps.mytracks.Constants.MAX_DISPLAYED_WAYPOINTS_POINTS;
-import static com.google.android.apps.mytracks.Constants.TARGET_DISPLAYED_TRACK_POINTS;
 import static com.google.android.apps.mytracks.Constants.MAX_LOCATION_AGE_MS;
 import static com.google.android.apps.mytracks.Constants.MAX_NETWORK_AGE_MS;
 import static com.google.android.apps.mytracks.Constants.TAG;
+import static com.google.android.apps.mytracks.Constants.TARGET_DISPLAYED_TRACK_POINTS;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.DataSourceManager.DataSourceListener;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.DoubleBufferedLocationFactory;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
@@ -196,14 +195,7 @@ public class TrackDataHub {
   /**
    * Default constructor.
    */
-  public TrackDataHub(Context ctx, MyTracksProviderUtils providerUtils) {
-    this(ctx, ctx.getSharedPreferences(Constants.SETTINGS_NAME, 0), providerUtils);
-  }
-
-  /**
-   * Intermediate constructor, used only for passing preferences into arguments.
-   */
-  private TrackDataHub(Context ctx, SharedPreferences preferences,
+  public TrackDataHub(Context ctx, SharedPreferences preferences,
       MyTracksProviderUtils providerUtils) {
     this(ctx, new DataSourcesWrapperImpl(ctx, preferences), new TrackDataListeners(),
         preferences, providerUtils, TARGET_DISPLAYED_TRACK_POINTS);
@@ -353,14 +345,6 @@ public class TrackDataHub {
   /** Returns whether there's a track currently selected. */
   public boolean isATrackSelected() {
     return getSelectedTrackId() > 0;
-  }
-
-  /** Returns whether we're currently recording a track. */
-  public boolean isRecording() {
-    if (!started) {
-      loadSharedPreferences();
-    }
-    return preferences.getLong(RECORDING_TRACK_KEY, -1) > 0;
   }
 
   /** Returns whether the selected track is still being recorded. */

@@ -968,7 +968,7 @@ public class TrackRecordingService extends Service implements LocationListener {
       this.service = null;
       attachInterface(null, null);
     }
-    
+
     @Override
     public boolean isRecording() {
       checkService();

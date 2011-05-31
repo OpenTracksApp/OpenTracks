@@ -48,6 +48,7 @@ public class TrackRecordingServiceBinder {
       ITrackRecordingService trackRecordingService =
           ITrackRecordingService.Stub.asInterface(service);
       synchronized (TrackRecordingServiceBinder.this) {
+        TrackRecordingServiceBinder.this.trackRecordingService = trackRecordingService;
         try {
           for (Runnable callback : pendingBindCallbacks.keySet()) {
             if (callback != null) {
@@ -56,7 +57,6 @@ public class TrackRecordingServiceBinder {
           }
         } finally {
           pendingBindCallbacks.clear();
-          TrackRecordingServiceBinder.this.trackRecordingService = trackRecordingService;
         }
       }
     }
