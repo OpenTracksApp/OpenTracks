@@ -34,28 +34,6 @@ import android.view.WindowManager.BadTokenException;
  */
 public class DialogManager {
 
-  private MyTracks activity;
-
-  public DialogManager(MyTracks activity) {
-    this.activity = activity;
-  }
-
-  /**
-   * Shows a dialog with the given message.
-   * Does it on the UI thread.
-   *
-   * @param success if true, displays an info icon/title, otherwise an error
-   *        icon/title
-   * @param message resource string id
-   */
-  public void showMessageDialog(final int message, final boolean success) {
-    activity.runOnUiThread(new Runnable() {
-      public void run() {
-        showMessageDialog(activity, message, success, null);
-      }
-    });
-  }
-
   public static void showMessageDialog(
       Context ctx, int message, boolean success, DialogInterface.OnClickListener okListener) {
     AlertDialog dialog = null;
@@ -67,27 +45,6 @@ public class DialogManager {
     builder.setTitle(success ? R.string.success : R.string.error);
     dialog = builder.create();
     dialog.show();
-  }
-  
-  /**
-   * Just like showDialog, but will catch a {@link BadTokenException} that
-   * sometimes (very rarely) gets thrown. This might happen if the user hits
-   * the "back" button immediately after sending tracks to google.
-   *
-   * @param id the dialog id
-   */
-  public void showDialogSafely(final int id) {
-    activity.runOnUiThread(new Runnable() {
-      public void run() {
-        try {
-          activity.showDialog(id);
-        } catch (BadTokenException e) {
-          Log.w(TAG, "Could not display dialog with id " + id, e);
-        } catch (IllegalStateException e) {
-          Log.w(TAG, "Could not display dialog with id " + id, e);
-        }
-      }
-    });
   }
 
   /**
@@ -109,21 +66,6 @@ public class DialogManager {
   }
 
   /**
-   * Dismisses the progress dialog if it is showing. Executed on the UI thread.
-   */
-  public void dismissDialogSafely(final int id) {
-    activity.runOnUiThread(new Runnable() {
-      public void run() {
-        try {
-          activity.dismissDialog(id);
-        } catch (IllegalArgumentException e) {
-          // This will be thrown if this dialog was not shown before.
-        }
-      }
-    });
-  }
-
-  /**
    * The equivalent of {@link #dismissDialogSafely(int)}, but for a specific
    * dialog instance.
    */
@@ -138,4 +80,6 @@ public class DialogManager {
       }
     });
   }
+
+  private DialogManager() {}
 }
