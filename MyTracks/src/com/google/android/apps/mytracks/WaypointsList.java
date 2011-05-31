@@ -19,6 +19,8 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
+import com.google.android.apps.mytracks.services.ITrackRecordingService;
+import com.google.android.apps.mytracks.services.TrackRecordingServiceBinder;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -43,6 +45,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Activity which shows the list of waypoints in a track.
@@ -181,23 +184,37 @@ public class WaypointsList extends ListActivity
       default:
         return;
     }
-    long id;
-    try {
-      id = MyTracks.getInstance().insertWaypoint(request);
-    } catch (RemoteException e) {
-      Log.e(Constants.TAG, "Cannot insert marker.", e);
-      return;
-    } catch (IllegalStateException e) {
-      Log.e(Constants.TAG, "Cannot insert marker.", e);
-      return;
-    }
+    long id = insertWaypoint(request);
     if (id < 0) {
+      Toast.makeText(this, R.string.error_unable_to_insert_marker,
+          Toast.LENGTH_LONG).show();
       Log.e(Constants.TAG, "Failed to insert marker.");
       return;
     }
     Intent intent = new Intent(this, WaypointDetails.class);
     intent.putExtra(WaypointDetails.WAYPOINT_ID_EXTRA, id);
     startActivity(intent);
+  }
+
+  private long insertWaypoint(WaypointCreationRequest request) {
+    try {
+      ITrackRecordingService trackRecordingService =
+          TrackRecordingServiceBinder.getInstance(this).getServiceIfBound();
+      if (trackRecordingService != null) {
+        long waypointId = trackRecordingService.insertWaypoint(request);
+        if (waypointId >= 0) {
+          Toast.makeText(this, R.string.status_statistics_inserted,
+              Toast.LENGTH_LONG).show();
+          return waypointId;
+        }
+      }
+    } catch (RemoteException e) {
+      Log.e(Constants.TAG, "Cannot insert marker.", e);
+    } catch (IllegalStateException e) {
+      Log.e(Constants.TAG, "Cannot insert marker.", e);
+    }
+
+    return -1;
   }
 
   private void setListAdapter() {

@@ -390,10 +390,12 @@ public class MyTracks extends TabActivity implements OnTouchListener {
   /**
    * Inserts a waypoint marker.
    *
+   * TODO: Merge with WaypointsList#insertWaypoint.
+   *
    * @return Id of the inserted statistics marker.
    * @throws RemoteException If the call on the service failed.
    */
-  public long insertWaypoint(WaypointCreationRequest request) throws RemoteException {
+  private long insertWaypoint(WaypointCreationRequest request) throws RemoteException {
     ITrackRecordingService trackRecordingService = serviceBinder.getServiceIfBound();
     if (trackRecordingService == null) {
       throw new IllegalStateException("The recording service is not bound.");
