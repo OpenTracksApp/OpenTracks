@@ -128,7 +128,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
 
     providerUtils = MyTracksProviderUtils.Factory.get(this);
     preferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
-    dataHub = new TrackDataHub(this, preferences, providerUtils);
+    dataHub = TrackDataHub.getInstance(this);
     menuManager = new MenuManager(this);
     serviceBinder = TrackRecordingServiceBinder.getInstance(this);
 
@@ -172,15 +172,6 @@ public class MyTracks extends TabActivity implements OnTouchListener {
 
     // This will show the eula until the user accepts or quits the app.
     Eula.showEulaRequireAcceptance(this);
-  }
-
-  @Override
-  protected void onDestroy() {
-    Log.d(TAG, "MyTracks.onDestroy");
-
-    dataHub.destroy();
-
-    super.onDestroy();
   }
 
   @Override

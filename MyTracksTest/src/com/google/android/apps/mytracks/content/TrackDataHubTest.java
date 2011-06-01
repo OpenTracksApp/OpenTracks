@@ -124,7 +124,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     AndroidMock.replay(dataSources);
 
     hub.stop();
-    hub.destroy();
+    hub = null;
 
     super.tearDown();
   }

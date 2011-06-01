@@ -22,6 +22,7 @@ import static com.google.android.apps.mytracks.Constants.MAX_NETWORK_AGE_MS;
 import static com.google.android.apps.mytracks.Constants.TAG;
 import static com.google.android.apps.mytracks.Constants.TARGET_DISPLAYED_TRACK_POINTS;
 
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.DataSourceManager.DataSourceListener;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.DoubleBufferedLocationFactory;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
@@ -150,8 +151,8 @@ public class TrackDataHub {
 
   // Get content notifications on the main thread, send listener callbacks in another.
   // This ensures listener calls are serialized.
-  private final HandlerThread listenerHandlerThread;
-  private final Handler listenerHandler;
+  private HandlerThread listenerHandlerThread;
+  private Handler listenerHandler;
 
   /** Manager for external listeners (those from activities). */
   private final TrackDataListeners listeners;
@@ -192,13 +193,24 @@ public class TrackDataHub {
   private int lastSamplingFrequency;
   private DoubleBufferedLocationFactory locationFactory;
 
-  /**
-   * Default constructor.
-   */
-  public TrackDataHub(Context ctx, SharedPreferences preferences,
-      MyTracksProviderUtils providerUtils) {
-    this(ctx, new DataSourcesWrapperImpl(ctx, preferences), new TrackDataListeners(),
-        preferences, providerUtils, TARGET_DISPLAYED_TRACK_POINTS);
+  private static TrackDataHub instance;
+  
+  public synchronized static TrackDataHub getInstance(Context context) {
+    if (instance != null) {
+      return instance;
+    }
+
+    // Ensure our singleton is never bound to an activity, to avoid memory leaks.
+    context = context.getApplicationContext();
+
+    SharedPreferences preferences = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    MyTracksProviderUtils providerUtils = MyTracksProviderUtils.Factory.get(context);
+    instance = new TrackDataHub(context,
+        new DataSourcesWrapperImpl(context, preferences),
+        new TrackDataListeners(),
+        preferences, providerUtils,
+        TARGET_DISPLAYED_TRACK_POINTS);
+    return instance;
   }
 
   /**
@@ -222,10 +234,6 @@ public class TrackDataHub {
     METRIC_UNITS_KEY = context.getString(R.string.metric_units_key);
     SPEED_REPORTING_KEY = context.getString(R.string.report_speed_key);
 
-    listenerHandlerThread = new HandlerThread("trackDataContentThread");
-    listenerHandlerThread.start();
-    listenerHandler = new Handler(listenerHandlerThread.getLooper());
-
     resetState();
   }
 
@@ -241,6 +249,10 @@ public class TrackDataHub {
     }
     started = true;
 
+    listenerHandlerThread = new HandlerThread("trackDataContentThread");
+    listenerHandlerThread.start();
+    listenerHandler = new Handler(listenerHandlerThread.getLooper());
+
     // This may or may not register internal listeners, depending on whether
     // we already had external listeners.
     dataSourceManager.updateAllListeners(getNeededListenerTypes());
@@ -248,14 +260,6 @@ public class TrackDataHub {
 
     // If there were listeners already registered, make sure they become up-to-date.
     loadDataForAllListeners();
-  }
-
-  private void loadSharedPreferences() {
-    selectedTrackId = preferences.getLong(SELECTED_TRACK_KEY, -1);
-    useMetricUnits = preferences.getBoolean(METRIC_UNITS_KEY, true);
-    reportSpeed = preferences.getBoolean(SPEED_REPORTING_KEY, true);
-    minRequiredAccuracy = preferences.getInt(MIN_REQUIRED_ACCURACY_KEY,
-        DEFAULT_MIN_REQUIRED_ACCURACY);
   }
 
   /**
@@ -273,16 +277,27 @@ public class TrackDataHub {
     dataSourceManager.unregisterAllListeners();
 
     started = false;
+
+    listenerHandlerThread.getLooper().quit();
+    listenerHandlerThread = null;
+    listenerHandler = null;
   }
 
-  /** Permanently invalidates and throws away all resources used by this class. */
-  public void destroy() {
-    if (started) {
-      throw new IllegalStateException("Can only destroy the data hub after it's been stopped");
+  @Override
+  protected void finalize() throws Throwable {
+    if (started || listenerHandlerThread.isAlive()) {
+      Log.e(TAG, "Forgot to stop() TrackDataHub");
     }
+ 
+    super.finalize();
+  }
 
-    ApiFeatures.getInstance().getApiPlatformAdapter()
-        .stopHandlerThread(listenerHandlerThread);
+  private void loadSharedPreferences() {
+    selectedTrackId = preferences.getLong(SELECTED_TRACK_KEY, -1);
+    useMetricUnits = preferences.getBoolean(METRIC_UNITS_KEY, true);
+    reportSpeed = preferences.getBoolean(SPEED_REPORTING_KEY, true);
+    minRequiredAccuracy = preferences.getInt(MIN_REQUIRED_ACCURACY_KEY,
+        DEFAULT_MIN_REQUIRED_ACCURACY);
   }
 
   /** Updates known magnetic declination if needed. */
@@ -325,6 +340,10 @@ public class TrackDataHub {
    * is not available or doesn't have a fix.
    */
   public void forceUpdateLocation() {
+    if (!started) {
+      Log.w(TAG, "Not started, not forcing location update");
+      return;
+    }
     Log.i(TAG, "Forcing location update");
 
     Location loc = dataSources.getLastKnownLocation();
@@ -1059,6 +1078,12 @@ public class TrackDataHub {
 
   // @VisibleForTesting
   protected void runInListenerThread(Runnable runnable) {
+    if (listenerHandler == null) {
+      // Use a Throwable to ensure the stack trace is logged.
+      Log.e(TAG, "Tried to use listener thread before start()", new Throwable());
+      return;
+    }
+
     listenerHandler.post(runnable);
   }
 
