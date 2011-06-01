@@ -525,6 +525,10 @@ public class TrackDataHub {
 
           // If this is the only listener we have registered, keep the state that we serve to it as
           // a reference for other future listeners.
+          if (isOnlyListener && reloadAll) {
+            resetState();
+          }
+
           notifyPointsUpdated(isOnlyListener,
               minPointId,
               previousNumPoints,
