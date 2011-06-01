@@ -91,7 +91,12 @@ public class TrackDataHubTest extends AndroidTestCase {
     dataSources = AndroidMock.createNiceMock("dataSources", DataSourcesWrapper.class);
 
     listeners = new TrackDataListeners();
-    hub = new TrackDataHub(context, dataSources, listeners, prefs, providerUtils, TARGET_POINTS) {
+    hub = new TrackDataHub(context, listeners, prefs, providerUtils, TARGET_POINTS) {
+      @Override
+      protected DataSourcesWrapper newDataSources() {
+        return dataSources;
+      }
+
       @Override
       protected void runInListenerThread(Runnable runnable) {
         // Run everything in the same thread.

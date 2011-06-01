@@ -158,10 +158,10 @@ public class TrackDataHub {
   private final TrackDataListeners listeners;
 
   /** Wrapper for interacting with system data managers. */
-  private final DataSourcesWrapper dataSources;
+  private DataSourcesWrapper dataSources;
 
   /** Manager for system data listener registrations. */
-  private final DataSourceManager dataSourceManager;
+  private DataSourceManager dataSourceManager;
 
   /** Condensed listener for system data listener events. */
   private final DataSourceListener dataSourceListener = new HubDataSourceListener();
@@ -206,7 +206,6 @@ public class TrackDataHub {
     SharedPreferences preferences = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     MyTracksProviderUtils providerUtils = MyTracksProviderUtils.Factory.get(context);
     instance = new TrackDataHub(context,
-        new DataSourcesWrapperImpl(context, preferences),
         new TrackDataListeners(),
         preferences, providerUtils,
         TARGET_DISPLAYED_TRACK_POINTS);
@@ -217,15 +216,13 @@ public class TrackDataHub {
    * Injection constructor.
    */
   // @VisibleForTesting
-  TrackDataHub(Context ctx, DataSourcesWrapper dataSources, TrackDataListeners listeners,
-      SharedPreferences preferences, MyTracksProviderUtils providerUtils, int targetNumPoints) {
+  TrackDataHub(Context ctx, TrackDataListeners listeners, SharedPreferences preferences,
+      MyTracksProviderUtils providerUtils, int targetNumPoints) {
     this.context = ctx;
     this.listeners = listeners;
     this.preferences = preferences;
     this.providerUtils = providerUtils;
-    this.dataSources = dataSources;
     this.targetNumPoints = targetNumPoints;
-    this.dataSourceManager = new DataSourceManager(dataSourceListener, dataSources);
     this.locationFactory = new DoubleBufferedLocationFactory();
 
     SELECTED_TRACK_KEY = context.getString(R.string.selected_track_key);
@@ -252,6 +249,8 @@ public class TrackDataHub {
     listenerHandlerThread = new HandlerThread("trackDataContentThread");
     listenerHandlerThread.start();
     listenerHandler = new Handler(listenerHandlerThread.getLooper());
+    dataSources = newDataSources();
+    dataSourceManager = new DataSourceManager(dataSourceListener, dataSources);
 
     // This may or may not register internal listeners, depending on whether
     // we already had external listeners.
@@ -260,6 +259,11 @@ public class TrackDataHub {
 
     // If there were listeners already registered, make sure they become up-to-date.
     loadDataForAllListeners();
+  }
+
+  // @VisibleForTesting
+  protected DataSourcesWrapper newDataSources() {
+    return new DataSourcesWrapperImpl(context, preferences);
   }
 
   /**
@@ -275,10 +279,12 @@ public class TrackDataHub {
 
     // Unregister internal listeners even if there are external listeners registered.
     dataSourceManager.unregisterAllListeners();
+    listenerHandlerThread.getLooper().quit();
 
     started = false;
 
-    listenerHandlerThread.getLooper().quit();
+    dataSources = null;
+    dataSourceManager = null;
     listenerHandlerThread = null;
     listenerHandler = null;
   }
