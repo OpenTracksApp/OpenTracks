@@ -22,7 +22,7 @@ import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.services.ServiceStateHelper;
+import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.maps.mytracks.R;
@@ -90,7 +90,7 @@ public class StatsActivity extends Activity implements TrackDataListener {
     @Override
     public void run() {
       Log.i(TAG, "Started UI update thread");
-      while (ServiceStateHelper.isRecording(StatsActivity.this, preferences)) {
+      while (ServiceUtils.isRecording(StatsActivity.this, preferences)) {
         runOnUiThread(updateResults);
         try {
           Thread.sleep(1000L);
@@ -109,7 +109,6 @@ public class StatsActivity extends Activity implements TrackDataListener {
     super.onCreate(savedInstanceState);
 
     preferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
-    dataHub = TrackDataHub.getInstance(this);
     utils = new StatsUtilities(this);
 
     // The volume we want to control is the Text-To-Speech volume
@@ -136,18 +135,20 @@ public class StatsActivity extends Activity implements TrackDataListener {
 
   @Override
   protected void onResume() {
+    super.onResume();
+
+    dataHub = TrackDataHub.getStartedInstance();
     dataHub.registerTrackDataListener(this, EnumSet.of(
         ListenerDataType.SELECTED_TRACK_CHANGED,
         ListenerDataType.TRACK_UPDATES,
         ListenerDataType.LOCATION_UPDATES,
         ListenerDataType.DISPLAY_PREFERENCES));
-
-    super.onResume();
   }
 
   @Override
   protected void onPause() {
     dataHub.unregisterTrackDataListener(this);
+    dataHub = null;
 
     if (thread != null) {
       thread.interrupt();
@@ -175,7 +176,7 @@ public class StatsActivity extends Activity implements TrackDataListener {
 
     utils.setReportSpeed(displaySpeed);
     updateLabels();
-  
+
     return true;  // Reload data
   }
 

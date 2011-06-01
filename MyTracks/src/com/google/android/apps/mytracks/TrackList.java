@@ -18,7 +18,7 @@ package com.google.android.apps.mytracks;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendActivity;
-import com.google.android.apps.mytracks.services.ServiceStateHelper;
+import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
@@ -79,7 +79,7 @@ public class TrackList extends ListActivity
               R.string.tracklist_show_track);
           menu.add(0, Constants.MENU_EDIT, 0,
               R.string.tracklist_edit_track);
-          if (!ServiceStateHelper.isRecording(TrackList.this, null)
+          if (!ServiceUtils.isRecording(TrackList.this, null)
               || trackId != recordingTrackId) {
             menu.add(0, Constants.MENU_SEND_TO_GOOGLE, 0,
                 R.string.tracklist_send_to_google);
@@ -219,7 +219,7 @@ public class TrackList extends ListActivity
 
     View deleteAll = findViewById(R.id.tracklist_btn_delete_all);
     View exportAll = findViewById(R.id.tracklist_btn_export_all);
-    boolean notRecording = !ServiceStateHelper.isRecording(this, preferences);
+    boolean notRecording = !ServiceUtils.isRecording(this, preferences);
     deleteAll.setOnClickListener(this);
     deleteAll.setEnabled(notRecording);
     exportAll.setOnClickListener(this);

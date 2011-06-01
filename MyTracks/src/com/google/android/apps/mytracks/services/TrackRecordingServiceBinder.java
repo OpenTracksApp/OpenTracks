@@ -30,7 +30,7 @@ import android.util.Log;
 import java.util.WeakHashMap;
 
 /**
- * A helper for managing the binding to the track recording service.
+ * A manager for the binding to the track recording service.
  * This uses reference counting so multiple callers can share a binding.
  *
  * @author Rodrigo Damazio
@@ -70,7 +70,7 @@ public class TrackRecordingServiceBinder {
     }
   };
 
-  /** Pointer to the service, if bound. */
+  /** Reference to the service, if bound. */
   private ITrackRecordingService trackRecordingService;
 
   /** Count of bindings to the service. */
@@ -99,7 +99,7 @@ public class TrackRecordingServiceBinder {
   /**
    * Binds to the service, and calls the given callback afterwards.
    * Calls to this method should be balanced with calls to {@link #unbindService}.
-   * 
+   *
    * @param onBindCallback the callback for when the service is connected
    */
   public void bindService(Runnable onBindCallback) {
@@ -118,7 +118,7 @@ public class TrackRecordingServiceBinder {
 
       if (bindCount == 1) {
         Intent intent = new Intent(applicationContext, TrackRecordingService.class);
-        int flags = SystemUtils.isRelease(applicationContext) ? 0 : Context.BIND_DEBUG_UNBIND; 
+        int flags = SystemUtils.isRelease(applicationContext) ? 0 : Context.BIND_DEBUG_UNBIND;
         applicationContext.bindService(intent, serviceConnection, flags);
       }
     }
@@ -186,8 +186,7 @@ public class TrackRecordingServiceBinder {
    */
   public synchronized static TrackRecordingServiceBinder getInstance(Context context) {
     if (instance == null) {
-      Context applicationContext = context.getApplicationContext();
-      instance = new TrackRecordingServiceBinder(applicationContext);
+      instance = new TrackRecordingServiceBinder(context.getApplicationContext());
     }
     return instance;
   }

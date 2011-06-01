@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -132,8 +132,6 @@ public class MapActivity extends com.google.android.maps.MapActivity
         new StatusAnnouncerFactory(ApiFeatures.getInstance()).getVolumeStream();
     setVolumeControlStream(volumeStream);
 
-    dataHub = TrackDataHub.getInstance(this);
-
     // We don't need a window title bar:
     requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -180,9 +178,10 @@ public class MapActivity extends com.google.android.maps.MapActivity
 
   @Override
   protected void onResume() {
-    Log.d(TAG, "MapActivity.onStart");
+    Log.d(TAG, "MapActivity.onResume");
     super.onResume();
 
+    dataHub = TrackDataHub.getStartedInstance();
     dataHub.registerTrackDataListener(this, EnumSet.of(
         ListenerDataType.SELECTED_TRACK_CHANGED,
         ListenerDataType.POINT_UPDATES,
@@ -203,9 +202,10 @@ public class MapActivity extends com.google.android.maps.MapActivity
 
   @Override
   protected void onPause() {
-    Log.d(TAG, "MapActivity.onStop");
+    Log.d(TAG, "MapActivity.onPause");
 
     dataHub.unregisterTrackDataListener(this);
+    dataHub = null;
 
     super.onPause();
   }
@@ -338,9 +338,9 @@ public class MapActivity extends com.google.android.maps.MapActivity
 
         if (trackSelected) {
           busyPane.setVisibility(View.VISIBLE);
-  
+
           zoomMapToBoundaries(track);
-  
+
           mapOverlay.setShowEndMarker(!isRecording);
           busyPane.setVisibility(View.GONE);
         }

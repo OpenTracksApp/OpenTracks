@@ -30,7 +30,7 @@ import android.util.Log;
  *
  * @author Rodrigo Damazio
  */
-public class ServiceStateHelper {
+public class ServiceUtils {
 
   public static boolean isRecording(Context ctx, SharedPreferences preferences) {
     TrackRecordingServiceBinder serviceBinder = TrackRecordingServiceBinder.getInstance(ctx);
@@ -51,5 +51,5 @@ public class ServiceStateHelper {
     return preferences.getLong(ctx.getString(R.string.recording_track_key), -1) > 0;
   }
 
-  private ServiceStateHelper() {}
+  private ServiceUtils() {}
 }

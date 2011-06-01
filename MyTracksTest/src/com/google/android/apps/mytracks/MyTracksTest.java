@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.services.ServiceStateHelper;
+import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -250,6 +250,6 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
   }
 
   private boolean isRecording() {
-    return ServiceStateHelper.isRecording(getActivity(), getSharedPreferences());
+    return ServiceUtils.isRecording(getActivity(), getSharedPreferences());
   }
 }

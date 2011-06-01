@@ -23,7 +23,7 @@ import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.io.file.TempFileCleaner;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
-import com.google.android.apps.mytracks.services.ServiceStateHelper;
+import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceBinder;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.util.ApiFeatures;
@@ -127,7 +127,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
 
     providerUtils = MyTracksProviderUtils.Factory.get(this);
     preferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
-    dataHub = TrackDataHub.getInstance(this);
+    dataHub = TrackDataHub.newInstance(this);
     menuManager = new MenuManager(this);
     serviceBinder = TrackRecordingServiceBinder.getInstance(this);
 
@@ -209,7 +209,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     dataHub.start();
 
     // Ensure that service is running if we're supposed to be recording
-    if (ServiceStateHelper.isRecording(this, preferences)) {
+    if (ServiceUtils.isRecording(this, preferences)) {
       serviceBinder.startService();
     }
 
@@ -238,7 +238,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
     menuManager.onPrepareOptionsMenu(menu, providerUtils.getLastTrack() != null,
-        ServiceStateHelper.isRecording(this, preferences),
+        ServiceUtils.isRecording(this, preferences),
         dataHub.isATrackSelected());
     return super.onPrepareOptionsMenu(menu);
   }
@@ -257,7 +257,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
 
   @Override
   public boolean onTrackballEvent(MotionEvent event) {
-    if (ServiceStateHelper.isRecording(this, preferences)) {
+    if (ServiceUtils.isRecording(this, preferences)) {
       if (event.getAction() == MotionEvent.ACTION_DOWN) {
         try {
           insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
@@ -474,9 +474,5 @@ public class MyTracks extends TabActivity implements OnTouchListener {
 
   long getSelectedTrackId() {
     return dataHub.getSelectedTrackId();
-  }
-
-  public TrackDataHub getDataHub() {
-    return dataHub;
   }
 }

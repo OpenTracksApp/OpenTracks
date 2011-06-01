@@ -107,7 +107,6 @@ public class ChartActivity extends Activity implements TrackDataListener {
   protected void onCreate(Bundle savedInstanceState) {
     Log.w(TAG, "ChartActivity.onCreate");
     super.onCreate(savedInstanceState);
-    dataHub = TrackDataHub.getInstance(this);
 
     // The volume we want to control is the Text-To-Speech volume
     int volumeStream =
@@ -143,6 +142,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
   protected void onResume() {
     super.onResume();
 
+    dataHub = TrackDataHub.getStartedInstance();
     dataHub.registerTrackDataListener(this, EnumSet.of(
         ListenerDataType.SELECTED_TRACK_CHANGED,
         ListenerDataType.POINT_UPDATES,
@@ -154,6 +154,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
   @Override
   protected void onPause() {
     dataHub.unregisterTrackDataListener(this);
+    dataHub = null;
 
     super.onPause();
   }
@@ -444,7 +445,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
     this.metricUnits = metric;
 
     chartView.setMetricUnits(metric);
-    
+
     return true;  // Reload data
   }
 
