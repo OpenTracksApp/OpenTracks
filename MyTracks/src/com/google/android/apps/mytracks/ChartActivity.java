@@ -107,7 +107,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
   protected void onCreate(Bundle savedInstanceState) {
     Log.w(TAG, "ChartActivity.onCreate");
     super.onCreate(savedInstanceState);
-    dataHub = MyTracks.getInstance().getDataHub();
+    dataHub = TrackDataHub.getInstance(this);
 
     // The volume we want to control is the Text-To-Speech volume
     int volumeStream =

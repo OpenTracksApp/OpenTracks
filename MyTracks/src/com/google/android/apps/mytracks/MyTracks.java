@@ -120,7 +120,6 @@ public class MyTracks extends TabActivity implements OnTouchListener {
   protected void onCreate(Bundle savedInstanceState) {
     Log.d(TAG, "MyTracks.onCreate");
     super.onCreate(savedInstanceState);
-    instance = this;
     ApiFeatures apiFeatures = ApiFeatures.getInstance();
     if (!SystemUtils.isRelease(this)) {
       apiFeatures.getApiPlatformAdapter().enableStrictMode();
@@ -479,12 +478,5 @@ public class MyTracks extends TabActivity implements OnTouchListener {
 
   public TrackDataHub getDataHub() {
     return dataHub;
-  }
-
-  // TODO: Remove very soon
-  private static MyTracks instance;
-
-  public static MyTracks getInstance() {
-    return instance;
   }
 }

@@ -180,7 +180,6 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
 
   private void assertInitialized() {
     assertNotNull(getActivity());
-    assertNotNull(MyTracks.getInstance());
   }
 
   /**

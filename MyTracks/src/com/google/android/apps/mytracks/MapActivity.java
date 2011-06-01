@@ -123,7 +123,7 @@ public class MapActivity extends com.google.android.maps.MapActivity
   // ------------------------
 
   @Override
-  public void onCreate(Bundle bundle) {
+  protected void onCreate(Bundle bundle) {
     Log.d(TAG, "MapActivity.onCreate");
     super.onCreate(bundle);
 
@@ -132,7 +132,7 @@ public class MapActivity extends com.google.android.maps.MapActivity
         new StatusAnnouncerFactory(ApiFeatures.getInstance()).getVolumeStream();
     setVolumeControlStream(volumeStream);
 
-    dataHub = MyTracks.getInstance().getDataHub();
+    dataHub = TrackDataHub.getInstance(this);
 
     // We don't need a window title bar:
     requestWindowFeature(Window.FEATURE_NO_TITLE);

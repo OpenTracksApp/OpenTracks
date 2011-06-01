@@ -105,11 +105,11 @@ public class StatsActivity extends Activity implements TrackDataListener {
 
   /** Called when the activity is first created. */
   @Override
-  public void onCreate(Bundle savedInstanceState) {
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
     preferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
-    dataHub = MyTracks.getInstance().getDataHub();
+    dataHub = TrackDataHub.getInstance(this);
     utils = new StatsUtilities(this);
 
     // The volume we want to control is the Text-To-Speech volume
