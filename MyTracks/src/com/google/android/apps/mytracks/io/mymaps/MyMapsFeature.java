@@ -3,7 +3,6 @@ package com.google.android.apps.mytracks.io.mymaps;
 
 import com.google.android.maps.GeoPoint;
 
-import java.io.Serializable;
 import java.util.Vector;
 
 /**
@@ -12,7 +11,7 @@ import java.util.Vector;
  * {@link MyMapsFeatureMetadata} object so that it can be more efficiently
  * transmitted to other activities.
  */
-class MyMapsFeature implements Serializable {
+class MyMapsFeature {
 
   private static final long serialVersionUID = 8439035544430497236L;
 
@@ -102,7 +101,7 @@ class MyMapsFeature implements Serializable {
    *
    * @param description The new description of this feature
    */
-  public synchronized void setDescription(String description) {
+  public void setDescription(String description) {
     featureInfo.setDescription(description);
   }
 
@@ -196,7 +195,7 @@ class MyMapsFeature implements Serializable {
    *
    * @param title The new title of this feature
    */
-  public synchronized void setTitle(String title) {
+  public void setTitle(String title) {
     featureInfo.setTitle(title);
   }
 
@@ -207,7 +206,7 @@ class MyMapsFeature implements Serializable {
    * @param type The new type of the feature. That type must be one of
    *        {@link #MARKER}, {@link #LINE}, or {@link #SHAPE}
    */
-  public synchronized void setType(int type) {
+  public void setType(int type) {
     featureInfo.setType(type);
   }
 
@@ -217,7 +216,7 @@ class MyMapsFeature implements Serializable {
    *
    * @param color The new ARGB color of this feature
    */
-  public synchronized void setColor(int color) {
+  public void setColor(int color) {
     featureInfo.setColor(color);
   }
 
@@ -227,7 +226,7 @@ class MyMapsFeature implements Serializable {
    *
    * @param url The new icon url of the feature
    */
-  public synchronized void setIconUrl(String url) {
+  public void setIconUrl(String url) {
     featureInfo.setIconUrl(url);
   }
 }

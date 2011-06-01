@@ -85,8 +85,8 @@ class XmlMapsGDataParserFactory implements GDataParserFactory {
 
   @Override
   public GDataSerializer createSerializer(Entry en) {
-    if (en.getClass() == MapFeatureEntry.class) {
-      return new XmlMapsGDataSerializer(xmlFactory, en);
+    if (en instanceof MapFeatureEntry) {
+      return new XmlMapsGDataSerializer(xmlFactory, (MapFeatureEntry) en);
     } else {
       return new XmlEntryGDataSerializer(xmlFactory, en);
     }

@@ -15,20 +15,20 @@
  */
 package com.google.android.apps.mytracks.services;
 
-import static com.google.android.apps.mytracks.Constants.TAG;
 import static com.google.android.apps.mytracks.Constants.RESUME_TRACK_EXTRA_NAME;
+import static com.google.android.apps.mytracks.Constants.TAG;
 
-import com.google.android.apps.mytracks.MyTracks;
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.MyTracks;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Sensor;
+import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
-import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.services.sensors.SensorManager;
 import com.google.android.apps.mytracks.services.sensors.SensorManagerFactory;
 import com.google.android.apps.mytracks.services.tasks.PeriodicTaskExecutor;
@@ -56,7 +56,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -570,7 +569,6 @@ public class TrackRecordingService extends Service implements LocationListener {
                 recordingTrackId)) {
               return;
             }
-            lastRecordedLocationId++;
           }
         } else {
           Log.d(TAG,
@@ -845,7 +843,7 @@ public class TrackRecordingService extends Service implements LocationListener {
         "shouldResumeTrack: lastModified = " + lastModified
         + ", autoResumeTrackTimeout: " + autoResumeTrackTimeout);
     return lastModified > 0 && System.currentTimeMillis() - lastModified <=
-        autoResumeTrackTimeout * 60 * 1000;
+        autoResumeTrackTimeout * 60L * 1000L;
   }
 
   public boolean isRecording() {

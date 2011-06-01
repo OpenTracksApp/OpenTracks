@@ -49,6 +49,7 @@ import java.util.ArrayList;
  * @author Leif Hendrik Wilden
  */
 public class ChartView extends View {
+  private static final int MIN_ZOOM_LEVEL = 1;
 
   /*
    * Scrolling logic:
@@ -62,7 +63,6 @@ public class ChartView extends View {
    * Zoom logic:
    */
   private int zoomLevel = 1;
-  private final int minZoomLevel = 1;
   private int maxZoomLevel = 10;
 
   private static final int MAX_INTERVALS = 5;
@@ -333,7 +333,7 @@ public class ChartView extends View {
    * @return true if the chart can be zoomed out
    */
   public boolean canZoomOut() {
-    return zoomLevel > minZoomLevel;
+    return zoomLevel > MIN_ZOOM_LEVEL;
   }
 
   /**

@@ -1,12 +1,12 @@
 /*
  * Copyright 2010 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -67,7 +67,7 @@ public class PeriodicTaskExecutor {
     if (!service.isRecording()) {
       return;
     }
-    
+
     if (!isTimeFrequency()) {
       if (timerExecutor != null) {
         timerExecutor.shutdown();
@@ -77,7 +77,7 @@ public class PeriodicTaskExecutor {
     if (taskFrequency == 0) {
       return;
     }
-    
+
     // Try to make the task.
     task = factory.create(service);
     // Returning null is ok.
@@ -90,7 +90,7 @@ public class PeriodicTaskExecutor {
       if (timerExecutor == null) {
         timerExecutor = new TimerTaskExecutor(task, service);
       }
-      timerExecutor.scheduleTask(taskFrequency * 60000);
+      timerExecutor.scheduleTask(taskFrequency * 60000L);
     } else {
       // For distance based splits.
       calculateNextTaskDistance();
@@ -119,7 +119,7 @@ public class PeriodicTaskExecutor {
     if (!service.isRecording() || task == null) {
       return;
     }
-    
+
     if (!isDistanceFrequency()) {
       nextTaskDistance = Double.MAX_VALUE;
       Log.d(TAG, "SplitManager: Distance splits disabled.");

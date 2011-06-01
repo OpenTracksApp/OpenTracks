@@ -49,6 +49,7 @@ import android.util.Log;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -420,10 +421,10 @@ public class SendToFusionTables implements Runnable {
    * @return the kml.
    */
   private String getKmlPoint(Location location) {
-  	StringBuilder builder = new StringBuilder("<Point><coordinates>");
-  	appendCoordinate(location, builder);
-  	builder.append("</coordinates></Point>");
-  	return builder.toString();
+    StringBuilder builder = new StringBuilder("<Point><coordinates>");
+    appendCoordinate(location, builder);
+    builder.append("</coordinates></Point>");
+    return builder.toString();
   }
 
   /**
@@ -599,7 +600,7 @@ public class SendToFusionTables implements Runnable {
     // I am leaving the number of waypoints very high which should not be a
     // problem because we don't try to load them into objects all at the
     // same time.
-  	boolean success = true;
+    boolean success = true;
     Cursor c = null;
     try {
       c = providerUtils.getWaypointsCursor(
@@ -613,9 +614,9 @@ public class SendToFusionTables implements Runnable {
             Waypoint wpt = providerUtils.createWaypoint(c);
             Log.d(Constants.TAG, "SendToFusionTables: Creating waypoint.");
             success = createNewPoint(wpt.getName(), wpt.getDescription(), wpt.getLocation(),
-            		MARKER_TYPE_WAYPOINT);
+                MARKER_TYPE_WAYPOINT);
             if (!success) {
-            	break;
+              break;
             }
           }
         }
@@ -681,8 +682,8 @@ public class SendToFusionTables implements Runnable {
         boolean success = response.isSuccessStatusCode;
         if (success) {
           byte[] result = new byte[1024];
-          response.getContent().read(result);
-          String s = Strings.fromBytesUtf8(result);
+          int read = response.getContent().read(result);
+          String s = new String(result, 0, read, Charset.forName("UTF8"));
           String[] lines = s.split(Strings.LINE_SEPARATOR);
           if (lines[0].equals("tableid")) {
             tableId = lines[1];

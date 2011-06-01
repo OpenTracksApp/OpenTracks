@@ -195,7 +195,7 @@ class TrackWriterImpl implements TrackWriter {
         directory, track.getName(), writer.getExtension());
     if (fileName == null) {
       Log.e(Constants.TAG,
-          "Unable to get a unique filename for " + fileName);
+          "Unable to get a unique filename for " + track.getName());
       return false;
     }
 
