@@ -7,7 +7,7 @@
 	<classpathentry kind="lib" path="libs/google-api-client-1.2.2-alpha.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry exported="true" kind="lib" path="/MyTracksLib/libs/protobuf-java-2.3.0-lite.jar"/>
 	<classpathentry kind="src" path="MyTracksLib_src"/>
+	<classpathentry kind="lib" path="C:/Documents and Settings/John/My Documents/Projects/Eclipse/jrgert-polar-bluetooth/MyTracksLib/libs/protobuf-java-2.3.0-lite.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

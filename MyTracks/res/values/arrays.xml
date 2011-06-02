@@ -272,12 +272,4 @@ limitations under the License.
     <item>way point</item>
   </array>
 
-  <array name="sensor_type_options">
-    <item>None</item>
-    <item>ANT+ Sensors</item>
-    <item>SRM ANT+ Bridge</item>
-    <item>Polar Bluetooth</item>
-    <item>Zephyr Bluetooth</item>
-  </array>
-
 </resources>

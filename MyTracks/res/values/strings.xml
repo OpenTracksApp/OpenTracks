@@ -498,4 +498,11 @@ limitations under the License.
   <string name="notification_permission_description">Be notified when a track starts or stops being recorded.</string>
   <string name="read_tracks_permission_description">Be able to read track data, such as points and waypoints.</string>
   <string name="write_tracks_permission_description">Be able to write track data, such as starting recording or adding waypoints.</string>
+
+  <!-- Sensor Type Options -->
+  <string name="ant_sensor_option">ANT+ Sensors</string>
+  <string name="ant_bridge_sensor_option">SRM ANT+ Bridge</string>
+  <string name="polar_bt_sensor_option">Polar Bluetooth</string>
+  <string name="zephyr_bt_sensor_option">Zephyr Bluetooth</string>
+  
 </resources>
