@@ -120,6 +120,7 @@ limitations under the License.
     <item>@string/none</item>
     <item>@string/ant_sensor_type</item>
     <item>@string/srm_ant_bridge_sensor_type</item>
+    <item>@string/polar_sensor_type</item>
     <item>@string/zephyr_sensor_type</item>
   </array>
 
