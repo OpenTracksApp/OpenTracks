@@ -133,12 +133,7 @@ public class ExportAllTracks {
       Log.i(Constants.TAG, "ExportAllTracks: Releasing wake lock.");
     }
     Log.i(Constants.TAG, "ExportAllTracks: Done");
-    activity.runOnUiThread(new Runnable() {
-      @Override
-      public void run() {
-        Toast.makeText(activity, R.string.export_done, Toast.LENGTH_SHORT).show();
-      }
-    });
+    showToast(R.string.export_done, Toast.LENGTH_SHORT);
   }
 
   private void makeProgressDialog(final int trackCount) {
@@ -198,13 +193,7 @@ public class ExportAllTracks {
 
         if (!writer.wasSuccess()) {
           // Abort the whole export on the first error.
-          final int error = writer.getErrorMessage();
-          activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-              Toast.makeText(activity, error, Toast.LENGTH_LONG).show();
-            }
-          });
+          showToast(writer.getErrorMessage(), Toast.LENGTH_LONG);
           return;
         }
       }
@@ -219,5 +208,14 @@ public class ExportAllTracks {
         }
       }
     }
+  }
+
+  private void showToast(final int messageId, final int length) {
+    activity.runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        Toast.makeText(activity, messageId, length).show();
+      }
+    });
   }
 }
