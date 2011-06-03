@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -51,6 +51,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.EnumSet;
 
@@ -336,9 +337,9 @@ public class MapActivity extends com.google.android.maps.MapActivity
 
         if (trackSelected) {
           busyPane.setVisibility(View.VISIBLE);
-  
+
           zoomMapToBoundaries(track);
-  
+
           mapOverlay.setShowEndMarker(!isRecording);
           busyPane.setVisibility(View.GONE);
         }
@@ -464,21 +465,21 @@ public class MapActivity extends com.google.android.maps.MapActivity
   @Override
   public void onProviderStateChange(ProviderState state) {
     final int messageId;
-    final boolean bindClick;
+    final boolean isGpsDisabled;
     switch (state) {
       case DISABLED:
         messageId = R.string.status_enable_gps;
-        bindClick = true;
+        isGpsDisabled = true;
         break;
       case NO_FIX:
       case BAD_FIX:
         messageId = R.string.wait_for_fix;
-        bindClick = false;
+        isGpsDisabled = false;
         break;
       case GOOD_FIX:
         // Nothing to show.
         messageId = -1;
-        bindClick = false;
+        isGpsDisabled = false;
         break;
       default:
         throw new IllegalArgumentException("Unexpected state: " + state);
@@ -491,7 +492,13 @@ public class MapActivity extends com.google.android.maps.MapActivity
           messageText.setText(messageId);
           messagePane.setVisibility(View.VISIBLE);
 
-          if (bindClick) {
+          if (isGpsDisabled) {
+            // Give a warning about this state.
+            Toast.makeText(MapActivity.this,
+                R.string.error_no_gps_location_provider,
+                Toast.LENGTH_LONG).show();
+
+            // Make clicking take the user to the location settings.
             messagePane.setOnClickListener(MapActivity.this);
           } else {
             messagePane.setOnClickListener(null);

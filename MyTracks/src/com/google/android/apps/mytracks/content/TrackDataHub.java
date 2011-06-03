@@ -1,12 +1,12 @@
 /*
  * Copyright 2011 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -446,7 +446,7 @@ public class TrackDataHub {
 
   /**
    * Reloads all track data received so far into the specified listeners.
-   * 
+   *
    * Assumes it's called from a block that synchronizes on {@link #listeners}.
    */
   private void reloadDataForListener(final ListenerRegistration registration) {
@@ -615,7 +615,7 @@ public class TrackDataHub {
       @Override
       public void run() {
         Set<TrackDataListener> displayListeners =
-            getListenersFor(ListenerDataType.DISPLAY_PREFERENCES);        
+            getListenersFor(ListenerDataType.DISPLAY_PREFERENCES);
 
         for (TrackDataListener listener : displayListeners) {
           // TODO: Do the reloading just once for all interested listeners
@@ -636,7 +636,7 @@ public class TrackDataHub {
     runInListenerThread(new Runnable() {
       @Override
       public void run() {
-        Set<TrackDataListener> displayListeners = getListenersFor(ListenerDataType.DISPLAY_PREFERENCES);        
+        Set<TrackDataListener> displayListeners = getListenersFor(ListenerDataType.DISPLAY_PREFERENCES);
 
         for (TrackDataListener listener : displayListeners) {
           if (listener.onUnitsChanged(useMetricUnits)) {
@@ -654,9 +654,6 @@ public class TrackDataHub {
     final TrackDataListener.ProviderState state;
     if (!hasProviderEnabled) {
       state = ProviderState.DISABLED;
-
-      // Give a global warning about this state.
-      Toast.makeText(context, R.string.error_no_gps_location_provider, Toast.LENGTH_LONG).show();
     } else if (!hasFix) {
       state = ProviderState.NO_FIX;
     } else if (!hasGoodFix) {
@@ -851,7 +848,7 @@ public class TrackDataHub {
               if (!LocationUtils.isValidLocation(waypoint.getLocation())) {
                 continue;
               }
-    
+
               for (TrackDataListener listener : listeners) {
                 listener.onNewWaypoint(waypoint);
               }
@@ -862,7 +859,7 @@ public class TrackDataHub {
             cursor.close();
           }
         }
-    
+
         for (TrackDataListener listener : listeners) {
           listener.onNewWaypointsDone();
         }
