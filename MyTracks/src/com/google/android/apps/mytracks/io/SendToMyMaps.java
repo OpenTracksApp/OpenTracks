@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -76,7 +76,7 @@ public class SendToMyMaps implements Runnable {
   public interface OnSendCompletedListener {
     void onSendCompleted(String mapId, boolean success, int statusMessage);
   }
-  
+
   public SendToMyMaps(Activity context, String mapId, AuthManager auth,
       long trackId, ProgressIndicator progressIndicator,
       OnSendCompletedListener onCompletion) {
@@ -103,15 +103,20 @@ public class SendToMyMaps implements Runnable {
       progressIndicator.setProgressValue(1);
       progressIndicator.setProgressMessage(
           R.string.progress_message_reading_track);
-  
+
       // Get the track meta-data
       Track track = providerUtils.getTrack(trackId);
+      if (track == null) {
+        Log.w(Constants.TAG, "Cannot get track.");
+        return;
+      }
+
       String originalDescription = track.getDescription();
       track.setDescription("<p>" + track.getDescription() + "</p><p>"
           + stringUtils.generateTrackDescription(track, null, null) + "</p>");
 
       mapsClient = new MapsFacade(context, auth);
-  
+
       // Create a new map if necessary:
       boolean isNewMap = mapId.equals(NEW_MAP_ID);
       if (isNewMap) {
@@ -166,7 +171,7 @@ public class SendToMyMaps implements Runnable {
           Log.w(TAG, "SendToMyMaps: upload waypoints failed.");
         }
       }
-  
+
       if (success) {
         statusMessageId = isNewMap
             ? R.string.status_new_mymap_has_been_created
@@ -178,7 +183,7 @@ public class SendToMyMaps implements Runnable {
       if (mapsClient != null) {
         mapsClient.cleanUp();
       }
-  
+
       final boolean finalSuccess = success;
       final int finalStatusMessageId = statusMessageId;
       context.runOnUiThread(new Runnable() {
@@ -206,17 +211,17 @@ public class SendToMyMaps implements Runnable {
     Cursor locationsCursor =
         providerUtils.getLocationsCursor(track.getId(), 0, -1, false);
     try {
-      if (!locationsCursor.moveToFirst()) {
+      if (locationsCursor == null || !locationsCursor.moveToFirst()) {
         Log.w(TAG, "Unable to get any points to upload");
         return false;
       }
-  
+
       totalLocationsRead = 0;
       totalLocationsPrepared = 0;
       totalLocationsUploaded = 0;
       totalLocations = locationsCursor.getCount();
       totalSegmentsUploaded = 0;
-  
+
       // Limit the number of elevation readings. Ideally we would want around 250.
       int elevationSamplingFrequency =
           Math.max(1, (int) (totalLocations / 250.0));
@@ -224,12 +229,12 @@ public class SendToMyMaps implements Runnable {
             "Using elevation sampling factor: " + elevationSamplingFrequency
             + " on " + totalLocations);
       double totalDistance = 0;
-  
+
       Vector<Double> distances = new Vector<Double>();
       Vector<Double> elevations = new Vector<Double>();
       DoubleBuffer elevationBuffer =
           new DoubleBuffer(Constants.ELEVATION_SMOOTHING_FACTOR);
-  
+
       List<Location> locations = new ArrayList<Location>(MAX_POINTS_PER_UPLOAD);
       progressIndicator.setProgressMessage(
           R.string.progress_message_reading_track);
@@ -238,15 +243,15 @@ public class SendToMyMaps implements Runnable {
         if (totalLocationsRead % 100 == 0) {
           updateProgress();
         }
-  
+
         Location loc = providerUtils.createLocation(locationsCursor);
         locations.add(loc);
-  
+
         if (totalLocationsRead == 0) {
           // Put a marker at the first point of the first valid segment:
           mapsClient.uploadMarker(mapId, track.getName(), track.getDescription(), loc, true);
         }
-  
+
         // Add to the elevation profile.
         if (loc != null && LocationUtils.isValidLocation(loc)) {
           // All points go into the smoothing buffer...
@@ -256,19 +261,19 @@ public class SendToMyMaps implements Runnable {
             double dist = lastLocation.distanceTo(loc);
             totalDistance += dist;
           }
-  
+
           // ...but only a few points are really used to keep the url short.
           if (totalLocationsRead % elevationSamplingFrequency == 0) {
             distances.add(totalDistance);
             elevations.add(elevationBuffer.getAverage());
           }
         }
-  
+
         // If the location was not valid, it's a segment split, so make sure the
         // distance between the previous segment and the new one is not accounted
         // for in the next iteration.
         lastLocation = loc;
-  
+
         // Every now and then, upload the accumulated points
         if (totalLocationsRead % MAX_POINTS_PER_UPLOAD
             == MAX_POINTS_PER_UPLOAD - 1) {
@@ -276,28 +281,30 @@ public class SendToMyMaps implements Runnable {
             return false;
           }
         }
-  
+
         totalLocationsRead++;
       } while (locationsCursor.moveToNext());
-  
+
       // Do a final upload with what's left
       if (!prepareAndUploadPoints(track, locations)) {
         return false;
       }
-  
+
       // Put an end marker at the last point of the last valid segment:
       if (lastLocation != null) {
         track.setDescription("<p>" + originalDescription + "</p><p>"
             + stringUtils.generateTrackDescription(
                 track, distances, elevations)
             + "</p>");
-        return mapsClient.uploadMarker(mapId, track.getName(), track.getDescription(), 
+        return mapsClient.uploadMarker(mapId, track.getName(), track.getDescription(),
             lastLocation, false);
       }
-  
+
       return true;
     } finally {
-      locationsCursor.close();
+      if (locationsCursor != null) {
+        locationsCursor.close();
+      }
     }
   }
 
@@ -306,17 +313,17 @@ public class SendToMyMaps implements Runnable {
     progressIndicator.setProgressMessage(
         R.string.progress_message_preparing_track);
     updateProgress();
-  
+
     int numLocations = locations.size();
     if (numLocations < 2) {
       Log.d(TAG, "Not preparing/uploading too few points");
       totalLocationsUploaded += numLocations;
       return true;
     }
-  
+
     // Prepare/pre-process the points
     ArrayList<Track> splitTracks = prepareLocations(track, locations);
-  
+
     // Start uploading them
     progressIndicator.setProgressMessage(
         R.string.progress_message_sending_mymaps);
@@ -330,7 +337,7 @@ public class SendToMyMaps implements Runnable {
       Log.d(TAG,
           "SendToMyMaps: Prepared feature for upload w/ "
           + splitTrack.getLocations().size() + " points.");
-  
+
       // Transmit tracks via GData feed:
       // -------------------------------
       Log.d(TAG,
@@ -340,7 +347,7 @@ public class SendToMyMaps implements Runnable {
         return false;
       }
     }
-  
+
     locations.clear();
     totalLocationsUploaded += numLocations;
     updateProgress();
@@ -358,7 +365,7 @@ public class SendToMyMaps implements Runnable {
   private ArrayList<Track> prepareLocations(
       Track track, Iterable<Location> locations) {
     ArrayList<Track> splitTracks = new ArrayList<Track>();
-  
+
     // Create segments from each full track:
     Track segment = new Track();
     TripStatistics segmentStats = segment.getStatistics();
@@ -377,11 +384,11 @@ public class SendToMyMaps implements Runnable {
       if (loc.getLatitude() > 90) {
         startNewTrackSegment = true;
       }
-  
+
       if (startNewTrackSegment) {
         // Close up the last segment.
         prepareTrackSegment(segment, splitTracks);
-  
+
         Log.d(TAG,
             "MyTracksSendToMyMaps: Starting new track segment...");
         startNewTrackSegment = false;
@@ -391,7 +398,7 @@ public class SendToMyMaps implements Runnable {
         segment.setDescription(/* track.getDescription() */ "");
         segment.setCategory(track.getCategory());
       }
-  
+
       if (loc.getLatitude() <= 90) {
         segment.addLocation(loc);
         if (segmentStats.getStartTime() < 0) {
@@ -400,9 +407,9 @@ public class SendToMyMaps implements Runnable {
       }
       totalLocationsPrepared++;
     }
-  
+
     prepareTrackSegment(segment, splitTracks);
-  
+
     return splitTracks;
   }
 
@@ -425,13 +432,13 @@ public class SendToMyMaps implements Runnable {
         && segment.getLocations().size() > 0) {
       segmentStats.setStopTime(segment.getLocations().size() - 1);
     }
-  
+
     /*
      * Decimate to 2 meter precision. Mapshop doesn't like too many
      * points:
      */
     LocationUtils.decimate(segment, 2.0);
-  
+
     /* It the track still has > 500 points, split it in pieces: */
     if (segment.getLocations().size() > 500) {
       splitTracks.addAll(LocationUtils.split(segment, 500));

@@ -189,6 +189,11 @@ public class ExportAllTracks {
         Log.i(Constants.TAG, "ExportAllTracks: exporting: " + id);
         TrackWriter writer =
             TrackWriterFactory.newWriter(activity, providerUtils, id, format);
+        if (writer == null) {
+          showToast(R.string.error_track_does_not_exist, Toast.LENGTH_LONG);
+          return;
+        }
+
         writer.writeTrack();
 
         if (!writer.wasSuccess()) {

@@ -905,7 +905,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    * Initiates the process to send tracks to google.
    * This is called once the user has selected sending options via the
    * SendToGoogleDialog.
-   * 
+   *
    * TODO: Change this whole flow to an actual state machine.
    */
   public void sendToGoogle() {
@@ -963,8 +963,12 @@ public class MyTracks extends TabActivity implements OnTouchListener,
           // Update the map id for this track:
           try {
             Track track = providerUtils.getTrack(trackId);
-            track.setMapId(mapId);
-            providerUtils.updateTrack(track);
+            if (track != null) {
+              track.setMapId(mapId);
+              providerUtils.updateTrack(track);
+            } else {
+              Log.w(TAG, "Updating map id failed.");
+            }
           } catch (RuntimeException e) {
             // If that fails whatever reasons we'll just log an error, but
             // continue.
@@ -1017,15 +1021,19 @@ public class MyTracks extends TabActivity implements OnTouchListener,
           // Update the table id for this track:
           try {
             Track track = providerUtils.getTrack(trackId);
-            track.setTableId(tableId);
-            providerUtils.updateTrack(track);
+            if (track != null) {
+              track.setTableId(tableId);
+              providerUtils.updateTrack(track);
+            } else {
+              Log.w(TAG, "Updating table id failed.");
+            }
           } catch (RuntimeException e) {
             // If that fails whatever reasons we'll just log an error, but
             // continue.
             Log.w(TAG, "Updating table id failed.", e);
           }
         }
-        
+
         onSendToFusionTablesDone();
       }
     };
@@ -1072,7 +1080,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     Log.d(TAG, "Sending to Docs....");
     setProgressValue(50);
     setProgressMessage(R.string.progress_message_sending_docs);
-    final SendToDocs sender = new SendToDocs(this, 
+    final SendToDocs sender = new SendToDocs(this,
         authMap.get(SendToDocs.GDATA_SERVICE_NAME_TRIX),
         authMap.get(SendToDocs.GDATA_SERVICE_NAME_DOCLIST), trackId);
     sendToTrackId = trackId;
@@ -1228,6 +1236,11 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    */
   public void saveTrack(long trackId, TrackFileFormat format) {
     TrackWriter writer = TrackWriterFactory.newWriter(this, providerUtils, trackId, format);
+    if (writer == null) {
+      dialogManager.showMessageDialog(R.string.error_track_does_not_exist, false);
+      return;
+    }
+
     WriteProgressController controller = new WriteProgressController(this, writer);
     controller.setOnCompletionListener(new WriteProgressController.OnCompletionListener() {
       @Override
@@ -1247,6 +1260,10 @@ public class MyTracks extends TabActivity implements OnTouchListener,
    */
   public void sendTrack(long trackId, final TrackFileFormat format) {
     TrackWriter writer = TrackWriterFactory.newWriter(this, providerUtils, trackId, format);
+    if (writer == null) {
+      dialogManager.showMessageDialog(R.string.error_track_does_not_exist, false);
+      return;
+    }
 
     FileUtils fileUtils = new FileUtils();
     String extension = format.getExtension();
@@ -1313,17 +1330,17 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   long getRecordingTrackId() {
     return sharedPreferences.getLong(getString(R.string.recording_track_key), -1);
   }
-  
+
   // @VisibleForTesting
   SharedPreferences getSharedPreferences() {
     return sharedPreferences;
   }
-  
+
   // @VisibleForTesting
   static void clearInstance() {
     instance = null;
   }
-  
+
   // @VisibleForTesting
   ITrackRecordingService getTrackRecordingService() {
     return trackRecordingService;

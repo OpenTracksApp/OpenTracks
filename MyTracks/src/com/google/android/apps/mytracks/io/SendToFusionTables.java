@@ -179,6 +179,11 @@ public class SendToFusionTables implements Runnable {
 
       // Get the track meta-data
       Track track = providerUtils.getTrack(trackId);
+      if (track == null) {
+        Log.w(Constants.TAG, "Cannot get track.");
+        return;
+      }
+
       String originalDescription = track.getDescription();
 
       // Create a new table:
@@ -207,7 +212,6 @@ public class SendToFusionTables implements Runnable {
       Log.d(Constants.TAG, "SendToFusionTables: Done: " + success);
       progressIndicator.setProgressValue(PROGRESS_COMPLETE);
     } finally {
-
       final boolean finalSuccess = success;
       final int finalStatusMessageId = statusMessageId;
       context.runOnUiThread(new Runnable() {
@@ -304,7 +308,7 @@ public class SendToFusionTables implements Runnable {
 
     Cursor locationsCursor = providerUtils.getLocationsCursor(track.getId(), 0, -1, false);
     try {
-      if (!locationsCursor.moveToFirst()) {
+      if (locationsCursor == null || !locationsCursor.moveToFirst()) {
         Log.w(Constants.TAG, "Unable to get any points to upload");
         return false;
       }
@@ -391,7 +395,9 @@ public class SendToFusionTables implements Runnable {
 
       return true;
     } finally {
-      locationsCursor.close();
+      if (locationsCursor != null) {
+        locationsCursor.close();
+      }
     }
   }
 
