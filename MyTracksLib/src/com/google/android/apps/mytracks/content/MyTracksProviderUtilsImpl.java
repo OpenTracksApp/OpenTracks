@@ -660,7 +660,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public Waypoint getFirstWaypoint(long trackId) {
-    if (trackId <= 0) {
+    if (trackId < 0) {
       return null;
     }
 
