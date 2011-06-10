@@ -1,12 +1,12 @@
 /*
  * Copyright 2009 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -133,7 +133,7 @@ public class ExportAllTracks {
       Log.i(Constants.TAG, "ExportAllTracks: Releasing wake lock.");
     }
     Log.i(Constants.TAG, "ExportAllTracks: Done");
-    Toast.makeText(activity, R.string.export_done, Toast.LENGTH_SHORT).show();
+    showToast(R.string.export_done, Toast.LENGTH_SHORT);
   }
 
   private void makeProgressDialog(final int trackCount) {
@@ -189,12 +189,16 @@ public class ExportAllTracks {
         Log.i(Constants.TAG, "ExportAllTracks: exporting: " + id);
         TrackWriter writer =
             TrackWriterFactory.newWriter(activity, providerUtils, id, format);
+        if (writer == null) {
+          showToast(R.string.error_track_does_not_exist, Toast.LENGTH_LONG);
+          return;
+        }
+
         writer.writeTrack();
 
         if (!writer.wasSuccess()) {
           // Abort the whole export on the first error.
-          int error = writer.getErrorMessage();
-          Toast.makeText(activity, error, Toast.LENGTH_LONG).show();
+          showToast(writer.getErrorMessage(), Toast.LENGTH_LONG);
           return;
         }
       }
@@ -209,5 +213,14 @@ public class ExportAllTracks {
         }
       }
     }
+  }
+
+  private void showToast(final int messageId, final int length) {
+    activity.runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        Toast.makeText(activity, messageId, length).show();
+      }
+    });
   }
 }

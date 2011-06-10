@@ -83,6 +83,8 @@ public class StatsUtilities {
   public void setText(int id, double d, NumberFormat format) {
     if (!Double.isNaN(d) && !Double.isInfinite(d)) {
       setText(id, format.format(d));
+    } else {
+      setUnknown(id);
     }
   }
 
@@ -218,7 +220,7 @@ public class StatsUtilities {
     setGrade(R.id.max_grade_register, maxGrade);
   }
 
-	public void setAllStats(TripStatistics stats) {
+  public void setAllStats(TripStatistics stats) {
     setTime(R.id.moving_time_register, stats.getMovingTime());
     setDistance(R.id.total_distance_register, stats.getTotalDistance() / 1000);
     setSpeed(R.id.average_speed_register, stats.getAverageSpeed() * 3.6);

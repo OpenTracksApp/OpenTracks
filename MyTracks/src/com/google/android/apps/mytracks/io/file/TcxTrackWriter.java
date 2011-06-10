@@ -187,7 +187,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
             && sensorData.getCadence().getState() == Sensor.SensorState.SENDING
             && sensorData.getCadence().hasValue()) {
           pw.print("          <Cadence>");
-          pw.print(sensorData.getCadence().getValue());
+          pw.print(Math.min(255, sensorData.getCadence().getValue()));
           pw.println("</Cadence>");
         }
       }
@@ -209,7 +209,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
     }
     pw.println("      </Lap>");
     pw.print("      <Creator xsi:type=\"Device_t\">");
-    pw.format("<Name>%s</Name>\n", Build.MODEL);
+    pw.format("<Name>My Tracks running on %s</Name>\n", Build.MODEL);
 
     // The following code is correct.  ID is inconsistently capitalized in the
     // TCX schema.

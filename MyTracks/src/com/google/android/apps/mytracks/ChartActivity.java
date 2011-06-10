@@ -18,10 +18,12 @@ package com.google.android.apps.mytracks;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.ChartView.Mode;
-import com.google.android.apps.mytracks.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.Sensor;
+import com.google.android.apps.mytracks.content.TrackDataHub;
+import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
+import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
@@ -137,11 +139,12 @@ public class ChartActivity extends Activity implements TrackDataListener {
   }
 
   @Override
-  protected void onStart() {
-    super.onStart();
+  protected void onResume() {
+    super.onResume();
 
     dataHub.registerTrackDataListener(this, EnumSet.of(
         ListenerDataType.SELECTED_TRACK_CHANGED,
+        ListenerDataType.TRACK_UPDATES,
         ListenerDataType.POINT_UPDATES,
         ListenerDataType.SAMPLED_OUT_POINT_UPDATES,
         ListenerDataType.WAYPOINT_UPDATES,
@@ -149,10 +152,10 @@ public class ChartActivity extends Activity implements TrackDataListener {
   }
 
   @Override
-  protected void onStop() {
+  protected void onPause() {
     dataHub.unregisterTrackDataListener(this);
 
-    super.onStop();
+    super.onPause();
   }
 
   private void zoomIn() {
@@ -257,13 +260,13 @@ public class ChartActivity extends Activity implements TrackDataListener {
     // TODO: Account for segment splits?
     switch (mode) {
       case BY_DISTANCE:
-        timeOrDistance = profileLength;
+        timeOrDistance = profileLength / 1000.0;
         if (lastLocation != null) {
           double d = lastLocation.distanceTo(location);
           if (metricUnits) {
-            profileLength += d / 1000.0;
+            profileLength += d;
           } else {
-            profileLength += d * UnitConversions.KM_TO_MI / 1000.0;
+            profileLength += d * UnitConversions.KM_TO_MI;
           }
         }
         break;
@@ -336,7 +339,6 @@ public class ChartActivity extends Activity implements TrackDataListener {
 
   @Override
   public void onSelectedTrackChanged(Track track, boolean isRecording) {
-    Log.e(TAG, "Visible", new Throwable());
     runOnUiThread(new Runnable() {
       @Override
       public void run() {
@@ -347,6 +349,11 @@ public class ChartActivity extends Activity implements TrackDataListener {
 
   @Override
   public void onTrackUpdated(Track track) {
+    if (track == null || track.getStatistics() == null) {
+      trackMaxSpeed = 0.0;
+      return;
+    }
+
     trackMaxSpeed = track.getStatistics().getMaxSpeed();
   }
 
@@ -356,9 +363,16 @@ public class ChartActivity extends Activity implements TrackDataListener {
     lastLocation = null;
     startTime = -1;
     elevationBuffer.reset();
-    speedBuffer.reset();
     chartView.reset();
+    speedBuffer.reset();
     pendingPoints.clear();
+
+    runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        chartView.resetScroll();
+      }
+    });
   }
 
   @Override
@@ -405,15 +419,21 @@ public class ChartActivity extends Activity implements TrackDataListener {
 
   @Override
   public boolean onUnitsChanged(boolean metric) {
+    boolean changed = metric != this.metricUnits;
+    if (!changed) return false;
+
     this.metricUnits = metric;
 
     chartView.setMetricUnits(metric);
-    
+
     return true;  // Reload data
   }
 
   @Override
   public boolean onReportSpeedChanged(boolean reportSpeed) {
+    boolean changed = reportSpeed != this.reportSpeed;
+    if (!changed) return false;
+
     this.reportSpeed = reportSpeed;
 
     chartView.setReportSpeed(reportSpeed, this);

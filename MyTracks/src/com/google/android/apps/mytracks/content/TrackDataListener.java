@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks;
+package com.google.android.apps.mytracks.content;
 
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
@@ -22,8 +22,6 @@ import android.location.Location;
 
 /**
  * Listener for track data, for both initial and incremental loading.
- *
- * TODO: Allow listening to just part of the data received here.
  *
  * @author Rodrigo Damazio
  */

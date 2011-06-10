@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -17,9 +17,11 @@ package com.google.android.apps.mytracks;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
 
-import com.google.android.apps.mytracks.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.content.TrackDataHub;
+import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
+import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
@@ -33,7 +35,6 @@ import com.google.android.maps.mytracks.R;
 
 import android.content.Intent;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -50,6 +51,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.EnumSet;
 
@@ -176,9 +178,9 @@ public class MapActivity extends com.google.android.maps.MapActivity
   }
 
   @Override
-  protected void onStart() {
+  protected void onResume() {
     Log.d(TAG, "MapActivity.onStart");
-    super.onStart();
+    super.onResume();
 
     dataHub.registerTrackDataListener(this, EnumSet.of(
         ListenerDataType.SELECTED_TRACK_CHANGED,
@@ -199,12 +201,12 @@ public class MapActivity extends com.google.android.maps.MapActivity
   }
 
   @Override
-  protected void onStop() {
+  protected void onPause() {
     Log.d(TAG, "MapActivity.onStop");
 
     dataHub.unregisterTrackDataListener(this);
 
-    super.onStop();
+    super.onPause();
   }
 
   // Utility functions:
@@ -253,17 +255,18 @@ public class MapActivity extends com.google.android.maps.MapActivity
    * the current location is outside the visible area.
    */
   private void showCurrentLocation() {
-    if (currentLocation == null || mapOverlay == null || mapView == null) {
+    if (mapOverlay == null || mapView == null) {
       return;
     }
+
     mapOverlay.setMyLocation(currentLocation);
     mapView.postInvalidate();
-    if (keepMyLocationVisible && !locationIsVisible(currentLocation)) {
+
+    if (currentLocation != null && keepMyLocationVisible && !locationIsVisible(currentLocation)) {
       GeoPoint geoPoint = LocationUtils.getGeoPoint(currentLocation);
       MapController controller = mapView.getController();
       controller.animateTo(geoPoint);
     }
-
   }
 
   @Override
@@ -334,9 +337,9 @@ public class MapActivity extends com.google.android.maps.MapActivity
 
         if (trackSelected) {
           busyPane.setVisibility(View.VISIBLE);
-  
+
           zoomMapToBoundaries(track);
-  
+
           mapOverlay.setShowEndMarker(!isRecording);
           busyPane.setVisibility(View.GONE);
         }
@@ -462,21 +465,21 @@ public class MapActivity extends com.google.android.maps.MapActivity
   @Override
   public void onProviderStateChange(ProviderState state) {
     final int messageId;
-    final boolean bindClick;
+    final boolean isGpsDisabled;
     switch (state) {
       case DISABLED:
         messageId = R.string.status_enable_gps;
-        bindClick = true;
+        isGpsDisabled = true;
         break;
       case NO_FIX:
       case BAD_FIX:
         messageId = R.string.wait_for_fix;
-        bindClick = false;
+        isGpsDisabled = false;
         break;
       case GOOD_FIX:
         // Nothing to show.
         messageId = -1;
-        bindClick = false;
+        isGpsDisabled = false;
         break;
       default:
         throw new IllegalArgumentException("Unexpected state: " + state);
@@ -489,7 +492,13 @@ public class MapActivity extends com.google.android.maps.MapActivity
           messageText.setText(messageId);
           messagePane.setVisibility(View.VISIBLE);
 
-          if (bindClick) {
+          if (isGpsDisabled) {
+            // Give a warning about this state.
+            Toast.makeText(MapActivity.this,
+                R.string.error_no_gps_location_provider,
+                Toast.LENGTH_LONG).show();
+
+            // Make clicking take the user to the location settings.
             messagePane.setOnClickListener(MapActivity.this);
           } else {
             messagePane.setOnClickListener(null);
@@ -505,11 +514,6 @@ public class MapActivity extends com.google.android.maps.MapActivity
 
   @Override
   public void onCurrentLocationChanged(Location location) {
-    if (!location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
-      Log.d(TAG,
-          "MapActivity: Network location update received (provider '" + location.getProvider() + "'.");
-    }
-
     currentLocation = location;
     showCurrentLocation();
   }

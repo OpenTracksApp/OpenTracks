@@ -22,6 +22,7 @@ import com.google.android.apps.mytracks.util.StringUtils;
 
 import android.content.Context;
 import android.location.Location;
+import android.os.Build;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -70,8 +71,9 @@ public class KmlTrackWriter implements TrackFormatWriter {
       pw.print(" xmlns=\"http://earth.google.com/kml/2.0\"");
       pw.println(" xmlns:atom=\"http://www.w3.org/2005/Atom\">");
       pw.println("<Document>");
-      pw.println("<atom:author><atom:name>My Tracks running on Android"
-          + "</atom:name></atom:author>");
+      pw.format("<atom:author><atom:name>My Tracks running on %s"
+          + "</atom:name></atom:author>\n", Build.MODEL);
+
       pw.println("<name>" + StringUtils.stringAsCData(track.getName())
           + "</name>");
       pw.println("<description>"

@@ -110,9 +110,6 @@ public class DatabaseDumperTest extends TestCase {
     // Verify the number of rows
     assertEquals(FAKE_DATA.length, reader.readInt());
 
-    // Verify the row contents
-    byte[] blob = new byte[4];
-
     // Row 0 -- everything populated
     assertEquals(EXPECTED_FIELD_SETS[0], reader.readLong());
     assertEquals(42, reader.readInt());

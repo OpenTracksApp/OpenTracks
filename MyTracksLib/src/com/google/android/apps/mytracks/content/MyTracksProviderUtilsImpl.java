@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -40,7 +40,7 @@ import java.util.NoSuchElementException;
 public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   private final ContentResolver contentResolver;
-  
+
   private int defaultCursorBatchSize = 2000;
 
   public MyTracksProviderUtilsImpl(ContentResolver contentResolver) {
@@ -199,12 +199,12 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     public final int idxLatitude;
     public final int idxLongitude;
     public final int idxAltitude;
-    public final int idxTime; 
-    public final int idxBearing; 
+    public final int idxTime;
+    public final int idxBearing;
     public final int idxAccuracy;
     public final int idxSpeed;
-    public final int idxSensor; 
-  
+    public final int idxSensor;
+
     public CachedTrackColumnIndices(Cursor cursor) {
       idxId = cursor.getColumnIndex(TrackPointsColumns._ID);
       idxLatitude = cursor.getColumnIndexOrThrow(TrackPointsColumns.LATITUDE);
@@ -217,11 +217,11 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       idxSensor = cursor.getColumnIndexOrThrow(TrackPointsColumns.SENSOR);
     }
   }
-  
+
   private void fillLocation(Cursor cursor, CachedTrackColumnIndices columnIndices,
       Location location) {
     location.reset();
-    
+
     if (!cursor.isNull(columnIndices.idxLatitude)) {
       location.setLatitude(1. * cursor.getInt(columnIndices.idxLatitude) / 1E6);
     }
@@ -256,7 +256,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       }
     }
   }
-  
+
   @Override
   public void fillLocation(Cursor cursor, Location location) {
     CachedTrackColumnIndices columnIndicies = new CachedTrackColumnIndices(cursor);
@@ -660,6 +660,10 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public Waypoint getFirstWaypoint(long trackId) {
+    if (trackId < 0) {
+      return null;
+    }
+
     Cursor cursor = contentResolver.query(
         WaypointsColumns.CONTENT_URI,
         null /*projection*/,
@@ -682,6 +686,10 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public Waypoint getWaypoint(long waypointId) {
+    if (waypointId < 0) {
+      return null;
+    }
+
     Cursor cursor = contentResolver.query(
         WaypointsColumns.CONTENT_URI,
         null /*projection*/,
@@ -704,6 +712,10 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public long getLastLocationId(long trackId) {
+    if (trackId < 0) {
+      return -1;
+    }
+
     final String[] projection = {"_id"};
     Cursor cursor = contentResolver.query(
         TrackPointsColumns.CONTENT_URI,
@@ -728,6 +740,10 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public long getFirstWaypointId(long trackId) {
+    if (trackId < 0) {
+      return -1;
+    }
+
     final String[] projection = {"_id"};
     Cursor cursor = contentResolver.query(
         WaypointsColumns.CONTENT_URI,
@@ -752,6 +768,10 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public long getLastWaypointId(long trackId) {
+    if (trackId < 0) {
+      return -1;
+    }
+
     final String[] projection = {"_id"};
     Cursor cursor = contentResolver.query(
         WaypointsColumns.CONTENT_URI,
@@ -815,6 +835,10 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public Location getLocation(long id) {
+    if (id < 0) {
+      return null;
+    }
+
     String selection = TrackPointsColumns._ID + "=" + id;
     return findLocationBy(selection);
   }
@@ -822,7 +846,11 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   @Override
   public Cursor getLocationsCursor(long trackId, long minTrackPointId,
       int maxLocations, boolean descending) {
-    String selection; 
+    if (trackId < 0 || maxLocations < 1) {
+      return null;
+    }
+
+    String selection;
     if (minTrackPointId >= 0) {
       selection = String.format("%s=%d AND %s%s%d",
           TrackPointsColumns.TRACKID, trackId, TrackPointsColumns._ID,
@@ -842,6 +870,10 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   @Override
   public Cursor getWaypointsCursor(long trackId, long minWaypointId,
       int maxWaypoints) {
+    if (trackId < 0 || maxWaypoints < 1) {
+      return null;
+    }
+
     String selection;
     if (minWaypointId > 0) {
       selection = String.format("%s=%d AND %s>=%d",
@@ -863,6 +895,10 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public Track getTrack(long id) {
+    if (id < 0) {
+      return null;
+    }
+
     String select = TracksColumns._ID + "=" + id;
     return findTrackBy(select);
   }
@@ -929,6 +965,10 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public boolean trackExists(long id) {
+    if (id < 0) {
+      return false;
+    }
+
     Cursor cursor = null;
     try {
       final String[] projection = { TracksColumns._ID };
@@ -967,7 +1007,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       private Cursor cursor = getCursor(startTrackPointId);
       private final CachedTrackColumnIndices columnIndices = cursor != null ?
           new CachedTrackColumnIndices(cursor) : null;
-          
+
       private Cursor getCursor(long trackPointId) {
         return getLocationsCursor(trackId, trackPointId, defaultCursorBatchSize, descending);
       }
@@ -979,7 +1019,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
         cursor = getCursor(pointId);
         return cursor != null;
       }
-        
+
       @Override
       public long getLocationId() {
         return lastTrackPointId;
@@ -999,7 +1039,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
           return cursor.getCount() == defaultCursorBatchSize &&
               advanceCursorToNextBatch() && !cursor.isAfterLast();
         }
-        
+
         return true;
       }
 
@@ -1009,11 +1049,11 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
             !(cursor.moveToNext() || advanceCursorToNextBatch() || cursor.moveToNext())) {
           throw new NoSuchElementException();
         }
-        
+
         lastTrackPointId = cursor.getLong(columnIndices.idxId);
         Location location = locationFactory.createLocation();
         fillLocation(cursor, columnIndices, location);
-        
+
         return location;
       }
 
@@ -1031,7 +1071,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       }
     };
   }
-  
+
   // @VisibleForTesting
   void setDefaultCursorBatchSize(int defaultCursorBatchSize) {
     this.defaultCursorBatchSize = defaultCursorBatchSize;

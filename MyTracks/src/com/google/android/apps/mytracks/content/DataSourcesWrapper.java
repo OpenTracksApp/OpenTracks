@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks;
+package com.google.android.apps.mytracks.content;
 
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.ContentObserver;
@@ -24,11 +24,11 @@ import android.location.LocationListener;
 import android.net.Uri;
 
 /**
- * Interface for abstracting external data sources.
+ * Interface for abstracting registration of external data source listeners.
  *
  * @author Rodrigo Damazio
  */
-interface TrackDataSources {
+interface DataSourcesWrapper {
   // Preferences
   void registerOnSharedPreferenceChangeListener(
       OnSharedPreferenceChangeListener listener);

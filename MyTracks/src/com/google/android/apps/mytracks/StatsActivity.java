@@ -17,8 +17,10 @@ package com.google.android.apps.mytracks;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
 
-import com.google.android.apps.mytracks.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.content.TrackDataHub;
+import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
+import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.util.ApiFeatures;
@@ -129,18 +131,18 @@ public class StatsActivity extends Activity implements TrackDataListener {
   }
 
   @Override
-  protected void onStart() {
+  protected void onResume() {
     dataHub.registerTrackDataListener(this, EnumSet.of(
         ListenerDataType.SELECTED_TRACK_CHANGED,
         ListenerDataType.TRACK_UPDATES,
         ListenerDataType.LOCATION_UPDATES,
         ListenerDataType.DISPLAY_PREFERENCES));
 
-    super.onStart();
+    super.onResume();
   }
 
   @Override
-  protected void onStop() {
+  protected void onPause() {
     dataHub.unregisterTrackDataListener(this);
 
     if (thread != null) {
@@ -153,6 +155,9 @@ public class StatsActivity extends Activity implements TrackDataListener {
 
   @Override
   public boolean onUnitsChanged(boolean metric) {
+    // Ignore if unchanged.
+    if (metric == utils.isMetricUnits()) return false;
+
     utils.setMetricUnits(metric);
     updateLabels();
 
@@ -161,6 +166,9 @@ public class StatsActivity extends Activity implements TrackDataListener {
 
   @Override
   public boolean onReportSpeedChanged(boolean displaySpeed) {
+    // Ignore if unchanged.
+    if (displaySpeed == utils.isReportSpeed()) return false;
+
     utils.setReportSpeed(displaySpeed);
     updateLabels();
   
@@ -248,21 +256,21 @@ public class StatsActivity extends Activity implements TrackDataListener {
       thread.interrupt();
       thread = null;
     }
-
-    if (track == null || track.getStatistics() == null) {
-      runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-          utils.setAllToUnknown();
-        }
-      });
-    }
   }
 
   @Override
-  public void onCurrentLocationChanged(Location loc) {
+  public void onCurrentLocationChanged(final Location loc) {
     if (dataHub.isRecordingSelected()) {
-      showLocation(loc);
+      runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+          if (loc != null) {
+            showLocation(loc);
+          } else {
+            showUnknownLocation();
+          }
+        }
+      });
     }
   }
 
@@ -276,7 +284,12 @@ public class StatsActivity extends Activity implements TrackDataListener {
     switch (state) {
       case DISABLED:
       case NO_FIX:
-        showUnknownLocation();
+        runOnUiThread(new Runnable() {
+          @Override
+          public void run() {
+            showUnknownLocation();
+          }
+        });
         break;
     }
   }
@@ -286,6 +299,11 @@ public class StatsActivity extends Activity implements TrackDataListener {
     runOnUiThread(new Runnable() {
       @Override
       public void run() {
+        if (track == null || track.getStatistics() == null) {
+          utils.setAllToUnknown();
+          return;
+        }
+
         startTime = track.getStatistics().getStartTime();
         if (!dataHub.isRecordingSelected()) {
           utils.setTime(R.id.total_time_register,

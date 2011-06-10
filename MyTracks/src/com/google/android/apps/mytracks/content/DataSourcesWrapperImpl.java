@@ -13,11 +13,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks;
+package com.google.android.apps.mytracks.content;
 
 import static com.google.android.apps.mytracks.Constants.MAX_LOCATION_AGE_MS;
 import static com.google.android.apps.mytracks.Constants.MAX_NETWORK_AGE_MS;
 
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.maps.mytracks.R;
 
 import android.content.ContentResolver;
@@ -41,7 +42,7 @@ import android.widget.Toast;
  *
  * @author Rodrigo Damazio
  */
-class TrackDataSourcesImpl implements TrackDataSources {
+class DataSourcesWrapperImpl implements DataSourcesWrapper {
   // System services
   private final SensorManager sensorManager;
   private final LocationManager locationManager;
@@ -49,7 +50,7 @@ class TrackDataSourcesImpl implements TrackDataSources {
   private final SharedPreferences sharedPreferences;
   private final Context context;
 
-  TrackDataSourcesImpl(Context context, SharedPreferences sharedPreferences) {
+  DataSourcesWrapperImpl(Context context, SharedPreferences sharedPreferences) {
     this.context = context;
     this.sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
     this.locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);

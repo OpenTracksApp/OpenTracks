@@ -21,12 +21,16 @@ import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Sensor;
 
 /**
- * An implementation of a SensorData parser for Zephyr HRM.
+ * An implementation of a Sensor MessageParser for Zephyr.
  *
  * @author Sandor Dornbush
  */
 public class ZephyrMessageParser implements MessageParser {
 
+  public static final int ZEPHYR_HXM_BYTE_STX = 0;
+  public static final int ZEPHYR_HXM_BYTE_CRC = 58;
+  public static final int ZEPHYR_HXM_BYTE_ETX = 59;
+	
   @Override
   public Sensor.SensorDataSet parseBuffer(byte[] buffer) {
     StringBuilder sb = new StringBuilder();
@@ -34,20 +38,24 @@ public class ZephyrMessageParser implements MessageParser {
       sb.append(String.format("%02X", buffer[i]));
     }
     Log.w(Constants.TAG, "Got zephyr data: " + sb);
-    // The provided units are 1/16 strides per minute.
-    // TODO: Fix the cadence calculation.
-    // int cadence = SensorUtils.unsignedShortToInt(buffer, 56);
     // Heart Rate
-    Sensor.SensorData.Builder b = Sensor.SensorData.newBuilder()
-      .setValue(buffer[12] & 0xFF)
-      .setState(Sensor.SensorState.SENDING);
-      // Cadence
-      //.setCadence(cadence / 16)
-      //.build();
+    Sensor.SensorData.Builder heartrate = Sensor.SensorData.newBuilder()
+        .setValue(buffer[12] & 0xFF)
+        .setState(Sensor.SensorState.SENDING);
+    // Changes Nico Laum (Power and Cadence)
+    Sensor.SensorData.Builder power = Sensor.SensorData.newBuilder()
+	    .setValue(buffer[11])
+	    .setState(Sensor.SensorState.SENDING);
+    Sensor.SensorData.Builder cadence = Sensor.SensorData.newBuilder()
+	    .setValue(SensorUtils.unsignedShortToIntLittleEndian(buffer, 56) / 16)
+	    .setState(Sensor.SensorState.SENDING);
+    
     Sensor.SensorDataSet sds =
       Sensor.SensorDataSet.newBuilder()
       .setCreationTime(System.currentTimeMillis())
-      .setHeartRate(b)
+      .setPower(power)
+      .setHeartRate(heartrate)
+      .setCadence(cadence)
       .build();
     
     return sds;
@@ -55,8 +63,11 @@ public class ZephyrMessageParser implements MessageParser {
 
   @Override
   public boolean isValid(byte[] buffer) {
-    // TODO crc etc.
-    return buffer[0] == 0x02 && buffer[59] == 0x03;
+    // Check STX (Start of Text), ETX (End of Text) and CRC Checksum
+    return buffer.length > ZEPHYR_HXM_BYTE_ETX
+        && buffer[ZEPHYR_HXM_BYTE_STX] == 0x02
+        && buffer[ZEPHYR_HXM_BYTE_ETX] == 0x03
+        && SensorUtils.getCrc8(buffer, 3, 55) == buffer[ZEPHYR_HXM_BYTE_CRC];
   }
 
   @Override

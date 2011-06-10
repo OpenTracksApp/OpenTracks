@@ -15,22 +15,20 @@
  */
 package com.dsi.ant;
 
-import java.util.Arrays;
+import com.dsi.ant.exception.AntInterfaceException;
+import com.dsi.ant.exception.AntRemoteException;
+import com.dsi.ant.exception.AntServiceNotConnectedException;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 
-import com.dsi.ant.exception.*;
+import java.util.Arrays;
 
 /**
  * Public API for controlling the Ant Service. AntInterface is a proxy
