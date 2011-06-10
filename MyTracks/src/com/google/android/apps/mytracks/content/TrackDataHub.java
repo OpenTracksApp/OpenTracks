@@ -989,6 +989,7 @@ public class TrackDataHub {
         // no matter how many points we get in the newest batch, we'll never exceed
         // MAX_DISPLAYED_TRACK_POINTS = 2 * TARGET_DISPLAYED_TRACK_POINTS before resampling.
         long numTotalPoints = lastStoredLocationId - localFirstSeenLocationId;
+        numTotalPoints = Math.max(0L, numTotalPoints);
         pointSamplingFrequency = (int) (1 + numTotalPoints / targetNumPoints);
       }
 
