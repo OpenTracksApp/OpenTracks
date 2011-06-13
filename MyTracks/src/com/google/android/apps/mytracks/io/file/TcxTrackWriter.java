@@ -187,7 +187,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
             && sensorData.getCadence().getState() == Sensor.SensorState.SENDING
             && sensorData.getCadence().hasValue()) {
           pw.print("          <Cadence>");
-          pw.print(Math.min(255, sensorData.getCadence().getValue()));
+          pw.print(Math.min(254, sensorData.getCadence().getValue()));
           pw.println("</Cadence>");
         }
       }
