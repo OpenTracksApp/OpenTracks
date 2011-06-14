@@ -21,6 +21,7 @@ import static com.google.android.apps.mytracks.DialogManager.DIALOG_PROGRESS;
 import static com.google.android.apps.mytracks.DialogManager.DIALOG_SEND_TO_GOOGLE;
 
 import com.google.android.accounts.Account;
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
@@ -160,6 +161,11 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   private SharedPreferences sharedPreferences;
 
   /**
+   * Google Analytics tracker
+   */
+  private GoogleAnalyticsTracker tracker;
+  
+  /**
    * The connection to the track recording service.
    */
   private final ServiceConnection serviceConnection = new ServiceConnection() {
@@ -250,6 +256,12 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       apiFeatures.getApiPlatformAdapter().enableStrictMode();
     }
 
+    tracker = GoogleAnalyticsTracker.getInstance();
+    // Start the tracker in manual dispatch mode...
+    tracker.start(this.getString(R.string.google_analytics_id), this.getApplicationContext());
+    tracker.trackPageView("/android/appstart");
+    tracker.dispatch();
+
     providerUtils = MyTracksProviderUtils.Factory.get(this);
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
     dataHub = new TrackDataHub(this, sharedPreferences, providerUtils);
@@ -325,6 +337,8 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     dataHub.destroy();
 
     tryUnbindTrackRecordingService();
+    tracker.dispatch();
+    tracker.stop();
     super.onDestroy();
   }
 
@@ -919,15 +933,19 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     dialogManager.showDialogSafely(DIALOG_PROGRESS);
 
     if (sendToGoogleDialog.getSendToMyMaps()) {
+      tracker.trackPageView("/android/send/maps");
       sendToGoogleMapsOrPickMap(sendToGoogleDialog);
     } else if (sendToGoogleDialog.getSendToFusionTables()) {
+      tracker.trackPageView("/android/send/fusion_tables");
       authenticateToFusionTables(null);
     } else if (sendToGoogleDialog.getSendToDocs()) {
+      tracker.trackPageView("/android/send/docs");
       authenticateToGoogleDocs();
     } else  {
       Log.w(TAG, "Nowhere to upload to");
       onSendToGoogleDone();
     }
+    tracker.dispatch();
   }
 
   private void sendToGoogleMapsOrPickMap(SendDialog sendToGoogleDialog) {
