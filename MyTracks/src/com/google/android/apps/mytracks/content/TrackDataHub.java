@@ -41,7 +41,6 @@ import android.location.LocationManager;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.EnumSet;
@@ -684,9 +683,6 @@ public class TrackDataHub {
     final TrackDataListener.ProviderState state;
     if (!hasProviderEnabled) {
       state = ProviderState.DISABLED;
-
-      // Give a global warning about this state.
-      Toast.makeText(context, R.string.error_no_gps_location_provider, Toast.LENGTH_LONG).show();
     } else if (!hasFix) {
       state = ProviderState.NO_FIX;
     } else if (!hasGoodFix) {
@@ -824,10 +820,6 @@ public class TrackDataHub {
       public void run() {
         for (TrackDataListener listener : listeners) {
           listener.onSelectedTrackChanged(track, isRecordingSelected());
-
-          if (track != null) {
-            listener.onTrackUpdated(track);
-          }
         }
       }
     });

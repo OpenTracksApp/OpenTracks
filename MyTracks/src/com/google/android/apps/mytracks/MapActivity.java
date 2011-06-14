@@ -53,6 +53,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.EnumSet;
 
@@ -480,21 +481,21 @@ public class MapActivity extends com.google.android.maps.MapActivity
   @Override
   public void onProviderStateChange(ProviderState state) {
     final int messageId;
-    final boolean bindClick;
+    final boolean isGpsDisabled;
     switch (state) {
       case DISABLED:
         messageId = R.string.status_enable_gps;
-        bindClick = true;
+        isGpsDisabled = true;
         break;
       case NO_FIX:
       case BAD_FIX:
         messageId = R.string.wait_for_fix;
-        bindClick = false;
+        isGpsDisabled = false;
         break;
       case GOOD_FIX:
         // Nothing to show.
         messageId = -1;
-        bindClick = false;
+        isGpsDisabled = false;
         break;
       default:
         throw new IllegalArgumentException("Unexpected state: " + state);
@@ -507,7 +508,13 @@ public class MapActivity extends com.google.android.maps.MapActivity
           messageText.setText(messageId);
           messagePane.setVisibility(View.VISIBLE);
 
-          if (bindClick) {
+          if (isGpsDisabled) {
+            // Give a warning about this state.
+            Toast.makeText(MapActivity.this,
+                R.string.error_no_gps_location_provider,
+                Toast.LENGTH_LONG).show();
+
+            // Make clicking take the user to the location settings.
             messagePane.setOnClickListener(MapActivity.this);
           } else {
             messagePane.setOnClickListener(null);

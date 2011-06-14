@@ -145,6 +145,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
     dataHub = TrackDataHub.getStartedInstance();
     dataHub.registerTrackDataListener(this, EnumSet.of(
         ListenerDataType.SELECTED_TRACK_CHANGED,
+        ListenerDataType.TRACK_UPDATES,
         ListenerDataType.POINT_UPDATES,
         ListenerDataType.SAMPLED_OUT_POINT_UPDATES,
         ListenerDataType.WAYPOINT_UPDATES,

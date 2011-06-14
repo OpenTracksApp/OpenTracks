@@ -17,6 +17,7 @@ package com.google.android.apps.mytracks;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
 
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TracksColumns;
@@ -79,6 +80,11 @@ public class MyTracks extends TabActivity implements OnTouchListener {
    */
   private MyTracksProviderUtils providerUtils;
 
+  /**
+   * Google Analytics tracker
+   */
+  private GoogleAnalyticsTracker tracker;
+
   private TrackRecordingServiceBinder serviceBinder;
 
   /*
@@ -124,6 +130,13 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     if (!SystemUtils.isRelease(this)) {
       apiFeatures.getApiPlatformAdapter().enableStrictMode();
     }
+
+    tracker = GoogleAnalyticsTracker.getInstance();
+    // Start the tracker in manual dispatch mode...
+    tracker.start(getString(R.string.google_analytics_id), getApplicationContext());
+    tracker.setProductVersion("android-mytracks", SystemUtils.getMyTracksVersion(this));
+    tracker.trackPageView("/appstart");
+    tracker.dispatch();
 
     providerUtils = MyTracksProviderUtils.Factory.get(this);
     preferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
@@ -178,6 +191,9 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     Log.d(TAG, "MyTracks.onStop");
 
     dataHub.stop();
+
+    tracker.dispatch();
+    tracker.stop();
 
     // Clean up any temporary track files.
     TempFileCleaner.clean();
@@ -464,9 +480,9 @@ public class MyTracks extends TabActivity implements OnTouchListener {
         startActivity(intent);
       }
     }
-
     serviceBinder.stopService();
   }
+
 
   void clearSelectedTrack() {
     dataHub.unloadCurrentTrack();

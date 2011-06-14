@@ -1,12 +1,12 @@
 /*
  * Copyright 2009 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -76,15 +76,18 @@ public class WaypointsList extends ListActivity
           contextPosition = info.position;
           waypointId = WaypointsList.this.listView.getAdapter()
               .getItemId(contextPosition);
-          int type = providerUtils.getWaypoint(info.id).getType();
-          menu.add(0, Constants.MENU_SHOW, 0,
-              R.string.waypointslist_show_waypoint);
-          menu.add(0, Constants.MENU_EDIT, 0,
-              R.string.waypointslist_edit_waypoint);
-          menu.add(0, Constants.MENU_DELETE, 0,
-              R.string.waypointslist_delete_waypoint).setEnabled(
-                  recordingTrackId < 0 || type == Waypoint.TYPE_WAYPOINT ||
-                  info.id != providerUtils.getLastWaypointId(recordingTrackId));
+          Waypoint waypoint = providerUtils.getWaypoint(info.id);
+          if (waypoint != null) {
+            int type = waypoint.getType();
+            menu.add(0, Constants.MENU_SHOW, 0,
+                R.string.waypointslist_show_waypoint);
+            menu.add(0, Constants.MENU_EDIT, 0,
+                R.string.waypointslist_edit_waypoint);
+            menu.add(0, Constants.MENU_DELETE, 0,
+                R.string.waypointslist_delete_waypoint).setEnabled(
+                    recordingTrackId < 0 || type == Waypoint.TYPE_WAYPOINT ||
+                    info.id != providerUtils.getLastWaypointId(recordingTrackId));
+          }
         }
       };
 
@@ -162,7 +165,7 @@ public class WaypointsList extends ListActivity
       trackId = -1;
     }
 
-    final long firstWaypointId = providerUtils.getFirstWaypointId(trackId); 
+    final long firstWaypointId = providerUtils.getFirstWaypointId(trackId);
     waypointsCursor = getContentResolver().query(
         WaypointsColumns.CONTENT_URI, null,
         WaypointsColumns.TRACKID + "=" + trackId + " AND "
@@ -226,7 +229,7 @@ public class WaypointsList extends ListActivity
         new String[] { WaypointsColumns.NAME, WaypointsColumns.TIME,
                        WaypointsColumns.CATEGORY, WaypointsColumns.TYPE },
         new int[] { R.id.waypointslist_item_name,
-                    R.id.waypointslist_item_time, 
+                    R.id.waypointslist_item_time,
                     R.id.waypointslist_item_category,
                     R.id.waypointslist_item_icon });
 
@@ -236,7 +239,7 @@ public class WaypointsList extends ListActivity
         waypointsCursor.getColumnIndexOrThrow(WaypointsColumns.TYPE);
     adapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
       @Override
-      public boolean setViewValue(View view, Cursor cursor, int columnIndex) {    
+      public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
         if (columnIndex == timeIdx) {
           long time = cursor.getLong(timeIdx);
           TextView textView = (TextView) view;

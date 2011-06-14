@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.io.sendtogoogle;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.accounts.Account;
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.google.android.apps.mytracks.AccountChooser;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.DialogManager;
@@ -34,6 +35,7 @@ import com.google.android.apps.mytracks.io.SendToFusionTables.OnSendCompletedLis
 import com.google.android.apps.mytracks.io.SendToMyMaps;
 import com.google.android.apps.mytracks.io.mymaps.MapsFacade;
 import com.google.android.apps.mytracks.io.mymaps.MyMapsConstants;
+import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.apps.mytracks.util.UriUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -68,6 +70,8 @@ public class SendActivity extends Activity implements ProgressIndicator {
   // Services
   private MyTracksProviderUtils providerUtils;
   private SharedPreferences sharedPreferences;
+
+  private GoogleAnalyticsTracker tracker;
 
   // Authentication
   private AuthManager lastAuth;
@@ -111,6 +115,11 @@ public class SendActivity extends Activity implements ProgressIndicator {
     super.onStart();
     resetState();
 
+    tracker = GoogleAnalyticsTracker.getInstance();
+    // Start the tracker in manual dispatch mode...
+    tracker.start(getString(R.string.google_analytics_id), getApplicationContext());
+    tracker.setProductVersion("android-mytracks", SystemUtils.getMyTracksVersion(this));
+
     Intent intent = getIntent();
     String action = intent.getAction();
     String type = intent.getType();
@@ -141,11 +150,19 @@ public class SendActivity extends Activity implements ProgressIndicator {
     sendDialog.show();
   }
 
+  @Override
+  protected void onStop() {
+    tracker.dispatch();
+    tracker.stop();
+
+    super.onStop();
+  }
+
   /**
    * Initiates the process to send tracks to google.
    * This is called once the user has selected sending options via the
    * SendToGoogleDialog.
-   * 
+   *
    * TODO: Change this whole flow to an actual state machine.
    */
   private void doSend() {
@@ -193,6 +210,8 @@ public class SendActivity extends Activity implements ProgressIndicator {
   }
 
   private void sendToGoogleMaps(String mapId) {
+    tracker.trackPageView("/send/maps");
+
     SendToMyMaps.OnSendCompletedListener onCompletion = new SendToMyMaps.OnSendCompletedListener() {
       @Override
       public void onSendCompleted(String mapId, boolean success, int statusMessage) {
@@ -247,6 +266,8 @@ public class SendActivity extends Activity implements ProgressIndicator {
   }
 
   private void sendToFusionTables() {
+    tracker.trackPageView("/send/fusion_tables");
+
     OnSendCompletedListener onCompletion = new OnSendCompletedListener() {
       @Override
       public void onSendCompleted(String tableId, boolean success,
@@ -310,6 +331,8 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
   private void sendToGoogleDocs() {
     Log.d(TAG, "Sending to Docs....");
+    tracker.trackPageView("/send/docs");
+
     setProgressValue(50);
     setProgressMessage(R.string.progress_message_sending_docs);
     final SendToDocs sender = new SendToDocs(this,
@@ -319,7 +342,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
     Runnable onCompletion = new Runnable() {
       public void run() {
         setProgressValue(100);
-        
+
         // TODO: Use this message
         sendToDocsMessage = sender.getStatusMessage();
         sendToDocsSuccess = sender.wasSuccess();
@@ -336,6 +359,8 @@ public class SendActivity extends Activity implements ProgressIndicator {
   }
 
   private void onSendToGoogleDone() {
+    tracker.dispatch();
+
     final boolean sentToMyMaps = sendDialog.getSendToMyMaps();
     final boolean sentToFusionTables = sendDialog.getSendToFusionTables();
     List<SendResult> results = makeSendToGoogleResults();
