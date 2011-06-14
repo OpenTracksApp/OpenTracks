@@ -259,7 +259,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     tracker = GoogleAnalyticsTracker.getInstance();
     // Start the tracker in manual dispatch mode...
     tracker.start(this.getString(R.string.google_analytics_id), this.getApplicationContext());
-    tracker.trackPageView("/android/appstart");
+    tracker.trackPageView("/appstart");
     tracker.dispatch();
 
     providerUtils = MyTracksProviderUtils.Factory.get(this);
@@ -933,22 +933,19 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     dialogManager.showDialogSafely(DIALOG_PROGRESS);
 
     if (sendToGoogleDialog.getSendToMyMaps()) {
-      tracker.trackPageView("/android/send/maps");
       sendToGoogleMapsOrPickMap(sendToGoogleDialog);
     } else if (sendToGoogleDialog.getSendToFusionTables()) {
-      tracker.trackPageView("/android/send/fusion_tables");
       authenticateToFusionTables(null);
     } else if (sendToGoogleDialog.getSendToDocs()) {
-      tracker.trackPageView("/android/send/docs");
       authenticateToGoogleDocs();
     } else  {
       Log.w(TAG, "Nowhere to upload to");
       onSendToGoogleDone();
     }
-    tracker.dispatch();
   }
 
   private void sendToGoogleMapsOrPickMap(SendDialog sendToGoogleDialog) {
+    tracker.trackPageView("/send/maps");
     if (!sendToGoogleDialog.getCreateNewMap()) {
       // Ask the user to choose a map to upload into
       Intent listIntent = new Intent(this, MyMapsList.class);
@@ -1028,6 +1025,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   }
 
   private void sendToFusionTables(final long trackId) {
+    tracker.trackPageView("/send/fusion_tables");
     OnSendCompletedListener onCompletion = new OnSendCompletedListener() {
       @Override
       public void onSendCompleted(String tableId, boolean success,
@@ -1096,6 +1094,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
 
   private void sendToGoogleDocs(final long trackId) {
     Log.d(TAG, "Sending to Docs....");
+    tracker.trackPageView("/send/docs");
     setProgressValue(50);
     setProgressMessage(R.string.progress_message_sending_docs);
     final SendToDocs sender = new SendToDocs(this,
@@ -1121,6 +1120,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   }
 
   private void onSendToGoogleDone() {
+    tracker.dispatch();
     SendDialog sendToGoogleDialog = dialogManager.getSendToGoogleDialog();
     final boolean sentToMyMaps = sendToGoogleDialog.getSendToMyMaps();
     final boolean sentToFusionTables = sendToGoogleDialog.getSendToFusionTables();
