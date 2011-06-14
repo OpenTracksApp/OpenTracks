@@ -109,7 +109,7 @@ limitations under the License.
   </array>
 
   <array name="sensor_type_options">
-    <item>@string/none</item>
+    <item>@string/no_sensor_option</item>
     <item>@string/ant_sensor_option</item>
     <item>@string/ant_bridge_sensor_option</item>
     <item>@string/polar_bt_sensor_option</item>

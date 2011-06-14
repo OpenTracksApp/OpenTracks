@@ -463,6 +463,13 @@ limitations under the License.
   <string name="searching">検索中</string>
   <string name="sending">送信中</string>
 
+  <!-- Sensor Type Options -->
+  <string name="no_sensor_option">なし</string>
+  <string name="ant_sensor_option">ANT+ センサー</string>
+  <string name="ant_bridge_sensor_option">SRM ANT+ ブリッジ</string>
+  <string name="polar_bt_sensor_option">Polar Bluetooth</string>
+  <string name="zephyr_bt_sensor_option">Zephyr Bluetooth</string>
+    
   <!-- Manifest description (not seen inside the app) -->
   <string name="notification_permission_label">トラック記録通知受信</string>
   <string name="read_tracks_permission_label">トラック読み込み</string>
