@@ -259,6 +259,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     tracker = GoogleAnalyticsTracker.getInstance();
     // Start the tracker in manual dispatch mode...
     tracker.start(this.getString(R.string.google_analytics_id), this.getApplicationContext());
+    tracker.setProductVersion("android-mytracks", SystemUtils.getMyTracksVersion(this));
     tracker.trackPageView("/appstart");
     tracker.dispatch();
 
