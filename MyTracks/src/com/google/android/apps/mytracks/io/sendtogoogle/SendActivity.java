@@ -223,8 +223,12 @@ public class SendActivity extends Activity implements ProgressIndicator {
           // Update the map id for this track:
           try {
             Track track = providerUtils.getTrack(sendTrackId);
-            track.setMapId(mapId);
-            providerUtils.updateTrack(track);
+            if (track != null) {
+              track.setMapId(mapId);
+              providerUtils.updateTrack(track);
+            } else {
+              Log.w(TAG, "Updating map id failed.");
+            }
           } catch (RuntimeException e) {
             // If that fails whatever reasons we'll just log an error, but
             // continue.
@@ -280,8 +284,12 @@ public class SendActivity extends Activity implements ProgressIndicator {
           // Update the table id for this track:
           try {
             Track track = providerUtils.getTrack(sendTrackId);
-            track.setTableId(tableId);
-            providerUtils.updateTrack(track);
+            if (track != null) {
+              track.setTableId(tableId);
+              providerUtils.updateTrack(track);
+            } else {
+              Log.w(TAG, "Updating table id failed.");
+            }
           } catch (RuntimeException e) {
             // If that fails whatever reasons we'll just log an error, but
             // continue.

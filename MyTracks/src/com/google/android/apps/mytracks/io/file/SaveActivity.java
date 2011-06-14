@@ -83,6 +83,11 @@ public class SaveActivity extends Activity {
     shareFile = intent.getBooleanExtra(EXTRA_SHARE_FILE, false);
 
     writer = TrackWriterFactory.newWriter(this, providerUtils, trackId, format);
+    if (writer == null) {
+      Log.e(TAG, "Unable to build writer");
+      finish();
+      return;
+    }
 
     if (shareFile) {
       // If the file is for sending, save it to a temporary location instead.
