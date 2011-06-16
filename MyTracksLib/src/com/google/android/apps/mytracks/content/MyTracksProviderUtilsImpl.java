@@ -846,7 +846,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   @Override
   public Cursor getLocationsCursor(long trackId, long minTrackPointId,
       int maxLocations, boolean descending) {
-    if (trackId < 0 || maxLocations < 1) {
+    if (trackId < 0) {
       return null;
     }
 
@@ -870,7 +870,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   @Override
   public Cursor getWaypointsCursor(long trackId, long minWaypointId,
       int maxWaypoints) {
-    if (trackId < 0 || maxWaypoints < 1) {
+    if (trackId < 0) {
       return null;
     }
 
