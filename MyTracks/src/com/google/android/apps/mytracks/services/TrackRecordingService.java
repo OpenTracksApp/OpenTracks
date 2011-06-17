@@ -981,12 +981,6 @@ public class TrackRecordingService extends Service implements LocationListener {
     }
 
     @Override
-    public boolean hasRecorded() {
-      checkService();
-      return service.providerUtils.getLastTrackId() >= 0;
-    }
-
-    @Override
     public long startNewTrack() {
       checkService();
       return service.startNewTrack();
@@ -1007,15 +1001,6 @@ public class TrackRecordingService extends Service implements LocationListener {
     public void endCurrentTrack() {
       checkService();
       service.endCurrentTrack();
-    }
-
-    @Override
-    public void deleteAllTracks() {
-      checkService();
-      if (isRecording()) {
-        throw new IllegalStateException("Cannot delete all tracks while recording!");
-      }
-      service.providerUtils.deleteAllTracks();
     }
 
     @Override
