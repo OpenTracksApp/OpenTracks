@@ -39,6 +39,7 @@ import com.google.android.maps.mytracks.R;
  * An AppWidgetProvider for displaying key track statistics (distance, time,
  * speed) from the current or most recent track.
  *
+ * @author Sandor Dornbush
  * @author Paul R. Saxman
  */
 public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
@@ -56,12 +57,12 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
   
   private final Handler contentHandler;
   private MyTracksProviderUtils providerUtils;
-  // TODO kill this.  I am fairly certain this is a bug.
   private Context context;
   private String unknown;
   private String time;
   private String distance;
   private String speed;
+  private TrackObserver trackObserver;
   
   public AppWidgetProvider() {
     super();
@@ -70,8 +71,15 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
 
   @Override
   public void onEnabled(Context context) {
-    context.getContentResolver().registerContentObserver(TracksColumns.CONTENT_URI, true, new TrackObserver());
+    trackObserver = new TrackObserver();
+    context.getContentResolver().registerContentObserver(
+        TracksColumns.CONTENT_URI, true, trackObserver);
     initialize(context);
+  }
+
+  @Override
+  public void onDisabled(Context context) {
+    context.getContentResolver().unregisterContentObserver(trackObserver);
   }
 
   private void initialize(Context context) {
@@ -80,10 +88,10 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
     }
     providerUtils = MyTracksProviderUtils.Factory.get(context);
     this.context = context;
-    this.distance = context.getString(R.string.kilometer);
-    this.speed = context.getString(R.string.kilometer_per_hour);
-    this.time = context.getString(R.string.min);
-    this.unknown = context.getString(R.string.unknown);
+    distance = context.getString(R.string.kilometer);
+    speed = context.getString(R.string.kilometer_per_hour);
+    time = context.getString(R.string.min);
+    unknown = context.getString(R.string.unknown);
   }
 
   @Override
