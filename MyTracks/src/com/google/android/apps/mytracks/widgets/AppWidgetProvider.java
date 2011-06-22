@@ -21,12 +21,15 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.database.ContentObserver;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.StringUtils;
@@ -39,9 +42,54 @@ import com.google.android.maps.mytracks.R;
  * @author Paul R. Saxman
  */
 public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
+
+  class TrackObserver extends ContentObserver {
+
+    public TrackObserver() {
+      super(contentHandler);
+    }
+    
+    public void onChange(boolean selfChange) {
+      updateTrack(-1, null);
+    }
+  }
+  
+  private final Handler contentHandler;
+  private MyTracksProviderUtils providerUtils;
+  // TODO kill this.  I am fairly certain this is a bug.
+  private Context context;
+  private String unknown;
+  private String time;
+  private String distance;
+  private String speed;
+  
+  public AppWidgetProvider() {
+    super();
+    contentHandler = new Handler();
+  }
+
+  @Override
+  public void onEnabled(Context context) {
+    context.getContentResolver().registerContentObserver(TracksColumns.CONTENT_URI, true, new TrackObserver());
+    initialize(context);
+  }
+
+  private void initialize(Context context) {
+    if (this.context != null) {
+      return;
+    }
+    providerUtils = MyTracksProviderUtils.Factory.get(context);
+    this.context = context;
+    this.distance = context.getString(R.string.kilometer);
+    this.speed = context.getString(R.string.kilometer_per_hour);
+    this.time = context.getString(R.string.min);
+    this.unknown = context.getString(R.string.unknown);
+  }
+
   @Override
   public void onReceive(Context context, Intent intent) {
     super.onReceive(context, intent);
+    initialize(context);
 
     long trackId = intent.getLongExtra(
         context.getString(R.string.track_id_broadcast_extra), -1);
@@ -51,27 +99,32 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
         "MyTracksAppWidgetProvider.onReceive: trackId=" + trackId + ", action="
             + action);
 
+    updateTrack(trackId, action);
+  }
+
+  private void updateTrack(long trackId, String action) {
     Track track = null;
     if (trackId != -1) {
       Log.d(Constants.TAG,
           "MyTracksAppWidgetProvider.onReceive: Retrieving specified track.");
-      track = MyTracksProviderUtils.Factory.get(context).getTrack(trackId);
+      track = providerUtils.getTrack(trackId);
     } else {
       Log.d(Constants.TAG,
           "MyTracksAppWidgetProvider.onReceive: Attempting to retrieve previous track.");
-      track = MyTracksProviderUtils.Factory.get(context).getLastTrack();
+      // TODO we should really read the pref.
+      track = providerUtils.getLastTrack();
     }
 
     AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-    ComponentName widget =
-        new ComponentName(context, AppWidgetProvider.class);
-    RemoteViews views = new RemoteViews(context.getPackageName(),
-        R.layout.appwidget);
+    ComponentName widget = new ComponentName(context, AppWidgetProvider.class);
+    RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.appwidget);
 
     int[] appWidgetIds = appWidgetManager.getAppWidgetIds(widget);
     for (int appWidgetId : appWidgetIds) {
-      updateViewButton(views, context, action);
-      updateViewTrackStatistics(views, track, context);
+      if (action != null) {
+        updateViewButton(views, context, action);
+      }
+      updateViewTrackStatistics(views, track);
       appWidgetManager.updateAppWidget(appWidgetId, views);
     }
   }
@@ -112,15 +165,13 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
    * the specified track.
    *
    * @param views The RemoteViews to update with statistics
-   * @param context The Context of the AppWidget
    * @param track The track to extract statistics from.
    */
-  protected void updateViewTrackStatistics(RemoteViews views, Track track,
-      Context context) {
+  protected void updateViewTrackStatistics(RemoteViews views, Track track) {
     if (track == null) {
-      views.setTextViewText(R.id.appwidget_distance_text, "NA");
-      views.setTextViewText(R.id.appwidget_time_text, "NA");
-      views.setTextViewText(R.id.appwidget_speed_text, "NA");
+      views.setTextViewText(R.id.appwidget_distance_text, unknown);
+      views.setTextViewText(R.id.appwidget_time_text, unknown);
+      views.setTextViewText(R.id.appwidget_speed_text, unknown);
       return;
     }
 
@@ -131,19 +182,20 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
 
     TripStatistics stats = track.getStatistics();
 
+    // TODO replace this with format strings and miles.
     // convert meters to kilometers
     String distance = StringUtils.formatSingleDecimalPlace(stats.getTotalDistance() / 1000)
-        + " " + context.getString(R.string.kilometer);
+        + " " + this.distance;
 
     // convert ms to minutes
     String time = StringUtils.formatSingleDecimalPlace(stats.getMovingTime() / 60000d)
-        + " mins";
+        + " " + this.time;
 
-    String speed = "NA";
+    String speed = unknown;
     if (!Double.isNaN(stats.getAverageMovingSpeed())) {
       // convert m/s to km/h
       speed = StringUtils.formatSingleDecimalPlace(stats.getAverageMovingSpeed() * 3.6)
-          + " " + context.getString(R.string.kilometer_per_hour);
+          + " " + this.speed;
     }
 
     views.setTextViewText(R.id.appwidget_distance_text, distance);

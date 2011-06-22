@@ -20,7 +20,6 @@ import static com.google.android.apps.mytracks.Constants.RESUME_TRACK_EXTRA_NAME
 
 import com.google.android.apps.mytracks.MyTracks;
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.TrackDataHub;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Sensor;
@@ -278,10 +277,6 @@ public class TrackRecordingService extends Service implements LocationListener {
     announcementExecutor.update();
     splitExecutor.update();
 
-    // Send broadcast that the track has been updated.
-    sendTrackBroadcast(R.string.track_updated_broadcast_action,
-        recordingTrack.getId());
-
     return true;
   }
 
@@ -409,13 +404,11 @@ public class TrackRecordingService extends Service implements LocationListener {
 
   public void unregisterLocationListener() {
     if (locationManager == null) {
-      Log.e(TAG,
-          "TrackRecordingService: Do not have any location manager.");
+      Log.e(TAG, "TrackRecordingService: Do not have any location manager.");
       return;
     }
     locationManager.removeUpdates(this);
-    Log.d(TAG,
-        "Location listener now unregistered w/ TrackRecordingService.");
+    Log.d(TAG, "Location listener now unregistered w/ TrackRecordingService.");
   }
 
   private Track getRecordingTrack() {
@@ -1112,9 +1105,6 @@ public class TrackRecordingService extends Service implements LocationListener {
     // Persist the current recording track.
     prefManager.setRecordingTrack(recordingTrackId);
 
-    TrackDataHub dataHub = MyTracks.getInstance().getDataHub();
-    dataHub.loadTrack(track.getId());
-
     // Notify the world that we're now recording.
     sendTrackBroadcast(
         R.string.track_started_broadcast_action, recordingTrackId);
@@ -1160,6 +1150,7 @@ public class TrackRecordingService extends Service implements LocationListener {
     }
 
     releaseWakeLock();
+    unregisterLocationListener();
 
     // Notify the world that we're no longer recording.
     sendTrackBroadcast(
