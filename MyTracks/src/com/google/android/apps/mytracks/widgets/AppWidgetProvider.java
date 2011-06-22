@@ -21,6 +21,8 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.ContentObserver;
 import android.os.Handler;
 import android.util.Log;
@@ -33,6 +35,7 @@ import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.StringUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 /**
@@ -42,7 +45,9 @@ import com.google.android.maps.mytracks.R;
  * @author Sandor Dornbush
  * @author Paul R. Saxman
  */
-public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
+public class AppWidgetProvider
+    extends android.appwidget.AppWidgetProvider
+    implements OnSharedPreferenceChangeListener {
 
   class TrackObserver extends ContentObserver {
 
@@ -63,6 +68,7 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
   private String distance;
   private String speed;
   private TrackObserver trackObserver;
+  private boolean isMetric;
   
   public AppWidgetProvider() {
     super();
@@ -92,6 +98,8 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
     speed = context.getString(R.string.kilometer_per_hour);
     time = context.getString(R.string.min);
     unknown = context.getString(R.string.unknown);
+    SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    this.onSharedPreferenceChanged(sharedPreferences, null);
   }
 
   @Override
@@ -192,8 +200,11 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
 
     // TODO replace this with format strings and miles.
     // convert meters to kilometers
-    String distance = StringUtils.formatSingleDecimalPlace(stats.getTotalDistance() / 1000)
-        + " " + this.distance;
+    double displayDistance = stats.getTotalDistance() / 1000;
+      if (isMetric) {
+        displayDistance *= UnitConversions.KM_TO_MI;
+      }
+    String distance = StringUtils.formatSingleDecimalPlace(displayDistance) + " " + this.distance;
 
     // convert ms to minutes
     String time = StringUtils.formatSingleDecimalPlace(stats.getMovingTime() / 60000d)
@@ -201,13 +212,25 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
 
     String speed = unknown;
     if (!Double.isNaN(stats.getAverageMovingSpeed())) {
-      // convert m/s to km/h
-      speed = StringUtils.formatSingleDecimalPlace(stats.getAverageMovingSpeed() * 3.6)
-          + " " + this.speed;
+      // Convert m/s to km/h
+      double displaySpeed = stats.getAverageMovingSpeed() * 3.6;
+      if (isMetric) {
+        displaySpeed *= UnitConversions.KMH_TO_MPH;
+      }
+      speed = StringUtils.formatSingleDecimalPlace(displaySpeed) + " " + this.speed;
     }
 
     views.setTextViewText(R.id.appwidget_distance_text, distance);
     views.setTextViewText(R.id.appwidget_time_text, time);
     views.setTextViewText(R.id.appwidget_speed_text, speed);
+  }
+
+  @Override
+  public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+    if (key == null || key.equals(context.getString(R.string.metric_units_key))) {
+      isMetric = prefs.getBoolean(context.getString(R.string.metric_units_key), true);
+      distance = context.getString(isMetric ? R.string.kilometer : R.string.mile);
+      speed = context.getString(isMetric ? R.string.kilometer_per_hour : R.string.mile_per_hour);
+    }
   }
 }
