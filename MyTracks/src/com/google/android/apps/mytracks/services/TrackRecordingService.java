@@ -1116,9 +1116,38 @@ public class TrackRecordingService extends Service {
    */
   private static class ServiceBinder extends ITrackRecordingService.Stub {
     private TrackRecordingService service;
+    private DeathRecipient deathRecipient;
 
     public ServiceBinder(TrackRecordingService service) {
       this.service = service;
+    }
+
+    // Logic for letting the actual service go up and down.
+
+    @Override
+    public boolean isBinderAlive() {
+      // Pretend dead if the service went down.
+      return service != null;
+    }
+
+    @Override
+    public boolean pingBinder() {
+      return isBinderAlive();
+    }
+
+    @Override
+    public void linkToDeath(DeathRecipient recipient, int flags) {
+      deathRecipient = recipient;
+    }
+
+    @Override
+    public boolean unlinkToDeath(DeathRecipient recipient, int flags) {
+      if (!isBinderAlive()) {
+        return false;
+      }
+
+      deathRecipient = null;
+      return true;
     }
 
     /**
@@ -1127,6 +1156,10 @@ public class TrackRecordingService extends Service {
     private void detachFromService() {
       this.service = null;
       attachInterface(null, null);
+
+      if (deathRecipient != null) {
+        deathRecipient.binderDied();
+      }
     }
 
     private void checkService() {

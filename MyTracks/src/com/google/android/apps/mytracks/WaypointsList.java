@@ -15,12 +15,14 @@
  */
 package com.google.android.apps.mytracks;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
-import com.google.android.apps.mytracks.services.TrackRecordingServiceBinder;
+import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -63,6 +65,7 @@ public class WaypointsList extends ListActivity
   private Button insertStatisticsButton = null;
   private long recordingTrackId = -1;
   private MyTracksProviderUtils providerUtils;
+  private TrackRecordingServiceConnection serviceConnection;
 
   private Cursor waypointsCursor = null;
 
@@ -128,6 +131,7 @@ public class WaypointsList extends ListActivity
     super.onCreate(savedInstanceState);
 
     providerUtils = MyTracksProviderUtils.Factory.get(this);
+    serviceConnection = new TrackRecordingServiceConnection(this, null);
 
     // We don't need a window title bar:
     requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -175,6 +179,20 @@ public class WaypointsList extends ListActivity
   }
 
   @Override
+  protected void onResume() {
+    super.onResume();
+
+    serviceConnection.bindIfRunning();
+  }
+
+  @Override
+  protected void onDestroy() {
+    serviceConnection.unbind();
+
+    super.onDestroy();
+  }
+
+  @Override
   public void onClick(View v) {
     WaypointCreationRequest request;
     switch (v.getId()) {
@@ -201,8 +219,7 @@ public class WaypointsList extends ListActivity
 
   private long insertWaypoint(WaypointCreationRequest request) {
     try {
-      ITrackRecordingService trackRecordingService =
-          TrackRecordingServiceBinder.getInstance(this).getServiceIfBound();
+      ITrackRecordingService trackRecordingService = serviceConnection.getServiceIfBound();
       if (trackRecordingService != null) {
         long waypointId = trackRecordingService.insertWaypoint(request);
         if (waypointId >= 0) {
@@ -210,6 +227,8 @@ public class WaypointsList extends ListActivity
               Toast.LENGTH_LONG).show();
           return waypointId;
         }
+      } else {
+        Log.e(TAG, "Not connected to service, not inserting waypoint");
       }
     } catch (RemoteException e) {
       Log.e(Constants.TAG, "Cannot insert marker.", e);

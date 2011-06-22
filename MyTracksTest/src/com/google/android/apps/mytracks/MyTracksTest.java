@@ -1,12 +1,12 @@
 /*
  * Copyright 2010 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.services.ServiceUtils;
+import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -33,11 +34,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * A unit test for {@link MyTracks} activity.
- * 
+ *
  * @author Bartlomiej Niechwiej
  */
 public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
   private SharedPreferences sharedPreferences;
+  private TrackRecordingServiceConnection serviceConnection;
 
   public MyTracksTest() {
     super(MyTracks.class);
@@ -126,7 +128,7 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     assertInitialized();
 
     // Check if not recording.
-    clearSelectedAndRecordingTracks();    
+    clearSelectedAndRecordingTracks();
     waitForIdle();
 
     assertFalse(isRecording());
@@ -137,6 +139,7 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
 
     // Start a new track.
     getActivity().startRecording();
+    serviceConnection.bindIfRunning();
     long recordingTrackId = awaitRecordingStatus(5000, true);
     assertTrue(recordingTrackId >= 0);
 
@@ -149,7 +152,7 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     assertEquals(recordingTrackId, selectedTrackId);
     assertEquals(selectedTrackId, getActivity().getSelectedTrackId());
 
-    // Watch for MyTracksDetails activity. 
+    // Watch for MyTracksDetails activity.
     ActivityMonitor monitor = getInstrumentation().addMonitor(
         TrackDetails.class.getName(), null, false);
 
@@ -157,7 +160,7 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     // no longer recording.
     getActivity().stopRecording();
 
-    // Check if we got back MyTracksDetails activity. 
+    // Check if we got back MyTracksDetails activity.
     Activity activity = getInstrumentation().waitForMonitor(monitor);
     assertTrue(activity instanceof TrackDetails);
 
@@ -180,13 +183,15 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
 
   private void assertInitialized() {
     assertNotNull(getActivity());
+
+    serviceConnection = new TrackRecordingServiceConnection(getActivity(), null);
   }
 
   /**
    * Waits until the UI thread becomes idle.
    */
   private void waitForIdle() throws InterruptedException {
-    // Note: We can't use getInstrumentation().waitForIdleSync() here.  
+    // Note: We can't use getInstrumentation().waitForIdleSync() here.
     final Object semaphore = new Object();
     synchronized (semaphore) {
       final AtomicBoolean isIdle = new AtomicBoolean();
@@ -216,10 +221,10 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     editor.clear();
     editor.commit();
   }
-  
+
   /**
    * Waits until the recording state changes to the given status.
-   * 
+   *
    * @param timeout the maximum time to wait, in milliseconds.
    * @param isRecording the final status to await.
    * @return the recording track ID.
@@ -250,6 +255,7 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
   }
 
   private boolean isRecording() {
-    return ServiceUtils.isRecording(getActivity(), getSharedPreferences());
+    return ServiceUtils.isRecording(getActivity(),
+        serviceConnection.getServiceIfBound(), getSharedPreferences());
   }
 }

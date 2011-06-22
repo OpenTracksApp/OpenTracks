@@ -90,7 +90,7 @@ public class StatsActivity extends Activity implements TrackDataListener {
     @Override
     public void run() {
       Log.i(TAG, "Started UI update thread");
-      while (ServiceUtils.isRecording(StatsActivity.this, preferences)) {
+      while (ServiceUtils.isRecording(StatsActivity.this, null, preferences)) {
         runOnUiThread(updateResults);
         try {
           Thread.sleep(1000L);

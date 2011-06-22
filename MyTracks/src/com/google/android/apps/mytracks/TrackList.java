@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -19,6 +19,7 @@ import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendActivity;
 import com.google.android.apps.mytracks.services.ServiceUtils;
+import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
@@ -79,8 +80,7 @@ public class TrackList extends ListActivity
               R.string.tracklist_show_track);
           menu.add(0, Constants.MENU_EDIT, 0,
               R.string.tracklist_edit_track);
-          if (!ServiceUtils.isRecording(TrackList.this, null)
-              || trackId != recordingTrackId) {
+          if (!isRecording() || trackId != recordingTrackId) {
             menu.add(0, Constants.MENU_SEND_TO_GOOGLE, 0,
                 R.string.tracklist_send_to_google);
             SubMenu share = menu.addSubMenu(0, Constants.MENU_SHARE, 0,
@@ -111,6 +111,16 @@ public class TrackList extends ListActivity
           }
         }
       };
+
+  private final Runnable serviceBindingChanged = new Runnable() {
+    @Override
+    public void run() {
+      updateButtonsEnabled();
+    }
+  };
+
+  private TrackRecordingServiceConnection serviceConnection;
+  private SharedPreferences preferences;
 
   @Override
   public void onSharedPreferenceChanged(
@@ -214,16 +224,17 @@ public class TrackList extends ListActivity
     listView = getListView();
     listView.setOnCreateContextMenuListener(contextMenuListener);
 
-    SharedPreferences preferences =
-        getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    preferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    serviceConnection = new TrackRecordingServiceConnection(this, serviceBindingChanged);
 
     View deleteAll = findViewById(R.id.tracklist_btn_delete_all);
-    View exportAll = findViewById(R.id.tracklist_btn_export_all);
-    boolean notRecording = !ServiceUtils.isRecording(this, preferences);
     deleteAll.setOnClickListener(this);
-    deleteAll.setEnabled(notRecording);
+
+    View exportAll = findViewById(R.id.tracklist_btn_export_all);
     exportAll.setOnClickListener(this);
-    exportAll.setEnabled(notRecording);
+
+    updateButtonsEnabled();
+
     findViewById(R.id.tracklist_btn_import_all).setOnClickListener(this);
 
     preferences.registerOnSharedPreferenceChangeListener(this);
@@ -236,6 +247,29 @@ public class TrackList extends ListActivity
         TracksColumns.CONTENT_URI, null, null, null, "_id DESC");
     startManagingCursor(tracksCursor);
     setListAdapter();
+  }
+
+  @Override
+  protected void onStart() {
+    super.onStart();
+
+    serviceConnection.bindIfRunning();
+  }
+
+  @Override
+  protected void onDestroy() {
+    serviceConnection.unbind();
+
+    super.onDestroy();
+  }
+
+  private void updateButtonsEnabled() {
+    View deleteAll = findViewById(R.id.tracklist_btn_delete_all);
+    View exportAll = findViewById(R.id.tracklist_btn_export_all);
+
+    boolean notRecording = !isRecording();
+    deleteAll.setEnabled(notRecording);
+    exportAll.setEnabled(notRecording);
   }
 
   private void setListAdapter() {
@@ -300,5 +334,9 @@ public class TrackList extends ListActivity
       }
     });
     setListAdapter(adapter);
+  }
+
+  private boolean isRecording() {
+    return ServiceUtils.isRecording(TrackList.this, serviceConnection.getServiceIfBound(), preferences);
   }
 }
