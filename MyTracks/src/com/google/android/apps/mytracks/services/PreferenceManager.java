@@ -93,13 +93,13 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
       return;
     }
     if (key == null || key.equals(minRecordingDistanceKey)) {
-      service.setMinRecordingDistance(
-          sharedPreferences.getInt(
-              minRecordingDistanceKey,
-              Constants.DEFAULT_MIN_RECORDING_DISTANCE));
+      int minRecordingDistance = sharedPreferences.getInt(
+          minRecordingDistanceKey,
+          Constants.DEFAULT_MIN_RECORDING_DISTANCE);
+      service.setMinRecordingDistance(minRecordingDistance);
       Log.d(Constants.TAG,
           "TrackRecordingService: minRecordingDistance = "
-          + service.getMinRecordingDistance());
+          + minRecordingDistance);
     }
     if (key == null || key.equals(maxRecordingDistanceKey)) {
       service.setMaxRecordingDistance(sharedPreferences.getInt(

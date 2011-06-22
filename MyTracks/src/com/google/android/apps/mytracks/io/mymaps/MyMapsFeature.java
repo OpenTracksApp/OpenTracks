@@ -3,7 +3,7 @@ package com.google.android.apps.mytracks.io.mymaps;
 
 import com.google.android.maps.GeoPoint;
 
-import java.io.Serializable;
+import java.util.Random;
 import java.util.Vector;
 
 /**
@@ -12,7 +12,7 @@ import java.util.Vector;
  * {@link MyMapsFeatureMetadata} object so that it can be more efficiently
  * transmitted to other activities.
  */
-class MyMapsFeature implements Serializable {
+class MyMapsFeature {
 
   private static final long serialVersionUID = 8439035544430497236L;
 
@@ -49,6 +49,8 @@ class MyMapsFeature implements Serializable {
   /** The metadata of this feature in a format efficient for transmission. */
   private MyMapsFeatureMetadata featureInfo = new MyMapsFeatureMetadata();
 
+  private final Random random = new Random();
+
   /**
    * Initializes a valid but empty feature. It will default to a
    * {@link #MARKER} with a blue placemark with a dot as an icon at the
@@ -62,7 +64,7 @@ class MyMapsFeature implements Serializable {
    *
    * @param point The new point to add
    */
-  public synchronized void addPoint(GeoPoint point) {
+  public void addPoint(GeoPoint point) {
     latitudeE6.add(point.getLatitudeE6());
     longitudeE6.add(point.getLongitudeE6());
   }
@@ -71,10 +73,10 @@ class MyMapsFeature implements Serializable {
    * Generates a new local id for this feature based on the current time and
    * a random number.
    */
-  public synchronized void generateAndroidId() {
-    Long time = System.currentTimeMillis();
-    Integer random = (int) (Math.random() * 10000);
-    androidId = time.toString() + "." + random.toString();
+  void generateAndroidId() {
+    long time = System.currentTimeMillis();
+    int rand = random.nextInt(10000);
+    androidId = time + "." + rand;
   }
 
   /**
@@ -82,7 +84,7 @@ class MyMapsFeature implements Serializable {
    *
    * @return The local id for this feature
    */
-  public String getAndroidId() {
+  String getAndroidId() {
     return androidId;
   }
 
@@ -102,7 +104,7 @@ class MyMapsFeature implements Serializable {
    *
    * @param description The new description of this feature
    */
-  public synchronized void setDescription(String description) {
+  public void setDescription(String description) {
     featureInfo.setDescription(description);
   }
 
@@ -196,7 +198,7 @@ class MyMapsFeature implements Serializable {
    *
    * @param title The new title of this feature
    */
-  public synchronized void setTitle(String title) {
+  public void setTitle(String title) {
     featureInfo.setTitle(title);
   }
 
@@ -207,7 +209,7 @@ class MyMapsFeature implements Serializable {
    * @param type The new type of the feature. That type must be one of
    *        {@link #MARKER}, {@link #LINE}, or {@link #SHAPE}
    */
-  public synchronized void setType(int type) {
+  public void setType(int type) {
     featureInfo.setType(type);
   }
 
@@ -217,7 +219,7 @@ class MyMapsFeature implements Serializable {
    *
    * @param color The new ARGB color of this feature
    */
-  public synchronized void setColor(int color) {
+  public void setColor(int color) {
     featureInfo.setColor(color);
   }
 
@@ -227,7 +229,7 @@ class MyMapsFeature implements Serializable {
    *
    * @param url The new icon url of the feature
    */
-  public synchronized void setIconUrl(String url) {
+  public void setIconUrl(String url) {
     featureInfo.setIconUrl(url);
   }
 }

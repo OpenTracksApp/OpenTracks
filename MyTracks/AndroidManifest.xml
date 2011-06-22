@@ -44,6 +44,110 @@ limitations under the License.
         <action android:name="android.intent.action.VIEW" />
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
+        <data android:mimeType="vnd.android.cursor.item/vnd.google.track" />
+      </intent-filter>
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.MapActivity"
+              android:label="MyTracks"
+              android:exported="false">
+      <intent-filter>
+        <category android:name="android.intent.category.TAB" />
+      </intent-filter>
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.MyMapsList"
+              android:label="@string/map_list_title"
+              android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|fontScale"
+              android:exported="false" />
+
+    <!-- TODO: VIEW and PICK for track cursor dir -->
+    <activity android:name="com.google.android.apps.mytracks.TrackList"
+              android:label="Recorded Tracks" />
+
+    <!-- TODO: VIEW and PICK for waypoint cursor dir -->
+    <activity android:name="com.google.android.apps.mytracks.WaypointsList"
+              android:label="Recorded Waypoints" />
+
+    <activity android:name="com.google.android.apps.mytracks.TrackDetails"
+              android:label="@string/trackdetails_title">
+      <intent-filter>
+        <action android:name="android.intent.action.EDIT" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:mimeType="vnd.android.cursor.item/vnd.google.track" />
+      </intent-filter>
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.WaypointDetails"
+              android:label="@string/waypointdetails_title">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <action android:name="android.intent.action.EDIT" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:mimeType="vnd.android.cursor.item/vnd.google.waypoint" />
+      </intent-filter>
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.SettingsActivity"
+              android:label="@string/mytracks_settings" >
+      <intent-filter>
+        <category android:name="android.intent.category.PREFERENCE" />
+      </intent-filter>
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.AggregatedStatsActivity"
+              android:label="@string/aggregated_stats" />
+
+    <activity android:name="com.google.android.apps.mytracks.StatsActivity"
+              android:label="@string/statistics"
+              android:exported="false">
+      <intent-filter>
+        <category android:name="android.intent.category.TAB" />
+      </intent-filter>
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.SensorStateActivity"
+              android:label="@string/sensor_state" />
+
+    <activity android:name="com.google.android.apps.mytracks.ChartActivity"
+              android:label="@string/elevation_label"
+              android:exported="false">
+      <intent-filter>
+        <category android:name="android.intent.category.TAB" />
+      </intent-filter>
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.SendActivity"
+              android:label="@string/sendtogoogle_title"
+              android:theme="@android:style/Theme.Translucent.NoTitleBar"
+              android:noHistory="true">
+      <intent-filter>
+        <action android:name="android.intent.action.SEND" />
+        <data android:mimeType="vnd.android.cursor.item/vnd.google.track" />
+      </intent-filter>
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.io.file.SaveActivity"
+              android:label="@string/tracklist_write_to_sd"
+              android:theme="@android:style/Theme.Translucent.NoTitleBar"
+              android:noHistory="true">
+      <intent-filter>
+        <action android:name="@string/save_intent_action" />
+        <data android:mimeType="vnd.android.cursor.item/vnd.google.track" />
+      </intent-filter>
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.io.file.ImportActivity"
+              android:label="@string/import_title"
+              android:theme="@android:style/Theme.Translucent.NoTitleBar"
+              android:noHistory="true">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <action android:name="android.intent.action.ATTACH_DATA" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
         <data android:scheme="file" />
         <data android:mimeType="application/gpx+xml" />
         <data android:mimeType="application/gpx" />
@@ -51,44 +155,6 @@ limitations under the License.
         <data android:mimeType="application/vnd.google-earth.gpx+xml" />
       </intent-filter>
     </activity>
-
-    <activity android:name="com.google.android.apps.mytracks.MapActivity"
-              android:label="MyTracks"
-              android:exported="false" />
-
-    <activity android:name="com.google.android.apps.mytracks.MyMapsList"
-              android:label="@string/map_list_title"
-              android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|fontScale"
-              android:exported="false" />
-
-    <activity android:name="com.google.android.apps.mytracks.TrackList"
-              android:label="Recorded Tracks" />
-
-    <activity android:name="com.google.android.apps.mytracks.WaypointsList"
-              android:label="Recorded Waypoints" />
-
-    <activity android:name="com.google.android.apps.mytracks.TrackDetails"
-              android:label="@string/trackdetails_title" />
-
-    <activity android:name="com.google.android.apps.mytracks.WaypointDetails"
-              android:label="@string/waypointdetails_title" />
-
-    <activity android:name="com.google.android.apps.mytracks.SettingsActivity"
-              android:label="@string/mytracks_settings" />
-
-    <activity android:name="com.google.android.apps.mytracks.AggregatedStatsActivity"
-              android:label="@string/aggregated_stats" />
-
-    <activity android:name="com.google.android.apps.mytracks.StatsActivity"
-              android:label="@string/statistics"
-              android:exported="false" />
-
-    <activity android:name="com.google.android.apps.mytracks.SensorStateActivity"
-              android:label="@string/sensor_state" />
-
-    <activity android:name="com.google.android.apps.mytracks.ChartActivity"
-              android:label="@string/elevation_label"
-              android:exported="false" />
 
     <activity android:name="com.google.android.apps.mytracks.WelcomeActivity"
               android:label="@string/welcome"

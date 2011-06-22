@@ -36,6 +36,7 @@ import android.widget.RadioGroup;
 public class ChartSettingsDialog extends Dialog {
   private RadioButton distance;
   private CheckBox[] series;
+  private OnClickListener clickListener;
 
   public ChartSettingsDialog(Context context) {
     super(context);
@@ -44,23 +45,31 @@ public class ChartSettingsDialog extends Dialog {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
     requestWindowFeature(Window.FEATURE_NO_TITLE);
     setContentView(R.layout.chart_settings);
     Button cancel = (Button) findViewById(R.id.chart_settings_cancel);
     cancel.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
+        if (clickListener != null) {
+          clickListener.onClick(ChartSettingsDialog.this, BUTTON_NEGATIVE);
+        }
         dismiss();
       }
     });
-    Button ok = (Button) findViewById(R.id.chart_settings_ok);
-    ok.setOnClickListener(new View.OnClickListener() {
+
+    Button okButton = (Button) findViewById(R.id.chart_settings_ok);
+    okButton.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
-        handleOk();
+        if (clickListener != null) {
+          clickListener.onClick(ChartSettingsDialog.this, BUTTON_POSITIVE);
+        }
+        dismiss();
       }
     });
 
     distance = (RadioButton) findViewById(R.id.chart_settings_by_distance);
-    
+
     series = new CheckBox[ChartView.NUM_SERIES];
     series[ChartView.ELEVATION_SERIES] =
         (CheckBox) findViewById(R.id.chart_settings_elevation);
@@ -74,29 +83,30 @@ public class ChartSettingsDialog extends Dialog {
         (CheckBox) findViewById(R.id.chart_settings_heart_rate);
   }
 
-  public void setup(ChartActivity chart) {
-    if (chart == null) {
-      return;
-    }
-
+  public void setMode(Mode mode) {
     RadioGroup rd = (RadioGroup) findViewById(R.id.chart_settings_x);
-    rd.check(chart.getMode() == Mode.BY_DISTANCE
+    rd.check(mode == Mode.BY_DISTANCE
              ? R.id.chart_settings_by_distance
              : R.id.chart_settings_by_time);
-    for (int i = 0; i < ChartView.NUM_SERIES; i++) {
-      series[i].setChecked(chart.isSeriesEnabled(i));
-    }
   }
 
-  private void handleOk() {
-    ChartActivity chart = MyTracks.getInstance().getChartActivity();
-    chart.setMode(distance.isChecked() ? Mode.BY_DISTANCE : Mode.BY_TIME);
+  public void setSeriesEnabled(int seriesIdx, boolean enabled) {
+    series[seriesIdx].setChecked(enabled);
+  }
 
-    // TODO: check that something is visible.
-    for (int i = 0; i < ChartView.NUM_SERIES; i++) {
-      chart.setSeriesEnabled(i, series[i].isChecked());
-    }
+  public Mode getMode() {
+    if (distance == null) return Mode.BY_DISTANCE;
 
-    dismiss();
+    return distance.isSelected() ? Mode.BY_DISTANCE : Mode.BY_TIME;
+  }
+
+  public boolean isSeriesEnabled(int seriesIdx) {
+    if (series == null) return true;
+
+    return series[seriesIdx].isChecked();
+  }
+
+  public void setOnClickListener(OnClickListener clickListener) {
+    this.clickListener = clickListener;
   }
 }

@@ -19,7 +19,6 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.SharedPreferences;
-import android.os.HandlerThread;
 
 /**
  * A set of methods that may be implemented in a platform specific way. 
@@ -50,14 +49,6 @@ public interface ApiPlatformAdapter {
    */
   void stopForeground(Service service, NotificationManager notificationManager,
       int id);
-
-  /**
-   * Terminates the given handler thread.
-   * 
-   * @param handlerThread the thread to be terminated.
-   * @return true whether the handler has been stopped or not.
-   */
-  boolean stopHandlerThread(HandlerThread handlerThread);
 
   /**
    * Applies all changes done to the given preferences editor.

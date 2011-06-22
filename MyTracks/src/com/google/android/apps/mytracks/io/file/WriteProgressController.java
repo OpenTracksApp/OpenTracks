@@ -13,9 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks;
+package com.google.android.apps.mytracks.io.file;
 
-import com.google.android.apps.mytracks.io.file.TrackWriter;
+import com.google.android.apps.mytracks.DialogManager;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -41,7 +41,7 @@ class WriteProgressController {
      * dialog has been dismissed.  Whether the write succeeded can be
      * determined by examining the {@link TrackWriter}.
      */
-    public void onComplete(TrackWriter writer);
+    public void onComplete();
   }
 
   private final Activity activity;
@@ -104,7 +104,7 @@ class WriteProgressController {
           DialogManager.dismissDialogSafely(activity, dialog);
 
           if (onCompletionListener != null) {
-            onCompletionListener.onComplete(writer);
+            onCompletionListener.onComplete();
           }
         }
       };

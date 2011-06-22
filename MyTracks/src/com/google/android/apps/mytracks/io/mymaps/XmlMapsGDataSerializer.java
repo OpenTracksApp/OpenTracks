@@ -1,7 +1,6 @@
 // Copyright 2010 Google Inc. All Rights Reserved.
 package com.google.android.apps.mytracks.io.mymaps;
 
-import com.google.wireless.gdata.data.Entry;
 import com.google.wireless.gdata.data.StringUtils;
 import com.google.wireless.gdata.parser.ParseException;
 import com.google.wireless.gdata.parser.xml.XmlGDataParser;
@@ -10,13 +9,13 @@ import com.google.wireless.gdata.serializer.xml.XmlEntryGDataSerializer;
 
 import android.util.Log;
 
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlSerializer;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
+
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
 
 /**
  * Serializer of maps data for GData.
@@ -29,11 +28,11 @@ class XmlMapsGDataSerializer extends XmlEntryGDataSerializer {
   private XmlParserFactory factory;
   private OutputStream stream;
 
-  public XmlMapsGDataSerializer(XmlParserFactory factory, Entry entry) {
+  public XmlMapsGDataSerializer(XmlParserFactory factory, MapFeatureEntry entry) {
     super(factory, entry);
 
     this.factory = factory;
-    this.entry = (MapFeatureEntry) entry;
+    this.entry = entry;
   }
 
   @Override

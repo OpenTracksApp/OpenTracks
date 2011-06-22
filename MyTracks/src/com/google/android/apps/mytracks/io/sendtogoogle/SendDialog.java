@@ -16,8 +16,6 @@
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.DialogManager;
-import com.google.android.apps.mytracks.MyTracks;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Dialog;
@@ -42,15 +40,13 @@ import android.widget.RadioGroup;
  */
 public class SendDialog extends Dialog {
 
-  private RadioGroup groupMyMaps;
   private RadioButton createNewMapRadioButton;
   private RadioButton pickMapRadioButton;
   private CheckBox sendToMyMapsCheckBox;
   private CheckBox sendToFusionTablesCheckBox;
   private CheckBox sendToDocsCheckBox;
-  private RadioButton sendStatsRadioButton;
   private RadioButton sendStatsAndPointsRadioButton;
-  private Button sendButton;
+  private OnClickListener clickListener;
 
   public SendDialog(Context context) {
     super(context);
@@ -62,18 +58,38 @@ public class SendDialog extends Dialog {
     requestWindowFeature(Window.FEATURE_NO_TITLE);
     setContentView(R.layout.mytracks_send_to_google);
 
+    final Button sendButton = (Button) findViewById(R.id.sendtogoogle_send_now);
+    final RadioGroup groupMyMaps = (RadioGroup) findViewById(R.id.sendtogoogle_group_mymaps);
+    sendToMyMapsCheckBox =
+        (CheckBox) findViewById(R.id.sendtogoogle_google_mymaps);
+    sendToFusionTablesCheckBox =
+        (CheckBox) findViewById(R.id.sendtogoogle_google_fusiontables);
+    sendToDocsCheckBox = (CheckBox) findViewById(R.id.sendtogoogle_google_docs);
+    createNewMapRadioButton =
+        (RadioButton) findViewById(R.id.sendtogoogle_create_new_map);
+    pickMapRadioButton =
+        (RadioButton) findViewById(R.id.sendtogoogle_pick_existing_map);
+    RadioButton sendStatsRadioButton = (RadioButton) findViewById(R.id.sendtogoogle_send_stats);
+    sendStatsAndPointsRadioButton = (RadioButton) findViewById(
+        R.id.sendtogoogle_send_stats_and_points);
+
     Button cancel = (Button) findViewById(R.id.sendtogoogle_cancel);
     cancel.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
-        MyTracks.getInstance().dismissDialog(DialogManager.DIALOG_SEND_TO_GOOGLE);
+        if (clickListener != null) {
+          clickListener.onClick(SendDialog.this, BUTTON_NEGATIVE);
+        }
+        dismiss();
       }
     });
 
     Button send = (Button) findViewById(R.id.sendtogoogle_send_now);
     send.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
+        if (clickListener != null) {
+          clickListener.onClick(SendDialog.this, BUTTON_POSITIVE);
+        }
         dismiss();
-        MyTracks.getInstance().sendToGoogle();
       }
     });
 
@@ -86,25 +102,9 @@ public class SendDialog extends Dialog {
         groupMyMaps.setVisibility(sendToMyMapsCheckBox.isChecked() ? View.VISIBLE : View.INVISIBLE);
       }
     };
-
-    sendButton = (Button) findViewById(R.id.sendtogoogle_send_now);
-    groupMyMaps = (RadioGroup) findViewById(R.id.sendtogoogle_group_mymaps);
-    sendToMyMapsCheckBox =
-        (CheckBox) findViewById(R.id.sendtogoogle_google_mymaps);
     sendToMyMapsCheckBox.setOnCheckedChangeListener(checkBoxListener);
-    sendToFusionTablesCheckBox =
-        (CheckBox) findViewById(R.id.sendtogoogle_google_fusiontables);
     sendToFusionTablesCheckBox.setOnCheckedChangeListener(checkBoxListener);
-    sendToDocsCheckBox = (CheckBox) findViewById(R.id.sendtogoogle_google_docs);
     sendToDocsCheckBox.setOnCheckedChangeListener(checkBoxListener);
-    createNewMapRadioButton =
-        (RadioButton) findViewById(R.id.sendtogoogle_create_new_map);
-    pickMapRadioButton =
-        (RadioButton) findViewById(R.id.sendtogoogle_pick_existing_map);
-    sendStatsRadioButton =
-        (RadioButton) findViewById(R.id.sendtogoogle_send_stats);
-    sendStatsAndPointsRadioButton = (RadioButton) findViewById(
-        R.id.sendtogoogle_send_stats_and_points);
 
     SharedPreferences prefs =
         getContext().getSharedPreferences(Constants.SETTINGS_NAME, 0);
@@ -161,6 +161,10 @@ public class SendDialog extends Dialog {
       }
     }
     super.onStop();
+  }
+
+  public void setOnClickListener(OnClickListener clickListener) {
+    this.clickListener = clickListener;
   }
 
   public boolean getSendToMyMaps() {

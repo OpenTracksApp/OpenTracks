@@ -22,6 +22,7 @@ import static com.google.android.apps.mytracks.Constants.MAX_NETWORK_AGE_MS;
 import static com.google.android.apps.mytracks.Constants.TAG;
 import static com.google.android.apps.mytracks.Constants.TARGET_DISPLAYED_TRACK_POINTS;
 
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.DataSourceManager.DataSourceListener;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.DoubleBufferedLocationFactory;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
@@ -149,23 +150,20 @@ public class TrackDataHub {
 
   // Get content notifications on the main thread, send listener callbacks in another.
   // This ensures listener calls are serialized.
-  private final HandlerThread listenerHandlerThread;
-  private final Handler listenerHandler;
+  private HandlerThread listenerHandlerThread;
+  private Handler listenerHandler;
 
   /** Manager for external listeners (those from activities). */
   private final TrackDataListeners listeners;
 
   /** Wrapper for interacting with system data managers. */
-  private final DataSourcesWrapper dataSources;
+  private DataSourcesWrapper dataSources;
 
   /** Manager for system data listener registrations. */
-  private final DataSourceManager dataSourceManager;
+  private DataSourceManager dataSourceManager;
 
   /** Condensed listener for system data listener events. */
   private final DataSourceListener dataSourceListener = new HubDataSourceListener();
-
-  /** Whether we've been started. */
-  private boolean started;
 
   // Cached preference values
   private int minRequiredAccuracy;
@@ -191,28 +189,34 @@ public class TrackDataHub {
   private int lastSamplingFrequency;
   private DoubleBufferedLocationFactory locationFactory;
 
+  private static TrackDataHub startedInstance;
+
   /**
-   * Default constructor.
+   * Builds a new {@link TrackDataHub} instance.
    */
-  public TrackDataHub(Context ctx, SharedPreferences preferences,
-      MyTracksProviderUtils providerUtils) {
-    this(ctx, new DataSourcesWrapperImpl(ctx, preferences), new TrackDataListeners(),
-         preferences, providerUtils, TARGET_DISPLAYED_TRACK_POINTS);
+  public synchronized static TrackDataHub newInstance(Context context) {
+    // Ensure our singleton is never bound to an activity, to avoid memory leaks.
+    context = context.getApplicationContext();
+
+    SharedPreferences preferences = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    MyTracksProviderUtils providerUtils = MyTracksProviderUtils.Factory.get(context);
+    return new TrackDataHub(context,
+        new TrackDataListeners(),
+        preferences, providerUtils,
+        TARGET_DISPLAYED_TRACK_POINTS);
   }
 
   /**
    * Injection constructor.
    */
   // @VisibleForTesting
-  TrackDataHub(Context ctx, DataSourcesWrapper dataSources, TrackDataListeners listeners,
-      SharedPreferences preferences, MyTracksProviderUtils providerUtils, int targetNumPoints) {
+  TrackDataHub(Context ctx, TrackDataListeners listeners, SharedPreferences preferences,
+      MyTracksProviderUtils providerUtils, int targetNumPoints) {
     this.context = ctx;
     this.listeners = listeners;
     this.preferences = preferences;
     this.providerUtils = providerUtils;
-    this.dataSources = dataSources;
     this.targetNumPoints = targetNumPoints;
-    this.dataSourceManager = new DataSourceManager(dataSourceListener, dataSources);
     this.locationFactory = new DoubleBufferedLocationFactory();
 
     SELECTED_TRACK_KEY = context.getString(R.string.selected_track_key);
@@ -220,10 +224,6 @@ public class TrackDataHub {
     MIN_REQUIRED_ACCURACY_KEY = context.getString(R.string.min_required_accuracy_key);
     METRIC_UNITS_KEY = context.getString(R.string.metric_units_key);
     SPEED_REPORTING_KEY = context.getString(R.string.report_speed_key);
-
-    listenerHandlerThread = new HandlerThread("trackDataContentThread");
-    listenerHandlerThread.start();
-    listenerHandler = new Handler(listenerHandlerThread.getLooper());
 
     resetState();
   }
@@ -234,11 +234,17 @@ public class TrackDataHub {
    */
   public void start() {
     Log.i(TAG, "TrackDataHub.start");
-    if (started) {
+    if (startedInstance != null) {
       Log.w(TAG, "Already started, ignoring");
       return;
     }
-    started = true;
+    startedInstance = this;
+
+    listenerHandlerThread = new HandlerThread("trackDataContentThread");
+    listenerHandlerThread.start();
+    listenerHandler = new Handler(listenerHandlerThread.getLooper());
+    dataSources = newDataSources();
+    dataSourceManager = new DataSourceManager(dataSourceListener, dataSources);
 
     // This may or may not register internal listeners, depending on whether
     // we already had external listeners.
@@ -249,12 +255,23 @@ public class TrackDataHub {
     loadDataForAllListeners();
   }
 
-  private void loadSharedPreferences() {
-    selectedTrackId = preferences.getLong(SELECTED_TRACK_KEY, -1);
-    useMetricUnits = preferences.getBoolean(METRIC_UNITS_KEY, true);
-    reportSpeed = preferences.getBoolean(SPEED_REPORTING_KEY, true);
-    minRequiredAccuracy = preferences.getInt(MIN_REQUIRED_ACCURACY_KEY,
-        DEFAULT_MIN_REQUIRED_ACCURACY);
+  // @VisibleForTesting
+  protected DataSourcesWrapper newDataSources() {
+    return new DataSourcesWrapperImpl(context, preferences);
+  }
+
+  /**
+   * If there's an instance for which {@link start} has been called, returns it.
+   *
+   * @return the started instance
+   * @throws IllegalStateException if there isn't a started instance
+   */
+  public static TrackDataHub getStartedInstance() {
+    if (startedInstance == null) {
+      throw new IllegalStateException("Data hub not started");
+    }
+
+    return startedInstance;
   }
 
   /**
@@ -263,25 +280,42 @@ public class TrackDataHub {
    */
   public void stop() {
     Log.i(TAG, "TrackDataHub.stop");
-    if (!started) {
+    if (!isStarted()) {
       Log.w(TAG, "Not started, ignoring");
       return;
     }
 
     // Unregister internal listeners even if there are external listeners registered.
     dataSourceManager.unregisterAllListeners();
+    listenerHandlerThread.getLooper().quit();
 
-    started = false;
+    startedInstance = null;
+
+    dataSources = null;
+    dataSourceManager = null;
+    listenerHandlerThread = null;
+    listenerHandler = null;
   }
 
-  /** Permanently invalidates and throws away all resources used by this class. */
-  public void destroy() {
-    if (started) {
-      throw new IllegalStateException("Can only destroy the data hub after it's been stopped");
+  private boolean isStarted() {
+    return startedInstance != null;
+  }
+
+  @Override
+  protected void finalize() throws Throwable {
+    if (isStarted() || listenerHandlerThread.isAlive()) {
+      Log.e(TAG, "Forgot to stop() TrackDataHub");
     }
 
-    ApiFeatures.getInstance().getApiPlatformAdapter()
-        .stopHandlerThread(listenerHandlerThread);
+    super.finalize();
+  }
+
+  private void loadSharedPreferences() {
+    selectedTrackId = preferences.getLong(SELECTED_TRACK_KEY, -1);
+    useMetricUnits = preferences.getBoolean(METRIC_UNITS_KEY, true);
+    reportSpeed = preferences.getBoolean(SPEED_REPORTING_KEY, true);
+    minRequiredAccuracy = preferences.getInt(MIN_REQUIRED_ACCURACY_KEY,
+        DEFAULT_MIN_REQUIRED_ACCURACY);
   }
 
   /** Updates known magnetic declination if needed. */
@@ -324,6 +358,10 @@ public class TrackDataHub {
    * is not available or doesn't have a fix.
    */
   public void forceUpdateLocation() {
+    if (!isStarted()) {
+      Log.w(TAG, "Not started, not forcing location update");
+      return;
+    }
     Log.i(TAG, "Forcing location update");
 
     Location loc = dataSources.getLastKnownLocation();
@@ -335,7 +373,7 @@ public class TrackDataHub {
 
   /** Returns the ID of the currently-selected track. */
   public long getSelectedTrackId() {
-    if (!started) {
+    if (!isStarted()) {
       loadSharedPreferences();
     }
     return selectedTrackId;
@@ -346,17 +384,9 @@ public class TrackDataHub {
     return getSelectedTrackId() > 0;
   }
 
-  /** Returns whether we're currently recording a track. */
-  public boolean isRecording() {
-    if (!started) {
-      loadSharedPreferences();
-    }
-    return preferences.getLong(RECORDING_TRACK_KEY, -1) > 0;
-  }
-
   /** Returns whether the selected track is still being recorded. */
   public boolean isRecordingSelected() {
-    if (!started) {
+    if (!isStarted()) {
       loadSharedPreferences();
     }
     long recordingTrackId = preferences.getLong(RECORDING_TRACK_KEY, -1);
@@ -412,7 +442,7 @@ public class TrackDataHub {
 
       // Don't load any data or start internal listeners if start() hasn't been
       // called. When it is called, we'll do both things.
-      if (!started) return;
+      if (!isStarted()) return;
 
       reloadDataForListener(registration);
 
@@ -426,7 +456,7 @@ public class TrackDataHub {
 
       // Don't load any data or start internal listeners if start() hasn't been
       // called. When it is called, we'll do both things.
-      if (!started) return;
+      if (!isStarted()) return;
 
       dataSourceManager.updateAllListeners(getNeededListenerTypes());
     }
@@ -449,7 +479,7 @@ public class TrackDataHub {
    * Assumes it's called from a block that synchronizes on {@link #listeners}.
    */
   private void reloadDataForListener(final ListenerRegistration registration) {
-    if (!started) {
+    if (!isStarted()) {
       Log.w(TAG, "Not started, not reloading");
       return;
     }
@@ -541,7 +571,7 @@ public class TrackDataHub {
    * Reloads all track data received so far into the specified listeners.
    */
   private void loadDataForAllListeners() {
-    if (!started) {
+    if (!isStarted()) {
       Log.w(TAG, "Not started, not reloading");
       return;
     }
@@ -608,7 +638,7 @@ public class TrackDataHub {
 
   /** Called when the speed/pace reporting preference changes. */
   private void notifySpeedReportingChanged() {
-    if (!started) return;
+    if (!isStarted()) return;
 
     runInListenerThread(new Runnable() {
       @Override
@@ -630,7 +660,7 @@ public class TrackDataHub {
 
   /** Called when the metric units setting changes. */
   private void notifyUnitsChanged() {
-    if (!started) return;
+    if (!isStarted()) return;
 
     runInListenerThread(new Runnable() {
       @Override
@@ -1063,6 +1093,12 @@ public class TrackDataHub {
 
   // @VisibleForTesting
   protected void runInListenerThread(Runnable runnable) {
+    if (listenerHandler == null) {
+      // Use a Throwable to ensure the stack trace is logged.
+      Log.e(TAG, "Tried to use listener thread before start()", new Throwable());
+      return;
+    }
+
     listenerHandler.post(runnable);
   }
 

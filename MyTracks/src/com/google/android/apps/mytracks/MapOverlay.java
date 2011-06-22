@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.maps.GeoPoint;
@@ -33,6 +35,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +74,7 @@ public class MapOverlay extends Overlay {
   private GeoPoint lastReferencePoint;
   private Rect lastViewRect;
   private Path lastPath;
-  
+
   /**
    * Represents a pre-processed {@code Location} to speed up drawing.
    * This class is more like a data object and doesn't provide accessors.
@@ -93,13 +96,13 @@ public class MapOverlay extends Overlay {
      */
     public CachedLocation(Location location) {
       this.valid = LocationUtils.isValidLocation(location);
-      this.geoPoint = valid ? LocationUtils.getGeoPoint(location) : null; 
+      this.geoPoint = valid ? LocationUtils.getGeoPoint(location) : null;
     }
   };
 
   public MapOverlay(Context context) {
     this.context = context;
-    
+
     this.waypoints = new ArrayList<Waypoint>();
     this.points = new ArrayList<CachedLocation>(1024);
     this.pendingPoints = new ArrayBlockingQueue<CachedLocation>(
@@ -164,7 +167,7 @@ public class MapOverlay extends Overlay {
 
   /**
    * Add a location to the map overlay.
-   * 
+   *
    * NOTE: This method doesn't take ownership of the given location, so it is
    * safe to reuse the same location while calling this method.
    *
@@ -172,14 +175,18 @@ public class MapOverlay extends Overlay {
    */
   public void addLocation(Location l) {
     // Queue up in the pending queue until it's merged with {@code #points}.
-    pendingPoints.offer(new CachedLocation(l));
+    if (!pendingPoints.offer(new CachedLocation(l))) {
+      Log.e(TAG, "Unable to add pending points");
+    }
   }
 
   /**
    * Adds a segment split to the map overlay.
    */
   public void addSegmentSplit() {
-    pendingPoints.offer(new CachedLocation());
+    if (!pendingPoints.offer(new CachedLocation())) {
+      Log.e(TAG, "Unable to add pending points");
+    }
   }
 
   public void addWaypoint(Waypoint wpt) {
@@ -203,7 +210,7 @@ public class MapOverlay extends Overlay {
       return waypoints.size();
     }
   }
-  
+
   public void clearPoints() {
     synchronized (points) {
       points.clear();
@@ -238,7 +245,7 @@ public class MapOverlay extends Overlay {
     // Get the current viewing window.
     if (trackDrawingEnabled) {
       Rect viewRect = getMapViewRect(mapView);
-      
+
       // Draw the selected track:
       drawTrack(canvas, projection, viewRect);
 
@@ -249,12 +256,12 @@ public class MapOverlay extends Overlay {
     // Draw the current location
     drawMyLocation(canvas, projection);
   }
-  
+
   // Visible for testing.
   Projection getMapProjection(MapView mapView) {
     return mapView.getProjection();
   }
-  
+
   // Visible for testing.
   Rect getMapViewRect(MapView mapView) {
     int w = mapView.getLongitudeSpan();
@@ -263,12 +270,12 @@ public class MapOverlay extends Overlay {
     int cy = mapView.getMapCenter().getLatitudeE6();
     return new Rect(cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2);
   }
-  
+
   // Visible for testing.
   Path newPath() {
     return new Path();
   }
-  
+
   // Visible for testing.
   Path getLastPath() {
     return lastPath;
@@ -304,9 +311,9 @@ public class MapOverlay extends Overlay {
     synchronized (points) {
       // Merge the pending points with the list of cached locations.
       final GeoPoint referencePoint = projection.fromPixels(0, 0);
-      int newPoints = pendingPoints.drainTo(points); 
+      int newPoints = pendingPoints.drainTo(points);
       boolean newProjection = !viewRect.equals(lastViewRect) ||
-          !referencePoint.equals(lastReferencePoint); 
+          !referencePoint.equals(lastReferencePoint);
       if (newPoints == 0 && lastPath != null && !newProjection) {
         // No need to recreate path (same points and viewing area).
         path = lastPath;
@@ -318,12 +325,12 @@ public class MapOverlay extends Overlay {
         } else if (lastPath != null && !newProjection) {
           // Incremental update of the path, without repositioning the view.
           path = lastPath;
-          updatePath(projection, viewRect, path, numPoints - newPoints); 
+          updatePath(projection, viewRect, path, numPoints - newPoints);
         } else {
           // The view has changed so we have to start from scratch.
           path = newPath();
           path.incReserve(numPoints);
-          updatePath(projection, viewRect, path, 0); 
+          updatePath(projection, viewRect, path, 0);
         }
         lastPath = path;
       }
@@ -344,7 +351,7 @@ public class MapOverlay extends Overlay {
         }
       }
     }
-    
+
     // Draw the "Start" marker.
     for (int i = 0; i < points.size(); ++i) {
       if (points.get(i).valid) {
@@ -354,7 +361,7 @@ public class MapOverlay extends Overlay {
       }
     }
   }
-  
+
   private void updatePath(Projection projection, Rect viewRect, Path path,
       int startLocationIdx) {
     // Whether to start a new segment on new valid and visible point.
@@ -370,7 +377,7 @@ public class MapOverlay extends Overlay {
         newSegment = true;
         continue;
       }
-      
+
       final GeoPoint geoPoint = loc.geoPoint;
       // Check if this breaks the existing segment.
       boolean visible = alwaysVisible || viewRect.contains(
@@ -380,7 +387,7 @@ public class MapOverlay extends Overlay {
         newSegment = true;
       }
       lastVisible = visible;
-      
+
       // Either move to beginning of a new segment or continue the old one.
       projection.toPixels(geoPoint, pt);
       if (newSegment) {
@@ -391,7 +398,7 @@ public class MapOverlay extends Overlay {
       }
     }
   }
-  
+
   // Visible for testing.
   Point drawElement(Canvas canvas, Projection projection, GeoPoint geoPoint,
       Drawable element, int offsetX, int offsetY) {

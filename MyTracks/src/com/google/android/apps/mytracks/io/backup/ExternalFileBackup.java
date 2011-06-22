@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks.io.backup;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.TrackPointsColumns;
 import com.google.android.apps.mytracks.content.TracksColumns;
@@ -205,7 +207,9 @@ class ExternalFileBackup {
     } catch (IOException e) {
       // We tried to delete the partially created file, but do nothing
       // if that also fails.
-      outputFile.delete();
+      if (!outputFile.delete()) {
+        Log.w(TAG, "Failed to delete file " + outputFile.getAbsolutePath());
+      }
 
       throw e;
     } finally {

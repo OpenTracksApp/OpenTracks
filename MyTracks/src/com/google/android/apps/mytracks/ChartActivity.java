@@ -35,6 +35,8 @@ import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -105,8 +107,6 @@ public class ChartActivity extends Activity implements TrackDataListener {
   protected void onCreate(Bundle savedInstanceState) {
     Log.w(TAG, "ChartActivity.onCreate");
     super.onCreate(savedInstanceState);
-    MyTracks.getInstance().setChartActivity(this);
-    dataHub = MyTracks.getInstance().getDataHub();
 
     // The volume we want to control is the Text-To-Speech volume
     int volumeStream =
@@ -142,6 +142,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
   protected void onResume() {
     super.onResume();
 
+    dataHub = TrackDataHub.getStartedInstance();
     dataHub.registerTrackDataListener(this, EnumSet.of(
         ListenerDataType.SELECTED_TRACK_CHANGED,
         ListenerDataType.TRACK_UPDATES,
@@ -154,6 +155,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
   @Override
   protected void onPause() {
     dataHub.unregisterTrackDataListener(this);
+    dataHub = null;
 
     super.onPause();
   }
@@ -187,10 +189,6 @@ public class ChartActivity extends Activity implements TrackDataListener {
     runOnUiThread(updateChart);
   }
 
-  public boolean isSeriesEnabled(int index) {
-    return chartView.getChartValueSeries(index).isEnabled();
-  }
-
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     super.onCreateOptionsMenu(menu);
@@ -205,11 +203,34 @@ public class ChartActivity extends Activity implements TrackDataListener {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case Constants.MENU_CHART_SETTINGS:
-        MyTracks.getInstance().getDialogManager().showDialogSafely(
-            DialogManager.DIALOG_CHART_SETTINGS);
+        showSettingsDialog();
         return true;
     }
     return super.onOptionsItemSelected(item);
+  }
+
+  private void showSettingsDialog() {
+    final ChartSettingsDialog settingsDialog = new ChartSettingsDialog(this);
+    settingsDialog.setOwnerActivity(this);
+
+    settingsDialog.setMode(mode);
+    for (int i = 0; i < ChartView.NUM_SERIES; i++) {
+      settingsDialog.setSeriesEnabled(i, chartView.getChartValueSeries(i).isEnabled());
+    }
+
+    settingsDialog.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(DialogInterface arg0, int which) {
+        if (which != DialogInterface.BUTTON_POSITIVE) return;
+
+        for (int i = 0; i < ChartView.NUM_SERIES; i++) {
+          chartView.getChartValueSeries(i).setEnabled(settingsDialog.isSeriesEnabled(i));
+        }
+        setMode(settingsDialog.getMode());
+      }
+    });
+
+    settingsDialog.show();
   }
 
   /**

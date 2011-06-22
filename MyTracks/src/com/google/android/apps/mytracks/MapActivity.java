@@ -23,6 +23,8 @@ import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.io.file.SaveActivity;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendActivity;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ApiFeatures;
@@ -122,7 +124,7 @@ public class MapActivity extends com.google.android.maps.MapActivity
   // ------------------------
 
   @Override
-  public void onCreate(Bundle bundle) {
+  protected void onCreate(Bundle bundle) {
     Log.d(TAG, "MapActivity.onCreate");
     super.onCreate(bundle);
 
@@ -130,8 +132,6 @@ public class MapActivity extends com.google.android.maps.MapActivity
     int volumeStream =
         new StatusAnnouncerFactory(ApiFeatures.getInstance()).getVolumeStream();
     setVolumeControlStream(volumeStream);
-
-    dataHub = MyTracks.getInstance().getDataHub();
 
     // We don't need a window title bar:
     requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -179,9 +179,10 @@ public class MapActivity extends com.google.android.maps.MapActivity
 
   @Override
   protected void onResume() {
-    Log.d(TAG, "MapActivity.onStart");
+    Log.d(TAG, "MapActivity.onResume");
     super.onResume();
 
+    dataHub = TrackDataHub.getStartedInstance();
     dataHub.registerTrackDataListener(this, EnumSet.of(
         ListenerDataType.SELECTED_TRACK_CHANGED,
         ListenerDataType.POINT_UPDATES,
@@ -202,9 +203,10 @@ public class MapActivity extends com.google.android.maps.MapActivity
 
   @Override
   protected void onPause() {
-    Log.d(TAG, "MapActivity.onStop");
+    Log.d(TAG, "MapActivity.onPause");
 
     dataHub.unregisterTrackDataListener(this);
+    dataHub = null;
 
     super.onPause();
   }
@@ -392,13 +394,27 @@ public class MapActivity extends com.google.android.maps.MapActivity
 
   @Override
   public boolean onMenuItemSelected(int featureId, MenuItem item) {
-    if (!super.onMenuItemSelected(featureId, item)) {
-      MyTracks.getInstance().onActivityResult(
-          Constants.getActionFromMenuId(item.getItemId()), RESULT_OK,
-          new Intent());
-      return true;
+    switch (item.getItemId()) {
+      case Constants.MENU_SEND_TO_GOOGLE:
+        SendActivity.sendToGoogle(this, dataHub.getSelectedTrackId(), false);
+        return true;
+      case Constants.MENU_SHARE_LINK:
+        SendActivity.sendToGoogle(this, dataHub.getSelectedTrackId(), true);
+        return true;
+      case Constants.MENU_SAVE_GPX_FILE:
+      case Constants.MENU_SAVE_KML_FILE:
+      case Constants.MENU_SAVE_CSV_FILE:
+      case Constants.MENU_SAVE_TCX_FILE:
+      case Constants.MENU_SHARE_GPX_FILE:
+      case Constants.MENU_SHARE_KML_FILE:
+      case Constants.MENU_SHARE_CSV_FILE:
+      case Constants.MENU_SHARE_TCX_FILE:
+        SaveActivity.handleExportTrackAction(this, dataHub.getSelectedTrackId(),
+            Constants.getActionFromMenuId(item.getItemId()));
+        return true;
+      default:
+        return super.onMenuItemSelected(featureId, item);
     }
-    return false;
   }
 
   @Override
