@@ -644,7 +644,7 @@ public class SendToFusionTables implements Runnable {
     // to fit the completion percentage range alloted to track data upload.
     double totalPercentage =
         (totalLocationsRead + totalLocationsPrepared + totalLocationsUploaded)
-        / (totalLocations * 3);
+        / (totalLocations * 3.0);
 
     double scaledPercentage = totalPercentage
         * (PROGRESS_UPLOAD_DATA_MAX - PROGRESS_UPLOAD_DATA_MIN) + PROGRESS_UPLOAD_DATA_MIN;

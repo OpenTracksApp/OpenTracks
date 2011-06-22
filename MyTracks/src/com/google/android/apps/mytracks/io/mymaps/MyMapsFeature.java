@@ -3,6 +3,7 @@ package com.google.android.apps.mytracks.io.mymaps;
 
 import com.google.android.maps.GeoPoint;
 
+import java.util.Random;
 import java.util.Vector;
 
 /**
@@ -48,6 +49,8 @@ class MyMapsFeature {
   /** The metadata of this feature in a format efficient for transmission. */
   private MyMapsFeatureMetadata featureInfo = new MyMapsFeatureMetadata();
 
+  private final Random random = new Random();
+
   /**
    * Initializes a valid but empty feature. It will default to a
    * {@link #MARKER} with a blue placemark with a dot as an icon at the
@@ -61,7 +64,7 @@ class MyMapsFeature {
    *
    * @param point The new point to add
    */
-  public synchronized void addPoint(GeoPoint point) {
+  public void addPoint(GeoPoint point) {
     latitudeE6.add(point.getLatitudeE6());
     longitudeE6.add(point.getLongitudeE6());
   }
@@ -70,10 +73,10 @@ class MyMapsFeature {
    * Generates a new local id for this feature based on the current time and
    * a random number.
    */
-  public synchronized void generateAndroidId() {
-    Long time = System.currentTimeMillis();
-    Integer random = (int) (Math.random() * 10000);
-    androidId = time.toString() + "." + random.toString();
+  void generateAndroidId() {
+    long time = System.currentTimeMillis();
+    int rand = random.nextInt(10000);
+    androidId = time + "." + rand;
   }
 
   /**
@@ -81,7 +84,7 @@ class MyMapsFeature {
    *
    * @return The local id for this feature
    */
-  public String getAndroidId() {
+  String getAndroidId() {
     return androidId;
   }
 

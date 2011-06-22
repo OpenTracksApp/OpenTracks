@@ -593,7 +593,7 @@ public class ChartView extends View {
 
       final float x = getWaypointX(waypoint);
       c.drawLine(x, h - bottomBorder, x, topBorder, gridPaint);
-      c.translate(x - markerWidth / 2, markerHeight);
+      c.translate(x - (float) markerWidth / 2.0f, (float) markerHeight);
       if (waypoints.get(i).getType() == Waypoint.TYPE_STATISTICS) {
         statsMarker.draw(c);
       } else {
