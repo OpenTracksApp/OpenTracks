@@ -74,7 +74,7 @@ import java.util.concurrent.Executors;
  *
  * @author Leif Hendrik Wilden
  */
-public class TrackRecordingService extends Service implements LocationListener {
+public class TrackRecordingService extends Service {
 
   static final int MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS = 3;
 
@@ -135,6 +135,34 @@ public class TrackRecordingService extends Service implements LocationListener {
   private LocationListenerPolicy locationListenerPolicy =
       new AbsoluteLocationListenerPolicy(0);
 
+  private LocationListener locationListener = new LocationListener() {
+    @Override
+    public void onProviderDisabled(String provider) {
+      // Do nothing
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+      // Do nothing
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+      // Do nothing
+    }
+
+    @Override
+    public void onLocationChanged(final Location location) {
+      executorService.submit(
+        new Runnable() {
+          @Override
+          public void run() {
+            onLocationChangedAsync(location);
+          }
+        });
+    }
+  };
+
   /**
    * Task invoked by a timer periodically to make sure the location listener is
    * still registered.
@@ -192,121 +220,186 @@ public class TrackRecordingService extends Service implements LocationListener {
    */
   private ExecutorService executorService;
 
+  private ServiceBinder binder = new ServiceBinder(this);
+
   /*
-   * Utility functions
+   * Application lifetime events: ============================
    */
 
-  /**
-   * Inserts a new location in the track points db and updates the corresponding
-   * track in the track db.
-   *
-   * @param recordingTrack the track that is currently being recorded
-   * @param location the location to be inserted
-   * @param lastRecordedLocation the last recorded location before this one (or
-   *        null if none)
-   * @param lastRecordedLocationId the id of the last recorded location (or -1
-   *        if none)
-   * @param trackId the id of the track
-   * @return true if successful. False if SQLite3 threw an exception.
-   */
-  private boolean insertLocation(Track recordingTrack, Location location,
-      Location lastRecordedLocation, long lastRecordedLocationId,
-      long trackId) {
+  @Override
+  public void onCreate() {
+    super.onCreate();
+    Log.d(TAG, "TrackRecordingService.onCreate");
+    providerUtils = MyTracksProviderUtils.Factory.get(this);
+    notificationManager =
+        (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+    locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-    // Keep track of length along recorded track (needed when a waypoint is
-    // inserted):
-    if (LocationUtils.isValidLocation(location)) {
-      if (lastValidLocation != null) {
-        length += location.distanceTo(lastValidLocation);
+    setUpTaskExecutors();
+    executorService = Executors.newSingleThreadExecutor();
+
+    prefManager = new PreferenceManager(this);
+
+    registerLocationListener();
+
+    /*
+     * After 5 min, check every minute that location listener still is
+     * registered and spit out additional debugging info to the logs:
+     */
+    timer.schedule(checkLocationListener, 1000 * 60 * 5, 1000 * 60);
+
+    // Try to restore previous recording state in case this service has been
+    // restarted by the system, which can sometimes happen.
+    recordingTrack = getRecordingTrack();
+    if (recordingTrack != null) {
+      restoreStats(recordingTrack);
+      isRecording = true;
+    } else {
+      if (recordingTrackId != -1) {
+        // Make sure we have consistent state in shared preferences.
+        Log.w(TAG, "TrackRecordingService.onCreate: "
+            + "Resetting an orphaned recording track = " + recordingTrackId);
       }
-      lastValidLocation = location;
+      prefManager.setRecordingTrack(recordingTrackId = -1);
+    }
+    showNotification();
+  }
+
+  @Override
+  public void onStart(Intent intent, int startId) {
+    handleStartCommand(intent, startId);
+  }
+
+  @Override
+  public int onStartCommand(Intent intent, int flags, int startId) {
+    handleStartCommand(intent, startId);
+    return START_STICKY;
+  }
+
+  private void handleStartCommand(Intent intent, int startId) {
+    Log.d(TAG,
+        "TrackRecordingService.handleStartCommand: " + startId);
+
+    // Check if called on phone reboot with resume intent.
+    if (intent != null &&
+        intent.getBooleanExtra(RESUME_TRACK_EXTRA_NAME, false)) {
+      Log.d(TAG, "TrackRecordingService: requested resume");
+
+      // Make sure that the current track exists and is fresh enough.
+      if (recordingTrack == null || !shouldResumeTrack(recordingTrack)) {
+        Log.i(TAG,
+            "TrackRecordingService: Not resuming, because the previous track ("
+            + recordingTrack + ") doesn't exist or is too old");
+        isRecording = false;
+        prefManager.setRecordingTrack(recordingTrackId = -1);
+        stopSelfResult(startId);
+        return;
+      }
+
+      Log.i(TAG, "TrackRecordingService: resuming");
+    }
+  }
+
+  @Override
+  public IBinder onBind(Intent intent) {
+    Log.d(TAG, "TrackRecordingService.onBind");
+    return binder;
+  }
+
+  @Override
+  public boolean onUnbind(Intent intent) {
+    Log.d(TAG, "TrackRecordingService.onUnbind");
+    return super.onUnbind(intent);
+  }
+
+  @Override
+  public void onDestroy() {
+    Log.d(TAG, "TrackRecordingService.onDestroy");
+
+    isRecording = false;
+    showNotification();
+    prefManager.shutdown();
+    prefManager = null;
+    checkLocationListener.cancel();
+    checkLocationListener = null;
+    timer.cancel();
+    timer.purge();
+    unregisterLocationListener();
+    shutdownTaskExecutors();
+    executorService.shutdown();
+    if (sensorManager != null) {
+      sensorManager.shutdown();
+      sensorManager = null;
     }
 
-    // Insert the new location:
-    try {
-      Location locationToInsert = location;
-      if (sensorManager != null && sensorManager.isEnabled()) {
-        SensorDataSet sd = sensorManager.getSensorDataSet();
-        if (sd != null && sensorManager.isDataValid()) {
-          locationToInsert = new MyTracksLocation(location, sd);
-        }
-      }
-      Uri pointUri = providerUtils.insertTrackPoint(locationToInsert, trackId);
-      int pointId = Integer.parseInt(pointUri.getLastPathSegment());
+    // Make sure we have no indirect references to this service.
+    locationManager = null;
+    notificationManager = null;
+    providerUtils = null;
+    binder.detachFromService();
+    binder = null;
 
-      // Update the current track:
-      if (lastRecordedLocation != null
-          && lastRecordedLocation.getLatitude() < 90) {
-        ContentValues values = new ContentValues();
-        TripStatistics stats = statsBuilder.getStatistics();
-        if (recordingTrack.getStartId() < 0) {
-          values.put(TracksColumns.STARTID, pointId);
-          recordingTrack.setStartId(pointId);
-        }
-        values.put(TracksColumns.STOPID, pointId);
-        values.put(TracksColumns.STOPTIME, System.currentTimeMillis());
-        values.put(TracksColumns.NUMPOINTS,
-            recordingTrack.getNumberOfPoints() + 1);
-        values.put(TracksColumns.MINLAT, stats.getBottom());
-        values.put(TracksColumns.MAXLAT, stats.getTop());
-        values.put(TracksColumns.MINLON, stats.getLeft());
-        values.put(TracksColumns.MAXLON, stats.getRight());
-        values.put(TracksColumns.TOTALDISTANCE, stats.getTotalDistance());
-        values.put(TracksColumns.TOTALTIME, stats.getTotalTime());
-        values.put(TracksColumns.MOVINGTIME, stats.getMovingTime());
-        values.put(TracksColumns.AVGSPEED, stats.getAverageSpeed());
-        values.put(TracksColumns.AVGMOVINGSPEED, stats.getAverageMovingSpeed());
-        values.put(TracksColumns.MAXSPEED, stats.getMaxSpeed());
-        values.put(TracksColumns.MINELEVATION, stats.getMinElevation());
-        values.put(TracksColumns.MAXELEVATION, stats.getMaxElevation());
-        values.put(TracksColumns.ELEVATIONGAIN, stats.getTotalElevationGain());
-        values.put(TracksColumns.MINGRADE, stats.getMinGrade());
-        values.put(TracksColumns.MAXGRADE, stats.getMaxGrade());
-        getContentResolver().update(TracksColumns.CONTENT_URI,
-            values, "_id=" + recordingTrack.getId(), null);
-        updateCurrentWaypoint();
-      }
-    } catch (SQLiteException e) {
-      // Insert failed, most likely because of SqlLite error code 5
-      // (SQLite_BUSY). This is expected to happen extremely rarely (if our
-      // listener gets invoked twice at about the same time).
-      Log.w(TAG,
-          "Caught SQLiteException: " + e.getMessage(), e);
+    // This should be the last operation.
+    releaseWakeLock();
+
+    super.onDestroy();
+  }
+
+  private void setAutoResumeTrackRetries(
+      SharedPreferences sharedPreferences, int retryAttempts) {
+    Log.d(TAG,
+        "Updating auto-resume retry attempts to: " + retryAttempts);
+    prefManager.setAutoResumeTrackCurrentRetry(retryAttempts);
+  }
+
+  private boolean shouldResumeTrack(Track track) {
+    Log.d(TAG, "shouldResumeTrack: autoResumeTrackTimeout = "
+        + autoResumeTrackTimeout);
+
+    // Check if we haven't exceeded the maximum number of retry attempts.
+    SharedPreferences sharedPreferences =
+        getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    int retries = sharedPreferences.getInt(
+        getString(R.string.auto_resume_track_current_retry_key), 0);
+    Log.d(TAG,
+        "shouldResumeTrack: Attempting to auto-resume the track ("
+        + (retries + 1) + "/" + MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS + ")");
+    if (retries >= MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS) {
+      Log.i(TAG,
+          "shouldResumeTrack: Not resuming because exceeded the maximum "
+          + "number of auto-resume retries");
       return false;
     }
-    announcementExecutor.update();
-    splitExecutor.update();
-    return true;
+
+    // Increase number of retry attempts.
+    setAutoResumeTrackRetries(sharedPreferences, retries + 1);
+
+    // Check for special cases.
+    if (autoResumeTrackTimeout == 0) {
+      // Never resume.
+      Log.d(TAG,
+          "shouldResumeTrack: Auto-resume disabled (never resume)");
+      return false;
+    } else if (autoResumeTrackTimeout == -1) {
+      // Always resume.
+      Log.d(TAG,
+          "shouldResumeTrack: Auto-resume forced (always resume)");
+      return true;
+    }
+
+    // Check if the last modified time is within the acceptable range.
+    long lastModified =
+        track.getStatistics() != null ? track.getStatistics().getStopTime() : 0;
+    Log.d(TAG,
+        "shouldResumeTrack: lastModified = " + lastModified
+        + ", autoResumeTrackTimeout: " + autoResumeTrackTimeout);
+    return lastModified > 0 && System.currentTimeMillis() - lastModified <=
+        autoResumeTrackTimeout * 60L * 1000L;
   }
 
-  private void updateCurrentWaypoint() {
-    if (currentWaypointId >= 0) {
-      ContentValues values = new ContentValues();
-      TripStatistics waypointStats = waypointStatsBuilder.getStatistics();
-      values.put(WaypointsColumns.STARTTIME, waypointStats.getStartTime());
-      values.put(WaypointsColumns.LENGTH, length);
-      values.put(WaypointsColumns.DURATION, System.currentTimeMillis()
-          - statsBuilder.getStatistics().getStartTime());
-      values.put(WaypointsColumns.TOTALDISTANCE,
-          waypointStats.getTotalDistance());
-      values.put(WaypointsColumns.TOTALTIME, waypointStats.getTotalTime());
-      values.put(WaypointsColumns.MOVINGTIME, waypointStats.getMovingTime());
-      values.put(WaypointsColumns.AVGSPEED, waypointStats.getAverageSpeed());
-      values.put(WaypointsColumns.AVGMOVINGSPEED,
-          waypointStats.getAverageMovingSpeed());
-      values.put(WaypointsColumns.MAXSPEED, waypointStats.getMaxSpeed());
-      values.put(WaypointsColumns.MINELEVATION,
-          waypointStats.getMinElevation());
-      values.put(WaypointsColumns.MAXELEVATION,
-          waypointStats.getMaxElevation());
-      values.put(WaypointsColumns.ELEVATIONGAIN,
-          waypointStats.getTotalElevationGain());
-      values.put(WaypointsColumns.MINGRADE, waypointStats.getMinGrade());
-      values.put(WaypointsColumns.MAXGRADE, waypointStats.getMaxGrade());
-      getContentResolver().update(WaypointsColumns.CONTENT_URI,
-          values, "_id=" + currentWaypointId, null);
-    }
-  }
+  /*
+   * Setup/shutdown methods.
+   */
 
   /**
    * Tries to acquire a partial wake lock if not already acquired. Logs errors
@@ -376,6 +469,26 @@ public class TrackRecordingService extends Service implements LocationListener {
     }
   }
 
+  private void setUpTaskExecutors() {
+    announcementExecutor = new PeriodicTaskExecutor(
+        this, new StatusAnnouncerFactory(ApiFeatures.getInstance()));
+    splitExecutor = new PeriodicTaskExecutor(this, new SplitTask.Factory());
+  }
+
+  private void shutdownTaskExecutors() {
+    Log.d(TAG, "TrackRecordingService.shutdownExecuters");
+    try {
+      announcementExecutor.shutdown();
+    } finally {
+      announcementExecutor = null;
+    }
+    try {
+      splitExecutor.shutdown();
+    } finally {
+      splitExecutor = null;
+    }
+  }
+
   private void registerLocationListener() {
     if (locationManager == null) {
       Log.e(TAG,
@@ -390,7 +503,7 @@ public class TrackRecordingService extends Service implements LocationListener {
           LocationManager.GPS_PROVIDER, desiredInterval,
           locationListenerPolicy.getMinDistance(),
           // , 0 /* minDistance, get all updates to properly time pauses */
-          TrackRecordingService.this);
+          locationListener);
       currentRecordingInterval = desiredInterval;
       Log.d(TAG,
           "...location listener now registered w/ TrackRecordingService @ "
@@ -407,17 +520,63 @@ public class TrackRecordingService extends Service implements LocationListener {
           "TrackRecordingService: Do not have any location manager.");
       return;
     }
-    locationManager.removeUpdates(this);
+    locationManager.removeUpdates(locationListener);
     Log.d(TAG,
         "Location listener now unregistered w/ TrackRecordingService.");
   }
 
-  private Track getRecordingTrack() {
-    if (recordingTrackId < 0) {
-      return null;
+  /*
+   * Recording lifecycle.
+   */
+
+  public long startNewTrack() {
+    Log.d(TAG, "TrackRecordingService.startNewTrack");
+    if (recordingTrackId != -1 || isRecording) {
+      throw new IllegalStateException("A track is already in progress!");
     }
 
-    return providerUtils.getTrack(recordingTrackId);
+    long startTime = System.currentTimeMillis();
+    acquireWakeLock();
+
+    Track track = new Track();
+    TripStatistics trackStats = track.getStatistics();
+    trackStats.setStartTime(startTime);
+    track.setStartId(-1);
+    Uri trackUri = providerUtils.insertTrack(track);
+    recordingTrackId = Long.parseLong(trackUri.getLastPathSegment());
+    track.setId(recordingTrackId);
+    track.setName(new DefaultTrackNameFactory(this).newTrackName(
+        recordingTrackId, startTime));
+    isRecording = true;
+    isMoving = true;
+
+    providerUtils.updateTrack(track);
+    statsBuilder = new TripStatisticsBuilder(startTime);
+    statsBuilder.setMinRecordingDistance(minRecordingDistance);
+    waypointStatsBuilder = new TripStatisticsBuilder(startTime);
+    waypointStatsBuilder.setMinRecordingDistance(minRecordingDistance);
+    currentWaypointId = insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
+    length = 0;
+    showNotification();
+    registerLocationListener();
+    sensorManager = SensorManagerFactory.getSensorManager(this);
+    if (sensorManager != null) {
+      sensorManager.onStartTrack();
+    }
+
+    // Reset the number of auto-resume retries.
+    setAutoResumeTrackRetries(
+        getSharedPreferences(Constants.SETTINGS_NAME, 0), 0);
+    // Persist the current recording track.
+    prefManager.setRecordingTrack(recordingTrackId);
+
+    // Notify the world that we're now recording.
+    sendTrackBroadcast(
+        R.string.track_started_broadcast_action, recordingTrackId);
+    announcementExecutor.restore();
+    splitExecutor.restore();
+
+    return recordingTrackId;
   }
 
   private void restoreStats(Track track) {
@@ -477,21 +636,6 @@ public class TrackRecordingService extends Service implements LocationListener {
 
     announcementExecutor.restore();
     splitExecutor.restore();
-  }
-
-  /*
-   * Location listener implementation: =================================
-   * TODO: Move to inner class.
-   */
-  @Override
-  public void onLocationChanged(final Location location) {
-    executorService.submit(
-      new Runnable() {
-        @Override
-        public void run() {
-          onLocationChangedAsync(location);
-        }
-      });
   }
 
   private void onLocationChangedAsync(Location location) {
@@ -628,6 +772,118 @@ public class TrackRecordingService extends Service implements LocationListener {
     lastLocation = location;
   }
 
+  /**
+   * Inserts a new location in the track points db and updates the corresponding
+   * track in the track db.
+   *
+   * @param recordingTrack the track that is currently being recorded
+   * @param location the location to be inserted
+   * @param lastRecordedLocation the last recorded location before this one (or
+   *        null if none)
+   * @param lastRecordedLocationId the id of the last recorded location (or -1
+   *        if none)
+   * @param trackId the id of the track
+   * @return true if successful. False if SQLite3 threw an exception.
+   */
+  private boolean insertLocation(Track recordingTrack, Location location,
+      Location lastRecordedLocation, long lastRecordedLocationId,
+      long trackId) {
+
+    // Keep track of length along recorded track (needed when a waypoint is
+    // inserted):
+    if (LocationUtils.isValidLocation(location)) {
+      if (lastValidLocation != null) {
+        length += location.distanceTo(lastValidLocation);
+      }
+      lastValidLocation = location;
+    }
+
+    // Insert the new location:
+    try {
+      Location locationToInsert = location;
+      if (sensorManager != null && sensorManager.isEnabled()) {
+        SensorDataSet sd = sensorManager.getSensorDataSet();
+        if (sd != null && sensorManager.isDataValid()) {
+          locationToInsert = new MyTracksLocation(location, sd);
+        }
+      }
+      Uri pointUri = providerUtils.insertTrackPoint(locationToInsert, trackId);
+      int pointId = Integer.parseInt(pointUri.getLastPathSegment());
+
+      // Update the current track:
+      if (lastRecordedLocation != null
+          && lastRecordedLocation.getLatitude() < 90) {
+        ContentValues values = new ContentValues();
+        TripStatistics stats = statsBuilder.getStatistics();
+        if (recordingTrack.getStartId() < 0) {
+          values.put(TracksColumns.STARTID, pointId);
+          recordingTrack.setStartId(pointId);
+        }
+        values.put(TracksColumns.STOPID, pointId);
+        values.put(TracksColumns.STOPTIME, System.currentTimeMillis());
+        values.put(TracksColumns.NUMPOINTS,
+            recordingTrack.getNumberOfPoints() + 1);
+        values.put(TracksColumns.MINLAT, stats.getBottom());
+        values.put(TracksColumns.MAXLAT, stats.getTop());
+        values.put(TracksColumns.MINLON, stats.getLeft());
+        values.put(TracksColumns.MAXLON, stats.getRight());
+        values.put(TracksColumns.TOTALDISTANCE, stats.getTotalDistance());
+        values.put(TracksColumns.TOTALTIME, stats.getTotalTime());
+        values.put(TracksColumns.MOVINGTIME, stats.getMovingTime());
+        values.put(TracksColumns.AVGSPEED, stats.getAverageSpeed());
+        values.put(TracksColumns.AVGMOVINGSPEED, stats.getAverageMovingSpeed());
+        values.put(TracksColumns.MAXSPEED, stats.getMaxSpeed());
+        values.put(TracksColumns.MINELEVATION, stats.getMinElevation());
+        values.put(TracksColumns.MAXELEVATION, stats.getMaxElevation());
+        values.put(TracksColumns.ELEVATIONGAIN, stats.getTotalElevationGain());
+        values.put(TracksColumns.MINGRADE, stats.getMinGrade());
+        values.put(TracksColumns.MAXGRADE, stats.getMaxGrade());
+        getContentResolver().update(TracksColumns.CONTENT_URI,
+            values, "_id=" + recordingTrack.getId(), null);
+        updateCurrentWaypoint();
+      }
+    } catch (SQLiteException e) {
+      // Insert failed, most likely because of SqlLite error code 5
+      // (SQLite_BUSY). This is expected to happen extremely rarely (if our
+      // listener gets invoked twice at about the same time).
+      Log.w(TAG,
+          "Caught SQLiteException: " + e.getMessage(), e);
+      return false;
+    }
+    announcementExecutor.update();
+    splitExecutor.update();
+    return true;
+  }
+
+  private void updateCurrentWaypoint() {
+    if (currentWaypointId >= 0) {
+      ContentValues values = new ContentValues();
+      TripStatistics waypointStats = waypointStatsBuilder.getStatistics();
+      values.put(WaypointsColumns.STARTTIME, waypointStats.getStartTime());
+      values.put(WaypointsColumns.LENGTH, length);
+      values.put(WaypointsColumns.DURATION, System.currentTimeMillis()
+          - statsBuilder.getStatistics().getStartTime());
+      values.put(WaypointsColumns.TOTALDISTANCE,
+          waypointStats.getTotalDistance());
+      values.put(WaypointsColumns.TOTALTIME, waypointStats.getTotalTime());
+      values.put(WaypointsColumns.MOVINGTIME, waypointStats.getMovingTime());
+      values.put(WaypointsColumns.AVGSPEED, waypointStats.getAverageSpeed());
+      values.put(WaypointsColumns.AVGMOVINGSPEED,
+          waypointStats.getAverageMovingSpeed());
+      values.put(WaypointsColumns.MAXSPEED, waypointStats.getMaxSpeed());
+      values.put(WaypointsColumns.MINELEVATION,
+          waypointStats.getMinElevation());
+      values.put(WaypointsColumns.MAXELEVATION,
+          waypointStats.getMaxElevation());
+      values.put(WaypointsColumns.ELEVATIONGAIN,
+          waypointStats.getTotalElevationGain());
+      values.put(WaypointsColumns.MINGRADE, waypointStats.getMinGrade());
+      values.put(WaypointsColumns.MAXGRADE, waypointStats.getMaxGrade());
+      getContentResolver().update(WaypointsColumns.CONTENT_URI,
+          values, "_id=" + currentWaypointId, null);
+    }
+  }
+
   private void addLocationToStats(Location location) {
     if (LocationUtils.isValidLocation(location)) {
       long now = System.currentTimeMillis();
@@ -636,219 +892,9 @@ public class TrackRecordingService extends Service implements LocationListener {
     }
   }
 
-  @Override
-  public void onProviderDisabled(String provider) {
-    // Do nothing
-  }
-
-  @Override
-  public void onProviderEnabled(String provider) {
-    // Do nothing
-  }
-
-  @Override
-  public void onStatusChanged(String provider, int status, Bundle extras) {
-    // Do nothing
-  }
-
   /*
    * Application lifetime events: ============================
    */
-
-  @Override
-  public void onCreate() {
-    super.onCreate();
-    Log.d(TAG, "TrackRecordingService.onCreate");
-    providerUtils = MyTracksProviderUtils.Factory.get(this);
-    notificationManager =
-        (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-    locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-    setUpTaskExecutors();
-    prefManager = new PreferenceManager(this);
-    registerLocationListener();
-
-    /*
-     * After 5 min, check every minute that location listener still is
-     * registered and spit out additional debugging info to the logs:
-     */
-    timer.schedule(checkLocationListener, 1000 * 60 * 5, 1000 * 60);
-
-    // Try to restore previous recording state in case this service has been
-    // restarted by the system, which can sometimes happen.
-    recordingTrack = getRecordingTrack();
-    if (recordingTrack != null) {
-      restoreStats(recordingTrack);
-      isRecording = true;
-    } else {
-      if (recordingTrackId != -1) {
-        // Make sure we have consistent state in shared preferences.
-        Log.w(TAG, "TrackRecordingService.onCreate: "
-            + "Resetting an orphaned recording track = " + recordingTrackId);
-      }
-      prefManager.setRecordingTrack(recordingTrackId = -1);
-    }
-    showNotification();
-    executorService = Executors.newSingleThreadExecutor();
-  }
-
-  /**
-   * Creates the periodic task executors.
-   */
-  private void setUpTaskExecutors() {
-    announcementExecutor = new PeriodicTaskExecutor(
-        this, new StatusAnnouncerFactory(ApiFeatures.getInstance()));
-    splitExecutor = new PeriodicTaskExecutor(this, new SplitTask.Factory());
-  }
-
-  private void shutdownTaskExecutors() {
-    Log.d(TAG, "TrackRecordingService.shutdownExecuters");
-    try {
-      announcementExecutor.shutdown();
-    } finally {
-      announcementExecutor = null;
-    }
-    try {
-      splitExecutor.shutdown();
-    } finally {
-      splitExecutor = null;
-    }
-  }
-
-  @Override
-  public void onDestroy() {
-    Log.d(TAG, "TrackRecordingService.onDestroy");
-
-    isRecording = false;
-    showNotification();
-    prefManager.shutdown();
-    prefManager = null;
-    checkLocationListener.cancel();
-    checkLocationListener = null;
-    timer.cancel();
-    timer.purge();
-    unregisterLocationListener();
-    shutdownTaskExecutors();
-    if (sensorManager != null) {
-      sensorManager.shutdown();
-      sensorManager = null;
-    }
-
-    // Make sure we have no indirect references to this service.
-    locationManager = null;
-    notificationManager = null;
-    providerUtils = null;
-    binder.detachFromService();
-    binder = null;
-
-    // This should be the last operation.
-    releaseWakeLock();
-
-    super.onDestroy();
-  }
-
-  @Override
-  public IBinder onBind(Intent intent) {
-    Log.d(TAG, "TrackRecordingService.onBind");
-    return binder;
-  }
-
-  @Override
-  public boolean onUnbind(Intent intent) {
-    Log.d(TAG, "TrackRecordingService.onUnbind");
-    return super.onUnbind(intent);
-  }
-
-  @Override
-  public void onStart(Intent intent, int startId) {
-    handleStartCommand(intent, startId);
-  }
-
-  @Override
-  public int onStartCommand(Intent intent, int flags, int startId) {
-    handleStartCommand(intent, startId);
-    return START_STICKY;
-  }
-
-  private void handleStartCommand(Intent intent, int startId) {
-    Log.d(TAG,
-        "TrackRecordingService.handleStartCommand: " + startId);
-
-    // Check if called on phone reboot with resume intent.
-    if (intent != null &&
-        intent.getBooleanExtra(RESUME_TRACK_EXTRA_NAME, false)) {
-      Log.d(TAG, "TrackRecordingService: requested resume");
-
-      // Make sure that the current track exists and is fresh enough.
-      if (recordingTrack == null || !shouldResumeTrack(recordingTrack)) {
-        Log.i(TAG,
-            "TrackRecordingService: Not resuming, because the previous track ("
-            + recordingTrack + ") doesn't exist or is too old");
-        isRecording = false;
-        prefManager.setRecordingTrack(recordingTrackId = -1);
-        stopSelfResult(startId);
-        return;
-      }
-
-      Log.i(TAG, "TrackRecordingService: resuming");
-    }
-  }
-
-  private void setAutoResumeTrackRetries(
-      SharedPreferences sharedPreferences, int retryAttempts) {
-    Log.d(TAG,
-        "Updating auto-resume retry attempts to: " + retryAttempts);
-    prefManager.setAutoResumeTrackCurrentRetry(retryAttempts);
-  }
-
-  private boolean shouldResumeTrack(Track track) {
-    Log.d(TAG, "shouldResumeTrack: autoResumeTrackTimeout = "
-        + autoResumeTrackTimeout);
-
-    // Check if we haven't exceeded the maximum number of retry attempts.
-    SharedPreferences sharedPreferences =
-        getSharedPreferences(Constants.SETTINGS_NAME, 0);
-    int retries = sharedPreferences.getInt(
-        getString(R.string.auto_resume_track_current_retry_key), 0);
-    Log.d(TAG,
-        "shouldResumeTrack: Attempting to auto-resume the track ("
-        + (retries + 1) + "/" + MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS + ")");
-    if (retries >= MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS) {
-      Log.i(TAG,
-          "shouldResumeTrack: Not resuming because exceeded the maximum "
-          + "number of auto-resume retries");
-      return false;
-    }
-
-    // Increase number of retry attempts.
-    setAutoResumeTrackRetries(sharedPreferences, retries + 1);
-
-    // Check for special cases.
-    if (autoResumeTrackTimeout == 0) {
-      // Never resume.
-      Log.d(TAG,
-          "shouldResumeTrack: Auto-resume disabled (never resume)");
-      return false;
-    } else if (autoResumeTrackTimeout == -1) {
-      // Always resume.
-      Log.d(TAG,
-          "shouldResumeTrack: Auto-resume forced (always resume)");
-      return true;
-    }
-
-    // Check if the last modified time is within the acceptable range.
-    long lastModified =
-        track.getStatistics() != null ? track.getStatistics().getStopTime() : 0;
-    Log.d(TAG,
-        "shouldResumeTrack: lastModified = " + lastModified
-        + ", autoResumeTrackTimeout: " + autoResumeTrackTimeout);
-    return lastModified > 0 && System.currentTimeMillis() - lastModified <=
-        autoResumeTrackTimeout * 60L * 1000L;
-  }
-
-  public boolean isRecording() {
-    return isRecording;
-  }
 
   public long insertWaypoint(WaypointCreationRequest request) {
     if (!isRecording()) {
@@ -934,156 +980,6 @@ public class TrackRecordingService extends Service implements LocationListener {
     waypointStatsBuilder = new TripStatisticsBuilder(time);
   }
 
-  private ServiceBinder binder = new ServiceBinder(this);
-
-  /**
-   * TODO: There is a bug in Android that leaks Binder instances.  This bug is
-   * especially visible if we have a non-static class, as there is no way to
-   * nullify reference to the outer class (the service).
-   * A workaround is to use a static class and explicitly clear service
-   * and detach it from the underlying Binder.  With this approach, we minimize
-   * the leak to 24 bytes per each service instance.
-   *
-   * For more details, see the following bug:
-   * http://code.google.com/p/android/issues/detail?id=6426.
-   */
-  private static class ServiceBinder extends ITrackRecordingService.Stub {
-    private TrackRecordingService service;
-
-    public ServiceBinder(TrackRecordingService service) {
-      this.service = service;
-    }
-
-    /**
-     * Clears the reference to the outer class to minimize the leak.
-     */
-    public void detachFromService() {
-      this.service = null;
-      attachInterface(null, null);
-    }
-
-    @Override
-    public boolean isRecording() {
-      checkService();
-      return service.isRecording();
-    }
-
-    private void checkService() {
-      if (service == null) {
-        throw new IllegalStateException("The service has been already detached!");
-      }
-    }
-
-    @Override
-    public long getRecordingTrackId() {
-      checkService();
-      return service.recordingTrackId;
-    }
-
-    @Override
-    public long startNewTrack() {
-      checkService();
-      return service.startNewTrack();
-    }
-
-    /**
-     * Inserts a waypoint marker in the track being recorded.
-     *
-     * @param request Details of the waypoint to insert
-     * @return the unique ID of the inserted marker
-     */
-    public long insertWaypoint(WaypointCreationRequest request) {
-      checkService();
-      return service.insertWaypoint(request);
-    }
-
-    @Override
-    public void endCurrentTrack() {
-      checkService();
-      service.endCurrentTrack();
-    }
-
-    @Override
-    public void recordLocation(Location loc) {
-      checkService();
-      service.onLocationChanged(loc);
-    }
-
-    @Override
-    public byte[] getSensorData() {
-      checkService();
-      if (service.sensorManager == null) {
-        Log.d(TAG, "No sensor manager for data.");
-        return null;
-      }
-      if (service.sensorManager.getSensorDataSet() == null) {
-        Log.d(TAG, "Sensor data set is null.");
-        return null;
-      }
-      return service.sensorManager.getSensorDataSet().toByteArray();
-    }
-
-    @Override
-    public int getSensorState() {
-      checkService();
-      if (service.sensorManager == null) {
-        Log.d(TAG, "No sensor manager for data.");
-        return Sensor.SensorState.NONE.getNumber();
-      }
-      return service.sensorManager.getSensorState().getNumber();
-    }
-  }
-
-  public long startNewTrack() {
-    Log.d(TAG, "TrackRecordingService.startNewTrack");
-    if (recordingTrackId != -1 || isRecording) {
-      throw new IllegalStateException("A track is already in progress!");
-    }
-
-    long startTime = System.currentTimeMillis();
-    acquireWakeLock();
-
-    Track track = new Track();
-    TripStatistics trackStats = track.getStatistics();
-    trackStats.setStartTime(startTime);
-    track.setStartId(-1);
-    Uri trackUri = providerUtils.insertTrack(track);
-    recordingTrackId = Long.parseLong(trackUri.getLastPathSegment());
-    track.setId(recordingTrackId);
-    track.setName(new DefaultTrackNameFactory(this).newTrackName(
-        recordingTrackId, startTime));
-    isRecording = true;
-    isMoving = true;
-
-    providerUtils.updateTrack(track);
-    statsBuilder = new TripStatisticsBuilder(startTime);
-    statsBuilder.setMinRecordingDistance(minRecordingDistance);
-    waypointStatsBuilder = new TripStatisticsBuilder(startTime);
-    waypointStatsBuilder.setMinRecordingDistance(minRecordingDistance);
-    currentWaypointId = insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
-    length = 0;
-    showNotification();
-    registerLocationListener();
-    sensorManager = SensorManagerFactory.getSensorManager(this);
-    if (sensorManager != null) {
-      sensorManager.onStartTrack();
-    }
-
-    // Reset the number of auto-resume retries.
-    setAutoResumeTrackRetries(
-        getSharedPreferences(Constants.SETTINGS_NAME, 0), 0);
-    // Persist the current recording track.
-    prefManager.setRecordingTrack(recordingTrackId);
-
-    // Notify the world that we're now recording.
-    sendTrackBroadcast(
-        R.string.track_started_broadcast_action, recordingTrackId);
-    announcementExecutor.restore();
-    splitExecutor.restore();
-
-    return recordingTrackId;
-  }
-
   private void endCurrentTrack() {
     Log.d(TAG, "TrackRecordingService.endCurrentTrack");
     if (recordingTrackId == -1 || !isRecording) {
@@ -1124,6 +1020,8 @@ public class TrackRecordingService extends Service implements LocationListener {
     // Notify the world that we're no longer recording.
     sendTrackBroadcast(
         R.string.track_stopped_broadcast_action, recordedTrackId);
+
+    stopSelf();
   }
 
   private void sendTrackBroadcast(int actionResId, long trackId) {
@@ -1133,6 +1031,22 @@ public class TrackRecordingService extends Service implements LocationListener {
             .putExtra(getString(R.string.track_id_broadcast_extra), trackId);
     sendBroadcast(broadcastIntent,
         getString(R.string.broadcast_notifications_permission));
+  }
+
+  /*
+   * Data/state access.
+   */
+
+  private Track getRecordingTrack() {
+    if (recordingTrackId < 0) {
+      return null;
+    }
+
+    return providerUtils.getTrack(recordingTrackId);
+  }
+
+  public boolean isRecording() {
+    return isRecording;
   }
 
   public TripStatistics getTripStatistics() {
@@ -1187,4 +1101,106 @@ public class TrackRecordingService extends Service implements LocationListener {
     announcementExecutor.setMetricUnits(metric);
     splitExecutor.setMetricUnits(metric);
   }
+
+
+  /**
+   * TODO: There is a bug in Android that leaks Binder instances.  This bug is
+   * especially visible if we have a non-static class, as there is no way to
+   * nullify reference to the outer class (the service).
+   * A workaround is to use a static class and explicitly clear service
+   * and detach it from the underlying Binder.  With this approach, we minimize
+   * the leak to 24 bytes per each service instance.
+   *
+   * For more details, see the following bug:
+   * http://code.google.com/p/android/issues/detail?id=6426.
+   */
+  private static class ServiceBinder extends ITrackRecordingService.Stub {
+    private TrackRecordingService service;
+
+    public ServiceBinder(TrackRecordingService service) {
+      this.service = service;
+    }
+
+    /**
+     * Clears the reference to the outer class to minimize the leak.
+     */
+    private void detachFromService() {
+      this.service = null;
+      attachInterface(null, null);
+    }
+
+    private void checkService() {
+      if (service == null) {
+        throw new IllegalStateException("The service has been already detached!");
+      }
+    }
+
+    // Service method delegates.
+
+    @Override
+    public boolean isRecording() {
+      checkService();
+      return service.isRecording();
+    }
+
+    @Override
+    public long getRecordingTrackId() {
+      checkService();
+      return service.recordingTrackId;
+    }
+
+    @Override
+    public long startNewTrack() {
+      checkService();
+      return service.startNewTrack();
+    }
+
+    /**
+     * Inserts a waypoint marker in the track being recorded.
+     *
+     * @param request Details of the waypoint to insert
+     * @return the unique ID of the inserted marker
+     */
+    public long insertWaypoint(WaypointCreationRequest request) {
+      checkService();
+      return service.insertWaypoint(request);
+    }
+
+    @Override
+    public void endCurrentTrack() {
+      checkService();
+      service.endCurrentTrack();
+    }
+
+    @Override
+    public void recordLocation(Location loc) {
+      checkService();
+      service.locationListener.onLocationChanged(loc);
+    }
+
+    @Override
+    public byte[] getSensorData() {
+      checkService();
+      if (service.sensorManager == null) {
+        Log.d(TAG, "No sensor manager for data.");
+        return null;
+      }
+      if (service.sensorManager.getSensorDataSet() == null) {
+        Log.d(TAG, "Sensor data set is null.");
+        return null;
+      }
+      return service.sensorManager.getSensorDataSet().toByteArray();
+    }
+
+    @Override
+    public int getSensorState() {
+      checkService();
+      if (service.sensorManager == null) {
+        Log.d(TAG, "No sensor manager for data.");
+        return Sensor.SensorState.NONE.getNumber();
+      }
+      return service.sensorManager.getSensorState().getNumber();
+    }
+  }
+
 }
