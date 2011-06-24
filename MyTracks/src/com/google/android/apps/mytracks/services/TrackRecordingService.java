@@ -223,7 +223,7 @@ public class TrackRecordingService extends Service {
   private ServiceBinder binder = new ServiceBinder(this);
 
   /*
-   * Application lifetime events: ============================
+   * Application lifetime events:
    */
 
   @Override
@@ -345,10 +345,8 @@ public class TrackRecordingService extends Service {
     super.onDestroy();
   }
 
-  private void setAutoResumeTrackRetries(
-      SharedPreferences sharedPreferences, int retryAttempts) {
-    Log.d(TAG,
-        "Updating auto-resume retry attempts to: " + retryAttempts);
+  private void setAutoResumeTrackRetries(SharedPreferences sharedPreferences, int retryAttempts) {
+    Log.d(TAG, "Updating auto-resume retry attempts to: " + retryAttempts);
     prefManager.setAutoResumeTrackCurrentRetry(retryAttempts);
   }
 

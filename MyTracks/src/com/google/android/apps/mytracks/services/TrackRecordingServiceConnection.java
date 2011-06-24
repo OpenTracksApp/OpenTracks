@@ -1,3 +1,18 @@
+/*
+ * Copyright 2011 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.google.android.apps.mytracks.services;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
@@ -13,6 +28,13 @@ import android.os.IBinder.DeathRecipient;
 import android.os.RemoteException;
 import android.util.Log;
 
+/**
+ * Wrapper for the connection to the track recording service.
+ * This handles connection/disconnection internally, only returning a real
+ * service for use if one is available and connected.
+ *
+ * @author Rodrigo Damazio
+ */
 public class TrackRecordingServiceConnection {
   private ITrackRecordingService boundService;
 
@@ -48,19 +70,35 @@ public class TrackRecordingServiceConnection {
 
   private final Runnable bindChangedCallback;
 
+  /**
+   * Constructor.
+   *
+   * @param context the current context
+   * @param bindChangedCallback a callback to be executed when the state of the
+   *        service binding changes
+   */
   public TrackRecordingServiceConnection(Context context, Runnable bindChangedCallback) {
     this.context = context;
     this.bindChangedCallback = bindChangedCallback;
   }
 
+  /**
+   * Binds to the service, starting it if necessary.
+   */
   public void startAndBind() {
     bindService(true);
   }
 
+  /**
+   * Binds to the service, only if it's already running.
+   */
   public void bindIfRunning() {
     bindService(false);
   }
 
+  /**
+   * Unbinds from and stops the service.
+   */
   public void stop() {
     unbind();
 
@@ -69,6 +107,9 @@ public class TrackRecordingServiceConnection {
     context.stopService(intent);
   }
 
+  /**
+   * Unbinds from the service (but leaves it running).
+   */
   public void unbind() {
     Log.d(TAG, "Unbinding from the service");
     try {
@@ -80,8 +121,20 @@ public class TrackRecordingServiceConnection {
     setBoundService(null);
   }
 
+  /**
+   * Returns the service if connected to it, or null if not connected.
+   */
   public ITrackRecordingService getServiceIfBound() {
+    checkBindingAlive();
+
     return boundService;
+  }
+
+  private void checkBindingAlive() {
+    if (boundService != null &&
+        !boundService.asBinder().isBinderAlive()) {
+      setBoundService(null);
+    }
   }
 
   private void bindService(boolean startIfNeeded) {
