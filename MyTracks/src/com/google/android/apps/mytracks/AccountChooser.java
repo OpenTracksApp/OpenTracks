@@ -1,12 +1,12 @@
 /*
  * Copyright 2010 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -52,7 +52,7 @@ public class AccountChooser {
    * If no account is found the user will be alerted.
    * If only one account is found that will be used.
    * If multiple accounts are found the user will be allowed to choose.
-   * 
+   *
    * @param activity The parent activity
    * @param handler The handler to be notified when an account has been selected
    */
@@ -83,13 +83,18 @@ public class AccountChooser {
     builder.setPositiveButton(R.string.ok,
         new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int which) {
-        selectedAccount = accounts[selectedAccountIndex];
+        dialog.dismiss();
+
+        if (selectedAccountIndex >= 0) {
+          selectedAccount = accounts[selectedAccountIndex];
+        }
         handler.handleAccountSelected(selectedAccount);
       }
     });
     builder.setNegativeButton(R.string.cancel,
         new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int which) {
+        dialog.dismiss();
         handler.handleAccountSelected(null);
       }
     });
@@ -120,6 +125,7 @@ public class AccountChooser {
     builder.setNegativeButton(R.string.ok,
         new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int which) {
+            dialog.dismiss();
             handler.handleAccountSelected(null);
           }
         });

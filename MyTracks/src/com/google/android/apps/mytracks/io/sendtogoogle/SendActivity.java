@@ -112,6 +112,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
   @Override
   protected void onStart() {
+    Log.d(TAG, "SendActivity.onStart");
     super.onStart();
     resetState();
 
@@ -152,6 +153,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
   @Override
   protected void onStop() {
+    Log.d(TAG, "SendActivity.onStop");
     tracker.dispatch();
     tracker.stop();
 
@@ -403,18 +405,27 @@ public class SendActivity extends Activity implements ProgressIndicator {
     final boolean canShare = sendToFusionTablesTableId != null
         || sendToMyMapsMapId != null;
 
+    final OnClickListener finishListener = new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+        dialog.dismiss();
+        finish();
+      }
+    };
+
     DialogInterface.OnClickListener doShareListener = null;
     if (canShare) {
       doShareListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
           shareLinkToMap(sentToMyMaps, sentToFusionTables);
+          finishListener.onClick(dialog, which);
         }
       };
     }
 
     DialogInterface.OnClickListener onOkListener = (canShare && shareRequested)
-        ? doShareListener : null;
+        ? doShareListener : finishListener;
     DialogInterface.OnClickListener onShareListener = (canShare && !shareRequested)
         ? doShareListener : null;
 
@@ -523,7 +534,8 @@ public class SendActivity extends Activity implements ProgressIndicator {
           public void handleAccountSelected(Account account) {
             if (account == null) {
               progressDialog.dismiss();
-              return;
+              progressDialog = null;
+              finish();
             }
 
             doLogin(results, requestCode, service, account);
@@ -533,9 +545,10 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
   private void doLogin(final Intent results, final int requestCode,
       final String service, final Account account) {
+    // There's a chance that we go to a different activity, so close the dialog.
     lastAuth.doLogin(new Runnable() {
       public void run() {
-        Log.i(TAG, "Loggin success for " + service + "!");
+        Log.i(TAG, "Login success for " + service + "!");
         onActivityResult(requestCode, RESULT_OK, results);
       }
     }, account);
