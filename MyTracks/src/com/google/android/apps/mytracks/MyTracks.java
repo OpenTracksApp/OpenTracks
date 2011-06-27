@@ -21,6 +21,7 @@ import static com.google.android.apps.mytracks.DialogManager.DIALOG_PROGRESS;
 import static com.google.android.apps.mytracks.DialogManager.DIALOG_SEND_TO_GOOGLE;
 
 import com.google.android.accounts.Account;
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
@@ -160,6 +161,11 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   private SharedPreferences sharedPreferences;
 
   /**
+   * Google Analytics tracker
+   */
+  private GoogleAnalyticsTracker tracker;
+  
+  /**
    * The connection to the track recording service.
    */
   private final ServiceConnection serviceConnection = new ServiceConnection() {
@@ -250,6 +256,13 @@ public class MyTracks extends TabActivity implements OnTouchListener,
       apiFeatures.getApiPlatformAdapter().enableStrictMode();
     }
 
+    tracker = GoogleAnalyticsTracker.getInstance();
+    // Start the tracker in manual dispatch mode...
+    tracker.start(this.getString(R.string.google_analytics_id), this.getApplicationContext());
+    tracker.setProductVersion("android-mytracks", SystemUtils.getMyTracksVersion(this));
+    tracker.trackPageView("/appstart");
+    tracker.dispatch();
+
     providerUtils = MyTracksProviderUtils.Factory.get(this);
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
     dataHub = new TrackDataHub(this, sharedPreferences, providerUtils);
@@ -325,6 +338,8 @@ public class MyTracks extends TabActivity implements OnTouchListener,
     dataHub.destroy();
 
     tryUnbindTrackRecordingService();
+    tracker.dispatch();
+    tracker.stop();
     super.onDestroy();
   }
 
@@ -934,6 +949,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   }
 
   private void sendToGoogleMapsOrPickMap(SendDialog sendToGoogleDialog) {
+    tracker.trackPageView("/send/maps");
     if (!sendToGoogleDialog.getCreateNewMap()) {
       // Ask the user to choose a map to upload into
       Intent listIntent = new Intent(this, MyMapsList.class);
@@ -1013,6 +1029,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   }
 
   private void sendToFusionTables(final long trackId) {
+    tracker.trackPageView("/send/fusion_tables");
     OnSendCompletedListener onCompletion = new OnSendCompletedListener() {
       @Override
       public void onSendCompleted(String tableId, boolean success,
@@ -1081,6 +1098,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
 
   private void sendToGoogleDocs(final long trackId) {
     Log.d(TAG, "Sending to Docs....");
+    tracker.trackPageView("/send/docs");
     setProgressValue(50);
     setProgressMessage(R.string.progress_message_sending_docs);
     final SendToDocs sender = new SendToDocs(this,
@@ -1106,6 +1124,7 @@ public class MyTracks extends TabActivity implements OnTouchListener,
   }
 
   private void onSendToGoogleDone() {
+    tracker.dispatch();
     SendDialog sendToGoogleDialog = dialogManager.getSendToGoogleDialog();
     final boolean sentToMyMaps = sendToGoogleDialog.getSendToMyMaps();
     final boolean sentToFusionTables = sendToGoogleDialog.getSendToFusionTables();
