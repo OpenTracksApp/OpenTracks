@@ -16,11 +16,11 @@
 package com.google.android.apps.mytracks.util;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.SharedPreferences.Editor;
-import android.os.HandlerThread;
 import android.util.Log;
 
 import java.lang.reflect.InvocationTargetException;
@@ -68,12 +68,6 @@ public class CupcakePlatformAdapter implements ApiPlatformAdapter {
     } catch (InvocationTargetException e) {
       Log.e(TAG, "Unable to set service foreground state", e);
     }
-  }
-
-  @Override
-  public boolean stopHandlerThread(HandlerThread handlerThread) {
-    // Do nothing, as Cupcake doesn't provide quit().
-    return false;
   }
 
   @Override

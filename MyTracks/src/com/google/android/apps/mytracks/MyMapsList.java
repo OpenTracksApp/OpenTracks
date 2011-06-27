@@ -1,12 +1,12 @@
 /*
  * Copyright 2011 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -25,11 +25,7 @@ import com.google.android.maps.mytracks.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnCreateContextMenuListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -42,28 +38,11 @@ import android.widget.TextView;
  * @author Rodrigo Damazio
  */
 public class MyMapsList extends Activity implements MapsFacade.MapsListCallback {
-  private static final int MENU_OPEN = 0;
-  private static final int MENU_SHARE = 2;
   private static final int GET_LOGIN = 1;
 
   private MapsFacade mapsClient;
   private AuthManager auth;
   private MyMapsListAdapter listAdapter;
-
-  private int contextPosition;
-
-  private final OnCreateContextMenuListener contextMenuListener =
-      new OnCreateContextMenuListener() {
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v,
-            ContextMenuInfo menuInfo) {
-          AdapterView.AdapterContextMenuInfo info =
-              (AdapterView.AdapterContextMenuInfo) menuInfo;
-          contextPosition = info.position;
-          menu.add(0, MENU_OPEN, 0, R.string.open_map);
-          menu.add(0, MENU_SHARE, 0, R.string.share_map);
-        }
-      };
 
   private final OnItemClickListener clickListener =
       new OnItemClickListener() {
@@ -91,7 +70,6 @@ public class MyMapsList extends Activity implements MapsFacade.MapsListCallback 
 
     ListView list = (ListView) findViewById(R.id.maplist);
     list.setOnItemClickListener(clickListener);
-    list.setOnCreateContextMenuListener(contextMenuListener);
     list.setAdapter(listAdapter);
 
     startLogin();
@@ -101,7 +79,8 @@ public class MyMapsList extends Activity implements MapsFacade.MapsListCallback 
     // Starts in the UI thread.
     // TODO fix this for non-froyo devices.
     if (AuthManagerFactory.useModernAuthManager()) {
-      MyTracks.getInstance().getAccountChooser().chooseAccount(
+      AccountChooser accountChooser = new AccountChooser();
+      accountChooser.chooseAccount(
           MyMapsList.this,
           new AccountChooser.AccountHandler() {
             @Override
@@ -111,6 +90,8 @@ public class MyMapsList extends Activity implements MapsFacade.MapsListCallback 
                 // The user did not quit and there was a valid google
                 // account.
                 doLogin(account);
+              } else {
+                finish();
               }
             }
           });
@@ -182,28 +163,5 @@ public class MyMapsList extends Activity implements MapsFacade.MapsListCallback 
       auth.authResult(resultCode, data);
     }
     super.onActivityResult(requestCode, resultCode, data);
-  }
-
-  @Override
-  public boolean onMenuItemSelected(int featureId, MenuItem item) {
-    switch (item.getItemId()) {
-      case MENU_OPEN:
-        clickListener.onItemClick(null, null, contextPosition, 0);
-        return true;
-      case MENU_SHARE:
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT,
-            getText(R.string.share_map_subject));
-        String[] listItem = (String[]) listAdapter.getMapListingArray(contextPosition);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, String.format(
-            getText(R.string.share_map_body_format).toString(),
-            listItem[1],
-            MapsFacade.buildMapUrl(listItem[0])));
-        startActivity(Intent.createChooser(shareIntent,
-            getText(R.string.share_map).toString()));
-        return true;
-    }
-    return false;
   }
 }

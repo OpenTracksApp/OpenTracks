@@ -83,15 +83,19 @@ public class AccountChooser {
     builder.setPositiveButton(R.string.ok,
         new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int which) {
+        dialog.dismiss();
+
         if (selectedAccountIndex >= 0) {
           selectedAccount = accounts[selectedAccountIndex];
-          handler.handleAccountSelected(selectedAccount);
         }
+
+        handler.handleAccountSelected(selectedAccount);
       }
     });
     builder.setNegativeButton(R.string.cancel,
         new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int which) {
+        dialog.dismiss();
         handler.handleAccountSelected(null);
       }
     });
@@ -122,6 +126,7 @@ public class AccountChooser {
     builder.setNegativeButton(R.string.ok,
         new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int which) {
+            dialog.dismiss();
             handler.handleAccountSelected(null);
           }
         });

@@ -104,9 +104,9 @@ public class ImportAllTracks {
     Log.i(Constants.TAG, "ImportAllTracks: Done");
     AlertDialog.Builder builder = new AlertDialog.Builder(activity);
     if (gpxFileCount == 0) {
-      builder.setMessage(activity.getString(R.string.import_empty, gpxPath + "/"));
+      builder.setMessage(activity.getString(R.string.import_multi_empty, gpxPath + "/"));
     } else {
-      builder.setMessage(activity.getString(R.string.import_done, importSuccessCount, gpxFileCount,
+      builder.setMessage(activity.getString(R.string.import_multi_done, importSuccessCount, gpxFileCount,
           gpxPath + "/"));
     }
     builder.setPositiveButton(R.string.ok, null);

@@ -175,14 +175,18 @@ public class MapOverlay extends Overlay {
    */
   public void addLocation(Location l) {
     // Queue up in the pending queue until it's merged with {@code #points}.
-    pendingPoints.offer(new CachedLocation(l));
+    if (!pendingPoints.offer(new CachedLocation(l))) {
+      Log.e(TAG, "Unable to add pending points");
+    }
   }
 
   /**
    * Adds a segment split to the map overlay.
    */
   public void addSegmentSplit() {
-    pendingPoints.offer(new CachedLocation());
+    if (!pendingPoints.offer(new CachedLocation())) {
+      Log.e(TAG, "Unable to add pending points");
+    }
   }
 
   public void addWaypoint(Waypoint wpt) {

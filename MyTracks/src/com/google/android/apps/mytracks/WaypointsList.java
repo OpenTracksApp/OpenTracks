@@ -15,10 +15,14 @@
  */
 package com.google.android.apps.mytracks;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
+import com.google.android.apps.mytracks.services.ITrackRecordingService;
+import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -43,6 +47,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Activity which shows the list of waypoints in a track.
@@ -60,6 +65,7 @@ public class WaypointsList extends ListActivity
   private Button insertStatisticsButton = null;
   private long recordingTrackId = -1;
   private MyTracksProviderUtils providerUtils;
+  private TrackRecordingServiceConnection serviceConnection;
 
   private Cursor waypointsCursor = null;
 
@@ -125,6 +131,7 @@ public class WaypointsList extends ListActivity
     super.onCreate(savedInstanceState);
 
     providerUtils = MyTracksProviderUtils.Factory.get(this);
+    serviceConnection = new TrackRecordingServiceConnection(this, null);
 
     // We don't need a window title bar:
     requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -172,6 +179,20 @@ public class WaypointsList extends ListActivity
   }
 
   @Override
+  protected void onResume() {
+    super.onResume();
+
+    serviceConnection.bindIfRunning();
+  }
+
+  @Override
+  protected void onDestroy() {
+    serviceConnection.unbind();
+
+    super.onDestroy();
+  }
+
+  @Override
   public void onClick(View v) {
     WaypointCreationRequest request;
     switch (v.getId()) {
@@ -184,23 +205,38 @@ public class WaypointsList extends ListActivity
       default:
         return;
     }
-    long id;
-    try {
-      id = MyTracks.getInstance().insertWaypoint(request);
-    } catch (RemoteException e) {
-      Log.e(Constants.TAG, "Cannot insert marker.", e);
-      return;
-    } catch (IllegalStateException e) {
-      Log.e(Constants.TAG, "Cannot insert marker.", e);
-      return;
-    }
+    long id = insertWaypoint(request);
     if (id < 0) {
+      Toast.makeText(this, R.string.error_unable_to_insert_marker,
+          Toast.LENGTH_LONG).show();
       Log.e(Constants.TAG, "Failed to insert marker.");
       return;
     }
     Intent intent = new Intent(this, WaypointDetails.class);
     intent.putExtra(WaypointDetails.WAYPOINT_ID_EXTRA, id);
     startActivity(intent);
+  }
+
+  private long insertWaypoint(WaypointCreationRequest request) {
+    try {
+      ITrackRecordingService trackRecordingService = serviceConnection.getServiceIfBound();
+      if (trackRecordingService != null) {
+        long waypointId = trackRecordingService.insertWaypoint(request);
+        if (waypointId >= 0) {
+          Toast.makeText(this, R.string.status_statistics_inserted,
+              Toast.LENGTH_LONG).show();
+          return waypointId;
+        }
+      } else {
+        Log.e(TAG, "Not connected to service, not inserting waypoint");
+      }
+    } catch (RemoteException e) {
+      Log.e(Constants.TAG, "Cannot insert marker.", e);
+    } catch (IllegalStateException e) {
+      Log.e(Constants.TAG, "Cannot insert marker.", e);
+    }
+
+    return -1;
   }
 
   private void setListAdapter() {

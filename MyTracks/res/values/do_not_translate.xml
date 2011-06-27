@@ -42,4 +42,7 @@ limitations under the License.
   
   <!-- ID for Google Analytics -->
   <string name="google_analytics_id">UA-7222692-2</string>
+
+  <!-- Intent actions -->
+  <string name="save_intent_action">android.intent.action.SAVE</string>
 </resources>

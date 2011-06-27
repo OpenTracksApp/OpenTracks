@@ -19,9 +19,9 @@ import java.util.List;
 
 /**
  * Activity for viewing the combined statistics for all the recorded tracks.
- * 
+ *
  * Other features to add - menu items to change setings.
- * 
+ *
  * @author Fergus Nelson
  */
 public class AggregatedStatsActivity extends Activity implements
@@ -43,7 +43,7 @@ public class AggregatedStatsActivity extends Activity implements
     Log.d(Constants.TAG, "StatsActivity: onSharedPreferences changed "
             + key);
     if (key != null) {
-      if (key.equals(R.string.metric_units_key)) {
+      if (key.equals(getString(R.string.metric_units_key))) {
         metricUnits = sharedPreferences.getBoolean(
                 getString(R.string.metric_units_key), true);
         utils.setMetricUnits(metricUnits);
@@ -86,8 +86,8 @@ public class AggregatedStatsActivity extends Activity implements
   }
 
   /**
-   * 1. Reads tracks from the db 
-   * 2. Merges the trip stats from the tracks 
+   * 1. Reads tracks from the db
+   * 2. Merges the trip stats from the tracks
    * 3. Updates the view
    */
   private void loadAggregatedStats() {

@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks.io.file;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
@@ -120,7 +122,9 @@ class TrackWriterImpl implements TrackWriter {
         } catch (InterruptedException e) {
           Log.i(Constants.TAG, "The track write was interrupted");
           if (file != null) {
-            file.delete();
+            if (!file.delete()) {
+              Log.w(TAG, "Failed to delete file " + file.getAbsolutePath());
+            }
           }
           success = false;
           errorMessage = R.string.error_operation_cancelled;
@@ -195,7 +199,7 @@ class TrackWriterImpl implements TrackWriter {
         directory, track.getName(), writer.getExtension());
     if (fileName == null) {
       Log.e(Constants.TAG,
-          "Unable to get a unique filename for " + fileName);
+          "Unable to get a unique filename for " + track.getName());
       return false;
     }
 

@@ -22,7 +22,6 @@ import com.google.android.accounts.AccountManagerFuture;
 import com.google.android.accounts.AuthenticatorException;
 import com.google.android.accounts.OperationCanceledException;
 import com.google.android.apps.mytracks.AccountChooser;
-import com.google.android.apps.mytracks.MyTracks;
 import com.google.android.apps.mytracks.Constants;
 
 import android.app.Activity;
@@ -183,7 +182,9 @@ public class ModernAuthManager implements AuthManager {
       public void run() {
         accountManager.invalidateAuthToken(Constants.ACCOUNT_TYPE,
             authToken);
-        MyTracks.getInstance().getAccountChooser().chooseAccount(activity,
+
+        AccountChooser accountChooser = new AccountChooser();
+        accountChooser.chooseAccount(activity,
             new AccountChooser.AccountHandler() {
               @Override
               public void handleAccountSelected(Account account) {

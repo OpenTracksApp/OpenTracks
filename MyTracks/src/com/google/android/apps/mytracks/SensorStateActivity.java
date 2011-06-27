@@ -16,8 +16,10 @@
 package com.google.android.apps.mytracks;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
+import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.services.sensors.SensorUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -58,6 +60,11 @@ public class SensorStateActivity extends Activity {
   };
 
   /**
+   * Connection to the recording service.
+   */
+  private TrackRecordingServiceConnection serviceConnection;
+
+  /**
    * A task which will update the U/I.
    */
   private class RefreshTask extends TimerTask {
@@ -79,35 +86,45 @@ public class SensorStateActivity extends Activity {
 
     setContentView(R.layout.sensor_state);
 
+    // TODO: Allow reading from sensors even if service is not running.
+    serviceConnection = new TrackRecordingServiceConnection(this, stateUpdater);
+    serviceConnection.bindIfRunning();
     updateState();
   }
 
   @Override
   protected void onResume() {
     super.onResume();
+
+    serviceConnection.bindIfRunning();
+
     timer = new Timer();
     timer.schedule(new RefreshTask(), REFRESH_PERIOD_MS, REFRESH_PERIOD_MS);
   }
 
   @Override
   protected void onPause() {
-    super.onPause();
     timer.cancel();
     timer.purge();
     timer = null;
+    super.onPause();
+  }
+
+  @Override
+  protected void onDestroy() {
+    serviceConnection.unbind();
+    super.onDestroy();
   }
 
   protected void updateState() {
-    MyTracks mt = MyTracks.getInstance();
-
-    ITrackRecordingService service =
-    	mt == null ? null : mt.getTrackRecordingService();
+    ITrackRecordingService service = serviceConnection.getServiceIfBound();
     if (service == null) {
       Log.d(Constants.TAG, "Could not get track recording service.");
       updateSensorState(Sensor.SensorState.NONE);
       updateSensorData(null);
       return;
     }
+
     Sensor.SensorDataSet sds = null;
     try {
       byte[] buff = service.getSensorData();
@@ -153,8 +170,8 @@ public class SensorStateActivity extends Activity {
 
     if (sds.hasPower() && sds.getPower().hasValue()
         && sds.getPower().getState() == Sensor.SensorState.SENDING) {
-      utils.setText(R.id.power_state_register, 
-    		  Integer.toString(sds.getPower().getValue()));
+      utils.setText(R.id.power_state_register,
+          Integer.toString(sds.getPower().getValue()));
     } else {
       utils.setText(R.id.power_state_register,
           SensorUtils.getStateAsString(
@@ -180,14 +197,14 @@ public class SensorStateActivity extends Activity {
     if (sds.hasHeartRate() && sds.getHeartRate().hasValue()
         && sds.getHeartRate().getState() == Sensor.SensorState.SENDING) {
       utils.setText(R.id.heart_rate_register,
-    		  Integer.toString(sds.getHeartRate().getValue()));
+          Integer.toString(sds.getHeartRate().getValue()));
     } else {
-	    utils.setText(R.id.heart_rate_register,
-	        SensorUtils.getStateAsString(
-	            sds.hasHeartRate()
-	                ? sds.getHeartRate().getState()
-	                : Sensor.SensorState.NONE,
-	            this));
+      utils.setText(R.id.heart_rate_register,
+          SensorUtils.getStateAsString(
+              sds.hasHeartRate()
+                  ? sds.getHeartRate().getState()
+                  : Sensor.SensorState.NONE,
+              this));
     }
   }
 }
