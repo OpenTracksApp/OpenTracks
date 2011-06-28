@@ -44,7 +44,7 @@ public class AccountChooser {
      * Handle the account being selected.
      * @param account The selected account or null if none could be found
      */
-    public void handleAccountSelected(Account account);
+    public void onAccountSelected(Account account);
   }
 
   /**
@@ -65,13 +65,13 @@ public class AccountChooser {
       return;
     }
     if (accounts.length == 1) {
-      handler.handleAccountSelected(accounts[0]);
+      handler.onAccountSelected(accounts[0]);
       return;
     }
 
     // TODO This should be read out of a preference.
     if (selectedAccount != null) {
-      handler.handleAccountSelected(selectedAccount);
+      handler.onAccountSelected(selectedAccount);
       return;
     }
 
@@ -89,14 +89,14 @@ public class AccountChooser {
           selectedAccount = accounts[selectedAccountIndex];
         }
 
-        handler.handleAccountSelected(selectedAccount);
+        handler.onAccountSelected(selectedAccount);
       }
     });
     builder.setNegativeButton(R.string.cancel,
         new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int which) {
         dialog.dismiss();
-        handler.handleAccountSelected(null);
+        handler.onAccountSelected(null);
       }
     });
     String[] choices = new String[accounts.length];
@@ -127,7 +127,7 @@ public class AccountChooser {
         new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int which) {
             dialog.dismiss();
-            handler.handleAccountSelected(null);
+            handler.onAccountSelected(null);
           }
         });
     builder.show();

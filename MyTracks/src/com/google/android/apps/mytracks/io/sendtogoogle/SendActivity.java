@@ -533,7 +533,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
     accountChooser.chooseAccount(SendActivity.this,
         new AccountChooser.AccountHandler() {
           @Override
-          public void handleAccountSelected(Account account) {
+          public void onAccountSelected(Account account) {
             if (account == null) {
               progressDialog.dismiss();
               progressDialog = null;

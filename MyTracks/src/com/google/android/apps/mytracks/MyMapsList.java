@@ -84,7 +84,7 @@ public class MyMapsList extends Activity implements MapsFacade.MapsListCallback 
           MyMapsList.this,
           new AccountChooser.AccountHandler() {
             @Override
-            public void handleAccountSelected(Account account) {
+            public void onAccountSelected(Account account) {
               // Account selection happens in the UI thread.
               if (account != null) {
                 // The user did not quit and there was a valid google

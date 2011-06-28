@@ -187,7 +187,7 @@ public class ModernAuthManager implements AuthManager {
         accountChooser.chooseAccount(activity,
             new AccountChooser.AccountHandler() {
               @Override
-              public void handleAccountSelected(Account account) {
+              public void onAccountSelected(Account account) {
                 if (account != null) {
                   doLogin(whenFinished, account);
                 } else {
