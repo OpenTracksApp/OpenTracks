@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.io.file;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.DialogManager;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
@@ -27,9 +26,12 @@ import com.google.android.apps.mytracks.util.UriUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
@@ -46,12 +48,15 @@ import java.io.File;
 public class SaveActivity extends Activity {
   public static final String EXTRA_SHARE_FILE = "share_file";
   public static final String EXTRA_FILE_FORMAT = "file_format";
+  private static final int RESULT_DIALOG = 1;
+  /* VisibleForTesting */ static final int PROGRESS_DIALOG = 2;
 
   private MyTracksProviderUtils providerUtils;
   private long trackId;
   private TrackWriter writer;
   private boolean shareFile;
   private TrackFileFormat format;
+  private WriteProgressController controller;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +104,7 @@ public class SaveActivity extends Activity {
       writer.setDirectory(dir);
     }
 
-    WriteProgressController controller = new WriteProgressController(this, writer);
+    controller = new WriteProgressController(this, writer, PROGRESS_DIALOG);
     controller.setOnCompletionListener(new WriteProgressController.OnCompletionListener() {
       @Override
       public void onComplete() {
@@ -138,14 +143,47 @@ public class SaveActivity extends Activity {
   }
 
   private void showResultDialog() {
-    DialogManager.showMessageDialog(this, writer.getErrorMessage(), writer.wasSuccess(),
-        new OnClickListener() {
-          @Override
-          public void onClick(DialogInterface dialog, int arg1) {
-            dialog.dismiss();
-            finish();
-          }
-        });
+    removeDialog(RESULT_DIALOG);
+    showDialog(RESULT_DIALOG);
+  }
+
+  @Override
+  protected Dialog onCreateDialog(int id) {
+    switch (id) {
+      case RESULT_DIALOG:
+        return createResultDialog();
+      case PROGRESS_DIALOG:
+        if (controller != null) {
+          return controller.createProgressDialog();
+        }
+      default:
+        return super.onCreateDialog(id);
+    }
+  }
+
+  private Dialog createResultDialog() {
+    boolean success = writer.wasSuccess();
+
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setMessage(writer.getErrorMessage());
+    builder.setNeutralButton(R.string.ok, new OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialog, int arg1) {
+        dialog.dismiss();
+        finish();
+      }
+    });
+    builder.setOnCancelListener(new OnCancelListener() {
+      @Override
+      public void onCancel(DialogInterface dialog) {
+        dialog.dismiss();
+        finish();
+      }
+    });
+    builder.setIcon(success ? android.R.drawable.ic_dialog_info :
+        android.R.drawable.ic_dialog_alert);
+    builder.setTitle(success ? R.string.success : R.string.error);
+    return builder.create();
   }
 
   public static void handleExportTrackAction(Context ctx, long trackId, int actionCode) {

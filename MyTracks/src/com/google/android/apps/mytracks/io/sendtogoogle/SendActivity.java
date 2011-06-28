@@ -21,7 +21,6 @@ import com.google.android.accounts.Account;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.google.android.apps.mytracks.AccountChooser;
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.DialogManager;
 import com.google.android.apps.mytracks.MyMapsList;
 import com.google.android.apps.mytracks.ProgressIndicator;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
@@ -40,11 +39,12 @@ import com.google.android.apps.mytracks.util.UriUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -65,6 +65,10 @@ import java.util.List;
  */
 public class SendActivity extends Activity implements ProgressIndicator {
   public static final String EXTRA_SHARE_LINK = "share_link";
+
+  private static final int SEND_DIALOG = 1;
+  private static final int PROGRESS_DIALOG = 2;
+  /* @VisibleForTesting */ static final int DONE_DIALOG = 3;
 
   // Services
   private MyTracksProviderUtils providerUtils;
@@ -101,6 +105,13 @@ public class SendActivity extends Activity implements ProgressIndicator {
   private SendDialog sendDialog;
   private ProgressDialog progressDialog;
 
+  private final OnCancelListener finishOnCancelListener = new OnCancelListener() {
+    @Override
+    public void onCancel(DialogInterface arg0) {
+      onAllDone();
+    }
+  };
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -134,20 +145,39 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
     sendTrackId = ContentUris.parseId(data);
 
+    showDialog(SEND_DIALOG);
+  }
+
+  @Override
+  protected Dialog onCreateDialog(int id) {
+    switch (id) {
+      case SEND_DIALOG:
+        return createSendDialog();
+      case PROGRESS_DIALOG:
+        return createProgressDialog();
+      case DONE_DIALOG:
+        return createDoneDialog();
+    }
+
+    return null;
+  }
+
+  private Dialog createSendDialog() {
     sendDialog = new SendDialog(this);
-    sendDialog.setOwnerActivity(this);
     sendDialog.setOnClickListener(new OnClickListener() {
       @Override
-      public void onClick(DialogInterface arg0, int which) {
+      public void onClick(DialogInterface dialog, int which) {
         if (which != DialogInterface.BUTTON_POSITIVE) {
           finish();
           return;
         }
 
+        dialog.dismiss();
         doSend();
       }
     });
-    sendDialog.show();
+    sendDialog.setOnCancelListener(finishOnCancelListener);
+    return sendDialog;
   }
 
   @Override
@@ -163,18 +193,9 @@ public class SendActivity extends Activity implements ProgressIndicator {
    * Initiates the process to send tracks to google.
    * This is called once the user has selected sending options via the
    * SendToGoogleDialog.
-   *
-   * TODO: Change this whole flow to an actual state machine.
    */
   private void doSend() {
-    progressDialog = new ProgressDialog(this);
-    progressDialog.setIcon(android.R.drawable.ic_dialog_info);
-    progressDialog.setTitle(R.string.progress_title);
-    progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-    progressDialog.setMessage("");
-    progressDialog.setMax(100);
-    progressDialog.setProgress(0);
-    progressDialog.show();
+    showDialog(PROGRESS_DIALOG);
 
     if (sendDialog.getSendToMyMaps()) {
       sendToGoogleMapsOrPickMap();
@@ -186,6 +207,18 @@ public class SendActivity extends Activity implements ProgressIndicator {
       Log.w(TAG, "Nowhere to upload to");
       onSendToGoogleDone();
     }
+  }
+
+  private Dialog createProgressDialog() {
+    progressDialog = new ProgressDialog(this);
+    progressDialog.setCancelable(false);
+    progressDialog.setIcon(android.R.drawable.ic_dialog_info);
+    progressDialog.setTitle(R.string.progress_title);
+    progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+    progressDialog.setMax(100);
+    progressDialog.setProgress(0);
+
+    return progressDialog;
   }
 
   private void sendToGoogleMapsOrPickMap() {
@@ -370,19 +403,24 @@ public class SendActivity extends Activity implements ProgressIndicator {
   private void onSendToGoogleDone() {
     tracker.dispatch();
 
-    final boolean sentToMyMaps = sendDialog.getSendToMyMaps();
-    final boolean sentToFusionTables = sendDialog.getSendToFusionTables();
-    List<SendResult> results = makeSendToGoogleResults();
-
     runOnUiThread(new Runnable() {
       @Override
       public void run() {
-        progressDialog.dismiss();
-        progressDialog = null;
-        sendDialog = null;
+        Log.d(TAG, "Sending to Google done.");
+        dismissDialog(PROGRESS_DIALOG);
+        dismissDialog(SEND_DIALOG);
+
+        // Ensure a new done dialog is created each time.
+        // This is required because the send results must be available at the
+        // time the dialog is created.
+        removeDialog(DONE_DIALOG);
+        showDialog(DONE_DIALOG);
       }
     });
+  }
 
+  private Dialog createDoneDialog() {
+    Log.d(TAG, "Creating done dialog");
     // We've finished sending the track to the user-selected services.  Now
     // we tell them the results of the upload, and optionally share the track.
     // There are a few different paths through this code:
@@ -401,14 +439,16 @@ public class SendActivity extends Activity implements ProgressIndicator {
     //    which we succeeded in uploading the track are incompatible with
     //    sharing.  We won't display a share button.
 
-    final boolean canShare = sendToFusionTablesTableId != null
-        || sendToMyMapsMapId != null;
+    final boolean sentToMyMaps = sendDialog.getSendToMyMaps();
+    final boolean sentToFusionTables = sendDialog.getSendToFusionTables();
+    List<SendResult> results = makeSendToGoogleResults();
+    final boolean canShare = sendToFusionTablesTableId != null || sendToMyMapsMapId != null;
 
     final OnClickListener finishListener = new DialogInterface.OnClickListener() {
       @Override
       public void onClick(DialogInterface dialog, int which) {
         dialog.dismiss();
-        finish();
+        onAllDone();
       }
     };
 
@@ -417,11 +457,13 @@ public class SendActivity extends Activity implements ProgressIndicator {
       doShareListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
+          dialog.dismiss();
+
           if (!shareLinkToMap(sentToMyMaps, sentToFusionTables)) {
             Log.w(TAG, "Failed to share link");
           }
 
-          finishListener.onClick(dialog, which);
+          onAllDone();
         }
       };
     }
@@ -431,9 +473,17 @@ public class SendActivity extends Activity implements ProgressIndicator {
     DialogInterface.OnClickListener onShareListener = (canShare && !shareRequested)
         ? doShareListener : null;
 
-    AlertDialog sendToGoogleResultDialog = ResultDialogFactory.makeDialog(this,
-        results, onOkListener, onShareListener);
-    DialogManager.showDialogSafely(this, sendToGoogleResultDialog);
+    return ResultDialogFactory.makeDialog(this, results, onOkListener, onShareListener, finishOnCancelListener);
+  }
+
+  private void onAllDone() {
+    Log.d(TAG, "All sending done.");
+    removeDialog(PROGRESS_DIALOG);
+    removeDialog(SEND_DIALOG);
+    removeDialog(DONE_DIALOG);
+    progressDialog = null;
+    sendDialog = null;
+    finish();
   }
 
   boolean shareLinkToMap(boolean sentToMyMaps, boolean sentToFusionTables) {
@@ -535,9 +585,9 @@ public class SendActivity extends Activity implements ProgressIndicator {
           @Override
           public void onAccountSelected(Account account) {
             if (account == null) {
-              progressDialog.dismiss();
-              progressDialog = null;
+              dismissDialog(PROGRESS_DIALOG);
               finish();
+              return;
             }
 
             doLogin(results, requestCode, service, account);
@@ -565,7 +615,8 @@ public class SendActivity extends Activity implements ProgressIndicator {
         //       make this return path explicit.
         if (resultCode != RESULT_OK || lastAuth == null ||
             !lastAuth.authResult(resultCode, results)) {
-          progressDialog.dismiss();
+          dismissDialog(PROGRESS_DIALOG);
+          finish();
         }
         break;
       }

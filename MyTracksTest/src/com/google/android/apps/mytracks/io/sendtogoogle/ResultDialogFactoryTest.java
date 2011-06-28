@@ -15,7 +15,6 @@
  */
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
-import com.google.android.apps.mytracks.MyTracks;
 import com.google.android.maps.mytracks.R;
 
 import android.app.AlertDialog;
@@ -33,9 +32,9 @@ import java.util.List;
  *
  * @author Matthew Simmons
  */
-public class ResultDialogFactoryTest extends ActivityInstrumentationTestCase2<MyTracks> {
+public class ResultDialogFactoryTest extends ActivityInstrumentationTestCase2<SendActivity> {
   public ResultDialogFactoryTest() {
-    super(MyTracks.class);
+    super(SendActivity.class);
   }
 
   private List<SendResult> makeResults(SendResult... results) {
@@ -55,7 +54,7 @@ public class ResultDialogFactoryTest extends ActivityInstrumentationTestCase2<My
     List<SendResult> results = makeResults(new SendResult(SendType.MYMAPS, true),
         new SendResult(SendType.DOCS, true));
 
-    AlertDialog dialog = ResultDialogFactory.makeDialog(getActivity(), results, clickListener, null);
+    AlertDialog dialog = ResultDialogFactory.makeDialog(getActivity(), results, clickListener, null, null);
     dialog.show();
 
     ListView listView = (ListView) dialog.findViewById(R.id.send_to_google_result_list);
@@ -87,7 +86,7 @@ public class ResultDialogFactoryTest extends ActivityInstrumentationTestCase2<My
         new SendResult(SendType.DOCS, true));
 
     AlertDialog dialog = ResultDialogFactory.makeDialog(getActivity(), results,
-        clickListener, clickListener);
+        clickListener, clickListener, null);
     dialog.show();
 
     assertEquals(View.VISIBLE, dialog.getButton(AlertDialog.BUTTON_POSITIVE).getVisibility());
@@ -98,7 +97,7 @@ public class ResultDialogFactoryTest extends ActivityInstrumentationTestCase2<My
     List<SendResult> results = makeResults(new SendResult(SendType.MYMAPS, true),
         new SendResult(SendType.DOCS, false));
 
-    AlertDialog dialog = ResultDialogFactory.makeDialog(getActivity(), results, clickListener, null);
+    AlertDialog dialog = ResultDialogFactory.makeDialog(getActivity(), results, clickListener, null, null);
     dialog.show();
 
     assertEquals(View.GONE,
@@ -112,7 +111,7 @@ public class ResultDialogFactoryTest extends ActivityInstrumentationTestCase2<My
         new SendResult(SendType.DOCS, false));
 
     AlertDialog dialog = ResultDialogFactory.makeDialog(getActivity(), results,
-        clickListener, clickListener);
+        clickListener, clickListener, null);
     dialog.show();
 
     assertEquals(View.VISIBLE, dialog.getButton(AlertDialog.BUTTON_POSITIVE).getVisibility());

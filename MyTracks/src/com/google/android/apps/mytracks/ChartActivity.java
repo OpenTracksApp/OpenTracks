@@ -35,6 +35,7 @@ import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.location.Location;
@@ -60,6 +61,7 @@ import java.util.EnumSet;
  */
 public class ChartActivity extends Activity implements TrackDataListener {
 
+  private static final int CHART_SETTINGS_DIALOG = 1;
   private final DoubleBuffer elevationBuffer =
       new DoubleBuffer(Constants.ELEVATION_SMOOTHING_FACTOR);
   private final DoubleBuffer speedBuffer =
@@ -203,34 +205,49 @@ public class ChartActivity extends Activity implements TrackDataListener {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case Constants.MENU_CHART_SETTINGS:
-        showSettingsDialog();
+        showDialog(CHART_SETTINGS_DIALOG);
         return true;
     }
     return super.onOptionsItemSelected(item);
   }
 
-  private void showSettingsDialog() {
-    final ChartSettingsDialog settingsDialog = new ChartSettingsDialog(this);
-    settingsDialog.setOwnerActivity(this);
+  @Override
+  protected Dialog onCreateDialog(int id) {
+    if (id == CHART_SETTINGS_DIALOG) {
+      final ChartSettingsDialog settingsDialog = new ChartSettingsDialog(this);
+      settingsDialog.setOnClickListener(new OnClickListener() {
+        @Override
+        public void onClick(DialogInterface arg0, int which) {
+          if (which != DialogInterface.BUTTON_POSITIVE) return;
 
+          for (int i = 0; i < ChartView.NUM_SERIES; i++) {
+            boolean seriesEnabled = settingsDialog.isSeriesEnabled(i);
+            chartView.getChartValueSeries(i).setEnabled(seriesEnabled);
+          }
+          setMode(settingsDialog.getMode());
+          chartView.postInvalidate();
+        }
+      });
+      return settingsDialog;
+    }
+
+    return super.onCreateDialog(id);
+  }
+
+  @Override
+  protected void onPrepareDialog(int id, Dialog dialog) {
+    super.onPrepareDialog(id, dialog);
+
+    if (id == CHART_SETTINGS_DIALOG) {
+      prepareSettingsDialog((ChartSettingsDialog) dialog);
+    }
+  }
+
+  private void prepareSettingsDialog(final ChartSettingsDialog settingsDialog) {
     settingsDialog.setMode(mode);
     for (int i = 0; i < ChartView.NUM_SERIES; i++) {
       settingsDialog.setSeriesEnabled(i, chartView.getChartValueSeries(i).isEnabled());
     }
-
-    settingsDialog.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(DialogInterface arg0, int which) {
-        if (which != DialogInterface.BUTTON_POSITIVE) return;
-
-        for (int i = 0; i < ChartView.NUM_SERIES; i++) {
-          chartView.getChartValueSeries(i).setEnabled(settingsDialog.isSeriesEnabled(i));
-        }
-        setMode(settingsDialog.getMode());
-      }
-    });
-
-    settingsDialog.show();
   }
 
   /**

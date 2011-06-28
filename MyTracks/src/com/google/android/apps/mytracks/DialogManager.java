@@ -17,12 +17,8 @@ package com.google.android.apps.mytracks;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
 
-import com.google.android.maps.mytracks.R;
-
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.util.Log;
 import android.view.WindowManager.BadTokenException;
 
@@ -32,24 +28,6 @@ import android.view.WindowManager.BadTokenException;
  * @author Sandor Dornbush
  */
 public class DialogManager {
-
-  public static void showMessageDialog(
-      Activity ctx, int message, boolean success, DialogInterface.OnClickListener okListener) {
-    if (ctx.isFinishing()) {
-      Log.w(TAG, "Activity finishing - not showing dialog");
-      return;
-    }
-
-    AlertDialog dialog = null;
-    AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
-    builder.setMessage(message);
-    builder.setNeutralButton(R.string.ok, okListener);
-    builder.setIcon(success ? android.R.drawable.ic_dialog_info :
-        android.R.drawable.ic_dialog_alert);
-    builder.setTitle(success ? R.string.success : R.string.error);
-    dialog = builder.create();
-    dialog.show();
-  }
 
   /**
    * The equivalent of {@link #showDialogSafely(int)}, but for a specific

@@ -17,7 +17,6 @@ package com.google.android.apps.mytracks.io.file;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
 
-import com.google.android.apps.mytracks.DialogManager;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.util.UriUtils;
@@ -26,6 +25,7 @@ import com.google.android.maps.mytracks.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentUris;
 import android.content.DialogInterface;
@@ -50,8 +50,15 @@ import org.xml.sax.SAXException;
  */
 public class ImportActivity extends Activity {
 
-  private ProgressDialog progressDialog;
+  private static final int PROGRESS_DIALOG = 1;
+  private static final int SUCCESS_DIALOG = 2;
+  private static final int FAILURE_DIALOG = 3;
+
   private MyTracksProviderUtils providerUtils;
+
+  private ProgressDialog progressDialog;
+  private int resultMessage;
+  private long importedTrackIds[];
 
   @Override
   public void onCreate(Bundle savedState) {
@@ -78,49 +85,114 @@ public class ImportActivity extends Activity {
     startTrackImport(data.getPath());
   }
 
+  @Override
+  protected Dialog onCreateDialog(int id) {
+    switch (id) {
+      case PROGRESS_DIALOG:
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setIcon(android.R.drawable.ic_dialog_info);
+        progressDialog.setTitle(R.string.progress_title);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage(getString(R.string.import_progress_message));
+        return progressDialog;
+      case SUCCESS_DIALOG:
+        final Builder dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setCancelable(true);
+        dialogBuilder.setPositiveButton(android.R.string.ok, new OnClickListener() {
+          @Override
+          public void onClick(DialogInterface arg0, int arg1) {
+            finish();
+          }
+        });
+        dialogBuilder.setNeutralButton(R.string.import_show_track, new OnClickListener() {
+          @Override
+          public void onClick(DialogInterface arg0, int arg1) {
+            showImportedTrack();
+            finish();
+          }
+        });
+        return dialogBuilder.create();
+      case FAILURE_DIALOG:
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setNeutralButton(R.string.ok, new OnClickListener() {
+          @Override
+          public void onClick(DialogInterface arg0, int arg1) {
+            finish();
+          }
+        });
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setTitle(R.string.error);
+        return builder.create();
+
+    }
+
+    return null;
+  }
+
+  @Override
+  protected void onPrepareDialog(int id, Dialog dialog) {
+    super.onPrepareDialog(id, dialog);
+
+    switch (id) {
+      case SUCCESS_DIALOG:
+        AlertDialog successDialog = (AlertDialog) dialog;
+        successDialog.setMessage(getString(R.string.import_success, importedTrackIds.length));
+        break;
+      case FAILURE_DIALOG:
+        AlertDialog failureDialog = (AlertDialog) dialog;
+        failureDialog.setMessage(getString(resultMessage));
+        break;
+    }
+  }
+
+  protected void showImportedTrack() {
+    long lastTrackId = importedTrackIds[importedTrackIds.length - 1];
+    Uri trackUri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, lastTrackId);
+
+    Intent intent = new Intent(Intent.ACTION_VIEW);
+    intent.setDataAndType(trackUri, TracksColumns.CONTENT_ITEMTYPE);
+    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    startActivity(intent);
+    finish();
+  }
+
   private void startTrackImport(final String fileName) {
-    progressDialog = new ProgressDialog(this);
-    progressDialog.setOwnerActivity(this);
-    progressDialog.setIcon(android.R.drawable.ic_dialog_info);
-    progressDialog.setTitle(R.string.progress_title);
-    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-    progressDialog.setMessage(getString(R.string.import_progress_message));
-    progressDialog.show();
+    showDialog(PROGRESS_DIALOG);
 
     Thread t = new Thread() {
       @Override
       public void run() {
-        int message = R.string.success;
+        resultMessage = R.string.success;
 
-        long[] trackIdsImported = null;
+        importedTrackIds = null;
 
         try {
           try {
             InputStream is = new FileInputStream(fileName);
-            trackIdsImported = GpxImporter.importGPXFile(is, providerUtils);
+            importedTrackIds = GpxImporter.importGPXFile(is, providerUtils);
           } catch (SAXException e) {
             Log.e(TAG, "Caught an unexpected exception.", e);
-            message = R.string.error_generic;
+            resultMessage = R.string.error_generic;
           } catch (ParserConfigurationException e) {
             Log.e(TAG, "Caught an unexpected exception.", e);
-            message = R.string.error_generic;
+            resultMessage = R.string.error_generic;
           } catch (IOException e) {
             Log.e(TAG, "Caught an unexpected exception.", e);
-            message = R.string.error_unable_to_read_file;
+            resultMessage = R.string.error_unable_to_read_file;
           } catch (NullPointerException e) {
             Log.e(TAG, "Caught an unexpected exception.", e);
-            message = R.string.error_invalid_gpx_format;
+            resultMessage = R.string.error_invalid_gpx_format;
           } catch (OutOfMemoryError e) {
             Log.e(TAG, "Caught an unexpected exception.", e);
-            message = R.string.error_out_of_memory;
+            resultMessage = R.string.error_out_of_memory;
           }
 
-          boolean success = (trackIdsImported != null && trackIdsImported.length > 0);
-          onImportDone(success, message, trackIdsImported);
+          boolean success = (importedTrackIds != null && importedTrackIds.length > 0);
+          showImportResult(success);
         } finally {
           runOnUiThread(new Runnable() {
             public void run() {
-              progressDialog.dismiss();
+              dismissDialog(PROGRESS_DIALOG);
             }
           });
         }
@@ -129,44 +201,15 @@ public class ImportActivity extends Activity {
     t.start();
   }
 
-  private void onImportDone(boolean success, int message, final long[] trackIds) {
-    OnClickListener finishOnClick = new OnClickListener() {
-      @Override
-      public void onClick(DialogInterface arg0, int arg1) {
-        finish();
-      }
-    };
-
-    if (!success) {
-      DialogManager.showMessageDialog(this, message, false /* success */,
-          finishOnClick);
-      return;
-    }
+  private void showImportResult(boolean success) {
+    final int dialogToShow = success ? SUCCESS_DIALOG : FAILURE_DIALOG;
 
     // Show a dialog telling the user about the import, and asking if he wishes
     // to open the track right away.
-    final Builder dialogBuilder = new AlertDialog.Builder(this);
-    dialogBuilder.setCancelable(true);
-    dialogBuilder.setMessage(getString(R.string.import_success, trackIds.length));
-    dialogBuilder.setPositiveButton(android.R.string.ok, finishOnClick);
-    dialogBuilder.setNeutralButton(R.string.import_show_track, new OnClickListener() {
-      @Override
-      public void onClick(DialogInterface arg0, int arg1) {
-        long lastTrackId = trackIds[trackIds.length - 1];
-        Uri trackUri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, lastTrackId);
-
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(trackUri, TracksColumns.CONTENT_ITEMTYPE);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
-      }
-    });
-
     runOnUiThread(new Runnable() {
       @Override
       public void run() {
-        dialogBuilder.show();
+        showDialog(dialogToShow);
       }
     });
   }

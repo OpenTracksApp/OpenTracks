@@ -15,10 +15,6 @@
  */
 package com.google.android.apps.mytracks.io.file;
 
-import com.google.android.apps.mytracks.MyTracks;
-import com.google.android.apps.mytracks.io.file.TrackWriter;
-import com.google.android.apps.mytracks.io.file.WriteProgressController;
-
 import android.app.ProgressDialog;
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -30,9 +26,9 @@ import java.util.concurrent.atomic.AtomicReference;
  *
  * @author Matthew Simmons
  */
-public class WriteProgressControllerTest extends ActivityInstrumentationTestCase2<MyTracks> {
+public class WriteProgressControllerTest extends ActivityInstrumentationTestCase2<SaveActivity> {
   public WriteProgressControllerTest() {
-    super(MyTracks.class);
+    super(SaveActivity.class);
   }
 
   private static void assertProgress(ProgressDialog dialog, int expectedProgress,
@@ -58,7 +54,7 @@ public class WriteProgressControllerTest extends ActivityInstrumentationTestCase
     };
 
     WriteProgressController controller = new WriteProgressController(
-        getActivity(), mockWriter);
+        getActivity(), mockWriter, SaveActivity.PROGRESS_DIALOG);
     controller.setOnCompletionListener(new WriteProgressController.OnCompletionListener() {
       @Override
       public void onComplete() {
@@ -66,7 +62,7 @@ public class WriteProgressControllerTest extends ActivityInstrumentationTestCase
       }
     });
 
-    dialogRef.set(controller.getDialog());
+    dialogRef.set(controller.createProgressDialog());
 
     controller.startWrite();
 

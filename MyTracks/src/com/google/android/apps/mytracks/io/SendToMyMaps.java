@@ -100,7 +100,6 @@ public class SendToMyMaps implements Runnable {
     int statusMessageId = R.string.error_sending_to_mymap;
     boolean success = true;
     try {
-      progressIndicator.setProgressValue(1);
       progressIndicator.setProgressMessage(
           R.string.progress_message_reading_track);
 
@@ -454,9 +453,10 @@ public class SendToMyMaps implements Runnable {
     // The percent of the total that represents the completed part of this
     // segment.
     int totalPercentage =
-        (totalLocationsRead + totalLocationsPrepared + totalLocationsUploaded)
+        (totalLocationsRead + totalLocationsPrepared + totalLocationsUploaded) * 100
         / (totalLocations * 3);
     totalPercentage = Math.min(99, totalPercentage);
+    Log.d(TAG, "Percentage: read=" + totalLocationsRead + "; prep=" + totalLocationsPrepared + "; up=" + totalLocationsUploaded + "; total=" + totalLocations + "; percentage=" + totalPercentage);
     progressIndicator.setProgressValue(totalPercentage);
   }
 }
