@@ -218,11 +218,12 @@ public class ChartActivity extends Activity implements TrackDataListener {
       settingsDialog.setOnClickListener(new OnClickListener() {
         @Override
         public void onClick(DialogInterface arg0, int which) {
-          if (which != DialogInterface.BUTTON_POSITIVE) return;
+          if (which != DialogInterface.BUTTON_POSITIVE) {
+            return;
+          }
 
           for (int i = 0; i < ChartView.NUM_SERIES; i++) {
-            boolean seriesEnabled = settingsDialog.isSeriesEnabled(i);
-            chartView.getChartValueSeries(i).setEnabled(seriesEnabled);
+            chartView.getChartValueSeries(i).setEnabled(settingsDialog.isSeriesEnabled(i));
           }
           setMode(settingsDialog.getMode());
           chartView.postInvalidate();

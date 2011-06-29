@@ -68,7 +68,8 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
   private static final int SEND_DIALOG = 1;
   private static final int PROGRESS_DIALOG = 2;
-  /* @VisibleForTesting */ static final int DONE_DIALOG = 3;
+  /* @VisibleForTesting */
+  static final int DONE_DIALOG = 3;
 
   // Services
   private MyTracksProviderUtils providerUtils;

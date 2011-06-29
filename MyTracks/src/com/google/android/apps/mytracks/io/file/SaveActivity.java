@@ -49,7 +49,8 @@ public class SaveActivity extends Activity {
   public static final String EXTRA_SHARE_FILE = "share_file";
   public static final String EXTRA_FILE_FORMAT = "file_format";
   private static final int RESULT_DIALOG = 1;
-  /* VisibleForTesting */ static final int PROGRESS_DIALOG = 2;
+  /* VisibleForTesting */
+  static final int PROGRESS_DIALOG = 2;
 
   private MyTracksProviderUtils providerUtils;
   private long trackId;

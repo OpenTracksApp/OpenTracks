@@ -456,7 +456,6 @@ public class SendToMyMaps implements Runnable {
         (totalLocationsRead + totalLocationsPrepared + totalLocationsUploaded) * 100
         / (totalLocations * 3);
     totalPercentage = Math.min(99, totalPercentage);
-    Log.d(TAG, "Percentage: read=" + totalLocationsRead + "; prep=" + totalLocationsPrepared + "; up=" + totalLocationsUploaded + "; total=" + totalLocations + "; percentage=" + totalPercentage);
     progressIndicator.setProgressValue(totalPercentage);
   }
 }
