@@ -32,8 +32,6 @@ import com.google.wireless.gdata.docs.XmlDocsGDataParserFactory;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.util.Log;
 
 import java.io.IOException;
@@ -46,7 +44,7 @@ import java.io.IOException;
 public class SendToDocs {
   /** The GData service name for Google Spreadsheets (aka Trix) */
   public static final String GDATA_SERVICE_NAME_TRIX = "wise";
-  
+
   /** The GData service name for the Google Docs Document List */
   public static final String GDATA_SERVICE_NAME_DOCLIST = "writely";
 
@@ -55,8 +53,6 @@ public class SendToDocs {
   private final AuthManager docListAuth;
   private final ProgressIndicator progressIndicator;
   private final boolean metricUnits;
-  private final HandlerThread handlerThread;
-  private final Handler handler;
 
   private boolean createdNewSpreadSheet = false;
 
@@ -81,21 +77,17 @@ public class SendToDocs {
     } else {
       metricUnits = true;
     }
-
-    handlerThread = new HandlerThread("SendToGoogleDocs");
-    handlerThread.start();
-    handler = new Handler(handlerThread.getLooper());
   }
 
   public void sendToDocs(final long trackId) {
     Log.d(Constants.TAG,
         "Sending to Google Docs: trackId = " + trackId);
-    handler.post(new Runnable() {
+    new Thread("SendToGoogleDocs") {
       @Override
       public void run() {
         doUpload(trackId);
       }
-    });
+    }.start();
   }
 
   private void doUpload(long trackId) {
@@ -163,7 +155,7 @@ public class SendToDocs {
     GDataWrapper<GDataServiceClient> docListWrapper = new GDataWrapper<GDataServiceClient>();
     docListWrapper.setAuthManager(docListAuth);
     docListWrapper.setRetryOnAuthFailure(true);
-    
+
     GDataWrapper<GDataServiceClient> trixWrapper = new GDataWrapper<GDataServiceClient>();
     trixWrapper.setAuthManager(trixAuth);
     trixWrapper.setRetryOnAuthFailure(true);
@@ -191,7 +183,7 @@ public class SendToDocs {
       // First try to find the spreadsheet:
       String spreadsheetId = null;
       try {
-        spreadsheetId = docsHelper.requestSpreadsheetId(docListWrapper, 
+        spreadsheetId = docsHelper.requestSpreadsheetId(docListWrapper,
             sheetTitle);
       } catch (IOException e) {
         Log.i(Constants.TAG, "Spreadsheet lookup failed.", e);
@@ -207,16 +199,16 @@ public class SendToDocs {
         } catch (InterruptedException e) {
           Log.e(Constants.TAG, "Sleep interrupted", e);
         }
-        
+
         try {
-          spreadsheetId = docsHelper.requestSpreadsheetId(docListWrapper, 
+          spreadsheetId = docsHelper.requestSpreadsheetId(docListWrapper,
               sheetTitle);
         } catch (IOException e) {
           Log.i(Constants.TAG, "2nd spreadsheet lookup failed.", e);
           return false;
         }
       }
-      
+
       // We were unable to find an existing spreadsheet, so create a new one.
       progressIndicator.setProgressValue(70);
       if (spreadsheetId == null) {
@@ -248,7 +240,7 @@ public class SendToDocs {
           }
 
           try {
-            spreadsheetId = docsHelper.requestSpreadsheetId(docListWrapper, 
+            spreadsheetId = docsHelper.requestSpreadsheetId(docListWrapper,
                 sheetTitle);
           } catch (IOException e) {
             Log.i(Constants.TAG, "Failed create-failed lookup", e);
@@ -263,9 +255,9 @@ public class SendToDocs {
             } catch (InterruptedException e) {
               Log.e(Constants.TAG, "Sleep interrupted", e);
             }
-            
+
             try {
-              spreadsheetId = docsHelper.requestSpreadsheetId(docListWrapper, 
+              spreadsheetId = docsHelper.requestSpreadsheetId(docListWrapper,
                   sheetTitle);
             } catch (IOException e) {
               Log.i(Constants.TAG, "Failed create-failed relookup", e);
@@ -293,7 +285,7 @@ public class SendToDocs {
 
       progressIndicator.setProgressValue(90);
 
-      docsHelper.addTrackRow(activity, trixAuth, spreadsheetId, worksheetId, 
+      docsHelper.addTrackRow(activity, trixAuth, spreadsheetId, worksheetId,
           track, metricUnits);
       Log.i(Constants.TAG, "Done uploading to docs.");
     } catch (IOException e) {

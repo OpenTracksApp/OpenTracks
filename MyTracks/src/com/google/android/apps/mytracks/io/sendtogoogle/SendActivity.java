@@ -50,8 +50,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -426,11 +424,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
     final SendToMyMaps sender = new SendToMyMaps(this, sendToMyMapsMapId, lastAuth,
         sendTrackId, this /*progressIndicator*/, onCompletion);
 
-    // TODO: We're leaking this thread!
-    HandlerThread handlerThread = new HandlerThread("SendToMyMaps");
-    handlerThread.start();
-    Handler handler = new Handler(handlerThread.getLooper());
-    handler.post(sender);
+    new Thread(sender, "SendToMyMaps").start();
 
     return SendState.NOT_READY;
   }
@@ -485,14 +479,11 @@ public class SendActivity extends Activity implements ProgressIndicator {
         executeStateMachine(SendState.SEND_TO_FUSION_TABLES_DONE);
       }
     };
+
     final SendToFusionTables sender = new SendToFusionTables(this, lastAuth,
         sendTrackId, this /*progressIndicator*/, onCompletion);
 
-    // TODO: We're leaking this thread!
-    HandlerThread handlerThread = new HandlerThread("SendToFusionTables");
-    handlerThread.start();
-    Handler handler = new Handler(handlerThread.getLooper());
-    handler.post(sender);
+    new Thread(sender, "SendToFusionTables").start();
 
     return SendState.NOT_READY;
   }

@@ -29,8 +29,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
 import android.widget.Toast;
@@ -91,12 +89,7 @@ public class ExportAllTracks {
       new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-          HandlerThread handlerThread;
-          Handler handler;
-          handlerThread = new HandlerThread("SendToMyMaps");
-          handlerThread.start();
-          handler = new Handler(handlerThread.getLooper());
-          handler.post(runner);
+          new Thread(runner, "SendToMyMaps").start();
         }
       };
 
@@ -117,7 +110,7 @@ public class ExportAllTracks {
     long recordingTrackId = -1;
     if (prefs != null) {
       recordingTrackId =
-    	  prefs.getLong(activity.getString(R.string.recording_track_key), -1);
+          prefs.getLong(activity.getString(R.string.recording_track_key), -1);
     }
     if (recordingTrackId != -1) {
       wakeLock = SystemUtils.acquireWakeLock(activity, wakeLock);
