@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.accounts.Account;
 import com.google.android.apps.mytracks.io.AuthManager;
 import com.google.android.apps.mytracks.io.AuthManagerFactory;
@@ -25,6 +27,7 @@ import com.google.android.maps.mytracks.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -39,6 +42,9 @@ import android.widget.TextView;
  */
 public class MyMapsList extends Activity implements MapsFacade.MapsListCallback {
   private static final int GET_LOGIN = 1;
+
+  public static final String EXTRA_ACCOUNT_NAME = "accountName";
+  public static final String EXTRA_ACCOUNT_TYPE = "accountType";
 
   private MapsFacade mapsClient;
   private AuthManager auth;
@@ -79,22 +85,18 @@ public class MyMapsList extends Activity implements MapsFacade.MapsListCallback 
     // Starts in the UI thread.
     // TODO fix this for non-froyo devices.
     if (AuthManagerFactory.useModernAuthManager()) {
-      AccountChooser accountChooser = new AccountChooser();
-      accountChooser.chooseAccount(
-          MyMapsList.this,
-          new AccountChooser.AccountHandler() {
-            @Override
-            public void onAccountSelected(Account account) {
-              // Account selection happens in the UI thread.
-              if (account != null) {
-                // The user did not quit and there was a valid google
-                // account.
-                doLogin(account);
-              } else {
-                finish();
-              }
-            }
-          });
+      Intent intent = getIntent();
+      String accountName = intent.getStringExtra(EXTRA_ACCOUNT_NAME);
+      String accountType = intent.getStringExtra(EXTRA_ACCOUNT_TYPE);
+      if (accountName == null || accountType == null) {
+        Log.e(TAG, "Didn't receive account name or type");
+        setResult(RESULT_CANCELED);
+        finish();
+        return;
+      }
+
+      Account account = new Account(accountName, accountType);
+      doLogin(account);
     } else {
       doLogin(null);
     }

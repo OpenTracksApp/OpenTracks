@@ -107,6 +107,8 @@ public class SendActivity extends Activity implements ProgressIndicator {
   private final HashMap<String, AuthManager> authMap =
     new HashMap<String, AuthManager>();
   private final AccountChooser accountChooser = new AccountChooser();
+  private String lastAccountName;
+  private String lastAccountType;
 
   // Send request information.
   private boolean shareRequested = false;
@@ -225,6 +227,9 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
     sendToMyMapsMapId = savedInstanceState.getString("mapId");
     sendToFusionTablesTableId = savedInstanceState.getString("tableId");
+
+    lastAccountName = savedInstanceState.getString("accountName");
+    lastAccountType = savedInstanceState.getString("accountType");
   }
 
   @Override
@@ -243,6 +248,9 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
     outState.putString("mapId", sendToMyMapsMapId);
     outState.putString("tableId", sendToFusionTablesTableId);
+
+    outState.putString("accountName", lastAccountName);
+    outState.putString("accountType", lastAccountType);
 
     // TODO: Ideally we should serialize/restore the authenticator map and lastAuth somehow,
     //       but it's highly unlikely we'll get killed while an auth dialog is displayed.
@@ -370,6 +378,8 @@ public class SendActivity extends Activity implements ProgressIndicator {
     if (!sendDialog.getCreateNewMap()) {
       // Ask the user to choose a map to upload into
       Intent listIntent = new Intent(this, MyMapsList.class);
+      listIntent.putExtra(MyMapsList.EXTRA_ACCOUNT_NAME, lastAccountName);
+      listIntent.putExtra(MyMapsList.EXTRA_ACCOUNT_TYPE, lastAccountType);
       startActivityForResult(listIntent, Constants.GET_MAP);
       // The callback for GET_MAP calls authenticateToGoogleMaps
       return SendState.NOT_READY;
@@ -738,12 +748,14 @@ public class SendActivity extends Activity implements ProgressIndicator {
               return;
             }
 
+            lastAccountName = account.name;
+            lastAccountType = account.type;
             doLogin(requestCode, service, account);
           }
         });
   }
 
-  private void doLogin(final int requestCode, final String service, final Account account) {
+  private void doLogin(final int requestCode, final String service, final Object account) {
     // There's a chance that we go to a different activity, so close the dialog.
     lastAuth.doLogin(new Runnable() {
       public void run() {
