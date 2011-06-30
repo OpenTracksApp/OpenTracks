@@ -64,7 +64,7 @@ import java.util.List;
  * @author Rodrigo Damazio
  */
 public class SendActivity extends Activity implements ProgressIndicator {
-  public static final String EXTRA_SHARE_LINK = "share_link";
+  private static final String EXTRA_SHARE_LINK = "share_link";
 
   /** States for the state machine that defines the upload process. */
   private enum SendState {
@@ -93,10 +93,13 @@ public class SendActivity extends Activity implements ProgressIndicator {
   /* @VisibleForTesting */
   static final int DONE_DIALOG = 3;
 
+  // UI
+  private SendDialog sendDialog;
+  private ProgressDialog progressDialog;
+
   // Services
   private MyTracksProviderUtils providerUtils;
   private SharedPreferences sharedPreferences;
-
   private GoogleAnalyticsTracker tracker;
 
   // Authentication
@@ -109,25 +112,21 @@ public class SendActivity extends Activity implements ProgressIndicator {
   private boolean shareRequested = false;
   private long sendTrackId;
 
-  // Send result information, used by SendToGoogleResultDialog.
+  // Send result information, used by results dialog.
   private boolean sendToMyMapsSuccess = false;
   private boolean sendToFusionTablesSuccess = false;
   private boolean sendToDocsSuccess = false;
+  // TODO: Make these be used for showing results
+  private String sendToMyMapsMessage;
+  private String sendToFusionTablesMessage;
+  private String sendToDocsMessage;
+
+  // Send result information, used to share a link.
   private String sendToMyMapsMapId;
   private String sendToFusionTablesTableId;
 
-  // TODO: Make these be used for showing results
-  @SuppressWarnings("unused")
-  private String sendToMyMapsMessage;
-  @SuppressWarnings("unused")
-  private String sendToFusionTablesMessage;
-  @SuppressWarnings("unused")
-  private String sendToDocsMessage;
-
-  // State used while sending.
+  // Current sending state.
   private SendState currentState;
-  private SendDialog sendDialog;
-  private ProgressDialog progressDialog;
 
   private final OnCancelListener finishOnCancelListener = new OnCancelListener() {
     @Override
@@ -151,6 +150,18 @@ public class SendActivity extends Activity implements ProgressIndicator {
     tracker.start(getString(R.string.google_analytics_id), getApplicationContext());
     tracker.setProductVersion("android-mytracks", SystemUtils.getMyTracksVersion(this));
 
+    if (!handleIntent()) {
+      finish();
+      return;
+    }
+    if (savedInstanceState != null) {
+      restoreInstanceState(savedInstanceState);
+    }
+
+    executeStateMachine(null);
+  }
+
+  private boolean handleIntent() {
     Intent intent = getIntent();
     String action = intent.getAction();
     String type = intent.getType();
@@ -159,13 +170,13 @@ public class SendActivity extends Activity implements ProgressIndicator {
         !TracksColumns.CONTENT_ITEMTYPE.equals(type) ||
         !UriUtils.matchesContentUri(data, TracksColumns.CONTENT_URI)) {
       Log.e(TAG, "Got bad send intent: " + intent);
-      finish();
-      return;
+      return false;
     }
 
     sendTrackId = ContentUris.parseId(data);
+    shareRequested = intent.getBooleanExtra(EXTRA_SHARE_LINK, false);
 
-    executeState(SendState.SEND_OPTIONS);
+    return true;
   }
 
   @Override
@@ -199,6 +210,42 @@ public class SendActivity extends Activity implements ProgressIndicator {
     });
     sendDialog.setOnCancelListener(finishOnCancelListener);
     return sendDialog;
+  }
+
+  private void restoreInstanceState(Bundle savedInstanceState) {
+    currentState = SendState.values()[savedInstanceState.getInt("state")];
+
+    sendToMyMapsSuccess = savedInstanceState.getBoolean("mapsSuccess");
+    sendToFusionTablesSuccess = savedInstanceState.getBoolean("fusionSuccess");
+    sendToDocsSuccess = savedInstanceState.getBoolean("docsSuccess");
+
+    sendToMyMapsMessage = savedInstanceState.getString("mapsMsg");
+    sendToFusionTablesMessage = savedInstanceState.getString("fusionMsg");
+    sendToDocsMessage = savedInstanceState.getString("docsMsg");
+
+    sendToMyMapsMapId = savedInstanceState.getString("mapId");
+    sendToFusionTablesTableId = savedInstanceState.getString("tableId");
+  }
+
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+
+    outState.putInt("state", currentState.ordinal());
+
+    outState.putBoolean("mapsSuccess", sendToMyMapsSuccess);
+    outState.putBoolean("fusionSuccess", sendToFusionTablesSuccess);
+    outState.putBoolean("docsSuccess", sendToDocsSuccess);
+
+    outState.putString("mapsMsg", sendToMyMapsMessage);
+    outState.putString("fusionMsg", sendToFusionTablesMessage);
+    outState.putString("docsMsg", sendToDocsMessage);
+
+    outState.putString("mapId", sendToMyMapsMapId);
+    outState.putString("tableId", sendToFusionTablesTableId);
+
+    // TODO: Ideally we should serialize/restore the authenticator map and lastAuth somehow,
+    //       but it's highly unlikely we'll get killed while an auth dialog is displayed.
   }
 
   @Override
