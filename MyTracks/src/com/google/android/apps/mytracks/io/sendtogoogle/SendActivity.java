@@ -62,6 +62,18 @@ import java.util.List;
  * @author Rodrigo Damazio
  */
 public class SendActivity extends Activity implements ProgressIndicator {
+  // Keys for saved state variables.
+  private static final String STATE_ACCOUNT_TYPE = "accountType";
+  private static final String STATE_ACCOUNT_NAME = "accountName";
+  private static final String STATE_TABLE_ID = "tableId";
+  private static final String STATE_MAP_ID = "mapId";
+  private static final String STATE_DOCS_MESSAGE = "docsMsg";
+  private static final String STATE_FUSION_TABLES_MESSAGE = "fusionMsg";
+  private static final String STATE_MAPS_MESSAGE = "mapsMsg";
+  private static final String STATE_DOCS_SUCCESS = "docsSuccess";
+  private static final String STATE_FUSION_SUCCESS = "fusionSuccess";
+  private static final String STATE_MAPS_SUCCESS = "mapsSuccess";
+  private static final String STATE_STATE = "state";
   private static final String EXTRA_SHARE_LINK = "share_link";
 
   /** States for the state machine that defines the upload process. */
@@ -213,42 +225,42 @@ public class SendActivity extends Activity implements ProgressIndicator {
   }
 
   private void restoreInstanceState(Bundle savedInstanceState) {
-    currentState = SendState.values()[savedInstanceState.getInt("state")];
+    currentState = SendState.values()[savedInstanceState.getInt(STATE_STATE)];
 
-    sendToMyMapsSuccess = savedInstanceState.getBoolean("mapsSuccess");
-    sendToFusionTablesSuccess = savedInstanceState.getBoolean("fusionSuccess");
-    sendToDocsSuccess = savedInstanceState.getBoolean("docsSuccess");
+    sendToMyMapsSuccess = savedInstanceState.getBoolean(STATE_MAPS_SUCCESS);
+    sendToFusionTablesSuccess = savedInstanceState.getBoolean(STATE_FUSION_SUCCESS);
+    sendToDocsSuccess = savedInstanceState.getBoolean(STATE_DOCS_SUCCESS);
 
-    sendToMyMapsMessage = savedInstanceState.getString("mapsMsg");
-    sendToFusionTablesMessage = savedInstanceState.getString("fusionMsg");
-    sendToDocsMessage = savedInstanceState.getString("docsMsg");
+    sendToMyMapsMessage = savedInstanceState.getString(STATE_MAPS_MESSAGE);
+    sendToFusionTablesMessage = savedInstanceState.getString(STATE_FUSION_TABLES_MESSAGE);
+    sendToDocsMessage = savedInstanceState.getString(STATE_DOCS_MESSAGE);
 
-    sendToMyMapsMapId = savedInstanceState.getString("mapId");
-    sendToFusionTablesTableId = savedInstanceState.getString("tableId");
+    sendToMyMapsMapId = savedInstanceState.getString(STATE_MAP_ID);
+    sendToFusionTablesTableId = savedInstanceState.getString(STATE_TABLE_ID);
 
-    lastAccountName = savedInstanceState.getString("accountName");
-    lastAccountType = savedInstanceState.getString("accountType");
+    lastAccountName = savedInstanceState.getString(STATE_ACCOUNT_NAME);
+    lastAccountType = savedInstanceState.getString(STATE_ACCOUNT_TYPE);
   }
 
   @Override
   protected void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
 
-    outState.putInt("state", currentState.ordinal());
+    outState.putInt(STATE_STATE, currentState.ordinal());
 
-    outState.putBoolean("mapsSuccess", sendToMyMapsSuccess);
-    outState.putBoolean("fusionSuccess", sendToFusionTablesSuccess);
-    outState.putBoolean("docsSuccess", sendToDocsSuccess);
+    outState.putBoolean(STATE_MAPS_SUCCESS, sendToMyMapsSuccess);
+    outState.putBoolean(STATE_FUSION_SUCCESS, sendToFusionTablesSuccess);
+    outState.putBoolean(STATE_DOCS_SUCCESS, sendToDocsSuccess);
 
-    outState.putString("mapsMsg", sendToMyMapsMessage);
-    outState.putString("fusionMsg", sendToFusionTablesMessage);
-    outState.putString("docsMsg", sendToDocsMessage);
+    outState.putString(STATE_MAPS_MESSAGE, sendToMyMapsMessage);
+    outState.putString(STATE_FUSION_TABLES_MESSAGE, sendToFusionTablesMessage);
+    outState.putString(STATE_DOCS_MESSAGE, sendToDocsMessage);
 
-    outState.putString("mapId", sendToMyMapsMapId);
-    outState.putString("tableId", sendToFusionTablesTableId);
+    outState.putString(STATE_MAP_ID, sendToMyMapsMapId);
+    outState.putString(STATE_TABLE_ID, sendToFusionTablesTableId);
 
-    outState.putString("accountName", lastAccountName);
-    outState.putString("accountType", lastAccountType);
+    outState.putString(STATE_ACCOUNT_NAME, lastAccountName);
+    outState.putString(STATE_ACCOUNT_TYPE, lastAccountType);
 
     // TODO: Ideally we should serialize/restore the authenticator map and lastAuth somehow,
     //       but it's highly unlikely we'll get killed while an auth dialog is displayed.
