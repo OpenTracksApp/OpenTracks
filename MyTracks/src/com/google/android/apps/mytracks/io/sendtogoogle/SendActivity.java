@@ -759,7 +759,6 @@ public class SendActivity extends Activity implements ProgressIndicator {
   }
 
   private void doLogin(final int requestCode, final String service, final Object account) {
-    // There's a chance that we go to a different activity, so close the dialog.
     lastAuth.doLogin(new Runnable() {
       public void run() {
         Log.i(TAG, "Login success for " + service + "!");
