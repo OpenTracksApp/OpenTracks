@@ -1,12 +1,12 @@
 /*
  * Copyright 2010 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -29,7 +29,7 @@ import android.util.Log;
  * @author Sandor Dornbush
  */
 public class AccountChooser {
- 
+
   /**
    * The last selected account.
    */
@@ -44,7 +44,7 @@ public class AccountChooser {
      * Handle the account being selected.
      * @param account The selected account or null if none could be found
      */
-    public void handleAccountSelected(Account account);
+    public void onAccountSelected(Account account);
   }
 
   /**
@@ -52,7 +52,7 @@ public class AccountChooser {
    * If no account is found the user will be alerted.
    * If only one account is found that will be used.
    * If multiple accounts are found the user will be allowed to choose.
-   * 
+   *
    * @param activity The parent activity
    * @param handler The handler to be notified when an account has been selected
    */
@@ -65,16 +65,16 @@ public class AccountChooser {
       return;
     }
     if (accounts.length == 1) {
-      handler.handleAccountSelected(accounts[0]);
+      handler.onAccountSelected(accounts[0]);
       return;
     }
-    
+
     // TODO This should be read out of a preference.
     if (selectedAccount != null) {
-      handler.handleAccountSelected(selectedAccount);
+      handler.onAccountSelected(selectedAccount);
       return;
     }
-    
+
     // Let the user choose.
     Log.e(Constants.TAG, "Multiple matching accounts found.");
     final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -83,14 +83,20 @@ public class AccountChooser {
     builder.setPositiveButton(R.string.ok,
         new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int which) {
-        selectedAccount = accounts[selectedAccountIndex];
-        handler.handleAccountSelected(selectedAccount);
+        dialog.dismiss();
+
+        if (selectedAccountIndex >= 0) {
+          selectedAccount = accounts[selectedAccountIndex];
+        }
+
+        handler.onAccountSelected(selectedAccount);
       }
     });
     builder.setNegativeButton(R.string.cancel,
         new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int which) {
-        handler.handleAccountSelected(null);
+        dialog.dismiss();
+        handler.onAccountSelected(null);
       }
     });
     String[] choices = new String[accounts.length];
@@ -120,7 +126,8 @@ public class AccountChooser {
     builder.setNegativeButton(R.string.ok,
         new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int which) {
-            handler.handleAccountSelected(null);
+            dialog.dismiss();
+            handler.onAccountSelected(null);
           }
         });
     builder.show();

@@ -1,12 +1,12 @@
 /*
  * Copyright 2011 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -44,34 +44,35 @@ public class FroyoStatusAnnouncerTask extends StatusAnnouncerTask {
       new OnUtteranceCompletedListener() {
         @Override
         public void onUtteranceCompleted(String utteranceId) {
-          if (audioManager != null) {
-            Log.d(TAG, "FroyoStatusAnnouncerTask: Abandoning audio focus.");
-            audioManager.abandonAudioFocus(null);
+          int result = audioManager.abandonAudioFocus(null);
+          if (result == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
+            Log.w(TAG, "FroyoStatusAnnouncerTask: Failed to relinquish audio focus");
           }
         }
       };
 
   public FroyoStatusAnnouncerTask(Context context) {
     super(context);
+
     audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
   }
 
   @Override
-  protected void onTtsInit(int status) {
-    super.onTtsInit(status);
-    if (status == TextToSpeech.SUCCESS) {
-      tts.setOnUtteranceCompletedListener(utteranceListener);
-    }
+  protected void onTtsReady() {
+    super.onTtsReady();
+
+    tts.setOnUtteranceCompletedListener(utteranceListener);
   }
 
   @Override
-  protected void speakAnnouncment(String announcement) {
+  protected synchronized void speakAnnouncement(String announcement) {
     int result = audioManager.requestAudioFocus(null,
           TextToSpeech.Engine.DEFAULT_STREAM,
           AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
     if (result == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
-      Log.w(TAG, "FroyoStatusAnnouncerTask: Request audio focus failed.");
+      Log.w(TAG, "FroyoStatusAnnouncerTask: Request for audio focus failed.");
     }
+
     // We don't care about the utterance id.
     // It is supplied here to force onUtteranceCompleted to be called.
     tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, SPEECH_PARAMS);

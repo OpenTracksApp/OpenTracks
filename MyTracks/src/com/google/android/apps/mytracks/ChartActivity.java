@@ -18,10 +18,12 @@ package com.google.android.apps.mytracks;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.ChartView.Mode;
-import com.google.android.apps.mytracks.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.Sensor;
+import com.google.android.apps.mytracks.content.TrackDataHub;
+import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
+import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
@@ -33,6 +35,9 @@ import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -56,6 +61,7 @@ import java.util.EnumSet;
  */
 public class ChartActivity extends Activity implements TrackDataListener {
 
+  private static final int CHART_SETTINGS_DIALOG = 1;
   private final DoubleBuffer elevationBuffer =
       new DoubleBuffer(Constants.ELEVATION_SMOOTHING_FACTOR);
   private final DoubleBuffer speedBuffer =
@@ -103,8 +109,6 @@ public class ChartActivity extends Activity implements TrackDataListener {
   protected void onCreate(Bundle savedInstanceState) {
     Log.w(TAG, "ChartActivity.onCreate");
     super.onCreate(savedInstanceState);
-    MyTracks.getInstance().setChartActivity(this);
-    dataHub = MyTracks.getInstance().getDataHub();
 
     // The volume we want to control is the Text-To-Speech volume
     int volumeStream =
@@ -137,11 +141,13 @@ public class ChartActivity extends Activity implements TrackDataListener {
   }
 
   @Override
-  protected void onStart() {
-    super.onStart();
+  protected void onResume() {
+    super.onResume();
 
+    dataHub = TrackDataHub.getStartedInstance();
     dataHub.registerTrackDataListener(this, EnumSet.of(
         ListenerDataType.SELECTED_TRACK_CHANGED,
+        ListenerDataType.TRACK_UPDATES,
         ListenerDataType.POINT_UPDATES,
         ListenerDataType.SAMPLED_OUT_POINT_UPDATES,
         ListenerDataType.WAYPOINT_UPDATES,
@@ -149,10 +155,11 @@ public class ChartActivity extends Activity implements TrackDataListener {
   }
 
   @Override
-  protected void onStop() {
+  protected void onPause() {
     dataHub.unregisterTrackDataListener(this);
+    dataHub = null;
 
-    super.onStop();
+    super.onPause();
   }
 
   private void zoomIn() {
@@ -184,10 +191,6 @@ public class ChartActivity extends Activity implements TrackDataListener {
     runOnUiThread(updateChart);
   }
 
-  public boolean isSeriesEnabled(int index) {
-    return chartView.getChartValueSeries(index).isEnabled();
-  }
-
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     super.onCreateOptionsMenu(menu);
@@ -202,11 +205,50 @@ public class ChartActivity extends Activity implements TrackDataListener {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case Constants.MENU_CHART_SETTINGS:
-        MyTracks.getInstance().getDialogManager().showDialogSafely(
-            DialogManager.DIALOG_CHART_SETTINGS);
+        showDialog(CHART_SETTINGS_DIALOG);
         return true;
     }
     return super.onOptionsItemSelected(item);
+  }
+
+  @Override
+  protected Dialog onCreateDialog(int id) {
+    if (id == CHART_SETTINGS_DIALOG) {
+      final ChartSettingsDialog settingsDialog = new ChartSettingsDialog(this);
+      settingsDialog.setOnClickListener(new OnClickListener() {
+        @Override
+        public void onClick(DialogInterface arg0, int which) {
+          if (which != DialogInterface.BUTTON_POSITIVE) {
+            return;
+          }
+
+          for (int i = 0; i < ChartView.NUM_SERIES; i++) {
+            chartView.getChartValueSeries(i).setEnabled(settingsDialog.isSeriesEnabled(i));
+          }
+          setMode(settingsDialog.getMode());
+          chartView.postInvalidate();
+        }
+      });
+      return settingsDialog;
+    }
+
+    return super.onCreateDialog(id);
+  }
+
+  @Override
+  protected void onPrepareDialog(int id, Dialog dialog) {
+    super.onPrepareDialog(id, dialog);
+
+    if (id == CHART_SETTINGS_DIALOG) {
+      prepareSettingsDialog((ChartSettingsDialog) dialog);
+    }
+  }
+
+  private void prepareSettingsDialog(final ChartSettingsDialog settingsDialog) {
+    settingsDialog.setMode(mode);
+    for (int i = 0; i < ChartView.NUM_SERIES; i++) {
+      settingsDialog.setSeriesEnabled(i, chartView.getChartValueSeries(i).isEnabled());
+    }
   }
 
   /**
@@ -257,13 +299,13 @@ public class ChartActivity extends Activity implements TrackDataListener {
     // TODO: Account for segment splits?
     switch (mode) {
       case BY_DISTANCE:
-        timeOrDistance = profileLength;
+        timeOrDistance = profileLength / 1000.0;
         if (lastLocation != null) {
           double d = lastLocation.distanceTo(location);
           if (metricUnits) {
-            profileLength += d / 1000.0;
+            profileLength += d;
           } else {
-            profileLength += d * UnitConversions.KM_TO_MI / 1000.0;
+            profileLength += d * UnitConversions.KM_TO_MI;
           }
         }
         break;
@@ -336,7 +378,6 @@ public class ChartActivity extends Activity implements TrackDataListener {
 
   @Override
   public void onSelectedTrackChanged(Track track, boolean isRecording) {
-    Log.e(TAG, "Visible", new Throwable());
     runOnUiThread(new Runnable() {
       @Override
       public void run() {
@@ -347,6 +388,11 @@ public class ChartActivity extends Activity implements TrackDataListener {
 
   @Override
   public void onTrackUpdated(Track track) {
+    if (track == null || track.getStatistics() == null) {
+      trackMaxSpeed = 0.0;
+      return;
+    }
+
     trackMaxSpeed = track.getStatistics().getMaxSpeed();
   }
 
@@ -356,9 +402,16 @@ public class ChartActivity extends Activity implements TrackDataListener {
     lastLocation = null;
     startTime = -1;
     elevationBuffer.reset();
-    speedBuffer.reset();
     chartView.reset();
+    speedBuffer.reset();
     pendingPoints.clear();
+
+    runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        chartView.resetScroll();
+      }
+    });
   }
 
   @Override
@@ -405,15 +458,21 @@ public class ChartActivity extends Activity implements TrackDataListener {
 
   @Override
   public boolean onUnitsChanged(boolean metric) {
+    boolean changed = metric != this.metricUnits;
+    if (!changed) return false;
+
     this.metricUnits = metric;
 
     chartView.setMetricUnits(metric);
-    
+
     return true;  // Reload data
   }
 
   @Override
   public boolean onReportSpeedChanged(boolean reportSpeed) {
+    boolean changed = reportSpeed != this.reportSpeed;
+    if (!changed) return false;
+
     this.reportSpeed = reportSpeed;
 
     chartView.setReportSpeed(reportSpeed, this);

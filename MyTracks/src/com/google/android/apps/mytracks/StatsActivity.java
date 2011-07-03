@@ -17,14 +17,18 @@ package com.google.android.apps.mytracks;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
 
-import com.google.android.apps.mytracks.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.content.TrackDataHub;
+import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
+import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -44,6 +48,18 @@ import java.util.EnumSet;
  * @author Rodrigo Damazio
  */
 public class StatsActivity extends Activity implements TrackDataListener {
+  /**
+   * A runnable for posting to the UI thread. Will update the total time field.
+   */
+  private final Runnable updateResults = new Runnable() {
+    public void run() {
+      if (dataHub != null && dataHub.isRecordingSelected()) {
+        utils.setTime(R.id.total_time_register,
+            System.currentTimeMillis() - startTime);
+      }
+    }
+  };
+
   private StatsUtilities utils;
   private UIUpdateThread thread;
 
@@ -59,18 +75,7 @@ public class StatsActivity extends Activity implements TrackDataListener {
   private boolean showCurrentSegment = false;
 
   private TrackDataHub dataHub;
-
-  /**
-   * A runnable for posting to the UI thread. Will update the total time field.
-   */
-  private final Runnable updateResults = new Runnable() {
-    public void run() {
-      if (dataHub.isRecordingSelected()) {
-        utils.setTime(R.id.total_time_register,
-            System.currentTimeMillis() - startTime);
-      }
-    }
-  };
+  private SharedPreferences preferences;
 
   /**
    * A thread that updates the total time field every second.
@@ -85,7 +90,7 @@ public class StatsActivity extends Activity implements TrackDataListener {
     @Override
     public void run() {
       Log.i(TAG, "Started UI update thread");
-      while (MyTracks.getInstance().isRecording()) {
+      while (ServiceUtils.isRecording(StatsActivity.this, null, preferences)) {
         runOnUiThread(updateResults);
         try {
           Thread.sleep(1000L);
@@ -100,10 +105,10 @@ public class StatsActivity extends Activity implements TrackDataListener {
 
   /** Called when the activity is first created. */
   @Override
-  public void onCreate(Bundle savedInstanceState) {
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    dataHub = MyTracks.getInstance().getDataHub();
+    preferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
     utils = new StatsUtilities(this);
 
     // The volume we want to control is the Text-To-Speech volume
@@ -129,19 +134,21 @@ public class StatsActivity extends Activity implements TrackDataListener {
   }
 
   @Override
-  protected void onStart() {
+  protected void onResume() {
+    super.onResume();
+
+    dataHub = TrackDataHub.getStartedInstance();
     dataHub.registerTrackDataListener(this, EnumSet.of(
         ListenerDataType.SELECTED_TRACK_CHANGED,
         ListenerDataType.TRACK_UPDATES,
         ListenerDataType.LOCATION_UPDATES,
         ListenerDataType.DISPLAY_PREFERENCES));
-
-    super.onStart();
   }
 
   @Override
-  protected void onStop() {
+  protected void onPause() {
     dataHub.unregisterTrackDataListener(this);
+    dataHub = null;
 
     if (thread != null) {
       thread.interrupt();
@@ -153,6 +160,9 @@ public class StatsActivity extends Activity implements TrackDataListener {
 
   @Override
   public boolean onUnitsChanged(boolean metric) {
+    // Ignore if unchanged.
+    if (metric == utils.isMetricUnits()) return false;
+
     utils.setMetricUnits(metric);
     updateLabels();
 
@@ -161,9 +171,12 @@ public class StatsActivity extends Activity implements TrackDataListener {
 
   @Override
   public boolean onReportSpeedChanged(boolean displaySpeed) {
+    // Ignore if unchanged.
+    if (displaySpeed == utils.isReportSpeed()) return false;
+
     utils.setReportSpeed(displaySpeed);
     updateLabels();
-  
+
     return true;  // Reload data
   }
 
@@ -248,21 +261,21 @@ public class StatsActivity extends Activity implements TrackDataListener {
       thread.interrupt();
       thread = null;
     }
-
-    if (track == null || track.getStatistics() == null) {
-      runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-          utils.setAllToUnknown();
-        }
-      });
-    }
   }
 
   @Override
-  public void onCurrentLocationChanged(Location loc) {
+  public void onCurrentLocationChanged(final Location loc) {
     if (dataHub.isRecordingSelected()) {
-      showLocation(loc);
+      runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+          if (loc != null) {
+            showLocation(loc);
+          } else {
+            showUnknownLocation();
+          }
+        }
+      });
     }
   }
 
@@ -276,18 +289,29 @@ public class StatsActivity extends Activity implements TrackDataListener {
     switch (state) {
       case DISABLED:
       case NO_FIX:
-        showUnknownLocation();
+        runOnUiThread(new Runnable() {
+          @Override
+          public void run() {
+            showUnknownLocation();
+          }
+        });
         break;
     }
   }
 
   @Override
   public void onTrackUpdated(final Track track) {
+    final boolean recordingSelected = dataHub.isRecordingSelected();
     runOnUiThread(new Runnable() {
       @Override
       public void run() {
+        if (track == null || track.getStatistics() == null) {
+          utils.setAllToUnknown();
+          return;
+        }
+
         startTime = track.getStatistics().getStartTime();
-        if (!dataHub.isRecordingSelected()) {
+        if (!recordingSelected) {
           utils.setTime(R.id.total_time_register,
               track.getStatistics().getTotalTime());
           showUnknownLocation();

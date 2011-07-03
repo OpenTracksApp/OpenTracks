@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileForm
 import com.google.android.apps.mytracks.util.StringUtils;
 
 import android.location.Location;
+import android.os.Build;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -85,7 +86,7 @@ public class GpxTrackWriter implements TrackFormatWriter {
       pw.println("<?xml-stylesheet type=\"text/xsl\" href=\"details.xsl\"?>");
       pw.println("<gpx");
       pw.println(" version=\"1.1\"");
-      pw.println(" creator=\"My Tracks for the G1 running Android\"");
+      pw.format(" creator=\"My Tracks running on %s\"\n", Build.MODEL);
       pw.println(" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
       pw.println(" xmlns=\"http://www.topografix.com/GPX/1/1\"");
       pw.print(" xmlns:topografix=\"http://www.topografix.com/GPX/Private/"

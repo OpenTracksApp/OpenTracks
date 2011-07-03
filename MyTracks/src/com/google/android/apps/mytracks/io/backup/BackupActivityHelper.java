@@ -202,8 +202,6 @@ public class BackupActivityHelper {
           Log.e(Constants.TAG, "Failed to restore backup", e);
           showToast(R.string.io_read_failed);
         } finally {
-          dismissDialog(progressDialog);
-
           // Data may have been restored, "reboot" the app to catch it
           restartApplication();
         }

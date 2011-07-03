@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks.io.docs;
 
 import com.google.android.apps.mytracks.io.gdata.GDataWrapper;
+import com.google.wireless.gdata.client.GDataServiceClient;
 
 import android.content.Context;
 import android.test.mock.MockContext;
@@ -43,7 +44,7 @@ public class DocsHelperTest extends TestCase {
   // touch AndroidMock at all to get this failure.
   // The bug is filed with Android Mock as
   //   http://code.google.com/p/android-mock/issues/detail?id=3
-  private class MockGDataWrapper extends GDataWrapper {
+  private class MockGDataWrapper extends GDataWrapper<GDataServiceClient> {
     private final boolean returnValue;
     
     MockGDataWrapper(boolean returnValue) {
@@ -51,7 +52,7 @@ public class DocsHelperTest extends TestCase {
     }
     
     @Override
-    public boolean runQuery(QueryFunction queryFunction) {
+    public boolean runQuery(QueryFunction<GDataServiceClient> queryFunction) {
       return returnValue;
     }
   }

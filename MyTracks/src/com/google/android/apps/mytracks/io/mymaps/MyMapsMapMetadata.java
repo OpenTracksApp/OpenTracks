@@ -23,7 +23,7 @@ class MyMapsMapMetadata {
   }
 
   public void setTitle(String title) {
-    this.title = new String(title);
+    this.title = title;
   }
 
   public String getDescription() {
@@ -31,7 +31,7 @@ class MyMapsMapMetadata {
   }
 
   public void setDescription(String description) {
-    this.description = new String(description);
+    this.description = description;
   }
 
   public boolean getSearchable() {
@@ -47,6 +47,6 @@ class MyMapsMapMetadata {
   }
 
   public void setGDataEditUri(String editUri) {
-    this.gdataEditUri = new String(editUri);
+    this.gdataEditUri = editUri;
   }
 }

@@ -13,9 +13,8 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks;
+package com.google.android.apps.mytracks.io.file;
 
-import com.google.android.apps.mytracks.io.file.TrackWriter;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -41,14 +40,15 @@ class WriteProgressController {
      * dialog has been dismissed.  Whether the write succeeded can be
      * determined by examining the {@link TrackWriter}.
      */
-    public void onComplete(TrackWriter writer);
+    public void onComplete();
   }
 
   private final Activity activity;
   private final TrackWriter writer;
-  private final ProgressDialog dialog;
+  private ProgressDialog dialog;
 
   private OnCompletionListener onCompletionListener;
+  private final int progressDialogId;
 
   /**
    * @param activity the activity associated with this write
@@ -57,17 +57,10 @@ class WriteProgressController {
    *     interested in notification upon completion of the write, they should
    *     use {@link #setOnCompletionListener}.
    */
-  public WriteProgressController(Activity activity, TrackWriter writer) {
+  public WriteProgressController(Activity activity, TrackWriter writer, int progressDialogId) {
     this.activity = activity;
     this.writer = writer;
-
-    dialog = new ProgressDialog(activity);
-    dialog.setIcon(android.R.drawable.ic_dialog_info);
-    dialog.setTitle(activity.getString(R.string.progress_title));
-    dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-    dialog.setMessage(activity.getString(R.string.write_progress_message));
-    dialog.setIndeterminate(true);
-    dialog.setOnCancelListener(dialogCancelListener);
+    this.progressDialogId = progressDialogId;
 
     writer.setOnCompletionListener(writerCompleteListener);
     writer.setOnWriteListener(writerWriteListener);
@@ -78,9 +71,20 @@ class WriteProgressController {
     this.onCompletionListener = onCompletionListener;
   }
 
+  public ProgressDialog createProgressDialog() {
+    dialog = new ProgressDialog(activity);
+    dialog.setIcon(android.R.drawable.ic_dialog_info);
+    dialog.setTitle(activity.getString(R.string.progress_title));
+    dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+    dialog.setMessage(activity.getString(R.string.write_progress_message));
+    dialog.setIndeterminate(true);
+    dialog.setOnCancelListener(dialogCancelListener);
+    return dialog;
+  }
+
   /** Initiate an asynchronous write. */
   public void startWrite() {
-    DialogManager.showDialogSafely(activity, dialog);
+    activity.showDialog(progressDialogId);
     writer.writeTrackAsync();
   }
 
@@ -101,10 +105,10 @@ class WriteProgressController {
       new TrackWriter.OnCompletionListener() {
         @Override
         public void onComplete() {
-          DialogManager.dismissDialogSafely(activity, dialog);
+          activity.dismissDialog(progressDialogId);
 
           if (onCompletionListener != null) {
-            onCompletionListener.onComplete(writer);
+            onCompletionListener.onComplete();
           }
         }
       };

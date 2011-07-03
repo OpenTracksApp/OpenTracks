@@ -16,10 +16,13 @@
 
 package com.google.android.apps.mytracks.io.file;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 
 import android.content.Context;
+import android.util.Log;
 
 /**
  * A factory to produce track writers for any format.
@@ -90,6 +93,11 @@ public class TrackWriterFactory {
       MyTracksProviderUtils providerUtils,
       long trackId, TrackFileFormat format) {
     Track track = providerUtils.getTrack(trackId);
+    if (track == null) {
+      Log.w(TAG, "Trying to create a writer for an invalid track, id=" + trackId);
+      return null;
+    }
+
     return newWriter(context, providerUtils, track, format);
   }
 

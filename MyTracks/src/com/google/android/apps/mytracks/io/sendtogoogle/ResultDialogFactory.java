@@ -58,7 +58,8 @@ public class ResultDialogFactory {
    */
   public static AlertDialog makeDialog(Activity activity, List<SendResult> results,
       DialogInterface.OnClickListener onOkClickListener,
-      DialogInterface.OnClickListener onShareClickListener) {
+      DialogInterface.OnClickListener onShareClickListener,
+      DialogInterface.OnCancelListener onCancelListener) {
     boolean success = true;
     for (SendResult result : results) {
       if (!result.isSuccess()) {
@@ -83,6 +84,8 @@ public class ResultDialogFactory {
       builder.setNeutralButton(activity.getString(R.string.share_track),
           onShareClickListener);
     }
+
+    builder.setOnCancelListener(onCancelListener);
 
     return builder.create();
   }

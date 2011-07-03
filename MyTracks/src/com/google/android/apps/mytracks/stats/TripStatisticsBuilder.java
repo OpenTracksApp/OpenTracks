@@ -19,7 +19,6 @@ package com.google.android.apps.mytracks.stats;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.SettingsActivity;
 
 import android.location.Location;
 import android.util.Log;

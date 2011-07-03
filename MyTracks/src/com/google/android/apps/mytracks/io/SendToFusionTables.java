@@ -15,6 +15,7 @@
  */
 package com.google.android.apps.mytracks.io;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.ProgressIndicator;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
@@ -49,6 +50,7 @@ import android.util.Log;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -156,6 +158,11 @@ public class SendToFusionTables implements Runnable {
   }
 
   public static String getMapVisualizationUrl(Track track) {
+    if (track == null || track.getStatistics() == null || track.getTableId() == null) {
+      Log.w(TAG, "Unable to get track URL");
+      return null;
+    }
+
     // TODO(leifhendrik): Determine correct bounding box and zoom level that will show the entire track.
     TripStatistics stats = track.getStatistics();
     double latE6 = stats.getBottom() + (stats.getTop() - stats.getBottom()) / 2;
@@ -179,6 +186,11 @@ public class SendToFusionTables implements Runnable {
 
       // Get the track meta-data
       Track track = providerUtils.getTrack(trackId);
+      if (track == null) {
+        Log.w(Constants.TAG, "Cannot get track.");
+        return;
+      }
+
       String originalDescription = track.getDescription();
 
       // Create a new table:
@@ -207,7 +219,6 @@ public class SendToFusionTables implements Runnable {
       Log.d(Constants.TAG, "SendToFusionTables: Done: " + success);
       progressIndicator.setProgressValue(PROGRESS_COMPLETE);
     } finally {
-
       final boolean finalSuccess = success;
       final int finalStatusMessageId = statusMessageId;
       context.runOnUiThread(new Runnable() {
@@ -304,7 +315,7 @@ public class SendToFusionTables implements Runnable {
 
     Cursor locationsCursor = providerUtils.getLocationsCursor(track.getId(), 0, -1, false);
     try {
-      if (!locationsCursor.moveToFirst()) {
+      if (locationsCursor == null || !locationsCursor.moveToFirst()) {
         Log.w(Constants.TAG, "Unable to get any points to upload");
         return false;
       }
@@ -391,7 +402,9 @@ public class SendToFusionTables implements Runnable {
 
       return true;
     } finally {
-      locationsCursor.close();
+      if (locationsCursor != null) {
+        locationsCursor.close();
+      }
     }
   }
 
@@ -420,10 +433,10 @@ public class SendToFusionTables implements Runnable {
    * @return the kml.
    */
   private String getKmlPoint(Location location) {
-  	StringBuilder builder = new StringBuilder("<Point><coordinates>");
-  	appendCoordinate(location, builder);
-  	builder.append("</coordinates></Point>");
-  	return builder.toString();
+    StringBuilder builder = new StringBuilder("<Point><coordinates>");
+    appendCoordinate(location, builder);
+    builder.append("</coordinates></Point>");
+    return builder.toString();
   }
 
   /**
@@ -599,7 +612,7 @@ public class SendToFusionTables implements Runnable {
     // I am leaving the number of waypoints very high which should not be a
     // problem because we don't try to load them into objects all at the
     // same time.
-  	boolean success = true;
+    boolean success = true;
     Cursor c = null;
     try {
       c = providerUtils.getWaypointsCursor(
@@ -613,9 +626,9 @@ public class SendToFusionTables implements Runnable {
             Waypoint wpt = providerUtils.createWaypoint(c);
             Log.d(Constants.TAG, "SendToFusionTables: Creating waypoint.");
             success = createNewPoint(wpt.getName(), wpt.getDescription(), wpt.getLocation(),
-            		MARKER_TYPE_WAYPOINT);
+                MARKER_TYPE_WAYPOINT);
             if (!success) {
-            	break;
+              break;
             }
           }
         }
@@ -637,7 +650,7 @@ public class SendToFusionTables implements Runnable {
     // to fit the completion percentage range alloted to track data upload.
     double totalPercentage =
         (totalLocationsRead + totalLocationsPrepared + totalLocationsUploaded)
-        / (totalLocations * 3);
+        / (totalLocations * 3.0);
 
     double scaledPercentage = totalPercentage
         * (PROGRESS_UPLOAD_DATA_MAX - PROGRESS_UPLOAD_DATA_MIN) + PROGRESS_UPLOAD_DATA_MIN;
@@ -681,8 +694,8 @@ public class SendToFusionTables implements Runnable {
         boolean success = response.isSuccessStatusCode;
         if (success) {
           byte[] result = new byte[1024];
-          response.getContent().read(result);
-          String s = Strings.fromBytesUtf8(result);
+          int read = response.getContent().read(result);
+          String s = new String(result, 0, read, Charset.forName("UTF8"));
           String[] lines = s.split(Strings.LINE_SEPARATOR);
           if (lines[0].equals("tableid")) {
             tableId = lines[1];

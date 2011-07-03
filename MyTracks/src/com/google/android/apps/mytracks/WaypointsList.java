@@ -1,12 +1,12 @@
 /*
  * Copyright 2009 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -15,10 +15,14 @@
  */
 package com.google.android.apps.mytracks;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
+import com.google.android.apps.mytracks.services.ITrackRecordingService;
+import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -43,6 +47,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Activity which shows the list of waypoints in a track.
@@ -60,6 +65,7 @@ public class WaypointsList extends ListActivity
   private Button insertStatisticsButton = null;
   private long recordingTrackId = -1;
   private MyTracksProviderUtils providerUtils;
+  private TrackRecordingServiceConnection serviceConnection;
 
   private Cursor waypointsCursor = null;
 
@@ -73,15 +79,18 @@ public class WaypointsList extends ListActivity
           contextPosition = info.position;
           waypointId = WaypointsList.this.listView.getAdapter()
               .getItemId(contextPosition);
-          int type = providerUtils.getWaypoint(info.id).getType();
-          menu.add(0, Constants.MENU_SHOW, 0,
-              R.string.waypointslist_show_waypoint);
-          menu.add(0, Constants.MENU_EDIT, 0,
-              R.string.waypointslist_edit_waypoint);
-          menu.add(0, Constants.MENU_DELETE, 0,
-              R.string.waypointslist_delete_waypoint).setEnabled(
-                  recordingTrackId < 0 || type == Waypoint.TYPE_WAYPOINT ||
-                  info.id != providerUtils.getLastWaypointId(recordingTrackId));
+          Waypoint waypoint = providerUtils.getWaypoint(info.id);
+          if (waypoint != null) {
+            int type = waypoint.getType();
+            menu.add(0, Constants.MENU_SHOW, 0,
+                R.string.waypointslist_show_waypoint);
+            menu.add(0, Constants.MENU_EDIT, 0,
+                R.string.waypointslist_edit_waypoint);
+            menu.add(0, Constants.MENU_DELETE, 0,
+                R.string.waypointslist_delete_waypoint).setEnabled(
+                    recordingTrackId < 0 || type == Waypoint.TYPE_WAYPOINT ||
+                    info.id != providerUtils.getLastWaypointId(recordingTrackId));
+          }
         }
       };
 
@@ -122,6 +131,7 @@ public class WaypointsList extends ListActivity
     super.onCreate(savedInstanceState);
 
     providerUtils = MyTracksProviderUtils.Factory.get(this);
+    serviceConnection = new TrackRecordingServiceConnection(this, null);
 
     // We don't need a window title bar:
     requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -159,13 +169,27 @@ public class WaypointsList extends ListActivity
       trackId = -1;
     }
 
-    final long firstWaypointId = providerUtils.getFirstWaypointId(trackId); 
+    final long firstWaypointId = providerUtils.getFirstWaypointId(trackId);
     waypointsCursor = getContentResolver().query(
         WaypointsColumns.CONTENT_URI, null,
         WaypointsColumns.TRACKID + "=" + trackId + " AND "
         + WaypointsColumns._ID + "!=" + firstWaypointId, null, null);
     startManagingCursor(waypointsCursor);
     setListAdapter();
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+
+    serviceConnection.bindIfRunning();
+  }
+
+  @Override
+  protected void onDestroy() {
+    serviceConnection.unbind();
+
+    super.onDestroy();
   }
 
   @Override
@@ -181,23 +205,38 @@ public class WaypointsList extends ListActivity
       default:
         return;
     }
-    long id;
-    try {
-      id = MyTracks.getInstance().insertWaypoint(request);
-    } catch (RemoteException e) {
-      Log.e(Constants.TAG, "Cannot insert marker.", e);
-      return;
-    } catch (IllegalStateException e) {
-      Log.e(Constants.TAG, "Cannot insert marker.", e);
-      return;
-    }
+    long id = insertWaypoint(request);
     if (id < 0) {
+      Toast.makeText(this, R.string.error_unable_to_insert_marker,
+          Toast.LENGTH_LONG).show();
       Log.e(Constants.TAG, "Failed to insert marker.");
       return;
     }
     Intent intent = new Intent(this, WaypointDetails.class);
     intent.putExtra(WaypointDetails.WAYPOINT_ID_EXTRA, id);
     startActivity(intent);
+  }
+
+  private long insertWaypoint(WaypointCreationRequest request) {
+    try {
+      ITrackRecordingService trackRecordingService = serviceConnection.getServiceIfBound();
+      if (trackRecordingService != null) {
+        long waypointId = trackRecordingService.insertWaypoint(request);
+        if (waypointId >= 0) {
+          Toast.makeText(this, R.string.status_statistics_inserted,
+              Toast.LENGTH_LONG).show();
+          return waypointId;
+        }
+      } else {
+        Log.e(TAG, "Not connected to service, not inserting waypoint");
+      }
+    } catch (RemoteException e) {
+      Log.e(Constants.TAG, "Cannot insert marker.", e);
+    } catch (IllegalStateException e) {
+      Log.e(Constants.TAG, "Cannot insert marker.", e);
+    }
+
+    return -1;
   }
 
   private void setListAdapter() {
@@ -209,7 +248,7 @@ public class WaypointsList extends ListActivity
         new String[] { WaypointsColumns.NAME, WaypointsColumns.TIME,
                        WaypointsColumns.CATEGORY, WaypointsColumns.TYPE },
         new int[] { R.id.waypointslist_item_name,
-                    R.id.waypointslist_item_time, 
+                    R.id.waypointslist_item_time,
                     R.id.waypointslist_item_category,
                     R.id.waypointslist_item_icon });
 
@@ -219,7 +258,7 @@ public class WaypointsList extends ListActivity
         waypointsCursor.getColumnIndexOrThrow(WaypointsColumns.TYPE);
     adapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
       @Override
-      public boolean setViewValue(View view, Cursor cursor, int columnIndex) {    
+      public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
         if (columnIndex == timeIdx) {
           long time = cursor.getLong(timeIdx);
           TextView textView = (TextView) view;

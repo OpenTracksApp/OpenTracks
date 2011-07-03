@@ -50,7 +50,7 @@ public abstract class Constants {
   public static final int AUTHENTICATE_TO_DOCLIST = 10;
   public static final int AUTHENTICATE_TO_TRIX = 11;
   public static final int DELETE_TRACK = 13;
-  public static final int SEND_TO_GOOGLE_DIALOG = 14;
+  public static final int SEND_TO_GOOGLE = 14;
   public static final int SHARE_LINK = 15;
   public static final int SHARE_GPX_FILE = 16;
   public static final int SHARE_KML_FILE = 17;
@@ -187,18 +187,10 @@ public abstract class Constants {
   public static final String RESUME_TRACK_EXTRA_NAME =
       "com.google.android.apps.mytracks.RESUME_TRACK";
 
-  /**
-   * The name of the extra intent property that holds the track information
-   * when sharing with friends
-   */
-  public static final String TRACK_EXTRA = 
-      "com.google.android.apps.mytracks.TRACK";
-  
-
   public static int getActionFromMenuId(int menuId) {
     switch (menuId) {
       case Constants.MENU_SEND_TO_GOOGLE:
-        return Constants.SEND_TO_GOOGLE_DIALOG;
+        return Constants.SEND_TO_GOOGLE;
       case Constants.MENU_EDIT:
         return Constants.EDIT_DETAILS;
       case Constants.MENU_DELETE:

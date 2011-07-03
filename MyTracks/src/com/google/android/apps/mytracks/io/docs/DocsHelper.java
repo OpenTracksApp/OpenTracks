@@ -363,8 +363,8 @@ public class DocsHelper {
     wr.close();
     rd.close();
   }
-  
-  private static IOException newIOException(GDataWrapper wrapper, 
+
+  private static IOException newIOException(GDataWrapper<GDataServiceClient> wrapper, 
       String message) {
     return new IOException(String.format("%s: %d: %s", message, 
         wrapper.getErrorType(), wrapper.getErrorMessage()));

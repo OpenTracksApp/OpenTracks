@@ -42,7 +42,7 @@ limitations under the License.
   <string name="error_invalid_gpx_format">Plik nie jest poprawnym plikiem GPX.</string>
   <string name="error_generic">Wystąpił błąd. Spróbuj ponownie.</string>
   <string name="error_track_does_not_exist">Trasa nie istnieje.</string>
-  <string name="error_out_of_memory">Plik jest za duży (musi być mniejszy nić 500 KB). Przerywam.</string>
+  <string name="error_out_of_memory">Plik jest za duży (musi być mniejszy niż 500 KB). Przerywam.</string>
   <string name="error_unable_to_insert_marker">Nie można wstawić markera. Brak poprawnych danych o lokalizacji.</string>
 
   <!-- Status messages -->
@@ -334,7 +334,6 @@ limitations under the License.
   <string name="about_team">Zespół:</string>
   <string name="about_version">Wersja:</string>
   <string name="about_support">Wsparcie:</string>
-  <string name="about_bart">Bartłomiej Niechwiej</string>
 
   <!-- Send to Google -->
   <string name="sendtogoogle_title">Wyślij do...</string>
@@ -385,4 +384,31 @@ limitations under the License.
   <!-- Check Units -->
   <string name="check_units_title">Jednostki miary</string>
   <string name="check_units_message">Domyślnie używane są jednostki metryczne. Chcesz to zmienić?</string>
+  
+  <!-- Fake preference keys - never saved, but show options in the preferences screen -->
+  <string name="method_bluetooth">Bluetooth</string>
+  <string name="bluetooth_options">Opcje Bluetooth</string>
+  <string name="bluetooth_pairing">Parowanie urządzenia</string>
+  <string name="bluetooth_pairing_summary">Przejdź do ustawień Bluetooth Androida aby sparować urządzenie</string>
+  <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
+  <string name="ant_options">Opce ANT</string>
+  <string name="sensor_options">Opcje Czujników</string>
+
+  <!-- Bluetooth Sensor -->
+  <string name="bluetooth_connected">Połączony z %s</string>
+  <string name="bluetooth_connecting">Łączenie urządzenia Bluetooth w toku...</string>
+  <string name="bluetooth_not_connected">Urządzenie Bluetooth niepołączone</string>
+
+  <!-- Sensor State -->
+  <string name="sensor_data_time">Czas Danych Czujnika</string>
+  <string name="power_meter_enabled">Miernik mocy aktywny</string>
+  <string name="heart_rate_monitor_enabled">Pulsometr aktywny</string>
+  <string name="no_sensor_manager">Brak Ustawień Czujników</string>
+  <string name="enabled">Aktywny</string>
+  <string name="connecting">Łączenie</string>
+  <string name="connected">Podłączony</string>
+  <string name="disconnected">Rozłączony</string>
+  <string name="no_sensor_service">Brak Serwisu Czujników</string>
+  <string name="searching">Wykrywanie</string>
+  <string name="sending">Przesyłanie</string>
 </resources>

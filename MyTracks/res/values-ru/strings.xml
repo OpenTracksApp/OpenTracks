@@ -162,8 +162,8 @@ limitations under the License.
   $2 : Attempted imports
   $3 : MyTracks gpx path
   -->
-  <string name="import_done">Импортировано %1$d из %2$d GPX файлов с %3$s</string>
-  <string name="import_empty">GPX файлы не найденны в %s. Возможно не читается SD-карта или каталог не содержит GPX файлы.</string>
+  <string name="import_multi_done">Импортировано %1$d из %2$d GPX файлов с %3$s</string>
+  <string name="import_multi_empty">GPX файлы не найденны в %s. Возможно не читается SD-карта или каталог не содержит GPX файлы.</string>
   <string name="import_error">Ошибка импорта файла %s</string>
 
   <!-- Waypoints list -->

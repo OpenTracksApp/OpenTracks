@@ -159,8 +159,8 @@ limitations under the License.
   $2 : Attempted imports
   $3 : MyTracks gpx path
   -->
-  <string name="import_done">%3$s からGPXファイル %2$d件のうち %1$d件をインポートしました</string>
-  <string name="import_empty">%s ではGPXファイルがありません．SDカードを読み込めないかディレクトリにGPXファイルが無いかも知れません．</string>
+  <string name="import_multi_done">%3$s からGPXファイル %2$d件のうち %1$d件をインポートしました</string>
+  <string name="import_multi_empty">%s ではGPXファイルがありません．SDカードを読み込めないかディレクトリにGPXファイルが無いかも知れません．</string>
   <string name="import_error">ファイル %s のインポートエラー</string>
 
   <!-- Waypoints list -->
