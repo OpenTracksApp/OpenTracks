@@ -16,8 +16,12 @@
 
 package com.google.android.apps.mytracks.widgets;
 
+import static com.google.android.apps.mytracks.Constants.SETTINGS_NAME;
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
+import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -28,12 +32,12 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
@@ -45,8 +49,8 @@ import com.google.android.maps.mytracks.R;
  * @author Sandor Dornbush
  * @author Paul R. Saxman
  */
-public class AppWidgetProvider
-    extends android.appwidget.AppWidgetProvider
+public class TrackWidgetProvider
+    extends AppWidgetProvider
     implements OnSharedPreferenceChangeListener {
 
   class TrackObserver extends ContentObserver {
@@ -56,7 +60,7 @@ public class AppWidgetProvider
     }
     
     public void onChange(boolean selfChange) {
-      updateTrack(-1, null);
+      updateTrack(null);
     }
   }
   
@@ -69,37 +73,46 @@ public class AppWidgetProvider
   private String speed;
   private TrackObserver trackObserver;
   private boolean isMetric;
-  
-  public AppWidgetProvider() {
+  private long selectedTrackId;
+  private SharedPreferences sharedPreferences;
+  private String TRACK_STARTED_ACTION;
+  private String TRACK_STOPPED_ACTION;
+
+  public TrackWidgetProvider() {
     super();
     contentHandler = new Handler();
+    selectedTrackId = -1;
   }
 
   @Override
   public void onEnabled(Context context) {
+    initialize(context);
+
+    // So long as an action is set the buttons will get set up properly.
+    updateTrack("some action");
+  }
+
+  private void initialize(Context context) {
+    this.context = context;
     trackObserver = new TrackObserver();
+    providerUtils = MyTracksProviderUtils.Factory.get(context);
+    time = context.getString(R.string.min);
+    unknown = context.getString(R.string.unknown);
+
+    sharedPreferences = context.getSharedPreferences(SETTINGS_NAME, 0);
+    sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+    onSharedPreferenceChanged(sharedPreferences, null);
+
     context.getContentResolver().registerContentObserver(
         TracksColumns.CONTENT_URI, true, trackObserver);
-    initialize(context);
+    TRACK_STARTED_ACTION = context.getString(R.string.track_started_broadcast_action);
+    TRACK_STOPPED_ACTION = context.getString(R.string.track_stopped_broadcast_action);
   }
 
   @Override
   public void onDisabled(Context context) {
     context.getContentResolver().unregisterContentObserver(trackObserver);
-  }
-
-  private void initialize(Context context) {
-    if (this.context != null) {
-      return;
-    }
-    providerUtils = MyTracksProviderUtils.Factory.get(context);
-    this.context = context;
-    distance = context.getString(R.string.kilometer);
-    speed = context.getString(R.string.kilometer_per_hour);
-    time = context.getString(R.string.min);
-    unknown = context.getString(R.string.unknown);
-    SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
-    this.onSharedPreferenceChanged(sharedPreferences, null);
+    sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
   }
 
   @Override
@@ -107,32 +120,41 @@ public class AppWidgetProvider
     super.onReceive(context, intent);
     initialize(context);
 
-    long trackId = intent.getLongExtra(
-        context.getString(R.string.track_id_broadcast_extra), -1);
+    selectedTrackId = intent.getLongExtra(
+        context.getString(R.string.track_id_broadcast_extra), selectedTrackId);
     String action = intent.getAction();
+    // TODO this should only trigger for intents this sent.
+    if (TRACK_STARTED_ACTION.equals(action)) {
+      ApiFeatures.getInstance().getApiPlatformAdapter()
+          .applyPreferenceChanges(
+              sharedPreferences.edit().putLong(
+                  context.getString(R.string.selected_track_key), selectedTrackId));
+    }
 
-    Log.d(Constants.TAG,
-        "MyTracksAppWidgetProvider.onReceive: trackId=" + trackId + ", action="
-            + action);
+    Log.d(TAG,
+        "TrackWidgetProvider.onReceive: trackId=" + selectedTrackId + ", action=" + action);
 
-    updateTrack(trackId, action);
+    if (AppWidgetManager.ACTION_APPWIDGET_ENABLED.equals(action)
+        || AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(action)
+        || TRACK_STARTED_ACTION.equals(action)
+        || TRACK_STOPPED_ACTION.equals(action)) {
+      updateTrack(action);
+    }
   }
 
-  private void updateTrack(long trackId, String action) {
+  private void updateTrack(String action) {
     Track track = null;
-    if (trackId != -1) {
-      Log.d(Constants.TAG,
-          "MyTracksAppWidgetProvider.onReceive: Retrieving specified track.");
-      track = providerUtils.getTrack(trackId);
+    if (selectedTrackId != -1) {
+      Log.d(TAG, "TrackWidgetProvider.updateTrack: Retrieving specified track.");
+      track = providerUtils.getTrack(selectedTrackId);
     } else {
-      Log.d(Constants.TAG,
-          "MyTracksAppWidgetProvider.onReceive: Attempting to retrieve previous track.");
+      Log.d(TAG, "TrackWidgetProvider.updateTrack: Attempting to retrieve previous track.");
       // TODO we should really read the pref.
       track = providerUtils.getLastTrack();
     }
 
     AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-    ComponentName widget = new ComponentName(context, AppWidgetProvider.class);
+    ComponentName widget = new ComponentName(context, TrackWidgetProvider.class);
     RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.appwidget);
 
     int[] appWidgetIds = appWidgetManager.getAppWidgetIds(widget);
@@ -153,7 +175,7 @@ public class AppWidgetProvider
    * @param action The action broadcast from the track service
    */
   protected void updateViewButton(RemoteViews views, Context context, String action) {
-    if (context.getString(R.string.track_started_broadcast_action).equals(action)) {
+    if (TRACK_STARTED_ACTION.equals(action)) {
       // If a new track is started by this appwidget or elsewhere,
       // toggle the button to active and have it disable the track if pressed.
       Intent intent = new Intent(context, TrackRecordingService.class);
@@ -201,7 +223,7 @@ public class AppWidgetProvider
     // TODO replace this with format strings and miles.
     // convert meters to kilometers
     double displayDistance = stats.getTotalDistance() / 1000;
-      if (isMetric) {
+      if (!isMetric) {
         displayDistance *= UnitConversions.KM_TO_MI;
       }
     String distance = StringUtils.formatSingleDecimalPlace(displayDistance) + " " + this.distance;
@@ -214,7 +236,7 @@ public class AppWidgetProvider
     if (!Double.isNaN(stats.getAverageMovingSpeed())) {
       // Convert m/s to km/h
       double displaySpeed = stats.getAverageMovingSpeed() * 3.6;
-      if (isMetric) {
+      if (!isMetric) {
         displaySpeed *= UnitConversions.KMH_TO_MPH;
       }
       speed = StringUtils.formatSingleDecimalPlace(displaySpeed) + " " + this.speed;
@@ -227,10 +249,16 @@ public class AppWidgetProvider
 
   @Override
   public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-    if (key == null || key.equals(context.getString(R.string.metric_units_key))) {
-      isMetric = prefs.getBoolean(context.getString(R.string.metric_units_key), true);
+    String metricUnitsKey = context.getString(R.string.metric_units_key);
+    if (key == null || key.equals(metricUnitsKey)) {
+      isMetric = prefs.getBoolean(metricUnitsKey, true);
       distance = context.getString(isMetric ? R.string.kilometer : R.string.mile);
       speed = context.getString(isMetric ? R.string.kilometer_per_hour : R.string.mile_per_hour);
+    }
+    String selectedTrackKey = context.getString(R.string.selected_track_key);
+    if (key == null || key.equals(selectedTrackKey)) {
+      selectedTrackId = prefs.getLong(selectedTrackKey, -1);
+      Log.d(TAG, "TrackWidgetProvider setting selecting track from preference: " + selectedTrackId);
     }
   }
 }

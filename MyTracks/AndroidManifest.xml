@@ -107,7 +107,7 @@ limitations under the License.
 	  </intent-filter>
     </receiver>
 
-    <receiver android:name="com.google.android.apps.mytracks.widgets.AppWidgetProvider">
+    <receiver android:name="com.google.android.apps.mytracks.widgets.TrackWidgetProvider">
       <intent-filter>
         <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
         <action android:name="com.google.android.apps.mytracks.TRACK_STARTED" />
