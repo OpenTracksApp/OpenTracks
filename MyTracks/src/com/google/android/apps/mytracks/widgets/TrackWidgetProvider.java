@@ -223,9 +223,9 @@ public class TrackWidgetProvider
     // TODO replace this with format strings and miles.
     // convert meters to kilometers
     double displayDistance = stats.getTotalDistance() / 1000;
-      if (!isMetric) {
-        displayDistance *= UnitConversions.KM_TO_MI;
-      }
+    if (!isMetric) {
+      displayDistance *= UnitConversions.KM_TO_MI;
+    }
     String distance = StringUtils.formatSingleDecimalPlace(displayDistance) + " " + this.distance;
 
     // convert ms to minutes
