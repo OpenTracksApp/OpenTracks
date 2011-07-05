@@ -494,8 +494,6 @@ limitations under the License.
   <string name="no_sensor_option">Нет</string>
   <string name="ant_sensor_option">ANT+ Датчик</string>
   <string name="ant_bridge_sensor_option">SRM ANT+ Bridge</string>
-  <string name="polar_bt_sensor_option">Polar Bluetooth</string>
-  <string name="zephyr_bt_sensor_option">Zephyr Bluetooth</string>
 
   <!-- Manifest description (not seen inside the app) -->
   <string name="notification_permission_label">получать уведомления о записи трека</string>

@@ -410,10 +410,5 @@ limitations under the License.
   <string name="sending">S\'està enviant</string>
 
   <!-- Sensor Type Options -->
-  <string name="no_sensor_option">NONE</string>
-  <string name="ant_sensor_option">ANT+ Sensors</string>
-  <string name="ant_bridge_sensor_option">SRM ANT+ Bridge</string>
-  <string name="polar_bt_sensor_option">Polar Bluetooth</string>
-  <string name="zephyr_bt_sensor_option">Zephyr Bluetooth</string>
-
+  <string name="no_sensor_option">Cap</string>
 </resources>
