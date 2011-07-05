@@ -409,4 +409,6 @@ limitations under the License.
   <string name="searching">S\'està cercant</string>
   <string name="sending">S\'està enviant</string>
 
+  <!-- Sensor Type Options -->
+  <string name="no_sensor_option">Cap</string>
 </resources>

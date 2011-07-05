@@ -98,10 +98,19 @@ limitations under the License.
     <item>TCX</item>
   </array>
 
+  <array name="sensor_type_options">
+    <item>@string/no_sensor_option</item>
+    <item>@string/ant_sensor_option</item>
+    <item>@string/ant_bridge_sensor_option</item>
+    <item>@string/polar_bt_sensor_option</item>
+    <item>@string/zephyr_bt_sensor_option</item>
+  </array>
+
   <array name="sensor_type_values">
     <item>@string/none</item>
     <item>@string/ant_sensor_type</item>
     <item>@string/srm_ant_bridge_sensor_type</item>
+    <item>@string/polar_sensor_type</item>
     <item>@string/zephyr_sensor_type</item>
   </array>
 

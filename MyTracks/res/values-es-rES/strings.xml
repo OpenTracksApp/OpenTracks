@@ -128,4 +128,8 @@ limitations under the License.
   $6 : Speed units (mph) : Pace units (per mile)
   -->
 
+  <!-- Sensor Type Options -->
+  <string name="no_sensor_option">Ninguna</string>
+  <string name="ant_sensor_option">ANT+ Sensores</string>
+  <string name="ant_bridge_sensor_option">SRM ANT+ Puente</string>
 </resources>

@@ -232,7 +232,8 @@ public class SettingsActivity extends PreferenceActivity {
 
   private void updateSensorSettings(String sensorType) {
     boolean usesBluetooth =
-        getString(R.string.zephyr_sensor_type).equals(sensorType);
+        getString(R.string.zephyr_sensor_type).equals(sensorType)
+        || getString(R.string.polar_sensor_type).equals(sensorType);
     findPreference(
         getString(R.string.bluetooth_sensor_key)).setEnabled(usesBluetooth);
     findPreference(

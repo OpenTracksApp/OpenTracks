@@ -394,8 +394,9 @@ public class BluetoothConnectionManager {
 
           offset = 0;
 
-          // Send the obtained bytes to the UI Activity
-          handler.obtainMessage(MESSAGE_READ, bytes, -1, buffer)
+          // Send copy of the obtained bytes to the UI Activity.
+          // Avoids memory inconsistency issues.
+          handler.obtainMessage(MESSAGE_READ, bytes, -1, buffer.clone())
               .sendToTarget();
         } catch (IOException e) {
           Log.e(Constants.TAG, "disconnected", e);

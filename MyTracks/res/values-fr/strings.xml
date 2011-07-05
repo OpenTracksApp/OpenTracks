@@ -397,6 +397,13 @@ limitations under the License.
   <string name="searching">Recherche</string>
   <string name="sending">Envoi</string>
 
+  <!-- Sensor Type Options -->
+  <string name="no_sensor_option">Aucun</string>
+  <string name="ant_sensor_option">Capteur ANT+</string>
+  <string name="ant_bridge_sensor_option">Pont SRM ANT+</string>
+  <string name="polar_bt_sensor_option">Bluetooth Polar</string>
+  <string name="zephyr_bt_sensor_option">Bluetooth Zephyr</string>
+
   <!-- Manifest description (not seen inside the app) -->
   <string name="notification_permission_label">notifications lors de l\'enregistrement de parcours</string>
   <string name="read_tracks_permission_label">lecture des parcours enregistrés</string>
