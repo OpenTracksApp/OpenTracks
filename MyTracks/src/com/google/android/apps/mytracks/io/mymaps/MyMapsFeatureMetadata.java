@@ -82,6 +82,6 @@ class MyMapsFeatureMetadata {
   }
 
   public void setIconUrl(String url) {
-    iconUrl = new String(url);
+    iconUrl = url;
   }
 }

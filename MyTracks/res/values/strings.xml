@@ -163,9 +163,12 @@ limitations under the License.
   $2 : Attempted imports
   $3 : MyTracks gpx path
   -->
-  <string name="import_done">Imported %1$d of %2$d GPX files from %3$s</string>
-  <string name="import_empty">No GPX files found in %s. SD card may be unreadable or directory may not contain GPX files.</string>
+  <string name="import_multi_done">Imported %1$d of %2$d GPX files from %3$s</string>
+  <string name="import_multi_empty">No GPX files found in %s. SD card may be unreadable or directory may not contain GPX files.</string>
   <string name="import_error">Import error for file %s</string>
+  <string name="import_title">Import into My Tracks</string>
+  <string name="import_success">Successfully imported %1$d track(s) from file.</string>
+  <string name="import_show_track">Show track</string>
 
   <!-- Waypoints list -->
   <string name="waypointslist_btn_delete_all">Delete all markers</string>
@@ -498,4 +501,12 @@ limitations under the License.
   <string name="notification_permission_description">Be notified when a track starts or stops being recorded.</string>
   <string name="read_tracks_permission_description">Be able to read track data, such as points and waypoints.</string>
   <string name="write_tracks_permission_description">Be able to write track data, such as starting recording or adding waypoints.</string>
+
+  <!-- Sensor Type Options -->
+  <string name="no_sensor_option">NONE</string>
+  <string name="ant_sensor_option">ANT+ Sensors</string>
+  <string name="ant_bridge_sensor_option">SRM ANT+ Bridge</string>
+  <string name="polar_bt_sensor_option">Polar Bluetooth</string>
+  <string name="zephyr_bt_sensor_option">Zephyr Bluetooth</string>
+  
 </resources>

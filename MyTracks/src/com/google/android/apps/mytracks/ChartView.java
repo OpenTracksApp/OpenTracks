@@ -49,6 +49,7 @@ import java.util.ArrayList;
  * @author Leif Hendrik Wilden
  */
 public class ChartView extends View {
+  private static final int MIN_ZOOM_LEVEL = 1;
 
   /*
    * Scrolling logic:
@@ -62,7 +63,6 @@ public class ChartView extends View {
    * Zoom logic:
    */
   private int zoomLevel = 1;
-  private final int minZoomLevel = 1;
   private int maxZoomLevel = 10;
 
   private static final int MAX_INTERVALS = 5;
@@ -199,7 +199,7 @@ public class ChartView extends View {
     updateDimensions();
   }
 
-  public void setUpChartValueSeries(Context context) {
+  private void setUpChartValueSeries(Context context) {
     series = new ChartValueSeries[NUM_SERIES];
 
     // Create the value series.
@@ -333,7 +333,7 @@ public class ChartView extends View {
    * @return true if the chart can be zoomed out
    */
   public boolean canZoomOut() {
-    return zoomLevel > minZoomLevel;
+    return zoomLevel > MIN_ZOOM_LEVEL;
   }
 
   /**
@@ -401,6 +401,7 @@ public class ChartView extends View {
 
   /**
    * Sets the display mode (by distance, by time).
+   * It is expected that after the mode change, data will be reloaded.
    */
   public void setMode(Mode mode) {
     this.mode = mode;
@@ -593,7 +594,7 @@ public class ChartView extends View {
 
       final float x = getWaypointX(waypoint);
       c.drawLine(x, h - bottomBorder, x, topBorder, gridPaint);
-      c.translate(x - markerWidth / 2, markerHeight);
+      c.translate(x - (float) markerWidth / 2.0f, (float) markerHeight);
       if (waypoints.get(i).getType() == Waypoint.TYPE_STATISTICS) {
         statsMarker.draw(c);
       } else {
@@ -865,14 +866,24 @@ public class ChartView extends View {
   }
 
   /**
-   * Gets one of the chart value series.
-   * The index should be one of the following values:
-   *   ELEVATION_SERIES or SPEED_SERIES
+   * Returns whether a given time series is enabled for drawing.
    *
-   * @param index of the value series
-   * @return The chart series at the index
+   * @param index the time series, one of {@link #ELEVATION_SERIES},
+   *        {@link #SPEED_SERIES}, {@link #POWER_SERIES}, etc.
+   * @return true if drawn, false otherwise
    */
-  public ChartValueSeries getChartValueSeries(int index) {
-    return series[index];
+  public boolean isChartValueSeriesEnabled(int index) {
+    return series[index].isEnabled();
+  }
+
+  /**
+   * Sets whether a given time series will be enabled for drawing.
+   *
+   * @param index the time series, one of {@link #ELEVATION_SERIES},
+   *        {@link #SPEED_SERIES}, {@link #POWER_SERIES}, etc.
+   * @return true to be drawn, false otherwise
+   */
+  public void setChartValueSeriesEnabled(int index, boolean enabled) {
+    series[index].setEnabled(enabled);
   }
 }

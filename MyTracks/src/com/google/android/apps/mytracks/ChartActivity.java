@@ -35,6 +35,9 @@ import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -58,6 +61,7 @@ import java.util.EnumSet;
  */
 public class ChartActivity extends Activity implements TrackDataListener {
 
+  private static final int CHART_SETTINGS_DIALOG = 1;
   private final DoubleBuffer elevationBuffer =
       new DoubleBuffer(Constants.ELEVATION_SMOOTHING_FACTOR);
   private final DoubleBuffer speedBuffer =
@@ -73,7 +77,6 @@ public class ChartActivity extends Activity implements TrackDataListener {
   private double trackMaxSpeed;
 
   // Modes of operation
-  private Mode mode = Mode.BY_DISTANCE;
   private boolean metricUnits;
   private boolean reportSpeed;
 
@@ -93,6 +96,10 @@ public class ChartActivity extends Activity implements TrackDataListener {
   private final Runnable updateChart = new Runnable() {
     @Override
     public void run() {
+      if (isFinishing()) {
+        return;
+      }
+
       busyPane.setVisibility(View.GONE);
       zoomControls.setIsZoomInEnabled(chartView.canZoomIn());
       zoomControls.setIsZoomOutEnabled(chartView.canZoomOut());
@@ -105,8 +112,6 @@ public class ChartActivity extends Activity implements TrackDataListener {
   protected void onCreate(Bundle savedInstanceState) {
     Log.w(TAG, "ChartActivity.onCreate");
     super.onCreate(savedInstanceState);
-    MyTracks.getInstance().setChartActivity(this);
-    dataHub = MyTracks.getInstance().getDataHub();
 
     // The volume we want to control is the Text-To-Speech volume
     int volumeStream =
@@ -117,7 +122,6 @@ public class ChartActivity extends Activity implements TrackDataListener {
     setContentView(R.layout.mytracks_charts);
     ViewGroup layout = (ViewGroup) findViewById(R.id.elevation_chart);
     chartView = new ChartView(this);
-    chartView.setMode(this.mode);
     LayoutParams params =
         new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
     layout.addView(chartView, params);
@@ -142,6 +146,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
   protected void onResume() {
     super.onResume();
 
+    dataHub = TrackDataHub.getStartedInstance();
     dataHub.registerTrackDataListener(this, EnumSet.of(
         ListenerDataType.SELECTED_TRACK_CHANGED,
         ListenerDataType.TRACK_UPDATES,
@@ -154,6 +159,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
   @Override
   protected void onPause() {
     dataHub.unregisterTrackDataListener(this);
+    dataHub = null;
 
     super.onPause();
   }
@@ -170,25 +176,11 @@ public class ChartActivity extends Activity implements TrackDataListener {
     zoomControls.setIsZoomOutEnabled(chartView.canZoomOut());
   }
 
-  public void setMode(Mode newMode) {
-    if (this.mode != newMode) {
-      this.mode = newMode;
-      chartView.setMode(this.mode);
+  private void setMode(Mode newMode) {
+    if (chartView.getMode() != newMode) {
+      chartView.setMode(newMode);
       dataHub.reloadDataForListener(this);
     }
-  }
-
-  public Mode getMode() {
-    return mode;
-  }
-
-  public void setSeriesEnabled(int index, boolean enabled) {
-    chartView.getChartValueSeries(index).setEnabled(enabled);
-    runOnUiThread(updateChart);
-  }
-
-  public boolean isSeriesEnabled(int index) {
-    return chartView.getChartValueSeries(index).isEnabled();
   }
 
   @Override
@@ -205,11 +197,50 @@ public class ChartActivity extends Activity implements TrackDataListener {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case Constants.MENU_CHART_SETTINGS:
-        MyTracks.getInstance().getDialogManager().showDialogSafely(
-            DialogManager.DIALOG_CHART_SETTINGS);
+        showDialog(CHART_SETTINGS_DIALOG);
         return true;
     }
     return super.onOptionsItemSelected(item);
+  }
+
+  @Override
+  protected Dialog onCreateDialog(int id) {
+    if (id == CHART_SETTINGS_DIALOG) {
+      final ChartSettingsDialog settingsDialog = new ChartSettingsDialog(this);
+      settingsDialog.setOnClickListener(new OnClickListener() {
+        @Override
+        public void onClick(DialogInterface arg0, int which) {
+          if (which != DialogInterface.BUTTON_POSITIVE) {
+            return;
+          }
+
+          for (int i = 0; i < ChartView.NUM_SERIES; i++) {
+            chartView.setChartValueSeriesEnabled(i, settingsDialog.isSeriesEnabled(i));
+          }
+          setMode(settingsDialog.getMode());
+          chartView.postInvalidate();
+        }
+      });
+      return settingsDialog;
+    }
+
+    return super.onCreateDialog(id);
+  }
+
+  @Override
+  protected void onPrepareDialog(int id, Dialog dialog) {
+    super.onPrepareDialog(id, dialog);
+
+    if (id == CHART_SETTINGS_DIALOG) {
+      prepareSettingsDialog((ChartSettingsDialog) dialog);
+    }
+  }
+
+  private void prepareSettingsDialog(ChartSettingsDialog settingsDialog) {
+    settingsDialog.setMode(chartView.getMode());
+    for (int i = 0; i < ChartView.NUM_SERIES; i++) {
+      settingsDialog.setSeriesEnabled(i, chartView.isChartValueSeriesEnabled(i));
+    }
   }
 
   /**
@@ -258,6 +289,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
     }
 
     // TODO: Account for segment splits?
+    Mode mode = chartView.getMode();
     switch (mode) {
       case BY_DISTANCE:
         timeOrDistance = profileLength / 1000.0;

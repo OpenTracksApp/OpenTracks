@@ -61,10 +61,10 @@ public class AntInterface {
     private static Object INSTANCE_LOCK = new Object();
 
     /** The context to use. */
-    private static Context sContext = null;
+    private Context sContext = null;
 
     /** Listens to changes to service connection status. */
-    private static ServiceListener sServiceListener;
+    private ServiceListener sServiceListener;
 
     /** Is the ANT Radio Proxy Service connected. */
     private static boolean sServiceConnected = false;
@@ -210,7 +210,7 @@ public class AntInterface {
     /**
      * Class for interacting with the ANT interface.
      */
-    private static ServiceConnection sIAntConnection = new ServiceConnection() {
+    private final ServiceConnection sIAntConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName pClassName, IBinder pService) {
             // This is called when the connection with the service has been
             // established, giving us the service object we can use to
@@ -1223,7 +1223,7 @@ public class AntInterface {
      */
     public boolean requestForceClaimInterface(String appName) throws AntInterfaceException
     {
-        if((null == appName) || ("" == appName))
+        if((null == appName) || ("".equals(appName)))
         {
             throw new IllegalArgumentException();
         }

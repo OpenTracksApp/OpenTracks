@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -154,12 +154,12 @@ public class MyTracksProvider extends ContentProvider {
         // Sensor data.
         if (oldVersion <= 17) {
           Log.w(TAG, "Upgrade DB: Adding sensor column.");
-          db.execSQL("ALTER TABLE " + TRACKPOINTS_TABLE 
+          db.execSQL("ALTER TABLE " + TRACKPOINTS_TABLE
               + " ADD " + TrackPointsColumns.SENSOR + " BLOB");
         }
         if (oldVersion <= 18) {
           Log.w(TAG, "Upgrade DB: Adding tableid column.");
-          db.execSQL("ALTER TABLE " + TRACKS_TABLE 
+          db.execSQL("ALTER TABLE " + TRACKS_TABLE
               + " ADD " + TracksColumns.TABLEID + " STRING");
         }
       }
@@ -186,7 +186,11 @@ public class MyTracksProvider extends ContentProvider {
   @Override
   public boolean onCreate() {
     DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-    db = dbHelper.getWritableDatabase();
+    try {
+      db = dbHelper.getWritableDatabase();
+    } catch (SQLiteException e) {
+      Log.e(TAG, "Unable to open database for writing", e);
+    }
     return db != null;
   }
 
@@ -383,7 +387,7 @@ public class MyTracksProvider extends ContentProvider {
 
     if (ApiFeatures.getInstance().canReuseSQLiteQueryBuilder()) {
       Log.i(Constants.TAG,
-          "Build query: " + qb.buildQuery(projection, selection, selectionArgs, 
+          "Build query: " + qb.buildQuery(projection, selection, selectionArgs,
           null, null, sortOrder, null));
     }
     Cursor c = qb.query(db, projection, selection, selectionArgs, null, null,

@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -57,10 +57,11 @@ public class ResourceUtils {
   public static void readBinaryFileToOutputStream(
       Context activity, int id, OutputStream os) {
     BufferedInputStream in = null;
+    BufferedOutputStream out = null;
     try {
       in = new BufferedInputStream(
           activity.getResources().openRawResource(id));
-      BufferedOutputStream out = new BufferedOutputStream(os);
+      out = new BufferedOutputStream(os);
       int b;
       while ((b = in.read()) != -1) {
         out.write(b);
@@ -72,6 +73,14 @@ public class ResourceUtils {
       if (in != null) {
         try {
           in.close();
+        } catch (IOException e) {
+          // Ignore
+        }
+      }
+
+      if (out != null) {
+        try {
+          out.close();
         } catch (IOException e) {
           // Ignore
         }

@@ -291,11 +291,4 @@ limitations under the License.
     <item>point de passage</item>
   </array>
 
-  <array name="sensor_type_options">
-    <item>Aucun</item>
-    <item>Capteur ANT+</item>
-    <item>Pont SRM ANT+</item>
-    <item>Bluetooth Zephyr</item>
-  </array>
-
 </resources>

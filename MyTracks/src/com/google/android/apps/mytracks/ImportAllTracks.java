@@ -1,12 +1,12 @@
 /*
  * Copyright 2011 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -25,8 +25,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
 import android.widget.Toast;
@@ -45,7 +43,7 @@ import org.xml.sax.SAXException;
 
 /**
  * A class that will import all GPX tracks in /sdcard/MyTracks/gpx/
- * 
+ *
  * @author David Piggott
  */
 public class ImportAllTracks {
@@ -63,12 +61,8 @@ public class ImportAllTracks {
     Log.i(Constants.TAG, "ImportAllTracks: Starting");
     fileUtils = new FileUtils();
     gpxPath = fileUtils.buildExternalDirectoryPath("gpx");
-    HandlerThread handlerThread;
-    Handler handler;
-    handlerThread = new HandlerThread("ImportAllTracks");
-    handlerThread.start();
-    handler = new Handler(handlerThread.getLooper());
-    handler.post(runner);
+
+    new Thread(runner).start();
   }
 
   private final Runnable runner = new Runnable() {
@@ -104,9 +98,9 @@ public class ImportAllTracks {
     Log.i(Constants.TAG, "ImportAllTracks: Done");
     AlertDialog.Builder builder = new AlertDialog.Builder(activity);
     if (gpxFileCount == 0) {
-      builder.setMessage(activity.getString(R.string.import_empty, gpxPath + "/"));
+      builder.setMessage(activity.getString(R.string.import_multi_empty, gpxPath + "/"));
     } else {
-      builder.setMessage(activity.getString(R.string.import_done, importSuccessCount, gpxFileCount,
+      builder.setMessage(activity.getString(R.string.import_multi_done, importSuccessCount, gpxFileCount,
           gpxPath + "/"));
     }
     builder.setPositiveButton(R.string.ok, null);

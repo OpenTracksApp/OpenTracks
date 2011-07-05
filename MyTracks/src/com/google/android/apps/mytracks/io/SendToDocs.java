@@ -15,8 +15,8 @@
  */
 package com.google.android.apps.mytracks.io;
 
-import com.google.android.apps.mytracks.MyTracks;
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.ProgressIndicator;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.docs.DocsHelper;
@@ -25,15 +25,13 @@ import com.google.android.apps.mytracks.io.gdata.GDataWrapper;
 import com.google.android.common.gdata.AndroidXmlParserFactory;
 import com.google.android.maps.mytracks.R;
 import com.google.wireless.gdata.client.GDataClient;
+import com.google.wireless.gdata.client.GDataServiceClient;
 import com.google.wireless.gdata.docs.DocumentsClient;
 import com.google.wireless.gdata.docs.SpreadsheetsClient;
 import com.google.wireless.gdata.docs.XmlDocsGDataParserFactory;
-import com.google.wireless.gdata.client.GDataServiceClient;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.util.Log;
 
 import java.io.IOException;
@@ -46,17 +44,15 @@ import java.io.IOException;
 public class SendToDocs {
   /** The GData service name for Google Spreadsheets (aka Trix) */
   public static final String GDATA_SERVICE_NAME_TRIX = "wise";
-  
+
   /** The GData service name for the Google Docs Document List */
   public static final String GDATA_SERVICE_NAME_DOCLIST = "writely";
-  
+
   private final Activity activity;
   private final AuthManager trixAuth;
   private final AuthManager docListAuth;
-  private final long trackId;
+  private final ProgressIndicator progressIndicator;
   private final boolean metricUnits;
-  private final HandlerThread handlerThread;
-  private final Handler handler;
 
   private boolean createdNewSpreadSheet = false;
 
@@ -64,12 +60,13 @@ public class SendToDocs {
   private String statusMessage = "";
   private Runnable onCompletion = null;
 
+
   public SendToDocs(Activity activity, AuthManager trixAuth,
-      AuthManager docListAuth, long trackId) {
+      AuthManager docListAuth, ProgressIndicator progressIndicator) {
     this.activity = activity;
     this.trixAuth = trixAuth;
     this.docListAuth = docListAuth;
-    this.trackId = trackId;
+    this.progressIndicator = progressIndicator;
 
     SharedPreferences preferences = activity.getSharedPreferences(
         Constants.SETTINGS_NAME, 0);
@@ -80,24 +77,20 @@ public class SendToDocs {
     } else {
       metricUnits = true;
     }
+  }
 
+  public void sendToDocs(final long trackId) {
     Log.d(Constants.TAG,
         "Sending to Google Docs: trackId = " + trackId);
-    handlerThread = new HandlerThread("SendToGoogleDocs");
-    handlerThread.start();
-    handler = new Handler(handlerThread.getLooper());
-  }
-
-  public void run() {
-    handler.post(new Runnable() {
+    new Thread("SendToGoogleDocs") {
       @Override
       public void run() {
-        doUpload();
+        doUpload(trackId);
       }
-    });
+    }.start();
   }
 
-  private void doUpload() {
+  private void doUpload(long trackId) {
     // TODO
     statusMessage = activity.getString(R.string.error_sending_to_fusiontables);
     success = false;
@@ -162,7 +155,7 @@ public class SendToDocs {
     GDataWrapper<GDataServiceClient> docListWrapper = new GDataWrapper<GDataServiceClient>();
     docListWrapper.setAuthManager(docListAuth);
     docListWrapper.setRetryOnAuthFailure(true);
-    
+
     GDataWrapper<GDataServiceClient> trixWrapper = new GDataWrapper<GDataServiceClient>();
     trixWrapper.setAuthManager(trixAuth);
     trixWrapper.setRetryOnAuthFailure(true);
@@ -190,7 +183,7 @@ public class SendToDocs {
       // First try to find the spreadsheet:
       String spreadsheetId = null;
       try {
-        spreadsheetId = docsHelper.requestSpreadsheetId(docListWrapper, 
+        spreadsheetId = docsHelper.requestSpreadsheetId(docListWrapper,
             sheetTitle);
       } catch (IOException e) {
         Log.i(Constants.TAG, "Spreadsheet lookup failed.", e);
@@ -198,7 +191,7 @@ public class SendToDocs {
       }
 
       if (spreadsheetId == null) {
-        MyTracks.getInstance().setProgressValue(65);
+        progressIndicator.setProgressValue(65);
         // Waiting a few seconds and trying again. Maybe the server just had a
         // hickup (unfortunately that happens quite a lot...).
         try {
@@ -206,18 +199,18 @@ public class SendToDocs {
         } catch (InterruptedException e) {
           Log.e(Constants.TAG, "Sleep interrupted", e);
         }
-        
+
         try {
-          spreadsheetId = docsHelper.requestSpreadsheetId(docListWrapper, 
+          spreadsheetId = docsHelper.requestSpreadsheetId(docListWrapper,
               sheetTitle);
         } catch (IOException e) {
           Log.i(Constants.TAG, "2nd spreadsheet lookup failed.", e);
           return false;
         }
       }
-      
+
       // We were unable to find an existing spreadsheet, so create a new one.
-      MyTracks.getInstance().setProgressValue(70);
+      progressIndicator.setProgressValue(70);
       if (spreadsheetId == null) {
         Log.i(Constants.TAG, "Creating new spreadsheet: " + sheetTitle);
 
@@ -229,11 +222,11 @@ public class SendToDocs {
               + sheetTitle, e);
           return false;
         }
-        MyTracks.getInstance().setProgressValue(80);
+        progressIndicator.setProgressValue(80);
         createdNewSpreadSheet = true;
 
         if (spreadsheetId == null) {
-          MyTracks.getInstance().setProgressValue(85);
+          progressIndicator.setProgressValue(85);
           // The previous creation might have succeeded even though GData
           // reported an error. Seems to be a know bug,
           // see http://code.google.com/p/gdata-issues/issues/detail?id=929
@@ -247,7 +240,7 @@ public class SendToDocs {
           }
 
           try {
-            spreadsheetId = docsHelper.requestSpreadsheetId(docListWrapper, 
+            spreadsheetId = docsHelper.requestSpreadsheetId(docListWrapper,
                 sheetTitle);
           } catch (IOException e) {
             Log.i(Constants.TAG, "Failed create-failed lookup", e);
@@ -255,16 +248,16 @@ public class SendToDocs {
           }
 
           if (spreadsheetId == null) {
-            MyTracks.getInstance().setProgressValue(87);
+            progressIndicator.setProgressValue(87);
             // Re-try
             try {
               Thread.sleep(5000);
             } catch (InterruptedException e) {
               Log.e(Constants.TAG, "Sleep interrupted", e);
             }
-            
+
             try {
-              spreadsheetId = docsHelper.requestSpreadsheetId(docListWrapper, 
+              spreadsheetId = docsHelper.requestSpreadsheetId(docListWrapper,
                   sheetTitle);
             } catch (IOException e) {
               Log.i(Constants.TAG, "Failed create-failed relookup", e);
@@ -290,9 +283,9 @@ public class SendToDocs {
         return false;
       }
 
-      MyTracks.getInstance().setProgressValue(90);
+      progressIndicator.setProgressValue(90);
 
-      docsHelper.addTrackRow(activity, trixAuth, spreadsheetId, worksheetId, 
+      docsHelper.addTrackRow(activity, trixAuth, spreadsheetId, worksheetId,
           track, metricUnits);
       Log.i(Constants.TAG, "Done uploading to docs.");
     } catch (IOException e) {

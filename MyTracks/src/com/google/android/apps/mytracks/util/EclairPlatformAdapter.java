@@ -19,7 +19,6 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.SharedPreferences.Editor;
-import android.os.HandlerThread;
 
 /**
  * The Eclair (API level 5) specific implementation of the
@@ -40,11 +39,6 @@ public class EclairPlatformAdapter implements ApiPlatformAdapter {
   public void stopForeground(Service service,
       NotificationManager notificationManager, int id) {
     service.stopForeground(id != -1);
-  }
-
-  @Override
-  public boolean stopHandlerThread(HandlerThread handlerThread) {
-    return handlerThread.quit();
   }
 
   @Override

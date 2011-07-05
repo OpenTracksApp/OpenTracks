@@ -33,6 +33,7 @@ limitations under the License.
   <string name="none">NONE</string>
   <string name="ant_sensor_type">ANT</string>
   <string name="srm_ant_bridge_sensor_type">SRM_ANT_BRIDGE</string>
+  <string name="polar_sensor_type">POLAR</string>
   <string name="zephyr_sensor_type">ZEPHYR</string>
 
   <!-- Send to Google URLs -->
@@ -42,4 +43,7 @@ limitations under the License.
   
   <!-- ID for Google Analytics -->
   <string name="google_analytics_id">UA-7222692-2</string>
+
+  <!-- Intent actions -->
+  <string name="save_intent_action">android.intent.action.SAVE</string>
 </resources>

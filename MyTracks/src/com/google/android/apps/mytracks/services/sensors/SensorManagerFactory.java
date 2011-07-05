@@ -1,12 +1,12 @@
 /*
  * Copyright 2009 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -45,7 +45,9 @@ public class SensorManagerFactory {
     if (prefs == null) {
       return null;
     }
-    
+
+    context = context.getApplicationContext();
+
     String sensor = prefs.getString(context.getString(R.string.sensor_type_key), null);
     Log.i(Constants.TAG, "Creating sensor of type: " + sensor);
 
@@ -57,6 +59,8 @@ public class SensorManagerFactory {
       return new AntSRMSensorManager(context);
     } else if (sensor.equals(context.getString(R.string.zephyr_sensor_type))) {
       return new ZephyrSensorManager(context);
+    } else if (sensor.equals(context.getString(R.string.polar_sensor_type))) {
+      return new PolarSensorManager(context);
     } else  {
       Log.w(Constants.TAG, "Unable to find sensor type: " + sensor);
       return null;

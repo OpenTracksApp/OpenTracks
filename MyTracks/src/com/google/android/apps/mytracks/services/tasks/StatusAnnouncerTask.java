@@ -1,12 +1,12 @@
 /*
  * Copyright 2009 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -66,6 +66,11 @@ public class StatusAnnouncerTask implements PeriodicTask {
   /**
    * The response received from the TTS engine after initialization.
    */
+  private int initStatus = TextToSpeech.ERROR;
+
+  /**
+   * Whether the TTS engine is ready.
+   */
   private boolean ready = false;
 
   /**
@@ -81,12 +86,13 @@ public class StatusAnnouncerTask implements PeriodicTask {
     public void onCallStateChanged(int state, String incomingNumber) {
       speechAllowed = state == TelephonyManager.CALL_STATE_IDLE;
 
-      if (!speechAllowed && tts.isSpeaking()) {
+      if (!speechAllowed && tts != null && tts.isSpeaking()) {
         // If we're already speaking, stop it.
         tts.stop();
       }
     }
   };
+
 
   public StatusAnnouncerTask(Context context) {
     this(context, new StringUtils(context));
@@ -95,33 +101,6 @@ public class StatusAnnouncerTask implements PeriodicTask {
   public StatusAnnouncerTask(Context context, StringUtils stringUtils) {
     this.context = context;
     this.stringUtils = stringUtils;
-  }
-
-  /**
-   * Called when the TTS engine is initialized.
-   */
-  protected void onTtsInit(int status) {
-    Log.i(TAG, "TrackRecordingService.TTS init: " + status);
-    // TTS should be valid here but NPE exceptions were reported to the market.
-    this.ready = status == TextToSpeech.SUCCESS && tts != null;
-
-    if (ready) {
-      // Force the language to be the same as the string we will be speaking,
-      // if that's available.
-      Locale speechLanguage = Locale.getDefault();
-      int languageAvailability = tts.isLanguageAvailable(speechLanguage);
-      if (languageAvailability == TextToSpeech.LANG_MISSING_DATA ||
-          languageAvailability == TextToSpeech.LANG_NOT_SUPPORTED) {
-        // English is probably supported.
-        // TODO: Somehow use announcement strings from English too.
-        Log.w(TAG, "Default language not available, using English.");
-        speechLanguage = Locale.ENGLISH;
-      }
-      tts.setLanguage(speechLanguage);
-
-      // Slow down the speed just a bit as it is hard to hear when exercising.
-      tts.setSpeechRate(TTS_SPEECH_RATE);
-    }
   }
 
   /**
@@ -144,12 +123,15 @@ public class StatusAnnouncerTask implements PeriodicTask {
    * to avoid needing to instantiate an entire {@link TrackRecordingService}
    * just to test the announcer.
    */
-  protected void runWithStatistics(TripStatistics statistics) {
+  // @VisibleForTesting
+  void runWithStatistics(TripStatistics statistics) {
     if (statistics == null) {
       Log.e(TAG, "StatusAnnouncer stats not initialized.");
       return;
     }
-    if (!ready || tts == null) {
+
+    checkReady();
+    if (!ready) {
       Log.e(TAG, "StatusAnnouncer Tts not ready.");
       return;
     }
@@ -162,10 +144,10 @@ public class StatusAnnouncerTask implements PeriodicTask {
 
     String announcement = getAnnouncement(statistics);
     Log.d(Constants.TAG, "Announcement: " + announcement);
-    speakAnnouncment(announcement);
+    speakAnnouncement(announcement);
   }
 
-  protected void speakAnnouncment(String announcement) {
+  protected void speakAnnouncement(String announcement) {
     tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, null);
   }
 
@@ -181,7 +163,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
     boolean metricUnits = true;
     boolean reportSpeed = true;
     if (preferences != null) {
-      metricUnits = 
+      metricUnits =
           preferences.getBoolean(context.getString(R.string.metric_units_key),
               true);
       reportSpeed =
@@ -254,6 +236,59 @@ public class StatusAnnouncerTask implements PeriodicTask {
 
     // Register ourselves as a listener so we won't speak during a call.
     listenToPhoneState(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
+  }
+
+  /**
+   * Called when the TTS engine is initialized.
+   */
+  private void onTtsInit(int status) {
+    Log.i(TAG, "TrackRecordingService.TTS init: " + status);
+    synchronized (this) {
+      // TTS should be valid here but NPE exceptions were reported to the market.
+      initStatus = status;
+      checkReady();
+    }
+  }
+
+  /**
+   * Ensures that the TTS is ready (finishing its initialization if needed).
+   */
+  private void checkReady() {
+    synchronized (this) {
+      if (ready) {
+        // Already done;
+        return;
+      }
+
+      ready = initStatus == TextToSpeech.SUCCESS && tts != null;
+      Log.d(TAG, "Status announcer ready: " + ready);
+
+      if (ready) {
+        onTtsReady();
+      }
+    }
+  }
+
+  /**
+   * Finishes the TTS engine initialization.
+   * Called once (and only once) when the TTS engine is ready.
+   */
+  protected void onTtsReady() {
+    // Force the language to be the same as the string we will be speaking,
+    // if that's available.
+    Locale speechLanguage = Locale.getDefault();
+    int languageAvailability = tts.isLanguageAvailable(speechLanguage);
+    if (languageAvailability == TextToSpeech.LANG_MISSING_DATA ||
+        languageAvailability == TextToSpeech.LANG_NOT_SUPPORTED) {
+      // English is probably supported.
+      // TODO: Somehow use announcement strings from English too.
+      Log.w(TAG, "Default language not available, using English.");
+      speechLanguage = Locale.ENGLISH;
+    }
+    tts.setLanguage(speechLanguage);
+
+    // Slow down the speed just a bit as it is hard to hear when exercising.
+    tts.setSpeechRate(TTS_SPEECH_RATE);
   }
 
   @Override
