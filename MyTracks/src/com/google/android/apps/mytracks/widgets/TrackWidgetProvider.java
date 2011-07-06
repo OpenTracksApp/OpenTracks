@@ -32,12 +32,12 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.google.android.apps.mytracks.MyTracks;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
@@ -92,6 +92,14 @@ public class TrackWidgetProvider
     updateTrack("some action");
   }
 
+  @Override
+  public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+    initialize(context);
+
+    // So long as an action is set the buttons will get set up properly.
+    updateTrack("some action");
+  }
+
   private void initialize(Context context) {
     this.context = context;
     trackObserver = new TrackObserver();
@@ -123,14 +131,6 @@ public class TrackWidgetProvider
     selectedTrackId = intent.getLongExtra(
         context.getString(R.string.track_id_broadcast_extra), selectedTrackId);
     String action = intent.getAction();
-    // TODO this should only trigger for intents this sent.
-    if (TRACK_STARTED_ACTION.equals(action)) {
-      ApiFeatures.getInstance().getApiPlatformAdapter()
-          .applyPreferenceChanges(
-              sharedPreferences.edit().putLong(
-                  context.getString(R.string.selected_track_key), selectedTrackId));
-    }
-
     Log.d(TAG,
         "TrackWidgetProvider.onReceive: trackId=" + selectedTrackId + ", action=" + action);
 
@@ -157,12 +157,17 @@ public class TrackWidgetProvider
     ComponentName widget = new ComponentName(context, TrackWidgetProvider.class);
     RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.appwidget);
 
+    // Make all of the stats open the mytracks activity.
+    Intent i = new Intent(context, MyTracks.class);
+    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, i, 0);
+    views.setOnClickPendingIntent(R.id.appwidget_track_statistics, pendingIntent);
+
+    if (action != null) {
+      updateViewButton(views, context, action);
+    }
+    updateViewTrackStatistics(views, track);
     int[] appWidgetIds = appWidgetManager.getAppWidgetIds(widget);
     for (int appWidgetId : appWidgetIds) {
-      if (action != null) {
-        updateViewButton(views, context, action);
-      }
-      updateViewTrackStatistics(views, track);
       appWidgetManager.updateAppWidget(appWidgetId, views);
     }
   }
@@ -174,28 +179,33 @@ public class TrackWidgetProvider
    * @param context The Context of the AppWidget
    * @param action The action broadcast from the track service
    */
-  protected void updateViewButton(RemoteViews views, Context context, String action) {
+  private void updateViewButton(RemoteViews views, Context context, String action) {
     if (TRACK_STARTED_ACTION.equals(action)) {
       // If a new track is started by this appwidget or elsewhere,
       // toggle the button to active and have it disable the track if pressed.
-      Intent intent = new Intent(context, TrackRecordingService.class);
-      intent.setAction(context.getString(R.string.end_current_track_action));
-      PendingIntent pendingIntent = PendingIntent.getService(context, 0,
-          intent, PendingIntent.FLAG_UPDATE_CURRENT);
-      views.setImageViewResource(R.id.appwidget_button,
-          R.drawable.appwidget_button_enabled);
-      views.setOnClickPendingIntent(R.id.appwidget_button, pendingIntent);
+      setButtonIntent(
+          views, context, R.string.end_current_track_action, R.drawable.appwidget_button_enabled,
+          -1);
     } else {
       // If a track is stopped by this appwidget or elsewhere,
       // toggle the button to inactive and have it start a new track if pressed.
-      Intent intent = new Intent(context, TrackRecordingService.class);
-      intent.setAction(context.getString(R.string.start_new_track_action));
-      PendingIntent pendingIntent = PendingIntent.getService(context, 0,
-          intent, PendingIntent.FLAG_UPDATE_CURRENT);
-      views.setImageViewResource(R.id.appwidget_button,
-          R.drawable.appwidget_button_disabled);
-      views.setOnClickPendingIntent(R.id.appwidget_button, pendingIntent);
+      setButtonIntent(
+          views, context, R.string.start_new_track_action, R.drawable.appwidget_button_disabled,
+          R.string.select_new_track_extra);
     }
+  }
+
+  private void setButtonIntent(
+      RemoteViews views, Context context, int action, int icon, int extra) {
+    Intent intent = new Intent(context, TrackRecordingService.class);
+    intent.setAction(context.getString(action));
+    if (extra != -1) {
+      intent.putExtra(context.getString(extra), true);
+    }
+    PendingIntent pendingIntent = PendingIntent.getService(context, 0,
+        intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    views.setOnClickPendingIntent(R.id.appwidget_button, pendingIntent);
+    views.setImageViewResource(R.id.appwidget_button, icon);
   }
 
   /**
@@ -212,11 +222,6 @@ public class TrackWidgetProvider
       views.setTextViewText(R.id.appwidget_speed_text, unknown);
       return;
     }
-
-    // TODO(saxman) Display stats details when track stats view is pressed.
-    // Intent i = new Intent(context, StatsActivity.class);
-    // PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, i, 0);
-    // views.setOnClickPendingIntent(R.id.appwidget_track_statistics, pendingIntent);
 
     TripStatistics stats = track.getStatistics();
 

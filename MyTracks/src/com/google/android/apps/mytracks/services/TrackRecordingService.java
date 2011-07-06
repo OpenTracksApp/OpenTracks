@@ -281,22 +281,34 @@ public class TrackRecordingService extends Service {
         "TrackRecordingService.handleStartCommand: " + startId);
 
     // Check if called on phone reboot with resume intent.
-    if (intent != null &&
-        intent.getBooleanExtra(RESUME_TRACK_EXTRA_NAME, false)) {
-      Log.d(TAG, "TrackRecordingService: requested resume");
-
-      // Make sure that the current track exists and is fresh enough.
-      if (recordingTrack == null || !shouldResumeTrack(recordingTrack)) {
-        Log.i(TAG,
-            "TrackRecordingService: Not resuming, because the previous track ("
-            + recordingTrack + ") doesn't exist or is too old");
-        isRecording = false;
-        prefManager.setRecordingTrack(recordingTrackId = -1);
-        stopSelfResult(startId);
-        return;
+    if (intent != null) {
+      if (intent.getBooleanExtra(RESUME_TRACK_EXTRA_NAME, false)) {
+        Log.d(TAG, "TrackRecordingService: requested resume");
+  
+        // Make sure that the current track exists and is fresh enough.
+        if (recordingTrack == null || !shouldResumeTrack(recordingTrack)) {
+          Log.i(TAG,
+              "TrackRecordingService: Not resuming, because the previous track ("
+              + recordingTrack + ") doesn't exist or is too old");
+          isRecording = false;
+          prefManager.setRecordingTrack(recordingTrackId = -1);
+          stopSelfResult(startId);
+          return;
+        }
+  
+        Log.i(TAG, "TrackRecordingService: resuming");
+      } else {
+        // Process actions for controlling the service.
+        String action = intent.getAction();
+        if (getString(R.string.start_new_track_action).equals(action)) {
+          startNewTrack();
+          if (intent.getBooleanExtra(getString(R.string.select_new_track_extra), false)) {
+            prefManager.setSelectedTrack(recordingTrackId);
+          }
+        } else if (getString(R.string.end_current_track_action).equals(action)) {
+          endCurrentTrack();
+        }
       }
-
-      Log.i(TAG, "TrackRecordingService: resuming");
     }
   }
 

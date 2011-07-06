@@ -39,6 +39,7 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
   private final String minRecordingIntervalKey;
   private final String minRequiredAccuracyKey;
   private final String recordingTrackKey;
+  private final String selectedTrackKey;
   private final String splitFrequencyKey;
 
   public PreferenceManager(TrackRecordingService service) {
@@ -70,6 +71,8 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
         service.getString(R.string.min_required_accuracy_key);
     recordingTrackKey =
         service.getString(R.string.recording_track_key);
+    selectedTrackKey =
+        service.getString(R.string.selected_track_key);
     splitFrequencyKey =
         service.getString(R.string.split_frequency_key);
     
@@ -176,6 +179,13 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
     sharedPreferences
         .edit()
         .putLong(recordingTrackKey, id)
+        .commit();
+  }
+  
+  public void setSelectedTrack(long id) {
+    sharedPreferences
+        .edit()
+        .putLong(selectedTrackKey, id)
         .commit();
   }
   

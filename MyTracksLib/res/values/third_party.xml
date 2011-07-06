@@ -30,6 +30,8 @@ limitations under the License.
 
   <!-- TrackRecordingService actions -->
   <string name="start_new_track_action">com.google.android.apps.mytracks.START_NEW_TRACK</string>
+  <!-- Setting this intent makes the new track the selected track. -->
+  <string name="select_new_track_extra">com.google.android.apps.mytracks.SELECT_NEW_TRACK</string>
   <string name="end_current_track_action">com.google.android.apps.mytracks.END_CURRENT_TRACK</string>
 
   <!-- My Tracks service constants -->
