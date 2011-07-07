@@ -272,11 +272,4 @@ limitations under the License.
     <item>путевая точка</item>
   </array>
 
-  <array name="sensor_type_options">
-    <item>Нет</item>
-    <item>ANT+ Sensors</item>
-    <item>SRM ANT+ Bridge</item>
-    <item>Zephyr Bluetooth</item>
-  </array>
-
 </resources>

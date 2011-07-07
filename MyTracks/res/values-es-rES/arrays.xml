@@ -143,11 +143,4 @@ limitations under the License.
     <item>camino</item>
   </array>
 
-  <array name="sensor_type_options">
-    <item>Ninguna</item>
-    <item>ANT+ Sensores</item>
-    <item>SRM ANT+ Puente</item>
-    <item>Zephyr Bluetooth</item>
-  </array>
-
 </resources>

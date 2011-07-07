@@ -272,11 +272,4 @@ limitations under the License.
     <item>ウェイポイント</item>
   </array>
 
-  <array name="sensor_type_options">
-    <item>なし</item>
-    <item>ANT+ センサー</item>
-    <item>SRM ANT+ ブリッジ</item>
-    <item>Zephyr Bluetooth</item>
-  </array>
-
 </resources>
