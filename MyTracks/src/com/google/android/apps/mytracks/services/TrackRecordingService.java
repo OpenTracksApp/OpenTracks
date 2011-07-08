@@ -283,20 +283,7 @@ public class TrackRecordingService extends Service {
     // Check if called on phone reboot with resume intent.
     if (intent != null) {
       if (intent.getBooleanExtra(RESUME_TRACK_EXTRA_NAME, false)) {
-        Log.d(TAG, "TrackRecordingService: requested resume");
-  
-        // Make sure that the current track exists and is fresh enough.
-        if (recordingTrack == null || !shouldResumeTrack(recordingTrack)) {
-          Log.i(TAG,
-              "TrackRecordingService: Not resuming, because the previous track ("
-              + recordingTrack + ") doesn't exist or is too old");
-          isRecording = false;
-          prefManager.setRecordingTrack(recordingTrackId = -1);
-          stopSelfResult(startId);
-          return;
-        }
-  
-        Log.i(TAG, "TrackRecordingService: resuming");
+        resumeTrack(startId);
       } else {
         // Process actions for controlling the service.
         String action = intent.getAction();
@@ -310,6 +297,23 @@ public class TrackRecordingService extends Service {
         }
       }
     }
+  }
+
+  private void resumeTrack(int startId) {
+    Log.d(TAG, "TrackRecordingService: requested resume");
+ 
+    // Make sure that the current track exists and is fresh enough.
+    if (recordingTrack == null || !shouldResumeTrack(recordingTrack)) {
+      Log.i(TAG,
+          "TrackRecordingService: Not resuming, because the previous track ("
+          + recordingTrack + ") doesn't exist or is too old");
+      isRecording = false;
+      prefManager.setRecordingTrack(recordingTrackId = -1);
+      stopSelfResult(startId);
+      return;
+    }
+ 
+    Log.i(TAG, "TrackRecordingService: resuming");
   }
 
   @Override

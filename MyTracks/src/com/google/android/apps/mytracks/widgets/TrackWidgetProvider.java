@@ -87,17 +87,11 @@ public class TrackWidgetProvider
   @Override
   public void onEnabled(Context context) {
     initialize(context);
-
-    // So long as an action is set the buttons will get set up properly.
-    updateTrack("some action");
   }
 
   @Override
   public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
     initialize(context);
-
-    // So long as an action is set the buttons will get set up properly.
-    updateTrack("some action");
   }
 
   private void initialize(Context context) {
@@ -115,12 +109,6 @@ public class TrackWidgetProvider
         TracksColumns.CONTENT_URI, true, trackObserver);
     TRACK_STARTED_ACTION = context.getString(R.string.track_started_broadcast_action);
     TRACK_STOPPED_ACTION = context.getString(R.string.track_stopped_broadcast_action);
-  }
-
-  @Override
-  public void onDisabled(Context context) {
-    context.getContentResolver().unregisterContentObserver(trackObserver);
-    sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
   }
 
   @Override
@@ -142,6 +130,12 @@ public class TrackWidgetProvider
     }
   }
 
+  @Override
+  public void onDisabled(Context context) {
+    context.getContentResolver().unregisterContentObserver(trackObserver);
+    sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+  }
+
   private void updateTrack(String action) {
     Track track = null;
     if (selectedTrackId != -1) {
@@ -158,8 +152,8 @@ public class TrackWidgetProvider
     RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.appwidget);
 
     // Make all of the stats open the mytracks activity.
-    Intent i = new Intent(context, MyTracks.class);
-    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, i, 0);
+    Intent intent = new Intent(context, MyTracks.class);
+    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
     views.setOnClickPendingIntent(R.id.appwidget_track_statistics, pendingIntent);
 
     if (action != null) {
@@ -195,6 +189,15 @@ public class TrackWidgetProvider
     }
   }
 
+  /**
+   * Set up the main widget button.
+   *
+   * @param views The widget views
+   * @param context The widget context
+   * @param action The resource id of the action to fire when the button is pressed
+   * @param icon The resource id of the icon to show for the button
+   * @param extra Optional resource id of a boolean extra on the intent
+   */
   private void setButtonIntent(
       RemoteViews views, Context context, int action, int icon, int extra) {
     Intent intent = new Intent(context, TrackRecordingService.class);
