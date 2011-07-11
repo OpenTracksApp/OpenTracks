@@ -68,7 +68,6 @@ public class TrackWidgetProvider
   private MyTracksProviderUtils providerUtils;
   private Context context;
   private String unknown;
-  private String time;
   private String distance;
   private String speed;
   private TrackObserver trackObserver;
@@ -84,21 +83,10 @@ public class TrackWidgetProvider
     selectedTrackId = -1;
   }
 
-  @Override
-  public void onEnabled(Context context) {
-    initialize(context);
-  }
-
-  @Override
-  public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-    initialize(context);
-  }
-
   private void initialize(Context context) {
     this.context = context;
     trackObserver = new TrackObserver();
     providerUtils = MyTracksProviderUtils.Factory.get(context);
-    time = context.getString(R.string.min);
     unknown = context.getString(R.string.unknown);
 
     sharedPreferences = context.getSharedPreferences(SETTINGS_NAME, 0);
@@ -132,8 +120,12 @@ public class TrackWidgetProvider
 
   @Override
   public void onDisabled(Context context) {
-    context.getContentResolver().unregisterContentObserver(trackObserver);
-    sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+    if (trackObserver != null) {
+      context.getContentResolver().unregisterContentObserver(trackObserver);
+    }
+    if (sharedPreferences != null) {
+      sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+    }
   }
 
   private void updateTrack(String action) {
@@ -237,9 +229,7 @@ public class TrackWidgetProvider
     String distance = StringUtils.formatSingleDecimalPlace(displayDistance) + " " + this.distance;
 
     // convert ms to minutes
-    String time = StringUtils.formatSingleDecimalPlace(stats.getMovingTime() / 60000d)
-        + " " + this.time;
-
+    String time = StringUtils.formatTime(stats.getMovingTime());
     String speed = unknown;
     if (!Double.isNaN(stats.getAverageMovingSpeed())) {
       // Convert m/s to km/h
