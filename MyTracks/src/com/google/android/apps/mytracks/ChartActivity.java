@@ -96,14 +96,16 @@ public class ChartActivity extends Activity implements TrackDataListener {
   private final Runnable updateChart = new Runnable() {
     @Override
     public void run() {
-      if (isFinishing()) {
+      // Get a local reference in case it's set to null concurrently with this.
+      TrackDataHub localDataHub = dataHub;
+      if (localDataHub == null || isFinishing()) {
         return;
       }
 
       busyPane.setVisibility(View.GONE);
       zoomControls.setIsZoomInEnabled(chartView.canZoomIn());
       zoomControls.setIsZoomOutEnabled(chartView.canZoomOut());
-      chartView.setShowPointer(dataHub.isRecordingSelected());
+      chartView.setShowPointer(localDataHub.isRecordingSelected());
       chartView.invalidate();
     }
   };
