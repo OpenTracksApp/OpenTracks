@@ -68,9 +68,9 @@ public class TrackWidgetProvider
   private MyTracksProviderUtils providerUtils;
   private Context context;
   private String unknown;
-  private String distance;
-  private String speed;
-  private String pace;
+  private String distanceLabel;
+  private String speedLabel;
+  private String paceLabel;
   private TrackObserver trackObserver;
   private boolean isMetric;
   private boolean reportSpeed;
@@ -86,6 +86,9 @@ public class TrackWidgetProvider
   }
 
   private void initialize(Context context) {
+    if (this.context != null) {
+      return;
+    }
     this.context = context;
     trackObserver = new TrackObserver();
     providerUtils = MyTracksProviderUtils.Factory.get(context);
@@ -228,7 +231,8 @@ public class TrackWidgetProvider
     if (!isMetric) {
       displayDistance *= UnitConversions.KM_TO_MI;
     }
-    String distance = StringUtils.formatSingleDecimalPlace(displayDistance) + " " + this.distance;
+    String distance =
+        StringUtils.formatSingleDecimalPlace(displayDistance) + " " + this.distanceLabel;
 
     // convert ms to minutes
     String time = StringUtils.formatTime(stats.getMovingTime());
@@ -240,10 +244,10 @@ public class TrackWidgetProvider
         displaySpeed *= UnitConversions.KMH_TO_MPH;
       }
       if (reportSpeed) {
-        speed = StringUtils.formatSingleDecimalPlace(displaySpeed) + " " + this.speed;
+        speed = StringUtils.formatSingleDecimalPlace(displaySpeed) + " " + this.speedLabel;
       } else {
         long displayPace = (long) (3600000.0 / displaySpeed);
-        speed = StringUtils.formatTime(displayPace) + " " + pace;
+        speed = StringUtils.formatTime(displayPace) + " " + paceLabel;
       }
     }
 
@@ -257,9 +261,9 @@ public class TrackWidgetProvider
     String metricUnitsKey = context.getString(R.string.metric_units_key);
     if (key == null || key.equals(metricUnitsKey)) {
       isMetric = prefs.getBoolean(metricUnitsKey, true);
-      distance = context.getString(isMetric ? R.string.kilometer : R.string.mile);
-      speed = context.getString(isMetric ? R.string.kilometer_per_hour : R.string.mile_per_hour);
-      pace = context.getString(isMetric ? R.string.min_per_kilometer : R.string.min_per_mile);
+      distanceLabel = context.getString(isMetric ? R.string.kilometer : R.string.mile);
+      speedLabel = context.getString(isMetric ? R.string.kilometer_per_hour : R.string.mile_per_hour);
+      paceLabel = context.getString(isMetric ? R.string.min_per_kilometer : R.string.min_per_mile);
     }
 
     String reportSpeedKey = context.getString(R.string.report_speed_key);
