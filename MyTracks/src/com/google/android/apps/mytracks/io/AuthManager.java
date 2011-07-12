@@ -25,15 +25,27 @@ import android.content.Intent;
  */
 public interface AuthManager {
   /**
-   * Initializes the login process. The user should be asked to login if they
-   * haven't already. The {@link Runnable} provided will be executed when the
-   * auth token is successfully fetched.
-   *
-   * @param whenFinished A {@link Runnable} to execute when the auth token
-   *        has been successfully fetched and is available via
-   *        {@link #getAuthToken()}
+   * Callback for authentication token retrieval operations.
    */
-  void doLogin(Runnable whenFinished, Object o);
+  public interface AuthCallback {
+    /**
+     * Indicates that we're done fetching an auth token.
+     *
+     * @param success if true, indicates we have the requested auth token available
+     *        to be retrieved using {@link AuthManager#getAuthToken}
+     */
+    void onAuthResult(boolean success);
+  }
+
+  /**
+   * Initializes the login process. The user should be asked to login if they
+   * haven't already. The {@link AuthCallback} provided will be executed when the
+   * auth token fetching is done (successfully or not).
+   *
+   * @param whenFinished A {@link AuthCallback} to execute when the auth token
+   *        fetching is done
+   */
+  void doLogin(AuthCallback whenFinished, Object o);
 
   /**
    * The {@link android.app.Activity} owner of this class should call this
@@ -48,11 +60,8 @@ public interface AuthManager {
    *        {@link android.app.Activity#onActivityResult} function
    * @param results The data passed in to the {@link android.app.Activity}'s
    *        {@link android.app.Activity#onActivityResult} function
-   * @return True if the auth token was fetched or we aren't done fetching
-   *         the auth token, or False if there was an error or the request was
-   *         canceled
    */
-  boolean authResult(int resultCode, Intent results);
+  void authResult(int resultCode, Intent results);
 
   /**
    * Returns the current auth token. Response may be null if no valid auth
@@ -71,5 +80,5 @@ public interface AuthManager {
    * @param whenFinished A {@link Runnable} to execute when a new auth token
    *        is successfully fetched
    */
-  void invalidateAndRefresh(Runnable whenFinished);
+  void invalidateAndRefresh(AuthCallback whenFinished);
 }

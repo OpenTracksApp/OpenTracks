@@ -19,6 +19,7 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.accounts.Account;
 import com.google.android.apps.mytracks.io.AuthManager;
+import com.google.android.apps.mytracks.io.AuthManager.AuthCallback;
 import com.google.android.apps.mytracks.io.AuthManagerFactory;
 import com.google.android.apps.mytracks.io.mymaps.MapsFacade;
 import com.google.android.apps.mytracks.io.mymaps.MyMapsConstants;
@@ -104,8 +105,15 @@ public class MyMapsList extends Activity implements MapsFacade.MapsListCallback 
 
   private void doLogin(final Account account) {
     // Starts in the UI thread.
-    auth.doLogin(new Runnable() {
-      public void run() {
+    auth.doLogin(new AuthCallback() {
+      @Override
+      public void onAuthResult(boolean success) {
+        if (!success) {
+          setResult(RESULT_CANCELED);
+          finish();
+          return;
+        }
+
         // Runs in UI thread.
         mapsClient = new MapsFacade(MyMapsList.this, auth);
 

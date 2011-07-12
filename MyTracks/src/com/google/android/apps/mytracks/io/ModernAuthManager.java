@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks.io;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.accounts.Account;
 import com.google.android.accounts.AccountManager;
 import com.google.android.accounts.AccountManagerCallback;
@@ -49,7 +51,9 @@ public class ModernAuthManager implements AuthManager {
 
   private final AccountManager accountManager;
 
-  private Runnable whenFinished;
+  private AuthCallback whenFinished;
+
+  private Account lastAccount;
 
   /**
    * AuthManager requires many of the same parameters as
@@ -63,16 +67,9 @@ public class ModernAuthManager implements AuthManager {
    *        {@link Activity#onActivityResult} that calls
    *        {@link #authResult(int, Intent)} when {@literal code} is the request
    *        code
-   * @param code The request code to pass to
-   *        {@link Activity#onActivityResult} when
-   *        {@link #authResult(int, Intent)} should be called
-   * @param extras A {@link Bundle} of extras for
-   *        {@link com.google.android.googlelogindist.GoogleLoginServiceHelper}
-   * @param requireGoogle True if the account must be a Google account
    * @param service The name of the service to authenticate as
    */
-  public ModernAuthManager(Activity activity, int code, Bundle extras,
-      boolean requireGoogle, String service) {
+  public ModernAuthManager(Activity activity, String service) {
     this.activity = activity;
     this.service = service;
     this.accountManager = AccountManager.get(activity);
@@ -87,12 +84,19 @@ public class ModernAuthManager implements AuthManager {
    *        has been successfully fetched and is available via
    *        {@link #getAuthToken()}
    */
-  public void doLogin(final Runnable runnable, Object o) {
+  public void doLogin(AuthCallback runnable, Object o) {
     this.whenFinished = runnable;
     if (!(o instanceof Account)) {
-      throw new IllegalArgumentException("FroyoAuthManager requires an account.");
+      throw new IllegalArgumentException("ModernAuthManager requires an account.");
     }
     Account account = (Account) o;
+    doLogin(account);
+  }
+
+  private void doLogin(Account account) {
+    // Keep the account in case we need to retry.
+    this.lastAccount = account;
+
     accountManager.getAuthToken(account, service, true,
             new AccountManagerCallback<Bundle>() {
         public void run(AccountManagerFuture<Bundle> future) {
@@ -109,7 +113,7 @@ public class ModernAuthManager implements AuthManager {
 
             authToken = result.getString(
                 AccountManager.KEY_AUTHTOKEN);
-            Log.e(Constants.TAG, "Got auth token.");
+            Log.i(Constants.TAG, "Got auth token.");
             runWhenFinished();
           } catch (OperationCanceledException e) {
             Log.e(Constants.TAG, "Operation Canceled", e);
@@ -144,16 +148,23 @@ public class ModernAuthManager implements AuthManager {
    *         the auth token, or False if there was an error or the request was
    *         canceled
    */
-  public boolean authResult(int resultCode, Intent results) {
+  public void authResult(int resultCode, Intent results) {
+    boolean retry = false;
     if (results != null) {
-      authToken = results.getStringExtra(
-          AccountManager.KEY_AUTHTOKEN);
-      Log.w(Constants.TAG, "authResult: " + authToken);
+      authToken = results.getStringExtra(AccountManager.KEY_AUTHTOKEN);
+      retry = results.getBooleanExtra("retry", false);
+      Log.w(Constants.TAG, "authResult: token=" + authToken + "; extras=" + results.getExtras());
     } else {
-      Log.e(Constants.TAG, "No auth result results!!");
+      Log.e(Constants.TAG, "No auth token!!");
     }
+
+    if (authToken == null && retry) {
+      Log.i(TAG, "Retrying to get auth result");
+      doLogin(lastAccount);
+      return;
+    }
+
     runWhenFinished();
-    return authToken != null;
   }
 
   /**
@@ -175,13 +186,14 @@ public class ModernAuthManager implements AuthManager {
    * @param runnable A {@link Runnable} to execute when a new auth token
    *        is successfully fetched
    */
-  public void invalidateAndRefresh(final Runnable runnable) {
+  public void invalidateAndRefresh(final AuthCallback runnable) {
     this.whenFinished = runnable;
 
     activity.runOnUiThread(new Runnable() {
       public void run() {
         accountManager.invalidateAuthToken(Constants.ACCOUNT_TYPE,
             authToken);
+        authToken = null;
 
         AccountChooser accountChooser = new AccountChooser();
         accountChooser.chooseAccount(activity,
@@ -189,7 +201,7 @@ public class ModernAuthManager implements AuthManager {
               @Override
               public void onAccountSelected(Account account) {
                 if (account != null) {
-                  doLogin(whenFinished, account);
+                  doLogin(account);
                 } else {
                   runWhenFinished();
                 }
@@ -200,11 +212,13 @@ public class ModernAuthManager implements AuthManager {
   }
 
   private void runWhenFinished() {
+    lastAccount = null;
+
     if (whenFinished != null) {
       (new Thread() {
         @Override
         public void run() {
-          whenFinished.run();
+          whenFinished.onAuthResult(authToken != null);
         }
       }).start();
     }

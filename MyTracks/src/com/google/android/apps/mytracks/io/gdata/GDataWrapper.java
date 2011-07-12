@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -17,6 +17,7 @@ package com.google.android.apps.mytracks.io.gdata;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.io.AuthManager;
+import com.google.android.apps.mytracks.io.AuthManager.AuthCallback;
 
 import android.util.Log;
 
@@ -26,6 +27,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 /**
@@ -132,7 +134,7 @@ public class GDataWrapper<C> {
   public static final int ERROR_CLEANED_UP = 7;
   // An unknown error occurred.
   public static final int ERROR_UNKNOWN = 100;
-  
+
   private static final int AUTH_TOKEN_INVALIDATE_REFRESH_NUM_RETRIES = 1;
   private static final int AUTH_TOKEN_INVALIDATE_REFRESH_TIMEOUT = 5000;
 
@@ -141,7 +143,7 @@ public class GDataWrapper<C> {
   private C gdataServiceClient;
   private AuthManager auth;
   private boolean retryOnAuthFailure;
-  
+
   public GDataWrapper() {
     errorType = ERROR_NO_ERROR;
     errorMessage = null;
@@ -179,7 +181,7 @@ public class GDataWrapper<C> {
           return false;
         }
       }
-      
+
       Log.d(Constants.TAG, "retrying function/query");
     }
     return false;
@@ -189,7 +191,7 @@ public class GDataWrapper<C> {
    * Execute a given function or query.  If one is executed, errorType and
    * errorMessage will contain the result/status of the function/query.
    */
-  private void runOne(final AuthenticatedFunction function, 
+  private void runOne(final AuthenticatedFunction function,
       final QueryFunction<C> query) {
     try {
       if (function != null) {
@@ -210,7 +212,7 @@ public class GDataWrapper<C> {
       errorType = ERROR_AUTH;
       errorMessage = e.getMessage();
     } catch (HttpException e) {
-      Log.e(Constants.TAG, 
+      Log.e(Constants.TAG,
           "HttpException, code " + e.getStatusCode() + " message " + e.getMessage(), e);
       errorMessage = e.getMessage();
       if (e.getStatusCode() == 401) {
@@ -241,10 +243,10 @@ public class GDataWrapper<C> {
     }
   }
 
-  /** 
+  /**
    * Invalidates and refreshes the auth token.  Blocks until the refresh has
    * completed or until we deem the refresh as having timed out.
-   * 
+   *
    * @return true If the invalidate/refresh succeeds, false if it fails or
    *   times out.
    */
@@ -252,19 +254,26 @@ public class GDataWrapper<C> {
     Log.d(Constants.TAG, "Retrying due to auth failure");
     // This FutureTask doesn't do anything -- it exists simply to be
     // blocked upon using get().
-    FutureTask<?> whenFinishedFuture = new FutureTask<Object>(new Runnable() {
+    final FutureTask<?> whenFinishedFuture = new FutureTask<Object>(new Runnable() {
       public void run() {}
     }, null);
 
-    auth.invalidateAndRefresh(whenFinishedFuture);
+    final AtomicBoolean finalSuccess = new AtomicBoolean(false);
+    auth.invalidateAndRefresh(new AuthCallback() {
+      @Override
+      public void onAuthResult(boolean success) {
+        finalSuccess.set(success);
+        whenFinishedFuture.run();
+      }
+    });
 
     try {
       Log.d(Constants.TAG, "waiting for invalidate");
-      whenFinishedFuture.get(AUTH_TOKEN_INVALIDATE_REFRESH_TIMEOUT, 
+      whenFinishedFuture.get(AUTH_TOKEN_INVALIDATE_REFRESH_TIMEOUT,
           TimeUnit.MILLISECONDS);
-      Log.d(Constants.TAG, "invalidate finished");
-      return true;
-
+      boolean success = finalSuccess.get();
+      Log.d(Constants.TAG, "invalidate finished, success = " + success);
+      return success;
     } catch (InterruptedException e) {
       Log.e(Constants.TAG, "Failed to invalidate", e);
     } catch (ExecutionException e) {
@@ -274,7 +283,7 @@ public class GDataWrapper<C> {
     } finally {
       whenFinishedFuture.cancel(false);
     }
-    
+
     return false;
   }
 
@@ -289,11 +298,11 @@ public class GDataWrapper<C> {
   public void setAuthManager(AuthManager auth) {
     this.auth = auth;
   }
-  
+
   public AuthManager getAuthManager() {
     return auth;
   }
-  
+
   public void setRetryOnAuthFailure(boolean retry) {
     retryOnAuthFailure = retry;
   }

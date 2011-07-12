@@ -2,6 +2,7 @@
 package com.google.android.apps.mytracks.io.mymaps;
 
 import com.google.android.apps.mytracks.io.AuthManager;
+import com.google.android.apps.mytracks.io.AuthManager.AuthCallback;
 import com.google.android.apps.mytracks.io.gdata.GDataClientFactory;
 import com.google.android.common.gdata.AndroidXmlParserFactory;
 import com.google.wireless.gdata.client.GDataClient;
@@ -126,11 +127,12 @@ class MyMapsGDataWrapper {
     }
     Log.d(MyMapsConstants.TAG, "GData error encountered: " + errorMessage);
     if (errorType == ERROR_AUTH && auth != null) {
-      Runnable whenFinished = null;
+      AuthCallback whenFinished = null;
       if (retryOnAuthFailure) {
         retriesPending++;
-        whenFinished = new Runnable() {
-          public void run() {
+        whenFinished = new AuthCallback() {
+          @Override
+          public void onAuthResult(boolean success) {
             retriesPending--;
             retryOnAuthFailure = false;
             runQuery(query);
