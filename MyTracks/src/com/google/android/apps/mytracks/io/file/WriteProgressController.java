@@ -96,7 +96,7 @@ class WriteProgressController {
   private final DialogInterface.OnCancelListener dialogCancelListener =
     new DialogInterface.OnCancelListener() {
       @Override
-      public void onCancel(DialogInterface dialog) {
+      public void onCancel(DialogInterface dialogInterface) {
         writer.stopWriteTrack();
       }
     };

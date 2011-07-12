@@ -130,10 +130,12 @@ public class StatusAnnouncerTask implements PeriodicTask {
       return;
     }
 
-    checkReady();
-    if (!ready) {
-      Log.e(TAG, "StatusAnnouncer Tts not ready.");
-      return;
+    synchronized (this) {
+      checkReady();
+      if (!ready) {
+        Log.e(TAG, "StatusAnnouncer Tts not ready.");
+        return;
+      }
     }
 
     if (!speechAllowed) {

@@ -59,7 +59,7 @@ public class WaypointsList extends ListActivity
 
   private int contextPosition = -1;
   private long trackId = -1;
-  private long waypointId = -1;
+  private long selectedWaypointId = -1;
   private ListView listView = null;
   private Button insertWaypointButton = null;
   private Button insertStatisticsButton = null;
@@ -77,7 +77,7 @@ public class WaypointsList extends ListActivity
           AdapterView.AdapterContextMenuInfo info =
               (AdapterView.AdapterContextMenuInfo) menuInfo;
           contextPosition = info.position;
-          waypointId = WaypointsList.this.listView.getAdapter()
+          selectedWaypointId = WaypointsList.this.listView.getAdapter()
               .getItemId(contextPosition);
           Waypoint waypoint = providerUtils.getWaypoint(info.id);
           if (waypoint != null) {
@@ -108,18 +108,18 @@ public class WaypointsList extends ListActivity
     if (!super.onMenuItemSelected(featureId, item)) {
       switch (item.getItemId()) {
         case Constants.MENU_SHOW: {
-          onListItemClick(null, null, 0, waypointId);
+          onListItemClick(null, null, 0, selectedWaypointId);
           return true;
         }
         case Constants.MENU_EDIT: {
           Intent intent = new Intent(this, WaypointDetails.class);
           intent.putExtra("trackid", trackId);
-          intent.putExtra(WaypointDetails.WAYPOINT_ID_EXTRA, waypointId);
+          intent.putExtra(WaypointDetails.WAYPOINT_ID_EXTRA, selectedWaypointId);
           startActivity(intent);
           return true;
         }
         case Constants.MENU_DELETE: {
-          deleteWaypoint(waypointId);
+          deleteWaypoint(selectedWaypointId);
         }
       }
     }
@@ -297,8 +297,8 @@ public class WaypointsList extends ListActivity
     builder.setPositiveButton(getString(R.string.yes),
         new DialogInterface.OnClickListener() {
           @Override
-          public void onClick(DialogInterface dialog, int i) {
-            dialog.dismiss();
+          public void onClick(DialogInterface dialogInterface, int i) {
+            dialogInterface.dismiss();
             providerUtils.deleteWaypoint(waypointId,
                 new StringUtils(WaypointsList.this));
           }
@@ -306,8 +306,8 @@ public class WaypointsList extends ListActivity
     builder.setNegativeButton(getString(R.string.no),
         new DialogInterface.OnClickListener() {
           @Override
-          public void onClick(DialogInterface dialog, int i) {
-            dialog.dismiss();
+          public void onClick(DialogInterface dialogInterface, int i) {
+            dialogInterface.dismiss();
           }
         });
     dialog = builder.create();

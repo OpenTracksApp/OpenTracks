@@ -31,9 +31,9 @@ public class KmlTrackWriterTest extends TrackFormatWriterTest {
     }
 
     @Override
-    public String generateTrackDescription(Track track,
+    public String generateTrackDescription(Track trackToDescribe,
         Vector<Double> distances, Vector<Double> elevations) {
-      assertSame(KmlTrackWriterTest.super.track, track);
+      assertSame(KmlTrackWriterTest.super.track, trackToDescribe);
       assertTrue(distances.isEmpty());
       assertTrue(elevations.isEmpty());
       return FULL_TRACK_DESCRIPTION;

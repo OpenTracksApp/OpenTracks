@@ -38,6 +38,7 @@ public class AntSensorManagerTest extends AndroidTestCase {
       super.handleMessage(rawMessage);
     }
 
+    @SuppressWarnings("hiding")
     @Override
     public boolean handleMessage(byte messageId, byte[] messageData) {
       this.messageId = messageId;

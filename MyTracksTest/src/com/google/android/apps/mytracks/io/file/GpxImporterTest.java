@@ -48,7 +48,7 @@ import org.xml.sax.SAXException;
 
 /**
  * Tests for the GPX importer.
- * 
+ *
  * @author Steffen Horlacher
  */
 public class GpxImporterTest extends AndroidTestCase {
@@ -180,51 +180,45 @@ public class GpxImporterTest extends AndroidTestCase {
   /**
    * Test with invalid location - track should be deleted.
    */
-  public void testImportLocationFailure() throws ParserConfigurationException,
-      SAXException, IOException {
+  public void testImportLocationFailure() throws ParserConfigurationException, IOException {
     testInvalidXML(INVALID_LOCATION_TEST_GPX);
   }
 
   /**
    * Test with invalid time - track should be deleted.
    */
-  public void testImportTimeFailure() throws ParserConfigurationException,
-      SAXException, IOException {
+  public void testImportTimeFailure() throws ParserConfigurationException, IOException {
     testInvalidXML(INVALID_TIME_TEST_GPX);
   }
 
   /**
    * Test with invalid xml - track should be deleted.
    */
-  public void testImportXMLFailure() throws ParserConfigurationException,
-      SAXException, IOException {
+  public void testImportXMLFailure() throws ParserConfigurationException, IOException {
     testInvalidXML(INVALID_XML_TEST_GPX);
   }
-  
+
   /**
    * Test with invalid altitude - track should be deleted.
    */
-  public void testImportInvalidAltitude() throws ParserConfigurationException,
-      SAXException, IOException {
+  public void testImportInvalidAltitude() throws ParserConfigurationException, IOException {
     testInvalidXML(INVALID_ALTITUDE_TEST_GPX);
   }
 
   /**
    * Test with invalid latitude - track should be deleted.
    */
-  public void testImportInvalidLatitude() throws ParserConfigurationException,
-      SAXException, IOException {
+  public void testImportInvalidLatitude() throws ParserConfigurationException, IOException {
     testInvalidXML(INVALID_LATITUDE_TEST_GPX);
   }
-  
+
   /**
    * Test with invalid longitude - track should be deleted.
    */
-  public void testImportInvalidLongitude() throws ParserConfigurationException,
-      SAXException, IOException {
+  public void testImportInvalidLongitude() throws ParserConfigurationException, IOException {
     testInvalidXML(INVALID_LONGITUDE_TEST_GPX);
   }
-  
+
   private void testInvalidXML(String xml) throws ParserConfigurationException,
       IOException {
     expect(providerUtils.insertTrack((Track) AndroidMock.anyObject()))

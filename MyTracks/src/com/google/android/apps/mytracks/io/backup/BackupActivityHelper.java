@@ -185,7 +185,7 @@ public class BackupActivityHelper {
    */
   private void restoreFromDateAsync(final Date date) {
     // Show a progress dialog
-    final ProgressDialog progressDialog = ProgressDialog.show(
+    ProgressDialog.show(
         activity,
         activity.getString(R.string.progress_title),
         activity.getString(R.string.backup_import_progress_message),

@@ -58,12 +58,12 @@ public class TrackWidgetProvider
     public TrackObserver() {
       super(contentHandler);
     }
-    
+
     public void onChange(boolean selfChange) {
       updateTrack(null);
     }
   }
-  
+
   private final Handler contentHandler;
   private MyTracksProviderUtils providerUtils;
   private Context context;

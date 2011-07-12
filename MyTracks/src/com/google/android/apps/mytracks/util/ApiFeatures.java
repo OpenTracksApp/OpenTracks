@@ -35,7 +35,7 @@ public class ApiFeatures {
       Build.VERSION.SDK);
 
   private static ApiFeatures instance;
-  
+
   /**
    * The API platform adapter supported by this system.
    */
@@ -54,6 +54,7 @@ public class ApiFeatures {
   /**
    * Injects a specific singleton instance, to be used for unit tests.
    */
+  @SuppressWarnings("hiding")
   public static void injectInstance(ApiFeatures instance) {
     ApiFeatures.instance = instance;
   }
@@ -106,11 +107,11 @@ public class ApiFeatures {
   public boolean hasStrictMode() {
     return getApiLevel() >= 9;
   }
-  
+
   public boolean isAudioFocusSupported() {
     return getApiLevel() >= 8;
   }
-  
+
   /**
    * There's a bug (#1587) in Cupcake and Donut which prevents you from
    * using a SQLiteQueryBuilder twice.  That is, if you call buildQuery

@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -56,8 +56,8 @@ public class DeleteAllTracks extends Handler {
     builder.setIcon(android.R.drawable.ic_dialog_alert);
     builder.setPositiveButton(context.getString(R.string.yes),
         new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog, int i) {
-            dialog.dismiss();
+          public void onClick(DialogInterface dialogInterface, int i) {
+            dialogInterface.dismiss();
             Log.w(Constants.TAG, "deleting all!");
             MyTracksProviderUtils.Factory.get(context).deleteAllTracks();
             SharedPreferences prefs =
@@ -74,8 +74,8 @@ public class DeleteAllTracks extends Handler {
         });
     builder.setNegativeButton(context.getString(R.string.no),
         new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog, int i) {
-            dialog.dismiss();
+          public void onClick(DialogInterface dialogInterface, int i) {
+            dialogInterface.dismiss();
           }
         });
     dialog = builder.create();

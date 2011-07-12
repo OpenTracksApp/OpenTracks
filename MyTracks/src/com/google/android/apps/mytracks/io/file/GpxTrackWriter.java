@@ -67,6 +67,7 @@ public class GpxTrackWriter implements TrackFormatWriter {
       + "\" lon=\"" + coordinateFormatter.format(l.getLongitude()) + "\"";
   }
 
+  @SuppressWarnings("hiding")
   @Override
   public void prepare(Track track, OutputStream out) {
     this.track = track;

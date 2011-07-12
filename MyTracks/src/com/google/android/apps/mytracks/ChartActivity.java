@@ -463,6 +463,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
     return true;  // Reload data
   }
 
+  @SuppressWarnings("hiding")
   @Override
   public boolean onReportSpeedChanged(boolean reportSpeed) {
     boolean changed = reportSpeed != this.reportSpeed;

@@ -1,12 +1,12 @@
 /*
  * Copyright 2010 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -28,7 +28,7 @@ import java.util.List;
 
 /**
  * A class to monitor the network signal strength.
- * 
+ *
  * TODO: i18n
  *
  * @author Sandor Dornbush
@@ -60,6 +60,7 @@ public class SignalStrengthListenerCupcake extends PhoneStateListener
     return PhoneStateListener.LISTEN_SIGNAL_STRENGTH;
   }
 
+  @SuppressWarnings("hiding")
   @Override
   public void onSignalStrengthChanged(int signalStrength) {
     Log.d(TAG, "Signal Strength: " + signalStrength);
@@ -95,7 +96,7 @@ public class SignalStrengthListenerCupcake extends PhoneStateListener
 
   /**
    * Builds a description for the current signal strength.
-   * 
+   *
    * @return A human readable description of the network state
    */
   private String getDescription() {

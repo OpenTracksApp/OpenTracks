@@ -82,7 +82,7 @@ public abstract class AntSensorManager extends SensorManager {
   /** Receives and logs all status ANT intents. */
   private final BroadcastReceiver statusReceiver = new BroadcastReceiver() {
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(Context ctx, Intent intent) {
       String antAction = intent.getAction();
       Log.i(TAG, "enter status onReceive" + antAction);
     }
@@ -91,7 +91,7 @@ public abstract class AntSensorManager extends SensorManager {
   /** Receives all data ANT intents. */
   private final BroadcastReceiver dataReceiver = new BroadcastReceiver() {
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(Context ctx, Intent intent) {
       String antAction = intent.getAction();
       Log.i(TAG, "enter data onReceive" + antAction);
 

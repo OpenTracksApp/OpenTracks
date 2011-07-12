@@ -59,6 +59,7 @@ public class ResultListAdapterTest extends AndroidTestCase {
       this.urlId = urlId;
     }
 
+    @SuppressWarnings("hiding")
     private void saveContentView(View contentView) {
       if (this.contentView == null) {
         this.contentView = contentView;

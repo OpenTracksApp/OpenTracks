@@ -196,7 +196,7 @@ public class SendToFusionTables implements Runnable {
       // Create a new table:
       progressIndicator.setProgressValue(PROGRESS_FUSION_TABLE_CREATE);
       progressIndicator.setProgressMessage(R.string.progress_message_creating_fusiontable);
-      if (!createNewTable(track) || !makeTableUnlisted(tableId)) {
+      if (!createNewTable(track) || !makeTableUnlisted()) {
         return;
       }
 
@@ -245,7 +245,7 @@ public class SendToFusionTables implements Runnable {
     return runUpdate(query);
   }
 
-  private boolean makeTableUnlisted(String tableId) {
+  private boolean makeTableUnlisted() {
     Log.d(Constants.TAG, "Setting visibility to unlisted.");
     String query = "UPDATE TABLE " + tableId + " SET VISIBILITY = UNLISTED";
     return runUpdate(query);

@@ -280,9 +280,7 @@ class TrackWriterImpl implements TrackWriter {
           }
         }
       } finally {
-        if (cursor != null) {
-          cursor.close();
-        }
+        cursor.close();
       }
     }
   }

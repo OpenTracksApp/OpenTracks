@@ -386,8 +386,8 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     builder.setIcon(android.R.drawable.ic_dialog_alert);
     builder.setPositiveButton(getString(R.string.yes),
         new DialogInterface.OnClickListener() {
-      public void onClick(DialogInterface dialog, int i) {
-        dialog.dismiss();
+      public void onClick(DialogInterface dialogInterface, int i) {
+        dialogInterface.dismiss();
         providerUtils.deleteTrack(trackId);
         if (trackId == dataHub.getSelectedTrackId()) {
           dataHub.unloadCurrentTrack();
@@ -395,8 +395,8 @@ public class MyTracks extends TabActivity implements OnTouchListener {
       }});
     builder.setNegativeButton(getString(R.string.no),
         new DialogInterface.OnClickListener() {
-      public void onClick(DialogInterface dialog, int i) {
-        dialog.dismiss();
+      public void onClick(DialogInterface dialogInterface, int i) {
+        dialogInterface.dismiss();
       }
     });
     dialog = builder.create();

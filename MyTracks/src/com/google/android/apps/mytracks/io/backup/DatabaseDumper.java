@@ -85,7 +85,7 @@ class DatabaseDumper {
   public void writeHeaders(Cursor cursor, int numRows, DataOutputStream writer)
       throws IOException {
     initializeCachedValues(cursor);
-    writeQueryMetadata(cursor, numRows, writer);
+    writeQueryMetadata(numRows, writer);
   }
 
   /**
@@ -151,7 +151,7 @@ class DatabaseDumper {
    * @throws IOException if there are any errors while writing
    */
   private void writeQueryMetadata(
-      Cursor cursor, int numRows, DataOutputStream writer) throws IOException {
+      int numRows, DataOutputStream writer) throws IOException {
     // Write column data
     writer.writeInt(columnNames.length);
     for (int i = 0; i < columnNames.length; i++) {

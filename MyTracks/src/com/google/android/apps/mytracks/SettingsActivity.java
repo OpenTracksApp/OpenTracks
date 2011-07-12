@@ -340,7 +340,7 @@ public class SettingsActivity extends PreferenceActivity {
         .setPositiveButton(android.R.string.ok,
             new OnClickListener() {
               @Override
-              public void onClick(DialogInterface dialog, int button) {
+              public void onClick(DialogInterface dialogInterface, int button) {
                 onResetPreferencesConfirmed();
               }
             })

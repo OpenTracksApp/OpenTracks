@@ -69,16 +69,16 @@ public class SignalStrengthService extends Service
 
   @Override
   public void onStart(Intent intent, int startId) {
-    handleCommand(intent, startId);
+    handleCommand(intent);
   }
 
   @Override
   public int onStartCommand(Intent intent, int flags, int startId) {
-    handleCommand(intent, startId);
+    handleCommand(intent);
     return START_STICKY;
   }
 
-  private void handleCommand(Intent intent, int startId) {
+  private void handleCommand(Intent intent) {
     String action = intent.getAction();
     if (START_SAMPLING.equals(action)) {
       startSampling();

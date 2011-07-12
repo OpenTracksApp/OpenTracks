@@ -331,7 +331,7 @@ public class TrackRecordingServiceTest
     }
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(Context ctx, Intent intent) {
       Log.d("MyTracksTest", "Got broadcast: " + intent);
       synchronized (receivedIntents) {
         receivedIntents.add(intent);

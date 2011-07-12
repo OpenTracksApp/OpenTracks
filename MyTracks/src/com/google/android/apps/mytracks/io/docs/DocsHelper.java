@@ -69,22 +69,22 @@ public class DocsHelper {
   private static final String OPENDOCUMENT_SPREADSHEET_MIME_TYPE =
       "application/x-vnd.oasis.opendocument.spreadsheet";
   private static final String ATOM_FEED_MIME_TYPE = "application/atom+xml";
-  
+
   /**
    * Creates a new MyTracks spreadsheet with the given name.
-   * 
+   *
    * @param context The context associated with this request.
    * @param docListWrapper The GData handle for the Document List service.
    * @param name The name for the newly-created spreadsheet.
    * @return The spreadsheet ID, if one is created.  {@code null} will be
    *     returned if a GData error didn't occur, but no spreadsheet ID was
-   *     returned. 
+   *     returned.
    */
-  public String createSpreadsheet(final Context context, 
+  public String createSpreadsheet(final Context context,
       final GDataWrapper<GDataServiceClient> docListWrapper, final String name) throws IOException {
     final AtomicReference<String> idSaver = new AtomicReference<String>();
 
-    boolean result = docListWrapper.runQuery(new QueryFunction<GDataServiceClient>() {
+    boolean success = docListWrapper.runQuery(new QueryFunction<GDataServiceClient>() {
       @Override
       public void query(GDataServiceClient client) throws IOException,
           GDataWrapper.AuthenticationException {
@@ -95,7 +95,7 @@ public class DocsHelper {
             OPENDOCUMENT_SPREADSHEET_MIME_TYPE);
         conn.addRequestProperty("Slug", name);
         conn.addRequestProperty("Authorization",
-            "GoogleLogin auth=" + 
+            "GoogleLogin auth=" +
             docListWrapper.getAuthManager().getAuthToken());
         conn.setDoOutput(true);
         OutputStream os = conn.getOutputStream();
@@ -141,24 +141,24 @@ public class DocsHelper {
         if (idStringStart == -1) {
           return;
         }
-        
+
         String id = result.substring(
             idStringStart + DOCS_SPREADSHEET_URL.length(), idTagCloseIndex);
         Log.i(Constants.TAG, "Created new spreadsheet: " + id);
         idSaver.set(id);
       }});
-    
-    if (!result) {
-      throw newIOException(docListWrapper, 
+
+    if (!success) {
+      throw newIOException(docListWrapper,
           "Failed to create new spreadsheet.");
     }
-    
+
     return idSaver.get();
   }
 
   /**
    * Retrieve the ID of a spreadsheet with the given name.
-   * 
+   *
    * @param docListWrapper The GData handle for the Document List service.
    * @param title The name of the spreadsheet whose ID is to be retrieved.
    * @return The spreadsheet ID, if it can be retrieved.  {@code null} will
@@ -177,7 +177,7 @@ public class DocsHelper {
         GDataParser listParser;
         try {
           listParser = client.getParserForFeed(Entry.class,
-              DOCS_MY_SPREADSHEETS_FEED_URL, 
+              DOCS_MY_SPREADSHEETS_FEED_URL,
               docListWrapper.getAuthManager().getAuthToken());
           listParser.init();
 
@@ -201,22 +201,22 @@ public class DocsHelper {
     });
 
     if (!result) {
-      throw newIOException(docListWrapper, 
+      throw newIOException(docListWrapper,
           "Failed to retrieve spreadsheet list.");
     }
-    
+
     return idSaver.get();
   }
 
   /**
    * Retrieve the ID of the first worksheet in the named spreadsheet.
-   * 
+   *
    * @param trixWrapper The GData handle for the spreadsheet service.
    * @param spreadsheetId The GData ID for the given spreadsheet.
    * @return The worksheet ID, if it can be retrieved.  {@code null} will be
    *     returned if the GData request returns without error, but without an
    *     ID.
-   * @throws IOException If an error occurs during the GData request. 
+   * @throws IOException If an error occurs during the GData request.
    */
   public String getWorksheetId(final GDataWrapper<GDataServiceClient> trixWrapper,
       final String spreadsheetId) throws IOException {
@@ -250,17 +250,17 @@ public class DocsHelper {
         }
       }
     });
-    
+
     if (!result) {
       throw newIOException(trixWrapper, "Failed to retrieve worksheet ID.");
     }
-    
+
     return idSaver.get();
   }
-  
+
   /**
    * Add a row to a worksheet containing the stats for a given track.
-   * 
+   *
    * @param context The context associated with this request.
    * @param trixAuth The GData authorization for the spreadsheet service.
    * @param spreadsheetId The spreadsheet to be modified.
@@ -270,17 +270,17 @@ public class DocsHelper {
    *     imperial units will be used.
    * @throws IOException If an error occurs while updating the worksheet.
    */
-  public void addTrackRow(Context context, AuthManager trixAuth, 
-      String spreadsheetId, String worksheetId, Track track, 
+  public void addTrackRow(Context context, AuthManager trixAuth,
+      String spreadsheetId, String worksheetId, Track track,
       boolean metricUnits) throws IOException {
-    
+
     String worksheetUri = String.format(DOCS_SPREADSHEET_URL_FORMAT,
         spreadsheetId, worksheetId);
     TripStatistics stats = track.getStatistics();
-    
-    String distanceUnit = context.getString(metricUnits ? 
+
+    String distanceUnit = context.getString(metricUnits ?
         R.string.kilometer : R.string.mile);
-    String speedUnit = context.getString(metricUnits ? 
+    String speedUnit = context.getString(metricUnits ?
         R.string.kilometer_per_hour : R.string.mile_per_hour);
     String elevationUnit = context.getString(metricUnits ?
         R.string.meter : R.string.feet);
@@ -310,7 +310,7 @@ public class DocsHelper {
       tagBuilder.append("map", String.format("%s?msa=0&msid=%s",
           Constants.MAPSHOP_BASE_URL, track.getMapId()));
     }
-    
+
     String postText = new StringBuilder()
         .append("<entry xmlns='http://www.w3.org/2005/Atom' "
             + "xmlns:gsx='http://schemas.google.com/spreadsheets/"
@@ -323,7 +323,7 @@ public class DocsHelper {
         "Inserting at: " + spreadsheetId + " => " + worksheetUri);
 
     Log.i(Constants.TAG, postText);
-    
+
     writeRowData(trixAuth, worksheetUri, postText);
 
     Log.i(Constants.TAG, "Post finished.");
@@ -331,13 +331,13 @@ public class DocsHelper {
 
   /**
    * Writes spreadsheet row data to the indicated worksheet.
-   * 
+   *
    * @param trixAuth The GData authorization for the spreadsheet service.
    * @param worksheetUri The URI of the worksheet to be altered.
    * @param postText The XML tags describing the change to be made.
    * @throws IOException Thrown if an error occurs during the write.
    */
-  protected void writeRowData(AuthManager trixAuth, String worksheetUri, 
+  protected void writeRowData(AuthManager trixAuth, String worksheetUri,
       String postText) throws IOException {
     // No need for a wrapper because we know that the authorization was good
     // enough to get this far.
@@ -364,9 +364,9 @@ public class DocsHelper {
     rd.close();
   }
 
-  private static IOException newIOException(GDataWrapper<GDataServiceClient> wrapper, 
+  private static IOException newIOException(GDataWrapper<GDataServiceClient> wrapper,
       String message) {
-    return new IOException(String.format("%s: %d: %s", message, 
+    return new IOException(String.format("%s: %d: %s", message,
         wrapper.getErrorType(), wrapper.getErrorMessage()));
   }
 }

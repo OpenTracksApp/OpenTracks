@@ -157,6 +157,7 @@ public class SaveActivity extends Activity {
         if (controller != null) {
           return controller.createProgressDialog();
         }
+        //$FALL-THROUGH$
       default:
         return super.onCreateDialog(id);
     }

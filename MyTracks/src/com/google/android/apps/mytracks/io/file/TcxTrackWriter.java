@@ -71,6 +71,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
     timestampFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
   }
 
+  @SuppressWarnings("hiding")
   @Override
   public void prepare(Track track, OutputStream out) {
     this.track = track;
