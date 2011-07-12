@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+  <!-- Do not translate any arrays in this file. -->
+  <string-array name="min_required_accuracy_values">
+    <item>10</item>
+    <item>20</item>
+    <item>50</item>
+    <item>100</item>
+    <item>200</item>
+    <item>500</item>
+    <item>1000</item>
+    <item>2000</item>
+    <item>5000</item>
+  </string-array>
+ 
+  <string-array name="min_recording_distance_values">
+    <item>1</item>
+    <item>2</item>
+    <item>3</item>
+    <item>4</item>
+    <item>5</item>
+    <item>10</item>
+    <item>100</item>
+  </string-array>
+
+  <string-array name="max_recording_distance_values">
+    <item>50</item>
+    <item>100</item>
+    <item>200</item>
+    <item>500</item>
+    <item>1000</item>
+    <item>5000</item>
+  </string-array>
+
+  <string-array name="min_recording_interval_values">
+    <item>-2</item>
+    <item>-1</item>
+    <item>0</item>
+    <item>2</item>
+    <item>3</item>
+    <item>4</item>
+    <item>5</item>
+    <item>10</item>
+    <item>20</item>
+    <item>30</item>
+    <item>60</item>
+    <item>120</item>
+    <item>300</item>
+    <item>480</item>
+    <item>900</item>
+    <item>1800</item>
+  </string-array>
+
+  <string-array name="task_frequency_values">
+    <item>0</item>
+    <item>-100</item>
+    <item>-50</item>
+    <item>-25</item>
+    <item>-10</item>
+    <item>-5</item>
+    <item>-1</item>
+    <item>60</item>
+    <item>30</item>
+    <item>15</item>
+    <item>10</item>
+    <item>5</item>
+    <item>2</item>
+    <item>1</item>
+  </string-array>
+
+  <string-array name="auto_resume_track_timeout_values">
+    <item>0</item>
+    <item>5</item>
+    <item>10</item>
+    <item>15</item>
+    <item>-1</item>
+  </string-array>
+
+  <array name="export_formats">
+    <item>GPX</item>
+    <item>KML</item>
+    <item>CSV</item>
+    <item>TCX</item>
+  </array>
+
+  <array name="sensor_type_options">
+    <item>@string/no_sensor_option</item>
+    <item>@string/ant_sensor_option</item>
+    <item>@string/ant_bridge_sensor_option</item>
+    <item>@string/polar_bt_sensor_option</item>
+    <item>@string/zephyr_bt_sensor_option</item>
+  </array>
+
+  <array name="sensor_type_values">
+    <item>@string/none</item>
+    <item>@string/ant_sensor_type</item>
+    <item>@string/srm_ant_bridge_sensor_type</item>
+    <item>@string/polar_sensor_type</item>
+    <item>@string/zephyr_sensor_type</item>
+  </array>
+
+  <string-array name="ant_sensor_type_values">
+    <item>@string/ant_sensor_type</item>
+    <item>@string/srm_ant_bridge_sensor_type</item>
+  </string-array>
+</resources>
