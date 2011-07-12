@@ -74,4 +74,15 @@ limitations under the License.
     <item name="android:layout_height">3dip</item>
     <item name="android:layout_width">fill_parent</item>
   </style>
+  
+  <!-- The style for the track widget. -->
+  <style name="WidgetText" parent="@android:Widget.TextView">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textColor">@color/appwidget_text</item>
+    <item name="android:textSize">14sp</item>
+  </style>
+  <style name="WidgetText.Register">
+    <item name="android:width">160px</item>
+  </style>
 </resources>

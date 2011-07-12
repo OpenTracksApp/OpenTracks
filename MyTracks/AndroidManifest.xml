@@ -180,7 +180,7 @@ limitations under the License.
         <action android:name="com.google.android.apps.mytracks.TRACK_UPDATED" />
       </intent-filter>
       <meta-data android:name="android.appwidget.provider"
-                 android:resource="@xml/appwidget_info" />
+                 android:resource="@xml/track_widget_info" />
     </receiver>
   </application>
 

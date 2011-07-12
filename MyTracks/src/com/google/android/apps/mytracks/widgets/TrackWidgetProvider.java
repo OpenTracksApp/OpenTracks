@@ -70,8 +70,10 @@ public class TrackWidgetProvider
   private String unknown;
   private String distance;
   private String speed;
+  private String pace;
   private TrackObserver trackObserver;
   private boolean isMetric;
+  private boolean reportSpeed;
   private long selectedTrackId;
   private SharedPreferences sharedPreferences;
   private String TRACK_STARTED_ACTION;
@@ -141,7 +143,7 @@ public class TrackWidgetProvider
 
     AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
     ComponentName widget = new ComponentName(context, TrackWidgetProvider.class);
-    RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.appwidget);
+    RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.track_widget);
 
     // Make all of the stats open the mytracks activity.
     Intent intent = new Intent(context, MyTracks.class);
@@ -237,7 +239,12 @@ public class TrackWidgetProvider
       if (!isMetric) {
         displaySpeed *= UnitConversions.KMH_TO_MPH;
       }
-      speed = StringUtils.formatSingleDecimalPlace(displaySpeed) + " " + this.speed;
+      if (reportSpeed) {
+        speed = StringUtils.formatSingleDecimalPlace(displaySpeed) + " " + this.speed;
+      } else {
+        long displayPace = (long) (3600000.0 / displaySpeed);
+        speed = StringUtils.formatTime(displayPace) + " " + pace;
+      }
     }
 
     views.setTextViewText(R.id.appwidget_distance_text, distance);
@@ -252,7 +259,14 @@ public class TrackWidgetProvider
       isMetric = prefs.getBoolean(metricUnitsKey, true);
       distance = context.getString(isMetric ? R.string.kilometer : R.string.mile);
       speed = context.getString(isMetric ? R.string.kilometer_per_hour : R.string.mile_per_hour);
+      pace = context.getString(isMetric ? R.string.min_per_kilometer : R.string.min_per_mile);
     }
+
+    String reportSpeedKey = context.getString(R.string.report_speed_key);
+    if (key == null || key.equals(reportSpeedKey)) {
+      reportSpeed = prefs.getBoolean(reportSpeedKey, true);
+    }
+
     String selectedTrackKey = context.getString(R.string.selected_track_key);
     if (key == null || key.equals(selectedTrackKey)) {
       selectedTrackId = prefs.getLong(selectedTrackKey, -1);

@@ -48,18 +48,11 @@ limitations under the License.
         android:layout_width="fill_parent"
         android:orientation="horizontal">
         <TextView
-          android:id="@+id/appwidget_distance_text"
-          android:layout_height="wrap_content"
-          android:layout_width="wrap_content"
-          android:textColor="@color/appwidget_text"
-          android:textSize="14sp"
-          android:width="110px" />
+          style="@style/WidgetText.Register"
+          android:id="@+id/appwidget_distance_text" />
         <TextView
-          android:layout_height="wrap_content"
-          android:layout_width="wrap_content"
-          android:text="@string/total_distance_label"
-          android:textColor="@color/appwidget_text"
-          android:textSize="14sp" />
+          style="@style/WidgetText"
+          android:text="@string/total_distance_label" />
       </LinearLayout>
       <ImageView
         android:layout_width="fill_parent"
@@ -71,18 +64,11 @@ limitations under the License.
         android:orientation="horizontal"
         android:paddingBottom="2px">
         <TextView
-          android:id="@+id/appwidget_time_text"
-          android:layout_height="wrap_content"
-          android:layout_width="wrap_content"
-          android:textColor="@color/appwidget_text"
-          android:textSize="14sp"
-          android:width="110px" />
+          style="@style/WidgetText.Register"
+          android:id="@+id/appwidget_time_text" />
         <TextView
-          android:layout_height="wrap_content"
-          android:layout_width="wrap_content"
-          android:text="@string/moving_time_label"
-          android:textColor="@color/appwidget_text"
-          android:textSize="14sp" />
+          style="@style/WidgetText"
+          android:text="@string/moving_time_label" />
       </LinearLayout>
       <ImageView
         android:layout_width="fill_parent"
@@ -93,18 +79,11 @@ limitations under the License.
         android:layout_width="fill_parent"
         android:orientation="horizontal">
         <TextView
-          android:id="@+id/appwidget_speed_text"
-          android:layout_height="wrap_content"
-          android:layout_width="wrap_content"
-          android:textColor="@color/appwidget_text"
-          android:textSize="14sp"
-          android:width="110px" />
+          style="@style/WidgetText.Register"
+          android:id="@+id/appwidget_speed_text" />
         <TextView
-          android:layout_height="wrap_content"
-          android:layout_width="wrap_content"
-          android:text="@string/average_moving_speed_label"
-          android:textColor="@color/appwidget_text"
-          android:textSize="14sp" />
+          style="@style/WidgetText"
+          android:text="@string/speed" />
       </LinearLayout>
     </LinearLayout>
   </LinearLayout>
