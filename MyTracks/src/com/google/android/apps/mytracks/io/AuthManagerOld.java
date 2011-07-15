@@ -22,8 +22,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import java.util.Vector;
-
 /**
  * AuthManager keeps track of the current auth token for a user. The advantage
  * over just passing around a String is that this class can renew the auth
@@ -46,8 +44,8 @@ public class AuthManagerOld implements AuthManager {
   /** The name of the service to authorize for. */
   private final String service;
 
-  /** A list of handlers to call when a new auth token is fetched. */
-  private final Vector<AuthCallback> newTokenListeners = new Vector<AuthCallback>();
+  /** The handler to call when a new auth token is fetched. */
+  private AuthCallback authCallback;
 
   /** The most recently fetched auth token or null if none is available. */
   private String authToken;
@@ -82,12 +80,8 @@ public class AuthManagerOld implements AuthManager {
   }
 
   @Override
-  public void doLogin(AuthCallback whenFinished, Object o) {
-    synchronized (newTokenListeners) {
-      if (whenFinished != null) {
-        newTokenListeners.add(whenFinished);
-      }
-    }
+  public void doLogin(AuthCallback callback, Object o) {
+    authCallback = callback;
     activity.runOnUiThread(new LoginRunnable());
   }
 
@@ -105,31 +99,24 @@ public class AuthManagerOld implements AuthManager {
   @Override
   public void authResult(int resultCode, Intent results) {
     if (resultCode != Activity.RESULT_OK) {
-      notifyListeners(false);
+      runAuthCallback(false);
       return;
     }
 
-    authToken = results.getStringExtra(
-        GoogleLoginServiceConstants.AUTHTOKEN_KEY);
+    authToken = results.getStringExtra(GoogleLoginServiceConstants.AUTHTOKEN_KEY);
     if (authToken == null) {
       // Retry, without prompting the user.
       GoogleLoginServiceHelper.getCredentials(
           activity, code, extras, requireGoogle, service, false);
     } else {
       // Notify all active listeners that we have a new auth token.
-      notifyListeners(true);
+      runAuthCallback(true);
     }
   }
 
-  private void notifyListeners(boolean success) {
-    synchronized (newTokenListeners) {
-      for (AuthCallback callback : newTokenListeners) {
-        callback.onAuthResult(success);
-      }
-
-      // Remove anything not in the sticky part of the list.
-      newTokenListeners.clear();
-    }
+  private void runAuthCallback(boolean success) {
+    authCallback.onAuthResult(success);
+    authCallback = null;
   }
 
   @Override
@@ -138,12 +125,8 @@ public class AuthManagerOld implements AuthManager {
   }
 
   @Override
-  public void invalidateAndRefresh(AuthCallback whenFinished) {
-    synchronized (newTokenListeners) {
-      if (whenFinished != null) {
-        newTokenListeners.add(whenFinished);
-      }
-    }
+  public void invalidateAndRefresh(AuthCallback callback) {
+    authCallback = callback;
     activity.runOnUiThread(new Runnable() {
       public void run() {
         GoogleLoginServiceHelper.invalidateAuthToken(activity, code, authToken);

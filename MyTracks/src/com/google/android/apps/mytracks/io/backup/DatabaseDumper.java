@@ -80,6 +80,7 @@ class DatabaseDumper {
    *
    * @param cursor the cursor to get columns from
    * @param numRows the number of rows that will be later written
+   * @param writer the output to write to
    * @throws IOException if there are errors while writing
    */
   public void writeHeaders(Cursor cursor, int numRows, DataOutputStream writer)
@@ -93,6 +94,7 @@ class DatabaseDumper {
    * This must be called after {@link #writeHeaders}.
    *
    * @param cursor the cursor to write data from
+   * @param writer the output to write to
    * @throws IOException if there are any errors while writing
    */
   public void writeOneRow(Cursor cursor, DataOutputStream writer)
@@ -146,8 +148,8 @@ class DatabaseDumper {
   /**
    * Writes metadata about the query to be dumped.
    *
-   * @param cursor the cursor that the data will come from
    * @param numRows the number of rows that will be dumped
+   * @param writer the output to write to
    * @throws IOException if there are any errors while writing
    */
   private void writeQueryMetadata(
@@ -171,6 +173,7 @@ class DatabaseDumper {
    * @param columnIdx the column index to read from
    * @param columnTypeId the type of the column to be read
    * @param cursor the cursor to read from
+   * @param writer the output to write to
    * @throws IOException if there are any errors while writing
    */
   private void writeCell(

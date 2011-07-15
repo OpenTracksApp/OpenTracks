@@ -51,7 +51,7 @@ public class ModernAuthManager implements AuthManager {
 
   private final AccountManager accountManager;
 
-  private AuthCallback whenFinished;
+  private AuthCallback authCallback;
 
   private Account lastAccount;
 
@@ -85,7 +85,7 @@ public class ModernAuthManager implements AuthManager {
    *        {@link #getAuthToken()}
    */
   public void doLogin(AuthCallback runnable, Object o) {
-    this.whenFinished = runnable;
+    this.authCallback = runnable;
     if (!(o instanceof Account)) {
       throw new IllegalArgumentException("ModernAuthManager requires an account.");
     }
@@ -114,7 +114,7 @@ public class ModernAuthManager implements AuthManager {
             authToken = result.getString(
                 AccountManager.KEY_AUTHTOKEN);
             Log.i(Constants.TAG, "Got auth token.");
-            runWhenFinished();
+            runAuthCallback();
           } catch (OperationCanceledException e) {
             Log.e(Constants.TAG, "Operation Canceled", e);
           } catch (IOException e) {
@@ -150,12 +150,11 @@ public class ModernAuthManager implements AuthManager {
    */
   public void authResult(int resultCode, Intent results) {
     boolean retry = false;
-    if (results != null) {
+    if (results == null) {
+      Log.e(Constants.TAG, "No auth token!!");
+    } else {
       authToken = results.getStringExtra(AccountManager.KEY_AUTHTOKEN);
       retry = results.getBooleanExtra("retry", false);
-      Log.w(Constants.TAG, "authResult: token=" + authToken + "; extras=" + results.getExtras());
-    } else {
-      Log.e(Constants.TAG, "No auth token!!");
     }
 
     if (authToken == null && retry) {
@@ -164,7 +163,7 @@ public class ModernAuthManager implements AuthManager {
       return;
     }
 
-    runWhenFinished();
+    runAuthCallback();
   }
 
   /**
@@ -186,8 +185,8 @@ public class ModernAuthManager implements AuthManager {
    * @param runnable A {@link Runnable} to execute when a new auth token
    *        is successfully fetched
    */
-  public void invalidateAndRefresh(final AuthCallback runnable) {
-    this.whenFinished = runnable;
+  public void invalidateAndRefresh(final AuthCallback callback) {
+    this.authCallback = callback;
 
     activity.runOnUiThread(new Runnable() {
       public void run() {
@@ -203,7 +202,7 @@ public class ModernAuthManager implements AuthManager {
                 if (account != null) {
                   doLogin(account);
                 } else {
-                  runWhenFinished();
+                  runAuthCallback();
                 }
               }
             });
@@ -211,14 +210,15 @@ public class ModernAuthManager implements AuthManager {
     });
   }
 
-  private void runWhenFinished() {
+  private void runAuthCallback() {
     lastAccount = null;
 
-    if (whenFinished != null) {
+    if (authCallback != null) {
       (new Thread() {
         @Override
         public void run() {
-          whenFinished.onAuthResult(authToken != null);
+          authCallback.onAuthResult(authToken != null);
+          authCallback = null;
         }
       }).start();
     }

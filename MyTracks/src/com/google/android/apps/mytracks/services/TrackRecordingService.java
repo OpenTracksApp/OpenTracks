@@ -998,8 +998,7 @@ public class TrackRecordingService extends Service {
       long lastRecordedLocationId =
           providerUtils.getLastLocationId(recordingTrackId);
       ContentValues values = new ContentValues();
-      if (lastRecordedLocationId >= 0
-          && recordedTrack.getStopId() >= 0) {
+      if (lastRecordedLocationId >= 0 && recordedTrack.getStopId() >= 0) {
         values.put(TracksColumns.STOPID, lastRecordedLocationId);
       }
       values.put(TracksColumns.STOPTIME, stats.getStopTime());

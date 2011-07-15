@@ -174,8 +174,9 @@ public class SendActivity extends Activity implements ProgressIndicator {
       restoreInstanceState(savedInstanceState);
     }
 
+    // If we had the instance restored after it was done, reset it.
     if (currentState == SendState.DONE) {
-      currentState = SendState.SEND_OPTIONS;
+      resetState();
     }
 
     // Only consider the intent if we're not restoring from a previous state.
