@@ -97,39 +97,30 @@ public class ModernAuthManager implements AuthManager {
     // Keep the account in case we need to retry.
     this.lastAccount = account;
 
-    accountManager.getAuthToken(account, service, true,
+    // NOTE: Many Samsung phones have a crashing bug in
+    // AccountManager#getAuthToken(Account, String, boolean, AccountManagerCallback<Bundle>)
+    // so we use the other version of the method.
+    // More details here:
+    // http://forum.xda-developers.com/showthread.php?p=15155487
+    // http://android.git.kernel.org/?p=platform/frameworks/base.git;a=blob;f=core/java/android/accounts/AccountManagerService.java
+    accountManager.getAuthToken(account, service, null, activity,
             new AccountManagerCallback<Bundle>() {
         public void run(AccountManagerFuture<Bundle> future) {
           try {
-            Bundle result = future.getResult();
-
-            // AccountManager needs user to grant permission
-            if (result.containsKey(AccountManager.KEY_INTENT)) {
-              Intent intent = (Intent) result.get(AccountManager.KEY_INTENT);
-              clearNewTaskFlag(intent);
-              activity.startActivityForResult(intent, Constants.GET_LOGIN);
-              return;
-            }
-
-            authToken = result.getString(
+            authToken = future.getResult().getString(
                 AccountManager.KEY_AUTHTOKEN);
-            Log.i(Constants.TAG, "Got auth token.");
-            runAuthCallback();
+            Log.i(Constants.TAG, "Got auth token");
           } catch (OperationCanceledException e) {
-            Log.e(Constants.TAG, "Operation Canceled", e);
+            Log.e(Constants.TAG, "Auth token operation Canceled", e);
           } catch (IOException e) {
-            Log.e(Constants.TAG, "IOException", e);
+            Log.e(Constants.TAG, "Auth token IO exception", e);
           } catch (AuthenticatorException e) {
             Log.e(Constants.TAG, "Authentication Failed", e);
           }
+
+          runAuthCallback();
         }
     }, null /* handler */);
-  }
-
-  private static void clearNewTaskFlag(Intent intent) {
-    int flags = intent.getFlags();
-    flags &= ~Intent.FLAG_ACTIVITY_NEW_TASK;
-    intent.setFlags(flags);
   }
 
   /**
