@@ -15,10 +15,10 @@
  */
 package com.google.android.apps.mytracks.io;
 
+import static com.google.android.apps.mytracks.Constants.ACCOUNT_TYPE;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.AccountChooser;
-import com.google.android.apps.mytracks.Constants;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -109,13 +109,13 @@ public class ModernAuthManager implements AuthManager {
           try {
             authToken = future.getResult().getString(
                 AccountManager.KEY_AUTHTOKEN);
-            Log.i(Constants.TAG, "Got auth token");
+            Log.i(TAG, "Got auth token");
           } catch (OperationCanceledException e) {
-            Log.e(Constants.TAG, "Auth token operation Canceled", e);
+            Log.e(TAG, "Auth token operation Canceled", e);
           } catch (IOException e) {
-            Log.e(Constants.TAG, "Auth token IO exception", e);
+            Log.e(TAG, "Auth token IO exception", e);
           } catch (AuthenticatorException e) {
-            Log.e(Constants.TAG, "Authentication Failed", e);
+            Log.e(TAG, "Authentication Failed", e);
           }
 
           runAuthCallback();
@@ -142,7 +142,7 @@ public class ModernAuthManager implements AuthManager {
   public void authResult(int resultCode, Intent results) {
     boolean retry = false;
     if (results == null) {
-      Log.e(Constants.TAG, "No auth token!!");
+      Log.e(TAG, "No auth token!!");
     } else {
       authToken = results.getStringExtra(AccountManager.KEY_AUTHTOKEN);
       retry = results.getBooleanExtra("retry", false);
@@ -181,8 +181,7 @@ public class ModernAuthManager implements AuthManager {
 
     activity.runOnUiThread(new Runnable() {
       public void run() {
-        accountManager.invalidateAuthToken(Constants.ACCOUNT_TYPE,
-            authToken);
+        accountManager.invalidateAuthToken(ACCOUNT_TYPE, authToken);
         authToken = null;
 
         AccountChooser accountChooser = new AccountChooser();
