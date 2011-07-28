@@ -21,8 +21,8 @@ limitations under the License.
   android:layout_height="fill_parent"
   android:paddingLeft="10px"
   android:paddingRight="10px"
-  android:paddingTop="15px"
-  android:paddingBottom="15px">
+  android:paddingTop="5px"
+  android:paddingBottom="5px">
   <LinearLayout
     android:layout_height="fill_parent"
     android:layout_width="fill_parent"
