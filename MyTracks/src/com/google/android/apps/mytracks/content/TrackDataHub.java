@@ -130,6 +130,12 @@ public class TrackDataHub {
     }
 
     @Override
+    public void notifyLocationProviderAvailable(boolean available) {
+      hasFix = available;
+      TrackDataHub.this.notifyFixType();
+    }
+
+    @Override
     public void notifyLocationChanged(Location loc) {
       TrackDataHub.this.notifyLocationChanged(loc,
           getListenersFor(ListenerDataType.LOCATION_UPDATES));

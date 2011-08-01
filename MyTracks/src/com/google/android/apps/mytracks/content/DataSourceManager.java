@@ -24,7 +24,7 @@ import java.util.Set;
 
 /**
  * External data source manager, which converts system-level events into My Tracks data events.
- * 
+ *
  * @author Rodrigo Damazio
  */
 class DataSourceManager {
@@ -36,6 +36,7 @@ class DataSourceManager {
     void notifyPointsUpdated();
     void notifyPreferenceChanged(String key);
     void notifyLocationProviderEnabled(boolean enabled);
+    void notifyLocationProviderAvailable(boolean available);
     void notifyLocationChanged(Location loc);
     void notifyHeadingChanged(float heading);
   }
@@ -93,7 +94,7 @@ class DataSourceManager {
     public void onStatusChanged(String provider, int status, Bundle extras) {
       if (!LocationManager.GPS_PROVIDER.equals(provider)) return;
 
-      listener.notifyLocationProviderEnabled(status == LocationProvider.AVAILABLE);
+      listener.notifyLocationProviderAvailable(status == LocationProvider.AVAILABLE);
     }
 
     @Override
@@ -168,7 +169,7 @@ class DataSourceManager {
       neededListeners.remove(ListenerDataType.SAMPLED_OUT_POINT_UPDATES);
       neededListeners.add(ListenerDataType.POINT_UPDATES);
     }
-    
+
     Log.d(TAG, "Updating internal listeners to types " + neededListeners);
 
     // Unnecessary = registered - needed
