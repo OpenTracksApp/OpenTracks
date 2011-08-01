@@ -133,4 +133,9 @@ public class AuthManagerOld implements AuthManager {
       }
     });
   }
+
+  @Override
+  public Object getAccountObject(String accountName, String accountType) {
+    throw new UnsupportedOperationException("Legacy auth manager knows nothing about accounts");
+  }
 }

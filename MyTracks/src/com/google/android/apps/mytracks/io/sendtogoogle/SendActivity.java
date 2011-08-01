@@ -118,7 +118,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
   // Authentication
   private AuthManager lastAuth;
   private final HashMap<String, AuthManager> authMap = new HashMap<String, AuthManager>();
-  private final AccountChooser accountChooser = new AccountChooser();
+  private AccountChooser accountChooser;
   private String lastAccountName;
   private String lastAccountType;
 
@@ -268,9 +268,6 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
     lastAccountName = savedInstanceState.getString(STATE_ACCOUNT_NAME);
     lastAccountType = savedInstanceState.getString(STATE_ACCOUNT_TYPE);
-    if (lastAccountName != null && lastAccountType != null) {
-      accountChooser.setChosenAccount(lastAccountName, lastAccountType);
-    }
   }
 
   @Override
@@ -762,6 +759,15 @@ public class SendActivity extends Activity implements ProgressIndicator {
   }
 
   private void chooseAccount(final int requestCode, final String service) {
+    if (accountChooser == null) {
+      accountChooser = new AccountChooser();
+
+      // Restore state if necessary.
+      if (lastAccountName != null && lastAccountType != null) {
+        accountChooser.setChosenAccount(lastAccountName, lastAccountType);
+      }
+    }
+
     accountChooser.chooseAccount(SendActivity.this,
         new AccountChooser.AccountHandler() {
           @Override

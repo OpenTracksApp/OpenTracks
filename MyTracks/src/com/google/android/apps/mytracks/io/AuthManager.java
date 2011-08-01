@@ -81,4 +81,13 @@ public interface AuthManager {
    *        is successfully fetched
    */
   void invalidateAndRefresh(AuthCallback whenFinished);
+
+  /**
+   * Returns an object that represents the given account, if possible.
+   *
+   * @param accountName the name of the account
+   * @param accountType the type of the account
+   * @return the account object
+   */
+  Object getAccountObject(String accountName, String accountType);
 }

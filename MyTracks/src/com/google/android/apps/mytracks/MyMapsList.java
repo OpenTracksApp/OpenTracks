@@ -24,7 +24,6 @@ import com.google.android.apps.mytracks.io.mymaps.MapsFacade;
 import com.google.android.apps.mytracks.io.mymaps.MyMapsConstants;
 import com.google.android.maps.mytracks.R;
 
-import android.accounts.Account;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -96,14 +95,13 @@ public class MyMapsList extends Activity implements MapsFacade.MapsListCallback 
         return;
       }
 
-      Account account = new Account(accountName, accountType);
-      doLogin(account);
+      doLogin(auth.getAccountObject(accountName, accountType));
     } else {
       doLogin(null);
     }
   }
 
-  private void doLogin(final Account account) {
+  private void doLogin(final Object account) {
     // Starts in the UI thread.
     auth.doLogin(new AuthCallback() {
       @Override

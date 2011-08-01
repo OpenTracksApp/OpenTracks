@@ -213,4 +213,9 @@ public class ModernAuthManager implements AuthManager {
       }).start();
     }
   }
+
+  @Override
+  public Object getAccountObject(String accountName, String accountType) {
+    return new Account(accountName, accountType);
+  }
 }
