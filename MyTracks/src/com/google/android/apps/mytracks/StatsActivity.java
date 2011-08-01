@@ -265,7 +265,8 @@ public class StatsActivity extends Activity implements TrackDataListener {
 
   @Override
   public void onCurrentLocationChanged(final Location loc) {
-    if (dataHub.isRecordingSelected()) {
+    TrackDataHub localDataHub = dataHub;
+    if (localDataHub != null && localDataHub.isRecordingSelected()) {
       runOnUiThread(new Runnable() {
         @Override
         public void run() {
@@ -301,7 +302,8 @@ public class StatsActivity extends Activity implements TrackDataListener {
 
   @Override
   public void onTrackUpdated(final Track track) {
-    final boolean recordingSelected = dataHub.isRecordingSelected();
+    TrackDataHub localDataHub = dataHub;
+    final boolean recordingSelected = localDataHub != null && localDataHub.isRecordingSelected();
     runOnUiThread(new Runnable() {
       @Override
       public void run() {
