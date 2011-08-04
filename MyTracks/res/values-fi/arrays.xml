@@ -268,11 +268,4 @@ limitations under the License.
     <item>WC</item>
   </array>
 
-  <array name="sensor_type_options">
-    <item>Ei mitään</item>
-    <item>ANT+ Sensori</item>
-    <item>SRM ANT+ Silta</item>
-    <item>Zephyr Bluetooth</item>
-  </array>
-
 </resources>

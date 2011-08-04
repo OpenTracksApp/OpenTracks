@@ -35,9 +35,9 @@ limitations under the License.
   <!-- Error messages -->
   <string name="error_no_location_manager">Paikkatietoja ei löytynyt!</string>
   <string name="error_no_gps_location_provider">GPS-palvelua ei löytynyt.</string>
-  <string name="error_sending_to_mymap">Virhe lähetettäessä reittiä palveluun Google My Maps.</string>
-  <string name="error_sending_to_fusiontables">Virhe lähetettäessä reittiä palveluun Google Fusion Tables.</string>
-  <string name="error_sending_to_docs">Virhe lähetettäessä reittiä palveluun Google Docs.</string>
+  <string name="error_sending_to_mymap">Virhe lähetettäessä reittiä Google My Maps-palveluun.</string>
+  <string name="error_sending_to_fusiontables">Virhe lähetettäessä reittiä Google Fusion Tables-palveluun.</string>
+  <string name="error_sending_to_docs">Virhe lähetettäessä reittiä Google Docs-palveluun..</string>
   <string name="error_please_try_again_later">Yritä myöhemmin uudelleen.</string>
   <string name="error_unable_to_start_recording">Tallennusta ei voitu aloittaa. Yritä uudelleen.</string>
   <string name="error_unable_to_stop_recording">Tallennusta ei voitu pysäyttää. Yritä uudelleen.</string>
@@ -59,7 +59,7 @@ limitations under the License.
   <string name="status_tracks_have_been_uploaded_to_new_doc">Reittisi on luotu taulukoksi osoitteeseen  docs.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_docs">Reittisi on lähetetty osoitteeseen docs.google.com.</string>
   <string name="status_mymap_info">Reitin näkyminen saattaa kestää muutaman minuutin.</string>
-  <string name="status_enable_gps">Avaa tästä Sijainti ja suojaus -asetukset ja valitse \'Käytä GPS-satelliitteja\'. Paina Takaisin-näppäintä palataksesi ohjelmaan.</string>
+  <string name="status_enable_gps">Avaa tästä Sijainti ja suojaus -asetukset ja valitse \'Käytä GPS-satelliitteja\'. Palaa ohjelmaan painamalla Takaisin-näppäintä.</string>
   <string name="status_approximate_location">Huomio: Näkyvä sijainti perustuu kännykkämastoista ja WLAN-verkoista arvioituun paikkatietoon.</string>
   <string name="status_no_location">Paikkatietoa ei löydy. Aktivoi lisää paikannusmenetelmiä (katso Asetukset) ja varmista että taivas on näkyvissä. Yritä myöhemmin uudelleen.</string>
   <string name="status_waypoint_inserted">Reittimerkintä lisätty.</string>
@@ -71,9 +71,9 @@ limitations under the License.
   <string name="progress_message">Lähetetään reittiä Google:n palvelimelle.</string>
   <string name="progress_message_reading_track">Luetaan reittiä...</string>
   <string name="progress_message_preparing_track">Valmistellaan reittiä...</string>
-  <string name="progress_message_authenticating_fusiontables">Todennetaan Google Fusion Tables tiliä...</string>
-  <string name="progress_message_authenticating_mymaps">Todennetaan Google Maps tiliä...</string>
-  <string name="progress_message_authenticating_docs">Todennetaan Google Docs tiliä...</string>
+  <string name="progress_message_authenticating_fusiontables">Todennetaan Google Fusion Tables -tiliä...</string>
+  <string name="progress_message_authenticating_mymaps">Todennetaan Google Maps -tiliä...</string>
+  <string name="progress_message_authenticating_docs">Todennetaan Google Docs -tiliä...</string>
   <string name="progress_message_sending_docs">Lähetetään reittiä Google Docsiin...</string>
   <string name="progress_message_sending_mymaps">Lähetetään reittiä Google Mapsiin...</string>
   <string name="progress_message_creating_map">Luodaan uutta My Mapsia...</string>
@@ -146,7 +146,7 @@ limitations under the License.
   <!-- Export All -->
   <string name="tracklist_btn_export_all">Vie kaikki</string>
   <string name="export_done">Vienti tehty</string>
-  <string name="tracklist_pick_one">Valitse reitti. Paina valintaa pohjassa saadaksesi uusia vaihtoehtoja</string>
+  <string name="tracklist_pick_one">Valitse reitti. Pitkällä painalluksella lisää vaihtoehtoja.</string>
   <string name="tracklist_all_tracks">Kaikki reitit:</string>
   <string name="tracklist_this_track">Tämä reitti</string>
   <string name="tracklist_share_track">Jaa...</string>
@@ -216,8 +216,8 @@ limitations under the License.
   <string name="settings_min_required_accuracy">Sallittu tarkkuus</string>
   <string name="settings_min_required_accuracy_summary">Reitin tallennus pysäytetään, jos tarkkuus on tätä pienempi</string>
 
-  <string name="settings_metric_units">Käytä metrisiä yksiköitä</string>
-  <string name="settings_metric_units_summary_on">Kaikki etäisyydet näytetään metrisiä yksiköitä käyttäen</string>
+  <string name="settings_metric_units">Käytä metrijärjestelmää</string>
+  <string name="settings_metric_units_summary_on">Kaikki etäisyydet näytetään metrijärjestelmässä</string>
   <string name="settings_metric_units_summary_off">Kaikki etäisyydet näytetään U.S yksiköitä käyttäen</string>
 
   <string name="settings_map_public">Aseta kartat julkisiksi</string>
@@ -236,7 +236,7 @@ limitations under the License.
   <string name="settings_split_frequency_summary">Etäisyys tai aika jolloin reitti jaetaan osiin</string>
 
   <string name="settings_auto_resume_track_timeout">Reitin jatkaminen</string>
-  <string name="settings_auto_resume_track_timeout_summary">Määritä aika jolloin aikasempaa reittiä jatketaan uudelleenkäynnistämisen yhteydessä</string>
+  <string name="settings_auto_resume_track_timeout_summary">Aika jonka sisällä tallennettavaa reittiä jatketaan, jos puhelin käynnitetään uudelleen.</string>
 
   <string name="settings_timestamp_track_name">Aikamerkintä nimenä</string>
   <string name="settings_timestamp_track_name_summary_on">Oletusnimenä reitille käytetään aloituspäivämäärää ja aikaa</string>
@@ -324,7 +324,7 @@ limitations under the License.
   <string name="elevation_gain_label">Nousu</string>
   <string name="elevation_label">Korkeus</string>
   <string name="latitude_label">Leveysaste</string>
-  <string name="longitude_label">Korkeusaste</string>
+  <string name="longitude_label">Pituuspiiri</string>
 
   <!-- Min -->
   <string name="min_elevation_label">Min Korkeus</string>
@@ -388,7 +388,7 @@ limitations under the License.
   <string name="moving_time_label">Liikkumisaika</string>
   <string name="total_time_label">Kokonaisaika</string>
   <string name="time_label">Aika</string>
-  <string name="sd_unavail">SD Unavailable</string>
+  <string name="sd_unavail">Muistikortti ei ole käytettävissä</string>
   <string name="speed">Nopeus</string>
   <string name="start_trip">Sinun pitää ensin aloittaa matka.</string>
   <string name="statistics">Tilastot</string>
@@ -465,7 +465,7 @@ limitations under the License.
 
   <!-- Check Units -->
   <string name="check_units_title">Huomautus mittayksiköistä</string>
-  <string name="check_units_message">Oletuksena käytössä on metriset yksiköt. Haluatko muuttaa asetuksen?</string>
+  <string name="check_units_message">Oletuksena käytössä on metrijärjestelmä. Haluatko muuttaa asetuksen?</string>
 
   <!-- Fake preference keys - never saved, but show options in the preferences screen -->
   <string name="method_bluetooth">Bluetooth</string>
@@ -493,6 +493,12 @@ limitations under the License.
   <string name="no_sensor_service">Ei sensoripalvelua</string>
   <string name="searching">Etsitään</string>
   <string name="sending">Lähetetään</string>
+
+  <string name="no_sensor_option">Ei sensoria</string>
+  <string name="ant_sensor option">ANT+ -sensori</string>
+  <string name="ant_bridge sensor option">SRM ANT+ -silta</string>
+  <string name="polar_bt_sensor_option">Polar bluetooth</string>
+  <string name="zephyr_bt_sensor_option">Zephyr bluetooth</string>
 
   <!-- Manifest description (not seen inside the app) -->
   <string name="notification_permission_label">vastaanota huomautuksia reitin tallentamisesta</string>
