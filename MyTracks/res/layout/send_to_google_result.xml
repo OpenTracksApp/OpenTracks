@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2011 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<!--
+This layout is used as the content view for the send-to-Google result dialog.
+It is used to summarize the results of uploading track data to one or more
+services.
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="5dip"
+    android:paddingBottom="5dip"
+    android:paddingLeft="14dip"
+    android:paddingRight="14dip"
+    android:orientation="vertical">
+  <TextView
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/status_track_upload_status"
+      style="?android:attr/textAppearanceLarge"/>
+  <TableLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="center_horizontal">
+    <!-- We don't want a divider, so we set its color to transparent. -->
+    <!-- We do this explicitly, rather than with a color resource, because -->
+    <!-- an apparent bug causes the divider to be wildly misrendered on -->
+    <!-- a Mini X10 running 2.1. -->
+    <ListView
+        android:id="@+id/send_to_google_result_list"
+        android:clickable="false"
+        android:paddingTop="10dip"
+        android:paddingBottom="10dip"
+        android:divider="#00000000"/>
+  </TableLayout>
+  <TextView
+      android:id="@+id/send_to_google_result_comment"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/status_mymap_info"
+      android:visibility="gone"
+      style="?android:attr/textAppearanceSmall"/>
+  <TextView
+      android:id="@+id/send_to_google_result_error"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/error_please_try_again_later"
+      android:visibility="gone"
+      style="?android:attr/textAppearanceLarge"/>
+</LinearLayout>
