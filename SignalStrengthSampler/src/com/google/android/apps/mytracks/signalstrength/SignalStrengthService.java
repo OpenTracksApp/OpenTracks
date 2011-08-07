@@ -167,7 +167,7 @@ public class SignalStrengthService extends Service
         // Create a waypoint.
         WaypointCreationRequest request =
             new WaypointCreationRequest(WaypointCreationRequest.WaypointType.MARKER,
-                "Signal Strength", icon, description);
+                "Signal Strength", description, icon);
         waypointId = mytracksService.insertWaypoint(request);
       }
 
