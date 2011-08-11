@@ -495,8 +495,8 @@ limitations under the License.
   <string name="sending">Lähetetään</string>
 
   <string name="no_sensor_option">Ei sensoria</string>
-  <string name="ant_sensor option">ANT+ -sensori</string>
-  <string name="ant_bridge sensor option">SRM ANT+ -silta</string>
+  <string name="ant_sensor_option">ANT+ -sensori</string>
+  <string name="ant_bridge_sensor_option">SRM ANT+ -silta</string>
   <string name="polar_bt_sensor_option">Polar bluetooth</string>
   <string name="zephyr_bt_sensor_option">Zephyr bluetooth</string>
 
