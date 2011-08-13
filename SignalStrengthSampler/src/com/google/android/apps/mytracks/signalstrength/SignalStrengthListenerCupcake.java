@@ -15,9 +15,12 @@
  */
 package com.google.android.apps.mytracks.signalstrength;
 
-import static com.google.android.apps.mytracks.signalstrength.SignalStrengthConstants.*;
+import static com.google.android.apps.mytracks.signalstrength.SignalStrengthConstants.TAG;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.telephony.CellLocation;
 import android.telephony.NeighboringCellInfo;
 import android.telephony.PhoneStateListener;
@@ -35,6 +38,8 @@ import java.util.List;
  */
 public class SignalStrengthListenerCupcake extends PhoneStateListener
     implements SignalStrengthListener {
+  private static final Uri APN_URI = Uri.parse("content://telephony/carriers");
+
   private final Context context;
   private final SignalStrengthCallback callback;
 
@@ -100,7 +105,7 @@ public class SignalStrengthListenerCupcake extends PhoneStateListener
    * @return A human readable description of the network state
    */
   private String getDescription() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(getStrengthAsString());
 
     sb.append("Network Type: ");
@@ -116,6 +121,8 @@ public class SignalStrengthListenerCupcake extends PhoneStateListener
     sb.append("Roaming: ");
     sb.append(manager.isNetworkRoaming());
     sb.append('\n');
+
+    appendCurrentApns(sb);
 
     List<NeighboringCellInfo> infos = manager.getNeighboringCellInfo();
     Log.i(TAG, "Found " + infos.size() + " cells.");
@@ -136,6 +143,44 @@ public class SignalStrengthListenerCupcake extends PhoneStateListener
     }
 
     return sb.toString();
+  }
+
+  private void appendCurrentApns(StringBuilder output) {
+    ContentResolver contentResolver = context.getContentResolver();
+
+    Cursor cursor = contentResolver.query(
+        APN_URI, new String[] { "name", "apn" }, "current=1", null, null);
+
+    if (cursor == null) {
+      return;
+    }
+
+    try {
+      String name = null;
+      String apn = null;
+
+      while (cursor.moveToNext()) {
+        int nameIdx = cursor.getColumnIndex("name");
+        int apnIdx = cursor.getColumnIndex("apn");
+        if (apnIdx < 0 || nameIdx < 0) {
+          continue;
+        }
+
+        name = cursor.getString(nameIdx);
+        apn = cursor.getString(apnIdx);
+        output.append("APN: ");
+        if (name != null) {
+          output.append(name);
+        }
+        if (apn != null) {
+          output.append(" (");
+          output.append(apn);
+          output.append(")\n");
+        }
+      }
+    } finally {
+      cursor.close();
+    }
   }
 
   /**
