@@ -174,6 +174,14 @@ public class TcxTrackWriter implements TrackFormatWriter {
           pw.print("</Value>");
           pw.println("</HeartRateBpm>");
         }
+        // TCX Trackpoint_t contains a sequence, <Cadence> needs to be put before <Extensions>
+        if (sensorData.hasCadence()
+            && sensorData.getCadence().getState() == Sensor.SensorState.SENDING
+            && sensorData.getCadence().hasValue()) {
+          pw.print("          <Cadence>");
+          pw.print(Math.min(254, sensorData.getCadence().getValue()));
+          pw.println("</Cadence>");
+        }
         if (sensorData.hasPower()
             && sensorData.getPower().getState() == Sensor.SensorState.SENDING
             && sensorData.getPower().hasValue()) {
@@ -183,13 +191,6 @@ public class TcxTrackWriter implements TrackFormatWriter {
           pw.print(sensorData.getPower().getValue());
           pw.print("</Watts>");
           pw.println("</TPX></Extensions>");
-        }
-        if (sensorData.hasCadence()
-            && sensorData.getCadence().getState() == Sensor.SensorState.SENDING
-            && sensorData.getCadence().hasValue()) {
-          pw.print("          <Cadence>");
-          pw.print(Math.min(254, sensorData.getCadence().getValue()));
-          pw.println("</Cadence>");
         }
       }
     }
@@ -216,11 +217,9 @@ public class TcxTrackWriter implements TrackFormatWriter {
     // TCX schema.
     pw.println("<UnitId>0</UnitId>");
     pw.println("<ProductID>0</ProductID>");
+    
+    writeVersion();
 
-    pw.println("<Version>");
-    pw.println("<VersionMajor>0</VersionMajor>");
-    pw.println("<VersionMinor>0</VersionMinor>");
-    pw.println("</Version>");
     pw.println("</Creator>");
     pw.println("    </Activity>");
     pw.println("  </Activities>");
@@ -241,15 +240,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
 
     pw.println("<Build>");
 
-    // The TCX spec for the Version tag is too strict to allow us to use our
-    // user-visible version number, so we use our version code instead.  We
-    // also set the minor version to 1 if this is a development build to
-    // signify that this build is newer than the one associated with the
-    // version code given in VersionMajor.
-    pw.println("<Version>");
-    pw.format("<VersionMajor>%s</VersionMajor>\n", SystemUtils.getMyTracksVersion(context));
-    pw.format("<VersionMinor>%d</VersionMinor>\n", SystemUtils.isRelease(context) ? 0 : 1);
-    pw.println("</Version>");
+    writeVersion();
 
     pw.format("<Type>%s</Type>\n", SystemUtils.isRelease(context) ? TCX_TYPE_RELEASE
         : TCX_TYPE_INTERNAL);
@@ -263,6 +254,30 @@ public class TcxTrackWriter implements TrackFormatWriter {
   @Override
   public void writeWaypoint(Waypoint waypoint) {
     // TODO Write out the waypoints somewhere.
+  }
+  
+  private void writeVersion() {
+    if (pw == null) {
+      return;
+    }
+    
+    // Splitting the myTracks version code into VersionMajor, VersionMinor and BuildMajor
+    // to fit the integer type requirement for these fields in the TCX spec. 
+    // Putting a string like "x.x.x" into VersionMajor breaks XML validation.
+    // We also set the BuildMinor version to 1 if this is a development build to
+    // signify that this build is newer than the one associated with the
+    // version code given in BuildMajor.
+    
+    String[] myTracksVersionComponents = SystemUtils.getMyTracksVersion(context).split("\\.");
+
+    pw.println("<Version>");
+    pw.format("<VersionMajor>%d</VersionMajor>\n", Integer.valueOf(myTracksVersionComponents[0]));
+    pw.format("<VersionMinor>%d</VersionMinor>\n", Integer.valueOf(myTracksVersionComponents[1]));
+    // TCX schema says these are optional but http://connect.garmin.com only accepts 
+    // the TCX file when they are present.
+    pw.format("<BuildMajor>%d</BuildMajor>\n", Integer.valueOf(myTracksVersionComponents[2]));
+    pw.format("<BuildMinor>%d</BuildMinor>\n", SystemUtils.isRelease(context) ? 0 : 1);
+    pw.println("</Version>");
   }
 
   private String categoryToTcxSport(String category) {
