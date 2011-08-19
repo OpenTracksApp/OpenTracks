@@ -104,7 +104,11 @@ public class WaypointsList extends ListActivity
     if (!super.onMenuItemSelected(featureId, item)) {
       switch (item.getItemId()) {
         case Constants.MENU_SHOW: {
-          onListItemClick(null, null, 0, selectedWaypointId);
+          Intent result = new Intent();
+          result.putExtra("trackid", trackId);
+          result.putExtra(WaypointDetails.WAYPOINT_ID_EXTRA, selectedWaypointId);
+          setResult(RESULT_OK, result);
+          finish();
           return true;
         }
         case Constants.MENU_EDIT: {
