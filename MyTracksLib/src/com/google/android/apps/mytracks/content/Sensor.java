@@ -398,10 +398,18 @@ public final class Sensor {
     public boolean hasPower() { return hasPower; }
     public com.google.android.apps.mytracks.content.Sensor.SensorData getPower() { return power_; }
     
+    // optional .com.google.android.apps.mytracks.content.SensorData battery_level = 5;
+    public static final int BATTERY_LEVEL_FIELD_NUMBER = 5;
+    private boolean hasBatteryLevel;
+    private com.google.android.apps.mytracks.content.Sensor.SensorData batteryLevel_;
+    public boolean hasBatteryLevel() { return hasBatteryLevel; }
+    public com.google.android.apps.mytracks.content.Sensor.SensorData getBatteryLevel() { return batteryLevel_; }
+    
     private void initFields() {
       heartRate_ = com.google.android.apps.mytracks.content.Sensor.SensorData.getDefaultInstance();
       cadence_ = com.google.android.apps.mytracks.content.Sensor.SensorData.getDefaultInstance();
       power_ = com.google.android.apps.mytracks.content.Sensor.SensorData.getDefaultInstance();
+      batteryLevel_ = com.google.android.apps.mytracks.content.Sensor.SensorData.getDefaultInstance();
     }
     public final boolean isInitialized() {
       if (hasHeartRate()) {
@@ -412,6 +420,9 @@ public final class Sensor {
       }
       if (hasPower()) {
         if (!getPower().isInitialized()) return false;
+      }
+      if (hasBatteryLevel()) {
+        if (!getBatteryLevel().isInitialized()) return false;
       }
       return true;
     }
@@ -430,6 +441,9 @@ public final class Sensor {
       }
       if (hasPower()) {
         output.writeMessage(4, getPower());
+      }
+      if (hasBatteryLevel()) {
+        output.writeMessage(5, getBatteryLevel());
       }
     }
     
@@ -454,6 +468,10 @@ public final class Sensor {
       if (hasPower()) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(4, getPower());
+      }
+      if (hasBatteryLevel()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(5, getBatteryLevel());
       }
       memoizedSerializedSize = size;
       return size;
@@ -611,6 +629,9 @@ public final class Sensor {
         if (other.hasPower()) {
           mergePower(other.getPower());
         }
+        if (other.hasBatteryLevel()) {
+          mergeBatteryLevel(other.getBatteryLevel());
+        }
         return this;
       }
       
@@ -658,6 +679,15 @@ public final class Sensor {
               }
               input.readMessage(subBuilder, extensionRegistry);
               setPower(subBuilder.buildPartial());
+              break;
+            }
+            case 42: {
+              com.google.android.apps.mytracks.content.Sensor.SensorData.Builder subBuilder = com.google.android.apps.mytracks.content.Sensor.SensorData.newBuilder();
+              if (hasBatteryLevel()) {
+                subBuilder.mergeFrom(getBatteryLevel());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setBatteryLevel(subBuilder.buildPartial());
               break;
             }
           }
@@ -791,6 +821,43 @@ public final class Sensor {
       public Builder clearPower() {
         result.hasPower = false;
         result.power_ = com.google.android.apps.mytracks.content.Sensor.SensorData.getDefaultInstance();
+        return this;
+      }
+      
+      // optional .com.google.android.apps.mytracks.content.SensorData battery_level = 5;
+      public boolean hasBatteryLevel() {
+        return result.hasBatteryLevel();
+      }
+      public com.google.android.apps.mytracks.content.Sensor.SensorData getBatteryLevel() {
+        return result.getBatteryLevel();
+      }
+      public Builder setBatteryLevel(com.google.android.apps.mytracks.content.Sensor.SensorData value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasBatteryLevel = true;
+        result.batteryLevel_ = value;
+        return this;
+      }
+      public Builder setBatteryLevel(com.google.android.apps.mytracks.content.Sensor.SensorData.Builder builderForValue) {
+        result.hasBatteryLevel = true;
+        result.batteryLevel_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeBatteryLevel(com.google.android.apps.mytracks.content.Sensor.SensorData value) {
+        if (result.hasBatteryLevel() &&
+            result.batteryLevel_ != com.google.android.apps.mytracks.content.Sensor.SensorData.getDefaultInstance()) {
+          result.batteryLevel_ =
+            com.google.android.apps.mytracks.content.Sensor.SensorData.newBuilder(result.batteryLevel_).mergeFrom(value).buildPartial();
+        } else {
+          result.batteryLevel_ = value;
+        }
+        result.hasBatteryLevel = true;
+        return this;
+      }
+      public Builder clearBatteryLevel() {
+        result.hasBatteryLevel = false;
+        result.batteryLevel_ = com.google.android.apps.mytracks.content.Sensor.SensorData.getDefaultInstance();
         return this;
       }
       
