@@ -15,10 +15,10 @@
  */
 package com.google.android.apps.mytracks.services.sensors;
 
-import android.util.Log;
-
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Sensor;
+
+import android.util.Log;
 
 /**
  * An implementation of a Sensor MessageParser for Zephyr.
@@ -42,8 +42,7 @@ public class ZephyrMessageParser implements MessageParser {
     Sensor.SensorData.Builder heartrate = Sensor.SensorData.newBuilder()
         .setValue(buffer[12] & 0xFF)
         .setState(Sensor.SensorState.SENDING);
-    // Changes Nico Laum (Power and Cadence)
-    Sensor.SensorData.Builder power = Sensor.SensorData.newBuilder()
+    Sensor.SensorData.Builder batteryLevel = Sensor.SensorData.newBuilder()
 	    .setValue(buffer[11])
 	    .setState(Sensor.SensorState.SENDING);
     Sensor.SensorData.Builder cadence = Sensor.SensorData.newBuilder()
@@ -53,7 +52,7 @@ public class ZephyrMessageParser implements MessageParser {
     Sensor.SensorDataSet sds =
       Sensor.SensorDataSet.newBuilder()
       .setCreationTime(System.currentTimeMillis())
-      .setPower(power)
+      .setBatteryLevel(batteryLevel)
       .setHeartRate(heartrate)
       .setCadence(cadence)
       .build();
