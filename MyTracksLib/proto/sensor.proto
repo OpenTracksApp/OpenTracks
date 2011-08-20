@@ -50,4 +50,5 @@ message SensorDataSet {
   optional SensorData heart_rate = 2;
   optional SensorData cadence = 3;
   optional SensorData power = 4;
+  optional SensorData battery_level = 5;
 }
