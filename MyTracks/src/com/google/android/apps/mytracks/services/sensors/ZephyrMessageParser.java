@@ -1,6 +1,5 @@
 /*
  * Copyright 2010 Google Inc.
- * Copyright 2011 Dominik Ršttsches <d.roettsches@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -21,12 +20,11 @@ import com.google.android.apps.mytracks.content.Sensor;
 
 import android.util.Log;
 
-import java.util.LinkedList;
-
 /**
  * An implementation of a Sensor MessageParser for Zephyr.
  *
  * @author Sandor Dornbush
+ * @author Dominik Ršttsches
  */
 public class ZephyrMessageParser implements MessageParser {
 
@@ -34,53 +32,9 @@ public class ZephyrMessageParser implements MessageParser {
   public static final int ZEPHYR_HXM_BYTE_CRC = 58;
   public static final int ZEPHYR_HXM_BYTE_ETX = 59;
   
-  private StrideReadings strideReadings;
+  private static final String CADENCE_BUG_FW_ID = "1A00316550003162";
   
-  public class StrideReadings {
-    class StrideReading {
-      public int timeMs;
-      public int numStrides;
-      
-      StrideReading(int newTimeMs, int newNumStrides) {
-        timeMs = newTimeMs;
-        numStrides = newNumStrides;
-      }
-    }
-    
-    private LinkedList<StrideReading> strideReadingsHistory;
-    private static final int NUM_READINGS_FOR_AVERAGE = 10;
-    private static final int MIN_READINGS_FOR_AVERAGE = 5;
-    public static final int CADENCE_NOT_AVAILABLE = -1;
-    
-    public StrideReadings() {
-      strideReadingsHistory = new LinkedList<StrideReading>();
-    }
-
-    public void updateStrideReading(int timeInMs, int numStrides) {
-      // HRM/HxM docs say, transmission frequency is 1 Hz, 
-      // let's keep last NUM_READINGS_FOR_AVERAGE readings.
-      // TODO: Calibrate this using a reliable footpod / cadence sensor, 
-      // otherwise perhaps use heartbeat timestamp for calculation. 
-      strideReadingsHistory.addFirst(new StrideReading(timeInMs, numStrides));
-      while(strideReadingsHistory.size() > NUM_READINGS_FOR_AVERAGE) {
-        strideReadingsHistory.removeLast();
-      }
-    }
-    
-    public int getCadence() {
-      if(strideReadingsHistory.size() < MIN_READINGS_FOR_AVERAGE) {
-        // Bail out if we cannot really get a meaningful average yet.
-        return CADENCE_NOT_AVAILABLE;
-      }
-      // compute assuming 1 stride reading/second
-      int timeSinceOldestReadingSecs = strideReadingsHistory.size() - 1; 
-      int stridesThen = strideReadingsHistory.getLast().numStrides;
-      int stridesNow = strideReadingsHistory.getFirst().numStrides;
-      // Contrary to documentation stride value seems to roll over every 127 strides.
-      return Math.round( (float)((stridesNow - stridesThen) % 127) / 
-          timeSinceOldestReadingSecs * 60);
-    }
-  }
+  private StrideReadings strideReadings;
   
   @Override
   public Sensor.SensorDataSet parseBuffer(byte[] buffer) {
@@ -93,50 +47,55 @@ public class ZephyrMessageParser implements MessageParser {
     // Device Firmware ID, Firmware Version, Hardware ID, Hardware Version
     // 0x1A00316550003162 produces erroneous values for Cadence and needs
     // a workaround based on the stride counter.
+    // Firmware values range from field 3 to 11 of the byte buffer, 
+    // since in hex there are two characters for each byte, doubling the values.
     String hardwareFirmwareId = sb.substring(6, 22);
-    boolean needsWorkaround = hardwareFirmwareId.equals("1A00316550003162");
-    Log.w(Constants.TAG, "FW & HW Ids & Version " + hardwareFirmwareId + " needs workaround: " + needsWorkaround);
+    boolean computeCadenceFromStrides = hardwareFirmwareId.equals(CADENCE_BUG_FW_ID);
+    Log.d(Constants.TAG, "FW & HW Ids & Version " + hardwareFirmwareId + " needs workaround: " + computeCadenceFromStrides);
+    
+    Sensor.SensorDataSet.Builder sds =
+      Sensor.SensorDataSet.newBuilder()
+      .setCreationTime(System.currentTimeMillis());
 
     Sensor.SensorData.Builder heartrate = Sensor.SensorData.newBuilder()
       .setValue(buffer[12] & 0xFF)
       .setState(Sensor.SensorState.SENDING);
+    sds = sds.setHeartRate(heartrate);
     
     Sensor.SensorData.Builder batteryLevel = Sensor.SensorData.newBuilder()
       .setValue(buffer[11])
       .setState(Sensor.SensorState.SENDING);
+    sds = sds.setBatteryLevel(batteryLevel);
+    
+    // Appends cadence to SensorDataSet builder if available.
+    parseOrComputeCadence(sds, buffer, computeCadenceFromStrides);
+    
+    return sds.build();
+  }
+
+  private void parseOrComputeCadence(Sensor.SensorDataSet.Builder sds, byte[] buffer, boolean computeFromStrides) {
     
     Sensor.SensorData.Builder cadence = Sensor.SensorData.newBuilder();
 
-    if(!needsWorkaround) {
+    if(!computeFromStrides) {
       cadence = cadence
         .setValue(SensorUtils.unsignedShortToIntLittleEndian(buffer, 56) / 16)
         .setState(Sensor.SensorState.SENDING);
+      sds.setCadence(cadence);
     } else {
       if(strideReadings == null) {
         strideReadings = new StrideReadings();
       }
-  
       strideReadings.updateStrideReading(
           SensorUtils.unsignedShortToIntLittleEndian(buffer, 14), 
           buffer[54] & 0xFF);
       
       if(strideReadings.getCadence() != StrideReadings.CADENCE_NOT_AVAILABLE) {
         cadence = cadence.setValue(strideReadings.getCadence())
-          .setState(Sensor.SensorState.SENDING);  
-      } else {
-        cadence = cadence.setValue(0).setState(Sensor.SensorState.NONE);
+          .setState(Sensor.SensorState.SENDING);
+        sds.setCadence(cadence);
       }
     }
-      
-    Sensor.SensorDataSet sds =
-      Sensor.SensorDataSet.newBuilder()
-      .setCreationTime(System.currentTimeMillis())
-      .setBatteryLevel(batteryLevel)
-      .setHeartRate(heartrate)
-      .setCadence(cadence)
-      .build();
-    
-    return sds;
   }
 
   @Override
