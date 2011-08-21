@@ -44,6 +44,7 @@ import java.util.TimeZone;
  * Garmin Training Center 3.5.3.
  *
  * @author Sandor Dornbush
+ * @author Dominik Ršttsches
  */
 public class TcxTrackWriter implements TrackFormatWriter {
   protected static final String TIMESTAMP_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
@@ -174,22 +175,47 @@ public class TcxTrackWriter implements TrackFormatWriter {
           pw.print("</Value>");
           pw.println("</HeartRateBpm>");
         }
-        // TCX Trackpoint_t contains a sequence, <Cadence> needs to be put before <Extensions>
-        if (sensorData.hasCadence()
-            && sensorData.getCadence().getState() == Sensor.SensorState.SENDING
-            && sensorData.getCadence().hasValue()) {
+        
+        boolean cadenceAsCyclingCadence = categoryToTcxSport(track.getCategory()).equals(TCX_SPORT_BIKING);
+
+        boolean cadenceValueAvailable = sensorData.hasCadence() 
+          && sensorData.getCadence().getState() == Sensor.SensorState.SENDING
+          && sensorData.getCadence().hasValue();
+
+        // TCX Trackpoint_t contains a sequence, 
+        // legacy XML element <Cadence> needs to be put before <Extensions>
+        // Only for the case that activity was marked as biking.
+        // Otherwise cadence we interpret it as running cadence data 
+        // and put it into <Extensions>.
+        if (cadenceAsCyclingCadence && cadenceValueAvailable) {
           pw.print("          <Cadence>");
           pw.print(Math.min(254, sensorData.getCadence().getValue()));
           pw.println("</Cadence>");
         }
-        if (sensorData.hasPower()
-            && sensorData.getPower().getState() == Sensor.SensorState.SENDING
-            && sensorData.getPower().hasValue()) {
+
+        boolean powerValueAvailable = sensorData.hasPower()
+          && sensorData.getPower().getState() == Sensor.SensorState.SENDING
+          && sensorData.getPower().hasValue();
+        
+        if(powerValueAvailable
+            || (!cadenceAsCyclingCadence && cadenceValueAvailable)) {
           pw.print("          <Extensions>");
           pw.print("<TPX xmlns=\"http://www.garmin.com/xmlschemas/ActivityExtension/v2\">");
-          pw.print("<Watts>");
-          pw.print(sensorData.getPower().getValue());
-          pw.print("</Watts>");
+
+          // RunCadence needs to be put before power in order to be understood
+          // by Garmin Training Center.
+          if (!cadenceAsCyclingCadence && cadenceValueAvailable) {
+            pw.print("<RunCadence>");
+            pw.print(sensorData.getCadence().getValue());
+            pw.print("</RunCadence>");
+          }
+          
+          if (powerValueAvailable) {
+            pw.print("<Watts>");
+            pw.print(sensorData.getPower().getValue());
+            pw.print("</Watts>");
+          }
+
           pw.println("</TPX></Extensions>");
         }
       }
