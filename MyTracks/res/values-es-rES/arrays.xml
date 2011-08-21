@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+  <!-- Other non-preference arrays -->
+  <array name="activity_types">
+    <item>desconocido</item>
+    <item>tipo mixto</item>
+    <item>otro</item>
+
+    <item>correr</item>
+    <item>correr en calle</item>
+    <item>correr en pista</item>
+    <item>correr en senda</item>
+    <item>caminar</item>
+    <item>caminar rápido</item>
+    <item>excursión</item>
+    <item>excursión por sendas</item>
+    <item>excursión campo a través</item>
+    <item>escalando</item>
+
+    <item>bicicleta</item>
+    <item>bicicleta de carreras</item>
+    <item>bicicleta de montaña</item>
+    <item>bicicleta de pista</item>
+
+    <item>patinando</item>
+    <item>patinando inline</item>
+    <item>skate boarding</item>
+
+    <item>caminata sobre nieve</item>
+    <item>esquiando</item>
+    <item>snow boarding</item>
+    <item>trineo</item>
+    <item>navegando sobre hielo</item>
+
+    <item>navegando</item>
+    <item>en canoa</item>
+    <item>en kayak</item>
+    <item>remo</item>
+    <item>bote de motor</item>
+    <item>transbordador</item>
+    <item>barco teledirigido</item>
+    <item>surfeando</item>
+    <item>wind surfing</item>
+    <item>kite surfing</item>
+    <item>esquí aquático</item>
+    <item>wake boarding</item>
+
+    <item>avión</item>
+    <item>hidroavión</item>
+    <item>avión comercial</item>
+    <item>helicóptero</item>
+    <item>globo aerostático</item>
+    <item>dirigible</item>
+    <item>avión teledirigido</item>
+    <item>helicóptero teledirigido</item>
+    <item>paracaidismo</item>
+    <item>planeador</item>
+    <item>hang gliding</item>
+    <item>para gliding</item>
+
+    <item>montando</item>
+    <item>montando caballo</item>
+    <item>montando burro</item>
+
+    <item>conduciendo coche</item>
+    <item>conduciendo autobús</item>
+    <item>tren</item>
+    <item>moto</item>
+    <item>moto cross</item>
+    <item>ATV</item>
+
+    <item>navegando sobre tierra</item>
+    <item>frisbee</item>
+    <item>ultimate frisbee</item>
+  </array>
+
+  <array name="waypoint_types">
+    <item>cajero automático</item>
+    <item>banco</item>
+    <item>bar</item>
+    <item>barbacoa</item>
+    <item>edificio</item>
+    <item>parada de autobús</item>
+    <item>café</item>
+    <item>fogata</item>
+    <item>campamento</item>
+    <item>iglesia</item>
+    <item>café</item>
+    <item>tienda de abarrotes</item>
+    <item>agua potable</item>
+    <item>derrumbamiento</item>
+    <item>transbordador</item>
+    <item>chimenea</item>
+    <item>estación de bomberos</item>
+    <item>pesca</item>
+    <item>gasolinera</item>
+    <item>campo de golf</item>
+    <item>tienda de abarrotes</item>
+    <item>salon de belleza</item>
+    <item>puerto</item>
+    <item>senda</item>
+    <item>hotel</item>
+    <item>casa</item>
+    <item>información</item>
+    <item>intersección</item>
+    <item>buzón de correos</item>
+    <item>mercado</item>
+    <item>punto de encuentro</item>
+    <item>ópera</item>
+    <item>aparcamiento</item>
+    <item>oficina de correos</item>
+    <item>bache</item>
+    <item>comisaría de policía</item>
+    <item>cruce de vía de tren</item>
+    <item>restaurante</item>
+    <item>mall</item>
+    <item>lugar de interés</item>
+    <item>tienda</item>
+    <item>piscina</item>
+    <item>teléfono</item>
+    <item>teatro</item>
+    <item>baño</item>
+    <item>información turística</item>
+    <item>túnel</item>
+    <item>árbol</item>
+    <item>cascada</item>
+    <item>fuente de agua</item>
+    <item>camino</item>
+  </array>
+
+</resources>
