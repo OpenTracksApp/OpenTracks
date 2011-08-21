@@ -380,9 +380,9 @@ limitations under the License.
 
   <!-- Sensors -->
   <string name="watts">W</string>
-
   <string name="revolutions_per_minute">rpm</string>
   <string name="bpm">bpm</string>
+  <string name="battery_level">Akku</string>
 
   <!-- Stats Labels -->
   <string name="moving_time_label">Liikkumisaika</string>

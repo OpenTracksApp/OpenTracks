@@ -160,6 +160,7 @@ public class SensorStateActivity extends Activity {
       utils.setUnknown(R.id.cadence_state_register);
       utils.setUnknown(R.id.power_state_register);
       utils.setUnknown(R.id.heart_rate_register);
+      utils.setUnknown(R.id.battery_level_register);
       return;
     }
 
@@ -203,6 +204,19 @@ public class SensorStateActivity extends Activity {
           SensorUtils.getStateAsString(
               sds.hasHeartRate()
                   ? sds.getHeartRate().getState()
+                  : Sensor.SensorState.NONE,
+              this));
+    }
+    
+    if (sds.hasBatteryLevel() && sds.getBatteryLevel().hasValue()
+        && sds.getBatteryLevel().getState() == Sensor.SensorState.SENDING) {
+      utils.setText(R.id.battery_level_register,
+          Integer.toString(sds.getBatteryLevel().getValue()));
+    } else {
+      utils.setText(R.id.battery_level_register,
+          SensorUtils.getStateAsString(
+              sds.hasBatteryLevel()
+                  ?  sds.getBatteryLevel().getState()
                   : Sensor.SensorState.NONE,
               this));
     }

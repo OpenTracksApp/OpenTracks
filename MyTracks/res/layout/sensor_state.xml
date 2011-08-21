@@ -125,6 +125,27 @@ limitations under the License.
             android:text="@string/bpm" />
         </TableRow>
 
+        <!-- Battery Level -->
+        <TableRow
+          android:padding="1dip">
+          <TextView
+            android:layout_column="1"
+            android:layout_span="3"
+            android:text="@string/battery_level" />
+        </TableRow>
+        <TableRow
+          android:background="@color/stat_label_background">
+          <TextView
+            style="@style/StatsRegister.Big"
+            android:id="@+id/battery_level_register"
+            android:layout_column="1"
+            android:layout_span="4" />
+          <TextView
+            style="@style/StatsUnitSolo"
+            android:layout_column="5"
+            android:text="@string/percent" />
+        </TableRow>
+
       </TableLayout>
     </LinearLayout>
   </ScrollView>

@@ -333,6 +333,7 @@ limitations under the License.
 
   <!--string name="revolutions_per_minute">rpm</string-->
   <!--string name="bpm">bpm</string-->
+  <string name="battery_level">Akkukapazität</string>
 
   <!-- Stats Labels -->
   <string name="moving_time_label">Zeit in Bewegung</string>

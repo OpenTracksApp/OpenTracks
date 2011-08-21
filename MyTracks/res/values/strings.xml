@@ -383,6 +383,7 @@ limitations under the License.
 
   <string name="revolutions_per_minute">rpm</string>
   <string name="bpm">bpm</string>
+  <string name="battery_level">Battery Level</string>
 
   <!-- Stats Labels -->
   <string name="moving_time_label">Moving Time</string>
