@@ -27,6 +27,9 @@ import java.util.List;
  */
 public class StrideReadings {
   private static class StrideReading {
+    // TODO: Check whether 1Hz assumption is okay for cadence calculation
+    // otherwise use timeMs, which is taken from heart beat timestamp.
+    @SuppressWarnings("unused")
     public int timeMs;
     public int numStrides;
 
