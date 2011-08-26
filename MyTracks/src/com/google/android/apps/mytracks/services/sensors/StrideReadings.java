@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 Google Inc.
+ * Copyright 2011 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -22,19 +22,21 @@ import java.util.List;
  * A history of Zephyr stride counter reading.
  * These can be used as an alternate method to calculate the correct cadence.
  * This is a work around for an issue with some HxM firmware.
+ *
  * @author Dominik Ršttsches
  */
 public class StrideReadings {
 
-  private static final int NUM_READINGS_FOR_AVERAGE = 10;
-  private static final int MIN_READINGS_FOR_AVERAGE = 5;
+  // visible for testing
+  protected static final int NUM_READINGS_FOR_AVERAGE = 10;
+  protected static final int MIN_READINGS_FOR_AVERAGE = 5;
 
   protected static final int CADENCE_NOT_AVAILABLE = -1;
 
   // TODO: Check whether 1Hz assumption is okay for cadence calculation
   // otherwise add heart beat timestamp to this list and compute
   // cadence from these timestamps.
-  private List<Integer> strideReadingsHistory;
+  private final List<Integer> strideReadingsHistory;
 
   public StrideReadings() {
     strideReadingsHistory = new LinkedList<Integer>();
@@ -65,9 +67,14 @@ public class StrideReadings {
         timeSinceOldestReadingSecs * 60);
   }
 
-  private int mod(int x, int y)
+  /**
+   * Modulo operation with positive return values, Java's remainder operator doesn't change sign.
+   *
+   * @return x mod y
+   */
+  private static int mod(int x, int y)
   {
       int result = x % y;
-      return result < 0? result + y : result;
+      return result < 0 ? result + y : result;
   }
 }

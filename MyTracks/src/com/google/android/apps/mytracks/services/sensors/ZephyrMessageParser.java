@@ -62,22 +62,20 @@ public class ZephyrMessageParser implements MessageParser {
     // a workaround based on the stride counter.
     // Firmware values range from field 3 to 10 (inclusive) of the byte buffer.
     byte[] hardwareFirmwareId = Arrays.copyOfRange(buffer, 3, 11);
-    boolean computeFromStrides = Arrays.equals(hardwareFirmwareId, CADENCE_BUG_FW_ID);
 
     Sensor.SensorData.Builder cadence = Sensor.SensorData.newBuilder();
 
-    if(computeFromStrides) {
-      if(strideReadings == null) {
+    if (Arrays.equals(hardwareFirmwareId, CADENCE_BUG_FW_ID)) {
+      if (strideReadings == null) {
         strideReadings = new StrideReadings();
       }
       strideReadings.updateStrideReading(buffer[54] & 0xFF);
       
-      if(strideReadings.getCadence() != StrideReadings.CADENCE_NOT_AVAILABLE) {
-        cadence = cadence.setValue(strideReadings.getCadence())
-          .setState(Sensor.SensorState.SENDING);
+      if (strideReadings.getCadence() != StrideReadings.CADENCE_NOT_AVAILABLE) {
+        cadence.setValue(strideReadings.getCadence()).setState(Sensor.SensorState.SENDING);
       }
     } else {
-      cadence = cadence
+      cadence
       .setValue(SensorUtils.unsignedShortToIntLittleEndian(buffer, 56) / 16)
       .setState(Sensor.SensorState.SENDING);
     }
