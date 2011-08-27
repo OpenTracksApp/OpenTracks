@@ -48,13 +48,13 @@ public class StrideReadings {
     // TODO: Calibrate this using a reliable footpod / cadence sensor, 
     // otherwise use heartbeat timestamp for calculation. 
     strideReadingsHistory.add(0, numStrides);
-    while(strideReadingsHistory.size() > NUM_READINGS_FOR_AVERAGE) {
+    while (strideReadingsHistory.size() > NUM_READINGS_FOR_AVERAGE) {
       strideReadingsHistory.remove(strideReadingsHistory.size()-1);
     }
   }
 
   public int getCadence() {
-    if(strideReadingsHistory.size() < MIN_READINGS_FOR_AVERAGE) {
+    if (strideReadingsHistory.size() < MIN_READINGS_FOR_AVERAGE) {
       // Bail out if we cannot really get a meaningful average yet.
       return CADENCE_NOT_AVAILABLE;
     }

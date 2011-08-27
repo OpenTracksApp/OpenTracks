@@ -76,8 +76,8 @@ public class ZephyrMessageParser implements MessageParser {
       }
     } else {
       cadence
-      .setValue(SensorUtils.unsignedShortToIntLittleEndian(buffer, 56) / 16)
-      .setState(Sensor.SensorState.SENDING);
+        .setValue(SensorUtils.unsignedShortToIntLittleEndian(buffer, 56) / 16)
+        .setState(Sensor.SensorState.SENDING);
     }
     sds.setCadence(cadence);
   }

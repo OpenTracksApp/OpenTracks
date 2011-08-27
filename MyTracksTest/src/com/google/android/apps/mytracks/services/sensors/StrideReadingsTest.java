@@ -30,7 +30,7 @@ public class StrideReadingsTest extends TestCase {
   public void testAverageCadenceAvailable() {
     StrideReadings strideReadings = new StrideReadings();
     // 2 steps / second => Cadence is 120 / minute
-    for (int i=1;i<=30;i++) {
+    for (int i = 1; i <= 30; i++) {
       strideReadings.updateStrideReading(i*2);
       if (i >= StrideReadings.MIN_READINGS_FOR_AVERAGE) {
         assertEquals(120, strideReadings.getCadence());
@@ -51,7 +51,7 @@ public class StrideReadingsTest extends TestCase {
     // initialStrides set to a value below 128 to ensure rollover.
     int initialStrides = 128 - StrideReadings.NUM_READINGS_FOR_AVERAGE - 5;
 
-    for (int i=1;i<=StrideReadings.NUM_READINGS_FOR_AVERAGE+10;i++) {
+    for (int i = 1; i <= StrideReadings.NUM_READINGS_FOR_AVERAGE + 10; i++) {
       strideReadings.updateStrideReading((initialStrides + i) % 128);
       if (i >= StrideReadings.MIN_READINGS_FOR_AVERAGE) {
         assertEquals(60, strideReadings.getCadence());
