@@ -36,11 +36,11 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnCreateContextMenuListener;
 import android.view.Window;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.View.OnCreateContextMenuListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -88,7 +88,7 @@ public class WaypointsList extends ListActivity
                 R.string.waypointslist_edit_waypoint);
             menu.add(0, Constants.MENU_DELETE, 0,
                 R.string.waypointslist_delete_waypoint).setEnabled(
-                    recordingTrackId < 0 || type == Waypoint.TYPE_WAYPOINT ||
+                    recordingTrackId < 0 || type == Waypoint.TYPE_WAYPOINT || type == Waypoint.TYPE_STATISTICS ||
                     info.id != providerUtils.getLastWaypointId(recordingTrackId));
           }
         }
