@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks.io;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.ProgressIndicator;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
@@ -50,7 +51,6 @@ import android.util.Log;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -695,7 +695,7 @@ public class SendToFusionTables implements Runnable {
         if (success) {
           byte[] result = new byte[1024];
           int read = response.getContent().read(result);
-          String s = new String(result, 0, read, Charset.forName("UTF8"));
+          String s = new String(result, 0, read, "UTF8");
           String[] lines = s.split(Strings.LINE_SEPARATOR);
           if (lines[0].equals("tableid")) {
             tableId = lines[1];

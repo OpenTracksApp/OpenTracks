@@ -33,10 +33,8 @@ import com.google.android.apps.mytracks.util.UriUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.TabActivity;
 import android.content.ContentUris;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -61,6 +59,7 @@ import android.widget.Toast;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
+@SuppressWarnings("deprecation")
 public class MyTracks extends TabActivity implements OnTouchListener {
   private TrackDataHub dataHub;
 
@@ -314,7 +313,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
             dataHub.loadTrack(trackId);
 
             // The track list passed the requested action as result code. Hand
-            // it off to the onAcitivtyResult for further processing:
+            // it off to the onActivityResult for further processing:
             if (resultCode != Constants.SHOW_TRACK) {
               onActivityResult(resultCode, Activity.RESULT_OK, results);
             }
@@ -336,24 +335,6 @@ public class MyTracks extends TabActivity implements OnTouchListener {
         }
         break;
       }
-      case Constants.DELETE_TRACK: {
-        if (results != null && resultCode == RESULT_OK) {
-          deleteTrack(trackId);
-        }
-        break;
-      }
-      case Constants.EDIT_DETAILS: {
-        if (results != null && resultCode == RESULT_OK) {
-          Intent intent = new Intent(this, TrackDetails.class);
-          intent.putExtra("trackid", trackId);
-          startActivity(intent);
-        }
-        break;
-      }
-      case Constants.CLEAR_MAP: {
-        dataHub.unloadCurrentTrack();
-        break;
-      }
       case Constants.WELCOME: {
         CheckUnits.check(this);
         break;
@@ -371,36 +352,6 @@ public class MyTracks extends TabActivity implements OnTouchListener {
       navControls.show();
     }
     return false;
-  }
-
-  /**
-   * Deletes the track with the given id.
-   * Prompts the user if he want to really delete the track first.
-   * If the selected track is deleted, the selection will be removed.
-   */
-  public void deleteTrack(final long trackId) {
-    AlertDialog dialog = null;
-    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    builder.setMessage(getString(R.string.track_will_be_permanently_deleted));
-    builder.setTitle(getString(R.string.are_you_sure_question));
-    builder.setIcon(android.R.drawable.ic_dialog_alert);
-    builder.setPositiveButton(getString(R.string.yes),
-        new DialogInterface.OnClickListener() {
-      public void onClick(DialogInterface dialogInterface, int i) {
-        dialogInterface.dismiss();
-        providerUtils.deleteTrack(trackId);
-        if (trackId == dataHub.getSelectedTrackId()) {
-          dataHub.unloadCurrentTrack();
-        }
-      }});
-    builder.setNegativeButton(getString(R.string.no),
-        new DialogInterface.OnClickListener() {
-      public void onClick(DialogInterface dialogInterface, int i) {
-        dialogInterface.dismiss();
-      }
-    });
-    dialog = builder.create();
-    dialog.show();
   }
 
   /**
@@ -491,10 +442,6 @@ public class MyTracks extends TabActivity implements OnTouchListener {
       intent.putExtra("hasCancelButton", false);
       startActivity(intent);
     }
-  }
-
-  void clearSelectedTrack() {
-    dataHub.unloadCurrentTrack();
   }
 
   long getSelectedTrackId() {
