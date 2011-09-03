@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendActivity;
@@ -25,11 +27,14 @@ import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.app.ListActivity;
+import android.content.ContentUris;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
@@ -182,14 +187,16 @@ public class TrackList extends ListActivity
         SaveActivity.handleExportTrackAction(this, trackId,
             Constants.getActionFromMenuId(item.getItemId()));
         return true;
-      default: {
-        Intent result = new Intent();
-        result.putExtra("trackid", trackId);
-        setResult(
-            Constants.getActionFromMenuId(item.getItemId()), result);
-        finish();
+      case Constants.MENU_DELETE: {
+        Intent intent = new Intent(Intent.ACTION_DELETE);
+        Uri uri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId);
+        intent.setDataAndType(uri, TracksColumns.CONTENT_ITEMTYPE);
+        startActivity(intent);
         return true;
       }
+      default:
+        Log.w(TAG, "Unknown menu item: " + item.getItemId() + "(" + item.getTitle() + ")");
+        return super.onMenuItemSelected(featureId, item);
     }
   }
 

@@ -412,10 +412,10 @@ public class TrackDataHub {
       return;
     }
 
-    // Save the selection to memory and flash.
+    // Save the selection to memory and flush.
+    selectedTrackId = trackId;
     ApiFeatures.getInstance().getApiPlatformAdapter().applyPreferenceChanges(
         preferences.edit().putLong(SELECTED_TRACK_KEY, trackId));
-    selectedTrackId = trackId;
 
     // Force it to reload data from the beginning.
     Log.d(TAG, "Loading track");
@@ -642,6 +642,9 @@ public class TrackDataHub {
     } else if (SPEED_REPORTING_KEY.equals(key)) {
       reportSpeed = preferences.getBoolean(SPEED_REPORTING_KEY, true);
       notifySpeedReportingChanged();
+    } else if (SELECTED_TRACK_KEY.equals(key)) {
+      long trackId = preferences.getLong(SELECTED_TRACK_KEY, -1);
+      loadTrack(trackId);
     }
   }
 

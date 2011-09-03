@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -26,7 +26,7 @@ public abstract class Constants {
    * Should be used by all log statements
    */
   public static final String TAG = "MyTracks";
-  
+
   /**
    * Name of the top-level directory inside the SD card where our files will
    * be read from/written to.
@@ -39,32 +39,21 @@ public abstract class Constants {
 
   public static final int GET_LOGIN = 0;
   public static final int GET_MAP = 1;
-  public static final int CREATE_MAP = 2;
-  public static final int SHOW_TRACK = 3;
-  public static final int ADD_LIST = 4;
-  public static final int FEATURE_DETAILS = 5;
-  public static final int START_RECORDING = 6;
-  public static final int STOP_RECORDING = 7;
-  public static final int AUTHENTICATE_TO_MY_MAPS = 8;
-  public static final int AUTHENTICATE_TO_FUSION_TABLES = 9;
-  public static final int AUTHENTICATE_TO_DOCLIST = 10;
-  public static final int AUTHENTICATE_TO_TRIX = 11;
-  public static final int DELETE_TRACK = 13;
-  public static final int SEND_TO_GOOGLE = 14;
-  public static final int SHARE_LINK = 15;
-  public static final int SHARE_GPX_FILE = 16;
-  public static final int SHARE_KML_FILE = 17;
-  public static final int SHARE_CSV_FILE = 18;
-  public static final int SHARE_TCX_FILE = 19;
-  public static final int EDIT_DETAILS = 20;
-  public static final int SAVE_GPX_FILE = 21;
-  public static final int SAVE_KML_FILE = 22;
-  public static final int SAVE_CSV_FILE = 23;
-  public static final int SAVE_TCX_FILE = 24;
-  public static final int CLEAR_MAP = 25;
-  public static final int SHOW_WAYPOINT = 26;
-  public static final int EDIT_WAYPOINT = 27;
-  public static final int WELCOME = 28;
+  public static final int SHOW_TRACK = 2;
+  public static final int AUTHENTICATE_TO_MY_MAPS = 3;
+  public static final int AUTHENTICATE_TO_FUSION_TABLES = 4;
+  public static final int AUTHENTICATE_TO_DOCLIST = 5;
+  public static final int AUTHENTICATE_TO_TRIX = 6;
+  public static final int SHARE_GPX_FILE = 7;
+  public static final int SHARE_KML_FILE = 8;
+  public static final int SHARE_CSV_FILE = 9;
+  public static final int SHARE_TCX_FILE = 10;
+  public static final int SAVE_GPX_FILE = 11;
+  public static final int SAVE_KML_FILE = 12;
+  public static final int SAVE_CSV_FILE = 13;
+  public static final int SAVE_TCX_FILE = 14;
+  public static final int SHOW_WAYPOINT = 15;
+  public static final int WELCOME = 16;
 
   /*
    * Menu ids:
@@ -179,7 +168,7 @@ public abstract class Constants {
    * The type of account that we can use for gdata uploads.
    */
   public static final String ACCOUNT_TYPE = "com.google";
-  
+
   /**
    * The name of extra intent property to indicate whether we want to resume
    * a previously recorded track.
@@ -189,14 +178,6 @@ public abstract class Constants {
 
   public static int getActionFromMenuId(int menuId) {
     switch (menuId) {
-      case Constants.MENU_SEND_TO_GOOGLE:
-        return Constants.SEND_TO_GOOGLE;
-      case Constants.MENU_EDIT:
-        return Constants.EDIT_DETAILS;
-      case Constants.MENU_DELETE:
-        return Constants.DELETE_TRACK;
-      case Constants.MENU_SHARE_LINK:
-        return Constants.SHARE_LINK;
       case Constants.MENU_SHARE_KML_FILE:
         return Constants.SHARE_KML_FILE;
       case Constants.MENU_SHARE_GPX_FILE:
@@ -213,8 +194,6 @@ public abstract class Constants {
         return Constants.SAVE_CSV_FILE;
       case Constants.MENU_SAVE_TCX_FILE:
         return Constants.SAVE_TCX_FILE;
-      case Constants.MENU_CLEAR_MAP:
-        return Constants.CLEAR_MAP;
       default:
         return -1;
     }

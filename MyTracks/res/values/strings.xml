@@ -83,7 +83,8 @@ limitations under the License.
   <string name="write_progress_message">Writing file to SD card. This may take a while.</string>
   <string name="progress_message_updating_track">Updating track statistics...</string>
 
-  <!-- Used by DeleteAllDataHandler -->
+  <!-- Used by deletion actions -->
+  <string name="deletetrack_title">Delete track</string>
   <string name="are_you_sure_question">Are you sure?</string>
   <string name="all_data_will_be_permanently_deleted">All tracks and markers will be deleted from this phone.</string>
   <string name="track_will_be_permanently_deleted">The track and its markers will be permanently deleted from this phone.</string>
@@ -509,5 +510,5 @@ limitations under the License.
   <string name="ant_bridge_sensor_option">SRM ANT+ Bridge</string>
   <string name="polar_bt_sensor_option">Polar Bluetooth</string>
   <string name="zephyr_bt_sensor_option">Zephyr Bluetooth</string>
-  
+
 </resources>

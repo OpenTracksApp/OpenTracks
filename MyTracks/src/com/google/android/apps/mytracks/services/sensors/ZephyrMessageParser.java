@@ -15,10 +15,9 @@
  */
 package com.google.android.apps.mytracks.services.sensors;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Sensor;
 
-import android.util.Log;
+import java.util.Arrays;
 
 /**
  * An implementation of a Sensor MessageParser for Zephyr.
@@ -32,27 +31,12 @@ public class ZephyrMessageParser implements MessageParser {
   public static final int ZEPHYR_HXM_BYTE_CRC = 58;
   public static final int ZEPHYR_HXM_BYTE_ETX = 59;
   
-  private static final String CADENCE_BUG_FW_ID = "1A00316550003162";
+  private static final byte[] CADENCE_BUG_FW_ID = {0x1A, 0x00, 0x31, 0x65, 0x50, 0x00, 0x31, 0x62};
   
   private StrideReadings strideReadings;
   
   @Override
   public Sensor.SensorDataSet parseBuffer(byte[] buffer) {
-    StringBuilder sb = new StringBuilder();
-    for (int i = 0; i < buffer.length; i++) {
-      sb.append(String.format("%02X", buffer[i]));
-    }
-    Log.w(Constants.TAG, "Got zephyr data: " + sb);
-
-    // Device Firmware ID, Firmware Version, Hardware ID, Hardware Version
-    // 0x1A00316550003162 produces erroneous values for Cadence and needs
-    // a workaround based on the stride counter.
-    // Firmware values range from field 3 to 11 of the byte buffer, 
-    // since in hex there are two characters for each byte, doubling the values.
-    String hardwareFirmwareId = sb.substring(6, 22);
-    boolean computeCadenceFromStrides = hardwareFirmwareId.equals(CADENCE_BUG_FW_ID);
-    Log.d(Constants.TAG, "FW & HW Ids & Version " + hardwareFirmwareId + " needs workaround: " + computeCadenceFromStrides);
-    
     Sensor.SensorDataSet.Builder sds =
       Sensor.SensorDataSet.newBuilder()
       .setCreationTime(System.currentTimeMillis());
@@ -60,42 +44,42 @@ public class ZephyrMessageParser implements MessageParser {
     Sensor.SensorData.Builder heartrate = Sensor.SensorData.newBuilder()
       .setValue(buffer[12] & 0xFF)
       .setState(Sensor.SensorState.SENDING);
-    sds = sds.setHeartRate(heartrate);
+    sds.setHeartRate(heartrate);
     
     Sensor.SensorData.Builder batteryLevel = Sensor.SensorData.newBuilder()
       .setValue(buffer[11])
       .setState(Sensor.SensorState.SENDING);
-    sds = sds.setBatteryLevel(batteryLevel);
+    sds.setBatteryLevel(batteryLevel);
     
-    // Appends cadence to SensorDataSet builder if available.
-    parseOrComputeCadence(sds, buffer, computeCadenceFromStrides);
+    setCadence(sds, buffer);
     
     return sds.build();
   }
 
-  private void parseOrComputeCadence(Sensor.SensorDataSet.Builder sds, byte[] buffer, boolean computeFromStrides) {
-    
+  private void setCadence(Sensor.SensorDataSet.Builder sds, byte[] buffer) {
+    // Device Firmware ID, Firmware Version, Hardware ID, Hardware Version
+    // 0x1A00316550003162 produces erroneous values for Cadence and needs
+    // a workaround based on the stride counter.
+    // Firmware values range from field 3 to 10 (inclusive) of the byte buffer.
+    byte[] hardwareFirmwareId = Arrays.copyOfRange(buffer, 3, 11);
+
     Sensor.SensorData.Builder cadence = Sensor.SensorData.newBuilder();
 
-    if(!computeFromStrides) {
-      cadence = cadence
-        .setValue(SensorUtils.unsignedShortToIntLittleEndian(buffer, 56) / 16)
-        .setState(Sensor.SensorState.SENDING);
-      sds.setCadence(cadence);
-    } else {
-      if(strideReadings == null) {
+    if (Arrays.equals(hardwareFirmwareId, CADENCE_BUG_FW_ID)) {
+      if (strideReadings == null) {
         strideReadings = new StrideReadings();
       }
-      strideReadings.updateStrideReading(
-          SensorUtils.unsignedShortToIntLittleEndian(buffer, 14), 
-          buffer[54] & 0xFF);
+      strideReadings.updateStrideReading(buffer[54] & 0xFF);
       
-      if(strideReadings.getCadence() != StrideReadings.CADENCE_NOT_AVAILABLE) {
-        cadence = cadence.setValue(strideReadings.getCadence())
-          .setState(Sensor.SensorState.SENDING);
-        sds.setCadence(cadence);
+      if (strideReadings.getCadence() != StrideReadings.CADENCE_NOT_AVAILABLE) {
+        cadence.setValue(strideReadings.getCadence()).setState(Sensor.SensorState.SENDING);
       }
+    } else {
+      cadence
+        .setValue(SensorUtils.unsignedShortToIntLittleEndian(buffer, 56) / 16)
+        .setState(Sensor.SensorState.SENDING);
     }
+    sds.setCadence(cadence);
   }
 
   @Override
