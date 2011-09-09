@@ -61,8 +61,8 @@ public class ImportAllTracks {
     Log.i(Constants.TAG, "ImportAllTracks: Starting");
     fileUtils = new FileUtils();
     gpxPath = fileUtils.buildExternalDirectoryPath("gpx");
-
-    new Thread(runner).start();
+    this.activity.runOnUiThread(runner);
+    //new Thread(runner).start();
   }
 
   private final Runnable runner = new Runnable() {
