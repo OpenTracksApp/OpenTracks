@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+  <!-- Minimum recording distance -->
+  <string-array name="min_recording_distance_options">
+    <item>1 м</item>
+    <item>2 м</item>
+    <item>3 м</item>
+    <item>4 м</item>
+    <item>5 м (рекомендуется)</item>
+    <item>10 м</item>
+    <item>100 м</item>
+  </string-array>
+
+  <string-array name="min_recording_distance_options_ft">
+    <item>3 фута</item>
+    <item>6 футов</item>
+    <item>10 футов</item>
+    <item>13 футов</item>
+    <item>16 футов (рекомендуется)</item>
+    <item>33 фута</item>
+    <item>328 футов</item>
+  </string-array>
+
+  <!-- Maximum recording distance -->
+  <string-array name="max_recording_distance_options">
+    <item>50 м</item>
+    <item>100 м</item>
+    <item>200 м (рекомендуется)</item>
+    <item>500 м</item>
+    <item>1000 м</item>
+    <item>5000 м</item>
+  </string-array>
+
+  <string-array name="max_recording_distance_options_ft">
+    <item>164 фута</item>
+    <item>328 футов</item>
+    <item>656 фута (рекомендуется)</item>
+    <item>1640 футов</item>
+    <item>0,6 мили</item>
+    <item>3,1 мили</item>
+  </string-array>
+
+  <!-- Minimum recording interval -->
+  <string-array name="min_recording_interval_options">
+    <item>экономия батареи (адаптивная)</item>
+    <item>высокая точность (адаптивная)</item>
+    <item>высочайшая точность (рекомендуется)</item>
+    <item>2 с</item>
+    <item>3 с</item>
+    <item>4 с</item>
+    <item>5 с</item>
+    <item>10 с</item>
+    <item>20 с</item>
+    <item>30 с</item>
+    <item>1 мин</item>
+    <item>2 мин</item>
+    <item>5 мин</item>
+    <item>10 мин</item>
+    <item>15 мин</item>
+    <item>30 мин</item>
+  </string-array>
+
+  <!-- Minimum required accuracy -->
+  <string-array name="min_required_accuracy_options">
+    <item>10 м (отличный сигнал GPS)</item>
+    <item>20 м</item>
+    <item>50 м</item>
+    <item>100 м</item>
+    <item>200 м (рекомендуется)</item>
+    <item>500 м</item>
+    <item>1000 м</item>
+    <item>2000 м</item>
+    <item>5000 м (плохой сигнал GPS)</item>
+  </string-array>
+
+  <string-array name="min_required_accuracy_options_ft">
+    <item>33 фута (отличный сигнал GPS)</item>
+    <item>66 футов</item>
+    <item>165 футов</item>
+    <item>328 футов</item>
+    <item>656 футов (рекомендуется)</item>
+    <item>1640 футов</item>
+    <item>0,6 мили</item>
+    <item>1,2 мили</item>
+    <item>3,1 мили (плохой сигнал GPS)</item>
+  </string-array>
+
+  <!-- Task frequency -->
+  <string-array name="task_frequency_options">
+    <item>Выкл.</item>
+    <item>100 км</item>
+    <item>50 км</item>
+    <item>25 км</item>
+    <item>10 км</item>
+    <item>5 км</item>
+    <item>1 км</item>
+    <item>60 мин</item>
+    <item>30 мин</item>
+    <item>15 мин</item>
+    <item>10 мин</item>
+    <item>5 мин</item>
+    <item>2 мин</item>
+    <item>1 мин</item>
+  </string-array>
+
+  <string-array name="task_frequency_options_ft">
+    <item>Выкл.</item>
+    <item>100 миль</item>
+    <item>50 миль</item>
+    <item>25 миль</item>
+    <item>10 миль</item>
+    <item>5 миль</item>
+    <item>1 миля</item>
+    <item>60 мин</item>
+    <item>30 мин</item>
+    <item>15 мин</item>
+    <item>10 мин</item>
+    <item>5 мин</item>
+    <item>2 мин</item>
+    <item>1 мин</item>
+  </string-array>
+
+  <!-- Auto-resume track timeout -->
+  <string-array name="auto_resume_track_timeout_options">
+    <item>Никогда</item>
+    <item>5 мин</item>
+    <item>10 мин</item>
+    <item>15 мин</item>
+    <item>Всегда</item>
+  </string-array>
+
+  <!-- Other non-preference arrays -->
+  <array name="activity_types">
+    <item>не определен</item>
+    <item>смешанного типа</item>
+    <item>другое</item>
+
+    <item>бег</item>
+    <item>бег по улице</item>
+    <item>бег по треку</item>
+    <item>бег по тропе</item>
+    <item>ходьба</item>
+    <item>быстрая ходьба</item>
+    <item>пешая прогулка</item>
+    <item>прогулка по туристической тропе</item>
+    <item>прогулка по бездорожью</item>
+    <item>восхождение</item>
+
+    <item>велосипедная прогулка</item>
+    <item>шоссейный велосипед</item>
+    <item>горный велосипед</item>
+    <item>велотрек</item>
+
+    <item>катание на коньках</item>
+    <item>катания на роликовых коньках</item>
+    <item>катания на роликовых коньках</item>
+
+    <item>прогулка на снегоступах</item>
+    <item>лыжи</item>
+    <item>сноубординг</item>
+    <item>сани</item>
+    <item>ледяной парусный спорт</item>
+
+    <item>парусный спорт</item>
+    <item>гребля</item>
+    <item>каякинг</item>
+    <item>академическая гребля</item>
+    <item>моторная лодка</item>
+    <item>паром</item>
+    <item>RC лодка</item>
+    <item>серфинг</item>
+    <item>виндсерфинг</item>
+    <item>кайтсерфинг</item>
+    <item>водные лыжи</item>
+    <item>вейкбординг</item>
+
+    <item>самолет</item>
+    <item>гидроплан</item>
+    <item>коммерческий самолет</item>
+    <item>вертолет</item>
+    <item>воздушный шар</item>
+    <item>дирижабль</item>
+    <item>RC самолет</item>
+    <item>RC вертолет</item>
+    <item>прыжки</item>
+    <item>планеризм</item>
+    <item>дельтаплан</item>
+    <item>парный планеризм</item>
+
+    <item>верховая езда</item>
+    <item>катание на лошадях</item>
+    <item>прогулка на осле</item>
+
+    <item>вождение автомобиля</item>
+    <item>вождение автобуса</item>
+    <item>поезд</item>
+    <item>мотоцикл</item>
+    <item>Байк</item>
+    <item>ATV</item>
+
+    <item>парусный спорт на земле</item>
+    <item>фрисби</item>
+    <item>алтимат фризби</item>
+  </array>
+
+  <array name="waypoint_types">
+    <item>банкомат</item>
+    <item>банк</item>
+    <item>бар</item>
+    <item>барбекю</item>
+    <item>здание</item>
+    <item>автобусная остановка</item>
+    <item>кафе</item>
+    <item>костер</item>
+    <item>лагерь</item>
+    <item>церковь</item>
+    <item>кофейня</item>
+    <item>удобный магазин</item>
+    <item>питьевая вода</item>
+    <item>оползень</item>
+    <item>паром</item>
+    <item>камин</item>
+    <item>пожарная станция</item>
+    <item>рыболовство</item>
+    <item>автозаправочная станция</item>
+    <item>поле для гольфа</item>
+    <item>продуктовый магазин</item>
+    <item>парикмахерская</item>
+    <item>гавань</item>
+    <item>тропа</item>
+    <item>отель</item>
+    <item>дом</item>
+    <item>информация</item>
+    <item>пересечение</item>
+    <item>почтовый ящик</item>
+    <item>рынок</item>
+    <item>место встречи</item>
+    <item>опера</item>
+    <item>парковка</item>
+    <item>почтовое отделение</item>
+    <item>выбоина</item>
+    <item>полицейский участок</item>
+    <item>железнодорожный переезд</item>
+    <item>ресторан</item>
+    <item>покупки</item>
+    <item>вид</item>
+    <item>магазин</item>
+    <item>бассейн</item>
+    <item>телефон</item>
+    <item>театр</item>
+    <item>туалет</item>
+    <item>туристическая информация</item>
+    <item>туннель</item>
+    <item>дерево</item>
+    <item>водопад</item>
+    <item>фонтан</item>
+    <item>путевая точка</item>
+  </array>
+
+</resources>
