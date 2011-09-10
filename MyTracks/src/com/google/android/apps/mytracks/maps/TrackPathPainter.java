@@ -15,47 +15,53 @@
  */
 package com.google.android.apps.mytracks.maps;
 
-import java.util.List;
-
-import android.graphics.Canvas;
-import android.graphics.Rect;
-
 import com.google.android.apps.mytracks.MapOverlay.CachedLocation;
 import com.google.android.maps.Projection;
 
+import android.graphics.Canvas;
+import android.graphics.Path;
+import android.graphics.Rect;
+
+import java.util.List;
+
 /**
- * A path painter interface as template to each type of path painter.
+ * An interface for classes which paint the track path. 
  *
  * @author Vangelis S.
  */
 public interface TrackPathPainter {
 	
   /**
-   * Clears the related data
+   * Clears the related data.
    */
   void clear();
   
   /**
-   * Draws the path to the canvas
+   * Draws the path to the canvas.
    * @param canvas The Canvas to draw upon
    */
   void drawTrack(Canvas canvas);
   
   /**
-   * Updates the path
-   * @param projection The Canvas to draw upon
+   * Updates the path.
+   * @param projection The Canvas to draw upon.
    * @param viewRect The Path to be drawn.   
-   * @param startLocationIdx The start point from where update the path
-   * @param alwaysVisible Flag for alwaysvisible
-   * @param points The list of points used to update the path
+   * @param startLocationIdx The start point from where update the path.
+   * @param alwaysVisible Flag for alwaysvisible.
+   * @param points The list of points used to update the path.
    */
   void updatePath(Projection projection, Rect viewRect, int startLocationIdx,
       Boolean alwaysVisible, List<CachedLocation> points);
   
   /**
-   * @return If the path needs to be updated from scratch.
+   * @return True if the path needs to be updated.
    */
   boolean needsRedraw();
+  
+  /**
+   * @return The path being used currently.
+   */
+  Path getLastPath();
 }
 
 

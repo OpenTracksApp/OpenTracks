@@ -23,7 +23,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 /**
- * A factory of TrackPathPainters.
+ * A factory for TrackPathPainters.
  *
  * @author Vangelis S.
  */
@@ -45,9 +45,9 @@ public class TrackPathPainterFactory {
     }
     
     String colorMode = prefs.getString(context.getString(R.string.track_color_mode_key), null);
-    Log.i(Constants.TAG, "Creating trackpathpainter of type: " + colorMode);
+    Log.i(Constants.TAG, "Creating track path painter of type: " + colorMode);
 
-    if (colorMode == null) {
+    if (colorMode == null || colorMode.equals(context.getString(R.string.track_color_mode_none))) {
       return new SingleColorTrackPathPainter(context);
     } else if (colorMode.equals(context.getString(R.string.track_color_mode_fixed))) {
       return new DynamicSpeedTrackPathPainter(context, 
@@ -56,6 +56,7 @@ public class TrackPathPainterFactory {
       return new DynamicSpeedTrackPathPainter(context, 
           new DynamicSpeedTrackPathDescriptor(context));
     } else {
+      Log.i(Constants.TAG, "Unknow colorMode: " + colorMode);
       return new SingleColorTrackPathPainter(context);
     }
   }

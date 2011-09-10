@@ -37,8 +37,8 @@ public class FixedSpeedTrackPathDescriptor implements TrackPathDescriptor, OnSha
   public FixedSpeedTrackPathDescriptor(Context context){
 	
     this.context = context;
-	context.getSharedPreferences(Constants.SETTINGS_NAME, 0)
-    .registerOnSharedPreferenceChangeListener(this);
+    context.getSharedPreferences(Constants.SETTINGS_NAME, 0)
+        .registerOnSharedPreferenceChangeListener(this);
 	
     SharedPreferences prefs = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     if (prefs == null) {
@@ -89,10 +89,10 @@ public class FixedSpeedTrackPathDescriptor implements TrackPathDescriptor, OnSha
     }
     SharedPreferences prefs = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     if (prefs == null) {
-	  slowSpeed = 9; 
-	  normalSpeed = 17;
-	  return;
-	}
+      slowSpeed = 9; 
+      normalSpeed = 17;
+      return;
+    }
     
     try {
       slowSpeed = Integer.parseInt(prefs.getString(context.getString(

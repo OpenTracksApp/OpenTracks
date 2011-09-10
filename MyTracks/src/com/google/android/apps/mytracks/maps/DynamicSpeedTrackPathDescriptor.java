@@ -15,16 +15,16 @@
  */
 package com.google.android.apps.mytracks.maps;
 
-  import com.google.android.apps.mytracks.Constants;	
-  import com.google.android.apps.mytracks.content.MyTracksProviderUtils;	
-  import com.google.android.apps.mytracks.content.Track;	
-  import com.google.android.apps.mytracks.stats.TripStatistics;	
-  import com.google.android.maps.mytracks.R;		
-  import android.content.Context;	
-  
-  import android.content.SharedPreferences;
-  import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-  import android.util.Log;
+import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.maps.mytracks.R;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.util.Log;
 
 
 /**
@@ -32,8 +32,8 @@ package com.google.android.apps.mytracks.maps;
  *
  * @author Vangelis S.
  */
-public class DynamicSpeedTrackPathDescriptor implements TrackPathDescriptor, 
-  OnSharedPreferenceChangeListener {
+public class DynamicSpeedTrackPathDescriptor 
+  implements TrackPathDescriptor, OnSharedPreferenceChangeListener {
   private int slowSpeed;
   private int normalSpeed;
   private int speedMargin;
@@ -41,7 +41,6 @@ public class DynamicSpeedTrackPathDescriptor implements TrackPathDescriptor,
   private final Context context;
   
   public DynamicSpeedTrackPathDescriptor(Context context){
-	
     this.context = context;
     SharedPreferences prefs = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
 
@@ -100,7 +99,8 @@ public class DynamicSpeedTrackPathDescriptor implements TrackPathDescriptor,
     SharedPreferences prefs = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     long currentTrackId = prefs.getLong(context.getString(R.string.selected_track_key), -1);
     if(currentTrackId == -1) {
-      return false; //in reality this means something went awry, additional logic to exit or so?
+      // in reality this means something went awry, additional logic to exit or so?
+      return false; 
     }
     Track track = MyTracksProviderUtils.Factory.get(context).getTrack(currentTrackId);
     TripStatistics stats = track.getStatistics();
@@ -118,7 +118,10 @@ public class DynamicSpeedTrackPathDescriptor implements TrackPathDescriptor,
     } else {
       difference = Math.abs(averageMovingSpeed - newaverageSpeed) / difference * 100;
     }
-    averageMovingSpeed = newaverageSpeed;
-    return difference >= 20;
+    if(difference >= 20) {
+      averageMovingSpeed = newaverageSpeed;
+      return true;
+    }
+    return false;
   }
 }

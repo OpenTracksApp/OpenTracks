@@ -24,8 +24,7 @@ import android.graphics.Paint;
  * @author Vangelis S.
  */
 public class TrackPathUtilities {
-  public static Paint getPaint(int id, Context context)
-  {
+  public static Paint getPaint(int id, Context context) {
     Paint paint = new Paint();
     paint.setColor(context.getResources().getColor(id));
     paint.setStrokeWidth(3);

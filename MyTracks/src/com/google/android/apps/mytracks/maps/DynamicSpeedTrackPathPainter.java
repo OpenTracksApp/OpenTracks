@@ -15,23 +15,24 @@
  */
 package com.google.android.apps.mytracks.maps;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Point;
-import android.graphics.Rect;
-
 import com.google.android.apps.mytracks.ColoredPath;
 import com.google.android.apps.mytracks.MapOverlay.CachedLocation;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.Projection;
 import com.google.android.maps.mytracks.R;
 
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Point;
+import android.graphics.Rect;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * A path painter that variates the path colors based on fixed speeds or average speed margin
+ * A path painter that varies the path colors based on fixed speeds or average speed margin
  * depending of the TrackPathDescriptor passed to its constructor.
  * 
  *  @author Vangelis S.
@@ -126,7 +127,15 @@ public class  DynamicSpeedTrackPathPainter implements TrackPathPainter {
 
   @Override
   public boolean needsRedraw() {
-    // TODO Auto-generated method stub
     return trackPathDescriptor.needsRedraw();
+  }
+  
+  @Override
+  public Path getLastPath() {
+    Path path = new Path();
+    for(int i = 0; i < coloredPaths.size(); ++i) {
+      path.addPath(coloredPaths.get(i).getPath());
+    }
+    return path;
   }
 }

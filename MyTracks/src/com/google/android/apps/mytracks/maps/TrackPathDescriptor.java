@@ -16,23 +16,23 @@
 package com.google.android.apps.mytracks.maps;
 
 /**
- * A path descriptor interface as template to each type of path descriptor.
+ * An interface for classes which describe how to draw a track path. 
  *
  * @author Vangelis S.
  */
 public interface TrackPathDescriptor {
   /**
-   * @return The speed limit considered as slow.
+   * @return The maximum speed which is considered slow.
    */
   int getSlowSpeed();
   
   /**
-   * @return The speed limit considered as normal.
+   * @return The maximum speed which is considered normal.
    */
   int getNormalSpeed();
   
   /**
-   * @return If the path needs to be updated from scratch.
+   * @return True if the path needs to be updated.
    */
   boolean needsRedraw();
 }

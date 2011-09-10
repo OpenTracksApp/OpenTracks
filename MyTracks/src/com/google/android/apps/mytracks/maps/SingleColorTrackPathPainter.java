@@ -15,7 +15,10 @@
  */
 package com.google.android.apps.mytracks.maps;
 
-import java.util.List;
+import com.google.android.apps.mytracks.MapOverlay.CachedLocation;
+import com.google.android.maps.GeoPoint;
+import com.google.android.maps.Projection;
+import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -24,10 +27,7 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
 
-import com.google.android.apps.mytracks.MapOverlay.CachedLocation;
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.Projection;
-import com.google.android.maps.mytracks.R;
+import java.util.List;
 
 
 /**
@@ -98,5 +98,10 @@ public class SingleColorTrackPathPainter implements TrackPathPainter {
   @Override
   public boolean needsRedraw() {
     return false;
+  }
+  
+  @Override
+  public Path getLastPath() {
+    return path;
   }
 }

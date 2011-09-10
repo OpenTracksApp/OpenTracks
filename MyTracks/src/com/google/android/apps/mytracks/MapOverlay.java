@@ -259,25 +259,8 @@ public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListe
       // Draw the selected track:
       drawTrack(canvas, projection, viewRect);
 
-      // Draw the "End" marker.
-      if (showEndMarker) {
-        for (int i = getPoints().size() - 1; i >= 0; --i) {
-          if (getPoints().get(i).valid) {
-            drawElement(canvas, projection, getPoints().get(i).geoPoint, endMarker,
-                -markerWidth / 2, -markerHeight);
-            break;
-          }
-        }
-      }
-      
-      // Draw the "Start" marker.
-      for (int i = 0; i < getPoints().size(); ++i) {
-        if (getPoints().get(i).valid) {
-          drawElement(canvas, projection, getPoints().get(i).geoPoint, startMarker,
-              -markerWidth / 2, -markerHeight);
-          break;
-        }
-      }
+      // Draw the "Start" and "End" markers:
+      drawMarkers(canvas, projection);
       
       // Draw the waypoints:
       drawWaypoints(canvas, projection);
@@ -287,6 +270,28 @@ public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListe
     drawMyLocation(canvas, projection);
   }
 
+  private void drawMarkers(Canvas canvas, Projection projection) {
+    // Draw the "End" marker.
+    if (showEndMarker) {
+      for (int i = getPoints().size() - 1; i >= 0; --i) {
+        if (getPoints().get(i).valid) {
+          drawElement(canvas, projection, getPoints().get(i).geoPoint, endMarker,
+              -markerWidth / 2, -markerHeight);
+          break;
+        }
+      }
+    }
+    
+    // Draw the "Start" marker.
+    for (int i = 0; i < getPoints().size(); ++i) {
+      if (getPoints().get(i).valid) {
+        drawElement(canvas, projection, getPoints().get(i).geoPoint, startMarker,
+            -markerWidth / 2, -markerHeight);
+        break;
+      }
+    }
+  }
+  
   // Visible for testing.
   Projection getMapProjection(MapView mapView) {
     return mapView.getProjection();
@@ -306,6 +311,11 @@ public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListe
     return new Path();
   }
 
+  // Visible for testing.
+  public Path getLastPath() {
+    return trackPathPainter.getLastPath();
+  }
+  
   private void drawWaypoints(Canvas canvas, Projection projection) {
     synchronized (waypoints) {;
       for (Waypoint wpt : waypoints) {

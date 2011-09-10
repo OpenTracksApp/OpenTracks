@@ -461,14 +461,15 @@ public class SettingsActivity extends PreferenceActivity {
     }.start();
   }
   
-  /** Check if metric is unchecked and in that case convert to english to show it to the user. */
+  /** Set the given edit text preference text.
+      If the units are not metric convert the value before displaying.  */
   private void viewTrackColorModeSettings(EditTextPreference preference, int id) {
     CheckBoxPreference metricUnitsPreference = (CheckBoxPreference) findPreference(
         getString(R.string.metric_units_key));
     if(metricUnitsPreference.isChecked()) {
       return;
     }
-    //Convert miles/h to km/h
+    // Convert miles/h to km/h
     SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
     String metricspeed = prefs.getString(getString(id), null);
     int englishspeed;
@@ -480,14 +481,15 @@ public class SettingsActivity extends PreferenceActivity {
     preference.getEditText().setText(String.valueOf(englishspeed));
   }
   
-  /** Check if metric is unchecked and in that case convert to metric to save it internaly. */
+  /** Saves the given edit text preference value.
+  If the units are not metric convert the value before saving.  */
   private void validateTrackColorModeSettings(EditTextPreference preference, 
       String newValue, int id) {
     CheckBoxPreference metricUnitsPreference = (CheckBoxPreference) findPreference(
         getString(R.string.metric_units_key));
     String metricspeed;
     if(!metricUnitsPreference.isChecked()) {
-      //Convert miles/h to km/h
+      // Convert miles/h to km/h
       try {
         metricspeed = String.valueOf((int) (Double.parseDouble(newValue) * UnitConversions.MPH_TO_KMH) + 1);
       } catch (NumberFormatException e) {
