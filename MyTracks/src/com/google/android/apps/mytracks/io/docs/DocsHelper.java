@@ -287,11 +287,13 @@ public class DocsHelper {
     String elevationUnit = context.getString(metricUnits ?
         R.string.meter : R.string.feet);
 
+    DateFormat trackDateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
+
     // Prepare the Post-Text we are going to send.
     DocsTagBuilder tagBuilder = new DocsTagBuilder(metricUnits)
         .append("name", track.getName())
         .append("description", track.getDescription())
-        .append("date", DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT).format(new Date(stats.getStartTime())))
+        .append("date", trackDateFormat.format(new Date(stats.getStartTime())))
         .append("totaltime", StringUtils.formatTimeAlwaysShowingHours(
             stats.getTotalTime()))
         .append("movingtime", StringUtils.formatTimeAlwaysShowingHours(
