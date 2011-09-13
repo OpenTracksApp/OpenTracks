@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 Google Inc.
+ * Copyright 2011 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -27,29 +27,31 @@ import android.graphics.Rect;
  * 
  * @author Bartlomiej Niechwiej
  * @author Vangelis S.
+ * 
+ * A mock version of {@code MapOverlay} that does not use
+ * {@class MapView}. 
  */
-
-  /**
-   * A mock version of {@code MapOverlay} that does not use
-   * {@class MapView}. 
-   */
-  public class MockMyTracksOverlay extends MapOverlay {
+public class MockMyTracksOverlay extends MapOverlay {
     
-    private Projection mockProjection;
-    public MockMyTracksOverlay(Context context) {
-      super(context);
-      mockProjection = new MockProjection();
-    }
-    @Override
-    public Projection getMapProjection(MapView mapView) {
-      return mockProjection;
-    }
-    @Override
-    public Rect getMapViewRect(MapView mapView) {
-      return new Rect(0, 0, 100, 100);
-    }
-    @Override
-    public Path newPath() {
-      return new MockPath();
-    }
+  private Projection mockProjection;
+  
+  public MockMyTracksOverlay(Context context) {
+    super(context);
+    mockProjection = new MockProjection();
   }
+  
+  @Override
+  public Projection getMapProjection(MapView mapView) {
+    return mockProjection;
+  }
+  
+  @Override
+  public Rect getMapViewRect(MapView mapView) {
+    return new Rect(0, 0, 100, 100);
+  }
+  
+  @Override
+  public Path newPath() {
+    return new MockPath();
+  }
+}

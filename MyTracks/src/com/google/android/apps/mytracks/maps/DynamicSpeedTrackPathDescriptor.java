@@ -99,7 +99,7 @@ public class DynamicSpeedTrackPathDescriptor
     SharedPreferences prefs = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     long currentTrackId = prefs.getLong(context.getString(R.string.selected_track_key), -1);
     if(currentTrackId == -1) {
-      // in reality this means something went awry, additional logic to exit or so?
+      // Could not find track. 
       return false; 
     }
     Track track = MyTracksProviderUtils.Factory.get(context).getTrack(currentTrackId);

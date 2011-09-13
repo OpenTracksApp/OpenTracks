@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 Google Inc.
+ * Copyright 2011 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,22 +25,23 @@ import android.graphics.Point;
  * 
  * @author Bartlomiej Niechwiej
  * @author Vangelis S.
+ * 
+ * A mock {@code Projection} that acts as the identity matrix.
  */
+public class MockProjection implements Projection {
 
-  /**
-   * A mock {@code Projection} that acts as the identity matrix.
-   */
-  public class MockProjection implements Projection {
-    @Override
-    public Point toPixels(GeoPoint in, Point out) {
-      return out;
-    }
-    @Override
-    public float metersToEquatorPixels(float meters) {
-      return meters;
-    }
-    @Override
-    public GeoPoint fromPixels(int x, int y) {
-      return new GeoPoint(y, x);
-    }
+  @Override
+  public Point toPixels(GeoPoint in, Point out) {
+    return out;
   }
+
+  @Override
+  public float metersToEquatorPixels(float meters) {
+    return meters;
+  }
+
+  @Override
+  public GeoPoint fromPixels(int x, int y) {
+    return new GeoPoint(y, x);
+  }
+}

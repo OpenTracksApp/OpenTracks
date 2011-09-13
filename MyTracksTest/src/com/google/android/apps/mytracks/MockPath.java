@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 Google Inc.
+ * Copyright 2011 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,33 +30,31 @@ import junit.framework.Assert;
  * 
  * @author Bartlomiej Niechwiej
  * @author Vangelis S.
+ * 
+ * A mock class that intercepts {@code Path}'s and records calls to
+ * {@code #moveTo()} and {@code #lineTo()}.
  */
+public class MockPath extends Path {
   
-  /**
-   * A mock class that intercepts {@code Path}'s and records calls to
-   * {@code #moveTo()} and {@code #lineTo()}.
-   */
-  public class MockPath extends Path {
-    /** A list of disjoined path segments. */
-    public final List<List<PointF>> segments = new LinkedList<List<PointF>>();
-    /** The total number of points in this path. */
-    public int totalPoints;
-    
-    private List<PointF> currentSegment;
+  /** A list of disjoined path segments. */
+  public final List<List<PointF>> segments = new LinkedList<List<PointF>>();
+  /** The total number of points in this path. */
+  public int totalPoints;
+  private List<PointF> currentSegment;
 
-    @Override
-    public void lineTo(float x, float y) {
-      super.lineTo(x, y);
-
-      Assert.assertNotNull(currentSegment);
-      currentSegment.add(new PointF(x, y));
-      totalPoints++;
-    }
-    @Override
-    public void moveTo(float x, float y) {
-      super.moveTo(x, y);
-      segments.add(currentSegment =
-          new ArrayList<PointF>(Arrays.asList(new PointF(x, y))));
-      totalPoints++;
-    }
+  @Override
+  public void lineTo(float x, float y) {
+    super.lineTo(x, y);
+    Assert.assertNotNull(currentSegment);
+    currentSegment.add(new PointF(x, y));
+    totalPoints++;
   }
+  
+  @Override
+  public void moveTo(float x, float y) {
+    super.moveTo(x, y);
+    segments.add(currentSegment =
+        new ArrayList<PointF>(Arrays.asList(new PointF(x, y))));
+    totalPoints++;
+  }
+}

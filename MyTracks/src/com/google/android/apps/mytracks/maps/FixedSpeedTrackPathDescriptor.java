@@ -84,7 +84,7 @@ public class FixedSpeedTrackPathDescriptor implements TrackPathDescriptor, OnSha
     Log.d(Constants.TAG, "FixedSpeedTrackPathDescriptor: onSharedPreferences changed " + key);
     if (key == null 
     	|| (!key.equals(context.getString(R.string.track_color_mode_fixed_speed_slow_key))
-    		&& !key.equals(context.getString(R.string.track_color_mode_fixed_speed_medium_key)))) {
+    	    && !key.equals(context.getString(R.string.track_color_mode_fixed_speed_medium_key)))) {
       return;
     }
     SharedPreferences prefs = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);

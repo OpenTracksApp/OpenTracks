@@ -189,49 +189,7 @@ public class SettingsActivity extends PreferenceActivity {
         });
     updateTrackColorModeSettings(trackColorModePreference.getValue());
     
-    EditTextPreference trackColorModeFixedSlowPreference =
-        (EditTextPreference) findPreference(getString(R.string.track_color_mode_fixed_speed_slow_display_key));
-    trackColorModeFixedSlowPreference.setOnPreferenceChangeListener(
-        new OnPreferenceChangeListener() {
-          @Override
-          public boolean onPreferenceChange(Preference preference,
-              Object newValue) {
-            validateTrackColorModeSettings((EditTextPreference) preference, (String) newValue,
-                R.string.track_color_mode_fixed_speed_slow_key);
-            return true;
-          }
-        });
-    trackColorModeFixedSlowPreference.setOnPreferenceClickListener(
-        new OnPreferenceClickListener() {
-          @Override
-          public boolean onPreferenceClick(Preference preference) {
-            viewTrackColorModeSettings((EditTextPreference) preference,
-                R.string.track_color_mode_fixed_speed_slow_key);
-            return true;
-          }
-        });
-    
-    EditTextPreference trackColorModeFixedMediumPreference =
-        (EditTextPreference) findPreference(getString(R.string.track_color_mode_fixed_speed_medium_display_key));
-    trackColorModeFixedMediumPreference.setOnPreferenceChangeListener(
-        new OnPreferenceChangeListener() {
-          @Override
-          public boolean onPreferenceChange(Preference preference, 
-              Object newValue) {
-            validateTrackColorModeSettings((EditTextPreference) preference, (String) newValue,
-                R.string.track_color_mode_fixed_speed_slow_key);
-            return true;
-          }
-        });
-    trackColorModeFixedMediumPreference.setOnPreferenceClickListener(
-        new OnPreferenceClickListener() {
-          @Override
-          public boolean onPreferenceClick(Preference preference) {
-            viewTrackColorModeSettings((EditTextPreference) preference,
-                R.string.track_color_mode_fixed_speed_medium_key);
-            return true;
-          }
-        });
+    setTrackColorModePreferenceListeners();
     
     PreferenceCategory speedOptionsCategory =
         (PreferenceCategory) findPreference(getString(R.string.track_color_mode_fixed_speed_options_key));
@@ -461,8 +419,10 @@ public class SettingsActivity extends PreferenceActivity {
     }.start();
   }
   
-  /** Set the given edit text preference text.
-      If the units are not metric convert the value before displaying.  */
+  /** 
+   * Set the given edit text preference text.
+   * If the units are not metric convert the value before displaying.  
+   */
   private void viewTrackColorModeSettings(EditTextPreference preference, int id) {
     CheckBoxPreference metricUnitsPreference = (CheckBoxPreference) findPreference(
         getString(R.string.metric_units_key));
@@ -481,8 +441,10 @@ public class SettingsActivity extends PreferenceActivity {
     preference.getEditText().setText(String.valueOf(englishspeed));
   }
   
-  /** Saves the given edit text preference value.
-  If the units are not metric convert the value before saving.  */
+  /** 
+   * Saves the given edit text preference value.
+   * If the units are not metric convert the value before saving.  
+   */
   private void validateTrackColorModeSettings(EditTextPreference preference, 
       String newValue, int id) {
     CheckBoxPreference metricUnitsPreference = (CheckBoxPreference) findPreference(
@@ -500,5 +462,54 @@ public class SettingsActivity extends PreferenceActivity {
     }
     SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
     prefs.edit().putString(getString(id), metricspeed).commit();
+  }
+  
+  /** 
+   * Sets the TrackColorMode preference listeners.
+   */
+  private void setTrackColorModePreferenceListeners() {
+    EditTextPreference trackColorModeFixedSlowPreference =
+        (EditTextPreference) findPreference(getString(R.string.track_color_mode_fixed_speed_slow_display_key));
+    trackColorModeFixedSlowPreference.setOnPreferenceChangeListener(
+        new OnPreferenceChangeListener() {
+          @Override
+          public boolean onPreferenceChange(Preference preference,
+              Object newValue) {
+            validateTrackColorModeSettings((EditTextPreference) preference, (String) newValue,
+                R.string.track_color_mode_fixed_speed_slow_key);
+            return true;
+          }
+        });
+    trackColorModeFixedSlowPreference.setOnPreferenceClickListener(
+        new OnPreferenceClickListener() {
+          @Override
+          public boolean onPreferenceClick(Preference preference) {
+            viewTrackColorModeSettings((EditTextPreference) preference,
+                R.string.track_color_mode_fixed_speed_slow_key);
+            return true;
+          }
+        });
+    
+    EditTextPreference trackColorModeFixedMediumPreference =
+        (EditTextPreference) findPreference(getString(R.string.track_color_mode_fixed_speed_medium_display_key));
+    trackColorModeFixedMediumPreference.setOnPreferenceChangeListener(
+        new OnPreferenceChangeListener() {
+          @Override
+          public boolean onPreferenceChange(Preference preference, 
+              Object newValue) {
+            validateTrackColorModeSettings((EditTextPreference) preference, (String) newValue,
+                R.string.track_color_mode_fixed_speed_slow_key);
+            return true;
+          }
+        });
+    trackColorModeFixedMediumPreference.setOnPreferenceClickListener(
+        new OnPreferenceClickListener() {
+          @Override
+          public boolean onPreferenceClick(Preference preference) {
+            viewTrackColorModeSettings((EditTextPreference) preference,
+                R.string.track_color_mode_fixed_speed_medium_key);
+            return true;
+          }
+        });
   }
 }

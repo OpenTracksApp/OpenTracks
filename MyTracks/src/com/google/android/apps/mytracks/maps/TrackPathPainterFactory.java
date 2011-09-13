@@ -56,7 +56,7 @@ public class TrackPathPainterFactory {
       return new DynamicSpeedTrackPathPainter(context, 
           new DynamicSpeedTrackPathDescriptor(context));
     } else {
-      Log.i(Constants.TAG, "Unknow colorMode: " + colorMode);
+      Log.w(Constants.TAG, "Using default track path painter. Unrecognized painter: " + colorMode);
       return new SingleColorTrackPathPainter(context);
     }
   }
