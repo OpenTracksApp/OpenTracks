@@ -95,6 +95,15 @@ public class ImportAllTracks {
       Log.i(Constants.TAG, "ImportAllTracks: Releasing wake lock.");
     }
 
+    activity.runOnUiThread(new Thread() {
+      @Override
+      public void run() {
+        showDoneDialog();
+      }
+    });
+  }
+
+  private void showDoneDialog() {
     Log.i(Constants.TAG, "ImportAllTracks: Done");
     AlertDialog.Builder builder = new AlertDialog.Builder(activity);
     if (gpxFileCount == 0) {

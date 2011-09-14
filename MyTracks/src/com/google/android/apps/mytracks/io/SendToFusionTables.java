@@ -76,13 +76,13 @@ public class SendToFusionTables implements Runnable {
 
   /** The path for viewing a map visualization of a table. */
   private static final String FUSIONTABLES_MAP =
-      "http://www.google.com/fusiontables/embedviz?" +
+      "https://www.google.com/fusiontables/embedviz?" +
       "viz=MAP&q=select+col0,+col1,+col2,+col3+from+%s+&h=false&" +
       "lat=%f&lng=%f&z=%d&t=1&l=col2";
 
   /** Standard base feed url for Fusion Tables. */
   private static final String FUSIONTABLES_BASE_FEED_URL =
-      "http://www.google.com/fusiontables/api/query";
+      "https://www.google.com/fusiontables/api/query";
 
   private static final int MAX_POINTS_PER_UPLOAD = 2048;
 

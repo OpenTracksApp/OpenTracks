@@ -200,7 +200,7 @@ public abstract class Constants {
   }
 
   public static final String MAPSHOP_BASE_URL =
-    "http://maps.google.com/maps/ms";
+    "https://maps.google.com/maps/ms";
 
   /*
    * Default values - keep in sync with those in preferences.xml.
