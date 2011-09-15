@@ -135,34 +135,16 @@ limitations under the License.
     android:paddingRight="2dip"    
     android:paddingTop="4dip">
     <!-- left spacer -->
-    <LinearLayout
-      android:layout_height="wrap_content"
-      android:layout_weight="0.25"
-      android:layout_width="0dip"
-      android:orientation="horizontal"
-      android:visibility="gone"/>
+    <LinearLayout style="@style/DialogButtonSpacer"/>
     <Button android:id="@+id/sendtogoogle_cancel"
       android:layout_gravity="left"
-      android:layout_height="48dip"
-      android:layout_weight="1"
-      android:layout_width="0dip"      
-      android:maxLines="2"
       android:text="@string/cancel"
-      android:textSize="14dip"/>
+      style="@style/DialogButton"/>
     <Button android:id="@+id/sendtogoogle_send_now"
       android:layout_gravity="right"
-      android:layout_height="48dip"      
-      android:layout_weight="1"
-      android:layout_width="0dip"
-      android:maxLines="2"
       android:text="@string/sendtogoogle_send_now"
-      android:textSize="14dip"/>
+      style="@style/DialogButton"/>
     <!--  right spacer -->
-    <LinearLayout
-      android:layout_height="wrap_content"
-      android:layout_weight="0.25"
-      android:layout_width="0dip"
-      android:orientation="horizontal"
-      android:visibility="gone"/>
+    <LinearLayout style="@style/DialogButtonSpacer"/>
   </LinearLayout>
 </LinearLayout>
