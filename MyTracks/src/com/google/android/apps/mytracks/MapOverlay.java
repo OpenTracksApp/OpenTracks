@@ -462,7 +462,7 @@ public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListe
   
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-    Log.d(Constants.TAG, "MapOverlay: onSharedPreferences changed " + key);
+    Log.d(TAG, "MapOverlay: onSharedPreferences changed " + key);
     if (key != null) {
       if (key.equals(context.getString(R.string.track_color_mode_key))) {
         trackPathPainter = TrackPathPainterFactory.getTrackPathPainter(context);

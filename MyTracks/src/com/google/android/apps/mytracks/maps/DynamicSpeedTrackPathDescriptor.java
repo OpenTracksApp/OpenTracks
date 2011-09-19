@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks.maps;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
@@ -76,7 +78,7 @@ public class DynamicSpeedTrackPathDescriptor
   
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-    Log.d(Constants.TAG, "DynamicSpeedTrackPathDescriptor: onSharedPreferences changed " + key);
+    Log.d(TAG, "DynamicSpeedTrackPathDescriptor: onSharedPreferences changed " + key);
     if (key == null 
     	|| !key.equals(context.getString(R.string.track_color_mode_dynamic_speed_variation_key))) {
       return;

@@ -468,46 +468,32 @@ public class SettingsActivity extends PreferenceActivity {
    * Sets the TrackColorMode preference listeners.
    */
   private void setTrackColorModePreferenceListeners() {
-    EditTextPreference trackColorModeFixedSlowPreference =
-        (EditTextPreference) findPreference(getString(R.string.track_color_mode_fixed_speed_slow_display_key));
-    trackColorModeFixedSlowPreference.setOnPreferenceChangeListener(
+    setTrackColorModePreferenceListener(R.string.track_color_mode_fixed_speed_slow_display_key,
+        R.string.track_color_mode_fixed_speed_slow_key);
+    setTrackColorModePreferenceListener(R.string.track_color_mode_fixed_speed_medium_display_key,
+        R.string.track_color_mode_fixed_speed_medium_key);
+  }
+  
+  /** 
+   * Sets a TrackColorMode preference listener.
+   */
+  private void setTrackColorModePreferenceListener(int displayKey, final int metricKey) {
+    EditTextPreference trackColorModePreference =
+        (EditTextPreference) findPreference(getString(displayKey));
+    trackColorModePreference.setOnPreferenceChangeListener(
         new OnPreferenceChangeListener() {
           @Override
           public boolean onPreferenceChange(Preference preference,
               Object newValue) {
-            validateTrackColorModeSettings((EditTextPreference) preference, (String) newValue,
-                R.string.track_color_mode_fixed_speed_slow_key);
+            validateTrackColorModeSettings((EditTextPreference) preference, (String) newValue, metricKey);
             return true;
           }
         });
-    trackColorModeFixedSlowPreference.setOnPreferenceClickListener(
+    trackColorModePreference.setOnPreferenceClickListener(
         new OnPreferenceClickListener() {
           @Override
           public boolean onPreferenceClick(Preference preference) {
-            viewTrackColorModeSettings((EditTextPreference) preference,
-                R.string.track_color_mode_fixed_speed_slow_key);
-            return true;
-          }
-        });
-    
-    EditTextPreference trackColorModeFixedMediumPreference =
-        (EditTextPreference) findPreference(getString(R.string.track_color_mode_fixed_speed_medium_display_key));
-    trackColorModeFixedMediumPreference.setOnPreferenceChangeListener(
-        new OnPreferenceChangeListener() {
-          @Override
-          public boolean onPreferenceChange(Preference preference, 
-              Object newValue) {
-            validateTrackColorModeSettings((EditTextPreference) preference, (String) newValue,
-                R.string.track_color_mode_fixed_speed_slow_key);
-            return true;
-          }
-        });
-    trackColorModeFixedMediumPreference.setOnPreferenceClickListener(
-        new OnPreferenceClickListener() {
-          @Override
-          public boolean onPreferenceClick(Preference preference) {
-            viewTrackColorModeSettings((EditTextPreference) preference,
-                R.string.track_color_mode_fixed_speed_medium_key);
+            viewTrackColorModeSettings((EditTextPreference) preference, metricKey);
             return true;
           }
         });

@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks.maps;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.maps.mytracks.R;
 
@@ -34,7 +36,7 @@ public class FixedSpeedTrackPathDescriptor implements TrackPathDescriptor, OnSha
   private int normalSpeed;
   private final Context context;
   
-  public FixedSpeedTrackPathDescriptor(Context context){
+  public FixedSpeedTrackPathDescriptor(Context context) {
 	
     this.context = context;
     context.getSharedPreferences(Constants.SETTINGS_NAME, 0)
@@ -65,8 +67,7 @@ public class FixedSpeedTrackPathDescriptor implements TrackPathDescriptor, OnSha
    * Gets the slow speed for reference.
    * @return The speed limit considered as slow.
    */
-  public int getSlowSpeed()
-  {
+  public int getSlowSpeed() {
     return slowSpeed;
   }
   
@@ -74,14 +75,13 @@ public class FixedSpeedTrackPathDescriptor implements TrackPathDescriptor, OnSha
    * Gets the normal speed for reference.
    * @return The speed limit considered as normal.
    */
-  public int getNormalSpeed()
-  {
+  public int getNormalSpeed() {
     return normalSpeed;
   }
   
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-    Log.d(Constants.TAG, "FixedSpeedTrackPathDescriptor: onSharedPreferences changed " + key);
+    Log.d(TAG, "FixedSpeedTrackPathDescriptor: onSharedPreferences changed " + key);
     if (key == null 
     	|| (!key.equals(context.getString(R.string.track_color_mode_fixed_speed_slow_key))
     	    && !key.equals(context.getString(R.string.track_color_mode_fixed_speed_medium_key)))) {
@@ -104,7 +104,7 @@ public class FixedSpeedTrackPathDescriptor implements TrackPathDescriptor, OnSha
       normalSpeed = Integer.parseInt(prefs.getString(context.getString(
 	      R.string.track_color_mode_fixed_speed_medium_key), "17"));
     } catch (NumberFormatException e) {
-  	  normalSpeed = 17;
+      normalSpeed = 17;
     }
   }
 

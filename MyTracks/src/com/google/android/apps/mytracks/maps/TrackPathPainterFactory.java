@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks.maps;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.maps.mytracks.R;
 
@@ -45,7 +47,7 @@ public class TrackPathPainterFactory {
     }
     
     String colorMode = prefs.getString(context.getString(R.string.track_color_mode_key), null);
-    Log.i(Constants.TAG, "Creating track path painter of type: " + colorMode);
+    Log.i(TAG, "Creating track path painter of type: " + colorMode);
 
     if (colorMode == null || colorMode.equals(context.getString(R.string.track_color_mode_none))) {
       return new SingleColorTrackPathPainter(context);
@@ -56,7 +58,7 @@ public class TrackPathPainterFactory {
       return new DynamicSpeedTrackPathPainter(context, 
           new DynamicSpeedTrackPathDescriptor(context));
     } else {
-      Log.w(Constants.TAG, "Using default track path painter. Unrecognized painter: " + colorMode);
+      Log.w(TAG, "Using default track path painter. Unrecognized painter: " + colorMode);
       return new SingleColorTrackPathPainter(context);
     }
   }
