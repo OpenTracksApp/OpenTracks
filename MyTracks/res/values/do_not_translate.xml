@@ -49,4 +49,5 @@ limitations under the License.
 
   <!-- Intent actions -->
   <string name="save_intent_action">android.intent.action.SAVE</string>
+  <string name="open_settings_screen">android.intent.action.settings.OPEN</string>
 </resources>

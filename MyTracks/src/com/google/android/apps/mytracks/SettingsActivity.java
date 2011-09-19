@@ -58,7 +58,6 @@ public class SettingsActivity extends PreferenceActivity {
 
   private BackupPreferencesListener backupListener;
   private SharedPreferences preferences;
-  private boolean displaySettingsOnly = false;
   
   /** Called when the activity is first created. */
   @Override
@@ -83,8 +82,6 @@ public class SettingsActivity extends PreferenceActivity {
 
     // Load the preferences to be displayed
     addPreferencesFromResource(R.xml.preferences);
-    
-    processIntent();
 
     // Disable TTS announcement preference if not available
     if (!apiFeatures.hasTextToSpeech()) {
@@ -96,9 +93,10 @@ public class SettingsActivity extends PreferenceActivity {
       announcementFrequency.setSummary(
           R.string.settings_not_available_summary);
     }
-
-    if (displaySettingsOnly)
-       return;
+   
+   // If we only need the display setting screen nothing else needs to load.
+   if (processIntent())
+      return;
       
     // Hook up switching of displayed list entries between metric and imperial
     // units
@@ -128,18 +126,24 @@ public class SettingsActivity extends PreferenceActivity {
         return true;
       }
     });
+    
   }
   
-  private void processIntent() {
+  private boolean processIntent() {
+    boolean showDisplaySettings = false;
     Bundle bundle = getIntent().getExtras();
     PreferenceScreen preferenceScreen;
+    String intentString = getString(R.string.open_settings_screen);
+    
     if (bundle != null) {
-      preferenceScreen = (PreferenceScreen)findPreference(bundle.getString("Open"));
+      preferenceScreen = (PreferenceScreen) findPreference(bundle.getString(intentString));
       if (preferenceScreen != null) {
-         displaySettingsOnly = true;
+         showDisplaySettings = true;
          setPreferenceScreen(preferenceScreen);
       }
     }
+ 
+    return showDisplaySettings;
   }
 
   private void customizeSensorOptionsPreferences() {
@@ -194,7 +198,7 @@ public class SettingsActivity extends PreferenceActivity {
     super.onResume();
     
     // If we only need the display setting screen nothing else needs to load.
-    if (displaySettingsOnly)
+    if (processIntent())
       return;
 
     configureBluetoothPreferences();

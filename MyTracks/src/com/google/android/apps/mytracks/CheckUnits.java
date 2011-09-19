@@ -80,7 +80,8 @@ class CheckUnits {
   private static void accept(Context context, SharedPreferences preferences) {
     recordCheckPerformed(preferences);
     Intent startIntent = new Intent(context, SettingsActivity.class);
-    startIntent.putExtra("Open", context.getString(R.string.settings_display));
+    startIntent.putExtra(context.getString(R.string.open_settings_screen), 
+                         context.getString(R.string.settings_display));
     context.startActivity(startIntent);
   }
 
