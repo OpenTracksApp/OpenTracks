@@ -96,13 +96,13 @@ public class FixedSpeedTrackPathDescriptor implements TrackPathDescriptor, OnSha
     
     try {
       slowSpeed = Integer.parseInt(prefs.getString(context.getString(
-	      R.string.track_color_mode_fixed_speed_slow_key), "9"));
+	    R.string.track_color_mode_fixed_speed_slow_key), "9"));
     } catch (NumberFormatException e) {
       slowSpeed = 9;
     }
     try {
       normalSpeed = Integer.parseInt(prefs.getString(context.getString(
-	      R.string.track_color_mode_fixed_speed_medium_key), "17"));
+	    R.string.track_color_mode_fixed_speed_medium_key), "17"));
     } catch (NumberFormatException e) {
       normalSpeed = 17;
     }

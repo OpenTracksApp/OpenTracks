@@ -15,7 +15,10 @@
  */
 package com.google.android.apps.mytracks.maps;
 
+import static com.google.android.testing.mocking.AndroidMock.expect;
+
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.MockPath;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -46,12 +49,16 @@ public class TrackPathPainterFactoryTest extends TrackPathPainterTestCase {
       return;
     }
     
-    testTrackPathPainterFactorySpecific(context, prefs, R.string.track_color_mode_none);
-    testTrackPathPainterFactorySpecific(context, prefs, R.string.track_color_mode_fixed);
-    testTrackPathPainterFactorySpecific(context, prefs, R.string.track_color_mode_dynamic);
+    testTrackPathPainterFactorySpecific(context, prefs, R.string.track_color_mode_none, 
+        SingleColorTrackPathPainter.class);
+    testTrackPathPainterFactorySpecific(context, prefs, R.string.track_color_mode_fixed, 
+        DynamicSpeedTrackPathPainter.class);
+    testTrackPathPainterFactorySpecific(context, prefs, R.string.track_color_mode_dynamic, 
+        DynamicSpeedTrackPathPainter.class);
   }
   
-  private void testTrackPathPainterFactorySpecific(Context context, SharedPreferences prefs, int track_color_mode) {
+  private void testTrackPathPainterFactorySpecific(Context context, SharedPreferences prefs, 
+      int track_color_mode, Object classtested) {
     prefs.edit().putString(context.getString(track_color_mode), 
         context.getString(R.string.track_color_mode_key)).commit();
     
@@ -60,9 +67,13 @@ public class TrackPathPainterFactoryTest extends TrackPathPainterTestCase {
     
     TrackPathPainter painter = TrackPathPainterFactory.getTrackPathPainter(context);
     
+    assertNotNull(painter);
+    expect(painter instanceof classtested.getClass()); //i cant find the way to make this part work... :S
     painter.updatePath(myTracksOverlay.getMapProjection(mockView), 
         myTracksOverlay.getMapViewRect(mockView), startLocationIdx, alwaysVisible,
         myTracksOverlay.getPoints());
+    assertNotNull(myTracksOverlay.getLastPath());
+    assertTrue(myTracksOverlay.getLastPath() instanceof MockPath);
     painter.drawTrack(canvas);
   }
 }

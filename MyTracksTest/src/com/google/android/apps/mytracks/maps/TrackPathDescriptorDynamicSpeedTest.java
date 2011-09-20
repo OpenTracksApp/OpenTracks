@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks.maps;
 
+import com.google.android.apps.mytracks.MockPath;
+
 import android.location.Location;
 
 /**
@@ -39,9 +41,13 @@ public class TrackPathDescriptorDynamicSpeedTest extends TrackPathPainterTestCas
     int startLocationIdx = 0;
     Boolean alwaysVisible = true;
     
+    assertNotNull(painter);
     painter.updatePath(myTracksOverlay.getMapProjection(mockView), 
         myTracksOverlay.getMapViewRect(mockView), startLocationIdx, alwaysVisible,
         myTracksOverlay.getPoints());
+    assertNotNull(myTracksOverlay.getLastPath());
+    assertTrue(myTracksOverlay.getLastPath() instanceof MockPath);
     painter.drawTrack(canvas);
+    
   }
 }
