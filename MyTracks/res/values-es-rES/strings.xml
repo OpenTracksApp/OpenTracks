@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+  <!-- Used by the Menu -->
+  <string name="list_markers">Señales</string>
+
+  <!-- Error messages -->
+
+  <!-- Status messages -->
+
+  <!-- Progress dialog -->
+
+  <!-- Used by DeleteAllDataHandler -->
+
+  <!-- Text and links when uploading to Google Fusion Tables -->
+
+  <!-- Formatting of track and marker descriptions -->
+
+  <!-- Used by the track recording service -->
+
+  <!-- Common -->
+  <string name="license">Licencia</string>
+  <string name="close">Cerrar</string>
+  <string name="edit">Editar</string>
+  <string name="save">Guardar</string>
+
+  <!-- Placemark labels for start and end of track -->
+
+  <!--  TrackList -->
+  <string name="tracklist_send_to_fusiontables">Enviar a Google Fusion Tables</string>
+  <string name="tracklist_send_to_new_fusiontable">Enviar a nueva Google Fusion Table</string>
+  <string name="tracklist_save_as_csv">Guardar en archivo CSV</string>
+  <string name="tracklist_save_as_tcx">Guardar en archivo TCX</string>
+  <string name="tracklist_btn_send_all_to_fusiontables">Enviar a Google Fusion Tables</string>
+  <!-- Export All -->
+  <string name="tracklist_share_csv_file">Un archivo CSV</string>
+  <string name="tracklist_share_tcx_file">Un archivo TCX</string>
+
+  <!-- Waypoints list -->
+
+  <!-- MyTracks Details -->
+
+  <!-- MyTracks Waypoint Details -->
+
+  <!-- MyTracks Settings -->
+  <string name="settings_not_available_summary">No está disponible en su versión de Android</string>
+
+
+  <string name="settings_report_speed_or_pace">Mostrar velocidad</string>
+
+  <!-- Backups -->
+
+  <!-- MyTracksSky -->
+
+  <!-- Sharing -->
+
+  <!-- Visibility -->
+
+  <!-- Statistics View -->
+  <!-- Average Moving -->
+
+  <!-- Average -->
+
+  <!-- Min -->
+
+  <!-- Max -->
+
+  <!-- Chart Settings -->
+  <!-- X Axis -->
+
+  <!-- Y Axis -->
+
+  <!-- Units -->
+  <!-- Time  -->
+
+  <!-- Distance -->
+
+  <!-- Speed and Pace -->
+
+  <!-- Sensors -->
+
+  <!-- Stats Labels -->
+
+  <!-- End User License Agreement -->
+
+  <!-- About -->
+  <string name="about_version">Versión:</string>
+  <string name="about_support">Soporte:</string>
+  <string name="about_privacy">Privacidad:</string>
+
+  <!-- Send to Google -->
+
+  <!-- Getting the account to upload to. -->
+  <string name="no_account_found_title">No se ha encontrado la cuenta</string>
+  <string name="no_account_found">No se ha encontrado la cuenta a la que subir los recorridos.</string>
+  <string name="choose_account_title">Elegir cuenta</string>
+
+  <!-- SD card -->
+  <string name="io_read_failed">No es posible leer del fichero.</string>
+  <string name="io_write_finished">Grabación a tarjeta SD terminada.</string>
+  <string name="io_read_finished">Lectura de tarjeta SD terminada.</string>
+
+  <!-- VersionChecker -->
+
+  <!-- Welcome -->
+
+  <!-- Announcement -->
+  <!-- Format:
+  $1 : Distance label
+  $2 : Distance value (5)
+  $3 : Distance units (mi, km)
+  $4 : Time description (10 minutes 5 seconds)
+  $5 : Speed value (5.6) : Pace value (5 minutes 6 seconds)
+  $6 : Speed units (mph) : Pace units (per mile)
+  -->
+
+  <!-- Sensor Type Options -->
+  <string name="no_sensor_option">Ninguna</string>
+  <string name="ant_sensor_option">ANT+ Sensores</string>
+  <string name="ant_bridge_sensor_option">SRM ANT+ Puente</string>
+</resources>
