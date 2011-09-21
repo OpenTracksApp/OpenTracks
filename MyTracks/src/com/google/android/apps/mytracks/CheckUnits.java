@@ -81,7 +81,7 @@ class CheckUnits {
     recordCheckPerformed(preferences);
     Intent startIntent = new Intent(context, SettingsActivity.class);
     startIntent.putExtra(context.getString(R.string.open_settings_screen), 
-                         context.getString(R.string.settings_display));
+                         context.getString(R.string.display_settings_screen_key));
     context.startActivity(startIntent);
   }
 

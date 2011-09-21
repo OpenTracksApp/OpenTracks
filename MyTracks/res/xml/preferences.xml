@@ -19,7 +19,7 @@ limitations under the License.
 
   <!-- Display settings -->
   <PreferenceScreen android:title="@string/settings_display"
-                    android:key="@string/settings_display">
+                    android:key="@string/display_settings_screen_key">
     <CheckBoxPreference
         android:key="@string/metric_units_key"
         android:title="@string/settings_metric_units"

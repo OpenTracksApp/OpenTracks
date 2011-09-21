@@ -53,4 +53,5 @@ limitations under the License.
   <string name="reset_key">resetToDefaults</string>
   <string name="sensor_options_key">sensorOptions</string>
   <string name="ant_options_key">antOptions</string>
+  <string name="display_settings_screen_key">displaySettingsScreen</string>
 </resources>
