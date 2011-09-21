@@ -153,6 +153,9 @@ public class TrackRecordingService extends Service {
 
     @Override
     public void onLocationChanged(final Location location) {
+      if (executorService.isShutdown() || executorService.isTerminated()) {
+        return;
+      }
       executorService.submit(
         new Runnable() {
           @Override
@@ -342,7 +345,6 @@ public class TrackRecordingService extends Service {
     timer.purge();
     unregisterLocationListener();
     shutdownTaskExecutors();
-    executorService.shutdown();
     if (sensorManager != null) {
       sensorManager.shutdown();
       sensorManager = null;
@@ -358,6 +360,8 @@ public class TrackRecordingService extends Service {
     // This should be the last operation.
     releaseWakeLock();
 
+    // Shutdown the executor service last to avoid sending events to a dead executor.
+    executorService.shutdown();
     super.onDestroy();
   }
 

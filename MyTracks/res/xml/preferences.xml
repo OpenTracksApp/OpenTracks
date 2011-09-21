@@ -18,7 +18,8 @@ limitations under the License.
   xmlns:android="http://schemas.android.com/apk/res/android">
 
   <!-- Display settings -->
-  <PreferenceScreen android:title="@string/settings_display">
+  <PreferenceScreen android:title="@string/settings_display"
+                    android:key="@string/display_settings_screen_key">
     <CheckBoxPreference
         android:key="@string/metric_units_key"
         android:title="@string/settings_metric_units"
