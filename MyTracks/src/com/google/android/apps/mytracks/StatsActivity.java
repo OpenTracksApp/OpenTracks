@@ -137,7 +137,7 @@ public class StatsActivity extends Activity implements TrackDataListener {
   protected void onResume() {
     super.onResume();
 
-    dataHub = TrackDataHub.getStartedInstance();
+    dataHub = ((MyTracksApplication) getApplication()).getTrackDataHub();
     dataHub.registerTrackDataListener(this, EnumSet.of(
         ListenerDataType.SELECTED_TRACK_CHANGED,
         ListenerDataType.TRACK_UPDATES,

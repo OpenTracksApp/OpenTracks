@@ -46,12 +46,6 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
   }
 
   @Override
-  protected void setUp() throws Exception {
-    super.setUp();
-    Thread.sleep(1000);
-  }
-  
-  @Override
   protected void tearDown() throws Exception {
     clearSelectedAndRecordingTracks();
     waitForIdle();

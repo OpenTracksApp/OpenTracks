@@ -146,7 +146,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
 
     providerUtils = MyTracksProviderUtils.Factory.get(this);
     preferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
-    dataHub = TrackDataHub.newInstance(this);
+    dataHub = ((MyTracksApplication) getApplication()).getTrackDataHub();
     menuManager = new MenuManager(this);
     serviceConnection = new TrackRecordingServiceConnection(this, serviceBindCallback);
 
