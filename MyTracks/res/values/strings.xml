@@ -184,14 +184,20 @@ limitations under the License.
   <!-- MyTracks Details -->
   <string name="trackdetails_title">Track Details</string>
   <string name="trackdetails_name">Track Name</string>
+  <string name="trackdetails_name_hint">Track Name</string>
   <string name="trackdetails_description">Track Description</string>
+  <string name="trackdetails_description_hint">Track Description</string>
   <string name="trackdetails_category">Activity Type (e.g. hiking, cycling, running, climbing...)</string>
+  <string name="trackdetails_category_hint">Activity Type</string>
 
   <!-- MyTracks Waypoint Details -->
   <string name="waypointdetails_title">Marker Details</string>
   <string name="waypointdetails_name">Marker Name</string>
+  <string name="waypointdetails_name_hint">Marker Name</string>
   <string name="waypointdetails_description">Marker Description</string>
+  <string name="waypointdetails_description_hint">Marker Description</string>
   <string name="waypointdetails_category">Marker Type (e.g. Building, Pothole, Sight...)</string>
+  <string name="waypointdetails_category_hint">Marker Type</string>
 
   <!-- MyTracks Settings -->
   <string name="mytracks_settings">My Tracks Settings</string>

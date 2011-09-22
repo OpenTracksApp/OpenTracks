@@ -144,14 +144,20 @@ limitations under the License.
   <!-- MyTracks Details -->
   <string name="trackdetails_title">Détails parcours</string>
   <string name="trackdetails_name">Nom du parcours</string>
+  <string name="trackdetails_name_hint">Nom du parcours</string>
   <string name="trackdetails_description">Description du parcours</string>
+  <string name="trackdetails_description_hint">Description du parcours</string>
   <string name="trackdetails_category">Type d\'activité (randonnée, cyclisme, jogging, escalade...)</string>
+  <string name="trackdetails_category_hint">Type d\'activité</string>
 
   <!-- MyTracks Waypoint Details -->
   <string name="waypointdetails_title">Details balise</string>
   <string name="waypointdetails_name">Nom de la balise</string>
+  <string name="waypointdetails_name_hint">Nom de la balise</string>
   <string name="waypointdetails_description">Description balise</string>
+  <string name="waypointdetails_description_hint">Description balise</string>
   <string name="waypointdetails_category">Nom de balise (par ex.: immeuble, boutique, point de vue...)</string>
+  <string name="waypointdetails_category_hint">Nom de balise</string>
 
   <!-- MyTracks Settings -->
   <string name="mytracks_settings">Paramètres My Tracks</string>

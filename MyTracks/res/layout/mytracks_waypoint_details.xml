@@ -50,7 +50,8 @@ limitations under the License.
          android:singleLine="true"
          android:autoText="true"
          android:capitalize="words"
-         android:selectAllOnFocus="true"/>
+         android:selectAllOnFocus="true"
+         android:hint="@string/waypointdetails_name_hint"/>
       </LinearLayout>
       <LinearLayout android:id="@+id/waypointdetails_description_layout"
         android:orientation="vertical"
@@ -65,7 +66,8 @@ limitations under the License.
         <AutoCompleteTextView android:id="@+id/waypointdetails_category"
           android:layout_width="fill_parent"
           android:layout_height="wrap_content"
-          android:singleLine="true"/>
+          android:singleLine="true"
+          android:hint="@string/waypointdetails_category_hint"/>
         <TextView android:text="@string/waypointdetails_description"
           android:layout_width="fill_parent"
           android:layout_height="wrap_content"/>
@@ -79,7 +81,8 @@ limitations under the License.
           android:minLines="5"
           android:maxLines="50"
           android:gravity="top"
-          android:layout_weight="1"/>
+          android:layout_weight="1"
+          android:hint="@string/waypointdetails_description_hint"/>
       </LinearLayout>
 
       <TableLayout android:id="@+id/waypoint_stats"

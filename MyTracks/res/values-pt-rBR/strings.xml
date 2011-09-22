@@ -144,14 +144,20 @@ limitations under the License.
   <!-- MyTracks Details -->
   <string name="trackdetails_title">Detalhes do Caminho</string>
   <string name="trackdetails_name">Nome do Caminho</string>
+  <string name="trackdetails_name_hint">Nome do Caminho</string>
   <string name="trackdetails_description">Descrição do Caminho</string>
+  <string name="trackdetails_description_hint">Descrição do Caminho</string>
   <string name="trackdetails_category">Tipo de Atividade (por ex. caminhada, ciclismo, escalada...)</string>
+  <string name="trackdetails_category_hint">Tipo de Atividade</string>
 
   <!-- MyTracks Waypoint Details -->
   <string name="waypointdetails_title">Detalhes do Marcador</string>
   <string name="waypointdetails_name">Nome do Marcador</string>
+  <string name="waypointdetails_name_hint">Nome do Marcador</string>
   <string name="waypointdetails_description">Descrição do Marcador</string>
+  <string name="waypointdetails_description_hint">Descrição do Marcador</string>
   <string name="waypointdetails_category">Tipo do Marcador (por ex. Prédio, Mirante, Cachoeira...)</string>
+  <string name="waypointdetails_category_hint">Tipo do Marcador</string>
 
   <!-- MyTracks Settings -->
   <string name="mytracks_settings">Configurações do My Tracks</string>
