@@ -249,7 +249,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
   protected void onDestroy() {
     Log.d(TAG, "MyTracks.onDestroy");
     serviceConnection.unbind();
-
+    ((MyTracksApplication) getApplication()).clearTrackDataHub();
     super.onDestroy();
   }
 

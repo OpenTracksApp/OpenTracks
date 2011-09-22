@@ -26,9 +26,7 @@ public class MyTracksApplication extends Application {
     return trackDataHub;
   }
   
-  @Override
-  public void onTerminate() {
+  public void clearTrackDataHub() {
     trackDataHub = null;
-    super.onTerminate();
-  }  
+  }
 }
