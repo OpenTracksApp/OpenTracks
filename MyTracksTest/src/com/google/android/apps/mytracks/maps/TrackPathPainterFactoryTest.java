@@ -57,8 +57,8 @@ public class TrackPathPainterFactoryTest extends TrackPathPainterTestCase {
         DynamicSpeedTrackPathPainter.class);
   }
   
-  private void testTrackPathPainterFactorySpecific(Context context, SharedPreferences prefs, 
-      int track_color_mode, Object classtested) {
+  private <T> void testTrackPathPainterFactorySpecific(Context context, SharedPreferences prefs, 
+      int track_color_mode, Class <? extends TrackPathPainter> classtested) {
     prefs.edit().putString(context.getString(track_color_mode), 
         context.getString(R.string.track_color_mode_key)).commit();
     
@@ -68,7 +68,8 @@ public class TrackPathPainterFactoryTest extends TrackPathPainterTestCase {
     TrackPathPainter painter = TrackPathPainterFactory.getTrackPathPainter(context);
     
     assertNotNull(painter);
-    expect(painter instanceof classtested.getClass()); //i cant find the way to make this part work... :S
+    expect(classtested.isInstance(painter));
+    
     painter.updatePath(myTracksOverlay.getMapProjection(mockView), 
         myTracksOverlay.getMapViewRect(mockView), startLocationIdx, alwaysVisible,
         myTracksOverlay.getPoints());
