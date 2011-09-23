@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+  <!-- The style for the unit on the statistics activity. -->
+  <style name="StatsUnit" parent="@android:Widget.TextView">
+    <item name="android:gravity">bottom</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginBottom">-2dip</item>
+    <item name="android:layout_marginTop">-2dip</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textColor">@color/stat_label_text</item>
+  </style>
+
+  <!-- The style for the unit on the statistics activity where there is only one string. -->
+  <style name="StatsUnitSolo" parent="@android:Widget.TextView">
+    <item name="android:gravity">right</item>
+    <item name="android:layout_marginBottom">-9dip</item>
+    <item name="android:layout_marginTop">-9dip</item>
+    <item name="android:textColor">@color/stat_label_text</item>
+  </style>
+
+  <!-- The style for a text view for displaying a value on the statistics activity. -->
+  <style name="StatsRegister" parent="@android:Widget.TextView">
+    <item name="android:gravity">right</item>
+    <item name="android:layout_marginBottom">-9dip</item>
+    <item name="android:layout_marginTop">-9dip</item>
+    <item name="android:text">@string/unknown</item>
+    <item name="android:textColor">@color/stat_label_text</item>
+    <item name="android:textSize">40sp</item>
+  </style>
+
+  <!-- The style for a text view for displaying a large value on the statistics activity. -->
+  <style name="StatsRegister.Big">
+    <item name="android:layout_marginBottom">-13dip</item>
+    <item name="android:layout_marginTop">-13dip</item>
+    <item name="android:textSize">50sp</item>
+  </style>
+
+  <!-- The style for a text view for displaying a small value on the statistics activity. -->
+  <style name="StatsRegister.Small">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginBottom">-5dip</item>
+    <item name="android:layout_marginTop">-5dip</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:textSize">25sp</item>
+  </style>
+
+  <!-- The style for a view which divides two columns in the statistics activity. -->
+  <style name="StatsSpacer" parent="@android:Widget.TextView">
+    <item name="android:background">@color/black</item>
+    <item name="android:layout_marginBottom">-9dip</item>
+    <item name="android:layout_marginTop">-9dip</item>
+    <item name="android:layout_width">5dip</item>
+    <item name="android:textSize">40sp</item>
+  </style>
+
+  <!-- The style for a view which divides the numerator and denominator of the units on the statistics activity. -->
+  <style name="StatsDivider" parent="@android:Widget.TextView">
+    <item name="android:background">@color/black</item>
+    <item name="android:layout_height">3dip</item>
+    <item name="android:layout_width">fill_parent</item>
+  </style>
+  
+  <!-- The style for the track widget. -->
+  <style name="WidgetText" parent="@android:Widget.TextView">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textColor">@color/appwidget_text</item>
+    <item name="android:textSize">14sp</item>
+  </style>
+  <style name="WidgetText.Register">
+    <item name="android:width">160px</item>
+  </style>
+  
+  <!-- The style for the buttons on the bottom of a dialog. -->
+  <style name="DialogButton">
+    <item name="android:layout_height">48dip</item>
+    <item name="android:layout_weight">1</item>
+    <item name="android:layout_width">0dip</item>
+    <item name="android:maxLines">2</item>
+    <item name="android:textSize">14dip</item>
+  </style>
+  
+  <!--  The style for the spacer on the left and right of the dialog buttons. -->
+  <style name="DialogButtonSpacer">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_weight">0.25</item>
+    <item name="android:layout_width">0dip</item>
+    <item name="android:orientation">horizontal</item>
+    <item name="android:visibility">gone</item>
+  </style>  
+</resources>
