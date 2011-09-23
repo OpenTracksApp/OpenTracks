@@ -15,8 +15,6 @@
  */
 package com.google.android.apps.mytracks.maps;
 
-import static com.google.android.testing.mocking.AndroidMock.expect;
-
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.MockPath;
 import com.google.android.maps.mytracks.R;
@@ -58,7 +56,7 @@ public class TrackPathPainterFactoryTest extends TrackPathPainterTestCase {
   }
   
   private <T> void testTrackPathPainterFactorySpecific(Context context, SharedPreferences prefs, 
-      int track_color_mode, Class <? extends TrackPathPainter> classtested) {
+      int track_color_mode, Class <?> c) {
     prefs.edit().putString(context.getString(track_color_mode), 
         context.getString(R.string.track_color_mode_key)).commit();
     
@@ -68,7 +66,7 @@ public class TrackPathPainterFactoryTest extends TrackPathPainterTestCase {
     TrackPathPainter painter = TrackPathPainterFactory.getTrackPathPainter(context);
     
     assertNotNull(painter);
-    expect(classtested.isInstance(painter));
+    assertTrue(c.isInstance(painter));
     
     painter.updatePath(myTracksOverlay.getMapProjection(mockView), 
         myTracksOverlay.getMapViewRect(mockView), startLocationIdx, alwaysVisible,
