@@ -176,14 +176,20 @@ limitations under the License.
   <!-- MyTracks Details -->
   <string name="trackdetails_title">トラック詳細</string>
   <string name="trackdetails_name">トラック名</string>
+  <string name="trackdetails_name_hint">トラック名</string>
   <string name="trackdetails_description">トラック説明</string>
+  <string name="trackdetails_description_hint">トラック説明</string>
   <string name="trackdetails_category">活動タイプ(ハイキング, サイクリング、ランニング、登山...)</string>
+  <string name="trackdetails_category_hint">活動タイプ</string>
 
   <!-- MyTracks Waypoint Details -->
   <string name="waypointdetails_title">マーカー詳細</string>
   <string name="waypointdetails_name">マーカー名</string>
+  <string name="waypointdetails_name_hint">マーカー名</string>
   <string name="waypointdetails_description">マーカー説明</string>
+  <string name="waypointdetails_description_hint">マーカー説明</string>
   <string name="waypointdetails_category">マーカータイプ(建物、洞穴、名所...)</string>
+  <string name="waypointdetails_category_hint">マーカータイプ</string>
 
   <!-- MyTracks Settings -->
   <string name="mytracks_settings">My Tracks設定</string>

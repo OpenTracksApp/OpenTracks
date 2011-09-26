@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -139,6 +140,7 @@ public class WaypointDetails extends Activity
           utils.setAllStats(waypointStats);
           utils.setAltitude(
               R.id.elevation_register, waypoint.getLocation().getAltitude());
+          name.setImeOptions(EditorInfo.IME_ACTION_DONE);
           break;
       }
       icon.setImageDrawable(getResources().getDrawable(iconId));

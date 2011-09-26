@@ -152,14 +152,20 @@ limitations under the License.
   <!-- MyTracks Details -->
   <string name="trackdetails_title">Detalls de la ruta</string>
   <string name="trackdetails_name">Nom de la ruta</string>
+  <string name="trackdetails_name_hint">Nom de la ruta</string>
   <string name="trackdetails_description">Descripció de la ruta</string>
+  <string name="trackdetails_description_hint">Descripció de la ruta</string>
   <string name="trackdetails_category">Tipus d\'activitat (p.e. senderisme, bicicleta, còrrer, escalada...)</string>
+  <string name="trackdetails_category_hint">Tipus d\'activitat</string>
 
   <!-- MyTracks Waypoint Details -->
   <string name="waypointdetails_title">Detalls del marcador</string>
   <string name="waypointdetails_name">Nom del marcador</string>
+  <string name="waypointdetails_name_hint">Nom del marcador</string>
   <string name="waypointdetails_description">Descripció del marcador</string>
+  <string name="waypointdetails_description_hint">Descripció del marcador</string>
   <string name="waypointdetails_category">Tipus de marcador (e.g. edifici, sot, vista...)</string>
+  <string name="waypointdetails_category_hint">Tipus de marcador</string>
 
   <!-- MyTracks Settings -->
   <string name="mytracks_settings">Paràmetres de My Tracks</string>
