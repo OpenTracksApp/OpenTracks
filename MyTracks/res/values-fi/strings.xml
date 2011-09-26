@@ -183,14 +183,20 @@ limitations under the License.
   <!-- MyTracks Details -->
   <string name="trackdetails_title">Reitin tiedot</string>
   <string name="trackdetails_name">Reitin nimi</string>
+  <string name="trackdetails_name_hint">Reitin nimi</string>
   <string name="trackdetails_description">Reitin kuvaus</string>
+  <string name="trackdetails_description_hint">Reitin kuvaus</string>
   <string name="trackdetails_category">Liikunnan muoto (esim. hölkkä, pyöräily, juoksu...)</string>
+  <string name="trackdetails_category_hint">Liikunnan muoto</string>
 
   <!-- MyTracks Waypoint Details -->
   <string name="waypointdetails_title">Merkinnän tiedot</string>
   <string name="waypointdetails_name">Merkinnän nimi</string>
+  <string name="waypointdetails_name_hint">Merkinnän nimi</string>
   <string name="waypointdetails_description">Merkinnän kuvaus</string>
+  <string name="waypointdetails_description_hint">Merkinnän kuvaus</string>
   <string name="waypointdetails_category">Merkinnän tyyppi (esim. rakennus, kuoppa, nähtävyys...)</string>
+  <string name="waypointdetails_category_hint">Merkinnän tyyppi</string>
 
   <!-- MyTracks Settings -->
   <string name="mytracks_settings">My Tracks Asetukset</string>
@@ -380,9 +386,9 @@ limitations under the License.
 
   <!-- Sensors -->
   <string name="watts">W</string>
-
   <string name="revolutions_per_minute">rpm</string>
   <string name="bpm">bpm</string>
+  <string name="battery_level">Akku</string>
 
   <!-- Stats Labels -->
   <string name="moving_time_label">Liikkumisaika</string>

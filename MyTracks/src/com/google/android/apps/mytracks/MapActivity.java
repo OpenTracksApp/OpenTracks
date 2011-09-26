@@ -22,6 +22,7 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener;
+import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendActivity;
@@ -35,8 +36,10 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.mytracks.R;
 
+import android.content.ContentUris;
 import android.content.Intent;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -411,6 +414,23 @@ public class MapActivity extends com.google.android.maps.MapActivity
       case Constants.MENU_SHARE_TCX_FILE:
         SaveActivity.handleExportTrackAction(this, dataHub.getSelectedTrackId(),
             Constants.getActionFromMenuId(item.getItemId()));
+        return true;
+      case Constants.MENU_EDIT: {
+        Intent intent = new Intent(this, TrackDetails.class);
+        // TODO: Pass in a content URI
+        intent.putExtra("trackid", dataHub.getSelectedTrackId());
+        startActivity(intent);
+        return true;
+      }
+      case Constants.MENU_DELETE: {
+        Uri uri = ContentUris.withAppendedId(
+            TracksColumns.CONTENT_URI, dataHub.getSelectedTrackId());
+        Intent intent = new Intent(Intent.ACTION_DELETE, uri);
+        startActivity(intent);
+        return true;
+      }
+      case Constants.MENU_CLEAR_MAP:
+        dataHub.unloadCurrentTrack();
         return true;
       default:
         return super.onMenuItemSelected(featureId, item);

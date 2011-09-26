@@ -154,14 +154,20 @@ limitations under the License.
   <!-- MyTracks Details -->
   <string name="trackdetails_title">Trackdetails</string>
   <string name="trackdetails_name">Name</string>
+  <string name="trackdetails_name_hint">Name</string>
   <string name="trackdetails_description">Beschreibung</string>
+  <string name="trackdetails_description_hint">Beschreibung</string>
   <string name="trackdetails_category">Aktivität (z. B. Wandern, Fahrradfahren, Laufen, Klettern…)</string>
+  <string name="trackdetails_category_hint">Aktivität</string>
 
   <!-- MyTracks Waypoint Details -->
   <string name="waypointdetails_title">Wegpunktdetails</string>
   <string name="waypointdetails_name">Wegpunktname</string>
+  <string name="waypointdetails_name_hint">Wegpunktname</string>
   <string name="waypointdetails_description">Wegpunktbeschreibung</string>
+  <string name="waypointdetails_description_hint">Wegpunktbeschreibung</string>
   <string name="waypointdetails_category">Art des Wegpunktes (z. B. Gebäude, Schlagloch, Sehenswürdigkeit…)</string>
+  <string name="waypointdetails_category_hint">Art des Wegpunktes</string>
 
   <!-- MyTracks Settings -->
   <string name="mytracks_settings">Einstellungen für My Tracks</string>
@@ -333,6 +339,7 @@ limitations under the License.
 
   <!--string name="revolutions_per_minute">rpm</string-->
   <!--string name="bpm">bpm</string-->
+  <string name="battery_level">Akkukapazität</string>
 
   <!-- Stats Labels -->
   <string name="moving_time_label">Zeit in Bewegung</string>

@@ -96,11 +96,7 @@ public class WaypointsList extends ListActivity
 
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
-    Intent result = new Intent();
-    result.putExtra("trackid", trackId);
-    result.putExtra(WaypointDetails.WAYPOINT_ID_EXTRA, id);
-    setResult(Constants.EDIT_WAYPOINT, result);
-    finish();
+    editWaypoint(id);
   }
 
   @Override
@@ -108,14 +104,15 @@ public class WaypointsList extends ListActivity
     if (!super.onMenuItemSelected(featureId, item)) {
       switch (item.getItemId()) {
         case Constants.MENU_SHOW: {
-          onListItemClick(null, null, 0, selectedWaypointId);
+          Intent result = new Intent();
+          result.putExtra("trackid", trackId);
+          result.putExtra(WaypointDetails.WAYPOINT_ID_EXTRA, selectedWaypointId);
+          setResult(RESULT_OK, result);
+          finish();
           return true;
         }
         case Constants.MENU_EDIT: {
-          Intent intent = new Intent(this, WaypointDetails.class);
-          intent.putExtra("trackid", trackId);
-          intent.putExtra(WaypointDetails.WAYPOINT_ID_EXTRA, selectedWaypointId);
-          startActivity(intent);
+          editWaypoint(selectedWaypointId);
           return true;
         }
         case Constants.MENU_DELETE: {
@@ -124,6 +121,13 @@ public class WaypointsList extends ListActivity
       }
     }
     return false;
+  }
+
+  private void editWaypoint(long waypointId) {
+    Intent intent = new Intent(this, WaypointDetails.class);
+    intent.putExtra("trackid", trackId);
+    intent.putExtra(WaypointDetails.WAYPOINT_ID_EXTRA, waypointId);
+    startActivity(intent);
   }
 
   @Override

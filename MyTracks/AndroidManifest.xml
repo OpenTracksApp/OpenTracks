@@ -17,8 +17,8 @@ limitations under the License.
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.google.android.maps.mytracks"
           android:installLocation="auto"
-          android:versionCode="31"
-          android:versionName="1.1.8">
+          android:versionCode="32"
+          android:versionName="1.1.9">
   <application android:icon="@drawable/arrow_icon"
                android:label="@string/app_name"
                android:backupAgent="com.google.android.apps.mytracks.io.backup.MyTracksBackupAgent">
@@ -75,6 +75,17 @@ limitations under the License.
         <action android:name="android.intent.action.EDIT" />
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
+        <data android:mimeType="vnd.android.cursor.item/vnd.google.track" />
+      </intent-filter>
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.DeleteTrack"
+              android:label="@string/deletetrack_title"
+              android:theme="@android:style/Theme.Translucent.NoTitleBar"
+              android:noHistory="true">
+      <intent-filter>
+        <action android:name="android.intent.action.DELETE" />
+        <category android:name="android.intent.category.DEFAULT" />
         <data android:mimeType="vnd.android.cursor.item/vnd.google.track" />
       </intent-filter>
     </activity>

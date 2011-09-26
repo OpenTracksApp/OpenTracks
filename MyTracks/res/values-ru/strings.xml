@@ -179,14 +179,20 @@ limitations under the License.
   <!-- MyTracks Details -->
   <string name="trackdetails_title">Трек детали</string>
   <string name="trackdetails_name">Название трека</string>
+  <string name="trackdetails_name_hint">Название трека</string>
   <string name="trackdetails_description">Описание трека</string>
+  <string name="trackdetails_description_hint">Описание трека</string>
   <string name="trackdetails_category">Тип деятельности (например: пешая прогулка, велосипедная прогулка, бег, восхождение...)</string>
+  <string name="trackdetails_category_hint">Тип деятельности</string>
 
   <!-- MyTracks Waypoint Details -->
   <string name="waypointdetails_title">Маркер детали</string>
   <string name="waypointdetails_name">Имя маркера</string>
+  <string name="waypointdetails_name_hint">Имя маркера</string>
   <string name="waypointdetails_description">Описание маркера</string>
+  <string name="waypointdetails_description_hint">Описание маркера</string>
   <string name="waypointdetails_category">Тип маркера (например: здание, выбоина, достопримечательность...)</string>
+  <string name="waypointdetails_category_hint">Тип маркера</string>
 
   <!-- MyTracks Settings -->
   <string name="mytracks_settings">Настройки My Tracks</string>

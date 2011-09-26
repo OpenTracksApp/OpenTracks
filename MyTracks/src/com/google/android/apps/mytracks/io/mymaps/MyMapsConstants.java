@@ -7,7 +7,7 @@ package com.google.android.apps.mytracks.io.mymaps;
 public class MyMapsConstants {
   static final String TAG = "MapsApi";
   static final String MAPSHOP_BASE_URL =
-      "http://maps.google.com/maps/ms";
+      "https://maps.google.com/maps/ms";
   public static final String SERVICE_NAME = "local";
 
   /**

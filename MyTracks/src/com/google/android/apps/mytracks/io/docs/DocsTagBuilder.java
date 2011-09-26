@@ -19,36 +19,38 @@ import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  * <p>This class builds a string of XML tags used to talk to Docs using GData.
- * 
+ *
  * <p>Sample Usage:
- * 
+ *
  * <code>
  *   String tags = new DocsTagBuilder(false)
  *       .append("tagName", "tagValue")
  *       .appendLargeUnits("bigTagName", 1.0)
  *       .build();
  * </code>
- * 
+ *
  * <p>results in:
- * 
+ *
  * <code>
  *    <gsx:tagName><![CDATA[tagValue]]></gsx:tagName>
  *    <gsx:bigTagName><![CDATA[1.00]]></gsx:bigTagName>
  * </code>
- * 
+ *
  * @author Matthew Simmons
  */
 class DocsTagBuilder {
-  // TODO(simmonmt): These formats aren't I18N-compatible.  Not everyone uses
-  // commas for thousands and dots for the decimal point.
+  private static final DecimalFormatSymbols FORMAT_SYMBOLS =
+      DecimalFormatSymbols.getInstance(Locale.ENGLISH);
   private static final NumberFormat LARGE_UNIT_FORMAT =
-    new DecimalFormat("#,###,###.00");
+      new DecimalFormat("#,###,###.00", FORMAT_SYMBOLS);
   private static final NumberFormat SMALL_UNIT_FORMAT =
-    new DecimalFormat("###,###");
+      new DecimalFormat("###,###", FORMAT_SYMBOLS);
 
   protected final boolean metricUnits;
   protected final StringBuilder stringBuilder;
@@ -59,7 +61,7 @@ class DocsTagBuilder {
    */
   DocsTagBuilder(boolean metricUnits) {
     this.metricUnits = metricUnits;
-    stringBuilder = new StringBuilder();
+    this.stringBuilder = new StringBuilder();
   }
 
   /** Appends a tag containing a string value */
@@ -68,13 +70,13 @@ class DocsTagBuilder {
     return this;
   }
 
-  /** 
+  /**
    * Appends a tag containing a numeric value.  The value will be formatted
    * according to the large distance of the specified measurement system (i.e.
    * kilometers or miles).
-   * 
+   *
    * @param name The tag name.
-   * @param d The value to be formatted, in kilometers. 
+   * @param d The value to be formatted, in kilometers.
    */
   DocsTagBuilder appendLargeUnits(String name, double d) {
     double value = metricUnits ? d : (d * UnitConversions.KM_TO_MI);
@@ -86,7 +88,7 @@ class DocsTagBuilder {
    * Appends a tag containing a numeric value.  The value will be formatted
    * according to the small distance of the specified measurement system (i.e.
    * meters or feet).
-   * 
+   *
    * @param name The tag name.
    * @param d The value to be formatted, in meters.
    */

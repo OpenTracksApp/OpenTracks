@@ -50,7 +50,11 @@ import java.util.Set;
 
 /**
  * An activity that let's the user see and edit the settings.
- *
+ * 
+ * This activity has two entry points, "root" and "display" preference screen.
+ * If bundle.getString("open_settings_screen") is set to "display_settings_screen_key", then
+ * the "display" preference screen is shown, otherwise, the "root" display preference is shown.
+ * 
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
@@ -58,12 +62,22 @@ public class SettingsActivity extends PreferenceActivity {
 
   private BackupPreferencesListener backupListener;
   private SharedPreferences preferences;
-
+  
   /** Called when the activity is first created. */
   @Override
   protected void onCreate(Bundle icicle) {
     super.onCreate(icicle);
 
+    initActivityCommons();
+   
+    // If we only need the display setting screen nothing else needs to load.
+    if (processIntent())
+       return;
+      
+    initActivitySpecifics();
+  }
+  
+  private void initActivityCommons() {
     // The volume we want to control is the Text-To-Speech volume
     ApiFeatures apiFeatures = ApiFeatures.getInstance();
     int volumeStream =
@@ -83,6 +97,19 @@ public class SettingsActivity extends PreferenceActivity {
     // Load the preferences to be displayed
     addPreferencesFromResource(R.xml.preferences);
 
+    // Disable TTS announcement preference if not available
+    if (!apiFeatures.hasTextToSpeech()) {
+      IntegerListPreference announcementFrequency =
+          (IntegerListPreference) findPreference(
+              getString(R.string.announcement_frequency_key));
+      announcementFrequency.setEnabled(false);
+      announcementFrequency.setValue("-1");
+      announcementFrequency.setSummary(
+          R.string.settings_not_available_summary);
+    }
+  }
+  
+  private void initActivitySpecifics() {
     // Hook up switching of displayed list entries between metric and imperial
     // units
     CheckBoxPreference metricUnitsPreference =
@@ -102,17 +129,6 @@ public class SettingsActivity extends PreferenceActivity {
 
     customizeSensorOptionsPreferences();
 
-    // Disable TTS announcement preference if not available
-    if (!apiFeatures.hasTextToSpeech()) {
-      IntegerListPreference announcementFrequency =
-          (IntegerListPreference) findPreference(
-              getString(R.string.announcement_frequency_key));
-      announcementFrequency.setEnabled(false);
-      announcementFrequency.setValue("-1");
-      announcementFrequency.setSummary(
-          R.string.settings_not_available_summary);
-    }
-
     // Hook up action for resetting all settings
     Preference resetPreference = findPreference(getString(R.string.reset_key));
     resetPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -122,6 +138,23 @@ public class SettingsActivity extends PreferenceActivity {
         return true;
       }
     });
+  }
+  
+  private boolean processIntent() {
+    boolean showDisplaySettings = false;
+    Bundle bundle = getIntent().getExtras();
+    PreferenceScreen preferenceScreen;
+    String intentString = getString(R.string.open_settings_screen);
+    
+    if (bundle != null) {
+      preferenceScreen = (PreferenceScreen) findPreference(bundle.getString(intentString));
+      if (preferenceScreen != null) {
+         showDisplaySettings = true;
+         setPreferenceScreen(preferenceScreen);
+      }
+    }
+ 
+    return showDisplaySettings;
   }
 
   private void customizeSensorOptionsPreferences() {
@@ -174,6 +207,10 @@ public class SettingsActivity extends PreferenceActivity {
   @Override
   protected void onResume() {
     super.onResume();
+    
+    // If we only need the display setting screen nothing else needs to load.
+    if (processIntent())
+      return;
 
     configureBluetoothPreferences();
     Preference backupNowPreference =
