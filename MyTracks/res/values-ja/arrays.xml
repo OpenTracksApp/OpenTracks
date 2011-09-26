@@ -15,19 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-  <!-- Task frequency -->
-  <string-array name="task_frequency_options">
-    <item>不使用</item>
-    <item>1 分</item>
-    <item>2 分</item>
-    <item>5 分</item>
-    <item>10 分</item>
-    <item>15 分</item>
-    <item>30 分</item>
-    <item>60 分</item>
-  </string-array>
-
- <!-- Minimum recording distance -->
+  <!-- Minimum recording distance -->
   <string-array name="min_recording_distance_options">
     <item>1 m</item>
     <item>2 m</item>
@@ -48,7 +36,6 @@ limitations under the License.
     <item>328 ft</item>
   </string-array>
 
-
   <!-- Maximum recording distance -->
   <string-array name="max_recording_distance_options">
     <item>50 m</item>
@@ -67,7 +54,6 @@ limitations under the License.
     <item>0.6 mi</item>
     <item>3.1 mi</item>
   </string-array>
-
 
   <!-- Minimum recording interval -->
   <string-array name="min_recording_interval_options">
@@ -88,7 +74,6 @@ limitations under the License.
     <item>15 分</item>
     <item>30 分</item>
   </string-array>
-
 
   <!-- Minimum required accuracy -->
   <string-array name="min_required_accuracy_options">
@@ -115,10 +100,9 @@ limitations under the License.
     <item>3.1 mi (GPS信号強度不良)</item>
   </string-array>
 
-
-  <!-- Split frequency -->
-  <string-array name="split_frequency_options">
-    <item>分割なし</item>
+  <!-- Task frequency -->
+  <string-array name="task_frequency_options">
+    <item>不使用</item>
     <item>100 km</item>
     <item>50 km</item>
     <item>25 km</item>
@@ -134,8 +118,8 @@ limitations under the License.
     <item>1 分</item>
   </string-array>
 
-  <string-array name="split_frequency_options_ft">
-    <item>分割なし</item>
+  <string-array name="task_frequency_options_ft">
+    <item>不使用</item>
     <item>100 mi</item>
     <item>50 mi</item>
     <item>25 mi</item>
@@ -151,6 +135,14 @@ limitations under the License.
     <item>1 分</item>
   </string-array>
 
+  <!-- Auto-resume track timeout -->
+  <string-array name="auto_resume_track_timeout_options">
+    <item>なし</item>
+    <item>5 分</item>
+    <item>10 分</item>
+    <item>15 分</item>
+    <item>常時</item>
+  </string-array>
 
   <!-- Other non-preference arrays -->
   <array name="activity_types">
@@ -249,12 +241,12 @@ limitations under the License.
     <item>ゴルフ場</item>
     <item>雑貨店</item>
     <item>美容室</item>
-    <item>散髪屋</item>
+    <item>船着き場</item>
     <item>ハイキング道</item>
     <item>ホテル</item>
     <item>家</item>
-    <item>情報</item>
-    <item>交差</item>
+    <item>案内所</item>
+    <item>交差点</item>
     <item>メールボックス</item>
     <item>市場</item>
     <item>集合場所</item>
@@ -279,4 +271,5 @@ limitations under the License.
     <item>噴水</item>
     <item>ウェイポイント</item>
   </array>
+
 </resources>

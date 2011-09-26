@@ -16,7 +16,7 @@
 
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.apps.mytracks.MyTracksSettings;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.maps.mytracks.R;
@@ -50,7 +50,7 @@ public class ChartURLGenerator {
   public static String getChartUrl(Vector<Double> distances,
       Vector<Double> elevations, Track track, Context context) {
     SharedPreferences preferences =
-        context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+        context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     boolean metricUnits = true;
     if (preferences != null) {
       metricUnits = preferences.getBoolean(
@@ -58,7 +58,7 @@ public class ChartURLGenerator {
     }
 
     return getChartUrl(distances, elevations, track,
-        context.getString(R.string.elevation_label), metricUnits, true);
+        context.getString(R.string.elevation_label), metricUnits);
   }
 
   /**
@@ -70,11 +70,10 @@ public class ChartURLGenerator {
    * @param track The track for this chart
    * @param title The title for the chart
    * @param metricUnits Should the data be displayed in metric units
-   * @param escapePipe Should the pipe character be escaped
    */
   public static String getChartUrl(
       Vector<Double> distances, Vector<Double> elevations,
-      Track track, String title, boolean metricUnits, boolean escapePipe) {
+      Track track, String title, boolean metricUnits) {
     if (distances == null || elevations == null || track == null) {
       return null;
     }
@@ -125,9 +124,7 @@ public class ChartURLGenerator {
     sb.append(',');
     sb.append(xInterval);
 
-    // This is an ugly hack. We really want a pipe but we must double escape it.
-    sb.append(escapePipe ? "%257C" : "|");
-    sb.append("1,");
+    sb.append("|1,");
     sb.append(effectiveMinY);
     sb.append(',');
     sb.append(effectiveMaxY);

@@ -63,8 +63,7 @@ public class ChartURLGeneratorTest extends TestCase {
                                                  elevations,
                                                  t,
                                                  "Title",
-                                                 true,
-                                                 false);
+                                                 true);
 
     assertEquals(
         "http://chart.apis.google.com/chart?&chs=600x350&cht=lxy&"

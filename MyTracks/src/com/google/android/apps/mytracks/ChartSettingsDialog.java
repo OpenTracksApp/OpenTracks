@@ -1,12 +1,12 @@
 /*
  * Copyright 2009 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -35,8 +35,8 @@ import android.widget.RadioGroup;
  */
 public class ChartSettingsDialog extends Dialog {
   private RadioButton distance;
-  private CheckBox elevation;
-  private CheckBox speed;
+  private CheckBox[] series;
+  private OnClickListener clickListener;
 
   public ChartSettingsDialog(Context context) {
     super(context);
@@ -45,47 +45,68 @@ public class ChartSettingsDialog extends Dialog {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
     requestWindowFeature(Window.FEATURE_NO_TITLE);
     setContentView(R.layout.chart_settings);
     Button cancel = (Button) findViewById(R.id.chart_settings_cancel);
     cancel.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
+        if (clickListener != null) {
+          clickListener.onClick(ChartSettingsDialog.this, BUTTON_NEGATIVE);
+        }
         dismiss();
       }
     });
-    Button ok = (Button) findViewById(R.id.chart_settings_ok);
-    ok.setOnClickListener(new View.OnClickListener() {
+
+    Button okButton = (Button) findViewById(R.id.chart_settings_ok);
+    okButton.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
-        handleOk();
+        if (clickListener != null) {
+          clickListener.onClick(ChartSettingsDialog.this, BUTTON_POSITIVE);
+        }
+        dismiss();
       }
     });
 
     distance = (RadioButton) findViewById(R.id.chart_settings_by_distance);
-    elevation = (CheckBox) findViewById(R.id.chart_settings_elevation);
-    speed = (CheckBox) findViewById(R.id.chart_settings_speed);
+
+    series = new CheckBox[ChartView.NUM_SERIES];
+    series[ChartView.ELEVATION_SERIES] =
+        (CheckBox) findViewById(R.id.chart_settings_elevation);
+    series[ChartView.SPEED_SERIES] =
+        (CheckBox) findViewById(R.id.chart_settings_speed);
+    series[ChartView.POWER_SERIES] =
+        (CheckBox) findViewById(R.id.chart_settings_power);
+    series[ChartView.CADENCE_SERIES] =
+        (CheckBox) findViewById(R.id.chart_settings_cadence);
+    series[ChartView.HEART_RATE_SERIES] =
+        (CheckBox) findViewById(R.id.chart_settings_heart_rate);
   }
 
-  public void setup(ChartActivity chart) {
-    if (chart == null) {
-      return;
-    }
-
+  public void setMode(Mode mode) {
     RadioGroup rd = (RadioGroup) findViewById(R.id.chart_settings_x);
-    rd.check(chart.getMode() == Mode.BY_DISTANCE
+    rd.check(mode == Mode.BY_DISTANCE
              ? R.id.chart_settings_by_distance
              : R.id.chart_settings_by_time);
-    elevation.setChecked(chart.isSeriesEnabled(ChartView.ELEVATION_SERIES));
-    speed.setChecked(chart.isSeriesEnabled(ChartView.SPEED_SERIES));
   }
 
-  private void handleOk() {
-    ChartActivity chart = MyTracks.getInstance().getChartActivity();
-    chart.setMode(distance.isChecked() ? Mode.BY_DISTANCE : Mode.BY_TIME);
+  public void setSeriesEnabled(int seriesIdx, boolean enabled) {
+    series[seriesIdx].setChecked(enabled);
+  }
 
-    // TODO: check that something is visible.
-    chart.setSeriesEnabled(ChartView.ELEVATION_SERIES, elevation.isChecked());
-    chart.setSeriesEnabled(ChartView.SPEED_SERIES, speed.isChecked());
+  public Mode getMode() {
+    if (distance == null) return Mode.BY_DISTANCE;
 
-    dismiss();
+    return distance.isChecked() ? Mode.BY_DISTANCE : Mode.BY_TIME;
+  }
+
+  public boolean isSeriesEnabled(int seriesIdx) {
+    if (series == null) return true;
+
+    return series[seriesIdx].isChecked();
+  }
+
+  public void setOnClickListener(OnClickListener clickListener) {
+    this.clickListener = clickListener;
   }
 }

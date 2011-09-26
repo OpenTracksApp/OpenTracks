@@ -1,7 +1,6 @@
 <factorypath>
-    <factorypathentry kind="PLUGIN" id="org.eclipse.jst.ws.annotations.core" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="WKSPJAR" id="/MyTracksTest/libs/AndroidMockGenerator.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="ANDROID_SDK/platforms/android-8/android.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="ANDROID_SDK/add-ons/addon_google_apis_google_inc_8/libs/maps.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="ANDROID_SDK/platforms/android-13/android.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="ANDROID_SDK/add-ons/addon_google_apis_google_inc_13/libs/maps.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="MYTRACKS_BIN" enabled="true" runInBatchMode="false"/>
 </factorypath>

@@ -15,18 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-  <!-- Task frequency -->
-  <string-array name="task_frequency_options">
-    <item>关闭</item>
-    <item>1 分钟</item>
-    <item>2 分钟</item>
-    <item>5 分钟</item>
-    <item>10 分钟</item>
-    <item>15 分钟</item>
-    <item>30 分钟</item>
-    <item>60 分钟</item>
-  </string-array>
-
   <!-- Minimum recording distance -->
   <string-array name="min_recording_distance_options">
     <item>1 米</item>
@@ -112,9 +100,9 @@ limitations under the License.
     <item>3.1 英里 (糟糕的 GPS 信号)</item>
   </string-array>
 
-  <!-- Split frequency -->
-  <string-array name="split_frequency_options">
-    <item>不分割</item>
+  <!-- Task frequency -->
+  <string-array name="task_frequency_options">
+    <item>关闭</item>
     <item>100 千米</item>
     <item>50 千米</item>
     <item>25 千米</item>
@@ -130,8 +118,8 @@ limitations under the License.
     <item>1 分钟</item>
   </string-array>
 
-  <string-array name="split_frequency_options_ft">
-    <item>不分割</item>
+  <string-array name="task_frequency_options_ft">
+    <item>关闭</item>
     <item>100 英里</item>
     <item>50 英里</item>
     <item>25 英里</item>
@@ -155,6 +143,7 @@ limitations under the License.
     <item>15 分钟</item>
     <item>总是</item>
   </string-array>
+
   <!-- Other non-preference arrays -->
   <array name="activity_types">
     <item>未知</item>
@@ -180,6 +169,11 @@ limitations under the License.
     <item>滑冰</item>
     <item>轮滑</item>
     <item>滑板</item>
+
+    <item>滚轮滑雪 (传统)</item>
+    <item>滚轮滑雪 (滑板)</item>
+    <item>越野滑雪 (传统)</item>
+    <item>越野滑雪 (滑板)</item>
 
     <item>雪攀</item>
     <item>滑雪</item>

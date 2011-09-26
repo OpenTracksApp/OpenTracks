@@ -15,26 +15,22 @@
  */
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtilsImpl;
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.TracksColumns;
-import com.google.android.apps.mytracks.content.WaypointsColumns;
-import com.google.android.apps.mytracks.services.StatusAnnouncerFactory;
+import com.google.android.apps.mytracks.content.TrackDataHub;
+import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
+import com.google.android.apps.mytracks.content.TrackDataListener;
+import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.services.ServiceUtils;
+import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.database.ContentObserver;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
@@ -42,30 +38,30 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.util.EnumSet;
 
 /**
  * An activity that displays track statistics to the user.
  *
  * @author Sandor Dornbush
+ * @author Rodrigo Damazio
  */
-public class StatsActivity extends Activity
-    implements OnSharedPreferenceChangeListener {
+public class StatsActivity extends Activity implements TrackDataListener {
+  /**
+   * A runnable for posting to the UI thread. Will update the total time field.
+   */
+  private final Runnable updateResults = new Runnable() {
+    public void run() {
+      if (dataHub != null && dataHub.isRecordingSelected()) {
+        utils.setTime(R.id.total_time_register,
+            System.currentTimeMillis() - startTime);
+      }
+    }
+  };
 
   private StatsUtilities utils;
   private UIUpdateThread thread;
-
-  private ContentObserver observer;
-
-  /**
-   * The id of the currently selected track.
-   */
-  private long selectedTrackId = -1;
-
-  /**
-   * The id of the currently recording track.
-   */
-  private long recordingTrackId = -1;
 
   /**
    * The start time of the selected track.
@@ -73,37 +69,13 @@ public class StatsActivity extends Activity
   private long startTime = -1;
 
   /**
-   * True if distances should be displayed in metric units (from shared
-   * preferences).
-   */
-  private boolean metricUnits = true;
-
-  /**
-   * True if pace should be displayed as dist/time (from shared preferences).
-   */
-  private boolean displaySpeed = true;
-
-  /**
-   * true if activity has resumed and is on top
-   */
-  private boolean activityOnTop = false;
-
-  /**
    * If true, the statistics for the current segment are shown, otherwise
    * for the full track.
    */
   private boolean showCurrentSegment = false;
 
-  private MyTracksProviderUtils providerUtils;
-
-  /**
-   * A runnable for posting to the UI thread. Will update the total time field.
-   */
-  private final Runnable updateResults = new Runnable() {
-    public void run() {
-      updateTotalTime();
-    }
-  };
+  private TrackDataHub dataHub;
+  private SharedPreferences preferences;
 
   /**
    * A thread that updates the total time field every second.
@@ -112,35 +84,33 @@ public class StatsActivity extends Activity
 
     public UIUpdateThread() {
       super();
-      Log.i(MyTracksConstants.TAG, "Created UI update thread");
+      Log.i(TAG, "Created UI update thread");
     }
 
     @Override
     public void run() {
-      Log.i(MyTracksConstants.TAG, "Started UI update thread");
-      while (MyTracks.getInstance().isRecording()) {
-        long sleeptime = 1000;
+      Log.i(TAG, "Started UI update thread");
+      while (ServiceUtils.isRecording(StatsActivity.this, null, preferences)) {
         runOnUiThread(updateResults);
         try {
-          Thread.sleep(sleeptime);
+          Thread.sleep(1000L);
         } catch (InterruptedException e) {
-          Log.w(MyTracksConstants.TAG,
-              "StatsActivity: Caught exception on sleep.", e);
+          Log.w(TAG, "StatsActivity: Caught exception on sleep.", e);
           break;
         }
       }
-      Log.w(MyTracksConstants.TAG, "UIUpdateThread finished.");
+      Log.w(TAG, "UIUpdateThread finished.");
     }
   }
 
   /** Called when the activity is first created. */
   @Override
-  public void onCreate(Bundle savedInstanceState) {
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    preferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
     utils = new StatsUtilities(this);
-    providerUtils = new MyTracksProviderUtilsImpl(getContentResolver());
-    
+
     // The volume we want to control is the Text-To-Speech volume
     int volumeStream =
         new StatusAnnouncerFactory(ApiFeatures.getInstance()).getVolumeStream();
@@ -151,40 +121,10 @@ public class StatsActivity extends Activity
 
     setContentView(R.layout.stats);
 
-    Handler contentHandler = new Handler();
-    observer = new ContentObserver(contentHandler) {
-      @Override
-      public void onChange(boolean selfChange) {
-        Log.d(MyTracksConstants.TAG, "StatsActivity: ContentObserver.onChange");
-        restoreStats();
-        super.onChange(selfChange);
-      }
-    };
-
     ScrollView sv = ((ScrollView) findViewById(R.id.scrolly));
     sv.setScrollBarStyle(ScrollView.SCROLLBARS_OUTSIDE_INSET);
 
-    SharedPreferences preferences =
-        getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
-    if (preferences != null) {
-      selectedTrackId = preferences.getLong(
-          getString(R.string.selected_track_key), -1);
-      recordingTrackId = preferences.getLong(
-          getString(R.string.recording_track_key), -1);
-      metricUnits = preferences.getBoolean(
-          getString(R.string.metric_units_key), true);
-      displaySpeed =
-        preferences.getBoolean(getString(R.string.report_speed_key), true);
-      checkLiveTrack();
-      restoreStats();
-      showUnknownLocation();
-      preferences.registerOnSharedPreferenceChangeListener(this);
-    }
-    utils.setMetricUnits(metricUnits);
-    utils.setReportSpeed(displaySpeed);
-    utils.updateUnits();
-    utils.setSpeedLabel(R.id.speed_label, R.string.speed, R.string.pace_label);
-    utils.setSpeedLabels();
+    showUnknownLocation();
 
     DisplayMetrics metrics = new DisplayMetrics();
     getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -194,88 +134,75 @@ public class StatsActivity extends Activity
   }
 
   @Override
+  protected void onResume() {
+    super.onResume();
+
+    dataHub = TrackDataHub.getStartedInstance();
+    dataHub.registerTrackDataListener(this, EnumSet.of(
+        ListenerDataType.SELECTED_TRACK_CHANGED,
+        ListenerDataType.TRACK_UPDATES,
+        ListenerDataType.LOCATION_UPDATES,
+        ListenerDataType.DISPLAY_PREFERENCES));
+  }
+
+  @Override
   protected void onPause() {
-    unregisterLocationListener();
+    dataHub.unregisterTrackDataListener(this);
+    dataHub = null;
+
     if (thread != null) {
       thread.interrupt();
       thread = null;
     }
-    getContentResolver().unregisterContentObserver(observer);
-    activityOnTop = false;
-    super.onPause();
+
+    super.onStop();
   }
 
   @Override
-  protected void onResume() {
-    activityOnTop = true;
-    checkLiveTrack();
-    restoreStats();
-    showUnknownLocation();
-    super.onResume();
+  public boolean onUnitsChanged(boolean metric) {
+    // Ignore if unchanged.
+    if (metric == utils.isMetricUnits()) return false;
+
+    utils.setMetricUnits(metric);
+    updateLabels();
+
+    return true;  // Reload data
   }
 
   @Override
-  public void onSharedPreferenceChanged(
-      final SharedPreferences sharedPreferences, final String key) {
-    Log.d(MyTracksConstants.TAG,
-        "StatsActivity: onSharedPreferences changed " + key);
-    if (key != null) {
-      runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-          if (key.equals(getString(R.string.selected_track_key))) {
-            selectedTrackId =
-                sharedPreferences.getLong(
-                    getString(R.string.selected_track_key),
-                    -1);
-            checkLiveTrack();
-            restoreStats();
-            showUnknownLocation();
-          } else if (key.equals(getString(R.string.recording_track_key))) {
-            recordingTrackId =
-                sharedPreferences.getLong(
-                    getString(R.string.recording_track_key),
-                    -1);
-            checkLiveTrack();
-            restoreStats();
-            showUnknownLocation();
-          } else if (key.equals(getString(R.string.metric_units_key))) {
-            metricUnits =
-                sharedPreferences.getBoolean(
-                    getString(R.string.metric_units_key), true);
-            utils.setMetricUnits(metricUnits);
-            utils.updateUnits();
-            restoreStats();
-          } else if (key.equals(getString(R.string.report_speed_key))) {
-            displaySpeed =
-                sharedPreferences.getBoolean(
-                    getString(R.string.report_speed_key),
-                    true);
-            utils.setReportSpeed(displaySpeed);
-            utils.updateUnits();
-            utils.setSpeedLabel(
-                R.id.speed_label, R.string.speed, R.string.pace_label);
-            Log.w(MyTracksConstants.TAG, "Setting speed labels");
-            utils.setSpeedLabels();
-            restoreStats();
-          }
-        }
-      });
-    }
+  public boolean onReportSpeedChanged(boolean displaySpeed) {
+    // Ignore if unchanged.
+    if (displaySpeed == utils.isReportSpeed()) return false;
+
+    utils.setReportSpeed(displaySpeed);
+    updateLabels();
+
+    return true;  // Reload data
+  }
+
+  private void updateLabels() {
+    runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        utils.updateUnits();
+        utils.setSpeedLabel(R.id.speed_label, R.string.speed, R.string.pace_label);
+        utils.setSpeedLabels();
+      }
+    });
   }
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     super.onCreateOptionsMenu(menu);
     MenuItem currentSegment = menu.add(0,
-        MyTracksConstants.MENU_CURRENT_SEGMENT, 0, R.string.current_segment);
-    currentSegment.setIcon(R.drawable.menu_by_distance);
+        Constants.MENU_CURRENT_SEGMENT, 0, R.string.current_segment);
+    currentSegment.setIcon(R.drawable.ic_menu_lastsegment);
     return true;
   }
 
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
-    MenuItem item = menu.findItem(MyTracksConstants.MENU_CURRENT_SEGMENT);
+    MenuItem item = menu.findItem(Constants.MENU_CURRENT_SEGMENT);
     if (item != null) {
       item.setTitle(showCurrentSegment
           ? getString(R.string.current_track)
@@ -287,137 +214,12 @@ public class StatsActivity extends Activity
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
-      case MyTracksConstants.MENU_CURRENT_SEGMENT:
+      case Constants.MENU_CURRENT_SEGMENT:
         showCurrentSegment = !showCurrentSegment;
-        restoreStats();
+        // TODO: Re-read only the data that interests us
         return true;
     }
     return super.onOptionsItemSelected(item);
-  }
-
-  private final LocationListener locationListener = new LocationListener() {
-    @Override
-    public void onLocationChanged(Location l) {
-      if (selectedTrackIsRecording()) {
-        showLocation(l);
-      }
-    }
-  
-    @Override
-    public void onProviderDisabled(String provider) {
-      // Do nothing
-    }
-  
-    @Override
-    public void onProviderEnabled(String provider) {
-      // Do nothing
-    }
-  
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-      // Do nothing
-    }
-  };
-
-  /**
-   * Registers to receive location updates from the GPS location provider.
-   */
-  private void registerLocationListener() {
-    LocationManager locationManager =
-        (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-    if (locationManager != null) {
-      LocationProvider gpsProvider =
-          locationManager.getProvider(MyTracksConstants.GPS_PROVIDER);
-      if (gpsProvider == null) {
-        Toast.makeText(this, getString(R.string.error_no_gps_location_provider),
-            Toast.LENGTH_LONG).show();
-        return;
-      } else {
-        Log.d(MyTracksConstants.TAG, "StatsActivity: Using location provider "
-            + gpsProvider.getName());
-      }
-      locationManager.requestLocationUpdates(gpsProvider.getName(),
-         0/*minTime*/, 0/*minDist*/, locationListener);
-    }
-  }
-
-  /**
-   * Unregisters all location listener.
-   */
-  private void unregisterLocationListener() {
-    LocationManager locationManager =
-        (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-    if (locationManager != null) {
-      locationManager.removeUpdates(locationListener);
-    }
-  }
-
-  /**
-   * @return true if the selected track is the currently recording track
-   */
-  private boolean selectedTrackIsRecording() {
-    return MyTracks.getInstance().isRecording()
-        && selectedTrackId == recordingTrackId;
-  }
-
-  /**
-   * Reads values for selected tracks from provider and update the UI.
-   */
-  private void restoreStats() {
-    if (selectedTrackId < 0) {
-      utils.setAllToUnknown();
-      return;
-    }
-
-    Track track = providerUtils.getTrack(selectedTrackId);
-    if (track == null || track.getStatistics() == null) {
-      utils.setAllToUnknown();
-      return;
-    }
-
-    startTime = track.getStatistics().getStartTime();
-    if (!selectedTrackIsRecording()) {
-      utils.setTime(R.id.total_time_register,
-          track.getStatistics().getTotalTime());
-    }
-    utils.setAllStats(track.getStatistics());
-  }
-
-  /**
-   * Checks if this activity needs to update live track data or not.
-   * If so, make sure that:
-   * a) a thread keeps updating the total time
-   * b) a location listener is registered
-   * c) a content observer is registered
-   * Otherwise unregister listeners, observers, and kill update thread.
-   */
-  private void checkLiveTrack() {
-    final boolean isRecording = selectedTrackIsRecording();
-    final boolean startThread =
-        (thread == null) && isRecording && activityOnTop;
-    final boolean killThread =
-        (thread != null) && (!isRecording || !activityOnTop);
-    if (startThread) {
-      thread = new UIUpdateThread();
-      thread.start();
-      getContentResolver().registerContentObserver(
-          TracksColumns.CONTENT_URI, false, observer);
-      getContentResolver().registerContentObserver(
-          WaypointsColumns.CONTENT_URI, false, observer);
-      registerLocationListener();
-    } else if (killThread) {
-      thread.interrupt();
-      thread = null;
-      getContentResolver().unregisterContentObserver(observer);
-      unregisterLocationListener();
-    }
-  }
-
-  public void updateTotalTime() {
-    if (selectedTrackIsRecording()) {
-      utils.setTime(R.id.total_time_register,
-          System.currentTimeMillis() - startTime);
-    }
   }
 
   /**
@@ -438,5 +240,126 @@ public class StatsActivity extends Activity
     utils.setUnknown(R.id.latitude_register);
     utils.setUnknown(R.id.longitude_register);
     utils.setUnknown(R.id.speed_register);
+  }
+
+  @Override
+  public void onSelectedTrackChanged(Track track, boolean isRecording) {
+    /*
+     * Checks if this activity needs to update live track data or not.
+     * If so, make sure that:
+     * a) a thread keeps updating the total time
+     * b) a location listener is registered
+     * c) a content observer is registered
+     * Otherwise unregister listeners, observers, and kill update thread.
+     */
+    final boolean startThread = (thread == null) && isRecording;
+    final boolean killThread = (thread != null) && (!isRecording);
+    if (startThread) {
+      thread = new UIUpdateThread();
+      thread.start();
+    } else if (killThread) {
+      thread.interrupt();
+      thread = null;
+    }
+  }
+
+  @Override
+  public void onCurrentLocationChanged(final Location loc) {
+    TrackDataHub localDataHub = dataHub;
+    if (localDataHub != null && localDataHub.isRecordingSelected()) {
+      runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+          if (loc != null) {
+            showLocation(loc);
+          } else {
+            showUnknownLocation();
+          }
+        }
+      });
+    }
+  }
+
+  @Override
+  public void onCurrentHeadingChanged(double heading) {
+    // We don't care.
+  }
+
+  @Override
+  public void onProviderStateChange(ProviderState state) {
+    switch (state) {
+      case DISABLED:
+      case NO_FIX:
+        runOnUiThread(new Runnable() {
+          @Override
+          public void run() {
+            showUnknownLocation();
+          }
+        });
+        break;
+    }
+  }
+
+  @Override
+  public void onTrackUpdated(final Track track) {
+    TrackDataHub localDataHub = dataHub;
+    final boolean recordingSelected = localDataHub != null && localDataHub.isRecordingSelected();
+    runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        if (track == null || track.getStatistics() == null) {
+          utils.setAllToUnknown();
+          return;
+        }
+
+        startTime = track.getStatistics().getStartTime();
+        if (!recordingSelected) {
+          utils.setTime(R.id.total_time_register,
+              track.getStatistics().getTotalTime());
+          showUnknownLocation();
+        }
+        utils.setAllStats(track.getStatistics());
+      }
+    });
+  }
+
+  @Override
+  public void clearWaypoints() {
+    // We don't care.
+  }
+
+  @Override
+  public void onNewWaypoint(Waypoint wpt) {
+    // We don't care.
+  }
+
+  @Override
+  public void onNewWaypointsDone() {
+    // We don't care.
+  }
+
+  @Override
+  public void clearTrackPoints() {
+    // We don't care.
+  }
+
+  @Override
+  public void onNewTrackPoint(Location loc) {
+    // We don't care.
+  }
+
+  @Override
+  public void onSegmentSplit() {
+    // We don't care.
+  }
+
+  @Override
+  public void onSampledOutTrackPoint(Location loc) {
+    // We don't care.
+  }
+
+  @Override
+  public void onNewTrackPointsDone() {
+    // We don't care.
   }
 }

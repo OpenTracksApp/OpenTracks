@@ -83,6 +83,8 @@ public class StatsUtilities {
   public void setText(int id, double d, NumberFormat format) {
     if (!Double.isNaN(d) && !Double.isInfinite(d)) {
       setText(id, format.format(d));
+    } else {
+      setUnknown(id);
     }
   }
 
@@ -218,7 +220,7 @@ public class StatsUtilities {
     setGrade(R.id.max_grade_register, maxGrade);
   }
 
-	public void setAllStats(TripStatistics stats) {
+  public void setAllStats(TripStatistics stats) {
     setTime(R.id.moving_time_register, stats.getMovingTime());
     setDistance(R.id.total_distance_register, stats.getTotalDistance() / 1000);
     setSpeed(R.id.average_speed_register, stats.getAverageSpeed() * 3.6);
@@ -235,7 +237,7 @@ public class StatsUtilities {
   }
 
   public void setSpeedLabel(int id, int speedString, int paceString) {
-    Log.w(MyTracksConstants.TAG, "Setting view " + id +
+    Log.w(Constants.TAG, "Setting view " + id +
           " to " + reportSpeed +
           " speed: " + speedString +
           " pace: " + paceString);
@@ -243,7 +245,7 @@ public class StatsUtilities {
     if (tv != null) {
       tv.setText(reportSpeed ?  speedString : paceString);
     } else {
-      Log.w(MyTracksConstants.TAG, "Could not find id: " + id);
+      Log.w(Constants.TAG, "Could not find id: " + id);
     }
   }
 

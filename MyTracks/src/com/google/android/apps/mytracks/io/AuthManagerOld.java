@@ -22,9 +22,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import java.util.Iterator;
-import java.util.Vector;
-
 /**
  * AuthManager keeps track of the current auth token for a user. The advantage
  * over just passing around a String is that this class can renew the auth
@@ -47,17 +44,11 @@ public class AuthManagerOld implements AuthManager {
   /** The name of the service to authorize for. */
   private final String service;
 
-  /** A list of handlers to call when a new auth token is fetched. */
-  private final Vector<Runnable> newTokenListeners = new Vector<Runnable>();
+  /** The handler to call when a new auth token is fetched. */
+  private AuthCallback authCallback;
 
   /** The most recently fetched auth token or null if none is available. */
   private String authToken;
-
-  /**
-   * The number of handlers at the beginning of the above list that shouldn't
-   * be removed after they are called.
-   */
-  private int stickyNewTokenListenerCount;
 
   /**
    * AuthManager requires many of the same parameters as
@@ -88,15 +79,9 @@ public class AuthManagerOld implements AuthManager {
     this.service = service;
   }
 
-  /* (non-Javadoc)
-   * @see com.google.android.apps.mytracks.io.AuthManager#doLogin(java.lang.Runnable)
-   */
-  public void doLogin(Runnable whenFinished, Object o) {
-    synchronized (newTokenListeners) {
-      if (whenFinished != null) {
-        newTokenListeners.add(whenFinished);
-      }
-    }
+  @Override
+  public void doLogin(AuthCallback callback, Object o) {
+    authCallback = callback;
     activity.runOnUiThread(new LoginRunnable());
   }
 
@@ -111,50 +96,37 @@ public class AuthManagerOld implements AuthManager {
     }
   }
 
-  /* (non-Javadoc)
-   * @see com.google.android.apps.mytracks.io.AuthManager#authResult(int, android.content.Intent)
-   */
-  public boolean authResult(int resultCode, Intent results) {
-    if (resultCode == Activity.RESULT_OK) {
-      authToken = results.getStringExtra(
-          GoogleLoginServiceConstants.AUTHTOKEN_KEY);
-      if (authToken == null) {
-        GoogleLoginServiceHelper.getCredentials(
-            activity, code, extras, requireGoogle, service, false);
-        return true;
-      } else {
-        // Notify all active listeners that we have a new auth token.
-        synchronized (newTokenListeners) {
-          Iterator<Runnable> iter = newTokenListeners.iterator();
-          while (iter.hasNext()) {
-            iter.next().run();
-          }
-          iter = null;
-          // Remove anything not in the sticky part of the list.
-          newTokenListeners.setSize(stickyNewTokenListenerCount);
-        }
-        return true;
-      }
+  @Override
+  public void authResult(int resultCode, Intent results) {
+    if (resultCode != Activity.RESULT_OK) {
+      runAuthCallback(false);
+      return;
     }
-    return false;
+
+    authToken = results.getStringExtra(GoogleLoginServiceConstants.AUTHTOKEN_KEY);
+    if (authToken == null) {
+      // Retry, without prompting the user.
+      GoogleLoginServiceHelper.getCredentials(
+          activity, code, extras, requireGoogle, service, false);
+    } else {
+      // Notify all active listeners that we have a new auth token.
+      runAuthCallback(true);
+    }
   }
 
-  /* (non-Javadoc)
-   * @see com.google.android.apps.mytracks.io.AuthManager#getAuthToken()
-   */
+  private void runAuthCallback(boolean success) {
+    authCallback.onAuthResult(success);
+    authCallback = null;
+  }
+
+  @Override
   public String getAuthToken() {
     return authToken;
   }
 
-  /* (non-Javadoc)
-   * @see com.google.android.apps.mytracks.io.AuthManager#invalidateAndRefresh(java.lang.Runnable)
-   */
-  public void invalidateAndRefresh(Runnable whenFinished) {
-    synchronized (newTokenListeners) {
-      if (whenFinished != null) {
-        newTokenListeners.add(whenFinished);
-      }
-    }
+  @Override
+  public void invalidateAndRefresh(AuthCallback callback) {
+    authCallback = callback;
     activity.runOnUiThread(new Runnable() {
       public void run() {
         GoogleLoginServiceHelper.invalidateAuthToken(activity, code, authToken);
@@ -162,37 +134,8 @@ public class AuthManagerOld implements AuthManager {
     });
   }
 
-  /**
-   * Adds a {@link Runnable} to be executed every time the auth token is
-   * updated. The {@link Runnable} will not be removed until manually removed
-   * with {@link #removeStickyNewTokenListener(Runnable)}.
-   *
-   * @param listener The {@link Runnable} to execute every time a new auth
-   *        token is fetched
-   */
-  public void addStickyNewTokenListener(Runnable listener) {
-    synchronized (newTokenListeners) {
-      newTokenListeners.add(0, listener);
-      stickyNewTokenListenerCount++;
-    }
-  }
-
-  /**
-   * Stops executing the given {@link Runnable} every time the auth token is
-   * updated. This {@link Runnable} must have been added with
-   * {@link #addStickyNewTokenListener(Runnable)} above. If the
-   * {@link Runnable} was added more than once, only the first occurrence
-   * will be removed.
-   *
-   * @param listener The {@link Runnable} to stop executing every time a new
-   *        auth token is fetched
-   */
-  public void removeStickyNewTokenListener(Runnable listener) {
-    synchronized (newTokenListeners) {
-      if (stickyNewTokenListenerCount > 0
-          && newTokenListeners.remove(listener)) {
-        stickyNewTokenListenerCount--;
-      }
-    }
+  @Override
+  public Object getAccountObject(String accountName, String accountType) {
+    throw new UnsupportedOperationException("Legacy auth manager knows nothing about accounts");
   }
 }

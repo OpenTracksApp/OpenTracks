@@ -1,12 +1,12 @@
 /*
  * Copyright 2009 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -17,21 +17,18 @@ package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.TracksColumns;
-import com.google.android.apps.mytracks.io.TrackWriter;
-import com.google.android.apps.mytracks.io.TrackWriterFactory;
-import com.google.android.apps.mytracks.io.TrackWriterFactory.TrackFileFormat;
+import com.google.android.apps.mytracks.io.file.TrackWriter;
+import com.google.android.apps.mytracks.io.file.TrackWriterFactory;
+import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
+import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
 import android.widget.Toast;
@@ -46,6 +43,7 @@ public class ExportAllTracks {
   public static final int GPX_OPTION_INDEX = 0;
   public static final int KML_OPTION_INDEX = 1;
   public static final int CSV_OPTION_INDEX = 2;
+  public static final int TCX_OPTION_INDEX = 3;
 
   private final Activity activity;
   private WakeLock wakeLock;
@@ -67,13 +65,18 @@ public class ExportAllTracks {
             case CSV_OPTION_INDEX:
               format = TrackFileFormat.CSV;
               break;
+            case TCX_OPTION_INDEX:
+              format = TrackFileFormat.TCX;
+              break;
+            default:
+              Log.w(Constants.TAG, "Unknown export format: " + which);
           }
         }
       };
 
   public ExportAllTracks(Activity activity) {
     this.activity = activity;
-    Log.i(MyTracksConstants.TAG, "ExportAllTracks: Starting");
+    Log.i(Constants.TAG, "ExportAllTracks: Starting");
 
     AlertDialog.Builder builder = new AlertDialog.Builder(activity);
     builder.setSingleChoiceItems(R.array.export_formats, 0, itemClick);
@@ -86,12 +89,7 @@ public class ExportAllTracks {
       new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-          HandlerThread handlerThread;
-          Handler handler;
-          handlerThread = new HandlerThread("SendToMyMaps");
-          handlerThread.start();
-          handler = new Handler(handlerThread.getLooper());
-          handler.post(runner);
+          new Thread(runner, "SendToMyMaps").start();
         }
       };
 
@@ -108,14 +106,14 @@ public class ExportAllTracks {
    */
   private void aquireLocksAndExport() {
     SharedPreferences prefs =
-        activity.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+        activity.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     long recordingTrackId = -1;
     if (prefs != null) {
       recordingTrackId =
-    	  prefs.getLong(activity.getString(R.string.recording_track_key), -1);
+          prefs.getLong(activity.getString(R.string.recording_track_key), -1);
     }
     if (recordingTrackId != -1) {
-      acquireWakeLock();
+      wakeLock = SystemUtils.acquireWakeLock(activity, wakeLock);
     }
 
     // Now we can safely export everything.
@@ -125,10 +123,10 @@ public class ExportAllTracks {
     // TODO check what happens if we started recording after getting this lock.
     if (wakeLock != null && wakeLock.isHeld()) {
       wakeLock.release();
-      Log.i(MyTracksConstants.TAG, "ExportAllTracks: Releasing wake lock.");
+      Log.i(Constants.TAG, "ExportAllTracks: Releasing wake lock.");
     }
-    Log.i(MyTracksConstants.TAG, "ExportAllTracks: Done");
-    Toast.makeText(activity, R.string.export_done, Toast.LENGTH_SHORT).show();
+    Log.i(Constants.TAG, "ExportAllTracks: Done");
+    showToast(R.string.export_done, Toast.LENGTH_SHORT);
   }
 
   private void makeProgressDialog(final int trackCount) {
@@ -158,7 +156,7 @@ public class ExportAllTracks {
       }
 
       final int trackCount = cursor.getCount();
-      Log.i(MyTracksConstants.TAG,
+      Log.i(Constants.TAG,
           "ExportAllTracks: Exporting: " + cursor.getCount() + " tracks.");
       int idxTrackId = cursor.getColumnIndexOrThrow(TracksColumns._ID);
       activity.runOnUiThread(new Runnable() {
@@ -181,15 +179,19 @@ public class ExportAllTracks {
         });
 
         long id = cursor.getLong(idxTrackId);
-        Log.i(MyTracksConstants.TAG, "ExportAllTracks: exporting: " + id);
+        Log.i(Constants.TAG, "ExportAllTracks: exporting: " + id);
         TrackWriter writer =
             TrackWriterFactory.newWriter(activity, providerUtils, id, format);
+        if (writer == null) {
+          showToast(R.string.error_track_does_not_exist, Toast.LENGTH_LONG);
+          return;
+        }
+
         writer.writeTrack();
 
         if (!writer.wasSuccess()) {
           // Abort the whole export on the first error.
-          int error = writer.getErrorMessage();
-          Toast.makeText(activity, error, Toast.LENGTH_LONG).show();
+          showToast(writer.getErrorMessage(), Toast.LENGTH_LONG);
           return;
         }
       }
@@ -206,39 +208,12 @@ public class ExportAllTracks {
     }
   }
 
-  /**
-   * Tries to acquire a partial wake lock if not already acquired. Logs errors
-   * and gives up trying in case the wake lock cannot be acquired.
-   */
-  private void acquireWakeLock() {
-    Log.i(MyTracksConstants.TAG, "ExportAllTracks: Aquiring wake lock.");
-    try {
-      PowerManager pm =
-          (PowerManager) activity.getSystemService(Context.POWER_SERVICE);
-      if (pm == null) {
-        Log.e(MyTracksConstants.TAG,
-            "ExportAllTracks: Power manager not found!");
-        return;
+  private void showToast(final int messageId, final int length) {
+    activity.runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        Toast.makeText(activity, messageId, length).show();
       }
-      if (wakeLock == null) {
-        wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
-            MyTracksConstants.TAG);
-        if (wakeLock == null) {
-          Log.e(MyTracksConstants.TAG,
-              "ExportAllTracks: Could not create wake lock (null).");
-          return;
-        }
-      }
-      if (!wakeLock.isHeld()) {
-        wakeLock.acquire();
-        if (!wakeLock.isHeld()) {
-          Log.e(MyTracksConstants.TAG,
-              "ExportAllTracks: Could not acquire wake lock.");
-        }
-      }
-    } catch (RuntimeException e) {
-      Log.e(MyTracksConstants.TAG,
-          "ExportAllTracks: Caught unexpected exception: " + e.getMessage(), e);
-    }
+    });
   }
 }

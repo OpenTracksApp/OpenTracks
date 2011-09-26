@@ -15,15 +15,13 @@
  */
 package com.google.android.apps.mytracks;
 
+import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -74,19 +72,16 @@ public class WelcomeActivity extends Activity {
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
     builder.setView(view);
     builder.setPositiveButton(R.string.ok, null);
+    builder.setNeutralButton(R.string.license, new DialogInterface.OnClickListener() {
+      @Override 
+      public void onClick(DialogInterface dialog, int which) {
+        Eula.showEula(WelcomeActivity.this);
+      }
+    });
     builder.setIcon(R.drawable.arrow_icon);
     AlertDialog dialog = builder.create();
     dialog.show();
-
-    // Get the version from the manifest.
-    try {
-      PackageInfo pi =
-          getPackageManager().getPackageInfo("com.google.android.maps.mytracks",
-              PackageManager.GET_META_DATA);
-      ((TextView) dialog.findViewById(R.id.about_version_register)).
-          setText(pi.versionName);
-    } catch (NameNotFoundException e) {
-      Log.w(MyTracksConstants.TAG, "Failed to get version info.", e);
-    }
+    ((TextView) dialog.findViewById(R.id.about_version_register)).
+        setText(SystemUtils.getMyTracksVersion(this));
   }
 }

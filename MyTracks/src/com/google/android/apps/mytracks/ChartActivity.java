@@ -15,28 +15,31 @@
  */
 package com.google.android.apps.mytracks;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.apps.mytracks.ChartView.Mode;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.MyTracksLocation;
+import com.google.android.apps.mytracks.content.Sensor;
+import com.google.android.apps.mytracks.content.TrackDataHub;
+import com.google.android.apps.mytracks.content.TrackDataListener;
+import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
+import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.TrackPointsColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.content.WaypointsColumns;
-import com.google.android.apps.mytracks.services.StatusAnnouncerFactory;
+import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.ApiFeatures;
-import com.google.android.apps.mytracks.util.MyTracksUtils;
+import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
-import android.database.ContentObserver;
-import android.database.Cursor;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,63 +51,42 @@ import android.widget.LinearLayout;
 import android.widget.ZoomControls;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 
 /**
  * An activity that displays a chart from the track point provider.
  *
  * @author Sandor Dornbush
+ * @author Rodrigo Damazio
  */
-public class ChartActivity extends Activity implements
-    SharedPreferences.OnSharedPreferenceChangeListener {
+public class ChartActivity extends Activity implements TrackDataListener {
 
-  private double profileLength = 0;
-
-  private boolean metricUnits = true;
-  private boolean reportSpeed = true;
-
-  /**
-   * The track id that is displayed.
-   */
-  private long selectedTrackId = -1;
-
-  /**
-   * Id of the last location that was seen when reading tracks from the
-   * provider. This is used to determine which locations are new compared to the
-   * last time the chart was updated.
-   */
-  private long lastSeenLocationId = -1;
-
-  private long startTime = -1;
-
-  private Location lastLocation;
-
-  /**
-   * The id of the track currently being recorded.
-   */
-  private long recordingTrackId = -1;
-
+  private static final int CHART_SETTINGS_DIALOG = 1;
   private final DoubleBuffer elevationBuffer =
-      new DoubleBuffer(MyTracksConstants.ELEVATION_SMOOTHING_FACTOR);
+      new DoubleBuffer(Constants.ELEVATION_SMOOTHING_FACTOR);
   private final DoubleBuffer speedBuffer =
-      new DoubleBuffer(MyTracksConstants.SPEED_SMOOTHING_FACTOR);
+      new DoubleBuffer(Constants.SPEED_SMOOTHING_FACTOR);
+  private final ArrayList<double[]> pendingPoints = new ArrayList<double[]>();
 
-  private Mode mode = Mode.BY_DISTANCE;
+  private TrackDataHub dataHub;
 
-  /**
-   * Utilities to deal with the database.
-   */
-  private MyTracksProviderUtils providerUtils;
+  // Stats gathered from received data.
+  private double profileLength = 0;
+  private long startTime = -1;
+  private Location lastLocation;
+  private double trackMaxSpeed;
+
+  // Modes of operation
+  private boolean metricUnits;
+  private boolean reportSpeed;
 
   /*
    * UI elements:
    */
-  private ChartView cv;
+  private ChartView chartView;
   private MenuItem chartSettingsMenuItem;
   private LinearLayout busyPane;
   private ZoomControls zoomControls;
-
-  /** Handler for callbacks to the UI thread */
-  private final Handler uiHandler = new Handler();
 
   /**
    * A runnable that can be posted to the UI thread. It will remove the spinner
@@ -114,134 +96,24 @@ public class ChartActivity extends Activity implements
   private final Runnable updateChart = new Runnable() {
     @Override
     public void run() {
-      busyPane.setVisibility(View.GONE);
-      zoomControls.setIsZoomInEnabled(cv.canZoomIn());
-      zoomControls.setIsZoomOutEnabled(cv.canZoomOut());
-      cv.setShowPointer(selectedTrackIsRecording());
-      cv.invalidate();
-    }
-  };
-
-  /**
-   * A runnable that can be posted to the UI thread. It will show the spinner.
-   */
-  private final Runnable showSpinner = new Runnable() {
-    @Override
-    public void run() {
-      busyPane.setVisibility(View.VISIBLE);
-    }
-  };
-
-  /**
-   * An observer for the tracks provider. Will listen to new track points being
-   * added and update the chart if necessary.
-   */
-  private ContentObserver observer;
-
-  /**
-   * An observer for the waypoints provider. Will listen to new way points being
-   * added and update the chart if necessary.
-   */
-  private ContentObserver waypointObserver;
-
-  /**
-   * A thread with a looper. Post to updateTrackHandler to execute Runnables on
-   * this thread.
-   */
-  private final HandlerThread updateTrackThread =
-      new HandlerThread("updateTrackThread");
-
-  /** Handler for updateTrackThread */
-  private Handler updateTrackHandler;
-
-  /**
-   * A runnable that update the profile from the provider.
-   */
-  private final Runnable updateTrackRunnable = new Runnable() {
-    @Override
-    public void run() {
-      Log.d(MyTracksConstants.TAG, "MyTracks: Updating chart.");
-      Track track = providerUtils.getTrack(recordingTrackId);
-      if (track == null) {
-        Log.w(MyTracksConstants.TAG, "MyTracks: track not found");
+      // Get a local reference in case it's set to null concurrently with this.
+      TrackDataHub localDataHub = dataHub;
+      if (localDataHub == null || isFinishing()) {
         return;
       }
-      Cursor cursor = null;
-      try {
-        cursor = providerUtils.getLocationsCursor(recordingTrackId,
-            lastSeenLocationId + 1,
-            MyTracksConstants.MAX_DISPLAYED_TRACK_POINTS - cv.getData().size(),
-            true);
-        if (cursor != null) {
-          if (cursor.moveToLast()) {
-            final int idColumnIdx =
-                cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
-            ArrayList<double[]> data = new ArrayList<double[]>();
-            // Need two locations so we can keep track of the last location.
-            Location location = new Location("");
-            do {
-              lastSeenLocationId = cursor.getLong(idColumnIdx);
-              providerUtils.fillLocation(cursor, location);
-              if (MyTracksUtils.isValidLocation(location)) {
-                double[] point = new double[3];
-                location = getDataPoint(location, track, point);
-                data.add(point);
-              }
-            } while (cursor.moveToPrevious());
-            cv.addDataPoints(data);
-          }
-        }
-      } catch (RuntimeException e) {
-        Log.w(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
-      } finally {
-        if (cursor != null) {
-          cursor.close();
-        }
-        uiHandler.post(new Runnable() {
-          public void run() {
-            cv.invalidate();
-          }
-        });
-      }
+
+      busyPane.setVisibility(View.GONE);
+      zoomControls.setIsZoomInEnabled(chartView.canZoomIn());
+      zoomControls.setIsZoomOutEnabled(chartView.canZoomOut());
+      chartView.setShowPointer(localDataHub.isRecordingSelected());
+      chartView.invalidate();
     }
   };
-
-  @Override
-  public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-      String key) {
-    if (key != null) {
-      if (key.equals(getString(R.string.selected_track_key))) {
-        selectedTrackId =
-            sharedPreferences.getLong(getString(R.string.selected_track_key),
-                -1);
-        readProfileAsync();
-      } else if (key.equals(getString(R.string.metric_units_key))) {
-        metricUnits =
-            sharedPreferences.getBoolean(getString(R.string.metric_units_key),
-                true);
-        cv.setMetricUnits(metricUnits);
-        readProfileAsync();
-      } else if (key.equals(getString(R.string.report_speed_key))) {
-        reportSpeed =
-            sharedPreferences.getBoolean(getString(R.string.report_speed_key),
-                true);
-        cv.setReportSpeed(reportSpeed, this);
-        readProfileAsync();
-      } else if (key.equals(getString(R.string.recording_track_key))) {
-        recordingTrackId =
-            sharedPreferences.getLong(getString(R.string.recording_track_key),
-                -1);
-        runOnUiThread(updateChart);
-      }
-    }
-  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    Log.w(MyTracksConstants.TAG, "ChartActivity.onCreate");
+    Log.w(TAG, "ChartActivity.onCreate");
     super.onCreate(savedInstanceState);
-    MyTracks.getInstance().setChartActivity(this);
-    providerUtils = MyTracksProviderUtils.Factory.get(this);
 
     // The volume we want to control is the Text-To-Speech volume
     int volumeStream =
@@ -249,29 +121,12 @@ public class ChartActivity extends Activity implements
     setVolumeControlStream(volumeStream);
 
     requestWindowFeature(Window.FEATURE_NO_TITLE);
-    setContentView(R.layout.mytracks_elevation);
+    setContentView(R.layout.mytracks_charts);
     ViewGroup layout = (ViewGroup) findViewById(R.id.elevation_chart);
-    cv = new ChartView(this);
-    cv.setMode(this.mode);
+    chartView = new ChartView(this);
     LayoutParams params =
         new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
-    layout.addView(cv, params);
-
-    SharedPreferences preferences =
-        getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
-    if (preferences != null) {
-      selectedTrackId =
-          preferences.getLong(getString(R.string.selected_track_key), -1);
-      recordingTrackId =
-          preferences.getLong(getString(R.string.recording_track_key), -1);
-      metricUnits = preferences.getBoolean(getString(R.string.metric_units_key),
-          true);
-      cv.setMetricUnits(metricUnits);
-      reportSpeed = preferences.getBoolean(getString(R.string.report_speed_key),
-          true);
-      cv.setReportSpeed(reportSpeed, this);
-      preferences.registerOnSharedPreferenceChangeListener(this);
-    }
+    layout.addView(chartView, params);
 
     busyPane = (LinearLayout) findViewById(R.id.elevation_busypane);
     zoomControls = (ZoomControls) findViewById(R.id.elevation_zoom);
@@ -287,157 +142,46 @@ public class ChartActivity extends Activity implements
         zoomOut();
       }
     });
-
-    updateTrackThread.start();
-    updateTrackHandler = new Handler(updateTrackThread.getLooper());
-
-    // Register observer for the track point provider:
-    Handler contentHandler = new Handler();
-    observer = new ContentObserver(contentHandler) {
-      @Override
-      public void onChange(boolean selfChange) {
-        Log.d(MyTracksConstants.TAG, "ChartActivity: ContentObserver.onChange");
-        // Check for any new locations and append them to the currently
-        // recording track.
-        if (recordingTrackId < 0) {
-          // No track is being recorded. We should not be here.
-          return;
-        }
-        if (selectedTrackId != recordingTrackId) {
-          // No track, or one other than the recording track is selected, don't
-          // bother.
-          return;
-        }
-        // Update can potentially be lengthy, put it in its own thread:
-        updateTrackHandler.post(updateTrackRunnable);
-        super.onChange(selfChange);
-      }
-    };
-
-    waypointObserver = new ContentObserver(contentHandler) {
-      @Override
-      public void onChange(boolean selfChange) {
-        Log.d(MyTracksConstants.TAG,
-            "MyTracksMap: ContentObserver.onChange waypoints");
-        if (selectedTrackId < 0) {
-          return;
-        }
-        Thread t = new Thread() {
-          @Override
-          public void run() {
-            readWaypoints();
-            ChartActivity.this.runOnUiThread(new Runnable() {
-              @Override
-              public void run() {
-                cv.invalidate();
-              }
-            });
-          }
-        };
-        t.start();
-        super.onChange(selfChange);
-      }
-    };
-
-    readProfileAsync();
-  }
-
-  @Override
-  protected void onPause() {
-    super.onPause();
-    unregisterContentObservers();
   }
 
   @Override
   protected void onResume() {
     super.onResume();
-    // Make sure any updates that might have happened are propagated to this
-    // activity:
-    observer.onChange(false);
-    waypointObserver.onChange(false);
-    registerContentObservers();
+
+    dataHub = TrackDataHub.getStartedInstance();
+    dataHub.registerTrackDataListener(this, EnumSet.of(
+        ListenerDataType.SELECTED_TRACK_CHANGED,
+        ListenerDataType.TRACK_UPDATES,
+        ListenerDataType.POINT_UPDATES,
+        ListenerDataType.SAMPLED_OUT_POINT_UPDATES,
+        ListenerDataType.WAYPOINT_UPDATES,
+        ListenerDataType.DISPLAY_PREFERENCES));
   }
 
-  /**
-   * Register the content observer for the map overlay.
-   */
-  private void registerContentObservers() {
-    getContentResolver().registerContentObserver(TrackPointsColumns.CONTENT_URI,
-        false/* notifyForDescendents */, observer);
-    getContentResolver().registerContentObserver(WaypointsColumns.CONTENT_URI,
-        false/* notifyForDescendents */, waypointObserver);
-  }
+  @Override
+  protected void onPause() {
+    dataHub.unregisterTrackDataListener(this);
+    dataHub = null;
 
-  /**
-   * Unregister the content observer for the map overlay.
-   */
-  private void unregisterContentObservers() {
-    getContentResolver().unregisterContentObserver(observer);
-    getContentResolver().unregisterContentObserver(waypointObserver);
-  }
-
-  private boolean selectedTrackIsRecording() {
-    return selectedTrackId == recordingTrackId;
+    super.onPause();
   }
 
   private void zoomIn() {
-    cv.zoomIn();
-    zoomControls.setIsZoomInEnabled(cv.canZoomIn());
-    zoomControls.setIsZoomOutEnabled(cv.canZoomOut());
+    chartView.zoomIn();
+    zoomControls.setIsZoomInEnabled(chartView.canZoomIn());
+    zoomControls.setIsZoomOutEnabled(chartView.canZoomOut());
   }
 
   private void zoomOut() {
-    cv.zoomOut();
-    zoomControls.setIsZoomInEnabled(cv.canZoomIn());
-    zoomControls.setIsZoomOutEnabled(cv.canZoomOut());
+    chartView.zoomOut();
+    zoomControls.setIsZoomInEnabled(chartView.canZoomIn());
+    zoomControls.setIsZoomOutEnabled(chartView.canZoomOut());
   }
 
-  public void setMode(Mode newMode) {
-    if (this.mode != newMode) {
-      this.mode = newMode;
-      cv.setMode(this.mode);
-      readProfileAsync();
-    }
-  }
-
-  public Mode getMode() {
-    return mode;
-  }
-
-  public void setSeriesEnabled(int index, boolean enabled) {
-    cv.getChartValueSeries(index).setEnabled(enabled);
-    runOnUiThread(updateChart);
-  }
-
-  public boolean isSeriesEnabled(int index) {
-    return cv.getChartValueSeries(index).isEnabled();
-  }
-
-  private void readWaypoints() {
-    if (selectedTrackId < 0) {
-      return;
-    }
-    Cursor cursor = null;
-    cv.clearWaypoints();
-    try {
-      // We will silently drop extra waypoints to make the app responsive.
-      cursor =
-          providerUtils.getWaypointsCursor(selectedTrackId, 0,
-              MyTracksConstants.MAX_DISPLAYED_TRACK_POINTS);
-      if (cursor != null) {
-        if (cursor.moveToFirst()) {
-          do {
-            Waypoint wpt = providerUtils.createWaypoint(cursor);
-            cv.addWaypoint(wpt);
-          } while (cursor.moveToNext());
-        }
-      }
-    } catch (RuntimeException e) {
-      Log.w(MyTracksConstants.TAG, "Caught an unexpected exception.", e);
-    } finally {
-      if (cursor != null) {
-        cursor.close();
-      }
+  private void setMode(Mode newMode) {
+    if (chartView.getMode() != newMode) {
+      chartView.setMode(newMode);
+      dataHub.reloadDataForListener(this);
     }
   }
 
@@ -445,7 +189,7 @@ public class ChartActivity extends Activity implements
   public boolean onCreateOptionsMenu(Menu menu) {
     super.onCreateOptionsMenu(menu);
     chartSettingsMenuItem =
-        menu.add(0, MyTracksConstants.MENU_CHART_SETTINGS, 0,
+        menu.add(0, Constants.MENU_CHART_SETTINGS, 0,
             R.string.chart_settings);
     chartSettingsMenuItem.setIcon(R.drawable.chart_settings);
     return true;
@@ -454,38 +198,109 @@ public class ChartActivity extends Activity implements
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
-      case MyTracksConstants.MENU_CHART_SETTINGS:
-        MyTracks.getInstance().getDialogManager().showDialogSafely(
-            DialogManager.DIALOG_CHART_SETTINGS);
+      case Constants.MENU_CHART_SETTINGS:
+        showDialog(CHART_SETTINGS_DIALOG);
         return true;
     }
     return super.onOptionsItemSelected(item);
   }
 
+  @Override
+  protected Dialog onCreateDialog(int id) {
+    if (id == CHART_SETTINGS_DIALOG) {
+      final ChartSettingsDialog settingsDialog = new ChartSettingsDialog(this);
+      settingsDialog.setOnClickListener(new OnClickListener() {
+        @Override
+        public void onClick(DialogInterface arg0, int which) {
+          if (which != DialogInterface.BUTTON_POSITIVE) {
+            return;
+          }
+
+          for (int i = 0; i < ChartView.NUM_SERIES; i++) {
+            chartView.setChartValueSeriesEnabled(i, settingsDialog.isSeriesEnabled(i));
+          }
+          setMode(settingsDialog.getMode());
+          chartView.postInvalidate();
+        }
+      });
+      return settingsDialog;
+    }
+
+    return super.onCreateDialog(id);
+  }
+
+  @Override
+  protected void onPrepareDialog(int id, Dialog dialog) {
+    super.onPrepareDialog(id, dialog);
+
+    if (id == CHART_SETTINGS_DIALOG) {
+      prepareSettingsDialog((ChartSettingsDialog) dialog);
+    }
+  }
+
+  private void prepareSettingsDialog(ChartSettingsDialog settingsDialog) {
+    settingsDialog.setMode(chartView.getMode());
+    for (int i = 0; i < ChartView.NUM_SERIES; i++) {
+      settingsDialog.setSeriesEnabled(i, chartView.isChartValueSeriesEnabled(i));
+    }
+  }
+
   /**
    * Given a location, creates a new data point for the chart. A data point is
-   * an array double[2], where:
+   * an array double[3 or 6], where:
    * data[0] = the time or distance
    * data[1] = the elevation
    * data[2] = the speed
+   * and possibly:
+   * data[3] = power
+   * data[4] = cadence
+   * data[5] = heart rate
    *
    * This must be called in order for each point.
    *
    * @param location the location to get data for (this method takes ownership of that location)
-   * @param track the track to get data from
    * @param result the resulting point to fill out
    * @return the previous location, now available for reuse
    */
-  private Location getDataPoint(Location location, Track track, double[] result) {
+  private void fillDataPoint(Location location, double result[]) {
+    double timeOrDistance = Double.NaN,
+           elevation = Double.NaN,
+           speed = Double.NaN,
+           power = Double.NaN,
+           cadence = Double.NaN,
+           heartRate = Double.NaN;
+
+    if (location instanceof MyTracksLocation &&
+        ((MyTracksLocation) location).getSensorDataSet() != null) {
+      SensorDataSet sensorData = ((MyTracksLocation) location).getSensorDataSet();
+      if (sensorData.hasPower()
+          && sensorData.getPower().getState() == Sensor.SensorState.SENDING
+          && sensorData.getPower().hasValue()) {
+        power = sensorData.getPower().getValue();
+      }
+      if (sensorData.hasCadence()
+          && sensorData.getCadence().getState() == Sensor.SensorState.SENDING
+          && sensorData.getCadence().hasValue()) {
+        cadence = sensorData.getCadence().getValue();
+      }
+      if (sensorData.hasHeartRate()
+          && sensorData.getHeartRate().getState() == Sensor.SensorState.SENDING
+          && sensorData.getHeartRate().hasValue()) {
+        heartRate = sensorData.getHeartRate().getValue();
+      }
+    }
+
+    // TODO: Account for segment splits?
+    Mode mode = chartView.getMode();
     switch (mode) {
       case BY_DISTANCE:
-        result[0] = profileLength;
+        timeOrDistance = profileLength / 1000.0;
         if (lastLocation != null) {
           double d = lastLocation.distanceTo(location);
           if (metricUnits) {
-            profileLength += d / 1000.0;
+            profileLength += d;
           } else {
-            profileLength += d * UnitConversions.KM_TO_MI / 1000.0;
+            profileLength += d * UnitConversions.KM_TO_MI;
           }
         }
         break;
@@ -494,16 +309,16 @@ public class ChartActivity extends Activity implements
           // Base case
           startTime = location.getTime();
         }
-        result[0] = (location.getTime() - startTime);
+        timeOrDistance = (location.getTime() - startTime);
         break;
       default:
-        Log.w(MyTracksConstants.TAG, "ChartActivity unknown mode: " + mode);
+        Log.w(TAG, "ChartActivity unknown mode: " + mode);
     }
 
     elevationBuffer.setNext(metricUnits
         ? location.getAltitude()
         : location.getAltitude() * UnitConversions.M_TO_FT);
-    result[1] = elevationBuffer.getAverage();
+    elevation = elevationBuffer.getAverage();
 
     if (lastLocation == null) {
       if (Math.abs(location.getSpeed() - 128) > 1) {
@@ -512,113 +327,152 @@ public class ChartActivity extends Activity implements
     } else if (TripStatisticsBuilder.isValidSpeed(
         location.getTime(), location.getSpeed(), lastLocation.getTime(),
         lastLocation.getSpeed(), speedBuffer)
-        && (location.getSpeed() <= track.getStatistics().getMaxSpeed())) {
+        && (location.getSpeed() <= trackMaxSpeed)) {
       speedBuffer.setNext(location.getSpeed());
     }
-    result[2] = speedBuffer.getAverage() * 3.6;
+    speed = speedBuffer.getAverage() * 3.6;
     if (!metricUnits) {
-      result[2] *= UnitConversions.KM_TO_MI;
+      speed *= UnitConversions.KM_TO_MI;
     }
-    if (!reportSpeed && (result[2] != 0)) {
-      // Format as hours per unit
-      result[2] = (60.0 / result[2]);
+    if (!reportSpeed) {
+      if (speed != 0) {
+        // Format as hours per unit
+        speed = (60.0 / speed);
+      } else {
+        speed = Double.NaN;
+      }
     }
 
-    Location oldLastLocation = lastLocation;
+    // Keep a copy so the location can be reused.
     lastLocation = location;
 
-    if (oldLastLocation == null) {
-      // No previous location, but return a blank one for reuse
-      return new Location("");
+    if (result != null) {
+      result[0] = timeOrDistance;
+      result[1] = elevation;
+      result[2] = speed;
+      result[3] = power;
+      result[4] = cadence;
+      result[5] = heartRate;
     }
-
-    return oldLastLocation;
   }
 
-  /**
-   * Sets the chart data points reading from the provider. This is non-blocking.
-   */
-  private void readProfileAsync() {
-    cv.reset();
-    updateTrackHandler.post(new Runnable() {
+  @Override
+  public void onProviderStateChange(ProviderState state) {
+    // We don't care.
+  }
+
+  @Override
+  public void onCurrentLocationChanged(Location loc) {
+    // We don't care.
+  }
+
+  @Override
+  public void onCurrentHeadingChanged(double heading) {
+    // We don't care.
+  }
+
+  @Override
+  public void onSelectedTrackChanged(Track track, boolean isRecording) {
+    runOnUiThread(new Runnable() {
+      @Override
       public void run() {
-        runOnUiThread(showSpinner);
-        readProfile();
-        readWaypoints();
-        runOnUiThread(updateChart);
+        busyPane.setVisibility(View.VISIBLE);
       }
     });
   }
 
-  /**
-   * Reads the track profile from the provider. This is a blocking function and
-   * should not be run from the UI thread.
-   */
-  private void readProfile() {
+  @Override
+  public void onTrackUpdated(Track track) {
+    if (track == null || track.getStatistics() == null) {
+      trackMaxSpeed = 0.0;
+      return;
+    }
+
+    trackMaxSpeed = track.getStatistics().getMaxSpeed();
+  }
+
+  @Override
+  public void clearTrackPoints() {
     profileLength = 0;
     lastLocation = null;
     startTime = -1;
-    Cursor cursor = null;
-    if (selectedTrackId < 0) {
-      return;
-    }
-    Track track = providerUtils.getTrack(selectedTrackId);
-    if (track == null) {
-      return;
-    }
-    long lastLocationRead = track.getStartId();
-    long totalLocations = track.getStopId() - track.getStartId();
+    elevationBuffer.reset();
+    chartView.reset();
+    speedBuffer.reset();
+    pendingPoints.clear();
 
-    // Limit the number of chart readings. Ideally we would want around 1024.
-    int chartSamplingFrequency = Math.max(1, (int) (totalLocations / 1024.0));
-    int bufferSize = 1024;
-    try {
-      final ArrayList<double[]> theData = new ArrayList<double[]>();
-      int points = 0;
-      // Need two locations so we can keep track of the last location.
-      Location location = new Location("");
-      while (lastLocationRead < track.getStopId()) {
-        cursor = providerUtils.getLocationsCursor(
-            selectedTrackId, lastLocationRead, bufferSize, false);
-        if (cursor != null) {
-          elevationBuffer.reset();
-          speedBuffer.reset();
-          if (cursor.moveToFirst()) {
-            final int idColumnIdx =
-                cursor.getColumnIndexOrThrow(TrackPointsColumns._ID);
-            while (cursor.moveToNext()) {
-              points++;
-              providerUtils.fillLocation(cursor, location);
-              if (MyTracksUtils.isValidLocation(location)) {
-                lastLocationRead = lastSeenLocationId =
-                    cursor.getLong(idColumnIdx);
-                double[] point = new double[3];
-                location = getDataPoint(location, track, point);
-                if (points % chartSamplingFrequency == 0) {
-                  theData.add(point);
-                }
-              }
-            }
-          } else {
-            lastLocationRead += bufferSize;
-          }
-        } else {
-          lastLocationRead += bufferSize;
-        }
-        cursor.close();
-        cursor = null;
+    runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        chartView.resetScroll();
       }
-      runOnUiThread(new Runnable() {
-        public void run() {
-          cv.setDataPoints(theData);
-        }
-      });
-    } catch (RuntimeException e) {
-      Log.w(MyTracksConstants.TAG, "Caught unexpected exception.", e);
-    } finally {
-      if (cursor != null) {
-        cursor.close();
-      }
+    });
+  }
+
+  @Override
+  public void onNewTrackPoint(Location loc) {
+    if (LocationUtils.isValidLocation(loc)) {
+      double[] point = new double[6];
+      fillDataPoint(loc, point);
+      pendingPoints.add(point);
     }
+  }
+
+  @Override
+  public void onSampledOutTrackPoint(Location loc) {
+    // Still account for the point in the smoothing buffers.
+    fillDataPoint(loc, null);
+  }
+
+  @Override
+  public void onSegmentSplit() {
+    // Do nothing.
+  }
+
+  @Override
+  public void onNewTrackPointsDone() {
+    chartView.addDataPoints(pendingPoints);
+    pendingPoints.clear();
+    runOnUiThread(updateChart);
+  }
+
+  @Override
+  public void clearWaypoints() {
+    chartView.clearWaypoints();
+  }
+
+  @Override
+  public void onNewWaypoint(Waypoint wpt) {
+    chartView.addWaypoint(wpt);
+  }
+
+  @Override
+  public void onNewWaypointsDone() {
+    runOnUiThread(updateChart);
+  }
+
+  @Override
+  public boolean onUnitsChanged(boolean metric) {
+    boolean changed = metric != this.metricUnits;
+    if (!changed) return false;
+
+    this.metricUnits = metric;
+
+    chartView.setMetricUnits(metric);
+
+    return true;  // Reload data
+  }
+
+  @SuppressWarnings("hiding")
+  @Override
+  public boolean onReportSpeedChanged(boolean reportSpeed) {
+    boolean changed = reportSpeed != this.reportSpeed;
+    if (!changed) return false;
+
+    this.reportSpeed = reportSpeed;
+
+    chartView.setReportSpeed(reportSpeed, this);
+
+    return true;  // Reload data
   }
 }

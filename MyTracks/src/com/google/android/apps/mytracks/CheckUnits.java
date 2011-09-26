@@ -16,6 +16,7 @@
 
 package com.google.android.apps.mytracks;
 
+import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -24,6 +25,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
 import java.util.Locale;
 
 /**
@@ -77,12 +79,15 @@ class CheckUnits {
 
   private static void accept(Context context, SharedPreferences preferences) {
     recordCheckPerformed(preferences);
-    Intent startIntent = new Intent(context, MyTracksSettings.class);
+    Intent startIntent = new Intent(context, SettingsActivity.class);
+    startIntent.putExtra(context.getString(R.string.open_settings_screen), 
+                         context.getString(R.string.display_settings_screen_key));
     context.startActivity(startIntent);
   }
 
   private static void recordCheckPerformed(SharedPreferences preferences) {
-    preferences.edit().putBoolean(PREFERENCE_UNITS_CHECKED, true).commit();
+    ApiFeatures.getInstance().getApiPlatformAdapter().applyPreferenceChanges(
+        preferences.edit().putBoolean(PREFERENCE_UNITS_CHECKED, true));
   }
 
   private CheckUnits() {

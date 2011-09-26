@@ -18,7 +18,8 @@ limitations under the License.
   xmlns:android="http://schemas.android.com/apk/res/android">
 
   <!-- Display settings -->
-  <PreferenceScreen android:title="@string/settings_display">
+  <PreferenceScreen android:title="@string/settings_display"
+                    android:key="@string/display_settings_screen_key">
     <CheckBoxPreference
         android:key="@string/metric_units_key"
         android:title="@string/settings_metric_units"
@@ -42,14 +43,14 @@ limitations under the License.
         android:summary="@string/settings_announcement_frequency_summary"
         android:entries="@array/task_frequency_options"
         android:entryValues="@array/task_frequency_values"
-        android:defaultValue="-1" />
+        android:defaultValue="0" />
 
     <com.google.android.apps.mytracks.IntegerListPreference
         android:key="@string/split_frequency_key"
         android:title="@string/settings_split_frequency"
         android:summary="@string/settings_split_frequency_summary"
-        android:entries="@array/split_frequency_options"
-        android:entryValues="@array/split_frequency_values"
+        android:entries="@array/task_frequency_options"
+        android:entryValues="@array/task_frequency_values"
         android:defaultValue="0" />
 
     <com.google.android.apps.mytracks.IntegerListPreference
@@ -85,14 +86,6 @@ limitations under the License.
         android:defaultValue="200" />
 
     <com.google.android.apps.mytracks.IntegerListPreference
-        android:key="@string/signal_sampling_frequency_key"
-        android:title="@string/settings_signal_sampling_frequency"
-        android:summary="@string/settings_signal_sampling_frequency_summary"
-        android:entries="@array/task_frequency_options"
-        android:entryValues="@array/task_frequency_values"
-        android:defaultValue="-1" />
-
-    <com.google.android.apps.mytracks.IntegerListPreference
         android:key="@string/auto_resume_track_timeout_key"
         android:title="@string/settings_auto_resume_track_timeout"
         android:summary="@string/settings_auto_resume_track_timeout_summary"
@@ -107,6 +100,46 @@ limitations under the License.
         android:summaryOff="@string/settings_timestamp_track_name_summary_off"
         android:defaultValue="true" />
 
+  </PreferenceScreen>
+
+  <!-- Sensors -->
+  <PreferenceScreen android:title="@string/sensor_options"
+      android:key="@string/sensor_options_key">
+    <ListPreference android:key="@string/sensor_type_key"
+        android:title="@string/settings_sensor_type"
+        android:summary="@string/settings_sensor_type_summary"
+        android:entries="@array/sensor_type_options"
+        android:entryValues="@array/sensor_type_values"
+        android:defaultValue="@string/none"/>
+
+    <!-- Bluetooth -->
+    <PreferenceCategory android:title="@string/bluetooth_options">
+      <ListPreference android:key="@string/bluetooth_sensor_key"
+                      android:title="@string/bluetooth_sensor_title"
+                      android:summary="@string/bluetooth_sensor_summary"
+                      android:defaultValue="any" />
+
+      <Preference android:key="@string/bluetooth_pairing_key"
+                  android:title="@string/bluetooth_pairing"
+                  android:summary="@string/bluetooth_pairing_summary"
+                  android:persistent="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/ant_options"
+      android:key="@string/ant_options_key">
+	    <com.google.android.apps.mytracks.AntPreference
+	    	android:key="@string/ant_heart_rate_sensor_id_key"
+	        android:title="@string/settings_heart_rate_ant_sensor_id"/>
+<!--
+	    <com.google.android.apps.mytracks.AntPreference
+	    	android:key="@string/ant_power_sensor_id_key"
+	        android:title="@string/settings_power_ant_sensor_id"/>
+-->
+
+	    <com.google.android.apps.mytracks.AntPreference
+	    	android:key="@string/ant_srm_bridge_sensor_id_key"
+	        android:title="@string/settings_srm_bridge_ant_sensor_id"/>
+    </PreferenceCategory>
   </PreferenceScreen>
 
   <!-- Sharing settings -->
@@ -141,4 +174,11 @@ limitations under the License.
           android:persistent="false" />
     </PreferenceCategory>
   </PreferenceScreen>
+
+  <!-- Reset to defaults -->
+  <Preference
+      android:title="@string/settings_reset"
+      android:key="@string/reset_key"
+      android:summary="@string/settings_reset_summary"
+      android:persistent="false" />
 </PreferenceScreen>

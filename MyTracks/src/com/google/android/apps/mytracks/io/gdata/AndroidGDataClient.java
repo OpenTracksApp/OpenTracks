@@ -1,12 +1,12 @@
 /*
  * Copyright 2010 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -137,7 +137,7 @@ public class AndroidGDataClient implements GDataClient {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see GDataClient#encodeUri(java.lang.String)
    */
   public String encodeUri(String uri) {
@@ -155,7 +155,7 @@ public class AndroidGDataClient implements GDataClient {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see com.google.wireless.gdata.client.GDataClient#createQueryParams()
    */
   public QueryParams createQueryParams() {
@@ -187,6 +187,7 @@ public class AndroidGDataClient implements GDataClient {
     while (redirectsLeft > 0) {
 
       HttpUriRequest request = creator.createRequest(uri);
+      request.addHeader("User-Agent", "Android-GData");
       request.addHeader("Accept-Encoding", "gzip");
 
       // only add the auth token if not null (to allow for GData feeds that do
@@ -272,7 +273,7 @@ public class AndroidGDataClient implements GDataClient {
     String errorMessage = null;
     HttpEntity entity = response.getEntity();
     try {
-      if (response != null && entity != null) {
+      if (entity != null) {
         InputStream in = entity.getContent();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         byte[] buf = new byte[8192];
@@ -328,7 +329,7 @@ public class AndroidGDataClient implements GDataClient {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see GDataClient#getFeedAsStream(java.lang.String, java.lang.String)
    */
   public InputStream getFeedAsStream(String feedUrl, String authToken)
@@ -357,7 +358,7 @@ public class AndroidGDataClient implements GDataClient {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see GDataClient#createEntry
    */
   public InputStream createEntry(String feedUrl, String authToken,
@@ -376,7 +377,7 @@ public class AndroidGDataClient implements GDataClient {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see GDataClient#updateEntry
    */
   public InputStream updateEntry(String editUri, String authToken,
@@ -394,7 +395,7 @@ public class AndroidGDataClient implements GDataClient {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see GDataClient#deleteEntry
    */
   public void deleteEntry(String editUri, String authToken)

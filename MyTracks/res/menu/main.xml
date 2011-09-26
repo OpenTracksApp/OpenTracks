@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
   <item android:id="@+id/menu_start_recording"
-    android:icon="@drawable/menu_record"
+    android:icon="@drawable/ic_menu_recordtrack"
     android:title="@string/start_recording"/>
 
   <item android:id="@+id/menu_stop_recording"
-    android:icon="@drawable/menu_stop"
+    android:icon="@drawable/ic_menu_stoprecording"
     android:title="@string/stop_recording"/>
 
   <item android:id="@+id/menu_list_tracks"
-    android:icon="@drawable/menu_list_tracks"
+    android:icon="@drawable/ic_menu_tracklist"
     android:title="@string/list_tracks"/>
 
   <item android:id="@+id/menu_list_markers"
-    android:icon="@drawable/menu_marker"
+    android:icon="@drawable/ic_menu_waypoints"
     android:title="@string/list_markers"/>
 
   <item android:id="@+id/menu_settings"
@@ -22,10 +22,14 @@
     android:title="@string/settings"/>
     
   <item android:id="@+id/menu_aggregated_stats"
-    android:icon="@android:drawable/ic_menu_info_details"
     android:orderInCategory="1002"
     android:title="@string/aggregated_stats"/>
 
+  <item android:id="@+id/menu_sensor_state"
+    android:icon="@drawable/ic_menu_sensorstatus"
+    android:orderInCategory="1000"
+    android:title="@string/sensor_state"/>
+    
   <item android:id="@+id/menu_help"
     android:icon="@android:drawable/ic_menu_info_details"
     android:orderInCategory="1003"

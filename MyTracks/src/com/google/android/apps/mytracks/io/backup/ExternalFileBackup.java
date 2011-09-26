@@ -15,8 +15,9 @@
  */
 package com.google.android.apps.mytracks.io.backup;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
-import com.google.android.apps.mytracks.MyTracksSettings;
+import static com.google.android.apps.mytracks.Constants.TAG;
+
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.TrackPointsColumns;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
@@ -88,7 +89,7 @@ class ExternalFileBackup {
   private File getBackupsDirectory(boolean create) {
     String dirName = fileUtils.buildExternalDirectoryPath(BACKUPS_SUBDIR);
     final File dir = new File(dirName);
-    Log.d(MyTracksConstants.TAG, "Dir: " + dir.getAbsolutePath());
+    Log.d(Constants.TAG, "Dir: " + dir.getAbsolutePath());
     if (create) {
       // Try to create - if that fails, return null
       return fileUtils.ensureDirectoryExists(dir) ? dir : null;
@@ -147,22 +148,22 @@ class ExternalFileBackup {
    * Synchronously writes a backup to the given file.
    */
   private void writeToFile(File outputFile) throws IOException {
-    Log.d(MyTracksConstants.TAG,
+    Log.d(Constants.TAG,
         "Writing backup to file " + outputFile.getAbsolutePath());
 
     // Create all the auxiliary classes that will do the writing
     PreferenceBackupHelper preferencesHelper = new PreferenceBackupHelper();
     DatabaseDumper trackDumper = new DatabaseDumper(
-        TracksColumns.BACKUP_COLUMNS,
-        TracksColumns.BACKUP_COLUMN_TYPES,
+        BackupColumns.TRACKS_BACKUP_COLUMNS,
+        BackupColumns.TRACKS_BACKUP_COLUMN_TYPES,
         false);
     DatabaseDumper waypointDumper = new DatabaseDumper(
-        WaypointsColumns.BACKUP_COLUMNS,
-        WaypointsColumns.BACKUP_COLUMN_TYPES,
+        BackupColumns.WAYPOINTS_BACKUP_COLUMNS,
+        BackupColumns.WAYPOINTS_BACKUP_COLUMN_TYPES,
         false);
     DatabaseDumper pointDumper = new DatabaseDumper(
-        TrackPointsColumns.BACKUP_COLUMNS,
-        TrackPointsColumns.BACKUP_COLUMN_TYPES,
+        BackupColumns.POINTS_BACKUP_COLUMNS,
+        BackupColumns.POINTS_BACKUP_COLUMN_TYPES,
         false);
 
     // Open the target for writing
@@ -201,12 +202,14 @@ class ExternalFileBackup {
 
       // Dump preferences
       SharedPreferences preferences =
-          context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+          context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
       preferencesHelper.exportPreferences(preferences, outWriter);
     } catch (IOException e) {
       // We tried to delete the partially created file, but do nothing
       // if that also fails.
-      outputFile.delete();
+      if (!outputFile.delete()) {
+        Log.w(TAG, "Failed to delete file " + outputFile.getAbsolutePath());
+      }
 
       throw e;
     } finally {
@@ -219,7 +222,7 @@ class ExternalFileBackup {
    * Synchronously restores the backup from the given file.
    */
   private void restoreFromFile(File inputFile) throws IOException {
-    Log.d(MyTracksConstants.TAG,
+    Log.d(Constants.TAG,
         "Restoring from file " + inputFile.getAbsolutePath());
 
     PreferenceBackupHelper preferencesHelper = new PreferenceBackupHelper();
@@ -253,7 +256,7 @@ class ExternalFileBackup {
 
       // Restore preferences
       SharedPreferences preferences =
-          context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+          context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
       preferencesHelper.importPreferences(reader, preferences);
     } finally {
       compressedStream.close();

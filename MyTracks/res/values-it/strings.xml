@@ -15,8 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-  <string name="app_name">My Tracks</string>
-
   <!-- Used by the Menu -->
   <string name="start_recording">Registra percorso</string>
   <string name="stop_recording">Fine registrazione</string>
@@ -35,7 +33,7 @@ limitations under the License.
   <!-- Error messages -->
   <string name="error_no_location_manager">Nessuna fonte di posizione trovata su questo dispositivo.</string>
   <string name="error_no_gps_location_provider">Nessuna fonte di posizione GPS trovata su questo dispositivo.</string>
-  <string name="error_sending_to_mymap">Si è verificato un errore nell\'invio del percorso a «Le mie mappe». Per favore riprova più tardi.</string>
+  <string name="error_sending_to_fusiontables">Si è verificato un errore nell\'invio del percorso a Google Fusion Tables. Per favore riprova più tardi.</string>
   <string name="error_sending_to_docs">Si è verificato un errore nell\'invio del percorso a Google Docs. Per favore riporva più tardi.</string>
   <string name="error_unable_to_start_recording">Impossibile iniziare la registrazione. Riprova.</string>
   <string name="error_unable_to_stop_recording">Impossibile fermare la registrazione. Riprova.</string>
@@ -50,11 +48,10 @@ limitations under the License.
   <string name="wait_for_fix">Sto aspettando il fix del GPS. Accertati che il cielo sia visibile.</string>
   <string name="status_now_recording">Sto registrando un nuovo percorso.</string>
   <string name="status_stopped_recording">Registrazione del percorso terminata.</string>
-  <string name="status_new_mymap_has_been_created">Una nuova mappa è stata creata in «Le mie mappe» su maps.google.com.</string>
+  <!-- <string name="status_new_fusiontable_has_been_created">Una nuova mappa è stata creata in «Le mie mappe» su maps.google.com.</string> -->
   <string name="status_tracks_have_been_uploaded">Il tuo percorso è stato inviato a maps.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_new_doc">Il tuo percorso è stato inviato ad un nuovo foglio di calcolo su docs.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_docs">Il tuo percorso è stato inviato a docs.google.com.</string>
-  <string name="status_mymap_info">Potrebbe essere necessario aspettare qualche minuto prima che i nuovi percorsi siano visibili.</string>
   <string name="status_enable_gps">Premi qui per andare a «Impostazioni di posizione e protezione» e attiva «Utilizza satelliti GPS». Poi premi il tasto di ritorno per tornare qui.</string>
   <string name="status_approximate_location">Nota: la posizione indicata è un\'approssimazione determinata in base alle antenne cellulari e reti WIFI vicine.</string>
   <string name="status_no_location">La posizione non può essere determinata. Attiva più fonti di posizione (vedi «Impostazioni di posizione e protezione») e eccertati che il cielo sia visibile. Riprova più tardi.</string>
@@ -66,11 +63,11 @@ limitations under the License.
   <string name="progress_message">Invio del percorso a Google in corso.</string>
   <string name="progress_message_reading_track">Lettura in corso...</string>
   <string name="progress_message_preparing_track">Elaborazione del percorso in corso...</string>
-  <string name="progress_message_authenticating_mymaps">Autenticazione a Google Maps in corso...</string>
+  <!-- <string name="progress_message_authenticating_fusiontables">Autenticazione a Google Maps in corso...</string> -->
   <string name="progress_message_authenticating_docs">Autenticazione a Google Docs in corso...</string>
   <string name="progress_message_sending_docs">Invio del percorso a Google Docs in corso...</string>
-  <string name="progress_message_sending_mymaps">Invio del percorso a Google Maps in corso...</string>
-  <string name="progress_message_creating_map">Creazione di una nuova mappa in «Le mie mappe» in corso...</string>
+  <!-- <string name="progress_message_sending_fusiontables">Invio del percorso a Google Maps in corso...</string> -->
+  <!-- <string name="progress_message_creating_fusiontable">Creazione di una nuova mappa in «Le mie mappe» in corso...</string> -->
   <string name="import_progress_message">Importazione del percorso GPS in corso. Attendere prego...</string>
   <string name="write_progress_message">Salvataggio del file sulla scheda SD in corso. Attendere prego...</string>
   <string name="progress_message_updating_track">Aggiornamento delle statistiche del percorso in corso...</string>
@@ -83,8 +80,7 @@ limitations under the License.
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="new_map_description">Creato da My Tracks su Android.</string>
-  <string name="my_map_link">Creato da &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; su Android.</string>
-  <string name="new_map_title">Nuova mappa</string>
+  <string name="fusiontable_link">Creato da &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; su Android.</string>
 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">Punti</string>
@@ -104,6 +100,10 @@ limitations under the License.
   <string name="error">Errore</string>
   <string name="success">Successo</string>
   <string name="waypoint">Punto di passaggio</string>
+  <string name="cancel">Annulla</string>
+  <string name="close">Chiudi</string>
+  <string name="edit">Modifica</string>
+  <string name="save">Salva</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="start">(Inizio)</string>
@@ -111,8 +111,8 @@ limitations under the License.
 
   <!--  TrackList -->
   <string name="tracklist_show_track">Mostra</string>
-  <string name="tracklist_send_to_mymaps">Invia a «Le mie mappe» di Google</string>
-  <string name="tracklist_send_to_new_mymap">Invia a nuova mappa in «Le mie mappe» di Google</string>
+  <!-- <string name="tracklist_send_to_fusiontables">Invia a «Le mie mappe» di Google</string> -->
+  <!-- <string name="tracklist_send_to_new_fusiontable">Invia a nuova mappa in «Le mie mappe» di Google</string>  -->
   <string name="tracklist_send_to_docs">Invia a Google Docs</string>
   <string name="tracklist_send_to_google">Invia a Google...</string>
   <string name="tracklist_delete_track">Elimina dal telefono...</string>
@@ -120,7 +120,7 @@ limitations under the License.
   <string name="tracklist_write_to_sd">Salva su scheda SD...</string>
   <string name="tracklist_save_as_gpx">Salva in un file GPX</string>
   <string name="tracklist_save_as_kml">Salva in un file KML</string>
-  <string name="tracklist_btn_send_all_to_mymaps">Invia a «Le mie mappe» di Google</string>
+  <!-- <string name="tracklist_btn_send_all_to_fusiontables">Invia a «Le mie mappe» di Google</string> -->
   <string name="tracklist_btn_delete_all">Elimina tutti i percorsi</string>
   <!-- Export All -->
   <string name="tracklist_btn_export_all">Esporta tutti i percorsi</string>
@@ -129,7 +129,7 @@ limitations under the License.
   <string name="tracklist_all_tracks">Tutti i percorsi:</string>
   <string name="tracklist_this_track">Questo percorso</string>
   <string name="tracklist_share_track">Condividi con amici...</string>
-  <string name="tracklist_share_link">Un link alla mappa in «Le mie mappe» di Google</string>
+  <string name="tracklist_share_link">Un link alla mappa</string>
   <string name="tracklist_share_gpx_file">Un file GPX</string>
   <string name="tracklist_share_kml_file">Un file KML</string>
   <string name="tracklist_clear_map">Cancella la mappa</string>
@@ -147,14 +147,20 @@ limitations under the License.
   <!-- MyTracks Details -->
   <string name="trackdetails_title">Dettagli del percorso</string>
   <string name="trackdetails_name">Nome del percorso</string>
+  <string name="trackdetails_name_hint">Nome del percorso</string>
   <string name="trackdetails_description">Descrizione del percorso</string>
+  <string name="trackdetails_description_hint">Descrizione del percorso</string>
   <string name="trackdetails_category">Tipo di attività (ad es. escursionismo, ciclismo, corsa, arrampicata...)</string>
+  <string name="trackdetails_category_hint">Tipo di attività</string>
 
   <!-- MyTracks Waypoint Details -->
   <string name="waypointdetails_title">Dettagli sul segnaposto</string>
   <string name="waypointdetails_name">Nome del segnaposto</string>
+  <string name="waypointdetails_name_hint">Nome del segnaposto</string>
   <string name="waypointdetails_description">Descrizione del segnaposto</string>
+  <string name="waypointdetails_description_hint">Descrizione del segnaposto</string>
   <string name="waypointdetails_category">Tipo di segnaposto (ad es. edificio, buca, vista...)</string>
+  <string name="waypointdetails_category_hint">Tipo di segnaposto</string>
 
   <!-- MyTracks Settings -->
   <string name="mytracks_settings">Impostazioni di My Tracks</string>
@@ -193,37 +199,12 @@ limitations under the License.
   <string name="settings_share_url_only_summary_on">Solo l\'URL della mappa sarà inviata quando condividi un percorso</string>
   <string name="settings_share_url_only_summary_off">Anche il contenuto del percorso sarà inviato quando condividi un persorso</string>
 
-  <string name="settings_signal_sampling_frequency">Frequenza di campionamento</string>
-  <string name="settings_signal_sampling_frequency_summary">Tempo fra due registrazioni della qualità del segnale cellulare</string>
-
   <string name="settings_split_frequency">Frequenza di divisione</string>
   <string name="settings_split_frequency_summary">Tempo o distanza massima dopo di cui il percorso verrà diviso</string>
   <string name="pace_label">Andatura</string>
 
   <!-- MyTracksSky -->
   <string name="mytracks_sky">Satelliti GPS</string>
-
-  <!-- My Maps -->
-  <string name="select_map_message">Scegli una mappa dal tuo account:</string>
-  <string name="create_new_map">Crea una nuova mappa...</string>
-  <string name="map_list_title">Invia a «Le mie mappe» di Google</string>
-  <string name="maps_list_loading">Caricamento mappe in corso...</string>
-  <string name="maps_list_failed">Le tue mappe non possono momentaneamente essere caricate!</string>
-  <string name="open_map">Scegli questa mappa</string>
-  <string name="edit_map_details">Modifica dettagli della mappa</string>
-  <string name="share_map">Condividi la mappa con amici</string>
-  <string name="share_track">Condividi il percorso con amici</string>
-  <string name="delete_map">Elimina la mappa dal tuo account</string>
-  <string name="map_title">Titolo della mappa:</string>
-  <string name="map_description">Descrizione della mappa:</string>
-  <string name="map_searchable_edit">Rendi questa mappa e il suo contenuto visibili fra i risultati di ricerche</string>
-  <string name="map_not_searchable_edit">Rendi questa mappa e il suo contenuto invisibili fra i risultati di ricerche. Resteranno comunque visibili ad altri utilizzando l\'indirizzo URL esatto</string>
-  <string name="map_searchable">Questa mappa e il suo contenuto saranno visibili fra i risultati di ricerche</string>
-  <string name="map_not_searchable">Né questa mappa né il suo contenuto saranno visibili in risultati di ricerche, ma saranno comunque visibili ad altri tramite un link diretto.</string>
-  <string name="close">Chiudi</string>
-  <string name="edit">Modifica</string>
-  <string name="cancel">Annulla</string>
-  <string name="save">Salva</string>
 
   <!-- Sharing -->
   <string name="share_map_subject">Vorrei condividere una mappa con te</string>
@@ -234,6 +215,7 @@ limitations under the License.
   <string name="send_track_body_format">Credo che questo percorso potrebbe interessarti.
 
     Per vedere questo percorso, usa Google Earth o un altro software di cartografia.</string>
+  <string name="share_track">Condividi il percorso con amici</string>
 
   <!-- Visibility -->
   <string name="public_map">Pubblica</string>
@@ -327,19 +309,15 @@ limitations under the License.
   <!-- About -->
   <string name="about">Informazioni</string>
   <string name="help">Aiuto</string>
-  <string name="about_email">Supporto</string>
-
   <string name="about_team">Team:</string>
   <string name="about_version">Versione:</string>
   <string name="about_support">Supporto:</string>
 
   <!-- Send to Google -->
   <string name="sendtogoogle_title">Invia a...</string>
-  <string name="sendtogoogle_google_mymaps">«Le mie mappe» di Google</string>
+  <!-- <string name="sendtogoogle_google_fusiontables">«Le mie mappe» di Google</string> -->
   <string name="sendtogoogle_google_docs">Google Docs</string>
   <string name="sendtogoogle_send_now">Invia adesso</string>
-  <string name="sendtogoogle_create_new_map">Crea una nuova mappa</string>
-  <string name="sendtogoogle_pick_existing_map">Scegli una mappa esistente</string>
   <string name="sendtogoogle_send_stats">Invia statistiche del percorso</string>
   <string name="sendtogoogle_send_stats_and_points">Invia statistiche e segnaposti</string>
 

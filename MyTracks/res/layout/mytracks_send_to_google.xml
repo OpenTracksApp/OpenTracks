@@ -41,6 +41,8 @@ limitations under the License.
       android:stretchColumns="1"
       android:layout_marginTop="5dip"
       android:layout_marginLeft="5dip">
+      
+      <!-- My Maps -->
       <TableRow>
         <ImageView android:src="@drawable/mymaps_icon"
           android:layout_width="wrap_content"
@@ -70,6 +72,27 @@ limitations under the License.
           </RadioGroup>
         </LinearLayout>
       </TableRow>
+
+      <!-- Fusion Tables -->
+      <TableRow>
+        <ImageView android:src="@drawable/googledocs_icon"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+        <LinearLayout
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:layout_marginLeft="10dip">
+          <CheckBox android:id="@+id/sendtogoogle_google_fusiontables"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sendtogoogle_google_fusiontables"
+            android:textSize="20dip"
+            android:checked="true"/>
+        </LinearLayout>
+      </TableRow>
+
+      <!-- Google Docs -->
       <TableRow>
         <ImageView android:src="@drawable/googledocs_icon"
           android:layout_width="wrap_content"
@@ -104,26 +127,24 @@ limitations under the License.
     </TableLayout>
   </ScrollView>
   <LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
     android:background="@drawable/list_bar"
-    android:padding="3dip">
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:orientation="horizontal"
+    android:paddingLeft="2dip"
+    android:paddingRight="2dip"    
+    android:paddingTop="4dip">
+    <!-- left spacer -->
+    <LinearLayout style="@style/DialogButtonSpacer"/>
     <Button android:id="@+id/sendtogoogle_cancel"
-      android:layout_width="wrap_content"
-      android:layout_height="48dip"
-      android:layout_gravity="right"
+      android:layout_gravity="left"
       android:text="@string/cancel"
-      android:textSize="14dip"/>
-    <TextView
-      android:layout_width="0dip"
-      android:layout_height="wrap_content"
-      android:layout_weight="1"/>
+      style="@style/DialogButton"/>
     <Button android:id="@+id/sendtogoogle_send_now"
-      android:layout_width="wrap_content"
-      android:layout_height="48dip"
       android:layout_gravity="right"
       android:text="@string/sendtogoogle_send_now"
-      android:textSize="14dip"/>
+      style="@style/DialogButton"/>
+    <!--  right spacer -->
+    <LinearLayout style="@style/DialogButtonSpacer"/>
   </LinearLayout>
 </LinearLayout>

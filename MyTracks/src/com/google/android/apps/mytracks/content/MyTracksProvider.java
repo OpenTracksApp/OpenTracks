@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -14,6 +14,9 @@
  * the License.
  */
 package com.google.android.apps.mytracks.content;
+
+import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.util.ApiFeatures;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -38,7 +41,7 @@ import android.util.Log;
 public class MyTracksProvider extends ContentProvider {
 
   private static final String DATABASE_NAME = "mytracks.db";
-  private static final int DATABASE_VERSION = 17;
+  private static final int DATABASE_VERSION = 19;
   private static final int TRACKPOINTS = 1;
   private static final int TRACKPOINTS_ID = 2;
   private static final int TRACKS = 3;
@@ -70,7 +73,8 @@ public class MyTracksProvider extends ContentProvider {
           + TrackPointsColumns.ALTITUDE + " FLOAT, "
           + TrackPointsColumns.ACCURACY + " FLOAT, "
           + TrackPointsColumns.SPEED + " FLOAT, "
-          + TrackPointsColumns.BEARING + " FLOAT);");
+          + TrackPointsColumns.BEARING + " FLOAT, "
+          + TrackPointsColumns.SENSOR + " BLOB);");
       db.execSQL("CREATE TABLE " + TRACKS_TABLE + " ("
           + TracksColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
           + TracksColumns.NAME + " STRING, "
@@ -96,7 +100,8 @@ public class MyTracksProvider extends ContentProvider {
           + TracksColumns.ELEVATIONGAIN + " FLOAT, "
           + TracksColumns.MINGRADE + " FLOAT, "
           + TracksColumns.MAXGRADE + " FLOAT, "
-          + TracksColumns.MAPID + " STRING);");
+          + TracksColumns.MAPID + " STRING, "
+          + TracksColumns.TABLEID + " STRING);");
       db.execSQL("CREATE TABLE " + WAYPOINTS_TABLE + " ("
           + WaypointsColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
           + WaypointsColumns.NAME + " STRING, "
@@ -132,12 +137,32 @@ public class MyTracksProvider extends ContentProvider {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-      Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
-          + newVersion + ", which will destroy all old data");
-      db.execSQL("DROP TABLE IF EXISTS " + TRACKPOINTS_TABLE);
-      db.execSQL("DROP TABLE IF EXISTS " + TRACKS_TABLE);
-      db.execSQL("DROP TABLE IF EXISTS " + WAYPOINTS_TABLE);
-      onCreate(db);
+      if (oldVersion < 17) {
+        // Wipe the old data.
+        Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
+            + newVersion + ", which will destroy all old data");
+        db.execSQL("DROP TABLE IF EXISTS " + TRACKPOINTS_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + TRACKS_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + WAYPOINTS_TABLE);
+        onCreate(db);
+      } else {
+        // Incremental updates go here.
+        // Each time you increase the DB version, add a corresponding if clause.
+        Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
+            + newVersion);
+
+        // Sensor data.
+        if (oldVersion <= 17) {
+          Log.w(TAG, "Upgrade DB: Adding sensor column.");
+          db.execSQL("ALTER TABLE " + TRACKPOINTS_TABLE
+              + " ADD " + TrackPointsColumns.SENSOR + " BLOB");
+        }
+        if (oldVersion <= 18) {
+          Log.w(TAG, "Upgrade DB: Adding tableid column.");
+          db.execSQL("ALTER TABLE " + TRACKS_TABLE
+              + " ADD " + TracksColumns.TABLEID + " STRING");
+        }
+      }
     }
   }
 
@@ -161,19 +186,25 @@ public class MyTracksProvider extends ContentProvider {
   @Override
   public boolean onCreate() {
     DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-    db = dbHelper.getWritableDatabase();
+    try {
+      db = dbHelper.getWritableDatabase();
+    } catch (SQLiteException e) {
+      Log.e(TAG, "Unable to open database for writing", e);
+    }
     return db != null;
   }
 
   @Override
   public int delete(Uri url, String where, String[] selectionArgs) {
     String table;
+    boolean shouldVacuum = false;
     switch (urlMatcher.match(url)) {
       case TRACKPOINTS:
         table = TRACKPOINTS_TABLE;
         break;
       case TRACKS:
         table = TRACKS_TABLE;
+        shouldVacuum = true;
         break;
       case WAYPOINTS:
         table = WAYPOINTS_TABLE;
@@ -185,6 +216,13 @@ public class MyTracksProvider extends ContentProvider {
     Log.w(MyTracksProvider.TAG, "provider delete in " + table + "!");
     int count = db.delete(table, where, selectionArgs);
     getContext().getContentResolver().notifyChange(url, null, true);
+
+    if (shouldVacuum) {
+      // If a potentially large amount of data was deleted, we want to reclaim its space.
+      Log.i(TAG, "Vacuuming the database");
+      db.execSQL("VACUUM");
+    }
+
     return count;
   }
 
@@ -234,6 +272,7 @@ public class MyTracksProvider extends ContentProvider {
         throw new IllegalArgumentException("Unknown URL " + url);
     }
   }
+
 
   @Override
   public int bulkInsert(Uri url, ContentValues[] valuesBulk) {
@@ -346,6 +385,11 @@ public class MyTracksProvider extends ContentProvider {
       throw new IllegalArgumentException("Unknown URL " + url);
     }
 
+    if (ApiFeatures.getInstance().canReuseSQLiteQueryBuilder()) {
+      Log.i(Constants.TAG,
+          "Build query: " + qb.buildQuery(projection, selection, selectionArgs,
+          null, null, sortOrder, null));
+    }
     Cursor c = qb.query(db, projection, selection, selectionArgs, null, null,
         sortOrder);
     c.setNotificationUri(getContext().getContentResolver(), url);

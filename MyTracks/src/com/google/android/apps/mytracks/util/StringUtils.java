@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.apps.mytracks.MyTracksSettings;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.DescriptionGenerator;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
@@ -25,6 +25,7 @@ import com.google.android.maps.mytracks.R;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.text.DecimalFormat;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -63,6 +64,20 @@ public class StringUtils implements DescriptionGenerator {
    */
   public static String formatTimeAlwaysShowingHours(long time) {
     return formatTimeInternal(time, true);
+  }
+
+  private static final DecimalFormat SINGLE_DECIMAL_PLACE_FORMAT = new DecimalFormat("#.#");
+
+  /**
+   * Formats a double precision number as decimal number with a single decimal
+   * place.
+   *
+   * @param number A double precision number
+   * @return A string representation of a decimal number, derived from the input
+   *         double, with a single decimal place
+   */
+  public static final String formatSingleDecimalPlace(double number) {
+    return SINGLE_DECIMAL_PLACE_FORMAT.format(number);
   }
 
   /**
@@ -245,7 +260,7 @@ public class StringUtils implements DescriptionGenerator {
       Vector<Double> elevations) {
     boolean displaySpeed = true;
     SharedPreferences preferences =
-        context.getSharedPreferences(MyTracksSettings.SETTINGS_NAME, 0);
+        context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     if (preferences != null) {
       displaySpeed =
           preferences.getBoolean(context.getString(R.string.report_speed_key), true);
@@ -316,7 +331,7 @@ public class StringUtils implements DescriptionGenerator {
         + "<img border=\"0\" src=\"%s\"/>",
 
         // Line 1
-        context.getString(R.string.my_map_link),
+        context.getString(R.string.fusiontable_link),
 
         // Line 2
         context.getString(R.string.total_distance_label),

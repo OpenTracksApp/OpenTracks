@@ -22,18 +22,21 @@ limitations under the License.
   <string name="switch_to_map">地図モード</string>
   <string name="mylocation">現在地</string>
   <string name="list_tracks">トラック</string>
-  <string name="list_markers">マーカ</string>
+  <string name="list_markers">マーカー</string>
   <string name="delete_all_tracks">全トラック消去</string>
   <string name="settings">設定</string>
   <string name="elevation">標高</string>
   <string name="choose_track_message">表示するトラックを選択して下さい</string>
   <string name="current_track">現在のトラック</string>
   <string name="current_segment">最終セグメント</string>
+  <string name="sensor_state">センサー情報</string>
+  <string name="aggregated_stats">集計情報</string>
 
   <!-- Error messages -->
-  <string name="error_no_location_manager">この端末でロケーションマネージャを発見できませんでした</string>
-  <string name="error_no_gps_location_provider">この端末でGPSロケーションプロバイダを発見できました</string>
+  <string name="error_no_location_manager">この端末でロケーションマネージャを発見できませんでした．</string>
+  <string name="error_no_gps_location_provider">この端末でGPSロケーションプロバイダを発見できました．</string>
   <string name="error_sending_to_mymap">Googleマイマップへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
+  <string name="error_sending_to_fusiontables">Google Fusion Tablesへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
   <string name="error_sending_to_docs">Google Docsへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
   <string name="error_unable_to_start_recording">記録作成開始できません．もう一度試して下さい．</string>
   <string name="error_unable_to_stop_recording">記録停止できません．もう一度試して下さい．</string>
@@ -42,54 +45,61 @@ limitations under the License.
   <string name="error_generic">エラーが発生しました．もう一度試して下さい．</string>
   <string name="error_track_does_not_exist">トラックが存在しません．</string>
   <string name="error_out_of_memory">大きなファイルです(500KB未満でなければなりません)．終了します．</string>
-  <string name="error_unable_to_insert_marker">マーカの挿入ができません．位置決定ができません．</string>
+  <string name="error_unable_to_insert_marker">マーカーの挿入ができません．位置決定ができません．</string>
 
   <!-- Status messages -->
   <string name="wait_for_fix">GPS位置精度がよくなるまで待機しています．空が見えるところにいて下さい．</string>
   <string name="status_now_recording">新しいトラックを記録中です．</string>
   <string name="status_stopped_recording">トラック記録を停止しました．</string>
-  <string name="status_new_mymap_has_been_created">新しいGoogleマイマップを maps.google.com に作成しました．</string>
-  <string name="status_tracks_have_been_uploaded">トラックを maps.google.com に送信しました．</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">トラックを docs.google.com の新しいスプレッドシートに送信しました．</string>
-  <string name="status_tracks_have_been_uploaded_to_docs">トラックを docs.google.com に送信しました．</string>
-  <string name="status_mymap_info">新しいトラックが見えるようになるまで数分程度かかります．</string>
-  <string name="status_enable_gps">ここをタップして，セキュリティ &amp;位置情報 を開いて，「GPS機能をONにする」にチェックして下さい．バックボタンで戻ってください．</string>
+  <string name="status_new_mymap_has_been_created">新しいマイマップをmap.google.comに作成しました．</string>
+  <string name="status_new_fusiontable_has_been_created">新しいGoogle Fusion Tableをgoogle.com/fusiontablesに作成しました．</string>
+  <string name="status_tracks_have_been_uploaded">トラックをmaps.google.comに送信しました．</string>
+  <string name="status_tracks_have_been_uploaded_to_new_doc">トラックをdocs.google.comの新しいスプレッドシートに送信しました．</string>
+  <string name="status_tracks_have_been_uploaded_to_docs">トラックをdocs.google.comに送信しました．</string>
+  <string name="status_mymap_info">新しいトラックが表示されるまでに数分かかることがあります．</string>
+  <string name="status_enable_gps">ここをタップして「位置情報とセキュリティの設定」を開いて「GPS機能を使用」にチェックを入れて下さい．バックボタンで戻ってください．</string>
   <string name="status_approximate_location">ご注意: 携帯電話中継局とWi-Fiネットワークから大まかな位置を特定します．</string>
-  <string name="status_no_location">現在位置決定ができません．位置取得源を増やし(セキュリティ&amp;位置情報をご覧ください)，空が見えるようにして下さい．もう一度試して下さい．</string>
-  <string name="status_waypoint_inserted">ウェイポイントマーカを挿入しました．</string>
-  <string name="status_statistics_inserted">統計マーカを挿入しました．</string>
+  <string name="status_no_location">現在位置決定ができません．位置取得源を増やし(位置情報とセキュリティの設定 をご覧ください)、空が見えるようにして下さい．もう一度試して下さい．</string>
+  <string name="status_waypoint_inserted">ウェイポイントマーカーを挿入しました．</string>
+  <string name="status_statistics_inserted">統計マーカーを挿入しました．</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">お待ちください...</string>
-  <string name="progress_message">トラックをGoogleに送信しました．</string>
+  <string name="progress_message">トラックをGoogleに送信しています．</string>
   <string name="progress_message_reading_track">トラックを読んでいます...</string>
   <string name="progress_message_preparing_track">トラックを準備しています...</string>
-  <string name="progress_message_authenticating_mymaps">Googleマップの認証しています...</string>
+  <string name="progress_message_authenticating_fusiontables">Google Fusion Tablesへの認証を行っています...</string>
+  <string name="progress_message_authenticating_mymaps">Googleマップへの認証を行っています...</string>
   <string name="progress_message_authenticating_docs">Google Docsへの認証を行っています...</string>
   <string name="progress_message_sending_docs">トラックをGoogle Docsに送信しています...</string>
   <string name="progress_message_sending_mymaps">トラックをGoogleマップに送信しています...</string>
-  <string name="progress_message_creating_map">新しいマイマップを生成しています...</string>
+  <string name="progress_message_creating_map">新しいマイマップを作成しています...</string>
+  <string name="progress_message_sending_fusiontables">トラックをFusion Tablesに送信しています...</string>
+  <string name="progress_message_creating_fusiontable">新しいFusionテーブルを生成しています...</string>
   <string name="import_progress_message">GPSトラックをインポートしています．若干時間がかかります．</string>
   <string name="write_progress_message">SDカードにデータを書き込んでいます．若干時間がかかります．</string>
   <string name="progress_message_updating_track">トラック統計情報を更新しています...</string>
 
   <!-- Used by DeleteAllDataHandler -->
   <string name="are_you_sure_question">よろしいですか?</string>
-  <string name="all_data_will_be_permanently_deleted">全てのトラックとマーカをこの端末から削除しました．</string>
-  <string name="track_will_be_permanently_deleted">トラックとマーカをこの端末から完全に削除しました．</string>
-  <string name="marker_will_be_permanently_deleted">マーカをこの端末から完全に削除しました．</string>
+  <string name="all_data_will_be_permanently_deleted">全てのトラックとマーカーをこの端末から削除します．</string>
+  <string name="track_will_be_permanently_deleted">トラックとマーカーをこの端末から完全に削除します．</string>
+  <string name="marker_will_be_permanently_deleted">マーカーをこの端末から完全に削除します．</string>
+
+  <!-- Text and links when uploading to Google Fusion Tables -->
+  <string name="new_map_description">Android用My Tracksで作成</string>
+  <string name="fusiontable_link">Android用&lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt;で作成しました．</string>
 
   <!-- Text and links when uploading to Google My Maps -->
-  <string name="new_map_description">Android用My Tracksで作成</string>
   <string name="my_map_link">Android用&lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt;で作成しました．</string>
   <string name="new_map_title">新規マップ</string>
 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">ポイント</string>
-  <string name="recorded_date">記録</string>
+  <string name="recorded_date">記録日</string>
   <string name="category">活動タイプ</string>
-  <string name="waypoint_category">マーカタイプ</string>
-  <string name="part">(Part %d)</string>
+  <string name="waypoint_category">マーカータイプ</string>
+  <string name="part">(パート %d)</string>
 
   <!-- Used by the track recording service -->
   <string name="recording_your_track">トラックを保存中...</string>
@@ -98,10 +108,14 @@ limitations under the License.
   <!-- Common -->
   <string name="no">いいえ</string>
   <string name="yes">はい</string>
-  <string name="ok">OK</string>
   <string name="error">エラー</string>
   <string name="success">成功</string>
   <string name="waypoint">ウェイポイント</string>
+  <string name="license">ライセンス</string>
+  <string name="cancel">キャンセル</string>
+  <string name="close">閉じる</string>
+  <string name="edit">編集</string>
+  <string name="save">保存</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="start">(開始)</string>
@@ -109,52 +123,73 @@ limitations under the License.
 
   <!--  TrackList -->
   <string name="tracklist_show_track">表示</string>
-  <string name="tracklist_send_to_mymaps">Google My Mapsへ送信</string>
-  <string name="tracklist_send_to_new_mymap">新規Googleマイマップへ送信</string>
-  <string name="tracklist_send_to_docs">Google Docsへ送信</string>
-  <string name="tracklist_send_to_google">Googleへ送信...</string>
+  <string name="tracklist_send_to_mymaps">Googleマイマップに送信</string>
+  <string name="tracklist_send_to_new_mymap">新規Googleマイマップに送信</string>
+  <string name="tracklist_send_to_fusiontables">Google Fusion Tablesに送信</string>
+  <string name="tracklist_send_to_new_fusiontable">新規Google Fusion Tableに送信</string>
+  <string name="tracklist_send_to_docs">Google Docsに送信</string>
+  <string name="tracklist_send_to_google">Googleに送信...</string>
   <string name="tracklist_delete_track">端末から削除...</string>
   <string name="tracklist_edit_track">詳細編集</string>
   <string name="tracklist_write_to_sd">SDへの書き込み...</string>
   <string name="tracklist_save_as_gpx">GPXファイルの保存</string>
   <string name="tracklist_save_as_kml">KMLファイルの保存</string>
   <string name="tracklist_save_as_csv">CVSファイルの保存</string>
-  <string name="tracklist_btn_send_all_to_mymaps">Googleマイマップへの送信</string>
-  <string name="tracklist_btn_delete_all">全てのトラックの削除</string>
+  <string name="tracklist_save_as_tcx">TCXファイルの保存</string>
+  <string name="tracklist_btn_send_all_to_fusiontables">Google Fusion Tablesに送信</string>
+  <string name="tracklist_btn_send_all_to_mymaps">Googleマイマップに送信</string>
+  <string name="tracklist_btn_delete_all">全て削除</string>
   <!-- Export All -->
-  <string name="tracklist_btn_export_all">全てのトラックのエクスポート</string>
-  <string name="export_done">エクスポート終了</string>
+  <string name="tracklist_btn_export_all">全て出力</string>
+  <string name="export_done">出力終了</string>
   <string name="tracklist_pick_one">トラックを選択します．オプションを表示するには長押しして下さい．</string>
-  <string name="tracklist_all_tracks">全てのトラック:</string>
+  <string name="tracklist_all_tracks">全トラック:</string>
   <string name="tracklist_this_track">このトラック</string>
   <string name="tracklist_share_track">共有...</string>
-  <string name="tracklist_share_link">Googleマイマップへのリンク</string>
+  <string name="tracklist_share_link">マップへのリンク</string>
   <string name="tracklist_share_gpx_file">GPXファイル</string>
   <string name="tracklist_share_kml_file">KMLファイル</string>
   <string name="tracklist_share_csv_file">CSVファイル</string>
-  <string name="tracklist_clear_map">マップの消去</string>
+  <string name="tracklist_share_tcx_file">TCXファイル</string>
+  <string name="tracklist_clear_map">マップのクリア</string>
+  <!-- Import All -->
+  <string name="tracklist_btn_import_all">全てインポート</string>
+  <!-- Format:
+  $1 : Successful imports
+  $2 : Attempted imports
+  $3 : MyTracks gpx path
+  -->
+  <string name="import_multi_done">%3$s からGPXファイル %2$d件のうち %1$d件をインポートしました</string>
+  <string name="import_multi_empty">%s ではGPXファイルがありません．SDカードを読み込めないかディレクトリにGPXファイルが無いかも知れません．</string>
+  <string name="import_error">ファイル %s のインポートエラー</string>
 
   <!-- Waypoints list -->
-  <string name="waypointslist_btn_delete_all">全てのマーカの削除</string>
-  <string name="waypointslist_this_waypoint">このマーカ</string>
+  <string name="waypointslist_btn_delete_all">全てのマーカーの削除</string>
+  <string name="waypointslist_this_waypoint">このマーカー</string>
   <string name="waypointslist_delete_waypoint">削除</string>
   <string name="waypointslist_edit_waypoint">詳細編集</string>
   <string name="waypointslist_show_waypoint">マップに表示</string>
   <string name="waypointslist_btn_insert_waypoint">ウェイポイントの挿入</string>
   <string name="waypointslist_btn_insert_statistics">統計情報の挿入</string>
-  <string name="waypointslist_pick_one">マーカを選択します．オプションを表示するには長押しして下さい．</string>
+  <string name="waypointslist_pick_one">マーカーを選択します．オプションを表示するには長押しして下さい．</string>
 
   <!-- MyTracks Details -->
   <string name="trackdetails_title">トラック詳細</string>
   <string name="trackdetails_name">トラック名</string>
+  <string name="trackdetails_name_hint">トラック名</string>
   <string name="trackdetails_description">トラック説明</string>
-  <string name="trackdetails_category">活動タイプ(ハイキング, サイクリング,　ランニング, 登山...)</string>
+  <string name="trackdetails_description_hint">トラック説明</string>
+  <string name="trackdetails_category">活動タイプ(ハイキング, サイクリング、ランニング、登山...)</string>
+  <string name="trackdetails_category_hint">活動タイプ</string>
 
   <!-- MyTracks Waypoint Details -->
-  <string name="waypointdetails_title">マーカ詳細</string>
-  <string name="waypointdetails_name">マーカ名</string>
-  <string name="waypointdetails_description">マーカ説明</string>
-  <string name="waypointdetails_category">マーカタイプ(建物, 洞穴, 名所...)</string>
+  <string name="waypointdetails_title">マーカー詳細</string>
+  <string name="waypointdetails_name">マーカー名</string>
+  <string name="waypointdetails_name_hint">マーカー名</string>
+  <string name="waypointdetails_description">マーカー説明</string>
+  <string name="waypointdetails_description_hint">マーカー説明</string>
+  <string name="waypointdetails_category">マーカータイプ(建物、洞穴、名所...)</string>
+  <string name="waypointdetails_category_hint">マーカータイプ</string>
 
   <!-- MyTracks Settings -->
   <string name="mytracks_settings">My Tracks設定</string>
@@ -162,9 +197,10 @@ limitations under the License.
   <string name="settings_recording">記録</string>
   <string name="settings_sharing">共有</string>
 
+  <string name="settings_not_available_summary">このAndroidバージョンでは使用できません</string>
+
   <string name="settings_announcement_frequency">定期通知</string>
   <string name="settings_announcement_frequency_summary">音声通知間隔の最小時間</string>
-  
 
   <string name="settings_min_recording_distance">ポイント間の最短距離</string>
   <string name="settings_min_recording_distance_summary">位置記録間の最短距離</string>
@@ -184,7 +220,7 @@ limitations under the License.
 
   <string name="settings_map_public">マップの公開</string>
   <string name="settings_map_public_summary_on">アップロードされたマップはmaps.google.comで誰でも閲覧できます</string>
-  <string name="settings_map_public_summary_off">アップロードされたマップはmaps.google.comのリストに公開されません．</string>
+  <string name="settings_map_public_summary_off">アップロードされたマップはmaps.google.comのリストに公開されません</string>
 
   <string name="settings_report_speed_or_pace">速度表示</string>
   <string name="settings_report_speed_or_pace_summary_on">速度が表示されます</string>
@@ -194,41 +230,66 @@ limitations under the License.
   <string name="settings_share_url_only_summary_on">共有時にマップのURLのみ送信します</string>
   <string name="settings_share_url_only_summary_off">共有時にトラックのコンテントが含まれます</string>
 
-  <string name="settings_signal_sampling_frequency">信号サンプリング周波数</string>
-  <string name="settings_signal_sampling_frequency_summary">端末の信号強度記録の時間間隔</string>
-
   <string name="settings_split_frequency">分割頻度</string>
-  <string name="settings_split_frequency_summary">分割マーカを挿入する時間または距離の間隔</string>
+  <string name="settings_split_frequency_summary">分割マーカーを挿入する時間または距離の間隔</string>
+
+  <string name="settings_auto_resume_track_timeout">記録自動再開の制限時間</string>
+  <string name="settings_auto_resume_track_timeout_summary">指定時間(分単位)以内なら端末再起動時に以前のトラック記録を再開します．</string>
+
+  <string name="settings_timestamp_track_name">日時をトラック名にする</string>
+  <string name="settings_timestamp_track_name_summary_on">デフォルトのトラック名をトラック開始日時にします．</string>
+  <string name="settings_timestamp_track_name_summary_off">トラック名を昇順の数字にします．</string>
+
   <string name="pace_label">ペース</string>
+
+  <string name="eclair_required">Android 2.0以上でのみサポート</string>
+  <string name="settings_sensor_type">センサータイプ</string>
+  <string name="settings_sensor_type_summary">接続先センサーのタイプ</string>
+  <string name="settings_heart_rate_ant_sensor_id">ANT心拍数センサーとのペアリング解消</string>
+  <string name="settings_power_ant_sensor_id">ANT心拍強度センサーとのペアリング解消</string>
+  <string name="settings_srm_bridge_ant_sensor_id">ANT SRMブリッジセンサーとのペアリング解消</string>
+  <string name="settings_ant_not_paired">ANTセンサーとペアリングしていません</string>
+  <string name="settings_ant_paired">ANTセンサーとペアリング: %d</string>
+  <string name="bluetooth_sensor_title">Bluetoothセンサー</string>
+  <string name="bluetooth_sensor_summary">Bluetoothセンサー接続先</string>
+  <string name="settings_modular_stats_display_title">モジュール統計表示 </string>
+
+  <!-- Backups -->
+  <string name="settings_backup">バックアップ (ベータ版)</string>
+  <string name="settings_sd_backup">SDカード バックアップ</string>
+  <string name="settings_backup_to_sd">今すぐバックアップ</string>
+  <string name="settings_backup_to_sd_summary">SDカードに全てのトラックと設定をバックアップします</string>
+  <string name="settings_restore_from_sd">今すぐ復元</string>
+  <string name="settings_restore_from_sd_summary">SDカードから全てのトラックと設定を復元します</string>
+
+  <string name="restore_overwrites_warning">SDカードからの復元を実行すると、現在のトラックと設定は *全て上書き* されてしまいます．よろしいですか?</string>
+  <string name="select_backup_to_restore">復元するバックアップの選択</string>
+  <string name="no_backups">バックアップがありません．</string>
+  <string name="backup_write_progress_message">SDカードに全てのトラックと設定をバックアップしています．しばらくかかることがあります...</string>
+  <string name="backup_import_progress_message">SDカードから全てのトラックと設定を復元しています．しばらくかかることがあります...</string>
 
   <!-- MyTracksSky -->
   <string name="mytracks_sky">GPS衛星</string>
 
   <!-- My Maps -->
-  <string name="select_map_message">ご使用のアカウントからのマップ選択:</string>
-  <string name="create_new_map">新規マップ...</string>
-  <string name="map_list_title">Googleマイマップへの送信</string>
-  <string name="maps_list_loading">マップの読み込み中...</string>
-  <string name="maps_list_failed">マップを読み込めませんでした!</string>
+  <string name="select_map_message">アカウントからのマップ選択:</string>
+  <string name="create_new_map">新規マップ作成...</string>
+  <string name="map_list_title">Googleマイマップに送信</string>
+  <string name="maps_list_loading">マップをロード中...</string>
+  <string name="maps_list_failed">今回はマップをロードできませんでした!</string>
   <string name="open_map">このマップを選択</string>
-  <string name="edit_map_details">マップ詳細の編集</string>
-  <string name="share_map">マップの共有</string>
-  <string name="share_track">トラックの共有</string>
-  <string name="delete_map">アカウントからマップの削除</string>
+  <string name="edit_map_details">マップ詳細編集</string>
+  <string name="share_track">トラック共有</string>
+  <string name="delete_map">アカウントからマップを削除</string>
   <string name="map_title">マップタイトル:</string>
   <string name="map_description">マップ説明:</string>
-
-
-  <string name="map_searchable_edit">このマップとコンテンツを検索結果に表示させる</string>
-  <string name="map_not_searchable_edit">このマップとコンテンツはどちらも検索結果に表示させない(直接URLで他の方が見ることは可能)</string>
-  <string name="map_searchable">このマップとコンテンツは検索結果に表示されます</string>
-  <string name="map_not_searchable">このマップとコンテンツはどちらも検索結果に表示されませんが，直接リンクで他の方が見ることができます．</string>
-  <string name="close">閉じる</string>
-  <string name="edit">編集</string>
-  <string name="cancel">キャンセル</string>
-  <string name="save">保存</string>
+  <string name="map_searchable_edit">このマップまたはコンテンツを検索結果に表示</string>
+  <string name="map_not_searchable_edit">このマップまたはコンテンツを検索結果に表示しない(直接URLで見られる可能性があります)</string>
+  <string name="map_searchable">このマップまたはコンテンツは検索結果に表示されます</string>
+  <string name="map_not_searchable">このマップもコンテンツも検索結果に表示されませんが、直接リンクで見られる可能性があります</string>
 
   <!-- Sharing -->
+  <string name="share_map">マップ共有</string>
   <string name="share_map_subject">マップを共有したいと思います</string>
   <string name="share_map_body_format">このマップに興味を持って頂けると思います:
 
@@ -236,7 +297,8 @@ limitations under the License.
   <string name="send_track_subject">トラックを共有したいと思います</string>
   <string name="send_track_body_format">このトラックに興味を持って頂けると思います．
 
-    このトラックを閲覧するには，Google Earthまたは他のマッピングソフトウェアが必要です．</string>
+    このトラックを閲覧するには、Google Earthまたは他のマッピングソフトウェアが必要です．</string>
+  <string name="share_track">トラックの共有</string>
 
   <!-- Visibility -->
   <string name="public_map">公開</string>
@@ -290,23 +352,16 @@ limitations under the License.
   <string name="minutes">分</string>
   <string name="second">秒</string>
   <string name="seconds">秒</string>
+  <string name="milliseconds">ミリ秒</string>
 
   <!-- Distance -->
-  <string name="meter">m</string>
-  <string name="kilometer">km</string>
   <string name="kilometers_long">キロメータ</string>
-  <string name="feet">ft</string>
-  <string name="mile">mi</string>
   <string name="miles_long">マイル</string>
 
   <!-- Speed and Pace -->
-  <string name="kilometer_per_hour">km/h</string>
   <string name="kilometer_per_hour_long">キロメータ毎時</string>
-  <string name="min_per_kilometer">min/km</string>
   <string name="per_kilometer">毎キロメータ</string>
-  <string name="mile_per_hour">mi/h</string>
   <string name="mile_per_hour_long">マイル毎時</string>
-  <string name="min_per_mile">min/mi</string>
   <string name="per_mile">毎マイル</string>
 
   <!-- Stats Labels -->
@@ -319,7 +374,10 @@ limitations under the License.
   <string name="statistics">統計</string>
   <string name="total_distance_label">合計距離</string>
   <string name="distance_label">距離</string>
-  <string name="unknown">-</string>
+  <string name="power">心拍強度</string>
+  <string name="cadence">ケイデンス</string>
+  <string name="heart_rate">心拍数</string>
+  <string name="max_heart_rate">最大心拍数</string>
   <string name="waiting">待機中...</string>
 
   <!-- End User License Agreement -->
@@ -332,13 +390,12 @@ limitations under the License.
   <string name="help">ヘルプ</string>
   <string name="about_team">チーム:</string>
   <string name="about_version">バージョン:</string>
-  <string name="about_email">サポート</string>
   <string name="about_support">サポート:</string>
+  <string name="about_privacy">プライバシー:</string>
 
   <!-- Send to Google -->
   <string name="sendtogoogle_title">送信...</string>
   <string name="sendtogoogle_google_mymaps">Googleマイマップ</string>
-  <string name="sendtogoogle_google_docs">Google Docs</string>
   <string name="sendtogoogle_send_now">今すぐ送信</string>
   <string name="sendtogoogle_create_new_map">新規マップ作成</string>
   <string name="sendtogoogle_pick_existing_map">既存マップ選択</string>
@@ -351,22 +408,23 @@ limitations under the License.
   <string name="choose_account_title">アカウント選択</string>
 
   <!-- SD card -->
-  <string name="io_no_external_storage_found">外部ストレージを発見できませんでした．SDカードが刺さっているか，端末がコンピュータにマウントされているか確認してください．</string>
+  <string name="io_no_external_storage_found">外部ストレージを発見できませんでした．SDカードが刺さっているか、端末がコンピュータにマウントされていないか確認してください．</string>
   <string name="io_write_failed">ファイルへの書き込みができません．</string>
-  <string name="io_create_dir_failed">SDカードにディレクトリを作成できません．</string>
+  <string name="io_read_failed">ファイルからの読み込みができません．</string>
+  <string name="io_create_dir_failed">SDカード上でディレクトリを作成できません．</string>
   <string name="io_write_finished">SDカードへの書き込み終了．</string>
+  <string name="io_read_finished">SDカードからの読み込み終了．</string>
 
   <!-- VersionChecker -->
   <string name="version_check_title">アップグレードチェック</string>
-  <string name="version_check_upgrade_button">今すぐアップデート</string>
+  <string name="version_check_upgrade_button">今すぐアップグレード</string>
   <string name="version_check_continue_button">アップグレードせずに続行</string>
-  <string name="upgrade_required">お使いの版では，確実には動作せず，サポートもされません．ご使用を続けるには %1$s のアップグレードしてください．</string>
-  <string name="upgrade_recommended">お使いの版では，確実には動作しません．すぐにアップグレードすることをお勧めします．アップグレードされない場合は問題発生の可能性があることをご認識ください． サーバ同期するような機能の中には，アップグレードされるまで機能しないものがあります．</string>
-  <string name="upgrade_available">%1$s の新しい版が出ています．現版で問題なくご使用になれますが，アップグレードするまで最新の機能をお使いになれません．</string>
+  <string name="upgrade_required">お使いの版では、確実には動作せず、サポートもされません．ご使用を続けるには %1$s をアップグレードしてください．</string>
+  <string name="upgrade_recommended">お使いの版では、確実には動作しません．すぐにアップグレードすることをお勧めします．アップグレードされない場合は問題発生の可能性があることをご認識ください． サーバ同期するような機能の中には、アップグレードされるまで機能しないものがあります．</string>
+  <string name="upgrade_available">%1$s の新しい版が出ています．現版で問題なくご使用になれますが、アップグレードするまで最新の機能をお使いになれません．</string>
 
   <!-- Welcome -->
   <string name="welcome">ようこそ</string>
-  <string name="welcome_read_later">Ok</string>
   <string name="welcome_about">My Tracksについて</string>
 
   <!-- Announcement -->
@@ -385,11 +443,42 @@ limitations under the License.
   <string name="check_units_title">計測単位についてのご注意</string>
   <string name="check_units_message">デフォルトの単位はメートルです．設定を変更しますか?</string>
 
-  <!-- Signal Strength -->
-  <string name="error_rate"> 誤り率: %1$d</string>
-  <string name="signal_to_noise_ratio"> S/N比: %1$d</string>
-  <string name="ecio"> Ec/Io比: %1$.1f dB</string>
-  <string name="gsm_strength">GSM 強度: %1$d</string>
-  <string name="cdma_strength">CDMA 強度: %1$d dBm</string>
-  <string name="evdo_strength">EVDO 強度: %1$d dBm</string>
+  <!-- Fake preference keys - never saved, but show options in the preferences screen -->
+  <string name="bluetooth_options">Bluetoothオプション</string>
+  <string name="bluetooth_pairing">ペアリング</string>
+  <string name="bluetooth_pairing_summary">ペアリングを行うには「Bluetooth設定」を開いて下さい</string>
+  <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
+  <string name="ant_options">ANTオプション</string>
+  <string name="sensor_options">センサーオプション</string>
+
+  <!-- Bluetooth Sensor -->
+  <string name="bluetooth_connected">%sに接続しました</string>
+  <string name="bluetooth_connecting">Bluetoothセンサー接続中...</string>
+  <string name="bluetooth_not_connected">Bluetoothセンサーに接続していません</string>
+
+  <!-- Sensor State -->
+  <string name="sensor_data_time">計測日時</string>
+  <string name="power_meter_enabled">パワーメーター有効</string>
+  <string name="heart_rate_monitor_enabled">心拍数モニタ有効</string>
+  <string name="no_sensor_manager">センサーマネージャがありません</string>
+  <string name="enabled">有効</string>
+  <string name="connecting">接続中</string>
+  <string name="connected">接続</string>
+  <string name="disconnected">解除</string>
+  <string name="no_sensor_service">センサーサービスがありません</string>
+  <string name="searching">検索中</string>
+  <string name="sending">送信中</string>
+
+  <!-- Sensor Type Options -->
+  <string name="no_sensor_option">なし</string>
+  <string name="ant_sensor_option">ANT+ センサー</string>
+  <string name="ant_bridge_sensor_option">SRM ANT+ ブリッジ</string>
+    
+  <!-- Manifest description (not seen inside the app) -->
+  <string name="notification_permission_label">トラック記録通知受信</string>
+  <string name="read_tracks_permission_label">トラック読み込み</string>
+  <string name="write_tracks_permission_label">トラック書き込みとトラック記録の開始・終了</string>
+  <string name="notification_permission_description">トラック記録の開始・終了時に通知されます．</string>
+  <string name="read_tracks_permission_description">ポイントやウェイポイントといったトラックの読み込みを可能にします．</string>
+  <string name="write_tracks_permission_description">記録開始やウェイポイント追加といったトラック記録を可能にします．</string>
 </resources>

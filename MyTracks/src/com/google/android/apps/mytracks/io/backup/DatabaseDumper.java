@@ -80,12 +80,13 @@ class DatabaseDumper {
    *
    * @param cursor the cursor to get columns from
    * @param numRows the number of rows that will be later written
+   * @param writer the output to write to
    * @throws IOException if there are errors while writing
    */
   public void writeHeaders(Cursor cursor, int numRows, DataOutputStream writer)
       throws IOException {
     initializeCachedValues(cursor);
-    writeQueryMetadata(cursor, numRows, writer);
+    writeQueryMetadata(numRows, writer);
   }
 
   /**
@@ -93,6 +94,7 @@ class DatabaseDumper {
    * This must be called after {@link #writeHeaders}.
    *
    * @param cursor the cursor to write data from
+   * @param writer the output to write to
    * @throws IOException if there are any errors while writing
    */
   public void writeOneRow(Cursor cursor, DataOutputStream writer)
@@ -146,12 +148,12 @@ class DatabaseDumper {
   /**
    * Writes metadata about the query to be dumped.
    *
-   * @param cursor the cursor that the data will come from
    * @param numRows the number of rows that will be dumped
+   * @param writer the output to write to
    * @throws IOException if there are any errors while writing
    */
   private void writeQueryMetadata(
-      Cursor cursor, int numRows, DataOutputStream writer) throws IOException {
+      int numRows, DataOutputStream writer) throws IOException {
     // Write column data
     writer.writeInt(columnNames.length);
     for (int i = 0; i < columnNames.length; i++) {
@@ -169,8 +171,9 @@ class DatabaseDumper {
    * Writes a single cell of the database to the output.
    *
    * @param columnIdx the column index to read from
-   * @param columnType the type of the column to be read
+   * @param columnTypeId the type of the column to be read
    * @param cursor the cursor to read from
+   * @param writer the output to write to
    * @throws IOException if there are any errors while writing
    */
   private void writeCell(
@@ -195,6 +198,12 @@ class DatabaseDumper {
       case ContentTypeIds.STRING_TYPE_ID:
         writer.writeUTF(cursor.getString(columnIdx));
         return;
+      case ContentTypeIds.BLOB_TYPE_ID: {
+        byte[] blob = cursor.getBlob(columnIdx);
+        writer.writeInt(blob.length);
+        writer.write(blob);
+        return;
+      }
       default:
         throw new IllegalArgumentException(
             "Type " + columnTypeId + " not supported");
@@ -204,7 +213,7 @@ class DatabaseDumper {
   /**
    * Writes a dummy cell value to the output.
    *
-   * @param columnType the type of the value to write
+   * @param columnTypeId the type of the value to write
    * @throws IOException if there are any errors while writing
    */
   private void writeDummyCell(byte columnTypeId, DataOutputStream writer)
@@ -227,6 +236,9 @@ class DatabaseDumper {
         return;
       case ContentTypeIds.STRING_TYPE_ID:
         writer.writeUTF("");
+        return;
+      case ContentTypeIds.BLOB_TYPE_ID:
+        writer.writeInt(0);
         return;
       default:
         throw new IllegalArgumentException(

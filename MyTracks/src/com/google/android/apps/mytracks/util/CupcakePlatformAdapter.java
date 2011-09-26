@@ -15,10 +15,16 @@
  */
 package com.google.android.apps.mytracks.util;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.Service;
-import android.os.HandlerThread;
+import android.content.SharedPreferences.Editor;
+import android.util.Log;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * The Cupcake (API level 3) specific implementation of the
@@ -32,22 +38,45 @@ public class CupcakePlatformAdapter implements ApiPlatformAdapter {
   public void startForeground(Service service,
       NotificationManager notificationManager, int id,
       Notification notification) {
-    service.setForeground(true);
+    setServiceForeground(service, true);
+
     notificationManager.notify(id, notification);
   }
 
   @Override
   public void stopForeground(Service service,
       NotificationManager notificationManager, int id) {
-    service.setForeground(false);
+    setServiceForeground(service, false);
     if (id != -1) {
       notificationManager.cancel(id);
     }
   }
 
+  private void setServiceForeground(Service service, boolean foreground) {
+    // setForeground has been completely removed in API level 11, so we use reflection.
+    try {
+      Method setForegroundMethod = Service.class.getMethod("setForeground", boolean.class);
+      setForegroundMethod.invoke(service, foreground);
+    } catch (SecurityException e) {
+      Log.e(TAG, "Unable to set service foreground state", e);
+    } catch (NoSuchMethodException e) {
+      Log.e(TAG, "Unable to set service foreground state", e);
+    } catch (IllegalArgumentException e) {
+      Log.e(TAG, "Unable to set service foreground state", e);
+    } catch (IllegalAccessException e) {
+      Log.e(TAG, "Unable to set service foreground state", e);
+    } catch (InvocationTargetException e) {
+      Log.e(TAG, "Unable to set service foreground state", e);
+    }
+  }
+
   @Override
-  public boolean stopHandlerThread(HandlerThread handlerThread) {
-    // Do nothing, as Cupcake doesn't provide quit().
-    return false;
+  public void applyPreferenceChanges(Editor editor) {
+    editor.commit();
+  }
+
+  @Override
+  public void enableStrictMode() {
+    // Not supported
   }
 }

@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 
 import android.os.Environment;
 
@@ -53,7 +53,7 @@ public class FileUtilsTest extends TestCase {
   public void testBuildExternalDirectoryPath() {
     String expectedName = Environment.getExternalStorageDirectory()
         + File.separator
-        + MyTracksConstants.SDCARD_TOP_DIR
+        + Constants.SDCARD_TOP_DIR
         + File.separator
         + "a"
         + File.separator

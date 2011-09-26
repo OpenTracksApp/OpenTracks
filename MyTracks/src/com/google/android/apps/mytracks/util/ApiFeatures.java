@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
+import com.google.android.apps.mytracks.Constants;
 
 import android.os.Build;
 import android.util.Log;
@@ -33,9 +33,9 @@ public class ApiFeatures {
    */
   public static final int ANDROID_API_LEVEL = Integer.parseInt(
       Build.VERSION.SDK);
-  
+
   private static ApiFeatures instance;
-  
+
   /**
    * The API platform adapter supported by this system.
    */
@@ -54,6 +54,7 @@ public class ApiFeatures {
   /**
    * Injects a specific singleton instance, to be used for unit tests.
    */
+  @SuppressWarnings("hiding")
   public static void injectInstance(ApiFeatures instance) {
     ApiFeatures.instance = instance;
   }
@@ -62,24 +63,19 @@ public class ApiFeatures {
    * Allow subclasses for mocking, but no direct instantiation.
    */
   protected ApiFeatures() {
-    if (getApiLevel() >= 5) {
-      try {
-        Class<?> clazz = Class.forName(
-            "com.google.android.apps.mytracks.util.EclairPlatformAdapter");
-        apiPlatformAdapter = (ApiPlatformAdapter) clazz.newInstance();
-      } catch (Exception e) {
-        Log.i(MyTracksConstants.TAG, "ApiFeatures: Unable to instantiate Eclair"
-            + " platform adapter", e);
-      }
-    }
-    if (apiPlatformAdapter == null) {
-      Log.i(MyTracksConstants.TAG,
-          "ApiFeatures: Using default platform adapter");
-      // Cupcake adapter is always supported, so it's safe to do static linkage.
+    // It is safe to import unsupported classes as long as we only actually
+    // load the class when supported.
+    if (getApiLevel() >= 9) {
+      apiPlatformAdapter = new GingerbreadPlatformAdapter();
+    } else if (getApiLevel() >= 5) {
+      apiPlatformAdapter = new EclairPlatformAdapter();
+    } else {
       apiPlatformAdapter = new CupcakePlatformAdapter();
     }
+
+    Log.i(Constants.TAG, "Using platform adapter " + apiPlatformAdapter.getClass());
   }
-  
+
   public ApiPlatformAdapter getApiPlatformAdapter() {
     return apiPlatformAdapter;
   }
@@ -108,10 +104,26 @@ public class ApiFeatures {
     return true;
   }
 
-  public boolean hasModernSignalStrength() {
-    return getApiLevel() >= 7;
+  public boolean hasStrictMode() {
+    return getApiLevel() >= 9;
   }
-  
+
+  public boolean isAudioFocusSupported() {
+    return getApiLevel() >= 8;
+  }
+
+  /**
+   * There's a bug (#1587) in Cupcake and Donut which prevents you from
+   * using a SQLiteQueryBuilder twice.  That is, if you call buildQuery
+   * on a given instance (to log the statement for debugging), and then
+   * call query on the same instance to make it actually do the query,
+   * it'll regenerate the query for the second call, and will screw it
+   * up.  Specifically, it'll add extra parens which don't belong.
+   */
+  public boolean canReuseSQLiteQueryBuilder() {
+    return getApiLevel() > 4;
+  }
+
   // Visible for testing.
   protected int getApiLevel() {
     return ANDROID_API_LEVEL;

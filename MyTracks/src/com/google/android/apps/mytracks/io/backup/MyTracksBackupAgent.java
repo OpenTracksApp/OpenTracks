@@ -15,8 +15,7 @@
  */
 package com.google.android.apps.mytracks.io.backup;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
-import com.google.android.apps.mytracks.MyTracksSettings;
+import com.google.android.apps.mytracks.Constants;
 
 import android.app.backup.BackupAgent;
 import android.app.backup.BackupDataInput;
@@ -40,12 +39,12 @@ public class MyTracksBackupAgent extends BackupAgent {
   @Override
   public void onBackup(ParcelFileDescriptor oldState, BackupDataOutput data,
       ParcelFileDescriptor newState) throws IOException {
-    Log.i(MyTracksConstants.TAG, "Performing backup");
+    Log.i(Constants.TAG, "Performing backup");
     SharedPreferences preferences = this.getSharedPreferences(
-        MyTracksSettings.SETTINGS_NAME, 0);
+        Constants.SETTINGS_NAME, 0);
 
     backupPreferences(data, preferences);
-    Log.i(MyTracksConstants.TAG, "Backup complete");
+    Log.i(Constants.TAG, "Backup complete");
   }
 
   private void backupPreferences(BackupDataOutput data,
@@ -63,18 +62,18 @@ public class MyTracksBackupAgent extends BackupAgent {
   @Override
   public void onRestore(BackupDataInput data, int appVersionCode,
       ParcelFileDescriptor newState) throws IOException {
-    Log.i(MyTracksConstants.TAG, "Restoring from backup");
+    Log.i(Constants.TAG, "Restoring from backup");
     while (data.readNextHeader()) {
       String key = data.getKey();
-      Log.d(MyTracksConstants.TAG, "Restoring entity " + key);
+      Log.d(Constants.TAG, "Restoring entity " + key);
       if (key.equals(PREFERENCES_ENTITY)) {
         restorePreferences(data);
       } else {
-        Log.e(MyTracksConstants.TAG, "Found unknown backup entity: " + key);
+        Log.e(Constants.TAG, "Found unknown backup entity: " + key);
         data.skipEntityData();
       }
     }
-    Log.i(MyTracksConstants.TAG, "Done restoring from backup");
+    Log.i(Constants.TAG, "Done restoring from backup");
   }
 
   /**
@@ -92,7 +91,7 @@ public class MyTracksBackupAgent extends BackupAgent {
     }
 
     SharedPreferences preferences = this.getSharedPreferences(
-        MyTracksSettings.SETTINGS_NAME, 0);
+        Constants.SETTINGS_NAME, 0);
     PreferenceBackupHelper importer = createPreferenceBackupHelper();
     importer.importPreferences(dataBuffer, preferences);
   }

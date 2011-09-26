@@ -17,6 +17,9 @@ limitations under the License.
 <resources>
   <!-- Keys for application preferences - DO NOT TRANSLATE -->
   <string name="announcement_frequency_key">announcementFrequency</string>
+  <string name="ant_heart_rate_sensor_id_key">antHeartRateSensorId</string>
+  <string name="ant_power_sensor_id_key">antPowerSensorId</string>
+  <string name="ant_srm_bridge_sensor_id_key">antSRMBridgeSensorId</string>
   <string name="auto_resume_track_timeout_key">autoResumeTrackTimeout</string>
   <string name="bluetooth_device_key">bluetoothDevice</string>
   <string name="bluetooth_pairing_key">bluetoothPairing</string>
@@ -33,10 +36,9 @@ limitations under the License.
   <string name="send_stats_and_points_key">sendStatsAndPoints</string>
   <string name="send_to_docs_key">sendToDocs</string>
   <string name="send_to_my_maps_key">sendToMyMaps</string>
-  <string name="sensor_id_key">sensorId</string>
+  <string name="send_to_fusion_tables_key">sendToFusionTables</string>
   <string name="sensor_type_key">sensorType</string>
   <string name="share_url_only_key">shareUrlOnly</string>
-  <string name="signal_sampling_frequency_key">signalSamplingFrequency</string>
   <string name="split_frequency_key">splitFrequency</string>
   <string name="timestamp_track_name_key">timestampTrackName</string>
 
@@ -48,4 +50,8 @@ limitations under the License.
   <!-- Keys for non-persisted preferences - DO NOT TRANSLATE -->
   <string name="backup_to_sd_key">backupToSd</string>
   <string name="restore_from_sd_key">restoreFromSd</string>
+  <string name="reset_key">resetToDefaults</string>
+  <string name="sensor_options_key">sensorOptions</string>
+  <string name="ant_options_key">antOptions</string>
+  <string name="display_settings_screen_key">displaySettingsScreen</string>
 </resources>

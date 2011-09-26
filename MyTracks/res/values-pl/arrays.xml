@@ -15,18 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-  <!-- Task frequency -->
-  <string-array name="task_frequency_options">
-    <item>Brak</item>
-    <item>1 min</item>
-    <item>2 min</item>
-    <item>5 min</item>
-    <item>10 min</item>
-    <item>15 min</item>
-    <item>30 min</item>
-    <item>60 min</item>
-  </string-array>
-
   <!-- Minimum recording distance -->
   <string-array name="min_recording_distance_options">
     <item>1 m</item>
@@ -112,9 +100,9 @@ limitations under the License.
     <item>3.1 mili (słaby sygnał GPS)</item>
   </string-array>
 
-  <!-- Split frequency -->
-  <string-array name="split_frequency_options">
-    <item>Brak dzielenia</item>
+  <!-- Task frequency -->
+  <string-array name="task_frequency_options">
+    <item>Brak</item>
     <item>100 km</item>
     <item>50 km</item>
     <item>25 km</item>
@@ -130,8 +118,8 @@ limitations under the License.
     <item>1 min</item>
   </string-array>
 
-  <string-array name="split_frequency_options_ft">
-    <item>Brak dzielenia</item>
+  <string-array name="task_frequency_options_ft">
+    <item>Brak</item>
     <item>100 mi</item>
     <item>50 mi</item>
     <item>25 mi</item>
@@ -146,7 +134,7 @@ limitations under the License.
     <item>2 min</item>
     <item>1 min</item>
   </string-array>
-  
+
   <!-- Auto-resume track timeout -->
   <string-array name="auto_resume_track_timeout_options">
     <item>Nigdy</item>
@@ -162,7 +150,7 @@ limitations under the License.
     <item>typ mieszany</item>
     <item>inny</item>
 
-    <item>bieanie</item>
+    <item>bieganie</item>
     <item>bieganie uliczne</item>
     <item>bieganie na torze</item>
     <item>bieganie terenowe</item>
@@ -182,10 +170,10 @@ limitations under the License.
     <item>łyżwiarstwo torowe</item>
     <item>deskorolka</item>
 
-    <item>wędrówka po sniegu</item>
+    <item>wędrówka po śniegu</item>
     <item>narciarstwo</item>
     <item>snowboard</item>
-    <item>saneczkastwo</item>
+    <item>saneczkarstwo</item>
     <item>żeglarstwo lodowe</item>
 
     <item>żeglowanie</item>
@@ -249,7 +237,7 @@ limitations under the License.
     <item>kominek</item>
     <item>remiza strażacka</item>
     <item>baza wędkarska</item>
-    <item>stcja paliw</item>
+    <item>stacja paliw</item>
     <item>pole golfowe</item>
     <item>sklep spożywczy</item>
     <item>fryzjer</item>

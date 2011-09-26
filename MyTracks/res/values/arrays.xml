@@ -15,31 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-  <!-- Task frequency -->
-  <string-array name="task_frequency_options">
-    <item>Off</item>
-    <item>1 min</item>
-    <item>2 min</item>
-    <item>5 min</item>
-    <item>10 min</item>
-    <item>15 min</item>
-    <item>30 min</item>
-    <item>60 min</item>
-  </string-array>
-
-  <!-- DO NOT TRANSLATE -->
-  <string-array name="task_frequency_values">
-    <item>-1</item>
-    <item>1</item>
-    <item>2</item>
-    <item>5</item>
-    <item>10</item>
-    <item>15</item>
-    <item>30</item>
-    <item>60</item>
-  </string-array>
-
-
   <!-- Minimum recording distance -->
   <string-array name="min_recording_distance_options">
     <item>1 m</item>
@@ -61,18 +36,6 @@ limitations under the License.
     <item>328 ft</item>
   </string-array>
 
-  <!-- DO NOT TRANSLATE -->
-  <string-array name="min_recording_distance_values">
-    <item>1</item>
-    <item>2</item>
-    <item>3</item>
-    <item>4</item>
-    <item>5</item>
-    <item>10</item>
-    <item>100</item>
-  </string-array>
-
-
   <!-- Maximum recording distance -->
   <string-array name="max_recording_distance_options">
     <item>50 m</item>
@@ -91,17 +54,6 @@ limitations under the License.
     <item>0.6 miles</item>
     <item>3.1 miles</item>
   </string-array>
-
-  <!-- DO NOT TRANSLATE -->
-  <string-array name="max_recording_distance_values">
-    <item>50</item>
-    <item>100</item>
-    <item>200</item>
-    <item>500</item>
-    <item>1000</item>
-    <item>5000</item>
-  </string-array>
-
 
   <!-- Minimum recording interval -->
   <string-array name="min_recording_interval_options">
@@ -122,27 +74,6 @@ limitations under the License.
     <item>15 min</item>
     <item>30 min</item>
   </string-array>
-
-  <!-- DO NOT TRANSLATE -->
-  <string-array name="min_recording_interval_values">
-    <item>-2</item>
-    <item>-1</item>
-    <item>0</item>
-    <item>2</item>
-    <item>3</item>
-    <item>4</item>
-    <item>5</item>
-    <item>10</item>
-    <item>20</item>
-    <item>30</item>
-    <item>60</item>
-    <item>120</item>
-    <item>300</item>
-    <item>480</item>
-    <item>900</item>
-    <item>1800</item>
-  </string-array>
-
 
   <!-- Minimum required accuracy -->
   <string-array name="min_required_accuracy_options">
@@ -169,23 +100,9 @@ limitations under the License.
     <item>3.1 miles (poor GPS signal)</item>
   </string-array>
 
-  <!-- DO NOT TRANSLATE -->
-  <string-array name="min_required_accuracy_values">
-    <item>10</item>
-    <item>20</item>
-    <item>50</item>
-    <item>100</item>
-    <item>200</item>
-    <item>500</item>
-    <item>1000</item>
-    <item>2000</item>
-    <item>5000</item>
-  </string-array>
-
-
-  <!-- Split frequency -->
-  <string-array name="split_frequency_options">
-    <item>No splitting</item>
+  <!-- Task frequency -->
+  <string-array name="task_frequency_options">
+    <item>Off</item>
     <item>100 km</item>
     <item>50 km</item>
     <item>25 km</item>
@@ -201,8 +118,8 @@ limitations under the License.
     <item>1 min</item>
   </string-array>
 
-  <string-array name="split_frequency_options_ft">
-    <item>No splitting</item>
+  <string-array name="task_frequency_options_ft">
+    <item>Off</item>
     <item>100 mi</item>
     <item>50 mi</item>
     <item>25 mi</item>
@@ -218,24 +135,6 @@ limitations under the License.
     <item>1 min</item>
   </string-array>
 
-  <!-- DO NOT TRANSLATE -->
-  <string-array name="split_frequency_values">
-    <item>0</item>
-    <item>-100</item>
-    <item>-50</item>
-    <item>-25</item>
-    <item>-10</item>
-    <item>-5</item>
-    <item>-1</item>
-    <item>60</item>
-    <item>30</item>
-    <item>15</item>
-    <item>10</item>
-    <item>5</item>
-    <item>2</item>
-    <item>1</item>
-  </string-array>
-
   <!-- Auto-resume track timeout -->
   <string-array name="auto_resume_track_timeout_options">
     <item>Never</item>
@@ -244,16 +143,6 @@ limitations under the License.
     <item>15 min</item>
     <item>Always</item>
   </string-array>
-
-  <!-- DO NOT TRANSLATE -->
-  <string-array name="auto_resume_track_timeout_values">
-    <item>0</item>
-    <item>5</item>
-    <item>10</item>
-    <item>15</item>
-    <item>-1</item>
-  </string-array>
-
 
   <!-- Other non-preference arrays -->
   <array name="activity_types">
@@ -280,6 +169,11 @@ limitations under the License.
     <item>skating</item>
     <item>inline skating</item>
     <item>skate boarding</item>
+
+    <item>roller skiing (classic)</item>
+    <item>roller skiing (skate)</item>
+    <item>cross-country skiing (classic)</item>
+    <item>cross-country skiing (skate)</item>
 
     <item>snow shoeing</item>
     <item>skiing</item>
@@ -383,11 +277,4 @@ limitations under the License.
     <item>way point</item>
   </array>
 
-  <!-- DO NOT TRANSLATE -->
-  <array name="export_formats">
-    <item>GPX</item>
-    <item>KML</item>
-    <item>CSV</item>
-    <item>TCX</item>
-  </array>
 </resources>

@@ -1,12 +1,12 @@
 /*
  * Copyright 2010 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -15,8 +15,7 @@
  */
 package com.google.android.apps.mytracks.services;
 
-import com.google.android.apps.mytracks.MyTracksConstants;
-import com.google.android.apps.mytracks.MyTracksSettings;
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.maps.mytracks.R;
 
 import android.content.SharedPreferences;
@@ -25,7 +24,7 @@ import android.util.Log;
 
 /**
  * A class that manages reading the shared preferences for the service.
- * 
+ *
  * @author Sandor Dornbush
  */
 public class PreferenceManager implements OnSharedPreferenceChangeListener {
@@ -40,27 +39,27 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
   private final String minRecordingIntervalKey;
   private final String minRequiredAccuracyKey;
   private final String recordingTrackKey;
-  private final String signalSamplingFrequencyKey;
+  private final String selectedTrackKey;
   private final String splitFrequencyKey;
 
   public PreferenceManager(TrackRecordingService service) {
     this.service = service;
     this.sharedPreferences = service.getSharedPreferences(
-        MyTracksSettings.SETTINGS_NAME, 0);
+        Constants.SETTINGS_NAME, 0);
     if (sharedPreferences == null) {
-      Log.w(MyTracksConstants.TAG,
+      Log.w(Constants.TAG,
           "TrackRecordingService: Couldn't get shared preferences.");
       throw new IllegalStateException("Couldn't get shared preferences");
     }
     sharedPreferences.registerOnSharedPreferenceChangeListener(this);
-    
+
     announcementFrequencyKey =
         service.getString(R.string.announcement_frequency_key);
     autoResumeTrackCurrentRetryKey =
         service.getString(R.string.auto_resume_track_current_retry_key);
     autoResumeTrackTimeoutKey =
         service.getString(R.string.auto_resume_track_timeout_key);
-    maxRecordingDistanceKey = 
+    maxRecordingDistanceKey =
         service.getString(R.string.max_recording_distance_key);
     metricUnitsKey =
         service.getString(R.string.metric_units_key);
@@ -72,11 +71,11 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
         service.getString(R.string.min_required_accuracy_key);
     recordingTrackKey =
         service.getString(R.string.recording_track_key);
-    signalSamplingFrequencyKey =
-        service.getString(R.string.signal_sampling_frequency_key);
+    selectedTrackKey =
+        service.getString(R.string.selected_track_key);
     splitFrequencyKey =
         service.getString(R.string.split_frequency_key);
-    
+
     // Refresh all properties.
     onSharedPreferenceChanged(sharedPreferences, null);
   }
@@ -88,32 +87,32 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
    * @param key the key that changed (may be null to update all preferences)
    */
   @Override
-  public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+  public void onSharedPreferenceChanged(SharedPreferences preferences,
       String key) {
     if (service == null) {
-      Log.w(MyTracksConstants.TAG,
+      Log.w(Constants.TAG,
           "onSharedPreferenceChanged: a preference change (key = " + key
           + ") after a call to shutdown()");
       return;
     }
     if (key == null || key.equals(minRecordingDistanceKey)) {
-      service.setMinRecordingDistance(
-          sharedPreferences.getInt(
-              minRecordingDistanceKey,
-              MyTracksSettings.DEFAULT_MIN_RECORDING_DISTANCE));
-      Log.d(MyTracksConstants.TAG,
+      int minRecordingDistance = sharedPreferences.getInt(
+          minRecordingDistanceKey,
+          Constants.DEFAULT_MIN_RECORDING_DISTANCE);
+      service.setMinRecordingDistance(minRecordingDistance);
+      Log.d(Constants.TAG,
           "TrackRecordingService: minRecordingDistance = "
-          + service.getMinRecordingDistance());
+          + minRecordingDistance);
     }
     if (key == null || key.equals(maxRecordingDistanceKey)) {
       service.setMaxRecordingDistance(sharedPreferences.getInt(
           maxRecordingDistanceKey,
-          MyTracksSettings.DEFAULT_MAX_RECORDING_DISTANCE));
+          Constants.DEFAULT_MAX_RECORDING_DISTANCE));
     }
     if (key == null || key.equals(minRecordingIntervalKey)) {
       int minRecordingInterval = sharedPreferences.getInt(
           minRecordingIntervalKey,
-          MyTracksSettings.DEFAULT_MIN_RECORDING_INTERVAL);
+          Constants.DEFAULT_MIN_RECORDING_INTERVAL);
       switch (minRecordingInterval) {
         case -2:
           // Battery Miser
@@ -139,7 +138,7 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
     if (key == null || key.equals(minRequiredAccuracyKey)) {
       service.setMinRequiredAccuracy(sharedPreferences.getInt(
           minRequiredAccuracyKey,
-          MyTracksSettings.DEFAULT_MIN_REQUIRED_ACCURACY));
+          Constants.DEFAULT_MIN_REQUIRED_ACCURACY));
     }
     if (key == null || key.equals(announcementFrequencyKey)) {
       service.setAnnouncementFrequency(
@@ -148,31 +147,27 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
     if (key == null || key.equals(autoResumeTrackTimeoutKey)) {
       service.setAutoResumeTrackTimeout(sharedPreferences.getInt(
           autoResumeTrackTimeoutKey,
-          MyTracksSettings.DEFAULT_AUTO_RESUME_TRACK_TIMEOUT));
+          Constants.DEFAULT_AUTO_RESUME_TRACK_TIMEOUT));
     }
     if (key == null || key.equals(recordingTrackKey)) {
       long recordingTrackId = sharedPreferences.getLong(recordingTrackKey, -1);
       // Only read the id if it is valid.
-      // Setting it to -1 should only happen in 
+      // Setting it to -1 should only happen in
       // TrackRecordingService.endCurrentTrack()
       if (recordingTrackId > 0) {
         service.setRecordingTrackId(recordingTrackId);
       }
     }
     if (key == null || key.equals(splitFrequencyKey)) {
-      service.getSplitManager().setSplitFrequency(
+      service.setSplitFrequency(
           sharedPreferences.getInt(splitFrequencyKey, 0));
     }
-    if (key == null || key.equals(signalSamplingFrequencyKey)) {
-      service.getSignalManager().setFrequency(
-          sharedPreferences.getInt(signalSamplingFrequencyKey, -1), service);
-    }
     if (key == null || key.equals(metricUnitsKey)) {
-      service.getSplitManager().setMetricUnits(
+      service.setMetricUnits(
           sharedPreferences.getBoolean(metricUnitsKey, true));
     }
   }
-  
+
   public void setAutoResumeTrackCurrentRetry(int retryAttempts) {
     sharedPreferences
         .edit()
@@ -186,7 +181,14 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
         .putLong(recordingTrackKey, id)
         .commit();
   }
-  
+
+  public void setSelectedTrack(long id) {
+    sharedPreferences
+        .edit()
+        .putLong(selectedTrackKey, id)
+        .commit();
+  }
+
   public void shutdown() {
     sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
     service = null;

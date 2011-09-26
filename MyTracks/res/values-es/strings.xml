@@ -25,49 +25,48 @@ limitations under the License.
   <string name="delete_all_tracks">Borrar todos los recorridos</string>
   <string name="settings">Configuraciones</string>
   <string name="elevation">Elevación</string>
-  <string name="choose_track_message">Por favor seleccione el recorrido que desea ver</string>
+  <string name="choose_track_message">Por favor, seleccione el recorrido que desea ver</string>
   <string name="current_track">Recorrido actual</string>
   <string name="current_segment">Último segmento</string>
 
   <!-- Error messages -->
-  <string name="error_no_location_manager">Ningún administrador de ubicación fue hallado en este aparato! </string>
-  <string name="error_no_gps_location_provider">Ningún proveedor GPS de ubicación fue hallado en este aparato.</string>
-  <string name="error_sending_to_mymap">Hubo un error al mandar su recorrido a Google My Map. Por favor inténtelo de nuevo más tarde.</string>
-  <string name="error_sending_to_docs">Hubo un error al mandar su recorrido a Google Docs. Por favor inténtelo de nuevo más tarde.</string>
-  <string name="error_unable_to_start_recording">No pude empezar a grabar. Por favor inténtelo de nuevo. </string>
-  <string name="error_unable_to_stop_recording">No pude dejar de grabar. Por favor inténtelo de nuevo.</string>
+  <string name="error_no_location_manager">Ningún administrador de ubicación fue hallado en este dispositivo! </string>
+  <string name="error_no_gps_location_provider">Ningún proveedor de ubicación GPS fue hallado en este dispositivo.</string>
+  <string name="error_sending_to_fusiontables">Se produjo un error al enviar su recorrido a Google Fusion Tables.</string>
+  <string name="error_sending_to_docs">Se produjo un error al enviar su recorrido a Google Docs.</string>
+  <string name="error_unable_to_start_recording">No se puede iniciar la grabación. Inténtelo de nuevo. </string>
+  <string name="error_unable_to_stop_recording">No se puede detener la grabación. Inténtelo de nuevo.</string>
   <string name="error_unable_to_read_file">No pude leer del archivo.</string>
   <string name="error_invalid_gpx_format">El archivo no tiene un format GPX válido.</string>
-  <string name="error_generic">Error.  Por favor inténtelo de nuevo.</string>
+  <string name="error_generic">A ocurrido un error. Por favor, inténtelo de nuevo.</string>
   <string name="error_track_does_not_exist">El recorrido no existe.</string>
   <string name="error_out_of_memory">El archivo es demasiado grande (tiene que ser menor a 500 KB). Abortando.</string>
-  <string name="error_unable_to_insert_marker">No pude insertar la señal. La ubicación no esta disponible.</string>
+  <string name="error_unable_to_insert_marker">No se puede insertar el marcador. La ubicación no está disponible.</string>
 
   <!-- Status messages -->
   <string name="wait_for_fix">Esperando una ubicación mas exacta del GPS. Asegúrese que el cielo sea visible.</string>
   <string name="status_now_recording">Grabando un nuevo recorrido.</string>
-  <string name="status_stopped_recording">Grabacíon interrumpida.</string>
-  <string name="status_new_mymap_has_been_created">Un mapa Google My Map nuevo has sido creado en maps.google.com.</string>
+  <string name="status_stopped_recording">Grabación interrumpida.</string>
+  <string name="status_new_fusiontable_has_been_created">Una nueva tabla de Google Fusion ha sido creada en google.com/fusiontables.</string>
   <string name="status_tracks_have_been_uploaded">Su recorrido ha sido enviado a maps.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">Su recorrido ha sido enviado a una nueva hoja de cálculo en docs.google.com.</string>
+  <string name="status_tracks_have_been_uploaded_to_new_doc">Su recorrido ha sido enviado a una nueva hoja de cálculo de docs.google.com.</string>
   <string name="status_tracks_have_been_uploaded_to_docs">Su recorrido ha sido enviado a docs.google.com.</string>
-  <string name="status_mymap_info">A veces nuevos recorridos pueden tardar algunos minutos en aparecer.</string>
-  <string name="status_enable_gps">Por favor presione aquí para ir al menú de Seguridad y Ubicación y asegúrese que el GPS esté habilitado. Presione el botón de regreso para regresar.</string>
-  <string name="status_approximate_location">Nota: Una ubicación aproximada es mostrada, basada en informacion de torres de telefonía celular y red WIFI.</string>
-  <string name="status_no_location">La ubicación actual no puede ser determinada. Habilite más fuentes de datos (vea configuraciones de Seguridad y Ubicación) y asegúrese que el cielo sea visible. Inténtelo mas tarde.</string>
-  <string name="status_waypoint_inserted">Una señal de recorrido fue insertada.</string>
-  <string name="status_statistics_inserted">Una señal con estadísticas fue insertada.</string>
+  <string name="status_enable_gps">Por favor, presione aquí para ir al menú de Seguridad y Ubicación, y asegúrese que el GPS esté habilitado. Presione el botón "atrás" para regresar.</string>
+  <string name="status_approximate_location">Nota: Una ubicación aproximada es determinada a partir de torres de telefonía celular y redes WIFI.</string>
+  <string name="status_no_location">No puede ser determinada la ubicación actual. Habilite más fuentes de datos (vea las configuraciones de Seguridad y Ubicación) y asegúrese que el cielo sea visible. Inténtelo mas tarde.</string>
+  <string name="status_waypoint_inserted">Un marcador de recorrido fue insertado.</string>
+  <string name="status_statistics_inserted">Un marcador de estadísticas fue insertado.</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Por favor espere...</string>
   <string name="progress_message">Enviando su recorrido a Google.</string>
   <string name="progress_message_reading_track">Leyendo recorrido...</string>
   <string name="progress_message_preparing_track">Preparando recorrido...</string>
-  <string name="progress_message_authenticating_mymaps">Autenticando con Google Maps...</string>
+  <string name="progress_message_authenticating_fusiontables">Autenticando con Google Fusion Tables...</string>
   <string name="progress_message_authenticating_docs">Autenticando con Google Docs...</string>
   <string name="progress_message_sending_docs">Enviando recorrido a Google Docs...</string>
-  <string name="progress_message_sending_mymaps">Enviando recorrido a Google Maps...</string>
-  <string name="progress_message_creating_map">Creando nuevo mapa My Map...</string>
+  <string name="progress_message_sending_fusiontables">Enviando recorrido a Google Fusion Tables...</string>
+  <string name="progress_message_creating_fusiontable">Creando nuevo mapa Fusion Tables...</string>
   <string name="import_progress_message">Importando un recorrido GPS. Esto puede tardar.</string>
   <string name="write_progress_message">Escribiendo archivo a tarjeta SD. Esto puede tardar.</string>
   <string name="progress_message_updating_track">Actualizando estadísticas del recorrido...</string>
@@ -78,10 +77,8 @@ limitations under the License.
   <string name="track_will_be_permanently_deleted">El recorrido y sus señales serán borrados permanentemente de este teléfono.</string>
   <string name="marker_will_be_permanently_deleted">La señal será borrada permanentemente de este teléfono.</string>
 
-  <!-- Text and links when uploading to Google My Maps -->
-  <string name="new_map_description">"Creado por My Tracks en Android."</string>
-  <string name="my_map_link">"Creado por &lt;a href='http://mytracks.appspot.com'&gt;My Tracks&lt;/a&gt; en Android."</string>
-  <string name="new_map_title">Nuevo mapa</string>
+  <!-- Text and links when uploading to Google Fusion Tables -->
+  <string name="fusiontable_link">Creado por &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; en Android.</string>
 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">Puntos</string>
@@ -98,6 +95,7 @@ limitations under the License.
   <string name="yes">Sí</string>
   <string name="success">Éxito</string>
   <string name="waypoint">Señal de recorrido</string>
+  <string name="cancel">Cancelar</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="start">(Inicio)</string>
@@ -105,8 +103,8 @@ limitations under the License.
 
   <!--  TrackList -->
   <string name="tracklist_show_track">Mostrar</string>
-  <string name="tracklist_send_to_mymaps">Enviar a Google My Maps</string>
-  <string name="tracklist_send_to_new_mymap">Enviar a nuevo Google My Map</string>
+  <string name="tracklist_send_to_fusiontables">Enviar a Google Fusion Tables</string>
+  <string name="tracklist_send_to_new_fusiontable">Enviar a nueva Google Fusion Table</string>
   <string name="tracklist_send_to_docs">Enviar a Google Docs</string>
   <string name="tracklist_send_to_google">Enviar a Google...</string>
   <string name="tracklist_delete_track">Borrar del teléfono...</string>
@@ -114,7 +112,7 @@ limitations under the License.
   <string name="tracklist_write_to_sd">Guardar en tarjeta SD...</string>
   <string name="tracklist_save_as_gpx">Guardar en archivo GPX</string>
   <string name="tracklist_save_as_kml">Guardar en archivo KML</string>
-  <string name="tracklist_btn_send_all_to_mymaps">Enviar a Google My Maps</string>
+  <string name="tracklist_btn_send_all_to_fusiontables">Enviar a Google Fusion Tables</string>
   <string name="tracklist_btn_delete_all">Borrar todos los recorridos</string>
   <!-- Export All -->
   <string name="tracklist_btn_export_all">Exportar todos los recorridos</string>
@@ -123,7 +121,6 @@ limitations under the License.
   <string name="tracklist_all_tracks">Todos los recorridos:"</string>
   <string name="tracklist_this_track">Este recorrido"</string>
   <string name="tracklist_share_track">Compartir con amigos..."</string>
-  <string name="tracklist_share_link">Un link a Google My Map"</string>
   <string name="tracklist_share_gpx_file">Un archivo GPX"</string>
   <string name="tracklist_share_kml_file">Un archivo KML"</string>
   <string name="tracklist_clear_map">"Limpiar mapa"</string>
@@ -141,14 +138,20 @@ limitations under the License.
   <!-- MyTracks Details -->
   <string name="trackdetails_title">Detalles del recorrido</string>
   <string name="trackdetails_name">Nombre del recorrido</string>
+  <string name="trackdetails_name_hint">Nombre del recorrido</string>
   <string name="trackdetails_description">Descripción del recorrido</string>
+  <string name="trackdetails_description_hint">Descripción del recorrido</string>
   <string name="trackdetails_category">Tipo de actividad (por ejemplo, ciclismo, alpinismo...)</string>
+  <string name="trackdetails_category_hint">Tipo de actividad</string>
 
   <!-- MyTracks Waypoint Details -->
   <string name="waypointdetails_title">Detalles de señal</string>
   <string name="waypointdetails_name">Nombre de señal</string>
+  <string name="waypointdetails_name_hint">Nombre de señal</string>
   <string name="waypointdetails_description">Descripción  de señal</string>
+  <string name="waypointdetails_description_hint">Descripción  de señal</string>
   <string name="waypointdetails_category">Tipo de señal (por ejemplo, edificio, bache, atracción...)</string>
+  <string name="waypointdetails_category_hint">Tipo de señal</string>
 
   <!-- MyTracks Settings -->
   <string name="mytracks_settings">Configuraciones de My Tracks</string>
@@ -187,39 +190,46 @@ limitations under the License.
   <string name="settings_share_url_only_summary_on">Sólo el URL del mapa será enviado al compartir</string>
   <string name="settings_share_url_only_summary_off">Los contenidos de la pista también serán incluídos al compartir</string>
 
-  <string name="settings_signal_sampling_frequency">Frecuencia de medición de señal</string>
-  <string name="settings_signal_sampling_frequency_summary">Tiempo entre grabaciones de la intensidad de la señal del teléfono</string>
-
   <string name="settings_split_frequency">Dividir frecuencia</string>
   <string name="settings_split_frequency_summary">Tiempo o distancia máxima para insertar una nueva marca de división</string>
   <string name="pace_label">Paso</string>
 
+  <string name="settings_auto_resume_track_timeout">Temporizador de auto-reinicio de recorrido</string>
+  <string name="settings_auto_resume_track_timeout_summary">Máximo tiempo en minutos después del cual un recorrido previamente grabado no será reiniciado después de un reinicio del teléfono</string>
+
+  <string name="settings_timestamp_track_name">Hora como nombre de recorrido</string>
+  <string name="settings_timestamp_track_name_summary_on">El nombre por defecto del recorrido será la fecha y hora del inicio del recorrido</string>
+  <string name="settings_timestamp_track_name_summary_off">Los nombre de recorrido tendrán números que se incrementarán en cada nuevo recorrido.</string>
+
+  <string name="eclair_required">Sólo soportado en Android 2.0 o superior</string>
+  <string name="settings_sensor_type">Tipo de sensor</string>
+  <string name="settings_sensor_type_summary">Tipo de sensor al que conectar</string>
+  <string name="settings_heart_rate_ant_sensor_id">Liberar conexión al sensor de corazón ANT</string>
+  <string name="settings_power_ant_sensor_id">Liberar conexión al sensor de energía ANT</string>
+  <string name="settings_srm_bridge_ant_sensor_id">Liberar conexión al sensor puente SRM ANT</string>
+  <string name="settings_ant_not_paired">Sensor ANT no conectado</string>
+  <string name="settings_ant_paired">Sensor ANT conectado con: %d</string>
+  <string name="bluetooth_sensor_title">Sensor Bluetooth</string>
+  <string name="bluetooth_sensor_summary">Sensor Bluetooth al que conectar</string>
+
+  <!-- Backups -->
+  <string name="settings_sd_backup">Backup en tarjeta SD</string>
+  <string name="settings_backup_to_sd">Hacer backup</string>
+  <string name="settings_backup_to_sd_summary">Hacer una copia total de sus recorridos y configuraciones a la tarjeta SD</string>
+  <string name="settings_restore_from_sd">Restaurar</string>
+  <string name="settings_restore_from_sd_summary">Restaurar todos los recorridos y configuraciones desde la tarjeta SD</string>
+
+  <string name="restore_overwrites_warning">Restaurar un backup desde la tarjeta SD SOBREESCRIBIRÁ todos sus recorridos y configuraciones actuales. ¿Está usted seguro?</string>
+  <string name="select_backup_to_restore">Seleccionar el backup para restaurar</string>
+  <string name="no_backups">No se han encontrado backups.</string>
+  <string name="backup_write_progress_message">Guardando todos los recorridos y configuraciones a la tarjeta SD. Esto puede llevar un rato...</string>
+  <string name="backup_import_progress_message">Leyendo todos los recorridos y configuraciones desde la tarjeta SD. Esto puede llevar un rato...</string>
   <!-- MyTracksSky -->
   <string name="mytracks_sky">Satélites GPS</string>
-
-  <!-- My Maps -->
-  <string name="select_map_message">Elija un mapa de su cuenta:</string>
-  <string name="create_new_map">Crear mapa nuevo...</string>
-  <string name="map_list_title">Enviar a Google My Maps</string>
-  <string name="maps_list_loading">Cargando mapas...</string>
-  <string name="maps_list_failed">Sus mapas no pudieron ser cargados en este momento!</string>
-  <string name="open_map">Seleccione este mapa</string>
-  <string name="edit_map_details">Editar detalles del mapa</string>
-  <string name="share_map">Compartir mapa con amigos</string>
   <string name="share_track">Compartir recorrido con amigos</string>
-  <string name="delete_map">Borrar mapa de su cuenta</string>
-  <string name="map_title">Título del mapa:</string>
-  <string name="map_description">Descripción del mapa:</string>
-  <string name="map_searchable_edit">Permitir que este mapa y su contenido sean mostrados en resultados de búsqueda</string>
-  <string name="map_not_searchable_edit">No permitir que este mapa y su contenido sean mostrados en resultados de búsqueda, pero permitir acceso directo mediante su URL</string>
-  <string name="map_searchable">Este mapa y su contenido serán mostrados en resultados de búsqueda</string>
-  <string name="map_not_searchable">No mostrar ni este mapa ni sus contenidos en resultados de búsqueda, pero permitir acceso directo mediante su URL</string>
-  <string name="close">Cerrar</string>
-  <string name="edit">Editar</string>
-  <string name="cancel">Cancelar</string>
-  <string name="save">Guardar</string>
 
   <!-- Sharing -->
+  <string name="share_map">Compartir mapa con amigos</string>
   <string name="share_map_subject">Me gustaría compartir un mapa contigo</string>
   <string name="share_map_body_format">Creo que este mapa pudiera interesarte:
 
@@ -228,6 +238,7 @@ limitations under the License.
   <string name="send_track_body_format">Creo que este recorrido pudiera interesarte.
 
     Para ver este recorrido usa Google Earth o algún otro software de mapeo.</string>
+  <string name="share_track">Compartir recorrido con amigos</string>
 
   <!-- Visibility -->
   <string name="public_map">Público</string>
@@ -301,6 +312,10 @@ limitations under the License.
   <string name="total_distance_label">Distancia total</string>
   <string name="distance_label">Distancia</string>
   <string name="waiting">Esperando...</string>
+  <string name="power">Potencia</string>
+  <string name="cadence">Cadencia</string>
+  <string name="heart_rate">Ritmo cardíaco</string>
+  <string name="max_heart_rate">Máx ritmo cardíaco</string>
 
   <!-- End User License Agreement -->
   <string name="eula_title">Contrato de Licencia de Usuario Final</string>
@@ -310,16 +325,12 @@ limitations under the License.
   <!-- About -->
   <string name="about">Sobre</string>
   <string name="help">Ayuda</string>
-  <string name="about_email">Soporte técnico</string>
-
   <string name="about_team">Equipo:</string>
   <string name="about_support">Soporte técnico:</string>
 
   <!-- Send to Google -->
   <string name="sendtogoogle_title">Enviar a...</string>
   <string name="sendtogoogle_send_now">Enviar ahora</string>
-  <string name="sendtogoogle_create_new_map">Crear un nuevo mapa</string>
-  <string name="sendtogoogle_pick_existing_map">Escoja un mapa existente</string>
   <string name="sendtogoogle_send_stats">Enviar estadísticas de recorrido</string>
   <string name="sendtogoogle_send_stats_and_points">Enviar estadísticas y puntos</string>
 
@@ -352,5 +363,41 @@ limitations under the License.
   $6 : Speed units (mph) : Pace units (per mile)
   -->
   <string name="announce_template">My Tracks %1$s %2$.2f %3$s en %4$s a %5$s %6$s</string>
-</resources>
 
+  <!-- Check Units -->
+  <string name="check_units_title">Aviso de unidades de medida</string>
+  <string name="check_units_message">Por defecto las unidades son métricas. ¿Quiere cambiar la configuración?</string>
+
+  <!-- Fake preference keys - never saved, but show options in the preferences screen -->
+  <string name="bluetooth_options">Opciones Bluetooth</string>
+  <string name="bluetooth_pairing">Conexión de dispositivos</string>
+  <string name="bluetooth_pairing_summary">Abrir la configuración Bluetooth de Android para conectar un dispositivo</string>
+  <string name="sensor_bluetooth_options_key">Sensor Bluetooth activado</string>
+  <string name="sensor_options">Opciones del sensor</string>
+
+  <!-- Bluetooth Sensor -->
+  <string name="bluetooth_connected">Conectado a %s</string>
+  <string name="bluetooth_connecting">Sensor Bluetooth conectando ...</string>
+  <string name="bluetooth_not_connected">Sensor Bluetooth no conectado</string>
+
+  <!-- Sensor State -->
+  <string name="sensor_data_time">Hora de los datos del sensor</string>
+  <string name="power_meter_enabled">Sensor de batería activado</string>
+  <string name="heart_rate_monitor_enabled">Monitor de ritmo cardíaco activado</string>
+  <string name="no_sensor_manager">No hay un gestor de sensores</string>
+  <string name="enabled">Activado</string>
+  <string name="connecting">Conectando</string>
+  <string name="connected">Conectado</string>
+  <string name="disconnected">Desconectando</string>
+  <string name="no_sensor_service">No hay un servicio de sensores</string>
+  <string name="searching">Buscando</string>
+  <string name="sending">Enviando</string>
+
+  <!-- Manifest description (not seen inside the app) -->
+  <string name="notification_permission_label">recibir avisos de registro de recorridos</string>
+  <string name="read_tracks_permission_label">leer datos de recorridos grabados</string>
+  <string name="write_tracks_permission_label">escribir datos de recorridos grabados, iniciar/detener recorridos</string>
+  <string name="notification_permission_description">Ser notificado cuando un recorrido empieza o termina de registrarse.</string>
+  <string name="read_tracks_permission_description">Poder leer datos, como puntos de interés.</string>
+  <string name="write_tracks_permission_description">Poder escribir datos, como registrar o añadir puntos de interés.</string>
+</resources>

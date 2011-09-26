@@ -15,16 +15,17 @@
  */
 package com.google.android.apps.mytracks.io;
 
-import com.google.android.accounts.Account;
-import com.google.android.accounts.AccountManager;
-import com.google.android.accounts.AccountManagerCallback;
-import com.google.android.accounts.AccountManagerFuture;
-import com.google.android.accounts.AuthenticatorException;
-import com.google.android.accounts.OperationCanceledException;
-import com.google.android.apps.mytracks.AccountChooser;
-import com.google.android.apps.mytracks.MyTracks;
-import com.google.android.apps.mytracks.MyTracksConstants;
+import static com.google.android.apps.mytracks.Constants.ACCOUNT_TYPE;
+import static com.google.android.apps.mytracks.Constants.TAG;
 
+import com.google.android.apps.mytracks.AccountChooser;
+
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.accounts.AccountManagerCallback;
+import android.accounts.AccountManagerFuture;
+import android.accounts.AuthenticatorException;
+import android.accounts.OperationCanceledException;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -50,7 +51,9 @@ public class ModernAuthManager implements AuthManager {
 
   private final AccountManager accountManager;
 
-  private Runnable whenFinished;
+  private AuthCallback authCallback;
+
+  private Account lastAccount;
 
   /**
    * AuthManager requires many of the same parameters as
@@ -64,16 +67,9 @@ public class ModernAuthManager implements AuthManager {
    *        {@link Activity#onActivityResult} that calls
    *        {@link #authResult(int, Intent)} when {@literal code} is the request
    *        code
-   * @param code The request code to pass to
-   *        {@link Activity#onActivityResult} when
-   *        {@link #authResult(int, Intent)} should be called
-   * @param extras A {@link Bundle} of extras for
-   *        {@link com.google.android.googlelogindist.GoogleLoginServiceHelper}
-   * @param requireGoogle True if the account must be a Google account
    * @param service The name of the service to authenticate as
    */
-  public ModernAuthManager(Activity activity, int code, Bundle extras,
-      boolean requireGoogle, String service) {
+  public ModernAuthManager(Activity activity, String service) {
     this.activity = activity;
     this.service = service;
     this.accountManager = AccountManager.get(activity);
@@ -88,45 +84,43 @@ public class ModernAuthManager implements AuthManager {
    *        has been successfully fetched and is available via
    *        {@link #getAuthToken()}
    */
-  public void doLogin(final Runnable runnable, Object o) {
-    this.whenFinished = runnable;
+  public void doLogin(AuthCallback runnable, Object o) {
+    this.authCallback = runnable;
     if (!(o instanceof Account)) {
-      throw new IllegalArgumentException("FroyoAuthManager requires an account.");
+      throw new IllegalArgumentException("ModernAuthManager requires an account.");
     }
     Account account = (Account) o;
-    accountManager.getAuthToken(account, service, true,
+    doLogin(account);
+  }
+
+  private void doLogin(Account account) {
+    // Keep the account in case we need to retry.
+    this.lastAccount = account;
+
+    // NOTE: Many Samsung phones have a crashing bug in
+    // AccountManager#getAuthToken(Account, String, boolean, AccountManagerCallback<Bundle>)
+    // so we use the other version of the method.
+    // More details here:
+    // http://forum.xda-developers.com/showthread.php?p=15155487
+    // http://android.git.kernel.org/?p=platform/frameworks/base.git;a=blob;f=core/java/android/accounts/AccountManagerService.java
+    accountManager.getAuthToken(account, service, null, activity,
             new AccountManagerCallback<Bundle>() {
         public void run(AccountManagerFuture<Bundle> future) {
           try {
-            Bundle result = future.getResult();
-
-            // AccountManager needs user to grant permission
-            if (result.containsKey(AccountManager.KEY_INTENT)) {
-              Intent intent = (Intent) result.get(AccountManager.KEY_INTENT);
-              clearNewTaskFlag(intent);
-              activity.startActivityForResult(intent, MyTracksConstants.GET_LOGIN);
-              return;
-            }
-
-            authToken = result.getString(
+            authToken = future.getResult().getString(
                 AccountManager.KEY_AUTHTOKEN);
-            Log.e(MyTracksConstants.TAG, "Got auth token.");
-            runWhenFinished();
+            Log.i(TAG, "Got auth token");
           } catch (OperationCanceledException e) {
-            Log.e(MyTracksConstants.TAG, "Operation Canceled", e);
+            Log.e(TAG, "Auth token operation Canceled", e);
           } catch (IOException e) {
-            Log.e(MyTracksConstants.TAG, "IOException", e);
+            Log.e(TAG, "Auth token IO exception", e);
           } catch (AuthenticatorException e) {
-            Log.e(MyTracksConstants.TAG, "Authentication Failed", e);
+            Log.e(TAG, "Authentication Failed", e);
           }
+
+          runAuthCallback();
         }
     }, null /* handler */);
-  }
-
-  private static void clearNewTaskFlag(Intent intent) {
-    int flags = intent.getFlags();
-    flags &= ~Intent.FLAG_ACTIVITY_NEW_TASK;
-    intent.setFlags(flags);
   }
 
   /**
@@ -145,16 +139,22 @@ public class ModernAuthManager implements AuthManager {
    *         the auth token, or False if there was an error or the request was
    *         canceled
    */
-  public boolean authResult(int resultCode, Intent results) {
-    if (results != null) {
-      authToken = results.getStringExtra(
-          AccountManager.KEY_AUTHTOKEN);
-      Log.w(MyTracksConstants.TAG, "authResult: " + authToken);
+  public void authResult(int resultCode, Intent results) {
+    boolean retry = false;
+    if (results == null) {
+      Log.e(TAG, "No auth token!!");
     } else {
-      Log.e(MyTracksConstants.TAG, "No auth result results!!");
+      authToken = results.getStringExtra(AccountManager.KEY_AUTHTOKEN);
+      retry = results.getBooleanExtra("retry", false);
     }
-    runWhenFinished();
-    return authToken != null;
+
+    if (authToken == null && retry) {
+      Log.i(TAG, "Retrying to get auth result");
+      doLogin(lastAccount);
+      return;
+    }
+
+    runAuthCallback();
   }
 
   /**
@@ -176,21 +176,23 @@ public class ModernAuthManager implements AuthManager {
    * @param runnable A {@link Runnable} to execute when a new auth token
    *        is successfully fetched
    */
-  public void invalidateAndRefresh(final Runnable runnable) {
-    this.whenFinished = runnable;
+  public void invalidateAndRefresh(final AuthCallback callback) {
+    this.authCallback = callback;
 
     activity.runOnUiThread(new Runnable() {
       public void run() {
-        accountManager.invalidateAuthToken(MyTracksConstants.ACCOUNT_TYPE,
-            authToken);
-        MyTracks.getInstance().getAccountChooser().chooseAccount(activity,
+        accountManager.invalidateAuthToken(ACCOUNT_TYPE, authToken);
+        authToken = null;
+
+        AccountChooser accountChooser = new AccountChooser();
+        accountChooser.chooseAccount(activity,
             new AccountChooser.AccountHandler() {
               @Override
-              public void handleAccountSelected(Account account) {
+              public void onAccountSelected(Account account) {
                 if (account != null) {
-                  doLogin(whenFinished, account);
+                  doLogin(account);
                 } else {
-                  runWhenFinished();
+                  runAuthCallback();
                 }
               }
             });
@@ -198,14 +200,22 @@ public class ModernAuthManager implements AuthManager {
     });
   }
 
-  private void runWhenFinished() {
-    if (whenFinished != null) {
+  private void runAuthCallback() {
+    lastAccount = null;
+
+    if (authCallback != null) {
       (new Thread() {
         @Override
         public void run() {
-          whenFinished.run();
+          authCallback.onAuthResult(authToken != null);
+          authCallback = null;
         }
       }).start();
     }
+  }
+
+  @Override
+  public Object getAccountObject(String accountName, String accountType) {
+    return new Account(accountName, accountType);
   }
 }

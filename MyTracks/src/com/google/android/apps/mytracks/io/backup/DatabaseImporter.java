@@ -173,6 +173,23 @@ public class DatabaseImporter {
         if (values != null) { values.put(name, value); }
         return;
       }
+      case ContentTypeIds.BLOB_TYPE_ID: {
+        int blobLength = reader.readInt();
+        if (blobLength != 0) {
+          byte[] blob = new byte[blobLength];
+          int readBytes = reader.read(blob, 0, blobLength);
+          if (readBytes != blobLength) {
+            throw new IOException(String.format(
+                "Short read on column %s; expected %d bytes, read %d",
+                name, blobLength, readBytes));
+          }
+          
+          if (values != null) {
+            values.put(name, blob);
+          }
+        }
+        return;
+      }
       default:
         throw new IOException("Read unknown type " + typeId);
     }
