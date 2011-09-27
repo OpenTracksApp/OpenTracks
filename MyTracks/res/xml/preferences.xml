@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <!-- Display settings -->
+  <PreferenceScreen android:title="@string/settings_display"
+                    android:key="@string/display_settings_screen_key">
+    <CheckBoxPreference
+        android:key="@string/metric_units_key"
+        android:title="@string/settings_metric_units"
+        android:summaryOn="@string/settings_metric_units_summary_on"
+        android:summaryOff="@string/settings_metric_units_summary_off"
+        android:defaultValue="true" />
+
+    <CheckBoxPreference
+        android:key="@string/report_speed_key"
+        android:title="@string/settings_report_speed_or_pace"
+        android:summaryOn="@string/settings_report_speed_or_pace_summary_on"
+        android:summaryOff="@string/settings_report_speed_or_pace_summary_off"
+        android:defaultValue="true" />
+  </PreferenceScreen>
+
+  <!-- Recording settings -->
+  <PreferenceScreen android:title="@string/settings_recording">
+    <com.google.android.apps.mytracks.IntegerListPreference
+        android:key="@string/announcement_frequency_key"
+        android:title="@string/settings_announcement_frequency"
+        android:summary="@string/settings_announcement_frequency_summary"
+        android:entries="@array/task_frequency_options"
+        android:entryValues="@array/task_frequency_values"
+        android:defaultValue="0" />
+
+    <com.google.android.apps.mytracks.IntegerListPreference
+        android:key="@string/split_frequency_key"
+        android:title="@string/settings_split_frequency"
+        android:summary="@string/settings_split_frequency_summary"
+        android:entries="@array/task_frequency_options"
+        android:entryValues="@array/task_frequency_values"
+        android:defaultValue="0" />
+
+    <com.google.android.apps.mytracks.IntegerListPreference
+        android:key="@string/min_recording_interval_key"
+        android:title="@string/settings_min_recording_interval"
+        android:summary="@string/settings_min_recording_interval_summary"
+        android:entries="@array/min_recording_interval_options"
+        android:entryValues="@array/min_recording_interval_values"
+        android:defaultValue="0" />
+
+    <com.google.android.apps.mytracks.IntegerListPreference
+        android:key="@string/min_recording_distance_key"
+        android:title="@string/settings_min_recording_distance"
+        android:summary="@string/settings_min_recording_distance_summary"
+        android:entries="@array/min_recording_distance_options"
+        android:entryValues="@array/min_recording_distance_values"
+        android:defaultValue="5" />
+
+    <com.google.android.apps.mytracks.IntegerListPreference
+        android:key="@string/max_recording_distance_key"
+        android:title="@string/settings_max_recording_distance"
+        android:summary="@string/settings_max_recording_distance_summary"
+        android:entries="@array/max_recording_distance_options"
+        android:entryValues="@array/max_recording_distance_values"
+        android:defaultValue="200" />
+
+    <com.google.android.apps.mytracks.IntegerListPreference
+        android:key="@string/min_required_accuracy_key"
+        android:title="@string/settings_min_required_accuracy"
+        android:summary="@string/settings_min_required_accuracy_summary"
+        android:entries="@array/min_required_accuracy_options"
+        android:entryValues="@array/min_required_accuracy_values"
+        android:defaultValue="200" />
+
+    <com.google.android.apps.mytracks.IntegerListPreference
+        android:key="@string/auto_resume_track_timeout_key"
+        android:title="@string/settings_auto_resume_track_timeout"
+        android:summary="@string/settings_auto_resume_track_timeout_summary"
+        android:entries="@array/auto_resume_track_timeout_options"
+        android:entryValues="@array/auto_resume_track_timeout_values"
+        android:defaultValue="10" />
+
+    <CheckBoxPreference
+        android:key="@string/timestamp_track_name_key"
+        android:title="@string/settings_timestamp_track_name"
+        android:summaryOn="@string/settings_timestamp_track_name_summary_on"
+        android:summaryOff="@string/settings_timestamp_track_name_summary_off"
+        android:defaultValue="true" />
+
+  </PreferenceScreen>
+
+  <!-- Sensors -->
+  <PreferenceScreen android:title="@string/sensor_options"
+      android:key="@string/sensor_options_key">
+    <ListPreference android:key="@string/sensor_type_key"
+        android:title="@string/settings_sensor_type"
+        android:summary="@string/settings_sensor_type_summary"
+        android:entries="@array/sensor_type_options"
+        android:entryValues="@array/sensor_type_values"
+        android:defaultValue="@string/none"/>
+
+    <!-- Bluetooth -->
+    <PreferenceCategory android:title="@string/bluetooth_options">
+      <ListPreference android:key="@string/bluetooth_sensor_key"
+                      android:title="@string/bluetooth_sensor_title"
+                      android:summary="@string/bluetooth_sensor_summary"
+                      android:defaultValue="any" />
+
+      <Preference android:key="@string/bluetooth_pairing_key"
+                  android:title="@string/bluetooth_pairing"
+                  android:summary="@string/bluetooth_pairing_summary"
+                  android:persistent="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/ant_options"
+      android:key="@string/ant_options_key">
+	    <com.google.android.apps.mytracks.AntPreference
+	    	android:key="@string/ant_heart_rate_sensor_id_key"
+	        android:title="@string/settings_heart_rate_ant_sensor_id"/>
+<!--
+	    <com.google.android.apps.mytracks.AntPreference
+	    	android:key="@string/ant_power_sensor_id_key"
+	        android:title="@string/settings_power_ant_sensor_id"/>
+-->
+
+	    <com.google.android.apps.mytracks.AntPreference
+	    	android:key="@string/ant_srm_bridge_sensor_id_key"
+	        android:title="@string/settings_srm_bridge_ant_sensor_id"/>
+    </PreferenceCategory>
+  </PreferenceScreen>
+
+  <!-- Sharing settings -->
+  <PreferenceScreen android:title="@string/settings_sharing">
+    <CheckBoxPreference
+        android:key="@string/default_map_public_key"
+        android:title="@string/settings_map_public"
+        android:summaryOn="@string/settings_map_public_summary_on"
+        android:summaryOff="@string/settings_map_public_summary_off"
+        android:defaultValue="true" />
+
+    <CheckBoxPreference
+        android:key="@string/share_url_only_key"
+        android:title="@string/settings_share_url_only"
+        android:summaryOn="@string/settings_share_url_only_summary_on"
+        android:summaryOff="@string/settings_share_url_only_summary_off"
+        android:defaultValue="false" />
+  </PreferenceScreen>
+
+  <!-- Backup settings -->
+  <PreferenceScreen android:title="@string/settings_backup">
+    <PreferenceCategory android:title="@string/settings_sd_backup">
+      <Preference
+          android:key="@string/backup_to_sd_key"
+          android:title="@string/settings_backup_to_sd"
+          android:summary="@string/settings_backup_to_sd_summary"
+          android:persistent="false" />
+      <Preference
+          android:key="@string/restore_from_sd_key"
+          android:title="@string/settings_restore_from_sd"
+          android:summary="@string/settings_restore_from_sd_summary"
+          android:persistent="false" />
+    </PreferenceCategory>
+  </PreferenceScreen>
+
+  <!-- Reset to defaults -->
+  <Preference
+      android:title="@string/settings_reset"
+      android:key="@string/reset_key"
+      android:summary="@string/settings_reset_summary"
+      android:persistent="false" />
+</PreferenceScreen>
