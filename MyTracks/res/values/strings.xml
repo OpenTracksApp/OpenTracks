@@ -268,6 +268,17 @@ limitations under the License.
   <string name="bluetooth_sensor_summary">The bluetooth sensor to connect to</string>
   <string name="settings_modular_stats_display_title">Modular Stats Display</string>
 
+  <string name="settings_track_color_mode">Track Color Mode</string>
+  <string name="settings_track_color_mode_summary">The way to color the track</string>
+  <string name="settings_track_color_mode_fixed">Fixed</string>
+  <string name="settings_track_color_mode_dynamic">Dynamic</string>
+  <string name="settings_track_color_mode_fixed_speed_slow">Fixed Speed Slow</string>
+  <string name="settings_track_color_mode_fixed_speed_slow_summary">Slow speed top value</string>
+  <string name="settings_track_color_mode_fixed_speed_medium">Fixed Speed Medium</string>
+  <string name="settings_track_color_mode_fixed_speed_medium_summary">Medium speed top value</string>
+  <string name="settings_track_color_mode_dynamic_speed_variation">Dynamic Speed Variation</string>
+  <string name="settings_track_color_mode_dynamic_speed_variation_summary">% Margin from average speed to consider medium speed</string>
+  
   <!-- Backups -->
   <string name="settings_backup">Backup (BETA)</string>
   <string name="settings_sd_backup">SD Card Backup</string>
@@ -483,7 +494,10 @@ limitations under the License.
   <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
   <string name="ant_options">ANT options</string>
   <string name="sensor_options">Sensor Options</string>
-
+  <string name="track_color_mode">Track Color Mode</string>
+  <string name="fixed_speed_options">Fixed Speed Options</string>
+  <string name="dynamic_speed_options">Dynamic Speed Options</string>
+  
   <!-- Bluetooth Sensor -->
   <string name="bluetooth_connected">Connected to %s</string>
   <string name="bluetooth_connecting">Bluetooth sensor connecting ...</string>
@@ -517,4 +531,8 @@ limitations under the License.
   <string name="polar_bt_sensor_option">Polar Bluetooth</string>
   <string name="zephyr_bt_sensor_option">Zephyr Bluetooth</string>
 
+  <!-- Track Color Modes -->
+  <string name="track_color_mode_none">None</string>
+  <string name="track_color_mode_fixed">Fixed (BETA)</string>
+  <string name="track_color_mode_dynamic">Dynamic (BETA)</string>
 </resources>
