@@ -300,10 +300,9 @@ public class TrackRecordingService extends Service {
           } else if (getString(R.string.end_current_track_action).equals(action)) {
             endCurrentTrack();
           }
-        }
-        catch (IllegalStateException e) {
-          if (!intent.getBooleanExtra(getString(R.string.omit_illegal_state), false))
-             throw e;
+        } catch (IllegalStateException e) {
+           if (!intent.getBooleanExtra(getString(R.string.ignore_illegal_state), false))
+              throw e;
         }
       }
     }

@@ -50,5 +50,5 @@ limitations under the License.
   <!-- Intent actions -->
   <string name="save_intent_action">android.intent.action.SAVE</string>
   <string name="open_settings_screen">android.intent.action.settings.OPEN</string>
-  <string name="omit_illegal_state">android.intent.state.illegal.omit</string>
+  <string name="ignore_illegal_state">android.intent.extra.IGNORE_ILLEGAL_STATE</string>
 </resources>
