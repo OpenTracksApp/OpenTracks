@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+  <!-- Used by the Menu -->
+  <string name="start_recording">Запись трека</string>
+  <string name="stop_recording">Остановить запись</string>
+  <string name="switch_to_sat">Режим спутника</string>
+  <string name="switch_to_map">Режим карты</string>
+  <string name="mylocation">Мое местоположение</string>
+  <string name="list_tracks">Треки</string>
+  <string name="list_markers">Маркеры</string>
+  <string name="delete_all_tracks">Удалить все треки</string>
+  <string name="settings">Настройки</string>
+  <string name="elevation">Высота</string>
+  <string name="choose_track_message">Пожалуйста, выберите трек для просмотра</string>
+  <string name="current_track">Текущий трек</string>
+  <string name="current_segment">Последний сегмент</string>
+  <string name="sensor_state">Состояние датчика</string>
+  <string name="aggregated_stats">Совокупная статистика</string>
+
+  <!-- Error messages -->
+  <string name="error_no_location_manager">На этом устройстве не был обнаружен диспетчер местоположения!</string>
+  <string name="error_no_gps_location_provider">На этом устройстве не был обнаружен поставщик GPS местоположения.</string>
+  <string name="error_sending_to_mymap">Ошибка при отправке вашего трека в Google \"Мои карты\".</string>
+  <string name="error_sending_to_fusiontables">Ошибка при отправке вашего трека в Google Fusion Tables.</string>
+  <string name="error_sending_to_docs">Ошибка при отправке вашего трека в Google Документы.</string>
+  <string name="error_please_try_again_later">Пожалуйста, повторите попытку позже.</string>
+  <string name="error_unable_to_start_recording">Не удалось начать запись. Попробуйте еще раз.</string>
+  <string name="error_unable_to_stop_recording">Не удалось остановить запись. Попробуйте еще раз.</string>
+  <string name="error_unable_to_read_file">Не удалось прочитать из файла.</string>
+  <string name="error_invalid_gpx_format">Неверный формат GPX файла.</string>
+  <string name="error_generic">Произошла ошибка. Пожалуйста, попробуйте еще раз.</string>
+  <string name="error_track_does_not_exist">Трек не существует.</string>
+  <string name="error_out_of_memory">Этот файл слишком большой (должен быть меньше, чем 500 КБ). Прервано.</string>
+  <string name="error_unable_to_insert_marker">Невозможно вставить маркер. Местоположение неизвестно.</string>
+
+  <!-- Status messages -->
+  <string name="wait_for_fix">Ожидание сигнала GPS. Убедитесь в том, что вы находитесь под открытым небом.</string>
+  <string name="status_now_recording">Записывается новый трек.</string>
+  <string name="status_stopped_recording">Запись вашего трека остановлена.</string>
+  <string name="status_new_mymap_has_been_created">Новая Google \"Мои карты\" была создана на maps.google.com.</string>
+  <string name="status_new_fusiontable_has_been_created">Новая таблица Google Fusion была создана на google.com/fusiontables.</string>
+  <string name="status_tracks_have_been_uploaded">Твой трек был отправлен на maps.google.com.</string>
+  <string name="status_tracks_have_been_uploaded_to_new_doc">Ваш трек был отправлен в новую электронную таблицу на docs.google.com.</string>
+  <string name="status_tracks_have_been_uploaded_to_docs">Ваш трек был отправлен в docs.google.com.</string>
+  <string name="status_mymap_info">Это может занять несколько минут, прежде чем появятся новые треки.</string>
+  <string name="status_enable_gps">Пожалуйста, нажмите здесь для перехода к разделу настроек Координаты и отметьте пункт \"Спутники GPS\". Для возвращения нажмите кнопку Назад.</string>
+  <string name="status_approximate_location">Примечание: приблизительное местоположение определено относительно вышек сотовой связи и беспроводных сетей.</string>
+  <string name="status_no_location">В настоящее время местоположение не может быть определено. Включите больше источников местоположение (см. раздел настроек Координаты) и убедитесь в том, что находитесь под открытым небом. Повторите попытку позднее.</string>
+  <string name="status_waypoint_inserted">Маркер путевой точки был вставлен.</string>
+  <string name="status_statistics_inserted">Маркер статистики был вставлен.</string>
+  <string name="status_track_upload_status">Статус загрузки:</string>
+
+  <!-- Progress dialog -->
+  <string name="progress_title">Пожалуйста, подождите...</string>
+  <string name="progress_message">Отправка вашего трека в Google.</string>
+  <string name="progress_message_reading_track">Чтение трека...</string>
+  <string name="progress_message_preparing_track">Подготовка трека...</string>
+  <string name="progress_message_authenticating_fusiontables">Аутентификация на Google Fusion Tables...</string>
+  <string name="progress_message_authenticating_mymaps">Аутентификация на Google Карты...</string>
+  <string name="progress_message_authenticating_docs">Аутентификация в Google Документы...</string>
+  <string name="progress_message_sending_docs">Отправка трека в Google Документы...</string>
+  <string name="progress_message_sending_mymaps">Отправка трека в Google Карты...</string>
+  <string name="progress_message_creating_map">Создание новой \"Моей карты\" ...</string>
+  <string name="progress_message_sending_fusiontables">Отправка трека в Fusion Tables...</string>
+  <string name="progress_message_creating_fusiontable">Создание новой Fusion table...</string>
+  <string name="import_progress_message">Импорт GPS трека. Это может занять некоторое время.</string>
+  <string name="write_progress_message">Запись файла на SD карту. Это может занять некоторое время.</string>
+  <string name="progress_message_updating_track">Обновление статистики трека...</string>
+
+  <!-- Used by DeleteAllDataHandler -->
+  <string name="are_you_sure_question">Вы уверены?</string>
+  <string name="all_data_will_be_permanently_deleted">Все треки и маркеры будут удалены с этого телефона.</string>
+  <string name="track_will_be_permanently_deleted">Трек и его маркеры будут удалены из этого телефона.</string>
+  <string name="marker_will_be_permanently_deleted">Маркер будет удален с этого телефона.</string>
+
+  <!-- Text and links when uploading to Google Fusion Tables -->
+  <string name="new_map_description">Создано My Tracks на Android.</string>
+  <string name="fusiontable_link">Создано &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; на Android.</string>
+
+  <!-- Text and links when uploading to Google My Maps -->
+  <string name="my_map_link">Создано &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; на Android.</string>
+  <string name="new_map_title">Новая карта</string>
+
+  <!-- Formatting of track and marker descriptions -->
+  <string name="points">Точки</string>
+  <string name="recorded_date">Записан</string>
+  <string name="category">Тип деятельности</string>
+  <string name="waypoint_category">Тип маркера</string>
+  <string name="part">(Часть %d)</string>
+
+  <!-- Used by the track recording service -->
+  <string name="recording_your_track">Запись трека...</string>
+  <string name="new_track">Трек %d</string>
+
+  <!-- Common -->
+  <string name="no">Нет</string>
+  <string name="yes">Да</string>
+  <string name="ok">ОК</string>
+  <string name="error">Ошибка</string>
+  <string name="success">Готово</string>
+  <string name="waypoint">Путевая точка</string>
+  <string name="license">Лицензия</string>
+  <string name="cancel">Отмена</string>
+  <string name="close">Закрыть</string>
+  <string name="edit">Правка</string>
+  <string name="save">Сохранить</string>
+
+  <!-- Placemark labels for start and end of track -->
+  <string name="start">(Старт)</string>
+  <string name="end">(Конец)</string>
+
+  <!--  TrackList -->
+  <string name="tracklist_show_track">Показать</string>
+  <string name="tracklist_send_to_mymaps">Отправить в Google \"Мои карты\"</string>
+  <string name="tracklist_send_to_new_mymap">Отправить в новый Google \"Мои карты\"</string>
+  <string name="tracklist_send_to_fusiontables">Отправить в Google Fusion Tables</string>
+  <string name="tracklist_send_to_new_fusiontable">Отправить в новую Google Fusion Table</string>
+  <string name="tracklist_send_to_docs">Отправить в Google Документы</string>
+  <string name="tracklist_send_to_google">Отправить в Google ...</string>
+  <string name="tracklist_delete_track">Удалить из телефона...</string>
+  <string name="tracklist_edit_track">Править детали</string>
+  <string name="tracklist_write_to_sd">Записать на SD карту...</string>
+  <string name="tracklist_save_as_gpx">Сохранить файл GPX</string>
+  <string name="tracklist_save_as_kml">Сохранить файл KML</string>
+  <string name="tracklist_save_as_csv">Сохранить файл CSV</string>
+  <string name="tracklist_save_as_tcx">Сохранить файл TCX</string>
+  <string name="tracklist_btn_send_all_to_fusiontables">Отправить в Google Fusion Tables</string>
+  <string name="tracklist_btn_send_all_to_mymaps">Отправить в Google \"Мои карты\"</string>
+  <string name="tracklist_btn_delete_all">Удалить все</string>
+  <!-- Export All -->
+  <string name="tracklist_btn_export_all">Экспорт всех</string>
+  <string name="export_done">Экспорт закончен</string>
+  <string name="tracklist_pick_one">Выберите трек. Нажмите и удерживайте для получения дополнительных возможностей.</string>
+  <string name="tracklist_all_tracks">Все треки:</string>
+  <string name="tracklist_this_track">Этот трек</string>
+  <string name="tracklist_share_track">Поделиться с друзьями...</string>
+  <string name="tracklist_share_link">Ссылка на карту</string>
+  <string name="tracklist_share_gpx_file">Файл GPX</string>
+  <string name="tracklist_share_kml_file">Файл KML</string>
+  <string name="tracklist_share_csv_file">Файла CSV</string>
+  <string name="tracklist_share_tcx_file">Файл TCX</string>
+  <string name="tracklist_clear_map">Очистить карту</string>
+  <!-- Import All -->
+  <string name="tracklist_btn_import_all">Импорт всех</string>
+  <!-- Format:
+  $1 : Successful imports
+  $2 : Attempted imports
+  $3 : MyTracks gpx path
+  -->
+  <string name="import_multi_done">Импортировано %1$d из %2$d GPX файлов с %3$s</string>
+  <string name="import_multi_empty">GPX файлы не найденны в %s. Возможно не читается SD-карта или каталог не содержит GPX файлы.</string>
+  <string name="import_error">Ошибка импорта файла %s</string>
+
+  <!-- Waypoints list -->
+  <string name="waypointslist_btn_delete_all">Удалить все маркеры</string>
+  <string name="waypointslist_this_waypoint">Этот маркер</string>
+  <string name="waypointslist_delete_waypoint">Удалить</string>
+  <string name="waypointslist_edit_waypoint">Править детали</string>
+  <string name="waypointslist_show_waypoint">Показать на карте</string>
+  <string name="waypointslist_btn_insert_waypoint">Вставить путевую точку</string>
+  <string name="waypointslist_btn_insert_statistics">Вставить статистику</string>
+  <string name="waypointslist_pick_one">Выберите маркер. Нажмите и удерживайте для получения дополнительных возможностей.</string>
+
+  <!-- MyTracks Details -->
+  <string name="trackdetails_title">Трек детали</string>
+  <string name="trackdetails_name">Название трека</string>
+  <string name="trackdetails_name_hint">Название трека</string>
+  <string name="trackdetails_description">Описание трека</string>
+  <string name="trackdetails_description_hint">Описание трека</string>
+  <string name="trackdetails_category">Тип деятельности (например: пешая прогулка, велосипедная прогулка, бег, восхождение...)</string>
+  <string name="trackdetails_category_hint">Тип деятельности</string>
+
+  <!-- MyTracks Waypoint Details -->
+  <string name="waypointdetails_title">Маркер детали</string>
+  <string name="waypointdetails_name">Имя маркера</string>
+  <string name="waypointdetails_name_hint">Имя маркера</string>
+  <string name="waypointdetails_description">Описание маркера</string>
+  <string name="waypointdetails_description_hint">Описание маркера</string>
+  <string name="waypointdetails_category">Тип маркера (например: здание, выбоина, достопримечательность...)</string>
+  <string name="waypointdetails_category_hint">Тип маркера</string>
+
+  <!-- MyTracks Settings -->
+  <string name="mytracks_settings">Настройки My Tracks</string>
+  <string name="settings_display">Отображение</string>
+  <string name="settings_recording">Запись</string>
+  <string name="settings_sharing">Обмен</string>
+
+  <string name="settings_not_available_summary">Не доступен в вашем версии Android</string>
+  <string name="settings_not_while_recording">Не доступно во время записи трека</string>
+
+  <string name="settings_announcement_frequency">Частота объявлений</string>
+  <string name="settings_announcement_frequency_summary">Минимальное время между двумя голосовыми объявлениями</string>
+
+  <string name="settings_min_recording_distance">Минимальное расстояние между точками</string>
+  <string name="settings_min_recording_distance_summary">Наименьшее расстояние между двумя записями вашей позиции</string>
+
+  <string name="settings_max_recording_distance">Максимальное расстояние между точками</string>
+  <string name="settings_max_recording_distance_summary">Если два пункта находятся дальше, чем указано, то трек будет разделен</string>
+
+  <string name="settings_min_recording_interval">Минимальное время между точками</string>
+  <string name="settings_min_recording_interval_summary">Наименьший интервал времени между двумя записями вашей позиции</string>
+
+  <string name="settings_min_required_accuracy">Минимальная точность</string>
+  <string name="settings_min_required_accuracy_summary">Запись будет приостановлена, если ваша позиция не является достаточно точной</string>
+
+  <string name="settings_metric_units">Использовать метрические единицы</string>
+  <string name="settings_metric_units_summary_on">Все расстояния будут отображаться в метрических единицах</string>
+  <string name="settings_metric_units_summary_off">Все расстояния будут отображаться в имперских единицах</string>
+
+  <string name="settings_map_public">Обнародовать карты</string>
+  <string name="settings_map_public_summary_on">Загруженные карты будут общедоступны на maps.google.com</string>
+  <string name="settings_map_public_summary_off">Загруженные карты не будут перечислены публично на maps.google.com</string>
+
+  <string name="settings_report_speed_or_pace">Отображать скорость</string>
+  <string name="settings_report_speed_or_pace_summary_on">Скорость будет отображаться</string>
+  <string name="settings_report_speed_or_pace_summary_off">Темп будет отображаться</string>
+
+  <string name="settings_share_url_only">Поделиться только URL</string>
+  <string name="settings_share_url_only_summary_on">При обмене будет отправлен только URL-адрес</string>
+  <string name="settings_share_url_only_summary_off">Содержимое трека будет также включено при обмене</string>
+
+  <string name="settings_split_frequency">Частота деления</string>
+  <string name="settings_split_frequency_summary">Максимальное время или расстояние, после которого будет вставлен новый маркер деления</string>
+
+  <string name="settings_auto_resume_track_timeout">Автоматическое возобновление трек тайм-аут</string>
+  <string name="settings_auto_resume_track_timeout_summary">Максимальное время в минутах, после которого предыдущая запись трека не будет возобновлена на перезагруженном телефоне</string>
+
+  <string name="settings_timestamp_track_name">Штамп времени как название дорожки</string>
+  <string name="settings_timestamp_track_name_summary_on">По умолчанию имя трека будет складываться из даты и времени старта трека</string>
+  <string name="settings_timestamp_track_name_summary_off">Названия треков будут иметь прирост чисел для каждого нового трека.</string>
+
+  <string name="settings_reset">Восстановить значения по умолчанию</string>
+  <string name="settings_reset_summary">Восстановить значения по умолчанию во всех настройках</string>
+  <string name="settings_reset_dialog_message">Все ваши настройки будут стерты и восстановлены значения по умолчанию. Записанные треки будут сохранены. Вы уверены?</string>
+  <string name="settings_reset_done">Все настройки были возвращены к значениям по умолчанию.</string>
+
+  <string name="pace_label">Темп</string>
+
+  <string name="eclair_required">Поддерживается только в Android 2.0 или выше</string>
+  <string name="settings_sensor_type">Тип датчика</string>
+  <string name="settings_sensor_type_summary">Тип подключенного датчика</string>
+  <string name="settings_heart_rate_ant_sensor_id">Очистить ANT подсоединенного датчика пульса</string>
+  <string name="settings_power_ant_sensor_id">Очистить ANT подсоединенного датчика мощности</string>
+  <string name="settings_srm_bridge_ant_sensor_id">Очистить ANT подсоединенного датчика SRM</string>
+  <string name="settings_ant_not_paired">ANT датчик не подсоединен</string>
+  <string name="settings_ant_paired">ANT датчик подсоединен с: %d</string>
+  <string name="bluetooth_sensor_title">Bluetooth датчик</string>
+  <string name="bluetooth_sensor_summary">Подключенный bluetooth датчик</string>
+  <string name="settings_modular_stats_display_title">Отображение модульной статистики</string>
+
+  <!-- Backups -->
+  <string name="settings_backup">Резервное копирование (BETA)</string>
+  <string name="settings_sd_backup">Резервное копирование SD карты</string>
+  <string name="settings_backup_to_sd">Резервировать</string>
+  <string name="settings_backup_to_sd_summary">Создать полную копию всех ваших треков и настроек на SD карту</string>
+  <string name="settings_restore_from_sd">Восстановить</string>
+  <string name="settings_restore_from_sd_summary">Восстановить все треки и параметры с SD карты</string>
+
+  <string name="restore_overwrites_warning">Восстановление резервной копии с SD карты ПЕРЕЗАПИШЕТ все текущие треки и настройки. Вы уверены?</string>
+  <string name="select_backup_to_restore">Выберите резервную копию для восстановления</string>
+  <string name="no_backups">Резервные копии не найдены.</string>
+  <string name="backup_write_progress_message">Запись на SD-карту всех треков и настроек. Это может занять некоторое время...</string>
+  <string name="backup_import_progress_message">Чтение всех треков и настроек с SD-карты. Это может занять некоторое время...</string>
+
+  <!-- MyTracksSky -->
+  <string name="mytracks_sky">Спутники GPS</string>
+
+  <!-- My Maps -->
+  <string name="select_map_message">Выберите карту из вашей учетной записи:</string>
+  <string name="create_new_map">Создать новую карту...</string>
+  <string name="map_list_title">Отправить в Google \"Мои карты\"</string>
+  <string name="maps_list_loading">Загрузка карты ...</string>
+  <string name="maps_list_failed">Ваши карты не могут быть загружены в данный момент!</string>
+  <string name="open_map">Выберите эту карту</string>
+  <string name="edit_map_details">Править детали карты</string>
+  <string name="share_track">Поделиться треком</string>
+  <string name="delete_map">Удалить Карту из вашей учетной записи</string>
+  <string name="map_title">Название карты:</string>
+  <string name="map_description">Описание карты:</string>
+  <string name="map_searchable_edit">Сделать чтобы карта и ее содержимое отображались в результатах поиска</string>
+  <string name="map_not_searchable_edit">Не позволить этой карте или ее содержимому отображаться в результатах поиска, хотя они все еще могут просматриваться другими через прямой URL-адрес</string>
+  <string name="map_searchable">Эта карта и ее содержимое будут отображаться в результатах поиска</string>
+  <string name="map_not_searchable">Ни эта карта, ни ее содержимое не будут отображаться в результатах поиска, но их могут по-прежнему просматривать другие через прямую ссылку</string>
+
+  <!-- Sharing -->
+  <string name="share_map">Поделиться картой с друзьями</string>
+  <string name="share_map_subject">Я хотел бы поделиться с вами треком</string>
+  <string name="share_map_body_format">Я думаю, вы можете быть заинтересованы в этом треке:
+
+%s</string>
+  <string name="send_track_subject">Я хотел бы поделиться с вами треком</string>
+  <string name="send_track_body_format">Я думаю, вы можете быть заинтересованы в этом треке.
+
+Просмотреть трек можно с помощью Google Планета Земля или другого программного обоспечения для карт.</string>
+
+  <!-- Visibility -->
+  <string name="public_map">Общественные</string>
+  <string name="unlisted_map">Частные</string>
+  <string name="mapslist_no_maps_available">У вас пока еще нет карт.</string>
+
+  <!-- Statistics View -->
+  <!-- Average Moving -->
+  <string name="average_moving_speed_label">Средняя скорость движения</string>
+  <string name="average_moving_pace_label">Средний темп движения</string>
+
+  <!-- Average -->
+  <string name="average_speed_label">Средняя скорость</string>
+  <string name="average_pace_label">Средний темп</string>
+
+  <string name="elevation_chart_name">Диаграмма высоты</string>
+  <string name="elevation_gain_label">Набор высоты</string>
+  <string name="elevation_label">Высота</string>
+  <string name="latitude_label">Широта</string>
+  <string name="longitude_label">Долгота</string>
+
+  <!-- Min -->
+  <string name="min_elevation_label">Минимальная высота</string>
+  <string name="min_grade_label">Минимальный уклон</string>
+  <string name="min_pace_label">Минимальный темп</string>
+
+  <!-- Max -->
+  <string name="max_elevation_label">Максимальная высота</string>
+  <string name="max_grade_label">Максимальный уклон</string>
+  <string name="max_speed_label">Максимальная скорость</string>
+
+  <string name="loading_track">Загрузка трека...</string>
+
+  <!-- Chart Settings -->
+  <string name="chart_settings">Настройки диаграммы</string>
+  <!-- X Axis -->
+  <string name="x_axis">Ось X</string>
+  <string name="by_distance">По расстоянию</string>
+  <string name="by_time">По времени</string>
+
+  <!-- Y Axis -->
+  <string name="y_axis">Ось Y</string>
+
+  <!-- Units -->
+  <!-- Time  -->
+  <string name="hour">час</string>
+  <string name="hours">часов</string>
+  <string name="hr">ч</string>
+  <string name="min">мин</string>
+  <string name="minute">минута</string>
+  <string name="minutes">минут</string>
+  <string name="second">секунда</string>
+  <string name="seconds">секунд</string>
+  <string name="milliseconds">мс</string>
+
+  <!-- Distance -->
+  <string name="meter">м</string>
+  <string name="kilometer">км</string>
+  <string name="kilometers_long">километров</string>
+  <string name="feet">футов</string>
+  <string name="mile">миль</string>
+  <string name="miles_long">мили</string>
+
+  <!-- Speed and Pace -->
+  <string name="kilometer_per_hour">км/ч</string>
+  <string name="kilometer_per_hour_long">километров в час</string>
+  <string name="min_per_kilometer">мин/км</string>
+  <string name="per_kilometer">за километр</string>
+  <string name="mile_per_hour">миль/ч</string>
+  <string name="mile_per_hour_long">миль в час</string>
+  <string name="min_per_mile">мин/миля</string>
+  <string name="per_mile">за милю</string>
+
+  <!-- Sensors -->
+  <string name="watts">Вт</string>
+
+  <string name="revolutions_per_minute">об/мин</string>
+  <string name="bpm">bpm</string>
+
+  <!-- Stats Labels -->
+  <string name="moving_time_label">Время движения</string>
+  <string name="total_time_label">Общее время</string>
+  <string name="time_label">Время</string>
+  <string name="sd_unavail">SD карта недоступна</string>
+  <string name="speed">Скорость</string>
+  <string name="start_trip">Вы должны начать путешествие.</string>
+  <string name="statistics">Статистика</string>
+  <string name="total_distance_label">Общее расстояние</string>
+  <string name="distance_label">Расстояние</string>
+  <string name="power">Мощность</string>
+  <string name="cadence">Каденс</string>
+  <string name="heart_rate">Пульс</string>
+  <string name="max_heart_rate">Максимальный пульс</string>
+  <string name="unknown">-</string>
+  <string name="waiting">Ожидание...</string>
+
+  <!-- End User License Agreement -->
+  <string name="eula_title">Лицензионное соглашение</string>
+  <string name="accept">Принять</string>
+  <string name="decline">Отклонить</string>
+
+  <!-- About -->
+  <string name="about">О программе</string>
+  <string name="help">Справка</string>
+  <string name="about_team">Команда:</string>
+  <string name="about_version">Версия:</string>
+  <string name="about_support">Поддержка:</string>
+  <string name="about_privacy">Приватность:</string>
+
+  <!-- Send to Google -->
+  <string name="sendtogoogle_title">Отправить...</string>
+  <string name="sendtogoogle_google_fusiontables">Google Fusion Tables</string>
+  <string name="sendtogoogle_google_mymaps">Google \"Мои карты\"</string>
+  <string name="sendtogoogle_google_docs">Google Документы</string>
+  <string name="sendtogoogle_send_now">Отправить</string>
+  <string name="sendtogoogle_create_new_map">Создать новую карту</string>
+  <string name="sendtogoogle_pick_existing_map">Выбрать существующую карту</string>
+  <string name="sendtogoogle_send_stats">Отправить статистику трека</string>
+  <string name="sendtogoogle_send_stats_and_points">Отправить статистику и точки</string>
+
+  <!-- Getting the account to upload to. -->
+  <string name="no_account_found_title">Учетная запись не найдена</string>
+  <string name="no_account_found">Не найдена учетная запись для загрузки треков.</string>
+  <string name="choose_account_title">Выбор учетной записи</string>
+
+  <!-- SD card -->
+  <string name="io_no_external_storage_found">Не обнаружено внешнее устройство хранения данных. Убедитесь, что SD карта вставлена, и что ваш телефон не подключен к компьютеру.</string>
+  <string name="io_write_failed">Невозможно записать файл.</string>
+  <string name="io_read_failed">Невозможно прочитать из файла.</string>
+  <string name="io_create_dir_failed">Невозможно создать папку на SD карте.</string>
+  <string name="io_write_finished">Запись на SD карту закончена.</string>
+  <string name="io_read_finished">Чтение с SD карты закончено.</string>
+
+  <!-- VersionChecker -->
+  <string name="version_check_title">Проверить обновления</string>
+  <string name="version_check_upgrade_button">Обновить сейчас</string>
+  <string name="version_check_continue_button">Продолжить без обновления</string>
+  <string name="upgrade_required">Ваша версия %1$S больше не может работать должным образом, и больше не поддерживается. Обновите %1$s для продолжения использования.</string>
+  <string name="upgrade_recommended">Ваша версия %1$S больше не может работать должным образом. Вы можете обновить ее сейчас, либо продолжать использовать ее на свой страх и риск. Некоторые функции, такие как синхронизация с сервером может не функционировать до обновления.</string>
+  <string name="upgrade_available">Доступна новая версия %1$s. Вы можете продолжать использовать текущую версию без проблем, но вы не получите новейшие функции, до тех пор, пока не обновитесь.</string>
+
+  <!-- Welcome -->
+  <string name="welcome">Добро пожаловать</string>
+  <string name="welcome_read_later">Ок</string>
+  <string name="welcome_about">О My Tracks</string>
+
+  <!-- Announcement -->
+  <string name="announce_no_distance">My Tracks нет расстояния</string>
+  <!-- Format:
+  $1 : Distance label
+  $2 : Distance value (5)
+  $3 : Distance units (mi, km)
+  $4 : Time description (10 minutes 5 seconds)
+  $5 : Speed value (5.6) : Pace value (5 minutes 6 seconds)
+  $6 : Speed units (mph) : Pace units (per mile)
+  -->
+  <string name="announce_template">Мои треки %1$s %2$.2f %3$s в %4$s на %5$s %6$s</string>
+
+  <!-- Check Units -->
+  <string name="check_units_title">Единицы измерения обратите внимание</string>
+  <string name="check_units_message">По умолчанию используются метрические единицы. Вы хотели бы изменить этот параметр?</string>
+
+  <!-- Fake preference keys - never saved, but show options in the preferences screen -->
+  <string name="method_bluetooth">Bluetooth</string>
+  <string name="bluetooth_options">Параметры Bluetooth</string>
+  <string name="bluetooth_pairing">Подключение устройства</string>
+  <string name="bluetooth_pairing_summary">Открыть настройки Android по bluetooth для подключения устройства</string>
+  <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
+  <string name="ant_options">Параметры ANT</string>
+  <string name="sensor_options">Параметры датчика</string>
+
+  <!-- Bluetooth Sensor -->
+  <string name="bluetooth_connected">Подключен к %s</string>
+  <string name="bluetooth_connecting">Подключение Bluetooth датчика...</string>
+  <string name="bluetooth_not_connected">Bluetooth датчик не подключен</string>
+
+  <!-- Sensor State -->
+  <string name="sensor_data_time">Датчик времени</string>
+  <string name="power_meter_enabled">Измеритель мощности включен</string>
+  <string name="heart_rate_monitor_enabled">Монитор пульса включен</string>
+  <string name="no_sensor_manager">Нет диспетчера датчиков</string>
+  <string name="enabled">Включено</string>
+  <string name="connecting">Подключение</string>
+  <string name="connected">Подключено</string>
+  <string name="disconnected">Отключено</string>
+  <string name="no_sensor_service">Нет службы датчиков</string>
+  <string name="searching">Поиск</string>
+  <string name="sending">Отправка</string>
+
+  <!-- Sensor Type Options -->
+  <string name="no_sensor_option">Нет</string>
+  <string name="ant_sensor_option">ANT+ Датчик</string>
+  <string name="ant_bridge_sensor_option">SRM ANT+ Bridge</string>
+
+  <!-- Manifest description (not seen inside the app) -->
+  <string name="notification_permission_label">получать уведомления о записи трека</string>
+  <string name="read_tracks_permission_label">чтение записанных данных трека</string>
+  <string name="write_tracks_permission_label">запись данных трека, старт/стоп записи треков</string>
+  <string name="notification_permission_description">Получать уведомления, при старте или останове записи трека.</string>
+  <string name="read_tracks_permission_description">Иметь возможность читать данные трека, такие как точки и путевые точки.</string>
+  <string name="write_tracks_permission_description">Иметь возможность записать данные трека, такие как начало записи или добавление путевых точек.</string>
+</resources>
