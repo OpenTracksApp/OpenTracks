@@ -198,11 +198,6 @@ public class TrackWidgetProvider
   private void setButtonIntent(
       RemoteViews views, Context context, int action, int icon, int extra) {
     Intent intent = new Intent(context, TrackRecordingService.class);
-    
-    /* Keeps the TrackRecordingService from throwing back an exception in cases where
-     * two of the same intents are sent from the user double taping on the widget. */
-    intent.putExtra(context.getString(R.string.ignore_illegal_state), true);
-
     intent.setAction(context.getString(action));
     if (extra != -1) {
       intent.putExtra(context.getString(extra), true);

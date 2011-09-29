@@ -290,14 +290,8 @@ public class TrackRecordingService extends Service {
     if (intent.getBooleanExtra(RESUME_TRACK_EXTRA_NAME, false)) {
       resumeTrack(startId);
     } else {
-      try {
-         // Process actions for controlling the service.
-         processStartStopIntent(intent);
-      } catch (IllegalStateException e) {
-        /* Eat the exception if our sender says to ignore it, e.g., the Widget. */
-        if (!intent.getBooleanExtra(getString(R.string.ignore_illegal_state), false))
-          throw e;
-      }
+      // Process actions for controlling the service.
+      processStartStopIntent(intent);
     }
   }
   
@@ -305,15 +299,23 @@ public class TrackRecordingService extends Service {
     String action = intent.getAction();
 
     if (isNewTrackAction(action)) {
-      boolean selectNewTrack = intent.getBooleanExtra(getString(R.string.select_new_track_extra), false);
-      
-      startNewTrack();
-      if (selectNewTrack) {
-        prefManager.setSelectedTrack(recordingTrackId);
+      if (!isTrackInProgress()) {
+        boolean selectNewTrack = intent.getBooleanExtra(getString(R.string.select_new_track_extra), false);
+        
+        startNewTrack();
+        if (selectNewTrack) {
+          prefManager.setSelectedTrack(recordingTrackId);
+        }
       }
     } else if (isEndTrackAction(action)) {
-      endCurrentTrack();
+      if (isTrackInProgress()) {
+        endCurrentTrack();
+      }
     }
+  }
+
+  private boolean isTrackInProgress() {
+    return recordingTrackId != -1 || isRecording;
   }
   
   private boolean isNewTrackAction(String action) {
@@ -571,9 +573,6 @@ public class TrackRecordingService extends Service {
 
   public long startNewTrack() {
     Log.d(TAG, "TrackRecordingService.startNewTrack");
-    if (recordingTrackId != -1 || isRecording) {
-      throw new IllegalStateException("A track is already in progress!");
-    }
 
     long startTime = System.currentTimeMillis();
     acquireWakeLock();
@@ -1009,9 +1008,6 @@ public class TrackRecordingService extends Service {
 
   private void endCurrentTrack() {
     Log.d(TAG, "TrackRecordingService.endCurrentTrack");
-    if (recordingTrackId == -1 || !isRecording) {
-      throw new IllegalStateException("No recording track in progress!");
-    }
 
     announcementExecutor.shutdown();
     splitExecutor.shutdown();
