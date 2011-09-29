@@ -51,4 +51,14 @@ limitations under the License.
   <!-- AppWidget colors -->
   <color name="appwidget_text">#EDEDED</color>
   <color name="appwidget_hr">#99999999</color>
+  
+  <!-- Colors for dynamic track drawing --> 
+  <!-- Green -->
+  <color name="slow_path">#F774DF00</color>
+  
+  <!-- Blue -->
+  <color name="normal_path">#F75858FA</color>
+  
+  <!-- Red -->
+  <color name="fast_path">#F7DF0101</color>
 </resources>

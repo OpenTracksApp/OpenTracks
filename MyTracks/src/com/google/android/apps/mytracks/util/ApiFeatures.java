@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.Constants;
+import com.google.api.client.http.HttpTransport;
 
 import android.os.Build;
 import android.util.Log;
@@ -122,6 +123,15 @@ public class ApiFeatures {
    */
   public boolean canReuseSQLiteQueryBuilder() {
     return getApiLevel() > 4;
+  }
+  
+  /**
+   * Returns true if com.google.api.client.javanet.NetHttpTransport should be
+   * used rather than com.google.api.client.apache.ApacheHttpTransport. See
+   * {@link HttpTransport} for more info.
+   */
+  public boolean useNetHttpTransport() {
+    return getApiLevel() >= 9;
   }
 
   // Visible for testing.

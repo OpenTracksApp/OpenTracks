@@ -23,6 +23,7 @@ import com.google.android.apps.mytracks.services.sensors.ant.AntUtils;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.BluetoothDeviceUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.app.AlertDialog;
@@ -32,11 +33,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
@@ -128,7 +131,8 @@ public class SettingsActivity extends PreferenceActivity {
     updatePreferenceUnits(metricUnitsPreference.isChecked());
 
     customizeSensorOptionsPreferences();
-
+    customizeTrackColorModePreferences();
+    
     // Hook up action for resetting all settings
     Preference resetPreference = findPreference(getString(R.string.reset_key));
     resetPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -202,6 +206,29 @@ public class SettingsActivity extends PreferenceActivity {
           (PreferenceScreen) findPreference(getString(R.string.sensor_options_key));
       sensorOptionsScreen.removePreference(findPreference(getString(R.string.ant_options_key)));
     }
+  }
+  
+  private void customizeTrackColorModePreferences() {
+    ListPreference trackColorModePreference =
+        (ListPreference) findPreference(getString(R.string.track_color_mode_key));
+    trackColorModePreference.setOnPreferenceChangeListener(
+        new OnPreferenceChangeListener() {
+          @Override
+          public boolean onPreferenceChange(Preference preference,
+              Object newValue) {
+            updateTrackColorModeSettings((String) newValue);
+            return true;
+          }
+        });
+    updateTrackColorModeSettings(trackColorModePreference.getValue());
+    
+    setTrackColorModePreferenceListeners();
+    
+    PreferenceCategory speedOptionsCategory =
+        (PreferenceCategory) findPreference(getString(R.string.track_color_mode_fixed_speed_options_key));
+
+    speedOptionsCategory.removePreference(findPreference(getString(R.string.track_color_mode_fixed_speed_slow_key)));
+    speedOptionsCategory.removePreference(findPreference(getString(R.string.track_color_mode_fixed_speed_medium_key)));
   }
 
   @Override
@@ -288,6 +315,18 @@ public class SettingsActivity extends PreferenceActivity {
     }
   }
 
+  private void updateTrackColorModeSettings(String trackColorMode) {
+    boolean usesFixedSpeed = trackColorMode.equals(getString(R.string.track_color_mode_fixed));
+    boolean usesDynamicSpeed = trackColorMode.equals(getString(R.string.track_color_mode_dynamic));
+    
+    findPreference(
+        getString(R.string.track_color_mode_fixed_speed_slow_display_key)).setEnabled(usesFixedSpeed);
+    findPreference(
+        getString(R.string.track_color_mode_fixed_speed_medium_display_key)).setEnabled(usesFixedSpeed);
+    findPreference(
+        getString(R.string.track_color_mode_dynamic_speed_variation_key)).setEnabled(usesDynamicSpeed);
+  }
+  
   /**
    * Updates all the preferences which give options with distance units to use
    * the proper unit the user has selected.
@@ -415,5 +454,85 @@ public class SettingsActivity extends PreferenceActivity {
         });
       }
     }.start();
+  }
+  
+  /** 
+   * Set the given edit text preference text.
+   * If the units are not metric convert the value before displaying.  
+   */
+  private void viewTrackColorModeSettings(EditTextPreference preference, int id) {
+    CheckBoxPreference metricUnitsPreference = (CheckBoxPreference) findPreference(
+        getString(R.string.metric_units_key));
+    if(metricUnitsPreference.isChecked()) {
+      return;
+    }
+    // Convert miles/h to km/h
+    SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
+    String metricspeed = prefs.getString(getString(id), null);
+    int englishspeed;
+    try {
+      englishspeed = (int) (Double.parseDouble(metricspeed) * UnitConversions.KMH_TO_MPH);
+    } catch (NumberFormatException e) {
+      englishspeed = 0;
+    }
+    preference.getEditText().setText(String.valueOf(englishspeed));
+  }
+  
+  /** 
+   * Saves the given edit text preference value.
+   * If the units are not metric convert the value before saving.  
+   */
+  private void validateTrackColorModeSettings(EditTextPreference preference, 
+      String newValue, int id) {
+    CheckBoxPreference metricUnitsPreference = (CheckBoxPreference) findPreference(
+        getString(R.string.metric_units_key));
+    String metricspeed;
+    if(!metricUnitsPreference.isChecked()) {
+      // Convert miles/h to km/h
+      try {
+        metricspeed = String.valueOf((int) (Double.parseDouble(newValue) * UnitConversions.MPH_TO_KMH) + 1);
+      } catch (NumberFormatException e) {
+        metricspeed = "0";
+      }
+    } else {
+      metricspeed = newValue;
+    }
+    SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
+    prefs.edit().putString(getString(id), metricspeed).commit();
+  }
+  
+  /** 
+   * Sets the TrackColorMode preference listeners.
+   */
+  private void setTrackColorModePreferenceListeners() {
+    setTrackColorModePreferenceListener(R.string.track_color_mode_fixed_speed_slow_display_key,
+        R.string.track_color_mode_fixed_speed_slow_key);
+    setTrackColorModePreferenceListener(R.string.track_color_mode_fixed_speed_medium_display_key,
+        R.string.track_color_mode_fixed_speed_medium_key);
+  }
+  
+  /** 
+   * Sets a TrackColorMode preference listener.
+   */
+  private void setTrackColorModePreferenceListener(int displayKey, final int metricKey) {
+    EditTextPreference trackColorModePreference =
+        (EditTextPreference) findPreference(getString(displayKey));
+    trackColorModePreference.setOnPreferenceChangeListener(
+        new OnPreferenceChangeListener() {
+          @Override
+          public boolean onPreferenceChange(Preference preference,
+              Object newValue) {
+            validateTrackColorModeSettings((EditTextPreference) preference, (String) newValue, metricKey);
+            return true;
+          }
+        });
+    trackColorModePreference.setOnPreferenceClickListener(
+        new OnPreferenceClickListener() {
+          @Override
+          public boolean onPreferenceClick(Preference preference) {
+            viewTrackColorModeSettings((EditTextPreference) preference, metricKey);
+            return true;
+          }
+        });
   }
 }

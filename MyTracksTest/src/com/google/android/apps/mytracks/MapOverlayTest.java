@@ -16,103 +16,23 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
-import com.google.android.maps.Projection;
 
-import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Path;
-import android.graphics.Point;
-import android.graphics.PointF;
-import android.graphics.Rect;
 import android.location.Location;
 import android.test.AndroidTestCase;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Tests for the MyTracks map overlay.
  * 
  * @author Bartlomiej Niechwiej
+ * @author Vangelis S.
  */
 public class MapOverlayTest extends AndroidTestCase {
   private Canvas canvas;
   private MockMyTracksOverlay myTracksOverlay;
   private MapView mockView;
-  private Projection mockProjection;
-  
-  /**
-   * A mock version of {@code MapOverlay} that does not use
-   * {@class MapView}. 
-   */
-  private class MockMyTracksOverlay extends MapOverlay {
-    public MockMyTracksOverlay(Context context) {
-      super(context);
-    }
-    @Override
-    Projection getMapProjection(MapView mapView) {
-      return mockProjection;
-    }
-    @Override
-    Rect getMapViewRect(MapView mapView) {
-      return new Rect(0, 0, 100, 100);
-    }
-    @Override
-    Path newPath() {
-      return new MockPath();
-    }
-  }
-  
-  /**
-   * A mock class that intercepts {@code Path}'s and records calls to
-   * {@code #moveTo()} and {@code #lineTo()}.
-   */
-  private static class MockPath extends Path {
-    /** A list of disjoined path segments. */
-    public final List<List<PointF>> segments = new LinkedList<List<PointF>>();
-    /** The total number of points in this path. */
-    public int totalPoints;
-    
-    private List<PointF> currentSegment;
 
-    @Override
-    public void lineTo(float x, float y) {
-      super.lineTo(x, y);
-      assertNotNull(currentSegment);
-      currentSegment.add(new PointF(x, y));
-      totalPoints++;
-    }
-    @Override
-    public void moveTo(float x, float y) {
-      super.moveTo(x, y);
-      segments.add(currentSegment =
-          new ArrayList<PointF>(Arrays.asList(new PointF(x, y))));
-      totalPoints++;
-    }
-  }
-
-  /**
-   * A mock {@code Projection} that acts as the identity matrix.
-   */
-  private static class MockProjection implements Projection {
-    @Override
-    public Point toPixels(GeoPoint in, Point out) {
-      return out;
-    }
-    @Override
-    public float metersToEquatorPixels(float meters) {
-      return meters;
-    }
-    @Override
-    public GeoPoint fromPixels(int x, int y) {
-      return new GeoPoint(y, x);
-    }
-  }
-  
   @Override
   protected void setUp() throws Exception {
     super.setUp();
@@ -121,9 +41,8 @@ public class MapOverlayTest extends AndroidTestCase {
     // Enable drawing.
     myTracksOverlay.setTrackDrawingEnabled(true);
     mockView = null;
-    mockProjection = new MockProjection();
   }
-
+  
   public void testAddLocation() throws Exception {
     Location location = new Location("gps");
     location.setLatitude(10);

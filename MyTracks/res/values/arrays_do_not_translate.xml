@@ -118,4 +118,16 @@ limitations under the License.
     <item>@string/ant_sensor_type</item>
     <item>@string/srm_ant_bridge_sensor_type</item>
   </string-array>
+  
+  <string-array name="track_color_mode_options">
+      <item>@string/track_color_mode_none</item>
+      <item>@string/track_color_mode_fixed</item>
+      <item>@string/track_color_mode_dynamic</item>
+  </string-array>
+  
+   <string-array name="track_color_mode_values">
+      <item>@string/none</item>
+      <item>@string/track_color_mode_fixed</item>
+      <item>@string/track_color_mode_dynamic</item>
+  </string-array>
 </resources>

@@ -26,20 +26,23 @@ import com.google.android.apps.mytracks.io.gdata.GDataWrapper;
 import com.google.android.apps.mytracks.io.gdata.GDataWrapper.QueryFunction;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 import com.google.api.client.googleapis.GoogleHeaders;
-import com.google.api.client.googleapis.MethodOverrideIntercepter;
+import com.google.api.client.googleapis.MethodOverride;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpResponseException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.InputStreamContent;
-import com.google.api.client.javanet.NetHttpTransport;
+import com.google.api.client.http.apache.ApacheHttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.util.Strings;
 
 import android.app.Activity;
@@ -63,6 +66,8 @@ import java.util.Vector;
  * @author Leif Hendrik Wilden
  */
 public class SendToFusionTables implements Runnable {
+
+ private static final String CONTENT_TYPE = "application/x-www-form-urlencoded";
 
   /**
    * Listener invoked when sending to fusion tables completes.
@@ -118,22 +123,15 @@ public class SendToFusionTables implements Runnable {
   private int totalLocations;
   private int totalSegmentsUploaded;
 
-  private HttpTransport transport;
+  private HttpRequestFactory httpRequestFactory;
   private String tableId;
 
   private static String MARKER_TYPE_START = "large_green";
   private static String MARKER_TYPE_END = "large_red";
   private static String MARKER_TYPE_WAYPOINT = "large_yellow";
 
-  static {
-    // We manually assign the transport to avoid having HttpTransport try to
-    // load it via reflection (which breaks due to ProGuard).
-    HttpTransport.setLowLevelHttpTransport(new NetHttpTransport());
-  }
-
-  public SendToFusionTables(Activity context, AuthManager auth,
-      long trackId, ProgressIndicator progressIndicator,
-      OnSendCompletedListener onCompletion) {
+  public SendToFusionTables(Activity context, AuthManager auth, long trackId,
+      ProgressIndicator progressIndicator, OnSendCompletedListener onCompletion) {
     this.context = context;
     this.auth = auth;
     this.trackId = trackId;
@@ -142,13 +140,9 @@ public class SendToFusionTables implements Runnable {
     this.stringUtils = new StringUtils(context);
     this.providerUtils = MyTracksProviderUtils.Factory.get(context);
 
-    GoogleHeaders headers = new GoogleHeaders();
-    headers.setApplicationName("Google-MyTracks-" + SystemUtils.getMyTracksVersion(context));
-    headers.gdataVersion = GDATA_VERSION;
-
-    transport = new HttpTransport();
-    MethodOverrideIntercepter.setAsFirstFor(transport);
-    transport.defaultHeaders = headers;
+    HttpTransport transport = ApiFeatures.getInstance().useNetHttpTransport() 
+        ? new NetHttpTransport() : new ApacheHttpTransport();
+    httpRequestFactory = transport.createRequestFactory(new MethodOverride());
   }
 
   @Override
@@ -177,7 +171,6 @@ public class SendToFusionTables implements Runnable {
   }
 
   private void doUpload() {
-    ((GoogleHeaders) transport.defaultHeaders).setGoogleLogin(auth.getAuthToken());
     int statusMessageId = R.string.error_sending_to_fusiontables;
     boolean success = true;
     try {
@@ -280,7 +273,7 @@ public class SendToFusionTables implements Runnable {
    *
    * @param name the marker name
    * @param description the marker description
-   * @param the marker location
+   * @param location the marker location
    * @return true in case of success.
    */
   private boolean createNewPoint(String name, String description, Location location,
@@ -306,7 +299,6 @@ public class SendToFusionTables implements Runnable {
   }
 
   private boolean uploadAllTrackPoints(final Track track, String originalDescription) {
-
     SharedPreferences preferences = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     boolean metricUnits = true;
     if (preferences != null) {
@@ -440,10 +432,10 @@ public class SendToFusionTables implements Runnable {
   }
 
   /**
-   * Returns a KML Point tag for the given location.
+   * Returns a KML LineString.
    *
-   * @param location The location.
-   * @return the kml.
+   * @param track the track.
+   * @return the KML LineString.
    */
   private String getKmlLineString(Track track) {
     StringBuilder builder = new StringBuilder("<LineString><coordinates>");
@@ -500,7 +492,7 @@ public class SendToFusionTables implements Runnable {
    * Prepares a buffer of locations for transmission to google fusion tables.
    *
    * @param track the original track with meta data
-   * @param buffer a buffer of locations on the track
+   * @param locations locations on the track
    * @return an array of tracks each with a sub section of the points in the
    *         original buffer
    */
@@ -665,33 +657,40 @@ public class SendToFusionTables implements Runnable {
    * @return true in case of success
    */
   private boolean runUpdate(final String query) {
-    GDataWrapper<HttpTransport> wrapper = new GDataWrapper<HttpTransport>();
+    GDataWrapper<HttpRequestFactory> wrapper = new GDataWrapper<HttpRequestFactory>();
     wrapper.setAuthManager(auth);
     wrapper.setRetryOnAuthFailure(true);
-    wrapper.setClient(transport);
+    wrapper.setClient(httpRequestFactory);
     Log.d(Constants.TAG, "GData connection prepared: " + this.auth);
-    wrapper.runQuery(new QueryFunction<HttpTransport>() {
+    wrapper.runQuery(new QueryFunction<HttpRequestFactory>() {
       @Override
-      public void query(HttpTransport client)
+      public void query(HttpRequestFactory factory)
           throws IOException, GDataWrapper.ParseException, GDataWrapper.HttpException,
           GDataWrapper.AuthenticationException {
-        HttpRequest request = transport.buildPostRequest();
-        request.headers.contentType = "application/x-www-form-urlencoded";
         GenericUrl url = new GenericUrl(FUSIONTABLES_BASE_FEED_URL);
-        request.url = url;
-        InputStreamContent isc = new InputStreamContent();
-        String sql = "sql=" + URLEncoder.encode(query, "UTF-8");
-        isc.inputStream = new ByteArrayInputStream(Strings.toBytesUtf8(sql));
-        request.content = isc;
 
+        String sql = "sql=" + URLEncoder.encode(query, "UTF-8");
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(Strings.toBytesUtf8(sql));
+        InputStreamContent isc = new InputStreamContent(null, inputStream );
+
+        HttpRequest request = factory.buildPostRequest(url, isc);
+        
+        GoogleHeaders headers = new GoogleHeaders();
+        headers.setApplicationName("Google-MyTracks-" + SystemUtils.getMyTracksVersion(context));
+        headers.gdataVersion = GDATA_VERSION;
+        headers.setGoogleLogin(auth.getAuthToken());
+        headers.setContentType(CONTENT_TYPE);
+        request.setHeaders(headers);
+        
         Log.d(Constants.TAG, "Running update query " + url.toString() + ": " + sql);
         HttpResponse response;
         try {
           response = request.execute();
         } catch (HttpResponseException e) {
-          throw new GDataWrapper.HttpException(e.response.statusCode, e.response.statusMessage);
+          throw new GDataWrapper.HttpException(e.getResponse().getStatusCode(),
+              e.getResponse().getStatusMessage());
         }
-        boolean success = response.isSuccessStatusCode;
+        boolean success = response.isSuccessStatusCode();
         if (success) {
           byte[] result = new byte[1024];
           int read = response.getContent().read(result);
@@ -704,9 +703,11 @@ public class SendToFusionTables implements Runnable {
             Log.w(Constants.TAG, "Unrecognized response: " + lines[0]);
           }
         } else {
-          Log.d(Constants.TAG, "Query failed: " + response.statusMessage + " (" +
-              response.statusCode + ")");
-          throw new GDataWrapper.HttpException(response.statusCode, response.statusMessage);
+          Log.d(Constants.TAG,
+              "Query failed: " + response.getStatusMessage() + " ("
+                  + response.getStatusCode() + ")");
+          throw new GDataWrapper.HttpException(
+              response.getStatusCode(), response.getStatusMessage());
         }
       }
     });
