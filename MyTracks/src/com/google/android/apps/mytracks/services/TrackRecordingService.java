@@ -283,29 +283,45 @@ public class TrackRecordingService extends Service {
     Log.d(TAG,
         "TrackRecordingService.handleStartCommand: " + startId);
 
+    if (intent == null)
+      return;
+      
     // Check if called on phone reboot with resume intent.
-    if (intent != null) {
-      if (intent.getBooleanExtra(RESUME_TRACK_EXTRA_NAME, false)) {
-        resumeTrack(startId);
-      } else {
-        // Process actions for controlling the service.
-        
-        String action = intent.getAction();
-        try {
-          if (getString(R.string.start_new_track_action).equals(action)) {
-            startNewTrack();
-            if (intent.getBooleanExtra(getString(R.string.select_new_track_extra), false)) {
-              prefManager.setSelectedTrack(recordingTrackId);
-            }
-          } else if (getString(R.string.end_current_track_action).equals(action)) {
-            endCurrentTrack();
-          }
-        } catch (IllegalStateException e) {
-           if (!intent.getBooleanExtra(getString(R.string.ignore_illegal_state), false))
-              throw e;
-        }
+    if (intent.getBooleanExtra(RESUME_TRACK_EXTRA_NAME, false)) {
+      resumeTrack(startId);
+    } else {
+      try {
+         // Process actions for controlling the service.
+         processStartStopIntent(intent);
+      } catch (IllegalStateException e) {
+        /* Eat the exception if our sender says to ignore it, e.g., the Widget. */
+        if (!intent.getBooleanExtra(getString(R.string.ignore_illegal_state), false))
+          throw e;
       }
     }
+  }
+  
+  private void processStartStopIntent(Intent intent) {
+    String action = intent.getAction();
+
+    if (isNewTrackAction(action)) {
+      boolean selectNewTrack = intent.getBooleanExtra(getString(R.string.select_new_track_extra), false);
+      
+      startNewTrack();
+      if (selectNewTrack) {
+        prefManager.setSelectedTrack(recordingTrackId);
+      }
+    } else if (isEndTrackAction(action)) {
+      endCurrentTrack();
+    }
+  }
+  
+  private boolean isNewTrackAction(String action) {
+    return getString(R.string.start_new_track_action).equals(action);
+  }
+  
+  private boolean isEndTrackAction(String action) {
+    return getString(R.string.end_current_track_action).equals(action);
   }
 
   private void resumeTrack(int startId) {
