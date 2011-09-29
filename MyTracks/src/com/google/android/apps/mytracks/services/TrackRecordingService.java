@@ -573,6 +573,9 @@ public class TrackRecordingService extends Service {
 
   public long startNewTrack() {
     Log.d(TAG, "TrackRecordingService.startNewTrack");
+    if (isTrackInProgress()) {
+      throw new IllegalStateException("A track is already in progress!");
+    }
 
     long startTime = System.currentTimeMillis();
     acquireWakeLock();
@@ -1008,6 +1011,9 @@ public class TrackRecordingService extends Service {
 
   private void endCurrentTrack() {
     Log.d(TAG, "TrackRecordingService.endCurrentTrack");
+    if (!isTrackInProgress()) {
+      throw new IllegalStateException("No recording track in progress!");
+    }
 
     announcementExecutor.shutdown();
     splitExecutor.shutdown();
