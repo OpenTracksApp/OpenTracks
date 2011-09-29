@@ -39,8 +39,4 @@ public class MyTracksApplication extends Application {
     }
     return trackDataHub;
   }
-
-  public void clearTrackDataHub() {
-    trackDataHub = null;
-  }
 }
