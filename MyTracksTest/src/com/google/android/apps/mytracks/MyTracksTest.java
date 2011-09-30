@@ -49,7 +49,6 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
   protected void tearDown() throws Exception {
     clearSelectedAndRecordingTracks();
     waitForIdle();
-
     super.tearDown();
   }
 
@@ -85,7 +84,7 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     // Simulate start with ACTION_VIEW intent.
     Intent startIntent = new Intent();
     startIntent.setAction(Intent.ACTION_VIEW);
-    Uri uri = Uri.fromFile(File.createTempFile("valid", ".gpx"));
+    Uri uri = Uri.fromFile(File.createTempFile("valid", ".gpx", getActivity().getFilesDir()));
 
     // TODO: Add a valid GPX.
 
@@ -108,7 +107,7 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     // Simulate start with ACTION_VIEW intent.
     Intent startIntent = new Intent();
     startIntent.setAction(Intent.ACTION_VIEW);
-    Uri uri = Uri.fromFile(File.createTempFile("invalid", ".gpx"));
+    Uri uri = Uri.fromFile(File.createTempFile("invalid", ".gpx", getActivity().getFilesDir()));
     startIntent.setData(uri);
     setActivityIntent(startIntent);
 
@@ -168,8 +167,13 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     // properly saved.
 
     // Simulate a click on Save button.
-    Button save = (Button) activity.findViewById(R.id.trackdetails_save);
-    save.performClick();
+    final Button save = (Button) activity.findViewById(R.id.trackdetails_save);
+    getActivity().runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        save.performClick();
+      }
+    });  
 
     // Check the remaining properties.
     recordingTrackId = awaitRecordingStatus(5000, false);

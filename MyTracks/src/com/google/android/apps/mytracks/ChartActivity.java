@@ -20,11 +20,11 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 import com.google.android.apps.mytracks.ChartView.Mode;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.Sensor;
-import com.google.android.apps.mytracks.content.TrackDataHub;
-import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
-import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.content.TrackDataHub;
+import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
+import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
@@ -148,7 +148,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
   protected void onResume() {
     super.onResume();
 
-    dataHub = TrackDataHub.getStartedInstance();
+    dataHub = ((MyTracksApplication) getApplication()).getTrackDataHub();
     dataHub.registerTrackDataListener(this, EnumSet.of(
         ListenerDataType.SELECTED_TRACK_CHANGED,
         ListenerDataType.TRACK_UPDATES,
