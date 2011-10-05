@@ -38,6 +38,7 @@ limitations under the License.
   <string name="send_to_my_maps_key">sendToMyMaps</string>
   <string name="send_to_fusion_tables_key">sendToFusionTables</string>
   <string name="sensor_type_key">sensorType</string>
+  <string name="share_data_key">shareData</string>
   <string name="share_url_only_key">shareUrlOnly</string>
   <string name="split_frequency_key">splitFrequency</string>
   <string name="timestamp_track_name_key">timestampTrackName</string>

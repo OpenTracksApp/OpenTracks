@@ -235,6 +235,12 @@ limitations under the License.
   <string name="settings_report_speed_or_pace_summary_on">Speed will be displayed</string>
   <string name="settings_report_speed_or_pace_summary_off">Pace will be displayed</string>
 
+  <string name="settings_share_data">Share data</string>
+  <string name="settings_share_data_summary_on">Other installed apps will be able to read and write
+          MyTracks data, including starting/stopping a recording.</string>
+  <string name="settings_share_data_summary_off">MyTracks data is not shared with any installed app.
+          </string>
+
   <string name="settings_share_url_only">Share only URL</string>
   <string name="settings_share_url_only_summary_on">Only the URL of the map will be sent when sharing</string>
   <string name="settings_share_url_only_summary_off">The contents of the track will also be included when sharing</string>
