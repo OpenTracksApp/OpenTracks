@@ -178,6 +178,9 @@ limitations under the License.
              android:exported="true"
              android:permission="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
 
+    <service android:name="com.google.android.apps.mytracks.services.ControlRecordingService"
+             android:exported="false" />
+             
     <receiver android:name="com.google.android.apps.mytracks.BootReceiver">
       <intent-filter>
         <action android:name="android.intent.action.BOOT_COMPLETED" />
