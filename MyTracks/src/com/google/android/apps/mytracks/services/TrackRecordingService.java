@@ -1168,6 +1168,10 @@ public class TrackRecordingService extends Service {
       }
     }
 
+    /**
+     * Checks if the service is available. If not, throws an
+     * {@link IllegalStateException}.
+     */
     private void checkService() {
       if (service == null) {
         throw new IllegalStateException("The service has been already detached!");
@@ -1177,9 +1181,13 @@ public class TrackRecordingService extends Service {
     /**
      * Returns true if the RPC caller is from the same application or if the
      * sharing setting indicates that another app can invoke this service's
-     * RPCs.
+     * RPCs. 
      */
     private boolean canAccess() {
+      
+      // As a precondition for access, must check if the service is available.
+      checkService();
+      
       if (Process.myPid() == Binder.getCallingPid()) {
         return true;
       } else {
@@ -1193,7 +1201,6 @@ public class TrackRecordingService extends Service {
 
     @Override
     public boolean isRecording() {
-      checkService();
       if (!canAccess()) {
         return false;
       }
@@ -1202,7 +1209,6 @@ public class TrackRecordingService extends Service {
 
     @Override
     public long getRecordingTrackId() {
-      checkService();
       if (!canAccess()) {
         return -1L;
       }
@@ -1211,7 +1217,6 @@ public class TrackRecordingService extends Service {
 
     @Override
     public long startNewTrack() {
-      checkService();
       if (!canAccess()) {
         return -1L;
       }
@@ -1225,7 +1230,6 @@ public class TrackRecordingService extends Service {
      * @return the unique ID of the inserted marker
      */
     public long insertWaypoint(WaypointCreationRequest request) {
-      checkService();
       if (!canAccess()) {
         return -1L;
       }
@@ -1234,7 +1238,6 @@ public class TrackRecordingService extends Service {
 
     @Override
     public void endCurrentTrack() {
-      checkService();
       if (!canAccess()) {
         return;
       }
@@ -1243,7 +1246,6 @@ public class TrackRecordingService extends Service {
 
     @Override
     public void recordLocation(Location loc) {
-      checkService();
       if (!canAccess()) {
         return;
       }
@@ -1252,7 +1254,6 @@ public class TrackRecordingService extends Service {
 
     @Override
     public byte[] getSensorData() {
-      checkService();
       if (!canAccess()) {
         return null;
       }
@@ -1269,7 +1270,6 @@ public class TrackRecordingService extends Service {
 
     @Override
     public int getSensorState() {
-      checkService();
       if (!canAccess()) {
         return Sensor.SensorState.NONE.getNumber();
       }      
