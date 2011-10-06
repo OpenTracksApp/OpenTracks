@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+  <!-- Used by the Menu -->
+  <string name="start_recording">Aloita reitti</string>
+  <string name="stop_recording">Lopeta</string>
+  <string name="switch_to_sat">Satelliitti</string>
+  <string name="switch_to_map">Kartta</string>
+  <string name="mylocation">Oma sijainti</string>
+  <string name="list_tracks">Reitit</string>
+  <string name="list_markers">Merkinnät</string>
+  <string name="delete_all_tracks">Poista kaikki reitit</string>
+  <string name="settings">Asetukset</string>
+  <string name="elevation">Korkeus</string>
+  <string name="choose_track_message">Valitse näytettävä reitti</string>
+  <string name="current_track">Valittu reitti</string>
+  <string name="current_segment">Nykyinen segmentti</string>
+  <string name="sensor_state">Sensorien tila</string>
+  <string name="aggregated_stats">Yhteenlasketut tilastot</string>
+
+  <!-- Error messages -->
+  <string name="error_no_location_manager">Paikkatietoja ei löytynyt!</string>
+  <string name="error_no_gps_location_provider">GPS-palvelua ei löytynyt.</string>
+  <string name="error_sending_to_mymap">Virhe lähetettäessä reittiä Google My Maps-palveluun.</string>
+  <string name="error_sending_to_fusiontables">Virhe lähetettäessä reittiä Google Fusion Tables-palveluun.</string>
+  <string name="error_sending_to_docs">Virhe lähetettäessä reittiä Google Docs-palveluun..</string>
+  <string name="error_please_try_again_later">Yritä myöhemmin uudelleen.</string>
+  <string name="error_unable_to_start_recording">Tallennusta ei voitu aloittaa. Yritä uudelleen.</string>
+  <string name="error_unable_to_stop_recording">Tallennusta ei voitu pysäyttää. Yritä uudelleen.</string>
+  <string name="error_unable_to_read_file">Tiedostovirhe.</string>
+  <string name="error_invalid_gpx_format">Virheellinen GPX-formaatti.</string>
+  <string name="error_generic">Tapahtui virhe. Yritä uudelleen.</string>
+  <string name="error_track_does_not_exist">Reittiä ei ole olemassa.</string>
+  <string name="error_operation_cancelled">Tapahtuma keskeytettiin.</string>
+  <string name="error_out_of_memory">Liian suuri tiedosto (maksimi 500 KB). Keskeytetään.</string>
+  <string name="error_unable_to_insert_marker">Merkintää ei voitu lisätä. Paikkatietoa ei saatavilla.</string>
+
+  <!-- Status messages -->
+  <string name="wait_for_fix">Odotetaan parempaa GPS-yhteyttä. Varmista että taivas on näkyvissä.</string>
+  <string name="status_now_recording">Tallennetaan uutta reittiä.</string>
+  <string name="status_stopped_recording">Reitin tallentaminen lopetettiin.</string>
+  <string name="status_new_mymap_has_been_created">Uusi Google My Map on luotu osoitteeseen maps.google.com.</string>
+  <string name="status_new_fusiontable_has_been_created">Uusi Google Fusion taulukko on luotu osoitteeseen google.com/fusiontables.</string>
+  <string name="status_tracks_have_been_uploaded">Reittisi on lähetetty osoitteeseen maps.google.com.</string>
+  <string name="status_tracks_have_been_uploaded_to_new_doc">Reittisi on luotu taulukoksi osoitteeseen  docs.google.com.</string>
+  <string name="status_tracks_have_been_uploaded_to_docs">Reittisi on lähetetty osoitteeseen docs.google.com.</string>
+  <string name="status_mymap_info">Reitin näkyminen saattaa kestää muutaman minuutin.</string>
+  <string name="status_enable_gps">Avaa tästä Sijainti ja suojaus -asetukset ja valitse \'Käytä GPS-satelliitteja\'. Palaa ohjelmaan painamalla Takaisin-näppäintä.</string>
+  <string name="status_approximate_location">Huomio: Näkyvä sijainti perustuu kännykkämastoista ja WLAN-verkoista arvioituun paikkatietoon.</string>
+  <string name="status_no_location">Paikkatietoa ei löydy. Aktivoi lisää paikannusmenetelmiä (katso Asetukset) ja varmista että taivas on näkyvissä. Yritä myöhemmin uudelleen.</string>
+  <string name="status_waypoint_inserted">Reittimerkintä lisätty.</string>
+  <string name="status_statistics_inserted">Tilastomerkintä lisätty.</string>
+  <string name="status_track_upload_status">Lähetyksen tila:</string>
+
+  <!-- Progress dialog -->
+  <string name="progress_title">Odota...</string>
+  <string name="progress_message">Lähetetään reittiä Google:n palvelimelle.</string>
+  <string name="progress_message_reading_track">Luetaan reittiä...</string>
+  <string name="progress_message_preparing_track">Valmistellaan reittiä...</string>
+  <string name="progress_message_authenticating_fusiontables">Todennetaan Google Fusion Tables -tiliä...</string>
+  <string name="progress_message_authenticating_mymaps">Todennetaan Google Maps -tiliä...</string>
+  <string name="progress_message_authenticating_docs">Todennetaan Google Docs -tiliä...</string>
+  <string name="progress_message_sending_docs">Lähetetään reittiä Google Docsiin...</string>
+  <string name="progress_message_sending_mymaps">Lähetetään reittiä Google Mapsiin...</string>
+  <string name="progress_message_creating_map">Luodaan uutta My Mapsia...</string>
+  <string name="progress_message_sending_fusiontables">Lähetetään reittiä Fusion Tablesiin...</string>
+  <string name="progress_message_creating_fusiontable">Luodaan uutta Fusion tablea...</string>
+  <string name="import_progress_message">Tuodaan uutta GPS-reittiä. Odota.</string>
+  <string name="write_progress_message">Kirjoitetaan tiedostoa SD-kortille. Odota.</string>
+  <string name="progress_message_updating_track">Päivitetään reitin tilastoja...</string>
+
+  <!-- Used by DeleteAllDataHandler -->
+  <string name="are_you_sure_question">Oletko varma?</string>
+  <string name="all_data_will_be_permanently_deleted">Kaikki reitit ja merkinnät poistetaan puhelimesta.</string>
+  <string name="track_will_be_permanently_deleted">Reitti ja se merkinnät poistetaan pysyvästi puhelimesta.</string>
+  <string name="marker_will_be_permanently_deleted">Merkintä poistetaan puhelimesta.</string>
+
+  <!-- Text and links when uploading to Google Fusion Tables -->
+  <string name="new_map_description">Created by My Tracks on Android.</string>
+  <string name="fusiontable_link">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
+
+  <!-- Text and links when uploading to Google My Maps -->
+  <string name="my_map_link">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
+  <string name="new_map_title">Uusi kartta</string>
+
+  <!-- Formatting of track and marker descriptions -->
+  <string name="points">Pisteet</string>
+  <string name="recorded_date">Tallennettu</string>
+  <string name="category">Liikunnan muoto</string>
+  <string name="waypoint_category">Merkinnän tyyppi</string>
+  <string name="part">(Osa %d)</string>
+
+  <!-- Used by the track recording service -->
+  <string name="recording_your_track">Tallennetaan reittiä...</string>
+  <string name="new_track">Reitti %d</string>
+
+  <!-- Common -->
+  <string name="no">Ei</string>
+  <string name="yes">Kyllä</string>
+  <string name="ok">OK</string>
+  <string name="error">Virhe</string>
+  <string name="success">Valmis</string>
+  <string name="waypoint">Reittipiste</string>
+  <string name="license">Lisenssi</string>
+  <string name="cancel">Peruuta</string>
+  <string name="close">Sulje</string>
+  <string name="edit">Muokkaa</string>
+  <string name="save">Tallenna</string>
+
+  <!-- Placemark labels for start and end of track -->
+  <string name="start">(Lähtö)</string>
+  <string name="end">(Maali)</string>
+
+  <!--  TrackList -->
+  <string name="tracklist_show_track">Näytä</string>
+  <string name="tracklist_send_to_mymaps">Lähetä Google My Mapsiin</string>
+  <string name="tracklist_send_to_new_mymap">Lähetä New Google My Mapiin</string>
+  <string name="tracklist_send_to_fusiontables">Lähetä Google Fusion Tablesiin</string>
+  <string name="tracklist_send_to_new_fusiontable">Lähetä New Google Fusion Tablesiin</string>
+  <string name="tracklist_send_to_docs">Lähetä Google Docsiin</string>
+  <string name="tracklist_send_to_google">Lähetä Googleen...</string>
+  <string name="tracklist_delete_track">Poista puhelimesta...</string>
+  <string name="tracklist_edit_track">Muokkaa tietoja...</string>
+  <string name="tracklist_write_to_sd">Kirjoita SD-kortille...</string>
+  <string name="tracklist_save_as_gpx">Tallenna GPX-tiedosto</string>
+  <string name="tracklist_save_as_kml">Tallenna KML-tiedosto</string>
+  <string name="tracklist_save_as_csv">Tallenna CSV-tiedosto</string>
+  <string name="tracklist_save_as_tcx">Tallenna TCX-tiedosto</string>
+  <string name="tracklist_btn_send_all_to_fusiontables">Lähetä Google Fusion Tablesiin</string>
+  <string name="tracklist_btn_send_all_to_mymaps">Lähetä Google My Mapsiin</string>
+  <string name="tracklist_btn_delete_all">Poista kaikki</string>
+  <!-- Export All -->
+  <string name="tracklist_btn_export_all">Vie kaikki</string>
+  <string name="export_done">Vienti tehty</string>
+  <string name="tracklist_pick_one">Valitse reitti. Pitkällä painalluksella lisää vaihtoehtoja.</string>
+  <string name="tracklist_all_tracks">Kaikki reitit:</string>
+  <string name="tracklist_this_track">Tämä reitti</string>
+  <string name="tracklist_share_track">Jaa...</string>
+  <string name="tracklist_share_link">Linkki karttaan</string>
+  <string name="tracklist_share_gpx_file">GPX-tiedosto</string>
+  <string name="tracklist_share_kml_file">KML-tiedosto</string>
+  <string name="tracklist_share_csv_file">CSV-tiedosto</string>
+  <string name="tracklist_share_tcx_file">TCX-tiedosto</string>
+  <string name="tracklist_clear_map">Tyhjennä kartta</string>
+  <!-- Import All -->
+  <string name="tracklist_btn_import_all">Tuo kaikki</string>
+  <!-- Format:
+  $1 : Successful imports
+  $2 : Attempted imports
+  $3 : MyTracks gpx path
+  -->
+  <string name="import_multi_done">Tuotu %1$d GPX-tiedostoa %2$d:sta lähteestä %3$s</string>
+  <string name="import_multi_empty">Lähteestä %s ei löytynyt GPX-tiedostoja. SD-kortti saattaa olla lukukelvoton tai hakemistossa ei ole GPX-tiedostoja.</string>
+  <string name="import_error">Virhe tuotaessa tiedostoa %s</string>
+  <string name="import_title">Tuo My Tracksiin</string>
+  <string name="import_success">%1$d reittiä tuotu.</string>
+  <string name="import_show_track">Näytä reitti</string>
+
+  <!-- Waypoints list -->
+  <string name="waypointslist_btn_delete_all">Poista kaikki merkinnät</string>
+  <string name="waypointslist_this_waypoint">Tämä merkintä</string>
+  <string name="waypointslist_delete_waypoint">Poista</string>
+  <string name="waypointslist_edit_waypoint">Muokkaa tietoja</string>
+  <string name="waypointslist_show_waypoint">Näytä kartalla</string>
+  <string name="waypointslist_btn_insert_waypoint">Lisää reittipiste</string>
+  <string name="waypointslist_btn_insert_statistics">Lisää tilastot</string>
+  <string name="waypointslist_pick_one">Valitse merkintä. Pitkä painallus tuo esiin lisää vaihtoehtoja.</string>
+
+  <!-- MyTracks Details -->
+  <string name="trackdetails_title">Reitin tiedot</string>
+  <string name="trackdetails_name">Reitin nimi</string>
+  <string name="trackdetails_name_hint">Reitin nimi</string>
+  <string name="trackdetails_description">Reitin kuvaus</string>
+  <string name="trackdetails_description_hint">Reitin kuvaus</string>
+  <string name="trackdetails_category">Liikunnan muoto (esim. hölkkä, pyöräily, juoksu...)</string>
+  <string name="trackdetails_category_hint">Liikunnan muoto</string>
+
+  <!-- MyTracks Waypoint Details -->
+  <string name="waypointdetails_title">Merkinnän tiedot</string>
+  <string name="waypointdetails_name">Merkinnän nimi</string>
+  <string name="waypointdetails_name_hint">Merkinnän nimi</string>
+  <string name="waypointdetails_description">Merkinnän kuvaus</string>
+  <string name="waypointdetails_description_hint">Merkinnän kuvaus</string>
+  <string name="waypointdetails_category">Merkinnän tyyppi (esim. rakennus, kuoppa, nähtävyys...)</string>
+  <string name="waypointdetails_category_hint">Merkinnän tyyppi</string>
+
+  <!-- MyTracks Settings -->
+  <string name="mytracks_settings">My Tracks Asetukset</string>
+  <string name="settings_display">Näyttö</string>
+  <string name="settings_recording">Tallennus</string>
+  <string name="settings_sharing">Jakaminen</string>
+
+  <string name="settings_not_available_summary">Ei tuettu tässä Android-versiossa</string>
+  <string name="settings_not_while_recording">Ei saatavilla reittiä tallennettaessa.</string>
+
+  <string name="settings_announcement_frequency">Äänimerkki</string>
+  <string name="settings_announcement_frequency_summary">Äänimerkkien aikaväli</string>
+
+  <string name="settings_min_recording_distance">Lyhyin piste-etäisyys</string>
+  <string name="settings_min_recording_distance_summary">Lyhyin sallittu reitintallennuksessa käytetty etäisyys kahden pisteen välillä</string>
+
+  <string name="settings_max_recording_distance">Pisin piste-etäisyys</string>
+  <string name="settings_max_recording_distance_summary">Jos edeltävä piste on valittua etäisyyttä pidemmällä reitti jaetaan</string>
+
+  <string name="settings_min_recording_interval">Lyhyin aika</string>
+  <string name="settings_min_recording_interval_summary">Lyhyin aikaintervalli kahden tallennetun pisteen välillä</string>
+
+  <string name="settings_min_required_accuracy">Sallittu tarkkuus</string>
+  <string name="settings_min_required_accuracy_summary">Reitin tallennus pysäytetään, jos tarkkuus on tätä pienempi</string>
+
+  <string name="settings_metric_units">Käytä metrijärjestelmää</string>
+  <string name="settings_metric_units_summary_on">Kaikki etäisyydet näytetään metrijärjestelmässä</string>
+  <string name="settings_metric_units_summary_off">Kaikki etäisyydet näytetään U.S yksiköitä käyttäen</string>
+
+  <string name="settings_map_public">Aseta kartat julkisiksi</string>
+  <string name="settings_map_public_summary_on">Lähetetyt kartat näkyvät kaikille osoitteessa maps.google.com</string>
+  <string name="settings_map_public_summary_off">Lähetettyjä karttoja ei näytetä julkisesti osoitteessa maps.google.com</string>
+
+  <string name="settings_report_speed_or_pace">Näytä nopeus</string>
+  <string name="settings_report_speed_or_pace_summary_on">Nopeus näytetään</string>
+  <string name="settings_report_speed_or_pace_summary_off">Tahti näytetään</string>
+
+  <string name="settings_share_url_only">Jaa vain URL</string>
+  <string name="settings_share_url_only_summary_on">Ainoastaan kartan URL jaetaan</string>
+  <string name="settings_share_url_only_summary_off">Myös reitin sisältö ja tiedot jaetaan</string>
+
+  <string name="settings_split_frequency">Reitin jaotus</string>
+  <string name="settings_split_frequency_summary">Etäisyys tai aika jolloin reitti jaetaan osiin</string>
+
+  <string name="settings_auto_resume_track_timeout">Reitin jatkaminen</string>
+  <string name="settings_auto_resume_track_timeout_summary">Aika jonka sisällä tallennettavaa reittiä jatketaan, jos puhelin käynnitetään uudelleen.</string>
+
+  <string name="settings_timestamp_track_name">Aikamerkintä nimenä</string>
+  <string name="settings_timestamp_track_name_summary_on">Oletusnimenä reitille käytetään aloituspäivämäärää ja aikaa</string>
+  <string name="settings_timestamp_track_name_summary_off">Oletusnimenä käytetään kasvavaa numerointia.</string>
+
+  <string name="settings_reset">Palauta oletusasetukset</string>
+  <string name="settings_reset_summary">Palauta kaikki oletusasetukset</string>
+  <string name="settings_reset_dialog_message">Kaikki asetuksesi poistetaan ja palautetaan oletusarvoisiksi. Tallennetut reitit säilytetään. Oletko varma?</string>
+  <string name="settings_reset_done">Oletusasetukset palautettu.</string>
+
+  <string name="pace_label">Tahti</string>
+
+  <string name="eclair_required">Tuettuna vain Android 2.0 tai uudemmassa</string>
+  <string name="settings_sensor_type">Sensorin tyyppi</string>
+  <string name="settings_sensor_type_summary">Sensorin tyyppi johon yhdistetään</string>
+  <string name="settings_heart_rate_ant_sensor_id">Resetoi ANT sykemittarin paritus</string>
+  <string name="settings_power_ant_sensor_id">Resetoi ANT tehomittarin paritus</string>
+  <string name="settings_srm_bridge_ant_sensor_id">Resetoi ANT SRM sillan paritus</string>
+  <string name="settings_ant_not_paired">ANT sensori ei paritettu</string>
+  <string name="settings_ant_paired">ANT sensori paritettu: %d</string>
+  <string name="bluetooth_sensor_title">Bluetooth sensori</string>
+  <string name="bluetooth_sensor_summary">Bluetooth-sensori johon yhdistetään</string>
+  <string name="settings_modular_stats_display_title">Modular Stats Display</string>
+
+  <!-- Backups -->
+  <string name="settings_backup">Varmuuskopioi (BETA)</string>
+  <string name="settings_sd_backup">Varmuuskopioi SD-kortille</string>
+  <string name="settings_backup_to_sd">Varmuuskopioi</string>
+  <string name="settings_backup_to_sd_summary">Tallenna täydellinen kopio reiteistä ja asetuksista SD-kortille</string>
+  <string name="settings_restore_from_sd">Palauta</string>
+  <string name="settings_restore_from_sd_summary">Palauta kaikki reitit ja asetukset SD-kortilta</string>
+
+  <string name="restore_overwrites_warning">Palautus SD-kortilta ylikirjoittaa kaikki nykyiset reitit ja asetukset. Jatketaanko?</string>
+  <string name="select_backup_to_restore">Valitse palautettava varmuuskopio</string>
+  <string name="no_backups">Varmuuskopioita ei löytynyt.</string>
+  <string name="backup_write_progress_message">Luodaan varmuuskopiota. Odota...</string>
+  <string name="backup_import_progress_message">Luetaan varmuuskopiota SD-kortilta. Odota...</string>
+
+  <!-- MyTracksSky -->
+  <string name="mytracks_sky">GPS-satelliitit</string>
+
+  <!-- My Maps -->
+  <string name="select_map_message">Valitse kartta tililtäsi:</string>
+  <string name="create_new_map">Luo uusi kartta...</string>
+  <string name="map_list_title">Lähetä Google My Mapsiin</string>
+  <string name="maps_list_loading">Ladataan karttoja...</string>
+  <string name="maps_list_failed">Karttoja ei voitu ladata!</string>
+  <string name="open_map">Valitse tämä kartta</string>
+  <string name="edit_map_details">Muokkaa kartan tietoja</string>
+  <string name="share_track">Jaa reitti</string>
+  <string name="delete_map">Poista kartta tililtä</string>
+  <string name="map_title">Kartan otsikko:</string>
+  <string name="map_description">Kartan kuvaus:</string>
+  <string name="map_searchable_edit">Näytä kartta ja sen sisältö hakutuloksissa</string>
+  <string name="map_not_searchable_edit">Älä näytä karttaa tai sen sisältöä hakutuloksissa. Tiedot näkyvät suoralla URL-linkillä</string>
+  <string name="map_searchable">Tämä kartta ja sen sisältö näkyy hakutuloksissa</string>
+  <string name="map_not_searchable">Kartta tai sen sisältö ei näy hakutuloksissa. Tiedot näkyvät muille kuitenkin suoralla URL-linkillä</string>
+
+  <!-- Sharing -->
+  <string name="share_map">Jaa kartta</string>
+  <string name="share_map_subject">Haluaisin jakaa kartan kanssasi</string>
+  <string name="share_map_body_format">Saattaisit olla kiinnostunut tästä reitistä:
+
+      %s</string>
+  <string name="send_track_subject">Haluaisin jakaa reitin kanssasi</string>
+  <string name="send_track_body_format">Saattaisit olla kiinnostunut tästä reitistä.
+
+    Käytä Google Earthia tai jotain muuta karttaohjelmistoa kartan katsomiseen.</string>
+
+  <!-- Visibility -->
+  <string name="public_map">Julkinen</string>
+  <string name="unlisted_map">Ei listattu</string>
+  <string name="mapslist_no_maps_available">Ei karttoja saatavilla.</string>
+
+  <!-- Statistics View -->
+  <!-- Average Moving -->
+  <string name="average_moving_speed_label">Keskinopeus (liikuttaessa)</string>
+  <string name="average_moving_pace_label">Tahti (liikuttaessa)</string>
+
+  <!-- Average -->
+  <string name="average_speed_label">Keskinopeus</string>
+  <string name="average_pace_label">Tahti</string>
+
+  <string name="elevation_chart_name">Korkeuskaavio</string>
+  <string name="elevation_gain_label">Nousu</string>
+  <string name="elevation_label">Korkeus</string>
+  <string name="latitude_label">Leveysaste</string>
+  <string name="longitude_label">Pituuspiiri</string>
+
+  <!-- Min -->
+  <string name="min_elevation_label">Min Korkeus</string>
+  <string name="min_grade_label">Min Kaltevuus</string>
+  <string name="min_pace_label">Min Tahti</string>
+
+  <!-- Max -->
+  <string name="max_elevation_label">Max Korkeus</string>
+  <string name="max_grade_label">Max Kaltevuus</string>
+  <string name="max_speed_label">Max Nopeus</string>
+
+  <string name="loading_track">Ladataan reittiä...</string>
+
+  <!-- Chart Settings -->
+  <string name="chart_settings">Kaavion asetukset</string>
+  <!-- X Axis -->
+  <string name="x_axis">X-akseli</string>
+  <string name="by_distance">Etäisyyden mukaan</string>
+  <string name="by_time">Ajan mukaan</string>
+
+  <!-- Y Axis -->
+  <string name="y_axis">Y-akseli</string>
+
+  <!-- Units -->
+  <!-- Time  -->
+  <string name="hour">tunti</string>
+  <string name="hours">tuntia</string>
+  <string name="hr">h</string>
+  <string name="min">min</string>
+  <string name="minute">minuutti</string>
+  <string name="minutes">minuuttia</string>
+  <string name="second">sekunti</string>
+  <string name="seconds">sekuntia</string>
+  <string name="milliseconds">ms</string>
+
+  <!-- Distance -->
+  <string name="meter">m</string>
+  <string name="kilometer">km</string>
+  <string name="kilometers_long">kilometriä</string>
+  <string name="feet">ft</string>
+  <string name="mile">mi</string>
+  <string name="miles_long">mailia</string>
+
+  <!-- Speed and Pace -->
+  <string name="kilometer_per_hour">km/h</string>
+  <string name="kilometer_per_hour_long">kilometriä tunnissa</string>
+  <string name="min_per_kilometer">min/km</string>
+  <string name="per_kilometer">per kilometri</string>
+  <string name="mile_per_hour">mi/h</string>
+  <string name="mile_per_hour_long">mailia tunnissa</string>
+  <string name="min_per_mile">min/mi</string>
+  <string name="per_mile">per maili</string>
+
+  <!-- Sensors -->
+  <string name="watts">W</string>
+  <string name="revolutions_per_minute">rpm</string>
+  <string name="bpm">bpm</string>
+  <string name="battery_level">Akku</string>
+
+  <!-- Stats Labels -->
+  <string name="moving_time_label">Liikkumisaika</string>
+  <string name="total_time_label">Kokonaisaika</string>
+  <string name="time_label">Aika</string>
+  <string name="sd_unavail">Muistikortti ei ole käytettävissä</string>
+  <string name="speed">Nopeus</string>
+  <string name="start_trip">Sinun pitää ensin aloittaa matka.</string>
+  <string name="statistics">Tilastot</string>
+  <string name="total_distance_label">Kokonaismatka</string>
+  <string name="distance_label">Matka</string>
+  <string name="power">Teho</string>
+  <string name="cadence">Kadenssi</string>
+  <string name="heart_rate">Syke</string>
+  <string name="max_heart_rate">Maksimisyke</string>
+  <string name="unknown">-</string>
+  <string name="waiting">Odotetaan...</string>
+
+  <!-- End User License Agreement -->
+  <string name="eula_title">End User License Agreement</string>
+  <string name="accept">Hyväksy</string>
+  <string name="decline">Hylkää</string>
+
+  <!-- About -->
+  <string name="about">Tietoja</string>
+  <string name="help">Apua</string>
+  <string name="about_team">Tiimi:</string>
+  <string name="about_version">Version:</string>
+  <string name="about_support">Tuki:</string>
+  <string name="about_privacy">Yksityisyys:</string>
+
+  <!-- Send to Google -->
+  <string name="sendtogoogle_title">Lähetä...</string>
+  <string name="sendtogoogle_google_fusiontables">Google Fusion Tables</string>
+  <string name="sendtogoogle_google_mymaps">Google My Maps</string>
+  <string name="sendtogoogle_google_docs">Google Docs</string>
+  <string name="sendtogoogle_send_now">Lähetä</string>
+  <string name="sendtogoogle_create_new_map">Luo uusi kartta</string>
+  <string name="sendtogoogle_pick_existing_map">Valitse kartta</string>
+  <string name="sendtogoogle_send_stats">Lähetä reitin statistiikka</string>
+  <string name="sendtogoogle_send_stats_and_points">Lähetä reitin statistiikka ja pisteet</string>
+
+  <!-- Getting the account to upload to. -->
+  <string name="no_account_found_title">Tiliä ei löytynyt</string>
+  <string name="no_account_found">Tiliä johon reitin voisi lähettää ei löytynyt.</string>
+  <string name="choose_account_title">Valitse tili</string>
+
+  <!-- SD card -->
+  <string name="io_no_external_storage_found">Ulkoista tallennusmediaa ei löytynyt. Varmista että SD-kortti on kytketty eikä puhelinta ole liitetty tietokoneeseen.</string>
+  <string name="io_write_failed">Kirjoitusvirhe.</string>
+  <string name="io_read_failed">Lukuvirhe.</string>
+  <string name="io_create_dir_failed">Hakemistoa ei voitu luoda SD-kortille.</string>
+  <string name="io_write_finished">SD-kortille kirjoitus valmis.</string>
+  <string name="io_read_finished">SD-kortin luku valmis.</string>
+
+  <!-- VersionChecker -->
+  <string name="version_check_title">Tarkista päivitykset</string>
+  <string name="version_check_upgrade_button">Päivitä</string>
+  <string name="version_check_continue_button">Ohita päivitys</string>
+  <string name="upgrade_required">Käytössäsi oleva versio ohjelmasta %1$s saattaa lakata toimimasta eikä ole enää tuettu. Päivitä jatkaaksesi %1$s käyttöä.</string>
+  <string name="upgrade_recommended">Käytössäsi oleva versio ohjelmasta %1$s saattaa lakata toimimasta. Voit päivittää sen nyt tai jatkaa käyttöä omalla riskillä. Tietyt ominaisuudet, kuten synkronointi serverin kanssa, ei välttämättä toimi ennen päivitystä.</string>
+  <string name="upgrade_available">%1$s uusi versio saatavilla. Voit jatkaa nykyisen version käyttöä tai päivitää uuteen versioon.</string>
+
+  <!-- Welcome -->
+  <string name="welcome">Tervetuloa</string>
+  <string name="welcome_read_later">Ok</string>
+  <string name="welcome_about">Tietoa My Tracksista</string>
+
+  <!-- Announcement -->
+  <string name="announce_no_distance">My Tracks ei etäisyyttä</string>
+  <!-- Format:
+  $1 : Distance label
+  $2 : Distance value (5)
+  $3 : Distance units (mi, km)
+  $4 : Time description (10 minutes 5 seconds)
+  $5 : Speed value (5.6) : Pace value (5 minutes 6 seconds)
+  $6 : Speed units (mph) : Pace units (per mile)
+  -->
+  <string name="announce_template">My Tracks %1$s %2$.2f %3$s ajassa %4$s nopeudella %5$s %6$s</string>
+
+  <!-- Check Units -->
+  <string name="check_units_title">Huomautus mittayksiköistä</string>
+  <string name="check_units_message">Oletuksena käytössä on metrijärjestelmä. Haluatko muuttaa asetuksen?</string>
+
+  <!-- Fake preference keys - never saved, but show options in the preferences screen -->
+  <string name="method_bluetooth">Bluetooth</string>
+  <string name="bluetooth_options">Bluetooth asetukset</string>
+  <string name="bluetooth_pairing">Laiteparit</string>
+  <string name="bluetooth_pairing_summary">Avaa Androidin bluetooth-asetukset luodaksesi laitepareja</string>
+  <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
+  <string name="ant_options">ANT asetukset</string>
+  <string name="sensor_options">Sensorien asetukset</string>
+
+  <!-- Bluetooth Sensor -->
+  <string name="bluetooth_connected">Yhdistetty %s</string>
+  <string name="bluetooth_connecting">Yhdistetään bluetooth sensoria ...</string>
+  <string name="bluetooth_not_connected">Bluetooth sensoria ei ole yhdistetty</string>
+
+  <!-- Sensor State -->
+  <string name="sensor_data_time">Sensorin data-aika</string>
+  <string name="power_meter_enabled">Tehomittari käytössä</string>
+  <string name="heart_rate_monitor_enabled">Sykemittari käytössä</string>
+  <string name="no_sensor_manager">Ei sensorihallintaa</string>
+  <string name="enabled">Käytössä</string>
+  <string name="connecting">Yhdistetään</string>
+  <string name="connected">Yhdistetty</string>
+  <string name="disconnected">Katkaistu</string>
+  <string name="no_sensor_service">Ei sensoripalvelua</string>
+  <string name="searching">Etsitään</string>
+  <string name="sending">Lähetetään</string>
+
+  <string name="no_sensor_option">Ei sensoria</string>
+  <string name="ant_sensor_option">ANT+ -sensori</string>
+  <string name="ant_bridge_sensor_option">SRM ANT+ -silta</string>
+  <string name="polar_bt_sensor_option">Polar bluetooth</string>
+  <string name="zephyr_bt_sensor_option">Zephyr bluetooth</string>
+
+  <!-- Manifest description (not seen inside the app) -->
+  <string name="notification_permission_label">vastaanota huomautuksia reitin tallentamisesta</string>
+  <string name="read_tracks_permission_label">lue tallennettua reittidataa</string>
+  <string name="write_tracks_permission_label">kirjoita tallennettua reittidataa, aloita/pysäytä reitin tallennus</string>
+  <string name="notification_permission_description">Huomauta kun reitin tallennus aloitetaan tai pysäytetään..</string>
+  <string name="read_tracks_permission_description">Mahdollista reittidatan lukeminen, kuten reittipisteet, merkinnät jne.</string>
+  <string name="write_tracks_permission_description">Mahdollista reittidatan kirjoittaminen, kuten tallennuksen aloittaminen, merkintöjen lisääminen jne.</string>
+</resources>
