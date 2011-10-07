@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtilsFactory;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.stats.TripStatistics;
@@ -119,7 +119,7 @@ public class WaypointDetails extends Activity
   }
 
   private void fillDialog() {
-    waypoint = MyTracksProviderUtils.Factory.get(this).getWaypoint(waypointId);
+    waypoint = MyTracksProviderUtilsFactory.get(this).getWaypoint(waypointId);
     if (waypoint != null) {
       name.setText(waypoint.getName());
       ImageView icon = (ImageView) findViewById(R.id.waypointdetails_icon);
@@ -156,7 +156,7 @@ public class WaypointDetails extends Activity
       values.put(WaypointsColumns.CATEGORY, category.getText().toString());
     }
     getContentResolver().update(
-        WaypointsColumns.CONTENT_URI,
+        WaypointsColumns.DATABASE_CONTENT_URI,
         values,
         "_id = " + waypointId,
         null /*selectionArgs*/);

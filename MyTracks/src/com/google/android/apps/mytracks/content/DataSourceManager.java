@@ -211,14 +211,15 @@ class DataSourceManager {
         break;
       case POINT_UPDATES:
         dataSources.registerContentObserver(
-            TrackPointsColumns.CONTENT_URI, false, pointObserver);
+            TrackPointsColumns.DATABASE_CONTENT_URI, false, pointObserver);
         break;
       case TRACK_UPDATES:
-        dataSources.registerContentObserver(TracksColumns.CONTENT_URI, false, trackObserver);
+        dataSources.registerContentObserver(
+            TracksColumns.DATABASE_CONTENT_URI, false, trackObserver);
         break;
       case WAYPOINT_UPDATES:
         dataSources.registerContentObserver(
-            WaypointsColumns.CONTENT_URI, false, waypointObserver);
+            WaypointsColumns.DATABASE_CONTENT_URI, false, waypointObserver);
         break;
       case DISPLAY_PREFERENCES:
         dataSources.registerOnSharedPreferenceChangeListener(preferenceListener);

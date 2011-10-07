@@ -18,7 +18,7 @@ package com.google.android.apps.mytracks.maps;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtilsFactory;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.maps.mytracks.R;
@@ -104,7 +104,7 @@ public class DynamicSpeedTrackPathDescriptor
       // Could not find track. 
       return false; 
     }
-    Track track = MyTracksProviderUtils.Factory.get(context).getTrack(currentTrackId);
+    Track track = MyTracksProviderUtilsFactory.get(context).getTrack(currentTrackId);
     TripStatistics stats = track.getStatistics();
     double newaverageSpeed = (int) Math.floor(stats.getAverageMovingSpeed() * 3.6);
     

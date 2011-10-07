@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtilsFactory;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
@@ -134,7 +135,7 @@ public class WaypointsList extends ListActivity
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    providerUtils = MyTracksProviderUtils.Factory.get(this);
+    providerUtils = MyTracksProviderUtilsFactory.get(this);
     serviceConnection = new TrackRecordingServiceConnection(this, null);
 
     // We don't need a window title bar:
@@ -174,10 +175,10 @@ public class WaypointsList extends ListActivity
     }
 
     final long firstWaypointId = providerUtils.getFirstWaypointId(trackId);
+    String selection = WaypointsColumns.TRACKID + "=" + trackId + " AND " + WaypointsColumns._ID
+        + "!=" + firstWaypointId;
     waypointsCursor = getContentResolver().query(
-        WaypointsColumns.CONTENT_URI, null,
-        WaypointsColumns.TRACKID + "=" + trackId + " AND "
-        + WaypointsColumns._ID + "!=" + firstWaypointId, null, null);
+        WaypointsColumns.DATABASE_CONTENT_URI, null, selection, null, null);
     startManagingCursor(waypointsCursor);
     setListAdapter();
   }

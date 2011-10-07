@@ -34,6 +34,12 @@ limitations under the License.
               android:readPermission="com.google.android.apps.mytracks.READ_TRACK_DATA"
               android:writePermission="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
 
+    <provider android:name="com.google.android.apps.mytracks.content.DatabaseProvider"
+              android:authorities="com.google.android.apps.mytracks.content"
+              android:exported="false"
+              android:readPermission="com.google.android.apps.mytracks.READ_TRACK_DATA"
+              android:writePermission="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
+              
     <activity android:name="com.google.android.apps.mytracks.MyTracks"
               android:label="My Tracks"
               android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|fontScale">

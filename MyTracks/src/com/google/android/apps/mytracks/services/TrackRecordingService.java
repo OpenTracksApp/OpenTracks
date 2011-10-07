@@ -235,6 +235,11 @@ public class TrackRecordingService extends Service {
   public void onCreate() {
     super.onCreate();
     Log.d(TAG, "TrackRecordingService.onCreate");
+    
+    /*
+     * Use the MyTracksProviderUtils that access the MyTracksProvider because
+     * this service can be called by MyTracks or another app.
+     */
     providerUtils = MyTracksProviderUtils.Factory.get(this);
     notificationManager =
         (NotificationManager) getSystemService(NOTIFICATION_SERVICE);

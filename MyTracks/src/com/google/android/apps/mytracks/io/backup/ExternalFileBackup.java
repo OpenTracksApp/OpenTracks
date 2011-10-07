@@ -177,7 +177,7 @@ class ExternalFileBackup {
       // Dump the entire contents of each table
       ContentResolver contentResolver = context.getContentResolver();
       Cursor tracksCursor = contentResolver.query(
-          TracksColumns.CONTENT_URI, null, null, null, null);
+          TracksColumns.DATABASE_CONTENT_URI, null, null, null, null);
       try {
         trackDumper.writeAllRows(tracksCursor, outWriter);
       } finally {
@@ -185,7 +185,7 @@ class ExternalFileBackup {
       }
 
       Cursor waypointsCursor = contentResolver.query(
-          WaypointsColumns.CONTENT_URI, null, null, null, null);
+          WaypointsColumns.DATABASE_CONTENT_URI, null, null, null, null);
       try {
         waypointDumper.writeAllRows(waypointsCursor, outWriter);
       } finally {
@@ -193,7 +193,7 @@ class ExternalFileBackup {
       }
 
       Cursor pointsCursor = contentResolver.query(
-          TrackPointsColumns.CONTENT_URI, null, null, null, null);
+          TrackPointsColumns.DATABASE_CONTENT_URI, null, null, null, null);
       try {
         pointDumper.writeAllRows(pointsCursor, outWriter);
       } finally {
@@ -227,12 +227,12 @@ class ExternalFileBackup {
 
     PreferenceBackupHelper preferencesHelper = new PreferenceBackupHelper();
     ContentResolver resolver = context.getContentResolver();
-    DatabaseImporter trackImporter =
-        new DatabaseImporter(TracksColumns.CONTENT_URI, resolver, false);
-    DatabaseImporter waypointImporter =
-        new DatabaseImporter(WaypointsColumns.CONTENT_URI, resolver, false);
-    DatabaseImporter pointImporter =
-        new DatabaseImporter(TrackPointsColumns.CONTENT_URI, resolver, false);
+    DatabaseImporter trackImporter = new DatabaseImporter(
+        TracksColumns.DATABASE_CONTENT_URI, resolver, false);
+    DatabaseImporter waypointImporter = new DatabaseImporter(
+        WaypointsColumns.DATABASE_CONTENT_URI, resolver, false);
+    DatabaseImporter pointImporter = new DatabaseImporter(
+        TrackPointsColumns.DATABASE_CONTENT_URI, resolver, false);
 
     ZipFile zipFile = new ZipFile(inputFile, ZipFile.OPEN_READ);
     ZipEntry zipEntry = zipFile.getEntry(ZIP_ENTRY_NAME);
@@ -245,9 +245,9 @@ class ExternalFileBackup {
 
     try {
       // Delete all previous contents of the tables and preferences.
-      resolver.delete(TracksColumns.CONTENT_URI, null, null);
-      resolver.delete(TrackPointsColumns.CONTENT_URI, null, null);
-      resolver.delete(WaypointsColumns.CONTENT_URI, null, null);
+      resolver.delete(TracksColumns.DATABASE_CONTENT_URI, null, null);
+      resolver.delete(TrackPointsColumns.DATABASE_CONTENT_URI, null, null);
+      resolver.delete(WaypointsColumns.DATABASE_CONTENT_URI, null, null);
 
       // Import the new contents of each table
       trackImporter.importAllRows(reader);

@@ -25,8 +25,14 @@ import android.provider.BaseColumns;
  * @author Leif Hendrik Wilden
  */
 public interface TrackPointsColumns extends BaseColumns {
-  public static final Uri CONTENT_URI =
-      Uri.parse("content://com.google.android.maps.mytracks/trackpoints");
+
+  // MyTracks content provider URI for the track points table.
+  public static final Uri CONTENT_URI = Uri.parse(
+      "content://" + MyTracksProviderUtils.AUTHORITY + "/trackpoints");
+  
+  // Database content provider URI for the track points table.
+  public static final Uri DATABASE_CONTENT_URI = Uri.parse(
+      "content://" + MyTracksProviderUtils.DATABASE_AUTHORITY + "/trackpoints");
   public static final String CONTENT_TYPE =
       "vnd.android.cursor.dir/vnd.google.trackpoint";
   public static final String CONTENT_ITEMTYPE =

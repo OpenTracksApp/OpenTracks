@@ -15,6 +15,7 @@
  */
 package com.google.android.apps.mytracks;
 
+import com.google.android.apps.mytracks.content.MyTracksProviderUtilsFactory;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.file.TrackWriter;
@@ -148,8 +149,7 @@ public class ExportAllTracks {
     // Get a cursor over all tracks.
     Cursor cursor = null;
     try {
-      MyTracksProviderUtils providerUtils =
-          MyTracksProviderUtils.Factory.get(activity);
+      MyTracksProviderUtils providerUtils = MyTracksProviderUtilsFactory.get(activity);
       cursor = providerUtils.getTracksCursor("");
       if (cursor == null) {
         return;

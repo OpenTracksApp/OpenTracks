@@ -26,8 +26,13 @@ import android.provider.BaseColumns;
  */
 public interface WaypointsColumns extends BaseColumns {
 
-  public static final Uri CONTENT_URI =
-      Uri.parse("content://com.google.android.maps.mytracks/waypoints");
+  // MyTracks content provider URI for the waypoints table.
+  public static final Uri CONTENT_URI = Uri.parse(
+      "content://" + MyTracksProviderUtils.AUTHORITY + "/waypoints");
+
+  // Database content provider URI for the waypoints table.
+  public static final Uri DATABASE_CONTENT_URI = Uri.parse(
+      "content://" + MyTracksProviderUtils.DATABASE_AUTHORITY + "/waypoints");
   public static final String CONTENT_TYPE =
       "vnd.android.cursor.dir/vnd.google.waypoint";
   public static final String CONTENT_ITEMTYPE =

@@ -4,9 +4,10 @@ package com.google.android.apps.mytracks.io.file;
 
 import static org.easymock.EasyMock.expect;
 
-import com.google.android.apps.mytracks.content.MyTracksProvider;
+import com.google.android.apps.mytracks.content.DatabaseProvider;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtilsFactory;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceTest.MockContext;
@@ -140,11 +141,11 @@ public class TrackWriterTest extends AndroidTestCase {
     RenamingDelegatingContext targetContext = new RenamingDelegatingContext(
         getContext(), getContext(), "test.");
     Context context = new MockContext(mockContentResolver, targetContext);
-    MyTracksProvider provider = new MyTracksProvider();
+    DatabaseProvider provider = new DatabaseProvider();
     provider.attachInfo(context, null);
-    mockContentResolver.addProvider(MyTracksProviderUtils.AUTHORITY, provider);
+    mockContentResolver.addProvider(MyTracksProviderUtils.DATABASE_AUTHORITY, provider);
     setContext(context);
-    providerUtils = MyTracksProviderUtils.Factory.get(context);
+    providerUtils = MyTracksProviderUtilsFactory.get(context);
     oldProviderUtilsFactory = TestingProviderUtilsFactory.installWithInstance(providerUtils);
 
     mocksControl = EasyMock.createStrictControl();

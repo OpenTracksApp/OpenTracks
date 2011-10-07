@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtilsFactory;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.UriUtils;
@@ -53,13 +54,13 @@ public class DeleteTrack extends Activity
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    providerUtils = MyTracksProviderUtils.Factory.get(this);
+    providerUtils = MyTracksProviderUtilsFactory.get(this);
 
     Intent intent = getIntent();
     String action = intent.getAction();
     Uri data = intent.getData();
-    if (!Intent.ACTION_DELETE.equals(action) ||
-        !UriUtils.matchesContentUri(data, TracksColumns.CONTENT_URI)) {
+    if (!Intent.ACTION_DELETE.equals(action)
+        || !UriUtils.matchesContentUri(data, TracksColumns.DATABASE_CONTENT_URI)) {
       Log.e(TAG, "Got bad delete intent: " + intent);
       finish();
     }

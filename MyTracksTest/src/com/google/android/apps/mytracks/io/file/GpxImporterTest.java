@@ -19,10 +19,9 @@ import static com.google.android.testing.mocking.AndroidMock.eq;
 import static com.google.android.testing.mocking.AndroidMock.expect;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
-import com.google.android.apps.mytracks.io.file.GpxImporter;
 import com.google.android.apps.mytracks.testing.TestingProviderUtilsFactory;
 import com.google.android.testing.mocking.AndroidMock;
 import com.google.android.testing.mocking.UsesMocks;
@@ -106,7 +105,7 @@ public class GpxImporterTest extends AndroidTestCase {
   private static final long TRACK_POINT_ID_2 = 2;
 
   private static final Uri TRACK_ID_URI = ContentUris.appendId(
-      TracksColumns.CONTENT_URI.buildUpon(), TRACK_ID).build();
+      TracksColumns.DATABASE_CONTENT_URI.buildUpon(), TRACK_ID).build();
 
   private MyTracksProviderUtils providerUtils;
 

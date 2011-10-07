@@ -189,7 +189,7 @@ public class TrackList extends ListActivity
         return true;
       case Constants.MENU_DELETE: {
         Intent intent = new Intent(Intent.ACTION_DELETE);
-        Uri uri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId);
+        Uri uri = ContentUris.withAppendedId(TracksColumns.DATABASE_CONTENT_URI, trackId);
         intent.setDataAndType(uri, TracksColumns.CONTENT_ITEMTYPE);
         startActivity(intent);
         return true;
@@ -251,7 +251,7 @@ public class TrackList extends ListActivity
         preferences.getLong(getString(R.string.recording_track_key), -1);
 
     tracksCursor = getContentResolver().query(
-        TracksColumns.CONTENT_URI, null, null, null, "_id DESC");
+        TracksColumns.DATABASE_CONTENT_URI, null, null, null, "_id DESC");
     startManagingCursor(tracksCursor);
     setListAdapter();
   }

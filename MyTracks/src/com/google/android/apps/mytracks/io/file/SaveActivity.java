@@ -19,6 +19,7 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtilsFactory;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.util.FileUtils;
@@ -63,7 +64,7 @@ public class SaveActivity extends Activity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    providerUtils = MyTracksProviderUtils.Factory.get(this);
+    providerUtils = MyTracksProviderUtilsFactory.get(this);
   }
 
   @Override
@@ -74,9 +75,9 @@ public class SaveActivity extends Activity {
     String action = intent.getAction();
     String type = intent.getType();
     Uri data = intent.getData();
-    if (!getString(R.string.save_intent_action).equals(action) ||
-        !TracksColumns.CONTENT_ITEMTYPE.equals(type) ||
-        !UriUtils.matchesContentUri(data, TracksColumns.CONTENT_URI)) {
+    if (!getString(R.string.save_intent_action).equals(action)
+        || !TracksColumns.CONTENT_ITEMTYPE.equals(type)
+        || !UriUtils.matchesContentUri(data, TracksColumns.DATABASE_CONTENT_URI)) {
       Log.e(TAG, "Got bad save intent: " + intent);
       finish();
       return;
@@ -224,7 +225,7 @@ public class SaveActivity extends Activity {
         shareFile = true;
     }
 
-    Uri uri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId);
+    Uri uri = ContentUris.withAppendedId(TracksColumns.DATABASE_CONTENT_URI, trackId);
 
     Intent intent = new Intent(ctx, SaveActivity.class);
     intent.setAction(ctx.getString(R.string.save_intent_action));

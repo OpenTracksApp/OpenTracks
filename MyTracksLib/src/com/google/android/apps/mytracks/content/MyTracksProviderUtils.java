@@ -37,6 +37,13 @@ public interface MyTracksProviderUtils {
   public static final String AUTHORITY = "com.google.android.maps.mytracks";
 
   /**
+   * Authority for the Database content provider. The Database content provider
+   * is configured, through the MyTracks AndroidManifest.xml, to only allow the
+   * MyTracks app access.
+   */
+  public static final String DATABASE_AUTHORITY = "com.google.android.apps.mytracks.content";
+
+  /**
    * Deletes all tracks (including track points) from the provider.
    */
   void deleteAllTracks();
@@ -437,7 +444,7 @@ public interface MyTracksProviderUtils {
      * Creates an instance of {@link MyTracksProviderUtils}.
      */
     protected MyTracksProviderUtils newForContext(Context context) {
-      return new MyTracksProviderUtilsImpl(context.getContentResolver());
+      return new MyTracksProviderUtilsImpl(context.getContentResolver(), AUTHORITY);
     }
   }
 }

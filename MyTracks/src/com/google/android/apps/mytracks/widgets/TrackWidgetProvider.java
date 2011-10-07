@@ -21,6 +21,7 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.MyTracks;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtilsFactory;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.services.ControlRecordingService;
@@ -91,7 +92,7 @@ public class TrackWidgetProvider
     }
     this.context = context;
     trackObserver = new TrackObserver();
-    providerUtils = MyTracksProviderUtils.Factory.get(context);
+    providerUtils = MyTracksProviderUtilsFactory.get(context);
     unknown = context.getString(R.string.unknown);
 
     sharedPreferences = context.getSharedPreferences(SETTINGS_NAME, 0);
@@ -99,7 +100,7 @@ public class TrackWidgetProvider
     onSharedPreferenceChanged(sharedPreferences, null);
 
     context.getContentResolver().registerContentObserver(
-        TracksColumns.CONTENT_URI, true, trackObserver);
+        TracksColumns.DATABASE_CONTENT_URI, true, trackObserver);
     TRACK_STARTED_ACTION = context.getString(R.string.track_started_broadcast_action);
     TRACK_STOPPED_ACTION = context.getString(R.string.track_stopped_broadcast_action);
   }

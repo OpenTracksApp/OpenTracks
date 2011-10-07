@@ -142,7 +142,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     expect(providerUtils.getTrack(TRACK_ID)).andStubReturn(track);
     expectStart();
     dataSources.registerContentObserver(
-        eq(TracksColumns.CONTENT_URI), eq(false), capture(observerCapture));
+        eq(TracksColumns.DATABASE_CONTENT_URI), eq(false), capture(observerCapture));
 
     // Expect the initial loading.
     // Both listeners (registered before and after start) should get the same data.
@@ -322,7 +322,7 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     expectStart();
     dataSources.registerContentObserver(
-        eq(WaypointsColumns.CONTENT_URI), eq(false), capture(observerCapture));
+        eq(WaypointsColumns.DATABASE_CONTENT_URI), eq(false), capture(observerCapture));
 
     // Expect the initial loading.
     // Both listeners (registered before and after start) should get the same data.
@@ -415,7 +415,7 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     expectStart();
     dataSources.registerContentObserver(
-        eq(TrackPointsColumns.CONTENT_URI), eq(false), capture(observerCapture));
+        eq(TrackPointsColumns.DATABASE_CONTENT_URI), eq(false), capture(observerCapture));
 
     FixedSizeLocationIterator locationIterator = new FixedSizeLocationIterator(1, 10, 5);
     expect(providerUtils.getLocationIterator(
@@ -502,7 +502,7 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     expectStart();
     dataSources.registerContentObserver(
-        eq(TrackPointsColumns.CONTENT_URI), eq(false), capture(observerCapture));
+        eq(TrackPointsColumns.DATABASE_CONTENT_URI), eq(false), capture(observerCapture));
 
     FixedSizeLocationIterator locationIterator = new FixedSizeLocationIterator(1, 10, 5);
     expect(providerUtils.getLocationIterator(
@@ -533,7 +533,7 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     // Register again, except only points since unregistered.
     dataSources.registerContentObserver(
-        eq(TrackPointsColumns.CONTENT_URI), eq(false), capture(observerCapture));
+        eq(TrackPointsColumns.DATABASE_CONTENT_URI), eq(false), capture(observerCapture));
 
     locationIterator = new FixedSizeLocationIterator(11, 10);
     expect(providerUtils.getLocationIterator(
@@ -574,7 +574,7 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     expectStart();
     dataSources.registerContentObserver(
-        eq(TrackPointsColumns.CONTENT_URI), eq(false), capture(observerCapture));
+        eq(TrackPointsColumns.DATABASE_CONTENT_URI), eq(false), capture(observerCapture));
 
     FixedSizeLocationIterator locationIterator = new FixedSizeLocationIterator(1, 10, 5);
     expect(providerUtils.getLocationIterator(
@@ -605,7 +605,7 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     // Register again after track changed, expect all points.
     dataSources.registerContentObserver(
-        eq(TrackPointsColumns.CONTENT_URI), eq(false), capture(observerCapture));
+        eq(TrackPointsColumns.DATABASE_CONTENT_URI), eq(false), capture(observerCapture));
 
     locationIterator = new FixedSizeLocationIterator(1, 10);
     expect(providerUtils.getLocationIterator(
@@ -632,7 +632,7 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     expectStart();
     dataSources.registerContentObserver(
-        eq(TrackPointsColumns.CONTENT_URI), eq(false), capture(observerCapture));
+        eq(TrackPointsColumns.DATABASE_CONTENT_URI), eq(false), capture(observerCapture));
 
     FixedSizeLocationIterator locationIterator = new FixedSizeLocationIterator(1, 200, 4, 25, 71, 120);
     expect(providerUtils.getLocationIterator(
@@ -665,7 +665,7 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     expectStart();
     dataSources.registerContentObserver(
-        eq(TrackPointsColumns.CONTENT_URI), eq(false), capture(observerCapture));
+        eq(TrackPointsColumns.DATABASE_CONTENT_URI), eq(false), capture(observerCapture));
 
     // Deliver 30 points (no sampling happens)
     FixedSizeLocationIterator locationIterator = new FixedSizeLocationIterator(1, 30, 5);

@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtilsFactory;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.maps.mytracks.R;
@@ -89,7 +89,7 @@ public class TrackDetails extends Activity implements OnClickListener {
   }
 
   private void fillDialog() {
-    Track track = MyTracksProviderUtils.Factory.get(this).getTrack(trackId);
+    Track track = MyTracksProviderUtilsFactory.get(this).getTrack(trackId);
     if (track != null) {
       name.setText(track.getName());
       description.setText(track.getDescription());
@@ -103,7 +103,7 @@ public class TrackDetails extends Activity implements OnClickListener {
     values.put(TracksColumns.DESCRIPTION, description.getText().toString());
     values.put(TracksColumns.CATEGORY, category.getText().toString());
     getContentResolver().update(
-        TracksColumns.CONTENT_URI,
+        TracksColumns.DATABASE_CONTENT_URI,
         values,
         "_id = " + trackId,
         null/*selectionArgs*/);

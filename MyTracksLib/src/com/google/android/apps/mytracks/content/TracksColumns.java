@@ -26,8 +26,13 @@ import android.provider.BaseColumns;
  */
 public interface TracksColumns extends BaseColumns {
 
-  public static final Uri CONTENT_URI =
-      Uri.parse("content://com.google.android.maps.mytracks/tracks");
+  // MyTracks content provider URI for the tracks table.
+  public static final Uri CONTENT_URI = Uri.parse(
+      "content://" + MyTracksProviderUtils.AUTHORITY + "/tracks");
+
+  // Database content provider URI for the tracks table.
+  public static final Uri DATABASE_CONTENT_URI = Uri.parse(
+      "content://" + MyTracksProviderUtils.DATABASE_AUTHORITY + "/tracks");
   public static final String CONTENT_TYPE =
       "vnd.android.cursor.dir/vnd.google.track";
   public static final String CONTENT_ITEMTYPE =

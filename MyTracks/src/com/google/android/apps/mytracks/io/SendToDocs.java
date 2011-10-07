@@ -17,7 +17,7 @@ package com.google.android.apps.mytracks.io;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.ProgressIndicator;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtilsFactory;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.docs.DocsHelper;
 import com.google.android.apps.mytracks.io.gdata.GDataClientFactory;
@@ -102,8 +102,7 @@ public class SendToDocs {
       }
 
       // Get the track from the provider:
-      Track track =
-          MyTracksProviderUtils.Factory.get(activity).getTrack(trackId);
+      Track track = MyTracksProviderUtilsFactory.get(activity).getTrack(trackId);
       if (track == null) {
         Log.w(Constants.TAG, "Cannot get track.");
         return;

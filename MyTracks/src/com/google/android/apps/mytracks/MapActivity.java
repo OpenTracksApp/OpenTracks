@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtilsFactory;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
@@ -317,7 +318,7 @@ public class MapActivity extends com.google.android.maps.MapActivity
    * Zooms and pans the map so that the given waypoint is visible.
    */
   public void showWaypoint(long waypointId) {
-    MyTracksProviderUtils providerUtils = MyTracksProviderUtils.Factory.get(this);
+    MyTracksProviderUtils providerUtils = MyTracksProviderUtilsFactory.get(this);
     Waypoint wpt = providerUtils.getWaypoint(waypointId);
     if (wpt != null && wpt.getLocation() != null) {
       keepMyLocationVisible = false;
@@ -424,7 +425,7 @@ public class MapActivity extends com.google.android.maps.MapActivity
       }
       case Constants.MENU_DELETE: {
         Uri uri = ContentUris.withAppendedId(
-            TracksColumns.CONTENT_URI, dataHub.getSelectedTrackId());
+            TracksColumns.DATABASE_CONTENT_URI, dataHub.getSelectedTrackId());
         Intent intent = new Intent(Intent.ACTION_DELETE, uri);
         startActivity(intent);
         return true;

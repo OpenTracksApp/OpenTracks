@@ -19,6 +19,7 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtilsFactory;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
@@ -144,7 +145,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     tracker.trackPageView("/appstart");
     tracker.dispatch();
 
-    providerUtils = MyTracksProviderUtils.Factory.get(this);
+    providerUtils = MyTracksProviderUtilsFactory.get(this);
     preferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
     dataHub = ((MyTracksApplication) getApplication()).getTrackDataHub();
     menuManager = new MenuManager(this);
@@ -208,7 +209,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     Uri data = intent.getData();
     if ((Intent.ACTION_VIEW.equals(action) || Intent.ACTION_EDIT.equals(action))
         && TracksColumns.CONTENT_ITEMTYPE.equals(intent.getType())
-        && UriUtils.matchesContentUri(data, TracksColumns.CONTENT_URI)) {
+        && UriUtils.matchesContentUri(data, TracksColumns.DATABASE_CONTENT_URI)) {
       long trackId = ContentUris.parseId(data);
       dataHub.loadTrack(trackId);
     }
