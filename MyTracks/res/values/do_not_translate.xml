@@ -53,4 +53,8 @@ limitations under the License.
   <string name="start_new_track_action">com.google.android.apps.mytracks.START_NEW_TRACK</string>
   <string name="end_current_track_action">com.google.android.apps.mytracks.END_CURRENT_TRACK
           </string>
+  
+  <!--  Permissions -->
+  <!-- Permission for MyTracks notifications. -->
+  <string name="mytracks_notifications_permission">com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS</string>
 </resources>

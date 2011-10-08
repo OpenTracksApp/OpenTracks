@@ -524,11 +524,14 @@ limitations under the License.
 
   <!-- Manifest description (not seen inside the app) -->
   <string name="notification_permission_label">receive MyTracks notifications</string>
+  <string name="mytracks_notifications_permission_label">receive MyTracks notifications</string>
   <string name="read_tracks_permission_label">read MyTracks data</string>
   <string name="write_tracks_permission_label">write data to MyTracks and start/stop MyTracks
           recording</string>
   <string name="notification_permission_description">Allows the application to receive notifications
           when MyTracks starts or stops a recording.</string>
+  <string name="mytracks_notifications_permission_description">receive MyTracks notifications
+          </string>
   <string name="read_tracks_permission_description">Allows the application to read MyTracks data.
           </string>
   <string name="write_tracks_permission_description">Allows the application to write data to
