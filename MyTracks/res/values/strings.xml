@@ -240,6 +240,8 @@ limitations under the License.
           MyTracks data, including starting/stopping a recording.</string>
   <string name="settings_share_data_summary_off">MyTracks data is not shared with any installed app.
           </string>
+  <string name="settings_share_data_dialog_message">Are you sure? This will allow any app installed
+          on your phone control and access to MyTracks.</string>
 
   <string name="settings_share_url_only">Share only URL</string>
   <string name="settings_share_url_only_summary_on">Only the URL of the map will be sent when sharing</string>

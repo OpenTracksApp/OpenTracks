@@ -142,6 +142,33 @@ public class SettingsActivity extends PreferenceActivity {
         return true;
       }
     });
+    
+    // Add a confirmation dialog for the share data preference.
+    final CheckBoxPreference shareDataPreference = (CheckBoxPreference) findPreference(
+        getString(R.string.share_data_key));
+    shareDataPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+      @Override
+      public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if ((Boolean) newValue) {
+          AlertDialog dialog = new AlertDialog.Builder(SettingsActivity.this)
+              .setCancelable(true)
+              .setTitle(getString(R.string.settings_share_data))
+              .setMessage(getString(R.string.settings_share_data_dialog_message))
+              .setPositiveButton(android.R.string.ok, new OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int button) {
+                  shareDataPreference.setChecked(true);
+                }
+              })
+              .setNegativeButton(android.R.string.cancel, null)
+              .create();
+          dialog.show();
+          return false;
+        } else {
+          return true;
+        }
+      }
+    });
   }
   
   private boolean processIntent() {
