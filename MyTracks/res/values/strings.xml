@@ -517,12 +517,16 @@ limitations under the License.
   <string name="sending">Sending</string>
 
   <!-- Manifest description (not seen inside the app) -->
-  <string name="notification_permission_label">receive track recording notifications</string>
-  <string name="read_tracks_permission_label">read recorded track data</string>
-  <string name="write_tracks_permission_label">write recorded track data, start/stop recording tracks</string>
-  <string name="notification_permission_description">Be notified when a track starts or stops being recorded.</string>
-  <string name="read_tracks_permission_description">Be able to read track data, such as points and waypoints.</string>
-  <string name="write_tracks_permission_description">Be able to write track data, such as starting recording or adding waypoints.</string>
+  <string name="notification_permission_label">receive MyTracks notifications</string>
+  <string name="read_tracks_permission_label">read MyTracks data</string>
+  <string name="write_tracks_permission_label">write data to MyTracks and start/stop MyTracks
+          recording</string>
+  <string name="notification_permission_description">Allows the application to receive notifications
+          when MyTracks starts or stops a recording.</string>
+  <string name="read_tracks_permission_description">Allows the application to read MyTracks data.
+          </string>
+  <string name="write_tracks_permission_description">Allows the application to write data to
+          MyTracks and start/stop MyTracks recording.</string>
 
   <!-- Sensor Type Options -->
   <string name="no_sensor_option">NONE</string>
