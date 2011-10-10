@@ -405,12 +405,10 @@ public class TrackRecordingServiceTest
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertTrue(service.isRecording());
 
-    try {
-      service.startNewTrack();
-      fail("Expecting IllegalStateException");
-    } catch (IllegalStateException e) {
-      // Expected.
-    }
+    // Starting a new track when there is a recording should just return -1L.
+    long newTrack = service.startNewTrack();
+    assertEquals(-1L, newTrack);
+
     assertEquals(123, sharedPreferences.getLong(
         context.getString(R.string.recording_track_key), 0));
     assertEquals(123, service.getRecordingTrackId());
@@ -452,13 +450,9 @@ public class TrackRecordingServiceTest
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertFalse(service.isRecording());
 
-    // End the current track.
-    try {
-      service.endCurrentTrack();
-      fail("Expecting IllegalStateException");
-    } catch (IllegalStateException e) {
-      // Expected.
-    }
+    // Ending the current track when there is no recording should not result in any error.
+    service.endCurrentTrack();
+
     assertEquals(-1, sharedPreferences.getLong(
         context.getString(R.string.recording_track_key), 0));
     assertEquals(-1, service.getRecordingTrackId());

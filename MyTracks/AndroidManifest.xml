@@ -178,6 +178,9 @@ limitations under the License.
              android:exported="true"
              android:permission="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
 
+    <service android:name="com.google.android.apps.mytracks.services.ControlRecordingService"
+             android:exported="false" />
+             
     <receiver android:name="com.google.android.apps.mytracks.BootReceiver">
       <intent-filter>
         <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -189,7 +192,6 @@ limitations under the License.
         <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
         <action android:name="com.google.android.apps.mytracks.TRACK_STARTED" />
         <action android:name="com.google.android.apps.mytracks.TRACK_STOPPED" />
-        <action android:name="com.google.android.apps.mytracks.TRACK_UPDATED" />
       </intent-filter>
       <meta-data android:name="android.appwidget.provider"
                  android:resource="@xml/track_widget_info" />
@@ -231,7 +233,7 @@ limitations under the License.
               android:permissionGroup="android.permission-group.LOCATION"
               android:label="@string/notification_permission_label"
               android:description="@string/notification_permission_description"
-              android:protectionLevel="normal" />
+              android:protectionLevel="dangerous" />
   <!-- Permission to read raw track data (points, etc.) -->
   <permission android:name="com.google.android.apps.mytracks.READ_TRACK_DATA"
               android:permissionGroup="android.permission-group.LOCATION"
@@ -245,10 +247,17 @@ limitations under the License.
               android:description="@string/write_tracks_permission_description"
               android:protectionLevel="dangerous" />
 
+  <!-- Permission to get MyTracks broadcasts. For internal MyTracks communication. -->
+  <permission android:name="com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS"
+              android:permissionGroup="android.permission-group.LOCATION"
+              android:label="@string/mytracks_notifications_permission_label"
+              android:description="@string/mytracks_notifications_permission_description"
+              android:protectionLevel="signature" />
+
   <!-- We read and write raw track data, obviously. -->
   <uses-permission android:name="com.google.android.apps.mytracks.READ_TRACK_DATA" />
   <uses-permission android:name="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
-  <uses-permission android:name="com.google.android.apps.mytracks.TRACK_NOTIFICATIONS" />
+  <uses-permission android:name="com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS" />
 
   <!-- Features required -->
   <uses-feature android:name="android.hardware.location" android:required="true"/>

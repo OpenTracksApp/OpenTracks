@@ -208,6 +208,15 @@ limitations under the License.
   <string name="settings_not_available_summary">Not available in your version of Android</string>
   <string name="settings_not_while_recording">Not available while recording a track</string>
 
+  <string name="settings_allow_access">Allow access</string>
+  <string name="settings_allow_access_summary_on">Other apps can read, write, start/stop recording
+          MyTracks data.</string>
+  <string name="settings_allow_access_summary_off">Other apps cannot read, write, start/stop
+          recording MyTracks data.</string>
+  <string name="settings_allow_access_dialog_message">Are you sure you want to allow other apps,
+          including future apps, to control and access MyTracks data? There will be no further
+          notification.</string>
+          
   <string name="settings_announcement_frequency">Announcement frequency</string>
   <string name="settings_announcement_frequency_summary">Minimum time between two voice announcements</string>
 
@@ -518,11 +527,14 @@ limitations under the License.
 
   <!-- Manifest description (not seen inside the app) -->
   <string name="notification_permission_label">receive MyTracks notifications</string>
+  <string name="mytracks_notifications_permission_label">receive MyTracks notifications</string>
   <string name="read_tracks_permission_label">read MyTracks data</string>
   <string name="write_tracks_permission_label">write data to MyTracks and start/stop MyTracks
           recording</string>
   <string name="notification_permission_description">Allows the application to receive notifications
           when MyTracks starts or stops a recording.</string>
+  <string name="mytracks_notifications_permission_description">receive MyTracks notifications
+          </string>
   <string name="read_tracks_permission_description">Allows the application to read MyTracks data.
           </string>
   <string name="write_tracks_permission_description">Allows the application to write data to

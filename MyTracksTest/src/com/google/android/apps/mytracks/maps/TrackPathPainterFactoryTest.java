@@ -16,7 +16,6 @@
 package com.google.android.apps.mytracks.maps;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.MockPath;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -57,8 +56,8 @@ public class TrackPathPainterFactoryTest extends TrackPathPainterTestCase {
   
   private <T> void testTrackPathPainterFactorySpecific(Context context, SharedPreferences prefs, 
       int track_color_mode, Class <?> c) {
-    prefs.edit().putString(context.getString(track_color_mode), 
-        context.getString(R.string.track_color_mode_key)).commit();
+    prefs.edit().putString(context.getString(R.string.track_color_mode_key), 
+        context.getString(track_color_mode)).commit();
     
     int startLocationIdx = 0;
     Boolean alwaysVisible = true;
@@ -71,8 +70,6 @@ public class TrackPathPainterFactoryTest extends TrackPathPainterTestCase {
     painter.updatePath(myTracksOverlay.getMapProjection(mockView), 
         myTracksOverlay.getMapViewRect(mockView), startLocationIdx, alwaysVisible,
         myTracksOverlay.getPoints());
-    assertNotNull(myTracksOverlay.getLastPath());
-    assertTrue(myTracksOverlay.getLastPath() instanceof MockPath);
     painter.drawTrack(canvas);
   }
 }

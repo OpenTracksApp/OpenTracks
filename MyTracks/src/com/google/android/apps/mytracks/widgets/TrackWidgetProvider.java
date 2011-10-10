@@ -19,6 +19,16 @@ package com.google.android.apps.mytracks.widgets;
 import static com.google.android.apps.mytracks.Constants.SETTINGS_NAME;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
+import com.google.android.apps.mytracks.MyTracks;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.content.TracksColumns;
+import com.google.android.apps.mytracks.services.ControlRecordingService;
+import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.StringUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
+import com.google.android.maps.mytracks.R;
+
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -31,16 +41,6 @@ import android.database.ContentObserver;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.RemoteViews;
-
-import com.google.android.apps.mytracks.MyTracks;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.TracksColumns;
-import com.google.android.apps.mytracks.services.TrackRecordingService;
-import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.apps.mytracks.util.UnitConversions;
-import com.google.android.maps.mytracks.R;
 
 /**
  * An AppWidgetProvider for displaying key track statistics (distance, time,
@@ -175,14 +175,12 @@ public class TrackWidgetProvider
       // If a new track is started by this appwidget or elsewhere,
       // toggle the button to active and have it disable the track if pressed.
       setButtonIntent(
-          views, context, R.string.end_current_track_action, R.drawable.appwidget_button_enabled,
-          -1);
+          views, context, R.string.end_current_track_action, R.drawable.appwidget_button_enabled);
     } else {
       // If a track is stopped by this appwidget or elsewhere,
       // toggle the button to inactive and have it start a new track if pressed.
       setButtonIntent(
-          views, context, R.string.start_new_track_action, R.drawable.appwidget_button_disabled,
-          R.string.select_new_track_extra);
+          views, context, R.string.start_new_track_action, R.drawable.appwidget_button_disabled);
     }
   }
 
@@ -193,15 +191,11 @@ public class TrackWidgetProvider
    * @param context The widget context
    * @param action The resource id of the action to fire when the button is pressed
    * @param icon The resource id of the icon to show for the button
-   * @param extra Optional resource id of a boolean extra on the intent
    */
   private void setButtonIntent(
-      RemoteViews views, Context context, int action, int icon, int extra) {
-    Intent intent = new Intent(context, TrackRecordingService.class);
+      RemoteViews views, Context context, int action, int icon) {
+    Intent intent = new Intent(context, ControlRecordingService.class);
     intent.setAction(context.getString(action));
-    if (extra != -1) {
-      intent.putExtra(context.getString(extra), true);
-    }
     PendingIntent pendingIntent = PendingIntent.getService(context, 0,
         intent, PendingIntent.FLAG_UPDATE_CURRENT);
     views.setOnClickPendingIntent(R.id.appwidget_button, pendingIntent);

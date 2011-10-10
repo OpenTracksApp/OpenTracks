@@ -209,6 +209,13 @@ limitations under the License.
         android:summaryOn="@string/settings_share_url_only_summary_on"
         android:summaryOff="@string/settings_share_url_only_summary_off"
         android:defaultValue="false" />
+
+    <CheckBoxPreference
+        android:key="@string/allow_access_key"
+        android:title="@string/settings_allow_access"
+        android:summaryOn="@string/settings_allow_access_summary_on"
+        android:summaryOff="@string/settings_allow_access_summary_off"
+        android:defaultValue="false" />
   </PreferenceScreen>
 
   <!-- Backup settings -->

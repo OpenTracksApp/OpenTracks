@@ -142,6 +142,33 @@ public class SettingsActivity extends PreferenceActivity {
         return true;
       }
     });
+    
+    // Add a confirmation dialog for the "Allow access" preference.
+    final CheckBoxPreference allowAccessPreference = (CheckBoxPreference) findPreference(
+        getString(R.string.allow_access_key));
+    allowAccessPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+      @Override
+      public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if ((Boolean) newValue) {
+          AlertDialog dialog = new AlertDialog.Builder(SettingsActivity.this)
+              .setCancelable(true)
+              .setTitle(getString(R.string.settings_allow_access))
+              .setMessage(getString(R.string.settings_allow_access_dialog_message))
+              .setPositiveButton(android.R.string.ok, new OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int button) {
+                  allowAccessPreference.setChecked(true);
+                }
+              })
+              .setNegativeButton(android.R.string.cancel, null)
+              .create();
+          dialog.show();
+          return false;
+        } else {
+          return true;
+        }
+      }
+    });
   }
   
   private boolean processIntent() {
