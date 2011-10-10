@@ -63,6 +63,7 @@ public class TrackPathPainterFactoryTest extends TrackPathPainterTestCase {
     Boolean alwaysVisible = true;
     
     TrackPathPainter painter = TrackPathPainterFactory.getTrackPathPainter(context);
+    myTracksOverlay.setTrackPathPainter(painter);
     
     assertNotNull(painter);
     assertTrue(c.isInstance(painter));
@@ -70,6 +71,7 @@ public class TrackPathPainterFactoryTest extends TrackPathPainterTestCase {
     painter.updatePath(myTracksOverlay.getMapProjection(mockView), 
         myTracksOverlay.getMapViewRect(mockView), startLocationIdx, alwaysVisible,
         myTracksOverlay.getPoints());
+    assertNotNull(myTracksOverlay.getTrackPathPainter().getLastPath());      
     painter.drawTrack(canvas);
   }
 }

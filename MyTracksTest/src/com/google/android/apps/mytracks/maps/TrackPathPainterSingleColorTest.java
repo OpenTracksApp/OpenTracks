@@ -36,6 +36,8 @@ public class TrackPathPainterSingleColorTest extends TrackPathPainterTestCase {
     }
     
     TrackPathPainter painter = new SingleColorTrackPathPainter(getContext());
+    myTracksOverlay.setTrackPathPainter(painter);
+    
     int startLocationIdx = 0;
     Boolean alwaysVisible = true;
     
@@ -43,6 +45,7 @@ public class TrackPathPainterSingleColorTest extends TrackPathPainterTestCase {
     painter.updatePath(myTracksOverlay.getMapProjection(mockView), 
         myTracksOverlay.getMapViewRect(mockView), startLocationIdx, alwaysVisible,
         myTracksOverlay.getPoints());
+    assertNotNull(myTracksOverlay.getTrackPathPainter().getLastPath());
     painter.drawTrack(canvas);
   }
 }

@@ -57,7 +57,7 @@ public class SingleColorTrackPathPainter implements TrackPathPainter {
     final Point pt = new Point();
     // Loop over track points.
     int numPoints = points.size();
-    path = new Path();
+    path = newPath();
     path.incReserve(numPoints);
     
     for (int i = startLocationIdx; i < numPoints ; ++i) {
@@ -103,5 +103,10 @@ public class SingleColorTrackPathPainter implements TrackPathPainter {
   @Override
   public Path getLastPath() {
     return path;
+  }
+  
+  // Visible for testing
+  public Path newPath() {
+    return new Path();
   }
 }

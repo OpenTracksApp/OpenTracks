@@ -16,9 +16,11 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.maps.SingleColorTrackPathPainter;
 import com.google.android.maps.MapView;
 
 import android.graphics.Canvas;
+import android.graphics.Path;
 import android.location.Location;
 import android.test.AndroidTestCase;
 
@@ -38,12 +40,22 @@ public class MapOverlayTest extends AndroidTestCase {
     super.setUp();
     canvas = new Canvas();
     myTracksOverlay = new MockMyTracksOverlay(getContext());
+
     // Enable drawing.
     myTracksOverlay.setTrackDrawingEnabled(true);
+
+    // Set a TrackPathPainter with a MockPath.
+    myTracksOverlay.setTrackPathPainter(new SingleColorTrackPathPainter(getContext()) {
+      @Override
+      public Path newPath() {
+        return new MockPath();
+      }     
+    });
+    
     mockView = null;
   }
   
-  public void testAddLocation() throws Exception {
+  public void testAddLocation() throws Exception {   
     Location location = new Location("gps");
     location.setLatitude(10);
     location.setLongitude(20);
@@ -56,18 +68,21 @@ public class MapOverlayTest extends AndroidTestCase {
     myTracksOverlay.addLocation(location);
     assertEquals(2, myTracksOverlay.getNumLocations());
     assertEquals(0, myTracksOverlay.getNumWaypoints());
-    assertNull(myTracksOverlay.getLastPath());
+    assertNull(myTracksOverlay.getTrackPathPainter().getLastPath());
     
     // Draw and make sure that we don't lose any point.
     myTracksOverlay.draw(canvas, mockView, false);
     assertEquals(2, myTracksOverlay.getNumLocations());
     assertEquals(0, myTracksOverlay.getNumWaypoints());
-    assertNotNull(myTracksOverlay.getLastPath());
+    assertNotNull(myTracksOverlay.getTrackPathPainter().getLastPath());
+    assertTrue(myTracksOverlay.getTrackPathPainter().getLastPath() instanceof MockPath);
+    MockPath path = (MockPath) myTracksOverlay.getTrackPathPainter().getLastPath();
+    assertEquals(2, path.totalPoints);
     
     myTracksOverlay.draw(canvas, mockView, true);
     assertEquals(2, myTracksOverlay.getNumLocations());
     assertEquals(0, myTracksOverlay.getNumWaypoints());
-    assertNotNull(myTracksOverlay.getLastPath());
+    assertNotNull(myTracksOverlay.getTrackPathPainter().getLastPath());
   }
   
   public void testClearPoints() throws Exception {
@@ -100,7 +115,7 @@ public class MapOverlayTest extends AndroidTestCase {
     myTracksOverlay.addWaypoint(waypoint);
     assertEquals(1, myTracksOverlay.getNumWaypoints());
     assertEquals(0, myTracksOverlay.getNumLocations());
-    assertNull(myTracksOverlay.getLastPath());
+    assertNull(myTracksOverlay.getTrackPathPainter().getLastPath());
     
     final int waypoints = 10;
     for (int i = 0; i < waypoints; ++i) {
@@ -110,7 +125,7 @@ public class MapOverlayTest extends AndroidTestCase {
     }
     assertEquals(1 + waypoints, myTracksOverlay.getNumWaypoints());
     assertEquals(0, myTracksOverlay.getNumLocations());
-    assertNull(myTracksOverlay.getLastPath());
+    assertNull(myTracksOverlay.getTrackPathPainter().getLastPath());
   }
 
   public void testClearWaypoints() throws Exception {
@@ -144,15 +159,18 @@ public class MapOverlayTest extends AndroidTestCase {
     // Shadow.
     myTracksOverlay.draw(canvas, mockView, true);
     // We don't expect to do anything if  
-    assertNull(myTracksOverlay.getLastPath());
+    assertNull(myTracksOverlay.getTrackPathPainter().getLastPath());
     assertEquals(40, myTracksOverlay.getNumWaypoints());
     assertEquals(100, myTracksOverlay.getNumLocations());
 
     // No shadow.
     myTracksOverlay.draw(canvas, mockView, false);
-    assertNotNull(myTracksOverlay.getLastPath());
+    assertNotNull(myTracksOverlay.getTrackPathPainter().getLastPath());
+    assertTrue(myTracksOverlay.getTrackPathPainter().getLastPath() instanceof MockPath);
+    MockPath path = (MockPath) myTracksOverlay.getTrackPathPainter().getLastPath();
     assertEquals(40, myTracksOverlay.getNumWaypoints());
     assertEquals(100, myTracksOverlay.getNumLocations());
+    assertEquals(100, path.totalPoints);
     // TODO: Check the points from the path (and the segments).
   }
 }
