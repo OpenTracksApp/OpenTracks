@@ -208,6 +208,15 @@ limitations under the License.
   <string name="settings_not_available_summary">Not available in your version of Android</string>
   <string name="settings_not_while_recording">Not available while recording a track</string>
 
+  <string name="settings_allow_access">Allow access</string>
+  <string name="settings_allow_access_summary_on">Other apps can read, write, start/stop recording
+          MyTracks data.</string>
+  <string name="settings_allow_access_summary_off">Other apps cannot read, write, start/stop
+          recording MyTracks data.</string>
+  <string name="settings_allow_access_dialog_message">Are you sure you want to allow other apps,
+          including future apps, to control and access MyTracks data? There will be no further
+          notification.</string>
+          
   <string name="settings_announcement_frequency">Announcement frequency</string>
   <string name="settings_announcement_frequency_summary">Minimum time between two voice announcements</string>
 
@@ -234,14 +243,6 @@ limitations under the License.
   <string name="settings_report_speed_or_pace">Display speed</string>
   <string name="settings_report_speed_or_pace_summary_on">Speed will be displayed</string>
   <string name="settings_report_speed_or_pace_summary_off">Pace will be displayed</string>
-
-  <string name="settings_share_data">Share data</string>
-  <string name="settings_share_data_summary_on">Other installed apps will be able to read and write
-          MyTracks data, including starting/stopping a recording.</string>
-  <string name="settings_share_data_summary_off">MyTracks data is not shared with any installed app.
-          </string>
-  <string name="settings_share_data_dialog_message">Are you sure? This will allow any app installed
-          on your phone control and access to MyTracks.</string>
 
   <string name="settings_share_url_only">Share only URL</string>
   <string name="settings_share_url_only_summary_on">Only the URL of the map will be sent when sharing</string>

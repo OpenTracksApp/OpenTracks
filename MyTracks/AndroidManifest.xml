@@ -233,7 +233,7 @@ limitations under the License.
               android:permissionGroup="android.permission-group.LOCATION"
               android:label="@string/notification_permission_label"
               android:description="@string/notification_permission_description"
-              android:protectionLevel="normal" />
+              android:protectionLevel="dangerous" />
   <!-- Permission to read raw track data (points, etc.) -->
   <permission android:name="com.google.android.apps.mytracks.READ_TRACK_DATA"
               android:permissionGroup="android.permission-group.LOCATION"

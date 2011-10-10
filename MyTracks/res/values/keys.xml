@@ -15,7 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-  <!-- Keys for application preferences - DO NOT TRANSLATE -->
+  <!-- Keys for application preferences. Sorted alphabetically. - DO NOT TRANSLATE -->
+  <string name="allow_access_key">allowAccess</string>
   <string name="announcement_frequency_key">announcementFrequency</string>
   <string name="ant_heart_rate_sensor_id_key">antHeartRateSensorId</string>
   <string name="ant_power_sensor_id_key">antPowerSensorId</string>
@@ -35,31 +36,34 @@ limitations under the License.
   <string name="report_speed_key">reportSpeed</string>
   <string name="send_stats_and_points_key">sendStatsAndPoints</string>
   <string name="send_to_docs_key">sendToDocs</string>
-  <string name="send_to_my_maps_key">sendToMyMaps</string>
   <string name="send_to_fusion_tables_key">sendToFusionTables</string>
+  <string name="send_to_my_maps_key">sendToMyMaps</string>
   <string name="sensor_type_key">sensorType</string>
-  <string name="share_data_key">shareData</string>
   <string name="share_url_only_key">shareUrlOnly</string>
   <string name="split_frequency_key">splitFrequency</string>
   <string name="timestamp_track_name_key">timestampTrackName</string>
-  <string name="track_color_mode_key">trackColorMode</string>
-  <string name="track_color_mode_fixed_speed_slow_key">trackColorModeFixedSlow</string>
+  <string name="track_color_mode_dynamic_speed_variation_key">trackColorModeDynamicVariation
+          </string>  
+  <string name="track_color_mode_fixed_speed_medium_display_key">trackColorModeFixedMediumDisplay
+          </string>
   <string name="track_color_mode_fixed_speed_medium_key">trackColorModeFixedMedium</string>
-  <string name="track_color_mode_fixed_speed_slow_display_key">trackColorModeFixedSlowDisplay</string>
-  <string name="track_color_mode_fixed_speed_medium_display_key">trackColorModeFixedMediumDisplay</string>
-  <string name="track_color_mode_dynamic_speed_variation_key">trackColorModeDynamicVariation</string>
-  
-  <!-- Preference keys which keep transient state (not user preferences) - DO NOT TRANSLATE -->
+  <string name="track_color_mode_fixed_speed_slow_display_key">trackColorModeFixedSlowDisplay
+          </string>
+  <string name="track_color_mode_fixed_speed_slow_key">trackColorModeFixedSlow</string>
+  <string name="track_color_mode_key">trackColorMode</string>
+    
+  <!-- Preference keys which keep transient state (not user preferences). Sorted alphabetically.
+       - DO NOT TRANSLATE -->
   <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>
   <string name="recording_track_key">recordingTrack</string>
   <string name="selected_track_key">selectedTrack</string>
 
-  <!-- Keys for non-persisted preferences - DO NOT TRANSLATE -->
-  <string name="backup_to_sd_key">backupToSd</string>
-  <string name="restore_from_sd_key">restoreFromSd</string>
-  <string name="reset_key">resetToDefaults</string>
-  <string name="sensor_options_key">sensorOptions</string>
+  <!-- Keys for non-persisted preferences. Sorted alphabetically. - DO NOT TRANSLATE -->
   <string name="ant_options_key">antOptions</string>
+  <string name="backup_to_sd_key">backupToSd</string>
   <string name="display_settings_screen_key">displaySettingsScreen</string>
+  <string name="reset_key">resetToDefaults</string>
+  <string name="restore_from_sd_key">restoreFromSd</string>
+  <string name="sensor_options_key">sensorOptions</string>
   <string name="track_color_mode_fixed_speed_options_key">trackColorModeFixedOptions</string>
 </resources>
