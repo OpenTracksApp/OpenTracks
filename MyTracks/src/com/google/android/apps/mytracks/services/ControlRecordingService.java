@@ -106,6 +106,8 @@ public class ControlRecordingService extends IntentService implements ServiceCon
         Log.d(TAG, "ControlRecordingService onHandleIntent RemoteException", e);
       }
     }
+    unbindService(this);
+    connected = false;
   }
 
   @Override

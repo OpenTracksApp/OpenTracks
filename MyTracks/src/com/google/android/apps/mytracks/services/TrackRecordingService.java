@@ -231,6 +231,13 @@ public class TrackRecordingService extends Service {
    * Application lifetime events:
    */
 
+  /*
+   * Note that this service, through the AndroidManifest.xml, is configured to
+   * allow both MyTracks and third party apps to invoke it. For the onCreate
+   * callback, we cannot tell whether the caller is MyTracks or a third party
+   * app, thus it cannot start/stop a recording or write/update MyTracks
+   * database. However, it can resume a recording.
+   */
   @Override
   public void onCreate() {
     super.onCreate();
@@ -270,24 +277,31 @@ public class TrackRecordingService extends Service {
     showNotification();
   }
 
+  /*
+   * Note that this service, through the AndroidManifest.xml, is configured to
+   * allow both MyTracks and third party apps to invoke it. For the onStart
+   * callback, we cannot tell whether the caller is MyTracks or a third party
+   * app, thus it cannot start/stop a recording or write/update MyTracks
+   * database. However, it can resume a recording.
+   */
   @Override
   public void onStart(Intent intent, int startId) {
     handleStartCommand(intent, startId);
   }
 
+  /*
+   * Note that this service, through the AndroidManifest.xml, is configured to
+   * allow both MyTracks and third party apps to invoke it. For the
+   * onStartCommand callback, we cannot tell whether the caller is MyTracks or a
+   * third party app, thus it cannot start/stop a recording or write/update
+   * MyTracks database. However, it can resume a recording.
+   */
   @Override
   public int onStartCommand(Intent intent, int flags, int startId) {
     handleStartCommand(intent, startId);
     return START_STICKY;
   }
   
-  /**
-   * Handles onStart and onStartCommand. This service, through the
-   * AndroidManifest.xml, is configured to allow both MyTracks and other
-   * applications to invoke it. With only the intent, we cannot tell whether the
-   * caller is MyTracks or another app. Thus when starting the service through
-   * this method, we cannot read/write MyTracks data or start/stop a recording.
-   */
   private void handleStartCommand(Intent intent, int startId) {
     Log.d(TAG, "TrackRecordingService.handleStartCommand: " + startId);
 
@@ -550,7 +564,7 @@ public class TrackRecordingService extends Service {
    * Recording lifecycle.
    */
 
-  public long startNewTrack() {
+  private long startNewTrack() {
     Log.d(TAG, "TrackRecordingService.startNewTrack");
     if (isTrackInProgress()) {
       return -1L;

@@ -263,10 +263,9 @@ public class BluetoothConnectionManager {
     private BluetoothSocket getSocket() throws IOException {
       try {
         Class<? extends BluetoothDevice> c = device.getClass();
-        Method insecure = c.getMethod("createInsecureRfcommSocket",
-            Integer.class);
+        Method insecure = c.getMethod("createInsecureRfcommSocketToServiceRecord", UUID.class);
         insecure.setAccessible(true);
-        return (BluetoothSocket) insecure.invoke(device, 1);
+        return (BluetoothSocket) insecure.invoke(device, SPP_UUID);
       } catch (SecurityException e) {
         Log.e(Constants.TAG, "Unable to get insecure connect.", e);
       } catch (NoSuchMethodException e) {
