@@ -34,6 +34,7 @@ import com.google.wireless.gdata.parser.ParseException;
 import com.google.wireless.gdata2.client.AuthenticationException;
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -44,7 +45,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
-import java.text.DateFormat;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -287,13 +287,16 @@ public class DocsHelper {
     String elevationUnit = context.getString(metricUnits ?
         R.string.meter : R.string.feet);
 
-    DateFormat trackDateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
-
+    java.text.DateFormat dateFormat = DateFormat.getDateFormat(context);
+    java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
+    Date startTime = new Date(stats.getStartTime());
+    String dateString = dateFormat.format(startTime) + " " + timeFormat.format(startTime);
+    
     // Prepare the Post-Text we are going to send.
     DocsTagBuilder tagBuilder = new DocsTagBuilder(metricUnits)
         .append("name", track.getName())
         .append("description", track.getDescription())
-        .append("date", trackDateFormat.format(new Date(stats.getStartTime())))
+        .append("date", dateString)
         .append("totaltime", StringUtils.formatTimeAlwaysShowingHours(
             stats.getTotalTime()))
         .append("movingtime", StringUtils.formatTimeAlwaysShowingHours(

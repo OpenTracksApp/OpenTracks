@@ -17,9 +17,15 @@ package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.apache.ApacheHttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 
+import android.bluetooth.BluetoothDevice;
 import android.os.Build;
 import android.util.Log;
+
+import java.text.DecimalFormatSymbols;
+import java.util.Arrays;
 
 /**
  * Utility class for determining if newer-API features are available on the
@@ -32,7 +38,7 @@ public class ApiFeatures {
   /**
    * The API level of the Android version we're being run under.
    */
-  public static final int ANDROID_API_LEVEL = Integer.parseInt(
+  private static final int ANDROID_API_LEVEL = Integer.parseInt(
       Build.VERSION.SDK);
 
   private static ApiFeatures instance;
@@ -81,38 +87,17 @@ public class ApiFeatures {
     return apiPlatformAdapter;
   }
 
-  /**
-   * Returns whether cloud backup (a.k.a. Froyo backup) is available.
-   */
-  public boolean hasBackup() {
-    return getApiLevel() >= 8;
-  }
-
+  // API Level 4 Changes
+  
   /**
    * Returns whether text-to-speech is available.
    */
   public boolean hasTextToSpeech() {
-    if (getApiLevel() < 4) return false;
-
-    try {
-      Class.forName("android.speech.tts.TextToSpeech");
-    } catch (ClassNotFoundException ex) {
-      return false;
-    } catch (LinkageError er) {
-      return false;
-    }
-
-    return true;
+    return getApiLevel() >= 4;
   }
 
-  public boolean hasStrictMode() {
-    return getApiLevel() >= 9;
-  }
-
-  public boolean isAudioFocusSupported() {
-    return getApiLevel() >= 8;
-  }
-
+  // API Level 5 Changes
+  
   /**
    * There's a bug (#1587) in Cupcake and Donut which prevents you from
    * using a SQLiteQueryBuilder twice.  That is, if you call buildQuery
@@ -122,18 +107,57 @@ public class ApiFeatures {
    * up.  Specifically, it'll add extra parens which don't belong.
    */
   public boolean canReuseSQLiteQueryBuilder() {
-    return getApiLevel() > 4;
+    return getApiLevel() >= 5;
+  }
+  
+  // API Level 8 Changes
+  
+  public boolean isAudioFocusSupported() {
+    return getApiLevel() >= 8;
   }
   
   /**
-   * Returns true if com.google.api.client.javanet.NetHttpTransport should be
-   * used rather than com.google.api.client.apache.ApacheHttpTransport. See
-   * {@link HttpTransport} for more info.
+   * Returns whether cloud backup (a.k.a. Froyo backup) is available.
+   */
+  public boolean hasBackup() {
+    return getApiLevel() >= 8;
+  }
+  
+  // API Level 9 Changes
+
+  /**
+   * Returns true if {@link NetHttpTransport} should be used rather than
+   * {@link ApacheHttpTransport}. See {@link HttpTransport} for more info.
    */
   public boolean useNetHttpTransport() {
     return getApiLevel() >= 9;
   }
+  
+  /**
+   * Returns true if {@link DecimalFormatSymbols#getInstance} is available.
+   */
+  public boolean hasDecimalFormatSymbolsGetInstance() {
+    return getApiLevel() >= 9;
+  }
+  
+  /**
+   * Returns true if {@link Arrays#copyOfRange} is available.
+   */
+  public boolean hasArraysCopyOfRange() {
+    return getApiLevel() >= 9;
+  }
 
+  // API Level 10 changes
+  
+  /**
+   * Returns true if
+   * {@link BluetoothDevice#createInsecureRfcommSocketToServiceRecord} is
+   * available.
+   */
+  public boolean hasBluetoothDeviceCreateInsecureRfcommSocketToServiceRecord() {
+    return getApiLevel() >= 10;
+  }
+  
   // Visible for testing.
   protected int getApiLevel() {
     return ANDROID_API_LEVEL;

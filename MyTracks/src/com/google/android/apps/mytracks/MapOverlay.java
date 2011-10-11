@@ -305,12 +305,12 @@ public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListe
     return new Rect(cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2);
   }
  
-  // Visible for testing
+  // For use in testing only.
   public TrackPathPainter getTrackPathPainter() {
     return trackPathPainter;
   }
   
-  // Visible for testing
+  // For use in testing only.
   public void setTrackPathPainter(TrackPathPainter trackPathPainter) {
     this.trackPathPainter = trackPathPainter;
   }

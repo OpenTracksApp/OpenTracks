@@ -15,6 +15,7 @@
  */
 package com.google.android.apps.mytracks.io.docs;
 
+import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 
@@ -45,8 +46,11 @@ import java.util.Locale;
  * @author Matthew Simmons
  */
 class DocsTagBuilder {
+  
   private static final DecimalFormatSymbols FORMAT_SYMBOLS =
-      DecimalFormatSymbols.getInstance(Locale.ENGLISH);
+      ApiFeatures.getInstance().hasDecimalFormatSymbolsGetInstance() 
+          ? DecimalFormatSymbols.getInstance(Locale.ENGLISH)
+          : new DecimalFormatSymbols(Locale.ENGLISH);
   private static final NumberFormat LARGE_UNIT_FORMAT =
       new DecimalFormat("#,###,###.00", FORMAT_SYMBOLS);
   private static final NumberFormat SMALL_UNIT_FORMAT =
