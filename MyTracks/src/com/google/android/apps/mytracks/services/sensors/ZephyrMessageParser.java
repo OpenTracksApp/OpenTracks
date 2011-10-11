@@ -24,7 +24,7 @@ import java.util.Arrays;
  * An implementation of a Sensor MessageParser for Zephyr.
  *
  * @author Sandor Dornbush
- * @author Dominik R�ttsches
+ * @author Dominik Rttsches
  */
 public class ZephyrMessageParser implements MessageParser {
 
@@ -57,24 +57,13 @@ public class ZephyrMessageParser implements MessageParser {
     return sds.build();
   }
 
-  /**
-   * Copies a byte array. In case Arrays.copyOfRange is not available.
-   */
-  private byte[] copyByteArray(byte[] input, int from, int to) {
-    int length = to - from;
-    byte[] output = new byte[length];
-    System.arraycopy(input, from, output, 0, length);
-    return output;
-  }
-  
   private void setCadence(Sensor.SensorDataSet.Builder sds, byte[] buffer) {
     // Device Firmware ID, Firmware Version, Hardware ID, Hardware Version
     // 0x1A00316550003162 produces erroneous values for Cadence and needs
     // a workaround based on the stride counter.
     // Firmware values range from field 3 to 10 (inclusive) of the byte buffer.
-    byte[] hardwareFirmwareId = ApiFeatures.getInstance().hasArraysCopyOfRange() 
-        ? Arrays.copyOfRange(buffer, 3, 11)
-        : copyByteArray(buffer, 3, 11);    
+    byte[] hardwareFirmwareId = ApiFeatures.getInstance().getApiPlatformAdapter()
+        .copyByteArray(buffer, 3, 11);
     Sensor.SensorData.Builder cadence = Sensor.SensorData.newBuilder();
 
     if (Arrays.equals(hardwareFirmwareId, CADENCE_BUG_FW_ID)) {

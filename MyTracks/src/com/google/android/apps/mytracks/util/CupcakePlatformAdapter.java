@@ -25,6 +25,8 @@ import android.util.Log;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 /**
  * The Cupcake (API level 3) specific implementation of the
@@ -78,5 +80,18 @@ public class CupcakePlatformAdapter implements ApiPlatformAdapter {
   @Override
   public void enableStrictMode() {
     // Not supported
+  }
+  
+  @Override
+  public byte[] copyByteArray(byte[] input, int start, int end) {
+    int length = end - start;
+    byte[] output = new byte[length];
+    System.arraycopy(input, start, output, 0, length);
+    return output;
+  }
+  
+  @Override
+  public DecimalFormatSymbols getDecimalFormatSysmbols(Locale locale) {
+    return new DecimalFormatSymbols(locale);
   }
 }

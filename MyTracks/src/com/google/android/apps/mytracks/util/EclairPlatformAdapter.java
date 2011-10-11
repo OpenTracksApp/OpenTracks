@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.util;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.Service;
-import android.content.SharedPreferences.Editor;
 
 /**
  * The Eclair (API level 5) specific implementation of the
@@ -26,7 +25,7 @@ import android.content.SharedPreferences.Editor;
  * 
  * @author Bartlomiej Niechwiej
  */
-public class EclairPlatformAdapter implements ApiPlatformAdapter {
+public class EclairPlatformAdapter extends CupcakePlatformAdapter {
 
   @Override
   public void startForeground(Service service,
@@ -39,15 +38,5 @@ public class EclairPlatformAdapter implements ApiPlatformAdapter {
   public void stopForeground(Service service,
       NotificationManager notificationManager, int id) {
     service.stopForeground(id != -1);
-  }
-
-  @Override
-  public void applyPreferenceChanges(Editor editor) {
-    editor.commit();
-  }
-
-  @Override
-  public void enableStrictMode() {
-    // Not supported
   }
 }

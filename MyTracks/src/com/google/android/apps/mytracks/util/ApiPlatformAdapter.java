@@ -20,6 +20,9 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.SharedPreferences;
 
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
 /**
  * A set of methods that may be implemented in a platform specific way. 
  *  
@@ -60,4 +63,25 @@ public interface ApiPlatformAdapter {
    * Enables strict mode where supported, only if this is a development build.
    */
   void enableStrictMode();
+  
+  /**
+   * Copies elements from the input byte array into a new byte array, from
+   * indexes start (inclusive) to end (exclusive). The end index must be less
+   * than or equal to input.length.
+   *
+   * @param input the input byte array
+   * @param start the start index
+   * @param end the end index
+   * @return a new array containing elements from the input byte array
+   */
+  byte[] copyByteArray(byte[] input, int start, int end);
+  
+  
+  /**
+   * Gets an instance of {@link DecimalFormatSymbols} for a locale.
+   * 
+   * @param locale the locale
+   * @return a new instance of {@link DecimalFormatSymbols}
+   */
+  DecimalFormatSymbols getDecimalFormatSymbols(Locale locale);
 }

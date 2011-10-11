@@ -6,6 +6,10 @@ import android.content.SharedPreferences.Editor;
 import android.os.StrictMode;
 import android.util.Log;
 
+import java.text.DecimalFormatSymbols;
+import java.util.Arrays;
+import java.util.Locale;
+
 /**
  * The Gingerbread (API level 9) specific implememntation of the
  * {@link ApiPlatformAdapter}.
@@ -13,6 +17,7 @@ import android.util.Log;
  * @author Rodrigo Damazio
  */
 public class GingerbreadPlatformAdapter extends EclairPlatformAdapter {
+  
   @Override
   public void applyPreferenceChanges(Editor editor) {
     // Apply asynchronously
@@ -31,5 +36,15 @@ public class GingerbreadPlatformAdapter extends EclairPlatformAdapter {
         .detectAll()
         .penaltyLog()
         .build());
+  }
+  
+  @Override
+  public byte[] copyByteArray(byte[] input, int start, int end) {
+    return Arrays.copyOfRange(input, start, end);
+  }
+  
+  @Override
+  public DecimalFormatSymbols getDecimalFormatSysmbols(Locale locale) {
+    return DecimalFormatSymbols.getInstance(locale);
   }
 }

@@ -24,9 +24,6 @@ import android.bluetooth.BluetoothDevice;
 import android.os.Build;
 import android.util.Log;
 
-import java.text.DecimalFormatSymbols;
-import java.util.Arrays;
-
 /**
  * Utility class for determining if newer-API features are available on the
  * current device.
@@ -133,20 +130,6 @@ public class ApiFeatures {
     return getApiLevel() >= 9;
   }
   
-  /**
-   * Returns true if {@link DecimalFormatSymbols#getInstance} is available.
-   */
-  public boolean hasDecimalFormatSymbolsGetInstance() {
-    return getApiLevel() >= 9;
-  }
-  
-  /**
-   * Returns true if {@link Arrays#copyOfRange} is available.
-   */
-  public boolean hasArraysCopyOfRange() {
-    return getApiLevel() >= 9;
-  }
-
   // API Level 10 changes
   
   /**
