@@ -33,8 +33,6 @@ limitations under the License.
     <receiver android:name=".RecordingStateReceiver">
       <intent-filter>
         <action android:name="com.google.android.apps.mytracks.TRACK_STARTED" />
-        <action android:name="com.google.android.apps.mytracks.TRACK_PAUSED"  />
-        <action android:name="com.google.android.apps.mytracks.TRACK_RESUMED" />
         <action android:name="com.google.android.apps.mytracks.TRACK_STOPPED" />
       </intent-filter>
     </receiver>
