@@ -1045,8 +1045,9 @@ public class TrackRecordingService extends Service {
   }
 
   private void sendTrackBroadcast(int actionResId, long trackId) {
-    Intent broadcastIntent = new Intent().setAction(getString(actionResId)).putExtra(
-        getString(R.string.track_id_broadcast_extra), trackId);
+    Intent broadcastIntent = new Intent()
+        .setAction(getString(actionResId))
+        .putExtra(getString(R.string.track_id_broadcast_extra), trackId);
     sendBroadcast(broadcastIntent, getString(R.string.mytracks_notifications_permission));
     
     SharedPreferences sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);

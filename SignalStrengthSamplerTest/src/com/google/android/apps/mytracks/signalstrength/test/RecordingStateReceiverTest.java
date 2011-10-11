@@ -71,21 +71,9 @@ public class RecordingStateReceiverTest extends AndroidTestCase {
     assertServiceCalls(1, 0);
   }
 
-  public void testOnReceive_resume() {
-    receiver.onReceive(context,
-        new Intent(context.getString(R.string.track_resumed_broadcast_action)));
-    assertServiceCalls(1, 0);
-  }
-
   public void testOnReceive_stop() {
     receiver.onReceive(context,
         new Intent(context.getString(R.string.track_stopped_broadcast_action)));
-    assertServiceCalls(0, 1);
-  }
-
-  public void testOnReceive_pause() {
-    receiver.onReceive(context,
-        new Intent(context.getString(R.string.track_paused_broadcast_action)));
     assertServiceCalls(0, 1);
   }
 
