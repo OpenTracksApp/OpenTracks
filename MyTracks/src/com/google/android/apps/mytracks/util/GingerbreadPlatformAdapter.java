@@ -44,7 +44,7 @@ public class GingerbreadPlatformAdapter extends EclairPlatformAdapter {
   }
   
   @Override
-  public DecimalFormatSymbols getDecimalFormatSysmbols(Locale locale) {
+  public DecimalFormatSymbols getDecimalFormatSymbols(Locale locale) {
     return DecimalFormatSymbols.getInstance(locale);
   }
 }

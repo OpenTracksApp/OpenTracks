@@ -48,7 +48,7 @@ import java.util.Locale;
 class DocsTagBuilder {
   
   private static final DecimalFormatSymbols FORMAT_SYMBOLS =
-      ApiFeatures.getInstance().getApiPlatformAdapter().getDecimalFormatSysmbols(Locale.ENGLISH);
+      ApiFeatures.getInstance().getApiPlatformAdapter().getDecimalFormatSymbols(Locale.ENGLISH);
   private static final NumberFormat LARGE_UNIT_FORMAT =
       new DecimalFormat("#,###,###.00", FORMAT_SYMBOLS);
   private static final NumberFormat SMALL_UNIT_FORMAT =

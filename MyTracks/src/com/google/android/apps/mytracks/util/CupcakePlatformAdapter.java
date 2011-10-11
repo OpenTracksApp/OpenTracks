@@ -91,7 +91,7 @@ public class CupcakePlatformAdapter implements ApiPlatformAdapter {
   }
   
   @Override
-  public DecimalFormatSymbols getDecimalFormatSysmbols(Locale locale) {
+  public DecimalFormatSymbols getDecimalFormatSymbols(Locale locale) {
     return new DecimalFormatSymbols(locale);
   }
 }
