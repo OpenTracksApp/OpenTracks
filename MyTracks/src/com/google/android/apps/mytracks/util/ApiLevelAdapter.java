@@ -15,9 +15,14 @@
  */
 package com.google.android.apps.mytracks.util;
 
+import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
+import com.google.android.apps.mytracks.services.tasks.PeriodicTask;
+import com.google.api.client.http.HttpTransport;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.text.DecimalFormatSymbols;
@@ -59,6 +64,20 @@ public interface ApiLevelAdapter {
       int id);
 
   /**
+   * Gets a {@link PeriodicTask}.
+   * 
+   * Due to changes in API level 8.
+   */
+  PeriodicTask getPeriodicTask(Context context);
+  
+  /**
+   * Gets a {@link BackupPreferencesListener}.
+   * 
+   * Due to changes in API level 8.
+   */
+  BackupPreferencesListener getBackupPreferencesListener(Context context);
+  
+  /**
    * Applies all changes done to the given preferences editor.
    * Changes may or may not be applied immediately.
    * 
@@ -97,4 +116,11 @@ public interface ApiLevelAdapter {
    * @return a new instance of {@link DecimalFormatSymbols}
    */
   DecimalFormatSymbols getDecimalFormatSymbols(Locale locale);
+  
+  /**
+   * Gets a {@link HttpTransport}. 
+   * 
+   * Due to changes in API level 9.
+   */
+  HttpTransport getHttpTransport();  
 }

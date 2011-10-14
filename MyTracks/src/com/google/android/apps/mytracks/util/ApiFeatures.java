@@ -16,11 +16,7 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.apache.ApacheHttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
 
-import android.bluetooth.BluetoothDevice;
 import android.os.Build;
 import android.util.Log;
 
@@ -71,6 +67,8 @@ public class ApiFeatures {
     // load the class when supported.
     if (getApiLevel() >= 9) {
       apiLevelAdapter = new ApiLevel9Adapter();
+    } else if (getApiLevel() >= 8) {
+      apiLevelAdapter = new ApiLevel8Adapter();
     } else if (getApiLevel() >= 5) {
       apiLevelAdapter = new ApiLevel5Adapter();
     } else {
@@ -107,35 +105,11 @@ public class ApiFeatures {
     return getApiLevel() >= 5;
   }
   
-  // API Level 8 Changes
-  
-  public boolean isAudioFocusSupported() {
-    return getApiLevel() >= 8;
-  }
-  
-  /**
-   * Returns whether cloud backup (a.k.a. Froyo backup) is available.
-   */
-  public boolean hasBackup() {
-    return getApiLevel() >= 8;
-  }
-  
-  // API Level 9 Changes
-
-  /**
-   * Returns true if {@link NetHttpTransport} should be used rather than
-   * {@link ApacheHttpTransport}. See {@link HttpTransport} for more info.
-   */
-  public boolean useNetHttpTransport() {
-    return getApiLevel() >= 9;
-  }
-  
   // API Level 10 changes
   
   /**
-   * Returns true if
-   * {@link BluetoothDevice#createInsecureRfcommSocketToServiceRecord} is
-   * available.
+   * Returns true if BluetoothDevice.createInsecureRfcommSocketToServiceRecord
+   * is available.
    */
   public boolean hasBluetoothDeviceCreateInsecureRfcommSocketToServiceRecord() {
     return getApiLevel() >= 10;

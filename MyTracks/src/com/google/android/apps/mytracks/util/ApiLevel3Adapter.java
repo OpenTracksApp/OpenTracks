@@ -17,9 +17,17 @@ package com.google.android.apps.mytracks.util;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
 
+import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
+import com.google.android.apps.mytracks.services.tasks.PeriodicTask;
+import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerTask;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.apache.ApacheHttpTransport;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.Service;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Log;
 
@@ -51,6 +59,22 @@ public class ApiLevel3Adapter implements ApiLevelAdapter {
     if (id != -1) {
       notificationManager.cancel(id);
     }
+  }
+  
+  @Override
+  public PeriodicTask getPeriodicTask(Context context) {
+    return new StatusAnnouncerTask(context);
+  }
+
+  @Override
+  public BackupPreferencesListener getBackupPreferencesListener(Context context) {
+    return new BackupPreferencesListener() {
+      @Override
+      public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        
+        // Do nothing
+      }
+    };
   }
 
   private void setServiceForeground(Service service, boolean foreground) {
@@ -92,5 +116,10 @@ public class ApiLevel3Adapter implements ApiLevelAdapter {
   @Override
   public DecimalFormatSymbols getDecimalFormatSymbols(Locale locale) {
     return new DecimalFormatSymbols(locale);
+  }
+
+  @Override
+  public HttpTransport getHttpTransport() {
+    return new ApacheHttpTransport();
   }
 }

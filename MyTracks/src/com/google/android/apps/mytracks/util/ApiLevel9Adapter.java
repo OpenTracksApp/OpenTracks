@@ -1,6 +1,8 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.Constants;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 
 import android.content.SharedPreferences.Editor;
 import android.os.StrictMode;
@@ -15,7 +17,7 @@ import java.util.Locale;
  *
  * @author Rodrigo Damazio
  */
-public class ApiLevel9Adapter extends ApiLevel5Adapter {
+public class ApiLevel9Adapter extends ApiLevel8Adapter {
   
   @Override
   public void applyPreferenceChanges(Editor editor) {
@@ -45,5 +47,10 @@ public class ApiLevel9Adapter extends ApiLevel5Adapter {
   @Override
   public DecimalFormatSymbols getDecimalFormatSymbols(Locale locale) {
     return DecimalFormatSymbols.getInstance(locale);
+  }
+  
+  @Override
+  public HttpTransport getHttpTransport() {
+    return new NetHttpTransport();
   }
 }

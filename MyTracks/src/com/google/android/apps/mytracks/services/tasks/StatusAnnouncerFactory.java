@@ -37,11 +37,7 @@ public class StatusAnnouncerFactory implements PeriodicTaskFactory {
   @Override
   public PeriodicTask create(Context context) {
     if (hasTts) {
-      if (ApiFeatures.getInstance().isAudioFocusSupported()) {
-        return new FroyoStatusAnnouncerTask(context);
-      } else {
-        return new StatusAnnouncerTask(context);
-      }
+      return ApiFeatures.getInstance().getApiAdapter().getPeriodicTask(context);
     } else {
       return null;
     }
