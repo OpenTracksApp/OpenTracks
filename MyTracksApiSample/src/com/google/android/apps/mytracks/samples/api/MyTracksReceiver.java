@@ -23,7 +23,7 @@ import android.widget.Toast;
 /**
  * A receiver to receive MyTracks notifications.
  * 
- * Jimmy Shih
+ * @author Jimmy Shih
  */
 public class MyTracksReceiver extends BroadcastReceiver {
 

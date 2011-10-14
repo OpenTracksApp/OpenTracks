@@ -43,7 +43,7 @@ import java.util.List;
  * You also need to enable third party application access inside MyTracks
  * MyTracks -> menu -> Settings -> Sharing -> Allow access
  *
- * Jimmy Shih
+ * @author Jimmy Shih
  */
 public class MainActivity extends Activity {
 
@@ -83,10 +83,27 @@ public class MainActivity extends Activity {
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     outputTextView = (TextView) findViewById(R.id.output);
 
+    Button addWaypointsButton = (Button) findViewById(R.id.add_waypoints_button);
+    addWaypointsButton.setOnClickListener(new View.OnClickListener() {
+	@Override
+        public void onClick(View v) {
+	    List<Track> tracks = myTracksProviderUtils.getAllTracks();
+	    Calendar now = Calendar.getInstance();   
+	    for (Track track : tracks) {
+	      Waypoint waypoint = new Waypoint();
+	      waypoint.setTrackId(track.getId());
+	      waypoint.setName(now.getTime().toLocaleString());
+	      waypoint.setDescription(now.getTime().toLocaleString());
+	      myTracksProviderUtils.insertWaypoint(waypoint);
+	    }   	
+        }
+    });
+    
     // for the MyTracks service
     intent = new Intent();
-    intent.setComponent(new ComponentName(
-        getString(R.string.mytracks_service_package), getString(R.string.mytracks_service_class)));
+    ComponentName componentName = new ComponentName(
+        getString(R.string.mytracks_service_package), getString(R.string.mytracks_service_class));
+    intent.setComponent(componentName);
 
     Button startRecordingButton = (Button) findViewById(R.id.start_recording_button);
     startRecordingButton.setOnClickListener(new View.OnClickListener() {
@@ -125,16 +142,6 @@ public class MainActivity extends Activity {
     List<Track> tracks = myTracksProviderUtils.getAllTracks();
     for (Track track : tracks) {
       outputTextView.append(track.getId() + " ");
-    }
-
-    // use the MyTracks content provider to add a waypoint to all the tracks
-    Calendar now = Calendar.getInstance();
-    for (Track track : tracks) {
-      Waypoint waypoint = new Waypoint();
-      waypoint.setTrackId(track.getId());
-      waypoint.setName(now.getTime().toLocaleString());
-      waypoint.setDescription(now.getTime().toLocaleString());
-      myTracksProviderUtils.insertWaypoint(waypoint);
     }
 
     // start and bind the MyTracks service

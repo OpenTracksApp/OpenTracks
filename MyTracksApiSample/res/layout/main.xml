@@ -14,6 +14,11 @@
     android:layout_width="wrap_content"
     android:text="@string/stop_recording"
     />
+  <Button android:id="@+id/add_waypoints_button"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:text="@string/add_waypoints"
+    />
   <TextView android:id="@+id/output"  
     android:layout_height="wrap_content" 
     android:layout_width="match_parent"
