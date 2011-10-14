@@ -62,7 +62,7 @@ public class ZephyrMessageParser implements MessageParser {
     // 0x1A00316550003162 produces erroneous values for Cadence and needs
     // a workaround based on the stride counter.
     // Firmware values range from field 3 to 10 (inclusive) of the byte buffer.
-    byte[] hardwareFirmwareId = ApiFeatures.getInstance().getApiPlatformAdapter()
+    byte[] hardwareFirmwareId = ApiFeatures.getInstance().getApiAdapter()
         .copyByteArray(buffer, 3, 11);
     Sensor.SensorData.Builder cadence = Sensor.SensorData.newBuilder();
 

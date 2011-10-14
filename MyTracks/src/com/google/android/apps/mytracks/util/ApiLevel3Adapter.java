@@ -29,12 +29,11 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
 /**
- * The Cupcake (API level 3) specific implementation of the
- * {@link ApiPlatformAdapter}.
- * 
+ * API level 3 specific implementation of the {@link ApiLevelAdapter}.
+ *
  * @author Bartlomiej Niechwiej
  */
-public class CupcakePlatformAdapter implements ApiPlatformAdapter {
+public class ApiLevel3Adapter implements ApiLevelAdapter {
 
   @Override
   public void startForeground(Service service,

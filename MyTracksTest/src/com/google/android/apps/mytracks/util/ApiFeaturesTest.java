@@ -65,7 +65,7 @@ public class ApiFeaturesTest extends TestCase {
     }
   }
 
-  public void testGetApiPlatformAdapter() {
-    assertNotNull(features.getApiPlatformAdapter());
+  public void testGetApiAdapter() {
+    assertNotNull(features.getApiAdapter());
   }
 }

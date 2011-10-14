@@ -11,12 +11,11 @@ import java.util.Arrays;
 import java.util.Locale;
 
 /**
- * The Gingerbread (API level 9) specific implememntation of the
- * {@link ApiPlatformAdapter}.
+ * API level 9 specific implementation of the {@link ApiLevelAdapter}.
  *
  * @author Rodrigo Damazio
  */
-public class GingerbreadPlatformAdapter extends EclairPlatformAdapter {
+public class ApiLevel9Adapter extends ApiLevel5Adapter {
   
   @Override
   public void applyPreferenceChanges(Editor editor) {

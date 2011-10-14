@@ -33,7 +33,7 @@ import android.util.Log;
 public class ApiFeatures {
 
   /**
-   * The API level of the Android version we're being run under.
+   * The API level of the Android version we are being run under.
    */
   private static final int ANDROID_API_LEVEL = Integer.parseInt(
       Build.VERSION.SDK);
@@ -41,9 +41,9 @@ public class ApiFeatures {
   private static ApiFeatures instance;
 
   /**
-   * The API platform adapter supported by this system.
+   * The API level adapter for the Android version we are being run under.
    */
-  private ApiPlatformAdapter apiPlatformAdapter;
+  private ApiLevelAdapter apiLevelAdapter;
 
   /**
    * Returns the singleton instance of this class.
@@ -70,18 +70,18 @@ public class ApiFeatures {
     // It is safe to import unsupported classes as long as we only actually
     // load the class when supported.
     if (getApiLevel() >= 9) {
-      apiPlatformAdapter = new GingerbreadPlatformAdapter();
+      apiLevelAdapter = new ApiLevel9Adapter();
     } else if (getApiLevel() >= 5) {
-      apiPlatformAdapter = new EclairPlatformAdapter();
+      apiLevelAdapter = new ApiLevel5Adapter();
     } else {
-      apiPlatformAdapter = new CupcakePlatformAdapter();
+      apiLevelAdapter = new ApiLevel3Adapter();
     }
 
-    Log.i(Constants.TAG, "Using platform adapter " + apiPlatformAdapter.getClass());
+    Log.i(Constants.TAG, "Using API level adapter " + apiLevelAdapter.getClass());
   }
 
-  public ApiPlatformAdapter getApiPlatformAdapter() {
-    return apiPlatformAdapter;
+  public ApiLevelAdapter getApiAdapter() {
+    return apiLevelAdapter;
   }
 
   // API Level 4 Changes
