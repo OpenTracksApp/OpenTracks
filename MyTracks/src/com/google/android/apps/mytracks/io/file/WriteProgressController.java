@@ -70,6 +70,11 @@ class WriteProgressController {
   public void setOnCompletionListener(OnCompletionListener onCompletionListener) {
     this.onCompletionListener = onCompletionListener;
   }
+  
+  // For testing purpose
+  OnCompletionListener getOnCompletionListener() {
+    return onCompletionListener;
+  }
 
   public ProgressDialog createProgressDialog() {
     dialog = new ProgressDialog(activity);

@@ -26,9 +26,9 @@ public class ZephyrMessageParserTest extends TestCase {
 
   public void testParseBuffer() {
     byte[] buf = new byte[60];
-    // Heartrate (-1 =^ 255 unsigned byte)
+    // Heart Rate (-1 =^ 255 unsigned byte)
     buf[12] = -1;
-    // Power
+    // Battery Level
     buf[11] = 51;
     // Cadence (=^ 255*16 strides/min)
     buf[56] = -1;
@@ -37,9 +37,9 @@ public class ZephyrMessageParserTest extends TestCase {
     assertTrue(sds.hasHeartRate());
     assertTrue(sds.getHeartRate().getState() == Sensor.SensorState.SENDING);
     assertEquals(255, sds.getHeartRate().getValue());
-    assertTrue(sds.hasPower());
-    assertTrue(sds.getPower().getState() == Sensor.SensorState.SENDING);
-    assertEquals(51, sds.getPower().getValue());
+    assertTrue(sds.hasBatteryLevel());
+    assertTrue(sds.getBatteryLevel().getState() == Sensor.SensorState.SENDING);
+    assertEquals(51, sds.getBatteryLevel().getValue());
     assertTrue(sds.hasCadence());
     assertTrue(sds.getCadence().getState() == Sensor.SensorState.SENDING);
     assertEquals(255, sds.getCadence().getValue());

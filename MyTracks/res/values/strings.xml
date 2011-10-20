@@ -184,14 +184,20 @@ limitations under the License.
   <!-- MyTracks Details -->
   <string name="trackdetails_title">Track Details</string>
   <string name="trackdetails_name">Track Name</string>
+  <string name="trackdetails_name_hint">Track Name</string>
   <string name="trackdetails_description">Track Description</string>
+  <string name="trackdetails_description_hint">Track Description</string>
   <string name="trackdetails_category">Activity Type (e.g. hiking, cycling, running, climbing...)</string>
+  <string name="trackdetails_category_hint">Activity Type</string>
 
   <!-- MyTracks Waypoint Details -->
   <string name="waypointdetails_title">Marker Details</string>
   <string name="waypointdetails_name">Marker Name</string>
+  <string name="waypointdetails_name_hint">Marker Name</string>
   <string name="waypointdetails_description">Marker Description</string>
+  <string name="waypointdetails_description_hint">Marker Description</string>
   <string name="waypointdetails_category">Marker Type (e.g. Building, Pothole, Sight...)</string>
+  <string name="waypointdetails_category_hint">Marker Type</string>
 
   <!-- MyTracks Settings -->
   <string name="mytracks_settings">My Tracks Settings</string>
@@ -202,6 +208,15 @@ limitations under the License.
   <string name="settings_not_available_summary">Not available in your version of Android</string>
   <string name="settings_not_while_recording">Not available while recording a track</string>
 
+  <string name="settings_allow_access">Allow access</string>
+  <string name="settings_allow_access_summary_on">Other apps can read, write, start/stop recording
+          MyTracks data.</string>
+  <string name="settings_allow_access_summary_off">Other apps cannot read, write, start/stop
+          recording MyTracks data.</string>
+  <string name="settings_allow_access_dialog_message">Are you sure you want to allow other apps,
+          including future apps, to control and access MyTracks data? There will be no further
+          notification.</string>
+          
   <string name="settings_announcement_frequency">Announcement frequency</string>
   <string name="settings_announcement_frequency_summary">Minimum time between two voice announcements</string>
 
@@ -262,6 +277,17 @@ limitations under the License.
   <string name="bluetooth_sensor_summary">The bluetooth sensor to connect to</string>
   <string name="settings_modular_stats_display_title">Modular Stats Display</string>
 
+  <string name="settings_track_color_mode">Track Color Mode</string>
+  <string name="settings_track_color_mode_summary">The way to color the track</string>
+  <string name="settings_track_color_mode_fixed">Fixed</string>
+  <string name="settings_track_color_mode_dynamic">Dynamic</string>
+  <string name="settings_track_color_mode_fixed_speed_slow">Fixed Speed Slow</string>
+  <string name="settings_track_color_mode_fixed_speed_slow_summary">Slow speed top value</string>
+  <string name="settings_track_color_mode_fixed_speed_medium">Fixed Speed Medium</string>
+  <string name="settings_track_color_mode_fixed_speed_medium_summary">Medium speed top value</string>
+  <string name="settings_track_color_mode_dynamic_speed_variation">Dynamic Speed Variation</string>
+  <string name="settings_track_color_mode_dynamic_speed_variation_summary">% Margin from average speed to consider medium speed</string>
+  
   <!-- Backups -->
   <string name="settings_backup">Backup (BETA)</string>
   <string name="settings_sd_backup">SD Card Backup</string>
@@ -477,7 +503,10 @@ limitations under the License.
   <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
   <string name="ant_options">ANT options</string>
   <string name="sensor_options">Sensor Options</string>
-
+  <string name="track_color_mode">Track Color Mode</string>
+  <string name="fixed_speed_options">Fixed Speed Options</string>
+  <string name="dynamic_speed_options">Dynamic Speed Options</string>
+  
   <!-- Bluetooth Sensor -->
   <string name="bluetooth_connected">Connected to %s</string>
   <string name="bluetooth_connecting">Bluetooth sensor connecting ...</string>
@@ -497,12 +526,19 @@ limitations under the License.
   <string name="sending">Sending</string>
 
   <!-- Manifest description (not seen inside the app) -->
-  <string name="notification_permission_label">receive track recording notifications</string>
-  <string name="read_tracks_permission_label">read recorded track data</string>
-  <string name="write_tracks_permission_label">write recorded track data, start/stop recording tracks</string>
-  <string name="notification_permission_description">Be notified when a track starts or stops being recorded.</string>
-  <string name="read_tracks_permission_description">Be able to read track data, such as points and waypoints.</string>
-  <string name="write_tracks_permission_description">Be able to write track data, such as starting recording or adding waypoints.</string>
+  <string name="notification_permission_label">receive MyTracks notifications</string>
+  <string name="mytracks_notifications_permission_label">receive MyTracks notifications</string>
+  <string name="read_tracks_permission_label">read MyTracks data</string>
+  <string name="write_tracks_permission_label">write data to MyTracks and start/stop MyTracks
+          recording</string>
+  <string name="notification_permission_description">Allows the application to receive notifications
+          when MyTracks starts or stops a recording.</string>
+  <string name="mytracks_notifications_permission_description">receive MyTracks notifications
+          </string>
+  <string name="read_tracks_permission_description">Allows the application to read MyTracks data.
+          </string>
+  <string name="write_tracks_permission_description">Allows the application to write data to
+          MyTracks and start/stop MyTracks recording.</string>
 
   <!-- Sensor Type Options -->
   <string name="no_sensor_option">NONE</string>
@@ -511,4 +547,8 @@ limitations under the License.
   <string name="polar_bt_sensor_option">Polar Bluetooth</string>
   <string name="zephyr_bt_sensor_option">Zephyr Bluetooth</string>
 
+  <!-- Track Color Modes -->
+  <string name="track_color_mode_none">None</string>
+  <string name="track_color_mode_fixed">Fixed (BETA)</string>
+  <string name="track_color_mode_dynamic">Dynamic (BETA)</string>
 </resources>

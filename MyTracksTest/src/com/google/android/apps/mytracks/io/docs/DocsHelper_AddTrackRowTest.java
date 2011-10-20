@@ -28,6 +28,8 @@ import android.test.mock.MockContext;
 import android.test.mock.MockResources;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.util.Date;
 
 import junit.framework.TestCase;
 
@@ -55,13 +57,13 @@ public class DocsHelper_AddTrackRowTest extends TestCase {
     StringWritingDocsHelper docsHelper = new StringWritingDocsHelper();
     addTrackRow(docsHelper, false);
 
+    DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);    
     String expectedData =
       "<entry xmlns='http://www.w3.org/2005/Atom' "
       + "xmlns:gsx='http://schemas.google.com/spreadsheets/2006/extended'>"
       + "<gsx:name><![CDATA[trackName]]></gsx:name>"
       + "<gsx:description><![CDATA[trackDescription]]></gsx:description>"
-      // We format the date here because we can't guarantee/force the timezone
-      + "<gsx:date><![CDATA[" + String.format("%tc", TIME) + "]]></gsx:date>"
+      + "<gsx:date><![CDATA[" + dateFormat.format(new Date(TIME)) + "]]></gsx:date>"
       + "<gsx:totaltime><![CDATA[0:00:05]]></gsx:totaltime>"
       + "<gsx:movingtime><![CDATA[0:00:04]]></gsx:movingtime>"
       + "<gsx:distance><![CDATA[12.43]]></gsx:distance>"
@@ -76,12 +78,12 @@ public class DocsHelper_AddTrackRowTest extends TestCase {
       + "<gsx:maxelevation><![CDATA[1,804]]></gsx:maxelevation>"
       + "<gsx:elevationunit><![CDATA[feet]]></gsx:elevationunit>"
       + "<gsx:map>"
-      + "<![CDATA[http://maps.google.com/maps/ms?msa=0&msid=trackMapId]]>"
+      + "<![CDATA[https://maps.google.com/maps/ms?msa=0&msid=trackMapId]]>"
       + "</gsx:map>"
       + "</entry>";
 
     assertEquals(
-        "http://spreadsheets.google.com/feeds/list/ssid/wsid/private/full",
+        "https://spreadsheets.google.com/feeds/list/ssid/wsid/private/full",
         docsHelper.writtenSheetUri);
     assertEquals(expectedData, docsHelper.writtenData);
   }

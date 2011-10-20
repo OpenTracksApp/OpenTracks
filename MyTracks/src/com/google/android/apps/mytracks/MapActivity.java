@@ -185,7 +185,7 @@ public class MapActivity extends com.google.android.maps.MapActivity
     Log.d(TAG, "MapActivity.onResume");
     super.onResume();
 
-    dataHub = TrackDataHub.getStartedInstance();
+    dataHub = ((MyTracksApplication) getApplication()).getTrackDataHub();
     dataHub.registerTrackDataListener(this, EnumSet.of(
         ListenerDataType.SELECTED_TRACK_CHANGED,
         ListenerDataType.POINT_UPDATES,

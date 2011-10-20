@@ -34,8 +34,7 @@ public class RecordingStateReceiver extends BroadcastReceiver {
     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ctx);
 
     String action = intent.getAction();
-    if (ctx.getString(R.string.track_started_broadcast_action).equals(action) ||
-        ctx.getString(R.string.track_resumed_broadcast_action).equals(action)) {
+    if (ctx.getString(R.string.track_started_broadcast_action).equals(action)) {
       boolean autoStart = preferences.getBoolean(
           ctx.getString(R.string.settings_auto_start_key), false);
       if (!autoStart) {
@@ -44,8 +43,7 @@ public class RecordingStateReceiver extends BroadcastReceiver {
       }
 
       startService(ctx);
-    } else if (ctx.getString(R.string.track_stopped_broadcast_action).equals(action) ||
-               ctx.getString(R.string.track_paused_broadcast_action).equals(action)) {
+    } else if (ctx.getString(R.string.track_stopped_broadcast_action).equals(action)) {
       boolean autoStop = preferences.getBoolean(
           ctx.getString(R.string.settings_auto_stop_key), true);
       if (!autoStop) {

@@ -53,12 +53,28 @@ public class WriteProgressControllerTest extends ActivityInstrumentationTestCase
       }
     };
 
-    WriteProgressController controller = new WriteProgressController(
+    final WriteProgressController controller = new WriteProgressController(
         getActivity(), mockWriter, SaveActivity.PROGRESS_DIALOG);
     controller.setOnCompletionListener(new WriteProgressController.OnCompletionListener() {
       @Override
       public void onComplete() {
         controllerDoneRef.set(true);
+      }
+    });
+
+    /*
+     * The WriteProgressController constructor calls the mockWriter's
+     * setOnCompletionListener method with a listener that dismisses the
+     * progress dialog. However, this unit test only tests the
+     * WriteProgressController and doesn't actually show any progress dialog.
+     * Thus after the WriteProgressController is setup, we need to call the
+     * mockWriter's setOnCompletionListener method again with an listener that
+     * doesn't dismiss dialog.
+     */
+    mockWriter.setOnCompletionListener(new TrackWriter.OnCompletionListener() {
+      @Override
+      public void onComplete() {
+        controller.getOnCompletionListener().onComplete();
       }
     });
 
@@ -69,7 +85,6 @@ public class WriteProgressControllerTest extends ActivityInstrumentationTestCase
     // wait for the writer to finish
     writerDone.acquire();
 
-    assertFalse(dialogRef.get().isShowing());
     assertTrue(controllerDoneRef.get());
   }
 }

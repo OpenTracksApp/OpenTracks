@@ -134,7 +134,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     super.onCreate(savedInstanceState);
     ApiFeatures apiFeatures = ApiFeatures.getInstance();
     if (!SystemUtils.isRelease(this)) {
-      apiFeatures.getApiPlatformAdapter().enableStrictMode();
+      apiFeatures.getApiAdapter().enableStrictMode();
     }
 
     tracker = GoogleAnalyticsTracker.getInstance();
@@ -146,7 +146,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
 
     providerUtils = MyTracksProviderUtils.Factory.get(this);
     preferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
-    dataHub = TrackDataHub.newInstance(this);
+    dataHub = ((MyTracksApplication) getApplication()).getTrackDataHub();
     menuManager = new MenuManager(this);
     serviceConnection = new TrackRecordingServiceConnection(this, serviceBindCallback);
 
@@ -249,7 +249,6 @@ public class MyTracks extends TabActivity implements OnTouchListener {
   protected void onDestroy() {
     Log.d(TAG, "MyTracks.onDestroy");
     serviceConnection.unbind();
-
     super.onDestroy();
   }
 

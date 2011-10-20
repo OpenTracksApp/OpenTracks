@@ -23,19 +23,8 @@ limitations under the License.
 
   <!-- Broadcast notification Intent constants -->
   <string name="track_started_broadcast_action">com.google.android.apps.mytracks.TRACK_STARTED</string>
-  <string name="track_paused_broadcast_action">com.google.android.apps.mytracks.TRACK_PAUSED</string>
-  <string name="track_resumed_broadcast_action">com.google.android.apps.mytracks.TRACK_RESUMED</string>
   <string name="track_stopped_broadcast_action">com.google.android.apps.mytracks.TRACK_STOPPED</string>
   <string name="track_id_broadcast_extra">com.google.android.apps.mytracks.TRACK_ID</string>
-
-  <!-- TrackRecordingService actions -->
-  <string name="start_new_track_action">com.google.android.apps.mytracks.START_NEW_TRACK</string>
-  <!--
-    Setting this intent makes the new track the selected track.
-    This is not expected to work if the my tracks activity is currently active.
-  -->
-  <string name="select_new_track_extra">com.google.android.apps.mytracks.SELECT_NEW_TRACK</string>
-  <string name="end_current_track_action">com.google.android.apps.mytracks.END_CURRENT_TRACK</string>
 
   <!-- My Tracks service constants -->
   <string name="mytracks_service_class">com.google.android.apps.mytracks.services.TrackRecordingService</string>

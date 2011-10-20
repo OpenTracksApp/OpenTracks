@@ -95,7 +95,7 @@ class Eula {
   }
 
   private static void accept(Activity activity, SharedPreferences preferences) {
-    ApiFeatures.getInstance().getApiPlatformAdapter().applyPreferenceChanges(
+    ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(
         preferences.edit().putBoolean(PREFERENCE_EULA_ACCEPTED, true));
     Intent startIntent = new Intent(activity, WelcomeActivity.class);
     activity.startActivityForResult(startIntent, Constants.WELCOME);

@@ -180,14 +180,20 @@ limitations under the License.
   <!-- MyTracks Details -->
   <string name="trackdetails_title">轨迹详细信息</string>
   <string name="trackdetails_name">轨迹名称</string>
+  <string name="trackdetails_name_hint">轨迹名称</string>
   <string name="trackdetails_description">轨迹描述</string>
+  <string name="trackdetails_description_hint">轨迹描述</string>
   <string name="trackdetails_category">活动类型 (例如: 徒步, 骑行, 跑步, 攀岩...)</string>
+  <string name="trackdetails_category_hint">活动类型</string>
 
   <!-- MyTracks Waypoint Details -->
   <string name="waypointdetails_title">标记详细信息</string>
   <string name="waypointdetails_name">标记名称</string>
+  <string name="waypointdetails_name_hint">标记名称</string>
   <string name="waypointdetails_description">标记描述</string>
+  <string name="waypointdetails_description_hint">标记描述</string>
   <string name="waypointdetails_category">标记类型 (例如: 建筑, 陷坑, 景点...)</string>
+  <string name="waypointdetails_category_hint">标记类型</string>
 
   <!-- MyTracks Settings -->
   <string name="mytracks_settings">My Tracks 设置</string>

@@ -20,6 +20,8 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
+import com.google.android.apps.mytracks.services.sensors.SensorManager;
+import com.google.android.apps.mytracks.services.sensors.SensorManagerFactory;
 import com.google.android.apps.mytracks.services.sensors.SensorUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -55,7 +57,8 @@ public class SensorStateActivity extends Activity {
 
   private final Runnable stateUpdater = new Runnable() {
     public void run() {
-     updateState();
+      if (isVisible)    // only update when UI is visible
+        updateState();
     }
   };
 
@@ -73,6 +76,23 @@ public class SensorStateActivity extends Activity {
       runOnUiThread(stateUpdater);
     }
   };
+  
+
+  /**
+   * A temporary sensor manager, when none is available.
+   */
+  SensorManager tempSensorManager = null;
+  
+  /**
+   * A state flag set to true when the activity is active/visible,
+   * i.e. after resume, and before pause 
+   * 
+   * Used to avoid updating after the pause event, because sometimes an update 
+   * event occurs even after the timer is cancelled. In this case,
+   * it could cause the {@link #tempSensorManager} to be recreated, after it
+   * is destroyed at the pause event.
+   */
+  boolean isVisible = false;
 
   public SensorStateActivity() {
     utils = new StatsUtilities(this);
@@ -86,7 +106,6 @@ public class SensorStateActivity extends Activity {
 
     setContentView(R.layout.sensor_state);
 
-    // TODO: Allow reading from sensors even if service is not running.
     serviceConnection = new TrackRecordingServiceConnection(this, stateUpdater);
     serviceConnection.bindIfRunning();
     updateState();
@@ -95,6 +114,8 @@ public class SensorStateActivity extends Activity {
   @Override
   protected void onResume() {
     super.onResume();
+    
+    isVisible = true;
 
     serviceConnection.bindIfRunning();
 
@@ -104,9 +125,12 @@ public class SensorStateActivity extends Activity {
 
   @Override
   protected void onPause() {
+    isVisible = false;
+    
     timer.cancel();
     timer.purge();
     timer = null;
+    stopTempSensorManager();
     super.onPause();
   }
 
@@ -117,35 +141,106 @@ public class SensorStateActivity extends Activity {
   }
 
   protected void updateState() {
+    Log.d(TAG, "Updating SensorStateActivity");
+    
     ITrackRecordingService service = serviceConnection.getServiceIfBound();
-    if (service == null) {
-      Log.d(Constants.TAG, "Could not get track recording service.");
-      updateSensorState(Sensor.SensorState.NONE);
-      updateSensorData(null);
-      return;
-    }
-
-    Sensor.SensorDataSet sds = null;
-    try {
-      byte[] buff = service.getSensorData();
-      if (buff != null) {
-        sds = Sensor.SensorDataSet.parseFrom(buff);
-        updateSensorData(sds);
+    
+    //  Check if service is available, and recording.
+    boolean isRecording = false;
+    if (service != null) {
+      try {
+        isRecording = service.isRecording();
+      } catch (RemoteException e) {
+        Log.e(TAG, "Unable to determine if service is recording.", e);
       }
-    } catch (RemoteException e) {
-      Log.e(Constants.TAG, "Could not read sensor data.", e);
-    } catch (InvalidProtocolBufferException e) {
-      Log.e(Constants.TAG, "Could not read sensor data.", e);
     }
-    updateSensorData(sds);
+    
+    //  If either service isn't available, or not recording.
+    if (!isRecording) {
+      updateFromTempSensorManager();
+    } else {
+      updateFromSysSensorManager();
+    }
+  }
+  
+  private void updateFromTempSensorManager()
+  {
+    //  Use variables to hold the sensor state and data set.
+    Sensor.SensorState currentState = null;
+    Sensor.SensorDataSet currentDataSet = null;
+    
+    // If no temp sensor manager is present, create one, and start it.
+    if (tempSensorManager == null) {
+      tempSensorManager = SensorManagerFactory.getSensorManager(this);
+      if (tempSensorManager != null)
+        tempSensorManager.onStartTrack();
+    }
+    
+    //  If a temp sensor manager is available, use states from temp sensor
+    //  manager.
+    if (tempSensorManager != null) {
+      currentState = tempSensorManager.getSensorState();
+      currentDataSet = tempSensorManager.getSensorDataSet();
+    }
 
-    try {
-      int i = service.getSensorState();
-      updateSensorState(Sensor.SensorState.valueOf(i));
-    } catch (RemoteException e) {
-      Log.e(Constants.TAG, "Could not read sensor state.", e);
-      updateSensorState(Sensor.SensorState.NONE);
+    // Update the sensor state, and sensor data, using the variables.
+    updateSensorStateAndData(currentState, currentDataSet);
+  }
+  
+  private void updateFromSysSensorManager()
+  {
+    //  Use variables to hold the sensor state and data set.
+    Sensor.SensorState currentState = null;
+    Sensor.SensorDataSet currentDataSet = null;
+    
+    ITrackRecordingService service = serviceConnection.getServiceIfBound();
+    
+    //  If a temp sensor manager is present, shut it down, 
+    //  probably recording just started.
+    stopTempSensorManager();
+
+    // Get sensor details from the service.
+    if (service == null) {
+      Log.d(TAG, "Could not get track recording service.");
+    } else {
+      try {
+        byte[] buff = service.getSensorData();
+        if (buff != null) {
+          currentDataSet = Sensor.SensorDataSet.parseFrom(buff);
+        }
+      } catch (RemoteException e) {
+        Log.e(TAG, "Could not read sensor data.", e);
+      } catch (InvalidProtocolBufferException e) {
+        Log.e(TAG, "Could not read sensor data.", e);
+      }
+      
+      try {
+        currentState = Sensor.SensorState.valueOf(service.getSensorState());
+      } catch (RemoteException e) {
+        Log.e(TAG, "Could not read sensor state.", e);
+        currentState = Sensor.SensorState.NONE;
+      }
     }
+
+    // Update the sensor state, and sensor data, using the variables.
+    updateSensorStateAndData(currentState, currentDataSet);
+  }
+  
+  /**
+   * Stops the temporary sensor manager, if one exists. 
+   */
+  private void stopTempSensorManager()
+  {
+    if (tempSensorManager != null) {
+      tempSensorManager.shutdown();
+      tempSensorManager = null;
+    }
+  }
+  
+  private void updateSensorStateAndData(Sensor.SensorState state, Sensor.SensorDataSet dataSet)
+  {
+    updateSensorState(state == null ? Sensor.SensorState.NONE : state);
+    updateSensorData(dataSet);
   }
 
   private void updateSensorState(Sensor.SensorState state) {

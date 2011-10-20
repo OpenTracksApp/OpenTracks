@@ -17,11 +17,13 @@ package com.google.android.apps.mytracks.content;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.maps.mytracks.R;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -30,6 +32,8 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.os.Binder;
+import android.os.Process;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -183,8 +187,22 @@ public class MyTracksProvider extends ContentProvider {
         "waypoints/#", WAYPOINTS_ID);
   }
 
+  private boolean canAccess() {
+    if (Binder.getCallingPid() == Process.myPid()) {
+      return true;
+    } else {
+      Context context = getContext();
+      SharedPreferences sharedPreferences = context.getSharedPreferences(
+          Constants.SETTINGS_NAME, 0);
+      return sharedPreferences.getBoolean(context.getString(R.string.allow_access_key), false);
+    }
+  }
+  
   @Override
   public boolean onCreate() {
+    if (!canAccess()) {
+      return false;
+    }
     DatabaseHelper dbHelper = new DatabaseHelper(getContext());
     try {
       db = dbHelper.getWritableDatabase();
@@ -196,6 +214,9 @@ public class MyTracksProvider extends ContentProvider {
 
   @Override
   public int delete(Uri url, String where, String[] selectionArgs) {
+    if (!canAccess()) {
+      return 0;
+    }
     String table;
     boolean shouldVacuum = false;
     switch (urlMatcher.match(url)) {
@@ -228,6 +249,9 @@ public class MyTracksProvider extends ContentProvider {
 
   @Override
   public String getType(Uri url) {
+    if (!canAccess()) {
+      return null;
+    }
     switch (urlMatcher.match(url)) {
       case TRACKPOINTS:
         return TrackPointsColumns.CONTENT_TYPE;
@@ -248,6 +272,9 @@ public class MyTracksProvider extends ContentProvider {
 
   @Override
   public Uri insert(Uri url, ContentValues initialValues) {
+    if (!canAccess()) {
+      return null;
+    }
     Log.d(MyTracksProvider.TAG, "MyTracksProvider.insert");
     ContentValues values;
     if (initialValues != null) {
@@ -276,6 +303,9 @@ public class MyTracksProvider extends ContentProvider {
 
   @Override
   public int bulkInsert(Uri url, ContentValues[] valuesBulk) {
+    if (!canAccess()) {
+      return 0;
+    }
     Log.d(MyTracksProvider.TAG, "MyTracksProvider.bulkInsert");
     int numInserted = 0;
     try {
@@ -348,6 +378,9 @@ public class MyTracksProvider extends ContentProvider {
   public Cursor query(
       Uri url, String[] projection, String selection, String[] selectionArgs,
       String sort) {
+    if (!canAccess()) {
+      return null;
+    }
     SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
     int match = urlMatcher.match(url);
     String sortOrder = null;
@@ -399,6 +432,9 @@ public class MyTracksProvider extends ContentProvider {
   @Override
   public int update(Uri url, ContentValues values, String where,
       String[] selectionArgs) {
+    if (!canAccess()) {
+      return 0;
+    }
     int count;
     int match = urlMatcher.match(url);
     if (match == TRACKPOINTS) {

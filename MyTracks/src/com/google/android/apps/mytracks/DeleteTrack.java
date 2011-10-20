@@ -108,7 +108,7 @@ public class DeleteTrack extends Activity
     SharedPreferences preferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
     if (preferences.getLong(selectedKey, -1) == deleteTrackId) {
       Editor editor = preferences.edit().putLong(selectedKey, -1);
-      ApiFeatures.getInstance().getApiPlatformAdapter().applyPreferenceChanges(editor);
+      ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);
     }
   }
 }

@@ -18,7 +18,8 @@ limitations under the License.
   xmlns:android="http://schemas.android.com/apk/res/android">
 
   <!-- Display settings -->
-  <PreferenceScreen android:title="@string/settings_display">
+  <PreferenceScreen android:title="@string/settings_display"
+                    android:key="@string/display_settings_screen_key">
     <CheckBoxPreference
         android:key="@string/metric_units_key"
         android:title="@string/settings_metric_units"
@@ -32,6 +33,58 @@ limitations under the License.
         android:summaryOn="@string/settings_report_speed_or_pace_summary_on"
         android:summaryOff="@string/settings_report_speed_or_pace_summary_off"
         android:defaultValue="true" />
+        
+    <ListPreference android:key="@string/track_color_mode_key"
+        android:title="@string/settings_track_color_mode"
+        android:summary="@string/settings_track_color_mode_summary"
+        android:entries="@array/track_color_mode_options"
+        android:entryValues="@array/track_color_mode_values"
+        android:defaultValue="@string/none"/>
+
+    <PreferenceCategory android:title="@string/fixed_speed_options" 
+        android:key="@string/track_color_mode_fixed_speed_options_key">
+        <EditTextPreference android:key="@string/track_color_mode_fixed_speed_slow_key" 
+            android:title="@string/settings_track_color_mode_fixed_speed_slow" 
+            android:summary="@string/settings_track_color_mode_fixed_speed_slow_summary" 
+            android:defaultValue="9" 
+            android:inputType="number"
+            android:maxLength="3">
+        </EditTextPreference>
+        
+        <EditTextPreference android:key="@string/track_color_mode_fixed_speed_slow_display_key" 
+            android:title="@string/settings_track_color_mode_fixed_speed_slow" 
+            android:summary="@string/settings_track_color_mode_fixed_speed_slow_summary" 
+            android:defaultValue="9" 
+            android:inputType="number"
+            android:maxLength="3">
+        </EditTextPreference>
+        
+        <EditTextPreference android:key="@string/track_color_mode_fixed_speed_medium_key" 
+            android:title="@string/settings_track_color_mode_fixed_speed_medium" 
+            android:summary="@string/settings_track_color_mode_fixed_speed_medium_summary" 
+            android:defaultValue="15"
+            android:inputType="number"
+            android:maxLength="3">
+        </EditTextPreference>
+        
+        <EditTextPreference android:key="@string/track_color_mode_fixed_speed_medium_display_key" 
+            android:title="@string/settings_track_color_mode_fixed_speed_medium" 
+            android:summary="@string/settings_track_color_mode_fixed_speed_medium_summary" 
+            android:defaultValue="15"
+            android:inputType="number"
+            android:maxLength="3">
+        </EditTextPreference>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/dynamic_speed_options">
+        <EditTextPreference android:key="@string/track_color_mode_dynamic_speed_variation_key" 
+            android:title="@string/settings_track_color_mode_dynamic_speed_variation" 
+            android:summary="@string/settings_track_color_mode_dynamic_speed_variation_summary" 
+            android:defaultValue="25" 
+            android:inputType="number"
+            android:maxLength="2">
+        </EditTextPreference>
+    </PreferenceCategory>
   </PreferenceScreen>
 
   <!-- Recording settings -->
@@ -155,6 +208,13 @@ limitations under the License.
         android:title="@string/settings_share_url_only"
         android:summaryOn="@string/settings_share_url_only_summary_on"
         android:summaryOff="@string/settings_share_url_only_summary_off"
+        android:defaultValue="false" />
+
+    <CheckBoxPreference
+        android:key="@string/allow_access_key"
+        android:title="@string/settings_allow_access"
+        android:summaryOn="@string/settings_allow_access_summary_on"
+        android:summaryOff="@string/settings_allow_access_summary_off"
         android:defaultValue="false" />
   </PreferenceScreen>
 

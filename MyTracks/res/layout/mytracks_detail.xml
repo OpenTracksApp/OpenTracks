@@ -40,7 +40,9 @@ limitations under the License.
       android:singleLine="true"
       android:autoText="true"
       android:capitalize="words"
-      android:selectAllOnFocus="true"/>
+      android:selectAllOnFocus="true"
+      android:hint="@string/trackdetails_name_hint"
+      android:imeOptions="actionNext"/>
   </LinearLayout>
   <TextView android:text="@string/trackdetails_category"
     android:layout_width="fill_parent"
@@ -48,7 +50,9 @@ limitations under the License.
   <AutoCompleteTextView android:id="@+id/trackdetails_category"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:singleLine="true"/>
+    android:singleLine="true"
+    android:hint="@string/trackdetails_category_hint"
+    android:imeOptions="actionNext"/>
   <TextView android:text="@string/trackdetails_description"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"/>
@@ -61,7 +65,9 @@ limitations under the License.
     android:selectAllOnFocus="true"
     android:maxLines="50"
     android:gravity="top"
-    android:layout_weight="1"/>
+    android:layout_weight="1"
+    android:hint="@string/trackdetails_description_hint"
+    android:imeOptions="actionDone"/>
     <LinearLayout
       android:orientation="horizontal"
       android:layout_width="fill_parent"

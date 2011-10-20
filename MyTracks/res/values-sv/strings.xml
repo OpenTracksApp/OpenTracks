@@ -149,14 +149,20 @@ limitations under the License.
   <!-- MyTracks Details -->
   <string name="trackdetails_title">Spårdetaljer</string>
   <string name="trackdetails_name">Spårnamn</string>
+  <string name="trackdetails_name_hint">Spårnamn</string>
   <string name="trackdetails_description">Spårbeskrivning</string>
+  <string name="trackdetails_description_hint">Spårbeskrivning</string>
   <string name="trackdetails_category">Aktivitetstyp (t ex vandring, cyckling, löpning, klättring...)</string>
+  <string name="trackdetails_category_hint">Aktivitetstyp</string>
 
   <!-- MyTracks Waypoint Details -->
   <string name="waypointdetails_title">Markördetaljer</string>
   <string name="waypointdetails_name">Markörnamn</string>
+  <string name="waypointdetails_name_hint">Markörnamn</string>
   <string name="waypointdetails_description">Markörbeskrivning</string>
+  <string name="waypointdetails_description_hint">Markörbeskrivning</string>
   <string name="waypointdetails_category">Markörtyp (e.g. byggnad, grop, sevärdhet...)</string>
+  <string name="waypointdetails_category_hint">Markörtyp</string>
 
   <!-- MyTracks Settings -->
   <string name="mytracks_settings">My Tracks inställningar</string>
