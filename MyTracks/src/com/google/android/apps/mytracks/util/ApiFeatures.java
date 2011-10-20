@@ -16,11 +16,7 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.apache.ApacheHttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
 
-import android.bluetooth.BluetoothDevice;
 import android.os.Build;
 import android.util.Log;
 
@@ -33,7 +29,7 @@ import android.util.Log;
 public class ApiFeatures {
 
   /**
-   * The API level of the Android version we're being run under.
+   * The API level of the Android version we are being run under.
    */
   private static final int ANDROID_API_LEVEL = Integer.parseInt(
       Build.VERSION.SDK);
@@ -41,9 +37,9 @@ public class ApiFeatures {
   private static ApiFeatures instance;
 
   /**
-   * The API platform adapter supported by this system.
+   * The API level adapter for the Android version we are being run under.
    */
-  private ApiPlatformAdapter apiPlatformAdapter;
+  private ApiLevelAdapter apiLevelAdapter;
 
   /**
    * Returns the singleton instance of this class.
@@ -70,18 +66,20 @@ public class ApiFeatures {
     // It is safe to import unsupported classes as long as we only actually
     // load the class when supported.
     if (getApiLevel() >= 9) {
-      apiPlatformAdapter = new GingerbreadPlatformAdapter();
+      apiLevelAdapter = new ApiLevel9Adapter();
+    } else if (getApiLevel() >= 8) {
+      apiLevelAdapter = new ApiLevel8Adapter();
     } else if (getApiLevel() >= 5) {
-      apiPlatformAdapter = new EclairPlatformAdapter();
+      apiLevelAdapter = new ApiLevel5Adapter();
     } else {
-      apiPlatformAdapter = new CupcakePlatformAdapter();
+      apiLevelAdapter = new ApiLevel3Adapter();
     }
 
-    Log.i(Constants.TAG, "Using platform adapter " + apiPlatformAdapter.getClass());
+    Log.i(Constants.TAG, "Using API level adapter " + apiLevelAdapter.getClass());
   }
 
-  public ApiPlatformAdapter getApiPlatformAdapter() {
-    return apiPlatformAdapter;
+  public ApiLevelAdapter getApiAdapter() {
+    return apiLevelAdapter;
   }
 
   // API Level 4 Changes
@@ -107,35 +105,11 @@ public class ApiFeatures {
     return getApiLevel() >= 5;
   }
   
-  // API Level 8 Changes
-  
-  public boolean isAudioFocusSupported() {
-    return getApiLevel() >= 8;
-  }
-  
-  /**
-   * Returns whether cloud backup (a.k.a. Froyo backup) is available.
-   */
-  public boolean hasBackup() {
-    return getApiLevel() >= 8;
-  }
-  
-  // API Level 9 Changes
-
-  /**
-   * Returns true if {@link NetHttpTransport} should be used rather than
-   * {@link ApacheHttpTransport}. See {@link HttpTransport} for more info.
-   */
-  public boolean useNetHttpTransport() {
-    return getApiLevel() >= 9;
-  }
-  
   // API Level 10 changes
   
   /**
-   * Returns true if
-   * {@link BluetoothDevice#createInsecureRfcommSocketToServiceRecord} is
-   * available.
+   * Returns true if BluetoothDevice.createInsecureRfcommSocketToServiceRecord
+   * is available.
    */
   public boolean hasBluetoothDeviceCreateInsecureRfcommSocketToServiceRecord() {
     return getApiLevel() >= 10;

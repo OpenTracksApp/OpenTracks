@@ -15,23 +15,30 @@
  */
 package com.google.android.apps.mytracks.util;
 
+import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
+import com.google.android.apps.mytracks.services.tasks.PeriodicTask;
+import com.google.api.client.http.HttpTransport;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
 /**
- * A set of methods that may be implemented in a platform specific way. 
+ * A set of methods that may be implemented differently depending on the Android API level. 
  *  
  * @author Bartlomiej Niechwiej
  */
-public interface ApiPlatformAdapter {
+public interface ApiLevelAdapter {
   
   /**
    * Puts the specified service into foreground.
+   * 
+   * Due to changes in API level 5.
    * 
    * @param service the service to be put in foreground.
    * @param notificationManager the notification manager used to post the given
@@ -44,6 +51,9 @@ public interface ApiPlatformAdapter {
   
   /**
    * Puts the given service into background.
+   * 
+   * Due to changes in API level 5.
+   * 
    * @param service the service to put into background.
    * @param notificationManager the notification manager to user when removing
    *        notifications. 
@@ -54,13 +64,31 @@ public interface ApiPlatformAdapter {
       int id);
 
   /**
+   * Gets a status announcer task.
+   * 
+   * Due to changes in API level 8.
+   */
+  PeriodicTask getStatusAnnouncerTask(Context context);
+  
+  /**
+   * Gets a {@link BackupPreferencesListener}.
+   * 
+   * Due to changes in API level 8.
+   */
+  BackupPreferencesListener getBackupPreferencesListener(Context context);
+  
+  /**
    * Applies all changes done to the given preferences editor.
    * Changes may or may not be applied immediately.
+   * 
+   * Due to changes in API level 9.
    */
   void applyPreferenceChanges(SharedPreferences.Editor editor);
   
   /**
    * Enables strict mode where supported, only if this is a development build.
+   * 
+   * Due to changes in API level 9.
    */
   void enableStrictMode();
   
@@ -69,6 +97,8 @@ public interface ApiPlatformAdapter {
    * indexes start (inclusive) to end (exclusive). The end index must be less
    * than or equal to input.length.
    *
+   * Due to changes in API level 9.
+   * 
    * @param input the input byte array
    * @param start the start index
    * @param end the end index
@@ -80,8 +110,17 @@ public interface ApiPlatformAdapter {
   /**
    * Gets an instance of {@link DecimalFormatSymbols} for a locale.
    * 
+   * Due to changes in API level 9.
+   *    
    * @param locale the locale
    * @return a new instance of {@link DecimalFormatSymbols}
    */
   DecimalFormatSymbols getDecimalFormatSymbols(Locale locale);
+  
+  /**
+   * Gets a {@link HttpTransport}. 
+   * 
+   * Due to changes in API level 9.
+   */
+  HttpTransport getHttpTransport();  
 }
