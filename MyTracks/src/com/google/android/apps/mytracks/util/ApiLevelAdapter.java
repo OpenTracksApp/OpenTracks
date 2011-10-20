@@ -64,11 +64,11 @@ public interface ApiLevelAdapter {
       int id);
 
   /**
-   * Gets a {@link PeriodicTask}.
+   * Gets a status announcer task.
    * 
    * Due to changes in API level 8.
    */
-  PeriodicTask getPeriodicTask(Context context);
+  PeriodicTask getStatusAnnouncerTask(Context context);
   
   /**
    * Gets a {@link BackupPreferencesListener}.

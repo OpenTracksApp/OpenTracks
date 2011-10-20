@@ -15,7 +15,7 @@ import android.content.Context;
 public class ApiLevel8Adapter extends ApiLevel5Adapter {
   
   @Override
-  public PeriodicTask getPeriodicTask(Context context) {
+  public PeriodicTask getStatusAnnouncerTask(Context context) {
     return new FroyoStatusAnnouncerTask(context);
   }
   

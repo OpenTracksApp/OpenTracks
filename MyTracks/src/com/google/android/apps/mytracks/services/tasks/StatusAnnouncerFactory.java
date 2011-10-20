@@ -37,7 +37,7 @@ public class StatusAnnouncerFactory implements PeriodicTaskFactory {
   @Override
   public PeriodicTask create(Context context) {
     if (hasTts) {
-      return ApiFeatures.getInstance().getApiAdapter().getPeriodicTask(context);
+      return ApiFeatures.getInstance().getApiAdapter().getStatusAnnouncerTask(context);
     } else {
       return null;
     }

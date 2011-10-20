@@ -25,7 +25,7 @@ import android.content.SharedPreferences;
  *
  * @author Jimmy Shih
  */
-public class BackupPreferencesListenerImpl extends BackupPreferencesListener {
+public class BackupPreferencesListenerImpl implements BackupPreferencesListener {
 
   private final BackupManager backupManager;
 

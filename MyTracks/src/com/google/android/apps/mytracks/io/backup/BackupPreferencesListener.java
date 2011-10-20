@@ -23,5 +23,5 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
  *
  * @author Rodrigo Damazio
  */
-public abstract class BackupPreferencesListener implements OnSharedPreferenceChangeListener {
+public interface BackupPreferencesListener extends OnSharedPreferenceChangeListener {
 }

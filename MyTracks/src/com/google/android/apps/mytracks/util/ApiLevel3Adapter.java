@@ -62,7 +62,7 @@ public class ApiLevel3Adapter implements ApiLevelAdapter {
   }
   
   @Override
-  public PeriodicTask getPeriodicTask(Context context) {
+  public PeriodicTask getStatusAnnouncerTask(Context context) {
     return new StatusAnnouncerTask(context);
   }
 
@@ -70,8 +70,7 @@ public class ApiLevel3Adapter implements ApiLevelAdapter {
   public BackupPreferencesListener getBackupPreferencesListener(Context context) {
     return new BackupPreferencesListener() {
       @Override
-      public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        
+      public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {        
         // Do nothing
       }
     };
