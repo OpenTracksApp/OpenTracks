@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+
+  <!-- Used by the Menu -->
+  <string name="start_recording">Enregistrer parcours</string>
+  <string name="stop_recording">Arrêter enregistrement</string>
+  <string name="switch_to_sat">Mode satellite</string>
+  <string name="switch_to_map">Mode plan</string>
+  <string name="mylocation">Ma position</string>
+  <string name="list_tracks">Parcours</string>
+  <string name="list_markers">Marqueurs</string>
+  <string name="delete_all_tracks">Supprimer tous les parcours</string>
+  <string name="settings">Paramètres</string>
+  <string name="elevation">Altitude</string>
+  <string name="choose_track_message">Sélectionnez le parcours à visualiser</string>
+  <string name="current_track">Parcours actuel</string>
+  <string name="current_segment">Segment actuel</string>
+  <string name="sensor_state">État du capteur</string>
+  <string name="aggregated_stats">Statistiques consolidées</string>
+  
+  <!-- Error messages -->
+  <string name="error_no_location_manager">Aucune source de localisation n\'a été trouvée sur ce système !</string>
+  <string name="error_no_gps_location_provider">Aucune source GPS de localisation n\'a été trouvée sur ce système.</string>
+  <string name="error_sending_to_fusiontables">Il y a eu une erreur lors de l\'envoi de votre parcours à Google Fusion Tables. Réessayez plus tard SVP.</string>
+  <string name="error_sending_to_docs">Il y a eu une erreur lors de l\'envoi de votre parcours à Google Docs. Réessayez plus tard SVP.</string>
+  <string name="error_unable_to_start_recording">Impossible de débuter l\'enregistrement. Réessayez.</string>
+  <string name="error_unable_to_stop_recording">Impossible de stopper l\'enregistrement. Réessayez.</string>
+  <string name="error_unable_to_read_file">Impossible de lire le fichier.</string>
+  <string name="error_invalid_gpx_format">Le fichier n\'a pas un format GPX valide.</string>
+  <string name="error_generic">Une erreur a eu lieu. Essayez de nouveau s\'il vous plaît.</string>
+  <string name="error_track_does_not_exist">Le parcours n\'existe pas.</string>
+  <string name="error_out_of_memory">Ce fichier est trop gros (sa taille doit être inférieure à 500ko). Abandon.</string>
+  <string name="error_unable_to_insert_marker">Impossible d\'insérer une balise.  Position inconnue.</string>
+
+  <!-- Status messages -->
+  <string name="wait_for_fix">Attente du signal GPS. Assurez-vous que le ciel est bien visible.</string>
+  <string name="status_now_recording">Parcours en cours d\'enregistrement.</string>
+  <string name="status_stopped_recording">Enregistrement du parcours terminé.</string>
+  <string name="status_new_fusiontable_has_been_created">Une nouvelle table Google Fusion vient d\'être créée sur google.com/fusiontables.</string>
+  <string name="status_tracks_have_been_uploaded">Votre parcours a été envoyé à maps.google.com.</string>
+  <string name="status_tracks_have_been_uploaded_to_new_doc">Votre parcours a été envoyé dans un tableur à docs.google.com.</string>
+  <string name="status_tracks_have_been_uploaded_to_docs">Votre parcours a été envoyé à docs.google.com.</string>
+  <string name="status_enable_gps">Cliquez ici et allez dans \'Paramètres\', \'Sécurité et Localisation\' et selectionnez \'Activer les satellites GPS\'. Appuyez sur le bouton de retour pour revenir au menu.</string>
+  <string name="status_approximate_location">Note : Votre position est approximative, elle a été déterminée par les antennes de téléphonie ou le réseau WiFi.</string>
+  <string name="status_no_location">Votre position ne peut être déterminée. Vérifiez votre configuration dans \'Paramètres\', \'Sécurité et Localisation\'. Assurez-vous également que le ciel soit bien visible.</string>
+  <string name="status_waypoint_inserted">Un point de passage a été inséré.</string>
+  <string name="status_statistics_inserted">Une balise de statistiques a été insérée.</string>
+
+  <!-- Progress dialog -->
+  <string name="progress_title">Patientez SVP...</string>
+  <string name="progress_message">Envoi du parcours à Google...</string>
+  <string name="progress_message_reading_track">Lecture du parcours...</string>
+  <string name="progress_message_preparing_track">Préparation du parcours</string>
+  <string name="progress_message_authenticating_fusiontables">Authentification à Google Fusion Tables...</string>
+  <string name="progress_message_authenticating_docs">Authentification à Google Docs...</string>
+  <string name="progress_message_sending_docs">Envoi du parcours vers Google Docs...</string>
+  <string name="progress_message_sending_fusiontables">Envoi du parcours vers Google Fusion Tables...</string>
+  <string name="progress_message_creating_fusiontable">Création d\'une nouvelle \'Fusion Table\'...</string>
+  <string name="import_progress_message">Importation du parcours GPS. Patientez SVP.</string>
+  <string name="write_progress_message">Enregistrement du fichier sur la carte SD. Patientez SVP.</string>
+  <string name="progress_message_updating_track">Mise à jour des statistiques du parcours...</string>
+
+  <!-- Used by DeleteAllDataHandler -->
+  <string name="are_you_sure_question">Êtes-vous sûr?</string>
+  <string name="all_data_will_be_permanently_deleted">Tous les parcours et balises vont être supprimés de ce téléphone.</string>
+  <string name="track_will_be_permanently_deleted">Le parcours et ses balises vont être supprimés de manière permanente de ce téléphone.</string>
+  <string name="marker_will_be_permanently_deleted">Les balises vont être supprimées de manière permanente de ce téléphone.</string>
+
+  <!-- Text and links when uploading to Google My Maps -->
+  <string name="new_map_description">Créée par My Tracks sous Android.</string>
+  <string name="fusiontable_link">Créée par &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; sous Android.</string>
+
+  <!-- Formatting of track and marker descriptions -->
+  <string name="recorded_date">Enregistré</string>
+  <string name="category">Type d\'activité</string>
+  <string name="waypoint_category">Type de balise</string>
+  <string name="part">(Portion %d)</string>
+
+  <!-- Used by the track recording service -->
+  <string name="recording_your_track">Enregistrement de votre parcours...</string>
+  <string name="new_track">Parcours %d</string>
+
+  <!-- Common -->
+  <string name="no">Non</string>
+  <string name="yes">Oui</string>
+  <string name="error">Erreur</string>
+  <string name="waypoint">Point de passage</string>
+  <string name="cancel">Annuler</string>
+  <string name="close">Fermer</string>
+  <string name="edit">Modifier</string>
+  <string name="save">Enregistrer</string>
+
+  <!-- Placemark labels for start and end of track -->
+  <string name="start">(Début)</string>
+  <string name="end">(Fin)</string>
+
+  <!--  TrackList -->
+  <string name="tracklist_show_track">Afficher</string>
+  <string name="tracklist_send_to_fusiontables">Envoyer à Google Fusion Tables</string>
+  <string name="tracklist_send_to_new_fusiontable">Envoyer et créer un nouvelle table Google Fusion Tables</string>
+  <string name="tracklist_send_to_docs">Envoyer à Google Docs</string>
+  <string name="tracklist_send_to_google">Envoyer à Google...</string>
+  <string name="tracklist_delete_track">Effacer du téléphone...</string>
+  <string name="tracklist_edit_track">Consulter les détails</string>
+  <string name="tracklist_write_to_sd">Enregistrer sur la carte SD...</string>
+  <string name="tracklist_save_as_gpx">Enregistrer en fichier GPX </string>
+  <string name="tracklist_save_as_kml">Enregistrer en fichier KML</string>
+  <string name="tracklist_btn_send_all_to_fusiontables">Envoyer à Google Fusion Tables</string>
+  <string name="tracklist_btn_export_all">Exporter tous les parcours</string>
+  <string name="tracklist_btn_delete_all">Tout supprimer</string>
+  <string name="tracklist_pick_one">Choisissez un parcours. Faites un appui prolongé pour plus d\'options.</string>
+  <string name="tracklist_all_tracks">Tous les parcours:</string>
+  <string name="tracklist_this_track">Ce parcours</string>
+  <string name="tracklist_share_track">Partager...</string>
+  <string name="tracklist_share_gpx_file">Fichier GPX</string>
+  <string name="tracklist_share_kml_file">Fichier KML</string>
+  <string name="tracklist_clear_map">Effacer la carte</string>
+
+  <!-- Waypoints list -->
+  <string name="waypointslist_btn_delete_all">Supprimer toutes les balises</string>
+  <string name="waypointslist_this_waypoint">Ce marqueur</string>
+  <string name="waypointslist_delete_waypoint">Supprimer</string>
+  <string name="waypointslist_edit_waypoint">Consulter les détails</string>
+  <string name="waypointslist_show_waypoint">Indiquer sur la carte</string>
+  <string name="waypointslist_btn_insert_waypoint">Ajout point de passage</string>
+  <string name="waypointslist_btn_insert_statistics">Ajout de statistiques</string>
+  <string name="waypointslist_pick_one">Choisissez une balise. Faites un appui prolongé pour plus d\'options.</string>
+
+  <!-- MyTracks Details -->
+  <string name="trackdetails_title">Détails parcours</string>
+  <string name="trackdetails_name">Nom du parcours</string>
+  <string name="trackdetails_name_hint">Nom du parcours</string>
+  <string name="trackdetails_description">Description du parcours</string>
+  <string name="trackdetails_description_hint">Description du parcours</string>
+  <string name="trackdetails_category">Type d\'activité (randonnée, cyclisme, jogging, escalade...)</string>
+  <string name="trackdetails_category_hint">Type d\'activité</string>
+
+  <!-- MyTracks Waypoint Details -->
+  <string name="waypointdetails_title">Details balise</string>
+  <string name="waypointdetails_name">Nom de la balise</string>
+  <string name="waypointdetails_name_hint">Nom de la balise</string>
+  <string name="waypointdetails_description">Description balise</string>
+  <string name="waypointdetails_description_hint">Description balise</string>
+  <string name="waypointdetails_category">Nom de balise (par ex.: immeuble, boutique, point de vue...)</string>
+  <string name="waypointdetails_category_hint">Nom de balise</string>
+
+  <!-- MyTracks Settings -->
+  <string name="mytracks_settings">Paramètres My Tracks</string>
+  <string name="settings_display">Affichage</string>
+  <string name="settings_recording">Enregistrement</string>
+  <string name="settings_sharing">Partage</string>
+
+  <string name="settings_announcement_frequency">Fréquence des annonces</string>
+  <string name="settings_announcement_frequency_summary">Temps minimum entre deux annonces vocales</string>
+
+  <string name="settings_min_recording_distance">Distance min. entre 2 points</string>
+  <string name="settings_min_recording_distance_summary">Plus petite distance entre deux enregistrements de votre position</string>
+
+  <string name="settings_max_recording_distance">Distance max. entre 2 points</string>
+  <string name="settings_max_recording_distance_summary">Si deux points successifs sont plus éloignés, un nouveau parcours sera créé</string>
+
+  <string name="settings_min_recording_interval">Fréquence d\'enregistrement</string>
+  <string name="settings_min_recording_interval_summary">Plus petit intervalle de temps entre deux enregistrements de votre position</string>
+
+  <string name="settings_min_required_accuracy">Précision minimum</string>
+  <string name="settings_min_required_accuracy_summary">L\'enregistrement sera suspendu si la géolocalisation est moins précise</string>
+
+  <string name="settings_metric_units">Système métrique</string>
+  <string name="settings_metric_units_summary_on">Le système métrique sera utilisé pour l\'affichage des distances</string>
+  <string name="settings_metric_units_summary_off">Le système impérial sera utilisé pour l\'affichage des distances</string>
+
+  <string name="settings_map_public">Cartes publiques</string>
+  <string name="settings_map_public_summary_on">Les cartes partagées seront visibles par tout le monde sur maps.google.com</string>
+  <string name="settings_map_public_summary_off">Les cartes ne seront pas partagées publiquement sur maps.google.com</string>
+
+  <string name="settings_report_speed_or_pace">Afficher vitesse/rythme</string>
+  <string name="settings_report_speed_or_pace_summary_on">Afficher la vitesse</string>
+  <string name="settings_report_speed_or_pace_summary_off">Afficher le rythme</string>
+
+  <string name="settings_share_url_only">Partager URL/parcours</string>
+  <string name="settings_share_url_only_summary_on">Seule l\'adresse URL de la carte sera envoyée lors du partage</string>
+  <string name="settings_share_url_only_summary_off">Le contenu du parcours sera également inclus lors du partage</string>
+
+  <string name="settings_split_frequency">Fréquence de séparation</string>
+  <string name="settings_split_frequency_summary">Temps ou distance minimum avant l\'insertion d\'un marqueur de séparation</string>
+  <string name="pace_label">Rythme</string>
+
+  <string name="eclair_required">Nécessite au minimum Android 2.0</string>
+  <string name="settings_sensor_type">Type de capteur</string>
+  <string name="settings_sensor_type_summary">Type du capteur à utiliser</string>
+  <string name="settings_heart_rate_ant_sensor_id">Se désassocier du Cardiofréquencemètre ANT</string>
+  <string name="settings_power_ant_sensor_id">Se désassocier du compteur ANT</string>
+  <string name="settings_srm_bridge_ant_sensor_id">Se désassocier du pont SRM ANT</string>
+  <string name="settings_ant_not_paired">Capteur ANT non associé</string>
+  <string name="settings_ant_paired">Capteur ANT associé: %d</string>
+  <string name="bluetooth_sensor_title">Capteur Bluetooth</string>
+  <string name="bluetooth_sensor_summary">Capteur Bluetooth à utiliser</string>
+  <string name="settings_modular_stats_display_title">Affichage des statistiques modulaires</string>
+
+  <!-- Backups -->
+  <string name="settings_backup">Sauvegarde (BETA)</string>
+  <string name="settings_sd_backup">Sauvegarde sur carte SD</string>
+  <string name="settings_backup_to_sd">Sauvegarder</string>
+  <string name="settings_backup_to_sd_summary">Copier tous vos parcours et paramètres sur la carte SD</string>
+  <string name="settings_restore_from_sd">Restaurer</string>
+  <string name="settings_restore_from_sd_summary">Restaurer tous les parcours et paramètres depuis la carte SD</string>
+
+  <string name="restore_overwrites_warning">Restaurer une sauvegarde depuis la carte SD écrasera tous vos parcours et paramètres actuels.</string>
+  <string name="select_backup_to_restore">Choisissez la sauvegarde à restaurer</string>
+  <string name="no_backups">Pas de sauvegarde disponible.</string>
+  <string name="backup_write_progress_message">Écriture de tous vos parcours et paramètres sur la carte SD. Veuillez patienter...</string>
+  <string name="backup_import_progress_message">Lecture de tous vos parcours et paramètres depuis la carte SD. Veuillez patienter...</string>
+  
+  <!-- MyTracksSky -->
+  <string name="mytracks_sky">Satellites GPS</string>
+
+  <!-- Sharing -->
+  <string name="share_map">Partager.</string>
+  <string name="share_map_subject">Je voudrais partager ma carte avec vous</string>
+  <string name="share_map_body_format">Je pense que cette carte vous intéressera :
+
+      %s</string>
+  <string name="send_track_subject">Je voudrais partager un parcours avec vous</string>
+  <string name="send_track_body_format">Je pense que ce parcours vous intéressera.
+
+    Pour voir ce parcours, utilisez Google Earth ou tout autre logiciel de cartographie.</string>
+  <string name="share_track">Partager des parcours.</string>
+
+  <!-- Visibility -->
+  <string name="unlisted_map">Carte non listée</string>
+  <string name="mapslist_no_maps_available">Vous n\'avez par encore de carte personnalisée.</string>
+
+  <!-- Statistics View -->
+  <!-- Average Moving -->
+  <string name="average_moving_speed_label">Vitesse moyenne (déplacement)</string>
+  <string name="average_moving_pace_label">Rythme moyen (dépl.)</string>
+
+  <!-- Average -->
+  <string name="average_speed_label">Vitesse moyenne</string>
+  <string name="average_pace_label">Rythme moyen</string>
+
+  <string name="elevation_chart_name">Altitude maximale</string>
+  <string name="elevation_gain_label">Dénivelé cumulé</string>
+  <string name="elevation_label">Altitude</string>
+
+  <!-- Min -->
+  <string name="min_elevation_label">Altitude min</string>
+  <string name="min_grade_label">Pente min</string>
+  <string name="min_pace_label">Rythme min</string>
+
+  <!-- Max -->
+  <string name="max_elevation_label">Altitude max</string>
+  <string name="max_grade_label">Pente max</string>
+  <string name="max_speed_label">Vitesse max</string>
+
+  <string name="loading_track">Chargement du parcours...</string>
+
+  <!-- Chart Settings -->
+  <string name="chart_settings">Paramètres Graphique</string>
+  <!-- X Axis -->
+  <string name="x_axis">Abscisse (X)</string>
+  <string name="by_distance">Par distance</string>
+  <string name="by_time">Par durée</string>
+
+  <!-- Y Axis -->
+  <string name="y_axis">Ordonnée (Y)</string>
+
+  <!-- Units -->
+  <!-- Time  -->
+  <string name="hour">heure</string>
+  <string name="hours">heures</string>
+  <string name="second">seconde</string>
+  <string name="seconds">secondes</string>
+
+  <!-- Distance -->
+  <string name="feet">pied</string>
+  <string name="kilometers_long">kilomètres</string>
+  <string name="miles_long">milles</string>
+
+  <!-- Speed and Pace -->
+  <string name="kilometer_per_hour">km/h</string>
+  <string name="kilometer_per_hour_long">kilomètres/heure</string>
+  <string name="per_kilometer">par kilomètre</string>
+  <string name="mile_per_hour">mi/h</string>
+  <string name="mile_per_hour_long">miles/heure</string>
+  <string name="per_mile">per mile</string>
+
+
+  <string name="waiting">Waiting...</string>
+  
+  <!-- Stats Labels -->
+  <string name="moving_time_label">Durée (déplacement)</string>
+  <string name="total_time_label">Durée totale</string>
+  <string name="time_label">Durée</string>
+  <string name="sd_unavail">Carte SD indisponible</string>
+  <string name="speed">Vitesse</string>
+  <string name="start_trip">Vous devez commencer un parcours</string>
+  <string name="distance_label">Distance</string>
+  <string name="power">Puissance</string>
+  <string name="cadence">Cadence</string>
+  <string name="heart_rate">Rythme cardiaque</string>
+  <string name="max_heart_rate">Rythme cardiaque maximum</string>
+  <string name="unknown">-</string>
+  <string name="statistics">Statistiques</string>
+  <string name="total_distance_label">Distance totale</string>
+  <string name="waiting">Patientez</string>
+
+  <!-- End User License Agreement -->
+  <string name="eula_title">Accord de licence utilisateur</string>
+  <string name="accept">Accepter</string>
+  <string name="decline">Décliner</string>
+
+  <!-- About -->
+  <string name="about">À propos</string>
+  <string name="help">Aide</string>
+
+  <string name="about_team">Équipe :</string>
+
+  <!-- Send to Google -->
+  <string name="sendtogoogle_title">Envoyer à</string>
+  <string name="sendtogoogle_send_now">Envoyer maintenant</string>
+  <string name="sendtogoogle_send_stats">Envoyer les statistiques du parcours</string>
+  <string name="sendtogoogle_send_stats_and_points">Envoyer les statistiques et les balises</string>
+
+  <!-- Getting the account to upload to. -->
+  <string name="no_account_found_title">Pas de compte Google</string>
+  <string name="no_account_found">Un compte Google est nécessaire pour télécharger le parcours.</string>
+  <string name="choose_account_title">Choisissez un compte</string>
+
+  <!-- SD card -->
+  <string name="io_no_external_storage_found">Aucun emplacement externe de sauvegarde n\'a été trouvé. Assurez-vous qu\'une carte SD est insérée et que votre téléphone n\'est pas relié à un ordinateur.</string>
+  <string name="io_write_failed">Impossible d\'écrire dans le fichier.</string>
+  <string name="io_create_dir_failed">Impossible de créer un dossier dans la carte SD.</string>
+  <string name="io_write_finished">Parcours enregistré sur la carte SD.</string>
+
+  <!-- VersionChecker -->
+  <string name="version_check_title">Recherche mise à jour</string>
+  <string name="version_check_upgrade_button">Installer mise à jour</string>
+  <string name="version_check_continue_button">Continuer sans installer mise à jour</string>
+  <string name="upgrade_required">Votre version %1$s est obsolète et n\'est plus supportée. Installer les mises à jour afin de pouvoir continuer à utiliser %1$s.</string>
+  <string name="upgrade_recommended">Votre version  %1$s est obsolète et n\'est plus supportée. Vous pouvez installer les mises à jour ou continuer à l\'utiliser à vos propres risques. Certaines fonctionalités comme la synchronisation avec le serveur risquent de ne pas fonctionner tant que vous n\'installerez pas la mise à jour.</string>
+  <string name="upgrade_available">Une nouvelle version %1$s est disponible.  Vous pouvez continuer à utiliser la version actuelle sans rencontrer de problèmes mais vous de disposerez pas des dernières fonctionnalités tant que vous n\'aurez pas installé les mises à jour.</string>
+
+  <!-- Welcome -->
+  <string name="welcome">Bienvenue</string>
+  <string name="welcome_about">À propos de My Tracks</string>
+
+
+  <!-- Announcement -->
+  <string name="announce_no_distance">My Tracks pas de distance disponible</string>
+  <!-- Format:
+  $1 : Distance label
+  $2 : Distance value (5)
+  $3 : Distance units (mi, km)
+  $4 : Time description (10 minutes 5 seconds)
+  $5 : Speed value (5.6) : Pace value (5 minutes 6 seconds)
+  $6 : Speed units (mph) : Pace units (per mile)
+  -->
+  <string name="announce_template">My Tracks %1$s %2$.2f %3$s en %4$s at %5$s %6$s</string>
+
+  <!-- Check Units -->
+  <string name="check_units_title">Note sur les unités de mesure</string>
+  <string name="check_units_message">Le système métrique est utilisé par défaut. Souhaitez-vous changer ce paramètre ?</string>
+
+  <!-- Fake preference keys - never saved, but show options in the preferences screen -->
+  <string name="method_bluetooth">Bluetooth</string>
+  <string name="bluetooth_options">Options Bluetooth</string>
+  <string name="bluetooth_pairing">Association d\'un appareil</string>
+  <string name="bluetooth_pairing_summary">Visitez les paramètres Bluetooth d\'Android pour associer un nouvel appareil</string>
+  <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
+  <string name="sensor_options">Options du capteur</string>
+
+  <!-- Bluetooth Sensor -->
+  <string name="bluetooth_connected">Connecté à %s</string>
+  <string name="bluetooth_connecting">Connexion du capteur Bluetooth...</string>
+  <string name="bluetooth_not_connected">Capteur Bluetooth non connecté</string>
+
+  <!-- Sensor State -->
+  <string name="sensor_data_time">Date des données du capteur</string>
+  <string name="power_meter_enabled">Compteur activé</string>
+  <string name="heart_rate_monitor_enabled">Cardiofréquencemètre activé</string>
+  <string name="no_sensor_manager">Pas de gestionnaire de capteur</string>
+  <string name="enabled">Activé</string>
+  <string name="connecting">Connexion</string>
+  <string name="connected">Connecté</string>
+  <string name="disconnected">Déconnecté</string>
+  <string name="no_sensor_service">Pas de capteur</string>
+  <string name="searching">Recherche</string>
+  <string name="sending">Envoi</string>
+
+  <!-- Sensor Type Options -->
+  <string name="no_sensor_option">Aucun</string>
+  <string name="ant_sensor_option">Capteur ANT+</string>
+  <string name="ant_bridge_sensor_option">Pont SRM ANT+</string>
+  <string name="polar_bt_sensor_option">Bluetooth Polar</string>
+  <string name="zephyr_bt_sensor_option">Bluetooth Zephyr</string>
+
+  <!-- Manifest description (not seen inside the app) -->
+  <string name="notification_permission_label">notifications lors de l\'enregistrement de parcours</string>
+  <string name="read_tracks_permission_label">lecture des parcours enregistrés</string>
+  <string name="write_tracks_permission_label">sauvegarde de parcours, lancer/arrêter l\'enregistrement de parcours</string>
+  <string name="notification_permission_description">Notifications lors du lancement et de l\'arrêt de l\'enregistrement de parcours.</string>
+  <string name="read_tracks_permission_description">Possibilité de lire les données des parcours enregistrés, telles que les marqueurs et les points de passage.</string>
+  <string name="write_tracks_permission_description">Possibilité d\'écrire des données de parcours, telles que les marqueurs et les points de passage..</string>
+</resources>
