@@ -222,7 +222,6 @@ public abstract class Constants {
 
   public static final String SETTINGS_NAME = "SettingsActivity";
 
-
   /**
    * This is an abstract utility class.
    */
