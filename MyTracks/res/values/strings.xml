@@ -15,23 +15,60 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-  <!-- Used by the Menu -->
-  <string name="start_recording">Record track</string>
-  <string name="stop_recording">Stop recording</string>
-  <string name="switch_to_sat">Satellite Mode</string>
-  <string name="switch_to_map">Map Mode</string>
-  <string name="mylocation">My Location</string>
-  <string name="list_tracks">Tracks</string>
-  <string name="list_markers">Markers</string>
-  <string name="delete_all_tracks">Delete all tracks</string>
-  <string name="settings">Settings</string>
-  <string name="elevation">Elevation</string>
-  <string name="choose_track_message">Please select the track to view</string>
-  <string name="current_track">Current track</string>
-  <string name="current_segment">Last segment</string>
-  <string name="sensor_state">Sensor State</string>
-  <string name="aggregated_stats">Aggregated Statistics</string>
+  <!-- Menu items for the map, chart, and stat view. -->
+  <string name="start_recording"
+    translation_description="In the menu, to start recording a track.">
+    Record Track
+  </string>
+  <string name="stop_recording"
+    translation_description="In the menu, to stop recording a track.">
+    Stop Recording
+  </string>
+  <string name="list_tracks"
+    translation_description="In the menu, to show a list of all the tracks.">
+    Tracks
+  </string>
+  <string name="list_markers"
+    translation_description="In the menu, to show a list of markers for the curren track.">
+    Markers
+  </string>
+  <string name="sensor_state"
+    translation_description="In the menu, to go to the sensor state page.">
+    Sensor State
+  </string>
+  <string name="settings"
+    translation_description="In the menu, to go to the settings page.">
+    Settings
+  </string>
+  <string name="aggregated_stats"
+    translation_description="In the menu, to go to the aggregated statistics page.">
+    Aggregated Statistics
+  </string>
+  <string name="help"
+    translation_description="In the menu, to go to the help page.">
+    Help
+  </string>
 
+  <!--  Additional menu items for the map view. -->
+  <string name="mylocation"
+    translation_description="In the menu, to display user's current location.">
+    My Location
+  </string>
+    <string name="switch_to_sat"
+    translation_description="In the menu, to switch the display to the satellite mode.">
+    Satellite Mode
+  </string>
+  <string name="switch_to_map"
+    translation_description="In the menu, to switch the display to the map mode.">
+    Map Mode
+  </string>
+  
+  <!--  Additional menu items for the chart view. -->
+  <string name="chart_settings"
+    translation_description="In the menu, to change the chart settings.">
+    Chart Settings
+  </string>  
+  
   <!-- Error messages -->
   <string name="error_no_location_manager">No location manager was found on this device!</string>
   <string name="error_no_gps_location_provider">No GPS location provider was found on this device.</string>
@@ -157,6 +194,7 @@ limitations under the License.
   <string name="tracklist_share_csv_file">A CSV file</string>
   <string name="tracklist_share_tcx_file">A TCX file</string>
   <string name="tracklist_clear_map">Clear map</string>
+  
   <!-- Import All -->
   <string name="tracklist_btn_import_all">Import all</string>
   <!-- Format:
@@ -366,7 +404,6 @@ limitations under the License.
   <string name="loading_track">Loading track...</string>
 
   <!-- Chart Settings -->
-  <string name="chart_settings">Chart Settings</string>
   <!-- X Axis -->
   <string name="x_axis">X Axis</string>
   <string name="by_distance">By Distance</string>
@@ -428,6 +465,7 @@ limitations under the License.
   <string name="max_heart_rate">Max Heart Rate</string>
   <string name="unknown">-</string>
   <string name="waiting">Waiting...</string>
+  <string name="elevation">Elevation</string>
 
   <!-- End User License Agreement -->
   <string name="eula_title">End User License Agreement</string>
@@ -436,7 +474,6 @@ limitations under the License.
 
   <!-- About -->
   <string name="about">About</string>
-  <string name="help">Help</string>
   <string name="about_team">Team:</string>
   <string name="about_version">Version:</string>
   <string name="about_support">Support:</string>

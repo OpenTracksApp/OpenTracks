@@ -27,13 +27,13 @@ limitations under the License.
   </string-array>
 
   <string-array name="min_recording_distance_options_ft">
-    <item>3 ft</item>
-    <item>6 ft</item>
-    <item>10 ft</item>
-    <item>13 ft</item>
-    <item>16 ft (recomendada)</item>
-    <item>33 ft</item>
-    <item>328 ft</item>
+    <item>3 pies</item>
+    <item>6 pies</item>
+    <item>10 pies</item>
+    <item>13 pies</item>
+    <item>16 pies (recomendada)</item>
+    <item>33 pies</item>
+    <item>328 pies</item>
   </string-array>
 
   <!-- Maximum recording distance -->
@@ -47,12 +47,12 @@ limitations under the License.
   </string-array>
 
   <string-array name="max_recording_distance_options_ft">
-    <item>164 ft</item>
-    <item>328 ft</item>
-    <item>656 ft (recomendada)</item>
-    <item>1640 ft</item>
-    <item>0.6 miles</item>
-    <item>3.1 miles</item>
+    <item>164 pies</item>
+    <item>328 pies</item>
+    <item>656 pies (recomendada)</item>
+    <item>1640 pies</item>
+    <item>0.6 millas</item>
+    <item>3.1 millas</item>
   </string-array>
 
   <!-- Minimum recording interval -->
@@ -89,15 +89,15 @@ limitations under the License.
   </string-array>
 
   <string-array name="min_required_accuracy_options_ft">
-    <item>33 ft (señal GPS excelente)</item>
-    <item>66 ft</item>
-    <item>165 ft</item>
-    <item>328 ft</item>
-    <item>656 ft (recomendada)</item>
-    <item>1640 ft</item>
-    <item>0.6 miles</item>
-    <item>1.2 miles</item>
-    <item>3.1 miles (señal GPS débil)</item>
+    <item>33 pies (señal GPS excelente)</item>
+    <item>66 pies</item>
+    <item>165 pies</item>
+    <item>328 pies</item>
+    <item>656 pies (recomendada)</item>
+    <item>1640 pies</item>
+    <item>0.6 millas</item>
+    <item>1.2 millas</item>
+    <item>3.1 millas (señal GPS débil)</item>
   </string-array>
 
   <!-- Task frequency -->
@@ -135,6 +135,14 @@ limitations under the License.
     <item>1 min</item>
   </string-array>
 
+    <!-- Auto-resume track timeout -->
+  <string-array name="auto_resume_track_timeout_options">
+    <item>Nunca</item>
+    <item>5 min</item>
+    <item>10 min</item>
+    <item>15 min</item>
+    <item>Siempre</item>
+  </string-array>
 
   <!-- Other non-preference arrays -->
   <array name="activity_types">
