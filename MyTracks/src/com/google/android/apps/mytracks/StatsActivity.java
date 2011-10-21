@@ -33,8 +33,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.Window;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -67,12 +65,6 @@ public class StatsActivity extends Activity implements TrackDataListener {
    * The start time of the selected track.
    */
   private long startTime = -1;
-
-  /**
-   * If true, the statistics for the current segment are shown, otherwise
-   * for the full track.
-   */
-  private boolean showCurrentSegment = false;
 
   private TrackDataHub dataHub;
   private SharedPreferences preferences;
@@ -189,37 +181,6 @@ public class StatsActivity extends Activity implements TrackDataListener {
         utils.setSpeedLabels();
       }
     });
-  }
-
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    super.onCreateOptionsMenu(menu);
-    MenuItem currentSegment = menu.add(0,
-        Constants.MENU_CURRENT_SEGMENT, 0, R.string.current_segment);
-    currentSegment.setIcon(R.drawable.ic_menu_lastsegment);
-    return true;
-  }
-
-  @Override
-  public boolean onPrepareOptionsMenu(Menu menu) {
-    MenuItem item = menu.findItem(Constants.MENU_CURRENT_SEGMENT);
-    if (item != null) {
-      item.setTitle(showCurrentSegment
-          ? getString(R.string.current_track)
-          : getString(R.string.current_segment));
-    }
-    return super.onPrepareOptionsMenu(menu);
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case Constants.MENU_CURRENT_SEGMENT:
-        showCurrentSegment = !showCurrentSegment;
-        // TODO: Re-read only the data that interests us
-        return true;
-    }
-    return super.onOptionsItemSelected(item);
   }
 
   /**

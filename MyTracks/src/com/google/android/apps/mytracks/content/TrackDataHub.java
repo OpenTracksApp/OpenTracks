@@ -292,7 +292,8 @@ public class TrackDataHub {
 
   @Override
   protected void finalize() throws Throwable {
-    if (isStarted() || listenerHandlerThread.isAlive()) {
+    if (isStarted() ||
+        (listenerHandlerThread != null && listenerHandlerThread.isAlive())) {
       Log.e(TAG, "Forgot to stop() TrackDataHub");
     }
 
