@@ -17,55 +17,55 @@ limitations under the License.
 <resources>
   <!-- Menu items for the map, chart, and stat view. -->
   <string name="start_recording"
-          translation_description="In the menu, to start a recording.">
+    translation_description="In the menu, to start recording a track.">
     Record Track
   </string>
   <string name="stop_recording"
-          translation_description="In the menu, to stop a recording.">
+    translation_description="In the menu, to stop recording a track.">
     Stop Recording
   </string>
   <string name="list_tracks"
-          translation_description="In the menu, to show a list of all the tracks.">
+    translation_description="In the menu, to show a list of all the tracks.">
     Tracks
   </string>
   <string name="list_markers"
-          translation_description="In the menu, to show a list of markers for the curren track.">
+    translation_description="In the menu, to show a list of markers for the curren track.">
     Markers
   </string>
   <string name="sensor_state"
-          translation_description="In the menu, to go to the sensor state page.">
+    translation_description="In the menu, to go to the sensor state page.">
     Sensor State
   </string>
   <string name="settings"
-          translation_description="In the menu, to go to the settings page.">
+    translation_description="In the menu, to go to the settings page.">
     Settings
   </string>
   <string name="aggregated_stats"
-          translation_description="In the menu, to go to the aggregated statistics page.">
+    translation_description="In the menu, to go to the aggregated statistics page.">
     Aggregated Statistics
   </string>
   <string name="help"
-          translation_description="In the menu, to go to the help page.">
+    translation_description="In the menu, to go to the help page.">
     Help
   </string>
 
   <!--  Additional menu items for the map view. -->
   <string name="mylocation"
-          translation_description="In the menu, to display user's current location.">
+    translation_description="In the menu, to display user's current location.">
     My Location
   </string>
     <string name="switch_to_sat"
-          translation_description="In the menu, to switch the display to the satellite mode.">
+    translation_description="In the menu, to switch the display to the satellite mode.">
     Satellite Mode
   </string>
   <string name="switch_to_map"
-          translation_description="In the menu, to switch the display to the map mode.">
+    translation_description="In the menu, to switch the display to the map mode.">
     Map Mode
   </string>
   
   <!--  Additional menu items for the chart view. -->
   <string name="chart_settings"
-          translation_description="In the menu, to change the chart settings.">
+    translation_description="In the menu, to change the chart settings.">
     Chart Settings
   </string>  
   
