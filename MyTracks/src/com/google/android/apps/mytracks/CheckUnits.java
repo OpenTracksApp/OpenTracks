@@ -86,7 +86,7 @@ class CheckUnits {
   }
 
   private static void recordCheckPerformed(SharedPreferences preferences) {
-    ApiFeatures.getInstance().getApiPlatformAdapter().applyPreferenceChanges(
+    ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(
         preferences.edit().putBoolean(PREFERENCE_UNITS_CHECKED, true));
   }
 

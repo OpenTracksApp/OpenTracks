@@ -93,7 +93,7 @@ public class SettingsActivity extends PreferenceActivity {
     preferenceManager.setSharedPreferencesMode(0);
 
     // Set up automatic preferences backup
-    backupListener = BackupPreferencesListener.create(this, apiFeatures);
+    backupListener = apiFeatures.getApiAdapter().getBackupPreferencesListener(this);
     preferences = preferenceManager.getSharedPreferences();
     preferences.registerOnSharedPreferenceChangeListener(backupListener);
 

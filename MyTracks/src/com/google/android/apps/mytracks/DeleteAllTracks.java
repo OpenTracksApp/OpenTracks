@@ -65,7 +65,7 @@ public class DeleteAllTracks extends Handler {
             SharedPreferences.Editor editor = prefs.edit();
             // TODO: Go through data manager
             editor.putLong(context.getString(R.string.selected_track_key), -1);
-            ApiFeatures.getInstance().getApiPlatformAdapter().applyPreferenceChanges(editor);
+            ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);
             if (done != null) {
               Handler h = new Handler();
               h.post(done);

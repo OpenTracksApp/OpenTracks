@@ -41,8 +41,6 @@ import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpResponseException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.InputStreamContent;
-import com.google.api.client.http.apache.ApacheHttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.util.Strings;
 
 import android.app.Activity;
@@ -140,8 +138,7 @@ public class SendToFusionTables implements Runnable {
     this.stringUtils = new StringUtils(context);
     this.providerUtils = MyTracksProviderUtils.Factory.get(context);
 
-    HttpTransport transport = ApiFeatures.getInstance().useNetHttpTransport() 
-        ? new NetHttpTransport() : new ApacheHttpTransport();
+    HttpTransport transport = ApiFeatures.getInstance().getApiAdapter().getHttpTransport();
     httpRequestFactory = transport.createRequestFactory(new MethodOverride());
   }
 

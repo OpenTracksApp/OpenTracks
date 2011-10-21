@@ -397,7 +397,7 @@ public class TrackDataHub {
 
     // Save the selection to memory and flush.
     selectedTrackId = trackId;
-    ApiFeatures.getInstance().getApiPlatformAdapter().applyPreferenceChanges(
+    ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(
         preferences.edit().putLong(SELECTED_TRACK_KEY, trackId));
 
     // Force it to reload data from the beginning.
