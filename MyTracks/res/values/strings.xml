@@ -157,6 +157,7 @@ limitations under the License.
   <string name="tracklist_share_csv_file">A CSV file</string>
   <string name="tracklist_share_tcx_file">A TCX file</string>
   <string name="tracklist_clear_map">Clear map</string>
+  
   <!-- Import All -->
   <string name="tracklist_btn_import_all">Import all</string>
   <!-- Format:
