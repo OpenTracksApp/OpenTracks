@@ -11,5 +11,7 @@
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/MyTracks"/>
 	<classpathentry kind="lib" path="/MyTracks/libs/google-common.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/MyTracksLib"/>
+	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

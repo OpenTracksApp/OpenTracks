@@ -22,6 +22,7 @@ import com.dsi.ant.AntInterface;
 import com.dsi.ant.AntInterfaceIntent;
 import com.dsi.ant.AntMesg;
 import com.dsi.ant.exception.AntInterfaceException;
+import com.dsi.ant.exception.AntServiceNotConnectedException;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.services.sensors.SensorManager;
@@ -142,13 +143,16 @@ public abstract class AntSensorManager extends SensorManager {
       Log.w(TAG, "Failed to unregister ANT data receiver", e);
     }
 
-    try {
-      antReceiver.releaseInterface();
-    } catch (AntInterfaceException e) {
-      Log.e(TAG, "failed to release ANT interface", e);
+    if (antReceiver != null) {
+      try {
+        antReceiver.releaseInterface();
+      } catch (AntServiceNotConnectedException e) {
+        Log.i(TAG, "ANT service not connected", e);
+      } catch (AntInterfaceException e) {
+        Log.e(TAG, "failed to release ANT interface", e);
+      }
+      antReceiver.destroy();
     }
-
-    antReceiver.destroy();
   }
 
   @Override
@@ -236,7 +240,7 @@ public abstract class AntSensorManager extends SensorManager {
   /**
    * Process a raw ANT message.
    * @param antMessage the ANT message, including the size and message ID bytes
-   * @deprecated Use {@link #handleMessage(int, byte[])} instead.
+   * @deprecated Use {@link #handleMessage(byte, byte[])} instead.
    */
   protected void handleMessage(byte[] antMessage) {
     int len = antMessage[0];
