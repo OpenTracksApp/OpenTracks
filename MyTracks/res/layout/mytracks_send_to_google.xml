@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/screen"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical">
+  <LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_bar">
+    <TextView
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/sendtogoogle_title"
+      android:textSize="20dip"
+      android:textColor="#fff"
+      android:layout_marginLeft="10dip"/>
+  </LinearLayout>
+  <ScrollView android:id="@+id/sendtogoogle_scrollview"
+    android:layout_width="fill_parent"
+    android:layout_height="0dip"
+    android:layout_weight="1">
+    <TableLayout
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:stretchColumns="1"
+      android:layout_marginTop="5dip"
+      android:layout_marginLeft="5dip">
+      
+      <!-- My Maps -->
+      <TableRow>
+        <ImageView android:src="@drawable/mymaps_icon"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+        <LinearLayout
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:layout_marginLeft="10dip">
+          <CheckBox android:id="@+id/sendtogoogle_google_mymaps"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sendtogoogle_google_mymaps"
+            android:textSize="20dip"
+            android:checked="true"/>
+          <RadioGroup android:id="@+id/sendtogoogle_group_mymaps"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <RadioButton android:id="@+id/sendtogoogle_create_new_map"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:text="@string/sendtogoogle_create_new_map"/>
+            <RadioButton android:id="@+id/sendtogoogle_pick_existing_map"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:text="@string/sendtogoogle_pick_existing_map"/>
+          </RadioGroup>
+        </LinearLayout>
+      </TableRow>
+
+      <!-- Fusion Tables -->
+      <TableRow>
+        <ImageView android:src="@drawable/googledocs_icon"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+        <LinearLayout
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:layout_marginLeft="10dip">
+          <CheckBox android:id="@+id/sendtogoogle_google_fusiontables"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sendtogoogle_google_fusiontables"
+            android:textSize="20dip"
+            android:checked="true"/>
+        </LinearLayout>
+      </TableRow>
+
+      <!-- Google Docs -->
+      <TableRow>
+        <ImageView android:src="@drawable/googledocs_icon"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+        <LinearLayout
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:layout_marginLeft="10dip">
+          <CheckBox android:id="@+id/sendtogoogle_google_docs"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sendtogoogle_google_docs"
+            android:textSize="20dip"
+            android:checked="true"/>
+          <RadioGroup android:id="@+id/sendtogoogle_group_docs"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+            <RadioButton android:id="@+id/sendtogoogle_send_stats"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:text="@string/sendtogoogle_send_stats"/>
+            <RadioButton android:id="@+id/sendtogoogle_send_stats_and_points"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:text="@string/sendtogoogle_send_stats_and_points"
+              android:enabled="false"/>
+          </RadioGroup>
+        </LinearLayout>
+      </TableRow>
+    </TableLayout>
+  </ScrollView>
+  <LinearLayout
+    android:background="@drawable/list_bar"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:orientation="horizontal"
+    android:paddingLeft="2dip"
+    android:paddingRight="2dip"    
+    android:paddingTop="4dip">
+    <!-- left spacer -->
+    <LinearLayout style="@style/ButtonSpacer"/>
+    <Button android:id="@+id/sendtogoogle_cancel"
+      android:layout_gravity="left"
+      android:text="@string/cancel"
+      style="@style/Button"/>
+    <Button android:id="@+id/sendtogoogle_send_now"
+      android:layout_gravity="right"
+      android:text="@string/sendtogoogle_send_now"
+      style="@style/Button"/>
+    <!--  right spacer -->
+    <LinearLayout style="@style/ButtonSpacer"/>
+  </LinearLayout>
+</LinearLayout>
