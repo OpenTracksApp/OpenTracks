@@ -104,7 +104,7 @@ public class ImportActivity extends Activity {
             finish();
           }
         });
-        dialogBuilder.setNeutralButton(R.string.import_show_track, new OnClickListener() {
+        dialogBuilder.setNegativeButton(R.string.import_show_track, new OnClickListener() {
           @Override
           public void onClick(DialogInterface arg0, int arg1) {
             showImportedTrack();
@@ -114,7 +114,7 @@ public class ImportActivity extends Activity {
         return dialogBuilder.create();
       case FAILURE_DIALOG:
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setNeutralButton(R.string.ok, new OnClickListener() {
+        builder.setPositiveButton(R.string.ok, new OnClickListener() {
           @Override
           public void onClick(DialogInterface arg0, int arg1) {
             finish();

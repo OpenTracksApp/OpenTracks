@@ -489,13 +489,13 @@ limitations under the License.
   </ScrollView>
   <LinearLayout style="@style/ButtonLayout">
     <LinearLayout style="@style/ButtonSpacer"/>
-    <Button android:id="@+id/waypointdetails_cancel"
-      android:layout_gravity="left"
-      android:text="@string/cancel"
-      style="@style/Button"/>
     <Button android:id="@+id/waypointdetails_save"
-      android:layout_gravity="right"
+      android:layout_gravity="left"
       android:text="@string/save"
+      style="@style/Button"/>
+    <Button android:id="@+id/waypointdetails_cancel"
+      android:layout_gravity="right"
+      android:text="@string/cancel"
       style="@style/Button"/>
     <LinearLayout style="@style/ButtonSpacer"/>
   </LinearLayout>

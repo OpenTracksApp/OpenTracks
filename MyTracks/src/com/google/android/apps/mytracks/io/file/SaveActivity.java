@@ -168,7 +168,7 @@ public class SaveActivity extends Activity {
 
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
     builder.setMessage(writer.getErrorMessage());
-    builder.setNeutralButton(R.string.ok, new OnClickListener() {
+    builder.setPositiveButton(R.string.ok, new OnClickListener() {
       @Override
       public void onClick(DialogInterface dialog, int arg1) {
         dialog.dismiss();

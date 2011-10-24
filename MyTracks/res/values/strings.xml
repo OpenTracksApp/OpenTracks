@@ -513,7 +513,6 @@ limitations under the License.
 
   <!-- Welcome -->
   <string name="welcome">Welcome</string>
-  <string name="welcome_read_later">Ok</string>
   <string name="welcome_about">About My Tracks</string>
 
   <!-- Announcement -->
@@ -530,7 +529,7 @@ limitations under the License.
 
   <!-- Check Units -->
   <string name="check_units_title">Units of Measure Notice</string>
-  <string name="check_units_message">By default units are metric. Would you like to change that setting?</string>
+  <string name="check_units_message">Do you want to use metrics as your default units?</string>
 
   <!-- Fake preference keys - never saved, but show options in the preferences screen -->
   <string name="method_bluetooth">Bluetooth</string>

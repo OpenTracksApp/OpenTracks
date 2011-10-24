@@ -362,5 +362,4 @@ limitations under the License.
 
   <!-- Check Units -->
   <string name="check_units_title">Mätenheter</string>
-  <string name="check_units_message">Som standard är enheterna metriska. Vill du ändra den inställningen?</string>
 </resources>
