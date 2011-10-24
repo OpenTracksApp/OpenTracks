@@ -176,12 +176,6 @@ public abstract class Constants {
   public static final String RESUME_TRACK_EXTRA_NAME =
       "com.google.android.apps.mytracks.RESUME_TRACK";
 
-  /**
-   * The name of extra to hold the Track ID when sharing the track
-   */
-  public static final String TRACK_ID = 
-      "com.google.android.apps.mytracks.TRACK_ID";
-
   public static int getActionFromMenuId(int menuId) {
     switch (menuId) {
       case Constants.MENU_SHARE_KML_FILE:
