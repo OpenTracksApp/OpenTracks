@@ -24,6 +24,7 @@ limitations under the License.
   <!-- Broadcast notification Intent constants -->
   <string name="track_started_broadcast_action">com.google.android.apps.mytracks.TRACK_STARTED</string>
   <string name="track_stopped_broadcast_action">com.google.android.apps.mytracks.TRACK_STOPPED</string>
+  <!-- Next API refactor depricate track_id_broadcast_extra and rename it to remove the broadcast as it is used when SHARING tracks as -->
   <string name="track_id_broadcast_extra">com.google.android.apps.mytracks.TRACK_ID</string>
 
   <!-- My Tracks service constants -->
