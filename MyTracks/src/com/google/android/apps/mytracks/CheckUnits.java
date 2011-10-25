@@ -60,12 +60,12 @@ class CheckUnits {
     builder.setCancelable(true);
     builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int which) {
-        accept(context, preferences);
+        recordCheckPerformed(preferences);
       }
     });
     builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int which) {
-        recordCheckPerformed(preferences);
+        changeDefaultUnits(context, preferences);
       }
     });
     builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -77,7 +77,7 @@ class CheckUnits {
     builder.show();
   }
 
-  private static void accept(Context context, SharedPreferences preferences) {
+  private static void changeDefaultUnits(Context context, SharedPreferences preferences) {
     recordCheckPerformed(preferences);
     Intent startIntent = new Intent(context, SettingsActivity.class);
     startIntent.putExtra(context.getString(R.string.open_settings_screen), 
@@ -86,7 +86,7 @@ class CheckUnits {
   }
 
   private static void recordCheckPerformed(SharedPreferences preferences) {
-    ApiFeatures.getInstance().getApiPlatformAdapter().applyPreferenceChanges(
+    ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(
         preferences.edit().putBoolean(PREFERENCE_UNITS_CHECKED, true));
   }
 

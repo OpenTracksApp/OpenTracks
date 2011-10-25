@@ -80,7 +80,7 @@ public class TrackDetails extends Activity implements OnClickListener {
       cancel.setOnClickListener(this);
       cancel.setVisibility(View.VISIBLE);
     } else {
-      cancel.setVisibility(View.GONE);
+      cancel.setVisibility(View.INVISIBLE);
     }
     Button save = (Button) findViewById(R.id.trackdetails_save);
     save.setOnClickListener(this);

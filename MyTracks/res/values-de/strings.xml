@@ -419,7 +419,6 @@ limitations under the License.
 
   <!-- Check Units -->
   <string name="check_units_title">Einheitenbenachrichtigung</string>
-  <string name="check_units_message">Voreingestellt sind metrische Einheiten. Willst Du diese Einstellung ändern?</string>
 
   <!-- Fake preference keys - never saved, but show options in the preferences screen -->
   <string name="method_bluetooth">Bluetooth</string>

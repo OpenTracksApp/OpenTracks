@@ -375,8 +375,7 @@ limitations under the License.
 
   <!-- Check Units -->
   <string name="check_units_title">Note sur les unités de mesure</string>
-  <string name="check_units_message">Le système métrique est utilisé par défaut. Souhaitez-vous changer ce paramètre ?</string>
-
+ 
   <!-- Fake preference keys - never saved, but show options in the preferences screen -->
   <string name="method_bluetooth">Bluetooth</string>
   <string name="bluetooth_options">Options Bluetooth</string>

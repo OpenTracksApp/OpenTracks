@@ -388,7 +388,6 @@ limitations under the License.
 
   <!-- Check Units -->
   <string name="check_units_title">Avís de les unitats de mesura</string>
-  <string name="check_units_message">Les unitats són mètriques per defecte. Voleu canviar aquest paràmetre?</string>
 
   <!-- Fake preference keys - never saved, but show options in the preferences screen -->
   <string name="bluetooth_options">Opcions del Bluetooth</string>

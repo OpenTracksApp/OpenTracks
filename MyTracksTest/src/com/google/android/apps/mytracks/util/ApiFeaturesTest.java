@@ -47,15 +47,6 @@ public class ApiFeaturesTest extends TestCase {
     features = new TestableApiFeatures();
   }
 
-  public void testHasBackup() {
-    for (int i = 3; i <= 7; i++) {
-      features.setApiLevel(i);
-      assertFalse(features.hasBackup());
-    }
-    features.setApiLevel(8);
-    assertTrue(features.hasBackup());
-  }
-
   public void testHasTextToSpeech() {
     features.setApiLevel(3);
     assertFalse(features.hasTextToSpeech());
@@ -65,7 +56,7 @@ public class ApiFeaturesTest extends TestCase {
     }
   }
 
-  public void testGetApiPlatformAdapter() {
-    assertNotNull(features.getApiPlatformAdapter());
+  public void testGetApiAdapter() {
+    assertNotNull(features.getApiAdapter());
   }
 }

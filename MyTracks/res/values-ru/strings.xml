@@ -467,8 +467,7 @@ limitations under the License.
 
   <!-- Check Units -->
   <string name="check_units_title">Единицы измерения обратите внимание</string>
-  <string name="check_units_message">По умолчанию используются метрические единицы. Вы хотели бы изменить этот параметр?</string>
-
+ 
   <!-- Fake preference keys - never saved, but show options in the preferences screen -->
   <string name="method_bluetooth">Bluetooth</string>
   <string name="bluetooth_options">Параметры Bluetooth</string>

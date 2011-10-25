@@ -24,30 +24,16 @@ limitations under the License.
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_weight="1" />
-  <LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_weight="0"
-    android:background="@drawable/list_bar"
-    android:padding="3dip">
-    <Button
-      android:id="@+id/welcome_about"
-      android:layout_width="wrap_content"
-      android:layout_height="48dip"
+  <LinearLayout style="@style/ButtonLayout">
+    <LinearLayout style="@style/ButtonSpacer"/>
+    <Button android:id="@+id/welcome_ok"
       android:layout_gravity="left"
-      android:text="@string/welcome_about"
-      android:textSize="14dip" />
-    <TextView
-      android:layout_width="0dip"
-      android:layout_height="wrap_content"
-      android:layout_weight="1" />
-    <Button
-      android:id="@+id/welcome_read_later"
-      android:layout_width="wrap_content"
-      android:layout_height="48dip"
+      android:text="@string/ok"
+      style="@style/Button"/>
+    <Button android:id="@+id/welcome_about"
       android:layout_gravity="right"
-      android:text="@string/welcome_read_later"
-      android:textSize="14dip" />
+      android:text="@string/welcome_about"
+      style="@style/Button"/>
+    <LinearLayout style="@style/ButtonSpacer"/>
   </LinearLayout>
 </LinearLayout>

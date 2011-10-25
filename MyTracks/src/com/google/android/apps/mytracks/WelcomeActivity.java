@@ -47,7 +47,7 @@ public class WelcomeActivity extends Activity {
     WebView web = (WebView) findViewById(R.id.welcome_web);
     web.loadUrl("file:///android_asset/welcome.html");
 
-    findViewById(R.id.welcome_read_later).setOnClickListener(
+    findViewById(R.id.welcome_ok).setOnClickListener(
         new OnClickListener() {
           public void onClick(View v) {
             finish();
@@ -72,7 +72,7 @@ public class WelcomeActivity extends Activity {
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
     builder.setView(view);
     builder.setPositiveButton(R.string.ok, null);
-    builder.setNeutralButton(R.string.license, new DialogInterface.OnClickListener() {
+    builder.setNegativeButton(R.string.license, new DialogInterface.OnClickListener() {
       @Override 
       public void onClick(DialogInterface dialog, int which) {
         Eula.showEula(WelcomeActivity.this);

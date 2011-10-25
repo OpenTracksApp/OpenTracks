@@ -134,7 +134,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     super.onCreate(savedInstanceState);
     ApiFeatures apiFeatures = ApiFeatures.getInstance();
     if (!SystemUtils.isRelease(this)) {
-      apiFeatures.getApiPlatformAdapter().enableStrictMode();
+      apiFeatures.getApiAdapter().enableStrictMode();
     }
 
     tracker = GoogleAnalyticsTracker.getInstance();

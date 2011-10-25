@@ -122,27 +122,16 @@ limitations under the License.
       </TableRow>
     </TableLayout>
   </ScrollView>
-  <LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/list_bar"
-    android:padding="3dip">
+  <LinearLayout style="@style/ButtonLayout">
+    <LinearLayout style="@style/ButtonSpacer"/>
+    <Button android:id="@+id/chart_settings_ok"
+      android:layout_gravity="left"
+      android:text="@string/ok"
+      style="@style/Button"/>
     <Button android:id="@+id/chart_settings_cancel"
-      android:layout_width="wrap_content"
-      android:layout_height="48dip"
       android:layout_gravity="right"
       android:text="@string/cancel"
-      android:textSize="14dip"/>
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_weight="1"/>
-    <Button android:id="@+id/chart_settings_ok"
-      android:layout_width="wrap_content"
-      android:layout_height="48dip"
-      android:layout_gravity="right"
-      android:text="@string/ok"
-      android:textSize="14dip"/>
+      style="@style/Button"/>
+    <LinearLayout style="@style/ButtonSpacer"/>
   </LinearLayout>
 </LinearLayout>

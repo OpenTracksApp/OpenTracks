@@ -449,7 +449,6 @@ limitations under the License.
 
   <!-- Check Units -->
   <string name="check_units_title">测量单位提示</string>
-  <string name="check_units_message">默认单位均为公制. 你想要修改此设置吗?</string>
 
   <!-- Fake preference keys - never saved, but show options in the preferences screen -->
   <string name="method_bluetooth">蓝牙</string>

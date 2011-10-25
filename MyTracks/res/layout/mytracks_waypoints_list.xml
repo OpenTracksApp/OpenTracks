@@ -40,28 +40,16 @@ limitations under the License.
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_weight="1"/>
-  <LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/list_bar"
-    android:layout_weight="0"
-    android:padding="3dip">
-    <TextView
-      android:layout_width="0dip"
-      android:layout_height="wrap_content"
-      android:layout_weight="1"/>
+  <LinearLayout style="@style/ButtonLayout">
+    <LinearLayout style="@style/ButtonSpacer"/>
     <Button android:id="@+id/waypointslist_btn_insert_statistics"
-      android:layout_width="wrap_content"
-      android:layout_height="48dip"
-      android:layout_gravity="left|top"
+      android:layout_gravity="left"
       android:text="@string/waypointslist_btn_insert_statistics"
-      android:textSize="14dip"/>
+      style="@style/Button"/>
     <Button android:id="@+id/waypointslist_btn_insert_waypoint"
-      android:layout_width="wrap_content"
-      android:layout_height="48dip"
-      android:layout_gravity="left|top"
+      android:layout_gravity="right"
       android:text="@string/waypointslist_btn_insert_waypoint"
-      android:textSize="14dip"/>
-   </LinearLayout>
+      style="@style/Button"/>
+    <LinearLayout style="@style/ButtonSpacer"/>
+  </LinearLayout>
 </LinearLayout>

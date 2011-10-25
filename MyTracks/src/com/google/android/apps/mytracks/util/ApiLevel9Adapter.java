@@ -1,6 +1,8 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.Constants;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 
 import android.content.SharedPreferences.Editor;
 import android.os.StrictMode;
@@ -11,12 +13,11 @@ import java.util.Arrays;
 import java.util.Locale;
 
 /**
- * The Gingerbread (API level 9) specific implememntation of the
- * {@link ApiPlatformAdapter}.
+ * API level 9 specific implementation of the {@link ApiLevelAdapter}.
  *
  * @author Rodrigo Damazio
  */
-public class GingerbreadPlatformAdapter extends EclairPlatformAdapter {
+public class ApiLevel9Adapter extends ApiLevel8Adapter {
   
   @Override
   public void applyPreferenceChanges(Editor editor) {
@@ -46,5 +47,10 @@ public class GingerbreadPlatformAdapter extends EclairPlatformAdapter {
   @Override
   public DecimalFormatSymbols getDecimalFormatSymbols(Locale locale) {
     return DecimalFormatSymbols.getInstance(locale);
+  }
+  
+  @Override
+  public HttpTransport getHttpTransport() {
+    return new NetHttpTransport();
   }
 }

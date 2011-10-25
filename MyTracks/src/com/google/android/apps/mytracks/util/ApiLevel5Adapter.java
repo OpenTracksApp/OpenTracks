@@ -20,12 +20,11 @@ import android.app.NotificationManager;
 import android.app.Service;
 
 /**
- * The Eclair (API level 5) specific implementation of the
- * {@link ApiPlatformAdapter}.
- * 
+ * API level 5 specific implementation of the {@link ApiLevelAdapter}.
+ *
  * @author Bartlomiej Niechwiej
  */
-public class EclairPlatformAdapter extends CupcakePlatformAdapter {
+public class ApiLevel5Adapter extends ApiLevel3Adapter {
 
   @Override
   public void startForeground(Service service,

@@ -127,7 +127,7 @@ public class AccountChooser {
     builder.setTitle(R.string.no_account_found_title);
     builder.setMessage(R.string.no_account_found);
     builder.setCancelable(true);
-    builder.setNegativeButton(R.string.ok,
+    builder.setPositiveButton(R.string.ok,
         new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int which) {
             dialog.dismiss();
