@@ -275,7 +275,6 @@ public class DocsHelper {
   public void addTrackRow(Context context, AuthManager trixAuth,
       String spreadsheetId, String worksheetId, Track track,
       boolean metricUnits) throws IOException {
-
     String worksheetUri = String.format(DOCS_SPREADSHEET_URL_FORMAT,
         spreadsheetId, worksheetId);
     TripStatistics stats = track.getStatistics();
@@ -287,16 +286,11 @@ public class DocsHelper {
     String elevationUnit = context.getString(metricUnits ?
         R.string.meter : R.string.feet);
 
-    java.text.DateFormat dateFormat = DateFormat.getDateFormat(context);
-    java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
-    Date startTime = new Date(stats.getStartTime());
-    String dateString = dateFormat.format(startTime) + " " + timeFormat.format(startTime);
-    
     // Prepare the Post-Text we are going to send.
     DocsTagBuilder tagBuilder = new DocsTagBuilder(metricUnits)
         .append("name", track.getName())
         .append("description", track.getDescription())
-        .append("date", dateString)
+        .append("date", getDisplayDate(context, stats.getStartTime()))
         .append("totaltime", StringUtils.formatTimeAlwaysShowingHours(
             stats.getTotalTime()))
         .append("movingtime", StringUtils.formatTimeAlwaysShowingHours(
@@ -334,6 +328,21 @@ public class DocsHelper {
     writeRowData(trixAuth, worksheetUri, postText);
 
     Log.i(Constants.TAG, "Post finished.");
+  }
+
+  /**
+   * Gets the display string for a time based on the phone's setting.
+   *
+   * @param context the context to obtain the phone's setting.
+   * @param time the time
+   * @return the display string of the time
+   */
+  protected String getDisplayDate(Context context, long time) {
+    java.text.DateFormat dateFormat = DateFormat.getDateFormat(context);
+    java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
+    Date startTime = new Date(time);
+    String dateString = dateFormat.format(startTime) + " " + timeFormat.format(startTime);
+    return dateString;
   }
 
   /**
