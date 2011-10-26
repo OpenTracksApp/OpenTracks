@@ -49,7 +49,7 @@ public class TrackPathPainterFactory {
     String colorMode = prefs.getString(context.getString(R.string.track_color_mode_key), null);
     Log.i(TAG, "Creating track path painter of type: " + colorMode);
 
-    if (colorMode == null || colorMode.equals(context.getString(R.string.track_color_mode_none))) {
+    if (colorMode == null || colorMode.equals(context.getString(R.string.none))) {
       return new SingleColorTrackPathPainter(context);
     } else if (colorMode.equals(context.getString(R.string.track_color_mode_fixed))) {
       return new DynamicSpeedTrackPathPainter(context, 

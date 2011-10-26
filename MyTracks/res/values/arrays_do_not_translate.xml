@@ -120,7 +120,7 @@ limitations under the License.
   </string-array>
   
   <string-array name="track_color_mode_options">
-      <item>@string/track_color_mode_none</item>
+      <item>@string/none</item>
       <item>@string/track_color_mode_fixed</item>
       <item>@string/track_color_mode_dynamic</item>
   </string-array>

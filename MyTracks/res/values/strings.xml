@@ -584,7 +584,6 @@ limitations under the License.
   <string name="zephyr_bt_sensor_option">Zephyr Bluetooth</string>
 
   <!-- Track Color Modes -->
-  <string name="track_color_mode_none">None</string>
   <string name="track_color_mode_fixed">Fixed (BETA)</string>
   <string name="track_color_mode_dynamic">Dynamic (BETA)</string>
 </resources>
