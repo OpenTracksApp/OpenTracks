@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+  <!-- Permissions -->
+  <!-- This must be kept in sync with AndroidManifest.xml (we can't reference it there) -->
+  <string name="broadcast_notifications_permission">com.google.android.apps.mytracks.TRACK_NOTIFICATIONS</string>
+  <string name="read_track_data_permission">com.google.android.apps.mytracks.READ_TRACK_DATA</string>
+  <string name="write_track_data_permission">com.google.android.apps.mytracks.WRITE_TRACK_DATA</string>
+
+  <!-- Broadcast notification Intent constants -->
+  <string name="track_started_broadcast_action">com.google.android.apps.mytracks.TRACK_STARTED</string>
+  <string name="track_stopped_broadcast_action">com.google.android.apps.mytracks.TRACK_STOPPED</string>
+  <!-- Next API refactor depricate track_id_broadcast_extra and rename it to remove the broadcast as it is used when SHARING tracks as -->
+  <string name="track_id_broadcast_extra">com.google.android.apps.mytracks.TRACK_ID</string>
+
+  <!-- My Tracks service constants -->
+  <string name="mytracks_service_class">com.google.android.apps.mytracks.services.TrackRecordingService</string>
+  <string name="mytracks_service_package">com.google.android.maps.mytracks</string>
+
+</resources>
