@@ -173,8 +173,8 @@ public class SendToMyMaps implements Runnable {
 
       if (success) {
         statusMessageId = isNewMap
-            ? R.string.status_new_mymap_has_been_created
-            : R.string.status_tracks_have_been_uploaded;
+            ? R.string.sending_to_my_maps_success_new_map
+            : R.string.sending_to_my_maps_success_existing_map;
       }
       Log.d(TAG, "SendToMyMaps: Done: " + success);
       progressIndicator.setProgressValue(100);

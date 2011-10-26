@@ -50,21 +50,21 @@ limitations under the License.
   <string name="error_unable_to_insert_marker">Merkintää ei voitu lisätä. Paikkatietoa ei saatavilla.</string>
 
   <!-- Status messages -->
-  <string name="wait_for_fix">Odotetaan parempaa GPS-yhteyttä. Varmista että taivas on näkyvissä.</string>
+  <string name="status_wait_for_gps_fix">Odotetaan parempaa GPS-yhteyttä. Varmista että taivas on näkyvissä.</string>
   <string name="status_now_recording">Tallennetaan uutta reittiä.</string>
   <string name="status_stopped_recording">Reitin tallentaminen lopetettiin.</string>
-  <string name="status_new_mymap_has_been_created">Uusi Google My Map on luotu osoitteeseen maps.google.com.</string>
-  <string name="status_new_fusiontable_has_been_created">Uusi Google Fusion taulukko on luotu osoitteeseen google.com/fusiontables.</string>
-  <string name="status_tracks_have_been_uploaded">Reittisi on lähetetty osoitteeseen maps.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">Reittisi on luotu taulukoksi osoitteeseen  docs.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_docs">Reittisi on lähetetty osoitteeseen docs.google.com.</string>
-  <string name="status_mymap_info">Reitin näkyminen saattaa kestää muutaman minuutin.</string>
-  <string name="status_enable_gps">Avaa tästä Sijainti ja suojaus -asetukset ja valitse \'Käytä GPS-satelliitteja\'. Palaa ohjelmaan painamalla Takaisin-näppäintä.</string>
-  <string name="status_approximate_location">Huomio: Näkyvä sijainti perustuu kännykkämastoista ja WLAN-verkoista arvioituun paikkatietoon.</string>
-  <string name="status_no_location">Paikkatietoa ei löydy. Aktivoi lisää paikannusmenetelmiä (katso Asetukset) ja varmista että taivas on näkyvissä. Yritä myöhemmin uudelleen.</string>
+  <string name="sending_to_my_maps_success_new_map">Uusi Google My Map on luotu osoitteeseen maps.google.com.</string>
+  <string name="sending_to_fusion_tables_success">Uusi Google Fusion taulukko on luotu osoitteeseen google.com/fusiontables.</string>
+  <string name="sending_to_my_maps_success_existing_map">Reittisi on lähetetty osoitteeseen maps.google.com.</string>
+  <string name="sending_to_docs_success_new_doc">Reittisi on luotu taulukoksi osoitteeseen  docs.google.com.</string>
+  <string name="sending_to_docs_success_existing_doc">Reittisi on lähetetty osoitteeseen docs.google.com.</string>
+  <string name="sending_to_google_additional_info">Reitin näkyminen saattaa kestää muutaman minuutin.</string>
+  <string name="status_need_to_enable_gps">Avaa tästä Sijainti ja suojaus -asetukset ja valitse \'Käytä GPS-satelliitteja\'. Palaa ohjelmaan painamalla Takaisin-näppäintä.</string>
+  <string name="status_approximate_current_location">Huomio: Näkyvä sijainti perustuu kännykkämastoista ja WLAN-verkoista arvioituun paikkatietoon.</string>
+  <string name="status_no_current_location">Paikkatietoa ei löydy. Aktivoi lisää paikannusmenetelmiä (katso Asetukset) ja varmista että taivas on näkyvissä. Yritä myöhemmin uudelleen.</string>
   <string name="status_waypoint_inserted">Reittimerkintä lisätty.</string>
-  <string name="status_statistics_inserted">Tilastomerkintä lisätty.</string>
-  <string name="status_track_upload_status">Lähetyksen tila:</string>
+  <string name="status_marker_inserted">Tilastomerkintä lisätty.</string>
+  <string name="sending_to_google_upload_status">Lähetyksen tila:</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Odota...</string>

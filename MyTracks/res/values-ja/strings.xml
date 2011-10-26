@@ -48,20 +48,20 @@ limitations under the License.
   <string name="error_unable_to_insert_marker">マーカーの挿入ができません．位置決定ができません．</string>
 
   <!-- Status messages -->
-  <string name="wait_for_fix">GPS位置精度がよくなるまで待機しています．空が見えるところにいて下さい．</string>
+  <string name="status_wait_for_gps_fix">GPS位置精度がよくなるまで待機しています．空が見えるところにいて下さい．</string>
   <string name="status_now_recording">新しいトラックを記録中です．</string>
   <string name="status_stopped_recording">トラック記録を停止しました．</string>
-  <string name="status_new_mymap_has_been_created">新しいマイマップをmap.google.comに作成しました．</string>
-  <string name="status_new_fusiontable_has_been_created">新しいGoogle Fusion Tableをgoogle.com/fusiontablesに作成しました．</string>
-  <string name="status_tracks_have_been_uploaded">トラックをmaps.google.comに送信しました．</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">トラックをdocs.google.comの新しいスプレッドシートに送信しました．</string>
-  <string name="status_tracks_have_been_uploaded_to_docs">トラックをdocs.google.comに送信しました．</string>
-  <string name="status_mymap_info">新しいトラックが表示されるまでに数分かかることがあります．</string>
-  <string name="status_enable_gps">ここをタップして「位置情報とセキュリティの設定」を開いて「GPS機能を使用」にチェックを入れて下さい．バックボタンで戻ってください．</string>
-  <string name="status_approximate_location">ご注意: 携帯電話中継局とWi-Fiネットワークから大まかな位置を特定します．</string>
-  <string name="status_no_location">現在位置決定ができません．位置取得源を増やし(位置情報とセキュリティの設定 をご覧ください)、空が見えるようにして下さい．もう一度試して下さい．</string>
+  <string name="sending_to_my_maps_success_new_map">新しいマイマップをmap.google.comに作成しました．</string>
+  <string name="sending_to_fusion_tables_success">新しいGoogle Fusion Tableをgoogle.com/fusiontablesに作成しました．</string>
+  <string name="sending_to_my_maps_success_existing_map">トラックをmaps.google.comに送信しました．</string>
+  <string name="sending_to_docs_success_new_doc">トラックをdocs.google.comの新しいスプレッドシートに送信しました．</string>
+  <string name="sending_to_docs_success_existing_doc">トラックをdocs.google.comに送信しました．</string>
+  <string name="sending_to_google_additional_info">新しいトラックが表示されるまでに数分かかることがあります．</string>
+  <string name="status_need_to_enable_gps">ここをタップして「位置情報とセキュリティの設定」を開いて「GPS機能を使用」にチェックを入れて下さい．バックボタンで戻ってください．</string>
+  <string name="status_approximate_current_location">ご注意: 携帯電話中継局とWi-Fiネットワークから大まかな位置を特定します．</string>
+  <string name="status_no_current_location">現在位置決定ができません．位置取得源を増やし(位置情報とセキュリティの設定 をご覧ください)、空が見えるようにして下さい．もう一度試して下さい．</string>
   <string name="status_waypoint_inserted">ウェイポイントマーカーを挿入しました．</string>
-  <string name="status_statistics_inserted">統計マーカーを挿入しました．</string>
+  <string name="status_marker_inserted">統計マーカーを挿入しました．</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">お待ちください...</string>

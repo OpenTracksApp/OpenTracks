@@ -86,22 +86,79 @@ limitations under the License.
   <string name="error_out_of_memory">This file is too big (must be less than 500 KB). Aborting.</string>
   <string name="error_unable_to_insert_marker">Unable to insert marker. No location fix available.</string>
 
-  <!-- Status messages -->
-  <string name="wait_for_fix">Waiting for a better GPS fix. Make sure the sky is visible.</string>
-  <string name="status_now_recording">Now recording a new track.</string>
-  <string name="status_stopped_recording">Stopped recording your track.</string>
-  <string name="status_new_mymap_has_been_created">A new Google My Map has been created at maps.google.com.</string>
-  <string name="status_new_fusiontable_has_been_created">A new Google Fusion table has been created at google.com/fusiontables.</string>
-  <string name="status_tracks_have_been_uploaded">Your track has been sent to maps.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">Your track has been sent to a new spreadsheet at docs.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_docs">Your track has been sent to docs.google.com.</string>
-  <string name="status_mymap_info">It may take a few minutes before new tracks appear.</string>
-  <string name="status_enable_gps">Please tap here to go to Security and Location Settings and check \'enable GPS satellites\'. Press back button to return.</string>
-  <string name="status_approximate_location">Note: An approximate location as determined from cell towers and WIFI networks is shown.</string>
-  <string name="status_no_location">A location can currently not be determined. Enable more location sources (see Security and Location Settings) and make sure the sky is visible. Try again later.</string>
-  <string name="status_waypoint_inserted">A way point marker was inserted.</string>
-  <string name="status_statistics_inserted">A statistics marker was inserted.</string>
-  <string name="status_track_upload_status">Upload status:</string>
+  <!-- GPS status messages. -->
+  <string name="status_wait_for_gps_fix"
+    translation_description="In the main view, the message on the top indicating MyTracks is waiting
+      for a better GPS fix.">
+    Waiting for a better GPS fix. Make sure the sky is visible.
+  </string>
+  <string name="status_need_to_enable_gps"
+    translation_description="In the main view, the message on the top asking the user to enable
+      GPS.">     
+    Please tap here to go to \'Location &amp; security\' settings and check \'Use GPS satellites\'.
+    Press the back button to return.
+  </string>
+  <string name="status_approximate_current_location"
+    translation_description="When displaying user's current location, a status message indicating 
+      that GPS is not available and an approximate location is used instead.">
+    GPS is not available. An approximate location based on cell towers and WIFI networks is shown.
+  </string>
+  <string name="status_no_current_location"
+    translation_description="When displaying user's current location, a status message indicating
+      the current location cannot be determined.">
+    GPS is not available. Current location cannot be determined. Enable more location sources (see
+    \'Location &amp; security\' settings) and make sure the sky is visible. Try again later.
+  </string>
+  
+  <!-- Record track status message. -->
+  <string name="status_now_recording"
+    translation_description="When starting a new track recording, a status message indicating
+      success.">
+    Now recording a new track.
+  </string>
+  
+  <!-- Insert marker status message. -->
+  <string name="status_marker_inserted"
+    translation_description="When inserting a new marker, a message indicating success.">
+    A marker was inserted.
+  </string>
+  
+  <!-- Sending to Google status messages. -->
+  <string name="sending_to_google_upload_status"
+    translation_description="When sending a track to Google, the header on the top of the result
+      page.">
+    Upload status:
+  </string>
+  <string name="sending_to_google_additional_info"
+    translation_description="When sending a track to Google, the additional comment on the bottom of
+      the result page.">
+    It may take a few minutes before new tracks appear.
+  </string>
+  <string name="sending_to_my_maps_success_new_map"
+    translation_description="When sending a track to My Maps, the message on the result page
+      indicating a new map is created.">
+    A new Google My Map has been created at maps.google.com.
+  </string>
+  <string name="sending_to_my_maps_success_existing_map"
+    translation_description="When sending a track to My Maps, the message on the result page
+      indicating the track is sent to an existing map.">
+    Your track has been sent to maps.google.com.
+  </string>
+  <string name="sending_to_fusion_tables_success"
+    translation_description="When sending a track to Fusion Tables, the message on the result page
+      indicating success.">
+    A new Google Fusion table has been created at google.com/fusiontables.
+  </string>  
+  <string name="sending_to_docs_success_new_doc"
+    translation_description="When sending a track to Docs, the message on the result page indicating
+      a new spreadsheet is created.">
+    A new spreadsheet is created at docs.google.com.
+  </string>
+  <string name="sending_to_docs_success_existing_doc"
+    translation_description="When sending a track to Docs, the message on the result page indicating
+      the track is sent to an existing spreadsheet.">      
+    Your track has been sent to docs.google.com.
+  </string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Please wait...</string>

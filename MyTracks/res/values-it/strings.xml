@@ -45,18 +45,18 @@ limitations under the License.
   <string name="error_unable_to_insert_marker">Impossibile inserire il segnaposto. La posizione corrente non è disponibile.</string>
 
   <!-- Status messages -->
-  <string name="wait_for_fix">Sto aspettando il fix del GPS. Accertati che il cielo sia visibile.</string>
+  <string name="status_wait_for_gps_fix">Sto aspettando il fix del GPS. Accertati che il cielo sia visibile.</string>
   <string name="status_now_recording">Sto registrando un nuovo percorso.</string>
   <string name="status_stopped_recording">Registrazione del percorso terminata.</string>
-  <!-- <string name="status_new_fusiontable_has_been_created">Una nuova mappa è stata creata in «Le mie mappe» su maps.google.com.</string> -->
-  <string name="status_tracks_have_been_uploaded">Il tuo percorso è stato inviato a maps.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">Il tuo percorso è stato inviato ad un nuovo foglio di calcolo su docs.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_docs">Il tuo percorso è stato inviato a docs.google.com.</string>
-  <string name="status_enable_gps">Premi qui per andare a «Impostazioni di posizione e protezione» e attiva «Utilizza satelliti GPS». Poi premi il tasto di ritorno per tornare qui.</string>
-  <string name="status_approximate_location">Nota: la posizione indicata è un\'approssimazione determinata in base alle antenne cellulari e reti WIFI vicine.</string>
-  <string name="status_no_location">La posizione non può essere determinata. Attiva più fonti di posizione (vedi «Impostazioni di posizione e protezione») e eccertati che il cielo sia visibile. Riprova più tardi.</string>
+  <!-- <string name="sending_to_fusion_tables_success">Una nuova mappa è stata creata in «Le mie mappe» su maps.google.com.</string> -->
+  <string name="sending_to_my_maps_success_existing_map">Il tuo percorso è stato inviato a maps.google.com.</string>
+  <string name="sending_to_docs_success_new_doc">Il tuo percorso è stato inviato ad un nuovo foglio di calcolo su docs.google.com.</string>
+  <string name="sending_to_docs_success_existing_doc">Il tuo percorso è stato inviato a docs.google.com.</string>
+  <string name="status_need_to_enable_gps">Premi qui per andare a «Impostazioni di posizione e protezione» e attiva «Utilizza satelliti GPS». Poi premi il tasto di ritorno per tornare qui.</string>
+  <string name="status_approximate_current_location">Nota: la posizione indicata è un\'approssimazione determinata in base alle antenne cellulari e reti WIFI vicine.</string>
+  <string name="status_no_current_location">La posizione non può essere determinata. Attiva più fonti di posizione (vedi «Impostazioni di posizione e protezione») e eccertati che il cielo sia visibile. Riprova più tardi.</string>
   <string name="status_waypoint_inserted">Inserito un punto di passaggio.</string>
-  <string name="status_statistics_inserted">Inserito un segnaposto con statistiche.</string>
+  <string name="status_marker_inserted">Inserito un segnaposto con statistiche.</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Attendi per favore...</string>

@@ -49,21 +49,21 @@ limitations under the License.
   <string name="error_unable_to_insert_marker">Невозможно вставить маркер. Местоположение неизвестно.</string>
 
   <!-- Status messages -->
-  <string name="wait_for_fix">Ожидание сигнала GPS. Убедитесь в том, что вы находитесь под открытым небом.</string>
+  <string name="status_wait_for_gps_fix">Ожидание сигнала GPS. Убедитесь в том, что вы находитесь под открытым небом.</string>
   <string name="status_now_recording">Записывается новый трек.</string>
   <string name="status_stopped_recording">Запись вашего трека остановлена.</string>
-  <string name="status_new_mymap_has_been_created">Новая Google \"Мои карты\" была создана на maps.google.com.</string>
-  <string name="status_new_fusiontable_has_been_created">Новая таблица Google Fusion была создана на google.com/fusiontables.</string>
-  <string name="status_tracks_have_been_uploaded">Твой трек был отправлен на maps.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">Ваш трек был отправлен в новую электронную таблицу на docs.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_docs">Ваш трек был отправлен в docs.google.com.</string>
-  <string name="status_mymap_info">Это может занять несколько минут, прежде чем появятся новые треки.</string>
-  <string name="status_enable_gps">Пожалуйста, нажмите здесь для перехода к разделу настроек Координаты и отметьте пункт \"Спутники GPS\". Для возвращения нажмите кнопку Назад.</string>
-  <string name="status_approximate_location">Примечание: приблизительное местоположение определено относительно вышек сотовой связи и беспроводных сетей.</string>
-  <string name="status_no_location">В настоящее время местоположение не может быть определено. Включите больше источников местоположение (см. раздел настроек Координаты) и убедитесь в том, что находитесь под открытым небом. Повторите попытку позднее.</string>
+  <string name="sending_to_my_maps_success_new_map">Новая Google \"Мои карты\" была создана на maps.google.com.</string>
+  <string name="sending_to_fusion_tables_success">Новая таблица Google Fusion была создана на google.com/fusiontables.</string>
+  <string name="sending_to_my_maps_success_existing_map">Твой трек был отправлен на maps.google.com.</string>
+  <string name="sending_to_docs_success_new_doc">Ваш трек был отправлен в новую электронную таблицу на docs.google.com.</string>
+  <string name="sending_to_docs_success_existing_doc">Ваш трек был отправлен в docs.google.com.</string>
+  <string name="sending_to_google_additional_info">Это может занять несколько минут, прежде чем появятся новые треки.</string>
+  <string name="status_need_to_enable_gps">Пожалуйста, нажмите здесь для перехода к разделу настроек Координаты и отметьте пункт \"Спутники GPS\". Для возвращения нажмите кнопку Назад.</string>
+  <string name="status_approximate_current_location">Примечание: приблизительное местоположение определено относительно вышек сотовой связи и беспроводных сетей.</string>
+  <string name="status_no_current_location">В настоящее время местоположение не может быть определено. Включите больше источников местоположение (см. раздел настроек Координаты) и убедитесь в том, что находитесь под открытым небом. Повторите попытку позднее.</string>
   <string name="status_waypoint_inserted">Маркер путевой точки был вставлен.</string>
-  <string name="status_statistics_inserted">Маркер статистики был вставлен.</string>
-  <string name="status_track_upload_status">Статус загрузки:</string>
+  <string name="status_marker_inserted">Маркер статистики был вставлен.</string>
+  <string name="sending_to_google_upload_status">Статус загрузки:</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Пожалуйста, подождите...</string>

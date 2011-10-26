@@ -46,18 +46,18 @@ limitations under the License.
   <string name="error_unable_to_insert_marker">Kan inte skapa markör. Ingen position tillgänglig.</string>
 
   <!-- Status messages -->
-  <string name="wait_for_fix">Väntar på bättre GPS-position. Se till att himlen är synlig.</string>
+  <string name="status_wait_for_gps_fix">Väntar på bättre GPS-position. Se till att himlen är synlig.</string>
   <string name="status_now_recording">Spelar nu in ett nytt spår.</string>
   <string name="status_stopped_recording">Stoppade inspelning av ditt spår.</string>
-  <!-- <string name="status_new_fusiontable_has_been_created">En ny Google Mina Kartor har skapats på maps.google.com.</string> -->
-  <string name="status_tracks_have_been_uploaded">Ditt spår har skickats till maps.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">Ditt spår har skickats till ett nytt kalkylblad på docs.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_docs">Ditt spår har skickats till docs.google.com.</string>
-  <string name="status_enable_gps">Klicka här för att gå till Säkerhet och Platsinställningar och kryssa i \'aktivera gps-satteliter\'. Tryck på tillbakaknappen för att återgå.</string>
-  <string name="status_approximate_location">OBS: En ungefärlig position som avgörs från mobilmaster och WIFI-nät visas.</string>
-  <string name="status_no_location">En position kan för närvarande inte fastställas. Aktivera mer platskällor (se Säkerhet och Platsinställningar) och se till att himlen är synlig. Försök igen senare.</string>
+  <!-- <string name="sending_to_fusion_tables_success">En ny Google Mina Kartor har skapats på maps.google.com.</string> -->
+  <string name="sending_to_my_maps_success_existing_map">Ditt spår har skickats till maps.google.com.</string>
+  <string name="sending_to_docs_success_new_doc">Ditt spår har skickats till ett nytt kalkylblad på docs.google.com.</string>
+  <string name="sending_to_docs_success_existing_doc">Ditt spår har skickats till docs.google.com.</string>
+  <string name="status_need_to_enable_gps">Klicka här för att gå till Säkerhet och Platsinställningar och kryssa i \'aktivera gps-satteliter\'. Tryck på tillbakaknappen för att återgå.</string>
+  <string name="status_approximate_current_location">OBS: En ungefärlig position som avgörs från mobilmaster och WIFI-nät visas.</string>
+  <string name="status_no_current_location">En position kan för närvarande inte fastställas. Aktivera mer platskällor (se Säkerhet och Platsinställningar) och se till att himlen är synlig. Försök igen senare.</string>
   <string name="status_waypoint_inserted">En positionsmarkör har lagts in.</string>
-  <string name="status_statistics_inserted">En statistikmarkör har lagts in.</string>
+  <string name="status_marker_inserted">En statistikmarkör har lagts in.</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Var god vänta...</string>

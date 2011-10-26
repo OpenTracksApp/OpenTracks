@@ -47,18 +47,18 @@ limitations under the License.
   <string name="error_unable_to_insert_marker">Der Wegpunkt kann nicht einfügt werden. Keine Positionsbestimmung möglich.</string>
 
   <!-- Status messages -->
-  <string name="wait_for_fix">Warte auf ein besseres GPS-Signal. Bitte stelle sicher, dass der Himmel sichtbar ist.</string>
+  <string name="status_wait_for_gps_fix">Warte auf ein besseres GPS-Signal. Bitte stelle sicher, dass der Himmel sichtbar ist.</string>
   <string name="status_now_recording">Ein neuer Track wird aufgezeichnet.</string>
   <string name="status_stopped_recording">Die Aufzeichnung wurde angehalten.</string>
-  <string name="status_new_fusiontable_has_been_created">Eine neue Tabelle wurde auf google.com/fusiontables erstellt.</string>
-  <string name="status_tracks_have_been_uploaded">Dein Track wurde auf maps.google.com gespeichert.</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">Dein Track wurde in einer neuen Tabelle bei docs.google.com gespeichert.</string>
-  <string name="status_tracks_have_been_uploaded_to_docs">Dein Track wurde an docs.google.com gesendet.</string>
-  <string name="status_enable_gps">Hier berühren, um zu den Sicherheits- und Positionseinstellungen zu gelangen. Aktiviere \'GPS-Satelliten\'. Drücke dann den Zurück-Knopf, um hierher zurückzukehren.</string>
-  <string name="status_approximate_location">Anmerkung: Eine ungefähre Position wird angezeigt, bestimmt mittels Mobilfunkstationen und WiFi-Netzwerken.</string>
-  <string name="status_no_location">Die Position kann derzeit nicht bestimmt werden. Aktiviere mehr Positionsquellen (siehe Sicherheits- und Positionseinstellungen) und stelle sicher, dass der Himmel sichtbar ist.</string>
+  <string name="sending_to_fusion_tables_success">Eine neue Tabelle wurde auf google.com/fusiontables erstellt.</string>
+  <string name="sending_to_my_maps_success_existing_map">Dein Track wurde auf maps.google.com gespeichert.</string>
+  <string name="sending_to_docs_success_new_doc">Dein Track wurde in einer neuen Tabelle bei docs.google.com gespeichert.</string>
+  <string name="sending_to_docs_success_existing_doc">Dein Track wurde an docs.google.com gesendet.</string>
+  <string name="status_need_to_enable_gps">Hier berühren, um zu den Sicherheits- und Positionseinstellungen zu gelangen. Aktiviere \'GPS-Satelliten\'. Drücke dann den Zurück-Knopf, um hierher zurückzukehren.</string>
+  <string name="status_approximate_current_location">Anmerkung: Eine ungefähre Position wird angezeigt, bestimmt mittels Mobilfunkstationen und WiFi-Netzwerken.</string>
+  <string name="status_no_current_location">Die Position kann derzeit nicht bestimmt werden. Aktiviere mehr Positionsquellen (siehe Sicherheits- und Positionseinstellungen) und stelle sicher, dass der Himmel sichtbar ist.</string>
   <string name="status_waypoint_inserted">Ein Wegpunkt wurde eingefügt.</string>
-  <string name="status_statistics_inserted">Ein Statistikwegpunkt wurde eingefügt.</string>
+  <string name="status_marker_inserted">Ein Statistikwegpunkt wurde eingefügt.</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Bitte warten…</string>
