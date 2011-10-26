@@ -415,5 +415,5 @@ limitations under the License.
   <string name="sending">S\'està enviant</string>
 
   <!-- Sensor Type Options -->
-  <string name="no_sensor_option">Cap</string>
+  <string name="sensor_type_option_none">Cap</string>
 </resources>

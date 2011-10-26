@@ -55,7 +55,8 @@ limitations under the License.
     My Location
   </string>
     <string name="switch_to_sat"
-    translation_description="In the menu for the map view, to switch the display to the satellite mode.">
+    translation_description="In the menu for the map view, to switch the display to the satellite
+        mode.">
     Satellite Mode
   </string>
   <string name="switch_to_map"
@@ -577,13 +578,47 @@ limitations under the License.
           MyTracks and start/stop MyTracks recording.</string>
 
   <!-- Sensor Type Options -->
-  <string name="no_sensor_option">NONE</string>
-  <string name="ant_sensor_option">ANT+ Sensors</string>
-  <string name="ant_bridge_sensor_option">SRM ANT+ Bridge</string>
-  <string name="polar_bt_sensor_option">Polar Bluetooth</string>
-  <string name="zephyr_bt_sensor_option">Zephyr Bluetooth</string>
+  <string name="sensor_type_option_none"
+    translation_description="In the Sensor Options settings page, for the Sensor Type picker, the
+        dropdown option to not connect to any sensor.">
+    None
+  </string>
+  <string name="sensor_type_option_ant"
+    translation_description="In the Sensor Options settings page, for the Sensor Type picker, the
+        dropdown option to connect to an ANT+ sensor.">  
+    ANT+ Sensor
+  </string>
+  <string name="sensor_type_option_srm_ant_bridge"
+    translation_description="In the Sensor Options settings page, for the Sensor Type picker, the
+        dropdown option to connect to a SRM ANT+ bridge.">  
+    SRM ANT+ Bridge
+  </string>
+  <string name="sensor_type_option_polar"
+    translation_description="In the Sensor Options settings page, for the Sensor Type picker, the
+        dropdown option to connect to a Polar bluetooth sensor.">  
+    Polar Bluetooth
+  </string>
+  <string name="sensor_type_option_zephyr"
+    translation_description="In the Sensor Options settings page, for the Sensor Type picker, the
+        dropdown option to connect to a Zephyr bluetooth sensor.">     
+    Zephyr Bluetooth
+  </string>
 
-  <!-- Track Color Modes -->
-  <string name="track_color_mode_fixed">Fixed (BETA)</string>
-  <string name="track_color_mode_dynamic">Dynamic (BETA)</string>
+  <!-- Track Color Mode Options -->
+  <string name="track_color_mode_option_none"
+    translation_description="In the Display settings page, for the Track Color Mode picker, the
+        dropdown option to only use one color to color a track.">
+    One Color
+  </string>
+  <string name="track_color_mode_option_fixed"
+    translation_description="In the Display settings page, for the Track Color Mode picker, the 
+        dropdown option to use different colors to color a track based on fixed speed thresholds.">
+    Fixed Thresholds
+  </string>
+  <string name="track_color_mode_option_dynamic"
+    translation_description="In the Display settings page, for the Track Color Mode picker, the
+        dropdown option to use different colors to color a track based on dynamic speed thresholds."
+        >
+    Dynamic Thresholds
+  </string>
 </resources>

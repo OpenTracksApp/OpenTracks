@@ -496,9 +496,9 @@ limitations under the License.
   <string name="sending">Отправка</string>
 
   <!-- Sensor Type Options -->
-  <string name="no_sensor_option">Нет</string>
-  <string name="ant_sensor_option">ANT+ Датчик</string>
-  <string name="ant_bridge_sensor_option">SRM ANT+ Bridge</string>
+  <string name="sensor_type_option_none">Нет</string>
+  <string name="sensor_type_option_ant">ANT+ Датчик</string>
+  <string name="sensor_type_option_srm_ant_bridge">SRM ANT+ Bridge</string>
 
   <!-- Manifest description (not seen inside the app) -->
   <string name="notification_permission_label">получать уведомления о записи трека</string>

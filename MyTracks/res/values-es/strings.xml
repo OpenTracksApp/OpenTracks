@@ -514,14 +514,15 @@ limitations under the License.
   <string name="read_tracks_permission_description">Poder leer datos, como puntos de interés.</string>
   <string name="write_tracks_permission_description">Poder escribir datos, como registrar o añadir puntos de interés.</string>
   
-    <!-- Sensor Type Options -->
-  <string name="no_sensor_option">Ninguno</string>
-  <string name="ant_sensor_option">Sensores ANT+</string>
-  <string name="ant_bridge_sensor_option">Puente SRM ANT+</string>
-  <string name="polar_bt_sensor_option">Bluetooth Polar</string>
-  <string name="zephyr_bt_sensor_option">Bluetooth Zephyr</string>
+  <!-- Sensor Type Options -->
+  <string name="sensor_type_option_none">Ninguno</string>
+  <string name="sensor_type_option_ant">Sensores ANT+</string>
+  <string name="sensor_type_option_srm_ant_bridge">Puente SRM ANT+</string>
+  <string name="sensor_type_option_polar">Bluetooth Polar</string>
+  <string name="sensor_type_option_zephyr">Bluetooth Zephyr</string>
 
   <!-- Track Color Modes -->
-  <string name="track_color_mode_fixed">Fijo (BETA)</string>
-  <string name="track_color_mode_dynamic">Dinámico (BETA)</string>
+  <string name="track_color_mode_option_none">Ninguno</string>
+  <string name="track_color_mode_option_fixed">Fijo (BETA)</string>
+  <string name="track_color_mode_option_dynamic">Dinámico (BETA)</string>
 </resources>

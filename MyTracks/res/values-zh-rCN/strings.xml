@@ -476,10 +476,10 @@ limitations under the License.
   <string name="sending">发送中</string>
 
   <!-- Sensor Type Options -->
-  <string name="no_sensor_option">无</string>
-  <string name="ant_sensor_option">ANT+ 感应器</string>
-  <string name="ant_bridge_sensor_option">SRM ANT+ 转接器</string>
-  <string name="polar_bt_sensor_option">Polar Bluetooth</string>
-  <string name="zephyr_bt_sensor_option">Zephyr 蓝牙设备</string>
+  <string name="sensor_type_option_none">无</string>
+  <string name="sensor_type_option_ant">ANT+ 感应器</string>
+  <string name="sensor_type_option_srm_ant_bridge">SRM ANT+ 转接器</string>
+  <string name="sensor_type_option_polar">Polar Bluetooth</string>
+  <string name="sensor_type_option_zephyr">Zephyr 蓝牙设备</string>
   
 </resources>

@@ -499,11 +499,11 @@ limitations under the License.
   <string name="searching">Etsitään</string>
   <string name="sending">Lähetetään</string>
 
-  <string name="no_sensor_option">Ei sensoria</string>
-  <string name="ant_sensor_option">ANT+ -sensori</string>
-  <string name="ant_bridge_sensor_option">SRM ANT+ -silta</string>
-  <string name="polar_bt_sensor_option">Polar bluetooth</string>
-  <string name="zephyr_bt_sensor_option">Zephyr bluetooth</string>
+  <string name="sensor_type_option_none">Ei sensoria</string>
+  <string name="sensor_type_option_ant">ANT+ -sensori</string>
+  <string name="sensor_type_option_srm_ant_bridge">SRM ANT+ -silta</string>
+  <string name="sensor_type_option_polar">Polar bluetooth</string>
+  <string name="sensor_type_option_zephyr">Zephyr bluetooth</string>
 
   <!-- Manifest description (not seen inside the app) -->
   <string name="notification_permission_label">vastaanota huomautuksia reitin tallentamisesta</string>

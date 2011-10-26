@@ -403,11 +403,11 @@ limitations under the License.
   <string name="sending">Envoi</string>
 
   <!-- Sensor Type Options -->
-  <string name="no_sensor_option">Aucun</string>
-  <string name="ant_sensor_option">Capteur ANT+</string>
-  <string name="ant_bridge_sensor_option">Pont SRM ANT+</string>
-  <string name="polar_bt_sensor_option">Bluetooth Polar</string>
-  <string name="zephyr_bt_sensor_option">Bluetooth Zephyr</string>
+  <string name="sensor_type_option_none">Aucun</string>
+  <string name="sensor_type_option_ant">Capteur ANT+</string>
+  <string name="sensor_type_option_srm_ant_bridge">Pont SRM ANT+</string>
+  <string name="sensor_type_option_polar">Bluetooth Polar</string>
+  <string name="sensor_type_option_zephyr">Bluetooth Zephyr</string>
 
   <!-- Manifest description (not seen inside the app) -->
   <string name="notification_permission_label">notifications lors de l\'enregistrement de parcours</string>

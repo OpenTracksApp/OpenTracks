@@ -469,9 +469,9 @@ limitations under the License.
   <string name="sending">送信中</string>
 
   <!-- Sensor Type Options -->
-  <string name="no_sensor_option">なし</string>
-  <string name="ant_sensor_option">ANT+ センサー</string>
-  <string name="ant_bridge_sensor_option">SRM ANT+ ブリッジ</string>
+  <string name="sensor_type_option_none">なし</string>
+  <string name="sensor_type_option_ant">ANT+ センサー</string>
+  <string name="sensor_type_option_srm_ant_bridge">SRM ANT+ ブリッジ</string>
     
   <!-- Manifest description (not seen inside the app) -->
   <string name="notification_permission_label">トラック記録通知受信</string>
