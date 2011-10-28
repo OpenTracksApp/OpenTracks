@@ -617,8 +617,9 @@ limitations under the License.
   </string>
   <string name="track_color_mode_option_dynamic"
     translation_description="In the Display settings page, for the Track Color Mode picker, the
-        dropdown option to use different colors to color a track based on dynamic speed thresholds."
-        >
+        dropdown option to use different colors to color a track based on dynamically determined
+        speed thresholds. E.g., use one color for segments where the speed is below the average
+        speed of the track.">
     Dynamic Thresholds
   </string>
 </resources>
