@@ -45,18 +45,18 @@ limitations under the License.
   <string name="error_unable_to_insert_marker">Impossível inserir marcador - posição indisponível.</string>
 
   <!-- Status messages -->
-  <string name="wait_for_fix">Esperando por um sinal melhor do GPS.  Assegure-se de que o céu está visível.</string>
+  <string name="status_wait_for_gps_fix">Esperando por um sinal melhor do GPS.  Assegure-se de que o céu está visível.</string>
   <string name="status_now_recording">Gravando um novo caminho.</string>
   <string name="status_stopped_recording">Gravação interrompida.</string>
-  <string name="status_new_fusiontable_has_been_created">Uma nova Fusion Table Google foi criada em google.com/fusiontables.</string>
-  <string name="status_tracks_have_been_uploaded">Seu caminho foi enviado para maps.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">Seu caminho foi enviado para uma nova planilha em docs.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_docs">Seu caminho foi enviado para docs.google.com.</string>
-  <string name="status_enable_gps">"Por favor pressione aqui para ir aos ajustes de segurança e localização e verifique que o GPS esteja habilitado. Pressione o botão de voltar para retornar.</string>
-  <string name="status_approximate_location">Nota: Uma localização aproximada, determinada por torres de telefonia celular, está sendo mostrada.</string>
-  <string name="status_no_location">Sua localização não pôde ser determinada.  Habilite fontes adicionais de localização (veja configurações de Segurança e Localização) e assegure-se de que o céu está visível.</string>
+  <string name="sending_to_fusion_tables_success">Uma nova Fusion Table Google foi criada em google.com/fusiontables.</string>
+  <string name="sending_to_my_maps_success_existing_map">Seu caminho foi enviado para maps.google.com.</string>
+  <string name="sending_to_docs_success_new_doc">Seu caminho foi enviado para uma nova planilha em docs.google.com.</string>
+  <string name="sending_to_docs_success_existing_doc">Seu caminho foi enviado para docs.google.com.</string>
+  <string name="status_need_to_enable_gps">"Por favor pressione aqui para ir aos ajustes de segurança e localização e verifique que o GPS esteja habilitado. Pressione o botão de voltar para retornar.</string>
+  <string name="status_approximate_current_location">Nota: Uma localização aproximada, determinada por torres de telefonia celular, está sendo mostrada.</string>
+  <string name="status_no_current_location">Sua localização não pôde ser determinada.  Habilite fontes adicionais de localização (veja configurações de Segurança e Localização) e assegure-se de que o céu está visível.</string>
   <string name="status_waypoint_inserted">Um marcador de ponto de passagem foi inserido.</string>
-  <string name="status_statistics_inserted">Um marcador de estatísticas foi inserido..</string>
+  <string name="status_marker_inserted">Um marcador de estatísticas foi inserido..</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Por favor aguarde...</string>

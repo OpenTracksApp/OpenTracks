@@ -227,7 +227,7 @@ public class WaypointsList extends ListActivity
       if (trackRecordingService != null) {
         long waypointId = trackRecordingService.insertWaypoint(request);
         if (waypointId >= 0) {
-          Toast.makeText(this, R.string.status_statistics_inserted,
+          Toast.makeText(this, R.string.status_marker_inserted,
               Toast.LENGTH_LONG).show();
           return waypointId;
         }

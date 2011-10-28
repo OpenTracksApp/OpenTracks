@@ -47,18 +47,18 @@ limitations under the License.
   <string name="error_unable_to_insert_marker">No es pot inserir un marcador. No hi ha cap ubicació fixa disponible.</string>
 
   <!-- Status messages -->
-  <string name="wait_for_fix">S\'està esperant per tenir una posició GPS fixa. Assegureu-vos que el cel és visible.</string>
+  <string name="status_wait_for_gps_fix">S\'està esperant per tenir una posició GPS fixa. Assegureu-vos que el cel és visible.</string>
   <string name="status_now_recording">Ara s\'està enregistrant una ruta nova.</string>
   <string name="status_stopped_recording">S\'ha aturat l\'enregistrament de la ruta.</string>
-  <string name="status_new_fusiontable_has_been_created">S\'ha creat un Google Fusion Table nou a google.com/fusiontables.</string>
-  <string name="status_tracks_have_been_uploaded">S\'ha enviat la ruta a maps.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">S\'ha enviat la ruta a un full de càlcul a docs.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_docs">S\'ha enviat la ruta a docs.google.com.</string>
-  <string name="status_enable_gps">Toqueu aquí per anar als paràmetres de seguretat i ubicació i activeu \'habilita els satèl·lits GPS\'. Premeu el botó d\'anar enrere per tornar.</string>
-  <string name="status_approximate_location">Nota: Es mostra una ubicació determinada a partir de les xarxes sense fils i antenes telefòniques.</string>
-  <string name="status_no_location">No es pot determinar la ubicació. Habiliteu més fonts d\'ubicació (vegeu els paràmetres de seguretat i ubicació) i assegureu-vos que el cel és visible. Proveu de nou més tard.</string>
+  <string name="sending_to_fusion_tables_success">S\'ha creat un Google Fusion Table nou a google.com/fusiontables.</string>
+  <string name="sending_to_my_maps_success_existing_map">S\'ha enviat la ruta a maps.google.com.</string>
+  <string name="sending_to_docs_success_new_doc">S\'ha enviat la ruta a un full de càlcul a docs.google.com.</string>
+  <string name="sending_to_docs_success_existing_doc">S\'ha enviat la ruta a docs.google.com.</string>
+  <string name="status_need_to_enable_gps">Toqueu aquí per anar als paràmetres de seguretat i ubicació i activeu \'habilita els satèl·lits GPS\'. Premeu el botó d\'anar enrere per tornar.</string>
+  <string name="status_approximate_current_location">Nota: Es mostra una ubicació determinada a partir de les xarxes sense fils i antenes telefòniques.</string>
+  <string name="status_no_current_location">No es pot determinar la ubicació. Habiliteu més fonts d\'ubicació (vegeu els paràmetres de seguretat i ubicació) i assegureu-vos que el cel és visible. Proveu de nou més tard.</string>
   <string name="status_waypoint_inserted">S\'ha inserit un marcader de punt de ruta.</string>
-  <string name="status_statistics_inserted">S\'ha inserit un marcador d\'estadístiques.</string>
+  <string name="status_marker_inserted">S\'ha inserit un marcador d\'estadístiques.</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Espereu...</string>

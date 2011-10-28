@@ -48,18 +48,18 @@ limitations under the License.
   <string name="error_unable_to_insert_marker">Impossible d\'insérer une balise.  Position inconnue.</string>
 
   <!-- Status messages -->
-  <string name="wait_for_fix">Attente du signal GPS. Assurez-vous que le ciel est bien visible.</string>
+  <string name="status_wait_for_gps_fix">Attente du signal GPS. Assurez-vous que le ciel est bien visible.</string>
   <string name="status_now_recording">Parcours en cours d\'enregistrement.</string>
   <string name="status_stopped_recording">Enregistrement du parcours terminé.</string>
-  <string name="status_new_fusiontable_has_been_created">Une nouvelle table Google Fusion vient d\'être créée sur google.com/fusiontables.</string>
-  <string name="status_tracks_have_been_uploaded">Votre parcours a été envoyé à maps.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">Votre parcours a été envoyé dans un tableur à docs.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_docs">Votre parcours a été envoyé à docs.google.com.</string>
-  <string name="status_enable_gps">Cliquez ici et allez dans \'Paramètres\', \'Sécurité et Localisation\' et selectionnez \'Activer les satellites GPS\'. Appuyez sur le bouton de retour pour revenir au menu.</string>
-  <string name="status_approximate_location">Note : Votre position est approximative, elle a été déterminée par les antennes de téléphonie ou le réseau WiFi.</string>
-  <string name="status_no_location">Votre position ne peut être déterminée. Vérifiez votre configuration dans \'Paramètres\', \'Sécurité et Localisation\'. Assurez-vous également que le ciel soit bien visible.</string>
+  <string name="sending_to_fusion_tables_success">Une nouvelle table Google Fusion vient d\'être créée sur google.com/fusiontables.</string>
+  <string name="sending_to_my_maps_success_existing_map">Votre parcours a été envoyé à maps.google.com.</string>
+  <string name="sending_to_docs_success_new_doc">Votre parcours a été envoyé dans un tableur à docs.google.com.</string>
+  <string name="sending_to_docs_success_existing_doc">Votre parcours a été envoyé à docs.google.com.</string>
+  <string name="status_need_to_enable_gps">Cliquez ici et allez dans \'Paramètres\', \'Sécurité et Localisation\' et selectionnez \'Activer les satellites GPS\'. Appuyez sur le bouton de retour pour revenir au menu.</string>
+  <string name="status_approximate_current_location">Note : Votre position est approximative, elle a été déterminée par les antennes de téléphonie ou le réseau WiFi.</string>
+  <string name="status_no_current_location">Votre position ne peut être déterminée. Vérifiez votre configuration dans \'Paramètres\', \'Sécurité et Localisation\'. Assurez-vous également que le ciel soit bien visible.</string>
   <string name="status_waypoint_inserted">Un point de passage a été inséré.</string>
-  <string name="status_statistics_inserted">Une balise de statistiques a été insérée.</string>
+  <string name="status_marker_inserted">Une balise de statistiques a été insérée.</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Patientez SVP...</string>

@@ -46,18 +46,18 @@ limitations under the License.
   <string name="error_unable_to_insert_marker">Nie można wstawić markera. Brak poprawnych danych o lokalizacji.</string>
 
   <!-- Status messages -->
-  <string name="wait_for_fix">Oczekiwanie na lepsze ustalenie pozycji GPS. Upewnij się, że niebo jest widoczne.</string>
+  <string name="status_wait_for_gps_fix">Oczekiwanie na lepsze ustalenie pozycji GPS. Upewnij się, że niebo jest widoczne.</string>
   <string name="status_now_recording">Rejestrowanie nowej trasy.</string>
   <string name="status_stopped_recording">Zatrzymano rejestrowanie nowej trasy.</string>
-  <!-- <string name="status_new_fusiontable_has_been_created">Utworzona nową Mapę Google na maps.google.com.</string> -->
-  <string name="status_tracks_have_been_uploaded">Twoja trasa został wysłana do maps.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">Twoja trasa została wysłana do nowego arkusza na docs.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_docs">Twoja trasa została wysłana do docs.google.com.</string>
-  <string name="status_enable_gps">Tapnij tutaj, aby przejść do ustawień Lokalizacji i zabezpieczeń, a następnie zaznacz Użyj satelitów GPS. Naciśnij klawisz Wstecz, aby powrócić.</string>
-  <string name="status_approximate_location">Uwaga: używana jest przybliżona lokalizacja ustalona za pomocą stacji komórkowych i sieci WIFI.</string>
-  <string name="status_no_location">Lokalizacja nie może być obecnie ustalona. Włącz wiecej źródeł (zobacz ustawienia Lokalizacji i zabezpieczeń) i upewnij się, że niebo jest widoczne. Spróbuj później.</string>
+  <!-- <string name="sending_to_fusion_tables_success">Utworzona nową Mapę Google na maps.google.com.</string> -->
+  <string name="sending_to_my_maps_success_existing_map">Twoja trasa został wysłana do maps.google.com.</string>
+  <string name="sending_to_docs_success_new_doc">Twoja trasa została wysłana do nowego arkusza na docs.google.com.</string>
+  <string name="sending_to_docs_success_existing_doc">Twoja trasa została wysłana do docs.google.com.</string>
+  <string name="status_need_to_enable_gps">Tapnij tutaj, aby przejść do ustawień Lokalizacji i zabezpieczeń, a następnie zaznacz Użyj satelitów GPS. Naciśnij klawisz Wstecz, aby powrócić.</string>
+  <string name="status_approximate_current_location">Uwaga: używana jest przybliżona lokalizacja ustalona za pomocą stacji komórkowych i sieci WIFI.</string>
+  <string name="status_no_current_location">Lokalizacja nie może być obecnie ustalona. Włącz wiecej źródeł (zobacz ustawienia Lokalizacji i zabezpieczeń) i upewnij się, że niebo jest widoczne. Spróbuj później.</string>
   <string name="status_waypoint_inserted">Wstawiono znacznik punktu orientacyjnego.</string>
-  <string name="status_statistics_inserted">Wstawiono znacznik statystyk.</string>
+  <string name="status_marker_inserted">Wstawiono znacznik statystyk.</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Proszę czekać...</string>

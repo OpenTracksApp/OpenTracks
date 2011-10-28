@@ -50,21 +50,21 @@ limitations under the License.
   <string name="error_unable_to_insert_marker">No se puede insertar el marcador. La ubicación no está disponible.</string>
 
   <!-- Status messages -->
-  <string name="wait_for_fix">Esperando una ubicación mas exacta del GPS. Asegúrese que el cielo sea visible.</string>
+  <string name="status_wait_for_gps_fix">Esperando una ubicación mas exacta del GPS. Asegúrese que el cielo sea visible.</string>
   <string name="status_now_recording">Grabando un nuevo recorrido.</string>
   <string name="status_stopped_recording">Grabación interrumpida.</string>
-  <string name="status_new_mymap_has_been_created">Un nuevo sitio ha sido añadido en maps.google.com.</string>
-  <string name="status_new_fusiontable_has_been_created">Una nueva tabla de Google Fusion ha sido creada en google.com/fusiontables.</string>
-  <string name="status_tracks_have_been_uploaded">Su recorrido ha sido enviado a maps.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">Su recorrido ha sido enviado a una nueva hoja de cálculo de docs.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_docs">Su recorrido ha sido enviado a docs.google.com.</string>
-  <string name="status_mymap_info">Es posible que pasen unos minutos hasta que los nuevos recorridos aparezcan.</string>
-  <string name="status_enable_gps">Por favor, presione aquí para ir al menú de Seguridad y Ubicación, y asegúrese que el GPS esté habilitado. Presione el botón "atrás" para regresar.</string>
-  <string name="status_approximate_location">Nota: Una ubicación aproximada es determinada a partir de torres de telefonía celular y redes WIFI.</string>
-  <string name="status_no_location">No puede ser determinada la ubicación actual. Habilite más fuentes de datos (vea las configuraciones de Seguridad y Ubicación) y asegúrese que el cielo sea visible. Inténtelo mas tarde.</string>
+  <string name="sending_to_my_maps_success_new_map">Un nuevo sitio ha sido añadido en maps.google.com.</string>
+  <string name="sending_to_fusion_tables_success">Una nueva tabla de Google Fusion ha sido creada en google.com/fusiontables.</string>
+  <string name="sending_to_my_maps_success_existing_map">Su recorrido ha sido enviado a maps.google.com.</string>
+  <string name="sending_to_docs_success_new_doc">Su recorrido ha sido enviado a una nueva hoja de cálculo de docs.google.com.</string>
+  <string name="sending_to_docs_success_existing_doc">Su recorrido ha sido enviado a docs.google.com.</string>
+  <string name="sending_to_google_additional_info">Es posible que pasen unos minutos hasta que los nuevos recorridos aparezcan.</string>
+  <string name="status_need_to_enable_gps">Por favor, presione aquí para ir al menú de Seguridad y Ubicación, y asegúrese que el GPS esté habilitado. Presione el botón "atrás" para regresar.</string>
+  <string name="status_approximate_current_location">Nota: Una ubicación aproximada es determinada a partir de torres de telefonía celular y redes WIFI.</string>
+  <string name="status_no_current_location">No puede ser determinada la ubicación actual. Habilite más fuentes de datos (vea las configuraciones de Seguridad y Ubicación) y asegúrese que el cielo sea visible. Inténtelo mas tarde.</string>
   <string name="status_waypoint_inserted">Un marcador de recorrido fue insertado.</string>
-  <string name="status_statistics_inserted">Un marcador de estadísticas fue insertado.</string>
-  <string name="status_track_upload_status">Estado del envío:</string>
+  <string name="status_marker_inserted">Un marcador de estadísticas fue insertado.</string>
+  <string name="sending_to_google_upload_status">Estado del envío:</string>
   
   <!-- Progress dialog -->
   <string name="progress_title">Por favor espere...</string>

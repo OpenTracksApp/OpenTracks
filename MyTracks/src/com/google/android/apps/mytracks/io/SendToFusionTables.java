@@ -205,7 +205,7 @@ public class SendToFusionTables implements Runnable {
         return;
       }
 
-      statusMessageId = R.string.status_new_fusiontable_has_been_created;
+      statusMessageId = R.string.sending_to_fusion_tables_success;
       Log.d(Constants.TAG, "SendToFusionTables: Done: " + success);
       progressIndicator.setProgressValue(PROGRESS_COMPLETE);
     } finally {
