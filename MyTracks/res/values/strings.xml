@@ -439,7 +439,8 @@ limitations under the License.
     Show on map
   </string>
   <string name="tracklist_edit_track"
-    translation_description="In the context menu for a track, the menu option to edit the track.">
+    translation_description="In the context menu for a track, the menu option to edit the track's 
+      metadata (e.g., title, activity type, etc.).">
     Edit
   </string>
   <string name="tracklist_send_to_google"
@@ -449,7 +450,7 @@ limitations under the License.
   </string>
   <string name="tracklist_share_track"
     translation_description="In the context menu for a track, the menu option to share the track
-      with friends.">
+      with friends through other applications.">
     Share with friends...
   </string>
   <string name="tracklist_write_to_sd"
@@ -458,8 +459,8 @@ limitations under the License.
     Write to SD card...
   </string>      
   <string name="tracklist_clear_map"
-    translation_description="In the context menu for a track, the menu option to clear the track
-      from the map.">
+    translation_description="In the context menu for a track, the menu option to clear the map
+      of any track.">
     Clear map
   </string>
   <string name="tracklist_delete_track"
@@ -530,7 +531,7 @@ limitations under the License.
   </string>
   <string name="import_multi_empty"
     translation_description="After importing all the tracks from the SD card, the alert message
-      indicating that no track is improted. E.g., 'No GPX file found in /mnt/sdcard/MyTracks/gpx/.
+      indicating that no track is imported. E.g., 'No GPX file found in /mnt/sdcard/MyTracks/gpx/.
       SD card may be unreadable or directory may not contain any GPX file.'.">
     No GPX file found in %s. SD card may be unreadable or directory may not contain any GPX file.
   </string>
@@ -576,7 +577,8 @@ limitations under the License.
     Show on map
   </string>
   <string name="waypointslist_edit_waypoint"
-    translation_description="In the context menu for a marker, the menu option to edit the marker."> 
+    translation_description="In the context menu for a marker, the menu option to edit the marker's
+      metadata (e.g., title, type, etc.)."> 
     Edit
   </string>
   <string name="waypointslist_delete_waypoint"
