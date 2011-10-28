@@ -85,13 +85,15 @@ limitations under the License.
       location and asking the user to try again.">
     Unable to insert marker. No GPS location. Try again.
   </string>  
-  
-  <!-- Error messages when sending to Google. -->
-  <string name="error_sending_generic"
-    translation_description="When sending a track to Google, a generic error message asking the user
-      to try again.">
-    Please try again later.
+
+  <!-- A generic error message. -->
+  <string name="error_generic"
+    translation_description="In an alert dialog, a generic error message indicating that an error
+      has occurred and asking the user to try again.">
+    An error occurred. Please try again.
   </string>
+      
+  <!-- Error messages when sending to Google. -->
   <string name="error_sending_to_my_maps"
     translation_description="When sending a track to Google My Maps, a message indicating that an
       error has occured.">
@@ -109,11 +111,6 @@ limitations under the License.
   </string>
   
   <!-- Error messages when importing a track. -->
-  <string name="error_import_generic"
-    translation_description="When importing a track from the SD card, a generic error message 
-      indicating that an error has occurred and asking the user to try again.">
-    An error occurred. Please try again.
-  </string>
   <string name="error_import_unable_to_read_file"
     translation_description="When importing a track from the SD card, a messsage indicating that
       MyTracks is unable to read the file.">
@@ -124,6 +121,8 @@ limitations under the License.
       the file does not have a valid GPX format.">
     File does not have a valid GPX format.
   </string>
+  
+  <!-- TODO(jshih@google.com) confirm if the file size limit is still 500 KB. -->
   <string name="error_import_out_of_memory"
     translation_description="When importing a track from the SD card, a message indicating that
       the file is too big, must be less than 500 KB, and aborting.">
@@ -131,10 +130,10 @@ limitations under the License.
   </string>
   
   <!--  Error messages when exporting a track. -->
-  <string name="error_export_track_does_not_exist"
-    translation_description="When exporting a track to the SD card, a message indicating that the
-      track does not exist.">
-    Track does not exist.
+  <string name="error_export_generic"
+    translation_description="When exporting a track to the SD card, a generic error message
+      indicating unable to export.">
+    Unable to export.
   </string>
   <string name="error_export_operation_canceled"
     translation_description="When exporting a track to the SD card, a message indicating that the

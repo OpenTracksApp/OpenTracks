@@ -172,10 +172,10 @@ public class ImportActivity extends Activity {
             importedTrackIds = GpxImporter.importGPXFile(is, providerUtils);
           } catch (SAXException e) {
             Log.e(TAG, "Caught an unexpected exception.", e);
-            resultMessage = R.string.error_import_generic;
+            resultMessage = R.string.error_generic;
           } catch (ParserConfigurationException e) {
             Log.e(TAG, "Caught an unexpected exception.", e);
-            resultMessage = R.string.error_import_generic;
+            resultMessage = R.string.error_generic;
           } catch (IOException e) {
             Log.e(TAG, "Caught an unexpected exception.", e);
             resultMessage = R.string.error_import_unable_to_read_file;

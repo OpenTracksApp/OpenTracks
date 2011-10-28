@@ -114,7 +114,7 @@ class TrackWriterImpl implements TrackWriter {
   private void doWriteTrack() {
     // Open the input and output
     success = false;
-    errorMessage = R.string.error_export_track_does_not_exist;
+    errorMessage = R.string.error_export_generic;
     if (track != null) {
       if (openFile()) {
         try {
