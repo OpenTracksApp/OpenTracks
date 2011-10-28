@@ -33,16 +33,16 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">Ingen platshanterare hittades på denna enhet!</string>
-  <string name="error_no_gps_location_provider">Ingen GPS-positioneringstjänst hittades på denna enhet.</string>
-  <string name="error_sending_to_fusiontables">Det uppstod ett fel i sändningen av ditt spår till Google Fusion Tables. Försök igen senare.</string>
+  <string name="error_no_gps">Ingen GPS-positioneringstjänst hittades på denna enhet.</string>
+  <string name="error_sending_to_fusion_tables">Det uppstod ett fel i sändningen av ditt spår till Google Fusion Tables. Försök igen senare.</string>
   <string name="error_sending_to_docs">Det uppstod ett fel i sändningen av ditt spår till Google Dokument. Försök igen senare.</string>
   <string name="error_unable_to_start_recording">Kan inte starta inspelningen. Försök igen.</string>
   <string name="error_unable_to_stop_recording">Kan inte stoppa inspelningen. Försök igen.</string>
-  <string name="error_unable_to_read_file">Kan inte läsa från fil.</string>
-  <string name="error_invalid_gpx_format">Filen har inte ett giltigt GPX-format.</string>
-  <string name="error_generic">Ett fel uppstod. Försök igen.</string>
-  <string name="error_track_does_not_exist">Spåret finns inte.</string>
-  <string name="error_out_of_memory">Den här filen är för stor (måste vara mindre än 500 KB). Avbryter.</string>
+  <string name="error_import_unable_to_read_file">Kan inte läsa från fil.</string>
+  <string name="error_import_invalid_gpx_format">Filen har inte ett giltigt GPX-format.</string>
+  <string name="error_import_generic">Ett fel uppstod. Försök igen.</string>
+  <string name="error_export_track_does_not_exist">Spåret finns inte.</string>
+  <string name="error_import_out_of_memory">Den här filen är för stor (måste vara mindre än 500 KB). Avbryter.</string>
   <string name="error_unable_to_insert_marker">Kan inte skapa markör. Ingen position tillgänglig.</string>
 
   <!-- Status messages -->

@@ -92,7 +92,7 @@ public class SendToDocs {
 
   private void doUpload(long trackId) {
     // TODO
-    statusMessage = activity.getString(R.string.error_sending_to_fusiontables);
+    statusMessage = activity.getString(R.string.error_sending_to_fusion_tables);
     success = false;
 
     try {

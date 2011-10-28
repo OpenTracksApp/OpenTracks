@@ -34,16 +34,16 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">Es wurde kein Dienst zur Positionsermittlung auf diesem Gerät gefunden.</string>
-  <string name="error_no_gps_location_provider">Es wurde kein GPS-Empfänger auf diesem Gerät gefunden.</string>
-  <string name="error_sending_to_fusiontables">Beim Senden des Tracks an Google Fusion Tables ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.</string>
+  <string name="error_no_gps">Es wurde kein GPS-Empfänger auf diesem Gerät gefunden.</string>
+  <string name="error_sending_to_fusion_tables">Beim Senden des Tracks an Google Fusion Tables ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.</string>
   <string name="error_sending_to_docs">Beim Senden des Tracks an Google Text &amp; Tabellen ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.</string>
   <string name="error_unable_to_start_recording">Start der Aufzeichnung fehlgeschlagen. Bitte versuche es noch einmal.</string>
   <string name="error_unable_to_stop_recording">Anhalten unmöglich. Bitte versuche es noch einmal.</string>
-  <string name="error_unable_to_read_file">Konnte Datei nicht lesen.</string>
-  <string name="error_invalid_gpx_format">Datei ist nicht im GPX-Format.</string>
-  <string name="error_generic">Ein Fehler ist aufgetreten. Bitte versuche es noch einmal.</string>
-  <string name="error_track_does_not_exist">Track existiert nicht.</string>
-  <string name="error_out_of_memory">Die Datei ist zu groß (maximal 500 KB). Operation abgebrochen.</string>
+  <string name="error_import_unable_to_read_file">Konnte Datei nicht lesen.</string>
+  <string name="error_import_invalid_gpx_format">Datei ist nicht im GPX-Format.</string>
+  <string name="error_import_generic">Ein Fehler ist aufgetreten. Bitte versuche es noch einmal.</string>
+  <string name="error_export_track_does_not_exist">Track existiert nicht.</string>
+  <string name="error_import_out_of_memory">Die Datei ist zu groß (maximal 500 KB). Operation abgebrochen.</string>
   <string name="error_unable_to_insert_marker">Der Wegpunkt kann nicht einfügt werden. Keine Positionsbestimmung möglich.</string>
 
   <!-- Status messages -->

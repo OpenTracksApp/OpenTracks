@@ -35,16 +35,16 @@ limitations under the License.
   
   <!-- Error messages -->
   <string name="error_no_location_manager">Aucune source de localisation n\'a été trouvée sur ce système !</string>
-  <string name="error_no_gps_location_provider">Aucune source GPS de localisation n\'a été trouvée sur ce système.</string>
-  <string name="error_sending_to_fusiontables">Il y a eu une erreur lors de l\'envoi de votre parcours à Google Fusion Tables. Réessayez plus tard SVP.</string>
+  <string name="error_no_gps">Aucune source GPS de localisation n\'a été trouvée sur ce système.</string>
+  <string name="error_sending_to_fusion_tables">Il y a eu une erreur lors de l\'envoi de votre parcours à Google Fusion Tables. Réessayez plus tard SVP.</string>
   <string name="error_sending_to_docs">Il y a eu une erreur lors de l\'envoi de votre parcours à Google Docs. Réessayez plus tard SVP.</string>
   <string name="error_unable_to_start_recording">Impossible de débuter l\'enregistrement. Réessayez.</string>
   <string name="error_unable_to_stop_recording">Impossible de stopper l\'enregistrement. Réessayez.</string>
-  <string name="error_unable_to_read_file">Impossible de lire le fichier.</string>
-  <string name="error_invalid_gpx_format">Le fichier n\'a pas un format GPX valide.</string>
-  <string name="error_generic">Une erreur a eu lieu. Essayez de nouveau s\'il vous plaît.</string>
-  <string name="error_track_does_not_exist">Le parcours n\'existe pas.</string>
-  <string name="error_out_of_memory">Ce fichier est trop gros (sa taille doit être inférieure à 500ko). Abandon.</string>
+  <string name="error_import_unable_to_read_file">Impossible de lire le fichier.</string>
+  <string name="error_import_invalid_gpx_format">Le fichier n\'a pas un format GPX valide.</string>
+  <string name="error_import_generic">Une erreur a eu lieu. Essayez de nouveau s\'il vous plaît.</string>
+  <string name="error_export_track_does_not_exist">Le parcours n\'existe pas.</string>
+  <string name="error_import_out_of_memory">Ce fichier est trop gros (sa taille doit être inférieure à 500ko). Abandon.</string>
   <string name="error_unable_to_insert_marker">Impossible d\'insérer une balise.  Position inconnue.</string>
 
   <!-- Status messages -->

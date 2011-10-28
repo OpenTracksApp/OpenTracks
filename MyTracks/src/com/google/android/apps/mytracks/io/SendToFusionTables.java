@@ -168,7 +168,7 @@ public class SendToFusionTables implements Runnable {
   }
 
   private void doUpload() {
-    int statusMessageId = R.string.error_sending_to_fusiontables;
+    int statusMessageId = R.string.error_sending_to_fusion_tables;
     boolean success = true;
     try {
       progressIndicator.setProgressValue(PROGRESS_INITIALIZATION);

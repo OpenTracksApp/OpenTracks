@@ -32,16 +32,16 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">Nessuna fonte di posizione trovata su questo dispositivo.</string>
-  <string name="error_no_gps_location_provider">Nessuna fonte di posizione GPS trovata su questo dispositivo.</string>
-  <string name="error_sending_to_fusiontables">Si è verificato un errore nell\'invio del percorso a Google Fusion Tables. Per favore riprova più tardi.</string>
+  <string name="error_no_gps">Nessuna fonte di posizione GPS trovata su questo dispositivo.</string>
+  <string name="error_sending_to_fusion_tables">Si è verificato un errore nell\'invio del percorso a Google Fusion Tables. Per favore riprova più tardi.</string>
   <string name="error_sending_to_docs">Si è verificato un errore nell\'invio del percorso a Google Docs. Per favore riporva più tardi.</string>
   <string name="error_unable_to_start_recording">Impossibile iniziare la registrazione. Riprova.</string>
   <string name="error_unable_to_stop_recording">Impossibile fermare la registrazione. Riprova.</string>
-  <string name="error_unable_to_read_file">Impossibile leggere da un file.</string>
-  <string name="error_invalid_gpx_format">Il file non contiene dati validi in formato GPX.</string>
-  <string name="error_generic">Si è verificato un errore. Per favore riprova.</string>
-  <string name="error_track_does_not_exist">Il percorso non esiste.</string>
-  <string name="error_out_of_memory">Il file è troppo grande (dev\'essere meno di 500 KB). Azione abbandonata.</string>
+  <string name="error_import_unable_to_read_file">Impossibile leggere da un file.</string>
+  <string name="error_import_invalid_gpx_format">Il file non contiene dati validi in formato GPX.</string>
+  <string name="error_import_generic">Si è verificato un errore. Per favore riprova.</string>
+  <string name="error_export_track_does_not_exist">Il percorso non esiste.</string>
+  <string name="error_import_out_of_memory">Il file è troppo grande (dev\'essere meno di 500 KB). Azione abbandonata.</string>
   <string name="error_unable_to_insert_marker">Impossibile inserire il segnaposto. La posizione corrente non è disponibile.</string>
 
   <!-- Status messages -->

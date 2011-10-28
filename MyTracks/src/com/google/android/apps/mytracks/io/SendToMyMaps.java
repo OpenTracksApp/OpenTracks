@@ -97,7 +97,7 @@ public class SendToMyMaps implements Runnable {
   }
 
   private void doUpload() {
-    int statusMessageId = R.string.error_sending_to_mymap;
+    int statusMessageId = R.string.error_sending_to_my_maps;
     boolean success = true;
     try {
       progressIndicator.setProgressMessage(

@@ -34,19 +34,19 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">Paikkatietoja ei löytynyt!</string>
-  <string name="error_no_gps_location_provider">GPS-palvelua ei löytynyt.</string>
-  <string name="error_sending_to_mymap">Virhe lähetettäessä reittiä Google My Maps-palveluun.</string>
-  <string name="error_sending_to_fusiontables">Virhe lähetettäessä reittiä Google Fusion Tables-palveluun.</string>
+  <string name="error_no_gps">GPS-palvelua ei löytynyt.</string>
+  <string name="error_sending_to_my_maps">Virhe lähetettäessä reittiä Google My Maps-palveluun.</string>
+  <string name="error_sending_to_fusion_tables">Virhe lähetettäessä reittiä Google Fusion Tables-palveluun.</string>
   <string name="error_sending_to_docs">Virhe lähetettäessä reittiä Google Docs-palveluun..</string>
-  <string name="error_please_try_again_later">Yritä myöhemmin uudelleen.</string>
+  <string name="error_sending_generic">Yritä myöhemmin uudelleen.</string>
   <string name="error_unable_to_start_recording">Tallennusta ei voitu aloittaa. Yritä uudelleen.</string>
   <string name="error_unable_to_stop_recording">Tallennusta ei voitu pysäyttää. Yritä uudelleen.</string>
-  <string name="error_unable_to_read_file">Tiedostovirhe.</string>
-  <string name="error_invalid_gpx_format">Virheellinen GPX-formaatti.</string>
-  <string name="error_generic">Tapahtui virhe. Yritä uudelleen.</string>
-  <string name="error_track_does_not_exist">Reittiä ei ole olemassa.</string>
-  <string name="error_operation_cancelled">Tapahtuma keskeytettiin.</string>
-  <string name="error_out_of_memory">Liian suuri tiedosto (maksimi 500 KB). Keskeytetään.</string>
+  <string name="error_import_unable_to_read_file">Tiedostovirhe.</string>
+  <string name="error_import_invalid_gpx_format">Virheellinen GPX-formaatti.</string>
+  <string name="error_import_generic">Tapahtui virhe. Yritä uudelleen.</string>
+  <string name="error_export_track_does_not_exist">Reittiä ei ole olemassa.</string>
+  <string name="error_export_operation_canceled">Tapahtuma keskeytettiin.</string>
+  <string name="error_import_out_of_memory">Liian suuri tiedosto (maksimi 500 KB). Keskeytetään.</string>
   <string name="error_unable_to_insert_marker">Merkintää ei voitu lisätä. Paikkatietoa ei saatavilla.</string>
 
   <!-- Status messages -->

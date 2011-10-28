@@ -34,17 +34,17 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">この端末でロケーションマネージャを発見できませんでした．</string>
-  <string name="error_no_gps_location_provider">この端末でGPSロケーションプロバイダを発見できました．</string>
-  <string name="error_sending_to_mymap">Googleマイマップへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
-  <string name="error_sending_to_fusiontables">Google Fusion Tablesへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
+  <string name="error_no_gps">この端末でGPSロケーションプロバイダを発見できました．</string>
+  <string name="error_sending_to_my_maps">Googleマイマップへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
+  <string name="error_sending_to_fusion_tables">Google Fusion Tablesへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
   <string name="error_sending_to_docs">Google Docsへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
   <string name="error_unable_to_start_recording">記録作成開始できません．もう一度試して下さい．</string>
   <string name="error_unable_to_stop_recording">記録停止できません．もう一度試して下さい．</string>
-  <string name="error_unable_to_read_file">ファイルからの読み込みができません．</string>
-  <string name="error_invalid_gpx_format">ファイルは正しいGPX書式ではありませんでした．</string>
-  <string name="error_generic">エラーが発生しました．もう一度試して下さい．</string>
-  <string name="error_track_does_not_exist">トラックが存在しません．</string>
-  <string name="error_out_of_memory">大きなファイルです(500KB未満でなければなりません)．終了します．</string>
+  <string name="error_import_unable_to_read_file">ファイルからの読み込みができません．</string>
+  <string name="error_import_invalid_gpx_format">ファイルは正しいGPX書式ではありませんでした．</string>
+  <string name="error_import_generic">エラーが発生しました．もう一度試して下さい．</string>
+  <string name="error_export_track_does_not_exist">トラックが存在しません．</string>
+  <string name="error_import_out_of_memory">大きなファイルです(500KB未満でなければなりません)．終了します．</string>
   <string name="error_unable_to_insert_marker">マーカーの挿入ができません．位置決定ができません．</string>
 
   <!-- Status messages -->

@@ -531,7 +531,7 @@ public class MapActivity extends com.google.android.maps.MapActivity
           if (isGpsDisabled) {
             // Give a warning about this state.
             Toast.makeText(MapActivity.this,
-                R.string.error_no_gps_location_provider,
+                R.string.error_no_gps,
                 Toast.LENGTH_LONG).show();
 
             // Make clicking take the user to the location settings.

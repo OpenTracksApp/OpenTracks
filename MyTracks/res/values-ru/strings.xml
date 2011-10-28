@@ -34,18 +34,18 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">На этом устройстве не был обнаружен диспетчер местоположения!</string>
-  <string name="error_no_gps_location_provider">На этом устройстве не был обнаружен поставщик GPS местоположения.</string>
-  <string name="error_sending_to_mymap">Ошибка при отправке вашего трека в Google \"Мои карты\".</string>
-  <string name="error_sending_to_fusiontables">Ошибка при отправке вашего трека в Google Fusion Tables.</string>
+  <string name="error_no_gps">На этом устройстве не был обнаружен поставщик GPS местоположения.</string>
+  <string name="error_sending_to_my_maps">Ошибка при отправке вашего трека в Google \"Мои карты\".</string>
+  <string name="error_sending_to_fusion_tables">Ошибка при отправке вашего трека в Google Fusion Tables.</string>
   <string name="error_sending_to_docs">Ошибка при отправке вашего трека в Google Документы.</string>
-  <string name="error_please_try_again_later">Пожалуйста, повторите попытку позже.</string>
+  <string name="error_sending_generic">Пожалуйста, повторите попытку позже.</string>
   <string name="error_unable_to_start_recording">Не удалось начать запись. Попробуйте еще раз.</string>
   <string name="error_unable_to_stop_recording">Не удалось остановить запись. Попробуйте еще раз.</string>
-  <string name="error_unable_to_read_file">Не удалось прочитать из файла.</string>
-  <string name="error_invalid_gpx_format">Неверный формат GPX файла.</string>
-  <string name="error_generic">Произошла ошибка. Пожалуйста, попробуйте еще раз.</string>
-  <string name="error_track_does_not_exist">Трек не существует.</string>
-  <string name="error_out_of_memory">Этот файл слишком большой (должен быть меньше, чем 500 КБ). Прервано.</string>
+  <string name="error_import_unable_to_read_file">Не удалось прочитать из файла.</string>
+  <string name="error_import_invalid_gpx_format">Неверный формат GPX файла.</string>
+  <string name="error_import_generic">Произошла ошибка. Пожалуйста, попробуйте еще раз.</string>
+  <string name="error_export_track_does_not_exist">Трек не существует.</string>
+  <string name="error_import_out_of_memory">Этот файл слишком большой (должен быть меньше, чем 500 КБ). Прервано.</string>
   <string name="error_unable_to_insert_marker">Невозможно вставить маркер. Местоположение неизвестно.</string>
 
   <!-- Status messages -->

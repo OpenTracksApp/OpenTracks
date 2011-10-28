@@ -33,16 +33,16 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">Brak menedżera lokalizacji na urządzeniu!</string>
-  <string name="error_no_gps_location_provider">Brak dostawcy lokalizacji GPS na urządzeniu.</string>
-  <string name="error_sending_to_fusiontables">Podczas przesyłania pliku do Moich Map Google pojawił się błąd. Spróbuj ponownie później.</string>
+  <string name="error_no_gps">Brak dostawcy lokalizacji GPS na urządzeniu.</string>
+  <string name="error_sending_to_fusion_tables">Podczas przesyłania pliku do Moich Map Google pojawił się błąd. Spróbuj ponownie później.</string>
   <string name="error_sending_to_docs">Podczas przesyłania pliku do Dokumentów Google pojawił się błąd. Spróbuj ponownie później.</string>
   <string name="error_unable_to_start_recording">Nie można rozpocząć rejestrowania. Spróbuj ponownie.</string>
   <string name="error_unable_to_stop_recording">Nie można zakończyć rejestrowania. Spróbuj ponownie.</string>
-  <string name="error_unable_to_read_file">Nie można czytać z pliku.</string>
-  <string name="error_invalid_gpx_format">Plik nie jest poprawnym plikiem GPX.</string>
-  <string name="error_generic">Wystąpił błąd. Spróbuj ponownie.</string>
-  <string name="error_track_does_not_exist">Trasa nie istnieje.</string>
-  <string name="error_out_of_memory">Plik jest za duży (musi być mniejszy niż 500 KB). Przerywam.</string>
+  <string name="error_import_unable_to_read_file">Nie można czytać z pliku.</string>
+  <string name="error_import_invalid_gpx_format">Plik nie jest poprawnym plikiem GPX.</string>
+  <string name="error_import_generic">Wystąpił błąd. Spróbuj ponownie.</string>
+  <string name="error_export_track_does_not_exist">Trasa nie istnieje.</string>
+  <string name="error_import_out_of_memory">Plik jest za duży (musi być mniejszy niż 500 KB). Przerywam.</string>
   <string name="error_unable_to_insert_marker">Nie można wstawić markera. Brak poprawnych danych o lokalizacji.</string>
 
   <!-- Status messages -->

@@ -69,23 +69,78 @@ limitations under the License.
     translation_description="In the menu for the chart view, to change the chart settings.">
     Chart Settings
   </string>  
+ 
+  <!-- Error messages when there is no GPS. -->
+  <string name="error_no_gps"
+    translation_description="On application start, message when there is no GPS on the device.">
+    No GPS is found on the device.
+  </string>
+  <string name="error_unable_to_start_recording"
+    translation_description="When starting a recording, message when not able to start due to no GPS
+      location and asking the user to try again.">
+    Unable to start recording. No GPS location. Try again.
+  </string>
+  <string name="error_unable_to_insert_marker"
+    translation_description="When inserting a marker, message when not able to insert due to no GPS
+      location and asking the user to try again.">
+    Unable to insert marker. No GPS location. Try again.
+  </string>  
   
-  <!-- Error messages -->
-  <string name="error_no_location_manager">No location manager was found on this device!</string>
-  <string name="error_no_gps_location_provider">No GPS location provider was found on this device.</string>
-  <string name="error_sending_to_mymap">There was an error while sending your track to Google My Map.</string>
-  <string name="error_sending_to_fusiontables">There was an error while sending your track to Google Fusion Tables.</string>
-  <string name="error_sending_to_docs">There was an error while sending your track to Google Docs.</string>
-  <string name="error_please_try_again_later">Please try again later.</string>
-  <string name="error_unable_to_start_recording">Unable to start recording. Try again.</string>
-  <string name="error_unable_to_stop_recording">Unable to stop recording. Try again.</string>
-  <string name="error_unable_to_read_file">Unable to read from file.</string>
-  <string name="error_invalid_gpx_format">File does not have a valid GPX format.</string>
-  <string name="error_generic">An error occurred. Please try again.</string>
-  <string name="error_track_does_not_exist">Track does not exist.</string>
-  <string name="error_operation_cancelled">The operation was cancelled.</string>
-  <string name="error_out_of_memory">This file is too big (must be less than 500 KB). Aborting.</string>
-  <string name="error_unable_to_insert_marker">Unable to insert marker. No location fix available.</string>
+  <!-- Error messages when sending to Google. -->
+  <string name="error_sending_generic"
+    translation_description="When sending a track to Google, a generic error message asking the user
+      to try again.">
+    Please try again later.
+  </string>
+  <string name="error_sending_to_my_maps"
+    translation_description="When sending a track to Google My Maps, a message indicating that an
+      error has occured.">
+    There was an error while sending your track to Google My Maps.
+  </string>
+  <string name="error_sending_to_fusion_tables"
+    translation_description="When sending a track to Google Fusion Table, a message indicating that
+      an error has occurred.">
+    There was an error while sending your track to Google Fusion Tables.
+  </string>
+  <string name="error_sending_to_docs"
+    translation_description="When sending a track to Google Docs, a message indicating that an error
+      has occurred.">
+    There was an error while sending your track to Google Docs.
+  </string>
+  
+  <!-- Error messages when importing a track. -->
+  <string name="error_import_generic"
+    translation_description="When importing a track from the SD card, a generic error message 
+      indicating that an error has occurred and asking the user to try again.">
+    An error occurred. Please try again.
+  </string>
+  <string name="error_import_unable_to_read_file"
+    translation_description="When importing a track from the SD card, a messsage indicating that
+      MyTracks is unable to read the file.">
+    Unable to read from file.
+  </string>
+  <string name="error_import_invalid_gpx_format"
+    translation_description="When importing a track from the SD card, a message indicating that
+      the file does not have a valid GPX format.">
+    File does not have a valid GPX format.
+  </string>
+  <string name="error_import_out_of_memory"
+    translation_description="When importing a track from the SD card, a message indicating that
+      the file is too big, must be less than 500 KB, and aborting.">
+    This file is too big (must be less than 500 KB). Aborting.
+  </string>
+  
+  <!--  Error messages when exporting a track. -->
+  <string name="error_export_track_does_not_exist"
+    translation_description="When exporting a track to the SD card, a message indicating that the
+      track does not exist.">
+    Track does not exist.
+  </string>
+  <string name="error_export_operation_canceled"
+    translation_description="When exporting a track to the SD card, a message indicating that the
+      export operation was canceled.">
+    The operation was canceled.
+  </string>
 
   <!-- Status messages -->
   <string name="wait_for_fix">Waiting for a better GPS fix. Make sure the sky is visible.</string>

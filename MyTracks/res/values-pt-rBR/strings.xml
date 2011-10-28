@@ -32,16 +32,16 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">Gerenciador de localização não encontrado neste dispositivo!</string>
-  <string name="error_no_gps_location_provider">"Provedor de posição de GPS não encontrado neste dispositivo.</string>
-  <string name="error_sending_to_fusiontables">Ocorreu um erro ao enviar seu caminho para o Google Fusion Tables. Por favor tente novamente mais tarde.</string>
+  <string name="error_no_gps">"Provedor de posição de GPS não encontrado neste dispositivo.</string>
+  <string name="error_sending_to_fusion_tables">Ocorreu um erro ao enviar seu caminho para o Google Fusion Tables. Por favor tente novamente mais tarde.</string>
   <string name="error_sending_to_docs">Ocorreu um erro ao enviar seu caminho para o Google Docs. Por favor tente novamente mais tarde.</string>
   <string name="error_unable_to_start_recording">Impossível iniciar a gravação. Tente novamente.</string>
   <string name="error_unable_to_stop_recording">Impossível interromper a gravação. Tente novamente.</string>
-  <string name="error_unable_to_read_file">Impossível ler do arquivo.</string>
-  <string name="error_invalid_gpx_format">O arquivo não tem um formato GPX válido.</string>
-  <string name="error_generic">Ocorreu um erro. Por favor tente novamente.</string>
-  <string name="error_track_does_not_exist">Caminho não existe.</string>
-  <string name="error_out_of_memory">O arquivo é grande demais (deve ser menos de 500KB). Abortando.</string>
+  <string name="error_import_unable_to_read_file">Impossível ler do arquivo.</string>
+  <string name="error_import_invalid_gpx_format">O arquivo não tem um formato GPX válido.</string>
+  <string name="error_import_generic">Ocorreu um erro. Por favor tente novamente.</string>
+  <string name="error_export_track_does_not_exist">Caminho não existe.</string>
+  <string name="error_import_out_of_memory">O arquivo é grande demais (deve ser menos de 500KB). Abortando.</string>
   <string name="error_unable_to_insert_marker">Impossível inserir marcador - posição indisponível.</string>
 
   <!-- Status messages -->

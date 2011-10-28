@@ -214,7 +214,7 @@ public class TrackWriterTest extends AndroidTestCase {
     mocksControl.verify();
 
     assertFalse(writer.wasSuccess());
-    assertEquals(R.string.error_operation_cancelled, writer.getErrorMessage());
+    assertEquals(R.string.error_export_operation_canceled, writer.getErrorMessage());
   }
 
   public void testWriteTrack_openFails() {

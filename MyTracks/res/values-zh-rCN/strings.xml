@@ -34,19 +34,19 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">此设备上没有位置管理器!</string>
-  <string name="error_no_gps_location_provider">此设备上没有 GPS 定位装置.</string>
-  <string name="error_sending_to_mymap">发送轨迹到 Google My Map 时发生错误.</string>
-  <string name="error_sending_to_fusiontables">发送轨迹到 Google Fusion Tables 时发生错误. 请稍后重试.</string>
+  <string name="error_no_gps">此设备上没有 GPS 定位装置.</string>
+  <string name="error_sending_to_my_maps">发送轨迹到 Google My Map 时发生错误.</string>
+  <string name="error_sending_to_fusion_tables">发送轨迹到 Google Fusion Tables 时发生错误. 请稍后重试.</string>
   <string name="error_sending_to_docs">发送轨迹到 Google Docs 时发生错误. 请稍后重试.</string>
-  <string name="error_please_try_again_later">请稍后再试.</string>
+  <string name="error_sending_generic">请稍后再试.</string>
   <string name="error_unable_to_start_recording">无法开始记录. 请重试.</string>
   <string name="error_unable_to_stop_recording">无法停止记录. 请重试.</string>
-  <string name="error_unable_to_read_file">无法读取文件.</string>
-  <string name="error_invalid_gpx_format">文件不是有效的 GPX 格式.</string>
-  <string name="error_generic">发生错误. 请重试.</string>
-  <string name="error_track_does_not_exist">轨迹不存在.</string>
-  <string name="error_operation_cancelled">操作已被取消.</string>
-  <string name="error_out_of_memory">文件太大 (必须小于 500 KB). 中止操作.</string>
+  <string name="error_import_unable_to_read_file">无法读取文件.</string>
+  <string name="error_import_invalid_gpx_format">文件不是有效的 GPX 格式.</string>
+  <string name="error_import_generic">发生错误. 请重试.</string>
+  <string name="error_export_track_does_not_exist">轨迹不存在.</string>
+  <string name="error_export_operation_canceled">操作已被取消.</string>
+  <string name="error_import_out_of_memory">文件太大 (必须小于 500 KB). 中止操作.</string>
   <string name="error_unable_to_insert_marker">无法插入标记. 定位尚未完成.</string>
 
   <!-- Status messages -->

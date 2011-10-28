@@ -34,16 +34,16 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">No s\'ha trobat cap gestor d\'ubicacions en aquest dispositiu.</string>
-  <string name="error_no_gps_location_provider">No s\'ha trobat cap proveïdor d\'ubicació GPS en aquest dispositiu.</string>
-  <string name="error_sending_to_fusiontables">S\'ha produït un error quan s\'enviava la ruta a Google Fusion Tables. Proveu més tard.</string>
+  <string name="error_no_gps">No s\'ha trobat cap proveïdor d\'ubicació GPS en aquest dispositiu.</string>
+  <string name="error_sending_to_fusion_tables">S\'ha produït un error quan s\'enviava la ruta a Google Fusion Tables. Proveu més tard.</string>
   <string name="error_sending_to_docs">S\'ha prdouït un error quan s\'enviava la ruta a Google Docs. Proveu més tard.</string>
   <string name="error_unable_to_start_recording">No es pot iniciar l\'enregistrament. Proveu de nou.</string>
   <string name="error_unable_to_stop_recording">No es pot aturar l\'enregistrament. Proveu de nou.</string>
-  <string name="error_unable_to_read_file">No es pot llegir des del fitxer.</string>
-  <string name="error_invalid_gpx_format">El fitxer no conté un format GPX vàlid.</string>
-  <string name="error_generic">S\'ha produït un error. Proveu de nou.</string>
-  <string name="error_track_does_not_exist">No existeix la ruta.</string>
-  <string name="error_out_of_memory">Aquest fitxer és massa gran (ha d\'ésser inferior a 500KB. S\'està cancel·lant.</string>
+  <string name="error_import_unable_to_read_file">No es pot llegir des del fitxer.</string>
+  <string name="error_import_invalid_gpx_format">El fitxer no conté un format GPX vàlid.</string>
+  <string name="error_import_generic">S\'ha produït un error. Proveu de nou.</string>
+  <string name="error_export_track_does_not_exist">No existeix la ruta.</string>
+  <string name="error_import_out_of_memory">Aquest fitxer és massa gran (ha d\'ésser inferior a 500KB. S\'està cancel·lant.</string>
   <string name="error_unable_to_insert_marker">No es pot inserir un marcador. No hi ha cap ubicació fixa disponible.</string>
 
   <!-- Status messages -->
