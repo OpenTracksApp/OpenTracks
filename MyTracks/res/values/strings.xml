@@ -659,112 +659,427 @@ limitations under the License.
     Marker Description
   </string>
 
-  <!-- MyTracks Settings -->
-  <string name="mytracks_settings">My Tracks Settings</string>
-  <string name="settings_display">Display</string>
-  <string name="settings_recording">Recording</string>
-  <string name="settings_sharing">Sharing</string>
-
-  <string name="settings_not_available_summary">Not available in your version of Android</string>
-  <string name="settings_not_while_recording">Not available while recording a track</string>
-
-  <string name="settings_allow_access">Allow access</string>
-  <string name="settings_allow_access_summary_on">Other apps can read, write, start/stop recording
-          MyTracks data.</string>
-  <string name="settings_allow_access_summary_off">Other apps cannot read, write, start/stop
-          recording MyTracks data.</string>
-  <string name="settings_allow_access_dialog_message">Are you sure you want to allow other apps,
-          including future apps, to control and access MyTracks data? There will be no further
-          notification.</string>
-          
-  <string name="settings_announcement_frequency">Announcement frequency</string>
-  <string name="settings_announcement_frequency_summary">Minimum time between two voice announcements</string>
-
-  <string name="settings_min_recording_distance">Min distance between points</string>
-  <string name="settings_min_recording_distance_summary">Smallest distance between two recordings of your position</string>
-
-  <string name="settings_max_recording_distance">Max distance between points</string>
-  <string name="settings_max_recording_distance_summary">If two points are further than this, the track will be split</string>
-
-  <string name="settings_min_recording_interval">Min time between points</string>
-  <string name="settings_min_recording_interval_summary">Smallest time interval between two recordings of your position</string>
-
-  <string name="settings_min_required_accuracy">Minimum accuracy</string>
-  <string name="settings_min_required_accuracy_summary">Recording will be paused if your position is not at least this accurate</string>
-
-  <string name="settings_metric_units">Use metric units</string>
-  <string name="settings_metric_units_summary_on">All distances will be displayed in metric units</string>
-  <string name="settings_metric_units_summary_off">All distances will be displayed in imperial units</string>
-
-  <string name="settings_map_public">Make maps public</string>
-  <string name="settings_map_public_summary_on">Uploaded maps will be visible to anyone on maps.google.com</string>
-  <string name="settings_map_public_summary_off">Uploaded maps will not be listed publicly on maps.google.com</string>
-
-  <string name="settings_report_speed_or_pace">Display speed</string>
-  <string name="settings_report_speed_or_pace_summary_on">Speed will be displayed</string>
-  <string name="settings_report_speed_or_pace_summary_off">Pace will be displayed</string>
-
-  <string name="settings_share_url_only">Share only URL</string>
-  <string name="settings_share_url_only_summary_on">Only the URL of the map will be sent when sharing</string>
-  <string name="settings_share_url_only_summary_off">The contents of the track will also be included when sharing</string>
-
-  <string name="settings_split_frequency">Split frequency</string>
-  <string name="settings_split_frequency_summary">Maximum time or distance after which a new split marker will be inserted</string>
-
-  <string name="settings_auto_resume_track_timeout">Auto-resume track timeout</string>
-  <string name="settings_auto_resume_track_timeout_summary">Maximum time in minutes after which a previously recording track will not be resumed on phone reboot</string>
-
-  <string name="settings_timestamp_track_name">Timestamp as track name</string>
-  <string name="settings_timestamp_track_name_summary_on">The default track name will be the date and time at the start of the track</string>
-  <string name="settings_timestamp_track_name_summary_off">Track names will have numbers which increment for each new track.</string>
-
-  <string name="settings_reset">Reset to defaults</string>
-  <string name="settings_reset_summary">Revert all your settings to the default values</string>
-  <string name="settings_reset_dialog_message">All your settings will be erased and reverted to the default values. Saved tracks will be preserved. Are you sure?</string>
-  <string name="settings_reset_done">All settings have been reverted to their defaults.</string>
-
-  <string name="pace_label">Pace</string>
-
-  <string name="eclair_required">Only supported in Android 2.0 or above</string>
-  <string name="settings_sensor_type">Sensor Type</string>
-  <string name="settings_sensor_type_summary">The type of sensor to connect to</string>
-  <string name="settings_heart_rate_ant_sensor_id">Clear ANT heart rate sensor pairing</string>
-  <string name="settings_power_ant_sensor_id">Clear ANT power sensor pairing</string>
-  <string name="settings_srm_bridge_ant_sensor_id">Clear ANT SRM bridge sensor pairing</string>
-  <string name="settings_ant_not_paired">ANT sensor not paired</string>
-  <string name="settings_ant_paired">ANT sensor paired with: %d</string>
-  <string name="bluetooth_sensor_title">Bluetooth sensor</string>
-  <string name="bluetooth_sensor_summary">The bluetooth sensor to connect to</string>
-  <string name="settings_modular_stats_display_title">Modular Stats Display</string>
-
-  <string name="settings_track_color_mode">Track Color Mode</string>
-  <string name="settings_track_color_mode_summary">The way to color the track</string>
-  <string name="settings_track_color_mode_fixed">Fixed</string>
-  <string name="settings_track_color_mode_dynamic">Dynamic</string>
-  <string name="settings_track_color_mode_fixed_speed_slow">Fixed Speed Slow</string>
-  <string name="settings_track_color_mode_fixed_speed_slow_summary">Slow speed top value</string>
-  <string name="settings_track_color_mode_fixed_speed_medium">Fixed Speed Medium</string>
-  <string name="settings_track_color_mode_fixed_speed_medium_summary">Medium speed top value</string>
-  <string name="settings_track_color_mode_dynamic_speed_variation">Dynamic Speed Variation</string>
-  <string name="settings_track_color_mode_dynamic_speed_variation_summary">% Margin from average speed to consider medium speed</string>
+  <!-- Settings page -->
+  <string name="settings_title"
+    translation_description="The title of the Settings page.">  
+    My Tracks Settings
+  </string>
+  <string name="settings_display"
+    translation_description="In the Settings page, the option to change the display related
+      settings.">  
+    Display
+  </string>
+  <string name="settings_recording"
+    translation_description="In the Settings page, the option to change the track recording related
+      settings.">  
+    Recording
+  </string>
+  <string name="settings_sensor"
+    translation_description="In the Settings page, the option to change the sensor related
+      settings.">
+    Sensor
+  </string>
+  <string name="settings_sharing"
+    translation_description="In the Settings page, the option to change the track sharing related
+      settings.">   
+    Sharing
+  </string>
+  <string name="settings_backup"
+    translation_description="In the Settings page, the option to change the data backup related
+      settings."> 
+    Backup
+  </string>
+  <string name="settings_reset"
+    translation_description="In the Settings page, the option to reset everything to defaults."> 
+    Reset to defaults
+  </string>
+  <string name="settings_reset_summary"
+    translation_description="In the Settings page, the summary for the 'Reset to defaults'
+      option explaining reverting all the settings to the default values."> 
+    Revert all your settings to the default values
+  </string>
   
-  <!-- Backups -->
-  <string name="settings_backup">Backup (BETA)</string>
-  <string name="settings_sd_backup">SD Card Backup</string>
-  <string name="settings_backup_to_sd">Backup now</string>
-  <string name="settings_backup_to_sd_summary">Write a full copy of all your tracks and settings to the SD card</string>
-  <string name="settings_restore_from_sd">Restore now</string>
-  <string name="settings_restore_from_sd_summary">Restore all tracks and settings from the SD card</string>
-
-  <string name="restore_overwrites_warning">Restoring a backup from the SD card will OVERWRITE all your current tracks and settings. Are you sure?</string>
-  <string name="select_backup_to_restore">Select the backup to restore</string>
-  <string name="no_backups">No backups found.</string>
-  <string name="backup_write_progress_message">Writing all tracks and settings to the SD card. This may take a while...</string>
-  <string name="backup_import_progress_message">Reading all tracks and settings from the SD card. This may take a while...</string>
-
-  <!-- MyTracksSky -->
-  <string name="mytracks_sky">GPS Satellites</string>
-
+  <!--  Display settings -->
+  <string name="settings_metric_units"
+    translation_description="In the Display settings, the checkbox option to use the metrics units."
+      >
+    Use metric units
+  </string>
+  <string name="settings_metric_units_summary_on"
+    translation_description="In the Display settings, the summary for the 'Use metric units'
+      checkbox when it is checked explaining using the metrics units to display distances.">
+    Use metrics units to display distances
+  </string>
+  <string name="settings_metric_units_summary_off"
+    translation_description="In the Display settings, the summary for the 'Use metrics units'
+      checkbox when it is unchecked explaining using the imperial units to display distances.">
+    Use imperial units to display distances
+  </string>
+  <string name="settings_report_speed_or_pace"
+    translation_description="In the Display settings, the checkbox option to display speed (e.g., 5
+      miles per hour) instead of pace (e.g., 0.2 hours per mile).">  
+    Display speed
+  </string>
+  <string name="settings_report_speed_or_pace_summary_on"
+    translation_description="In the Display settings, the summary for the 'Display speed' checkbox
+      when it is checked explaining that speed (e.g., 5 miles per hour) will be used instead of pace
+      (e.g., 0.2 hours per mile).">  
+    Display speed (e.g., miles/hour)
+  </string>
+  <string name="settings_report_speed_or_pace_summary_off"
+    translation_description="In the Display settings, the summary for the 'Display speed' checkbox
+      when it is unchecked explaining that pace (e.g., 0.2 hours per mile) will be used instead of
+      speed (e.g., 5 miles per hour).">  
+    Display pace (e.g., hours/mile)
+  </string>
+  <string name="settings_track_color_mode"
+    translation_description="In the Display settings, the dropdown option to choose a track color
+      mode for how to use different colors to color a track based on speed.">
+    Track color mode
+  </string>
+  <string name="settings_track_color_mode_summary"
+    translation_description="In the Display settings, the summary for the 'Track color mode'
+      dropdown option explaining that it configures how colors are used to color a track based on
+      speed."
+      >
+    The way to color a track based on speed
+  </string>    
+  <string name="settings_track_color_mode_fixed_speed_slow"
+    translation_description="In the Display settings, the option for configuring the slow speed
+      threshold. Thus any speed lower than the threshold will be colored by the slow speed color.">
+    Slow speed threshold
+  </string>
+  <string name="settings_track_color_mode_fixed_speed_slow_summary"
+    translation_description="In the Display settings, the summary for the 'Slow speed threshold'
+      option explaining that it sets a cutoff speed for the slow speed color.">
+    Slow speed top value
+  </string>
+  <string name="settings_track_color_mode_fixed_speed_medium"
+    translation_description="In the Display settings, the option for configuring the medium speed
+      threshold. Thus any speed lower than the threshold but greater than the slow speed threshold
+      will be colored by the medium speed color.">
+    Medium speed threshold
+  </string>
+  <string name="settings_track_color_mode_fixed_speed_medium_summary"
+    translation_description="In the Display settings, the summary for the 'Medium speed threshold'
+      option explaining that it sets a cutoff speed for the medium speed color.">
+    Medium speed top value
+  </string> 
+  <string name="settings_track_color_mode_dynamic_speed_variation"
+    translation_description="In the Display settings, the option for configuring the dynamic
+      speed threshold for using colors to color a track based on speed.">
+    Medium speed range
+  </string>
+  <string name="settings_track_color_mode_dynamic_speed_variation_summary"
+    translation_description="In the Display settings, the summary for the 'Medium speed range'
+      option explaining that it sets a percentage from the average speed to determine the
+      medium speed range for using colors to color a track based on speed.">
+    Percentage from the average speed for the medium speed
+  </string>
+  
+  <!-- Recording settings -->
+  <string name="settings_announcement_frequency"
+    translation_description="In the Recording settings, the dropdown option to configure the voice
+      announcement frequency.">
+    Voice frequency
+  </string>
+  <string name="settings_announcement_frequency_summary"
+    translation_description="In the Recording settings, the summary for the 'Voice frequency'
+      dropdown option explaining that it configures the time or distance between two voice
+      announcements.">
+    Time/distance between two voice announcements
+  </string>
+  <string name="settings_not_available_summary"
+    translation_description="In the Recording settings, the summary for the 'Voice frequency'
+      explaining that this option is not available on your Android phone.">
+    Not available in your version of Android
+  </string>
+  <string name="settings_split_frequency"
+    translation_description="In the Recording settings, the dropdown option to configure the
+      time or distance a new marker will be inserted.">
+    Marker frequency
+  </string>
+  <string name="settings_split_frequency_summary"
+    translation_description="In the Recording settings, the summary for the 'Marker frequency' 
+      dropdown option explaining that it configures the time or distance after which a new
+      marker will be inserted.">
+    Time/distance after which a new marker will be inserted
+  </string>
+  <string name="settings_min_recording_interval"
+    translation_description="In the Recording settings, the dropdown option to configure the
+      minimum time between two recorded points.">
+    Min time for points
+  </string>
+  <string name="settings_min_recording_interval_summary"
+    translation_description="In the Recording settings, the summary for the 'Min time for points'
+      dropdown option explaining that it configures the smallest time interval between two
+      recordings of your position.">
+    Smallest time interval between two recordings of your position
+  </string>    
+  <string name="settings_min_recording_distance"
+    translation_description="In the Recording settings, the dropdown option to configure the minimum
+      distance between two recorded points.">
+    Min distance for points
+  </string>
+  <string name="settings_min_recording_distance_summary"
+    translation_description="In the Recording settings, the summary for the 'Min distance for
+      points' dropdown option explaining that it configures the smallest distance between two
+      recordings of your position.">
+    Smallest distance between two recordings of your position
+  </string>
+  <string name="settings_max_recording_distance"
+    translation_description="In the Recording settings, the dropdown option to configure the maximum
+      distance between two recorded points for them to still be considered as the same track.">
+    Max distance for points
+  </string>
+  <string name="settings_max_recording_distance_summary"
+    translation_description="In the Recording settings, the summary for the 'Max distance for
+      points' dropdown option explaining that it configures the maximum distance for two recorded
+      points for them to be still considered as the same track.">
+    If two recordings are further than this, the track will be split
+  </string>
+  <string name="settings_min_required_accuracy"
+    translation_description="In the Recording settings, the dropdown option to configure the minimum
+      required GPS accuracy. If a GPS position's accuracy is below the requirement, then it will
+      not be used.">
+    Min accuracy
+  </string>
+  <string name="settings_min_required_accuracy_summary"
+    translation_description="In the Recording settings, the summary for the 'Min accuracy' dropdown
+      option explaining that it configures the minimum required accuracy for your position.
+      If a GPS position's accuracy is below the requirement, then it will not be used and the 
+      recording will be paused.">
+    Recording will be paused if your position is not this accurate
+  </string>
+  <string name="settings_auto_resume_track_timeout"
+    translation_description="In the Recording settings, the dropdown option to configure the timeout
+      after which a recorded track will not be continued after phone reboot.">
+    Auto-resume timeout
+  </string>
+  <string name="settings_auto_resume_track_timeout_summary"
+    translation_description="In the Recording settings, the summary for the 'Auto-resume timeout'
+      dropdown option explaining that it configures the maximum time after which a previous
+      recording will not resumed after phone reboot.">
+    Maximum time after which a previously recording track will not be resumed on phone reboot
+  </string>      
+  <string name="settings_timestamp_track_name"
+    translation_description="In the Recording settings, the checkbox on whether the track should be
+      named based on the track's start time or based on a number.">
+    Use time for track name
+  </string>
+  <string name="settings_timestamp_track_name_summary_on"
+    translation_description="In the Recording settings, the summary for the 'Use time for track
+      name' checkbox when it is checked explaining using the track's start time as the default track
+      name.">
+    Use the track\'s start time as the default track name
+  </string>
+  <string name="settings_timestamp_track_name_summary_off"
+    translation_description="In the Recording settings, the summary for the 'Use time for track
+      name' checkbox when it is unchecked explaining using a number as the default track name.">
+    Use a number as the default track name
+  </string>
+      
+  <!-- Sensor settings -->
+  <string name="settings_sensor_type"
+    translation_description="In the Sensor settings, the dropdown option to choose a sensor type.">
+    Sensor Type
+  </string>
+  <string name="settings_sensor_type_summary"
+    translation_description="In the Sensor settings, the summary for the 'Sensor Type' option
+      explaining that it is to configure the type of sensor to connect to.">
+    The type of sensor to connect to
+  </string>
+  <string name="bluetooth_options" 
+    translation_description="In the Sensor settings, the section title to configure the Bluetooth
+      options.">
+   Bluetooth Options
+  </string>
+  <string name="bluetooth_sensor_title"
+    translation_description="In the Sensor settings, the dropdown option to pick a Bluetooth
+      sensor.">
+    Bluetooth sensor
+  </string>
+  <string name="bluetooth_sensor_summary"
+    translation_description="In the Sensor settings, the summary for the 'Bluetooth sensor' dropdown
+      option explaining it is to pick a Bluetooth sensor to connect to.">
+    The Bluetooth sensor to connect to
+  </string>
+  <string name="bluetooth_pairing"
+    translation_description="In the Sensor settings, the option to pair with a Bluetooth device.">
+    Bluetooth pairing
+  </string>
+  <string name="bluetooth_pairing_summary"
+    translation_description="In the Sensor settings, the summary for the 'Bluetooth pairing' option
+      explaining that it will open the Android's Bluetooth settings to pair a device.">
+    Open Android\'s Bluetooth settings to pair a device
+  </string>
+  <string name="ant_options"
+    translation_description="In the Sensor settings, the section title to configure the ANT+
+      options.">
+    ANT+ Options
+  </string>    
+  <string name="settings_heart_rate_ant_sensor_id"
+    translation_description="In the Sensor settings, the option to clear an ANT+ sensor pairing.">
+    Clear ANT+ sensor
+  </string>
+  <string name="settings_srm_bridge_ant_sensor_id"
+    translation_description="In the Sensor settings, the option to clear a SRM ANT+ bridge pairing."
+      >
+    Clear SRM ANT+ bridge
+  </string>    
+  <string name="settings_ant_not_paired"
+    translation_description="In the Sensor settings, the summary under 'Clear ANT+ sensor' or 'Clear
+      SRM ANT+ bridge' when there no ANT+ device paired.">
+    Not paired
+  </string>
+  <string name="settings_ant_paired"
+    translation_description="In the Sensor settings, the summary under 'Clear ANT+ sensor' or 'Clear
+      SRM ANT+ bridge' when there is an ANT+ device paired. E.g., 'Paired with: 1'.">
+    Paired with: %d
+  </string>
+  
+  <!-- Sharing settings -->
+  <string name="settings_map_public"
+    translation_description="In the Sharing settings, the checkbox option to make a new map created
+      in Google My Maps public."> 
+    Make new maps public
+  </string>
+  <string name="settings_map_public_summary_on"
+    translation_description="In the Sharing settings, the summary for the 'Make new maps public'
+      checkbox option when it is checked explaining that new maps created in Google My Maps will
+      be made public.">
+    Make new maps created in Google My Maps public
+  </string>
+  <string name="settings_map_public_summary_off"
+    translation_description="In the Sharing settings, the summary for the 'Make new maps public'
+      checkbox option when it is unchecked explaining that new maps created in Google My Maps will
+      be private.">
+    Make new maps created in Goolge My Maps private
+  </string>
+  <string name="settings_share_url_only"
+    translation_description="In the Sharing settings, the checkbox option to share only the URL 
+      link when sharing a link with friends.">  
+    Share only URL link
+  </string>
+  <string name="settings_share_url_only_summary_on" 
+    translation_description="In the Sharing settings, the summary for the 'Share only URL link'
+      checkbox option when it is checked explaining that only the URL link will be sent when sharing
+      a link with friends.">  
+   Only the URL link will be sent when sharing a link with friends
+  </string>
+  <string name="settings_share_url_only_summary_off"
+    translation_description="In the Sharing settings, the summary for the 'Share only URL link'
+      checkbox option when it is unchecked explaining that some text and the the URL link will be
+      sent when sharing a link with friends.">  
+    Some text and the URL link will be sent when sharing a link with friends
+  </string>
+  <string name="settings_allow_access"
+   translation_description="In the Sharing settings, the checkbox option to allow third party apps
+     access to My Tracks data.">
+    Allow access
+  </string>
+  <string name="settings_allow_access_summary_on"
+  translation_description="In the Sharing settings, the summary for the 'Allow access' checkbox
+      option when it is checked explaining that other apps can read, write, start/stop recording My
+      Tracks data.">
+    Other apps can read, write, start/stop recording My Tracks data.
+  </string>
+  <string name="settings_allow_access_summary_off"
+   translation_description="In the Sharing settings, the summary for the 'Allow access' checkbox
+      option when it is unchecked explaining that other apps cannot read, write, start/stop
+      recording My Tracks data.">
+    Other apps cannot read, write, start/stop recording My Tracks data.
+  </string>
+  <string name="settings_allow_access_dialog_message"
+    translation_description="In the Sharing settings, after checking the 'Allow access' checkbox,
+      the confirmation dialog asking the user if he wants to allow other apps, including apps
+      installed in the future, to control and access My Tracks data. In addition, no further
+      notification of third party app access will be shown.">
+    Are you sure you want to allow other apps, including future apps, to control and access My
+    Tracks data? There will be no further notification.
+  </string>
+  
+  <!-- Backup settings -->
+  <string name="settings_sd_backup"
+    translation_description="In the Backup settings, the section title for configuring backup to the
+      SD card.">
+    SD Card Backup
+  </string>
+  <string name="settings_backup_to_sd"
+    translation_description="In the Backup settings, the option to backup to the SD card now.">
+    Backup now
+  </string>
+  <string name="settings_backup_to_sd_summary"
+    translation_description="In the Backup settings, the summary for the 'Backup now' option
+      explaining that all tracks and settings will be written to the SD card.">
+    Write a full copy of all your tracks and settings to the SD card
+  </string>
+  <string name="settings_restore_from_sd"
+    translation_description="In the Backup settings, the option to restore everything from the SD
+      card.">
+    Restore now
+  </string>
+  <string name="settings_restore_from_sd_summary"
+    translation_description="In the Backup settings, the summary for the 'Restore now' option
+      explaining that it restores all tracks and settings from the SD card.">
+    Restore all tracks and settings from the SD card
+  </string>  
+      
+  <!-- Reset to defaults -->    
+  <string name="settings_reset_dialog_message"
+    translation_description="In the Settings page, after pressing the 'Reset to defaults' option,
+      the confirmation dialog asking the user to confirm reverting all settings to defaults. But
+      the saved tracks will be preserved.">
+    All your settings will be erased and reverted to the default values. Saved tracks will be
+    preserved. Are you sure?
+  </string>
+  <string name="settings_reset_done"
+    translation_description="In the Settings page, after pressing the 'Reset to defaults' option,
+      the confirmation dialog informing the user that all settings have been reverted to their
+      defaults.">
+    All settings have been reverted to their defaults.
+  </string>
+ 
+  <!-- Settings others -->    
+  <string name="settings_not_while_recording"
+    translation_description="In the Settings page, the summary for an option that is not available 
+      during a track recording.">
+    Not available while recording a track
+  </string>
+ 
+  <!-- Backup now -->
+  <string name="backup_write_progress_message"
+    translation_description="In the Backup settings, after pressing the 'Backup now' option, the
+      progress dialog telling the user that it is writing all tracks and settings and that it may
+      take a while.">
+    Writing all tracks and settings to the SD card. This may take a while...
+  </string>
+  
+  <!-- Restore now -->
+  <string name="restore_overwrites_warning"
+    translation_description="In the Backup settings, after pressing the 'Restore now' option, the
+      message in the alert dialog asking the user to confirm that he wants to restore from a backup
+      and it will overwrite all the current tracks and settings.">
+    Restoring a backup from the SD card will OVERWRITE all your current tracks and settings. Are you
+    sure?
+  </string>
+  <string name="select_backup_to_restore"
+    translation_description="In the Backup settings, after pressing the 'Restore now' option, the
+      message in the alert dialog asking the user to select a backup.">
+    Select the backup to restore
+  </string>
+  <string name="no_backups"
+    translation_description="In the Backup settings, after pressing the 'Restore now' option, the
+      message in the alert dialog informing the user that there is no backup.">
+    No backup found.
+  </string>
+  <string name="backup_import_progress_message"
+    translation_description="In the Backup settings, after pressing the 'Restore now' option, the
+      message on the progress dialog indicating that My Tracks is reading all tracks and settings
+      from the backup on the SD card and that it may take a while.">
+    Reading all tracks and settings from the SD card. This may take a while...
+  </string>
+       
   <!-- My Maps -->
   <string name="select_map_message">Pick a map from your account:</string>
   <string name="create_new_map">Create new map...</string>
@@ -877,6 +1192,7 @@ limitations under the License.
   <string name="time_label">Time</string>
   <string name="sd_unavail">SD Unavailable</string>
   <string name="speed">Speed</string>
+  <string name="pace_label">Pace</string>
   <string name="start_trip">You must start a trip.</string>
 
   <string name="total_distance_label">Total Distance</string>
@@ -952,23 +1268,6 @@ limitations under the License.
   <!-- Check Units -->
   <string name="check_units_title">Units of Measure Notice</string>
   <string name="check_units_message">Do you want to use metrics as your default units?</string>
-
-  <!-- Fake preference keys - never saved, but show options in the preferences screen -->
-  <string name="method_bluetooth">Bluetooth</string>
-  <string name="bluetooth_options">Bluetooth options</string>
-  <string name="bluetooth_pairing">Device pairing</string>
-  <string name="bluetooth_pairing_summary">Open Android\'s bluetooth settings to pair a device</string>
-  <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
-  <string name="ant_options">ANT options</string>
-  <string name="sensor_options">Sensor Options</string>
-  <string name="track_color_mode">Track Color Mode</string>
-  <string name="fixed_speed_options">Fixed Speed Options</string>
-  <string name="dynamic_speed_options">Dynamic Speed Options</string>
-  
-  <!-- Bluetooth Sensor -->
-  <string name="bluetooth_connected">Connected to %s</string>
-  <string name="bluetooth_connecting">Bluetooth sensor connecting ...</string>
-  <string name="bluetooth_not_connected">Bluetooth sensor not connected</string>
 
   <!-- Sensor State -->
   <string name="sensor_data_time">Sensor Data Time</string>

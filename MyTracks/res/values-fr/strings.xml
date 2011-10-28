@@ -158,7 +158,7 @@ limitations under the License.
   <string name="waypointdetails_category_hint">Nom de balise</string>
 
   <!-- MyTracks Settings -->
-  <string name="mytracks_settings">Paramètres My Tracks</string>
+  <string name="settings_title">Paramètres My Tracks</string>
   <string name="settings_display">Affichage</string>
   <string name="settings_recording">Enregistrement</string>
   <string name="settings_sharing">Partage</string>
@@ -380,7 +380,7 @@ limitations under the License.
   <string name="bluetooth_pairing">Association d\'un appareil</string>
   <string name="bluetooth_pairing_summary">Visitez les paramètres Bluetooth d\'Android pour associer un nouvel appareil</string>
   <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
-  <string name="sensor_options">Options du capteur</string>
+  <string name="settings_sensor">Options du capteur</string>
 
   <!-- Bluetooth Sensor -->
   <string name="bluetooth_connected">Connecté à %s</string>

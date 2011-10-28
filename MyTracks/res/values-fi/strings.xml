@@ -197,7 +197,7 @@ limitations under the License.
   <string name="waypointdetails_category_hint">Merkinnän tyyppi</string>
 
   <!-- MyTracks Settings -->
-  <string name="mytracks_settings">My Tracks Asetukset</string>
+  <string name="settings_title">My Tracks Asetukset</string>
   <string name="settings_display">Näyttö</string>
   <string name="settings_recording">Tallennus</string>
   <string name="settings_sharing">Jakaminen</string>
@@ -477,7 +477,7 @@ limitations under the License.
   <string name="bluetooth_pairing_summary">Avaa Androidin bluetooth-asetukset luodaksesi laitepareja</string>
   <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
   <string name="ant_options">ANT asetukset</string>
-  <string name="sensor_options">Sensorien asetukset</string>
+  <string name="settings_sensor">Sensorien asetukset</string>
 
   <!-- Bluetooth Sensor -->
   <string name="bluetooth_connected">Yhdistetty %s</string>

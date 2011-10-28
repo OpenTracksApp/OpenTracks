@@ -197,7 +197,7 @@ limitations under the License.
   <string name="waypointdetails_category_hint">Tipo de señal</string>
 
   <!-- MyTracks Settings -->
-  <string name="mytracks_settings">Configuraciones de My Tracks</string>
+  <string name="settings_title">Configuraciones de My Tracks</string>
   <string name="settings_display">Visualizador</string>
   <string name="settings_recording">Grabando</string>
   <string name="settings_sharing">Compartiendo</string>
@@ -480,7 +480,7 @@ limitations under the License.
   <string name="bluetooth_pairing_summary">Abrir la configuración Bluetooth de Android para conectar un dispositivo</string>
   <string name="sensor_bluetooth_options_key">Sensor Bluetooth activado</string>
   <string name="ant_options">Optiones ANT</string>
-  <string name="sensor_options">Opciones del sensor</string>
+  <string name="settings_sensor">Opciones del sensor</string>
   <string name="track_color_mode">Modo de Recorrido Coloreado</string>
   <string name="fixed_speed_options">Opciones de velocidad fija</string>
   <string name="dynamic_speed_options">Opciones de velocidad dinámica</string>

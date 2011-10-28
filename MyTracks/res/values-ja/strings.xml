@@ -190,7 +190,7 @@ limitations under the License.
   <string name="waypointdetails_category_hint">マーカータイプ</string>
 
   <!-- MyTracks Settings -->
-  <string name="mytracks_settings">My Tracks設定</string>
+  <string name="settings_title">My Tracks設定</string>
   <string name="settings_display">表示</string>
   <string name="settings_recording">記録</string>
   <string name="settings_sharing">共有</string>
@@ -446,7 +446,7 @@ limitations under the License.
   <string name="bluetooth_pairing_summary">ペアリングを行うには「Bluetooth設定」を開いて下さい</string>
   <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
   <string name="ant_options">ANTオプション</string>
-  <string name="sensor_options">センサーオプション</string>
+  <string name="settings_sensor">センサーオプション</string>
 
   <!-- Bluetooth Sensor -->
   <string name="bluetooth_connected">%sに接続しました</string>

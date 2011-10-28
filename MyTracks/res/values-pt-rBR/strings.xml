@@ -158,7 +158,7 @@ limitations under the License.
   <string name="waypointdetails_category_hint">Tipo do Marcador</string>
 
   <!-- MyTracks Settings -->
-  <string name="mytracks_settings">Configurações do My Tracks</string>
+  <string name="settings_title">Configurações do My Tracks</string>
   <string name="settings_display">Exibição</string>
   <string name="settings_recording">Gravação</string>
   <string name="settings_sharing">Compartilhamento</string>
