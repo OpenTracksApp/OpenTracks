@@ -41,7 +41,7 @@ limitations under the License.
       android:layout_height="wrap_content"
       android:textSize="16dip"
       android:textColor="#fff"
-      android:text="@string/wait_for_fix"
+      android:text="@string/status_wait_for_gps_fix"
       android:layout_weight="0"/>
     </LinearLayout>
     <LinearLayout android:id="@+id/busypane"

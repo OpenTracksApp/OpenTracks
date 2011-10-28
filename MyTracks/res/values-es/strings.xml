@@ -34,37 +34,37 @@ limitations under the License.
   
   <!-- Error messages -->
   <string name="error_no_location_manager">Ningún administrador de ubicación fue hallado en este dispositivo! </string>
-  <string name="error_no_gps_location_provider">Ningún proveedor de ubicación GPS fue hallado en este dispositivo.</string>
-  <string name="error_sending_to_mymap">Se produjo un error al enviar su recorrido a Google Mis Sitios.</string>
-  <string name="error_sending_to_fusiontables">Se produjo un error al enviar su recorrido a Google Fusion Tables.</string>
+  <string name="error_no_gps">Ningún proveedor de ubicación GPS fue hallado en este dispositivo.</string>
+  <string name="error_sending_to_my_maps">Se produjo un error al enviar su recorrido a Google Mis Sitios.</string>
+  <string name="error_sending_to_fusion_tables">Se produjo un error al enviar su recorrido a Google Fusion Tables.</string>
   <string name="error_sending_to_docs">Se produjo un error al enviar su recorrido a Google Docs.</string>
-  <string name="error_please_try_again_later">Por favor, inténtelo de nuevo mas tarde.</string>
+  <string name="error_sending_generic">Por favor, inténtelo de nuevo mas tarde.</string>
   <string name="error_unable_to_start_recording">No se puede iniciar la grabación. Inténtelo de nuevo. </string>
   <string name="error_unable_to_stop_recording">No se puede detener la grabación. Inténtelo de nuevo.</string>
-  <string name="error_unable_to_read_file">No pude leer del archivo.</string>
-  <string name="error_invalid_gpx_format">El archivo no tiene un format GPX válido.</string>
+  <string name="error_import_unable_to_read_file">No pude leer del archivo.</string>
+  <string name="error_import_invalid_gpx_format">El archivo no tiene un format GPX válido.</string>
   <string name="error_generic">A ocurrido un error. Por favor, inténtelo de nuevo.</string>
-  <string name="error_track_does_not_exist">El recorrido no existe.</string>
-  <string name="error_operation_cancelled">La operación fue cancelada.</string>
-  <string name="error_out_of_memory">El archivo es demasiado grande (tiene que ser menor a 500 KB). Abortando.</string>
+  <string name="error_export_track_does_not_exist">El recorrido no existe.</string>
+  <string name="error_export_operation_canceled">La operación fue cancelada.</string>
+  <string name="error_import_out_of_memory">El archivo es demasiado grande (tiene que ser menor a 500 KB). Abortando.</string>
   <string name="error_unable_to_insert_marker">No se puede insertar el marcador. La ubicación no está disponible.</string>
 
   <!-- Status messages -->
-  <string name="wait_for_fix">Esperando una ubicación mas exacta del GPS. Asegúrese que el cielo sea visible.</string>
+  <string name="status_wait_for_gps_fix">Esperando una ubicación mas exacta del GPS. Asegúrese que el cielo sea visible.</string>
   <string name="status_now_recording">Grabando un nuevo recorrido.</string>
   <string name="status_stopped_recording">Grabación interrumpida.</string>
-  <string name="status_new_mymap_has_been_created">Un nuevo sitio ha sido añadido en maps.google.com.</string>
-  <string name="status_new_fusiontable_has_been_created">Una nueva tabla de Google Fusion ha sido creada en google.com/fusiontables.</string>
-  <string name="status_tracks_have_been_uploaded">Su recorrido ha sido enviado a maps.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">Su recorrido ha sido enviado a una nueva hoja de cálculo de docs.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_docs">Su recorrido ha sido enviado a docs.google.com.</string>
-  <string name="status_mymap_info">Es posible que pasen unos minutos hasta que los nuevos recorridos aparezcan.</string>
-  <string name="status_enable_gps">Por favor, presione aquí para ir al menú de Seguridad y Ubicación, y asegúrese que el GPS esté habilitado. Presione el botón "atrás" para regresar.</string>
-  <string name="status_approximate_location">Nota: Una ubicación aproximada es determinada a partir de torres de telefonía celular y redes WIFI.</string>
-  <string name="status_no_location">No puede ser determinada la ubicación actual. Habilite más fuentes de datos (vea las configuraciones de Seguridad y Ubicación) y asegúrese que el cielo sea visible. Inténtelo mas tarde.</string>
+  <string name="sending_to_my_maps_success_new_map">Un nuevo sitio ha sido añadido en maps.google.com.</string>
+  <string name="sending_to_fusion_tables_success">Una nueva tabla de Google Fusion ha sido creada en google.com/fusiontables.</string>
+  <string name="sending_to_my_maps_success_existing_map">Su recorrido ha sido enviado a maps.google.com.</string>
+  <string name="sending_to_docs_success_new_doc">Su recorrido ha sido enviado a una nueva hoja de cálculo de docs.google.com.</string>
+  <string name="sending_to_docs_success_existing_doc">Su recorrido ha sido enviado a docs.google.com.</string>
+  <string name="sending_to_google_additional_info">Es posible que pasen unos minutos hasta que los nuevos recorridos aparezcan.</string>
+  <string name="status_need_to_enable_gps">Por favor, presione aquí para ir al menú de Seguridad y Ubicación, y asegúrese que el GPS esté habilitado. Presione el botón "atrás" para regresar.</string>
+  <string name="status_approximate_current_location">Nota: Una ubicación aproximada es determinada a partir de torres de telefonía celular y redes WIFI.</string>
+  <string name="status_no_current_location">No puede ser determinada la ubicación actual. Habilite más fuentes de datos (vea las configuraciones de Seguridad y Ubicación) y asegúrese que el cielo sea visible. Inténtelo mas tarde.</string>
   <string name="status_waypoint_inserted">Un marcador de recorrido fue insertado.</string>
-  <string name="status_statistics_inserted">Un marcador de estadísticas fue insertado.</string>
-  <string name="status_track_upload_status">Estado del envío:</string>
+  <string name="status_marker_inserted">Un marcador de estadísticas fue insertado.</string>
+  <string name="sending_to_google_upload_status">Estado del envío:</string>
   
   <!-- Progress dialog -->
   <string name="progress_title">Por favor espere...</string>
@@ -514,15 +514,15 @@ limitations under the License.
   <string name="read_tracks_permission_description">Poder leer datos, como puntos de interés.</string>
   <string name="write_tracks_permission_description">Poder escribir datos, como registrar o añadir puntos de interés.</string>
   
-    <!-- Sensor Type Options -->
-  <string name="no_sensor_option">Ninguno</string>
-  <string name="ant_sensor_option">Sensores ANT+</string>
-  <string name="ant_bridge_sensor_option">Puente SRM ANT+</string>
-  <string name="polar_bt_sensor_option">Bluetooth Polar</string>
-  <string name="zephyr_bt_sensor_option">Bluetooth Zephyr</string>
+  <!-- Sensor Type Options -->
+  <string name="sensor_type_option_none">Ninguno</string>
+  <string name="sensor_type_option_ant">Sensores ANT+</string>
+  <string name="sensor_type_option_srm_ant_bridge">Puente SRM ANT+</string>
+  <string name="sensor_type_option_polar">Bluetooth Polar</string>
+  <string name="sensor_type_option_zephyr">Bluetooth Zephyr</string>
 
   <!-- Track Color Modes -->
-  <string name="track_color_mode_none">Ninguno</string>
-  <string name="track_color_mode_fixed">Fijo (BETA)</string>
-  <string name="track_color_mode_dynamic">Dinámico (BETA)</string>
+  <string name="track_color_mode_option_none">Ninguno</string>
+  <string name="track_color_mode_option_fixed">Fijo (BETA)</string>
+  <string name="track_color_mode_option_dynamic">Dinámico (BETA)</string>
 </resources>

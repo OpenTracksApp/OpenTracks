@@ -46,11 +46,11 @@ public class TrackPathPainterFactoryTest extends TrackPathPainterTestCase {
       return;
     }
     
-    testTrackPathPainterFactorySpecific(context, prefs, R.string.track_color_mode_none, 
+    testTrackPathPainterFactorySpecific(context, prefs, R.string.track_color_mode_value_none, 
         SingleColorTrackPathPainter.class);
-    testTrackPathPainterFactorySpecific(context, prefs, R.string.track_color_mode_fixed, 
+    testTrackPathPainterFactorySpecific(context, prefs, R.string.track_color_mode_value_fixed, 
         DynamicSpeedTrackPathPainter.class);
-    testTrackPathPainterFactorySpecific(context, prefs, R.string.track_color_mode_dynamic, 
+    testTrackPathPainterFactorySpecific(context, prefs, R.string.track_color_mode_value_dynamic, 
         DynamicSpeedTrackPathPainter.class);
   }
   

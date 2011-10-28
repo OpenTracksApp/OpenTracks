@@ -15,10 +15,10 @@
  */
 package com.google.android.apps.mytracks.services.sensors;
 
-import android.content.Context;
-
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.maps.mytracks.R;
+
+import android.content.Context;
 
 /**
  * A collection of methods for message parsers.
@@ -99,7 +99,7 @@ public class SensorUtils {
   public static String getStateAsString(Sensor.SensorState state, Context c) {
     switch (state) {
       case NONE:
-        return c.getString(R.string.none);
+        return c.getString(R.string.sensor_type_value_none);
       case CONNECTING:
         return c.getString(R.string.connecting);
       case CONNECTED:

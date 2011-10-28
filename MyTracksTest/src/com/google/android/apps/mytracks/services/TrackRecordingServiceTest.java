@@ -625,7 +625,7 @@ public class TrackRecordingServiceTest
   @MediumTest
   public void testWithProperties_zephyrSensorType() throws Exception {
     functionalTest(R.string.sensor_type_key,
-        context.getString(R.string.zephyr_sensor_type));
+        context.getString(R.string.sensor_type_value_zephyr));
   }
 
   private ITrackRecordingService bindAndGetService(Intent intent) {

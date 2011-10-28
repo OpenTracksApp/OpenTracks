@@ -31,7 +31,7 @@ services.
   <TextView
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
-      android:text="@string/status_track_upload_status"
+      android:text="@string/sending_to_google_upload_status"
       style="?android:attr/textAppearanceLarge"/>
   <TableLayout
       android:layout_width="wrap_content"
@@ -52,14 +52,14 @@ services.
       android:id="@+id/send_to_google_result_comment"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
-      android:text="@string/status_mymap_info"
+      android:text="@string/sending_to_google_additional_info"
       android:visibility="gone"
       style="?android:attr/textAppearanceSmall"/>
   <TextView
       android:id="@+id/send_to_google_result_error"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
-      android:text="@string/error_please_try_again_later"
+      android:text="@string/error_generic"
       android:visibility="gone"
       style="?android:attr/textAppearanceLarge"/>
 </LinearLayout>

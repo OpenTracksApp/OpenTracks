@@ -29,12 +29,17 @@ limitations under the License.
   <string name="about_rdamazio">Rodrigo Damazio Bovendorp</string>
   <string name="about_sandor">Sandor Dornbush</string>
 
-  <!-- Sensor Types -->
-  <string name="none">NONE</string>
-  <string name="ant_sensor_type">ANT</string>
-  <string name="srm_ant_bridge_sensor_type">SRM_ANT_BRIDGE</string>
-  <string name="polar_sensor_type">POLAR</string>
-  <string name="zephyr_sensor_type">ZEPHYR</string>
+  <!-- Sensor Type values stored in preference -->
+  <string name="sensor_type_value_none">NONE</string>
+  <string name="sensor_type_value_ant">ANT</string>
+  <string name="sensor_type_value_srm_ant_bridge">SRM_ANT_BRIDGE</string>
+  <string name="sensor_type_value_polar">POLAR</string>
+  <string name="sensor_type_value_zephyr">ZEPHYR</string>
+  
+  <!-- Track Color Mode values stored in preference -->
+  <string name="track_color_mode_value_none">NONE</string>
+  <string name="track_color_mode_value_fixed">FIXED</string>
+  <string name="track_color_mode_value_dynamic">DYNAMIC</string>
 
   <!-- Send to Google URLs -->
   <string name="sendtogoogle_google_fusiontables_url">google.com/fusiontables</string>
