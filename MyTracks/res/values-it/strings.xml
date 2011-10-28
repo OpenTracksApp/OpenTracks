@@ -73,7 +73,7 @@ limitations under the License.
   <string name="progress_message_updating_track">Aggiornamento delle statistiche del percorso in corso...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">Sei sicuro?</string>
+  <string name="confirmation_title_are_you_sure">Sei sicuro?</string>
   <string name="all_data_will_be_permanently_deleted">Tutti i percorsi e segnaposti saranno eliminati definitivamente da questo telefono.</string>
   <string name="track_will_be_permanently_deleted">Il percorso e i suoi segnaposti saranno eliminati definitivamente da questo telefono.</string>
   <string name="marker_will_be_permanently_deleted">Il segnaposto sarà eliminato definitivamente da questo telefono.</string>

@@ -75,7 +75,7 @@ limitations under the License.
   <string name="progress_message_updating_track">S\'estan actualitzant les estadístiques de la ruta...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">Esteu segur?</string>
+  <string name="confirmation_title_are_you_sure">Esteu segur?</string>
   <string name="all_data_will_be_permanently_deleted">Tots els marcadors i rutes s\'eliminaran d\'aquest telèfon.</string>
   <string name="track_will_be_permanently_deleted">La ruta i els seus marcadors s\'eliminaran de forma permanent d\'aquest telèfon.</string>
   <string name="marker_will_be_permanently_deleted">El marcador s\'eliminarà de forma permanent d\'aquest telèfon.</string>

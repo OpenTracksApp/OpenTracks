@@ -76,7 +76,7 @@ limitations under the License.
   <string name="progress_message_updating_track">Mise à jour des statistiques du parcours...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">Êtes-vous sûr?</string>
+  <string name="confirmation_title_are_you_sure">Êtes-vous sûr?</string>
   <string name="all_data_will_be_permanently_deleted">Tous les parcours et balises vont être supprimés de ce téléphone.</string>
   <string name="track_will_be_permanently_deleted">Le parcours et ses balises vont être supprimés de manière permanente de ce téléphone.</string>
   <string name="marker_will_be_permanently_deleted">Les balises vont être supprimées de manière permanente de ce téléphone.</string>

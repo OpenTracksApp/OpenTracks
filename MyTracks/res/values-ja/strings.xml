@@ -81,7 +81,7 @@ limitations under the License.
   <string name="progress_message_updating_track">トラック統計情報を更新しています...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">よろしいですか?</string>
+  <string name="confirmation_title_are_you_sure">よろしいですか?</string>
   <string name="all_data_will_be_permanently_deleted">全てのトラックとマーカーをこの端末から削除します．</string>
   <string name="track_will_be_permanently_deleted">トラックとマーカーをこの端末から完全に削除します．</string>
   <string name="marker_will_be_permanently_deleted">マーカーをこの端末から完全に削除します．</string>

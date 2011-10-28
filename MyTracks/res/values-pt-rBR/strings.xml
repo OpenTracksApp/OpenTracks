@@ -73,7 +73,7 @@ limitations under the License.
   <string name="progress_message_updating_track">Atualizando estatísticas do caminho...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">Você tem certeza?</string>
+  <string name="confirmation_title_are_you_sure">Você tem certeza?</string>
   <string name="all_data_will_be_permanently_deleted">Todos os seus caminhos e marcadores serão apagados deste telefone.</string>
   <string name="track_will_be_permanently_deleted">O caminho e todos os seus marcadores serão permanentemente apagados deste telefone.</string>
   <string name="marker_will_be_permanently_deleted">O marcador será permanentemente apagado deste telefone.</string>

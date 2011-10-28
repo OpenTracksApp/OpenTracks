@@ -84,7 +84,7 @@ limitations under the License.
   <string name="progress_message_updating_track">更新轨迹统计信息中...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">请确认</string>
+  <string name="confirmation_title_are_you_sure">请确认</string>
   <string name="all_data_will_be_permanently_deleted">所以轨迹和标记都将被从本机删除.</string>
   <string name="track_will_be_permanently_deleted">选定轨迹和它相关的标记都将被从本机彻底删除.</string>
   <string name="marker_will_be_permanently_deleted">选定标记将被从本机删除.</string>

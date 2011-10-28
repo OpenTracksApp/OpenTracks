@@ -74,7 +74,7 @@ limitations under the License.
   <string name="progress_message_updating_track">Aktualizacja statystyk trasy...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">Jesteś pewien?</string>
+  <string name="confirmation_title_are_you_sure">Jesteś pewien?</string>
   <string name="all_data_will_be_permanently_deleted">Wszystkie trasy i znaczniki zostaną usunięte z telefonu.</string>
   <string name="track_will_be_permanently_deleted">Trasa i jej znaczniki zostanie całkowicie usunięta z telefonu.</string>
   <string name="marker_will_be_permanently_deleted">Znacznik zostanie całkowicie usunięty z telefonu.</string>

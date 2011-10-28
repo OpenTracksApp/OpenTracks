@@ -84,7 +84,7 @@ limitations under the License.
   <string name="progress_message_updating_track">Päivitetään reitin tilastoja...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">Oletko varma?</string>
+  <string name="confirmation_title_are_you_sure">Oletko varma?</string>
   <string name="all_data_will_be_permanently_deleted">Kaikki reitit ja merkinnät poistetaan puhelimesta.</string>
   <string name="track_will_be_permanently_deleted">Reitti ja se merkinnät poistetaan pysyvästi puhelimesta.</string>
   <string name="marker_will_be_permanently_deleted">Merkintä poistetaan puhelimesta.</string>

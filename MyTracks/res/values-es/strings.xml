@@ -85,7 +85,7 @@ limitations under the License.
 
   <!-- Used by DeleteAllDataHandler -->
     <string name="delete_track_activity_title">Borrar recorrido</string>
-  <string name="are_you_sure_question">¿Está usted seguro?</string>
+  <string name="confirmation_title_are_you_sure">¿Está usted seguro?</string>
   <string name="all_data_will_be_permanently_deleted">Todos los recorridos y señales serán borradas de este teléfono.</string>
   <string name="track_will_be_permanently_deleted">El recorrido y sus señales serán borrados permanentemente de este teléfono.</string>
   <string name="marker_will_be_permanently_deleted">La señal será borrada permanentemente de este teléfono.</string>

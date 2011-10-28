@@ -83,7 +83,7 @@ limitations under the License.
   <string name="progress_message_updating_track">Обновление статистики трека...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">Вы уверены?</string>
+  <string name="confirmation_title_are_you_sure">Вы уверены?</string>
   <string name="all_data_will_be_permanently_deleted">Все треки и маркеры будут удалены с этого телефона.</string>
   <string name="track_will_be_permanently_deleted">Трек и его маркеры будут удалены из этого телефона.</string>
   <string name="marker_will_be_permanently_deleted">Маркер будет удален с этого телефона.</string>

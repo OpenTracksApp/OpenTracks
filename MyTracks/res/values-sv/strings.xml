@@ -74,7 +74,7 @@ limitations under the License.
   <string name="progress_message_updating_track">Uppdaterar spårstatistik...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">Är du säker?</string>
+  <string name="confirmation_title_are_you_sure">Är du säker?</string>
   <string name="all_data_will_be_permanently_deleted">Alla spår och markörer kommer att tas bort från telefonen.</string>
   <string name="track_will_be_permanently_deleted">Spåret och dess markörer kommer att permanent tas bort från telefonen.</string>
   <string name="marker_will_be_permanently_deleted">Markören kommer att permanent tas bort från telefonen.</string>

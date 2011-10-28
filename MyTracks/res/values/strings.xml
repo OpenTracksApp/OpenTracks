@@ -113,7 +113,7 @@ limitations under the License.
   <!-- Error messages when importing a track. -->
   <string name="error_import_unable_to_read_file"
     translation_description="When importing a track from the SD card, a messsage indicating that
-      MyTracks is unable to read the file.">
+      My Tracks is unable to read the file.">
     Unable to read from file.
   </string>
   <string name="error_import_invalid_gpx_format"
@@ -240,37 +240,37 @@ limitations under the License.
   </string>    
   <string name="progress_message_reading_track"
     translation_description="When sending a track to Google, the message on the progress dialog
-      indicating Mytracks is reading the track the its database.">
+      indicating My Tracks is reading the track from its database.">
     Reading track...
   </string>  
   <string name="progress_message_preparing_track"
     translation_description="When sending a track to Google My Maps, the message on the progress
-      dialog indicating MyTracks is preparing the track.">
+      dialog indicating My Tracks is preparing the track's data for upload.">
     Preparing track...
   </string> 
   <string name="progress_message_creating_map"
     translation_description="When sending a track to Google My Maps, the messsage on the progress
-      dialog indicating MyTracks is creating a new map in Google My Maps.">
+      dialog indicating My Tracks is creating a new map in Google My Maps.">
     Creating a new My Map...
   </string>
   <string name="progress_message_creating_fusion_table"
     translation_description="When sending a track to Google Fusion Tables, the messsage on the
-      progress dialog indicating MyTracks is creating a new Fusion Table in Google Fusion Tables.">
+      progress dialog indicating My Tracks is creating a new Fusion Table in Google Fusion Tables.">
     Creating a new Fusion Table...
   </string>  
   <string name="progress_message_sending_my_maps"
     translation_description="When sending a track to Google My Maps, the message on the progress
-      dialog indicating MyTracks is sending the track data.">
+      dialog indicating MyxTracks is sending the track data.">
     Sending a track to Google My Maps...
   </string>
   <string name="progress_message_sending_fusion_tables"
     translation_description="When sending a track to Google Fusion Tables, the message on the
-      progress dialog indicating MyTracks is sending the track data.">
+      progress dialog indicating My Tracks is sending the track data.">
     Sending a track to Google Fusion Tables...
   </string>
   <string name="progress_message_sending_docs"
     translation_description="When sending a track to Google Docs, the message on the progress dialog
-      indicating MyTracks is sending the track data.">
+      indicating My Tracks is sending the track data.">
     Sending a track to Google Docs...
   </string>
   
@@ -287,27 +287,30 @@ limitations under the License.
   </string>
 
   <!-- Used by deletion actions -->
-  <string name="are_you_sure_question"
-    translation_description="When deleting data, the title on the confirmation dialog.">
+  <string name="confirmation_title_are_you_sure"
+    translation_description="When deleting data (e.g., deleting all tracks, deleting a track,
+      deleting a marker, etc.), the title on the confirmation dialog asking the user if he is sure."
+      >
     Are you sure?
   </string>
   <string name="all_data_will_be_permanently_deleted"
-    translation_description="When deleting all data, the confirmation message to ask the user if he
-      is sure.">
-    All tracks and markers will be deleted from this phone.
+    translation_description="When deleting all tracks, the message on the confirmation dialog
+      informing the user that all tracks and markers will be permanently deleted from the phone.">
+    All tracks and markers will be permanently deleted from the phone.
   </string>
   <string name="track_will_be_permanently_deleted"
-    translation_description="When deleting a track, the confirmation message to ask the user if he
-      is sure.">
-    The track and its markers will be permanently deleted from this phone.
+    translation_description="When deleting a track, the message on the confirmation dialog informing
+      the user that the track and its markers will be permanently deleted from the phone.">
+    The track and its markers will be permanently deleted from the phone.
   </string>
   <string name="marker_will_be_permanently_deleted"
-    translation_description="When deleting a marker, the confirmation message to ask the user if he
-      is sure.">
-    The marker will be permanently deleted from this phone.
+    translation_description="When deleting a marker, the message on the confirmation dialog
+      informing the user that the marker will be permanently deleted from the phone.">
+    The marker will be permanently deleted from the phone.
   </string>
 
   <!-- Text and link when uploading to Google. -->
+  <!-- TODO(jshih@google.com) remove the html href tag from this string. -->
   <string name="send_to_google_by_mytracks"
     translation_description="When sending a track to Google, a note indicating it is created by
       My Tracks on Android, with the 'My Tracks' word containng a http link to
@@ -329,8 +332,8 @@ limitations under the License.
 
   <!-- Used by the track recording service -->
   <string name="recording_your_track"
-    translation_description="When recording a track, the message on the MyTracks notification 
-      informing the user that MyTracks is actively recording his track.">
+    translation_description="When recording a track, the message on the My Tracks notification 
+      informing the user that My Tracks is actively recording his track.">
     Recording your track...
   </string>
   <string name="new_track_format"

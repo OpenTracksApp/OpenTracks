@@ -75,7 +75,7 @@ limitations under the License.
   <string name="progress_message_updating_track">Aktualisiere Trackstatistik...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">Bist Du Dir wirklich sicher?</string>
+  <string name="confirmation_title_are_you_sure">Bist Du Dir wirklich sicher?</string>
   <string name="all_data_will_be_permanently_deleted">Alle Tracks und Wegpunkte werden endgültig von diesem Gerät gelöscht.</string>
   <string name="track_will_be_permanently_deleted">Dieser Track und seine Wegpunkte werden endgültig von diesem Gerät gelöscht.</string>
   <string name="marker_will_be_permanently_deleted">Dieser Wegpunkt wird endgültig von diesem Gerät gelöscht.</string>
