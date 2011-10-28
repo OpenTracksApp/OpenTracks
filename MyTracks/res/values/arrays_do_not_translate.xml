@@ -16,37 +16,38 @@ limitations under the License.
 -->
 <resources>
   <!-- Do not translate any arrays in this file. -->
-  <string-array name="min_required_accuracy_values">
+  
+  <!-- Display settings -->
+  <string-array name="track_color_mode_options">
+    <item>@string/track_color_mode_option_none</item>
+    <item>@string/track_color_mode_option_fixed</item>
+    <item>@string/track_color_mode_option_dynamic</item>
+  </string-array>
+
+  <string-array name="track_color_mode_values">
+    <item>@string/track_color_mode_value_none</item>
+    <item>@string/track_color_mode_value_fixed</item>
+    <item>@string/track_color_mode_value_dynamic</item>
+  </string-array>
+  
+  <!-- Recording settings -->
+  <string-array name="task_frequency_values">
+    <item>0</item>
+    <item>-100</item>
+    <item>-50</item>
+    <item>-25</item>
+    <item>-10</item>
+    <item>-5</item>
+    <item>-1</item>
+    <item>60</item>
+    <item>30</item>
+    <item>15</item>
     <item>10</item>
-    <item>20</item>
-    <item>50</item>
-    <item>100</item>
-    <item>200</item>
-    <item>500</item>
-    <item>1000</item>
-    <item>2000</item>
-    <item>5000</item>
+    <item>5</item>
+    <item>2</item>
+    <item>1</item>
   </string-array>
  
-  <string-array name="min_recording_distance_values">
-    <item>1</item>
-    <item>2</item>
-    <item>3</item>
-    <item>4</item>
-    <item>5</item>
-    <item>10</item>
-    <item>100</item>
-  </string-array>
-
-  <string-array name="max_recording_distance_values">
-    <item>50</item>
-    <item>100</item>
-    <item>200</item>
-    <item>500</item>
-    <item>1000</item>
-    <item>5000</item>
-  </string-array>
-
   <string-array name="min_recording_interval_values">
     <item>-2</item>
     <item>-1</item>
@@ -65,24 +66,38 @@ limitations under the License.
     <item>900</item>
     <item>1800</item>
   </string-array>
-
-  <string-array name="task_frequency_values">
-    <item>0</item>
-    <item>-100</item>
-    <item>-50</item>
-    <item>-25</item>
-    <item>-10</item>
-    <item>-5</item>
-    <item>-1</item>
-    <item>60</item>
-    <item>30</item>
-    <item>15</item>
-    <item>10</item>
-    <item>5</item>
-    <item>2</item>
+    
+  <string-array name="min_recording_distance_values">
     <item>1</item>
+    <item>2</item>
+    <item>3</item>
+    <item>4</item>
+    <item>5</item>
+    <item>10</item>
+    <item>100</item>
   </string-array>
-
+  
+  <string-array name="max_recording_distance_values">
+    <item>50</item>
+    <item>100</item>
+    <item>200</item>
+    <item>500</item>
+    <item>1000</item>
+    <item>5000</item>
+  </string-array>  
+  
+  <string-array name="min_required_accuracy_values">
+    <item>10</item>
+    <item>20</item>
+    <item>50</item>
+    <item>100</item>
+    <item>200</item>
+    <item>500</item>
+    <item>1000</item>
+    <item>2000</item>
+    <item>5000</item>
+  </string-array>
+  
   <string-array name="auto_resume_track_timeout_values">
     <item>0</item>
     <item>5</item>
@@ -91,43 +106,35 @@ limitations under the License.
     <item>-1</item>
   </string-array>
 
+  <!-- Sensor Options settings -->
+  <array name="sensor_type_options">
+    <item>@string/sensor_type_option_none</item>
+    <item>@string/sensor_type_option_ant</item>
+    <item>@string/sensor_type_option_srm_ant_bridge</item>
+    <item>@string/sensor_type_option_polar</item>
+    <item>@string/sensor_type_option_zephyr</item>
+  </array>
+  
+  <array name="sensor_type_values">
+    <item>@string/sensor_type_value_none</item>
+    <item>@string/sensor_type_value_ant</item>
+    <item>@string/sensor_type_value_srm_ant_bridge</item>
+    <item>@string/sensor_type_value_polar</item>
+    <item>@string/sensor_type_value_zephyr</item>
+  </array>
+  
+  <string-array name="ant_sensor_type_values">
+    <item>@string/sensor_type_value_ant</item>
+    <item>@string/sensor_type_value_srm_ant_bridge</item>
+  </string-array>
+  
+  <!-- Others -->
   <array name="export_formats">
     <item>GPX</item>
     <item>KML</item>
     <item>CSV</item>
     <item>TCX</item>
   </array>
-
-  <array name="sensor_type_options">
-    <item>@string/no_sensor_option</item>
-    <item>@string/ant_sensor_option</item>
-    <item>@string/ant_bridge_sensor_option</item>
-    <item>@string/polar_bt_sensor_option</item>
-    <item>@string/zephyr_bt_sensor_option</item>
-  </array>
-
-  <array name="sensor_type_values">
-    <item>@string/none</item>
-    <item>@string/ant_sensor_type</item>
-    <item>@string/srm_ant_bridge_sensor_type</item>
-    <item>@string/polar_sensor_type</item>
-    <item>@string/zephyr_sensor_type</item>
-  </array>
-
-  <string-array name="ant_sensor_type_values">
-    <item>@string/ant_sensor_type</item>
-    <item>@string/srm_ant_bridge_sensor_type</item>
-  </string-array>
   
-  <string-array name="track_color_mode_options">
-      <item>@string/track_color_mode_none</item>
-      <item>@string/track_color_mode_fixed</item>
-      <item>@string/track_color_mode_dynamic</item>
-  </string-array>
-  
-   <string-array name="track_color_mode_values">
-      <item>@string/none</item>
-      <item>@string/track_color_mode_fixed</item>
-      <item>@string/track_color_mode_dynamic</item>
-  </string-array>
 </resources>
+

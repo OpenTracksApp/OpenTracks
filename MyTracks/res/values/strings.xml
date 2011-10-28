@@ -51,101 +51,302 @@ limitations under the License.
 
   <!--  Additional menu items for the map view. -->
   <string name="mylocation"
-    translation_description="In the menu, to display user's current location.">
+    translation_description="In the menu for the map view, to display user's current location.">
     My Location
   </string>
     <string name="switch_to_sat"
-    translation_description="In the menu, to switch the display to the satellite mode.">
+    translation_description="In the menu for the map view, to switch the display to the satellite
+        mode.">
     Satellite Mode
   </string>
   <string name="switch_to_map"
-    translation_description="In the menu, to switch the display to the map mode.">
+    translation_description="In the menu for the map view, to switch the display to the map mode.">
     Map Mode
   </string>
   
   <!--  Additional menu items for the chart view. -->
   <string name="chart_settings"
-    translation_description="In the menu, to change the chart settings.">
+    translation_description="In the menu for the chart view, to change the chart settings.">
     Chart Settings
   </string>  
+ 
+  <!-- Error messages when there is no GPS. -->
+  <string name="error_no_gps"
+    translation_description="On application start, message when there is no GPS on the device.">
+    No GPS is found on the device.
+  </string>
+  <string name="error_unable_to_start_recording"
+    translation_description="When starting a recording, message when not able to start due to no GPS
+      location and asking the user to try again.">
+    Unable to start recording. No GPS location. Try again.
+  </string>
+  <string name="error_unable_to_insert_marker"
+    translation_description="When inserting a marker, message when not able to insert due to no GPS
+      location and asking the user to try again.">
+    Unable to insert marker. No GPS location. Try again.
+  </string>  
+
+  <!-- A generic error message. -->
+  <string name="error_generic"
+    translation_description="In an alert dialog, a generic error message indicating that an error
+      has occurred and asking the user to try again.">
+    An error occurred. Please try again.
+  </string>
+      
+  <!-- Error messages when sending to Google. -->
+  <string name="error_sending_to_my_maps"
+    translation_description="When sending a track to Google My Maps, a message indicating that an
+      error has occured.">
+    There was an error while sending your track to Google My Maps.
+  </string>
+  <string name="error_sending_to_fusion_tables"
+    translation_description="When sending a track to Google Fusion Table, a message indicating that
+      an error has occurred.">
+    There was an error while sending your track to Google Fusion Tables.
+  </string>
+  <string name="error_sending_to_docs"
+    translation_description="When sending a track to Google Docs, a message indicating that an error
+      has occurred.">
+    There was an error while sending your track to Google Docs.
+  </string>
   
-  <!-- Error messages -->
-  <string name="error_no_location_manager">No location manager was found on this device!</string>
-  <string name="error_no_gps_location_provider">No GPS location provider was found on this device.</string>
-  <string name="error_sending_to_mymap">There was an error while sending your track to Google My Map.</string>
-  <string name="error_sending_to_fusiontables">There was an error while sending your track to Google Fusion Tables.</string>
-  <string name="error_sending_to_docs">There was an error while sending your track to Google Docs.</string>
-  <string name="error_please_try_again_later">Please try again later.</string>
-  <string name="error_unable_to_start_recording">Unable to start recording. Try again.</string>
-  <string name="error_unable_to_stop_recording">Unable to stop recording. Try again.</string>
-  <string name="error_unable_to_read_file">Unable to read from file.</string>
-  <string name="error_invalid_gpx_format">File does not have a valid GPX format.</string>
-  <string name="error_generic">An error occurred. Please try again.</string>
-  <string name="error_track_does_not_exist">Track does not exist.</string>
-  <string name="error_operation_cancelled">The operation was cancelled.</string>
-  <string name="error_out_of_memory">This file is too big (must be less than 500 KB). Aborting.</string>
-  <string name="error_unable_to_insert_marker">Unable to insert marker. No location fix available.</string>
+  <!-- Error messages when importing a track. -->
+  <string name="error_import_unable_to_read_file"
+    translation_description="When importing a track from the SD card, a messsage indicating that
+      My Tracks is unable to read the file.">
+    Unable to read from file.
+  </string>
+  <string name="error_import_invalid_gpx_format"
+    translation_description="When importing a track from the SD card, a message indicating that
+      the file does not have a valid GPX format.">
+    File does not have a valid GPX format.
+  </string>
+  
+  <!-- TODO(jshih@google.com) confirm if the file size limit is still 500 KB. -->
+  <string name="error_import_out_of_memory"
+    translation_description="When importing a track from the SD card, a message indicating that
+      the file is too big, must be less than 500 KB, and aborting.">
+    This file is too big (must be less than 500 KB). Aborting.
+  </string>
+  
+  <!--  Error messages when exporting a track. -->
+  <string name="error_export_generic"
+    translation_description="When exporting a track to the SD card, a generic error message
+      indicating unable to export.">
+    Unable to export.
+  </string>
+  <string name="error_export_operation_canceled"
+    translation_description="When exporting a track to the SD card, a message indicating that the
+      export operation was canceled.">
+    The operation was canceled.
+  </string>
 
-  <!-- Status messages -->
-  <string name="wait_for_fix">Waiting for a better GPS fix. Make sure the sky is visible.</string>
-  <string name="status_now_recording">Now recording a new track.</string>
-  <string name="status_stopped_recording">Stopped recording your track.</string>
-  <string name="status_new_mymap_has_been_created">A new Google My Map has been created at maps.google.com.</string>
-  <string name="status_new_fusiontable_has_been_created">A new Google Fusion table has been created at google.com/fusiontables.</string>
-  <string name="status_tracks_have_been_uploaded">Your track has been sent to maps.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">Your track has been sent to a new spreadsheet at docs.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_docs">Your track has been sent to docs.google.com.</string>
-  <string name="status_mymap_info">It may take a few minutes before new tracks appear.</string>
-  <string name="status_enable_gps">Please tap here to go to Security and Location Settings and check \'enable GPS satellites\'. Press back button to return.</string>
-  <string name="status_approximate_location">Note: An approximate location as determined from cell towers and WIFI networks is shown.</string>
-  <string name="status_no_location">A location can currently not be determined. Enable more location sources (see Security and Location Settings) and make sure the sky is visible. Try again later.</string>
-  <string name="status_waypoint_inserted">A way point marker was inserted.</string>
-  <string name="status_statistics_inserted">A statistics marker was inserted.</string>
-  <string name="status_track_upload_status">Upload status:</string>
+  <!-- GPS status messages. -->
+  <string name="status_wait_for_gps_fix"
+    translation_description="In the main view, the message on the top indicating My Tracks is
+      waiting for a better GPS fix.">
+    Waiting for a better GPS fix. Make sure the sky is visible.
+  </string>
+  <string name="status_need_to_enable_gps"
+    translation_description="In the main view, the message on the top asking the user to enable
+      GPS.">     
+    Please tap here to go to \'Location &amp; security\' settings and check \'Use GPS satellites\'.
+    Press the back button to return.
+  </string>
+  <string name="status_approximate_current_location"
+    translation_description="When displaying the user's current location, a status message
+      indicating that GPS is not available and an approximate location is used instead.">
+    GPS is not available. An approximate location based on cell towers and WIFI networks is shown.
+  </string>
+  <string name="status_no_current_location"
+    translation_description="When displaying the user's current location, a status message
+      indicating that the current location cannot be determined.">
+    GPS is not available. Current location cannot be determined. Enable more location sources (see
+    \'Location &amp; security\' settings) and make sure the sky is visible. Try again later.
+  </string>
+  
+  <!-- Record track status message. -->
+  <string name="status_now_recording"
+    translation_description="When starting a new track recording, a status message indicating
+      success.">
+    Now recording a new track.
+  </string>
+  
+  <!-- Insert marker status message. -->
+  <string name="status_marker_inserted"
+    translation_description="When inserting a new marker, a message indicating success.">
+    A marker was inserted.
+  </string>
+  
+  <!-- Sending to Google status messages. -->
+  <string name="sending_to_google_upload_status"
+    translation_description="When sending a track to Google, the header on the top of the result
+      page.">
+    Upload status:
+  </string>
+  <string name="sending_to_google_additional_info"
+    translation_description="When sending a track to Google, the additional comment on the bottom of
+      the result page.">
+    It may take a few minutes before new tracks appear.
+  </string>
+  <string name="sending_to_my_maps_success_new_map"
+    translation_description="When sending a track to Google My Maps, the message on the result page
+      indicating that a new map is created.">
+    A new Google My Map has been created at maps.google.com.
+  </string>
+  <string name="sending_to_my_maps_success_existing_map"
+    translation_description="When sending a track to Google My Maps, the message on the result page
+      indicating that the track is sent to an existing map.">
+    Your track has been sent to maps.google.com.
+  </string>
+  <string name="sending_to_fusion_tables_success"
+    translation_description="When sending a track to Google Fusion Tables, the message on the result
+      page indicating success.">
+    A new Google Fusion table has been created at google.com/fusiontables.
+  </string>  
+  <string name="sending_to_docs_success_new_doc"
+    translation_description="When sending a track to Google Docs, the message on the result page
+      indicating that a new spreadsheet is created.">
+    A new spreadsheet is created at docs.google.com.
+  </string>
+  <string name="sending_to_docs_success_existing_doc"
+    translation_description="When sending a track to Google Docs, the message on the result page
+      indicating that the track is sent to an existing spreadsheet.">      
+    Your track has been sent to docs.google.com.
+  </string>
 
-  <!-- Progress dialog -->
-  <string name="progress_title">Please wait...</string>
-  <string name="progress_message">Sending your track to Google.</string>
-  <string name="progress_message_reading_track">Reading track...</string>
-  <string name="progress_message_preparing_track">Preparing track...</string>
-  <string name="progress_message_authenticating_fusiontables">Authenticating to Google Fusion Tables...</string>
-  <string name="progress_message_authenticating_mymaps">Authenticating to Google Maps...</string>
-  <string name="progress_message_authenticating_docs">Authenticating to Google Docs...</string>
-  <string name="progress_message_sending_docs">Sending track to Google Docs...</string>
-  <string name="progress_message_sending_mymaps">Sending track to Google Maps...</string>
-  <string name="progress_message_creating_map">Creating new My Map...</string>
-  <string name="progress_message_sending_fusiontables">Sending track to Fusion Tables...</string>
-  <string name="progress_message_creating_fusiontable">Creating new Fusion table...</string>
-  <string name="import_progress_message">Importing a GPS track. This may take a while.</string>
-  <string name="write_progress_message">Writing file to SD card. This may take a while.</string>
-  <string name="progress_message_updating_track">Updating track statistics...</string>
+  <!-- Progress dialog title -->
+  <string name="progress_title"
+    translation_description="When displaying a progress dialog, the title on the dialog asking the
+      user to wait.">
+    Please wait...
+  </string>
+  
+  <!-- Progress dialog messages when sending to Google. -->
+  <string name="progress_message_authenticating_my_maps"
+    translation_description="When sending a track to Google My Maps, the messsage on the progress
+      dialog indicating authenticating to Google My Maps.">
+    Authenticating to Google My Maps...
+  </string>
+  <string name="progress_message_authenticating_fusion_tables"
+    translation_description="When sending a track to Google Fusion Tables, the messsage on the
+      progress dialog indicating authenticating to Google Fusion Tables.">
+    Authenticating to Google Fusion Tables...
+  </string>
+  <string name="progress_message_authenticating_docs"
+    translation_description="When sending a track to Google Docs, the messsage on the progress
+      dialog indicating authenticating to Google Docs.">
+    Authenticating to Google Docs...
+  </string>    
+  <string name="progress_message_reading_track"
+    translation_description="When sending a track to Google, the message on the progress dialog
+      indicating My Tracks is reading the track from its database.">
+    Reading track...
+  </string>  
+  <string name="progress_message_preparing_track"
+    translation_description="When sending a track to Google My Maps, the message on the progress
+      dialog indicating My Tracks is preparing the track's data for upload.">
+    Preparing track...
+  </string> 
+  <string name="progress_message_creating_map"
+    translation_description="When sending a track to Google My Maps, the messsage on the progress
+      dialog indicating My Tracks is creating a new map in Google My Maps.">
+    Creating a new My Map...
+  </string>
+  <string name="progress_message_creating_fusion_table"
+    translation_description="When sending a track to Google Fusion Tables, the messsage on the
+      progress dialog indicating My Tracks is creating a new Fusion Table in Google Fusion Tables.">
+    Creating a new Fusion Table...
+  </string>  
+  <string name="progress_message_sending_my_maps"
+    translation_description="When sending a track to Google My Maps, the message on the progress
+      dialog indicating My Tracks is sending the track data.">
+    Sending a track to Google My Maps...
+  </string>
+  <string name="progress_message_sending_fusion_tables"
+    translation_description="When sending a track to Google Fusion Tables, the message on the
+      progress dialog indicating My Tracks is sending the track data.">
+    Sending a track to Google Fusion Tables...
+  </string>
+  <string name="progress_message_sending_docs"
+    translation_description="When sending a track to Google Docs, the message on the progress dialog
+      indicating My Tracks is sending the track data.">
+    Sending a track to Google Docs...
+  </string>
+  
+  <!-- Import and Export progress messages. -->
+  <string name="progress_message_import"
+    translation_description="When importing a track from the SD card, the message on the progress
+      dialog indicating that it may take a while.">
+    Importing a track from the SD card. This may take a while.
+  </string>
+  <string name="progress_message_export"
+    translation_description="When exporting a track to the SD card, the message on the progress
+      dialog indicating that it may take a while.">
+    Exporting a track to the SD card. This may take a while.
+  </string>
 
   <!-- Used by deletion actions -->
-  <string name="deletetrack_title">Delete track</string>
-  <string name="are_you_sure_question">Are you sure?</string>
-  <string name="all_data_will_be_permanently_deleted">All tracks and markers will be deleted from this phone.</string>
-  <string name="track_will_be_permanently_deleted">The track and its markers will be permanently deleted from this phone.</string>
-  <string name="marker_will_be_permanently_deleted">The marker will be permanently deleted from this phone.</string>
+  <string name="confirmation_title_are_you_sure"
+    translation_description="When deleting data (e.g., deleting all tracks, deleting a track,
+      deleting a marker, etc.), the title on the confirmation dialog asking the user if he is sure."
+      >
+    Are you sure?
+  </string>
+  <string name="all_data_will_be_permanently_deleted"
+    translation_description="When deleting all tracks, the message on the confirmation dialog
+      informing the user that all tracks and markers will be permanently deleted from the phone.">
+    All tracks and markers will be permanently deleted from the phone.
+  </string>
+  <string name="track_will_be_permanently_deleted"
+    translation_description="When deleting a track, the message on the confirmation dialog informing
+      the user that the track and its markers will be permanently deleted from the phone.">
+    The track and its markers will be permanently deleted from the phone.
+  </string>
+  <string name="marker_will_be_permanently_deleted"
+    translation_description="When deleting a marker, the message on the confirmation dialog
+      informing the user that the marker will be permanently deleted from the phone.">
+    The marker will be permanently deleted from the phone.
+  </string>
 
-  <!-- Text and links when uploading to Google Fusion Tables -->
-  <string name="new_map_description">Created by My Tracks on Android.</string>
-  <string name="fusiontable_link">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
+  <!-- Text and link when uploading to Google. -->
+  <!-- TODO(jshih@google.com) remove the html href tag from this string. -->
+  <string name="send_to_google_by_mytracks"
+    translation_description="When sending a track to Google, a note indicating it is created by
+      My Tracks on Android, with the 'My Tracks' word containng a http link to
+      http://mytracks.appspot.com.">
+    Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.
+  </string>
 
-  <!-- Text and links when uploading to Google My Maps -->
-  <string name="my_map_link">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
-  <string name="new_map_title">New map</string>
-
-  <!-- Formatting of track and marker descriptions -->
-  <string name="points">Points</string>
-  <string name="recorded_date">Recorded</string>
-  <string name="category">Activity type</string>
-  <string name="waypoint_category">Marker type</string>
-  <string name="part">(Part %d)</string>
+  <!-- Tags for a track description. -->
+  <string name="recorded_date"
+    translation_description="When sending a track to Google, in the track description, a tag
+      for the track recorded date. E.g., 'Recorded: Tue Sep 06 15:08:30 PDT 2011'.">        
+    Recorded
+  </string>
+  <string name="category"
+    translation_description="When sending a track to Google, in the track desription, a tag
+      for the activity type. E.g., 'Activity type: hiking'.">
+    Activity type
+  </string>
 
   <!-- Used by the track recording service -->
-  <string name="recording_your_track">Recording your track...</string>
-  <string name="new_track">Track %d</string>
-
+  <string name="recording_your_track"
+    translation_description="When recording a track, the message on the My Tracks notification 
+      informing the user that My Tracks is actively recording his track.">
+    Recording your track...
+  </string>
+  <string name="new_track_format"
+    translation_description="When creating a new track, the string format to name the track. E.g.,
+      'Track 1'.">
+    Track %d
+  </string>  
+  <string name="track_part_format"
+    translation_description="When sending a track to Google, the string format to name segments
+      when splitting a large track. E.g., '(Part 1)'.">
+    (Part %d)
+  </string>
+      
   <!-- Button texts -->
   <string name="yes"
     translation_description="Text on the button to say yes.">
@@ -796,14 +997,48 @@ limitations under the License.
           MyTracks and start/stop MyTracks recording.</string>
 
   <!-- Sensor Type Options -->
-  <string name="no_sensor_option">NONE</string>
-  <string name="ant_sensor_option">ANT+ Sensors</string>
-  <string name="ant_bridge_sensor_option">SRM ANT+ Bridge</string>
-  <string name="polar_bt_sensor_option">Polar Bluetooth</string>
-  <string name="zephyr_bt_sensor_option">Zephyr Bluetooth</string>
+  <string name="sensor_type_option_none"
+    translation_description="In the Sensor Options settings page, for the Sensor Type picker, the
+        dropdown option to not connect to any sensor.">
+    None
+  </string>
+  <string name="sensor_type_option_ant"
+    translation_description="In the Sensor Options settings page, for the Sensor Type picker, the
+        dropdown option to connect to an ANT+ sensor.">  
+    ANT+ Sensor
+  </string>
+  <string name="sensor_type_option_srm_ant_bridge"
+    translation_description="In the Sensor Options settings page, for the Sensor Type picker, the
+        dropdown option to connect to a SRM ANT+ bridge.">  
+    SRM ANT+ Bridge
+  </string>
+  <string name="sensor_type_option_polar"
+    translation_description="In the Sensor Options settings page, for the Sensor Type picker, the
+        dropdown option to connect to a Polar bluetooth sensor.">  
+    Polar Bluetooth
+  </string>
+  <string name="sensor_type_option_zephyr"
+    translation_description="In the Sensor Options settings page, for the Sensor Type picker, the
+        dropdown option to connect to a Zephyr bluetooth sensor.">     
+    Zephyr Bluetooth
+  </string>
 
-  <!-- Track Color Modes -->
-  <string name="track_color_mode_none">None</string>
-  <string name="track_color_mode_fixed">Fixed (BETA)</string>
-  <string name="track_color_mode_dynamic">Dynamic (BETA)</string>
+  <!-- Track Color Mode Options -->
+  <string name="track_color_mode_option_none"
+    translation_description="In the Display settings page, for the Track Color Mode picker, the
+        dropdown option to only use one color to color a track.">
+    One Color
+  </string>
+  <string name="track_color_mode_option_fixed"
+    translation_description="In the Display settings page, for the Track Color Mode picker, the 
+        dropdown option to use different colors to color a track based on fixed speed thresholds.">
+    Fixed Thresholds
+  </string>
+  <string name="track_color_mode_option_dynamic"
+    translation_description="In the Display settings page, for the Track Color Mode picker, the
+        dropdown option to use different colors to color a track based on dynamically determined
+        speed thresholds. E.g., use one color for segments where the speed is below the average
+        speed of the track.">
+    Dynamic Thresholds
+  </string>
 </resources>

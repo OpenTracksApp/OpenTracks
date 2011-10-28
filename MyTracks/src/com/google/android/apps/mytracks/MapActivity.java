@@ -504,12 +504,12 @@ public class MapActivity extends com.google.android.maps.MapActivity
     final boolean isGpsDisabled;
     switch (state) {
       case DISABLED:
-        messageId = R.string.status_enable_gps;
+        messageId = R.string.status_need_to_enable_gps;
         isGpsDisabled = true;
         break;
       case NO_FIX:
       case BAD_FIX:
-        messageId = R.string.wait_for_fix;
+        messageId = R.string.status_wait_for_gps_fix;
         isGpsDisabled = false;
         break;
       case GOOD_FIX:
@@ -531,7 +531,7 @@ public class MapActivity extends com.google.android.maps.MapActivity
           if (isGpsDisabled) {
             // Give a warning about this state.
             Toast.makeText(MapActivity.this,
-                R.string.error_no_gps_location_provider,
+                R.string.error_no_gps,
                 Toast.LENGTH_LONG).show();
 
             // Make clicking take the user to the location settings.

@@ -168,7 +168,7 @@ public class SendToFusionTables implements Runnable {
   }
 
   private void doUpload() {
-    int statusMessageId = R.string.error_sending_to_fusiontables;
+    int statusMessageId = R.string.error_sending_to_fusion_tables;
     boolean success = true;
     try {
       progressIndicator.setProgressValue(PROGRESS_INITIALIZATION);
@@ -185,13 +185,13 @@ public class SendToFusionTables implements Runnable {
 
       // Create a new table:
       progressIndicator.setProgressValue(PROGRESS_FUSION_TABLE_CREATE);
-      progressIndicator.setProgressMessage(R.string.progress_message_creating_fusiontable);
+      progressIndicator.setProgressMessage(R.string.progress_message_creating_fusion_table);
       if (!createNewTable(track) || !makeTableUnlisted()) {
         return;
       }
 
       progressIndicator.setProgressValue(PROGRESS_UPLOAD_DATA_MIN);
-      progressIndicator.setProgressMessage(R.string.progress_message_sending_fusiontables);
+      progressIndicator.setProgressMessage(R.string.progress_message_sending_fusion_tables);
 
       // Upload all of the segments of the track plus start/end markers
       if (!uploadAllTrackPoints(track, originalDescription)) {
@@ -205,7 +205,7 @@ public class SendToFusionTables implements Runnable {
         return;
       }
 
-      statusMessageId = R.string.status_new_fusiontable_has_been_created;
+      statusMessageId = R.string.sending_to_fusion_tables_success;
       Log.d(Constants.TAG, "SendToFusionTables: Done: " + success);
       progressIndicator.setProgressValue(PROGRESS_COMPLETE);
     } finally {
@@ -462,7 +462,7 @@ public class SendToFusionTables implements Runnable {
       if (totalSegmentsUploaded > 1) {
         splitTrack.setName(splitTrack.getName() + " "
             + String.format(
-                context.getString(R.string.part), totalSegmentsUploaded));
+                context.getString(R.string.track_part_format), totalSegmentsUploaded));
       }
       totalSegmentsUploaded++;
       Log.d(Constants.TAG,

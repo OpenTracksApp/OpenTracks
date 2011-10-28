@@ -34,64 +34,64 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">Paikkatietoja ei löytynyt!</string>
-  <string name="error_no_gps_location_provider">GPS-palvelua ei löytynyt.</string>
-  <string name="error_sending_to_mymap">Virhe lähetettäessä reittiä Google My Maps-palveluun.</string>
-  <string name="error_sending_to_fusiontables">Virhe lähetettäessä reittiä Google Fusion Tables-palveluun.</string>
+  <string name="error_no_gps">GPS-palvelua ei löytynyt.</string>
+  <string name="error_sending_to_my_maps">Virhe lähetettäessä reittiä Google My Maps-palveluun.</string>
+  <string name="error_sending_to_fusion_tables">Virhe lähetettäessä reittiä Google Fusion Tables-palveluun.</string>
   <string name="error_sending_to_docs">Virhe lähetettäessä reittiä Google Docs-palveluun..</string>
-  <string name="error_please_try_again_later">Yritä myöhemmin uudelleen.</string>
+  <string name="error_sending_generic">Yritä myöhemmin uudelleen.</string>
   <string name="error_unable_to_start_recording">Tallennusta ei voitu aloittaa. Yritä uudelleen.</string>
   <string name="error_unable_to_stop_recording">Tallennusta ei voitu pysäyttää. Yritä uudelleen.</string>
-  <string name="error_unable_to_read_file">Tiedostovirhe.</string>
-  <string name="error_invalid_gpx_format">Virheellinen GPX-formaatti.</string>
-  <string name="error_generic">Tapahtui virhe. Yritä uudelleen.</string>
-  <string name="error_track_does_not_exist">Reittiä ei ole olemassa.</string>
-  <string name="error_operation_cancelled">Tapahtuma keskeytettiin.</string>
-  <string name="error_out_of_memory">Liian suuri tiedosto (maksimi 500 KB). Keskeytetään.</string>
+  <string name="error_import_unable_to_read_file">Tiedostovirhe.</string>
+  <string name="error_import_invalid_gpx_format">Virheellinen GPX-formaatti.</string>
+  <string name="error_import_generic">Tapahtui virhe. Yritä uudelleen.</string>
+  <string name="error_export_track_does_not_exist">Reittiä ei ole olemassa.</string>
+  <string name="error_export_operation_canceled">Tapahtuma keskeytettiin.</string>
+  <string name="error_import_out_of_memory">Liian suuri tiedosto (maksimi 500 KB). Keskeytetään.</string>
   <string name="error_unable_to_insert_marker">Merkintää ei voitu lisätä. Paikkatietoa ei saatavilla.</string>
 
   <!-- Status messages -->
-  <string name="wait_for_fix">Odotetaan parempaa GPS-yhteyttä. Varmista että taivas on näkyvissä.</string>
+  <string name="status_wait_for_gps_fix">Odotetaan parempaa GPS-yhteyttä. Varmista että taivas on näkyvissä.</string>
   <string name="status_now_recording">Tallennetaan uutta reittiä.</string>
   <string name="status_stopped_recording">Reitin tallentaminen lopetettiin.</string>
-  <string name="status_new_mymap_has_been_created">Uusi Google My Map on luotu osoitteeseen maps.google.com.</string>
-  <string name="status_new_fusiontable_has_been_created">Uusi Google Fusion taulukko on luotu osoitteeseen google.com/fusiontables.</string>
-  <string name="status_tracks_have_been_uploaded">Reittisi on lähetetty osoitteeseen maps.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">Reittisi on luotu taulukoksi osoitteeseen  docs.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_docs">Reittisi on lähetetty osoitteeseen docs.google.com.</string>
-  <string name="status_mymap_info">Reitin näkyminen saattaa kestää muutaman minuutin.</string>
-  <string name="status_enable_gps">Avaa tästä Sijainti ja suojaus -asetukset ja valitse \'Käytä GPS-satelliitteja\'. Palaa ohjelmaan painamalla Takaisin-näppäintä.</string>
-  <string name="status_approximate_location">Huomio: Näkyvä sijainti perustuu kännykkämastoista ja WLAN-verkoista arvioituun paikkatietoon.</string>
-  <string name="status_no_location">Paikkatietoa ei löydy. Aktivoi lisää paikannusmenetelmiä (katso Asetukset) ja varmista että taivas on näkyvissä. Yritä myöhemmin uudelleen.</string>
+  <string name="sending_to_my_maps_success_new_map">Uusi Google My Map on luotu osoitteeseen maps.google.com.</string>
+  <string name="sending_to_fusion_tables_success">Uusi Google Fusion taulukko on luotu osoitteeseen google.com/fusiontables.</string>
+  <string name="sending_to_my_maps_success_existing_map">Reittisi on lähetetty osoitteeseen maps.google.com.</string>
+  <string name="sending_to_docs_success_new_doc">Reittisi on luotu taulukoksi osoitteeseen  docs.google.com.</string>
+  <string name="sending_to_docs_success_existing_doc">Reittisi on lähetetty osoitteeseen docs.google.com.</string>
+  <string name="sending_to_google_additional_info">Reitin näkyminen saattaa kestää muutaman minuutin.</string>
+  <string name="status_need_to_enable_gps">Avaa tästä Sijainti ja suojaus -asetukset ja valitse \'Käytä GPS-satelliitteja\'. Palaa ohjelmaan painamalla Takaisin-näppäintä.</string>
+  <string name="status_approximate_current_location">Huomio: Näkyvä sijainti perustuu kännykkämastoista ja WLAN-verkoista arvioituun paikkatietoon.</string>
+  <string name="status_no_current_location">Paikkatietoa ei löydy. Aktivoi lisää paikannusmenetelmiä (katso Asetukset) ja varmista että taivas on näkyvissä. Yritä myöhemmin uudelleen.</string>
   <string name="status_waypoint_inserted">Reittimerkintä lisätty.</string>
-  <string name="status_statistics_inserted">Tilastomerkintä lisätty.</string>
-  <string name="status_track_upload_status">Lähetyksen tila:</string>
+  <string name="status_marker_inserted">Tilastomerkintä lisätty.</string>
+  <string name="sending_to_google_upload_status">Lähetyksen tila:</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Odota...</string>
   <string name="progress_message">Lähetetään reittiä Google:n palvelimelle.</string>
   <string name="progress_message_reading_track">Luetaan reittiä...</string>
   <string name="progress_message_preparing_track">Valmistellaan reittiä...</string>
-  <string name="progress_message_authenticating_fusiontables">Todennetaan Google Fusion Tables -tiliä...</string>
-  <string name="progress_message_authenticating_mymaps">Todennetaan Google Maps -tiliä...</string>
+  <string name="progress_message_authenticating_fusion_tables">Todennetaan Google Fusion Tables -tiliä...</string>
+  <string name="progress_message_authenticating_my_maps">Todennetaan Google Maps -tiliä...</string>
   <string name="progress_message_authenticating_docs">Todennetaan Google Docs -tiliä...</string>
   <string name="progress_message_sending_docs">Lähetetään reittiä Google Docsiin...</string>
-  <string name="progress_message_sending_mymaps">Lähetetään reittiä Google Mapsiin...</string>
+  <string name="progress_message_sending_my_maps">Lähetetään reittiä Google Mapsiin...</string>
   <string name="progress_message_creating_map">Luodaan uutta My Mapsia...</string>
-  <string name="progress_message_sending_fusiontables">Lähetetään reittiä Fusion Tablesiin...</string>
-  <string name="progress_message_creating_fusiontable">Luodaan uutta Fusion tablea...</string>
-  <string name="import_progress_message">Tuodaan uutta GPS-reittiä. Odota.</string>
-  <string name="write_progress_message">Kirjoitetaan tiedostoa SD-kortille. Odota.</string>
+  <string name="progress_message_sending_fusion_tables">Lähetetään reittiä Fusion Tablesiin...</string>
+  <string name="progress_message_creating_fusion_table">Luodaan uutta Fusion tablea...</string>
+  <string name="progress_message_import">Tuodaan uutta GPS-reittiä. Odota.</string>
+  <string name="progress_message_export">Kirjoitetaan tiedostoa SD-kortille. Odota.</string>
   <string name="progress_message_updating_track">Päivitetään reitin tilastoja...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">Oletko varma?</string>
+  <string name="confirmation_title_are_you_sure">Oletko varma?</string>
   <string name="all_data_will_be_permanently_deleted">Kaikki reitit ja merkinnät poistetaan puhelimesta.</string>
   <string name="track_will_be_permanently_deleted">Reitti ja se merkinnät poistetaan pysyvästi puhelimesta.</string>
   <string name="marker_will_be_permanently_deleted">Merkintä poistetaan puhelimesta.</string>
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Created by My Tracks on Android.</string>
-  <string name="fusiontable_link">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
+  <string name="send_to_google_by_mytracks">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="my_map_link">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
@@ -102,11 +102,11 @@ limitations under the License.
   <string name="recorded_date">Tallennettu</string>
   <string name="category">Liikunnan muoto</string>
   <string name="waypoint_category">Merkinnän tyyppi</string>
-  <string name="part">(Osa %d)</string>
+  <string name="track_part_format">(Osa %d)</string>
 
   <!-- Used by the track recording service -->
   <string name="recording_your_track">Tallennetaan reittiä...</string>
-  <string name="new_track">Reitti %d</string>
+  <string name="new_track_format">Reitti %d</string>
 
   <!-- Common -->
   <string name="no">Ei</string>
@@ -497,11 +497,11 @@ limitations under the License.
   <string name="searching">Etsitään</string>
   <string name="sending">Lähetetään</string>
 
-  <string name="no_sensor_option">Ei sensoria</string>
-  <string name="ant_sensor_option">ANT+ -sensori</string>
-  <string name="ant_bridge_sensor_option">SRM ANT+ -silta</string>
-  <string name="polar_bt_sensor_option">Polar bluetooth</string>
-  <string name="zephyr_bt_sensor_option">Zephyr bluetooth</string>
+  <string name="sensor_type_option_none">Ei sensoria</string>
+  <string name="sensor_type_option_ant">ANT+ -sensori</string>
+  <string name="sensor_type_option_srm_ant_bridge">SRM ANT+ -silta</string>
+  <string name="sensor_type_option_polar">Polar bluetooth</string>
+  <string name="sensor_type_option_zephyr">Zephyr bluetooth</string>
 
   <!-- Manifest description (not seen inside the app) -->
   <string name="notification_permission_label">vastaanota huomautuksia reitin tallentamisesta</string>

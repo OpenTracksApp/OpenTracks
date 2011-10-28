@@ -39,7 +39,7 @@ limitations under the License.
         android:summary="@string/settings_track_color_mode_summary"
         android:entries="@array/track_color_mode_options"
         android:entryValues="@array/track_color_mode_values"
-        android:defaultValue="@string/none"/>
+        android:defaultValue="@string/track_color_mode_value_none"/>
 
     <PreferenceCategory android:title="@string/fixed_speed_options" 
         android:key="@string/track_color_mode_fixed_speed_options_key">
@@ -162,7 +162,7 @@ limitations under the License.
         android:summary="@string/settings_sensor_type_summary"
         android:entries="@array/sensor_type_options"
         android:entryValues="@array/sensor_type_values"
-        android:defaultValue="@string/none"/>
+        android:defaultValue="@string/sensor_type_value_none"/>
 
     <!-- Bluetooth -->
     <PreferenceCategory android:title="@string/bluetooth_options">

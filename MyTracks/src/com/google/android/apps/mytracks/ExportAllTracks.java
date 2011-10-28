@@ -183,7 +183,7 @@ public class ExportAllTracks {
         TrackWriter writer =
             TrackWriterFactory.newWriter(activity, providerUtils, id, format);
         if (writer == null) {
-          showToast(R.string.error_track_does_not_exist, Toast.LENGTH_LONG);
+          showToast(R.string.error_export_generic, Toast.LENGTH_LONG);
           return;
         }
 

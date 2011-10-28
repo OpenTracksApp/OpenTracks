@@ -52,7 +52,7 @@ public class DeleteAllTracks extends Handler {
     AlertDialog.Builder builder = new AlertDialog.Builder(context);
     builder.setMessage(
         context.getString(R.string.all_data_will_be_permanently_deleted));
-    builder.setTitle(context.getString(R.string.are_you_sure_question));
+    builder.setTitle(context.getString(R.string.confirmation_title_are_you_sure));
     builder.setIcon(android.R.drawable.ic_dialog_alert);
     builder.setPositiveButton(context.getString(R.string.yes),
         new DialogInterface.OnClickListener() {

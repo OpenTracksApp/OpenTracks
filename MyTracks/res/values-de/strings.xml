@@ -34,66 +34,66 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">Es wurde kein Dienst zur Positionsermittlung auf diesem Gerät gefunden.</string>
-  <string name="error_no_gps_location_provider">Es wurde kein GPS-Empfänger auf diesem Gerät gefunden.</string>
-  <string name="error_sending_to_fusiontables">Beim Senden des Tracks an Google Fusion Tables ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.</string>
+  <string name="error_no_gps">Es wurde kein GPS-Empfänger auf diesem Gerät gefunden.</string>
+  <string name="error_sending_to_fusion_tables">Beim Senden des Tracks an Google Fusion Tables ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.</string>
   <string name="error_sending_to_docs">Beim Senden des Tracks an Google Text &amp; Tabellen ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.</string>
   <string name="error_unable_to_start_recording">Start der Aufzeichnung fehlgeschlagen. Bitte versuche es noch einmal.</string>
   <string name="error_unable_to_stop_recording">Anhalten unmöglich. Bitte versuche es noch einmal.</string>
-  <string name="error_unable_to_read_file">Konnte Datei nicht lesen.</string>
-  <string name="error_invalid_gpx_format">Datei ist nicht im GPX-Format.</string>
+  <string name="error_import_unable_to_read_file">Konnte Datei nicht lesen.</string>
+  <string name="error_import_invalid_gpx_format">Datei ist nicht im GPX-Format.</string>
   <string name="error_generic">Ein Fehler ist aufgetreten. Bitte versuche es noch einmal.</string>
-  <string name="error_track_does_not_exist">Track existiert nicht.</string>
-  <string name="error_out_of_memory">Die Datei ist zu groß (maximal 500 KB). Operation abgebrochen.</string>
+  <string name="error_export_track_does_not_exist">Track existiert nicht.</string>
+  <string name="error_import_out_of_memory">Die Datei ist zu groß (maximal 500 KB). Operation abgebrochen.</string>
   <string name="error_unable_to_insert_marker">Der Wegpunkt kann nicht einfügt werden. Keine Positionsbestimmung möglich.</string>
 
   <!-- Status messages -->
-  <string name="wait_for_fix">Warte auf ein besseres GPS-Signal. Bitte stelle sicher, dass der Himmel sichtbar ist.</string>
+  <string name="status_wait_for_gps_fix">Warte auf ein besseres GPS-Signal. Bitte stelle sicher, dass der Himmel sichtbar ist.</string>
   <string name="status_now_recording">Ein neuer Track wird aufgezeichnet.</string>
   <string name="status_stopped_recording">Die Aufzeichnung wurde angehalten.</string>
-  <string name="status_new_fusiontable_has_been_created">Eine neue Tabelle wurde auf google.com/fusiontables erstellt.</string>
-  <string name="status_tracks_have_been_uploaded">Dein Track wurde auf maps.google.com gespeichert.</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">Dein Track wurde in einer neuen Tabelle bei docs.google.com gespeichert.</string>
-  <string name="status_tracks_have_been_uploaded_to_docs">Dein Track wurde an docs.google.com gesendet.</string>
-  <string name="status_enable_gps">Hier berühren, um zu den Sicherheits- und Positionseinstellungen zu gelangen. Aktiviere \'GPS-Satelliten\'. Drücke dann den Zurück-Knopf, um hierher zurückzukehren.</string>
-  <string name="status_approximate_location">Anmerkung: Eine ungefähre Position wird angezeigt, bestimmt mittels Mobilfunkstationen und WiFi-Netzwerken.</string>
-  <string name="status_no_location">Die Position kann derzeit nicht bestimmt werden. Aktiviere mehr Positionsquellen (siehe Sicherheits- und Positionseinstellungen) und stelle sicher, dass der Himmel sichtbar ist.</string>
+  <string name="sending_to_fusion_tables_success">Eine neue Tabelle wurde auf google.com/fusiontables erstellt.</string>
+  <string name="sending_to_my_maps_success_existing_map">Dein Track wurde auf maps.google.com gespeichert.</string>
+  <string name="sending_to_docs_success_new_doc">Dein Track wurde in einer neuen Tabelle bei docs.google.com gespeichert.</string>
+  <string name="sending_to_docs_success_existing_doc">Dein Track wurde an docs.google.com gesendet.</string>
+  <string name="status_need_to_enable_gps">Hier berühren, um zu den Sicherheits- und Positionseinstellungen zu gelangen. Aktiviere \'GPS-Satelliten\'. Drücke dann den Zurück-Knopf, um hierher zurückzukehren.</string>
+  <string name="status_approximate_current_location">Anmerkung: Eine ungefähre Position wird angezeigt, bestimmt mittels Mobilfunkstationen und WiFi-Netzwerken.</string>
+  <string name="status_no_current_location">Die Position kann derzeit nicht bestimmt werden. Aktiviere mehr Positionsquellen (siehe Sicherheits- und Positionseinstellungen) und stelle sicher, dass der Himmel sichtbar ist.</string>
   <string name="status_waypoint_inserted">Ein Wegpunkt wurde eingefügt.</string>
-  <string name="status_statistics_inserted">Ein Statistikwegpunkt wurde eingefügt.</string>
+  <string name="status_marker_inserted">Ein Statistikwegpunkt wurde eingefügt.</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Bitte warten…</string>
   <string name="progress_message">Dein Track wird an Google gesendet...</string>
   <string name="progress_message_reading_track">Lese Track...</string>
   <string name="progress_message_preparing_track">Bereite Track vor...</string>
-  <string name="progress_message_authenticating_fusiontables">Anmeldung bei Google Fusion Tables...</string>
+  <string name="progress_message_authenticating_fusion_tables">Anmeldung bei Google Fusion Tables...</string>
   <string name="progress_message_authenticating_docs">Anmeldung bei Google Text &amp; Tabellen...</string>
   <string name="progress_message_sending_docs">Track wird an Google Text &amp; Tabellen gesendet...</string>
-  <string name="progress_message_sending_fusiontables">Track wird an Google Fusion Tables gesendet...</string>
-  <string name="progress_message_creating_fusiontable">Neue \'Fusion Tabelle\' wird erstellt...</string>
-  <string name="import_progress_message">Importiere GPS-Track. Das kann ein wenig dauern.</string>
-  <string name="write_progress_message">Schreibe Datei auf SD-Karte. Das kann ein wenig dauern.</string>
+  <string name="progress_message_sending_fusion_tables">Track wird an Google Fusion Tables gesendet...</string>
+  <string name="progress_message_creating_fusion_table">Neue \'Fusion Tabelle\' wird erstellt...</string>
+  <string name="progress_message_import">Importiere GPS-Track. Das kann ein wenig dauern.</string>
+  <string name="progress_message_export">Schreibe Datei auf SD-Karte. Das kann ein wenig dauern.</string>
   <string name="progress_message_updating_track">Aktualisiere Trackstatistik...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">Bist Du Dir wirklich sicher?</string>
+  <string name="confirmation_title_are_you_sure">Bist Du Dir wirklich sicher?</string>
   <string name="all_data_will_be_permanently_deleted">Alle Tracks und Wegpunkte werden endgültig von diesem Gerät gelöscht.</string>
   <string name="track_will_be_permanently_deleted">Dieser Track und seine Wegpunkte werden endgültig von diesem Gerät gelöscht.</string>
   <string name="marker_will_be_permanently_deleted">Dieser Wegpunkt wird endgültig von diesem Gerät gelöscht.</string>
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Erstellt von My Tracks für Android.</string>
-  <string name="fusiontable_link">Erstellt von &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; für Android.</string>
+  <string name="send_to_google_by_mytracks">Erstellt von &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; für Android.</string>
 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">Punkte</string>
   <string name="recorded_date">Aufgezeichnet am</string>
   <string name="category">Aktivität</string>
   <string name="waypoint_category">Art des Wegpunktes</string>
-  <string name="part">(Teil %d)</string>
+  <string name="track_part_format">(Teil %d)</string>
 
   <!-- Used by the track recording service -->
   <string name="recording_your_track">Dein Track wird aufgezeichnet…</string>
-  <!--string name="new_track">Track %d</string-->
+  <!--string name="new_track_format">Track %d</string-->
 
   <!-- Common -->
   <string name="no">Nein</string>

@@ -32,66 +32,66 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">Gerenciador de localização não encontrado neste dispositivo!</string>
-  <string name="error_no_gps_location_provider">"Provedor de posição de GPS não encontrado neste dispositivo.</string>
-  <string name="error_sending_to_fusiontables">Ocorreu um erro ao enviar seu caminho para o Google Fusion Tables. Por favor tente novamente mais tarde.</string>
+  <string name="error_no_gps">"Provedor de posição de GPS não encontrado neste dispositivo.</string>
+  <string name="error_sending_to_fusion_tables">Ocorreu um erro ao enviar seu caminho para o Google Fusion Tables. Por favor tente novamente mais tarde.</string>
   <string name="error_sending_to_docs">Ocorreu um erro ao enviar seu caminho para o Google Docs. Por favor tente novamente mais tarde.</string>
   <string name="error_unable_to_start_recording">Impossível iniciar a gravação. Tente novamente.</string>
   <string name="error_unable_to_stop_recording">Impossível interromper a gravação. Tente novamente.</string>
-  <string name="error_unable_to_read_file">Impossível ler do arquivo.</string>
-  <string name="error_invalid_gpx_format">O arquivo não tem um formato GPX válido.</string>
-  <string name="error_generic">Ocorreu um erro. Por favor tente novamente.</string>
-  <string name="error_track_does_not_exist">Caminho não existe.</string>
-  <string name="error_out_of_memory">O arquivo é grande demais (deve ser menos de 500KB). Abortando.</string>
+  <string name="error_import_unable_to_read_file">Impossível ler do arquivo.</string>
+  <string name="error_import_invalid_gpx_format">O arquivo não tem um formato GPX válido.</string>
+  <string name="error_import_generic">Ocorreu um erro. Por favor tente novamente.</string>
+  <string name="error_export_track_does_not_exist">Caminho não existe.</string>
+  <string name="error_import_out_of_memory">O arquivo é grande demais (deve ser menos de 500KB). Abortando.</string>
   <string name="error_unable_to_insert_marker">Impossível inserir marcador - posição indisponível.</string>
 
   <!-- Status messages -->
-  <string name="wait_for_fix">Esperando por um sinal melhor do GPS.  Assegure-se de que o céu está visível.</string>
+  <string name="status_wait_for_gps_fix">Esperando por um sinal melhor do GPS.  Assegure-se de que o céu está visível.</string>
   <string name="status_now_recording">Gravando um novo caminho.</string>
   <string name="status_stopped_recording">Gravação interrompida.</string>
-  <string name="status_new_fusiontable_has_been_created">Uma nova Fusion Table Google foi criada em google.com/fusiontables.</string>
-  <string name="status_tracks_have_been_uploaded">Seu caminho foi enviado para maps.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">Seu caminho foi enviado para uma nova planilha em docs.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_docs">Seu caminho foi enviado para docs.google.com.</string>
-  <string name="status_enable_gps">"Por favor pressione aqui para ir aos ajustes de segurança e localização e verifique que o GPS esteja habilitado. Pressione o botão de voltar para retornar.</string>
-  <string name="status_approximate_location">Nota: Uma localização aproximada, determinada por torres de telefonia celular, está sendo mostrada.</string>
-  <string name="status_no_location">Sua localização não pôde ser determinada.  Habilite fontes adicionais de localização (veja configurações de Segurança e Localização) e assegure-se de que o céu está visível.</string>
+  <string name="sending_to_fusion_tables_success">Uma nova Fusion Table Google foi criada em google.com/fusiontables.</string>
+  <string name="sending_to_my_maps_success_existing_map">Seu caminho foi enviado para maps.google.com.</string>
+  <string name="sending_to_docs_success_new_doc">Seu caminho foi enviado para uma nova planilha em docs.google.com.</string>
+  <string name="sending_to_docs_success_existing_doc">Seu caminho foi enviado para docs.google.com.</string>
+  <string name="status_need_to_enable_gps">"Por favor pressione aqui para ir aos ajustes de segurança e localização e verifique que o GPS esteja habilitado. Pressione o botão de voltar para retornar.</string>
+  <string name="status_approximate_current_location">Nota: Uma localização aproximada, determinada por torres de telefonia celular, está sendo mostrada.</string>
+  <string name="status_no_current_location">Sua localização não pôde ser determinada.  Habilite fontes adicionais de localização (veja configurações de Segurança e Localização) e assegure-se de que o céu está visível.</string>
   <string name="status_waypoint_inserted">Um marcador de ponto de passagem foi inserido.</string>
-  <string name="status_statistics_inserted">Um marcador de estatísticas foi inserido..</string>
+  <string name="status_marker_inserted">Um marcador de estatísticas foi inserido..</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Por favor aguarde...</string>
   <string name="progress_message">Enviando seu caminho ao Google.</string>
   <string name="progress_message_reading_track">Lendo caminho...</string>
   <string name="progress_message_preparing_track">Preparando caminho...</string>
-  <string name="progress_message_authenticating_fusiontables">Autenticando com o Google Fusion Tables...</string>
+  <string name="progress_message_authenticating_fusion_tables">Autenticando com o Google Fusion Tables...</string>
   <string name="progress_message_authenticating_docs">Authenticando com o Google Docs...</string>
   <string name="progress_message_sending_docs">Enviando caminho para o Google Docs...</string>
-  <string name="progress_message_sending_fusiontables">Enviando caminho para o Google Fusion Tables...</string>
-  <string name="progress_message_creating_fusiontable">Criando nova Fusion Table...</string>
-  <string name="import_progress_message">Importando um caminho de GPS. Isso pode demorar alguns instantes.</string>
-  <string name="write_progress_message">Salvando arquivo para o cartão SD. Isso pode demorar alguns instantes.</string>
+  <string name="progress_message_sending_fusion_tables">Enviando caminho para o Google Fusion Tables...</string>
+  <string name="progress_message_creating_fusion_table">Criando nova Fusion Table...</string>
+  <string name="progress_message_import">Importando um caminho de GPS. Isso pode demorar alguns instantes.</string>
+  <string name="progress_message_export">Salvando arquivo para o cartão SD. Isso pode demorar alguns instantes.</string>
   <string name="progress_message_updating_track">Atualizando estatísticas do caminho...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">Você tem certeza?</string>
+  <string name="confirmation_title_are_you_sure">Você tem certeza?</string>
   <string name="all_data_will_be_permanently_deleted">Todos os seus caminhos e marcadores serão apagados deste telefone.</string>
   <string name="track_will_be_permanently_deleted">O caminho e todos os seus marcadores serão permanentemente apagados deste telefone.</string>
   <string name="marker_will_be_permanently_deleted">O marcador será permanentemente apagado deste telefone.</string>
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="new_map_description">"Criado por My Tracks no Android.</string>
-  <string name="fusiontable_link">"Criado por &lt;a href='http://mytracks.appspot.com'&gt;My Tracks&lt;/a&gt; no Android.</string>
+  <string name="send_to_google_by_mytracks">"Criado por &lt;a href='http://mytracks.appspot.com'&gt;My Tracks&lt;/a&gt; no Android.</string>
 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">Pontos</string>
   <string name="recorded_date">Gravado</string>
   <string name="category">"Tipo de atividade</string>
   <string name="waypoint_category">"Tipo de marcador</string>
-  <string name="part">"(Parte %d)</string>
+  <string name="track_part_format">"(Parte %d)</string>
 
   <!-- Used by the track recording service -->
   <string name="recording_your_track">"Gravando seu caminho...</string>
-  <string name="new_track">"Caminho %d</string>
+  <string name="new_track_format">"Caminho %d</string>
 
   <!-- Common -->
   <string name="no">Não</string>

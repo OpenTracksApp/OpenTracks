@@ -34,63 +34,63 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">На этом устройстве не был обнаружен диспетчер местоположения!</string>
-  <string name="error_no_gps_location_provider">На этом устройстве не был обнаружен поставщик GPS местоположения.</string>
-  <string name="error_sending_to_mymap">Ошибка при отправке вашего трека в Google \"Мои карты\".</string>
-  <string name="error_sending_to_fusiontables">Ошибка при отправке вашего трека в Google Fusion Tables.</string>
+  <string name="error_no_gps">На этом устройстве не был обнаружен поставщик GPS местоположения.</string>
+  <string name="error_sending_to_my_maps">Ошибка при отправке вашего трека в Google \"Мои карты\".</string>
+  <string name="error_sending_to_fusion_tables">Ошибка при отправке вашего трека в Google Fusion Tables.</string>
   <string name="error_sending_to_docs">Ошибка при отправке вашего трека в Google Документы.</string>
-  <string name="error_please_try_again_later">Пожалуйста, повторите попытку позже.</string>
+  <string name="error_sending_generic">Пожалуйста, повторите попытку позже.</string>
   <string name="error_unable_to_start_recording">Не удалось начать запись. Попробуйте еще раз.</string>
   <string name="error_unable_to_stop_recording">Не удалось остановить запись. Попробуйте еще раз.</string>
-  <string name="error_unable_to_read_file">Не удалось прочитать из файла.</string>
-  <string name="error_invalid_gpx_format">Неверный формат GPX файла.</string>
-  <string name="error_generic">Произошла ошибка. Пожалуйста, попробуйте еще раз.</string>
-  <string name="error_track_does_not_exist">Трек не существует.</string>
-  <string name="error_out_of_memory">Этот файл слишком большой (должен быть меньше, чем 500 КБ). Прервано.</string>
+  <string name="error_import_unable_to_read_file">Не удалось прочитать из файла.</string>
+  <string name="error_import_invalid_gpx_format">Неверный формат GPX файла.</string>
+  <string name="error_import_generic">Произошла ошибка. Пожалуйста, попробуйте еще раз.</string>
+  <string name="error_export_track_does_not_exist">Трек не существует.</string>
+  <string name="error_import_out_of_memory">Этот файл слишком большой (должен быть меньше, чем 500 КБ). Прервано.</string>
   <string name="error_unable_to_insert_marker">Невозможно вставить маркер. Местоположение неизвестно.</string>
 
   <!-- Status messages -->
-  <string name="wait_for_fix">Ожидание сигнала GPS. Убедитесь в том, что вы находитесь под открытым небом.</string>
+  <string name="status_wait_for_gps_fix">Ожидание сигнала GPS. Убедитесь в том, что вы находитесь под открытым небом.</string>
   <string name="status_now_recording">Записывается новый трек.</string>
   <string name="status_stopped_recording">Запись вашего трека остановлена.</string>
-  <string name="status_new_mymap_has_been_created">Новая Google \"Мои карты\" была создана на maps.google.com.</string>
-  <string name="status_new_fusiontable_has_been_created">Новая таблица Google Fusion была создана на google.com/fusiontables.</string>
-  <string name="status_tracks_have_been_uploaded">Твой трек был отправлен на maps.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">Ваш трек был отправлен в новую электронную таблицу на docs.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_docs">Ваш трек был отправлен в docs.google.com.</string>
-  <string name="status_mymap_info">Это может занять несколько минут, прежде чем появятся новые треки.</string>
-  <string name="status_enable_gps">Пожалуйста, нажмите здесь для перехода к разделу настроек Координаты и отметьте пункт \"Спутники GPS\". Для возвращения нажмите кнопку Назад.</string>
-  <string name="status_approximate_location">Примечание: приблизительное местоположение определено относительно вышек сотовой связи и беспроводных сетей.</string>
-  <string name="status_no_location">В настоящее время местоположение не может быть определено. Включите больше источников местоположение (см. раздел настроек Координаты) и убедитесь в том, что находитесь под открытым небом. Повторите попытку позднее.</string>
+  <string name="sending_to_my_maps_success_new_map">Новая Google \"Мои карты\" была создана на maps.google.com.</string>
+  <string name="sending_to_fusion_tables_success">Новая таблица Google Fusion была создана на google.com/fusiontables.</string>
+  <string name="sending_to_my_maps_success_existing_map">Твой трек был отправлен на maps.google.com.</string>
+  <string name="sending_to_docs_success_new_doc">Ваш трек был отправлен в новую электронную таблицу на docs.google.com.</string>
+  <string name="sending_to_docs_success_existing_doc">Ваш трек был отправлен в docs.google.com.</string>
+  <string name="sending_to_google_additional_info">Это может занять несколько минут, прежде чем появятся новые треки.</string>
+  <string name="status_need_to_enable_gps">Пожалуйста, нажмите здесь для перехода к разделу настроек Координаты и отметьте пункт \"Спутники GPS\". Для возвращения нажмите кнопку Назад.</string>
+  <string name="status_approximate_current_location">Примечание: приблизительное местоположение определено относительно вышек сотовой связи и беспроводных сетей.</string>
+  <string name="status_no_current_location">В настоящее время местоположение не может быть определено. Включите больше источников местоположение (см. раздел настроек Координаты) и убедитесь в том, что находитесь под открытым небом. Повторите попытку позднее.</string>
   <string name="status_waypoint_inserted">Маркер путевой точки был вставлен.</string>
-  <string name="status_statistics_inserted">Маркер статистики был вставлен.</string>
-  <string name="status_track_upload_status">Статус загрузки:</string>
+  <string name="status_marker_inserted">Маркер статистики был вставлен.</string>
+  <string name="sending_to_google_upload_status">Статус загрузки:</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Пожалуйста, подождите...</string>
   <string name="progress_message">Отправка вашего трека в Google.</string>
   <string name="progress_message_reading_track">Чтение трека...</string>
   <string name="progress_message_preparing_track">Подготовка трека...</string>
-  <string name="progress_message_authenticating_fusiontables">Аутентификация на Google Fusion Tables...</string>
-  <string name="progress_message_authenticating_mymaps">Аутентификация на Google Карты...</string>
+  <string name="progress_message_authenticating_fusion_tables">Аутентификация на Google Fusion Tables...</string>
+  <string name="progress_message_authenticating_my_maps">Аутентификация на Google Карты...</string>
   <string name="progress_message_authenticating_docs">Аутентификация в Google Документы...</string>
   <string name="progress_message_sending_docs">Отправка трека в Google Документы...</string>
-  <string name="progress_message_sending_mymaps">Отправка трека в Google Карты...</string>
+  <string name="progress_message_sending_my_maps">Отправка трека в Google Карты...</string>
   <string name="progress_message_creating_map">Создание новой \"Моей карты\" ...</string>
-  <string name="progress_message_sending_fusiontables">Отправка трека в Fusion Tables...</string>
-  <string name="progress_message_creating_fusiontable">Создание новой Fusion table...</string>
-  <string name="import_progress_message">Импорт GPS трека. Это может занять некоторое время.</string>
-  <string name="write_progress_message">Запись файла на SD карту. Это может занять некоторое время.</string>
+  <string name="progress_message_sending_fusion_tables">Отправка трека в Fusion Tables...</string>
+  <string name="progress_message_creating_fusion_table">Создание новой Fusion table...</string>
+  <string name="progress_message_import">Импорт GPS трека. Это может занять некоторое время.</string>
+  <string name="progress_message_export">Запись файла на SD карту. Это может занять некоторое время.</string>
   <string name="progress_message_updating_track">Обновление статистики трека...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">Вы уверены?</string>
+  <string name="confirmation_title_are_you_sure">Вы уверены?</string>
   <string name="all_data_will_be_permanently_deleted">Все треки и маркеры будут удалены с этого телефона.</string>
   <string name="track_will_be_permanently_deleted">Трек и его маркеры будут удалены из этого телефона.</string>
   <string name="marker_will_be_permanently_deleted">Маркер будет удален с этого телефона.</string>
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Создано My Tracks на Android.</string>
-  <string name="fusiontable_link">Создано &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; на Android.</string>
+  <string name="send_to_google_by_mytracks">Создано &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; на Android.</string>
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="my_map_link">Создано &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; на Android.</string>
@@ -101,11 +101,11 @@ limitations under the License.
   <string name="recorded_date">Записан</string>
   <string name="category">Тип деятельности</string>
   <string name="waypoint_category">Тип маркера</string>
-  <string name="part">(Часть %d)</string>
+  <string name="track_part_format">(Часть %d)</string>
 
   <!-- Used by the track recording service -->
   <string name="recording_your_track">Запись трека...</string>
-  <string name="new_track">Трек %d</string>
+  <string name="new_track_format">Трек %d</string>
 
   <!-- Common -->
   <string name="no">Нет</string>
@@ -494,9 +494,9 @@ limitations under the License.
   <string name="sending">Отправка</string>
 
   <!-- Sensor Type Options -->
-  <string name="no_sensor_option">Нет</string>
-  <string name="ant_sensor_option">ANT+ Датчик</string>
-  <string name="ant_bridge_sensor_option">SRM ANT+ Bridge</string>
+  <string name="sensor_type_option_none">Нет</string>
+  <string name="sensor_type_option_ant">ANT+ Датчик</string>
+  <string name="sensor_type_option_srm_ant_bridge">SRM ANT+ Bridge</string>
 
   <!-- Manifest description (not seen inside the app) -->
   <string name="notification_permission_label">получать уведомления о записи трека</string>

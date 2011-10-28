@@ -227,7 +227,7 @@ public class WaypointsList extends ListActivity
       if (trackRecordingService != null) {
         long waypointId = trackRecordingService.insertWaypoint(request);
         if (waypointId >= 0) {
-          Toast.makeText(this, R.string.status_statistics_inserted,
+          Toast.makeText(this, R.string.status_marker_inserted,
               Toast.LENGTH_LONG).show();
           return waypointId;
         }
@@ -296,7 +296,7 @@ public class WaypointsList extends ListActivity
     AlertDialog dialog = null;
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
     builder.setMessage(getString(R.string.marker_will_be_permanently_deleted));
-    builder.setTitle(getString(R.string.are_you_sure_question));
+    builder.setTitle(getString(R.string.confirmation_title_are_you_sure));
     builder.setIcon(android.R.drawable.ic_dialog_alert);
     builder.setPositiveButton(getString(R.string.yes),
         new DialogInterface.OnClickListener() {

@@ -93,7 +93,7 @@ public class ImportActivity extends Activity {
         progressDialog.setIcon(android.R.drawable.ic_dialog_info);
         progressDialog.setTitle(R.string.progress_title);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage(getString(R.string.import_progress_message));
+        progressDialog.setMessage(getString(R.string.progress_message_import));
         return progressDialog;
       case SUCCESS_DIALOG:
         final Builder dialogBuilder = new AlertDialog.Builder(this);
@@ -178,13 +178,13 @@ public class ImportActivity extends Activity {
             resultMessage = R.string.error_generic;
           } catch (IOException e) {
             Log.e(TAG, "Caught an unexpected exception.", e);
-            resultMessage = R.string.error_unable_to_read_file;
+            resultMessage = R.string.error_import_unable_to_read_file;
           } catch (NullPointerException e) {
             Log.e(TAG, "Caught an unexpected exception.", e);
-            resultMessage = R.string.error_invalid_gpx_format;
+            resultMessage = R.string.error_import_invalid_gpx_format;
           } catch (OutOfMemoryError e) {
             Log.e(TAG, "Caught an unexpected exception.", e);
-            resultMessage = R.string.error_out_of_memory;
+            resultMessage = R.string.error_import_out_of_memory;
           }
 
           boolean success = (importedTrackIds != null && importedTrackIds.length > 0);

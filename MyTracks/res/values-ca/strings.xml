@@ -34,66 +34,65 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">No s\'ha trobat cap gestor d\'ubicacions en aquest dispositiu.</string>
-  <string name="error_no_gps_location_provider">No s\'ha trobat cap proveïdor d\'ubicació GPS en aquest dispositiu.</string>
-  <string name="error_sending_to_fusiontables">S\'ha produït un error quan s\'enviava la ruta a Google Fusion Tables. Proveu més tard.</string>
+  <string name="error_no_gps">No s\'ha trobat cap proveïdor d\'ubicació GPS en aquest dispositiu.</string>
+  <string name="error_sending_to_fusion_tables">S\'ha produït un error quan s\'enviava la ruta a Google Fusion Tables. Proveu més tard.</string>
   <string name="error_sending_to_docs">S\'ha prdouït un error quan s\'enviava la ruta a Google Docs. Proveu més tard.</string>
   <string name="error_unable_to_start_recording">No es pot iniciar l\'enregistrament. Proveu de nou.</string>
   <string name="error_unable_to_stop_recording">No es pot aturar l\'enregistrament. Proveu de nou.</string>
-  <string name="error_unable_to_read_file">No es pot llegir des del fitxer.</string>
-  <string name="error_invalid_gpx_format">El fitxer no conté un format GPX vàlid.</string>
+  <string name="error_import_unable_to_read_file">No es pot llegir des del fitxer.</string>
+  <string name="error_import_invalid_gpx_format">El fitxer no conté un format GPX vàlid.</string>
   <string name="error_generic">S\'ha produït un error. Proveu de nou.</string>
-  <string name="error_track_does_not_exist">No existeix la ruta.</string>
-  <string name="error_out_of_memory">Aquest fitxer és massa gran (ha d\'ésser inferior a 500KB. S\'està cancel·lant.</string>
+  <string name="error_export_track_does_not_exist">No existeix la ruta.</string>
+  <string name="error_import_out_of_memory">Aquest fitxer és massa gran (ha d\'ésser inferior a 500KB. S\'està cancel·lant.</string>
   <string name="error_unable_to_insert_marker">No es pot inserir un marcador. No hi ha cap ubicació fixa disponible.</string>
 
   <!-- Status messages -->
-  <string name="wait_for_fix">S\'està esperant per tenir una posició GPS fixa. Assegureu-vos que el cel és visible.</string>
+  <string name="status_wait_for_gps_fix">S\'està esperant per tenir una posició GPS fixa. Assegureu-vos que el cel és visible.</string>
   <string name="status_now_recording">Ara s\'està enregistrant una ruta nova.</string>
   <string name="status_stopped_recording">S\'ha aturat l\'enregistrament de la ruta.</string>
-  <string name="status_new_fusiontable_has_been_created">S\'ha creat un Google Fusion Table nou a google.com/fusiontables.</string>
-  <string name="status_tracks_have_been_uploaded">S\'ha enviat la ruta a maps.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">S\'ha enviat la ruta a un full de càlcul a docs.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_docs">S\'ha enviat la ruta a docs.google.com.</string>
-  <string name="status_enable_gps">Toqueu aquí per anar als paràmetres de seguretat i ubicació i activeu \'habilita els satèl·lits GPS\'. Premeu el botó d\'anar enrere per tornar.</string>
-  <string name="status_approximate_location">Nota: Es mostra una ubicació determinada a partir de les xarxes sense fils i antenes telefòniques.</string>
-  <string name="status_no_location">No es pot determinar la ubicació. Habiliteu més fonts d\'ubicació (vegeu els paràmetres de seguretat i ubicació) i assegureu-vos que el cel és visible. Proveu de nou més tard.</string>
+  <string name="sending_to_fusion_tables_success">S\'ha creat un Google Fusion Table nou a google.com/fusiontables.</string>
+  <string name="sending_to_my_maps_success_existing_map">S\'ha enviat la ruta a maps.google.com.</string>
+  <string name="sending_to_docs_success_new_doc">S\'ha enviat la ruta a un full de càlcul a docs.google.com.</string>
+  <string name="sending_to_docs_success_existing_doc">S\'ha enviat la ruta a docs.google.com.</string>
+  <string name="status_need_to_enable_gps">Toqueu aquí per anar als paràmetres de seguretat i ubicació i activeu \'habilita els satèl·lits GPS\'. Premeu el botó d\'anar enrere per tornar.</string>
+  <string name="status_approximate_current_location">Nota: Es mostra una ubicació determinada a partir de les xarxes sense fils i antenes telefòniques.</string>
+  <string name="status_no_current_location">No es pot determinar la ubicació. Habiliteu més fonts d\'ubicació (vegeu els paràmetres de seguretat i ubicació) i assegureu-vos que el cel és visible. Proveu de nou més tard.</string>
   <string name="status_waypoint_inserted">S\'ha inserit un marcader de punt de ruta.</string>
-  <string name="status_statistics_inserted">S\'ha inserit un marcador d\'estadístiques.</string>
+  <string name="status_marker_inserted">S\'ha inserit un marcador d\'estadístiques.</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Espereu...</string>
   <string name="progress_message">S\'està enviant la ruta a Google.</string>
   <string name="progress_message_reading_track">S\'està llegint la ruta...</string>
   <string name="progress_message_preparing_track">S\'està preparant la ruta...</string>
-  <string name="progress_message_authenticating_fusiontables">S\'està  to Google Fusion Tables...</string>
+  <string name="progress_message_authenticating_fusion_tables">S\'està  to Google Fusion Tables...</string>
   <string name="progress_message_authenticating_docs">S\'està autenticant a Google Docs...</string>
   <string name="progress_message_sending_docs">S\'està enviant la ruta a Google Docs...</string>
-  <string name="progress_message_sending_fusiontables">S\'està enviant a Google Fusion Tables...</string>
-  <string name="progress_message_creating_fusiontable">S\'està creant un Fusion Table nou...</string>
-  <string name="import_progress_message">S\'està imporant una ruta GPS. Això pot trigar una estona.</string>
-  <string name="write_progress_message">S\'està escrivint a la targeta SD. Això pot trigar una estona.</string>
+  <string name="progress_message_sending_fusion_tables">S\'està enviant a Google Fusion Tables...</string>
+  <string name="progress_message_creating_fusion_table">S\'està creant un Fusion Table nou...</string>
+  <string name="progress_message_import">S\'està imporant una ruta GPS. Això pot trigar una estona.</string>
+  <string name="progress_message_export">S\'està escrivint a la targeta SD. Això pot trigar una estona.</string>
   <string name="progress_message_updating_track">S\'estan actualitzant les estadístiques de la ruta...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">Esteu segur?</string>
+  <string name="confirmation_title_are_you_sure">Esteu segur?</string>
   <string name="all_data_will_be_permanently_deleted">Tots els marcadors i rutes s\'eliminaran d\'aquest telèfon.</string>
   <string name="track_will_be_permanently_deleted">La ruta i els seus marcadors s\'eliminaran de forma permanent d\'aquest telèfon.</string>
   <string name="marker_will_be_permanently_deleted">El marcador s\'eliminarà de forma permanent d\'aquest telèfon.</string>
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="new_map_description">Creat per My Tracks a l\'Android.</string>
-  <string name="fusiontable_link">Creat per &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; a l\'Android.</string>
+  <string name="send_to_google_by_mytracks">Creat per &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; a l\'Android.</string>
 
   <!-- Formatting of track and marker descriptions -->
-  <string name="points">Punts</string>
   <string name="recorded_date">Enregistrat</string>
   <string name="category">Tipus d\'activitat</string>
   <string name="waypoint_category">Tipus de marcador</string>
-  <string name="part">(Part %d)</string>
+  <string name="track_part_format">(Part %d)</string>
 
   <!-- Used by the track recording service -->
   <string name="recording_your_track">S\'està enregistrant la ruta...</string>
-  <string name="new_track">Ruta %d</string>
+  <string name="new_track_format">Ruta %d</string>
 
   <!-- Common -->
   <string name="no">No</string>
@@ -413,5 +412,5 @@ limitations under the License.
   <string name="sending">S\'està enviant</string>
 
   <!-- Sensor Type Options -->
-  <string name="no_sensor_option">Cap</string>
+  <string name="sensor_type_option_none">Cap</string>
 </resources>

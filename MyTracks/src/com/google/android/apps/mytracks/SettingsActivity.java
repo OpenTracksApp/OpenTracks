@@ -323,8 +323,8 @@ public class SettingsActivity extends PreferenceActivity {
 
   private void updateSensorSettings(String sensorType) {
     boolean usesBluetooth =
-        getString(R.string.zephyr_sensor_type).equals(sensorType)
-        || getString(R.string.polar_sensor_type).equals(sensorType);
+        getString(R.string.sensor_type_value_zephyr).equals(sensorType)
+        || getString(R.string.sensor_type_value_polar).equals(sensorType);
     findPreference(
         getString(R.string.bluetooth_sensor_key)).setEnabled(usesBluetooth);
     findPreference(
@@ -336,15 +336,15 @@ public class SettingsActivity extends PreferenceActivity {
     Preference antSrm = findPreference(getString(R.string.ant_srm_bridge_sensor_id_key));
     if (antHrm != null && antSrm != null) {
       antHrm
-          .setEnabled(getString(R.string.ant_sensor_type).equals(sensorType));
+          .setEnabled(getString(R.string.sensor_type_value_ant).equals(sensorType));
       antSrm
-          .setEnabled(getString(R.string.srm_ant_bridge_sensor_type).equals(sensorType));
+          .setEnabled(getString(R.string.sensor_type_value_srm_ant_bridge).equals(sensorType));
     }
   }
 
   private void updateTrackColorModeSettings(String trackColorMode) {
-    boolean usesFixedSpeed = trackColorMode.equals(getString(R.string.track_color_mode_fixed));
-    boolean usesDynamicSpeed = trackColorMode.equals(getString(R.string.track_color_mode_dynamic));
+    boolean usesFixedSpeed = trackColorMode.equals(getString(R.string.track_color_mode_value_fixed));
+    boolean usesDynamicSpeed = trackColorMode.equals(getString(R.string.track_color_mode_value_dynamic));
     
     findPreference(
         getString(R.string.track_color_mode_fixed_speed_slow_display_key)).setEnabled(usesFixedSpeed);

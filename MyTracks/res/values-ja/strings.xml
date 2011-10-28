@@ -34,61 +34,61 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">この端末でロケーションマネージャを発見できませんでした．</string>
-  <string name="error_no_gps_location_provider">この端末でGPSロケーションプロバイダを発見できました．</string>
-  <string name="error_sending_to_mymap">Googleマイマップへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
-  <string name="error_sending_to_fusiontables">Google Fusion Tablesへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
+  <string name="error_no_gps">この端末でGPSロケーションプロバイダを発見できました．</string>
+  <string name="error_sending_to_my_maps">Googleマイマップへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
+  <string name="error_sending_to_fusion_tables">Google Fusion Tablesへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
   <string name="error_sending_to_docs">Google Docsへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
   <string name="error_unable_to_start_recording">記録作成開始できません．もう一度試して下さい．</string>
   <string name="error_unable_to_stop_recording">記録停止できません．もう一度試して下さい．</string>
-  <string name="error_unable_to_read_file">ファイルからの読み込みができません．</string>
-  <string name="error_invalid_gpx_format">ファイルは正しいGPX書式ではありませんでした．</string>
-  <string name="error_generic">エラーが発生しました．もう一度試して下さい．</string>
-  <string name="error_track_does_not_exist">トラックが存在しません．</string>
-  <string name="error_out_of_memory">大きなファイルです(500KB未満でなければなりません)．終了します．</string>
+  <string name="error_import_unable_to_read_file">ファイルからの読み込みができません．</string>
+  <string name="error_import_invalid_gpx_format">ファイルは正しいGPX書式ではありませんでした．</string>
+  <string name="error_import_generic">エラーが発生しました．もう一度試して下さい．</string>
+  <string name="error_export_track_does_not_exist">トラックが存在しません．</string>
+  <string name="error_import_out_of_memory">大きなファイルです(500KB未満でなければなりません)．終了します．</string>
   <string name="error_unable_to_insert_marker">マーカーの挿入ができません．位置決定ができません．</string>
 
   <!-- Status messages -->
-  <string name="wait_for_fix">GPS位置精度がよくなるまで待機しています．空が見えるところにいて下さい．</string>
+  <string name="status_wait_for_gps_fix">GPS位置精度がよくなるまで待機しています．空が見えるところにいて下さい．</string>
   <string name="status_now_recording">新しいトラックを記録中です．</string>
   <string name="status_stopped_recording">トラック記録を停止しました．</string>
-  <string name="status_new_mymap_has_been_created">新しいマイマップをmap.google.comに作成しました．</string>
-  <string name="status_new_fusiontable_has_been_created">新しいGoogle Fusion Tableをgoogle.com/fusiontablesに作成しました．</string>
-  <string name="status_tracks_have_been_uploaded">トラックをmaps.google.comに送信しました．</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">トラックをdocs.google.comの新しいスプレッドシートに送信しました．</string>
-  <string name="status_tracks_have_been_uploaded_to_docs">トラックをdocs.google.comに送信しました．</string>
-  <string name="status_mymap_info">新しいトラックが表示されるまでに数分かかることがあります．</string>
-  <string name="status_enable_gps">ここをタップして「位置情報とセキュリティの設定」を開いて「GPS機能を使用」にチェックを入れて下さい．バックボタンで戻ってください．</string>
-  <string name="status_approximate_location">ご注意: 携帯電話中継局とWi-Fiネットワークから大まかな位置を特定します．</string>
-  <string name="status_no_location">現在位置決定ができません．位置取得源を増やし(位置情報とセキュリティの設定 をご覧ください)、空が見えるようにして下さい．もう一度試して下さい．</string>
+  <string name="sending_to_my_maps_success_new_map">新しいマイマップをmap.google.comに作成しました．</string>
+  <string name="sending_to_fusion_tables_success">新しいGoogle Fusion Tableをgoogle.com/fusiontablesに作成しました．</string>
+  <string name="sending_to_my_maps_success_existing_map">トラックをmaps.google.comに送信しました．</string>
+  <string name="sending_to_docs_success_new_doc">トラックをdocs.google.comの新しいスプレッドシートに送信しました．</string>
+  <string name="sending_to_docs_success_existing_doc">トラックをdocs.google.comに送信しました．</string>
+  <string name="sending_to_google_additional_info">新しいトラックが表示されるまでに数分かかることがあります．</string>
+  <string name="status_need_to_enable_gps">ここをタップして「位置情報とセキュリティの設定」を開いて「GPS機能を使用」にチェックを入れて下さい．バックボタンで戻ってください．</string>
+  <string name="status_approximate_current_location">ご注意: 携帯電話中継局とWi-Fiネットワークから大まかな位置を特定します．</string>
+  <string name="status_no_current_location">現在位置決定ができません．位置取得源を増やし(位置情報とセキュリティの設定 をご覧ください)、空が見えるようにして下さい．もう一度試して下さい．</string>
   <string name="status_waypoint_inserted">ウェイポイントマーカーを挿入しました．</string>
-  <string name="status_statistics_inserted">統計マーカーを挿入しました．</string>
+  <string name="status_marker_inserted">統計マーカーを挿入しました．</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">お待ちください...</string>
   <string name="progress_message">トラックをGoogleに送信しています．</string>
   <string name="progress_message_reading_track">トラックを読んでいます...</string>
   <string name="progress_message_preparing_track">トラックを準備しています...</string>
-  <string name="progress_message_authenticating_fusiontables">Google Fusion Tablesへの認証を行っています...</string>
-  <string name="progress_message_authenticating_mymaps">Googleマップへの認証を行っています...</string>
+  <string name="progress_message_authenticating_fusion_tables">Google Fusion Tablesへの認証を行っています...</string>
+  <string name="progress_message_authenticating_my_maps">Googleマップへの認証を行っています...</string>
   <string name="progress_message_authenticating_docs">Google Docsへの認証を行っています...</string>
   <string name="progress_message_sending_docs">トラックをGoogle Docsに送信しています...</string>
-  <string name="progress_message_sending_mymaps">トラックをGoogleマップに送信しています...</string>
+  <string name="progress_message_sending_my_maps">トラックをGoogleマップに送信しています...</string>
   <string name="progress_message_creating_map">新しいマイマップを作成しています...</string>
-  <string name="progress_message_sending_fusiontables">トラックをFusion Tablesに送信しています...</string>
-  <string name="progress_message_creating_fusiontable">新しいFusionテーブルを生成しています...</string>
-  <string name="import_progress_message">GPSトラックをインポートしています．若干時間がかかります．</string>
-  <string name="write_progress_message">SDカードにデータを書き込んでいます．若干時間がかかります．</string>
+  <string name="progress_message_sending_fusion_tables">トラックをFusion Tablesに送信しています...</string>
+  <string name="progress_message_creating_fusion_table">新しいFusionテーブルを生成しています...</string>
+  <string name="progress_message_import">GPSトラックをインポートしています．若干時間がかかります．</string>
+  <string name="progress_message_export">SDカードにデータを書き込んでいます．若干時間がかかります．</string>
   <string name="progress_message_updating_track">トラック統計情報を更新しています...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">よろしいですか?</string>
+  <string name="confirmation_title_are_you_sure">よろしいですか?</string>
   <string name="all_data_will_be_permanently_deleted">全てのトラックとマーカーをこの端末から削除します．</string>
   <string name="track_will_be_permanently_deleted">トラックとマーカーをこの端末から完全に削除します．</string>
   <string name="marker_will_be_permanently_deleted">マーカーをこの端末から完全に削除します．</string>
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Android用My Tracksで作成</string>
-  <string name="fusiontable_link">Android用&lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt;で作成しました．</string>
+  <string name="send_to_google_by_mytracks">Android用&lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt;で作成しました．</string>
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="my_map_link">Android用&lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt;で作成しました．</string>
@@ -99,11 +99,11 @@ limitations under the License.
   <string name="recorded_date">記録日</string>
   <string name="category">活動タイプ</string>
   <string name="waypoint_category">マーカータイプ</string>
-  <string name="part">(パート %d)</string>
+  <string name="track_part_format">(パート %d)</string>
 
   <!-- Used by the track recording service -->
   <string name="recording_your_track">トラックを保存中...</string>
-  <string name="new_track">トラック %d</string>
+  <string name="new_track_format">トラック %d</string>
 
   <!-- Common -->
   <string name="no">いいえ</string>
@@ -467,9 +467,9 @@ limitations under the License.
   <string name="sending">送信中</string>
 
   <!-- Sensor Type Options -->
-  <string name="no_sensor_option">なし</string>
-  <string name="ant_sensor_option">ANT+ センサー</string>
-  <string name="ant_bridge_sensor_option">SRM ANT+ ブリッジ</string>
+  <string name="sensor_type_option_none">なし</string>
+  <string name="sensor_type_option_ant">ANT+ センサー</string>
+  <string name="sensor_type_option_srm_ant_bridge">SRM ANT+ ブリッジ</string>
     
   <!-- Manifest description (not seen inside the app) -->
   <string name="notification_permission_label">トラック記録通知受信</string>

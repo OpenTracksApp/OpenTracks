@@ -34,67 +34,67 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">此设备上没有位置管理器!</string>
-  <string name="error_no_gps_location_provider">此设备上没有 GPS 定位装置.</string>
-  <string name="error_sending_to_mymap">发送轨迹到 Google My Map 时发生错误.</string>
-  <string name="error_sending_to_fusiontables">发送轨迹到 Google Fusion Tables 时发生错误. 请稍后重试.</string>
+  <string name="error_no_gps">此设备上没有 GPS 定位装置.</string>
+  <string name="error_sending_to_my_maps">发送轨迹到 Google My Map 时发生错误.</string>
+  <string name="error_sending_to_fusion_tables">发送轨迹到 Google Fusion Tables 时发生错误. 请稍后重试.</string>
   <string name="error_sending_to_docs">发送轨迹到 Google Docs 时发生错误. 请稍后重试.</string>
-  <string name="error_please_try_again_later">请稍后再试.</string>
+  <string name="error_sending_generic">请稍后再试.</string>
   <string name="error_unable_to_start_recording">无法开始记录. 请重试.</string>
   <string name="error_unable_to_stop_recording">无法停止记录. 请重试.</string>
-  <string name="error_unable_to_read_file">无法读取文件.</string>
-  <string name="error_invalid_gpx_format">文件不是有效的 GPX 格式.</string>
-  <string name="error_generic">发生错误. 请重试.</string>
-  <string name="error_track_does_not_exist">轨迹不存在.</string>
-  <string name="error_operation_cancelled">操作已被取消.</string>
-  <string name="error_out_of_memory">文件太大 (必须小于 500 KB). 中止操作.</string>
+  <string name="error_import_unable_to_read_file">无法读取文件.</string>
+  <string name="error_import_invalid_gpx_format">文件不是有效的 GPX 格式.</string>
+  <string name="error_import_generic">发生错误. 请重试.</string>
+  <string name="error_export_track_does_not_exist">轨迹不存在.</string>
+  <string name="error_export_operation_canceled">操作已被取消.</string>
+  <string name="error_import_out_of_memory">文件太大 (必须小于 500 KB). 中止操作.</string>
   <string name="error_unable_to_insert_marker">无法插入标记. 定位尚未完成.</string>
 
   <!-- Status messages -->
-  <string name="wait_for_fix">等待更准确的 GPS 定位. 请确定可以看见天空.</string>
+  <string name="status_wait_for_gps_fix">等待更准确的 GPS 定位. 请确定可以看见天空.</string>
   <string name="status_now_recording">现在开始记录新的轨迹.</string>
   <string name="status_stopped_recording">停止记录你的轨迹.</string>
-  <string name="status_new_mymap_has_been_created">已在 maps.google.com 创建了新的 Google My Map.</string>
-  <string name="status_new_fusiontable_has_been_created">已在 google.com/fusiontables 创建新 Google Fusion Table.</string>
-  <string name="status_tracks_have_been_uploaded">你的轨迹已经发送到 maps.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">你的轨迹已经作为新的电子表格发送到 docs.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_docs">你的轨迹已经发送到 docs.google.com.</string>
-  <string name="status_mymap_info">可能需要等待几分钟才能看见新的轨迹.</string>
-  <string name="status_enable_gps">请点击这里进入\'安全和位置设置\'并勾选上\'启用 GPS 卫星\'. 然后用后退键返回.</string>
-  <string name="status_approximate_location">注意: 当前显示的位置是根据无线信号和无线网络计算的近似位置.</string>
-  <string name="status_no_location">目前无法定位. 请启用更多的位置来源 (在\'安全和位置设置\'中) 并确认天空是可见的. 再重试.</string>
+  <string name="sending_to_my_maps_success_new_map">已在 maps.google.com 创建了新的 Google My Map.</string>
+  <string name="sending_to_fusion_tables_success">已在 google.com/fusiontables 创建新 Google Fusion Table.</string>
+  <string name="sending_to_my_maps_success_existing_map">你的轨迹已经发送到 maps.google.com.</string>
+  <string name="sending_to_docs_success_new_doc">你的轨迹已经作为新的电子表格发送到 docs.google.com.</string>
+  <string name="sending_to_docs_success_existing_doc">你的轨迹已经发送到 docs.google.com.</string>
+  <string name="sending_to_google_additional_info">可能需要等待几分钟才能看见新的轨迹.</string>
+  <string name="status_need_to_enable_gps">请点击这里进入\'安全和位置设置\'并勾选上\'启用 GPS 卫星\'. 然后用后退键返回.</string>
+  <string name="status_approximate_current_location">注意: 当前显示的位置是根据无线信号和无线网络计算的近似位置.</string>
+  <string name="status_no_current_location">目前无法定位. 请启用更多的位置来源 (在\'安全和位置设置\'中) 并确认天空是可见的. 再重试.</string>
   <string name="status_waypoint_inserted">插入了一个路点标记.</string>
-  <string name="status_statistics_inserted">插入了一个统计标记.</string>
-  <string name="status_track_upload_status">上传状态:</string>
+  <string name="status_marker_inserted">插入了一个统计标记.</string>
+  <string name="sending_to_google_upload_status">上传状态:</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">请稍候...</string>
   <string name="progress_message">发送你的轨迹到 Google.</string>
   <string name="progress_message_reading_track">读取轨迹中...</string>
   <string name="progress_message_preparing_track">准备轨迹中...</string>
-  <string name="progress_message_authenticating_fusiontables">登录 Google Fusion Tables 中...</string>
+  <string name="progress_message_authenticating_fusion_tables">登录 Google Fusion Tables 中...</string>
   <string name="progress_message_authenticating_docs">登录 Google Docs 中...</string>
   <string name="progress_message_sending_docs">发送轨迹到 Google Docs 中...</string>
-  <string name="progress_message_sending_fusiontables">发送轨迹到 Google Fusion Tables 中...</string>
-  <string name="progress_message_creating_fusiontable">创建新的 Fusion Table 中...</string>
+  <string name="progress_message_sending_fusion_tables">发送轨迹到 Google Fusion Tables 中...</string>
+  <string name="progress_message_creating_fusion_table">创建新的 Fusion Table 中...</string>
   <string name="progress_message_creating_map">创建新的 My Map...</string>
-  <string name="progress_message_sending_fusiontables">发送轨迹到 Fusion Tables...</string>
-  <string name="progress_message_creating_fusiontable">创建新的 Fusion table...</string>
-  <string name="import_progress_message">导入 GPS 轨迹中. 请稍候.</string>
-  <string name="write_progress_message">写入文件到 SD 卡中. 请稍候.</string>
+  <string name="progress_message_sending_fusion_tables">发送轨迹到 Fusion Tables...</string>
+  <string name="progress_message_creating_fusion_table">创建新的 Fusion table...</string>
+  <string name="progress_message_import">导入 GPS 轨迹中. 请稍候.</string>
+  <string name="progress_message_export">写入文件到 SD 卡中. 请稍候.</string>
   <string name="progress_message_updating_track">更新轨迹统计信息中...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">请确认</string>
+  <string name="confirmation_title_are_you_sure">请确认</string>
   <string name="all_data_will_be_permanently_deleted">所以轨迹和标记都将被从本机删除.</string>
   <string name="track_will_be_permanently_deleted">选定轨迹和它相关的标记都将被从本机彻底删除.</string>
   <string name="marker_will_be_permanently_deleted">选定标记将被从本机删除.</string>
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">由 Android 平台的 My Tracks 创建.</string>
-  <string name="fusiontable_link">由 Android 平台的 &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; 创建.</string>
+  <string name="send_to_google_by_mytracks">由 Android 平台的 &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; 创建.</string>
 
   <!-- Text and links when uploading to Google My Maps -->
-  <string name="fusiontable_link">由 Android 上的 &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; 创建.</string>
+  <string name="send_to_google_by_mytracks">由 Android 上的 &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; 创建.</string>
   <string name="new_map_title">新地图</string>
 
   <!-- Formatting of track and marker descriptions -->
@@ -102,11 +102,11 @@ limitations under the License.
   <string name="recorded_date">记录日期</string>
   <string name="category">活动类型</string>
   <string name="waypoint_category">标记类型</string>
-  <string name="part">(第 %d 部分)</string>
+  <string name="track_part_format">(第 %d 部分)</string>
 
   <!-- Used by the track recording service -->
   <string name="recording_your_track">记录轨迹中...</string>
-  <string name="new_track">轨迹 %d</string>
+  <string name="new_track_format">轨迹 %d</string>
 
   <!-- Common -->
   <string name="no">否</string>
@@ -474,10 +474,10 @@ limitations under the License.
   <string name="sending">发送中</string>
 
   <!-- Sensor Type Options -->
-  <string name="no_sensor_option">无</string>
-  <string name="ant_sensor_option">ANT+ 感应器</string>
-  <string name="ant_bridge_sensor_option">SRM ANT+ 转接器</string>
-  <string name="polar_bt_sensor_option">Polar Bluetooth</string>
-  <string name="zephyr_bt_sensor_option">Zephyr 蓝牙设备</string>
+  <string name="sensor_type_option_none">无</string>
+  <string name="sensor_type_option_ant">ANT+ 感应器</string>
+  <string name="sensor_type_option_srm_ant_bridge">SRM ANT+ 转接器</string>
+  <string name="sensor_type_option_polar">Polar Bluetooth</string>
+  <string name="sensor_type_option_zephyr">Zephyr 蓝牙设备</string>
   
 </resources>

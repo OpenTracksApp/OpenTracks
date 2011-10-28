@@ -81,7 +81,6 @@ limitations under the License.
     </activity>
 
     <activity android:name="com.google.android.apps.mytracks.DeleteTrack"
-              android:label="@string/deletetrack_title"
               android:theme="@android:style/Theme.Translucent.NoTitleBar"
               android:noHistory="true">
       <intent-filter>
