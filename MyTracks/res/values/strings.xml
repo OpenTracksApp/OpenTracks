@@ -260,7 +260,7 @@ limitations under the License.
   </string>  
   <string name="progress_message_sending_my_maps"
     translation_description="When sending a track to Google My Maps, the message on the progress
-      dialog indicating MyxTracks is sending the track data.">
+      dialog indicating My Tracks is sending the track data.">
     Sending a track to Google My Maps...
   </string>
   <string name="progress_message_sending_fusion_tables"
