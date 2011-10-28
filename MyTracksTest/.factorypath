@@ -1,6 +1,7 @@
 <factorypath>
     <factorypathentry kind="WKSPJAR" id="/MyTracksTest/libs/AndroidMockGenerator.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="ANDROID_SDK/platforms/android-13/android.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="ANDROID_SDK/add-ons/addon_google_apis_google_inc_13/libs/maps.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="MYTRACKS_BIN" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="ANDROID_SDK/platforms/android-14/android.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="ANDROID_SDK/add-ons/addon-google_apis-google_inc_-14/libs/maps.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="WKSPJAR" id="/MyTracksLib/bin/mytrackslib.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="MYTRACKS_BIN/classes" enabled="true" runInBatchMode="false"/>
 </factorypath>
