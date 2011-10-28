@@ -143,8 +143,8 @@ limitations under the License.
 
   <!-- GPS status messages. -->
   <string name="status_wait_for_gps_fix"
-    translation_description="In the main view, the message on the top indicating MyTracks is waiting
-      for a better GPS fix.">
+    translation_description="In the main view, the message on the top indicating My Tracks is
+      waiting for a better GPS fix.">
     Waiting for a better GPS fix. Make sure the sky is visible.
   </string>
   <string name="status_need_to_enable_gps"
@@ -154,13 +154,13 @@ limitations under the License.
     Press the back button to return.
   </string>
   <string name="status_approximate_current_location"
-    translation_description="When displaying user's current location, a status message indicating 
-      that GPS is not available and an approximate location is used instead.">
+    translation_description="When displaying the user's current location, a status message
+      indicating that GPS is not available and an approximate location is used instead.">
     GPS is not available. An approximate location based on cell towers and WIFI networks is shown.
   </string>
   <string name="status_no_current_location"
-    translation_description="When displaying user's current location, a status message indicating
-      the current location cannot be determined.">
+    translation_description="When displaying the user's current location, a status message
+      indicating that the current location cannot be determined.">
     GPS is not available. Current location cannot be determined. Enable more location sources (see
     \'Location &amp; security\' settings) and make sure the sky is visible. Try again later.
   </string>
@@ -190,28 +190,28 @@ limitations under the License.
     It may take a few minutes before new tracks appear.
   </string>
   <string name="sending_to_my_maps_success_new_map"
-    translation_description="When sending a track to My Maps, the message on the result page
-      indicating a new map is created.">
+    translation_description="When sending a track to Google My Maps, the message on the result page
+      indicating that a new map is created.">
     A new Google My Map has been created at maps.google.com.
   </string>
   <string name="sending_to_my_maps_success_existing_map"
-    translation_description="When sending a track to My Maps, the message on the result page
-      indicating the track is sent to an existing map.">
+    translation_description="When sending a track to Google My Maps, the message on the result page
+      indicating that the track is sent to an existing map.">
     Your track has been sent to maps.google.com.
   </string>
   <string name="sending_to_fusion_tables_success"
-    translation_description="When sending a track to Fusion Tables, the message on the result page
-      indicating success.">
+    translation_description="When sending a track to Google Fusion Tables, the message on the result
+      page indicating success.">
     A new Google Fusion table has been created at google.com/fusiontables.
   </string>  
   <string name="sending_to_docs_success_new_doc"
-    translation_description="When sending a track to Docs, the message on the result page indicating
-      a new spreadsheet is created.">
+    translation_description="When sending a track to Google Docs, the message on the result page
+      indicating that a new spreadsheet is created.">
     A new spreadsheet is created at docs.google.com.
   </string>
   <string name="sending_to_docs_success_existing_doc"
-    translation_description="When sending a track to Docs, the message on the result page indicating
-      the track is sent to an existing spreadsheet.">      
+    translation_description="When sending a track to Google Docs, the message on the result page
+      indicating that the track is sent to an existing spreadsheet.">      
     Your track has been sent to docs.google.com.
   </string>
 
