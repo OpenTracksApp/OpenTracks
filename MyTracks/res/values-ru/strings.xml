@@ -70,27 +70,27 @@ limitations under the License.
   <string name="progress_message">Отправка вашего трека в Google.</string>
   <string name="progress_message_reading_track">Чтение трека...</string>
   <string name="progress_message_preparing_track">Подготовка трека...</string>
-  <string name="progress_message_authenticating_fusiontables">Аутентификация на Google Fusion Tables...</string>
-  <string name="progress_message_authenticating_mymaps">Аутентификация на Google Карты...</string>
+  <string name="progress_message_authenticating_fusion_tables">Аутентификация на Google Fusion Tables...</string>
+  <string name="progress_message_authenticating_my_maps">Аутентификация на Google Карты...</string>
   <string name="progress_message_authenticating_docs">Аутентификация в Google Документы...</string>
   <string name="progress_message_sending_docs">Отправка трека в Google Документы...</string>
-  <string name="progress_message_sending_mymaps">Отправка трека в Google Карты...</string>
+  <string name="progress_message_sending_my_maps">Отправка трека в Google Карты...</string>
   <string name="progress_message_creating_map">Создание новой \"Моей карты\" ...</string>
-  <string name="progress_message_sending_fusiontables">Отправка трека в Fusion Tables...</string>
-  <string name="progress_message_creating_fusiontable">Создание новой Fusion table...</string>
-  <string name="import_progress_message">Импорт GPS трека. Это может занять некоторое время.</string>
-  <string name="write_progress_message">Запись файла на SD карту. Это может занять некоторое время.</string>
+  <string name="progress_message_sending_fusion_tables">Отправка трека в Fusion Tables...</string>
+  <string name="progress_message_creating_fusion_table">Создание новой Fusion table...</string>
+  <string name="progress_message_import">Импорт GPS трека. Это может занять некоторое время.</string>
+  <string name="progress_message_export">Запись файла на SD карту. Это может занять некоторое время.</string>
   <string name="progress_message_updating_track">Обновление статистики трека...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">Вы уверены?</string>
+  <string name="confirmation_title_are_you_sure">Вы уверены?</string>
   <string name="all_data_will_be_permanently_deleted">Все треки и маркеры будут удалены с этого телефона.</string>
   <string name="track_will_be_permanently_deleted">Трек и его маркеры будут удалены из этого телефона.</string>
   <string name="marker_will_be_permanently_deleted">Маркер будет удален с этого телефона.</string>
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Создано My Tracks на Android.</string>
-  <string name="fusiontable_link">Создано &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; на Android.</string>
+  <string name="send_to_google_by_mytracks">Создано &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; на Android.</string>
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="my_map_link">Создано &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; на Android.</string>
@@ -101,11 +101,11 @@ limitations under the License.
   <string name="recorded_date">Записан</string>
   <string name="category">Тип деятельности</string>
   <string name="waypoint_category">Тип маркера</string>
-  <string name="part">(Часть %d)</string>
+  <string name="track_part_format">(Часть %d)</string>
 
   <!-- Used by the track recording service -->
   <string name="recording_your_track">Запись трека...</string>
-  <string name="new_track">Трек %d</string>
+  <string name="new_track_format">Трек %d</string>
 
   <!-- Common -->
   <string name="no">Нет</string>
@@ -116,8 +116,6 @@ limitations under the License.
   <string name="waypoint">Путевая точка</string>
   <string name="license">Лицензия</string>
   <string name="cancel">Отмена</string>
-  <string name="close">Закрыть</string>
-  <string name="edit">Правка</string>
   <string name="save">Сохранить</string>
 
   <!-- Placemark labels for start and end of track -->

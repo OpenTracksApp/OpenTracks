@@ -65,35 +65,35 @@ limitations under the License.
   <string name="progress_message">Dein Track wird an Google gesendet...</string>
   <string name="progress_message_reading_track">Lese Track...</string>
   <string name="progress_message_preparing_track">Bereite Track vor...</string>
-  <string name="progress_message_authenticating_fusiontables">Anmeldung bei Google Fusion Tables...</string>
+  <string name="progress_message_authenticating_fusion_tables">Anmeldung bei Google Fusion Tables...</string>
   <string name="progress_message_authenticating_docs">Anmeldung bei Google Text &amp; Tabellen...</string>
   <string name="progress_message_sending_docs">Track wird an Google Text &amp; Tabellen gesendet...</string>
-  <string name="progress_message_sending_fusiontables">Track wird an Google Fusion Tables gesendet...</string>
-  <string name="progress_message_creating_fusiontable">Neue \'Fusion Tabelle\' wird erstellt...</string>
-  <string name="import_progress_message">Importiere GPS-Track. Das kann ein wenig dauern.</string>
-  <string name="write_progress_message">Schreibe Datei auf SD-Karte. Das kann ein wenig dauern.</string>
+  <string name="progress_message_sending_fusion_tables">Track wird an Google Fusion Tables gesendet...</string>
+  <string name="progress_message_creating_fusion_table">Neue \'Fusion Tabelle\' wird erstellt...</string>
+  <string name="progress_message_import">Importiere GPS-Track. Das kann ein wenig dauern.</string>
+  <string name="progress_message_export">Schreibe Datei auf SD-Karte. Das kann ein wenig dauern.</string>
   <string name="progress_message_updating_track">Aktualisiere Trackstatistik...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">Bist Du Dir wirklich sicher?</string>
+  <string name="confirmation_title_are_you_sure">Bist Du Dir wirklich sicher?</string>
   <string name="all_data_will_be_permanently_deleted">Alle Tracks und Wegpunkte werden endgültig von diesem Gerät gelöscht.</string>
   <string name="track_will_be_permanently_deleted">Dieser Track und seine Wegpunkte werden endgültig von diesem Gerät gelöscht.</string>
   <string name="marker_will_be_permanently_deleted">Dieser Wegpunkt wird endgültig von diesem Gerät gelöscht.</string>
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Erstellt von My Tracks für Android.</string>
-  <string name="fusiontable_link">Erstellt von &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; für Android.</string>
+  <string name="send_to_google_by_mytracks">Erstellt von &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; für Android.</string>
 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">Punkte</string>
   <string name="recorded_date">Aufgezeichnet am</string>
   <string name="category">Aktivität</string>
   <string name="waypoint_category">Art des Wegpunktes</string>
-  <string name="part">(Teil %d)</string>
+  <string name="track_part_format">(Teil %d)</string>
 
   <!-- Used by the track recording service -->
   <string name="recording_your_track">Dein Track wird aufgezeichnet…</string>
-  <!--string name="new_track">Track %d</string-->
+  <!--string name="new_track_format">Track %d</string-->
 
   <!-- Common -->
   <string name="no">Nein</string>
@@ -104,8 +104,6 @@ limitations under the License.
   <string name="waypoint">Wegpunkt</string>
   <string name="license">Lizenz</string>
   <string name="cancel">Abbrechen</string>
-  <string name="close">Schließen</string>
-  <string name="edit">Bearbeiten</string>
   <string name="save">Sichern</string>
 
   <!-- Placemark labels for start and end of track -->

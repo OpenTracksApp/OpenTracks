@@ -404,7 +404,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
     Log.d(TAG, "SendActivity.authenticateToGoogleMaps");
     progressDialog.setProgress(0);
     progressDialog.setMessage(getString(
-        R.string.progress_message_authenticating_mymaps));
+        R.string.progress_message_authenticating_my_maps));
     authenticate(Constants.AUTHENTICATE_TO_MY_MAPS, MyMapsConstants.SERVICE_NAME);
     // AUTHENTICATE_TO_MY_MAPS callback calls sendToGoogleMaps
     return SendState.NOT_READY;
@@ -480,7 +480,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
   private SendState authenticateToFusionTables() {
     progressDialog.setProgress(0);
     progressDialog.setMessage(getString(
-        R.string.progress_message_authenticating_fusiontables));
+        R.string.progress_message_authenticating_fusion_tables));
     authenticate(Constants.AUTHENTICATE_TO_FUSION_TABLES, SendToFusionTables.SERVICE_ID);
     // AUTHENTICATE_TO_FUSION_TABLES callback calls sendToFusionTables
     return SendState.NOT_READY;

@@ -68,27 +68,27 @@ limitations under the License.
   <string name="progress_message">トラックをGoogleに送信しています．</string>
   <string name="progress_message_reading_track">トラックを読んでいます...</string>
   <string name="progress_message_preparing_track">トラックを準備しています...</string>
-  <string name="progress_message_authenticating_fusiontables">Google Fusion Tablesへの認証を行っています...</string>
-  <string name="progress_message_authenticating_mymaps">Googleマップへの認証を行っています...</string>
+  <string name="progress_message_authenticating_fusion_tables">Google Fusion Tablesへの認証を行っています...</string>
+  <string name="progress_message_authenticating_my_maps">Googleマップへの認証を行っています...</string>
   <string name="progress_message_authenticating_docs">Google Docsへの認証を行っています...</string>
   <string name="progress_message_sending_docs">トラックをGoogle Docsに送信しています...</string>
-  <string name="progress_message_sending_mymaps">トラックをGoogleマップに送信しています...</string>
+  <string name="progress_message_sending_my_maps">トラックをGoogleマップに送信しています...</string>
   <string name="progress_message_creating_map">新しいマイマップを作成しています...</string>
-  <string name="progress_message_sending_fusiontables">トラックをFusion Tablesに送信しています...</string>
-  <string name="progress_message_creating_fusiontable">新しいFusionテーブルを生成しています...</string>
-  <string name="import_progress_message">GPSトラックをインポートしています．若干時間がかかります．</string>
-  <string name="write_progress_message">SDカードにデータを書き込んでいます．若干時間がかかります．</string>
+  <string name="progress_message_sending_fusion_tables">トラックをFusion Tablesに送信しています...</string>
+  <string name="progress_message_creating_fusion_table">新しいFusionテーブルを生成しています...</string>
+  <string name="progress_message_import">GPSトラックをインポートしています．若干時間がかかります．</string>
+  <string name="progress_message_export">SDカードにデータを書き込んでいます．若干時間がかかります．</string>
   <string name="progress_message_updating_track">トラック統計情報を更新しています...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">よろしいですか?</string>
+  <string name="confirmation_title_are_you_sure">よろしいですか?</string>
   <string name="all_data_will_be_permanently_deleted">全てのトラックとマーカーをこの端末から削除します．</string>
   <string name="track_will_be_permanently_deleted">トラックとマーカーをこの端末から完全に削除します．</string>
   <string name="marker_will_be_permanently_deleted">マーカーをこの端末から完全に削除します．</string>
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Android用My Tracksで作成</string>
-  <string name="fusiontable_link">Android用&lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt;で作成しました．</string>
+  <string name="send_to_google_by_mytracks">Android用&lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt;で作成しました．</string>
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="my_map_link">Android用&lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt;で作成しました．</string>
@@ -99,11 +99,11 @@ limitations under the License.
   <string name="recorded_date">記録日</string>
   <string name="category">活動タイプ</string>
   <string name="waypoint_category">マーカータイプ</string>
-  <string name="part">(パート %d)</string>
+  <string name="track_part_format">(パート %d)</string>
 
   <!-- Used by the track recording service -->
   <string name="recording_your_track">トラックを保存中...</string>
-  <string name="new_track">トラック %d</string>
+  <string name="new_track_format">トラック %d</string>
 
   <!-- Common -->
   <string name="no">いいえ</string>
@@ -113,8 +113,6 @@ limitations under the License.
   <string name="waypoint">ウェイポイント</string>
   <string name="license">ライセンス</string>
   <string name="cancel">キャンセル</string>
-  <string name="close">閉じる</string>
-  <string name="edit">編集</string>
   <string name="save">保存</string>
 
   <!-- Placemark labels for start and end of track -->

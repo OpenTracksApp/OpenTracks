@@ -51,7 +51,7 @@ class DefaultTrackNameFactory {
       SimpleDateFormat formatter = new SimpleDateFormat(TIMESTAMP_DATE_FORMAT);
       return formatter.format(new Date(startTime));
     } else {
-      return String.format(context.getString(R.string.new_track), trackId);
+      return String.format(context.getString(R.string.new_track_format), trackId);
     }
   }
 

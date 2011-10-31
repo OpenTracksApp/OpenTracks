@@ -64,35 +64,35 @@ limitations under the License.
   <string name="progress_message">Skickar ditt spår till Google.</string>
   <string name="progress_message_reading_track">Läser spår...</string>
   <string name="progress_message_preparing_track">Förbereder spår...</string>
-  <!-- <string name="progress_message_authenticating_fusiontables">Autentiserar till Google Kartor...</string> -->
+  <!-- <string name="progress_message_authenticating_fusion_tables">Autentiserar till Google Kartor...</string> -->
   <string name="progress_message_authenticating_docs">Autentiserar till Google Dokument...</string>
   <string name="progress_message_sending_docs">Skickar spår till Google Dokument...</string>
-  <!-- <string name="progress_message_sending_fusiontables">Skickar spår till Google Kartor...</string> -->
-  <!-- <string name="progress_message_creating_fusiontable">Skapar en ny Min Karta...</string> -->
-  <string name="import_progress_message">Importerar ett GPS-spår. Detta kan ta en stund.</string>
-  <string name="write_progress_message">Skriver till SD-kortet. Detta kan ta en stund.</string>
+  <!-- <string name="progress_message_sending_fusion_tables">Skickar spår till Google Kartor...</string> -->
+  <!-- <string name="progress_message_creating_fusion_table">Skapar en ny Min Karta...</string> -->
+  <string name="progress_message_import">Importerar ett GPS-spår. Detta kan ta en stund.</string>
+  <string name="progress_message_export">Skriver till SD-kortet. Detta kan ta en stund.</string>
   <string name="progress_message_updating_track">Uppdaterar spårstatistik...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">Är du säker?</string>
+  <string name="confirmation_title_are_you_sure">Är du säker?</string>
   <string name="all_data_will_be_permanently_deleted">Alla spår och markörer kommer att tas bort från telefonen.</string>
   <string name="track_will_be_permanently_deleted">Spåret och dess markörer kommer att permanent tas bort från telefonen.</string>
   <string name="marker_will_be_permanently_deleted">Markören kommer att permanent tas bort från telefonen.</string>
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="new_map_description">Skapad av My Tracks på Android.</string>
-  <string name="fusiontable_link">Skapad av &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; på Android.</string>
+  <string name="send_to_google_by_mytracks">Skapad av &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; på Android.</string>
 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">Punkter</string>
   <string name="recorded_date">Inspelad</string>
   <string name="category">Aktivitetstyp</string>
   <string name="waypoint_category">Markörtyp</string>
-  <string name="part">(Del %d)</string>
+  <string name="track_part_format">(Del %d)</string>
 
   <!-- Used by the track recording service -->
   <string name="recording_your_track">Spelar in ditt spår...</string>
-  <string name="new_track">Spår %d</string>
+  <string name="new_track_format">Spår %d</string>
 
   <!-- Common -->
   <string name="no">Nej</string>
@@ -102,8 +102,6 @@ limitations under the License.
   <string name="success">Lyckades</string>
   <string name="waypoint">Positionsmärke</string>
   <string name="cancel">Avbryt</string>
-  <string name="close">Stäng</string>
-  <string name="edit">Ändra</string>
   <string name="save">Spara</string>
 
   <!-- Placemark labels for start and end of track -->

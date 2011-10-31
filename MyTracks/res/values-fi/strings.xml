@@ -71,27 +71,27 @@ limitations under the License.
   <string name="progress_message">Lähetetään reittiä Google:n palvelimelle.</string>
   <string name="progress_message_reading_track">Luetaan reittiä...</string>
   <string name="progress_message_preparing_track">Valmistellaan reittiä...</string>
-  <string name="progress_message_authenticating_fusiontables">Todennetaan Google Fusion Tables -tiliä...</string>
-  <string name="progress_message_authenticating_mymaps">Todennetaan Google Maps -tiliä...</string>
+  <string name="progress_message_authenticating_fusion_tables">Todennetaan Google Fusion Tables -tiliä...</string>
+  <string name="progress_message_authenticating_my_maps">Todennetaan Google Maps -tiliä...</string>
   <string name="progress_message_authenticating_docs">Todennetaan Google Docs -tiliä...</string>
   <string name="progress_message_sending_docs">Lähetetään reittiä Google Docsiin...</string>
-  <string name="progress_message_sending_mymaps">Lähetetään reittiä Google Mapsiin...</string>
+  <string name="progress_message_sending_my_maps">Lähetetään reittiä Google Mapsiin...</string>
   <string name="progress_message_creating_map">Luodaan uutta My Mapsia...</string>
-  <string name="progress_message_sending_fusiontables">Lähetetään reittiä Fusion Tablesiin...</string>
-  <string name="progress_message_creating_fusiontable">Luodaan uutta Fusion tablea...</string>
-  <string name="import_progress_message">Tuodaan uutta GPS-reittiä. Odota.</string>
-  <string name="write_progress_message">Kirjoitetaan tiedostoa SD-kortille. Odota.</string>
+  <string name="progress_message_sending_fusion_tables">Lähetetään reittiä Fusion Tablesiin...</string>
+  <string name="progress_message_creating_fusion_table">Luodaan uutta Fusion tablea...</string>
+  <string name="progress_message_import">Tuodaan uutta GPS-reittiä. Odota.</string>
+  <string name="progress_message_export">Kirjoitetaan tiedostoa SD-kortille. Odota.</string>
   <string name="progress_message_updating_track">Päivitetään reitin tilastoja...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">Oletko varma?</string>
+  <string name="confirmation_title_are_you_sure">Oletko varma?</string>
   <string name="all_data_will_be_permanently_deleted">Kaikki reitit ja merkinnät poistetaan puhelimesta.</string>
   <string name="track_will_be_permanently_deleted">Reitti ja se merkinnät poistetaan pysyvästi puhelimesta.</string>
   <string name="marker_will_be_permanently_deleted">Merkintä poistetaan puhelimesta.</string>
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Created by My Tracks on Android.</string>
-  <string name="fusiontable_link">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
+  <string name="send_to_google_by_mytracks">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="my_map_link">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
@@ -102,11 +102,11 @@ limitations under the License.
   <string name="recorded_date">Tallennettu</string>
   <string name="category">Liikunnan muoto</string>
   <string name="waypoint_category">Merkinnän tyyppi</string>
-  <string name="part">(Osa %d)</string>
+  <string name="track_part_format">(Osa %d)</string>
 
   <!-- Used by the track recording service -->
   <string name="recording_your_track">Tallennetaan reittiä...</string>
-  <string name="new_track">Reitti %d</string>
+  <string name="new_track_format">Reitti %d</string>
 
   <!-- Common -->
   <string name="no">Ei</string>
@@ -117,8 +117,6 @@ limitations under the License.
   <string name="waypoint">Reittipiste</string>
   <string name="license">Lisenssi</string>
   <string name="cancel">Peruuta</string>
-  <string name="close">Sulje</string>
-  <string name="edit">Muokkaa</string>
   <string name="save">Tallenna</string>
 
   <!-- Placemark labels for start and end of track -->

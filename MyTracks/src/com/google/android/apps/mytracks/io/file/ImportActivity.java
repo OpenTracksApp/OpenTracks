@@ -93,7 +93,7 @@ public class ImportActivity extends Activity {
         progressDialog.setIcon(android.R.drawable.ic_dialog_info);
         progressDialog.setTitle(R.string.progress_title);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage(getString(R.string.import_progress_message));
+        progressDialog.setMessage(getString(R.string.progress_message_import));
         return progressDialog;
       case SUCCESS_DIALOG:
         final Builder dialogBuilder = new AlertDialog.Builder(this);

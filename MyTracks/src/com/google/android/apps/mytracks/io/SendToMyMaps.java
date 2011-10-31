@@ -326,12 +326,12 @@ public class SendToMyMaps implements Runnable {
 
     // Start uploading them
     progressIndicator.setProgressMessage(
-        R.string.progress_message_sending_mymaps);
+        R.string.progress_message_sending_my_maps);
     for (Track splitTrack : splitTracks) {
       if (totalSegmentsUploaded > 1) {
         splitTrack.setName(splitTrack.getName() + " "
             + String.format(
-                context.getString(R.string.part), totalSegmentsUploaded));
+                context.getString(R.string.track_part_format), totalSegmentsUploaded));
       }
       totalSegmentsUploaded++;
       Log.d(TAG,

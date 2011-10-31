@@ -63,35 +63,35 @@ limitations under the License.
   <string name="progress_message">Invio del percorso a Google in corso.</string>
   <string name="progress_message_reading_track">Lettura in corso...</string>
   <string name="progress_message_preparing_track">Elaborazione del percorso in corso...</string>
-  <!-- <string name="progress_message_authenticating_fusiontables">Autenticazione a Google Maps in corso...</string> -->
+  <!-- <string name="progress_message_authenticating_fusion_tables">Autenticazione a Google Maps in corso...</string> -->
   <string name="progress_message_authenticating_docs">Autenticazione a Google Docs in corso...</string>
   <string name="progress_message_sending_docs">Invio del percorso a Google Docs in corso...</string>
-  <!-- <string name="progress_message_sending_fusiontables">Invio del percorso a Google Maps in corso...</string> -->
-  <!-- <string name="progress_message_creating_fusiontable">Creazione di una nuova mappa in «Le mie mappe» in corso...</string> -->
-  <string name="import_progress_message">Importazione del percorso GPS in corso. Attendere prego...</string>
-  <string name="write_progress_message">Salvataggio del file sulla scheda SD in corso. Attendere prego...</string>
+  <!-- <string name="progress_message_sending_fusion_tables">Invio del percorso a Google Maps in corso...</string> -->
+  <!-- <string name="progress_message_creating_fusion_table">Creazione di una nuova mappa in «Le mie mappe» in corso...</string> -->
+  <string name="progress_message_import">Importazione del percorso GPS in corso. Attendere prego...</string>
+  <string name="progress_message_export">Salvataggio del file sulla scheda SD in corso. Attendere prego...</string>
   <string name="progress_message_updating_track">Aggiornamento delle statistiche del percorso in corso...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">Sei sicuro?</string>
+  <string name="confirmation_title_are_you_sure">Sei sicuro?</string>
   <string name="all_data_will_be_permanently_deleted">Tutti i percorsi e segnaposti saranno eliminati definitivamente da questo telefono.</string>
   <string name="track_will_be_permanently_deleted">Il percorso e i suoi segnaposti saranno eliminati definitivamente da questo telefono.</string>
   <string name="marker_will_be_permanently_deleted">Il segnaposto sarà eliminato definitivamente da questo telefono.</string>
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="new_map_description">Creato da My Tracks su Android.</string>
-  <string name="fusiontable_link">Creato da &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; su Android.</string>
+  <string name="send_to_google_by_mytracks">Creato da &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; su Android.</string>
 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">Punti</string>
   <string name="recorded_date">Registrato</string>
   <string name="category">Tipo di attività</string>
   <string name="waypoint_category">Tipo di segnaposto</string>
-  <string name="part">(Parte %d)</string>
+  <string name="track_part_format">(Parte %d)</string>
 
   <!-- Used by the track recording service -->
   <string name="recording_your_track">Registrazione del percorso in corso...</string>
-  <string name="new_track">Percorso %d</string>
+  <string name="new_track_format">Percorso %d</string>
 
   <!-- Common -->
   <string name="no">No</string>
@@ -101,8 +101,6 @@ limitations under the License.
   <string name="success">Successo</string>
   <string name="waypoint">Punto di passaggio</string>
   <string name="cancel">Annulla</string>
-  <string name="close">Chiudi</string>
-  <string name="edit">Modifica</string>
   <string name="save">Salva</string>
 
   <!-- Placemark labels for start and end of track -->

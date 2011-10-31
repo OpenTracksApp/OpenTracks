@@ -34,8 +34,6 @@ limitations under the License.
 
   <!-- Common -->
   <string name="license">Licencia</string>
-  <string name="close">Cerrar</string>
-  <string name="edit">Editar</string>
   <string name="save">Guardar</string>
 
   <!-- Placemark labels for start and end of track -->

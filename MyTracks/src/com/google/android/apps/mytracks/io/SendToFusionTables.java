@@ -185,13 +185,13 @@ public class SendToFusionTables implements Runnable {
 
       // Create a new table:
       progressIndicator.setProgressValue(PROGRESS_FUSION_TABLE_CREATE);
-      progressIndicator.setProgressMessage(R.string.progress_message_creating_fusiontable);
+      progressIndicator.setProgressMessage(R.string.progress_message_creating_fusion_table);
       if (!createNewTable(track) || !makeTableUnlisted()) {
         return;
       }
 
       progressIndicator.setProgressValue(PROGRESS_UPLOAD_DATA_MIN);
-      progressIndicator.setProgressMessage(R.string.progress_message_sending_fusiontables);
+      progressIndicator.setProgressMessage(R.string.progress_message_sending_fusion_tables);
 
       // Upload all of the segments of the track plus start/end markers
       if (!uploadAllTrackPoints(track, originalDescription)) {
@@ -462,7 +462,7 @@ public class SendToFusionTables implements Runnable {
       if (totalSegmentsUploaded > 1) {
         splitTrack.setName(splitTrack.getName() + " "
             + String.format(
-                context.getString(R.string.part), totalSegmentsUploaded));
+                context.getString(R.string.track_part_format), totalSegmentsUploaded));
       }
       totalSegmentsUploaded++;
       Log.d(Constants.TAG,

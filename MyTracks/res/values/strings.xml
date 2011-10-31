@@ -113,7 +113,7 @@ limitations under the License.
   <!-- Error messages when importing a track. -->
   <string name="error_import_unable_to_read_file"
     translation_description="When importing a track from the SD card, a messsage indicating that
-      MyTracks is unable to read the file.">
+      My Tracks is unable to read the file.">
     Unable to read from file.
   </string>
   <string name="error_import_invalid_gpx_format"
@@ -215,139 +215,449 @@ limitations under the License.
     Your track has been sent to docs.google.com.
   </string>
 
-  <!-- Progress dialog -->
-  <string name="progress_title">Please wait...</string>
-  <string name="progress_message">Sending your track to Google.</string>
-  <string name="progress_message_reading_track">Reading track...</string>
-  <string name="progress_message_preparing_track">Preparing track...</string>
-  <string name="progress_message_authenticating_fusiontables">Authenticating to Google Fusion Tables...</string>
-  <string name="progress_message_authenticating_mymaps">Authenticating to Google Maps...</string>
-  <string name="progress_message_authenticating_docs">Authenticating to Google Docs...</string>
-  <string name="progress_message_sending_docs">Sending track to Google Docs...</string>
-  <string name="progress_message_sending_mymaps">Sending track to Google Maps...</string>
-  <string name="progress_message_creating_map">Creating new My Map...</string>
-  <string name="progress_message_sending_fusiontables">Sending track to Fusion Tables...</string>
-  <string name="progress_message_creating_fusiontable">Creating new Fusion table...</string>
-  <string name="import_progress_message">Importing a GPS track. This may take a while.</string>
-  <string name="write_progress_message">Writing file to SD card. This may take a while.</string>
-  <string name="progress_message_updating_track">Updating track statistics...</string>
+  <!-- Progress dialog title -->
+  <string name="progress_title"
+    translation_description="When displaying a progress dialog, the title on the dialog asking the
+      user to wait.">
+    Please wait...
+  </string>
+  
+  <!-- Progress dialog messages when sending to Google. -->
+  <string name="progress_message_authenticating_my_maps"
+    translation_description="When sending a track to Google My Maps, the messsage on the progress
+      dialog indicating authenticating to Google My Maps.">
+    Authenticating to Google My Maps...
+  </string>
+  <string name="progress_message_authenticating_fusion_tables"
+    translation_description="When sending a track to Google Fusion Tables, the messsage on the
+      progress dialog indicating authenticating to Google Fusion Tables.">
+    Authenticating to Google Fusion Tables...
+  </string>
+  <string name="progress_message_authenticating_docs"
+    translation_description="When sending a track to Google Docs, the messsage on the progress
+      dialog indicating authenticating to Google Docs.">
+    Authenticating to Google Docs...
+  </string>    
+  <string name="progress_message_reading_track"
+    translation_description="When sending a track to Google, the message on the progress dialog
+      indicating My Tracks is reading the track from its database.">
+    Reading track...
+  </string>  
+  <string name="progress_message_preparing_track"
+    translation_description="When sending a track to Google My Maps, the message on the progress
+      dialog indicating My Tracks is preparing the track's data for upload.">
+    Preparing track...
+  </string> 
+  <string name="progress_message_creating_map"
+    translation_description="When sending a track to Google My Maps, the messsage on the progress
+      dialog indicating My Tracks is creating a new map in Google My Maps.">
+    Creating a new My Map...
+  </string>
+  <string name="progress_message_creating_fusion_table"
+    translation_description="When sending a track to Google Fusion Tables, the messsage on the
+      progress dialog indicating My Tracks is creating a new Fusion Table in Google Fusion Tables.">
+    Creating a new Fusion Table...
+  </string>  
+  <string name="progress_message_sending_my_maps"
+    translation_description="When sending a track to Google My Maps, the message on the progress
+      dialog indicating My Tracks is sending the track data.">
+    Sending a track to Google My Maps...
+  </string>
+  <string name="progress_message_sending_fusion_tables"
+    translation_description="When sending a track to Google Fusion Tables, the message on the
+      progress dialog indicating My Tracks is sending the track data.">
+    Sending a track to Google Fusion Tables...
+  </string>
+  <string name="progress_message_sending_docs"
+    translation_description="When sending a track to Google Docs, the message on the progress dialog
+      indicating My Tracks is sending the track data.">
+    Sending a track to Google Docs...
+  </string>
+  
+  <!-- Import and Export progress messages. -->
+  <string name="progress_message_import"
+    translation_description="When importing a track from the SD card, the message on the progress
+      dialog indicating that it may take a while.">
+    Importing a track from the SD card. This may take a while.
+  </string>
+  <string name="progress_message_export"
+    translation_description="When exporting a track to the SD card, the message on the progress
+      dialog indicating that it may take a while.">
+    Exporting a track to the SD card. This may take a while.
+  </string>
 
   <!-- Used by deletion actions -->
-  <string name="deletetrack_title">Delete track</string>
-  <string name="are_you_sure_question">Are you sure?</string>
-  <string name="all_data_will_be_permanently_deleted">All tracks and markers will be deleted from this phone.</string>
-  <string name="track_will_be_permanently_deleted">The track and its markers will be permanently deleted from this phone.</string>
-  <string name="marker_will_be_permanently_deleted">The marker will be permanently deleted from this phone.</string>
+  <string name="confirmation_title_are_you_sure"
+    translation_description="When deleting data (e.g., deleting all tracks, deleting a track,
+      deleting a marker, etc.), the title on the confirmation dialog asking the user if he is sure."
+      >
+    Are you sure?
+  </string>
+  <string name="all_data_will_be_permanently_deleted"
+    translation_description="When deleting all tracks, the message on the confirmation dialog
+      informing the user that all tracks and markers will be permanently deleted from the phone.">
+    All tracks and markers will be permanently deleted from the phone.
+  </string>
+  <string name="track_will_be_permanently_deleted"
+    translation_description="When deleting a track, the message on the confirmation dialog informing
+      the user that the track and its markers will be permanently deleted from the phone.">
+    The track and its markers will be permanently deleted from the phone.
+  </string>
+  <string name="marker_will_be_permanently_deleted"
+    translation_description="When deleting a marker, the message on the confirmation dialog
+      informing the user that the marker will be permanently deleted from the phone.">
+    The marker will be permanently deleted from the phone.
+  </string>
 
-  <!-- Text and links when uploading to Google Fusion Tables -->
-  <string name="new_map_description">Created by My Tracks on Android.</string>
-  <string name="fusiontable_link">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
+  <!-- Text and link when uploading to Google. -->
+  <!-- TODO(jshih@google.com) remove the html href tag from this string. -->
+  <string name="send_to_google_by_mytracks"
+    translation_description="When sending a track to Google, a note indicating it is created by
+      My Tracks on Android, with the 'My Tracks' word containng a http link to
+      http://mytracks.appspot.com.">
+    Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.
+  </string>
 
-  <!-- Text and links when uploading to Google My Maps -->
-  <string name="my_map_link">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
-  <string name="new_map_title">New map</string>
-
-  <!-- Formatting of track and marker descriptions -->
-  <string name="points">Points</string>
-  <string name="recorded_date">Recorded</string>
-  <string name="category">Activity type</string>
-  <string name="waypoint_category">Marker type</string>
-  <string name="part">(Part %d)</string>
+  <!-- Tags for a track description. -->
+  <string name="recorded_date"
+    translation_description="When sending a track to Google, in the track description, a tag
+      for the track recorded date. E.g., 'Recorded: Tue Sep 06 15:08:30 PDT 2011'.">        
+    Recorded
+  </string>
+  <string name="category"
+    translation_description="When sending a track to Google, in the track desription, a tag
+      for the activity type. E.g., 'Activity type: hiking'.">
+    Activity type
+  </string>
 
   <!-- Used by the track recording service -->
-  <string name="recording_your_track">Recording your track...</string>
-  <string name="new_track">Track %d</string>
-
-  <!-- Common -->
-  <string name="no">No</string>
-  <string name="yes">Yes</string>
-  <string name="ok">OK</string>
-  <string name="error">Error</string>
-  <string name="success">Success</string>
-  <string name="waypoint">Waypoint</string>
-  <string name="license">License</string>
-  <string name="cancel">Cancel</string>
-  <string name="close">Close</string>
-  <string name="edit">Edit</string>
-  <string name="save">Save</string>
-
-  <!-- Placemark labels for start and end of track -->
-  <string name="start">(Start)</string>
-  <string name="end">(End)</string>
-
-  <!--  TrackList -->
-  <string name="tracklist_show_track">Show</string>
-  <string name="tracklist_send_to_mymaps">Send to Google My Maps</string>
-  <string name="tracklist_send_to_new_mymap">Send to New Google My Map</string>
-  <string name="tracklist_send_to_fusiontables">Send to Google Fusion Tables</string>
-  <string name="tracklist_send_to_new_fusiontable">Send to New Google Fusion Table</string>
-  <string name="tracklist_send_to_docs">Send to Google Docs</string>
-  <string name="tracklist_send_to_google">Send to Google...</string>
-  <string name="tracklist_delete_track">Delete from phone...</string>
-  <string name="tracklist_edit_track">Edit details</string>
-  <string name="tracklist_write_to_sd">Write to SD card...</string>
-  <string name="tracklist_save_as_gpx">Save a GPX file</string>
-  <string name="tracklist_save_as_kml">Save a KML file</string>
-  <string name="tracklist_save_as_csv">Save a CSV file</string>
-  <string name="tracklist_save_as_tcx">Save a TCX file</string>
-  <string name="tracklist_btn_send_all_to_fusiontables">Send to Google Fusion Tables</string>
-  <string name="tracklist_btn_send_all_to_mymaps">Send to Google My Maps</string>
-  <string name="tracklist_btn_delete_all">Delete all</string>
-  <!-- Export All -->
-  <string name="tracklist_btn_export_all">Export all</string>
-  <string name="export_done">Export finished</string>
-  <string name="tracklist_pick_one">Pick a track. Press&amp;hold for more options.</string>
-  <string name="tracklist_all_tracks">All Tracks:</string>
-  <string name="tracklist_this_track">This Track</string>
-  <string name="tracklist_share_track">Share with Friends...</string>
-  <string name="tracklist_share_link">A link to the map</string>
-  <string name="tracklist_share_gpx_file">A GPX file</string>
-  <string name="tracklist_share_kml_file">A KML file</string>
-  <string name="tracklist_share_csv_file">A CSV file</string>
-  <string name="tracklist_share_tcx_file">A TCX file</string>
-  <string name="tracklist_clear_map">Clear map</string>
+  <string name="recording_your_track"
+    translation_description="When recording a track, the message on the My Tracks notification 
+      informing the user that My Tracks is actively recording his track.">
+    Recording your track...
+  </string>
+  <string name="new_track_format"
+    translation_description="When creating a new track, the string format to name the track. E.g.,
+      'Track 1'.">
+    Track %d
+  </string>  
+  <string name="track_part_format"
+    translation_description="When sending a track to Google, the string format to name segments
+      when splitting a large track. E.g., '(Part 1)'.">
+    (Part %d)
+  </string>
+      
+  <!-- Button texts -->
+  <string name="yes"
+    translation_description="Text on the button to say yes.">
+    Yes
+  </string>
+  <string name="no"
+    translation_description="Text on the button to say no.">
+    No
+  </string>
+  <string name="ok"
+    translation_description="Text on the button to say ok.">
+    OK
+  </string>
+  <string name="save"
+    translation_description="Text on the button to say save.">
+    Save
+  </string>
+  <string name="cancel"
+    translation_description="Text on the button to say cancel.">
+    Cancel
+  </string>
   
-  <!-- Import All -->
-  <string name="tracklist_btn_import_all">Import all</string>
-  <!-- Format:
-  $1 : Successful imports
-  $2 : Attempted imports
-  $3 : MyTracks gpx path
-  -->
-  <string name="import_multi_done">Imported %1$d of %2$d GPX files from %3$s</string>
-  <string name="import_multi_empty">No GPX files found in %s. SD card may be unreadable or directory may not contain GPX files.</string>
-  <string name="import_error">Import error for file %s</string>
-  <string name="import_title">Import into My Tracks</string>
-  <string name="import_success">Successfully imported %1$d track(s) from file.</string>
-  <string name="import_show_track">Show track</string>
+  <!-- Alert dialog titles -->    
+  <string name="success"
+    translation_description="The title on the alert dialog to indicate success.">
+    Success
+  </string>
+  <string name="error"
+    translation_description="The title on the alert dialog to indicate error.">
+    Error
+  </string>
 
-  <!-- Waypoints list -->
-  <string name="waypointslist_btn_delete_all">Delete all markers</string>
-  <string name="waypointslist_this_waypoint">This Marker</string>
-  <string name="waypointslist_delete_waypoint">Delete</string>
-  <string name="waypointslist_edit_waypoint">Edit details</string>
-  <string name="waypointslist_show_waypoint">Show on map</string>
-  <string name="waypointslist_btn_insert_waypoint">Insert waypoint</string>
-  <string name="waypointslist_btn_insert_statistics">Insert statistics</string>
-  <string name="waypointslist_pick_one">Pick a marker. Press&amp;hold for more options.</string>
+  <!-- Insert markers -->
+  <string name="waypoint"
+    translation_description="When inserting a waypoint marker, the default name of the marker.">
+    Waypoint
+  </string>
+  <string name="statistics"
+    translation_description="When inserting a statistics marker, the default name of the marker.">
+    Statistics
+  </string>
+  
+  <!--  Welcome dialog -->
+  <string name="license"
+    translation_description="In the welcome dialog, the text on the bottom button to view the terms
+      of service agreement.">
+    License
+  </string>
+  
+  <!-- Labels for start and end of a track -->
+  <string name="start"
+    translation_description="When inserting a marker to indicate the beginning of a track, the label
+      at the end of the marker name. E.g., the marker is named 'track_name (Start)'.">
+    (Start)
+  </string>
+  <string name="end"
+    translation_description="When inserting a marker to indicate the end of a track, the label at
+      the end of the marker name. E.g., the marker is named 'track_name (End)'."> 
+    (End)
+  </string>
 
-  <!-- MyTracks Details -->
-  <string name="trackdetails_title">Track Details</string>
-  <string name="trackdetails_name">Track Name</string>
-  <string name="trackdetails_name_hint">Track Name</string>
-  <string name="trackdetails_description">Track Description</string>
-  <string name="trackdetails_description_hint">Track Description</string>
-  <string name="trackdetails_category">Activity Type (e.g. hiking, cycling, running, climbing...)</string>
-  <string name="trackdetails_category_hint">Activity Type</string>
+  <!--  Tracks page -->
+  <string name="tracklist_pick_one"
+    translation_description="In the Tracks page, the instruction at the top of the page informing
+      the user he can press and hold a track for more options.">
+    Pick a track. Press&amp;hold for more options.
+  </string>
+  <string name="tracklist_btn_import_all"
+    translation_description="In the Tracks page, the button on the bottom to import all tracks.">
+    Import all
+  </string>
+  <string name="tracklist_btn_export_all"
+    translation_description="In the Tracks page, the button on the bottom to export all tracks.">
+    Export all
+  </string>  
+  <string name="tracklist_btn_delete_all"
+    translation_description="In the Tracks page, the button on the bottom to delete all tracks.">
+    Delete all
+  </string>
+  
+  <!-- A track's context menu -->
+  <string name="tracklist_this_track"
+    translation_description="In the context menu for a track, the title indicating that all the menu
+      options below are for this track.">
+    This Track
+  </string>
+  <string name="tracklist_show_track"
+    translation_description="In the context menu for a track, the menu option to show the track on
+      the map.">
+    Show on map
+  </string>
+  <string name="tracklist_edit_track"
+    translation_description="In the context menu for a track, the menu option to edit the track's 
+      metadata (e.g., title, activity type, etc.).">
+    Edit
+  </string>
+  <string name="tracklist_send_to_google"
+    translation_description="In the context menu for a track, the menu option to send the track to
+      Google.">
+    Send to Google...
+  </string>
+  <string name="tracklist_share_track"
+    translation_description="In the context menu for a track, the menu option to share the track
+      with friends through other applications.">
+    Share with friends...
+  </string>
+  <string name="tracklist_write_to_sd"
+    translation_description="In the context menu for a track, the menu option to write the track to
+      the SD card.">       
+    Write to SD card...
+  </string>      
+  <string name="tracklist_clear_map"
+    translation_description="In the context menu for a track, the menu option to clear the map
+      of any track.">
+    Clear map
+  </string>
+  <string name="tracklist_delete_track"
+    translation_description="In the context menu for a track, the menu option to delete the
+      track from the phone.">
+    Delete from phone...
+  </string>
+  
+  <!--  'Share with friends...' menu options. -->
+  <string name="tracklist_share_link"
+    translation_description="In the context menu for a track, under the 'Share with friends...'
+      option, the menu option to share the track's link to My Maps or Fusion Tables with friends.">
+    A link to My Maps or Fusion Tables
+  </string>
+  <string name="tracklist_share_gpx_file"
+    translation_description="In the context menu for a track, under the 'Share with friends...'
+      option, the menu option to share the track as a GPX file with friends.">     
+    A GPX file
+  </string>
+  <string name="tracklist_share_kml_file"
+    translation_description="In the context menu for a track, under the 'Share with friends...'
+      option, the menu option to share the track as a KML file with friends.">
+    A KML file
+  </string>
+  <string name="tracklist_share_csv_file"
+    translation_description="In the context menu for a track, under the 'Share with friends...'
+      option, the menu option to share the track as a CSV file with friends.">  
+    A CSV file
+  </string>
+  <string name="tracklist_share_tcx_file"
+    translation_description="In the context menu for a track, under the 'Share with friends...'
+      option, the menu option to share the track as a TCX file with friends."> 
+   A TCX file
+  </string>  
 
-  <!-- MyTracks Waypoint Details -->
-  <string name="waypointdetails_title">Marker Details</string>
-  <string name="waypointdetails_name">Marker Name</string>
-  <string name="waypointdetails_name_hint">Marker Name</string>
-  <string name="waypointdetails_description">Marker Description</string>
-  <string name="waypointdetails_description_hint">Marker Description</string>
-  <string name="waypointdetails_category">Marker Type (e.g. Building, Pothole, Sight...)</string>
-  <string name="waypointdetails_category_hint">Marker Type</string>
+  <!-- 'Write to SD card...' menu options. -->
+  <string name="tracklist_save_as_gpx"
+    translation_description="In the context menu for a track, under the 'Write to SD card...'
+      option, the menu option to save the track as a GPX file.">     
+    Save as a GPX file
+  </string>
+  <string name="tracklist_save_as_kml"
+    translation_description="In the context menu for a track, under the 'Write to SD card...'
+      option, the menu option to save the track as a KML file.">           
+    Save as a KML file
+  </string>
+  <string name="tracklist_save_as_csv"
+    translation_description="In the context menu for a track, under the 'Write to SD card...'
+      option, the menu option to save the track as a CSV file.">      
+    Save as a CSV file
+  </string>
+  <string name="tracklist_save_as_tcx"
+    translation_description="In the context menu for a track, under the 'Write to SD card...'
+      option, the menu option to save the track as a TCX file.">       
+    Save as a TCX file
+  </string>
+  
+  <!-- Export -->
+  <string name="export_done"
+    translation_description="After exporting all the tracks, a toast message indicating success.">
+    Export finished
+  </string>
+
+  <string name="import_multi_done"
+    translation_description="After importing all the tracks from the SD card, the alert message
+      indicating success. E.g., 'Imported 5 of 6 GPX files from /mnt/sdcard/MyTracks/gpx/'.">
+    Imported %1$d of %2$d GPX files from %3$s
+  </string>
+  <string name="import_multi_empty"
+    translation_description="After importing all the tracks from the SD card, the alert message
+      indicating that no track is imported. E.g., 'No GPX file found in /mnt/sdcard/MyTracks/gpx/.
+      SD card may be unreadable or directory may not contain any GPX file.'.">
+    No GPX file found in %s. SD card may be unreadable or directory may not contain any GPX file.
+  </string>
+  <string name="import_error"
+    translation_description="When importing all the tracks, a toast message indicating error for
+      one of the tracks. E.g., 'Import error for file /mnt/sdcard/MyTacks/gpx/1.gpx'."> 
+    Import error for file %s
+  </string>
+  <string name="import_success"
+    translation_description="After successfully importing one track, the message on the confirmation
+      dialog. E.g., 'Successfully imported 5 track(s) from file'.">
+    Successfully imported %d track(s) from file.
+  </string>
+  <string name="import_show_track"
+    translation_description="After importing one track, the button to see the track.">
+    Show track
+  </string>
+
+  <!-- Markers page. -->
+  <string name="waypointslist_pick_one"
+    translation_description="In the Markers page, the instruction at the top of the page informing
+      the user he can press and hold a marker for more options.">
+    Pick a marker. Press&amp;hold for more options.
+  </string>
+  <string name="waypointslist_btn_insert_waypoint"
+    translation_description="In the Markers page, the button on the bottom to insert a waypoint
+      marker.">      
+    Insert waypoint
+  </string>
+  <string name="waypointslist_btn_insert_statistics"
+    translation_description="In the Markers page, the button on the bottom to insert a statistics
+      marker.">            
+    Insert statistics
+  </string>
+  <string name="waypointslist_this_waypoint"
+    translation_description="In the context menu for a marker, the title indicating that all the 
+      menu options below are for this marker.">      
+    This Marker
+  </string>
+  <string name="waypointslist_show_waypoint"
+    translation_description="In the context menu for a marker, the menu option to show the marker
+      on the map.">      
+    Show on map
+  </string>
+  <string name="waypointslist_edit_waypoint"
+    translation_description="In the context menu for a marker, the menu option to edit the marker's
+      metadata (e.g., title, type, etc.)."> 
+    Edit
+  </string>
+  <string name="waypointslist_delete_waypoint"
+    translation_description="In the context menu for a marker, the menu option to delete the
+      marker.">   
+    Delete
+  </string>
+
+  <!-- Track detail page -->
+  <string name="trackdetails_title"
+    translation_description="In the detail page for a track, the title of the page.">
+    Track Details
+  </string>
+  <string name="trackdetails_name"
+    translation_description="In the detail page for a track, the text field for the track name.">
+    Track Name
+  </string>
+  <string name="trackdetails_name_hint"
+    translation_description="In the detail page for a track, the hint in the 'Track Name' text field
+      when it is empty.">  
+    Track Name
+  </string>
+  <string name="trackdetails_category"
+    translation_description="In the detail page for a track, the text field for the activity type,
+      including for examples.">
+    Activity Type (e.g. hiking, cycling, running, climbing...)
+  </string>
+  <string name="trackdetails_category_hint"
+    translation_description="In the detail page for a track, the hint in the 'Activity Type' text
+      field when it is empty.">  
+    Activity Type
+  </string>
+  <string name="trackdetails_description"
+    translation_description="In the detail page for a track, the text field for the track 
+      description.">  
+    Track Description
+  </string>
+  <string name="trackdetails_description_hint"
+    translation_description="In the detail page for a track, the hint in the 'Track Description'
+      text field when it is empty.">    
+    Track Description
+  </string>
+
+  <!-- Waypoint marker and statistics marker detail page -->
+  <string name="waypointdetails_title"
+    translation_description="In the detail page for a waypoint or statistics marker, the title of
+      the page.">
+    Marker Details
+  </string>
+  <string name="waypointdetails_name"
+    translation_description="In the detail page for a waypoint or statistics marker, text field for
+      the marker name.">      
+    Marker Name
+  </string>
+  <string name="waypointdetails_name_hint"
+    translation_description="In the detail page for a waypoint or statistics marker, the hint in the 
+      'Marker Name' text field when it is empty.">   
+    Marker Name
+  </string>
+  <string name="waypointdetails_category"
+    translation_description="In the detail page for a waypoint marker, the text field for the
+      marker type, including examples.">       
+    Marker Type (e.g. Building, Pothole, Sight...)
+  </string>
+  <string name="waypointdetails_category_hint"
+    translation_description="In the detail page for a waypoint marker, the hint in the 'Marker Type'
+      text field when it is empty.">
+    Marker Type
+  </string>
+  <string name="waypointdetails_description"
+    translation_description="In the detail page for a waypoint marker, the text field for the marker
+      description.">     
+    Marker Description
+  </string>
+  <string name="waypointdetails_description_hint"
+    translation_description="In the detail page for a waypoint marker, the hint in the 'Marker
+      Description' text field when it is empty.">     
+    Marker Description
+  </string>
 
   <!-- MyTracks Settings -->
   <string name="mytracks_settings">My Tracks Settings</string>
@@ -568,7 +878,7 @@ limitations under the License.
   <string name="sd_unavail">SD Unavailable</string>
   <string name="speed">Speed</string>
   <string name="start_trip">You must start a trip.</string>
-  <string name="statistics">Statistics</string>
+
   <string name="total_distance_label">Total Distance</string>
   <string name="distance_label">Distance</string>
   <string name="power">Power</string>

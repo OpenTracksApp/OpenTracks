@@ -65,35 +65,34 @@ limitations under the License.
   <string name="progress_message">S\'està enviant la ruta a Google.</string>
   <string name="progress_message_reading_track">S\'està llegint la ruta...</string>
   <string name="progress_message_preparing_track">S\'està preparant la ruta...</string>
-  <string name="progress_message_authenticating_fusiontables">S\'està  to Google Fusion Tables...</string>
+  <string name="progress_message_authenticating_fusion_tables">S\'està  to Google Fusion Tables...</string>
   <string name="progress_message_authenticating_docs">S\'està autenticant a Google Docs...</string>
   <string name="progress_message_sending_docs">S\'està enviant la ruta a Google Docs...</string>
-  <string name="progress_message_sending_fusiontables">S\'està enviant a Google Fusion Tables...</string>
-  <string name="progress_message_creating_fusiontable">S\'està creant un Fusion Table nou...</string>
-  <string name="import_progress_message">S\'està imporant una ruta GPS. Això pot trigar una estona.</string>
-  <string name="write_progress_message">S\'està escrivint a la targeta SD. Això pot trigar una estona.</string>
+  <string name="progress_message_sending_fusion_tables">S\'està enviant a Google Fusion Tables...</string>
+  <string name="progress_message_creating_fusion_table">S\'està creant un Fusion Table nou...</string>
+  <string name="progress_message_import">S\'està imporant una ruta GPS. Això pot trigar una estona.</string>
+  <string name="progress_message_export">S\'està escrivint a la targeta SD. Això pot trigar una estona.</string>
   <string name="progress_message_updating_track">S\'estan actualitzant les estadístiques de la ruta...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="are_you_sure_question">Esteu segur?</string>
+  <string name="confirmation_title_are_you_sure">Esteu segur?</string>
   <string name="all_data_will_be_permanently_deleted">Tots els marcadors i rutes s\'eliminaran d\'aquest telèfon.</string>
   <string name="track_will_be_permanently_deleted">La ruta i els seus marcadors s\'eliminaran de forma permanent d\'aquest telèfon.</string>
   <string name="marker_will_be_permanently_deleted">El marcador s\'eliminarà de forma permanent d\'aquest telèfon.</string>
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="new_map_description">Creat per My Tracks a l\'Android.</string>
-  <string name="fusiontable_link">Creat per &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; a l\'Android.</string>
+  <string name="send_to_google_by_mytracks">Creat per &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; a l\'Android.</string>
 
   <!-- Formatting of track and marker descriptions -->
-  <string name="points">Punts</string>
   <string name="recorded_date">Enregistrat</string>
   <string name="category">Tipus d\'activitat</string>
   <string name="waypoint_category">Tipus de marcador</string>
-  <string name="part">(Part %d)</string>
+  <string name="track_part_format">(Part %d)</string>
 
   <!-- Used by the track recording service -->
   <string name="recording_your_track">S\'està enregistrant la ruta...</string>
-  <string name="new_track">Ruta %d</string>
+  <string name="new_track_format">Ruta %d</string>
 
   <!-- Common -->
   <string name="no">No</string>
@@ -103,8 +102,6 @@ limitations under the License.
   <string name="success">Fet</string>
   <string name="waypoint">Punt de referència</string>
   <string name="cancel">Cancel·la</string>
-  <string name="close">Tanca</string>
-  <string name="edit">Edita</string>
   <string name="save">Desa</string>
 
   <!-- Placemark labels for start and end of track -->
