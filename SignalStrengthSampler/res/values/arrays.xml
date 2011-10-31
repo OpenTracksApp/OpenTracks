@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2010 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<resources>
+  <!-- Task frequency -->
+  <string-array name="task_period_options">
+    <item>As often as possible</item>
+    <item>1 min</item>
+    <item>2 min</item>
+    <item>5 min</item>
+    <item>10 min</item>
+    <item>15 min</item>
+    <item>30 min</item>
+    <item>60 min</item>
+  </string-array>
+
+  <!-- DO NOT TRANSLATE -->
+  <string-array name="task_period_values">
+    <item>-1</item>
+    <item>1</item>
+    <item>2</item>
+    <item>5</item>
+    <item>10</item>
+    <item>15</item>
+    <item>30</item>
+    <item>60</item>
+  </string-array>
+</resources>
