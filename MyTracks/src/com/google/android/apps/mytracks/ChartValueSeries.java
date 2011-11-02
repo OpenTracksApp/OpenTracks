@@ -20,8 +20,8 @@ import com.google.android.apps.mytracks.stats.ExtremityMonitor;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Paint.Style;
+import android.graphics.Path;
 
 import java.text.DecimalFormat;
 
@@ -133,9 +133,10 @@ public class ChartValueSeries {
    *
    * @param context The context for the chart
    * @param formatString The format of the decimal format for this series
-   * @param fill The paint for filling the chart
-   * @param stroke The paint for stroking the outside the chart, optional
+   * @param fillColor The paint for filling the chart
+   * @param strokeColor The paint for stroking the outside the chart, optional
    * @param zoomSettings The settings related to zooming
+   * @param titleId The title ID
    *
    * TODO: Get rid of Context and inject appropriate values instead.
    */

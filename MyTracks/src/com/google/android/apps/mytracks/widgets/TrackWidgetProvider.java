@@ -85,11 +85,11 @@ public class TrackWidgetProvider
     selectedTrackId = -1;
   }
 
-  private void initialize(Context context) {
+  private void initialize(Context aContext) {
     if (this.context != null) {
       return;
     }
-    this.context = context;
+    this.context = aContext;
     trackObserver = new TrackObserver();
     providerUtils = MyTracksProviderUtils.Factory.get(context);
     unknown = context.getString(R.string.unknown);
@@ -105,9 +105,9 @@ public class TrackWidgetProvider
   }
 
   @Override
-  public void onReceive(Context context, Intent intent) {
-    super.onReceive(context, intent);
-    initialize(context);
+  public void onReceive(Context aContext, Intent intent) {
+    super.onReceive(aContext, intent);
+    initialize(aContext);
 
     selectedTrackId = intent.getLongExtra(
         context.getString(R.string.track_id_broadcast_extra), selectedTrackId);
@@ -124,9 +124,9 @@ public class TrackWidgetProvider
   }
 
   @Override
-  public void onDisabled(Context context) {
+  public void onDisabled(Context aContext) {
     if (trackObserver != null) {
-      context.getContentResolver().unregisterContentObserver(trackObserver);
+      aContext.getContentResolver().unregisterContentObserver(trackObserver);
     }
     if (sharedPreferences != null) {
       sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
@@ -154,7 +154,7 @@ public class TrackWidgetProvider
     views.setOnClickPendingIntent(R.id.appwidget_track_statistics, pendingIntent);
 
     if (action != null) {
-      updateViewButton(views, context, action);
+      updateViewButton(views, action);
     }
     updateViewTrackStatistics(views, track);
     int[] appWidgetIds = appWidgetManager.getAppWidgetIds(widget);
@@ -167,20 +167,19 @@ public class TrackWidgetProvider
    * Update the widget's button with the appropriate intent and icon.
    *
    * @param views The RemoteViews containing the button
-   * @param context The Context of the AppWidget
    * @param action The action broadcast from the track service
    */
-  private void updateViewButton(RemoteViews views, Context context, String action) {
+  private void updateViewButton(RemoteViews views, String action) {
     if (TRACK_STARTED_ACTION.equals(action)) {
       // If a new track is started by this appwidget or elsewhere,
       // toggle the button to active and have it disable the track if pressed.
       setButtonIntent(
-          views, context, R.string.end_current_track_action, R.drawable.appwidget_button_enabled);
+          views, R.string.end_current_track_action, R.drawable.appwidget_button_enabled);
     } else {
       // If a track is stopped by this appwidget or elsewhere,
       // toggle the button to inactive and have it start a new track if pressed.
       setButtonIntent(
-          views, context, R.string.start_new_track_action, R.drawable.appwidget_button_disabled);
+          views, R.string.start_new_track_action, R.drawable.appwidget_button_disabled);
     }
   }
 
@@ -188,12 +187,10 @@ public class TrackWidgetProvider
    * Set up the main widget button.
    *
    * @param views The widget views
-   * @param context The widget context
    * @param action The resource id of the action to fire when the button is pressed
    * @param icon The resource id of the icon to show for the button
    */
-  private void setButtonIntent(
-      RemoteViews views, Context context, int action, int icon) {
+  private void setButtonIntent(RemoteViews views, int action, int icon) {
     Intent intent = new Intent(context, ControlRecordingService.class);
     intent.setAction(context.getString(action));
     PendingIntent pendingIntent = PendingIntent.getService(context, 0,

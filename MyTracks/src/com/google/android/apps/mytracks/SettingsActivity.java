@@ -509,8 +509,7 @@ public class SettingsActivity extends PreferenceActivity {
    * Saves the given edit text preference value.
    * If the units are not metric convert the value before saving.  
    */
-  private void validateTrackColorModeSettings(EditTextPreference preference, 
-      String newValue, int id) {
+  private void validateTrackColorModeSettings(String newValue, int id) {
     CheckBoxPreference metricUnitsPreference = (CheckBoxPreference) findPreference(
         getString(R.string.metric_units_key));
     String metricspeed;
@@ -549,7 +548,7 @@ public class SettingsActivity extends PreferenceActivity {
           @Override
           public boolean onPreferenceChange(Preference preference,
               Object newValue) {
-            validateTrackColorModeSettings((EditTextPreference) preference, (String) newValue, metricKey);
+            validateTrackColorModeSettings((String) newValue, metricKey);
             return true;
           }
         });

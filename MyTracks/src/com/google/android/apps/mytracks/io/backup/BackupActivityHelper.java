@@ -15,8 +15,8 @@
  */
 package com.google.android.apps.mytracks.io.backup;
 
-import com.google.android.apps.mytracks.MyTracks;
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.MyTracks;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -148,7 +148,6 @@ public class BackupActivityHelper {
   /**
    * Shows a backup list for the user to pick, then restores it.
    *
-   * @param backupDir the backup directory
    * @param backupDates the list of available backup files
    */
   private void pickBackupForRestore(final Date[] backupDates) {
@@ -179,9 +178,9 @@ public class BackupActivityHelper {
   }
 
   /**
-   * Shows a progress dialog, then starts restoring the backup osynchronously.
+   * Shows a progress dialog, then starts restoring the backup asynchronously.
    *
-   * @param inputFile the file to restore from
+   * @param date the date
    */
   private void restoreFromDateAsync(final Date date) {
     // Show a progress dialog

@@ -97,8 +97,8 @@ class TrackDataListeners {
 
   /**
    * Registers a listener to send data to.
-   * It is ok to call this method before {@link start}, and in that case
-   * the data will only be passed to listeners when {@link start} is called.
+   * It is ok to call this method before {@link TrackDataHub#start}, and in that case
+   * the data will only be passed to listeners when {@link TrackDataHub#start} is called.
    *
    * @param listener the listener to register
    * @param dataTypes the type of data that the listener is interested in

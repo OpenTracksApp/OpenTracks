@@ -48,8 +48,8 @@ public class PolarMessageParser implements MessageParser {
    *     offset 2 = check byte, 255 - packet length.
    *     offset 3 = sequence byte, range from 0 to 15.
    *     
-   * @param an array of bytes to parse
-   * @param buffer offset to beginning of packet.  
+   * @param buffer an array of bytes to parse
+   * @param i buffer offset to beginning of packet.  
    * @return whether buffer has a valid packet at offset i
    */
   private boolean packetValid (byte[] buffer, int i) {
@@ -100,7 +100,7 @@ public class PolarMessageParser implements MessageParser {
   /**
    * Applies packet validation rules to buffer
    *     
-   * @param an array of bytes to parse
+   * @param buffer an array of bytes to parse
    * @return whether buffer has a valid packet starting at index zero
    */
   @Override
@@ -124,7 +124,7 @@ public class PolarMessageParser implements MessageParser {
   /**
    * Searches buffer for the beginning of a valid packet.
    *     
-   * @param an array of bytes to parse
+   * @param buffer an array of bytes to parse
    * @return index to beginning of good packet, or -1 if none found.
    */
   @Override

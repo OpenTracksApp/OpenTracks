@@ -58,12 +58,12 @@ public class SensorUtils {
   }
 
   /**
-   * Returns CRC8 (polynomial 0x8C) from byte array buffer[start] until
-   * (including) buffer[end]
+   * Returns CRC8 (polynomial 0x8C) from byte array buffer[start] to
+   * (excluding) buffer[start + length]
    * 
    * @param buffer the byte array of data (payload)
    * @param start the position in the byte array where the payload begins
-   * @param end the position in the byte array where the payload ends
+   * @param length the length
    * @return CRC8 value
    */
   public static byte getCrc8(byte[] buffer, int start, int length) {

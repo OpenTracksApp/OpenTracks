@@ -60,7 +60,11 @@ class XmlMapsGDataSerializer extends XmlEntryGDataSerializer {
     declareEntryNamespaces(serializer);
     serializer.startTag(XmlGDataParser.NAMESPACE_ATOM_URI, "entry");
 
-    stream = MapsClient.LOG_COMMUNICATION ? printStream : out;
+    if (MapsClient.LOG_COMMUNICATION) {
+      stream = printStream;
+    } else {
+      stream = out;
+    }
     serializeEntryContents(serializer, format);
 
     serializer.endTag(XmlGDataParser.NAMESPACE_ATOM_URI, "entry");
