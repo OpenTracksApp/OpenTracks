@@ -158,11 +158,11 @@ limitations under the License.
   <string name="waypointdetails_category_hint">Tipo do Marcador</string>
 
   <!-- MyTracks Settings -->
-  <string name="mytracks_settings">Configurações do My Tracks</string>
+  <string name="settings_title">Configurações do My Tracks</string>
   <string name="settings_display">Exibição</string>
   <string name="settings_recording">Gravação</string>
   <string name="settings_sharing">Compartilhamento</string>
-  <string name="settings_not_available_summary">Não disponível na sua versão do Android</string>
+  <string name="settings_announcement_frequency_not_available">Não disponível na sua versão do Android</string>
   <string name="settings_not_while_recording">Não disponível durante a gravação de uma trilha</string>
   <string name="settings_announcement_frequency">Tempo entre anúncios</string>
   <string name="settings_announcement_frequency_summary">Tempo mínimo entre dois anúncios de voz</string>
@@ -195,14 +195,14 @@ limitations under the License.
 
   <!-- Sharing -->
   <string name="share_map_subject">Eu gostaria de compartilhar um mapa com você</string>
-  <string name="share_map_body_format">Eu acredito que você pode se interessar por este mapa:
+  <string name="share_track_url_body_format">Eu acredito que você pode se interessar por este mapa:
 
       %s</string>
-  <string name="send_track_subject">Eu gostaria de compartilhar um caminho com você</string>
-  <string name="send_track_body_format">Eu acredito que você pode se interesasr por este caminho.
+  <string name="share_track_subject">Eu gostaria de compartilhar um caminho com você</string>
+  <string name="share_track_file_body_format">Eu acredito que você pode se interesasr por este caminho.
 
     Para visualizar este caminho, use o Google Earth ou outro software de mapas.</string>
-  <string name="share_track">Compartilhar caminho com amigos</string>
+  <string name="share_track_url">Compartilhar caminho com amigos</string>
 
   <!-- Visibility -->
   <string name="public_map">Público</string>

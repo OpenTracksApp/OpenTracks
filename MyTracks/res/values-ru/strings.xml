@@ -193,12 +193,12 @@ limitations under the License.
   <string name="waypointdetails_category_hint">Тип маркера</string>
 
   <!-- MyTracks Settings -->
-  <string name="mytracks_settings">Настройки My Tracks</string>
+  <string name="settings_title">Настройки My Tracks</string>
   <string name="settings_display">Отображение</string>
   <string name="settings_recording">Запись</string>
   <string name="settings_sharing">Обмен</string>
 
-  <string name="settings_not_available_summary">Не доступен в вашем версии Android</string>
+  <string name="settings_announcement_frequency_not_available">Не доступен в вашем версии Android</string>
   <string name="settings_not_while_recording">Не доступно во время записи трека</string>
 
   <string name="settings_announcement_frequency">Частота объявлений</string>
@@ -286,7 +286,7 @@ limitations under the License.
   <string name="maps_list_failed">Ваши карты не могут быть загружены в данный момент!</string>
   <string name="open_map">Выберите эту карту</string>
   <string name="edit_map_details">Править детали карты</string>
-  <string name="share_track">Поделиться треком</string>
+  <string name="share_track_url">Поделиться треком</string>
   <string name="delete_map">Удалить Карту из вашей учетной записи</string>
   <string name="map_title">Название карты:</string>
   <string name="map_description">Описание карты:</string>
@@ -296,13 +296,13 @@ limitations under the License.
   <string name="map_not_searchable">Ни эта карта, ни ее содержимое не будут отображаться в результатах поиска, но их могут по-прежнему просматривать другие через прямую ссылку</string>
 
   <!-- Sharing -->
-  <string name="share_map">Поделиться картой с друзьями</string>
+  <string name="share_track_picker_title">Поделиться картой с друзьями</string>
   <string name="share_map_subject">Я хотел бы поделиться с вами треком</string>
-  <string name="share_map_body_format">Я думаю, вы можете быть заинтересованы в этом треке:
+  <string name="share_track_url_body_format">Я думаю, вы можете быть заинтересованы в этом треке:
 
 %s</string>
-  <string name="send_track_subject">Я хотел бы поделиться с вами треком</string>
-  <string name="send_track_body_format">Я думаю, вы можете быть заинтересованы в этом треке.
+  <string name="share_track_subject">Я хотел бы поделиться с вами треком</string>
+  <string name="share_track_file_body_format">Я думаю, вы можете быть заинтересованы в этом треке.
 
 Просмотреть трек можно с помощью Google Планета Земля или другого программного обоспечения для карт.</string>
 
@@ -473,7 +473,7 @@ limitations under the License.
   <string name="bluetooth_pairing_summary">Открыть настройки Android по bluetooth для подключения устройства</string>
   <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
   <string name="ant_options">Параметры ANT</string>
-  <string name="sensor_options">Параметры датчика</string>
+  <string name="settings_sensor">Параметры датчика</string>
 
   <!-- Bluetooth Sensor -->
   <string name="bluetooth_connected">Подключен к %s</string>

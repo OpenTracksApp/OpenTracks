@@ -194,12 +194,12 @@ limitations under the License.
   <string name="waypointdetails_category_hint">标记类型</string>
 
   <!-- MyTracks Settings -->
-  <string name="mytracks_settings">My Tracks 设置</string>
+  <string name="settings_title">My Tracks 设置</string>
   <string name="settings_display">显示</string>
   <string name="settings_recording">记录</string>
   <string name="settings_sharing">分享</string>
 
-  <string name="settings_not_available_summary">不支持当前使用的 Android 版本</string>
+  <string name="settings_announcement_frequency_not_available">不支持当前使用的 Android 版本</string>
   <string name="settings_not_while_recording">在记录轨迹时不可用</string>
 
   <string name="settings_announcement_frequency">通知频度</string>
@@ -287,7 +287,7 @@ limitations under the License.
   <string name="maps_list_failed">现在无法载入你的地图!</string>
   <string name="open_map">选择此地图</string>
   <string name="edit_map_details">编辑地图详细信息</string>
-  <string name="share_track">分享轨迹</string>
+  <string name="share_track_url">分享轨迹</string>
   <string name="delete_map">从你的帐号删除地图</string>
   <string name="map_title">地图标题:</string>
   <string name="map_description">地图描述:</string>
@@ -297,13 +297,13 @@ limitations under the License.
   <string name="map_not_searchable">此地图和它的内容不会在搜索结果中出现, 但其它用户依然可以通过直接 URL 访问它</string>
 
   <!-- Sharing -->
-  <string name="share_map">与朋友分享地图</string>
+  <string name="share_track_picker_title">与朋友分享地图</string>
   <string name="share_map_subject">我想与你分享一张地图</string>
-  <string name="share_map_body_format">我想你可能会对这个地图感兴趣:
+  <string name="share_track_url_body_format">我想你可能会对这个地图感兴趣:
 
       %s</string>
-  <string name="send_track_subject">我想与你分享一条轨迹</string>
-  <string name="send_track_body_format">我想你可能会对这条轨迹感兴趣.
+  <string name="share_track_subject">我想与你分享一条轨迹</string>
+  <string name="share_track_file_body_format">我想你可能会对这条轨迹感兴趣.
 
     请用 Google Earth 或其它地图软件查看此轨迹.</string>
 
@@ -453,7 +453,7 @@ limitations under the License.
   <string name="bluetooth_options">蓝牙设置</string>
   <string name="bluetooth_pairing">设备关联</string>
   <string name="bluetooth_pairing_summary">打开 Android 的蓝牙设置关联设备</string>
-  <string name="sensor_options">感应器选项</string>
+  <string name="settings_sensor">感应器选项</string>
 
   <!-- Bluetooth Sensor -->
   <string name="bluetooth_connected">连接到 %s</string>

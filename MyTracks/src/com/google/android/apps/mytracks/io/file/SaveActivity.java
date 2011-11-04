@@ -132,16 +132,16 @@ public class SaveActivity extends Activity {
     // Share the file.
     Intent shareIntent = new Intent(Intent.ACTION_SEND);
     shareIntent.putExtra(Intent.EXTRA_SUBJECT,
-        getResources().getText(R.string.send_track_subject).toString());
+        getResources().getText(R.string.share_track_subject).toString());
     shareIntent.putExtra(Intent.EXTRA_TEXT,
-        getResources().getText(R.string.send_track_body_format)
+        getResources().getText(R.string.share_track_file_body_format)
         .toString());
     shareIntent.setType(format.getMimeType());
     Uri u = Uri.fromFile(new File(writer.getAbsolutePath()));
     shareIntent.putExtra(Intent.EXTRA_STREAM, u);
     shareIntent.putExtra(getString(R.string.track_id_broadcast_extra), trackId);
     startActivity(Intent.createChooser(shareIntent,
-        getResources().getText(R.string.share_track).toString()));
+        getResources().getText(R.string.share_track_picker_title).toString()));
   }
 
   private void showResultDialog() {

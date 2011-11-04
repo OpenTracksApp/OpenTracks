@@ -163,7 +163,7 @@ limitations under the License.
   <string name="waypointdetails_category_hint">Markörtyp</string>
 
   <!-- MyTracks Settings -->
-  <string name="mytracks_settings">My Tracks inställningar</string>
+  <string name="settings_title">My Tracks inställningar</string>
   <string name="settings_display">Visning</string>
   <string name="settings_recording">Inspelning</string>
   <string name="settings_sharing">Delning</string>
@@ -209,14 +209,14 @@ limitations under the License.
 
   <!-- Sharing -->
   <string name="share_map_subject">Jag vill dela en karta med dig</string>
-  <string name="share_map_body_format">Jag tror att du skulle vara intresserad av den här kartan:
+  <string name="share_track_url_body_format">Jag tror att du skulle vara intresserad av den här kartan:
 
       %s</string>
-  <string name="send_track_subject">Jag vill dela ett spår med dig</string>
-  <string name="send_track_body_format">Jag tror att du skulle vara intresserad av det här spåret.
+  <string name="share_track_subject">Jag vill dela ett spår med dig</string>
+  <string name="share_track_file_body_format">Jag tror att du skulle vara intresserad av det här spåret.
 
     För att se det här spåret använd Google Earth eller något annat kartprogram.</string>
-  <string name="share_track">Dela spår med vänner</string>
+  <string name="share_track_url">Dela spår med vänner</string>
 
   <!-- Visibility -->
   <string name="public_map">Publik</string>

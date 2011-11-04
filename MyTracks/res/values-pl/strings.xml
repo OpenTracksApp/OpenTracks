@@ -163,7 +163,7 @@ limitations under the License.
   <string name="waypointdetails_category_hint">Typ znacznika</string>
 
   <!-- MyTracks Settings -->
-  <string name="mytracks_settings">Ustawienia My Tracks</string>
+  <string name="settings_title">Ustawienia My Tracks</string>
   <string name="settings_display">Wyświetlanie</string>
   <string name="settings_recording">Rejestrowanie</string>
   <string name="settings_sharing">Dzielenie</string>
@@ -234,14 +234,14 @@ limitations under the License.
 
   <!-- Sharing -->
   <string name="share_map_subject">Chciałbym się z Tobą podzielić mapą</string>
-  <string name="share_map_body_format">Myślę, że może Cię zainteresować ta mapa:
+  <string name="share_track_url_body_format">Myślę, że może Cię zainteresować ta mapa:
 
       %s</string>
-  <string name="send_track_subject">Chciałbym się z Tobą podzielić trasą</string>
-  <string name="send_track_body_format">Myślę, że może Cię zainteresować ta trasa.
+  <string name="share_track_subject">Chciałbym się z Tobą podzielić trasą</string>
+  <string name="share_track_file_body_format">Myślę, że może Cię zainteresować ta trasa.
 
     Trasę możesz obejrzeć w Google Earth lub innym programie do obsługi map.</string>
-  <string name="share_track">Podziel się trasą z przyjaciółmi</string>
+  <string name="share_track_url">Podziel się trasą z przyjaciółmi</string>
 
   <!-- Visibility -->
   <string name="public_map">Publiczna</string>
@@ -395,7 +395,7 @@ limitations under the License.
   <string name="bluetooth_pairing_summary">Przejdź do ustawień Bluetooth Androida aby sparować urządzenie</string>
   <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
   <string name="ant_options">Opce ANT</string>
-  <string name="sensor_options">Opcje Czujników</string>
+  <string name="settings_sensor">Opcje Czujników</string>
 
   <!-- Bluetooth Sensor -->
   <string name="bluetooth_connected">Połączony z %s</string>
