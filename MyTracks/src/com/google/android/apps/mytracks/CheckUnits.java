@@ -43,9 +43,9 @@ class CheckUnits {
     }
 
     AlertDialog.Builder builder = new AlertDialog.Builder(context);
-    builder.setTitle(context.getString(R.string.preferrred_units_title));
-    CharSequence[] items = { context.getString(R.string.preferrred_units_metric),
-        context.getString(R.string.preferrred_units_imperial) };
+    builder.setTitle(context.getString(R.string.preferred_units_title));
+    CharSequence[] items = { context.getString(R.string.preferred_units_metric),
+        context.getString(R.string.preferred_units_imperial) };
     builder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
       @Override
       public void onClick(DialogInterface dialog, int which) {
