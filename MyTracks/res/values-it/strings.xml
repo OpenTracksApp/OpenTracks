@@ -161,7 +161,7 @@ limitations under the License.
   <string name="waypointdetails_category_hint">Tipo di segnaposto</string>
 
   <!-- MyTracks Settings -->
-  <string name="mytracks_settings">Impostazioni di My Tracks</string>
+  <string name="settings_title">Impostazioni di My Tracks</string>
   <string name="settings_display">Visualizzazione</string>
   <string name="settings_recording">Registrazione</string>
   <string name="settings_sharing">Condivisione</string>
@@ -206,14 +206,14 @@ limitations under the License.
 
   <!-- Sharing -->
   <string name="share_map_subject">Vorrei condividere una mappa con te</string>
-  <string name="share_map_body_format">Credo che questa mappa potrebbe interessarti:
+  <string name="share_track_url_body_format">Credo che questa mappa potrebbe interessarti:
 
       %s</string>
-  <string name="send_track_subject">Vorrei condividere un percorso con te</string>
-  <string name="send_track_body_format">Credo che questo percorso potrebbe interessarti.
+  <string name="share_track_subject">Vorrei condividere un percorso con te</string>
+  <string name="share_track_file_body_format">Credo che questo percorso potrebbe interessarti.
 
     Per vedere questo percorso, usa Google Earth o un altro software di cartografia.</string>
-  <string name="share_track">Condividi il percorso con amici</string>
+  <string name="share_track_url">Condividi il percorso con amici</string>
 
   <!-- Visibility -->
   <string name="public_map">Pubblica</string>

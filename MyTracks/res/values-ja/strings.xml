@@ -190,12 +190,12 @@ limitations under the License.
   <string name="waypointdetails_category_hint">マーカータイプ</string>
 
   <!-- MyTracks Settings -->
-  <string name="mytracks_settings">My Tracks設定</string>
+  <string name="settings_title">My Tracks設定</string>
   <string name="settings_display">表示</string>
   <string name="settings_recording">記録</string>
   <string name="settings_sharing">共有</string>
 
-  <string name="settings_not_available_summary">このAndroidバージョンでは使用できません</string>
+  <string name="settings_announcement_frequency_not_available">このAndroidバージョンでは使用できません</string>
 
   <string name="settings_announcement_frequency">定期通知</string>
   <string name="settings_announcement_frequency_summary">音声通知間隔の最小時間</string>
@@ -277,7 +277,7 @@ limitations under the License.
   <string name="maps_list_failed">今回はマップをロードできませんでした!</string>
   <string name="open_map">このマップを選択</string>
   <string name="edit_map_details">マップ詳細編集</string>
-  <string name="share_track">トラック共有</string>
+  <string name="share_track_url">トラック共有</string>
   <string name="delete_map">アカウントからマップを削除</string>
   <string name="map_title">マップタイトル:</string>
   <string name="map_description">マップ説明:</string>
@@ -287,16 +287,16 @@ limitations under the License.
   <string name="map_not_searchable">このマップもコンテンツも検索結果に表示されませんが、直接リンクで見られる可能性があります</string>
 
   <!-- Sharing -->
-  <string name="share_map">マップ共有</string>
+  <string name="share_track_picker_title">マップ共有</string>
   <string name="share_map_subject">マップを共有したいと思います</string>
-  <string name="share_map_body_format">このマップに興味を持って頂けると思います:
+  <string name="share_track_url_body_format">このマップに興味を持って頂けると思います:
 
       %s</string>
-  <string name="send_track_subject">トラックを共有したいと思います</string>
-  <string name="send_track_body_format">このトラックに興味を持って頂けると思います．
+  <string name="share_track_subject">トラックを共有したいと思います</string>
+  <string name="share_track_file_body_format">このトラックに興味を持って頂けると思います．
 
     このトラックを閲覧するには、Google Earthまたは他のマッピングソフトウェアが必要です．</string>
-  <string name="share_track">トラックの共有</string>
+  <string name="share_track_url">トラックの共有</string>
 
   <!-- Visibility -->
   <string name="public_map">公開</string>
@@ -446,7 +446,7 @@ limitations under the License.
   <string name="bluetooth_pairing_summary">ペアリングを行うには「Bluetooth設定」を開いて下さい</string>
   <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
   <string name="ant_options">ANTオプション</string>
-  <string name="sensor_options">センサーオプション</string>
+  <string name="settings_sensor">センサーオプション</string>
 
   <!-- Bluetooth Sensor -->
   <string name="bluetooth_connected">%sに接続しました</string>

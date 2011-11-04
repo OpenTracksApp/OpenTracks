@@ -102,7 +102,7 @@ limitations under the License.
     </activity>
 
     <activity android:name="com.google.android.apps.mytracks.SettingsActivity"
-              android:label="@string/mytracks_settings" >
+              android:label="@string/settings_title" >
       <intent-filter>
         <category android:name="android.intent.category.PREFERENCE" />
       </intent-filter>
