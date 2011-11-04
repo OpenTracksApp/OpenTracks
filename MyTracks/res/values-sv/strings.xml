@@ -163,7 +163,7 @@ limitations under the License.
   <string name="waypointdetails_category_hint">Markörtyp</string>
 
   <!-- MyTracks Settings -->
-  <string name="mytracks_settings">My Tracks inställningar</string>
+  <string name="settings_title">My Tracks inställningar</string>
   <string name="settings_display">Visning</string>
   <string name="settings_recording">Inspelning</string>
   <string name="settings_sharing">Delning</string>

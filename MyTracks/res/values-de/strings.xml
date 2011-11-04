@@ -168,12 +168,12 @@ limitations under the License.
   <string name="waypointdetails_category_hint">Art des Wegpunktes</string>
 
   <!-- MyTracks Settings -->
-  <string name="mytracks_settings">Einstellungen für My Tracks</string>
+  <string name="settings_title">Einstellungen für My Tracks</string>
   <string name="settings_display">Anzeige</string>
   <string name="settings_recording">Aufzeichnung</string>
   <string name="settings_sharing">Mit Freunden teilen</string>
 
-  <string name="settings_not_available_summary">In dieser Android-Version nicht verfügbar</string>
+  <string name="settings_announcement_frequency_not_available">In dieser Android-Version nicht verfügbar</string>
 
   <string name="settings_announcement_frequency">Dauer zwischen Ansagen</string>
   <string name="settings_announcement_frequency_summary">Kürzeste Zeit zwischen zwei Ansagen</string>
@@ -424,7 +424,7 @@ limitations under the License.
   <string name="bluetooth_pairing">Geräteverbindung</string>
   <string name="bluetooth_pairing_summary">Öffnet Androids Bluetooth-Einstellungen, um Geräte zu verbinden.</string>
   <!--string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string-->
-  <string name="sensor_options">Sensor-Einstellungen</string>
+  <string name="settings_sensor">Sensor-Einstellungen</string>
 
   <!-- Bluetooth Sensor -->
   <string name="bluetooth_connected">Verbunden mit %s</string>

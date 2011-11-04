@@ -41,7 +41,7 @@ limitations under the License.
         android:entryValues="@array/track_color_mode_values"
         android:defaultValue="@string/track_color_mode_value_none"/>
 
-    <PreferenceCategory android:title="@string/fixed_speed_options" 
+    <PreferenceCategory android:title="@string/track_color_mode_option_fixed" 
         android:key="@string/track_color_mode_fixed_speed_options_key">
         <EditTextPreference android:key="@string/track_color_mode_fixed_speed_slow_key" 
             android:title="@string/settings_track_color_mode_fixed_speed_slow" 
@@ -76,7 +76,7 @@ limitations under the License.
         </EditTextPreference>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/dynamic_speed_options">
+    <PreferenceCategory android:title="@string/track_color_mode_option_dynamic">
         <EditTextPreference android:key="@string/track_color_mode_dynamic_speed_variation_key" 
             android:title="@string/settings_track_color_mode_dynamic_speed_variation" 
             android:summary="@string/settings_track_color_mode_dynamic_speed_variation_summary" 
@@ -155,7 +155,7 @@ limitations under the License.
   </PreferenceScreen>
 
   <!-- Sensors -->
-  <PreferenceScreen android:title="@string/sensor_options"
+  <PreferenceScreen android:title="@string/settings_sensor"
       android:key="@string/sensor_options_key">
     <ListPreference android:key="@string/sensor_type_key"
         android:title="@string/settings_sensor_type"

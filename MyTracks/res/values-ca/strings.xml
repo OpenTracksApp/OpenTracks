@@ -165,12 +165,12 @@ limitations under the License.
   <string name="waypointdetails_category_hint">Tipus de marcador</string>
 
   <!-- MyTracks Settings -->
-  <string name="mytracks_settings">Paràmetres de My Tracks</string>
+  <string name="settings_title">Paràmetres de My Tracks</string>
   <string name="settings_display">Visualització</string>
   <string name="settings_recording">Enregistrament</string>
   <string name="settings_sharing">Compartició</string>
 
-  <string name="settings_not_available_summary">No es troba disponible a la vostra versió de l\'Android</string>
+  <string name="settings_announcement_frequency_not_available">No es troba disponible a la vostra versió de l\'Android</string>
 
   <string name="settings_announcement_frequency">Freqüència d\'avís</string>
   <string name="settings_announcement_frequency_summary">Temps mínim entre dos avisos de veu</string>
@@ -391,7 +391,7 @@ limitations under the License.
   <string name="bluetooth_pairing">Associació de dispositius</string>
   <string name="bluetooth_pairing_summary">Obriu els paràmetres de bluetooth de l\'Android per associar un dispositiu</string>
   <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
-  <string name="sensor_options">Opcions del sensor</string>
+  <string name="settings_sensor">Opcions del sensor</string>
 
   <!-- Bluetooth Sensor -->
   <string name="bluetooth_connected">Connectat a %s</string>

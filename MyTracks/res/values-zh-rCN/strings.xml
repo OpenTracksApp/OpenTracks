@@ -194,12 +194,12 @@ limitations under the License.
   <string name="waypointdetails_category_hint">标记类型</string>
 
   <!-- MyTracks Settings -->
-  <string name="mytracks_settings">My Tracks 设置</string>
+  <string name="settings_title">My Tracks 设置</string>
   <string name="settings_display">显示</string>
   <string name="settings_recording">记录</string>
   <string name="settings_sharing">分享</string>
 
-  <string name="settings_not_available_summary">不支持当前使用的 Android 版本</string>
+  <string name="settings_announcement_frequency_not_available">不支持当前使用的 Android 版本</string>
   <string name="settings_not_while_recording">在记录轨迹时不可用</string>
 
   <string name="settings_announcement_frequency">通知频度</string>
@@ -453,7 +453,7 @@ limitations under the License.
   <string name="bluetooth_options">蓝牙设置</string>
   <string name="bluetooth_pairing">设备关联</string>
   <string name="bluetooth_pairing_summary">打开 Android 的蓝牙设置关联设备</string>
-  <string name="sensor_options">感应器选项</string>
+  <string name="settings_sensor">感应器选项</string>
 
   <!-- Bluetooth Sensor -->
   <string name="bluetooth_connected">连接到 %s</string>

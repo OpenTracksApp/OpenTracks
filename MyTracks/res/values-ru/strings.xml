@@ -193,12 +193,12 @@ limitations under the License.
   <string name="waypointdetails_category_hint">Тип маркера</string>
 
   <!-- MyTracks Settings -->
-  <string name="mytracks_settings">Настройки My Tracks</string>
+  <string name="settings_title">Настройки My Tracks</string>
   <string name="settings_display">Отображение</string>
   <string name="settings_recording">Запись</string>
   <string name="settings_sharing">Обмен</string>
 
-  <string name="settings_not_available_summary">Не доступен в вашем версии Android</string>
+  <string name="settings_announcement_frequency_not_available">Не доступен в вашем версии Android</string>
   <string name="settings_not_while_recording">Не доступно во время записи трека</string>
 
   <string name="settings_announcement_frequency">Частота объявлений</string>
@@ -473,7 +473,7 @@ limitations under the License.
   <string name="bluetooth_pairing_summary">Открыть настройки Android по bluetooth для подключения устройства</string>
   <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
   <string name="ant_options">Параметры ANT</string>
-  <string name="sensor_options">Параметры датчика</string>
+  <string name="settings_sensor">Параметры датчика</string>
 
   <!-- Bluetooth Sensor -->
   <string name="bluetooth_connected">Подключен к %s</string>
