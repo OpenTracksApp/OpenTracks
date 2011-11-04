@@ -1095,7 +1095,7 @@ limitations under the License.
   <string name="mapslist_no_maps_available"
     translation_description="When showing a track to an existing Google My Map, the text on 'Your
       Google My Maps' page informing the user that he doesn't have any map."> 
-    You don\'t have any map.
+    You don\'t have any maps.
   </string>
   <string name="maps_list_loading"
     translation_description="When sending a track to an existing Google My Map, a progress message
