@@ -108,7 +108,7 @@ public class SettingsActivity extends PreferenceActivity {
       announcementFrequency.setEnabled(false);
       announcementFrequency.setValue("-1");
       announcementFrequency.setSummary(
-          R.string.settings_not_available_summary);
+          R.string.settings_announcement_frequency_not_available);
     }
   }
   

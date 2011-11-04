@@ -199,7 +199,7 @@ limitations under the License.
   <string name="settings_recording">记录</string>
   <string name="settings_sharing">分享</string>
 
-  <string name="settings_not_available_summary">不支持当前使用的 Android 版本</string>
+  <string name="settings_announcement_frequency_not_available">不支持当前使用的 Android 版本</string>
   <string name="settings_not_while_recording">在记录轨迹时不可用</string>
 
   <string name="settings_announcement_frequency">通知频度</string>

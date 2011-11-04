@@ -202,7 +202,7 @@ limitations under the License.
   <string name="settings_recording">Grabando</string>
   <string name="settings_sharing">Compartiendo</string>
 
-  <string name="settings_not_available_summary">No disponible para tu versión de Android</string>
+  <string name="settings_announcement_frequency_not_available">No disponible para tu versión de Android</string>
   <string name="settings_not_while_recording">No disponible mientras se graba el recorrido</string>
 
   <string name="settings_allow_access">Permitir acceso</string>

@@ -173,7 +173,7 @@ limitations under the License.
   <string name="settings_recording">Aufzeichnung</string>
   <string name="settings_sharing">Mit Freunden teilen</string>
 
-  <string name="settings_not_available_summary">In dieser Android-Version nicht verfügbar</string>
+  <string name="settings_announcement_frequency_not_available">In dieser Android-Version nicht verfügbar</string>
 
   <string name="settings_announcement_frequency">Dauer zwischen Ansagen</string>
   <string name="settings_announcement_frequency_summary">Kürzeste Zeit zwischen zwei Ansagen</string>

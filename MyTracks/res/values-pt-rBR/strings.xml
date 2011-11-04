@@ -162,7 +162,7 @@ limitations under the License.
   <string name="settings_display">Exibição</string>
   <string name="settings_recording">Gravação</string>
   <string name="settings_sharing">Compartilhamento</string>
-  <string name="settings_not_available_summary">Não disponível na sua versão do Android</string>
+  <string name="settings_announcement_frequency_not_available">Não disponível na sua versão do Android</string>
   <string name="settings_not_while_recording">Não disponível durante a gravação de uma trilha</string>
   <string name="settings_announcement_frequency">Tempo entre anúncios</string>
   <string name="settings_announcement_frequency_summary">Tempo mínimo entre dois anúncios de voz</string>

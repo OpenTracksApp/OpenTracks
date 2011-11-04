@@ -778,6 +778,7 @@ limitations under the License.
   </string>
   
   <!-- Recording settings -->
+  <!-- TODO decide if voice frequency should be under the Recording settings. -->
   <string name="settings_announcement_frequency"
     translation_description="In the Recording settings, the dropdown option to configure the voice
       announcement frequency.">
@@ -789,10 +790,10 @@ limitations under the License.
       announcements.">
     Time/distance between two voice announcements
   </string>
-  <string name="settings_not_available_summary"
+  <string name="settings_announcement_frequency_not_available"
     translation_description="In the Recording settings, the summary for the 'Voice frequency'
       explaining that this option is not available on your Android phone.">
-    Not available in your version of Android
+    Voice announcement is not available on your Android phone
   </string>
   <string name="settings_split_frequency"
     translation_description="In the Recording settings, the dropdown option to configure the
@@ -807,49 +808,48 @@ limitations under the License.
   </string>
   <string name="settings_min_recording_interval"
     translation_description="In the Recording settings, the dropdown option to configure the
-      minimum time between two recorded points.">
-    Min time for points
+      time between two recorded points.">
+    Time between points
   </string>
   <string name="settings_min_recording_interval_summary"
-    translation_description="In the Recording settings, the summary for the 'Min time for points'
+    translation_description="In the Recording settings, the summary for the 'Time between points'
       dropdown option explaining that it configures the smallest time interval between two
       recordings of your position.">
     Smallest time interval between two recordings of your position
   </string>    
   <string name="settings_min_recording_distance"
-    translation_description="In the Recording settings, the dropdown option to configure the minimum
+    translation_description="In the Recording settings, the dropdown option to configure the
       distance between two recorded points.">
-    Min distance for points
+    Distance between points
   </string>
   <string name="settings_min_recording_distance_summary"
-    translation_description="In the Recording settings, the summary for the 'Min distance for
+    translation_description="In the Recording settings, the summary for the 'Distance between
       points' dropdown option explaining that it configures the smallest distance between two
       recordings of your position.">
     Smallest distance between two recordings of your position
   </string>
   <string name="settings_max_recording_distance"
-    translation_description="In the Recording settings, the dropdown option to configure the maximum
-      distance between two recorded points for them to still be considered as the same track.">
-    Max distance for points
+    translation_description="In the Recording settings, the dropdown option to configure the 
+      distance between two tracks.">
+    Distance between tracks
   </string>
   <string name="settings_max_recording_distance_summary"
-    translation_description="In the Recording settings, the summary for the 'Max distance for
-      points' dropdown option explaining that it configures the maximum distance for two recorded
+    translation_description="In the Recording settings, the summary for the 'Distance between
+      tracks' dropdown option explaining that it configures the maximum distance for two recorded
       points for them to be still considered as the same track.">
-    If two recordings are further than this, the track will be split
+    Track will be split if two recordings of your position are further than this
   </string>
   <string name="settings_min_required_accuracy"
-    translation_description="In the Recording settings, the dropdown option to configure the minimum
+    translation_description="In the Recording settings, the dropdown option to configure the 
       required GPS accuracy. If a GPS position's accuracy is below the requirement, then it will
       not be used.">
-    Min accuracy
+    GPS accuracy
   </string>
   <string name="settings_min_required_accuracy_summary"
-    translation_description="In the Recording settings, the summary for the 'Min accuracy' dropdown
-      option explaining that it configures the minimum required accuracy for your position.
-      If a GPS position's accuracy is below the requirement, then it will not be used and the 
-      recording will be paused.">
-    Recording will be paused if your position is not this accurate
+    translation_description="In the Recording settings, the summary for the 'GPS accuracy' dropdown
+      option explaining that it configures the required accuracy for your position.
+      If a GPS position's accuracy is below the requirement, then it will not be used.">
+    GPS position will be ignored if it is not this accurate
   </string>
   <string name="settings_auto_resume_track_timeout"
     translation_description="In the Recording settings, the dropdown option to configure the timeout
@@ -919,13 +919,13 @@ limitations under the License.
     ANT+ Options
   </string>    
   <string name="settings_heart_rate_ant_sensor_id"
-    translation_description="In the Sensor settings, the option to clear an ANT+ sensor pairing.">
-    Clear ANT+ sensor
+    translation_description="In the Sensor settings, the option to unpair an ANT+ heart rate
+      sensor.">
+    Unpair ANT+ heart rate sensor
   </string>
   <string name="settings_srm_bridge_ant_sensor_id"
-    translation_description="In the Sensor settings, the option to clear a SRM ANT+ bridge pairing."
-      >
-    Clear SRM ANT+ bridge
+    translation_description="In the Sensor settings, the option to unpair a SRM ANT+ bridge.">
+    Unpair SRM ANT+ bridge
   </string>    
   <string name="settings_ant_not_paired"
     translation_description="In the Sensor settings, the summary under 'Clear ANT+ sensor' or 'Clear
@@ -947,14 +947,14 @@ limitations under the License.
   <string name="settings_map_public_summary_on"
     translation_description="In the Sharing settings, the summary for the 'Make new maps public'
       checkbox option when it is checked explaining that new maps created in Google My Maps will
-      be made public.">
+      be public, as opposed to unlisted.">
     Make new maps created in Google My Maps public
   </string>
   <string name="settings_map_public_summary_off"
     translation_description="In the Sharing settings, the summary for the 'Make new maps public'
       checkbox option when it is unchecked explaining that new maps created in Google My Maps will
-      be private.">
-    Make new maps created in Goolge My Maps private
+      be unlisted, as opposed to public.">
+    Make new maps created in Goolge My Maps unlisted
   </string>
   <string name="settings_share_url_only"
     translation_description="In the Sharing settings, the checkbox option to share only the URL 

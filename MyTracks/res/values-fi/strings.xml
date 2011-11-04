@@ -202,7 +202,7 @@ limitations under the License.
   <string name="settings_recording">Tallennus</string>
   <string name="settings_sharing">Jakaminen</string>
 
-  <string name="settings_not_available_summary">Ei tuettu tässä Android-versiossa</string>
+  <string name="settings_announcement_frequency_not_available">Ei tuettu tässä Android-versiossa</string>
   <string name="settings_not_while_recording">Ei saatavilla reittiä tallennettaessa.</string>
 
   <string name="settings_announcement_frequency">Äänimerkki</string>

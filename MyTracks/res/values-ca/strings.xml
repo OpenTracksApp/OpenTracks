@@ -170,7 +170,7 @@ limitations under the License.
   <string name="settings_recording">Enregistrament</string>
   <string name="settings_sharing">Compartició</string>
 
-  <string name="settings_not_available_summary">No es troba disponible a la vostra versió de l\'Android</string>
+  <string name="settings_announcement_frequency_not_available">No es troba disponible a la vostra versió de l\'Android</string>
 
   <string name="settings_announcement_frequency">Freqüència d\'avís</string>
   <string name="settings_announcement_frequency_summary">Temps mínim entre dos avisos de veu</string>

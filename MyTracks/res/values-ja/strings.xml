@@ -195,7 +195,7 @@ limitations under the License.
   <string name="settings_recording">記録</string>
   <string name="settings_sharing">共有</string>
 
-  <string name="settings_not_available_summary">このAndroidバージョンでは使用できません</string>
+  <string name="settings_announcement_frequency_not_available">このAndroidバージョンでは使用できません</string>
 
   <string name="settings_announcement_frequency">定期通知</string>
   <string name="settings_announcement_frequency_summary">音声通知間隔の最小時間</string>
