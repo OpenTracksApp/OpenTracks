@@ -294,22 +294,22 @@ limitations under the License.
 
   <!-- Units -->
   <!-- Time  -->
-  <string name="hour">hora</string>
-  <string name="hours">hores</string>
-  <string name="minute">minut</string>
-  <string name="minutes">minuts</string>
-  <string name="second">segon</string>
-  <string name="seconds">segons</string>
+  <string name="voice_hour">hora</string>
+  <string name="voice_hours">hores</string>
+  <string name="voice_minute">minut</string>
+  <string name="voice_minutes">minuts</string>
+  <string name="voice_second">segon</string>
+  <string name="voice_seconds">segons</string>
 
   <!-- Distance -->
-  <string name="kilometers_long">kilòmetres</string>
-  <string name="miles_long">milles</string>
+  <string name="voice_kilometers">kilòmetres</string>
+  <string name="voice_miles">milles</string>
 
   <!-- Speed and Pace -->
-  <string name="kilometer_per_hour_long">kilòmetres per hora</string>
-  <string name="per_kilometer">per kilòmetre</string>
-  <string name="mile_per_hour_long">milles per hora</string>
-  <string name="per_mile">per milla</string>
+  <string name="voice_kilometer_per_hour">kilòmetres per hora</string>
+  <string name="voice_per_kilometer">per kilòmetre</string>
+  <string name="voice_mile_per_hour">milles per hora</string>
+  <string name="voice_per_mile">per milla</string>
 
   <!-- Stats Labels -->
   <string name="moving_time_label">Temps en moviment</string>

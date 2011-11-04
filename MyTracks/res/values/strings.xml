@@ -1259,59 +1259,59 @@ limitations under the License.
     Heart Rate
   </string>
       
-  <!-- Voice announcements  -->
-  <string name="hour"
+  <!-- Voice -->
+  <string name="voice_hour"
     translation_description="For voice announcement, to say hour like 'one hour'.">
     hour
   </string>
-  <string name="hours"
+  <string name="voice_hours"
     translation_description="For voice announcement, to say hours like 'two hours'.">  
     hours
   </string>
-  <string name="minute"
-    translation_description="For voice announcement, to say minute like 'one minute'.">
-    minute
-  </string>
-  <string name="minutes"
-    translation_description="For voice announcement, to say minutes like 'two minutes'.">
-    minutes
-  </string>
-  <string name="second"
-    translation_description="For voice announcement, to say second like 'one second'.">
-    second
-  </string>
-  <string name="seconds"
-    translation_description="For voice announcement, to say seconds like 'two seconds'.">
-    seconds
-  </string>
-  <string name="kilometers_long"
-    translation_description="For voice announcement, to say kilometers like 'two kilometers'.">
-    kilometers
-  </string>
-  <string name="miles_long"
-    translation_description="For voice announcement, to say miles like 'two miles'.">
-    miles
-  </string>
-  <string name="kilometer_per_hour_long"
+  <string name="voice_kilometer_per_hour"
     translation_description="For voice announcement, to say 'kilometers per hour' for speed like
       'two kilometers per hour'.">
     kilometers per hour
   </string>
-  <string name="mile_per_hour_long"
+  <string name="voice_kilometers"
+    translation_description="For voice announcement, to say kilometers like 'two kilometers'.">
+    kilometers
+  </string>
+  <string name="voice_mile_per_hour"
     translation_description="For voice announcement, to say 'miles per hour' for speed like 'two
       miles per hour'.">
     miles per hour
   </string>
-  <string name="per_kilometer"
+  <string name="voice_miles"
+    translation_description="For voice announcement, to say miles like 'two miles'.">
+    miles
+  </string>
+  <string name="voice_minute"
+    translation_description="For voice announcement, to say minute like 'one minute'.">
+    minute
+  </string>
+  <string name="voice_minutes"
+    translation_description="For voice announcement, to say minutes like 'two minutes'.">
+    minutes
+  </string>
+  <string name="voice_per_kilometer"
     translation_description="For voice announcement, to say 'per kilometer' for pace like 'two
       minutes per kilometer'.">
     per kilometer
   </string>
-  <string name="per_mile"
+  <string name="voice_per_mile"
     translation_description="For voice announcement, to say 'per mile' for pace like 'two minutes
       per mile'.">
     per mile
   </string>
+  <string name="voice_second"
+    translation_description="For voice announcement, to say second like 'one second'.">
+    second
+  </string>
+  <string name="voice_seconds"
+    translation_description="For voice announcement, to say seconds like 'two seconds'.">
+    seconds
+  </string> 
       
   <!-- time -->
   <string name="hr"

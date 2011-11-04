@@ -351,24 +351,24 @@ limitations under the License.
 
   <!-- Units -->
   <!-- Time  -->
-  <string name="hour">小时</string>
-  <string name="hours">小时</string>
+  <string name="voice_hour">小时</string>
+  <string name="voice_hours">小时</string>
   <string name="hr">时</string>
   <string name="min">分</string>
-  <string name="minute">分钟</string>
-  <string name="minutes">分钟</string>
-  <string name="second">秒</string>
-  <string name="seconds">秒</string>
+  <string name="voice_minute">分钟</string>
+  <string name="voice_minutes">分钟</string>
+  <string name="voice_second">秒</string>
+  <string name="voice_seconds">秒</string>
 
   <!-- Distance -->
-  <string name="kilometers_long">千米</string>
-  <string name="miles_long">英里</string>
+  <string name="voice_kilometers">千米</string>
+  <string name="voice_miles">英里</string>
 
   <!-- Speed and Pace -->
-  <string name="kilometer_per_hour_long">千米每小时</string>
-  <string name="per_kilometer">每千米</string>
-  <string name="mile_per_hour_long">英里每小时</string>
-  <string name="per_mile">每英里</string>
+  <string name="voice_kilometer_per_hour">千米每小时</string>
+  <string name="voice_per_kilometer">每千米</string>
+  <string name="voice_mile_per_hour">英里每小时</string>
+  <string name="voice_per_mile">每英里</string>
 
   <!-- Stats Labels -->
   <string name="moving_time_label">移动时间</string>

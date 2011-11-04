@@ -342,25 +342,25 @@ limitations under the License.
 
   <!-- Units -->
   <!-- Time  -->
-  <string name="hour">時</string>
-  <string name="hours">時</string>
+  <string name="voice_hour">時</string>
+  <string name="voice_hours">時</string>
   <string name="hr">時</string>
   <string name="min">分</string>
-  <string name="minute">分</string>
-  <string name="minutes">分</string>
-  <string name="second">秒</string>
-  <string name="seconds">秒</string>
+  <string name="voice_minute">分</string>
+  <string name="voice_minutes">分</string>
+  <string name="voice_second">秒</string>
+  <string name="voice_seconds">秒</string>
   <string name="milliseconds">ミリ秒</string>
 
   <!-- Distance -->
-  <string name="kilometers_long">キロメータ</string>
-  <string name="miles_long">マイル</string>
+  <string name="voice_kilometers">キロメータ</string>
+  <string name="voice_miles">マイル</string>
 
   <!-- Speed and Pace -->
-  <string name="kilometer_per_hour_long">キロメータ毎時</string>
-  <string name="per_kilometer">毎キロメータ</string>
-  <string name="mile_per_hour_long">マイル毎時</string>
-  <string name="per_mile">毎マイル</string>
+  <string name="voice_kilometer_per_hour">キロメータ毎時</string>
+  <string name="voice_per_kilometer">毎キロメータ</string>
+  <string name="voice_mile_per_hour">マイル毎時</string>
+  <string name="voice_per_mile">毎マイル</string>
 
   <!-- Stats Labels -->
   <string name="moving_time_label">移動時間</string>

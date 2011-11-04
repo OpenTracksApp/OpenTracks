@@ -373,23 +373,23 @@ limitations under the License.
 
   <!-- Units -->
   <!-- Time  -->
-  <string name="hour">hora</string>
-  <string name="hours">horas</string>
-  <string name="minute">minuto</string>
-  <string name="minutes">minutos</string>
-  <string name="second">segundo</string>
-  <string name="seconds">segundos</string>
+  <string name="voice_hour">hora</string>
+  <string name="voice_hours">horas</string>
+  <string name="voice_minute">minuto</string>
+  <string name="voice_minutes">minutos</string>
+  <string name="voice_second">segundo</string>
+  <string name="voice_seconds">segundos</string>
 
   <!-- Distance -->
-  <string name="kilometers_long">kilómetros</string>
+  <string name="voice_kilometers">kilómetros</string>
   <string name="feet">pies</string>
-  <string name="miles_long">millas</string>
+  <string name="voice_miles">millas</string>
 
   <!-- Speed and Pace -->
-  <string name="kilometer_per_hour_long">kilómetros por hora</string>
-  <string name="per_kilometer">por kilómetro</string>
-  <string name="mile_per_hour_long">millas por hora</string>
-  <string name="per_mile">por milla</string>
+  <string name="voice_kilometer_per_hour">kilómetros por hora</string>
+  <string name="voice_per_kilometer">por kilómetro</string>
+  <string name="voice_mile_per_hour">millas por hora</string>
+  <string name="voice_per_mile">por milla</string>
 
   <!-- Sensors -->
   <string name="battery_level">Nivel de batería</string>

@@ -182,17 +182,17 @@ public class StatusAnnouncerTask implements PeriodicTask {
     int speedLabel;
     if (metricUnits) {
       if (reportSpeed) {
-        speedLabel = R.string.kilometer_per_hour_long;
+        speedLabel = R.string.voice_kilometer_per_hour;
       } else {
-        speedLabel = R.string.per_kilometer;
+        speedLabel = R.string.voice_per_kilometer;
       }
     } else {
       s *= UnitConversions.KMH_TO_MPH;
       d *= UnitConversions.KM_TO_MI;
       if (reportSpeed) {
-        speedLabel = R.string.mile_per_hour_long;
+        speedLabel = R.string.voice_mile_per_hour;
       } else {
-        speedLabel = R.string.per_mile;
+        speedLabel = R.string.voice_per_mile;
       }
     }
 
@@ -214,8 +214,8 @@ public class StatusAnnouncerTask implements PeriodicTask {
         context.getString(R.string.total_distance_label),
         d,
         context.getString(metricUnits
-                          ? R.string.kilometers_long
-                          : R.string.miles_long),
+                          ? R.string.voice_kilometers
+                          : R.string.voice_miles),
         stringUtils.formatTimeLong(stats.getMovingTime()),
         speed,
         context.getString(speedLabel));

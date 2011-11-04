@@ -221,14 +221,19 @@ public class StringUtils implements DescriptionGenerator {
     this.context = context;
   }
 
+  /**
+   * Formats a time for voice announcement.
+   * 
+   * @param time the time
+   */
   public String formatTimeLong(long time) {
     int[] parts = getTimeParts(time);
     String secLabel =
-        context.getString(parts[0] == 1 ? R.string.second : R.string.seconds);
+        context.getString(parts[0] == 1 ? R.string.voice_second : R.string.voice_seconds);
     String minLabel =
-        context.getString(parts[1] == 1 ? R.string.minute : R.string.minutes);
+        context.getString(parts[1] == 1 ? R.string.voice_minute : R.string.voice_minutes);
     String hourLabel =
-        context.getString(parts[2] == 1 ? R.string.hour : R.string.hours);
+        context.getString(parts[2] == 1 ? R.string.voice_hour : R.string.voice_hours);
 
     StringBuilder sb = new StringBuilder();
     if (parts[2] != 0) {

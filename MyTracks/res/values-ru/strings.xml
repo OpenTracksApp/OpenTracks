@@ -350,33 +350,33 @@ limitations under the License.
 
   <!-- Units -->
   <!-- Time  -->
-  <string name="hour">час</string>
-  <string name="hours">часов</string>
+  <string name="voice_hour">час</string>
+  <string name="voice_hours">часов</string>
   <string name="hr">ч</string>
   <string name="min">мин</string>
-  <string name="minute">минута</string>
-  <string name="minutes">минут</string>
-  <string name="second">секунда</string>
-  <string name="seconds">секунд</string>
+  <string name="voice_minute">минута</string>
+  <string name="voice_minutes">минут</string>
+  <string name="voice_second">секунда</string>
+  <string name="voice_seconds">секунд</string>
   <string name="milliseconds">мс</string>
 
   <!-- Distance -->
   <string name="meter">м</string>
   <string name="kilometer">км</string>
-  <string name="kilometers_long">километров</string>
+  <string name="voice_kilometers">километров</string>
   <string name="feet">футов</string>
   <string name="mile">миль</string>
-  <string name="miles_long">мили</string>
+  <string name="voice_miles">мили</string>
 
   <!-- Speed and Pace -->
   <string name="kilometer_per_hour">км/ч</string>
-  <string name="kilometer_per_hour_long">километров в час</string>
+  <string name="voice_kilometer_per_hour">километров в час</string>
   <string name="min_per_kilometer">мин/км</string>
-  <string name="per_kilometer">за километр</string>
+  <string name="voice_per_kilometer">за километр</string>
   <string name="mile_per_hour">миль/ч</string>
-  <string name="mile_per_hour_long">миль в час</string>
+  <string name="voice_mile_per_hour">миль в час</string>
   <string name="min_per_mile">мин/миля</string>
-  <string name="per_mile">за милю</string>
+  <string name="voice_per_mile">за милю</string>
 
   <!-- Sensors -->
   <string name="watts">Вт</string>

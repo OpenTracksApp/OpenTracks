@@ -262,32 +262,32 @@ limitations under the License.
 
   <!-- Units -->
   <!-- Time  -->
-  <string name="hour">timme</string>
-  <string name="hours">timmar</string>
+  <string name="voice_hour">timme</string>
+  <string name="voice_hours">timmar</string>
   <string name="hr">tim</string>
   <string name="min">min</string>
-  <string name="minute">minut</string>
-  <string name="minutes">minuter</string>
-  <string name="second">sekund</string>
-  <string name="seconds">sekunder</string>
+  <string name="voice_minute">minut</string>
+  <string name="voice_minutes">minuter</string>
+  <string name="voice_second">sekund</string>
+  <string name="voice_seconds">sekunder</string>
 
   <!-- Distance -->
   <string name="meter">m</string>
   <string name="kilometer">km</string>
-  <string name="kilometers_long">kilometer</string>
+  <string name="voice_kilometers">kilometer</string>
   <string name="feet">ft</string>
   <string name="mile">mi</string>
-  <string name="miles_long">miles</string>
+  <string name="voice_miles">miles</string>
 
   <!-- Speed and Pace -->
   <string name="kilometer_per_hour">km/h</string>
-  <string name="kilometer_per_hour_long">kilometer i timmen</string>
+  <string name="voice_kilometer_per_hour">kilometer i timmen</string>
   <string name="min_per_kilometer">min/km</string>
-  <string name="per_kilometer">per kilometer</string>
+  <string name="voice_per_kilometer">per kilometer</string>
   <string name="mile_per_hour">mi/h</string>
-  <string name="mile_per_hour_long">miles i timmen</string>
+  <string name="voice_mile_per_hour">miles i timmen</string>
   <string name="min_per_mile">min/mi</string>
-  <string name="per_mile">per mile</string>
+  <string name="voice_per_mile">per mile</string>
 
   <!-- Stats Labels -->
   <string name="moving_time_label">Rörlig tid</string>

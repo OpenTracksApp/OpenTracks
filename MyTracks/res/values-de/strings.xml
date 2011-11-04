@@ -304,33 +304,33 @@ limitations under the License.
 
   <!-- Units -->
   <!-- Time  -->
-  <string name="hour">Stunde</string>
-  <string name="hours">Stunden</string>
+  <string name="voice_hour">Stunde</string>
+  <string name="voice_hours">Stunden</string>
   <string name="hr">Std</string>
   <string name="min">Min</string>
-  <string name="minute">Minute</string>
-  <string name="minutes">Minuten</string>
-  <string name="second">Sekunde</string>
-  <string name="seconds">Sekunden</string>
+  <string name="voice_minute">Minute</string>
+  <string name="voice_minutes">Minuten</string>
+  <string name="voice_second">Sekunde</string>
+  <string name="voice_seconds">Sekunden</string>
   <!--string name="milliseconds">ms</string-->
 
   <!-- Distance -->
   <!--string name="meter">m</string-->
   <!--string name="kilometer">km</string-->
-  <string name="kilometers_long">Kilometer</string>
+  <string name="voice_kilometers">Kilometer</string>
   <string name="feet">Fuß</string>
   <!--string name="mile">mi</string-->
-  <string name="miles_long">Meilen</string>
+  <string name="voice_miles">Meilen</string>
 
   <!-- Speed and Pace -->
   <!--string name="kilometer_per_hour">km/h</string-->
-  <string name="kilometer_per_hour_long">Kilometer pro Stunde</string>
+  <string name="voice_kilometer_per_hour">Kilometer pro Stunde</string>
   <!--string name="min_per_kilometer">min/km</string-->
-  <string name="per_kilometer">pro Kilometer</string>
+  <string name="voice_per_kilometer">pro Kilometer</string>
   <!--string name="mile_per_hour">mi/h</string-->
-  <string name="mile_per_hour_long">Meilen pro Stunde</string>
+  <string name="voice_mile_per_hour">Meilen pro Stunde</string>
   <!--string name="min_per_mile">min/mi</string-->
-  <string name="per_mile">pro Meile</string>
+  <string name="voice_per_mile">pro Meile</string>
 
   <!-- Sensors -->
   <!--string name="watts">W</string-->

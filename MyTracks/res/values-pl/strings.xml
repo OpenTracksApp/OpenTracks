@@ -287,32 +287,32 @@ limitations under the License.
 
   <!-- Units -->
   <!-- Time  -->
-  <string name="hour">godzina</string>
-  <string name="hours">godziny</string>
+  <string name="voice_hour">godzina</string>
+  <string name="voice_hours">godziny</string>
   <string name="hr">godz.</string>
   <string name="min">min</string>
-  <string name="minute">minuta</string>
-  <string name="minutes">minuty</string>
-  <string name="second">sekunda</string>
-  <string name="seconds">sekundy</string>
+  <string name="voice_minute">minuta</string>
+  <string name="voice_minutes">minuty</string>
+  <string name="voice_second">sekunda</string>
+  <string name="voice_seconds">sekundy</string>
 
   <!-- Distance -->
   <string name="meter">m</string>
   <string name="kilometer">km</string>
-  <string name="kilometers_long">kilometerów</string>
+  <string name="voice_kilometers">kilometerów</string>
   <string name="feet">st.</string>
   <string name="mile">mi</string>
-  <string name="miles_long">mil</string>
+  <string name="voice_miles">mil</string>
 
   <!-- Speed and Pace -->
   <string name="kilometer_per_hour">km/h</string>
-  <string name="kilometer_per_hour_long">kilometry na godzinę</string>
+  <string name="voice_kilometer_per_hour">kilometry na godzinę</string>
   <string name="min_per_kilometer">min/km</string>
-  <string name="per_kilometer">na kilometr</string>
+  <string name="voice_per_kilometer">na kilometr</string>
   <string name="mile_per_hour">mi/h</string>
-  <string name="mile_per_hour_long">mile na godzinę</string>
+  <string name="voice_mile_per_hour">mile na godzinę</string>
   <string name="min_per_mile">min/mi</string>
-  <string name="per_mile">na milę</string>
+  <string name="voice_per_mile">na milę</string>
 
   <!-- Stats Labels -->
   <string name="moving_time_label">Czas w ruchu</string>

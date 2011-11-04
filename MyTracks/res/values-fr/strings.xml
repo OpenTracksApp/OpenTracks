@@ -280,23 +280,23 @@ limitations under the License.
 
   <!-- Units -->
   <!-- Time  -->
-  <string name="hour">heure</string>
-  <string name="hours">heures</string>
-  <string name="second">seconde</string>
-  <string name="seconds">secondes</string>
+  <string name="voice_hour">heure</string>
+  <string name="voice_hours">heures</string>
+  <string name="voice_second">seconde</string>
+  <string name="voice_seconds">secondes</string>
 
   <!-- Distance -->
   <string name="feet">pied</string>
-  <string name="kilometers_long">kilomètres</string>
-  <string name="miles_long">milles</string>
+  <string name="voice_kilometers">kilomètres</string>
+  <string name="voice_miles">milles</string>
 
   <!-- Speed and Pace -->
   <string name="kilometer_per_hour">km/h</string>
-  <string name="kilometer_per_hour_long">kilomètres/heure</string>
-  <string name="per_kilometer">par kilomètre</string>
+  <string name="voice_kilometer_per_hour">kilomètres/heure</string>
+  <string name="voice_per_kilometer">par kilomètre</string>
   <string name="mile_per_hour">mi/h</string>
-  <string name="mile_per_hour_long">miles/heure</string>
-  <string name="per_mile">per mile</string>
+  <string name="voice_mile_per_hour">miles/heure</string>
+  <string name="voice_per_mile">per mile</string>
 
 
   <string name="waiting">Waiting...</string>

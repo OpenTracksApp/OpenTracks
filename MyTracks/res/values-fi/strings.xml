@@ -354,33 +354,33 @@ limitations under the License.
 
   <!-- Units -->
   <!-- Time  -->
-  <string name="hour">tunti</string>
-  <string name="hours">tuntia</string>
+  <string name="voice_hour">tunti</string>
+  <string name="voice_hours">tuntia</string>
   <string name="hr">h</string>
   <string name="min">min</string>
-  <string name="minute">minuutti</string>
-  <string name="minutes">minuuttia</string>
-  <string name="second">sekunti</string>
-  <string name="seconds">sekuntia</string>
+  <string name="voice_minute">minuutti</string>
+  <string name="voice_minutes">minuuttia</string>
+  <string name="voice_second">sekunti</string>
+  <string name="voice_seconds">sekuntia</string>
   <string name="milliseconds">ms</string>
 
   <!-- Distance -->
   <string name="meter">m</string>
   <string name="kilometer">km</string>
-  <string name="kilometers_long">kilometriä</string>
+  <string name="voice_kilometers">kilometriä</string>
   <string name="feet">ft</string>
   <string name="mile">mi</string>
-  <string name="miles_long">mailia</string>
+  <string name="voice_miles">mailia</string>
 
   <!-- Speed and Pace -->
   <string name="kilometer_per_hour">km/h</string>
-  <string name="kilometer_per_hour_long">kilometriä tunnissa</string>
+  <string name="voice_kilometer_per_hour">kilometriä tunnissa</string>
   <string name="min_per_kilometer">min/km</string>
-  <string name="per_kilometer">per kilometri</string>
+  <string name="voice_per_kilometer">per kilometri</string>
   <string name="mile_per_hour">mi/h</string>
-  <string name="mile_per_hour_long">mailia tunnissa</string>
+  <string name="voice_mile_per_hour">mailia tunnissa</string>
   <string name="min_per_mile">min/mi</string>
-  <string name="per_mile">per maili</string>
+  <string name="voice_per_mile">per maili</string>
 
   <!-- Sensors -->
   <string name="watts">W</string>
