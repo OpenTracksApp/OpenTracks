@@ -950,18 +950,18 @@ limitations under the License.
   <string name="announce_template">My Tracks %1$s %2$.2f %3$s in %4$s at %5$s %6$s</string>
   
   <!--  Preferred Units -->
-  <string name="preferrred_units_title"
-    translation_description="The title of the dialog asking the user to choose a preferrred units,
+  <string name="preferred_units_title"
+    translation_description="The title of the dialog asking the user to choose a preferred units,
       metric or imperial.">
     Preferred Units
   </string>
-  <string name="preferrred_units_metric"
-    translation_description="In the dialog asking the user to choose a preferrred units, the option
+  <string name="preferred_units_metric"
+    translation_description="In the dialog asking the user to choose a preferred units, the option
       to choose the metric units.">
     Metric
   </string>
-  <string name="preferrred_units_imperial"
-    translation_description="In the dialog asking the user to choose a preferrred units, the option
+  <string name="preferred_units_imperial"
+    translation_description="In the dialog asking the user to choose a preferred units, the option
       to choose the imperial units.">
     Imperial
   </string>
