@@ -77,7 +77,6 @@ public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListe
   private GeoPoint lastReferencePoint;
   private Rect lastViewRect;
   private boolean lastPathExists;
-  private Location lastLocation;
   private TrackPathPainter trackPathPainter;
 
   /**

@@ -69,8 +69,8 @@ public class BluetoothConnectionManager {
   /**
    * Constructor. Prepares a new BluetoothSensor session.
    *
-   * @param context The UI Activity Context
    * @param handler A Handler to send messages back to the UI Activity
+   * @param parser A message parser
    */
   public BluetoothConnectionManager(Handler handler, MessageParser parser) {
     this.adapter = BluetoothAdapter.getDefaultAdapter();

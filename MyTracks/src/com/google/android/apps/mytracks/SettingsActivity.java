@@ -108,7 +108,7 @@ public class SettingsActivity extends PreferenceActivity {
       announcementFrequency.setEnabled(false);
       announcementFrequency.setValue("-1");
       announcementFrequency.setSummary(
-          R.string.settings_not_available_summary);
+          R.string.settings_announcement_frequency_not_available);
     }
   }
   
@@ -509,8 +509,7 @@ public class SettingsActivity extends PreferenceActivity {
    * Saves the given edit text preference value.
    * If the units are not metric convert the value before saving.  
    */
-  private void validateTrackColorModeSettings(EditTextPreference preference, 
-      String newValue, int id) {
+  private void validateTrackColorModeSettings(String newValue, int id) {
     CheckBoxPreference metricUnitsPreference = (CheckBoxPreference) findPreference(
         getString(R.string.metric_units_key));
     String metricspeed;
@@ -549,7 +548,7 @@ public class SettingsActivity extends PreferenceActivity {
           @Override
           public boolean onPreferenceChange(Preference preference,
               Object newValue) {
-            validateTrackColorModeSettings((EditTextPreference) preference, (String) newValue, metricKey);
+            validateTrackColorModeSettings((String) newValue, metricKey);
             return true;
           }
         });

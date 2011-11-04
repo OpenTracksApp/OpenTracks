@@ -138,7 +138,7 @@ public class MapsFacade {
    * @param mapId ID of the map to upload to
    * @param trackName name of the track being started/ended
    * @param trackDescription description of the track being started/ended
-   * @param location the location of the marker
+   * @param loc the location of the marker
    * @param isStart true to add a start marker, false to add an end marker
    * @return true on success, false otherwise
    */
@@ -185,7 +185,9 @@ public class MapsFacade {
   /**
    * Builds a placemark MyMapsFeature from a track.
    *
-   * @param track the track
+   * @param trackName the track
+   * @param trackDescription the track description
+   * @param geoPoint the geo point
    * @param isStart true if it's the start of the track, or false for end
    * @return a MyMapsFeature
    */
@@ -206,9 +208,12 @@ public class MapsFacade {
   }
 
   /**
-   * Builds a MyMapsFeature from a track.
-   *
-   * @param wpt the waypoint
+   * Builds a MyMapsFeature from a waypoint.
+   * 
+   * @param title the title
+   * @param description the description
+   * @param iconUrl the icon url
+   * @param geoPoint the waypoint
    * @return a MyMapsFeature
    */
   private static MyMapsFeature buildMyMapsPlacemarkFeature(
@@ -336,7 +341,8 @@ public class MapsFacade {
   /**
    * Builds a MyMapsFeature from a track.
    *
-   * @param track the track
+   * @param trackName the track name
+   * @param locations locations on the track
    * @return a MyMapsFeature
    */
   private static MyMapsFeature buildMyMapsLineFeature(String trackName,

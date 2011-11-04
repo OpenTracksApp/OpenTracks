@@ -161,7 +161,7 @@ limitations under the License.
   <string name="waypointdetails_category_hint">Tipo di segnaposto</string>
 
   <!-- MyTracks Settings -->
-  <string name="mytracks_settings">Impostazioni di My Tracks</string>
+  <string name="settings_title">Impostazioni di My Tracks</string>
   <string name="settings_display">Visualizzazione</string>
   <string name="settings_recording">Registrazione</string>
   <string name="settings_sharing">Condivisione</string>

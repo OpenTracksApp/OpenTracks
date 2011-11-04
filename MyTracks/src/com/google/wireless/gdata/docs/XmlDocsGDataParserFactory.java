@@ -48,7 +48,7 @@ public class XmlDocsGDataParserFactory implements GDataParserFactory {
     }
   }
 
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings("unchecked")
   @Override
   public GDataParser createParser(Class cls, InputStream is)
       throws ParseException {

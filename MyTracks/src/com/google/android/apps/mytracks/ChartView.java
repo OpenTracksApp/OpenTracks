@@ -881,7 +881,6 @@ public class ChartView extends View {
    *
    * @param index the time series, one of {@link #ELEVATION_SERIES},
    *        {@link #SPEED_SERIES}, {@link #POWER_SERIES}, etc.
-   * @return true to be drawn, false otherwise
    */
   public void setChartValueSeriesEnabled(int index, boolean enabled) {
     series[index].setEnabled(enabled);

@@ -153,7 +153,7 @@ public class SpreadsheetsClient extends GDataServiceClient {
    * @return a parser for the indicated feed
    * @throws ParseException if the response from the server could not be parsed
    */
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings("unchecked")
   @Override
   public GDataParser getParserForFeed(
       Class feedEntryClass, String feedUri, String authToken)
@@ -227,7 +227,7 @@ public class SpreadsheetsClient extends GDataServiceClient {
    * Converts an HTTP exception which happened while writing to the equivalent
    * local exception.
    */
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings("unchecked")
   private void convertHttpExceptionForWrites(
       Class entryClass, String message, HttpException cause)
       throws ParseException, IOException {
@@ -253,7 +253,7 @@ public class SpreadsheetsClient extends GDataServiceClient {
   /**
    * Parses one entry from the input stream.
    */
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings("unchecked")
   private Entry parseEntry(Class entryClass, InputStream is)
       throws ParseException, IOException {
     GDataParser parser = null;

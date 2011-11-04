@@ -17,6 +17,8 @@ package com.google.android.apps.mytracks.io.file;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
 
+import com.google.android.apps.mytracks.util.FileUtils;
+
 import android.os.Environment;
 import android.util.Log;
 
@@ -51,11 +53,9 @@ public class TempFileCleaner {
   }
 
   private void cleanTmpDirectory(String name) {
-    String sep = System.getProperty("file.separator");
-    cleanTmpDirectory(
-        new File(
-            Environment.getExternalStorageDirectory() + sep + name + sep
-            + "tmp"));
+    FileUtils fileUtils = new FileUtils();
+    String dirName = fileUtils.buildExternalDirectoryPath(name, "tmp");
+    cleanTmpDirectory(new File(dirName));
   }
 
   // @VisibleForTesting

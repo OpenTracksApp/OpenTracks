@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * handling. After a query is run, the wrapper can be queried about the error
  * that occurred.
  *
- * @param C the GData service client
+ * @param <C> the GData service client
  * @author Sandor Dornbush
  */
 public class GDataWrapper<C> {

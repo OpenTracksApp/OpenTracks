@@ -260,7 +260,6 @@ public class ChartActivity extends Activity implements TrackDataListener {
    *
    * @param location the location to get data for (this method takes ownership of that location)
    * @param result the resulting point to fill out
-   * @return the previous location, now available for reuse
    */
   private void fillDataPoint(Location location, double result[]) {
     double timeOrDistance = Double.NaN,

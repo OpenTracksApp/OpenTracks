@@ -215,7 +215,7 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
   }
 
   /**
-   * Clears {selected,recording}TrackId in the {@link getSharedPreferences()}.
+   * Clears {selected,recording}TrackId in the {@link #getSharedPreferences()}.
    */
   private void clearSelectedAndRecordingTracks() {
     Editor editor = getSharedPreferences().edit();
