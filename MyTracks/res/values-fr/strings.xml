@@ -286,7 +286,7 @@ limitations under the License.
   <string name="voice_seconds">secondes</string>
 
   <!-- Distance -->
-  <string name="feet">pied</string>
+  <string name="unit_feet">pied</string>
   <string name="voice_kilometers">kilomètres</string>
   <string name="voice_miles">milles</string>
 

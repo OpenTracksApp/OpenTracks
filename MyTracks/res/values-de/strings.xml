@@ -306,8 +306,8 @@ limitations under the License.
   <!-- Time  -->
   <string name="voice_hour">Stunde</string>
   <string name="voice_hours">Stunden</string>
-  <string name="hr">Std</string>
-  <string name="min">Min</string>
+  <string name="unit_hour">Std</string>
+  <string name="unit_minute">Min</string>
   <string name="voice_minute">Minute</string>
   <string name="voice_minutes">Minuten</string>
   <string name="voice_second">Sekunde</string>
@@ -315,11 +315,11 @@ limitations under the License.
   <!--string name="milliseconds">ms</string-->
 
   <!-- Distance -->
-  <!--string name="meter">m</string-->
-  <!--string name="kilometer">km</string-->
+  <!--string name="unit_meter">m</string-->
+  <!--string name="unit_kilometer">km</string-->
   <string name="voice_kilometers">Kilometer</string>
-  <string name="feet">Fuß</string>
-  <!--string name="mile">mi</string-->
+  <string name="unit_feet">Fuß</string>
+  <!--string name="unit_mile">mi</string-->
   <string name="voice_miles">Meilen</string>
 
   <!-- Speed and Pace -->

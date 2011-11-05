@@ -352,8 +352,8 @@ limitations under the License.
   <!-- Time  -->
   <string name="voice_hour">час</string>
   <string name="voice_hours">часов</string>
-  <string name="hr">ч</string>
-  <string name="min">мин</string>
+  <string name="unit_hour">ч</string>
+  <string name="unit_minute">мин</string>
   <string name="voice_minute">минута</string>
   <string name="voice_minutes">минут</string>
   <string name="voice_second">секунда</string>
@@ -361,11 +361,11 @@ limitations under the License.
   <string name="milliseconds">мс</string>
 
   <!-- Distance -->
-  <string name="meter">м</string>
-  <string name="kilometer">км</string>
+  <string name="unit_meter">м</string>
+  <string name="unit_kilometer">км</string>
   <string name="voice_kilometers">километров</string>
-  <string name="feet">футов</string>
-  <string name="mile">миль</string>
+  <string name="unit_feet">футов</string>
+  <string name="unit_mile">миль</string>
   <string name="voice_miles">мили</string>
 
   <!-- Speed and Pace -->

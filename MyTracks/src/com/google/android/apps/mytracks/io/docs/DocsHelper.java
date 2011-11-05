@@ -280,11 +280,11 @@ public class DocsHelper {
     TripStatistics stats = track.getStatistics();
 
     String distanceUnit = context.getString(metricUnits ?
-        R.string.kilometer : R.string.mile);
+        R.string.unit_kilometer : R.string.unit_mile);
     String speedUnit = context.getString(metricUnits ?
         R.string.kilometer_per_hour : R.string.mile_per_hour);
     String elevationUnit = context.getString(metricUnits ?
-        R.string.meter : R.string.feet);
+        R.string.unit_meter : R.string.unit_feet);
 
     // Prepare the Post-Text we are going to send.
     DocsTagBuilder tagBuilder = new DocsTagBuilder(metricUnits)

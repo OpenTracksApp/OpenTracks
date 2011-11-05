@@ -248,14 +248,14 @@ limitations under the License.
   <!-- Time -->
   <string name="voice_hour">hora</string>
   <string name="voice_hours">horas</string>
-  <string name="hr">h</string>
+  <string name="unit_hour">h</string>
   <string name="voice_minute">minuto</string>
   <string name="voice_minutes">minutos</string>
   <string name="voice_second">segundo</string>
   <string name="voice_seconds">segundos</string>
 
   <!-- Distance -->
-  <string name="feet">pés</string>
+  <string name="unit_feet">pés</string>
   <string name="voice_kilometers">kilômetros</string>
   <string name="voice_miles">milhas</string>
 

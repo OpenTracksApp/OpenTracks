@@ -382,7 +382,7 @@ limitations under the License.
 
   <!-- Distance -->
   <string name="voice_kilometers">kilómetros</string>
-  <string name="feet">pies</string>
+  <string name="unit_feet">pies</string>
   <string name="voice_miles">millas</string>
 
   <!-- Speed and Pace -->

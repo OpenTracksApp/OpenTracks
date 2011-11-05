@@ -123,20 +123,21 @@ public class SettingsActivity extends PreferenceActivity {
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {
       if (values[i].equals("-2")) {
-        options[i] = getString(R.string.min_recording_interval_adaptive_battery);
+        options[i] = getString(R.string.value_adapt_battery_life);
       } else if (values[i].equals("-1")) {
-        options[i] = getString(R.string.min_recording_interval_adaptive_accuracy);
+        options[i] = getString(R.string.value_adapt_accuracy);
       } else if (values[i].equals("0")) {
-        options[i] = getString(R.string.min_recording_interval_highest) + " ("
-            + getString(R.string.settings_recommended) + ")";
+        options[i] = getString(R.string.value_smallest_recommended);
       } else {
         int value = Integer.parseInt(values[i]);
+        String format;
         if (value < 60) {
-          options[i] = value + " " + getString(R.string.second);
+          format = getString(R.string.value_integer_second);
         } else {
           value = value / 60;
-          options[i] = value + " " + getString(R.string.min);
+          format = getString(R.string.value_integer_minute);
         }
+        options[i] = String.format(format, value);
       }
     }
     ListPreference list = (ListPreference) findPreference(
@@ -152,11 +153,13 @@ public class SettingsActivity extends PreferenceActivity {
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {
       if (values[i].equals("0")) {
-        options[i] = getString(R.string.auto_resume_track_timeout_never);
+        options[i] = getString(R.string.value_never);
       } else if (values[i].equals("-1")) {
-        options[i] = getString(R.string.auto_resume_track_timeout_always);
+        options[i] = getString(R.string.value_always);
       } else {
-        options[i] = values[i] + " " + getString(R.string.min);
+        int value = Integer.parseInt(values[i]);
+        String format = getString(R.string.value_integer_minute);
+        options[i] = String.format(format, value);
       }
     }
     ListPreference list = (ListPreference) findPreference(
@@ -423,16 +426,20 @@ public class SettingsActivity extends PreferenceActivity {
    * Sets the display options for a periodic task.
    */
   private void setTaskOptions(boolean isMetric, int listId) {
-    String distanceUnit = isMetric ? getString(R.string.kilometer) : getString(R.string.mile);
     String[] values = getResources().getStringArray(R.array.task_frequency_values);
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {
       if (values[i].equals("0")) {
-        options[i] = getString(R.string.task_frequency_off);
+        options[i] = getString(R.string.value_off);
       } else if (values[i].startsWith("-")) {
-        options[i] = values[i].substring(1) + " " + distanceUnit;
+        int value = Integer.parseInt(values[i].substring(1));
+        String format = isMetric ? getString(R.string.value_integer_kilometer)
+            : getString(R.string.value_integer_mile);
+        options[i] = String.format(format, value);
       } else {
-        options[i] = values[i] + " " + getString(R.string.minute);
+        int value = Integer.parseInt(values[i]);
+        String format = getString(R.string.value_integer_minute);
+        options[i] = String.format(format, value);
       }
     }
 
@@ -444,7 +451,6 @@ public class SettingsActivity extends PreferenceActivity {
    * Sets the display options for min distance between points.
    */
   private void setMinDistanceOptions(boolean isMetric, int listId) {
-    String unit = isMetric ? getString(R.string.meter) : getString(R.string.feet);
     String[] values = getResources().getStringArray(R.array.min_recording_distance_values);
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {
@@ -452,10 +458,15 @@ public class SettingsActivity extends PreferenceActivity {
       if (!isMetric) {
         value = (int) (value * UnitConversions.M_TO_FT);
       }
-      options[i] = value + " " + unit;
+      String format;
       if (values[i].equals("5")) {
-        options[i] += " (" + getString(R.string.settings_recommended) + ")";
+        format = isMetric ? getString(R.string.value_integer_meter_recommended)
+            : getString(R.string.value_integer_feet_recommended);
+      } else {
+        format = isMetric ? getString(R.string.value_integer_meter)
+            : getString(R.string.value_integer_feet);
       }
+      options[i] = String.format(format, value);
     }
 
     ListPreference list = (ListPreference) findPreference(getString(listId));
@@ -470,21 +481,29 @@ public class SettingsActivity extends PreferenceActivity {
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {
       int value = Integer.parseInt(values[i]);
+      String format;
       if (isMetric) {
-        options[i] = value + " " + getString(R.string.meter);
+        if (values[i].equals("200")) {
+          format = getString(R.string.value_integer_meter_recommended);
+        } else {
+          format = getString(R.string.value_integer_meter);
+        }
+        options[i] = String.format(format, value);
       } else {
         value = (int) (value * UnitConversions.M_TO_FT);
         if (value < 2000) {
-          options[i] = value + " " + getString(R.string.feet);
+          if (values[i].equals("200")) {
+            format = getString(R.string.value_integer_feet_recommended);
+          } else {
+            format = getString(R.string.value_integer_feet);
+          }
+          options[i] = String.format(format, value);          
         } else {
-          double mileValue = value / UnitConversions.MI_TO_FEET;
-          mileValue = (int) (mileValue * 10) / 10.0;
-          options[i] = mileValue + " " + getString(R.string.mile);
+          double mile = value / UnitConversions.MI_TO_FEET;
+          format = getString(R.string.value_float_mile);
+          options[i] = String.format(format, mile);          
         }
-      }
-      if (values[i].equals("200")) {
-        options[i] += " (" + getString(R.string.settings_recommended) + ")";
-      }
+      } 
     }
 
     ListPreference list = (ListPreference) findPreference(getString(listId));
@@ -499,27 +518,40 @@ public class SettingsActivity extends PreferenceActivity {
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {
       int value = Integer.parseInt(values[i]);
+      String format;
       if (isMetric) {
-        options[i] = value + " " + getString(R.string.meter);
+        if (values[i].equals("200")) {
+          format = getString(R.string.value_integer_meter_recommended);
+        } else if (values[i].equals("10")) {
+          format = getString(R.string.value_integer_meter_excellent_gps);
+        } else if (values[i].equals("5000")) {
+          format = getString(R.string.value_integer_meter_poor_gps);
+        } else {
+          format = getString(R.string.value_integer_meter);
+        }
+        options[i] = String.format(format, value);
       } else {
         value = (int) (value * UnitConversions.M_TO_FT);
         if (value < 2000) {
-          options[i] = value + " " + getString(R.string.feet);
+          if (values[i].equals("200")) {
+            format = getString(R.string.value_integer_feet_recommended);
+          } else if (values[i].equals("10")) {
+            format = getString(R.string.value_integer_feet_excellent_gps);
+          } else {
+            format = getString(R.string.value_integer_feet);
+          }
+          options[i] = String.format(format, value);
         } else {
-          double mileValue = value / UnitConversions.MI_TO_FEET;
-          mileValue = (int) (mileValue * 10) / 10.0;
-          options[i] = mileValue + " " + getString(R.string.mile);
+          double mile = value / UnitConversions.MI_TO_FEET;
+          if (values[i].equals("5000")) {
+            format = getString(R.string.value_float_mile_poor_gps);
+          } else {
+            format = getString(R.string.value_float_mile);
+          }
+          options[i] = String.format(format, mile);    
         }
       }
-      if (values[i].equals("200")) {
-        options[i] += " (" + getString(R.string.settings_recommended) + ")";
-      } else if (values[i].equals("10")) {
-        options[i] += " (" + getString(R.string.min_required_accuracy_excellent_gps) + ")";
-      } else if (values[i].equals("5000")) {
-        options[i] += " (" + getString(R.string.min_required_accuracy_poor_gps) + ")";
-      }
     }
-
     ListPreference list = (ListPreference) findPreference(getString(listId));
     list.setEntries(options);
   }

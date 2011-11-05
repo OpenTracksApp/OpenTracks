@@ -264,19 +264,19 @@ limitations under the License.
   <!-- Time  -->
   <string name="voice_hour">timme</string>
   <string name="voice_hours">timmar</string>
-  <string name="hr">tim</string>
-  <string name="min">min</string>
+  <string name="unit_hour">tim</string>
+  <string name="unit_minute">min</string>
   <string name="voice_minute">minut</string>
   <string name="voice_minutes">minuter</string>
   <string name="voice_second">sekund</string>
   <string name="voice_seconds">sekunder</string>
 
   <!-- Distance -->
-  <string name="meter">m</string>
-  <string name="kilometer">km</string>
+  <string name="unit_meter">m</string>
+  <string name="unit_kilometer">km</string>
   <string name="voice_kilometers">kilometer</string>
-  <string name="feet">ft</string>
-  <string name="mile">mi</string>
+  <string name="unit_feet">ft</string>
+  <string name="unit_mile">mi</string>
   <string name="voice_miles">miles</string>
 
   <!-- Speed and Pace -->

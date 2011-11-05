@@ -353,8 +353,8 @@ limitations under the License.
   <!-- Time  -->
   <string name="voice_hour">小时</string>
   <string name="voice_hours">小时</string>
-  <string name="hr">时</string>
-  <string name="min">分</string>
+  <string name="unit_hour">时</string>
+  <string name="unit_minute">分</string>
   <string name="voice_minute">分钟</string>
   <string name="voice_minutes">分钟</string>
   <string name="voice_second">秒</string>

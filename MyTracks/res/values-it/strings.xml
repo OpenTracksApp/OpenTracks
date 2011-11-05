@@ -261,19 +261,19 @@ limitations under the License.
   <!-- Time  -->
   <string name="voice_hour">ora</string>
   <string name="voice_hours">ore</string>
-  <string name="hr">h</string>
-  <string name="min">min</string>
+  <string name="unit_hour">h</string>
+  <string name="unit_minute">min</string>
   <string name="voice_minute">minuto</string>
   <string name="voice_minutes">minuti</string>
   <string name="voice_second">secondo</string>
   <string name="voice_seconds">secondi</string>
 
   <!-- Distance -->
-  <string name="meter">m</string>
-  <string name="kilometer">km</string>
+  <string name="unit_meter">m</string>
+  <string name="unit_kilometer">km</string>
   <string name="voice_kilometers">chilometri</string>
-  <string name="feet">pd</string>
-  <string name="mile">mi</string>
+  <string name="unit_feet">pd</string>
+  <string name="unit_mile">mi</string>
   <string name="voice_miles">miglia</string>
 
   <!-- Speed and Pace -->

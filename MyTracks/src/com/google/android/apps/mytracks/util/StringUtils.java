@@ -307,8 +307,8 @@ public class StringUtils implements DescriptionGenerator {
 
         // Line 2
         context.getString(R.string.total_distance_label),
-        distanceInKm, context.getString(R.string.kilometer),
-        distanceInMiles, context.getString(R.string.mile),
+        distanceInKm, context.getString(R.string.unit_kilometer),
+        distanceInMiles, context.getString(R.string.unit_mile),
 
         // Line 3
         context.getString(R.string.total_time_label),
@@ -323,18 +323,18 @@ public class StringUtils implements DescriptionGenerator {
 
         // Line 6
         context.getString(R.string.min_elevation_label),
-        minElevationInMeters, context.getString(R.string.meter),
-        minElevationInFeet, context.getString(R.string.feet),
+        minElevationInMeters, context.getString(R.string.unit_meter),
+        minElevationInFeet, context.getString(R.string.unit_feet),
 
         // Line 7
         context.getString(R.string.max_elevation_label),
-        maxElevationInMeters, context.getString(R.string.meter),
-        maxElevationInFeet, context.getString(R.string.feet),
+        maxElevationInMeters, context.getString(R.string.unit_meter),
+        maxElevationInFeet, context.getString(R.string.unit_feet),
 
         // Line 8
         context.getString(R.string.elevation_gain_label),
-        elevationGainInMeters, context.getString(R.string.meter),
-        elevationGainInFeet, context.getString(R.string.feet),
+        elevationGainInMeters, context.getString(R.string.unit_meter),
+        elevationGainInFeet, context.getString(R.string.unit_feet),
 
         // Line 9
         context.getString(R.string.max_grade_label), maxGrade,
@@ -435,8 +435,8 @@ public class StringUtils implements DescriptionGenerator {
         + "%s: %d %s\n"
         + "%s: %d %s\n",
         context.getString(R.string.total_distance_label),
-            distanceInKm, context.getString(R.string.kilometer),
-            distanceInMiles, context.getString(R.string.mile),
+            distanceInKm, context.getString(R.string.unit_kilometer),
+            distanceInMiles, context.getString(R.string.unit_mile),
         context.getString(R.string.total_time_label),
             StringUtils.formatTime(stats.getTotalTime()),
         context.getString(R.string.moving_time_label),
@@ -451,14 +451,14 @@ public class StringUtils implements DescriptionGenerator {
             maxSpeedInKmh, context.getString(R.string.kilometer_per_hour),
             maxSpeedInMph, context.getString(R.string.mile_per_hour),
         context.getString(R.string.min_elevation_label),
-            minElevationInMeters, context.getString(R.string.meter),
-            minElevationInFeet, context.getString(R.string.feet),
+            minElevationInMeters, context.getString(R.string.unit_meter),
+            minElevationInFeet, context.getString(R.string.unit_feet),
         context.getString(R.string.max_elevation_label),
-            maxElevationInMeters, context.getString(R.string.meter),
-            maxElevationInFeet, context.getString(R.string.feet),
+            maxElevationInMeters, context.getString(R.string.unit_meter),
+            maxElevationInFeet, context.getString(R.string.unit_feet),
         context.getString(R.string.elevation_gain_label),
-            elevationGainInMeters, context.getString(R.string.meter),
-            elevationGainInFeet, context.getString(R.string.feet),
+            elevationGainInMeters, context.getString(R.string.unit_meter),
+            elevationGainInFeet, context.getString(R.string.unit_feet),
         context.getString(R.string.max_grade_label),
             theMaxGrade, percent,
         context.getString(R.string.min_grade_label),

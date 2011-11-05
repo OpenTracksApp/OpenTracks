@@ -289,19 +289,19 @@ limitations under the License.
   <!-- Time  -->
   <string name="voice_hour">godzina</string>
   <string name="voice_hours">godziny</string>
-  <string name="hr">godz.</string>
-  <string name="min">min</string>
+  <string name="unit_hour">godz.</string>
+  <string name="unit_minute">min</string>
   <string name="voice_minute">minuta</string>
   <string name="voice_minutes">minuty</string>
   <string name="voice_second">sekunda</string>
   <string name="voice_seconds">sekundy</string>
 
   <!-- Distance -->
-  <string name="meter">m</string>
-  <string name="kilometer">km</string>
+  <string name="unit_meter">m</string>
+  <string name="unit_kilometer">km</string>
   <string name="voice_kilometers">kilometerów</string>
-  <string name="feet">st.</string>
-  <string name="mile">mi</string>
+  <string name="unit_feet">st.</string>
+  <string name="unit_mile">mi</string>
   <string name="voice_miles">mil</string>
 
   <!-- Speed and Pace -->

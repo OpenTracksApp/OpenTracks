@@ -1313,39 +1313,117 @@ limitations under the License.
     seconds
   </string> 
       
-  <!-- time -->
-  <string name="hr"
-    translation_description="Abbreviation for hours. E.g, '2 hr'.">
-    hr
-  </string>
-  <string name="second"
-   translation_description="Abbreviation for second. E.g, '5 s' for 5 seconds.">
-   s
-  </string>
-  
-  <string name="min"
-    translation_description="Abbreviation for minutes. E.g, '2 min'.">
-    min
-  </string>
-
-  <!--  distance -->
-  <string name="kilometer"
-    translation_description="Abbreviation for kilometers. E.g., '2 km'.">
-    km
-  </string>
-  <string name="meter"
-    translation_description="Abbreviation for meters. E.g., '2 m'.">
-    m
-  </string>
-  <string name="mile"
-    translation_description="Abbreviation for miles. E.g., '2 mi'.">
-    mi
-  </string>
-  <string name="feet"
+  <!-- Unit -->
+  <string name="unit_feet"
     translation_description="Abbreviation for feet. E.g., '2 ft'.">
     ft
   </string>
+  <string name="unit_hour"
+    translation_description="Abbreviation for hour. E.g, '2 hr'.">
+    hr
+  </string>   
+  <string name="unit_kilometer"
+    translation_description="Abbreviation for kilometer. E.g., '2 km'.">
+    km
+  </string>
+  <string name="unit_meter"
+    translation_description="Abbreviation for meter. E.g., '2 m'.">
+    m
+  </string>
+  <string name="unit_mile"
+    translation_description="Abbreviation for mile. E.g., '2 mi'.">
+    mi
+  </string>
+  <string name="unit_minute"
+    translation_description="Abbreviation for minute. E.g, '2 min'.">
+    min
+  </string>
 
+  <!-- Value - values in a setting picker -->
+  <string name="value_adapt_accuracy"
+    translation_description="In a setting picker, the value to adapt for accuracy.">
+    adapt for accuracy
+  </string> 
+  <string name="value_adapt_battery_life"
+    translation_description="In a setting picker, the value to adapt for battery life.">
+    adapt for battery life
+  </string> 
+  <string name="value_always"
+    translation_description="In a setting picker, the value to always enable the option.">
+    Always
+  </string>
+  <string name="value_float_mile"
+    translation_description="In a setting picker, a float value in miles. E.g., '2.2 mi'.">
+    %.1f mi
+  </string> 
+  <string name="value_float_mile_poor_gps"
+    translation_description="In a setting picker, a float value in miles, recommended when having
+      poor GPS signal. E.g., '2.2 mi (poor GPS)'.">
+    %.1f mi (poor GPS)
+  </string> 
+  <string name="value_integer_feet"
+    translation_description="In a setting picker, an integer value in feet. E.g., '2 ft'.">
+    %d ft
+  </string>
+  <string name="value_integer_feet_excellent_gps"
+    translation_description="In a setting picker, an integer value in feet, recommended when having
+      excellent GPS signal. E.g., '2 ft (excellent GPS)'.">
+    %d ft (excellent GPS)
+  </string>       
+  <string name="value_integer_feet_recommended"
+    translation_description="In a setting picker, an integer value in feet that is recommended.
+      E.g., '2 ft (recommended)'.">
+    %d ft (recommended)
+  </string>  
+  <string name="value_integer_kilometer"
+    translation_description="In a setting picker, an integer value in kilometers. E.g., '2 km'.">
+    %d km
+  </string> 
+  <string name="value_integer_meter"
+    translation_description="In a setting picker, an integer value in meters. E.g., '2 m'.">
+    %d m
+  </string>
+  <string name="value_integer_meter_excellent_gps"
+    translation_description="In a setting picker, an integer value in meters, recommended when
+      having excellent GPS signal. E.g., '2 m (excellent GPS)'.">
+    %d m (excellent GPS)
+  </string>
+  <string name="value_integer_meter_poor_gps"
+    translation_description="In a setting picker, an integer value in meters, recommended when
+      having poor GPS signal. E.g., '2 m (poor GPS)'.">
+    %d m (poor GPS)
+  </string>      
+  <string name="value_integer_meter_recommended"
+    translation_description="In a setting picker, an integer value in meters that is recommended.
+      E.g., '2 m (recommended)'.">    
+    %d m (recommended)
+  </string>
+  <string name="value_integer_mile"
+    translation_description="In a setting picker, an integer value in miles. E.g., '2 mi'.">
+    %d mi
+  </string>   
+  <string name="value_integer_minute"
+    translation_description="In a setting picker, an integer value in minutes. E.g., '2 min'.">
+    %d min
+  </string>
+  <string name="value_integer_second"
+    translation_description="In a setting picker, an integer value in seconds. E.g., '2 s'.">
+    %d s
+  </string>
+  <string name="value_never"
+    translation_description="In a setting picker, the value to never use the feature.">
+    Never
+  </string>
+  <string name="value_off"
+    translation_description="In a setting picker, the value to turn off the feature.">
+    Off
+  </string>
+  <string name="value_smallest_recommended"
+    translation_description="In a setting picker, the value to use the smallest value, also the
+      recommended value.">
+    smallest (recommended)
+  </string> 
+        
   <!-- Speed unit -->
   <string name="kilometer_per_hour"
     translation_description="For speed unit, abbreviation for kilometers per hour. E.g, '5 km/h'.">
@@ -1668,52 +1746,8 @@ limitations under the License.
         speed thresholds. E.g., use one color for segments where the speed is below the average
         speed of the track.">
     Dynamic Thresholds
-  </string>
- 
-  <string name="auto_resume_track_timeout_never"
-    translation_description="In the 'Auto-resume timeout' setting, the option to never resume a
-      recording after phone reboot.">
-  </string>
-  <string name="auto_resume_track_timeout_always"
-    translation_description="In the 'Auto-resume timeout' setting, the option to always resume a
-      recording after phone reboot.">
-    Always
-  </string>
-  <string name="task_frequency_off"
-    translation_description="For task frequency settings like voice announcement, the option to turn
-      off the task.">
-    Off
-  </string>
-  <string name="settings_recommended"
-    translation_description="For settings, the text next to the recommended value.">
-    recommended
-  </string>
-  <string name="min_required_accuracy_excellent_gps"
-    translation_description="For the 'Min accuracy' setting, the text next to the option that should
-      be picked when the phone has excellent GPS.">
-    excellent GPS
-  </string>
-  <string name="min_required_accuracy_poor_gps"
-    translation_description="In the 'Min accuracy' setting, the text next to the option that should
-      be picked when the phone has poor GPS.">
-    poor GPS
-  </string>    
-  <string name="min_recording_interval_adaptive_battery"
-    translation_description="In the 'Min time between points' setting, the option to record using
-      an adaptive algorithm to optimize for battery life.">
-    battery life (adaptive)
   </string> 
-  <string name="min_recording_interval_adaptive_accuracy"
-    translation_description="In the 'Min time between points' setting, the option to record using
-      an adaptive algorithm to optimize for high accuracy.">
-    high accuracy (adaptive)
-  </string> 
-  <string name="min_recording_interval_highest"
-    translation_description="In the 'Min time between points' setting, the option to record at the
-      highest rate.">
-    highest
-  </string> 
-        
+      
   <!-- Activity Types -->
   <string name="activity_type_airplane"
     translation_description="When entering the Activity Type, an option for airplane.">

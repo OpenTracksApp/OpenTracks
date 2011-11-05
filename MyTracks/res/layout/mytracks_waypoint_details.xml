@@ -125,7 +125,7 @@ limitations under the License.
             android:layout_column="2"
             android:layout_marginBottom="-9dip"
             android:layout_marginTop="-9dip"
-            android:text="@string/mile"
+            android:text="@string/unit_mile"
             android:textColor="@color/stat_label_text" />
           <!-- TODO 4/08/2009
           The following is a bad hack to get a spacer the same size as the
@@ -351,7 +351,7 @@ limitations under the License.
             android:layout_column="2"
             android:layout_marginBottom="-9dip"
             android:layout_marginTop="-9dip"
-            android:text="@string/feet"
+            android:text="@string/unit_feet"
             android:textColor="@color/stat_label_text"/>
           <TextView
             android:background="@color/black"
@@ -375,7 +375,7 @@ limitations under the License.
             android:layout_column="5"
             android:layout_marginBottom="-9dip"
             android:layout_marginTop="-9dip"
-            android:text="@string/feet"
+            android:text="@string/unit_feet"
             android:textColor="@color/stat_label_text" />
         </TableRow>
 
@@ -409,7 +409,7 @@ limitations under the License.
             android:layout_column="2"
             android:layout_marginBottom="-9dip"
             android:layout_marginTop="-9dip"
-            android:text="@string/feet"
+            android:text="@string/unit_feet"
             android:textColor="@color/stat_label_text" />
           <TextView
             android:background="@color/black"
@@ -433,7 +433,7 @@ limitations under the License.
             android:layout_column="5"
             android:layout_marginBottom="-9dip"
             android:layout_marginTop="-9dip"
-            android:text="@string/feet"
+            android:text="@string/unit_feet"
             android:textColor="@color/stat_label_text" />
         </TableRow>
 
