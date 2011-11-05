@@ -34,7 +34,6 @@ limitations under the License.
   <string name="modular_stats_display_key">modularStatsDisplay</string>
   <string name="pick_existing_map_key">pickExistingMap</string>
   <string name="report_speed_key">reportSpeed</string>
-  <string name="send_stats_and_points_key">sendStatsAndPoints</string>
   <string name="send_to_docs_key">sendToDocs</string>
   <string name="send_to_fusion_tables_key">sendToFusionTables</string>
   <string name="send_to_my_maps_key">sendToMyMaps</string>

@@ -200,7 +200,6 @@ public class StatusAnnouncerTask implements PeriodicTask {
     }
 
     return context.getString(R.string.announce_template,
-        context.getString(R.string.total_distance_label),
         d,
         context.getString(metricUnits
                           ? R.string.voice_kilometers

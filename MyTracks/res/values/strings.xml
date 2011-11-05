@@ -1422,85 +1422,197 @@ limitations under the License.
     Privacy:
   </string>
 
-  <!-- Send to Google -->
-  <string name="sendtogoogle_title">Send to...</string>
-  <string name="sendtogoogle_google_fusiontables">Google Fusion Tables</string>
-  <string name="sendtogoogle_google_mymaps">Google My Maps</string>
-  <string name="sendtogoogle_google_docs">Google Docs</string>
-  <string name="sendtogoogle_send_now">Send now</string>
-  <string name="sendtogoogle_create_new_map">Create a new map</string>
-  <string name="sendtogoogle_pick_existing_map">Pick an existing map</string>
-  <string name="sendtogoogle_send_stats">Send track statistics</string>
-  <string name="sendtogoogle_send_stats_and_points">Send statistics and points</string>
+  <!-- Send to Google dialog -->
+  <string name="sendtogoogle_title"
+    translation_description="When sending a track to Google, the dialog title to choose the Google
+      services to send the track to. The user can choose Google My Maps, Google Fusion
+      Tables, and Google Docs.">
+    Send to...
+  </string>
+  <string name="sendtogoogle_google_mymaps"
+    translation_description="When sending a track to Google, under the 'Send to...' dialog, the 
+      checkbox option to send to Google My Maps.">
+    Google My Maps
+  </string>
+  <string name="sendtogoogle_create_new_map"
+    translation_description="When sending a track to Google My Maps, the radio option to create a
+      new map as opposed to use an existing map.">
+    Create a new map
+  </string>
+  <string name="sendtogoogle_pick_existing_map"
+    translation_description="When sending a track to Google My Maps, the radio option to use an
+      existing map as opposed to create a new map.">
+    Use an existing map
+  </string>
+  <string name="sendtogoogle_google_fusiontables"
+    translation_description="When sending a track to Google, under the 'Send to...' dialog, the 
+      checkbox option to send to Google Fusion Tables.">
+    Google Fusion Tables
+  </string>
+  <string name="sendtogoogle_google_docs"
+    translation_description="When sending a track to Google, under the 'Send to...' dialog, the 
+      checkbox option to send to Google Docs.">
+    Google Docs
+  </string>
+  <string name="sendtogoogle_send_now"
+    translation_description="When sending a track to Google, under the 'Send to...' dialog, the 
+      button on the bottom to send the track to the selected Google services.">
+    Send now
+  </string>
 
   <!-- Getting the account to upload to. -->
-  <string name="no_account_found_title">No Account Found</string>
-  <string name="no_account_found">No account found to upload tracks to.</string>
-  <string name="choose_account_title">Choose Account</string>
+  <string name="choose_account_title"
+    translation_description="When sending to Google, the dialog title to choose a Google account.">
+    Choose Account
+  </string>
+  <string name="no_account_found_title"
+    translation_description="When sending to Google, the dialog title when no Google account is
+      found.">
+    No Account Found
+  </string>
+  <string name="no_account_found"
+    translation_description="When sending to Google, the dialog message when no Google account is
+      found.">
+    No account found to upload tracks to.
+  </string>
 
-  <!-- SD card -->
-  <string name="io_no_external_storage_found">No external storage was found. Make sure that a SD card is inserted and that your phone is not mounted to a computer.</string>
-  <string name="io_write_failed">Unable to write to file.</string>
-  <string name="io_read_failed">Unable to read from file.</string>
-  <string name="io_create_dir_failed">Unable to create directory on SD card.</string>
-  <string name="io_write_finished">Finished writing to SD card.</string>
-  <string name="io_read_finished">Finished reading from SD card.</string>
-
-  <!-- VersionChecker -->
-  <string name="version_check_title">Upgrade Check</string>
-  <string name="version_check_upgrade_button">Upgrade Now</string>
-  <string name="version_check_continue_button">Continue Without Upgrading</string>
-  <string name="upgrade_required">Your version of %1$s may no longer work properly, and is no longer supported. Please upgrade in order to continue using %1$s.</string>
-  <string name="upgrade_recommended">Your version of %1$s may no longer work properly. You may upgrade it now, or continue to use it at your own risk. Some functionality such as server synchronization may not function until you upgrade.</string>
-  <string name="upgrade_available">A new version of %1$s is available. You may continue to use your current version without problems, but you won\'t get the latest features until you upgrade.</string>
+  <!-- writing to SD card -->
+  <string name="io_no_external_storage_found"
+    translation_description="When writing to the SD card, the error message when the SD card is not
+      found.">
+    No external storage was found. Make sure that a SD card is inserted and that your phone is not
+    mounted to a computer.
+  </string>
+  <string name="io_create_dir_failed"
+    translation_description="When writing to the SD card, the error message when not able to create
+      a directory on the SD card.">
+    Unable to create directory on SD card.
+  </string>
+  <string name="io_write_failed"
+    translation_description="When writing to the SD card, the error message when not able to write a
+      file to the SD card.">
+    Unable to write to file.
+  </string>
+  <string name="io_write_finished"
+    translation_description="When writing to the SD card, the success message when finish writing to
+      the SD card.">
+    Finished writing to SD card.
+  </string>
+  
+  <!--  reading from SD card -->
+  <string name="io_read_failed"
+    translation_description="When reading from the SD card, the error message when not able to read
+      a file.">
+    Unable to read from file.
+  </string>
+  <string name="io_read_finished"
+    translation_description="When reading from the SD card, the success message when finish reading
+      from the SD card.">
+    Finished reading from SD card.
+  </string>
 
   <!-- Welcome -->
-  <string name="welcome">Welcome</string>
-  <string name="welcome_about">About My Tracks</string>
+  <string name="welcome"
+    translation_description="The title of the welcome page.">
+    Welcome
+  </string>
+  <string name="welcome_about"
+    translation_description="In the 'Welcome' page, the button on the bottom to read the 'About'
+      page.">
+    About My Tracks
+  </string>
 
   <!-- Announcement -->
-  <string name="announce_no_distance">My Tracks no distance</string>
-  <!-- Format:
-  $1 : Distance label
-  $2 : Distance value (5)
-  $3 : Distance units (mi, km)
-  $4 : Time description (10 minutes 5 seconds)
-  $5 : Speed value (5.6) : Pace value (5 minutes 6 seconds)
-  $6 : Speed units (mph) : Pace units (per mile)
-  -->
-  <string name="announce_template">My Tracks %1$s %2$.2f %3$s in %4$s at %5$s %6$s</string>
+  <string name="announce_no_distance"
+    translation_description="For the voice announcement, the announcement when the current track's
+      total distance is zero.">
+    My Tracks no distance
+  </string>
+  <string name="announce_template"
+    translation_description="For the voice announcement, the template to make an announcement. E.g.,
+      'My Tracks total distance 5.2 miles in 2 hours 30 minutes at 2.2 miles per hour'. Below is the
+      list of the parameters:
+       
+      %1$.2f: Distance value (E.g., 5.2)
+      %2$s: Distance unit (miles or kilometers)
+      %3$s: Time value (E.g., 2 hours and 30 minutes)
+      %4$s: Speed value (E.g., 2.2) or pace value (E.g., 2 hours and 30 minutes)
+      %5$s: Speed unit (miles per hour or kilometers per hour) or pace unit (per mile or per
+        kilometer)">
+      My Tracks total distance %1$.2f %2$s in %3$s at %4$s %5$s
+  </string>
 
   <!-- Check Units -->
-  <string name="check_units_title">Units of Measure Notice</string>
-  <string name="check_units_message">Do you want to use metrics as your default units?</string>
+  <string name="check_units_title"
+    translation_description="The title of the dialog asking the user to confirm if he wants to use
+      metrics as the preferred units.">
+    Preferred Units
+  </string>
+  <string name="check_units_message"
+    translation_description="The message of the dialog asking the user to confirm if he wants to use
+      metrics as the preferred units.">
+    Do you want to use metrics as the preferred units?
+  </string>
 
-  <!-- Sensor State -->
-  <string name="sensor_data_time">Sensor Data Time</string>
-  <string name="power_meter_enabled">Power meter enabled</string>
-  <string name="heart_rate_monitor_enabled">Heart rate monitor enabled</string>
-  <string name="no_sensor_manager">No Sensor Manager</string>
-  <string name="enabled">Enabled</string>
-  <string name="connecting">Connecting</string>
-  <string name="connected">Connected</string>
-  <string name="disconnected">Disconnected</string>
-  <string name="no_sensor_service">No Sensor Service</string>
-  <string name="searching">Searching</string>
-  <string name="sending">Sending</string>
+  <!-- Sensor State page -->
+  <string name="sensor_data_time"
+    translation_description="In the 'Sensor State' page, the label for the last time the sensor has
+      sent data. E.g., 'Sensor Date Time' 10:05 am.">
+    Sensor Data Time
+  </string>
 
+  <!-- sensor states -->
+  <string name="connecting"
+    translation_description="In the 'Sensor State' page, the 'Sensor State' value when the sensor is
+      connecting.">
+    Connecting
+  </string>
+  <string name="connected"
+    translation_description="In the 'Sensor State' page, the 'Sensor State' value when the sensor
+      has connected.">
+    Connected
+  </string>
+  <string name="disconnected"
+    translation_description="In the 'Sensor State' page, the 'Sensor State' value the sensor has
+      disconnected.">
+    Disconnected
+  </string>
+  <string name="sending"
+    translation_description="In the 'Sensor State' page, the 'Sensor State' value when the sensor
+      is sending data.">
+    Sending
+  </string>
+      
   <!-- Manifest description (not seen inside the app) -->
-  <string name="notification_permission_label">receive MyTracks notifications</string>
-  <string name="mytracks_notifications_permission_label">receive MyTracks notifications</string>
-  <string name="read_tracks_permission_label">read MyTracks data</string>
-  <string name="write_tracks_permission_label">write data to MyTracks and start/stop MyTracks
-          recording</string>
-  <string name="notification_permission_description">Allows the application to receive notifications
-          when MyTracks starts or stops a recording.</string>
-  <string name="mytracks_notifications_permission_description">receive MyTracks notifications
-          </string>
-  <string name="read_tracks_permission_description">Allows the application to read MyTracks data.
-          </string>
-  <string name="write_tracks_permission_description">Allows the application to write data to
-          MyTracks and start/stop MyTracks recording.</string>
+  <string name="notification_permission_label"
+    translation_description="When installing a third-party app that wants to receive My Tracks 
+      notifications, the permission label that the Android Market shows to the user.">
+    receive My Tracks notifications
+  </string>
+  <string name="notification_permission_description"
+    translation_description="When installing a third-party app that wants to receive My Tracks 
+      notifications, the permission description that the Android Market shows to the user.">
+    Allows the application to receive notifications when My Tracks starts or stops a recording.
+  </string>
+  <string name="read_tracks_permission_label"
+    translation_description="When installing a third-party app that wants to read My Tracks data,
+      the permission label that the Android Market shows to the user.">
+    read My Tracks data
+  </string>
+  <string name="read_tracks_permission_description"
+    translation_description="When installing a third-party app that wants to read My Tracks data,
+      the permission description that the Android Market shows to the user.">
+    Allows the application to read My Tracks data.</string>
+  <string name="write_tracks_permission_label"
+    translation_description="When installing a third-party app that wants to write data to My
+      Tracks, the permission label that the Android Market shows to the user.">
+    write data to My Tracks and start/stop My Tracks recording
+  </string>
+  <string name="write_tracks_permission_description"
+    translation_description="When installing a third-party app that wants to write data to My
+      Tracks, the permission description that the Android Market shows to the user.">
+    Allows the application to write data to My Tracks and start/stop My Tracks recording.
+  </string>
 
   <!-- Sensor Type Options -->
   <string name="sensor_type_option_none"
