@@ -59,7 +59,7 @@ services.
       android:id="@+id/send_to_google_result_error"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
-      android:text="@string/error_generic"
+      android:text="@string/error_sending_to_google"
       android:visibility="gone"
       style="?android:attr/textAppearanceLarge"/>
 </LinearLayout>

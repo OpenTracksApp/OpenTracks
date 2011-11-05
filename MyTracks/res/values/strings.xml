@@ -86,14 +86,12 @@ limitations under the License.
     Unable to insert marker. No GPS location. Try again.
   </string>  
 
-  <!-- A generic error message. -->
-  <string name="error_generic"
-    translation_description="In an alert dialog, a generic error message indicating that an error
-      has occurred and asking the user to try again.">
+  <!-- Error messages when sending to Google. -->
+  <string name="error_sending_to_google"
+    translation_description="When sending a track to Google, a message indicating that an error has
+      occurred and ask the user to try again.">
     An error occurred. Please try again.
   </string>
-      
-  <!-- Error messages when sending to Google. -->
   <string name="error_sending_to_my_maps"
     translation_description="When sending a track to Google My Maps, a message indicating that an
       error has occured.">
@@ -108,27 +106,8 @@ limitations under the License.
     translation_description="When sending a track to Google Docs, a message indicating that an error
       has occurred.">
     There was an error while sending your track to Google Docs.
-  </string>
-  
-  <!-- Error messages when importing a track. -->
-  <string name="error_import_unable_to_read_file"
-    translation_description="When importing a track from the SD card, a messsage indicating that
-      My Tracks is unable to read the file.">
-    Unable to read from file.
-  </string>
-  <string name="error_import_invalid_gpx_format"
-    translation_description="When importing a track from the SD card, a message indicating that
-      the file does not have a valid GPX format.">
-    File does not have a valid GPX format.
-  </string>
-  
-  <!-- TODO(jshih@google.com) confirm if the file size limit is still 500 KB. -->
-  <string name="error_import_out_of_memory"
-    translation_description="When importing a track from the SD card, a message indicating that
-      the file is too big, must be less than 500 KB, and aborting.">
-    This file is too big (must be less than 500 KB). Aborting.
-  </string>
-  
+  </string>  
+
   <!--  Error messages when exporting a track. -->
   <string name="error_export_generic"
     translation_description="When exporting a track to the SD card, a generic error message
@@ -274,12 +253,7 @@ limitations under the License.
     Sending a track to Google Docs...
   </string>
   
-  <!-- Import and Export progress messages. -->
-  <string name="progress_message_import"
-    translation_description="When importing a track from the SD card, the message on the progress
-      dialog indicating that it may take a while.">
-    Importing a track from the SD card. This may take a while.
-  </string>
+  <!-- Export progress messages. -->
   <string name="progress_message_export"
     translation_description="When exporting a track to the SD card, the message on the progress
       dialog indicating that it may take a while.">
@@ -528,7 +502,7 @@ limitations under the License.
   <string name="import_multi_done"
     translation_description="After importing all the tracks from the SD card, the alert message
       indicating success. E.g., 'Imported 5 of 6 GPX files from /mnt/sdcard/MyTracks/gpx/'.">
-    Imported %1$d of %2$d GPX files from %3$s
+    Imported to My Tracks %1$d of %2$d GPX files from %3$s
   </string>
   <string name="import_multi_empty"
     translation_description="After importing all the tracks from the SD card, the alert message
@@ -540,15 +514,6 @@ limitations under the License.
     translation_description="When importing all the tracks, a toast message indicating error for
       one of the tracks. E.g., 'Import error for file /mnt/sdcard/MyTacks/gpx/1.gpx'."> 
     Import error for file %s
-  </string>
-  <string name="import_success"
-    translation_description="After successfully importing one track, the message on the confirmation
-      dialog. E.g., 'Successfully imported 5 track(s) from file'.">
-    Successfully imported %d track(s) from file.
-  </string>
-  <string name="import_show_track"
-    translation_description="After importing one track, the button to see the track.">
-    Show track
   </string>
 
   <!-- Markers page. -->
