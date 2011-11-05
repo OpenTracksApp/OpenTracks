@@ -45,7 +45,6 @@ public class SendDialog extends Dialog {
   private CheckBox sendToMyMapsCheckBox;
   private CheckBox sendToFusionTablesCheckBox;
   private CheckBox sendToDocsCheckBox;
-  private RadioButton sendStatsAndPointsRadioButton;
   private OnClickListener clickListener;
 
   public SendDialog(Context context) {
@@ -69,9 +68,6 @@ public class SendDialog extends Dialog {
         (RadioButton) findViewById(R.id.sendtogoogle_create_new_map);
     pickMapRadioButton =
         (RadioButton) findViewById(R.id.sendtogoogle_pick_existing_map);
-    RadioButton sendStatsRadioButton = (RadioButton) findViewById(R.id.sendtogoogle_send_stats);
-    sendStatsAndPointsRadioButton = (RadioButton) findViewById(
-        R.id.sendtogoogle_send_stats_and_points);
 
     Button cancel = (Button) findViewById(R.id.sendtogoogle_cancel);
     cancel.setOnClickListener(new View.OnClickListener() {
@@ -124,14 +120,6 @@ public class SendDialog extends Dialog {
       createNewMapRadioButton.setChecked(
           !prefs.getBoolean(
               getContext().getString(R.string.pick_existing_map_key), false));
-      sendStatsAndPointsRadioButton.setChecked(
-          prefs.getBoolean(
-              getContext().getString(R.string.send_stats_and_points_key),
-              false));
-      sendStatsRadioButton.setChecked(
-          !prefs.getBoolean(
-              getContext().getString(R.string.send_stats_and_points_key),
-              false));
     }
   }
 
@@ -154,9 +142,6 @@ public class SendDialog extends Dialog {
         editor.putBoolean(
             getContext().getString(R.string.pick_existing_map_key),
             pickMapRadioButton.isChecked());
-        editor.putBoolean(
-            getContext().getString(R.string.send_stats_and_points_key),
-            sendStatsAndPointsRadioButton.isChecked());
         editor.commit();
       }
     }
@@ -181,9 +166,5 @@ public class SendDialog extends Dialog {
 
   public boolean getCreateNewMap() {
     return createNewMapRadioButton.isChecked();
-  }
-
-  public boolean getSendStatsAndPoints() {
-    return sendStatsAndPointsRadioButton.isChecked();
   }
 }

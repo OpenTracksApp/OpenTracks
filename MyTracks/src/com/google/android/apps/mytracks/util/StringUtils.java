@@ -221,34 +221,6 @@ public class StringUtils implements DescriptionGenerator {
     this.context = context;
   }
 
-  public String formatTimeLong(long time) {
-    int[] parts = getTimeParts(time);
-    String secLabel =
-        context.getString(parts[0] == 1 ? R.string.second : R.string.seconds);
-    String minLabel =
-        context.getString(parts[1] == 1 ? R.string.minute : R.string.minutes);
-    String hourLabel =
-        context.getString(parts[2] == 1 ? R.string.hour : R.string.hours);
-
-    StringBuilder sb = new StringBuilder();
-    if (parts[2] != 0) {
-      sb.append(parts[2]);
-      sb.append(" ");
-      sb.append(hourLabel);
-      sb.append(" ");
-      sb.append(parts[1]);
-      sb.append(minLabel);
-    } else {
-      sb.append(parts[1]);
-      sb.append(" ");
-      sb.append(minLabel);
-      sb.append(" ");
-      sb.append(parts[0]);
-      sb.append(secLabel);
-    }
-    return sb.toString();
-  }
-
   /**
    * Generates a description for a track (with information about the
    * statistics).
@@ -462,10 +434,10 @@ public class StringUtils implements DescriptionGenerator {
         + "%s: %d %s (%d %s)\n"
         + "%s: %d %s\n"
         + "%s: %d %s\n",
-        context.getString(R.string.distance_label),
+        context.getString(R.string.total_distance_label),
             distanceInKm, context.getString(R.string.kilometer),
             distanceInMiles, context.getString(R.string.mile),
-        context.getString(R.string.time_label),
+        context.getString(R.string.total_time_label),
             StringUtils.formatTime(stats.getTotalTime()),
         context.getString(R.string.moving_time_label),
             StringUtils.formatTime(stats.getMovingTime()),

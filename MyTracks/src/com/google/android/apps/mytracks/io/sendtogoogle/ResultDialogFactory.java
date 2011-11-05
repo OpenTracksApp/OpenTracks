@@ -81,7 +81,7 @@ public class ResultDialogFactory {
 
     builder.setPositiveButton(activity.getString(R.string.ok), onOkClickListener);
     if (onShareClickListener != null) {
-      builder.setNegativeButton(activity.getString(R.string.share_track),
+      builder.setNegativeButton(activity.getString(R.string.share_track_url),
           onShareClickListener);
     }
 

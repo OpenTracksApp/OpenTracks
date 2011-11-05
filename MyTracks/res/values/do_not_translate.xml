@@ -41,6 +41,9 @@ limitations under the License.
   <string name="track_color_mode_value_fixed">FIXED</string>
   <string name="track_color_mode_value_dynamic">DYNAMIC</string>
 
+  <!-- When a value is unknown. E.g. when speed is unknown '- km/hr'. -->
+  <string name="unknown">-</string>
+      
   <!-- Send to Google URLs -->
   <string name="sendtogoogle_google_mymaps_url">maps.google.com</string>
   <string name="sendtogoogle_google_fusiontables_url">google.com/fusiontables</string>

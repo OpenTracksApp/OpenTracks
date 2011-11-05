@@ -193,12 +193,12 @@ limitations under the License.
   <string name="waypointdetails_category_hint">Тип маркера</string>
 
   <!-- MyTracks Settings -->
-  <string name="mytracks_settings">Настройки My Tracks</string>
+  <string name="settings_title">Настройки My Tracks</string>
   <string name="settings_display">Отображение</string>
   <string name="settings_recording">Запись</string>
   <string name="settings_sharing">Обмен</string>
 
-  <string name="settings_not_available_summary">Не доступен в вашем версии Android</string>
+  <string name="settings_announcement_frequency_not_available">Не доступен в вашем версии Android</string>
   <string name="settings_not_while_recording">Не доступно во время записи трека</string>
 
   <string name="settings_announcement_frequency">Частота объявлений</string>
@@ -286,7 +286,7 @@ limitations under the License.
   <string name="maps_list_failed">Ваши карты не могут быть загружены в данный момент!</string>
   <string name="open_map">Выберите эту карту</string>
   <string name="edit_map_details">Править детали карты</string>
-  <string name="share_track">Поделиться треком</string>
+  <string name="share_track_url">Поделиться треком</string>
   <string name="delete_map">Удалить Карту из вашей учетной записи</string>
   <string name="map_title">Название карты:</string>
   <string name="map_description">Описание карты:</string>
@@ -296,13 +296,13 @@ limitations under the License.
   <string name="map_not_searchable">Ни эта карта, ни ее содержимое не будут отображаться в результатах поиска, но их могут по-прежнему просматривать другие через прямую ссылку</string>
 
   <!-- Sharing -->
-  <string name="share_map">Поделиться картой с друзьями</string>
+  <string name="share_track_picker_title">Поделиться картой с друзьями</string>
   <string name="share_map_subject">Я хотел бы поделиться с вами треком</string>
-  <string name="share_map_body_format">Я думаю, вы можете быть заинтересованы в этом треке:
+  <string name="share_track_url_body_format">Я думаю, вы можете быть заинтересованы в этом треке:
 
 %s</string>
-  <string name="send_track_subject">Я хотел бы поделиться с вами треком</string>
-  <string name="send_track_body_format">Я думаю, вы можете быть заинтересованы в этом треке.
+  <string name="share_track_subject">Я хотел бы поделиться с вами треком</string>
+  <string name="share_track_file_body_format">Я думаю, вы можете быть заинтересованы в этом треке.
 
 Просмотреть трек можно с помощью Google Планета Земля или другого программного обоспечения для карт.</string>
 
@@ -350,33 +350,33 @@ limitations under the License.
 
   <!-- Units -->
   <!-- Time  -->
-  <string name="hour">час</string>
-  <string name="hours">часов</string>
+  <string name="voice_hour">час</string>
+  <string name="voice_hours">часов</string>
   <string name="hr">ч</string>
   <string name="min">мин</string>
-  <string name="minute">минута</string>
-  <string name="minutes">минут</string>
-  <string name="second">секунда</string>
-  <string name="seconds">секунд</string>
+  <string name="voice_minute">минута</string>
+  <string name="voice_minutes">минут</string>
+  <string name="voice_second">секунда</string>
+  <string name="voice_seconds">секунд</string>
   <string name="milliseconds">мс</string>
 
   <!-- Distance -->
   <string name="meter">м</string>
   <string name="kilometer">км</string>
-  <string name="kilometers_long">километров</string>
+  <string name="voice_kilometers">километров</string>
   <string name="feet">футов</string>
   <string name="mile">миль</string>
-  <string name="miles_long">мили</string>
+  <string name="voice_miles">мили</string>
 
   <!-- Speed and Pace -->
   <string name="kilometer_per_hour">км/ч</string>
-  <string name="kilometer_per_hour_long">километров в час</string>
+  <string name="voice_kilometer_per_hour">километров в час</string>
   <string name="min_per_kilometer">мин/км</string>
-  <string name="per_kilometer">за километр</string>
+  <string name="voice_per_kilometer">за километр</string>
   <string name="mile_per_hour">миль/ч</string>
-  <string name="mile_per_hour_long">миль в час</string>
+  <string name="voice_mile_per_hour">миль в час</string>
   <string name="min_per_mile">мин/миля</string>
-  <string name="per_mile">за милю</string>
+  <string name="voice_per_mile">за милю</string>
 
   <!-- Sensors -->
   <string name="watts">Вт</string>
@@ -473,7 +473,7 @@ limitations under the License.
   <string name="bluetooth_pairing_summary">Открыть настройки Android по bluetooth для подключения устройства</string>
   <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
   <string name="ant_options">Параметры ANT</string>
-  <string name="sensor_options">Параметры датчика</string>
+  <string name="settings_sensor">Параметры датчика</string>
 
   <!-- Bluetooth Sensor -->
   <string name="bluetooth_connected">Подключен к %s</string>
