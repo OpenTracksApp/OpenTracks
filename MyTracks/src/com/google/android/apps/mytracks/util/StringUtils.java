@@ -222,39 +222,6 @@ public class StringUtils implements DescriptionGenerator {
   }
 
   /**
-   * Formats a time for voice announcement.
-   * 
-   * @param time the time
-   */
-  public String formatTimeLong(long time) {
-    int[] parts = getTimeParts(time);
-    String secLabel =
-        context.getString(parts[0] == 1 ? R.string.voice_second : R.string.voice_seconds);
-    String minLabel =
-        context.getString(parts[1] == 1 ? R.string.voice_minute : R.string.voice_minutes);
-    String hourLabel =
-        context.getString(parts[2] == 1 ? R.string.voice_hour : R.string.voice_hours);
-
-    StringBuilder sb = new StringBuilder();
-    if (parts[2] != 0) {
-      sb.append(parts[2]);
-      sb.append(" ");
-      sb.append(hourLabel);
-      sb.append(" ");
-      sb.append(parts[1]);
-      sb.append(minLabel);
-    } else {
-      sb.append(parts[1]);
-      sb.append(" ");
-      sb.append(minLabel);
-      sb.append(" ");
-      sb.append(parts[0]);
-      sb.append(secLabel);
-    }
-    return sb.toString();
-  }
-
-  /**
    * Generates a description for a track (with information about the
    * statistics).
    *

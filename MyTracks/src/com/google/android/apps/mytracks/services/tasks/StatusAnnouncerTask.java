@@ -54,11 +54,6 @@ public class StatusAnnouncerTask implements PeriodicTask {
   private final Context context;
 
   /**
-   * String utilities.
-   */
-  private final StringUtils stringUtils;
-
-  /**
    * The interface to the text to speech engine.
    */
   protected TextToSpeech tts;
@@ -93,14 +88,8 @@ public class StatusAnnouncerTask implements PeriodicTask {
     }
   };
 
-
   public StatusAnnouncerTask(Context context) {
-    this(context, new StringUtils(context));
-  }
-
-  public StatusAnnouncerTask(Context context, StringUtils stringUtils) {
     this.context = context;
-    this.stringUtils = stringUtils;
   }
 
   /**
@@ -206,7 +195,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
         double pace = 3600000.0 / s;
         Log.w(Constants.TAG,
               "Converted speed: " + s + " to pace: " + pace);
-        speed = stringUtils.formatTimeLong((long) pace);
+        speed = getAnnounceTime((long) pace);
       }
     }
 
@@ -216,7 +205,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
         context.getString(metricUnits
                           ? R.string.voice_kilometers
                           : R.string.voice_miles),
-        stringUtils.formatTimeLong(stats.getMovingTime()),
+        getAnnounceTime(stats.getMovingTime()),
         speed,
         context.getString(speedLabel));
   }
@@ -332,5 +321,38 @@ public class StatusAnnouncerTask implements PeriodicTask {
    */
   public static int getVolumeStream() {
     return TextToSpeech.Engine.DEFAULT_STREAM;
+  }
+  
+  /**
+   * Gets a string to announce the time.
+   * 
+   * @param time the time
+   */
+  private String getAnnounceTime(long time) {
+    int[] parts = StringUtils.getTimeParts(time);
+    String secLabel =
+        context.getString(parts[0] == 1 ? R.string.voice_second : R.string.voice_seconds);
+    String minLabel =
+        context.getString(parts[1] == 1 ? R.string.voice_minute : R.string.voice_minutes);
+    String hourLabel =
+        context.getString(parts[2] == 1 ? R.string.voice_hour : R.string.voice_hours);
+
+    StringBuilder sb = new StringBuilder();
+    if (parts[2] != 0) {
+      sb.append(parts[2]);
+      sb.append(" ");
+      sb.append(hourLabel);
+      sb.append(" ");
+      sb.append(parts[1]);
+      sb.append(minLabel);
+    } else {
+      sb.append(parts[1]);
+      sb.append(" ");
+      sb.append(minLabel);
+      sb.append(" ");
+      sb.append(parts[0]);
+      sb.append(secLabel);
+    }
+    return sb.toString();
   }
 }
