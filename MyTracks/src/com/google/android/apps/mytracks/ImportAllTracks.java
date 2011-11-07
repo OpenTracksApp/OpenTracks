@@ -55,7 +55,7 @@ public class ImportAllTracks {
 
   private final Activity activity;
   private FileUtils fileUtils;
-  private boolean displayTrack;
+  private boolean singleTrackSelected;
   private String gpxPath;  
   private WakeLock wakeLock;
   private ProgressDialog progress;
@@ -79,7 +79,7 @@ public class ImportAllTracks {
     Log.i(Constants.TAG, "ImportAllTracks: Starting");
     this.activity = activity;
     fileUtils = new FileUtils();
-    displayTrack = path != null;
+    singleTrackSelected = path != null;
     gpxPath = path == null ? fileUtils.buildExternalDirectoryPath("gpx") : path;
     new Thread(runner).start();
   }
@@ -134,7 +134,7 @@ public class ImportAllTracks {
     builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
       @Override
       public void onClick(DialogInterface dialog, int which) {
-        if (displayTrack) {
+        if (singleTrackSelected) {
           long lastTrackId = importedTrackIds[importedTrackIds.length - 1];
           Uri trackUri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, lastTrackId);
 
@@ -236,14 +236,14 @@ public class ImportAllTracks {
   }
 
   /**
-   * Gets a list of the GPX files. If displayTrack is true, returns a list
-   * containing just the gpxPath file. If displayTrack is false, returns a list
-   * of GPX files under the gpxPath directory.
+   * Gets a list of the GPX files. If singleTrackSelected is true, returns a
+   * list containing just the gpxPath file. If singleTrackSelected is false,
+   * returns a list of GPX files under the gpxPath directory.
    */
   private List<File> getGpxFiles() {
     List<File> gpxFiles = new LinkedList<File>();    
     File file = new File(gpxPath);
-    if (displayTrack) {
+    if (singleTrackSelected) {
       gpxFiles.add(file);
     } else {      
       File[] gpxFileCandidates = file.listFiles();
