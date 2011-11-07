@@ -41,7 +41,7 @@ limitations under the License.
   <string name="error_unable_to_stop_recording">Anhalten unmöglich. Bitte versuche es noch einmal.</string>
   <string name="error_import_unable_to_read_file">Konnte Datei nicht lesen.</string>
   <string name="error_import_invalid_gpx_format">Datei ist nicht im GPX-Format.</string>
-  <string name="error_generic">Ein Fehler ist aufgetreten. Bitte versuche es noch einmal.</string>
+  <string name="error_sending_to_google">Ein Fehler ist aufgetreten. Bitte versuche es noch einmal.</string>
   <string name="error_export_track_does_not_exist">Track existiert nicht.</string>
   <string name="error_import_out_of_memory">Die Datei ist zu groß (maximal 500 KB). Operation abgebrochen.</string>
   <string name="error_unable_to_insert_marker">Der Wegpunkt kann nicht einfügt werden. Keine Positionsbestimmung möglich.</string>

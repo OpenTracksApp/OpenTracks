@@ -41,7 +41,7 @@ limitations under the License.
   <string name="error_unable_to_stop_recording">No es pot aturar l\'enregistrament. Proveu de nou.</string>
   <string name="error_import_unable_to_read_file">No es pot llegir des del fitxer.</string>
   <string name="error_import_invalid_gpx_format">El fitxer no conté un format GPX vàlid.</string>
-  <string name="error_generic">S\'ha produït un error. Proveu de nou.</string>
+  <string name="error_sending_to_google">S\'ha produït un error. Proveu de nou.</string>
   <string name="error_export_track_does_not_exist">No existeix la ruta.</string>
   <string name="error_import_out_of_memory">Aquest fitxer és massa gran (ha d\'ésser inferior a 500KB. S\'està cancel·lant.</string>
   <string name="error_unable_to_insert_marker">No es pot inserir un marcador. No hi ha cap ubicació fixa disponible.</string>

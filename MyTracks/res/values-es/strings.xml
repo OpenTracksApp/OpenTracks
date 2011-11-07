@@ -43,7 +43,7 @@ limitations under the License.
   <string name="error_unable_to_stop_recording">No se puede detener la grabación. Inténtelo de nuevo.</string>
   <string name="error_import_unable_to_read_file">No pude leer del archivo.</string>
   <string name="error_import_invalid_gpx_format">El archivo no tiene un format GPX válido.</string>
-  <string name="error_generic">A ocurrido un error. Por favor, inténtelo de nuevo.</string>
+  <string name="error_sending_to_google">A ocurrido un error. Por favor, inténtelo de nuevo.</string>
   <string name="error_export_track_does_not_exist">El recorrido no existe.</string>
   <string name="error_export_operation_canceled">La operación fue cancelada.</string>
   <string name="error_import_out_of_memory">El archivo es demasiado grande (tiene que ser menor a 500 KB). Abortando.</string>
