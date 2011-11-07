@@ -102,7 +102,7 @@ limitations under the License.
     </activity>
 
     <activity android:name="com.google.android.apps.mytracks.SettingsActivity"
-              android:label="@string/mytracks_settings" >
+              android:label="@string/settings_title" >
       <intent-filter>
         <category android:name="android.intent.category.PREFERENCE" />
       </intent-filter>
@@ -248,8 +248,8 @@ limitations under the License.
   <!-- Permission to get MyTracks broadcasts. For internal MyTracks communication. -->
   <permission android:name="com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS"
               android:permissionGroup="android.permission-group.LOCATION"
-              android:label="@string/mytracks_notifications_permission_label"
-              android:description="@string/mytracks_notifications_permission_description"
+              android:label="@string/notification_permission_label"
+              android:description="@string/notification_permission_label"
               android:protectionLevel="signature" />
 
   <!-- We read and write raw track data, obviously. -->

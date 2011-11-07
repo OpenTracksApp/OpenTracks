@@ -161,7 +161,7 @@ limitations under the License.
   <string name="waypointdetails_category_hint">Tipo di segnaposto</string>
 
   <!-- MyTracks Settings -->
-  <string name="mytracks_settings">Impostazioni di My Tracks</string>
+  <string name="settings_title">Impostazioni di My Tracks</string>
   <string name="settings_display">Visualizzazione</string>
   <string name="settings_recording">Registrazione</string>
   <string name="settings_sharing">Condivisione</string>
@@ -206,14 +206,14 @@ limitations under the License.
 
   <!-- Sharing -->
   <string name="share_map_subject">Vorrei condividere una mappa con te</string>
-  <string name="share_map_body_format">Credo che questa mappa potrebbe interessarti:
+  <string name="share_track_url_body_format">Credo che questa mappa potrebbe interessarti:
 
       %s</string>
-  <string name="send_track_subject">Vorrei condividere un percorso con te</string>
-  <string name="send_track_body_format">Credo che questo percorso potrebbe interessarti.
+  <string name="share_track_subject">Vorrei condividere un percorso con te</string>
+  <string name="share_track_file_body_format">Credo che questo percorso potrebbe interessarti.
 
     Per vedere questo percorso, usa Google Earth o un altro software di cartografia.</string>
-  <string name="share_track">Condividi il percorso con amici</string>
+  <string name="share_track_url">Condividi il percorso con amici</string>
 
   <!-- Visibility -->
   <string name="public_map">Pubblica</string>
@@ -259,32 +259,32 @@ limitations under the License.
 
   <!-- Units -->
   <!-- Time  -->
-  <string name="hour">ora</string>
-  <string name="hours">ore</string>
+  <string name="voice_hour">ora</string>
+  <string name="voice_hours">ore</string>
   <string name="hr">h</string>
   <string name="min">min</string>
-  <string name="minute">minuto</string>
-  <string name="minutes">minuti</string>
-  <string name="second">secondo</string>
-  <string name="seconds">secondi</string>
+  <string name="voice_minute">minuto</string>
+  <string name="voice_minutes">minuti</string>
+  <string name="voice_second">secondo</string>
+  <string name="voice_seconds">secondi</string>
 
   <!-- Distance -->
   <string name="meter">m</string>
   <string name="kilometer">km</string>
-  <string name="kilometers_long">chilometri</string>
+  <string name="voice_kilometers">chilometri</string>
   <string name="feet">pd</string>
   <string name="mile">mi</string>
-  <string name="miles_long">miglia</string>
+  <string name="voice_miles">miglia</string>
 
   <!-- Speed and Pace -->
   <string name="kilometer_per_hour">km/h</string>
-  <string name="kilometer_per_hour_long">chilometri orari</string>
+  <string name="voice_kilometer_per_hour">chilometri orari</string>
   <string name="min_per_kilometer">min/km</string>
-  <string name="per_kilometer">per chilometro</string>
+  <string name="voice_per_kilometer">per chilometro</string>
   <string name="mile_per_hour">mi/h</string>
-  <string name="mile_per_hour_long">miglia orarie</string>
+  <string name="voice_mile_per_hour">miglia orarie</string>
   <string name="min_per_mile">min/mi</string>
-  <string name="per_mile">per miglio</string>
+  <string name="voice_per_mile">per miglio</string>
 
   <!-- Stats Labels -->
   <string name="moving_time_label">Durata in moto</string>

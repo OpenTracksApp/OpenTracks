@@ -692,15 +692,15 @@ public class SendActivity extends Activity implements ProgressIndicator {
     boolean shareUrlOnly = sharedPreferences.getBoolean(
         getString(R.string.share_url_only_key), false);
     String msg = shareUrlOnly ? url : String.format(
-        getResources().getText(R.string.share_map_body_format).toString(), url);
+        getResources().getText(R.string.share_track_url_body_format).toString(), url);
 
     Intent shareIntent = new Intent(Intent.ACTION_SEND);
     shareIntent.setType("text/plain");
     shareIntent.putExtra(Intent.EXTRA_SUBJECT,
-        getResources().getText(R.string.share_map_subject).toString());
+        getResources().getText(R.string.share_track_subject).toString());
     shareIntent.putExtra(Intent.EXTRA_TEXT, msg);
     startActivity(Intent.createChooser(shareIntent,
-        getResources().getText(R.string.share_map).toString()));
+        getResources().getText(R.string.share_track_picker_title).toString()));
   }
 
   protected String getFusionTablesUrl(long trackId) {

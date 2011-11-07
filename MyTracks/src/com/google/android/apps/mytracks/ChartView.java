@@ -210,7 +210,7 @@ public class ChartView extends View {
                              R.color.elevation_border,
                              new ZoomSettings(MAX_INTERVALS,
                                  new int[] {5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000}),
-                             R.string.elevation);
+                             R.string.elevation_label);
 
     series[SPEED_SERIES] =
         new ChartValueSeries(context,

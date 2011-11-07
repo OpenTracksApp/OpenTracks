@@ -97,7 +97,7 @@ limitations under the License.
             android:checked="true"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/elevation"/>
+            android:text="@string/elevation_label"/>
           <CheckBox android:id="@+id/chart_settings_speed"
             android:checked="true"
             android:layout_width="fill_parent"
