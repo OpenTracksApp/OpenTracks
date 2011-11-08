@@ -63,6 +63,39 @@ import java.util.Set;
  */
 public class SettingsActivity extends PreferenceActivity {
 
+  // Value when the task frequency is off.
+  private static final String TASK_FREQUENCY_OFF = "0";
+  
+  // Value when the recording interval is 'Adapt battery life'.
+  private static final String RECORDING_INTERVAL_ADAPT_BATTERY_LIFE = "-2";
+  
+  // Value when the recording interval is 'Adapt accuracy'.
+  private static final String RECORDING_INTERVAL_ADAPT_ACCURACY = "-1";
+  
+  // Value for the recommended recording interval.
+  private static final String RECORDING_INTERVAL_RECOMMENDED = "0";
+
+  // Value when the auto resume timeout is never.
+  private static final String AUTO_RESUME_TIMEOUT_NEVER = "0";
+  
+  // Value when the auto resume timeout is always.
+  private static final String AUTO_RESUME_TIMEOUT_ALWAYS = "-1";
+  
+  // Value for the recommended recording distance.
+  private static final String RECORDING_DISTANCE_RECOMMENDED = "5";
+
+  // Value for the recommended track distance.  
+  private static final String TRACK_DISTANCE_RECOMMENDED = "200";
+
+  // Value for the recommended GPS accuracy.
+  private static final String GPS_ACCURACY_RECOMMENDED = "200";
+  
+  // Value when the GPS accuracy is for excellent GPS signal.
+  private static final String GPS_ACCURACY_EXCELLENT = "10";
+  
+  // Value when the GPS accuracy is for poor GPS signal.
+  private static final String GPS_ACCURACY_POOR = "5000";
+
   private BackupPreferencesListener backupListener;
   private SharedPreferences preferences;
   
@@ -106,65 +139,13 @@ public class SettingsActivity extends PreferenceActivity {
           (IntegerListPreference) findPreference(
               getString(R.string.announcement_frequency_key));
       announcementFrequency.setEnabled(false);
-      announcementFrequency.setValue("-1");
+      announcementFrequency.setValue(TASK_FREQUENCY_OFF);
       announcementFrequency.setSummary(
           R.string.settings_announcement_frequency_not_available);
     }
     
-    setMinRecordingIntervalOptions();
+    setRecordingIntervalOptions();
     setAutoResumeTimeoutOptions();
-  }
-  
-  /**
-   * Sets the display options for the min recording interval option.
-   */
-  private void setMinRecordingIntervalOptions() {
-    String[] values = getResources().getStringArray(R.array.min_recording_interval_values);
-    String[] options = new String[values.length];
-    for (int i = 0; i < values.length; i++) {
-      if (values[i].equals("-2")) {
-        options[i] = getString(R.string.value_adapt_battery_life);
-      } else if (values[i].equals("-1")) {
-        options[i] = getString(R.string.value_adapt_accuracy);
-      } else if (values[i].equals("0")) {
-        options[i] = getString(R.string.value_smallest_recommended);
-      } else {
-        int value = Integer.parseInt(values[i]);
-        String format;
-        if (value < 60) {
-          format = getString(R.string.value_integer_second);
-        } else {
-          value = value / 60;
-          format = getString(R.string.value_integer_minute);
-        }
-        options[i] = String.format(format, value);
-      }
-    }
-    ListPreference list = (ListPreference) findPreference(
-        getString(R.string.min_recording_interval_key));
-    list.setEntries(options);
-  }
-  
-  /**
-   * Sets the display options for the auto resume timeout option.
-   */
-  private void setAutoResumeTimeoutOptions() {
-    String[] values = getResources().getStringArray(R.array.auto_resume_track_timeout_values);
-    String[] options = new String[values.length];
-    for (int i = 0; i < values.length; i++) {
-      if (values[i].equals("0")) {
-        options[i] = getString(R.string.value_never);
-      } else if (values[i].equals("-1")) {
-        options[i] = getString(R.string.value_always);
-      } else {
-        int value = Integer.parseInt(values[i]);
-        String format = getString(R.string.value_integer_minute);
-        options[i] = String.format(format, value);
-      }
-    }
-    ListPreference list = (ListPreference) findPreference(
-        getString(R.string.auto_resume_track_timeout_key));
-    list.setEntries(options);
   }
   
   private void initActivitySpecifics() {
@@ -198,7 +179,7 @@ public class SettingsActivity extends PreferenceActivity {
       }
     });
     
-    // Add a confirmation dialog for the "Allow access" preference.
+    // Add a confirmation dialog for the 'Allow access' preference.
     final CheckBoxPreference allowAccessPreference = (CheckBoxPreference) findPreference(
         getString(R.string.allow_access_key));
     allowAccessPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
@@ -226,6 +207,58 @@ public class SettingsActivity extends PreferenceActivity {
     });
   }
   
+  /**
+   * Sets the display options for the 'Time between points' option.
+   */
+  private void setRecordingIntervalOptions() {
+    String[] values = getResources().getStringArray(R.array.min_recording_interval_values);
+    String[] options = new String[values.length];
+    for (int i = 0; i < values.length; i++) {
+      if (values[i].equals(RECORDING_INTERVAL_ADAPT_BATTERY_LIFE)) {
+        options[i] = getString(R.string.value_adapt_battery_life);
+      } else if (values[i].equals(RECORDING_INTERVAL_ADAPT_ACCURACY)) {
+        options[i] = getString(R.string.value_adapt_accuracy);
+      } else if (values[i].equals(RECORDING_INTERVAL_RECOMMENDED)) {
+        options[i] = getString(R.string.value_smallest_recommended);
+      } else {
+        int value = Integer.parseInt(values[i]);
+        String format;
+        if (value < 60) {
+          format = getString(R.string.value_integer_second);
+        } else {
+          value = value / 60;
+          format = getString(R.string.value_integer_minute);
+        }
+        options[i] = String.format(format, value);
+      }
+    }
+    ListPreference list = (ListPreference) findPreference(
+        getString(R.string.min_recording_interval_key));
+    list.setEntries(options);
+  }
+
+  /**
+   * Sets the display options for the 'Auto-resume timeout' option.
+   */
+  private void setAutoResumeTimeoutOptions() {
+    String[] values = getResources().getStringArray(R.array.auto_resume_track_timeout_values);
+    String[] options = new String[values.length];
+    for (int i = 0; i < values.length; i++) {
+      if (values[i].equals(AUTO_RESUME_TIMEOUT_NEVER)) {
+        options[i] = getString(R.string.value_never);
+      } else if (values[i].equals(AUTO_RESUME_TIMEOUT_ALWAYS)) {
+        options[i] = getString(R.string.value_always);
+      } else {
+        int value = Integer.parseInt(values[i]);
+        String format = getString(R.string.value_integer_minute);
+        options[i] = String.format(format, value);
+      }
+    }
+    ListPreference list = (ListPreference) findPreference(
+        getString(R.string.auto_resume_track_timeout_key));
+    list.setEntries(options);
+  }
+
   private boolean processIntent() {
     boolean showDisplaySettings = false;
     Bundle bundle = getIntent().getExtras();
@@ -306,11 +339,13 @@ public class SettingsActivity extends PreferenceActivity {
     
     setTrackColorModePreferenceListeners();
     
-    PreferenceCategory speedOptionsCategory =
-        (PreferenceCategory) findPreference(getString(R.string.track_color_mode_fixed_speed_options_key));
+    PreferenceCategory speedOptionsCategory = (PreferenceCategory) findPreference(
+        getString(R.string.track_color_mode_fixed_speed_options_key));
 
-    speedOptionsCategory.removePreference(findPreference(getString(R.string.track_color_mode_fixed_speed_slow_key)));
-    speedOptionsCategory.removePreference(findPreference(getString(R.string.track_color_mode_fixed_speed_medium_key)));
+    speedOptionsCategory.removePreference(
+        findPreference(getString(R.string.track_color_mode_fixed_speed_slow_key)));
+    speedOptionsCategory.removePreference(
+        findPreference(getString(R.string.track_color_mode_fixed_speed_medium_key)));
   }
 
   @Override
@@ -398,15 +433,17 @@ public class SettingsActivity extends PreferenceActivity {
   }
 
   private void updateTrackColorModeSettings(String trackColorMode) {
-    boolean usesFixedSpeed = trackColorMode.equals(getString(R.string.track_color_mode_value_fixed));
-    boolean usesDynamicSpeed = trackColorMode.equals(getString(R.string.track_color_mode_value_dynamic));
-    
-    findPreference(
-        getString(R.string.track_color_mode_fixed_speed_slow_display_key)).setEnabled(usesFixedSpeed);
-    findPreference(
-        getString(R.string.track_color_mode_fixed_speed_medium_display_key)).setEnabled(usesFixedSpeed);
-    findPreference(
-        getString(R.string.track_color_mode_dynamic_speed_variation_key)).setEnabled(usesDynamicSpeed);
+    boolean usesFixedSpeed = trackColorMode.equals(
+        getString(R.string.track_color_mode_value_fixed));
+    boolean usesDynamicSpeed = trackColorMode.equals(
+        getString(R.string.track_color_mode_value_dynamic));
+
+    findPreference(getString(R.string.track_color_mode_fixed_speed_slow_display_key))
+        .setEnabled(usesFixedSpeed);
+    findPreference(getString(R.string.track_color_mode_fixed_speed_medium_display_key))
+        .setEnabled(usesFixedSpeed);
+    findPreference(getString(R.string.track_color_mode_dynamic_speed_variation_key))
+        .setEnabled(usesDynamicSpeed);
   }
   
   /**
@@ -417,9 +454,9 @@ public class SettingsActivity extends PreferenceActivity {
   private void updateDisplayOptions(boolean isMetric) {
     setTaskOptions(isMetric, R.string.announcement_frequency_key);
     setTaskOptions(isMetric, R.string.split_frequency_key);
-    setMinDistanceOptions(isMetric, R.string.min_recording_distance_key);
-    setMaxDistanceOptions(isMetric, R.string.max_recording_distance_key);
-    setMinAccuracyOptions(isMetric, R.string.min_required_accuracy_key);
+    setRecordingDistanceOptions(isMetric, R.string.min_recording_distance_key);
+    setTrackDistanceOptions(isMetric, R.string.max_recording_distance_key);
+    setGpsAccuracyOptions(isMetric, R.string.min_required_accuracy_key);
   }
 
   /**
@@ -429,12 +466,12 @@ public class SettingsActivity extends PreferenceActivity {
     String[] values = getResources().getStringArray(R.array.task_frequency_values);
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {
-      if (values[i].equals("0")) {
+      if (values[i].equals(TASK_FREQUENCY_OFF)) {
         options[i] = getString(R.string.value_off);
       } else if (values[i].startsWith("-")) {
         int value = Integer.parseInt(values[i].substring(1));
-        String format = isMetric ? getString(R.string.value_integer_kilometer)
-            : getString(R.string.value_integer_mile);
+        int stringId = isMetric ? R.string.value_integer_kilometer : R.string.value_integer_mile;
+        String format = getString(stringId);
         options[i] = String.format(format, value);
       } else {
         int value = Integer.parseInt(values[i]);
@@ -448,9 +485,9 @@ public class SettingsActivity extends PreferenceActivity {
   }
   
   /**
-   * Sets the display options for min distance between points.
+   * Sets the display options for 'Distance between points' option.
    */
-  private void setMinDistanceOptions(boolean isMetric, int listId) {
+  private void setRecordingDistanceOptions(boolean isMetric, int listId) {
     String[] values = getResources().getStringArray(R.array.min_recording_distance_values);
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {
@@ -459,12 +496,13 @@ public class SettingsActivity extends PreferenceActivity {
         value = (int) (value * UnitConversions.M_TO_FT);
       }
       String format;
-      if (values[i].equals("5")) {
-        format = isMetric ? getString(R.string.value_integer_meter_recommended)
-            : getString(R.string.value_integer_feet_recommended);
+      if (values[i].equals(RECORDING_DISTANCE_RECOMMENDED)) {
+        int stringId = isMetric ? R.string.value_integer_meter_recommended
+            : R.string.value_integer_feet_recommended;
+        format = getString(stringId);
       } else {
-        format = isMetric ? getString(R.string.value_integer_meter)
-            : getString(R.string.value_integer_feet);
+        int stringId = isMetric ? R.string.value_integer_meter : R.string.value_integer_feet;
+        format = getString(stringId);
       }
       options[i] = String.format(format, value);
     }
@@ -474,36 +512,32 @@ public class SettingsActivity extends PreferenceActivity {
   }
   
   /**
-   * Sets the display options for max distance between points.
+   * Sets the display options for 'Distance between Tracks'.
    */
-  private void setMaxDistanceOptions(boolean isMetric, int listId) {
+  private void setTrackDistanceOptions(boolean isMetric, int listId) {
     String[] values = getResources().getStringArray(R.array.max_recording_distance_values);
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {
       int value = Integer.parseInt(values[i]);
       String format;
       if (isMetric) {
-        if (values[i].equals("200")) {
-          format = getString(R.string.value_integer_meter_recommended);
-        } else {
-          format = getString(R.string.value_integer_meter);
-        }
+        int stringId = values[i].equals(TRACK_DISTANCE_RECOMMENDED) 
+            ? R.string.value_integer_meter_recommended : R.string.value_integer_meter;
+        format = getString(stringId);
         options[i] = String.format(format, value);
       } else {
         value = (int) (value * UnitConversions.M_TO_FT);
         if (value < 2000) {
-          if (values[i].equals("200")) {
-            format = getString(R.string.value_integer_feet_recommended);
-          } else {
-            format = getString(R.string.value_integer_feet);
-          }
-          options[i] = String.format(format, value);          
+          int stringId = values[i].equals(TRACK_DISTANCE_RECOMMENDED) 
+              ? R.string.value_integer_feet_recommended : R.string.value_integer_feet;
+          format = getString(stringId);
+          options[i] = String.format(format, value);
         } else {
           double mile = value / UnitConversions.MI_TO_FEET;
           format = getString(R.string.value_float_mile);
-          options[i] = String.format(format, mile);          
+          options[i] = String.format(format, mile);
         }
-      } 
+      }
     }
 
     ListPreference list = (ListPreference) findPreference(getString(listId));
@@ -511,20 +545,20 @@ public class SettingsActivity extends PreferenceActivity {
   }
   
   /**
-   * Sets the display options for min accuracy.
+   * Sets the display options for 'GPS accuracy'.
    */
-  private void setMinAccuracyOptions(boolean isMetric, int listId) {
+  private void setGpsAccuracyOptions(boolean isMetric, int listId) {
     String[] values = getResources().getStringArray(R.array.min_required_accuracy_values);
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {
       int value = Integer.parseInt(values[i]);
       String format;
       if (isMetric) {
-        if (values[i].equals("200")) {
+        if (values[i].equals(GPS_ACCURACY_RECOMMENDED)) {
           format = getString(R.string.value_integer_meter_recommended);
-        } else if (values[i].equals("10")) {
+        } else if (values[i].equals(GPS_ACCURACY_EXCELLENT)) {
           format = getString(R.string.value_integer_meter_excellent_gps);
-        } else if (values[i].equals("5000")) {
+        } else if (values[i].equals(GPS_ACCURACY_POOR)) {
           format = getString(R.string.value_integer_meter_poor_gps);
         } else {
           format = getString(R.string.value_integer_meter);
@@ -533,9 +567,9 @@ public class SettingsActivity extends PreferenceActivity {
       } else {
         value = (int) (value * UnitConversions.M_TO_FT);
         if (value < 2000) {
-          if (values[i].equals("200")) {
+          if (values[i].equals(GPS_ACCURACY_RECOMMENDED)) {
             format = getString(R.string.value_integer_feet_recommended);
-          } else if (values[i].equals("10")) {
+          } else if (values[i].equals(GPS_ACCURACY_EXCELLENT)) {
             format = getString(R.string.value_integer_feet_excellent_gps);
           } else {
             format = getString(R.string.value_integer_feet);
@@ -543,7 +577,7 @@ public class SettingsActivity extends PreferenceActivity {
           options[i] = String.format(format, value);
         } else {
           double mile = value / UnitConversions.MI_TO_FEET;
-          if (values[i].equals("5000")) {
+          if (values[i].equals(GPS_ACCURACY_POOR)) {
             format = getString(R.string.value_float_mile_poor_gps);
           } else {
             format = getString(R.string.value_float_mile);
@@ -677,7 +711,8 @@ public class SettingsActivity extends PreferenceActivity {
     if(!metricUnitsPreference.isChecked()) {
       // Convert miles/h to km/h
       try {
-        metricspeed = String.valueOf((int) (Double.parseDouble(newValue) * UnitConversions.MPH_TO_KMH) + 1);
+        metricspeed = String.valueOf(
+            (int) (Double.parseDouble(newValue) * UnitConversions.MPH_TO_KMH) + 1);
       } catch (NumberFormatException e) {
         metricspeed = "0";
       }
