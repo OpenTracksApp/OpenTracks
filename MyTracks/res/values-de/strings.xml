@@ -34,31 +34,31 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">Es wurde kein Dienst zur Positionsermittlung auf diesem Gerät gefunden.</string>
-  <string name="error_no_gps">Es wurde kein GPS-Empfänger auf diesem Gerät gefunden.</string>
+  <string name="gps_not_found">Es wurde kein GPS-Empfänger auf diesem Gerät gefunden.</string>
   <string name="error_sending_to_fusion_tables">Beim Senden des Tracks an Google Fusion Tables ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.</string>
   <string name="error_sending_to_docs">Beim Senden des Tracks an Google Text &amp; Tabellen ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.</string>
-  <string name="error_unable_to_start_recording">Start der Aufzeichnung fehlgeschlagen. Bitte versuche es noch einmal.</string>
+  <string name="track_unable_to_start_recording">Start der Aufzeichnung fehlgeschlagen. Bitte versuche es noch einmal.</string>
   <string name="error_unable_to_stop_recording">Anhalten unmöglich. Bitte versuche es noch einmal.</string>
   <string name="error_import_unable_to_read_file">Konnte Datei nicht lesen.</string>
   <string name="error_import_invalid_gpx_format">Datei ist nicht im GPX-Format.</string>
   <string name="error_sending_to_google">Ein Fehler ist aufgetreten. Bitte versuche es noch einmal.</string>
   <string name="error_export_track_does_not_exist">Track existiert nicht.</string>
   <string name="error_import_out_of_memory">Die Datei ist zu groß (maximal 500 KB). Operation abgebrochen.</string>
-  <string name="error_unable_to_insert_marker">Der Wegpunkt kann nicht einfügt werden. Keine Positionsbestimmung möglich.</string>
+  <string name="marker_insert_error">Der Wegpunkt kann nicht einfügt werden. Keine Positionsbestimmung möglich.</string>
 
   <!-- Status messages -->
-  <string name="status_wait_for_gps_fix">Warte auf ein besseres GPS-Signal. Bitte stelle sicher, dass der Himmel sichtbar ist.</string>
+  <string name="gps_wait_for_fix">Warte auf ein besseres GPS-Signal. Bitte stelle sicher, dass der Himmel sichtbar ist.</string>
   <string name="status_now_recording">Ein neuer Track wird aufgezeichnet.</string>
   <string name="status_stopped_recording">Die Aufzeichnung wurde angehalten.</string>
   <string name="sending_to_fusion_tables_success">Eine neue Tabelle wurde auf google.com/fusiontables erstellt.</string>
   <string name="sending_to_my_maps_success_existing_map">Dein Track wurde auf maps.google.com gespeichert.</string>
   <string name="sending_to_docs_success_new_doc">Dein Track wurde in einer neuen Tabelle bei docs.google.com gespeichert.</string>
   <string name="sending_to_docs_success_existing_doc">Dein Track wurde an docs.google.com gesendet.</string>
-  <string name="status_need_to_enable_gps">Hier berühren, um zu den Sicherheits- und Positionseinstellungen zu gelangen. Aktiviere \'GPS-Satelliten\'. Drücke dann den Zurück-Knopf, um hierher zurückzukehren.</string>
+  <string name="gps_need_to_enable">Hier berühren, um zu den Sicherheits- und Positionseinstellungen zu gelangen. Aktiviere \'GPS-Satelliten\'. Drücke dann den Zurück-Knopf, um hierher zurückzukehren.</string>
   <string name="status_approximate_current_location">Anmerkung: Eine ungefähre Position wird angezeigt, bestimmt mittels Mobilfunkstationen und WiFi-Netzwerken.</string>
   <string name="status_no_current_location">Die Position kann derzeit nicht bestimmt werden. Aktiviere mehr Positionsquellen (siehe Sicherheits- und Positionseinstellungen) und stelle sicher, dass der Himmel sichtbar ist.</string>
   <string name="status_waypoint_inserted">Ein Wegpunkt wurde eingefügt.</string>
-  <string name="status_marker_inserted">Ein Statistikwegpunkt wurde eingefügt.</string>
+  <string name="marker_insert_success">Ein Statistikwegpunkt wurde eingefügt.</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Bitte warten…</string>
@@ -101,14 +101,14 @@ limitations under the License.
   <!--string name="ok">OK</string-->
   <string name="error">Fehler</string>
   <string name="success">Erfolgreich</string>
-  <string name="waypoint">Wegpunkt</string>
+  <string name="marker_type_waypoint">Wegpunkt</string>
   <string name="license">Lizenz</string>
   <string name="cancel">Abbrechen</string>
   <string name="save">Sichern</string>
 
   <!-- Placemark labels for start and end of track -->
-  <!--string name="start">(Start)</string-->
-  <string name="end">(Ende)</string>
+  <!--string name="marker_label_start">(Start)</string-->
+  <string name="marker_label_end">(Ende)</string>
 
   <!--  TrackList -->
   <string name="tracklist_show_track">Anzeigen</string>
@@ -141,13 +141,13 @@ limitations under the License.
 
   <!-- Waypoints list -->
   <string name="waypointslist_btn_delete_all">Alle Wegpunkte löschen</string>
-  <string name="waypointslist_this_waypoint">Dieser Wegpunkt</string>
-  <string name="waypointslist_delete_waypoint">Löschen</string>
-  <string name="waypointslist_edit_waypoint">Details bearbeiten</string>
-  <string name="waypointslist_show_waypoint">Auf der Karte zeigen</string>
-  <string name="waypointslist_btn_insert_waypoint">Wegpunkt einfügen</string>
-  <string name="waypointslist_btn_insert_statistics">Statistik einfügen</string>
-  <string name="waypointslist_pick_one">Wegpunkt auswählen. Lange berühren für mehr Optionen.</string>
+  <string name="marker_list_this_marker">Dieser Wegpunkt</string>
+  <string name="marker_list_delete_marker">Löschen</string>
+  <string name="marker_list_edit_marker">Details bearbeiten</string>
+  <string name="marker_list_show_on_map">Auf der Karte zeigen</string>
+  <string name="marker_list_insert_waypoint">Wegpunkt einfügen</string>
+  <string name="marker_list_insert_statistics">Statistik einfügen</string>
+  <string name="marker_list_pick_one">Wegpunkt auswählen. Lange berühren für mehr Optionen.</string>
 
   <!-- MyTracks Details -->
   <string name="trackdetails_title">Trackdetails</string>
@@ -159,13 +159,11 @@ limitations under the License.
   <string name="trackdetails_category_hint">Aktivität</string>
 
   <!-- MyTracks Waypoint Details -->
-  <string name="waypointdetails_title">Wegpunktdetails</string>
-  <string name="waypointdetails_name">Wegpunktname</string>
-  <string name="waypointdetails_name_hint">Wegpunktname</string>
-  <string name="waypointdetails_description">Wegpunktbeschreibung</string>
-  <string name="waypointdetails_description_hint">Wegpunktbeschreibung</string>
-  <string name="waypointdetails_category">Art des Wegpunktes (z. B. Gebäude, Schlagloch, Sehenswürdigkeit…)</string>
-  <string name="waypointdetails_category_hint">Art des Wegpunktes</string>
+  <string name="marker_detail_title">Wegpunktdetails</string>
+  <string name="marker_detail_marker_name">Wegpunktname</string>
+  <string name="marker_detail_marker_description">Wegpunktbeschreibung</string>
+  <string name="marker_detail_marker_type">Art des Wegpunktes (z. B. Gebäude, Schlagloch, Sehenswürdigkeit…)</string>
+  <string name="marker_detail_marker_type_hint">Art des Wegpunktes</string>
 
   <!-- MyTracks Settings -->
   <string name="settings_title">Einstellungen für My Tracks</string>
@@ -346,7 +344,7 @@ limitations under the License.
   <string name="sd_unavail">SD-Karte nicht verfügbar</string>
   <string name="speed">Geschwindigkeit</string>
   <string name="start_trip">Du musst erst eine Aufzeichnung beginnen.</string>
-  <string name="statistics">Statistik</string>
+  <string name="marker_type_statistics">Statistik</string>
   <string name="total_distance_label">Gesamtentfernung</string>
   <string name="distance_label">Entfernung</string>
   <string name="power">Kraft</string>

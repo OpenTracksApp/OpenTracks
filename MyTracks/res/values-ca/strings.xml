@@ -34,31 +34,31 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">No s\'ha trobat cap gestor d\'ubicacions en aquest dispositiu.</string>
-  <string name="error_no_gps">No s\'ha trobat cap proveïdor d\'ubicació GPS en aquest dispositiu.</string>
+  <string name="gps_not_found">No s\'ha trobat cap proveïdor d\'ubicació GPS en aquest dispositiu.</string>
   <string name="error_sending_to_fusion_tables">S\'ha produït un error quan s\'enviava la ruta a Google Fusion Tables. Proveu més tard.</string>
   <string name="error_sending_to_docs">S\'ha prdouït un error quan s\'enviava la ruta a Google Docs. Proveu més tard.</string>
-  <string name="error_unable_to_start_recording">No es pot iniciar l\'enregistrament. Proveu de nou.</string>
+  <string name="track_unable_to_start_recording">No es pot iniciar l\'enregistrament. Proveu de nou.</string>
   <string name="error_unable_to_stop_recording">No es pot aturar l\'enregistrament. Proveu de nou.</string>
   <string name="error_import_unable_to_read_file">No es pot llegir des del fitxer.</string>
   <string name="error_import_invalid_gpx_format">El fitxer no conté un format GPX vàlid.</string>
   <string name="error_sending_to_google">S\'ha produït un error. Proveu de nou.</string>
   <string name="error_export_track_does_not_exist">No existeix la ruta.</string>
   <string name="error_import_out_of_memory">Aquest fitxer és massa gran (ha d\'ésser inferior a 500KB. S\'està cancel·lant.</string>
-  <string name="error_unable_to_insert_marker">No es pot inserir un marcador. No hi ha cap ubicació fixa disponible.</string>
+  <string name="marker_insert_error">No es pot inserir un marcador. No hi ha cap ubicació fixa disponible.</string>
 
   <!-- Status messages -->
-  <string name="status_wait_for_gps_fix">S\'està esperant per tenir una posició GPS fixa. Assegureu-vos que el cel és visible.</string>
+  <string name="gps_wait_for_fix">S\'està esperant per tenir una posició GPS fixa. Assegureu-vos que el cel és visible.</string>
   <string name="status_now_recording">Ara s\'està enregistrant una ruta nova.</string>
   <string name="status_stopped_recording">S\'ha aturat l\'enregistrament de la ruta.</string>
   <string name="sending_to_fusion_tables_success">S\'ha creat un Google Fusion Table nou a google.com/fusiontables.</string>
   <string name="sending_to_my_maps_success_existing_map">S\'ha enviat la ruta a maps.google.com.</string>
   <string name="sending_to_docs_success_new_doc">S\'ha enviat la ruta a un full de càlcul a docs.google.com.</string>
   <string name="sending_to_docs_success_existing_doc">S\'ha enviat la ruta a docs.google.com.</string>
-  <string name="status_need_to_enable_gps">Toqueu aquí per anar als paràmetres de seguretat i ubicació i activeu \'habilita els satèl·lits GPS\'. Premeu el botó d\'anar enrere per tornar.</string>
+  <string name="gps_need_to_enable">Toqueu aquí per anar als paràmetres de seguretat i ubicació i activeu \'habilita els satèl·lits GPS\'. Premeu el botó d\'anar enrere per tornar.</string>
   <string name="status_approximate_current_location">Nota: Es mostra una ubicació determinada a partir de les xarxes sense fils i antenes telefòniques.</string>
   <string name="status_no_current_location">No es pot determinar la ubicació. Habiliteu més fonts d\'ubicació (vegeu els paràmetres de seguretat i ubicació) i assegureu-vos que el cel és visible. Proveu de nou més tard.</string>
   <string name="status_waypoint_inserted">S\'ha inserit un marcader de punt de ruta.</string>
-  <string name="status_marker_inserted">S\'ha inserit un marcador d\'estadístiques.</string>
+  <string name="marker_insert_success">S\'ha inserit un marcador d\'estadístiques.</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Espereu...</string>
@@ -100,13 +100,13 @@ limitations under the License.
   <string name="ok">D\'acord</string>
   <string name="error">Error</string>
   <string name="success">Fet</string>
-  <string name="waypoint">Punt de referència</string>
+  <string name="marker_type_waypoint">Punt de referència</string>
   <string name="cancel">Cancel·la</string>
   <string name="save">Desa</string>
 
   <!-- Placemark labels for start and end of track -->
-  <string name="start">(Inici)</string>
-  <string name="end">(Fi)</string>
+  <string name="marker_label_start">(Inici)</string>
+  <string name="marker_label_end">(Fi)</string>
 
   <!--  TrackList -->
   <string name="tracklist_show_track">Mostra</string>
@@ -138,13 +138,13 @@ limitations under the License.
 
   <!-- Waypoints list -->
   <string name="waypointslist_btn_delete_all">Elimina tots els marcadors</string>
-  <string name="waypointslist_this_waypoint">Aquest marcador</string>
-  <string name="waypointslist_delete_waypoint">Elimina</string>
-  <string name="waypointslist_edit_waypoint">Edita els detalls</string>
-  <string name="waypointslist_show_waypoint">Mostra al mapa</string>
-  <string name="waypointslist_btn_insert_waypoint">Insereix un punt de referència</string>
-  <string name="waypointslist_btn_insert_statistics">Insereix estadístiques</string>
-  <string name="waypointslist_pick_one">Seleccioneu un marcador. Mantingueu el dit per veure més opcions.</string>
+  <string name="marker_list_this_marker">Aquest marcador</string>
+  <string name="marker_list_delete_marker">Elimina</string>
+  <string name="marker_list_edit_marker">Edita els detalls</string>
+  <string name="marker_list_show_on_map">Mostra al mapa</string>
+  <string name="marker_list_insert_waypoint">Insereix un punt de referència</string>
+  <string name="marker_list_insert_statistics">Insereix estadístiques</string>
+  <string name="marker_list_pick_one">Seleccioneu un marcador. Mantingueu el dit per veure més opcions.</string>
 
   <!-- MyTracks Details -->
   <string name="trackdetails_title">Detalls de la ruta</string>
@@ -156,13 +156,11 @@ limitations under the License.
   <string name="trackdetails_category_hint">Tipus d\'activitat</string>
 
   <!-- MyTracks Waypoint Details -->
-  <string name="waypointdetails_title">Detalls del marcador</string>
-  <string name="waypointdetails_name">Nom del marcador</string>
-  <string name="waypointdetails_name_hint">Nom del marcador</string>
-  <string name="waypointdetails_description">Descripció del marcador</string>
-  <string name="waypointdetails_description_hint">Descripció del marcador</string>
-  <string name="waypointdetails_category">Tipus de marcador (e.g. edifici, sot, vista...)</string>
-  <string name="waypointdetails_category_hint">Tipus de marcador</string>
+  <string name="marker_detail_title">Detalls del marcador</string>
+  <string name="marker_detail_marker_name">Nom del marcador</string>
+  <string name="marker_detail_marker_description">Descripció del marcador</string>
+  <string name="marker_detail_marker_type">Tipus de marcador (e.g. edifici, sot, vista...)</string>
+  <string name="marker_detail_marker_type_hint">Tipus de marcador</string>
 
   <!-- MyTracks Settings -->
   <string name="settings_title">Paràmetres de My Tracks</string>
@@ -318,7 +316,7 @@ limitations under the License.
   <string name="sd_unavail">La targeta SD no està disponible</string>
   <string name="speed">Velocitat</string>
   <string name="start_trip">Heu d\'iniciar la marxa.</string>
-  <string name="statistics">Estadístiques</string>
+  <string name="marker_type_statistics">Estadístiques</string>
   <string name="total_distance_label">Distància total</string>
   <string name="distance_label">Distància</string>
   <string name="power">Energia</string>

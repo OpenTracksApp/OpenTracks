@@ -369,13 +369,11 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     try {
       long waypointId = trackRecordingService.insertWaypoint(request);
       if (waypointId >= 0) {
-        Toast.makeText(this, R.string.status_marker_inserted,
-            Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.marker_insert_success, Toast.LENGTH_LONG).show();
       }
       return waypointId;
     } catch (RemoteException e) {
-      Toast.makeText(this, R.string.error_unable_to_insert_marker,
-          Toast.LENGTH_LONG).show();
+      Toast.makeText(this, R.string.marker_insert_error, Toast.LENGTH_LONG).show();
       throw e;
     }
   }
@@ -392,7 +390,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
       // all exceptions it may throw are no longer wrapped in a RemoteException.
     } catch (Exception e) {
       Toast.makeText(this,
-          getString(R.string.error_unable_to_start_recording),
+          getString(R.string.track_unable_to_start_recording),
           Toast.LENGTH_SHORT).show();
       Log.w(TAG, "Unable to start recording.", e);
     }

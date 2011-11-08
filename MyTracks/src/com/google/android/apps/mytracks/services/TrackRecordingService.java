@@ -962,7 +962,7 @@ public class TrackRecordingService extends Service {
       wpt.setIcon(request.getIconUrl());
     }
     if (request.getName() == null) {
-      wpt.setName(getString(R.string.waypoint));
+      wpt.setName(getString(R.string.marker_type_waypoint));
     } else {
       wpt.setName(request.getName());
     }
@@ -990,7 +990,7 @@ public class TrackRecordingService extends Service {
 
     // Set the rest of the waypoint data
     waypoint.setType(Waypoint.TYPE_STATISTICS);
-    waypoint.setName(getString(R.string.statistics));
+    waypoint.setName(getString(R.string.marker_type_statistics));
     waypoint.setStatistics(waypointStatsBuilder.getStatistics());
     waypoint.setDescription(utils.generateWaypointDescription(waypoint));
     waypoint.setIcon(getString(R.string.stats_icon_url));

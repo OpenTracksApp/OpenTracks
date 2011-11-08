@@ -34,21 +34,21 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">この端末でロケーションマネージャを発見できませんでした．</string>
-  <string name="error_no_gps">この端末でGPSロケーションプロバイダを発見できました．</string>
+  <string name="gps_not_found">この端末でGPSロケーションプロバイダを発見できました．</string>
   <string name="error_sending_to_my_maps">Googleマイマップへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
   <string name="error_sending_to_fusion_tables">Google Fusion Tablesへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
   <string name="error_sending_to_docs">Google Docsへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
-  <string name="error_unable_to_start_recording">記録作成開始できません．もう一度試して下さい．</string>
+  <string name="track_unable_to_start_recording">記録作成開始できません．もう一度試して下さい．</string>
   <string name="error_unable_to_stop_recording">記録停止できません．もう一度試して下さい．</string>
   <string name="error_import_unable_to_read_file">ファイルからの読み込みができません．</string>
   <string name="error_import_invalid_gpx_format">ファイルは正しいGPX書式ではありませんでした．</string>
   <string name="error_import_generic">エラーが発生しました．もう一度試して下さい．</string>
   <string name="error_export_track_does_not_exist">トラックが存在しません．</string>
   <string name="error_import_out_of_memory">大きなファイルです(500KB未満でなければなりません)．終了します．</string>
-  <string name="error_unable_to_insert_marker">マーカーの挿入ができません．位置決定ができません．</string>
+  <string name="marker_insert_error">マーカーの挿入ができません．位置決定ができません．</string>
 
   <!-- Status messages -->
-  <string name="status_wait_for_gps_fix">GPS位置精度がよくなるまで待機しています．空が見えるところにいて下さい．</string>
+  <string name="gps_wait_for_fix">GPS位置精度がよくなるまで待機しています．空が見えるところにいて下さい．</string>
   <string name="status_now_recording">新しいトラックを記録中です．</string>
   <string name="status_stopped_recording">トラック記録を停止しました．</string>
   <string name="sending_to_my_maps_success_new_map">新しいマイマップをmap.google.comに作成しました．</string>
@@ -57,11 +57,11 @@ limitations under the License.
   <string name="sending_to_docs_success_new_doc">トラックをdocs.google.comの新しいスプレッドシートに送信しました．</string>
   <string name="sending_to_docs_success_existing_doc">トラックをdocs.google.comに送信しました．</string>
   <string name="sending_to_google_additional_info">新しいトラックが表示されるまでに数分かかることがあります．</string>
-  <string name="status_need_to_enable_gps">ここをタップして「位置情報とセキュリティの設定」を開いて「GPS機能を使用」にチェックを入れて下さい．バックボタンで戻ってください．</string>
+  <string name="gps_need_to_enable">ここをタップして「位置情報とセキュリティの設定」を開いて「GPS機能を使用」にチェックを入れて下さい．バックボタンで戻ってください．</string>
   <string name="status_approximate_current_location">ご注意: 携帯電話中継局とWi-Fiネットワークから大まかな位置を特定します．</string>
   <string name="status_no_current_location">現在位置決定ができません．位置取得源を増やし(位置情報とセキュリティの設定 をご覧ください)、空が見えるようにして下さい．もう一度試して下さい．</string>
   <string name="status_waypoint_inserted">ウェイポイントマーカーを挿入しました．</string>
-  <string name="status_marker_inserted">統計マーカーを挿入しました．</string>
+  <string name="marker_insert_success">統計マーカーを挿入しました．</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">お待ちください...</string>
@@ -110,14 +110,14 @@ limitations under the License.
   <string name="yes">はい</string>
   <string name="error">エラー</string>
   <string name="success">成功</string>
-  <string name="waypoint">ウェイポイント</string>
+  <string name="marker_type_waypoint">ウェイポイント</string>
   <string name="license">ライセンス</string>
   <string name="cancel">キャンセル</string>
   <string name="save">保存</string>
 
   <!-- Placemark labels for start and end of track -->
-  <string name="start">(開始)</string>
-  <string name="end">(終了)</string>
+  <string name="marker_label_start">(開始)</string>
+  <string name="marker_label_end">(終了)</string>
 
   <!--  TrackList -->
   <string name="tracklist_show_track">表示</string>
@@ -163,13 +163,13 @@ limitations under the License.
 
   <!-- Waypoints list -->
   <string name="waypointslist_btn_delete_all">全てのマーカーの削除</string>
-  <string name="waypointslist_this_waypoint">このマーカー</string>
-  <string name="waypointslist_delete_waypoint">削除</string>
-  <string name="waypointslist_edit_waypoint">詳細編集</string>
-  <string name="waypointslist_show_waypoint">マップに表示</string>
-  <string name="waypointslist_btn_insert_waypoint">ウェイポイントの挿入</string>
-  <string name="waypointslist_btn_insert_statistics">統計情報の挿入</string>
-  <string name="waypointslist_pick_one">マーカーを選択します．オプションを表示するには長押しして下さい．</string>
+  <string name="marker_list_this_marker">このマーカー</string>
+  <string name="marker_list_delete_marker">削除</string>
+  <string name="marker_list_edit_marker">詳細編集</string>
+  <string name="marker_list_show_on_map">マップに表示</string>
+  <string name="marker_list_insert_waypoint">ウェイポイントの挿入</string>
+  <string name="marker_list_insert_statistics">統計情報の挿入</string>
+  <string name="marker_list_pick_one">マーカーを選択します．オプションを表示するには長押しして下さい．</string>
 
   <!-- MyTracks Details -->
   <string name="trackdetails_title">トラック詳細</string>
@@ -181,13 +181,11 @@ limitations under the License.
   <string name="trackdetails_category_hint">活動タイプ</string>
 
   <!-- MyTracks Waypoint Details -->
-  <string name="waypointdetails_title">マーカー詳細</string>
-  <string name="waypointdetails_name">マーカー名</string>
-  <string name="waypointdetails_name_hint">マーカー名</string>
-  <string name="waypointdetails_description">マーカー説明</string>
-  <string name="waypointdetails_description_hint">マーカー説明</string>
-  <string name="waypointdetails_category">マーカータイプ(建物、洞穴、名所...)</string>
-  <string name="waypointdetails_category_hint">マーカータイプ</string>
+  <string name="marker_detail_title">マーカー詳細</string>
+  <string name="marker_detail_marker_name">マーカー名</string>
+  <string name="marker_detail_marker_description">マーカー説明</string>
+  <string name="marker_detail_marker_type">マーカータイプ(建物、洞穴、名所...)</string>
+  <string name="marker_detail_marker_type_hint">マーカータイプ</string>
 
   <!-- MyTracks Settings -->
   <string name="settings_title">My Tracks設定</string>
@@ -369,7 +367,7 @@ limitations under the License.
   <string name="sd_unavail">SD が発見できません</string>
   <string name="speed">速度</string>
   <string name="start_trip">移動して下さい．</string>
-  <string name="statistics">統計</string>
+  <string name="marker_type_statistics">統計</string>
   <string name="total_distance_label">合計距離</string>
   <string name="distance_label">距離</string>
   <string name="power">心拍強度</string>

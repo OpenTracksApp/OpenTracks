@@ -34,12 +34,12 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">Paikkatietoja ei löytynyt!</string>
-  <string name="error_no_gps">GPS-palvelua ei löytynyt.</string>
+  <string name="gps_not_found">GPS-palvelua ei löytynyt.</string>
   <string name="error_sending_to_my_maps">Virhe lähetettäessä reittiä Google My Maps-palveluun.</string>
   <string name="error_sending_to_fusion_tables">Virhe lähetettäessä reittiä Google Fusion Tables-palveluun.</string>
   <string name="error_sending_to_docs">Virhe lähetettäessä reittiä Google Docs-palveluun..</string>
   <string name="error_sending_generic">Yritä myöhemmin uudelleen.</string>
-  <string name="error_unable_to_start_recording">Tallennusta ei voitu aloittaa. Yritä uudelleen.</string>
+  <string name="track_unable_to_start_recording">Tallennusta ei voitu aloittaa. Yritä uudelleen.</string>
   <string name="error_unable_to_stop_recording">Tallennusta ei voitu pysäyttää. Yritä uudelleen.</string>
   <string name="error_import_unable_to_read_file">Tiedostovirhe.</string>
   <string name="error_import_invalid_gpx_format">Virheellinen GPX-formaatti.</string>
@@ -47,10 +47,10 @@ limitations under the License.
   <string name="error_export_track_does_not_exist">Reittiä ei ole olemassa.</string>
   <string name="error_export_operation_canceled">Tapahtuma keskeytettiin.</string>
   <string name="error_import_out_of_memory">Liian suuri tiedosto (maksimi 500 KB). Keskeytetään.</string>
-  <string name="error_unable_to_insert_marker">Merkintää ei voitu lisätä. Paikkatietoa ei saatavilla.</string>
+  <string name="marker_insert_error">Merkintää ei voitu lisätä. Paikkatietoa ei saatavilla.</string>
 
   <!-- Status messages -->
-  <string name="status_wait_for_gps_fix">Odotetaan parempaa GPS-yhteyttä. Varmista että taivas on näkyvissä.</string>
+  <string name="gps_wait_for_fix">Odotetaan parempaa GPS-yhteyttä. Varmista että taivas on näkyvissä.</string>
   <string name="status_now_recording">Tallennetaan uutta reittiä.</string>
   <string name="status_stopped_recording">Reitin tallentaminen lopetettiin.</string>
   <string name="sending_to_my_maps_success_new_map">Uusi Google My Map on luotu osoitteeseen maps.google.com.</string>
@@ -59,11 +59,11 @@ limitations under the License.
   <string name="sending_to_docs_success_new_doc">Reittisi on luotu taulukoksi osoitteeseen  docs.google.com.</string>
   <string name="sending_to_docs_success_existing_doc">Reittisi on lähetetty osoitteeseen docs.google.com.</string>
   <string name="sending_to_google_additional_info">Reitin näkyminen saattaa kestää muutaman minuutin.</string>
-  <string name="status_need_to_enable_gps">Avaa tästä Sijainti ja suojaus -asetukset ja valitse \'Käytä GPS-satelliitteja\'. Palaa ohjelmaan painamalla Takaisin-näppäintä.</string>
+  <string name="gps_need_to_enable">Avaa tästä Sijainti ja suojaus -asetukset ja valitse \'Käytä GPS-satelliitteja\'. Palaa ohjelmaan painamalla Takaisin-näppäintä.</string>
   <string name="status_approximate_current_location">Huomio: Näkyvä sijainti perustuu kännykkämastoista ja WLAN-verkoista arvioituun paikkatietoon.</string>
   <string name="status_no_current_location">Paikkatietoa ei löydy. Aktivoi lisää paikannusmenetelmiä (katso Asetukset) ja varmista että taivas on näkyvissä. Yritä myöhemmin uudelleen.</string>
   <string name="status_waypoint_inserted">Reittimerkintä lisätty.</string>
-  <string name="status_marker_inserted">Tilastomerkintä lisätty.</string>
+  <string name="marker_insert_success">Tilastomerkintä lisätty.</string>
   <string name="sending_to_google_upload_status">Lähetyksen tila:</string>
 
   <!-- Progress dialog -->
@@ -114,14 +114,14 @@ limitations under the License.
   <string name="ok">OK</string>
   <string name="error">Virhe</string>
   <string name="success">Valmis</string>
-  <string name="waypoint">Reittipiste</string>
+  <string name="marker_type_waypoint">Reittipiste</string>
   <string name="license">Lisenssi</string>
   <string name="cancel">Peruuta</string>
   <string name="save">Tallenna</string>
 
   <!-- Placemark labels for start and end of track -->
-  <string name="start">(Lähtö)</string>
-  <string name="end">(Maali)</string>
+  <string name="marker_label_start">(Lähtö)</string>
+  <string name="marker_label_end">(Maali)</string>
 
   <!--  TrackList -->
   <string name="tracklist_show_track">Näytä</string>
@@ -170,13 +170,13 @@ limitations under the License.
 
   <!-- Waypoints list -->
   <string name="waypointslist_btn_delete_all">Poista kaikki merkinnät</string>
-  <string name="waypointslist_this_waypoint">Tämä merkintä</string>
-  <string name="waypointslist_delete_waypoint">Poista</string>
-  <string name="waypointslist_edit_waypoint">Muokkaa tietoja</string>
-  <string name="waypointslist_show_waypoint">Näytä kartalla</string>
-  <string name="waypointslist_btn_insert_waypoint">Lisää reittipiste</string>
-  <string name="waypointslist_btn_insert_statistics">Lisää tilastot</string>
-  <string name="waypointslist_pick_one">Valitse merkintä. Pitkä painallus tuo esiin lisää vaihtoehtoja.</string>
+  <string name="marker_list_this_marker">Tämä merkintä</string>
+  <string name="marker_list_delete_marker">Poista</string>
+  <string name="marker_list_edit_marker">Muokkaa tietoja</string>
+  <string name="marker_list_show_on_map">Näytä kartalla</string>
+  <string name="marker_list_insert_waypoint">Lisää reittipiste</string>
+  <string name="marker_list_insert_statistics">Lisää tilastot</string>
+  <string name="marker_list_pick_one">Valitse merkintä. Pitkä painallus tuo esiin lisää vaihtoehtoja.</string>
 
   <!-- MyTracks Details -->
   <string name="trackdetails_title">Reitin tiedot</string>
@@ -188,13 +188,11 @@ limitations under the License.
   <string name="trackdetails_category_hint">Liikunnan muoto</string>
 
   <!-- MyTracks Waypoint Details -->
-  <string name="waypointdetails_title">Merkinnän tiedot</string>
-  <string name="waypointdetails_name">Merkinnän nimi</string>
-  <string name="waypointdetails_name_hint">Merkinnän nimi</string>
-  <string name="waypointdetails_description">Merkinnän kuvaus</string>
-  <string name="waypointdetails_description_hint">Merkinnän kuvaus</string>
-  <string name="waypointdetails_category">Merkinnän tyyppi (esim. rakennus, kuoppa, nähtävyys...)</string>
-  <string name="waypointdetails_category_hint">Merkinnän tyyppi</string>
+  <string name="marker_detail_title">Merkinnän tiedot</string>
+  <string name="marker_detail_marker_name">Merkinnän nimi</string>
+  <string name="marker_detail_marker_description">Merkinnän kuvaus</string>
+  <string name="marker_detail_marker_type">Merkinnän tyyppi (esim. rakennus, kuoppa, nähtävyys...)</string>
+  <string name="marker_detail_marker_type_hint">Merkinnän tyyppi</string>
 
   <!-- MyTracks Settings -->
   <string name="settings_title">My Tracks Asetukset</string>
@@ -395,7 +393,7 @@ limitations under the License.
   <string name="sd_unavail">Muistikortti ei ole käytettävissä</string>
   <string name="speed">Nopeus</string>
   <string name="start_trip">Sinun pitää ensin aloittaa matka.</string>
-  <string name="statistics">Tilastot</string>
+  <string name="marker_type_statistics">Tilastot</string>
   <string name="total_distance_label">Kokonaismatka</string>
   <string name="distance_label">Matka</string>
   <string name="power">Teho</string>

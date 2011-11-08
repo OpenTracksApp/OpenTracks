@@ -339,7 +339,7 @@ public class SendToFusionTables implements Runnable {
 
         if (totalLocationsRead == 0) {
           // Put a marker at the first point of the first valid segment:
-          String name = track.getName() + " " + context.getString(R.string.start);
+          String name = track.getName() + " " + context.getString(R.string.marker_label_start);
           createNewPoint(name, "", loc, MARKER_TYPE_START);
         }
 
@@ -385,7 +385,7 @@ public class SendToFusionTables implements Runnable {
         track.setDescription("<p>" + originalDescription + "</p><p>"
             + stringUtils.generateTrackDescription(track, distances, elevations)
             + "</p>");
-        String name = track.getName() + " " + context.getString(R.string.end);
+        String name = track.getName() + " " + context.getString(R.string.marker_label_end);
         return createNewPoint(name, track.getDescription(), lastLocation, MARKER_TYPE_END);
       }
 

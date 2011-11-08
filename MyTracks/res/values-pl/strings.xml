@@ -33,31 +33,31 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">Brak menedżera lokalizacji na urządzeniu!</string>
-  <string name="error_no_gps">Brak dostawcy lokalizacji GPS na urządzeniu.</string>
+  <string name="gps_not_found">Brak dostawcy lokalizacji GPS na urządzeniu.</string>
   <string name="error_sending_to_fusion_tables">Podczas przesyłania pliku do Moich Map Google pojawił się błąd. Spróbuj ponownie później.</string>
   <string name="error_sending_to_docs">Podczas przesyłania pliku do Dokumentów Google pojawił się błąd. Spróbuj ponownie później.</string>
-  <string name="error_unable_to_start_recording">Nie można rozpocząć rejestrowania. Spróbuj ponownie.</string>
+  <string name="track_unable_to_start_recording">Nie można rozpocząć rejestrowania. Spróbuj ponownie.</string>
   <string name="error_unable_to_stop_recording">Nie można zakończyć rejestrowania. Spróbuj ponownie.</string>
   <string name="error_import_unable_to_read_file">Nie można czytać z pliku.</string>
   <string name="error_import_invalid_gpx_format">Plik nie jest poprawnym plikiem GPX.</string>
   <string name="error_import_generic">Wystąpił błąd. Spróbuj ponownie.</string>
   <string name="error_export_track_does_not_exist">Trasa nie istnieje.</string>
   <string name="error_import_out_of_memory">Plik jest za duży (musi być mniejszy niż 500 KB). Przerywam.</string>
-  <string name="error_unable_to_insert_marker">Nie można wstawić markera. Brak poprawnych danych o lokalizacji.</string>
+  <string name="marker_insert_error">Nie można wstawić markera. Brak poprawnych danych o lokalizacji.</string>
 
   <!-- Status messages -->
-  <string name="status_wait_for_gps_fix">Oczekiwanie na lepsze ustalenie pozycji GPS. Upewnij się, że niebo jest widoczne.</string>
+  <string name="gps_wait_for_fix">Oczekiwanie na lepsze ustalenie pozycji GPS. Upewnij się, że niebo jest widoczne.</string>
   <string name="status_now_recording">Rejestrowanie nowej trasy.</string>
   <string name="status_stopped_recording">Zatrzymano rejestrowanie nowej trasy.</string>
   <!-- <string name="sending_to_fusion_tables_success">Utworzona nową Mapę Google na maps.google.com.</string> -->
   <string name="sending_to_my_maps_success_existing_map">Twoja trasa został wysłana do maps.google.com.</string>
   <string name="sending_to_docs_success_new_doc">Twoja trasa została wysłana do nowego arkusza na docs.google.com.</string>
   <string name="sending_to_docs_success_existing_doc">Twoja trasa została wysłana do docs.google.com.</string>
-  <string name="status_need_to_enable_gps">Tapnij tutaj, aby przejść do ustawień Lokalizacji i zabezpieczeń, a następnie zaznacz Użyj satelitów GPS. Naciśnij klawisz Wstecz, aby powrócić.</string>
+  <string name="gps_need_to_enable">Tapnij tutaj, aby przejść do ustawień Lokalizacji i zabezpieczeń, a następnie zaznacz Użyj satelitów GPS. Naciśnij klawisz Wstecz, aby powrócić.</string>
   <string name="status_approximate_current_location">Uwaga: używana jest przybliżona lokalizacja ustalona za pomocą stacji komórkowych i sieci WIFI.</string>
   <string name="status_no_current_location">Lokalizacja nie może być obecnie ustalona. Włącz wiecej źródeł (zobacz ustawienia Lokalizacji i zabezpieczeń) i upewnij się, że niebo jest widoczne. Spróbuj później.</string>
   <string name="status_waypoint_inserted">Wstawiono znacznik punktu orientacyjnego.</string>
-  <string name="status_marker_inserted">Wstawiono znacznik statystyk.</string>
+  <string name="marker_insert_success">Wstawiono znacznik statystyk.</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Proszę czekać...</string>
@@ -100,13 +100,13 @@ limitations under the License.
   <string name="ok">OK</string>
   <string name="error">Błąd</string>
   <string name="success">Powodzenie</string>
-  <string name="waypoint">Punkt orientacyjny</string>
+  <string name="marker_type_waypoint">Punkt orientacyjny</string>
   <string name="cancel">Anuluj</string>
   <string name="save">Zapisz</string>
 
   <!-- Placemark labels for start and end of track -->
-  <string name="start">(Początek)</string>
-  <string name="end">(Koniec)</string>
+  <string name="marker_label_start">(Początek)</string>
+  <string name="marker_label_end">(Koniec)</string>
 
   <!--  TrackList -->
   <string name="tracklist_show_track">Pokaż</string>
@@ -136,13 +136,13 @@ limitations under the License.
 
   <!-- Waypoints list -->
   <string name="waypointslist_btn_delete_all">Wyczyść wszystkie znaczniki</string>
-  <string name="waypointslist_this_waypoint">Ten znacznik</string>
-  <string name="waypointslist_delete_waypoint">Usuń</string>
-  <string name="waypointslist_edit_waypoint">Edytuj szczegóły</string>
-  <string name="waypointslist_show_waypoint">Pokaż na mapie</string>
-  <string name="waypointslist_btn_insert_waypoint">Wstaw punkt orientacyjny</string>
-  <string name="waypointslist_btn_insert_statistics">Wstaw statystyki</string>
-  <string name="waypointslist_pick_one">Wybierz znacznik. Naciśnij i przytrzymaj, aby wybrać opcje.</string>
+  <string name="marker_list_this_marker">Ten znacznik</string>
+  <string name="marker_list_delete_marker">Usuń</string>
+  <string name="marker_list_edit_marker">Edytuj szczegóły</string>
+  <string name="marker_list_show_on_map">Pokaż na mapie</string>
+  <string name="marker_list_insert_waypoint">Wstaw punkt orientacyjny</string>
+  <string name="marker_list_insert_statistics">Wstaw statystyki</string>
+  <string name="marker_list_pick_one">Wybierz znacznik. Naciśnij i przytrzymaj, aby wybrać opcje.</string>
 
   <!-- MyTracks Details -->
   <string name="trackdetails_title">Szczegóły trasy</string>
@@ -154,13 +154,11 @@ limitations under the License.
   <string name="trackdetails_category_hint">Typ aktywności</string>
 
   <!-- MyTracks Waypoint Details -->
-  <string name="waypointdetails_title">Szczegóły znacznika</string>
-  <string name="waypointdetails_name">Nazwa znacznika</string>
-  <string name="waypointdetails_name_hint">Nazwa znacznika</string>
-  <string name="waypointdetails_description">Opis znacznika</string>
-  <string name="waypointdetails_description_hint">Opis znacznika</string>
-  <string name="waypointdetails_category">Typ znacznika (np. budynek, jaskinia, punkt widokowy...)</string>
-  <string name="waypointdetails_category_hint">Typ znacznika</string>
+  <string name="marker_detail_title">Szczegóły znacznika</string>
+  <string name="marker_detail_marker_name">Nazwa znacznika</string>
+  <string name="marker_detail_marker_description">Opis znacznika</string>
+  <string name="marker_detail_marker_type">Typ znacznika (np. budynek, jaskinia, punkt widokowy...)</string>
+  <string name="marker_detail_marker_type_hint">Typ znacznika</string>
 
   <!-- MyTracks Settings -->
   <string name="settings_title">Ustawienia My Tracks</string>
@@ -321,7 +319,7 @@ limitations under the License.
   <string name="sd_unavail">Karta SD niedostępna</string>
   <string name="speed">Prędkość</string>
   <string name="start_trip">Musisz rozpocząć podróż.</string>
-  <string name="statistics">Statystyki</string>
+  <string name="marker_type_statistics">Statystyki</string>
   <string name="total_distance_label">Całkowita odległość</string>
   <string name="distance_label">Odległość</string>
   <string name="unknown">-</string>

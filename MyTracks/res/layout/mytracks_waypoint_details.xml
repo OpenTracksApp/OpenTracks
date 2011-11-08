@@ -30,7 +30,7 @@ limitations under the License.
       android:layout_width="fill_parent"
       android:layout_height="fill_parent"
       android:orientation="vertical">
-      <TextView android:text="@string/waypointdetails_name"
+      <TextView android:text="@string/marker_detail_marker_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"/>
       <LinearLayout
@@ -51,7 +51,7 @@ limitations under the License.
          android:autoText="true"
          android:capitalize="words"
          android:selectAllOnFocus="true"
-         android:hint="@string/waypointdetails_name_hint"
+         android:hint="@string/marker_detail_marker_name"
          android:imeOptions="actionNext"/>
       </LinearLayout>
       <LinearLayout android:id="@+id/waypointdetails_description_layout"
@@ -61,16 +61,16 @@ limitations under the License.
         android:visibility="visible"
         android:layout_weight="1">
         <TextView android:id="@+id/waypointdetails_category_label"
-          android:text="@string/waypointdetails_category"
+          android:text="@string/marker_detail_marker_type"
           android:layout_width="fill_parent"
           android:layout_height="wrap_content"/>
         <AutoCompleteTextView android:id="@+id/waypointdetails_category"
           android:layout_width="fill_parent"
           android:layout_height="wrap_content"
           android:singleLine="true"
-          android:hint="@string/waypointdetails_category_hint"
+          android:hint="@string/marker_detail_marker_type_hint"
           android:imeOptions="actionNext"/>
-        <TextView android:text="@string/waypointdetails_description"
+        <TextView android:text="@string/marker_detail_marker_description"
           android:layout_width="fill_parent"
           android:layout_height="wrap_content"/>
         <EditText android:id="@+id/waypointdetails_description"
@@ -84,7 +84,7 @@ limitations under the License.
           android:maxLines="50"
           android:gravity="top"
           android:layout_weight="1"
-          android:hint="@string/waypointdetails_description_hint"
+          android:hint="@string/marker_detail_marker_description"
           android:imeOptions="actionDone"/>
       </LinearLayout>
 

@@ -491,7 +491,7 @@ public class TrackRecordingServiceTest
     Waypoint wpt = providerUtils.getWaypoint(1);
     assertEquals(getContext().getString(R.string.stats_icon_url),
         wpt.getIcon());
-    assertEquals(getContext().getString(R.string.statistics),
+    assertEquals(getContext().getString(R.string.marker_type_statistics),
         wpt.getName());
     assertEquals(Waypoint.TYPE_STATISTICS, wpt.getType());
     assertEquals(123, wpt.getTrackId());
@@ -527,7 +527,7 @@ public class TrackRecordingServiceTest
     Waypoint wpt = providerUtils.getWaypoint(1);
     assertEquals(getContext().getString(R.string.waypoint_icon_url),
         wpt.getIcon());
-    assertEquals(getContext().getString(R.string.waypoint),
+    assertEquals(getContext().getString(R.string.marker_type_waypoint),
         wpt.getName());
     assertEquals(Waypoint.TYPE_WAYPOINT, wpt.getType());
     assertEquals(123, wpt.getTrackId());

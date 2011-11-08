@@ -34,22 +34,22 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">На этом устройстве не был обнаружен диспетчер местоположения!</string>
-  <string name="error_no_gps">На этом устройстве не был обнаружен поставщик GPS местоположения.</string>
+  <string name="gps_not_found">На этом устройстве не был обнаружен поставщик GPS местоположения.</string>
   <string name="error_sending_to_my_maps">Ошибка при отправке вашего трека в Google \"Мои карты\".</string>
   <string name="error_sending_to_fusion_tables">Ошибка при отправке вашего трека в Google Fusion Tables.</string>
   <string name="error_sending_to_docs">Ошибка при отправке вашего трека в Google Документы.</string>
   <string name="error_sending_generic">Пожалуйста, повторите попытку позже.</string>
-  <string name="error_unable_to_start_recording">Не удалось начать запись. Попробуйте еще раз.</string>
+  <string name="track_unable_to_start_recording">Не удалось начать запись. Попробуйте еще раз.</string>
   <string name="error_unable_to_stop_recording">Не удалось остановить запись. Попробуйте еще раз.</string>
   <string name="error_import_unable_to_read_file">Не удалось прочитать из файла.</string>
   <string name="error_import_invalid_gpx_format">Неверный формат GPX файла.</string>
   <string name="error_import_generic">Произошла ошибка. Пожалуйста, попробуйте еще раз.</string>
   <string name="error_export_track_does_not_exist">Трек не существует.</string>
   <string name="error_import_out_of_memory">Этот файл слишком большой (должен быть меньше, чем 500 КБ). Прервано.</string>
-  <string name="error_unable_to_insert_marker">Невозможно вставить маркер. Местоположение неизвестно.</string>
+  <string name="marker_insert_error">Невозможно вставить маркер. Местоположение неизвестно.</string>
 
   <!-- Status messages -->
-  <string name="status_wait_for_gps_fix">Ожидание сигнала GPS. Убедитесь в том, что вы находитесь под открытым небом.</string>
+  <string name="gps_wait_for_fix">Ожидание сигнала GPS. Убедитесь в том, что вы находитесь под открытым небом.</string>
   <string name="status_now_recording">Записывается новый трек.</string>
   <string name="status_stopped_recording">Запись вашего трека остановлена.</string>
   <string name="sending_to_my_maps_success_new_map">Новая Google \"Мои карты\" была создана на maps.google.com.</string>
@@ -58,11 +58,11 @@ limitations under the License.
   <string name="sending_to_docs_success_new_doc">Ваш трек был отправлен в новую электронную таблицу на docs.google.com.</string>
   <string name="sending_to_docs_success_existing_doc">Ваш трек был отправлен в docs.google.com.</string>
   <string name="sending_to_google_additional_info">Это может занять несколько минут, прежде чем появятся новые треки.</string>
-  <string name="status_need_to_enable_gps">Пожалуйста, нажмите здесь для перехода к разделу настроек Координаты и отметьте пункт \"Спутники GPS\". Для возвращения нажмите кнопку Назад.</string>
+  <string name="gps_need_to_enable">Пожалуйста, нажмите здесь для перехода к разделу настроек Координаты и отметьте пункт \"Спутники GPS\". Для возвращения нажмите кнопку Назад.</string>
   <string name="status_approximate_current_location">Примечание: приблизительное местоположение определено относительно вышек сотовой связи и беспроводных сетей.</string>
   <string name="status_no_current_location">В настоящее время местоположение не может быть определено. Включите больше источников местоположение (см. раздел настроек Координаты) и убедитесь в том, что находитесь под открытым небом. Повторите попытку позднее.</string>
   <string name="status_waypoint_inserted">Маркер путевой точки был вставлен.</string>
-  <string name="status_marker_inserted">Маркер статистики был вставлен.</string>
+  <string name="marker_insert_success">Маркер статистики был вставлен.</string>
   <string name="sending_to_google_upload_status">Статус загрузки:</string>
 
   <!-- Progress dialog -->
@@ -113,14 +113,14 @@ limitations under the License.
   <string name="ok">ОК</string>
   <string name="error">Ошибка</string>
   <string name="success">Готово</string>
-  <string name="waypoint">Путевая точка</string>
+  <string name="marker_type_waypoint">Путевая точка</string>
   <string name="license">Лицензия</string>
   <string name="cancel">Отмена</string>
   <string name="save">Сохранить</string>
 
   <!-- Placemark labels for start and end of track -->
-  <string name="start">(Старт)</string>
-  <string name="end">(Конец)</string>
+  <string name="marker_label_start">(Старт)</string>
+  <string name="marker_label_end">(Конец)</string>
 
   <!--  TrackList -->
   <string name="tracklist_show_track">Показать</string>
@@ -166,13 +166,13 @@ limitations under the License.
 
   <!-- Waypoints list -->
   <string name="waypointslist_btn_delete_all">Удалить все маркеры</string>
-  <string name="waypointslist_this_waypoint">Этот маркер</string>
-  <string name="waypointslist_delete_waypoint">Удалить</string>
-  <string name="waypointslist_edit_waypoint">Править детали</string>
-  <string name="waypointslist_show_waypoint">Показать на карте</string>
-  <string name="waypointslist_btn_insert_waypoint">Вставить путевую точку</string>
-  <string name="waypointslist_btn_insert_statistics">Вставить статистику</string>
-  <string name="waypointslist_pick_one">Выберите маркер. Нажмите и удерживайте для получения дополнительных возможностей.</string>
+  <string name="marker_list_this_marker">Этот маркер</string>
+  <string name="marker_list_delete_marker">Удалить</string>
+  <string name="marker_list_edit_marker">Править детали</string>
+  <string name="marker_list_show_on_map">Показать на карте</string>
+  <string name="marker_list_insert_waypoint">Вставить путевую точку</string>
+  <string name="marker_list_insert_statistics">Вставить статистику</string>
+  <string name="marker_list_pick_one">Выберите маркер. Нажмите и удерживайте для получения дополнительных возможностей.</string>
 
   <!-- MyTracks Details -->
   <string name="trackdetails_title">Трек детали</string>
@@ -184,13 +184,11 @@ limitations under the License.
   <string name="trackdetails_category_hint">Тип деятельности</string>
 
   <!-- MyTracks Waypoint Details -->
-  <string name="waypointdetails_title">Маркер детали</string>
-  <string name="waypointdetails_name">Имя маркера</string>
-  <string name="waypointdetails_name_hint">Имя маркера</string>
-  <string name="waypointdetails_description">Описание маркера</string>
-  <string name="waypointdetails_description_hint">Описание маркера</string>
-  <string name="waypointdetails_category">Тип маркера (например: здание, выбоина, достопримечательность...)</string>
-  <string name="waypointdetails_category_hint">Тип маркера</string>
+  <string name="marker_detail_title">Маркер детали</string>
+  <string name="marker_detail_marker_name">Имя маркера</string>
+  <string name="marker_detail_marker_description">Описание маркера</string>
+  <string name="marker_detail_marker_type">Тип маркера (например: здание, выбоина, достопримечательность...)</string>
+  <string name="marker_detail_marker_type_hint">Тип маркера</string>
 
   <!-- MyTracks Settings -->
   <string name="settings_title">Настройки My Tracks</string>
@@ -391,7 +389,7 @@ limitations under the License.
   <string name="sd_unavail">SD карта недоступна</string>
   <string name="speed">Скорость</string>
   <string name="start_trip">Вы должны начать путешествие.</string>
-  <string name="statistics">Статистика</string>
+  <string name="marker_type_statistics">Статистика</string>
   <string name="total_distance_label">Общее расстояние</string>
   <string name="distance_label">Расстояние</string>
   <string name="power">Мощность</string>

@@ -33,31 +33,31 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">Ingen platshanterare hittades på denna enhet!</string>
-  <string name="error_no_gps">Ingen GPS-positioneringstjänst hittades på denna enhet.</string>
+  <string name="gps_not_found">Ingen GPS-positioneringstjänst hittades på denna enhet.</string>
   <string name="error_sending_to_fusion_tables">Det uppstod ett fel i sändningen av ditt spår till Google Fusion Tables. Försök igen senare.</string>
   <string name="error_sending_to_docs">Det uppstod ett fel i sändningen av ditt spår till Google Dokument. Försök igen senare.</string>
-  <string name="error_unable_to_start_recording">Kan inte starta inspelningen. Försök igen.</string>
+  <string name="track_unable_to_start_recording">Kan inte starta inspelningen. Försök igen.</string>
   <string name="error_unable_to_stop_recording">Kan inte stoppa inspelningen. Försök igen.</string>
   <string name="error_import_unable_to_read_file">Kan inte läsa från fil.</string>
   <string name="error_import_invalid_gpx_format">Filen har inte ett giltigt GPX-format.</string>
   <string name="error_import_generic">Ett fel uppstod. Försök igen.</string>
   <string name="error_export_track_does_not_exist">Spåret finns inte.</string>
   <string name="error_import_out_of_memory">Den här filen är för stor (måste vara mindre än 500 KB). Avbryter.</string>
-  <string name="error_unable_to_insert_marker">Kan inte skapa markör. Ingen position tillgänglig.</string>
+  <string name="marker_insert_error">Kan inte skapa markör. Ingen position tillgänglig.</string>
 
   <!-- Status messages -->
-  <string name="status_wait_for_gps_fix">Väntar på bättre GPS-position. Se till att himlen är synlig.</string>
+  <string name="gps_wait_for_fix">Väntar på bättre GPS-position. Se till att himlen är synlig.</string>
   <string name="status_now_recording">Spelar nu in ett nytt spår.</string>
   <string name="status_stopped_recording">Stoppade inspelning av ditt spår.</string>
   <!-- <string name="sending_to_fusion_tables_success">En ny Google Mina Kartor har skapats på maps.google.com.</string> -->
   <string name="sending_to_my_maps_success_existing_map">Ditt spår har skickats till maps.google.com.</string>
   <string name="sending_to_docs_success_new_doc">Ditt spår har skickats till ett nytt kalkylblad på docs.google.com.</string>
   <string name="sending_to_docs_success_existing_doc">Ditt spår har skickats till docs.google.com.</string>
-  <string name="status_need_to_enable_gps">Klicka här för att gå till Säkerhet och Platsinställningar och kryssa i \'aktivera gps-satteliter\'. Tryck på tillbakaknappen för att återgå.</string>
+  <string name="gps_need_to_enable">Klicka här för att gå till Säkerhet och Platsinställningar och kryssa i \'aktivera gps-satteliter\'. Tryck på tillbakaknappen för att återgå.</string>
   <string name="status_approximate_current_location">OBS: En ungefärlig position som avgörs från mobilmaster och WIFI-nät visas.</string>
   <string name="status_no_current_location">En position kan för närvarande inte fastställas. Aktivera mer platskällor (se Säkerhet och Platsinställningar) och se till att himlen är synlig. Försök igen senare.</string>
   <string name="status_waypoint_inserted">En positionsmarkör har lagts in.</string>
-  <string name="status_marker_inserted">En statistikmarkör har lagts in.</string>
+  <string name="marker_insert_success">En statistikmarkör har lagts in.</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Var god vänta...</string>
@@ -100,13 +100,13 @@ limitations under the License.
   <string name="ok">OK</string>
   <string name="error">Fel</string>
   <string name="success">Lyckades</string>
-  <string name="waypoint">Positionsmärke</string>
+  <string name="marker_type_waypoint">Positionsmärke</string>
   <string name="cancel">Avbryt</string>
   <string name="save">Spara</string>
 
   <!-- Placemark labels for start and end of track -->
-  <string name="start">(Start)</string>
-  <string name="end">(Slut)</string>
+  <string name="marker_label_start">(Start)</string>
+  <string name="marker_label_end">(Slut)</string>
 
   <!--  TrackList -->
   <string name="tracklist_show_track">Visa</string>
@@ -136,13 +136,13 @@ limitations under the License.
 
   <!-- Waypoints list -->
   <string name="waypointslist_btn_delete_all">Ta bort alla markörer</string>
-  <string name="waypointslist_this_waypoint">Den här markören</string>
-  <string name="waypointslist_delete_waypoint">Ta bort</string>
-  <string name="waypointslist_edit_waypoint">Ändra detaljer</string>
-  <string name="waypointslist_show_waypoint">Visa på karta</string>
-  <string name="waypointslist_btn_insert_waypoint">Infoga positionspunkt</string>
-  <string name="waypointslist_btn_insert_statistics">Infoga statistik</string>
-  <string name="waypointslist_pick_one">Välj en markör. Tryck &amp; håll för fler alternativ.</string>
+  <string name="marker_list_this_marker">Den här markören</string>
+  <string name="marker_list_delete_marker">Ta bort</string>
+  <string name="marker_list_edit_marker">Ändra detaljer</string>
+  <string name="marker_list_show_on_map">Visa på karta</string>
+  <string name="marker_list_insert_waypoint">Infoga positionspunkt</string>
+  <string name="marker_list_insert_statistics">Infoga statistik</string>
+  <string name="marker_list_pick_one">Välj en markör. Tryck &amp; håll för fler alternativ.</string>
 
   <!-- MyTracks Details -->
   <string name="trackdetails_title">Spårdetaljer</string>
@@ -154,13 +154,11 @@ limitations under the License.
   <string name="trackdetails_category_hint">Aktivitetstyp</string>
 
   <!-- MyTracks Waypoint Details -->
-  <string name="waypointdetails_title">Markördetaljer</string>
-  <string name="waypointdetails_name">Markörnamn</string>
-  <string name="waypointdetails_name_hint">Markörnamn</string>
-  <string name="waypointdetails_description">Markörbeskrivning</string>
-  <string name="waypointdetails_description_hint">Markörbeskrivning</string>
-  <string name="waypointdetails_category">Markörtyp (e.g. byggnad, grop, sevärdhet...)</string>
-  <string name="waypointdetails_category_hint">Markörtyp</string>
+  <string name="marker_detail_title">Markördetaljer</string>
+  <string name="marker_detail_marker_name">Markörnamn</string>
+  <string name="marker_detail_marker_description">Markörbeskrivning</string>
+  <string name="marker_detail_marker_type">Markörtyp (e.g. byggnad, grop, sevärdhet...)</string>
+  <string name="marker_detail_marker_type_hint">Markörtyp</string>
 
   <!-- MyTracks Settings -->
   <string name="settings_title">My Tracks inställningar</string>
@@ -296,7 +294,7 @@ limitations under the License.
   <string name="sd_unavail">SD otillgängligt</string>
   <string name="speed">Hastighet</string>
   <string name="start_trip">Du måste starta en tur.</string>
-  <string name="statistics">Statistik</string>
+  <string name="marker_type_statistics">Statistik</string>
   <string name="total_distance_label">Total distans</string>
   <string name="distance_label">Distans</string>
   <string name="unknown">-</string>

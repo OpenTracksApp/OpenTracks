@@ -16,6 +16,112 @@ limitations under the License.
 -->
 <resources>
  
+  <!-- GPS -->
+  <string name="gps_need_to_enable"
+    translation_description="In the main view, the message on the top asking the user to enable
+      GPS.">     
+    Please tap here to go to \'Location &amp; security\' settings and check \'Use GPS satellites\'.
+    Press the back button to return.
+  </string> 
+  <string name="gps_not_found"
+    translation_description="On application start, message when there is no GPS on the device.">
+    No GPS is found on the device.
+  </string>
+  <string name="gps_wait_for_fix"
+    translation_description="In the main view, the message on the top indicating My Tracks is
+      waiting for a better GPS fix.">
+    Waiting for a better GPS fix. Make sure the sky is visible.
+  </string> 
+  
+  <!-- Marker -->    
+  <string name="marker_detail_marker_description"
+    translation_description="In the detail page for a waypoint marker, the text field for the marker
+      description.">     
+    Marker Description
+  </string>    
+  <string name="marker_detail_marker_name"
+    translation_description="In the detail page for a waypoint or statistics marker, text field for
+      the marker name.">      
+    Marker Name
+  </string>
+  <string name="marker_detail_marker_type"
+    translation_description="In the detail page for a waypoint marker, the text field for the
+      marker type, including examples.">       
+    Marker Type (e.g. Building, Pothole, Sight...)
+  </string>
+  <string name="marker_detail_marker_type_hint"
+    translation_description="In the detail page for a waypoint marker, the hint in the 'Marker Type'
+      text field when it is empty.">
+    Marker Type
+  </string>
+  <string name="marker_detail_title"
+    translation_description="In the detail page for a waypoint or statistics marker, the title of
+      the page.">
+    Marker Details
+  </string>  
+  <string name="marker_insert_error"
+    translation_description="When inserting a marker, message when not able to insert due to no GPS
+      location and asking the user to try again.">
+    Unable to insert marker. No GPS location. Try again.
+  </string>  
+  <string name="marker_insert_success"
+    translation_description="When inserting a new marker, a message indicating success.">
+    A marker was inserted.
+  </string>
+  <string name="marker_label_end"
+    translation_description="When inserting a marker to indicate the end of a track, the label at
+      the end of the marker name. E.g., the marker is named 'track_name (End)'."> 
+    (End)
+  </string>
+  <string name="marker_label_start"
+    translation_description="When inserting a marker to indicate the beginning of a track, the label
+      at the end of the marker name. E.g., the marker is named 'track_name (Start)'.">
+    (Start)
+  </string>
+  <string name="marker_list_delete_marker"
+    translation_description="In the context menu for a marker, the menu option to delete the
+      marker.">   
+    Delete
+  </string>
+  <string name="marker_list_edit_marker"
+    translation_description="In the context menu for a marker, the menu option to edit the marker's
+      metadata (e.g., name, type, etc.)."> 
+    Edit
+  </string>
+  <string name="marker_list_insert_statistics"
+    translation_description="In the Markers page, the button on the bottom to insert a statistics
+      marker.">            
+    Insert statistics
+  </string>
+  <string name="marker_list_insert_waypoint"
+    translation_description="In the Markers page, the button on the bottom to insert a waypoint
+      marker.">      
+    Insert waypoint
+  </string>
+  <string name="marker_list_pick_one"
+    translation_description="In the Markers page, the instruction at the top of the page informing
+      the user he can press and hold a marker for more options.">
+    Pick a marker. Press &amp; hold for more options.
+  </string>
+  <string name="marker_list_show_on_map"
+    translation_description="In the context menu for a marker, the menu option to show the marker
+      on the map.">      
+    Show on map
+  </string>
+  <string name="marker_list_this_marker"
+    translation_description="In the context menu for a marker, the title indicating that all the 
+      menu options below are for this marker.">      
+    This Marker
+  </string>
+  <string name="marker_type_statistics"
+    translation_description="When inserting a statistics marker, the default name of the marker.">
+    Statistics
+  </string>
+  <string name="marker_type_waypoint"
+    translation_description="When inserting a waypoint marker, the default name of the marker.">
+    Waypoint
+  </string>
+      
   <!-- Menu items for the map, chart, and stat view. -->
   <string name="menu_aggregated_statistics"
     translation_description="In the menu, to go to the aggregated statistics page.">
@@ -66,22 +172,13 @@ limitations under the License.
     translation_description="In the menu, to show a list of all the tracks.">
     Tracks
   </string> 
- 
-  <!-- Error messages when there is no GPS. -->
-  <string name="error_no_gps"
-    translation_description="On application start, message when there is no GPS on the device.">
-    No GPS is found on the device.
-  </string>
-  <string name="error_unable_to_start_recording"
+       
+  <!-- Track -->
+  <string name="track_unable_to_start_recording"
     translation_description="When starting a recording, message when not able to start due to no GPS
       location and asking the user to try again.">
     Unable to start recording. No GPS location. Try again.
   </string>
-  <string name="error_unable_to_insert_marker"
-    translation_description="When inserting a marker, message when not able to insert due to no GPS
-      location and asking the user to try again.">
-    Unable to insert marker. No GPS location. Try again.
-  </string>  
 
   <!-- Error messages when sending to Google. -->
   <string name="error_sending_to_google"
@@ -117,18 +214,6 @@ limitations under the License.
     The operation was canceled.
   </string>
 
-  <!-- GPS status messages. -->
-  <string name="status_wait_for_gps_fix"
-    translation_description="In the main view, the message on the top indicating My Tracks is
-      waiting for a better GPS fix.">
-    Waiting for a better GPS fix. Make sure the sky is visible.
-  </string>
-  <string name="status_need_to_enable_gps"
-    translation_description="In the main view, the message on the top asking the user to enable
-      GPS.">     
-    Please tap here to go to \'Location &amp; security\' settings and check \'Use GPS satellites\'.
-    Press the back button to return.
-  </string>
   <string name="status_approximate_current_location"
     translation_description="When displaying the user's current location, a status message
       indicating that GPS is not available and an approximate location is used instead.">
@@ -148,11 +233,7 @@ limitations under the License.
     Now recording a new track.
   </string>
   
-  <!-- Insert marker status message. -->
-  <string name="status_marker_inserted"
-    translation_description="When inserting a new marker, a message indicating success.">
-    A marker was inserted.
-  </string>
+
   
   <!-- Sending to Google status messages. -->
   <string name="sending_to_google_upload_status"
@@ -350,15 +431,7 @@ limitations under the License.
     Error
   </string>
 
-  <!-- Insert markers -->
-  <string name="waypoint"
-    translation_description="When inserting a waypoint marker, the default name of the marker.">
-    Waypoint
-  </string>
-  <string name="statistics"
-    translation_description="When inserting a statistics marker, the default name of the marker.">
-    Statistics
-  </string>
+
   
   <!--  Welcome dialog -->
   <string name="license"
@@ -367,18 +440,6 @@ limitations under the License.
     License
   </string>
   
-  <!-- Labels for start and end of a track -->
-  <string name="start"
-    translation_description="When inserting a marker to indicate the beginning of a track, the label
-      at the end of the marker name. E.g., the marker is named 'track_name (Start)'.">
-    (Start)
-  </string>
-  <string name="end"
-    translation_description="When inserting a marker to indicate the end of a track, the label at
-      the end of the marker name. E.g., the marker is named 'track_name (End)'."> 
-    (End)
-  </string>
-
   <!--  Tracks page -->
   <string name="tracklist_pick_one"
     translation_description="In the Tracks page, the instruction at the top of the page informing
@@ -513,42 +574,7 @@ limitations under the License.
     Import error for file %s
   </string>
 
-  <!-- Markers page. -->
-  <string name="waypointslist_pick_one"
-    translation_description="In the Markers page, the instruction at the top of the page informing
-      the user he can press and hold a marker for more options.">
-    Pick a marker. Press&amp;hold for more options.
-  </string>
-  <string name="waypointslist_btn_insert_waypoint"
-    translation_description="In the Markers page, the button on the bottom to insert a waypoint
-      marker.">      
-    Insert waypoint
-  </string>
-  <string name="waypointslist_btn_insert_statistics"
-    translation_description="In the Markers page, the button on the bottom to insert a statistics
-      marker.">            
-    Insert statistics
-  </string>
-  <string name="waypointslist_this_waypoint"
-    translation_description="In the context menu for a marker, the title indicating that all the 
-      menu options below are for this marker.">      
-    This Marker
-  </string>
-  <string name="waypointslist_show_waypoint"
-    translation_description="In the context menu for a marker, the menu option to show the marker
-      on the map.">      
-    Show on map
-  </string>
-  <string name="waypointslist_edit_waypoint"
-    translation_description="In the context menu for a marker, the menu option to edit the marker's
-      metadata (e.g., title, type, etc.)."> 
-    Edit
-  </string>
-  <string name="waypointslist_delete_waypoint"
-    translation_description="In the context menu for a marker, the menu option to delete the
-      marker.">   
-    Delete
-  </string>
+
 
   <!-- Track detail page -->
   <string name="trackdetails_title"
@@ -585,42 +611,7 @@ limitations under the License.
     Track Description
   </string>
 
-  <!-- Waypoint marker and statistics marker detail page -->
-  <string name="waypointdetails_title"
-    translation_description="In the detail page for a waypoint or statistics marker, the title of
-      the page.">
-    Marker Details
-  </string>
-  <string name="waypointdetails_name"
-    translation_description="In the detail page for a waypoint or statistics marker, text field for
-      the marker name.">      
-    Marker Name
-  </string>
-  <string name="waypointdetails_name_hint"
-    translation_description="In the detail page for a waypoint or statistics marker, the hint in the 
-      'Marker Name' text field when it is empty.">   
-    Marker Name
-  </string>
-  <string name="waypointdetails_category"
-    translation_description="In the detail page for a waypoint marker, the text field for the
-      marker type, including examples.">       
-    Marker Type (e.g. Building, Pothole, Sight...)
-  </string>
-  <string name="waypointdetails_category_hint"
-    translation_description="In the detail page for a waypoint marker, the hint in the 'Marker Type'
-      text field when it is empty.">
-    Marker Type
-  </string>
-  <string name="waypointdetails_description"
-    translation_description="In the detail page for a waypoint marker, the text field for the marker
-      description.">     
-    Marker Description
-  </string>
-  <string name="waypointdetails_description_hint"
-    translation_description="In the detail page for a waypoint marker, the hint in the 'Marker
-      Description' text field when it is empty.">     
-    Marker Description
-  </string>
+
 
   <!-- Settings page -->
   <string name="settings_title"

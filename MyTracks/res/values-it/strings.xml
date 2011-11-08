@@ -32,31 +32,31 @@ limitations under the License.
 
   <!-- Error messages -->
   <string name="error_no_location_manager">Nessuna fonte di posizione trovata su questo dispositivo.</string>
-  <string name="error_no_gps">Nessuna fonte di posizione GPS trovata su questo dispositivo.</string>
+  <string name="gps_not_found">Nessuna fonte di posizione GPS trovata su questo dispositivo.</string>
   <string name="error_sending_to_fusion_tables">Si è verificato un errore nell\'invio del percorso a Google Fusion Tables. Per favore riprova più tardi.</string>
   <string name="error_sending_to_docs">Si è verificato un errore nell\'invio del percorso a Google Docs. Per favore riporva più tardi.</string>
-  <string name="error_unable_to_start_recording">Impossibile iniziare la registrazione. Riprova.</string>
+  <string name="track_unable_to_start_recording">Impossibile iniziare la registrazione. Riprova.</string>
   <string name="error_unable_to_stop_recording">Impossibile fermare la registrazione. Riprova.</string>
   <string name="error_import_unable_to_read_file">Impossibile leggere da un file.</string>
   <string name="error_import_invalid_gpx_format">Il file non contiene dati validi in formato GPX.</string>
   <string name="error_import_generic">Si è verificato un errore. Per favore riprova.</string>
   <string name="error_export_track_does_not_exist">Il percorso non esiste.</string>
   <string name="error_import_out_of_memory">Il file è troppo grande (dev\'essere meno di 500 KB). Azione abbandonata.</string>
-  <string name="error_unable_to_insert_marker">Impossibile inserire il segnaposto. La posizione corrente non è disponibile.</string>
+  <string name="marker_insert_error">Impossibile inserire il segnaposto. La posizione corrente non è disponibile.</string>
 
   <!-- Status messages -->
-  <string name="status_wait_for_gps_fix">Sto aspettando il fix del GPS. Accertati che il cielo sia visibile.</string>
+  <string name="gps_wait_for_fix">Sto aspettando il fix del GPS. Accertati che il cielo sia visibile.</string>
   <string name="status_now_recording">Sto registrando un nuovo percorso.</string>
   <string name="status_stopped_recording">Registrazione del percorso terminata.</string>
   <!-- <string name="sending_to_fusion_tables_success">Una nuova mappa è stata creata in «Le mie mappe» su maps.google.com.</string> -->
   <string name="sending_to_my_maps_success_existing_map">Il tuo percorso è stato inviato a maps.google.com.</string>
   <string name="sending_to_docs_success_new_doc">Il tuo percorso è stato inviato ad un nuovo foglio di calcolo su docs.google.com.</string>
   <string name="sending_to_docs_success_existing_doc">Il tuo percorso è stato inviato a docs.google.com.</string>
-  <string name="status_need_to_enable_gps">Premi qui per andare a «Impostazioni di posizione e protezione» e attiva «Utilizza satelliti GPS». Poi premi il tasto di ritorno per tornare qui.</string>
+  <string name="gps_need_to_enable">Premi qui per andare a «Impostazioni di posizione e protezione» e attiva «Utilizza satelliti GPS». Poi premi il tasto di ritorno per tornare qui.</string>
   <string name="status_approximate_current_location">Nota: la posizione indicata è un\'approssimazione determinata in base alle antenne cellulari e reti WIFI vicine.</string>
   <string name="status_no_current_location">La posizione non può essere determinata. Attiva più fonti di posizione (vedi «Impostazioni di posizione e protezione») e eccertati che il cielo sia visibile. Riprova più tardi.</string>
   <string name="status_waypoint_inserted">Inserito un punto di passaggio.</string>
-  <string name="status_marker_inserted">Inserito un segnaposto con statistiche.</string>
+  <string name="marker_insert_success">Inserito un segnaposto con statistiche.</string>
 
   <!-- Progress dialog -->
   <string name="progress_title">Attendi per favore...</string>
@@ -99,13 +99,13 @@ limitations under the License.
   <string name="ok">OK</string>
   <string name="error">Errore</string>
   <string name="success">Successo</string>
-  <string name="waypoint">Punto di passaggio</string>
+  <string name="marker_type_waypoint">Punto di passaggio</string>
   <string name="cancel">Annulla</string>
   <string name="save">Salva</string>
 
   <!-- Placemark labels for start and end of track -->
-  <string name="start">(Inizio)</string>
-  <string name="end">(Fine)</string>
+  <string name="marker_label_start">(Inizio)</string>
+  <string name="marker_label_end">(Fine)</string>
 
   <!--  TrackList -->
   <string name="tracklist_show_track">Mostra</string>
@@ -134,13 +134,13 @@ limitations under the License.
 
   <!-- Waypoints list -->
   <string name="waypointslist_btn_delete_all">Elimina tutti i segnaposti</string>
-  <string name="waypointslist_this_waypoint">Questo segnaposto</string>
-  <string name="waypointslist_delete_waypoint">Elimina</string>
-  <string name="waypointslist_edit_waypoint">Modifica dettagli</string>
-  <string name="waypointslist_show_waypoint">Mostra sulla mappa</string>
-  <string name="waypointslist_btn_insert_waypoint">Inserisci punto di passaggio</string>
-  <string name="waypointslist_btn_insert_statistics">Inserisci statistiche</string>
-  <string name="waypointslist_pick_one">Scegli un segnaposto. Tieni premuto per più opzioni.</string>
+  <string name="marker_list_this_marker">Questo segnaposto</string>
+  <string name="marker_list_delete_marker">Elimina</string>
+  <string name="marker_list_edit_marker">Modifica dettagli</string>
+  <string name="marker_list_show_on_map">Mostra sulla mappa</string>
+  <string name="marker_list_insert_waypoint">Inserisci punto di passaggio</string>
+  <string name="marker_list_insert_statistics">Inserisci statistiche</string>
+  <string name="marker_list_pick_one">Scegli un segnaposto. Tieni premuto per più opzioni.</string>
 
   <!-- MyTracks Details -->
   <string name="trackdetails_title">Dettagli del percorso</string>
@@ -152,13 +152,11 @@ limitations under the License.
   <string name="trackdetails_category_hint">Tipo di attività</string>
 
   <!-- MyTracks Waypoint Details -->
-  <string name="waypointdetails_title">Dettagli sul segnaposto</string>
-  <string name="waypointdetails_name">Nome del segnaposto</string>
-  <string name="waypointdetails_name_hint">Nome del segnaposto</string>
-  <string name="waypointdetails_description">Descrizione del segnaposto</string>
-  <string name="waypointdetails_description_hint">Descrizione del segnaposto</string>
-  <string name="waypointdetails_category">Tipo di segnaposto (ad es. edificio, buca, vista...)</string>
-  <string name="waypointdetails_category_hint">Tipo di segnaposto</string>
+  <string name="marker_detail_title">Dettagli sul segnaposto</string>
+  <string name="marker_detail_marker_name">Nome del segnaposto</string>
+  <string name="marker_detail_marker_description">Descrizione del segnaposto</string>
+  <string name="marker_detail_marker_type">Tipo di segnaposto (ad es. edificio, buca, vista...)</string>
+  <string name="marker_detail_marker_type_hint">Tipo di segnaposto</string>
 
   <!-- MyTracks Settings -->
   <string name="settings_title">Impostazioni di My Tracks</string>
@@ -293,7 +291,7 @@ limitations under the License.
   <string name="sd_unavail">Scheda SD non disponibile</string>
   <string name="speed">Velocità</string>
   <string name="start_trip">Devi prima iniziare un percorso.</string>
-  <string name="statistics">Statistiche</string>
+  <string name="marker_type_statistics">Statistiche</string>
   <string name="total_distance_label">Distanza totale</string>
   <string name="distance_label">Distanza</string>
   <string name="unknown">-</string>
