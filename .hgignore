@@ -1,0 +1,11 @@
+syntax:glob
+
+*/bin
+*/gen/**
+*/proguard/**
+.metadata
+MyTracksTest/AnnotationProcessor.log
+**/*.pyc
+**/*.pyo
+syntax: glob
+MyTracksTest/hs_err_pid*.log
