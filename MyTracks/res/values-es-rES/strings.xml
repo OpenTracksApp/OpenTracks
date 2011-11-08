@@ -41,12 +41,12 @@ limitations under the License.
   <!--  TrackList -->
   <string name="tracklist_send_to_fusiontables">Enviar a Google Fusion Tables</string>
   <string name="tracklist_send_to_new_fusiontable">Enviar a nueva Google Fusion Table</string>
-  <string name="tracklist_save_as_csv">Guardar en archivo CSV</string>
-  <string name="tracklist_save_as_tcx">Guardar en archivo TCX</string>
+  <string name="track_list_save_csv_file">Guardar en archivo CSV</string>
+  <string name="track_list_save_tcx_file">Guardar en archivo TCX</string>
   <string name="tracklist_btn_send_all_to_fusiontables">Enviar a Google Fusion Tables</string>
   <!-- Export All -->
-  <string name="tracklist_share_csv_file">Un archivo CSV</string>
-  <string name="tracklist_share_tcx_file">Un archivo TCX</string>
+  <string name="track_list_share_csv_file">Un archivo CSV</string>
+  <string name="track_list_share_tcx_file">Un archivo TCX</string>
 
   <!-- Waypoints list -->
 

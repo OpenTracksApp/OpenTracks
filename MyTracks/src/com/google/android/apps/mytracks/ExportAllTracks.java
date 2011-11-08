@@ -130,7 +130,7 @@ public class ExportAllTracks {
   }
 
   private void makeProgressDialog(final int trackCount) {
-    String exportMsg = activity.getString(R.string.tracklist_btn_export_all);
+    String exportMsg = activity.getString(R.string.track_list_export_all);
     progress = new ProgressDialog(activity);
     progress.setIcon(android.R.drawable.ic_dialog_info);
     progress.setTitle(exportMsg);

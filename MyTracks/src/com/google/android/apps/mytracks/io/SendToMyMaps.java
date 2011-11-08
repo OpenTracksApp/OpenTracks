@@ -331,7 +331,7 @@ public class SendToMyMaps implements Runnable {
       if (totalSegmentsUploaded > 1) {
         splitTrack.setName(splitTrack.getName() + " "
             + String.format(
-                context.getString(R.string.track_part_format), totalSegmentsUploaded));
+                context.getString(R.string.send_google_track_part_format), totalSegmentsUploaded));
       }
       totalSegmentsUploaded++;
       Log.d(TAG,

@@ -35,7 +35,7 @@ limitations under the License.
   <string name="gps_not_found">Nessuna fonte di posizione GPS trovata su questo dispositivo.</string>
   <string name="error_sending_to_fusion_tables">Si è verificato un errore nell\'invio del percorso a Google Fusion Tables. Per favore riprova più tardi.</string>
   <string name="error_sending_to_docs">Si è verificato un errore nell\'invio del percorso a Google Docs. Per favore riporva più tardi.</string>
-  <string name="track_unable_to_start_recording">Impossibile iniziare la registrazione. Riprova.</string>
+  <string name="track_record_error">Impossibile iniziare la registrazione. Riprova.</string>
   <string name="error_unable_to_stop_recording">Impossibile fermare la registrazione. Riprova.</string>
   <string name="error_import_unable_to_read_file">Impossibile leggere da un file.</string>
   <string name="error_import_invalid_gpx_format">Il file non contiene dati validi in formato GPX.</string>
@@ -46,7 +46,7 @@ limitations under the License.
 
   <!-- Status messages -->
   <string name="gps_wait_for_fix">Sto aspettando il fix del GPS. Accertati che il cielo sia visibile.</string>
-  <string name="status_now_recording">Sto registrando un nuovo percorso.</string>
+  <string name="track_record_success">Sto registrando un nuovo percorso.</string>
   <string name="status_stopped_recording">Registrazione del percorso terminata.</string>
   <!-- <string name="sending_to_fusion_tables_success">Una nuova mappa è stata creata in «Le mie mappe» su maps.google.com.</string> -->
   <string name="sending_to_my_maps_success_existing_map">Il tuo percorso è stato inviato a maps.google.com.</string>
@@ -87,11 +87,11 @@ limitations under the License.
   <string name="recorded_date">Registrato</string>
   <string name="category">Tipo di attività</string>
   <string name="waypoint_category">Tipo di segnaposto</string>
-  <string name="track_part_format">(Parte %d)</string>
+  <string name="send_google_track_part_format">(Parte %d)</string>
 
   <!-- Used by the track recording service -->
-  <string name="recording_your_track">Registrazione del percorso in corso...</string>
-  <string name="new_track_format">Percorso %d</string>
+  <string name="track_record_notification">Registrazione del percorso in corso...</string>
+  <string name="track_name_format">Percorso %d</string>
 
   <!-- Common -->
   <string name="no">No</string>
@@ -108,29 +108,29 @@ limitations under the License.
   <string name="marker_label_end">(Fine)</string>
 
   <!--  TrackList -->
-  <string name="tracklist_show_track">Mostra</string>
+  <string name="track_list_show_on_map">Mostra</string>
   <!-- <string name="tracklist_send_to_fusiontables">Invia a «Le mie mappe» di Google</string> -->
   <!-- <string name="tracklist_send_to_new_fusiontable">Invia a nuova mappa in «Le mie mappe» di Google</string>  -->
   <string name="tracklist_send_to_docs">Invia a Google Docs</string>
-  <string name="tracklist_send_to_google">Invia a Google...</string>
-  <string name="tracklist_delete_track">Elimina dal telefono...</string>
-  <string name="tracklist_edit_track">Modifica dettagli</string>
-  <string name="tracklist_write_to_sd">Salva su scheda SD...</string>
-  <string name="tracklist_save_as_gpx">Salva in un file GPX</string>
-  <string name="tracklist_save_as_kml">Salva in un file KML</string>
+  <string name="track_list_send_google">Invia a Google...</string>
+  <string name="track_list_delete_track">Elimina dal telefono...</string>
+  <string name="track_list_edit_track">Modifica dettagli</string>
+  <string name="track_list_save_sd">Salva su scheda SD...</string>
+  <string name="track_list_save_gpx_file">Salva in un file GPX</string>
+  <string name="track_list_save_kml_file">Salva in un file KML</string>
   <!-- <string name="tracklist_btn_send_all_to_fusiontables">Invia a «Le mie mappe» di Google</string> -->
-  <string name="tracklist_btn_delete_all">Elimina tutti i percorsi</string>
+  <string name="track_list_delete_all">Elimina tutti i percorsi</string>
   <!-- Export All -->
-  <string name="tracklist_btn_export_all">Esporta tutti i percorsi</string>
+  <string name="track_list_export_all">Esporta tutti i percorsi</string>
   <string name="export_done">Esportazione terminata.</string>
-  <string name="tracklist_pick_one">Scegli un percorso. Tieni premuto per più opzioni.</string>
+  <string name="track_list_pick_one">Scegli un percorso. Tieni premuto per più opzioni.</string>
   <string name="tracklist_all_tracks">Tutti i percorsi:</string>
-  <string name="tracklist_this_track">Questo percorso</string>
-  <string name="tracklist_share_track">Condividi con amici...</string>
-  <string name="tracklist_share_link">Un link alla mappa</string>
-  <string name="tracklist_share_gpx_file">Un file GPX</string>
-  <string name="tracklist_share_kml_file">Un file KML</string>
-  <string name="tracklist_clear_map">Cancella la mappa</string>
+  <string name="track_list_this_track">Questo percorso</string>
+  <string name="track_list_share_track">Condividi con amici...</string>
+  <string name="track_list_share_url">Un link alla mappa</string>
+  <string name="track_list_share_gpx_file">Un file GPX</string>
+  <string name="track_list_share_kml_file">Un file KML</string>
+  <string name="track_list_clear_map">Cancella la mappa</string>
 
   <!-- Waypoints list -->
   <string name="waypointslist_btn_delete_all">Elimina tutti i segnaposti</string>
@@ -143,13 +143,11 @@ limitations under the License.
   <string name="marker_list_pick_one">Scegli un segnaposto. Tieni premuto per più opzioni.</string>
 
   <!-- MyTracks Details -->
-  <string name="trackdetails_title">Dettagli del percorso</string>
-  <string name="trackdetails_name">Nome del percorso</string>
-  <string name="trackdetails_name_hint">Nome del percorso</string>
-  <string name="trackdetails_description">Descrizione del percorso</string>
-  <string name="trackdetails_description_hint">Descrizione del percorso</string>
-  <string name="trackdetails_category">Tipo di attività (ad es. escursionismo, ciclismo, corsa, arrampicata...)</string>
-  <string name="trackdetails_category_hint">Tipo di attività</string>
+  <string name="track_detail_title">Dettagli del percorso</string>
+  <string name="track_detail_track_name">Nome del percorso</string>
+  <string name="track_detail_track_description">Descrizione del percorso</string>
+  <string name="track_detail_activity_type">Tipo di attività (ad es. escursionismo, ciclismo, corsa, arrampicata...)</string>
+  <string name="track_detail_activity_type_hint">Tipo di attività</string>
 
   <!-- MyTracks Waypoint Details -->
   <string name="marker_detail_title">Dettagli sul segnaposto</string>

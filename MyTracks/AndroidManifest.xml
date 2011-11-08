@@ -67,7 +67,7 @@ limitations under the License.
     <activity android:name="com.google.android.apps.mytracks.WaypointsList" />
 
     <activity android:name="com.google.android.apps.mytracks.TrackDetails"
-              android:label="@string/trackdetails_title">
+              android:label="@string/track_detail_title">
       <intent-filter>
         <action android:name="android.intent.action.EDIT" />
         <category android:name="android.intent.category.DEFAULT" />

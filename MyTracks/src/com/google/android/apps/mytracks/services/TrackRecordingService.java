@@ -495,7 +495,7 @@ public class TrackRecordingService extends Service {
           this, 0 /* requestCode */, new Intent(this, MyTracks.class),
           0 /* flags */);
       notification.setLatestEventInfo(this, getString(R.string.app_name),
-          getString(R.string.recording_your_track), contentIntent);
+          getString(R.string.track_record_notification), contentIntent);
       notification.flags += Notification.FLAG_NO_CLEAR;
       apiLevelAdapter.startForeground(this, notificationManager, 1,
           notification);

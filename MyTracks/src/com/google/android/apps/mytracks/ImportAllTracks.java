@@ -150,7 +150,7 @@ public class ImportAllTracks {
   }
 
   private void makeProgressDialog(final int trackCount) {
-    String importMsg = activity.getString(R.string.tracklist_btn_import_all);
+    String importMsg = activity.getString(R.string.track_list_import_all);
     progress = new ProgressDialog(activity);
     progress.setIcon(android.R.drawable.ic_dialog_info);
     progress.setTitle(importMsg);

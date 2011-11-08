@@ -32,7 +32,7 @@ limitations under the License.
       android:layout_height="wrap_content"
       android:textSize="16dip"
       android:textColor="#fff"
-      android:text="@string/tracklist_pick_one"
+      android:text="@string/track_list_pick_one"
       android:layout_weight="0"/>
   </LinearLayout>
   <ListView android:id="@android:id/list"
@@ -43,15 +43,15 @@ limitations under the License.
     <LinearLayout style="@style/ButtonSpacer"/>
     <Button android:id="@+id/tracklist_btn_import_all"
       android:layout_gravity="left"
-      android:text="@string/tracklist_btn_import_all"
+      android:text="@string/track_list_import_all"
       style="@style/Button"/>
     <Button android:id="@+id/tracklist_btn_export_all"
       android:layout_gravity="center_horizontal"
-      android:text="@string/tracklist_btn_export_all"
+      android:text="@string/track_list_export_all"
       style="@style/Button"/>
     <Button android:id="@+id/tracklist_btn_delete_all"
       android:layout_gravity="right"
-      android:text="@string/tracklist_btn_delete_all"
+      android:text="@string/track_list_delete_all"
       style="@style/Button"/>
     <LinearLayout style="@style/ButtonSpacer"/>
   </LinearLayout>

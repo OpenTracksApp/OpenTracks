@@ -384,14 +384,11 @@ public class MyTracks extends TabActivity implements OnTouchListener {
       long recordingTrackId = trackRecordingService.startNewTrack();
       // Select the recording track.
       dataHub.loadTrack(recordingTrackId);
-      Toast.makeText(this, getString(R.string.status_now_recording),
-          Toast.LENGTH_SHORT).show();
+      Toast.makeText(this, getString(R.string.track_record_success), Toast.LENGTH_SHORT).show();
       // TODO: We catch Exception, because after eliminating the service process
       // all exceptions it may throw are no longer wrapped in a RemoteException.
     } catch (Exception e) {
-      Toast.makeText(this,
-          getString(R.string.track_unable_to_start_recording),
-          Toast.LENGTH_SHORT).show();
+      Toast.makeText(this, getString(R.string.track_record_error), Toast.LENGTH_SHORT).show();
       Log.w(TAG, "Unable to start recording.", e);
     }
   }

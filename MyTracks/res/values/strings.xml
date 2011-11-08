@@ -172,14 +172,162 @@ limitations under the License.
     translation_description="In the menu, to show a list of all the tracks.">
     Tracks
   </string> 
-       
+  
+  <!-- Send Google -->    
+  <string name="send_google_track_part_format"
+    translation_description="When sending a track to Google, the string format to name segments
+      when splitting a large track. E.g., '(Part 1)'.">
+    (Part %d)
+  </string>
+  
   <!-- Track -->
-  <string name="track_unable_to_start_recording"
+  <string name="track_detail_activity_type"
+    translation_description="In the detail page for a track, the text field for the activity type,
+      including for examples.">
+    Activity Type (e.g. hiking, cycling, running, climbing...)
+  </string>
+  <string name="track_detail_activity_type_hint"
+    translation_description="In the detail page for a track, the hint in the 'Activity Type' text
+      field when it is empty.">  
+    Activity Type
+  </string>
+  <string name="track_detail_title"
+    translation_description="In the detail page for a track, the title of the page.">
+    Track Details
+  </string>
+  <string name="track_detail_track_description"
+    translation_description="In the detail page for a track, the text field for the track 
+      description.">  
+    Track Description
+  </string>
+  <string name="track_detail_track_name"
+    translation_description="In the detail page for a track, the text field for the track name.">
+    Track Name
+  </string>
+  <string name="track_list_clear_map"
+    translation_description="In the context menu for a track, the menu option to clear the map
+      of any track.">
+    Clear map
+  </string>
+  <string name="track_list_delete_all"
+    translation_description="In the Tracks page, the button on the bottom to delete all tracks.">
+    Delete all
+  </string>
+  <string name="track_list_delete_track"
+    translation_description="In the context menu for a track, the menu option to delete the
+      track from the phone.">
+    Delete from phone...
+  </string>
+  <string name="track_list_edit_track"
+    translation_description="In the context menu for a track, the menu option to edit the track's 
+      metadata (e.g., name, activity type, etc.).">
+    Edit
+  </string>
+  <string name="track_list_export_all"
+    translation_description="In the Tracks page, the button on the bottom to export all tracks.">
+    Export all
+  </string>  
+  <string name="track_list_import_all"
+    translation_description="In the Tracks page, the button on the bottom to import all tracks.">
+    Import all
+  </string>      
+  <string name="track_list_pick_one"
+    translation_description="In the Tracks page, the instruction at the top of the page informing
+      the user he can press and hold a track for more options.">
+    Pick a track. Press &amp; hold for more options.
+  </string>
+  <string name="track_list_save_csv_file"
+    translation_description="In the context menu for a track, under the 'Save to SD card...'
+      option, the menu option to save the track as a CSV file.">      
+    Save as a CSV file
+  </string>
+  <string name="track_list_save_gpx_file"
+    translation_description="In the context menu for a track, under the 'Save to SD card...'
+      option, the menu option to save the track as a GPX file.">     
+    Save as a GPX file
+  </string>
+  <string name="track_list_save_kml_file"
+    translation_description="In the context menu for a track, under the 'Save to SD card...'
+      option, the menu option to save the track as a KML file.">           
+    Save as a KML file
+  </string>
+  <string name="track_list_save_sd"
+    translation_description="In the context menu for a track, the menu option to save the track to
+      the SD card.">       
+    Save to SD card...
+  </string>   
+  <string name="track_list_save_tcx_file"
+    translation_description="In the context menu for a track, under the 'Save to SD card...'
+      option, the menu option to save the track as a TCX file.">       
+    Save as a TCX file
+  </string>
+  <string name="track_list_send_google"
+    translation_description="In the context menu for a track, the menu option to send the track to
+      Google.">
+    Send to Google...
+  </string>
+  <string name="track_list_share_csv_file"
+    translation_description="In the context menu for a track, under the 'Share with friends...'
+      option, the menu option to share the track as a CSV file with friends.">  
+    A CSV file
+  </string>
+  <string name="track_list_share_gpx_file"
+    translation_description="In the context menu for a track, under the 'Share with friends...'
+      option, the menu option to share the track as a GPX file with friends.">     
+    A GPX file
+  </string>
+  <string name="track_list_share_kml_file"
+    translation_description="In the context menu for a track, under the 'Share with friends...'
+      option, the menu option to share the track as a KML file with friends.">
+    A KML file
+  </string>
+  <string name="track_list_share_tcx_file"
+    translation_description="In the context menu for a track, under the 'Share with friends...'
+      option, the menu option to share the track as a TCX file with friends."> 
+   A TCX file
+  </string>  
+  <string name="track_list_share_track"
+    translation_description="In the context menu for a track, the menu option to share the track
+      with friends through other applications.">
+    Share with friends...
+  </string>
+  <string name="track_list_share_url"
+    translation_description="In the context menu for a track, under the 'Share with friends...'
+      option, the menu option to save a track to My Maps or Fusion Tables and share the URL with
+      friends.">
+    My Map or Fusion Table URL
+  </string>
+  <string name="track_list_show_on_map"
+    translation_description="In the context menu for a track, the menu option to show the track on
+      the map.">
+    Show on map
+  </string>
+  <string name="track_list_this_track"
+    translation_description="In the context menu for a track, the title indicating that all the menu
+      options below are for this track.">
+    This Track
+  </string>
+  <string name="track_name_format"
+    translation_description="When creating a new track, the string format to name the track. E.g.,
+      'Track 1'.">
+    Track %d
+  </string>
+  <string name="track_record_error"
     translation_description="When starting a recording, message when not able to start due to no GPS
       location and asking the user to try again.">
     Unable to start recording. No GPS location. Try again.
   </string>
-
+  <string name="track_record_notification"
+    translation_description="When recording a track, the message on the My Tracks notification 
+      informing the user that My Tracks is actively recording his track.">
+    Recording your track...
+  </string>
+  <string name="track_record_success"
+    translation_description="When starting a new track recording, a status message indicating
+      success.">
+    Now recording a new track.
+  </string>
+  
   <!-- Error messages when sending to Google. -->
   <string name="error_sending_to_google"
     translation_description="When sending a track to Google, a message indicating that an error has
@@ -225,15 +373,6 @@ limitations under the License.
     GPS is not available. Current location cannot be determined. Enable more location sources (see
     \'Location &amp; security\' settings) and make sure the sky is visible. Try again later.
   </string>
-  
-  <!-- Record track status message. -->
-  <string name="status_now_recording"
-    translation_description="When starting a new track recording, a status message indicating
-      success.">
-    Now recording a new track.
-  </string>
-  
-
   
   <!-- Sending to Google status messages. -->
   <string name="sending_to_google_upload_status"
@@ -381,24 +520,7 @@ limitations under the License.
       for the activity type. E.g., 'Activity type: hiking'.">
     Activity type
   </string>
-
-  <!-- Used by the track recording service -->
-  <string name="recording_your_track"
-    translation_description="When recording a track, the message on the My Tracks notification 
-      informing the user that My Tracks is actively recording his track.">
-    Recording your track...
-  </string>
-  <string name="new_track_format"
-    translation_description="When creating a new track, the string format to name the track. E.g.,
-      'Track 1'.">
-    Track %d
-  </string>  
-  <string name="track_part_format"
-    translation_description="When sending a track to Google, the string format to name segments
-      when splitting a large track. E.g., '(Part 1)'.">
-    (Part %d)
-  </string>
-      
+  
   <!-- Button texts -->
   <string name="yes"
     translation_description="Text on the button to say yes.">
@@ -430,125 +552,12 @@ limitations under the License.
     translation_description="The title on the alert dialog to indicate error.">
     Error
   </string>
-
-
   
   <!--  Welcome dialog -->
   <string name="license"
     translation_description="In the welcome dialog, the text on the bottom button to view the terms
       of service agreement.">
     License
-  </string>
-  
-  <!--  Tracks page -->
-  <string name="tracklist_pick_one"
-    translation_description="In the Tracks page, the instruction at the top of the page informing
-      the user he can press and hold a track for more options.">
-    Pick a track. Press&amp;hold for more options.
-  </string>
-  <string name="tracklist_btn_import_all"
-    translation_description="In the Tracks page, the button on the bottom to import all tracks.">
-    Import all
-  </string>
-  <string name="tracklist_btn_export_all"
-    translation_description="In the Tracks page, the button on the bottom to export all tracks.">
-    Export all
-  </string>  
-  <string name="tracklist_btn_delete_all"
-    translation_description="In the Tracks page, the button on the bottom to delete all tracks.">
-    Delete all
-  </string>
-  
-  <!-- A track's context menu -->
-  <string name="tracklist_this_track"
-    translation_description="In the context menu for a track, the title indicating that all the menu
-      options below are for this track.">
-    This Track
-  </string>
-  <string name="tracklist_show_track"
-    translation_description="In the context menu for a track, the menu option to show the track on
-      the map.">
-    Show on map
-  </string>
-  <string name="tracklist_edit_track"
-    translation_description="In the context menu for a track, the menu option to edit the track's 
-      metadata (e.g., title, activity type, etc.).">
-    Edit
-  </string>
-  <string name="tracklist_send_to_google"
-    translation_description="In the context menu for a track, the menu option to send the track to
-      Google.">
-    Send to Google...
-  </string>
-  <string name="tracklist_share_track"
-    translation_description="In the context menu for a track, the menu option to share the track
-      with friends through other applications.">
-    Share with friends...
-  </string>
-  <string name="tracklist_write_to_sd"
-    translation_description="In the context menu for a track, the menu option to write the track to
-      the SD card.">       
-    Write to SD card...
-  </string>      
-  <string name="tracklist_clear_map"
-    translation_description="In the context menu for a track, the menu option to clear the map
-      of any track.">
-    Clear map
-  </string>
-  <string name="tracklist_delete_track"
-    translation_description="In the context menu for a track, the menu option to delete the
-      track from the phone.">
-    Delete from phone...
-  </string>
-  
-  <!--  'Share with friends...' menu options. -->
-  <string name="tracklist_share_link"
-    translation_description="In the context menu for a track, under the 'Share with friends...'
-      option, the menu option to save a track to My Maps or Fusion Tables and share the URL with
-      friends.">
-    My Map or Fusion Table URL
-  </string>
-  <string name="tracklist_share_gpx_file"
-    translation_description="In the context menu for a track, under the 'Share with friends...'
-      option, the menu option to share the track as a GPX file with friends.">     
-    A GPX file
-  </string>
-  <string name="tracklist_share_kml_file"
-    translation_description="In the context menu for a track, under the 'Share with friends...'
-      option, the menu option to share the track as a KML file with friends.">
-    A KML file
-  </string>
-  <string name="tracklist_share_csv_file"
-    translation_description="In the context menu for a track, under the 'Share with friends...'
-      option, the menu option to share the track as a CSV file with friends.">  
-    A CSV file
-  </string>
-  <string name="tracklist_share_tcx_file"
-    translation_description="In the context menu for a track, under the 'Share with friends...'
-      option, the menu option to share the track as a TCX file with friends."> 
-   A TCX file
-  </string>  
-
-  <!-- 'Write to SD card...' menu options. -->
-  <string name="tracklist_save_as_gpx"
-    translation_description="In the context menu for a track, under the 'Write to SD card...'
-      option, the menu option to save the track as a GPX file.">     
-    Save as a GPX file
-  </string>
-  <string name="tracklist_save_as_kml"
-    translation_description="In the context menu for a track, under the 'Write to SD card...'
-      option, the menu option to save the track as a KML file.">           
-    Save as a KML file
-  </string>
-  <string name="tracklist_save_as_csv"
-    translation_description="In the context menu for a track, under the 'Write to SD card...'
-      option, the menu option to save the track as a CSV file.">      
-    Save as a CSV file
-  </string>
-  <string name="tracklist_save_as_tcx"
-    translation_description="In the context menu for a track, under the 'Write to SD card...'
-      option, the menu option to save the track as a TCX file.">       
-    Save as a TCX file
   </string>
   
   <!-- Export -->
@@ -573,45 +582,6 @@ limitations under the License.
       one of the tracks. E.g., 'Import error for file /mnt/sdcard/MyTacks/gpx/1.gpx'."> 
     Import error for file %s
   </string>
-
-
-
-  <!-- Track detail page -->
-  <string name="trackdetails_title"
-    translation_description="In the detail page for a track, the title of the page.">
-    Track Details
-  </string>
-  <string name="trackdetails_name"
-    translation_description="In the detail page for a track, the text field for the track name.">
-    Track Name
-  </string>
-  <string name="trackdetails_name_hint"
-    translation_description="In the detail page for a track, the hint in the 'Track Name' text field
-      when it is empty.">  
-    Track Name
-  </string>
-  <string name="trackdetails_category"
-    translation_description="In the detail page for a track, the text field for the activity type,
-      including for examples.">
-    Activity Type (e.g. hiking, cycling, running, climbing...)
-  </string>
-  <string name="trackdetails_category_hint"
-    translation_description="In the detail page for a track, the hint in the 'Activity Type' text
-      field when it is empty.">  
-    Activity Type
-  </string>
-  <string name="trackdetails_description"
-    translation_description="In the detail page for a track, the text field for the track 
-      description.">  
-    Track Description
-  </string>
-  <string name="trackdetails_description_hint"
-    translation_description="In the detail page for a track, the hint in the 'Track Description'
-      text field when it is empty.">    
-    Track Description
-  </string>
-
-
 
   <!-- Settings page -->
   <string name="settings_title"

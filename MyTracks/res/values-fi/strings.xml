@@ -39,7 +39,7 @@ limitations under the License.
   <string name="error_sending_to_fusion_tables">Virhe lähetettäessä reittiä Google Fusion Tables-palveluun.</string>
   <string name="error_sending_to_docs">Virhe lähetettäessä reittiä Google Docs-palveluun..</string>
   <string name="error_sending_generic">Yritä myöhemmin uudelleen.</string>
-  <string name="track_unable_to_start_recording">Tallennusta ei voitu aloittaa. Yritä uudelleen.</string>
+  <string name="track_record_error">Tallennusta ei voitu aloittaa. Yritä uudelleen.</string>
   <string name="error_unable_to_stop_recording">Tallennusta ei voitu pysäyttää. Yritä uudelleen.</string>
   <string name="error_import_unable_to_read_file">Tiedostovirhe.</string>
   <string name="error_import_invalid_gpx_format">Virheellinen GPX-formaatti.</string>
@@ -51,7 +51,7 @@ limitations under the License.
 
   <!-- Status messages -->
   <string name="gps_wait_for_fix">Odotetaan parempaa GPS-yhteyttä. Varmista että taivas on näkyvissä.</string>
-  <string name="status_now_recording">Tallennetaan uutta reittiä.</string>
+  <string name="track_record_success">Tallennetaan uutta reittiä.</string>
   <string name="status_stopped_recording">Reitin tallentaminen lopetettiin.</string>
   <string name="sending_to_my_maps_success_new_map">Uusi Google My Map on luotu osoitteeseen maps.google.com.</string>
   <string name="sending_to_fusion_tables_success">Uusi Google Fusion taulukko on luotu osoitteeseen google.com/fusiontables.</string>
@@ -102,11 +102,11 @@ limitations under the License.
   <string name="recorded_date">Tallennettu</string>
   <string name="category">Liikunnan muoto</string>
   <string name="waypoint_category">Merkinnän tyyppi</string>
-  <string name="track_part_format">(Osa %d)</string>
+  <string name="send_google_track_part_format">(Osa %d)</string>
 
   <!-- Used by the track recording service -->
-  <string name="recording_your_track">Tallennetaan reittiä...</string>
-  <string name="new_track_format">Reitti %d</string>
+  <string name="track_record_notification">Tallennetaan reittiä...</string>
+  <string name="track_name_format">Reitti %d</string>
 
   <!-- Common -->
   <string name="no">Ei</string>
@@ -124,38 +124,38 @@ limitations under the License.
   <string name="marker_label_end">(Maali)</string>
 
   <!--  TrackList -->
-  <string name="tracklist_show_track">Näytä</string>
+  <string name="track_list_show_on_map">Näytä</string>
   <string name="tracklist_send_to_mymaps">Lähetä Google My Mapsiin</string>
   <string name="tracklist_send_to_new_mymap">Lähetä New Google My Mapiin</string>
   <string name="tracklist_send_to_fusiontables">Lähetä Google Fusion Tablesiin</string>
   <string name="tracklist_send_to_new_fusiontable">Lähetä New Google Fusion Tablesiin</string>
   <string name="tracklist_send_to_docs">Lähetä Google Docsiin</string>
-  <string name="tracklist_send_to_google">Lähetä Googleen...</string>
-  <string name="tracklist_delete_track">Poista puhelimesta...</string>
-  <string name="tracklist_edit_track">Muokkaa tietoja...</string>
-  <string name="tracklist_write_to_sd">Kirjoita SD-kortille...</string>
-  <string name="tracklist_save_as_gpx">Tallenna GPX-tiedosto</string>
-  <string name="tracklist_save_as_kml">Tallenna KML-tiedosto</string>
-  <string name="tracklist_save_as_csv">Tallenna CSV-tiedosto</string>
-  <string name="tracklist_save_as_tcx">Tallenna TCX-tiedosto</string>
+  <string name="track_list_send_google">Lähetä Googleen...</string>
+  <string name="track_list_delete_track">Poista puhelimesta...</string>
+  <string name="track_list_edit_track">Muokkaa tietoja...</string>
+  <string name="track_list_save_sd">Kirjoita SD-kortille...</string>
+  <string name="track_list_save_gpx_file">Tallenna GPX-tiedosto</string>
+  <string name="track_list_save_kml_file">Tallenna KML-tiedosto</string>
+  <string name="track_list_save_csv_file">Tallenna CSV-tiedosto</string>
+  <string name="track_list_save_tcx_file">Tallenna TCX-tiedosto</string>
   <string name="tracklist_btn_send_all_to_fusiontables">Lähetä Google Fusion Tablesiin</string>
   <string name="tracklist_btn_send_all_to_mymaps">Lähetä Google My Mapsiin</string>
-  <string name="tracklist_btn_delete_all">Poista kaikki</string>
+  <string name="track_list_delete_all">Poista kaikki</string>
   <!-- Export All -->
-  <string name="tracklist_btn_export_all">Vie kaikki</string>
+  <string name="track_list_export_all">Vie kaikki</string>
   <string name="export_done">Vienti tehty</string>
-  <string name="tracklist_pick_one">Valitse reitti. Pitkällä painalluksella lisää vaihtoehtoja.</string>
+  <string name="track_list_pick_one">Valitse reitti. Pitkällä painalluksella lisää vaihtoehtoja.</string>
   <string name="tracklist_all_tracks">Kaikki reitit:</string>
-  <string name="tracklist_this_track">Tämä reitti</string>
-  <string name="tracklist_share_track">Jaa...</string>
-  <string name="tracklist_share_link">Linkki karttaan</string>
-  <string name="tracklist_share_gpx_file">GPX-tiedosto</string>
-  <string name="tracklist_share_kml_file">KML-tiedosto</string>
-  <string name="tracklist_share_csv_file">CSV-tiedosto</string>
-  <string name="tracklist_share_tcx_file">TCX-tiedosto</string>
-  <string name="tracklist_clear_map">Tyhjennä kartta</string>
+  <string name="track_list_this_track">Tämä reitti</string>
+  <string name="track_list_share_track">Jaa...</string>
+  <string name="track_list_share_url">Linkki karttaan</string>
+  <string name="track_list_share_gpx_file">GPX-tiedosto</string>
+  <string name="track_list_share_kml_file">KML-tiedosto</string>
+  <string name="track_list_share_csv_file">CSV-tiedosto</string>
+  <string name="track_list_share_tcx_file">TCX-tiedosto</string>
+  <string name="track_list_clear_map">Tyhjennä kartta</string>
   <!-- Import All -->
-  <string name="tracklist_btn_import_all">Tuo kaikki</string>
+  <string name="track_list_import_all">Tuo kaikki</string>
   <!-- Format:
   $1 : Successful imports
   $2 : Attempted imports
@@ -179,13 +179,11 @@ limitations under the License.
   <string name="marker_list_pick_one">Valitse merkintä. Pitkä painallus tuo esiin lisää vaihtoehtoja.</string>
 
   <!-- MyTracks Details -->
-  <string name="trackdetails_title">Reitin tiedot</string>
-  <string name="trackdetails_name">Reitin nimi</string>
-  <string name="trackdetails_name_hint">Reitin nimi</string>
-  <string name="trackdetails_description">Reitin kuvaus</string>
-  <string name="trackdetails_description_hint">Reitin kuvaus</string>
-  <string name="trackdetails_category">Liikunnan muoto (esim. hölkkä, pyöräily, juoksu...)</string>
-  <string name="trackdetails_category_hint">Liikunnan muoto</string>
+  <string name="track_detail_title">Reitin tiedot</string>
+  <string name="track_detail_track_name">Reitin nimi</string>
+  <string name="track_detail_track_description">Reitin kuvaus</string>
+  <string name="track_detail_activity_type">Liikunnan muoto (esim. hölkkä, pyöräily, juoksu...)</string>
+  <string name="track_detail_activity_type_hint">Liikunnan muoto</string>
 
   <!-- MyTracks Waypoint Details -->
   <string name="marker_detail_title">Merkinnän tiedot</string>

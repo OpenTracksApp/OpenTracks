@@ -36,7 +36,7 @@ limitations under the License.
   <string name="gps_not_found">Ingen GPS-positioneringstjänst hittades på denna enhet.</string>
   <string name="error_sending_to_fusion_tables">Det uppstod ett fel i sändningen av ditt spår till Google Fusion Tables. Försök igen senare.</string>
   <string name="error_sending_to_docs">Det uppstod ett fel i sändningen av ditt spår till Google Dokument. Försök igen senare.</string>
-  <string name="track_unable_to_start_recording">Kan inte starta inspelningen. Försök igen.</string>
+  <string name="track_record_error">Kan inte starta inspelningen. Försök igen.</string>
   <string name="error_unable_to_stop_recording">Kan inte stoppa inspelningen. Försök igen.</string>
   <string name="error_import_unable_to_read_file">Kan inte läsa från fil.</string>
   <string name="error_import_invalid_gpx_format">Filen har inte ett giltigt GPX-format.</string>
@@ -47,7 +47,7 @@ limitations under the License.
 
   <!-- Status messages -->
   <string name="gps_wait_for_fix">Väntar på bättre GPS-position. Se till att himlen är synlig.</string>
-  <string name="status_now_recording">Spelar nu in ett nytt spår.</string>
+  <string name="track_record_success">Spelar nu in ett nytt spår.</string>
   <string name="status_stopped_recording">Stoppade inspelning av ditt spår.</string>
   <!-- <string name="sending_to_fusion_tables_success">En ny Google Mina Kartor har skapats på maps.google.com.</string> -->
   <string name="sending_to_my_maps_success_existing_map">Ditt spår har skickats till maps.google.com.</string>
@@ -88,11 +88,11 @@ limitations under the License.
   <string name="recorded_date">Inspelad</string>
   <string name="category">Aktivitetstyp</string>
   <string name="waypoint_category">Markörtyp</string>
-  <string name="track_part_format">(Del %d)</string>
+  <string name="send_google_track_part_format">(Del %d)</string>
 
   <!-- Used by the track recording service -->
-  <string name="recording_your_track">Spelar in ditt spår...</string>
-  <string name="new_track_format">Spår %d</string>
+  <string name="track_record_notification">Spelar in ditt spår...</string>
+  <string name="track_name_format">Spår %d</string>
 
   <!-- Common -->
   <string name="no">Nej</string>
@@ -109,30 +109,30 @@ limitations under the License.
   <string name="marker_label_end">(Slut)</string>
 
   <!--  TrackList -->
-  <string name="tracklist_show_track">Visa</string>
+  <string name="track_list_show_on_map">Visa</string>
   <!-- <string name="tracklist_send_to_fusiontables">Skicka till Google Mina Kartor</string> -->
   <!-- <string name="tracklist_send_to_new_fusiontable">Skicka till ny Google Mina Kartor</string> -->
   <string name="tracklist_send_to_docs">Skicka till Google Dokument</string>
-  <string name="tracklist_send_to_google">Skicka till Google...</string>
-  <string name="tracklist_delete_track">Ta bort från telefonen...</string>
-  <string name="tracklist_edit_track">Ändra detaljer</string>
-  <string name="tracklist_write_to_sd">Skriv till SD-kort...</string>
-  <string name="tracklist_save_as_gpx">Spara en GPX-fil</string>
-  <string name="tracklist_save_as_kml">Spara en KML-fil</string>
-  <string name="tracklist_save_as_csv">Spara en CSV-fil</string>
+  <string name="track_list_send_google">Skicka till Google...</string>
+  <string name="track_list_delete_track">Ta bort från telefonen...</string>
+  <string name="track_list_edit_track">Ändra detaljer</string>
+  <string name="track_list_save_sd">Skriv till SD-kort...</string>
+  <string name="track_list_save_gpx_file">Spara en GPX-fil</string>
+  <string name="track_list_save_kml_file">Spara en KML-fil</string>
+  <string name="track_list_save_csv_file">Spara en CSV-fil</string>
   <!-- <string name="tracklist_btn_send_all_to_fusiontables">Skicka till Google Mina Kartor</string> -->
-  <string name="tracklist_btn_delete_all">Ta bort alla spår</string>
+  <string name="track_list_delete_all">Ta bort alla spår</string>
   <!-- Export All -->
-  <string name="tracklist_btn_export_all">Exportera alla spår</string>
+  <string name="track_list_export_all">Exportera alla spår</string>
   <string name="export_done">Exporteringen slutfördes</string>
-  <string name="tracklist_pick_one">Välj ett spår. Tryck &amp; håll för fler alternativ.</string>
+  <string name="track_list_pick_one">Välj ett spår. Tryck &amp; håll för fler alternativ.</string>
   <string name="tracklist_all_tracks">Alla spår:</string>
-  <string name="tracklist_this_track">Det här spåret</string>
-  <string name="tracklist_share_track">Dela med vänner...</string>
-  <string name="tracklist_share_gpx_file">En GPX-fil</string>
-  <string name="tracklist_share_kml_file">En KML-fil</string>
-  <string name="tracklist_share_csv_file">En CSV-fil</string>
-  <string name="tracklist_clear_map">Rensa karta</string>
+  <string name="track_list_this_track">Det här spåret</string>
+  <string name="track_list_share_track">Dela med vänner...</string>
+  <string name="track_list_share_gpx_file">En GPX-fil</string>
+  <string name="track_list_share_kml_file">En KML-fil</string>
+  <string name="track_list_share_csv_file">En CSV-fil</string>
+  <string name="track_list_clear_map">Rensa karta</string>
 
   <!-- Waypoints list -->
   <string name="waypointslist_btn_delete_all">Ta bort alla markörer</string>
@@ -145,13 +145,11 @@ limitations under the License.
   <string name="marker_list_pick_one">Välj en markör. Tryck &amp; håll för fler alternativ.</string>
 
   <!-- MyTracks Details -->
-  <string name="trackdetails_title">Spårdetaljer</string>
-  <string name="trackdetails_name">Spårnamn</string>
-  <string name="trackdetails_name_hint">Spårnamn</string>
-  <string name="trackdetails_description">Spårbeskrivning</string>
-  <string name="trackdetails_description_hint">Spårbeskrivning</string>
-  <string name="trackdetails_category">Aktivitetstyp (t ex vandring, cyckling, löpning, klättring...)</string>
-  <string name="trackdetails_category_hint">Aktivitetstyp</string>
+  <string name="track_detail_title">Spårdetaljer</string>
+  <string name="track_detail_track_name">Spårnamn</string>
+  <string name="track_detail_track_description">Spårbeskrivning</string>
+  <string name="track_detail_activity_type">Aktivitetstyp (t ex vandring, cyckling, löpning, klättring...)</string>
+  <string name="track_detail_activity_type_hint">Aktivitetstyp</string>
 
   <!-- MyTracks Waypoint Details -->
   <string name="marker_detail_title">Markördetaljer</string>

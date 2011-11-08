@@ -75,44 +75,44 @@ public class TrackList extends ListActivity
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v,
             ContextMenuInfo menuInfo) {
-          menu.setHeaderTitle(R.string.tracklist_this_track);
+          menu.setHeaderTitle(R.string.track_list_this_track);
           AdapterView.AdapterContextMenuInfo info =
               (AdapterView.AdapterContextMenuInfo) menuInfo;
           contextPosition = info.position;
           trackId = TrackList.this.listView.getAdapter().getItemId(
               contextPosition);
           menu.add(0, Constants.MENU_SHOW, 0,
-              R.string.tracklist_show_track);
+              R.string.track_list_show_on_map);
           menu.add(0, Constants.MENU_EDIT, 0,
-              R.string.tracklist_edit_track);
+              R.string.track_list_edit_track);
           if (!isRecording() || trackId != recordingTrackId) {
             menu.add(0, Constants.MENU_SEND_TO_GOOGLE, 0,
-                R.string.tracklist_send_to_google);
+                R.string.track_list_send_google);
             SubMenu share = menu.addSubMenu(0, Constants.MENU_SHARE, 0,
-                R.string.tracklist_share_track);
+                R.string.track_list_share_track);
             share.add(0, Constants.MENU_SHARE_LINK, 0,
-                R.string.tracklist_share_link);
+                R.string.track_list_share_url);
             share.add(0, Constants.MENU_SHARE_GPX_FILE, 0,
-                R.string.tracklist_share_gpx_file);
+                R.string.track_list_share_gpx_file);
             share.add(0, Constants.MENU_SHARE_KML_FILE, 0,
-                R.string.tracklist_share_kml_file);
+                R.string.track_list_share_kml_file);
             share.add(0, Constants.MENU_SHARE_CSV_FILE, 0,
-                R.string.tracklist_share_csv_file);
+                R.string.track_list_share_csv_file);
             share.add(0, Constants.MENU_SHARE_TCX_FILE, 0,
-                R.string.tracklist_share_tcx_file);
+                R.string.track_list_share_tcx_file);
             SubMenu save = menu.addSubMenu(0,
                 Constants.MENU_WRITE_TO_SD_CARD, 0,
-                R.string.tracklist_write_to_sd);
+                R.string.track_list_save_sd);
             save.add(0, Constants.MENU_SAVE_GPX_FILE, 0,
-                R.string.tracklist_save_as_gpx);
+                R.string.track_list_save_gpx_file);
             save.add(0, Constants.MENU_SAVE_KML_FILE, 0,
-                R.string.tracklist_save_as_kml);
+                R.string.track_list_save_kml_file);
             save.add(0, Constants.MENU_SAVE_CSV_FILE, 0,
-                R.string.tracklist_save_as_csv);
+                R.string.track_list_save_csv_file);
             save.add(0, Constants.MENU_SAVE_TCX_FILE, 0,
-                R.string.tracklist_save_as_tcx);
+                R.string.track_list_save_tcx_file);
             menu.add(0, Constants.MENU_DELETE, 0,
-                R.string.tracklist_delete_track);
+                R.string.track_list_delete_track);
           }
         }
       };

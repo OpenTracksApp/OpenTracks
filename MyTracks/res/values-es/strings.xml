@@ -39,7 +39,7 @@ limitations under the License.
   <string name="error_sending_to_fusion_tables">Se produjo un error al enviar su recorrido a Google Fusion Tables.</string>
   <string name="error_sending_to_docs">Se produjo un error al enviar su recorrido a Google Docs.</string>
   <string name="error_sending_generic">Por favor, inténtelo de nuevo mas tarde.</string>
-  <string name="track_unable_to_start_recording">No se puede iniciar la grabación. Inténtelo de nuevo. </string>
+  <string name="track_record_error">No se puede iniciar la grabación. Inténtelo de nuevo. </string>
   <string name="error_unable_to_stop_recording">No se puede detener la grabación. Inténtelo de nuevo.</string>
   <string name="error_import_unable_to_read_file">No pude leer del archivo.</string>
   <string name="error_import_invalid_gpx_format">El archivo no tiene un format GPX válido.</string>
@@ -51,7 +51,7 @@ limitations under the License.
 
   <!-- Status messages -->
   <string name="gps_wait_for_fix">Esperando una ubicación mas exacta del GPS. Asegúrese que el cielo sea visible.</string>
-  <string name="status_now_recording">Grabando un nuevo recorrido.</string>
+  <string name="track_record_success">Grabando un nuevo recorrido.</string>
   <string name="status_stopped_recording">Grabación interrumpida.</string>
   <string name="sending_to_my_maps_success_new_map">Un nuevo sitio ha sido añadido en maps.google.com.</string>
   <string name="sending_to_fusion_tables_success">Una nueva tabla de Google Fusion ha sido creada en google.com/fusiontables.</string>
@@ -103,11 +103,11 @@ limitations under the License.
   <string name="recorded_date">Grabado</string>
   <string name="category">Tipo de actividad</string>
   <string name="waypoint_category">Tipo de señal</string>
-  <string name="track_part_format">"(Parte %d)"</string>
+  <string name="send_google_track_part_format">"(Parte %d)"</string>
 
   <!-- Used by the track recording service -->
-  <string name="recording_your_track">Grabando su recorrido...</string>
-  <string name="new_track_format">Recorrido %d</string>
+  <string name="track_record_notification">Grabando su recorrido...</string>
+  <string name="track_name_format">Recorrido %d</string>
 
   <!-- Common -->
   <string name="yes">Sí</string>
@@ -122,40 +122,40 @@ limitations under the License.
   <string name="marker_label_end">(Fin)</string>
 
   <!--  TrackList -->
-  <string name="tracklist_show_track">Mostrar</string>
+  <string name="track_list_show_on_map">Mostrar</string>
   <string name="tracklist_send_to_mymaps">Enviar a Google Mis Sitios</string>
   <string name="tracklist_send_to_new_mymap">Enviar a nuevo Google Mis Sitios</string>
   <string name="tracklist_send_to_fusiontables">Enviar a Google Fusion Tables</string>
   <string name="tracklist_send_to_new_fusiontable">Enviar a nueva Google Fusion Table</string>
   <string name="tracklist_send_to_docs">Enviar a Google Docs</string>
-  <string name="tracklist_send_to_google">Enviar a Google...</string>
-  <string name="tracklist_delete_track">Borrar del teléfono...</string>
-  <string name="tracklist_edit_track">Editar detalles</string>
-  <string name="tracklist_write_to_sd">Guardar en tarjeta SD...</string>
-  <string name="tracklist_save_as_gpx">Guardar en archivo GPX</string>
-  <string name="tracklist_save_as_kml">Guardar en archivo KML</string>
-  <string name="tracklist_save_as_csv">Guardar en archivo CSV</string>
-  <string name="tracklist_save_as_tcx">Guardar en archivo TCX</string>
+  <string name="track_list_send_google">Enviar a Google...</string>
+  <string name="track_list_delete_track">Borrar del teléfono...</string>
+  <string name="track_list_edit_track">Editar detalles</string>
+  <string name="track_list_save_sd">Guardar en tarjeta SD...</string>
+  <string name="track_list_save_gpx_file">Guardar en archivo GPX</string>
+  <string name="track_list_save_kml_file">Guardar en archivo KML</string>
+  <string name="track_list_save_csv_file">Guardar en archivo CSV</string>
+  <string name="track_list_save_tcx_file">Guardar en archivo TCX</string>
   <string name="tracklist_btn_send_all_to_fusiontables">Enviar a Google Fusion Tables</string>
   <string name="tracklist_btn_send_all_to_mymaps">Enviar a Google Mis Sitios</string>
-  <string name="tracklist_btn_delete_all">Borrar todos</string>
+  <string name="track_list_delete_all">Borrar todos</string>
   
   <!-- Export All -->
-  <string name="tracklist_btn_export_all">Exportar todos</string>
+  <string name="track_list_export_all">Exportar todos</string>
   <string name="export_done">Exportación concluída</string>
-  <string name="tracklist_pick_one">Escoja un recorrido. Presione&amp;mantenga presionado para ver más opciones.</string>
+  <string name="track_list_pick_one">Escoja un recorrido. Presione&amp;mantenga presionado para ver más opciones.</string>
   <string name="tracklist_all_tracks">Todos los recorridos:"</string>
-  <string name="tracklist_this_track">Este recorrido"</string>
-  <string name="tracklist_share_track">Compartir con amigos..."</string>
-  <string name="tracklist_share_link">Un enlace al mapa</string>
-  <string name="tracklist_share_gpx_file">Un archivo GPX"</string>
-  <string name="tracklist_share_kml_file">Un archivo KML"</string>
-  <string name="tracklist_share_csv_file">Un archivo CSV</string>
-  <string name="tracklist_share_tcx_file">Un archivo TCX</string>
-  <string name="tracklist_clear_map">"Limpiar mapa"</string>
+  <string name="track_list_this_track">Este recorrido"</string>
+  <string name="track_list_share_track">Compartir con amigos..."</string>
+  <string name="track_list_share_url">Un enlace al mapa</string>
+  <string name="track_list_share_gpx_file">Un archivo GPX"</string>
+  <string name="track_list_share_kml_file">Un archivo KML"</string>
+  <string name="track_list_share_csv_file">Un archivo CSV</string>
+  <string name="track_list_share_tcx_file">Un archivo TCX</string>
+  <string name="track_list_clear_map">"Limpiar mapa"</string>
 
   <!-- Import All -->
-  <string name="tracklist_btn_import_all">Importar todos</string>
+  <string name="track_list_import_all">Importar todos</string>
     <!-- Format:
   $1 : Successful imports
   $2 : Attempted imports
@@ -179,13 +179,11 @@ limitations under the License.
   <string name="marker_list_pick_one">Escoja un marcador. Presione&amp; mantenga presionado para ver más opciones.</string>
 
   <!-- MyTracks Details -->
-  <string name="trackdetails_title">Detalles del recorrido</string>
-  <string name="trackdetails_name">Nombre del recorrido</string>
-  <string name="trackdetails_name_hint">Nombre del recorrido</string>
-  <string name="trackdetails_description">Descripción del recorrido</string>
-  <string name="trackdetails_description_hint">Descripción del recorrido</string>
-  <string name="trackdetails_category">Tipo de actividad (por ejemplo, ciclismo, alpinismo...)</string>
-  <string name="trackdetails_category_hint">Tipo de actividad</string>
+  <string name="track_detail_title">Detalles del recorrido</string>
+  <string name="track_detail_track_name">Nombre del recorrido</string>
+  <string name="track_detail_track_description">Descripción del recorrido</string>
+  <string name="track_detail_activity_type">Tipo de actividad (por ejemplo, ciclismo, alpinismo...)</string>
+  <string name="track_detail_activity_type_hint">Tipo de actividad</string>
 
   <!-- MyTracks Waypoint Details -->
   <string name="marker_detail_title">Detalles de señal</string>

@@ -37,7 +37,7 @@ limitations under the License.
   <string name="gps_not_found">No s\'ha trobat cap proveïdor d\'ubicació GPS en aquest dispositiu.</string>
   <string name="error_sending_to_fusion_tables">S\'ha produït un error quan s\'enviava la ruta a Google Fusion Tables. Proveu més tard.</string>
   <string name="error_sending_to_docs">S\'ha prdouït un error quan s\'enviava la ruta a Google Docs. Proveu més tard.</string>
-  <string name="track_unable_to_start_recording">No es pot iniciar l\'enregistrament. Proveu de nou.</string>
+  <string name="track_record_error">No es pot iniciar l\'enregistrament. Proveu de nou.</string>
   <string name="error_unable_to_stop_recording">No es pot aturar l\'enregistrament. Proveu de nou.</string>
   <string name="error_import_unable_to_read_file">No es pot llegir des del fitxer.</string>
   <string name="error_import_invalid_gpx_format">El fitxer no conté un format GPX vàlid.</string>
@@ -48,7 +48,7 @@ limitations under the License.
 
   <!-- Status messages -->
   <string name="gps_wait_for_fix">S\'està esperant per tenir una posició GPS fixa. Assegureu-vos que el cel és visible.</string>
-  <string name="status_now_recording">Ara s\'està enregistrant una ruta nova.</string>
+  <string name="track_record_success">Ara s\'està enregistrant una ruta nova.</string>
   <string name="status_stopped_recording">S\'ha aturat l\'enregistrament de la ruta.</string>
   <string name="sending_to_fusion_tables_success">S\'ha creat un Google Fusion Table nou a google.com/fusiontables.</string>
   <string name="sending_to_my_maps_success_existing_map">S\'ha enviat la ruta a maps.google.com.</string>
@@ -88,11 +88,11 @@ limitations under the License.
   <string name="recorded_date">Enregistrat</string>
   <string name="category">Tipus d\'activitat</string>
   <string name="waypoint_category">Tipus de marcador</string>
-  <string name="track_part_format">(Part %d)</string>
+  <string name="send_google_track_part_format">(Part %d)</string>
 
   <!-- Used by the track recording service -->
-  <string name="recording_your_track">S\'està enregistrant la ruta...</string>
-  <string name="new_track_format">Ruta %d</string>
+  <string name="track_record_notification">S\'està enregistrant la ruta...</string>
+  <string name="track_name_format">Ruta %d</string>
 
   <!-- Common -->
   <string name="no">No</string>
@@ -109,32 +109,32 @@ limitations under the License.
   <string name="marker_label_end">(Fi)</string>
 
   <!--  TrackList -->
-  <string name="tracklist_show_track">Mostra</string>
+  <string name="track_list_show_on_map">Mostra</string>
   <string name="tracklist_send_to_fusiontables">Envia a Google Fusion Tables</string>
   <string name="tracklist_send_to_new_fusiontable">Envia a un Google Fusion Table nou</string>
   <string name="tracklist_send_to_docs">Envia a Google Docs</string>
-  <string name="tracklist_send_to_google">Envia a Google...</string>
-  <string name="tracklist_delete_track">Elimina del telèfon...</string>
-  <string name="tracklist_edit_track">Edita els detalls</string>
-  <string name="tracklist_write_to_sd">Escriu a la targeta SD...</string>
-  <string name="tracklist_save_as_gpx">Anomena i desa com un fitxer GPX</string>
-  <string name="tracklist_save_as_kml">Anomena i desa com un fitxer KML</string>
-  <string name="tracklist_save_as_csv">Anomena i desa com un fitxer CSV</string>
-  <string name="tracklist_save_as_tcx">Anomena i desa com un fitxer TCX</string>
+  <string name="track_list_send_google">Envia a Google...</string>
+  <string name="track_list_delete_track">Elimina del telèfon...</string>
+  <string name="track_list_edit_track">Edita els detalls</string>
+  <string name="track_list_save_sd">Escriu a la targeta SD...</string>
+  <string name="track_list_save_gpx_file">Anomena i desa com un fitxer GPX</string>
+  <string name="track_list_save_kml_file">Anomena i desa com un fitxer KML</string>
+  <string name="track_list_save_csv_file">Anomena i desa com un fitxer CSV</string>
+  <string name="track_list_save_tcx_file">Anomena i desa com un fitxer TCX</string>
   <string name="tracklist_btn_send_all_to_fusiontables">Envia a Google Fusion Tables</string>
-  <string name="tracklist_btn_delete_all">Elimina totes les rutes</string>
+  <string name="track_list_delete_all">Elimina totes les rutes</string>
   <!-- Export All -->
-  <string name="tracklist_btn_export_all">Exporta totes les rutes</string>
+  <string name="track_list_export_all">Exporta totes les rutes</string>
   <string name="export_done">Exporta les finalitzades</string>
-  <string name="tracklist_pick_one">Seleccioneu una ruta. Mantingueu el dit per veure més opcions.</string>
+  <string name="track_list_pick_one">Seleccioneu una ruta. Mantingueu el dit per veure més opcions.</string>
   <string name="tracklist_all_tracks">Totes les rutes:</string>
-  <string name="tracklist_this_track">Aquesta ruta</string>
-  <string name="tracklist_share_track">Comparteix amb amics...</string>
-  <string name="tracklist_share_gpx_file">Un fitxer GPX</string>
-  <string name="tracklist_share_kml_file">Un fitxer KML</string>
-  <string name="tracklist_share_csv_file">Un fitxer CSV</string>
-  <string name="tracklist_share_tcx_file">Un fitxer TCX</string>
-  <string name="tracklist_clear_map">Neteja el mapa</string>
+  <string name="track_list_this_track">Aquesta ruta</string>
+  <string name="track_list_share_track">Comparteix amb amics...</string>
+  <string name="track_list_share_gpx_file">Un fitxer GPX</string>
+  <string name="track_list_share_kml_file">Un fitxer KML</string>
+  <string name="track_list_share_csv_file">Un fitxer CSV</string>
+  <string name="track_list_share_tcx_file">Un fitxer TCX</string>
+  <string name="track_list_clear_map">Neteja el mapa</string>
 
   <!-- Waypoints list -->
   <string name="waypointslist_btn_delete_all">Elimina tots els marcadors</string>
@@ -147,13 +147,11 @@ limitations under the License.
   <string name="marker_list_pick_one">Seleccioneu un marcador. Mantingueu el dit per veure més opcions.</string>
 
   <!-- MyTracks Details -->
-  <string name="trackdetails_title">Detalls de la ruta</string>
-  <string name="trackdetails_name">Nom de la ruta</string>
-  <string name="trackdetails_name_hint">Nom de la ruta</string>
-  <string name="trackdetails_description">Descripció de la ruta</string>
-  <string name="trackdetails_description_hint">Descripció de la ruta</string>
-  <string name="trackdetails_category">Tipus d\'activitat (p.e. senderisme, bicicleta, còrrer, escalada...)</string>
-  <string name="trackdetails_category_hint">Tipus d\'activitat</string>
+  <string name="track_detail_title">Detalls de la ruta</string>
+  <string name="track_detail_track_name">Nom de la ruta</string>
+  <string name="track_detail_track_description">Descripció de la ruta</string>
+  <string name="track_detail_activity_type">Tipus d\'activitat (p.e. senderisme, bicicleta, còrrer, escalada...)</string>
+  <string name="track_detail_activity_type_hint">Tipus d\'activitat</string>
 
   <!-- MyTracks Waypoint Details -->
   <string name="marker_detail_title">Detalls del marcador</string>

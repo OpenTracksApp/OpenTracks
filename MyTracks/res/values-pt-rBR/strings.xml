@@ -35,7 +35,7 @@ limitations under the License.
   <string name="gps_not_found">"Provedor de posição de GPS não encontrado neste dispositivo.</string>
   <string name="error_sending_to_fusion_tables">Ocorreu um erro ao enviar seu caminho para o Google Fusion Tables. Por favor tente novamente mais tarde.</string>
   <string name="error_sending_to_docs">Ocorreu um erro ao enviar seu caminho para o Google Docs. Por favor tente novamente mais tarde.</string>
-  <string name="track_unable_to_start_recording">Impossível iniciar a gravação. Tente novamente.</string>
+  <string name="track_record_error">Impossível iniciar a gravação. Tente novamente.</string>
   <string name="error_unable_to_stop_recording">Impossível interromper a gravação. Tente novamente.</string>
   <string name="error_import_unable_to_read_file">Impossível ler do arquivo.</string>
   <string name="error_import_invalid_gpx_format">O arquivo não tem um formato GPX válido.</string>
@@ -46,7 +46,7 @@ limitations under the License.
 
   <!-- Status messages -->
   <string name="gps_wait_for_fix">Esperando por um sinal melhor do GPS.  Assegure-se de que o céu está visível.</string>
-  <string name="status_now_recording">Gravando um novo caminho.</string>
+  <string name="track_record_success">Gravando um novo caminho.</string>
   <string name="status_stopped_recording">Gravação interrompida.</string>
   <string name="sending_to_fusion_tables_success">Uma nova Fusion Table Google foi criada em google.com/fusiontables.</string>
   <string name="sending_to_my_maps_success_existing_map">Seu caminho foi enviado para maps.google.com.</string>
@@ -87,11 +87,11 @@ limitations under the License.
   <string name="recorded_date">Gravado</string>
   <string name="category">"Tipo de atividade</string>
   <string name="waypoint_category">"Tipo de marcador</string>
-  <string name="track_part_format">"(Parte %d)</string>
+  <string name="send_google_track_part_format">"(Parte %d)</string>
 
   <!-- Used by the track recording service -->
-  <string name="recording_your_track">"Gravando seu caminho...</string>
-  <string name="new_track_format">"Caminho %d</string>
+  <string name="track_record_notification">"Gravando seu caminho...</string>
+  <string name="track_name_format">"Caminho %d</string>
 
   <!-- Common -->
   <string name="no">Não</string>
@@ -108,26 +108,26 @@ limitations under the License.
   <string name="marker_label_end">(Fim)</string>
 
   <!--  TrackList -->
-  <string name="tracklist_show_track">Mostrar</string>
+  <string name="track_list_show_on_map">Mostrar</string>
   <string name="tracklist_send_to_fusiontables">Enviar para o Google Fusion Tables</string>
   <string name="tracklist_send_to_new_fusiontable">Enviar para nova Google Fusion Table</string>
   <string name="tracklist_send_to_docs">Enviar para o Google Docs</string>
-  <string name="tracklist_send_to_google">Enviar para o Google...</string>
-  <string name="tracklist_delete_track">Apagar do telefone...</string>
-  <string name="tracklist_edit_track">Editar detalhes</string>
-  <string name="tracklist_write_to_sd">Salvar no cartão SD...</string>
-  <string name="tracklist_save_as_gpx">Salvar arquivo GPX</string>
-  <string name="tracklist_save_as_kml">Salvar arquivo KML</string>
+  <string name="track_list_send_google">Enviar para o Google...</string>
+  <string name="track_list_delete_track">Apagar do telefone...</string>
+  <string name="track_list_edit_track">Editar detalhes</string>
+  <string name="track_list_save_sd">Salvar no cartão SD...</string>
+  <string name="track_list_save_gpx_file">Salvar arquivo GPX</string>
+  <string name="track_list_save_kml_file">Salvar arquivo KML</string>
   <string name="tracklist_btn_send_all_to_fusiontables">Enviar para o Google Fusion Tables</string>
-  <string name="tracklist_btn_delete_all">Apagar todos os caminhos</string>
-  <string name="tracklist_pick_one">Escolha um caminho. Pressione&amp;segure para mais opções.</string>
+  <string name="track_list_delete_all">Apagar todos os caminhos</string>
+  <string name="track_list_pick_one">Escolha um caminho. Pressione&amp;segure para mais opções.</string>
   <string name="tracklist_all_tracks">Todos os Caminhos:</string>
-  <string name="tracklist_this_track">Este Caminho</string>
-  <string name="tracklist_share_track">Compartilhar com amigos...</string>
-  <string name="tracklist_share_link">Um link para a mapa</string>
-  <string name="tracklist_share_gpx_file">Um arquivo GPX</string>
-  <string name="tracklist_share_kml_file">Um arquivo KML</string>
-  <string name="tracklist_clear_map">Limpar mapa</string>
+  <string name="track_list_this_track">Este Caminho</string>
+  <string name="track_list_share_track">Compartilhar com amigos...</string>
+  <string name="track_list_share_url">Um link para a mapa</string>
+  <string name="track_list_share_gpx_file">Um arquivo GPX</string>
+  <string name="track_list_share_kml_file">Um arquivo KML</string>
+  <string name="track_list_clear_map">Limpar mapa</string>
 
   <!-- Waypoints list -->
   <string name="waypointslist_btn_delete_all">Apagar todos os marcadores</string>
@@ -140,13 +140,11 @@ limitations under the License.
   <string name="marker_list_pick_one">Escolha um marcador.  Pressione&amp;segure para mais opções.</string>
 
   <!-- MyTracks Details -->
-  <string name="trackdetails_title">Detalhes do Caminho</string>
-  <string name="trackdetails_name">Nome do Caminho</string>
-  <string name="trackdetails_name_hint">Nome do Caminho</string>
-  <string name="trackdetails_description">Descrição do Caminho</string>
-  <string name="trackdetails_description_hint">Descrição do Caminho</string>
-  <string name="trackdetails_category">Tipo de Atividade (por ex. caminhada, ciclismo, escalada...)</string>
-  <string name="trackdetails_category_hint">Tipo de Atividade</string>
+  <string name="track_detail_title">Detalhes do Caminho</string>
+  <string name="track_detail_track_name">Nome do Caminho</string>
+  <string name="track_detail_track_description">Descrição do Caminho</string>
+  <string name="track_detail_activity_type">Tipo de Atividade (por ex. caminhada, ciclismo, escalada...)</string>
+  <string name="track_detail_activity_type_hint">Tipo de Atividade</string>
 
   <!-- MyTracks Waypoint Details -->
   <string name="marker_detail_title">Detalhes do Marcador</string>
