@@ -152,7 +152,7 @@ limitations under the License.
         android:summaryOff="@string/settings_timestamp_track_name_summary_off"
         android:defaultValue="true" />
         
-    <EditTextPreference
+    <com.google.android.apps.mytracks.AutoCompleteTextPreference
         android:key="@string/default_category_key"
         android:title="@string/settings_default_category"
         android:summary="@string/settings_default_category_summary"
