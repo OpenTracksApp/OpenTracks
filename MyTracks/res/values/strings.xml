@@ -43,6 +43,28 @@ limitations under the License.
     Version:
   </string>
  
+  <!-- Chart Settings -->
+  <string name="chart_settings_by_distance"
+    translation_description="In the Chart Settings, under the 'X Axis' section, the radio option 
+      to show the charts by distance. The other radio option is to show by time. User can only
+      choose one of the options.">
+    By Distance
+  </string>
+  <string name="chart_settings_by_time"
+    translation_description="In the Chart Settings, under the 'X Axis' section, the radio option 
+      to show the charts by time. The other radio option is to show by distance. User can only
+      choose one of the options.">
+    By Time
+  </string>
+  <string name="chart_settings_x_axis"
+    translation_description="In the Chart Settings, the section label for configuring the X axis.">
+    X Axis
+  </string>
+  <string name="chart_settings_y_axis"
+    translation_description="In the Chart Settings, the section label for configuring the Y axis.">
+    Y Axis
+  </string>
+  
   <!-- EULA -->
   <string name="eula_accept"
     translation_description="In the 'End User License Agreement' dialog, the button to accept.">
@@ -284,6 +306,54 @@ limitations under the License.
     (Part %d)
   </string>
   
+  <!--  Sensor State -->
+  <string name="sensor_state_battery"
+    translation_description="In the 'Sensor State' page, the label for the battery level on the bike
+      sensor. E.g, 'Battery Level: 50 %'.">
+    Battery Level
+  </string> 
+  <string name="sensor_state_cadence"
+    translation_description="In the 'Sensor State' page, the label for the cadence on the bike
+      sensor. Cadence is the number of revolutions of the crank per minute. E.g.,
+      'Cadence: 80 rpm'.">    
+    Cadence
+  </string>
+  <string name="sensor_state_connected"
+    translation_description="In the 'Sensor State' page, the 'Sensor State' value when the sensor
+      has connected.">
+    Connected
+  </string>
+  <string name="sensor_state_connecting"
+    translation_description="In the 'Sensor State' page, the 'Sensor State' value when the sensor is
+      connecting.">
+    Connecting
+  </string>  
+  <string name="sensor_state_last_sensor_time"
+    translation_description="In the 'Sensor State' page, the label for the last time the sensor has
+      sent a data. E.g., 'Last Sensor Time: 10:05 am'.">
+    Last Sensor Time
+  </string>
+  <string name="sensor_state_disconnected"
+    translation_description="In the 'Sensor State' page, the 'Sensor State' value when the sensor
+      has disconnected.">
+    Disconnected
+  </string>
+  <string name="sensor_state_heart_rate"
+    translation_description="In the 'Sensor State' page, the label for the heart rate from a heart
+      rate sensor. E.g., 'Hear Rate: 100 bpm'.">
+    Heart Rate
+  </string>
+  <string name="sensor_state_power"
+    translation_description="In the 'Sensor State' page, the label for the power from the bike
+      sensor. Power is the power output of the rider. E.g., 'Power: 50 W'.">    
+    Power
+  </string>
+  <string name="sensor_state_sending"
+    translation_description="In the 'Sensor State' page, the 'Sensor State' value when the sensor
+      is sending data.">
+    Sending
+  </string>      
+      
   <!-- Settings -->
   <string name="settings_backup"
     translation_description="In the Settings page, the option to change the data backup related
@@ -739,8 +809,86 @@ limitations under the License.
   <string name="settings_title"
     translation_description="The title of the Settings page.">  
     My Tracks Settings
+  </string> 
+      
+  <!-- Stat view -->
+  <string name="stat_average_moving_pace"
+    translation_description="In the Statistic view, the average moving pace.">    
+    Average Moving Pace
+  </string>  
+  <string name="stat_average_moving_speed"
+    translation_description="In the Statistic view, the average moving speed.">    
+    Average Moving Speed
+  </string>  
+  <string name="stat_average_pace"
+    translation_description="In the Statistic view, the average pace.">    
+    Average Pace
   </string>
-       
+  <string name="stat_average_speed"
+    translation_description="In the Statistic view, the average speed.">    
+    Average Speed
+  </string>
+  <string name="stat_elevation"
+    translation_description="In the Statistic view, the elevation.">  
+    Elevation
+  </string>
+  <string name="stat_elevation_gain"
+    translation_description="In the Statistic view, the elevation gain.">
+    Elevation Gain
+  </string>
+  <string name="stat_latitude"
+    translation_description="In the Statistic view, the latitude.">
+    Latitude
+  </string>
+  <string name="stat_longitude"
+    translation_description="In the Statistic view, the longitude.">
+    Longitude
+  </string>
+  <string name="stat_max_elevation"
+    translation_description="In the Statistic view, the maximum elevation.">
+    Max Elevation
+  </string>
+  <string name="stat_max_grade"
+    translation_description="In the Statistic view, the maximum grade.">
+    Max Grade
+  </string>  
+  <string name="stat_max_speed"
+    translation_description="In the Statistic view, the maximum speed.">    
+    Max Speed
+  </string>
+  <string name="stat_min_elevation"
+    translation_description="In the Statistic view, the minimum elevation.">
+    Min Elevation
+  </string>
+  <string name="stat_min_grade"
+    translation_description="In the Statistic view, the minimum grade.">
+    Min Grade
+  </string>    
+  <string name="stat_min_pace"
+    translation_description="In the Statistic view, the minimum pace.">    
+    Min Pace
+  </string>
+  <string name="stat_moving_time"
+    translation_description="In the Statistic view, the moving time.">  
+    Moving Time
+  </string>
+  <string name="stat_pace"
+    translation_description="In the Statistic view, the pace like hours per mile.">    
+    Pace
+  </string>           
+  <string name="stat_speed"
+    translation_description="In the Statistic view, the speed like miles per hour.">    
+    Speed
+  </string>
+  <string name="stat_total_distance"
+    translation_description="In the Statistic view, the total distance.">    
+    Total Distance
+  </string>
+  <string name="stat_total_time"
+    translation_description="In the Statistic view, the total time.">    
+    Total Time
+  </string>
+
   <!-- Track -->
   <string name="track_detail_activity_type"
     translation_description="In the detail page for a track, the text field for the activity type,
@@ -889,6 +1037,62 @@ limitations under the License.
     Now recording a new track.
   </string>
   
+  <!-- Unit - all abbreviations for display-->
+  <string name="unit_beat_per_minute"
+    translation_description="Abbreviation for beats per minute, unit for heart rate. E.g.,
+      'heart rate: 80 bpm'.">
+    bpm
+  </string>   
+  <string name="unit_feet"
+    translation_description="Abbreviation for feet. E.g., '2 ft'.">
+    ft
+  </string>  
+  <string name="unit_hour"
+    translation_description="Abbreviation for hours. E.g, '2 hr'.">
+    hr
+  </string>
+  <string name="unit_kilometer"
+    translation_description="Abbreviation for kilometers. E.g., '2 km'.">
+    km
+  </string>
+  <string name="unit_kilometer_per_hour"
+    translation_description="Abbreviation for kilometers per hour. E.g, '5 km/h'.">
+    km/h
+  </string>
+  <string name="unit_meter"
+    translation_description="Abbreviation for meters. E.g., '2 m'.">
+    m
+  </string>    
+  <string name="unit_mile"
+    translation_description="Abbreviation for miles. E.g., '2 mi'.">
+    mi
+  </string>
+  <string name="unit_mile_per_hour"
+    translation_description="Abbreviation for miles per hour. E.g, '5 mi/h'.">
+    mi/h
+  </string>  
+  <string name="unit_minute"
+    translation_description="Abbreviation for minutes. E.g, '2 min'.">
+    min
+  </string>
+  <string name="unit_minute_per_kilometer"
+    translation_description="Abbreviation for minutes per kilometer. E.g, '5 min/km'.">
+    min/km
+  </string>
+  <string name="unit_minute_per_mile"
+    translation_description="Abbreviation for minutes per mile. E.g, '5 min/mi'.">
+    min/mi
+  </string>
+  <string name="unit_revolution_per_minute"
+    translation_description="Abbreviation for revolutions per minute, unit for cadence. E.g.,
+      'cadence: 80 rpm'.">  
+    rpm
+  </string>
+  <string name="unit_watt"
+    translation_description="Abbreviation for watts, unit for power. E.g., 'power: 80 W'.">  
+    W
+  </string>
+      
   <!-- Voice -->
   <string name="voice_hour"
     translation_description="For voice announcement, to say hour like 'one hour'.">
@@ -1270,193 +1474,6 @@ limitations under the License.
     I think you might be interested in this track.\n\nTo view this track use Google Earth or other
     mapping software.
   </string>
-
-  <!-- Statistics view -->
-  <string name="speed"
-    translation_description="In the Statistic view, the speed like miles per hour.">    
-    Speed
-  </string>
-  <string name="pace_label"
-    translation_description="In the Statistic view, the pace like hours per mile.">    
-    Pace
-  </string> 
-  <string name="total_distance_label"
-    translation_description="In the Statistic view, the total distance.">    
-    Total Distance
-  </string>
-  <string name="total_time_label"
-    translation_description="In the Statistic view, the total time.">    
-    Total Time
-  </string>
-  <string name="moving_time_label"
-    translation_description="In the Statistic view, the moving time.">  
-    Moving Time
-  </string>      
-  <string name="max_speed_label"
-    translation_description="In the Statistic view, the maximum speed.">    
-    Max Speed
-  </string>
-  <string name="average_speed_label"
-    translation_description="In the Statistic view, the average speed.">    
-    Average Speed
-  </string>
-  <string name="average_moving_speed_label"
-    translation_description="In the Statistic view, the average moving speed.">    
-    Average Moving Speed
-  </string>    
-  <string name="min_pace_label"
-    translation_description="In the Statistic view, the minimum pace.">    
-    Min Pace
-  </string>
-  <string name="average_pace_label"
-    translation_description="In the Statistic view, the average pace.">    
-    Average Pace
-  </string>
-  <string name="average_moving_pace_label"
-    translation_description="In the Statistic view, the average moving pace.">    
-    Average Moving Pace
-  </string>  
-  <string name="elevation_label"
-    translation_description="In the Statistic view, the current elevation.">  
-    Elevation
-  </string>
-  <string name="elevation_gain_label"
-    translation_description="In the Statistic view, the elevation gain.">
-    Elevation Gain
-  </string>
-  <string name="max_elevation_label"
-    translation_description="In the Statistic view, the maximum elevation.">
-    Max Elevation
-  </string>
-  <string name="min_elevation_label"
-    translation_description="In the Statistic view, the minimum elevation.">
-    Min Elevation
-  </string>    
-  <string name="min_grade_label"
-    translation_description="In the Statistic view, the minimum grade.">
-    Min Grade
-  </string>
-  <string name="max_grade_label"
-    translation_description="In the Statistic view, the maximum grade.">
-    Max Grade
-  </string>  
-  <string name="latitude_label"
-    translation_description="In the Statistic view, the current latitude.">
-    Latitude
-  </string>
-  <string name="longitude_label"
-    translation_description="In the Statistic view, the current longitude.">
-    Longitude
-  </string>
-
-  <!-- Chart Settings -->
-  <string name="x_axis"
-    translation_description="In the Chart Settings, the section label for configuring the X axis.">
-    X Axis
-  </string>
-  <string name="by_distance"
-    translation_description="In the Chart Settings, under the 'X Axis' section, the radio option 
-      to show the graphics by distance. The other radio option is to show by time. User can only
-      choose one of the options.">
-    By Distance
-  </string>
-  <string name="by_time"
-    translation_description="In the Chart Settings, under the 'X Axis' section, the radio option 
-      to show the graphics by time. The other radio option is to show by distance. User can only
-      choose one of the options.">
-    By Time
-  </string>
-  <string name="y_axis"
-    translation_description="In the Chart Settings, the section label for configuring the Y axis.">
-    Y Axis
-  </string>
-  <string name="power"
-    translation_description="In the Chart Settings, under the 'Y Axis' section, the checkbox option
-      to graph power (for cycling, the power output of the rider).">    
-    Power
-  </string>
-  <string name="cadence"
-    translation_description="In the Chart Settings, under the 'Y Axis' section, the checkbox option
-      to graph cadence (for cycling, the number of revolutions of the crank per minute).">    
-    Cadence
-  </string>
-  <string name="heart_rate"
-    translation_description="In the Chart Settings, under the 'Y Axis' section, the checkbox option
-      to graph heart rate.">
-    Heart Rate
-  </string> 
-      
-  <!-- time -->
-  <string name="hr"
-    translation_description="Abbreviation for hours. E.g, '2 hr'.">
-    hr
-  </string>
-  <string name="min"
-    translation_description="Abbreviation for minutes. E.g, '2 min'.">
-    min
-  </string>
-
-  <!--  distance -->
-  <string name="kilometer"
-    translation_description="Abbreviation for kilometers. E.g., '2 km'.">
-    km
-  </string>
-  <string name="meter"
-    translation_description="Abbreviation for meters. E.g., '2 m'.">
-    m
-  </string>
-  <string name="mile"
-    translation_description="Abbreviation for miles. E.g., '2 mi'.">
-    mi
-  </string>
-  <string name="feet"
-    translation_description="Abbreviation for feet. E.g., '2 ft'.">
-    ft
-  </string>
-
-  <!-- Speed unit -->
-  <string name="kilometer_per_hour"
-    translation_description="For speed unit, abbreviation for kilometers per hour. E.g, '5 km/h'.">
-    km/h
-  </string>
-  <string name="mile_per_hour"
-    translation_description="For speed unit, abbreviation for miles per hour. E.g, '5 mi/h'.">
-    mi/h
-  </string>
-  
-  <!-- Pace unit -->
-  <string name="min_per_kilometer"
-    translation_description="For pace unit, abbreviation for minutes per kilometer. E.g,
-      '5 min/km'.">
-    min/km
-  </string>
-  <string name="min_per_mile"
-    translation_description="For pace unit, abbreviation for minutes per mile. E.g, '5 min/mi'.">
-    min/mi
-  </string>
-      
-  <!-- Sensor State -->    
-  <string name="battery_level"
-    translation_description="In the Sensor State page, the label for battery level on the bike
-      sensor. E.g, battery level like '50 %'.">
-    Battery Level
-  </string>
-  
-  <!-- Sensor State unit -->
-  <string name="watts"
-    translation_description="Abbreviation for watts, unit for power. E.g., power of '80 W'.">  
-    W
-  </string>
-  <string name="revolutions_per_minute"
-    translation_description="Abbreviation for revolutions per minute, unit for cadence. E.g.,
-    cadence of '80 rpm'.">  
-    rpm
-  </string>
-  <string name="bpm"
-    translation_description="Abbreviation for beats per minute, unit for heart rate. E.g.,
-    heart rate of '80 bpm'.">
-    bpm
-  </string>
   
   <!-- Send to Google dialog -->
   <string name="sendtogoogle_title"
@@ -1545,34 +1562,5 @@ limitations under the License.
     translation_description="When reading from the SD card, the success message when finish reading
       from the SD card.">
     Finished reading from SD card.
-  </string>
-
-  <!-- Sensor State page -->
-  <string name="sensor_data_time"
-    translation_description="In the 'Sensor State' page, the label for the last time the sensor has
-      sent data. E.g., 'Sensor Date Time' 10:05 am.">
-    Sensor Data Time
-  </string>
-
-  <!-- sensor states -->
-  <string name="connecting"
-    translation_description="In the 'Sensor State' page, the 'Sensor State' value when the sensor is
-      connecting.">
-    Connecting
-  </string>
-  <string name="connected"
-    translation_description="In the 'Sensor State' page, the 'Sensor State' value when the sensor
-      has connected.">
-    Connected
-  </string>
-  <string name="disconnected"
-    translation_description="In the 'Sensor State' page, the 'Sensor State' value the sensor has
-      disconnected.">
-    Disconnected
-  </string>
-  <string name="sending"
-    translation_description="In the 'Sensor State' page, the 'Sensor State' value when the sensor
-      is sending data.">
-    Sending
   </string>
 </resources>

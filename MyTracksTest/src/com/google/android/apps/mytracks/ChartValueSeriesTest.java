@@ -34,7 +34,7 @@ public class ChartValueSeriesTest extends AndroidTestCase {
         R.color.elevation_fill,
         R.color.elevation_border,
         new ZoomSettings(5, new int[] {100}),
-        R.string.elevation_label);
+        R.string.stat_elevation);
   }
 
   public void testInitialConditions() {
@@ -44,7 +44,7 @@ public class ChartValueSeriesTest extends AndroidTestCase {
     assertEquals(0, series.getMax());
     assertEquals(0.0, series.getSpread());
     assertEquals(Style.STROKE, series.getPaint().getStyle());
-    assertEquals(getContext().getString(R.string.elevation_label),
+    assertEquals(getContext().getString(R.string.stat_elevation),
         series.getTitle());
     assertTrue(series.isEnabled());
   }

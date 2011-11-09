@@ -255,7 +255,7 @@ limitations under the License.
   <string name="settings_reset_dialog_message">Todas tus preferencias seran borradas o restauradas a sus valores por defecto. Los recorridos se mantendran. ¿Está seguro?</string>
   <string name="settings_reset_done">Todas las preferencias han sido restauradas a sus valores por defecto.</string>
 
-  <string name="pace_label">Paso</string>
+  <string name="stat_pace">Paso</string>
   
   <string name="eclair_required">Sólo soportado en Android 2.0 o superior</string>
   <string name="settings_sensor_type">Tipo de sensor</string>
@@ -332,40 +332,40 @@ limitations under the License.
 
   <!-- Statistics View -->
   <!-- Average Moving -->
-  <string name="average_moving_speed_label">Velocidad promedio en movimiento</string>
-  <string name="average_moving_pace_label">Paso promedio en movimiento</string>
+  <string name="stat_average_moving_speed">Velocidad promedio en movimiento</string>
+  <string name="stat_average_moving_pace">Paso promedio en movimiento</string>
 
   <!-- Average -->
-  <string name="average_speed_label">Velocidad promedio</string>
-  <string name="average_pace_label">Paso promedio</string>
+  <string name="stat_average_speed">Velocidad promedio</string>
+  <string name="stat_average_pace">Paso promedio</string>
 
   <string name="elevation_chart_name">Gráfica de elevación</string>
-  <string name="elevation_gain_label">Aumento de elevación</string>
-  <string name="elevation_label">Elevación</string>
-  <string name="latitude_label">Latitud</string>
-  <string name="longitude_label">Longitud</string>
+  <string name="stat_elevation_gain">Aumento de elevación</string>
+  <string name="stat_elevation">Elevación</string>
+  <string name="stat_latitude">Latitud</string>
+  <string name="stat_longitude">Longitud</string>
 
   <!-- Min -->
-  <string name="min_elevation_label">Elevación mínima</string>
-  <string name="min_grade_label">Pendiente mínima</string>
-  <string name="min_pace_label">Paso mínimo</string>
+  <string name="stat_min_elevation">Elevación mínima</string>
+  <string name="stat_min_grade">Pendiente mínima</string>
+  <string name="stat_min_pace">Paso mínimo</string>
 
   <!-- Max -->
-  <string name="max_elevation_label">Elevación máxima</string>
-  <string name="max_grade_label">Pendiente máxima</string>
-  <string name="max_speed_label">Velocidad máxima</string>
+  <string name="stat_max_elevation">Elevación máxima</string>
+  <string name="stat_max_grade">Pendiente máxima</string>
+  <string name="stat_max_speed">Velocidad máxima</string>
 
   <string name="loading_track">Cargando recorrido...</string>
 
   <!-- Chart Settings -->
   <string name="menu_chart_view_chart_settings">Configuración de gráficas</string>
   <!-- X Axis -->
-  <string name="x_axis">Eje X</string>
-  <string name="by_distance">Como función de distancia</string>
-  <string name="by_time">Como función de tiempo</string>
+  <string name="chart_settings_x_axis">Eje X</string>
+  <string name="chart_settings_by_distance">Como función de distancia</string>
+  <string name="chart_settings_by_time">Como función de tiempo</string>
 
   <!-- Y Axis -->
-  <string name="y_axis">Eje Y</string>
+  <string name="chart_settings_y_axis">Eje Y</string>
 
   <!-- Units -->
   <!-- Time  -->
@@ -378,7 +378,7 @@ limitations under the License.
 
   <!-- Distance -->
   <string name="voice_kilometers">kilómetros</string>
-  <string name="feet">pies</string>
+  <string name="unit_feet">pies</string>
   <string name="voice_miles">millas</string>
 
   <!-- Speed and Pace -->
@@ -388,21 +388,21 @@ limitations under the License.
   <string name="voice_per_mile">por milla</string>
 
   <!-- Sensors -->
-  <string name="battery_level">Nivel de batería</string>
+  <string name="sensor_state_battery">Nivel de batería</string>
 	
   <!-- Stats Labels -->
-  <string name="moving_time_label">Tiempo en movimiento</string>
-  <string name="total_time_label">Tiempo total</string>
+  <string name="stat_moving_time">Tiempo en movimiento</string>
+  <string name="stat_total_time">Tiempo total</string>
   <string name="time_label">Tiempo</string>
   <string name="sd_unavail">SD no disponible</string>
-  <string name="speed">Velocidad</string>
+  <string name="stat_speed">Velocidad</string>
   <string name="start_trip">Debes comenzar un viaje.</string>
   <string name="marker_type_statistics">Estadísticas</string>
-  <string name="total_distance_label">Distancia total</string>
+  <string name="stat_total_distance">Distancia total</string>
   <string name="distance_label">Distancia</string>
-  <string name="power">Potencia</string>
-  <string name="cadence">Cadencia</string>
-  <string name="heart_rate">Ritmo cardíaco</string>
+  <string name="sensor_state_power">Potencia</string>
+  <string name="sensor_state_cadence">Cadencia</string>
+  <string name="sensor_state_heart_rate">Ritmo cardíaco</string>
   <string name="max_heart_rate">Máx ritmo cardíaco</string>
   <string name="waiting">Esperando...</string>
   
@@ -487,17 +487,17 @@ limitations under the License.
   <string name="bluetooth_not_connected">Sensor Bluetooth no conectado</string>
 
   <!-- Sensor State -->
-  <string name="sensor_data_time">Hora de los datos del sensor</string>
+  <string name="sensor_state_last_sensor_time">Hora de los datos del sensor</string>
   <string name="power_meter_enabled">Sensor de batería activado</string>
   <string name="heart_rate_monitor_enabled">Monitor de ritmo cardíaco activado</string>
   <string name="no_sensor_manager">No hay un gestor de sensores</string>
   <string name="enabled">Activado</string>
-  <string name="connecting">Conectando</string>
-  <string name="connected">Conectado</string>
-  <string name="disconnected">Desconectando</string>
+  <string name="sensor_state_connecting">Conectando</string>
+  <string name="sensor_state_connected">Conectado</string>
+  <string name="sensor_state_disconnected">Desconectando</string>
   <string name="no_sensor_service">No hay un servicio de sensores</string>
   <string name="searching">Buscando</string>
-  <string name="sending">Enviando</string>
+  <string name="sensor_state_sending">Enviando</string>
 
   <!-- Manifest description (not seen inside the app) -->
   <string name="permission_notification_label">recibir avisos de registro de recorridos</string>

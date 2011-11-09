@@ -252,9 +252,11 @@ public class TrackWidgetProvider
     String metricUnitsKey = context.getString(R.string.metric_units_key);
     if (key == null || key.equals(metricUnitsKey)) {
       isMetric = prefs.getBoolean(metricUnitsKey, true);
-      distanceLabel = context.getString(isMetric ? R.string.kilometer : R.string.mile);
-      speedLabel = context.getString(isMetric ? R.string.kilometer_per_hour : R.string.mile_per_hour);
-      paceLabel = context.getString(isMetric ? R.string.min_per_kilometer : R.string.min_per_mile);
+      distanceLabel = context.getString(isMetric ? R.string.unit_kilometer : R.string.unit_mile);
+      speedLabel = context.getString(
+          isMetric ? R.string.unit_kilometer_per_hour : R.string.unit_mile_per_hour);
+      paceLabel = context.getString(
+          isMetric ? R.string.unit_minute_per_kilometer : R.string.unit_minute_per_mile);
     }
 
     String reportSpeedKey = context.getString(R.string.report_speed_key);

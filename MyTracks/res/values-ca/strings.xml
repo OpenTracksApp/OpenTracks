@@ -209,7 +209,7 @@ limitations under the License.
   <string name="settings_recording_name_summary_on">El nom per defecte de la ruta serà la data i hora en que s\'ha iniciat.</string>
   <string name="settings_recording_name_summary_off">Els noms de les rutes seran números que s\'incrementaran per a cada nova ruta.</string>
 
-  <string name="pace_label">Ritme de pas</string>
+  <string name="stat_pace">Ritme de pas</string>
 
   <string name="eclair_required">Suportat només en Android 2.0 i superior</string>
   <string name="settings_sensor_type">Tipus de sensor</string>
@@ -253,40 +253,40 @@ limitations under the License.
 
   <!-- Statistics View -->
   <!-- Average Moving -->
-  <string name="average_moving_speed_label">Velocitat mitjana en moviment</string>
-  <string name="average_moving_pace_label">Ritme mitjà en moviment</string>
+  <string name="stat_average_moving_speed">Velocitat mitjana en moviment</string>
+  <string name="stat_average_moving_pace">Ritme mitjà en moviment</string>
 
   <!-- Average -->
-  <string name="average_speed_label">Velocitat mitjana</string>
-  <string name="average_pace_label">Ritme de pas mitjà</string>
+  <string name="stat_average_speed">Velocitat mitjana</string>
+  <string name="stat_average_pace">Ritme de pas mitjà</string>
 
   <string name="elevation_chart_name">Gràfic d\'elevació</string>
-  <string name="elevation_gain_label">Guany d\'elevació</string>
-  <string name="elevation_label">Elevació</string>
-  <string name="latitude_label">Latitud</string>
-  <string name="longitude_label">Longitud</string>
+  <string name="stat_elevation_gain">Guany d\'elevació</string>
+  <string name="stat_elevation">Elevació</string>
+  <string name="stat_latitude">Latitud</string>
+  <string name="stat_longitude">Longitud</string>
 
   <!-- Min -->
-  <string name="min_elevation_label">Elevació mínima</string>
-  <string name="min_grade_label">Grau mínim</string>
-  <string name="min_pace_label">Ritme de pas mínima</string>
+  <string name="stat_min_elevation">Elevació mínima</string>
+  <string name="stat_min_grade">Grau mínim</string>
+  <string name="stat_min_pace">Ritme de pas mínima</string>
 
   <!-- Max -->
-  <string name="max_elevation_label">Elevació màxima</string>
-  <string name="max_grade_label">Grau màxim</string>
-  <string name="max_speed_label">Velocitat màxima</string>
+  <string name="stat_max_elevation">Elevació màxima</string>
+  <string name="stat_max_grade">Grau màxim</string>
+  <string name="stat_max_speed">Velocitat màxima</string>
 
   <string name="loading_track">S\'està carregant la ruta...</string>
 
   <!-- Chart Settings -->
   <string name="menu_chart_view_chart_settings">Configuració del gràfic</string>
   <!-- X Axis -->
-  <string name="x_axis">Eix X</string>
-  <string name="by_distance">Per distància</string>
-  <string name="by_time">Per temps</string>
+  <string name="chart_settings_x_axis">Eix X</string>
+  <string name="chart_settings_by_distance">Per distància</string>
+  <string name="chart_settings_by_time">Per temps</string>
 
   <!-- Y Axis -->
-  <string name="y_axis">Eix Y</string>
+  <string name="chart_settings_y_axis">Eix Y</string>
 
   <!-- Units -->
   <!-- Time  -->
@@ -308,18 +308,18 @@ limitations under the License.
   <string name="voice_per_mile">per milla</string>
 
   <!-- Stats Labels -->
-  <string name="moving_time_label">Temps en moviment</string>
-  <string name="total_time_label">Temps total</string>
+  <string name="stat_moving_time">Temps en moviment</string>
+  <string name="stat_total_time">Temps total</string>
   <string name="time_label">Temps</string>
   <string name="sd_unavail">La targeta SD no està disponible</string>
-  <string name="speed">Velocitat</string>
+  <string name="stat_speed">Velocitat</string>
   <string name="start_trip">Heu d\'iniciar la marxa.</string>
   <string name="marker_type_statistics">Estadístiques</string>
-  <string name="total_distance_label">Distància total</string>
+  <string name="stat_total_distance">Distància total</string>
   <string name="distance_label">Distància</string>
-  <string name="power">Energia</string>
-  <string name="cadence">Cadència</string>
-  <string name="heart_rate">Freqüència cardíaca</string>
+  <string name="sensor_state_power">Energia</string>
+  <string name="sensor_state_cadence">Cadència</string>
+  <string name="sensor_state_heart_rate">Freqüència cardíaca</string>
   <string name="max_heart_rate">Freqüència cardíaca màxima</string>
   <string name="waiting">S\'està esperant...</string>
 
@@ -395,17 +395,17 @@ limitations under the License.
   <string name="bluetooth_not_connected">El sensor bluetooth no està connectat</string>
 
   <!-- Sensor State -->
-  <string name="sensor_data_time">Dades del sensor de temps</string>
+  <string name="sensor_state_last_sensor_time">Dades del sensor de temps</string>
   <string name="power_meter_enabled">S\'ha habilitat el mesurador de potència</string>
   <string name="heart_rate_monitor_enabled">S\'ha habilitat el monitor de la freqüència cardíaca</string>
   <string name="no_sensor_manager">Cap gestor de sensors</string>
   <string name="enabled">Habilitat</string>
-  <string name="connecting">S\'està connectant</string>
-  <string name="connected">S\'ha connectat</string>
-  <string name="disconnected">S\'ha desconnectat</string>
+  <string name="sensor_state_connecting">S\'està connectant</string>
+  <string name="sensor_state_connected">S\'ha connectat</string>
+  <string name="sensor_state_disconnected">S\'ha desconnectat</string>
   <string name="no_sensor_service">Cap servei de sensor</string>
   <string name="searching">S\'està cercant</string>
-  <string name="sending">S\'està enviant</string>
+  <string name="sensor_state_sending">S\'està enviant</string>
 
   <!-- Sensor Type Options -->
   <string name="settings_sensor_type_none">Cap</string>

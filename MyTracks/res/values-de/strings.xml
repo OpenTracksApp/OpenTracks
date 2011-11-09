@@ -212,7 +212,7 @@ limitations under the License.
   <string name="settings_recording_name_summary_on">Der Trackname wird aus Datum und Zeit zum Aufzeichnungsbeginn zusammengesetzt.</string>
   <string name="settings_recording_name_summary_off">Tracknamen erhalten eine fortlaufende Nummer.</string>
 
-  <string name="pace_label">Pace</string>
+  <string name="stat_pace">Pace</string>
 
   <string name="eclair_required">Wird nur unter Android 2.0 oder höher unterstützt</string>
   <string name="settings_sensor_type">Sensortyp</string>
@@ -263,47 +263,47 @@ limitations under the License.
 
   <!-- Statistics View -->
   <!-- Average Moving -->
-  <string name="average_moving_speed_label">Durchschnitt in Bew.</string>
-  <string name="average_moving_pace_label">Pace in Bew.</string>
+  <string name="stat_average_moving_speed">Durchschnitt in Bew.</string>
+  <string name="stat_average_moving_pace">Pace in Bew.</string>
 
   <!-- Average -->
-  <string name="average_speed_label">Durchschnittsgeschw.</string>
-  <string name="average_pace_label">Durchschnitts-Pace</string>
+  <string name="stat_average_speed">Durchschnittsgeschw.</string>
+  <string name="stat_average_pace">Durchschnitts-Pace</string>
 
   <string name="elevation_chart_name">Höhenprofil</string>
-  <string name="elevation_gain_label">Höhengewinn</string>
-  <string name="elevation_label">Höhe</string>
-  <string name="latitude_label">Breitengrad</string>
-  <string name="longitude_label">Längengrad</string>
+  <string name="stat_elevation_gain">Höhengewinn</string>
+  <string name="stat_elevation">Höhe</string>
+  <string name="stat_latitude">Breitengrad</string>
+  <string name="stat_longitude">Längengrad</string>
 
   <!-- Min -->
-  <string name="min_elevation_label">Niedrigste Höhenlage</string>
-  <string name="min_grade_label">Minimale Steigung</string>
-  <string name="min_pace_label">Minimaler Pace</string>
+  <string name="stat_min_elevation">Niedrigste Höhenlage</string>
+  <string name="stat_min_grade">Minimale Steigung</string>
+  <string name="stat_min_pace">Minimaler Pace</string>
 
   <!-- Max -->
-  <string name="max_elevation_label">Höchste Höhenlage</string>
-  <string name="max_grade_label">Maximale Steigung</string>
-  <string name="max_speed_label">Max. Geschwindigkeit</string>
+  <string name="stat_max_elevation">Höchste Höhenlage</string>
+  <string name="stat_max_grade">Maximale Steigung</string>
+  <string name="stat_max_speed">Max. Geschwindigkeit</string>
 
   <string name="loading_track">Lade Track…</string>
 
   <!-- Chart Settings -->
   <string name="menu_chart_view_chart_settings">Diagramm-Einstellungen</string>
   <!-- X Axis -->
-  <string name="x_axis">X-Achse</string>
-  <string name="by_distance">Nach Entfernung</string>
-  <string name="by_time">Nach Zeit</string>
+  <string name="chart_settings_x_axis">X-Achse</string>
+  <string name="chart_settings_by_distance">Nach Entfernung</string>
+  <string name="chart_settings_by_time">Nach Zeit</string>
 
   <!-- Y Axis -->
-  <string name="y_axis">Y-Achse</string>
+  <string name="chart_settings_y_axis">Y-Achse</string>
 
   <!-- Units -->
   <!-- Time  -->
   <string name="voice_hour">Stunde</string>
   <string name="voice_hours">Stunden</string>
-  <string name="hr">Std</string>
-  <string name="min">Min</string>
+  <string name="unit_hour">Std</string>
+  <string name="unit_minute">Min</string>
   <string name="voice_minute">Minute</string>
   <string name="voice_minutes">Minuten</string>
   <string name="voice_second">Sekunde</string>
@@ -311,43 +311,43 @@ limitations under the License.
   <!--string name="milliseconds">ms</string-->
 
   <!-- Distance -->
-  <!--string name="meter">m</string-->
-  <!--string name="kilometer">km</string-->
+  <!--string name="unit_meter">m</string-->
+  <!--string name="unit_kilometer">km</string-->
   <string name="voice_kilometers">Kilometer</string>
-  <string name="feet">Fuß</string>
-  <!--string name="mile">mi</string-->
+  <string name="unit_feet">Fuß</string>
+  <!--string name="unit_mile">mi</string-->
   <string name="voice_miles">Meilen</string>
 
   <!-- Speed and Pace -->
-  <!--string name="kilometer_per_hour">km/h</string-->
+  <!--string name="unit_kilometer_per_hour">km/h</string-->
   <string name="voice_kilometer_per_hour">Kilometer pro Stunde</string>
-  <!--string name="min_per_kilometer">min/km</string-->
+  <!--string name="unit_minute_per_kilometer">min/km</string-->
   <string name="voice_per_kilometer">pro Kilometer</string>
-  <!--string name="mile_per_hour">mi/h</string-->
+  <!--string name="unit_mile_per_hour">mi/h</string-->
   <string name="voice_mile_per_hour">Meilen pro Stunde</string>
-  <!--string name="min_per_mile">min/mi</string-->
+  <!--string name="unit_minute_per_mile">min/mi</string-->
   <string name="voice_per_mile">pro Meile</string>
 
   <!-- Sensors -->
-  <!--string name="watts">W</string-->
+  <!--string name="unit_watt">W</string-->
 
-  <!--string name="revolutions_per_minute">rpm</string-->
-  <!--string name="bpm">bpm</string-->
-  <string name="battery_level">Akkukapazität</string>
+  <!--string name="unit_revolution_per_minute">rpm</string-->
+  <!--string name="unit_beat_per_minute">bpm</string-->
+  <string name="sensor_state_battery">Akkukapazität</string>
 
   <!-- Stats Labels -->
-  <string name="moving_time_label">Zeit in Bewegung</string>
-  <string name="total_time_label">Gesamtzeit</string>
+  <string name="stat_moving_time">Zeit in Bewegung</string>
+  <string name="stat_total_time">Gesamtzeit</string>
   <string name="time_label">Zeit</string>
   <string name="sd_unavail">SD-Karte nicht verfügbar</string>
-  <string name="speed">Geschwindigkeit</string>
+  <string name="stat_speed">Geschwindigkeit</string>
   <string name="start_trip">Du musst erst eine Aufzeichnung beginnen.</string>
   <string name="marker_type_statistics">Statistik</string>
-  <string name="total_distance_label">Gesamtentfernung</string>
+  <string name="stat_total_distance">Gesamtentfernung</string>
   <string name="distance_label">Entfernung</string>
-  <string name="power">Kraft</string>
-  <string name="cadence">Kadenz</string>
-  <string name="heart_rate">Herzfrequenz</string>
+  <string name="sensor_state_power">Kraft</string>
+  <string name="sensor_state_cadence">Kadenz</string>
+  <string name="sensor_state_heart_rate">Herzfrequenz</string>
   <string name="max_heart_rate">Höchste Herzfrequenz</string>
   <!--string name="unknown">-</string-->
   <string name="waiting">Bitte warten…</string>
@@ -428,17 +428,17 @@ limitations under the License.
   <string name="bluetooth_not_connected">Bluetooth-Sensor nicht verbunden.</string>
 
   <!-- Sensor State -->
-  <string name="sensor_data_time">Uhrzeit</string>
+  <string name="sensor_state_last_sensor_time">Uhrzeit</string>
   <string name="power_meter_enabled">Kraftmesser aktiviert</string>
   <string name="heart_rate_monitor_enabled">Herzfrequenzmessung aktiviert</string>
   <string name="no_sensor_manager">Keine Sensoren verfügbar</string>
   <string name="enabled">Aktiviert</string>
-  <string name="connecting">Verbinde...</string>
-  <string name="connected">Verbunden</string>
-  <string name="disconnected">Getrennt</string>
+  <string name="sensor_state_connecting">Verbinde...</string>
+  <string name="sensor_state_connected">Verbunden</string>
+  <string name="sensor_state_disconnected">Getrennt</string>
   <string name="no_sensor_service">Kein Sensor-Dienst</string>
   <string name="searching">Suche...</string>
-  <string name="sending">Sende...</string>
+  <string name="sensor_state_sending">Sende...</string>
 
   <!-- Manifest description (not seen inside the app) -->
   <string name="permission_notification_label">Track-Aufzeichnungs-Benachrichtigungen empfangen</string>

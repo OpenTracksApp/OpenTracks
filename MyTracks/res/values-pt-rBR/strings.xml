@@ -184,7 +184,7 @@ limitations under the License.
   <string name="settings_sharing_url_only_summary_off">O conteúdo do mapa também será incluído ao compartilhar</string>
   <string name="settings_recording_marker">Freqüência de divisão</string>
   <string name="settings_recording_marker_summary">Maior tempo ou distância de uma gravação antes que ela seja dividida em duas</string>
-  <string name="pace_label">Passo</string>
+  <string name="stat_pace">Passo</string>
 
   <!-- MyTracksSky -->
   <string name="mytracks_sky">Satélites de GPS</string>
@@ -207,51 +207,51 @@ limitations under the License.
 
   <!-- Statistics View -->
   <!-- Average Moving -->
-  <string name="average_moving_speed_label">Velocidade Méd. em Movimento</string>
-  <string name="average_moving_pace_label">Passo Médio em Movimento</string>
+  <string name="stat_average_moving_speed">Velocidade Méd. em Movimento</string>
+  <string name="stat_average_moving_pace">Passo Médio em Movimento</string>
 
   <!-- Average -->
-  <string name="average_speed_label">Velocidade Média</string>
-  <string name="average_pace_label">Passo Médio</string>
+  <string name="stat_average_speed">Velocidade Média</string>
+  <string name="stat_average_pace">Passo Médio</string>
 
   <!-- Min -->
   <string name="elevation_chart_name">Carta de elevação</string>
-  <string name="elevation_gain_label">Ganho de elevação</string>
-  <string name="elevation_label">Elevação</string>
+  <string name="stat_elevation_gain">Ganho de elevação</string>
+  <string name="stat_elevation">Elevação</string>
 
   <!-- Max -->
-  <string name="min_elevation_label">Elevação Mínima</string>
-  <string name="min_grade_label">Subida mínima</string>
-  <string name="min_pace_label">Passo Mínimo</string>
+  <string name="stat_min_elevation">Elevação Mínima</string>
+  <string name="stat_min_grade">Subida mínima</string>
+  <string name="stat_min_pace">Passo Mínimo</string>
 
-  <string name="max_elevation_label">Elevação Máxima</string>
-   <string name="max_grade_label">Subida máxima</string>
-  <string name="max_speed_label">Velocidade Máxima</string>
+  <string name="stat_max_elevation">Elevação Máxima</string>
+   <string name="stat_max_grade">Subida máxima</string>
+  <string name="stat_max_speed">Velocidade Máxima</string>
 
   <string name="loading_track">Carregando caminho...</string>
 
   <!-- Chart Settings -->
   <string name="menu_chart_view_chart_settings">Configurações do gráfico</string>
   <!-- X Axis -->
-  <string name="x_axis">Eixo X</string>
-  <string name="by_distance">Por Distância</string>
-  <string name="by_time">Por Tempo</string>
+  <string name="chart_settings_x_axis">Eixo X</string>
+  <string name="chart_settings_by_distance">Por Distância</string>
+  <string name="chart_settings_by_time">Por Tempo</string>
 
   <!-- Y Axis -->
-  <string name="y_axis">Eixo Y</string>
+  <string name="chart_settings_y_axis">Eixo Y</string>
 
   <!-- Units -->
   <!-- Time -->
   <string name="voice_hour">hora</string>
   <string name="voice_hours">horas</string>
-  <string name="hr">h</string>
+  <string name="unit_hour">h</string>
   <string name="voice_minute">minuto</string>
   <string name="voice_minutes">minutos</string>
   <string name="voice_second">segundo</string>
   <string name="voice_seconds">segundos</string>
 
   <!-- Distance -->
-  <string name="feet">pés</string>
+  <string name="unit_feet">pés</string>
   <string name="voice_kilometers">kilômetros</string>
   <string name="voice_miles">milhas</string>
 
@@ -262,14 +262,14 @@ limitations under the License.
   <string name="voice_per_mile">por milha</string>
 
   <!-- Stats Labels -->
-  <string name="moving_time_label">Tempo em Movimento</string>
-  <string name="total_time_label">Tempo Total</string>
+  <string name="stat_moving_time">Tempo em Movimento</string>
+  <string name="stat_total_time">Tempo Total</string>
   <string name="time_label">Tempo</string>
   <string name="sd_unavail">SD não disponível</string>
-  <string name="speed">Velocidade</string>
+  <string name="stat_speed">Velocidade</string>
   <string name="start_trip">Você deve começar uma viagem.</string>
   <string name="marker_type_statistics">Estatísticas</string>
-  <string name="total_distance_label">Distância Total</string>
+  <string name="stat_total_distance">Distância Total</string>
   <string name="distance_label">Distância</string>
   <string name="unknown">-</string>
   <string name="waiting">Aguardando...</string>

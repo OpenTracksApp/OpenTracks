@@ -202,7 +202,7 @@ limitations under the License.
   <string name="settings_recording_auto_resume">Automatyczne wznawianie rejestracji trasy</string>
   <string name="settings_recording_auto_resume_summary">Maksymalny czas w minutach, który upłynął od ostatniego restartu telefonu, a po którym nie zostania wznowiona poprzednia trasa</string>
   
-  <string name="pace_label">Tempo</string>
+  <string name="stat_pace">Tempo</string>
   
   <string name="eclair_required">Dostępne tylko w wersji Android 2.0 lub nowszej</string>
   <string name="settings_sensor_type">Typ Czujnika</string>
@@ -246,79 +246,79 @@ limitations under the License.
 
   <!-- Statistics View -->
   <!-- Average Moving -->
-  <string name="average_moving_speed_label">Średnia prędkość poruszania</string>
-  <string name="average_moving_pace_label">Średnie tempo poruszania</string>
+  <string name="stat_average_moving_speed">Średnia prędkość poruszania</string>
+  <string name="stat_average_moving_pace">Średnie tempo poruszania</string>
 
   <!-- Average -->
-  <string name="average_speed_label">Średnia prędkość</string>
-  <string name="average_pace_label">Średnie tempo</string>
+  <string name="stat_average_speed">Średnia prędkość</string>
+  <string name="stat_average_pace">Średnie tempo</string>
 
   <string name="elevation_chart_name">Wykres wysokości</string>
-  <string name="elevation_gain_label">Wzrost wysokości</string>
-  <string name="elevation_label">Wysokość</string>
-  <string name="latitude_label">Szerokość</string>
-  <string name="longitude_label">Długość</string>
+  <string name="stat_elevation_gain">Wzrost wysokości</string>
+  <string name="stat_elevation">Wysokość</string>
+  <string name="stat_latitude">Szerokość</string>
+  <string name="stat_longitude">Długość</string>
 
   <!-- Min -->
-  <string name="min_elevation_label">Min. wysokość</string>
-  <string name="min_grade_label">Min. nachylenie</string>
-  <string name="min_pace_label">Min. tempo</string>
+  <string name="stat_min_elevation">Min. wysokość</string>
+  <string name="stat_min_grade">Min. nachylenie</string>
+  <string name="stat_min_pace">Min. tempo</string>
 
   <!-- Max -->
-  <string name="max_elevation_label">Maks. wysokość</string>
-  <string name="max_grade_label">Maks. nachylenie</string>
-  <string name="max_speed_label">Maks. prędkość</string>
+  <string name="stat_max_elevation">Maks. wysokość</string>
+  <string name="stat_max_grade">Maks. nachylenie</string>
+  <string name="stat_max_speed">Maks. prędkość</string>
 
   <string name="loading_track">Wczytywanie trasy...</string>
 
   <!-- Chart Settings -->
   <string name="menu_chart_view_chart_settings">Ustawienia wykresów</string>
   <!-- X Axis -->
-  <string name="x_axis">Oś X</string>
-  <string name="by_distance">Według odległości</string>
-  <string name="by_time">Według czasu</string>
+  <string name="chart_settings_x_axis">Oś X</string>
+  <string name="chart_settings_by_distance">Według odległości</string>
+  <string name="chart_settings_by_time">Według czasu</string>
 
   <!-- Y Axis -->
-  <string name="y_axis">Oś Y</string>
+  <string name="chart_settings_y_axis">Oś Y</string>
 
   <!-- Units -->
   <!-- Time  -->
   <string name="voice_hour">godzina</string>
   <string name="voice_hours">godziny</string>
-  <string name="hr">godz.</string>
-  <string name="min">min</string>
+  <string name="unit_hour">godz.</string>
+  <string name="unit_minute">min</string>
   <string name="voice_minute">minuta</string>
   <string name="voice_minutes">minuty</string>
   <string name="voice_second">sekunda</string>
   <string name="voice_seconds">sekundy</string>
 
   <!-- Distance -->
-  <string name="meter">m</string>
-  <string name="kilometer">km</string>
+  <string name="unit_meter">m</string>
+  <string name="unit_kilometer">km</string>
   <string name="voice_kilometers">kilometerów</string>
-  <string name="feet">st.</string>
-  <string name="mile">mi</string>
+  <string name="unit_feet">st.</string>
+  <string name="unit_mile">mi</string>
   <string name="voice_miles">mil</string>
 
   <!-- Speed and Pace -->
-  <string name="kilometer_per_hour">km/h</string>
+  <string name="unit_kilometer_per_hour">km/h</string>
   <string name="voice_kilometer_per_hour">kilometry na godzinę</string>
-  <string name="min_per_kilometer">min/km</string>
+  <string name="unit_minute_per_kilometer">min/km</string>
   <string name="voice_per_kilometer">na kilometr</string>
-  <string name="mile_per_hour">mi/h</string>
+  <string name="unit_mile_per_hour">mi/h</string>
   <string name="voice_mile_per_hour">mile na godzinę</string>
-  <string name="min_per_mile">min/mi</string>
+  <string name="unit_minute_per_mile">min/mi</string>
   <string name="voice_per_mile">na milę</string>
 
   <!-- Stats Labels -->
-  <string name="moving_time_label">Czas w ruchu</string>
-  <string name="total_time_label">Całkowity czas</string>
+  <string name="stat_moving_time">Czas w ruchu</string>
+  <string name="stat_total_time">Całkowity czas</string>
   <string name="time_label">Czas</string>
   <string name="sd_unavail">Karta SD niedostępna</string>
-  <string name="speed">Prędkość</string>
+  <string name="stat_speed">Prędkość</string>
   <string name="start_trip">Musisz rozpocząć podróż.</string>
   <string name="marker_type_statistics">Statystyki</string>
-  <string name="total_distance_label">Całkowita odległość</string>
+  <string name="stat_total_distance">Całkowita odległość</string>
   <string name="distance_label">Odległość</string>
   <string name="unknown">-</string>
   <string name="waiting">Oczekiwanie...</string>
@@ -399,15 +399,15 @@ limitations under the License.
   <string name="bluetooth_not_connected">Urządzenie Bluetooth niepołączone</string>
 
   <!-- Sensor State -->
-  <string name="sensor_data_time">Czas Danych Czujnika</string>
+  <string name="sensor_state_last_sensor_time">Czas Danych Czujnika</string>
   <string name="power_meter_enabled">Miernik mocy aktywny</string>
   <string name="heart_rate_monitor_enabled">Pulsometr aktywny</string>
   <string name="no_sensor_manager">Brak Ustawień Czujników</string>
   <string name="enabled">Aktywny</string>
-  <string name="connecting">Łączenie</string>
-  <string name="connected">Podłączony</string>
-  <string name="disconnected">Rozłączony</string>
+  <string name="sensor_state_connecting">Łączenie</string>
+  <string name="sensor_state_connected">Podłączony</string>
+  <string name="sensor_state_disconnected">Rozłączony</string>
   <string name="no_sensor_service">Brak Serwisu Czujników</string>
   <string name="searching">Wykrywanie</string>
-  <string name="sending">Przesyłanie</string>
+  <string name="sensor_state_sending">Przesyłanie</string>
 </resources>

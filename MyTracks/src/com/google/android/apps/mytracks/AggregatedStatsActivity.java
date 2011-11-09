@@ -74,7 +74,7 @@ public class AggregatedStatsActivity extends Activity implements
     }
     utils.setMetricUnits(metricUnits);
     utils.updateUnits();
-    utils.setSpeedLabel(R.id.speed_label, R.string.speed, R.string.pace_label);
+    utils.setSpeedLabel(R.id.speed_label, R.string.stat_speed, R.string.stat_pace);
     utils.setSpeedLabels();
 
     DisplayMetrics metrics = new DisplayMetrics();

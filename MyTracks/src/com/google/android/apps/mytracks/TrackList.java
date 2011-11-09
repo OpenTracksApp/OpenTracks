@@ -312,17 +312,17 @@ public class TrackList extends ListActivity
           if (metricUnits) {
             if (length > 1000) {
               length /= 1000;
-              lengthUnit = getString(R.string.kilometer);
+              lengthUnit = getString(R.string.unit_kilometer);
             } else {
-              lengthUnit = getString(R.string.meter);
+              lengthUnit = getString(R.string.unit_meter);
             }
           } else {
             if (length > UnitConversions.MI_TO_M) {
               length /= UnitConversions.MI_TO_M;
-              lengthUnit = getString(R.string.mile);
+              lengthUnit = getString(R.string.unit_mile);
             } else {
               length *= UnitConversions.M_TO_FT;
-              lengthUnit = getString(R.string.feet);
+              lengthUnit = getString(R.string.unit_feet);
             }
           }
           textView.setText(String.format("%s  %.2f %s",

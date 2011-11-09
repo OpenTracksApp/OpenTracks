@@ -192,7 +192,7 @@ limitations under the License.
 
   <string name="settings_recording_marker">Fréquence de séparation</string>
   <string name="settings_recording_marker_summary">Temps ou distance minimum avant l\'insertion d\'un marqueur de séparation</string>
-  <string name="pace_label">Rythme</string>
+  <string name="stat_pace">Rythme</string>
 
   <string name="eclair_required">Nécessite au minimum Android 2.0</string>
   <string name="settings_sensor_type">Type de capteur</string>
@@ -241,38 +241,38 @@ limitations under the License.
 
   <!-- Statistics View -->
   <!-- Average Moving -->
-  <string name="average_moving_speed_label">Vitesse moyenne (déplacement)</string>
-  <string name="average_moving_pace_label">Rythme moyen (dépl.)</string>
+  <string name="stat_average_moving_speed">Vitesse moyenne (déplacement)</string>
+  <string name="stat_average_moving_pace">Rythme moyen (dépl.)</string>
 
   <!-- Average -->
-  <string name="average_speed_label">Vitesse moyenne</string>
-  <string name="average_pace_label">Rythme moyen</string>
+  <string name="stat_average_speed">Vitesse moyenne</string>
+  <string name="stat_average_pace">Rythme moyen</string>
 
   <string name="elevation_chart_name">Altitude maximale</string>
-  <string name="elevation_gain_label">Dénivelé cumulé</string>
-  <string name="elevation_label">Altitude</string>
+  <string name="stat_elevation_gain">Dénivelé cumulé</string>
+  <string name="stat_elevation">Altitude</string>
 
   <!-- Min -->
-  <string name="min_elevation_label">Altitude min</string>
-  <string name="min_grade_label">Pente min</string>
-  <string name="min_pace_label">Rythme min</string>
+  <string name="stat_min_elevation">Altitude min</string>
+  <string name="stat_min_grade">Pente min</string>
+  <string name="stat_min_pace">Rythme min</string>
 
   <!-- Max -->
-  <string name="max_elevation_label">Altitude max</string>
-  <string name="max_grade_label">Pente max</string>
-  <string name="max_speed_label">Vitesse max</string>
+  <string name="stat_max_elevation">Altitude max</string>
+  <string name="stat_max_grade">Pente max</string>
+  <string name="stat_max_speed">Vitesse max</string>
 
   <string name="loading_track">Chargement du parcours...</string>
 
   <!-- Chart Settings -->
   <string name="menu_chart_view_chart_settings">Paramètres Graphique</string>
   <!-- X Axis -->
-  <string name="x_axis">Abscisse (X)</string>
-  <string name="by_distance">Par distance</string>
-  <string name="by_time">Par durée</string>
+  <string name="chart_settings_x_axis">Abscisse (X)</string>
+  <string name="chart_settings_by_distance">Par distance</string>
+  <string name="chart_settings_by_time">Par durée</string>
 
   <!-- Y Axis -->
-  <string name="y_axis">Ordonnée (Y)</string>
+  <string name="chart_settings_y_axis">Ordonnée (Y)</string>
 
   <!-- Units -->
   <!-- Time  -->
@@ -282,15 +282,15 @@ limitations under the License.
   <string name="voice_seconds">secondes</string>
 
   <!-- Distance -->
-  <string name="feet">pied</string>
+  <string name="unit_feet">pied</string>
   <string name="voice_kilometers">kilomètres</string>
   <string name="voice_miles">milles</string>
 
   <!-- Speed and Pace -->
-  <string name="kilometer_per_hour">km/h</string>
+  <string name="unit_kilometer_per_hour">km/h</string>
   <string name="voice_kilometer_per_hour">kilomètres/heure</string>
   <string name="voice_per_kilometer">par kilomètre</string>
-  <string name="mile_per_hour">mi/h</string>
+  <string name="unit_mile_per_hour">mi/h</string>
   <string name="voice_mile_per_hour">miles/heure</string>
   <string name="voice_per_mile">per mile</string>
 
@@ -298,20 +298,20 @@ limitations under the License.
   <string name="waiting">Waiting...</string>
   
   <!-- Stats Labels -->
-  <string name="moving_time_label">Durée (déplacement)</string>
-  <string name="total_time_label">Durée totale</string>
+  <string name="stat_moving_time">Durée (déplacement)</string>
+  <string name="stat_total_time">Durée totale</string>
   <string name="time_label">Durée</string>
   <string name="sd_unavail">Carte SD indisponible</string>
-  <string name="speed">Vitesse</string>
+  <string name="stat_speed">Vitesse</string>
   <string name="start_trip">Vous devez commencer un parcours</string>
   <string name="distance_label">Distance</string>
-  <string name="power">Puissance</string>
-  <string name="cadence">Cadence</string>
-  <string name="heart_rate">Rythme cardiaque</string>
+  <string name="sensor_state_power">Puissance</string>
+  <string name="sensor_state_cadence">Cadence</string>
+  <string name="sensor_state_heart_rate">Rythme cardiaque</string>
   <string name="max_heart_rate">Rythme cardiaque maximum</string>
   <string name="unknown">-</string>
   <string name="marker_type_statistics">Statistiques</string>
-  <string name="total_distance_label">Distance totale</string>
+  <string name="stat_total_distance">Distance totale</string>
   <string name="waiting">Patientez</string>
 
   <!-- End User License Agreement -->
@@ -384,17 +384,17 @@ limitations under the License.
   <string name="bluetooth_not_connected">Capteur Bluetooth non connecté</string>
 
   <!-- Sensor State -->
-  <string name="sensor_data_time">Date des données du capteur</string>
+  <string name="sensor_state_last_sensor_time">Date des données du capteur</string>
   <string name="power_meter_enabled">Compteur activé</string>
   <string name="heart_rate_monitor_enabled">Cardiofréquencemètre activé</string>
   <string name="no_sensor_manager">Pas de gestionnaire de capteur</string>
   <string name="enabled">Activé</string>
-  <string name="connecting">Connexion</string>
-  <string name="connected">Connecté</string>
-  <string name="disconnected">Déconnecté</string>
+  <string name="sensor_state_connecting">Connexion</string>
+  <string name="sensor_state_connected">Connecté</string>
+  <string name="sensor_state_disconnected">Déconnecté</string>
   <string name="no_sensor_service">Pas de capteur</string>
   <string name="searching">Recherche</string>
-  <string name="sending">Envoi</string>
+  <string name="sensor_state_sending">Envoi</string>
 
   <!-- Sensor Type Options -->
   <string name="settings_sensor_type_none">Aucun</string>

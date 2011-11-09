@@ -177,7 +177,7 @@ public class StatsActivity extends Activity implements TrackDataListener {
       @Override
       public void run() {
         utils.updateUnits();
-        utils.setSpeedLabel(R.id.speed_label, R.string.speed, R.string.pace_label);
+        utils.setSpeedLabel(R.id.speed_label, R.string.stat_speed, R.string.stat_pace);
         utils.setSpeedLabels();
       }
     });

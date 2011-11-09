@@ -210,7 +210,7 @@ public class ChartView extends View {
                              R.color.elevation_border,
                              new ZoomSettings(MAX_INTERVALS,
                                  new int[] {5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000}),
-                             R.string.elevation_label);
+                             R.string.stat_elevation);
 
     series[SPEED_SERIES] =
         new ChartValueSeries(context,
@@ -219,14 +219,14 @@ public class ChartView extends View {
                              R.color.speed_border,
                              new ZoomSettings(MAX_INTERVALS, 0, Integer.MIN_VALUE,
                                  new int[] {1, 5, 10, 20, 50}),
-                             R.string.speed);
+                             R.string.stat_speed);
     series[POWER_SERIES] =
         new ChartValueSeries(context,
                              "###,###",
                              R.color.power_fill,
                              R.color.power_border,
                              new ZoomSettings(MAX_INTERVALS, 0, 1000, new int[] {5, 50, 100, 200}),
-                             R.string.power);
+                             R.string.sensor_state_power);
     series[CADENCE_SERIES] =
         new ChartValueSeries(context,
                              "###,###",
@@ -234,7 +234,7 @@ public class ChartView extends View {
                              R.color.cadence_border,
                              new ZoomSettings(MAX_INTERVALS, 0, Integer.MIN_VALUE,
                                  new int[] {5, 10, 25, 50}),
-                             R.string.cadence);
+                             R.string.sensor_state_cadence);
     series[HEART_RATE_SERIES] =
         new ChartValueSeries(context,
                              "###,###",
@@ -242,7 +242,7 @@ public class ChartView extends View {
                              R.color.heartrate_border,
                              new ZoomSettings(MAX_INTERVALS, 0, Integer.MIN_VALUE,
                                  new int[] {25, 50}),
-                             R.string.heart_rate);
+                             R.string.sensor_state_heart_rate);
   }
 
   public void clearWaypoints() {
@@ -269,8 +269,8 @@ public class ChartView extends View {
 
   public void setReportSpeed(boolean reportSpeed, Context c) {
     series[SPEED_SERIES].setTitle(c.getString(reportSpeed
-                                              ? R.string.speed
-                                              : R.string.pace_label));
+                                              ? R.string.stat_speed
+                                              : R.string.stat_pace));
   }
 
   private void addDataPointInternal(double[] theData) {
@@ -832,8 +832,8 @@ public class ChartView extends View {
     canvas.drawLine(leftBorder, y, rightEdge, y, borderPaint);
     Context c = getContext();
     String s = mode == Mode.BY_DISTANCE
-        ? (metricUnits ? c.getString(R.string.kilometer) : c.getString(R.string.mile))
-        : c.getString(R.string.min);
+        ? (metricUnits ? c.getString(R.string.unit_kilometer) : c.getString(R.string.unit_mile))
+        : c.getString(R.string.unit_minute);
     canvas.drawText(s, rightEdge, effectiveHeight + .2f * UNIT_BORDER + topBorder, labelPaint);
   }
 
@@ -852,7 +852,7 @@ public class ChartView extends View {
 
     Context c = getContext();
     // TODO: This should really show units for all series.
-    String s = metricUnits ? c.getString(R.string.meter) : c.getString(R.string.feet);
+    String s = metricUnits ? c.getString(R.string.unit_meter) : c.getString(R.string.unit_feet);
     canvas.drawText(s, leftBorder - UNIT_BORDER * .2f, UNIT_BORDER * .8f + topBorder, labelPaint);
   }
 

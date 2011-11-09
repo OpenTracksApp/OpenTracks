@@ -244,7 +244,7 @@ limitations under the License.
   <string name="settings_reset_dialog_message">你的所有设置都将恢复到默认值. 已保存的轨迹不会丢失. 确定要继续吗?</string>
   <string name="settings_reset_done">所有设置已恢复到默认值.</string>
 
-  <string name="pace_label">节奏</string>
+  <string name="stat_pace">节奏</string>
 
   <string name="eclair_required">只在 Android 2.0 及以上版本支持</string>
   <string name="settings_sensor_type">感应器类型</string>
@@ -310,47 +310,47 @@ limitations under the License.
 
   <!-- Statistics View -->
   <!-- Average Moving -->
-  <string name="average_moving_speed_label">平均移动速度</string>
-  <string name="average_moving_pace_label">平均移动步速</string>
+  <string name="stat_average_moving_speed">平均移动速度</string>
+  <string name="stat_average_moving_pace">平均移动步速</string>
 
   <!-- Average -->
-  <string name="average_speed_label">平均速度</string>
-  <string name="average_pace_label">平均步速</string>
+  <string name="stat_average_speed">平均速度</string>
+  <string name="stat_average_pace">平均步速</string>
 
   <string name="elevation_chart_name">海拔图表</string>
-  <string name="elevation_gain_label">爬升</string>
-  <string name="elevation_label">海拔</string>
-  <string name="latitude_label">纬度</string>
-  <string name="longitude_label">经度</string>
+  <string name="stat_elevation_gain">爬升</string>
+  <string name="stat_elevation">海拔</string>
+  <string name="stat_latitude">纬度</string>
+  <string name="stat_longitude">经度</string>
 
   <!-- Min -->
-  <string name="min_elevation_label">最小海拔</string>
-  <string name="min_grade_label">最小落差</string>
-  <string name="min_pace_label">最小步速</string>
+  <string name="stat_min_elevation">最小海拔</string>
+  <string name="stat_min_grade">最小落差</string>
+  <string name="stat_min_pace">最小步速</string>
 
   <!-- Max -->
-  <string name="max_elevation_label">最大海拔</string>
-  <string name="max_grade_label">最大落差</string>
-  <string name="max_speed_label">最大速度</string>
+  <string name="stat_max_elevation">最大海拔</string>
+  <string name="stat_max_grade">最大落差</string>
+  <string name="stat_max_speed">最大速度</string>
 
   <string name="loading_track">载入轨迹中...</string>
 
   <!-- Chart Settings -->
   <string name="menu_chart_view_chart_settings">图表设置</string>
   <!-- X Axis -->
-  <string name="x_axis">横轴</string>
-  <string name="by_distance">按距离显示</string>
-  <string name="by_time">按时间显示</string>
+  <string name="chart_settings_x_axis">横轴</string>
+  <string name="chart_settings_by_distance">按距离显示</string>
+  <string name="chart_settings_by_time">按时间显示</string>
 
   <!-- Y Axis -->
-  <string name="y_axis">纵轴</string>
+  <string name="chart_settings_y_axis">纵轴</string>
 
   <!-- Units -->
   <!-- Time  -->
   <string name="voice_hour">小时</string>
   <string name="voice_hours">小时</string>
-  <string name="hr">时</string>
-  <string name="min">分</string>
+  <string name="unit_hour">时</string>
+  <string name="unit_minute">分</string>
   <string name="voice_minute">分钟</string>
   <string name="voice_minutes">分钟</string>
   <string name="voice_second">秒</string>
@@ -367,18 +367,18 @@ limitations under the License.
   <string name="voice_per_mile">每英里</string>
 
   <!-- Stats Labels -->
-  <string name="moving_time_label">移动时间</string>
-  <string name="total_time_label">总时间</string>
+  <string name="stat_moving_time">移动时间</string>
+  <string name="stat_total_time">总时间</string>
   <string name="time_label">时间</string>
   <string name="sd_unavail">没有 SD 卡</string>
-  <string name="speed">速度</string>
+  <string name="stat_speed">速度</string>
   <string name="start_trip">你必须先记录轨迹.</string>
   <string name="marker_type_statistics">统计</string>
-  <string name="total_distance_label">总距离</string>
+  <string name="stat_total_distance">总距离</string>
   <string name="distance_label">距离</string>
-  <string name="power">电源</string>
-  <string name="cadence">节奏</string>
-  <string name="heart_rate">心率</string>
+  <string name="sensor_state_power">电源</string>
+  <string name="sensor_state_cadence">节奏</string>
+  <string name="sensor_state_heart_rate">心率</string>
   <string name="max_heart_rate">最大心率</string>
   <string name="waiting">请稍候...</string>
 
@@ -457,17 +457,17 @@ limitations under the License.
   <string name="bluetooth_not_connected">未连接蓝牙感应器</string>
 
   <!-- Sensor State -->
-  <string name="sensor_data_time">感应器数据时间</string>
+  <string name="sensor_state_last_sensor_time">感应器数据时间</string>
   <string name="power_meter_enabled">电源计量器已启用</string>
   <string name="heart_rate_monitor_enabled">心率监视器已启用</string>
   <string name="no_sensor_manager">没有感应器管理器</string>
   <string name="enabled">已启用</string>
-  <string name="connecting">连接中</string>
-  <string name="connected">已连接</string>
-  <string name="disconnected">未连接</string>
+  <string name="sensor_state_connecting">连接中</string>
+  <string name="sensor_state_connected">已连接</string>
+  <string name="sensor_state_disconnected">未连接</string>
   <string name="no_sensor_service">没有感应器服务</string>
   <string name="searching">搜索中</string>
-  <string name="sending">发送中</string>
+  <string name="sensor_state_sending">发送中</string>
 
   <!-- Sensor Type Options -->
   <string name="settings_sensor_type_none">无</string>

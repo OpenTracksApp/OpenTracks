@@ -243,7 +243,7 @@ limitations under the License.
   <string name="settings_reset_dialog_message">Все ваши настройки будут стерты и восстановлены значения по умолчанию. Записанные треки будут сохранены. Вы уверены?</string>
   <string name="settings_reset_done">Все настройки были возвращены к значениям по умолчанию.</string>
 
-  <string name="pace_label">Темп</string>
+  <string name="stat_pace">Темп</string>
 
   <string name="eclair_required">Поддерживается только в Android 2.0 или выше</string>
   <string name="settings_sensor_type">Тип датчика</string>
@@ -309,47 +309,47 @@ limitations under the License.
 
   <!-- Statistics View -->
   <!-- Average Moving -->
-  <string name="average_moving_speed_label">Средняя скорость движения</string>
-  <string name="average_moving_pace_label">Средний темп движения</string>
+  <string name="stat_average_moving_speed">Средняя скорость движения</string>
+  <string name="stat_average_moving_pace">Средний темп движения</string>
 
   <!-- Average -->
-  <string name="average_speed_label">Средняя скорость</string>
-  <string name="average_pace_label">Средний темп</string>
+  <string name="stat_average_speed">Средняя скорость</string>
+  <string name="stat_average_pace">Средний темп</string>
 
   <string name="elevation_chart_name">Диаграмма высоты</string>
-  <string name="elevation_gain_label">Набор высоты</string>
-  <string name="elevation_label">Высота</string>
-  <string name="latitude_label">Широта</string>
-  <string name="longitude_label">Долгота</string>
+  <string name="stat_elevation_gain">Набор высоты</string>
+  <string name="stat_elevation">Высота</string>
+  <string name="stat_latitude">Широта</string>
+  <string name="stat_longitude">Долгота</string>
 
   <!-- Min -->
-  <string name="min_elevation_label">Минимальная высота</string>
-  <string name="min_grade_label">Минимальный уклон</string>
-  <string name="min_pace_label">Минимальный темп</string>
+  <string name="stat_min_elevation">Минимальная высота</string>
+  <string name="stat_min_grade">Минимальный уклон</string>
+  <string name="stat_min_pace">Минимальный темп</string>
 
   <!-- Max -->
-  <string name="max_elevation_label">Максимальная высота</string>
-  <string name="max_grade_label">Максимальный уклон</string>
-  <string name="max_speed_label">Максимальная скорость</string>
+  <string name="stat_max_elevation">Максимальная высота</string>
+  <string name="stat_max_grade">Максимальный уклон</string>
+  <string name="stat_max_speed">Максимальная скорость</string>
 
   <string name="loading_track">Загрузка трека...</string>
 
   <!-- Chart Settings -->
   <string name="menu_chart_view_chart_settings">Настройки диаграммы</string>
   <!-- X Axis -->
-  <string name="x_axis">Ось X</string>
-  <string name="by_distance">По расстоянию</string>
-  <string name="by_time">По времени</string>
+  <string name="chart_settings_x_axis">Ось X</string>
+  <string name="chart_settings_by_distance">По расстоянию</string>
+  <string name="chart_settings_by_time">По времени</string>
 
   <!-- Y Axis -->
-  <string name="y_axis">Ось Y</string>
+  <string name="chart_settings_y_axis">Ось Y</string>
 
   <!-- Units -->
   <!-- Time  -->
   <string name="voice_hour">час</string>
   <string name="voice_hours">часов</string>
-  <string name="hr">ч</string>
-  <string name="min">мин</string>
+  <string name="unit_hour">ч</string>
+  <string name="unit_minute">мин</string>
   <string name="voice_minute">минута</string>
   <string name="voice_minutes">минут</string>
   <string name="voice_second">секунда</string>
@@ -357,42 +357,42 @@ limitations under the License.
   <string name="milliseconds">мс</string>
 
   <!-- Distance -->
-  <string name="meter">м</string>
-  <string name="kilometer">км</string>
+  <string name="unit_meter">м</string>
+  <string name="unit_kilometer">км</string>
   <string name="voice_kilometers">километров</string>
-  <string name="feet">футов</string>
-  <string name="mile">миль</string>
+  <string name="unit_feet">футов</string>
+  <string name="unit_mile">миль</string>
   <string name="voice_miles">мили</string>
 
   <!-- Speed and Pace -->
-  <string name="kilometer_per_hour">км/ч</string>
+  <string name="unit_kilometer_per_hour">км/ч</string>
   <string name="voice_kilometer_per_hour">километров в час</string>
-  <string name="min_per_kilometer">мин/км</string>
+  <string name="unit_minute_per_kilometer">мин/км</string>
   <string name="voice_per_kilometer">за километр</string>
-  <string name="mile_per_hour">миль/ч</string>
+  <string name="unit_mile_per_hour">миль/ч</string>
   <string name="voice_mile_per_hour">миль в час</string>
-  <string name="min_per_mile">мин/миля</string>
+  <string name="unit_minute_per_mile">мин/миля</string>
   <string name="voice_per_mile">за милю</string>
 
   <!-- Sensors -->
-  <string name="watts">Вт</string>
+  <string name="unit_watt">Вт</string>
 
-  <string name="revolutions_per_minute">об/мин</string>
-  <string name="bpm">bpm</string>
+  <string name="unit_revolution_per_minute">об/мин</string>
+  <string name="unit_beat_per_minute">bpm</string>
 
   <!-- Stats Labels -->
-  <string name="moving_time_label">Время движения</string>
-  <string name="total_time_label">Общее время</string>
+  <string name="stat_moving_time">Время движения</string>
+  <string name="stat_total_time">Общее время</string>
   <string name="time_label">Время</string>
   <string name="sd_unavail">SD карта недоступна</string>
-  <string name="speed">Скорость</string>
+  <string name="stat_speed">Скорость</string>
   <string name="start_trip">Вы должны начать путешествие.</string>
   <string name="marker_type_statistics">Статистика</string>
-  <string name="total_distance_label">Общее расстояние</string>
+  <string name="stat_total_distance">Общее расстояние</string>
   <string name="distance_label">Расстояние</string>
-  <string name="power">Мощность</string>
-  <string name="cadence">Каденс</string>
-  <string name="heart_rate">Пульс</string>
+  <string name="sensor_state_power">Мощность</string>
+  <string name="sensor_state_cadence">Каденс</string>
+  <string name="sensor_state_heart_rate">Пульс</string>
   <string name="max_heart_rate">Максимальный пульс</string>
   <string name="unknown">-</string>
   <string name="waiting">Ожидание...</string>
@@ -477,17 +477,17 @@ limitations under the License.
   <string name="bluetooth_not_connected">Bluetooth датчик не подключен</string>
 
   <!-- Sensor State -->
-  <string name="sensor_data_time">Датчик времени</string>
+  <string name="sensor_state_last_sensor_time">Датчик времени</string>
   <string name="power_meter_enabled">Измеритель мощности включен</string>
   <string name="heart_rate_monitor_enabled">Монитор пульса включен</string>
   <string name="no_sensor_manager">Нет диспетчера датчиков</string>
   <string name="enabled">Включено</string>
-  <string name="connecting">Подключение</string>
-  <string name="connected">Подключено</string>
-  <string name="disconnected">Отключено</string>
+  <string name="sensor_state_connecting">Подключение</string>
+  <string name="sensor_state_connected">Подключено</string>
+  <string name="sensor_state_disconnected">Отключено</string>
   <string name="no_sensor_service">Нет службы датчиков</string>
   <string name="searching">Поиск</string>
-  <string name="sending">Отправка</string>
+  <string name="sensor_state_sending">Отправка</string>
 
   <!-- Sensor Type Options -->
   <string name="settings_sensor_type_none">Нет</string>

@@ -198,7 +198,7 @@ limitations under the License.
 
   <string name="settings_recording_marker">Delningsfrekvens</string>
   <string name="settings_recording_marker_summary">Maximala tiden eller distansen varefter en ny delningsmarkör kommer infogas</string>
-  <string name="pace_label">Tempo</string>
+  <string name="stat_pace">Tempo</string>
 
   <!-- MyTracksSky -->
   <string name="mytracks_sky">GPS-satelliter</string>
@@ -221,79 +221,79 @@ limitations under the License.
 
   <!-- Statistics View -->
   <!-- Average Moving -->
-  <string name="average_moving_speed_label">Genomsnittlig rörlig hastighet</string>
-  <string name="average_moving_pace_label">Genomsnittlig rörligt tempo</string>
+  <string name="stat_average_moving_speed">Genomsnittlig rörlig hastighet</string>
+  <string name="stat_average_moving_pace">Genomsnittlig rörligt tempo</string>
 
   <!-- Average -->
-  <string name="average_speed_label">Genomsnittlig hastighet</string>
-  <string name="average_pace_label">Genomsnittligt tempo</string>
+  <string name="stat_average_speed">Genomsnittlig hastighet</string>
+  <string name="stat_average_pace">Genomsnittligt tempo</string>
 
   <string name="elevation_chart_name">Höjddiagram</string>
-  <string name="elevation_gain_label">Höjdvinst</string>
-  <string name="elevation_label">Höjd</string>
-  <string name="latitude_label">Latitud</string>
-  <string name="longitude_label">Longitud</string>
+  <string name="stat_elevation_gain">Höjdvinst</string>
+  <string name="stat_elevation">Höjd</string>
+  <string name="stat_latitude">Latitud</string>
+  <string name="stat_longitude">Longitud</string>
 
   <!-- Min -->
-  <string name="min_elevation_label">Minimihöjd</string>
-  <string name="min_grade_label">Minimilutning</string>
-  <string name="min_pace_label">Minimitempo</string>
+  <string name="stat_min_elevation">Minimihöjd</string>
+  <string name="stat_min_grade">Minimilutning</string>
+  <string name="stat_min_pace">Minimitempo</string>
 
   <!-- Max -->
-  <string name="max_elevation_label">Maxhöjd</string>
-  <string name="max_grade_label">Maxlutning</string>
-  <string name="max_speed_label">Maxhastighet</string>
+  <string name="stat_max_elevation">Maxhöjd</string>
+  <string name="stat_max_grade">Maxlutning</string>
+  <string name="stat_max_speed">Maxhastighet</string>
 
   <string name="loading_track">Laddar spår...</string>
 
   <!-- Chart Settings -->
   <string name="menu_chart_view_chart_settings">Diagraminställningar</string>
   <!-- X Axis -->
-  <string name="x_axis">X-axel</string>
-  <string name="by_distance">Efter distans</string>
-  <string name="by_time">Efter tid</string>
+  <string name="chart_settings_x_axis">X-axel</string>
+  <string name="chart_settings_by_distance">Efter distans</string>
+  <string name="chart_settings_by_time">Efter tid</string>
 
   <!-- Y Axis -->
-  <string name="y_axis">Y-axel</string>
+  <string name="chart_settings_y_axis">Y-axel</string>
 
   <!-- Units -->
   <!-- Time  -->
   <string name="voice_hour">timme</string>
   <string name="voice_hours">timmar</string>
-  <string name="hr">tim</string>
-  <string name="min">min</string>
+  <string name="unit_hour">tim</string>
+  <string name="unit_minute">min</string>
   <string name="voice_minute">minut</string>
   <string name="voice_minutes">minuter</string>
   <string name="voice_second">sekund</string>
   <string name="voice_seconds">sekunder</string>
 
   <!-- Distance -->
-  <string name="meter">m</string>
-  <string name="kilometer">km</string>
+  <string name="unit_meter">m</string>
+  <string name="unit_kilometer">km</string>
   <string name="voice_kilometers">kilometer</string>
-  <string name="feet">ft</string>
-  <string name="mile">mi</string>
+  <string name="unit_feet">ft</string>
+  <string name="unit_mile">mi</string>
   <string name="voice_miles">miles</string>
 
   <!-- Speed and Pace -->
-  <string name="kilometer_per_hour">km/h</string>
+  <string name="unit_kilometer_per_hour">km/h</string>
   <string name="voice_kilometer_per_hour">kilometer i timmen</string>
-  <string name="min_per_kilometer">min/km</string>
+  <string name="unit_minute_per_kilometer">min/km</string>
   <string name="voice_per_kilometer">per kilometer</string>
-  <string name="mile_per_hour">mi/h</string>
+  <string name="unit_mile_per_hour">mi/h</string>
   <string name="voice_mile_per_hour">miles i timmen</string>
-  <string name="min_per_mile">min/mi</string>
+  <string name="unit_minute_per_mile">min/mi</string>
   <string name="voice_per_mile">per mile</string>
 
   <!-- Stats Labels -->
-  <string name="moving_time_label">Rörlig tid</string>
-  <string name="total_time_label">Total tid</string>
+  <string name="stat_moving_time">Rörlig tid</string>
+  <string name="stat_total_time">Total tid</string>
   <string name="time_label">Tid</string>
   <string name="sd_unavail">SD otillgängligt</string>
-  <string name="speed">Hastighet</string>
+  <string name="stat_speed">Hastighet</string>
   <string name="start_trip">Du måste starta en tur.</string>
   <string name="marker_type_statistics">Statistik</string>
-  <string name="total_distance_label">Total distans</string>
+  <string name="stat_total_distance">Total distans</string>
   <string name="distance_label">Distans</string>
   <string name="unknown">-</string>
   <string name="waiting">Väntar...</string>

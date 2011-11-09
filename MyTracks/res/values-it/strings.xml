@@ -195,7 +195,7 @@ limitations under the License.
 
   <string name="settings_recording_marker">Frequenza di divisione</string>
   <string name="settings_recording_marker_summary">Tempo o distanza massima dopo di cui il percorso verrà diviso</string>
-  <string name="pace_label">Andatura</string>
+  <string name="stat_pace">Andatura</string>
 
   <!-- MyTracksSky -->
   <string name="mytracks_sky">Satelliti GPS</string>
@@ -218,79 +218,79 @@ limitations under the License.
 
   <!-- Statistics View -->
   <!-- Average Moving -->
-  <string name="average_moving_speed_label">Velocità media in moto</string>
-  <string name="average_moving_pace_label">Andatura media in moto</string>
+  <string name="stat_average_moving_speed">Velocità media in moto</string>
+  <string name="stat_average_moving_pace">Andatura media in moto</string>
 
   <!-- Average -->
-  <string name="average_speed_label">Velocità media</string>
-  <string name="average_pace_label">Andatura media</string>
+  <string name="stat_average_speed">Velocità media</string>
+  <string name="stat_average_pace">Andatura media</string>
 
   <string name="elevation_chart_name">Grafico dell\'Altitudine</string>
-  <string name="elevation_gain_label">Dislivello</string>
-  <string name="elevation_label">Altitudine</string>
-  <string name="latitude_label">Latitudine</string>
-  <string name="longitude_label">Longitudine</string>
+  <string name="stat_elevation_gain">Dislivello</string>
+  <string name="stat_elevation">Altitudine</string>
+  <string name="stat_latitude">Latitudine</string>
+  <string name="stat_longitude">Longitudine</string>
 
   <!-- Min -->
-  <string name="min_elevation_label">Altitudine min</string>
-  <string name="min_grade_label">Inclinazione min</string>
-  <string name="min_pace_label">Andatura min</string>
+  <string name="stat_min_elevation">Altitudine min</string>
+  <string name="stat_min_grade">Inclinazione min</string>
+  <string name="stat_min_pace">Andatura min</string>
 
   <!-- Max -->
-  <string name="max_elevation_label">Altitudine max</string>
-  <string name="max_grade_label">Inclinazione max</string>
-  <string name="max_speed_label">Velocità max</string>
+  <string name="stat_max_elevation">Altitudine max</string>
+  <string name="stat_max_grade">Inclinazione max</string>
+  <string name="stat_max_speed">Velocità max</string>
 
   <string name="loading_track">Caricamento percorso in corso...</string>
 
   <!-- Chart Settings -->
   <string name="menu_chart_view_chart_settings">Impostazioni grafico</string>
   <!-- X Axis -->
-  <string name="x_axis">Asse X</string>
-  <string name="by_distance">Distanza</string>
-  <string name="by_time">Tempo</string>
+  <string name="chart_settings_x_axis">Asse X</string>
+  <string name="chart_settings_by_distance">Distanza</string>
+  <string name="chart_settings_by_time">Tempo</string>
 
   <!-- Y Axis -->
-  <string name="y_axis">Asse Y</string>
+  <string name="chart_settings_y_axis">Asse Y</string>
 
   <!-- Units -->
   <!-- Time  -->
   <string name="voice_hour">ora</string>
   <string name="voice_hours">ore</string>
-  <string name="hr">h</string>
-  <string name="min">min</string>
+  <string name="unit_hour">h</string>
+  <string name="unit_minute">min</string>
   <string name="voice_minute">minuto</string>
   <string name="voice_minutes">minuti</string>
   <string name="voice_second">secondo</string>
   <string name="voice_seconds">secondi</string>
 
   <!-- Distance -->
-  <string name="meter">m</string>
-  <string name="kilometer">km</string>
+  <string name="unit_meter">m</string>
+  <string name="unit_kilometer">km</string>
   <string name="voice_kilometers">chilometri</string>
-  <string name="feet">pd</string>
-  <string name="mile">mi</string>
+  <string name="unit_feet">pd</string>
+  <string name="unit_mile">mi</string>
   <string name="voice_miles">miglia</string>
 
   <!-- Speed and Pace -->
-  <string name="kilometer_per_hour">km/h</string>
+  <string name="unit_kilometer_per_hour">km/h</string>
   <string name="voice_kilometer_per_hour">chilometri orari</string>
-  <string name="min_per_kilometer">min/km</string>
+  <string name="unit_minute_per_kilometer">min/km</string>
   <string name="voice_per_kilometer">per chilometro</string>
-  <string name="mile_per_hour">mi/h</string>
+  <string name="unit_mile_per_hour">mi/h</string>
   <string name="voice_mile_per_hour">miglia orarie</string>
-  <string name="min_per_mile">min/mi</string>
+  <string name="unit_minute_per_mile">min/mi</string>
   <string name="voice_per_mile">per miglio</string>
 
   <!-- Stats Labels -->
-  <string name="moving_time_label">Durata in moto</string>
-  <string name="total_time_label">Durata totale</string>
+  <string name="stat_moving_time">Durata in moto</string>
+  <string name="stat_total_time">Durata totale</string>
   <string name="time_label">Durata</string>
   <string name="sd_unavail">Scheda SD non disponibile</string>
-  <string name="speed">Velocità</string>
+  <string name="stat_speed">Velocità</string>
   <string name="start_trip">Devi prima iniziare un percorso.</string>
   <string name="marker_type_statistics">Statistiche</string>
-  <string name="total_distance_label">Distanza totale</string>
+  <string name="stat_total_distance">Distanza totale</string>
   <string name="distance_label">Distanza</string>
   <string name="unknown">-</string>
   <string name="waiting">Attendere...</string>

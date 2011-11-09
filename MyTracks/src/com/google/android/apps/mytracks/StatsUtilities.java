@@ -20,12 +20,12 @@ import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-
 import android.app.Activity;
 import android.util.Log;
 import android.widget.TextView;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 /**
  * Various utility functions for views that display statistics information.
@@ -128,24 +128,24 @@ public class StatsUtilities {
 
   public void setAltitudeUnits(int unitLabelId) {
     TextView unitTextView = (TextView) activity.findViewById(unitLabelId);
-    unitTextView.setText(metricUnits ? R.string.meter : R.string.feet);
+    unitTextView.setText(metricUnits ? R.string.unit_meter : R.string.unit_feet);
   }
 
   public void setDistanceUnits(int unitLabelId) {
     TextView unitTextView = (TextView) activity.findViewById(unitLabelId);
-    unitTextView.setText(metricUnits ? R.string.kilometer : R.string.mile);
+    unitTextView.setText(metricUnits ? R.string.unit_kilometer : R.string.unit_mile);
   }
 
   public void setSpeedUnits(int unitLabelId, int unitLabelBottomId) {
     TextView unitTextView = (TextView) activity.findViewById(unitLabelId);
     unitTextView.setText(reportSpeed
-        ? (metricUnits ? R.string.kilometer : R.string.mile)
-        : R.string.min);
+        ? (metricUnits ? R.string.unit_kilometer : R.string.unit_mile)
+        : R.string.unit_minute);
 
     unitTextView = (TextView) activity.findViewById(unitLabelBottomId);
     unitTextView.setText(reportSpeed
-        ? R.string.hr
-        : (metricUnits ? R.string.kilometer : R.string.mile));
+        ? R.string.unit_hour
+        : (metricUnits ? R.string.unit_kilometer : R.string.unit_mile));
   }
 
   public void setTime(int id, long l) {
@@ -251,13 +251,13 @@ public class StatsUtilities {
 
   public void setSpeedLabels() {
     setSpeedLabel(R.id.average_speed_label,
-                  R.string.average_speed_label,
-                  R.string.average_pace_label);
+                  R.string.stat_average_speed,
+                  R.string.stat_average_pace);
     setSpeedLabel(R.id.average_moving_speed_label,
-                  R.string.average_moving_speed_label,
-                  R.string.average_moving_pace_label);
+                  R.string.stat_average_moving_speed,
+                  R.string.stat_average_moving_pace);
     setSpeedLabel(R.id.max_speed_label,
-                  R.string.max_speed_label,
-                  R.string.min_pace_label);
+                  R.string.stat_max_speed,
+                  R.string.stat_min_pace);
   }
 }

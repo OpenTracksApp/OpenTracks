@@ -57,7 +57,7 @@ limitations under the License.
             <TextView
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:text="@string/x_axis"
+              android:text="@string/chart_settings_x_axis"
               android:textSize="20dip" />
           </LinearLayout>
           <RadioGroup  android:id="@+id/chart_settings_x"
@@ -66,11 +66,11 @@ limitations under the License.
             <RadioButton android:id="@+id/chart_settings_by_distance"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:text="@string/by_distance"/>
+              android:text="@string/chart_settings_by_distance"/>
             <RadioButton android:id="@+id/chart_settings_by_time"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:text="@string/by_time"/>
+              android:text="@string/chart_settings_by_time"/>
           </RadioGroup>
         </LinearLayout>
       </TableRow>
@@ -90,34 +90,34 @@ limitations under the License.
             <TextView
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:text="@string/y_axis"
+              android:text="@string/chart_settings_y_axis"
               android:textSize="20dip" />
           </LinearLayout>
           <CheckBox android:id="@+id/chart_settings_elevation"
             android:checked="true"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/elevation_label"/>
+            android:text="@string/stat_elevation"/>
           <CheckBox android:id="@+id/chart_settings_speed"
             android:checked="true"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/speed"/>
+            android:text="@string/stat_speed"/>
           <CheckBox android:id="@+id/chart_settings_power"
             android:checked="true"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/power"/>
+            android:text="@string/sensor_state_power"/>
           <CheckBox android:id="@+id/chart_settings_cadence"
             android:checked="true"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/cadence"/>
+            android:text="@string/sensor_state_cadence"/>
           <CheckBox android:id="@+id/chart_settings_heart_rate"
             android:checked="true"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/heart_rate"/>
+            android:text="@string/sensor_state_heart_rate"/>
         </LinearLayout>
       </TableRow>
     </TableLayout>
