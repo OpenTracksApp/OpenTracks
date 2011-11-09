@@ -15,7 +15,49 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
+
+  <!-- About -->  
+  <string name="about_license"
+    translation_description="In the 'About' page, the button on the bottom to view the terms
+      of service agreement.">
+    License
+  </string>
+  <string name="about_privacy"
+    translation_description="In the 'About My Tracks' page, label for the privacy link. E.g.,
+      'Privacy: m.google.com/privacy'.">
+    Privacy:
+  </string>
+  <string name="about_support"
+    translation_description="In the 'About My Tracks' page, label for the support link. E.g.,
+      'Support: mytracks.appspot.com'.">
+    Support:
+  </string>
+  <string name="about_team"
+    translation_description="In the 'About My Tracks' page, label for the team members. E.g.,
+      'Team: Sandor Dornbush, Rodrigo Damazio'.">
+    Team:
+  </string>
+  <string name="about_version"
+    translation_description="In the 'About My Tracks' page, label for the version number. E.g.,
+      'Version: 1.1.10'.">
+    Version:
+  </string>
  
+  <!-- EULA -->
+  <string name="eula_accept"
+    translation_description="In the 'End User License Agreement' dialog, the button to accept.">
+    Accept
+  </string>
+  <string name="eula_decline"
+    translation_description="In the 'End User License Agreement' dialog, the button to decline.">
+    Decline
+  </string>
+  <string name="eula_title"
+    translation_description="The title for the terms of service dialog, asking the user to accept
+      or decline.">
+    End User License Agreement
+  </string>
+    
   <!-- GPS -->
   <string name="gps_need_to_enable"
     translation_description="In the main view, the message on the top asking the user to enable
@@ -173,6 +215,68 @@ limitations under the License.
     Tracks
   </string> 
   
+  <!-- My Location -->
+  <string name="my_location_approximate_location"
+    translation_description="When displaying the user's current location, a status message
+      indicating that GPS is not available and an approximate location is used instead.">
+    GPS is not available. An approximate location based on cell towers and WIFI networks is shown.
+  </string>
+  <string name="my_location_no_location"
+    translation_description="When displaying the user's current location, a status message
+      indicating that the current location cannot be determined.">
+    GPS is not available. Current location cannot be determined. Enable more location sources (see
+    \'Location &amp; security\' settings) and make sure the sky is visible. Try again later.
+  </string>
+  
+  <!-- Permission - not seen inside the app -->
+  <string name="permission_notification_description"
+    translation_description="When installing a third-party app that wants to receive My Tracks 
+      notifications, the permission description that the Android Market shows to the user.">
+    Allows the application to receive notifications when My Tracks starts or stops a recording.
+  </string>
+  <string name="permission_notification_label"
+    translation_description="When installing a third-party app that wants to receive My Tracks 
+      notifications, the permission label that the Android Market shows to the user.">
+    receive My Tracks notifications
+  </string>
+  <string name="permission_read_description"
+    translation_description="When installing a third-party app that wants to read My Tracks data,
+      the permission description that the Android Market shows to the user.">
+    Allows the application to read My Tracks data.
+  </string>
+  <string name="permission_read_label"
+    translation_description="When installing a third-party app that wants to read My Tracks data,
+      the permission label that the Android Market shows to the user.">
+    read My Tracks data
+  </string>
+  <string name="permission_write_description"
+    translation_description="When installing a third-party app that wants to write data to My
+      Tracks, the permission description that the Android Market shows to the user.">
+    Allows the application to write data to My Tracks and start/stop My Tracks recording.
+  </string>
+  <string name="permission_write_label"
+    translation_description="When installing a third-party app that wants to write data to My
+      Tracks, the permission label that the Android Market shows to the user.">
+    write data to My Tracks and start/stop My Tracks recording
+  </string>
+  
+  <!--  Preferred Units -->
+  <string name="preferred_units_imperial"
+    translation_description="In the dialog asking the user to choose a preferred units, the option
+      to choose the imperial units.">
+    Imperial
+  </string>
+  <string name="preferred_units_metric"
+    translation_description="In the dialog asking the user to choose a preferred units, the option
+      to choose the metric units.">
+    Metric
+  </string>
+  <string name="preferred_units_title"
+    translation_description="The title of the dialog asking the user to choose a preferred units,
+      metric or imperial.">
+    Preferred Units
+  </string>
+  
   <!-- Send Google -->    
   <string name="send_google_track_part_format"
     translation_description="When sending a track to Google, the string format to name segments
@@ -328,6 +432,89 @@ limitations under the License.
     Now recording a new track.
   </string>
   
+  <!-- Voice -->
+  <string name="voice_hour"
+    translation_description="For voice announcement, to say hour like 'one hour'.">
+    hour
+  </string>
+  <string name="voice_hours"
+    translation_description="For voice announcement, to say hours like 'two hours'.">  
+    hours
+  </string>
+  <string name="voice_kilometer_per_hour"
+    translation_description="For voice announcement, to say 'kilometers per hour' for speed like
+      'two kilometers per hour'.">
+    kilometers per hour
+  </string>
+  <string name="voice_kilometers"
+    translation_description="For voice announcement, to say kilometers like 'two kilometers'.">
+    kilometers
+  </string>
+  <string name="voice_mile_per_hour"
+    translation_description="For voice announcement, to say 'miles per hour' for speed like 'two
+      miles per hour'.">
+    miles per hour
+  </string>
+  <string name="voice_miles"
+    translation_description="For voice announcement, to say miles like 'two miles'.">
+    miles
+  </string>
+  <string name="voice_minute"
+    translation_description="For voice announcement, to say minute like 'one minute'.">
+    minute
+  </string>
+  <string name="voice_minutes"
+    translation_description="For voice announcement, to say minutes like 'two minutes'.">
+    minutes
+  </string>
+  <string name="voice_no_distance"
+    translation_description="For the voice announcement, the announcement when the current track's
+      total distance is zero.">
+    My Tracks no distance
+  </string>
+  <string name="voice_per_kilometer"
+    translation_description="For voice announcement, to say 'per kilometer' for pace like 'two
+      minutes per kilometer'.">
+    per kilometer
+  </string>
+  <string name="voice_per_mile"
+    translation_description="For voice announcement, to say 'per mile' for pace like 'two minutes
+      per mile'.">
+    per mile
+  </string>
+  <string name="voice_second"
+    translation_description="For voice announcement, to say second like 'one second'.">
+    second
+  </string>
+  <string name="voice_seconds"
+    translation_description="For voice announcement, to say seconds like 'two seconds'.">
+    seconds
+  </string> 
+  <string name="voice_template"
+    translation_description="For the voice announcement, the template to make an announcement. E.g.,
+      'My Tracks total distance 5.2 miles in 2 hours 30 minutes at 2.2 miles per hour'. Below is the
+      list of the parameters:
+       
+      %1$.2f: Distance value (E.g., 5.2)
+      %2$s: Distance unit (miles or kilometers)
+      %3$s: Time value (E.g., 2 hours and 30 minutes)
+      %4$s: Speed value (E.g., 2.2) or pace value (E.g., 2 hours and 30 minutes)
+      %5$s: Speed unit (miles per hour or kilometers per hour) or pace unit (per mile or per
+        kilometer)">
+      My Tracks total distance %1$.2f %2$s in %3$s at %4$s %5$s
+  </string>
+  
+  <!-- Welcome -->
+  <string name="welcome_about"
+    translation_description="In the 'Welcome' page, the button on the bottom to read the 'About'
+      page.">
+    About My Tracks
+  </string>    
+  <string name="welcome_title"
+    translation_description="The title of the welcome page.">
+    Welcome
+  </string>
+      
   <!-- Error messages when sending to Google. -->
   <string name="error_sending_to_google"
     translation_description="When sending a track to Google, a message indicating that an error has
@@ -362,18 +549,6 @@ limitations under the License.
     The operation was canceled.
   </string>
 
-  <string name="status_approximate_current_location"
-    translation_description="When displaying the user's current location, a status message
-      indicating that GPS is not available and an approximate location is used instead.">
-    GPS is not available. An approximate location based on cell towers and WIFI networks is shown.
-  </string>
-  <string name="status_no_current_location"
-    translation_description="When displaying the user's current location, a status message
-      indicating that the current location cannot be determined.">
-    GPS is not available. Current location cannot be determined. Enable more location sources (see
-    \'Location &amp; security\' settings) and make sure the sky is visible. Try again later.
-  </string>
-  
   <!-- Sending to Google status messages. -->
   <string name="sending_to_google_upload_status"
     translation_description="When sending a track to Google, the header on the top of the result
@@ -552,14 +727,7 @@ limitations under the License.
     translation_description="The title on the alert dialog to indicate error.">
     Error
   </string>
-  
-  <!--  Welcome dialog -->
-  <string name="license"
-    translation_description="In the welcome dialog, the text on the bottom button to view the terms
-      of service agreement.">
-    License
-  </string>
-  
+
   <!-- Export -->
   <string name="export_done"
     translation_description="After exporting all the tracks, a toast message indicating success.">
@@ -1180,60 +1348,6 @@ limitations under the License.
     translation_description="In the Chart Settings, under the 'Y Axis' section, the checkbox option
       to graph heart rate.">
     Heart Rate
-  </string>
-      
-  <!-- Voice -->
-  <string name="voice_hour"
-    translation_description="For voice announcement, to say hour like 'one hour'.">
-    hour
-  </string>
-  <string name="voice_hours"
-    translation_description="For voice announcement, to say hours like 'two hours'.">  
-    hours
-  </string>
-  <string name="voice_kilometer_per_hour"
-    translation_description="For voice announcement, to say 'kilometers per hour' for speed like
-      'two kilometers per hour'.">
-    kilometers per hour
-  </string>
-  <string name="voice_kilometers"
-    translation_description="For voice announcement, to say kilometers like 'two kilometers'.">
-    kilometers
-  </string>
-  <string name="voice_mile_per_hour"
-    translation_description="For voice announcement, to say 'miles per hour' for speed like 'two
-      miles per hour'.">
-    miles per hour
-  </string>
-  <string name="voice_miles"
-    translation_description="For voice announcement, to say miles like 'two miles'.">
-    miles
-  </string>
-  <string name="voice_minute"
-    translation_description="For voice announcement, to say minute like 'one minute'.">
-    minute
-  </string>
-  <string name="voice_minutes"
-    translation_description="For voice announcement, to say minutes like 'two minutes'.">
-    minutes
-  </string>
-  <string name="voice_per_kilometer"
-    translation_description="For voice announcement, to say 'per kilometer' for pace like 'two
-      minutes per kilometer'.">
-    per kilometer
-  </string>
-  <string name="voice_per_mile"
-    translation_description="For voice announcement, to say 'per mile' for pace like 'two minutes
-      per mile'.">
-    per mile
-  </string>
-  <string name="voice_second"
-    translation_description="For voice announcement, to say second like 'one second'.">
-    second
-  </string>
-  <string name="voice_seconds"
-    translation_description="For voice announcement, to say seconds like 'two seconds'.">
-    seconds
   </string> 
       
   <!-- time -->
@@ -1308,43 +1422,6 @@ limitations under the License.
     bpm
   </string>
   
-  <!-- End User License Agreement -->
-  <string name="eula_title"
-    translation_description="The title for the terms of service dialog, asking the user to accept
-      or decline.">
-    End User License Agreement
-  </string>
-  <string name="accept"
-    translation_description="In the 'End User License Agreement' dialog, the button to accept.">
-    Accept
-  </string>
-  <string name="decline"
-    translation_description="In the 'End User License Agreement' dialog, the button to decline.">
-    Decline
-  </string>
-
-  <!-- About My Tracks page -->
-  <string name="about_team"
-    translation_description="In the 'About My Tracks' page, label for the team members. E.g.,
-      'Team: Sandor Dornbush, Rodrigo Damazio'.">
-    Team:
-  </string>
-  <string name="about_version"
-    translation_description="In the 'About My Tracks' page, label for the version number. E.g.,
-      'Version: 1.1.10'.">
-    Version:
-  </string>
-  <string name="about_support"
-    translation_description="In the 'About My Tracks' page, label for the support link. E.g.,
-      'Support: mytracks.appspot.com'.">
-    Support:
-  </string>
-  <string name="about_privacy"
-    translation_description="In the 'About My Tracks' page, label for the privacy link. E.g.,
-      'Privacy: m.google.com/privacy'.">
-    Privacy:
-  </string>
-
   <!-- Send to Google dialog -->
   <string name="sendtogoogle_title"
     translation_description="When sending a track to Google, the dialog title to choose the Google
@@ -1434,54 +1511,6 @@ limitations under the License.
     Finished reading from SD card.
   </string>
 
-  <!-- Welcome -->
-  <string name="welcome"
-    translation_description="The title of the welcome page.">
-    Welcome
-  </string>
-  <string name="welcome_about"
-    translation_description="In the 'Welcome' page, the button on the bottom to read the 'About'
-      page.">
-    About My Tracks
-  </string>
-
-  <!-- Announcement -->
-  <string name="announce_no_distance"
-    translation_description="For the voice announcement, the announcement when the current track's
-      total distance is zero.">
-    My Tracks no distance
-  </string>
-  <string name="announce_template"
-    translation_description="For the voice announcement, the template to make an announcement. E.g.,
-      'My Tracks total distance 5.2 miles in 2 hours 30 minutes at 2.2 miles per hour'. Below is the
-      list of the parameters:
-       
-      %1$.2f: Distance value (E.g., 5.2)
-      %2$s: Distance unit (miles or kilometers)
-      %3$s: Time value (E.g., 2 hours and 30 minutes)
-      %4$s: Speed value (E.g., 2.2) or pace value (E.g., 2 hours and 30 minutes)
-      %5$s: Speed unit (miles per hour or kilometers per hour) or pace unit (per mile or per
-        kilometer)">
-      My Tracks total distance %1$.2f %2$s in %3$s at %4$s %5$s
-  </string>
-
-  <!--  Preferred Units -->
-  <string name="preferred_units_title"
-    translation_description="The title of the dialog asking the user to choose a preferred units,
-      metric or imperial.">
-    Preferred Units
-  </string>
-  <string name="preferred_units_metric"
-    translation_description="In the dialog asking the user to choose a preferred units, the option
-      to choose the metric units.">
-    Metric
-  </string>
-  <string name="preferred_units_imperial"
-    translation_description="In the dialog asking the user to choose a preferred units, the option
-      to choose the imperial units.">
-    Imperial
-  </string>
-        
   <!-- Sensor State page -->
   <string name="sensor_data_time"
     translation_description="In the 'Sensor State' page, the label for the last time the sensor has
@@ -1511,37 +1540,6 @@ limitations under the License.
     Sending
   </string>
       
-  <!-- Manifest description (not seen inside the app) -->
-  <string name="notification_permission_label"
-    translation_description="When installing a third-party app that wants to receive My Tracks 
-      notifications, the permission label that the Android Market shows to the user.">
-    receive My Tracks notifications
-  </string>
-  <string name="notification_permission_description"
-    translation_description="When installing a third-party app that wants to receive My Tracks 
-      notifications, the permission description that the Android Market shows to the user.">
-    Allows the application to receive notifications when My Tracks starts or stops a recording.
-  </string>
-  <string name="read_tracks_permission_label"
-    translation_description="When installing a third-party app that wants to read My Tracks data,
-      the permission label that the Android Market shows to the user.">
-    read My Tracks data
-  </string>
-  <string name="read_tracks_permission_description"
-    translation_description="When installing a third-party app that wants to read My Tracks data,
-      the permission description that the Android Market shows to the user.">
-    Allows the application to read My Tracks data.</string>
-  <string name="write_tracks_permission_label"
-    translation_description="When installing a third-party app that wants to write data to My
-      Tracks, the permission label that the Android Market shows to the user.">
-    write data to My Tracks and start/stop My Tracks recording
-  </string>
-  <string name="write_tracks_permission_description"
-    translation_description="When installing a third-party app that wants to write data to My
-      Tracks, the permission description that the Android Market shows to the user.">
-    Allows the application to write data to My Tracks and start/stop My Tracks recording.
-  </string>
-
   <!-- Sensor Type Options -->
   <string name="sensor_type_option_none"
     translation_description="In the Sensor Options settings page, for the Sensor Type picker, the

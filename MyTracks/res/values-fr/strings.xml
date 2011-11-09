@@ -56,8 +56,8 @@ limitations under the License.
   <string name="sending_to_docs_success_new_doc">Votre parcours a été envoyé dans un tableur à docs.google.com.</string>
   <string name="sending_to_docs_success_existing_doc">Votre parcours a été envoyé à docs.google.com.</string>
   <string name="gps_need_to_enable">Cliquez ici et allez dans \'Paramètres\', \'Sécurité et Localisation\' et selectionnez \'Activer les satellites GPS\'. Appuyez sur le bouton de retour pour revenir au menu.</string>
-  <string name="status_approximate_current_location">Note : Votre position est approximative, elle a été déterminée par les antennes de téléphonie ou le réseau WiFi.</string>
-  <string name="status_no_current_location">Votre position ne peut être déterminée. Vérifiez votre configuration dans \'Paramètres\', \'Sécurité et Localisation\'. Assurez-vous également que le ciel soit bien visible.</string>
+  <string name="my_location_approximate_location">Note : Votre position est approximative, elle a été déterminée par les antennes de téléphonie ou le réseau WiFi.</string>
+  <string name="my_location_no_location">Votre position ne peut être déterminée. Vérifiez votre configuration dans \'Paramètres\', \'Sécurité et Localisation\'. Assurez-vous également que le ciel soit bien visible.</string>
   <string name="status_waypoint_inserted">Un point de passage a été inséré.</string>
   <string name="marker_insert_success">Une balise de statistiques a été insérée.</string>
 
@@ -316,8 +316,8 @@ limitations under the License.
 
   <!-- End User License Agreement -->
   <string name="eula_title">Accord de licence utilisateur</string>
-  <string name="accept">Accepter</string>
-  <string name="decline">Décliner</string>
+  <string name="eula_accept">Accepter</string>
+  <string name="eula_decline">Décliner</string>
 
   <!-- About -->
   <string name="about">À propos</string>
@@ -351,12 +351,12 @@ limitations under the License.
   <string name="upgrade_available">Une nouvelle version %1$s est disponible.  Vous pouvez continuer à utiliser la version actuelle sans rencontrer de problèmes mais vous de disposerez pas des dernières fonctionnalités tant que vous n\'aurez pas installé les mises à jour.</string>
 
   <!-- Welcome -->
-  <string name="welcome">Bienvenue</string>
+  <string name="welcome_title">Bienvenue</string>
   <string name="welcome_about">À propos de My Tracks</string>
 
 
   <!-- Announcement -->
-  <string name="announce_no_distance">My Tracks pas de distance disponible</string>
+  <string name="voice_no_distance">My Tracks pas de distance disponible</string>
   <!-- Format:
   $1 : Distance label
   $2 : Distance value (5)
@@ -365,7 +365,7 @@ limitations under the License.
   $5 : Speed value (5.6) : Pace value (5 minutes 6 seconds)
   $6 : Speed units (mph) : Pace units (per mile)
   -->
-  <string name="announce_template">My Tracks %1$s %2$.2f %3$s en %4$s at %5$s %6$s</string>
+  <string name="voice_template">My Tracks %1$s %2$.2f %3$s en %4$s at %5$s %6$s</string>
 
   <!-- Check Units -->
   <string name="check_units_title">Note sur les unités de mesure</string>
@@ -404,10 +404,10 @@ limitations under the License.
   <string name="sensor_type_option_zephyr">Bluetooth Zephyr</string>
 
   <!-- Manifest description (not seen inside the app) -->
-  <string name="notification_permission_label">notifications lors de l\'enregistrement de parcours</string>
-  <string name="read_tracks_permission_label">lecture des parcours enregistrés</string>
-  <string name="write_tracks_permission_label">sauvegarde de parcours, lancer/arrêter l\'enregistrement de parcours</string>
-  <string name="notification_permission_description">Notifications lors du lancement et de l\'arrêt de l\'enregistrement de parcours.</string>
-  <string name="read_tracks_permission_description">Possibilité de lire les données des parcours enregistrés, telles que les marqueurs et les points de passage.</string>
-  <string name="write_tracks_permission_description">Possibilité d\'écrire des données de parcours, telles que les marqueurs et les points de passage..</string>
+  <string name="permission_notification_label">notifications lors de l\'enregistrement de parcours</string>
+  <string name="permission_read_label">lecture des parcours enregistrés</string>
+  <string name="permission_write_label">sauvegarde de parcours, lancer/arrêter l\'enregistrement de parcours</string>
+  <string name="permission_notification_description">Notifications lors du lancement et de l\'arrêt de l\'enregistrement de parcours.</string>
+  <string name="permission_read_description">Possibilité de lire les données des parcours enregistrés, telles que les marqueurs et les points de passage.</string>
+  <string name="permission_write_description">Possibilité d\'écrire des données de parcours, telles que les marqueurs et les points de passage..</string>
 </resources>

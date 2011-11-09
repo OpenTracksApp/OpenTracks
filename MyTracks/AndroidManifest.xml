@@ -158,7 +158,7 @@ limitations under the License.
     </activity>
 
     <activity android:name="com.google.android.apps.mytracks.WelcomeActivity"
-              android:label="@string/welcome"
+              android:label="@string/welcome_title"
               android:exported="false" />
 
     <service android:name="com.google.android.apps.mytracks.services.TrackRecordingService"
@@ -220,27 +220,27 @@ limitations under the License.
   <!-- Permission to get track start/end broadcasts -->
   <permission android:name="com.google.android.apps.mytracks.TRACK_NOTIFICATIONS"
               android:permissionGroup="android.permission-group.LOCATION"
-              android:label="@string/notification_permission_label"
-              android:description="@string/notification_permission_description"
+              android:label="@string/permission_notification_label"
+              android:description="@string/permission_notification_description"
               android:protectionLevel="dangerous" />
   <!-- Permission to read raw track data (points, etc.) -->
   <permission android:name="com.google.android.apps.mytracks.READ_TRACK_DATA"
               android:permissionGroup="android.permission-group.LOCATION"
-              android:label="@string/read_tracks_permission_label"
-              android:description="@string/read_tracks_permission_description"
+              android:label="@string/permission_read_label"
+              android:description="@string/permission_read_description"
               android:protectionLevel="dangerous" />
   <!-- Permission to write track data, either raw or by making service calls -->
   <permission android:name="com.google.android.apps.mytracks.WRITE_TRACK_DATA"
               android:permissionGroup="android.permission-group.LOCATION"
-              android:label="@string/write_tracks_permission_label"
-              android:description="@string/write_tracks_permission_description"
+              android:label="@string/permission_write_label"
+              android:description="@string/permission_write_description"
               android:protectionLevel="dangerous" />
 
   <!-- Permission to get MyTracks broadcasts. For internal MyTracks communication. -->
   <permission android:name="com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS"
               android:permissionGroup="android.permission-group.LOCATION"
-              android:label="@string/notification_permission_label"
-              android:description="@string/notification_permission_label"
+              android:label="@string/permission_notification_label"
+              android:description="@string/permission_notification_label"
               android:protectionLevel="signature" />
 
   <!-- We read and write raw track data, obviously. -->

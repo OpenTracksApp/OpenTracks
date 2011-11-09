@@ -60,8 +60,8 @@ limitations under the License.
   <string name="sending_to_docs_success_existing_doc">你的轨迹已经发送到 docs.google.com.</string>
   <string name="sending_to_google_additional_info">可能需要等待几分钟才能看见新的轨迹.</string>
   <string name="gps_need_to_enable">请点击这里进入\'安全和位置设置\'并勾选上\'启用 GPS 卫星\'. 然后用后退键返回.</string>
-  <string name="status_approximate_current_location">注意: 当前显示的位置是根据无线信号和无线网络计算的近似位置.</string>
-  <string name="status_no_current_location">目前无法定位. 请启用更多的位置来源 (在\'安全和位置设置\'中) 并确认天空是可见的. 再重试.</string>
+  <string name="my_location_approximate_location">注意: 当前显示的位置是根据无线信号和无线网络计算的近似位置.</string>
+  <string name="my_location_no_location">目前无法定位. 请启用更多的位置来源 (在\'安全和位置设置\'中) 并确认天空是可见的. 再重试.</string>
   <string name="status_waypoint_inserted">插入了一个路点标记.</string>
   <string name="marker_insert_success">插入了一个统计标记.</string>
   <string name="sending_to_google_upload_status">上传状态:</string>
@@ -115,7 +115,7 @@ limitations under the License.
   <string name="error">错误</string>
   <string name="success">成功</string>
   <string name="marker_type_waypoint">路点</string>
-  <string name="license">授权</string>
+  <string name="about_license">授权</string>
   <string name="cancel">取消</string>
   <string name="save">保存</string>
 
@@ -384,8 +384,8 @@ limitations under the License.
 
   <!-- End User License Agreement -->
   <string name="eula_title">最终用户协议</string>
-  <string name="accept">同意</string>
-  <string name="decline">拒绝</string>
+  <string name="eula_accept">同意</string>
+  <string name="eula_decline">拒绝</string>
 
   <!-- About -->
   <string name="about">关于</string>
@@ -425,12 +425,12 @@ limitations under the License.
   <string name="upgrade_available">%1$s 的新版本已经发布. 你可以继续使用现在的版本, 但在更新前无法使用到最新的功能.</string>
 
   <!-- Welcome -->
-  <string name="welcome">欢迎</string>
+  <string name="welcome_title">欢迎</string>
   <string name="welcome_read_later">确定</string>
   <string name="welcome_about">关于 My Tracks</string>
 
   <!-- Announcement -->
-  <string name="announce_no_distance">My Tracks 无距离</string>
+  <string name="voice_no_distance">My Tracks 无距离</string>
   <!-- Format:
   $1 : Distance label
   $2 : Distance value (5)
@@ -439,7 +439,7 @@ limitations under the License.
   $5 : Speed value (5.6) : Pace value (5 minutes 6 seconds)
   $6 : Speed units (mph) : Pace units (per mile)
   -->
-  <string name="announce_template">My Tracks %1$s %2$.2f %3$s 用时 %4$s 速度 %5$s %6$s</string>
+  <string name="voice_template">My Tracks %1$s %2$.2f %3$s 用时 %4$s 速度 %5$s %6$s</string>
 
   <!-- Check Units -->
   <string name="check_units_title">测量单位提示</string>

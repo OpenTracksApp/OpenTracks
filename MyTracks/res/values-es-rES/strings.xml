@@ -33,7 +33,7 @@ limitations under the License.
   <!-- Used by the track recording service -->
 
   <!-- Common -->
-  <string name="license">Licencia</string>
+  <string name="about_license">Licencia</string>
   <string name="save">Guardar</string>
 
   <!-- Placemark labels for start and end of track -->

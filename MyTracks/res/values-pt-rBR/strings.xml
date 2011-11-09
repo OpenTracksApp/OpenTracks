@@ -53,8 +53,8 @@ limitations under the License.
   <string name="sending_to_docs_success_new_doc">Seu caminho foi enviado para uma nova planilha em docs.google.com.</string>
   <string name="sending_to_docs_success_existing_doc">Seu caminho foi enviado para docs.google.com.</string>
   <string name="gps_need_to_enable">"Por favor pressione aqui para ir aos ajustes de segurança e localização e verifique que o GPS esteja habilitado. Pressione o botão de voltar para retornar.</string>
-  <string name="status_approximate_current_location">Nota: Uma localização aproximada, determinada por torres de telefonia celular, está sendo mostrada.</string>
-  <string name="status_no_current_location">Sua localização não pôde ser determinada.  Habilite fontes adicionais de localização (veja configurações de Segurança e Localização) e assegure-se de que o céu está visível.</string>
+  <string name="my_location_approximate_location">Nota: Uma localização aproximada, determinada por torres de telefonia celular, está sendo mostrada.</string>
+  <string name="my_location_no_location">Sua localização não pôde ser determinada.  Habilite fontes adicionais de localização (veja configurações de Segurança e Localização) e assegure-se de que o céu está visível.</string>
   <string name="status_waypoint_inserted">Um marcador de ponto de passagem foi inserido.</string>
   <string name="marker_insert_success">Um marcador de estatísticas foi inserido..</string>
 
@@ -276,8 +276,8 @@ limitations under the License.
 
   <!-- End User License Agreement -->
   <string name="eula_title">Contrato de Licença de Usuário Final</string>
-  <string name="accept">Aceitar</string>
-  <string name="decline">Recusar</string>
+  <string name="eula_accept">Aceitar</string>
+  <string name="eula_decline">Recusar</string>
 
   <!-- About -->
   <string name="about">Sobre</string>
@@ -313,11 +313,11 @@ limitations under the License.
   <string name="upgrade_available">Uma nova versão do %1$s está disponível.  Você pode continuar a usar sua versão atual sem problemas, porém não terá acesso aos novos recursos até que atualize.</string>
 
   <!-- Welcome -->
-  <string name="welcome">Bem-vindo</string>
+  <string name="welcome_title">Bem-vindo</string>
   <string name="welcome_about">Sobre My Tracks</string>
 
   <!-- Announcement -->
-  <string name="announce_no_distance">My Tracks sem distância</string>
+  <string name="voice_no_distance">My Tracks sem distância</string>
   <!-- Format:
   $1 : Distance label
   $2 : Distance value (5)
@@ -326,6 +326,6 @@ limitations under the License.
   $5 : Speed value (5.6) : Pace value (5 minutes 6 seconds)
   $6 : Speed units (mph) : Pace units (per mile)
   -->
-  <string name="announce_template">My Tracks %1$s %2$.2f %3$s em %4$s a %5$s %6$s</string>
+  <string name="voice_template">My Tracks %1$s %2$.2f %3$s em %4$s a %5$s %6$s</string>
 
 </resources>

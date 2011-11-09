@@ -60,8 +60,8 @@ limitations under the License.
   <string name="sending_to_docs_success_existing_doc">Reittisi on lähetetty osoitteeseen docs.google.com.</string>
   <string name="sending_to_google_additional_info">Reitin näkyminen saattaa kestää muutaman minuutin.</string>
   <string name="gps_need_to_enable">Avaa tästä Sijainti ja suojaus -asetukset ja valitse \'Käytä GPS-satelliitteja\'. Palaa ohjelmaan painamalla Takaisin-näppäintä.</string>
-  <string name="status_approximate_current_location">Huomio: Näkyvä sijainti perustuu kännykkämastoista ja WLAN-verkoista arvioituun paikkatietoon.</string>
-  <string name="status_no_current_location">Paikkatietoa ei löydy. Aktivoi lisää paikannusmenetelmiä (katso Asetukset) ja varmista että taivas on näkyvissä. Yritä myöhemmin uudelleen.</string>
+  <string name="my_location_approximate_location">Huomio: Näkyvä sijainti perustuu kännykkämastoista ja WLAN-verkoista arvioituun paikkatietoon.</string>
+  <string name="my_location_no_location">Paikkatietoa ei löydy. Aktivoi lisää paikannusmenetelmiä (katso Asetukset) ja varmista että taivas on näkyvissä. Yritä myöhemmin uudelleen.</string>
   <string name="status_waypoint_inserted">Reittimerkintä lisätty.</string>
   <string name="marker_insert_success">Tilastomerkintä lisätty.</string>
   <string name="sending_to_google_upload_status">Lähetyksen tila:</string>
@@ -115,7 +115,7 @@ limitations under the License.
   <string name="error">Virhe</string>
   <string name="success">Valmis</string>
   <string name="marker_type_waypoint">Reittipiste</string>
-  <string name="license">Lisenssi</string>
+  <string name="about_license">Lisenssi</string>
   <string name="cancel">Peruuta</string>
   <string name="save">Tallenna</string>
 
@@ -403,8 +403,8 @@ limitations under the License.
 
   <!-- End User License Agreement -->
   <string name="eula_title">End User License Agreement</string>
-  <string name="accept">Hyväksy</string>
-  <string name="decline">Hylkää</string>
+  <string name="eula_accept">Hyväksy</string>
+  <string name="eula_decline">Hylkää</string>
 
   <!-- About -->
   <string name="about">Tietoja</string>
@@ -447,12 +447,12 @@ limitations under the License.
   <string name="upgrade_available">%1$s uusi versio saatavilla. Voit jatkaa nykyisen version käyttöä tai päivitää uuteen versioon.</string>
 
   <!-- Welcome -->
-  <string name="welcome">Tervetuloa</string>
+  <string name="welcome_title">Tervetuloa</string>
   <string name="welcome_read_later">Ok</string>
   <string name="welcome_about">Tietoa My Tracksista</string>
 
   <!-- Announcement -->
-  <string name="announce_no_distance">My Tracks ei etäisyyttä</string>
+  <string name="voice_no_distance">My Tracks ei etäisyyttä</string>
   <!-- Format:
   $1 : Distance label
   $2 : Distance value (5)
@@ -461,7 +461,7 @@ limitations under the License.
   $5 : Speed value (5.6) : Pace value (5 minutes 6 seconds)
   $6 : Speed units (mph) : Pace units (per mile)
   -->
-  <string name="announce_template">My Tracks %1$s %2$.2f %3$s ajassa %4$s nopeudella %5$s %6$s</string>
+  <string name="voice_template">My Tracks %1$s %2$.2f %3$s ajassa %4$s nopeudella %5$s %6$s</string>
 
   <!-- Check Units -->
   <string name="check_units_title">Huomautus mittayksiköistä</string>
@@ -500,10 +500,10 @@ limitations under the License.
   <string name="sensor_type_option_zephyr">Zephyr bluetooth</string>
 
   <!-- Manifest description (not seen inside the app) -->
-  <string name="notification_permission_label">vastaanota huomautuksia reitin tallentamisesta</string>
-  <string name="read_tracks_permission_label">lue tallennettua reittidataa</string>
-  <string name="write_tracks_permission_label">kirjoita tallennettua reittidataa, aloita/pysäytä reitin tallennus</string>
-  <string name="notification_permission_description">Huomauta kun reitin tallennus aloitetaan tai pysäytetään..</string>
-  <string name="read_tracks_permission_description">Mahdollista reittidatan lukeminen, kuten reittipisteet, merkinnät jne.</string>
-  <string name="write_tracks_permission_description">Mahdollista reittidatan kirjoittaminen, kuten tallennuksen aloittaminen, merkintöjen lisääminen jne.</string>
+  <string name="permission_notification_label">vastaanota huomautuksia reitin tallentamisesta</string>
+  <string name="permission_read_label">lue tallennettua reittidataa</string>
+  <string name="permission_write_label">kirjoita tallennettua reittidataa, aloita/pysäytä reitin tallennus</string>
+  <string name="permission_notification_description">Huomauta kun reitin tallennus aloitetaan tai pysäytetään..</string>
+  <string name="permission_read_description">Mahdollista reittidatan lukeminen, kuten reittipisteet, merkinnät jne.</string>
+  <string name="permission_write_description">Mahdollista reittidatan kirjoittaminen, kuten tallennuksen aloittaminen, merkintöjen lisääminen jne.</string>
 </resources>

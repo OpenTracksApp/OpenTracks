@@ -60,8 +60,8 @@ limitations under the License.
   <string name="sending_to_docs_success_existing_doc">Su recorrido ha sido enviado a docs.google.com.</string>
   <string name="sending_to_google_additional_info">Es posible que pasen unos minutos hasta que los nuevos recorridos aparezcan.</string>
   <string name="gps_need_to_enable">Por favor, presione aquí para ir al menú de Seguridad y Ubicación, y asegúrese que el GPS esté habilitado. Presione el botón "atrás" para regresar.</string>
-  <string name="status_approximate_current_location">Nota: Una ubicación aproximada es determinada a partir de torres de telefonía celular y redes WIFI.</string>
-  <string name="status_no_current_location">No puede ser determinada la ubicación actual. Habilite más fuentes de datos (vea las configuraciones de Seguridad y Ubicación) y asegúrese que el cielo sea visible. Inténtelo mas tarde.</string>
+  <string name="my_location_approximate_location">Nota: Una ubicación aproximada es determinada a partir de torres de telefonía celular y redes WIFI.</string>
+  <string name="my_location_no_location">No puede ser determinada la ubicación actual. Habilite más fuentes de datos (vea las configuraciones de Seguridad y Ubicación) y asegúrese que el cielo sea visible. Inténtelo mas tarde.</string>
   <string name="status_waypoint_inserted">Un marcador de recorrido fue insertado.</string>
   <string name="marker_insert_success">Un marcador de estadísticas fue insertado.</string>
   <string name="sending_to_google_upload_status">Estado del envío:</string>
@@ -113,7 +113,7 @@ limitations under the License.
   <string name="yes">Sí</string>
   <string name="success">Éxito</string>
   <string name="marker_type_waypoint">Marcador de recorrido</string>
-  <string name="license">Licencia</string>
+  <string name="about_license">Licencia</string>
   <string name="cancel">Cancelar</string>
   <string name="save">Guardar</string>
 
@@ -408,8 +408,8 @@ limitations under the License.
   
   <!-- End User License Agreement -->
   <string name="eula_title">Contrato de Licencia de Usuario Final</string>
-  <string name="accept">Aceptar</string>
-  <string name="decline">Declinar</string>
+  <string name="eula_accept">Aceptar</string>
+  <string name="eula_decline">Declinar</string>
 
   <!-- About -->
   <string name="about">Sobre</string>
@@ -451,12 +451,12 @@ limitations under the License.
   <string name="upgrade_available">Una nueva versión de %1$s ya está disponible. Puede continuar usando su versión actual sin ninún problema, pero no tendrá las nueva funcionalidad hasta que actualice su versión.</string>
 
   <!-- Welcome -->
-  <string name="welcome">Bienvenido</string>
+  <string name="welcome_title">Bienvenido</string>
   <string name="welcome_read_later">Aceptar</string>
   <string name="welcome_about">Sobre My Tracks</string>
 
   <!-- Announcement -->
-  <string name="announce_no_distance">My Tracks sin distancia</string>
+  <string name="voice_no_distance">My Tracks sin distancia</string>
   <!-- Format:
   $1 : Distance label
   $2 : Distance value (5)
@@ -465,7 +465,7 @@ limitations under the License.
   $5 : Speed value (5.6) : Pace value (5 minutes 6 seconds)
   $6 : Speed units (mph) : Pace units (per mile)
   -->
-  <string name="announce_template">My Tracks %1$s %2$.2f %3$s en %4$s a %5$s %6$s</string>
+  <string name="voice_template">My Tracks %1$s %2$.2f %3$s en %4$s a %5$s %6$s</string>
 
   <!-- Check Units -->
   <string name="check_units_title">Aviso de unidades de medida</string>
@@ -500,13 +500,13 @@ limitations under the License.
   <string name="sending">Enviando</string>
 
   <!-- Manifest description (not seen inside the app) -->
-  <string name="notification_permission_label">recibir avisos de registro de recorridos</string>
+  <string name="permission_notification_label">recibir avisos de registro de recorridos</string>
   <string name="mytracks_notifications_permission_label">receive MyTracks notifications</string>
-  <string name="read_tracks_permission_label">leer datos de recorridos grabados</string>
-  <string name="write_tracks_permission_label">escribir datos de recorridos grabados, iniciar/detener recorridos</string>
-  <string name="notification_permission_description">Ser notificado cuando un recorrido empieza o termina de registrarse.</string>
-  <string name="read_tracks_permission_description">Poder leer datos, como puntos de interés.</string>
-  <string name="write_tracks_permission_description">Poder escribir datos, como registrar o añadir puntos de interés.</string>
+  <string name="permission_read_label">leer datos de recorridos grabados</string>
+  <string name="permission_write_label">escribir datos de recorridos grabados, iniciar/detener recorridos</string>
+  <string name="permission_notification_description">Ser notificado cuando un recorrido empieza o termina de registrarse.</string>
+  <string name="permission_read_description">Poder leer datos, como puntos de interés.</string>
+  <string name="permission_write_description">Poder escribir datos, como registrar o añadir puntos de interés.</string>
   
   <!-- Sensor Type Options -->
   <string name="sensor_type_option_none">Ninguno</string>

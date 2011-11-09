@@ -54,8 +54,8 @@ limitations under the License.
   <string name="sending_to_docs_success_new_doc">Twoja trasa została wysłana do nowego arkusza na docs.google.com.</string>
   <string name="sending_to_docs_success_existing_doc">Twoja trasa została wysłana do docs.google.com.</string>
   <string name="gps_need_to_enable">Tapnij tutaj, aby przejść do ustawień Lokalizacji i zabezpieczeń, a następnie zaznacz Użyj satelitów GPS. Naciśnij klawisz Wstecz, aby powrócić.</string>
-  <string name="status_approximate_current_location">Uwaga: używana jest przybliżona lokalizacja ustalona za pomocą stacji komórkowych i sieci WIFI.</string>
-  <string name="status_no_current_location">Lokalizacja nie może być obecnie ustalona. Włącz wiecej źródeł (zobacz ustawienia Lokalizacji i zabezpieczeń) i upewnij się, że niebo jest widoczne. Spróbuj później.</string>
+  <string name="my_location_approximate_location">Uwaga: używana jest przybliżona lokalizacja ustalona za pomocą stacji komórkowych i sieci WIFI.</string>
+  <string name="my_location_no_location">Lokalizacja nie może być obecnie ustalona. Włącz wiecej źródeł (zobacz ustawienia Lokalizacji i zabezpieczeń) i upewnij się, że niebo jest widoczne. Spróbuj później.</string>
   <string name="status_waypoint_inserted">Wstawiono znacznik punktu orientacyjnego.</string>
   <string name="marker_insert_success">Wstawiono znacznik statystyk.</string>
 
@@ -325,8 +325,8 @@ limitations under the License.
 
   <!-- End User License Agreement -->
   <string name="eula_title">Licencja użytkownika końcowego</string>
-  <string name="accept">Zaakceptuj</string>
-  <string name="decline">Odrzuć</string>
+  <string name="eula_accept">Zaakceptuj</string>
+  <string name="eula_decline">Odrzuć</string>
 
   <!-- About -->
   <string name="about">O</string>
@@ -365,12 +365,12 @@ limitations under the License.
   <string name="upgrade_available">Dostępna jest nowa wersja %1$s is available. Możesz nadal używać obecnej wersji bez problemów, nie będziesz miał jednak dostępu do najnowszych funkcji.</string>
 
   <!-- Welcome -->
-  <string name="welcome">Witamy</string>
+  <string name="welcome_title">Witamy</string>
   <string name="welcome_read_later">Ok</string>
   <string name="welcome_about">O My Tracks</string>
 
   <!-- Announcement -->
-  <string name="announce_no_distance">My Tracks brak odległości</string>
+  <string name="voice_no_distance">My Tracks brak odległości</string>
   <!-- Format:
   $1 : Distance label
   $2 : Distance value (5)
@@ -379,7 +379,7 @@ limitations under the License.
   $5 : Speed value (5.6) : Pace value (5 minutes 6 seconds)
   $6 : Speed units (mph) : Pace units (per mile)
   -->
-  <string name="announce_template">My Tracks %1$s %2$.2f %3$s w %4$s w tempie %5$s %6$s</string>
+  <string name="voice_template">My Tracks %1$s %2$.2f %3$s w %4$s w tempie %5$s %6$s</string>
 
   <!-- Check Units -->
   <string name="check_units_title">Jednostki miary</string>

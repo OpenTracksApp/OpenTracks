@@ -55,8 +55,8 @@ limitations under the License.
   <string name="sending_to_docs_success_new_doc">Dein Track wurde in einer neuen Tabelle bei docs.google.com gespeichert.</string>
   <string name="sending_to_docs_success_existing_doc">Dein Track wurde an docs.google.com gesendet.</string>
   <string name="gps_need_to_enable">Hier berühren, um zu den Sicherheits- und Positionseinstellungen zu gelangen. Aktiviere \'GPS-Satelliten\'. Drücke dann den Zurück-Knopf, um hierher zurückzukehren.</string>
-  <string name="status_approximate_current_location">Anmerkung: Eine ungefähre Position wird angezeigt, bestimmt mittels Mobilfunkstationen und WiFi-Netzwerken.</string>
-  <string name="status_no_current_location">Die Position kann derzeit nicht bestimmt werden. Aktiviere mehr Positionsquellen (siehe Sicherheits- und Positionseinstellungen) und stelle sicher, dass der Himmel sichtbar ist.</string>
+  <string name="my_location_approximate_location">Anmerkung: Eine ungefähre Position wird angezeigt, bestimmt mittels Mobilfunkstationen und WiFi-Netzwerken.</string>
+  <string name="my_location_no_location">Die Position kann derzeit nicht bestimmt werden. Aktiviere mehr Positionsquellen (siehe Sicherheits- und Positionseinstellungen) und stelle sicher, dass der Himmel sichtbar ist.</string>
   <string name="status_waypoint_inserted">Ein Wegpunkt wurde eingefügt.</string>
   <string name="marker_insert_success">Ein Statistikwegpunkt wurde eingefügt.</string>
 
@@ -102,7 +102,7 @@ limitations under the License.
   <string name="error">Fehler</string>
   <string name="success">Erfolgreich</string>
   <string name="marker_type_waypoint">Wegpunkt</string>
-  <string name="license">Lizenz</string>
+  <string name="about_license">Lizenz</string>
   <string name="cancel">Abbrechen</string>
   <string name="save">Sichern</string>
 
@@ -354,8 +354,8 @@ limitations under the License.
 
   <!-- End User License Agreement -->
   <string name="eula_title">Lizenzvereinbarung für Endverbraucher</string>
-  <string name="accept">Akzeptieren</string>
-  <string name="decline">Ablehnen</string>
+  <string name="eula_accept">Akzeptieren</string>
+  <string name="eula_decline">Ablehnen</string>
 
   <!-- About -->
   <string name="about">Über</string>
@@ -395,12 +395,12 @@ limitations under the License.
   <string name="upgrade_available">Eine neue Version von %1$s ist jetzt verfügbar. Du kannst Deine installierte Version ohne Probleme weiterverwenden, aber um die neuesten Funktionen in Anspruch nehmen zu können, musst Du die Software aktualisieren.</string>
 
   <!-- Welcome -->
-  <string name="welcome">Willkommen</string>
+  <string name="welcome_title">Willkommen</string>
   <string name="welcome_read_later">OK</string>
   <string name="welcome_about">Über My Tracks</string>
 
   <!-- Announcement -->
-  <string name="announce_no_distance">My Tracks keine Entfernung</string>
+  <string name="voice_no_distance">My Tracks keine Entfernung</string>
   <!-- Format:
   $1 : Distance label
   $2 : Distance value (5)
@@ -409,7 +409,7 @@ limitations under the License.
   $5 : Speed value (5.6) : Pace value (5 minutes 6 seconds)
   $6 : Speed units (mph) : Pace units (per mile)
   -->
-  <string name="announce_template">My Tracks %1$s %2$.2f %3$s in %4$s mit %5$s %6$s</string>
+  <string name="voice_template">My Tracks %1$s %2$.2f %3$s in %4$s mit %5$s %6$s</string>
 
   <!-- Check Units -->
   <string name="check_units_title">Einheitenbenachrichtigung</string>
@@ -441,10 +441,10 @@ limitations under the License.
   <string name="sending">Sende...</string>
 
   <!-- Manifest description (not seen inside the app) -->
-  <string name="notification_permission_label">Track-Aufzeichnungs-Benachrichtigungen empfangen</string>
-  <string name="read_tracks_permission_label">Aufgezeichnete Trackdaten lesen</string>
-  <string name="write_tracks_permission_label">Aufgezeichnete Trackdaten schreiben, Starten/Anhalten des Aufzeichnens von Tracks</string>
-  <string name="notification_permission_description">Werde benachrichtigt, wenn die Aufzeichnung eines Tracks beginnt oder anhält.</string>
-  <string name="read_tracks_permission_description">Ermöglicht das Lesen von Trackdaten wie Messpunkten oder Wegpunkten.</string>
-  <string name="write_tracks_permission_description">Ermöglicht das Schreiben von Trackdaten wie beim Starten der Aufzeichnung oder beim Hinzufügen von Wegpunkten.</string>
+  <string name="permission_notification_label">Track-Aufzeichnungs-Benachrichtigungen empfangen</string>
+  <string name="permission_read_label">Aufgezeichnete Trackdaten lesen</string>
+  <string name="permission_write_label">Aufgezeichnete Trackdaten schreiben, Starten/Anhalten des Aufzeichnens von Tracks</string>
+  <string name="permission_notification_description">Werde benachrichtigt, wenn die Aufzeichnung eines Tracks beginnt oder anhält.</string>
+  <string name="permission_read_description">Ermöglicht das Lesen von Trackdaten wie Messpunkten oder Wegpunkten.</string>
+  <string name="permission_write_description">Ermöglicht das Schreiben von Trackdaten wie beim Starten der Aufzeichnung oder beim Hinzufügen von Wegpunkten.</string>
 </resources>

@@ -53,8 +53,8 @@ limitations under the License.
   <string name="sending_to_docs_success_new_doc">Il tuo percorso è stato inviato ad un nuovo foglio di calcolo su docs.google.com.</string>
   <string name="sending_to_docs_success_existing_doc">Il tuo percorso è stato inviato a docs.google.com.</string>
   <string name="gps_need_to_enable">Premi qui per andare a «Impostazioni di posizione e protezione» e attiva «Utilizza satelliti GPS». Poi premi il tasto di ritorno per tornare qui.</string>
-  <string name="status_approximate_current_location">Nota: la posizione indicata è un\'approssimazione determinata in base alle antenne cellulari e reti WIFI vicine.</string>
-  <string name="status_no_current_location">La posizione non può essere determinata. Attiva più fonti di posizione (vedi «Impostazioni di posizione e protezione») e eccertati che il cielo sia visibile. Riprova più tardi.</string>
+  <string name="my_location_approximate_location">Nota: la posizione indicata è un\'approssimazione determinata in base alle antenne cellulari e reti WIFI vicine.</string>
+  <string name="my_location_no_location">La posizione non può essere determinata. Attiva più fonti di posizione (vedi «Impostazioni di posizione e protezione») e eccertati che il cielo sia visibile. Riprova più tardi.</string>
   <string name="status_waypoint_inserted">Inserito un punto di passaggio.</string>
   <string name="marker_insert_success">Inserito un segnaposto con statistiche.</string>
 
@@ -297,8 +297,8 @@ limitations under the License.
 
   <!-- End User License Agreement -->
   <string name="eula_title">Termini di servizio</string>
-  <string name="accept">Accetto</string>
-  <string name="decline">Non accetto</string>
+  <string name="eula_accept">Accetto</string>
+  <string name="eula_decline">Non accetto</string>
 
   <!-- About -->
   <string name="about">Informazioni</string>
@@ -335,12 +335,12 @@ limitations under the License.
   <string name="upgrade_available">Una nuova versione di %1$s è disponibile. Puoi continuare a usare la versione corrente senza problemi, ma non avrai le ultime funzionalità finché non installi l\'aggiornamento.</string>
 
   <!-- Welcome -->
-  <string name="welcome">Benvenuto</string>
+  <string name="welcome_title">Benvenuto</string>
   <string name="welcome_read_later">OK</string>
   <string name="welcome_about">Informazioni su My Tracks</string>
 
   <!-- Announcement -->
-  <string name="announce_no_distance">Mai Tracks Distanza non disponibile</string>
+  <string name="voice_no_distance">Mai Tracks Distanza non disponibile</string>
   <!-- Format:
   $1 : Distance label
   $2 : Distance value (5)
@@ -349,5 +349,5 @@ limitations under the License.
   $5 : Speed value (5.6) : Pace value (5 minutes 6 seconds)
   $6 : Speed units (mph) : Pace units (per mile)
   -->
-  <string name="announce_template">Mai Tracks %1$s %2$.2f %3$s in %4$s a %5$s %6$s</string>
+  <string name="voice_template">Mai Tracks %1$s %2$.2f %3$s in %4$s a %5$s %6$s</string>
 </resources>

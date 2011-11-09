@@ -58,8 +58,8 @@ limitations under the License.
   <string name="sending_to_docs_success_existing_doc">トラックをdocs.google.comに送信しました．</string>
   <string name="sending_to_google_additional_info">新しいトラックが表示されるまでに数分かかることがあります．</string>
   <string name="gps_need_to_enable">ここをタップして「位置情報とセキュリティの設定」を開いて「GPS機能を使用」にチェックを入れて下さい．バックボタンで戻ってください．</string>
-  <string name="status_approximate_current_location">ご注意: 携帯電話中継局とWi-Fiネットワークから大まかな位置を特定します．</string>
-  <string name="status_no_current_location">現在位置決定ができません．位置取得源を増やし(位置情報とセキュリティの設定 をご覧ください)、空が見えるようにして下さい．もう一度試して下さい．</string>
+  <string name="my_location_approximate_location">ご注意: 携帯電話中継局とWi-Fiネットワークから大まかな位置を特定します．</string>
+  <string name="my_location_no_location">現在位置決定ができません．位置取得源を増やし(位置情報とセキュリティの設定 をご覧ください)、空が見えるようにして下さい．もう一度試して下さい．</string>
   <string name="status_waypoint_inserted">ウェイポイントマーカーを挿入しました．</string>
   <string name="marker_insert_success">統計マーカーを挿入しました．</string>
 
@@ -111,7 +111,7 @@ limitations under the License.
   <string name="error">エラー</string>
   <string name="success">成功</string>
   <string name="marker_type_waypoint">ウェイポイント</string>
-  <string name="license">ライセンス</string>
+  <string name="about_license">ライセンス</string>
   <string name="cancel">キャンセル</string>
   <string name="save">保存</string>
 
@@ -376,8 +376,8 @@ limitations under the License.
 
   <!-- End User License Agreement -->
   <string name="eula_title">エンドユーザライセンス契約書</string>
-  <string name="accept">同意する</string>
-  <string name="decline">拒否する</string>
+  <string name="eula_accept">同意する</string>
+  <string name="eula_decline">拒否する</string>
 
   <!-- About -->
   <string name="about">このアプリケーションについて</string>
@@ -418,11 +418,11 @@ limitations under the License.
   <string name="upgrade_available">%1$s の新しい版が出ています．現版で問題なくご使用になれますが、アップグレードするまで最新の機能をお使いになれません．</string>
 
   <!-- Welcome -->
-  <string name="welcome">ようこそ</string>
+  <string name="welcome_title">ようこそ</string>
   <string name="welcome_about">My Tracksについて</string>
 
   <!-- Announcement -->
-  <string name="announce_no_distance">My Tracks 移動していません</string>
+  <string name="voice_no_distance">My Tracks 移動していません</string>
   <!-- Format:
   $1 : Distance label
   $2 : Distance value (5)
@@ -431,7 +431,7 @@ limitations under the License.
   $5 : Speed value (5.6) : Pace value (5 minutes 6 seconds)
   $6 : Speed units (mph) : Pace units (per mile)
   -->
-  <string name="announce_template">My Tracks %1$s %2$.2f %3$s 時間 %4$s 速度/ペース %5$s %6$s</string>
+  <string name="voice_template">My Tracks %1$s %2$.2f %3$s 時間 %4$s 速度/ペース %5$s %6$s</string>
 
   <!-- Check Units -->
   <string name="check_units_title">計測単位についてのご注意</string>
@@ -468,10 +468,10 @@ limitations under the License.
   <string name="sensor_type_option_srm_ant_bridge">SRM ANT+ ブリッジ</string>
     
   <!-- Manifest description (not seen inside the app) -->
-  <string name="notification_permission_label">トラック記録通知受信</string>
-  <string name="read_tracks_permission_label">トラック読み込み</string>
-  <string name="write_tracks_permission_label">トラック書き込みとトラック記録の開始・終了</string>
-  <string name="notification_permission_description">トラック記録の開始・終了時に通知されます．</string>
-  <string name="read_tracks_permission_description">ポイントやウェイポイントといったトラックの読み込みを可能にします．</string>
-  <string name="write_tracks_permission_description">記録開始やウェイポイント追加といったトラック記録を可能にします．</string>
+  <string name="permission_notification_label">トラック記録通知受信</string>
+  <string name="permission_read_label">トラック読み込み</string>
+  <string name="permission_write_label">トラック書き込みとトラック記録の開始・終了</string>
+  <string name="permission_notification_description">トラック記録の開始・終了時に通知されます．</string>
+  <string name="permission_read_description">ポイントやウェイポイントといったトラックの読み込みを可能にします．</string>
+  <string name="permission_write_description">記録開始やウェイポイント追加といったトラック記録を可能にします．</string>
 </resources>
