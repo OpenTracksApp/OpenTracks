@@ -21,64 +21,64 @@ limitations under the License.
   <PreferenceScreen android:title="@string/settings_display">
     <CheckBoxPreference
         android:key="@string/metric_units_key"
-        android:title="@string/settings_metric_units"
-        android:summaryOn="@string/settings_metric_units_summary_on"
-        android:summaryOff="@string/settings_metric_units_summary_off"
+        android:title="@string/settings_display_metric"
+        android:summaryOn="@string/settings_display_metric_summary_on"
+        android:summaryOff="@string/settings_display_metric_summary_off"
         android:defaultValue="true" />
 
     <CheckBoxPreference
         android:key="@string/report_speed_key"
-        android:title="@string/settings_report_speed_or_pace"
-        android:summaryOn="@string/settings_report_speed_or_pace_summary_on"
-        android:summaryOff="@string/settings_report_speed_or_pace_summary_off"
+        android:title="@string/settings_display_speed"
+        android:summaryOn="@string/settings_display_speed_summary_on"
+        android:summaryOff="@string/settings_display_speed_summary_off"
         android:defaultValue="true" />
         
     <ListPreference android:key="@string/track_color_mode_key"
-        android:title="@string/settings_track_color_mode"
-        android:summary="@string/settings_track_color_mode_summary"
+        android:title="@string/settings_display_track_color"
+        android:summary="@string/settings_display_track_color_summary"
         android:entries="@array/track_color_mode_options"
         android:entryValues="@array/track_color_mode_values"
         android:defaultValue="@string/track_color_mode_value_none"/>
 
-    <PreferenceCategory android:title="@string/track_color_mode_option_fixed" 
+    <PreferenceCategory android:title="@string/settings_display_track_color_fixed" 
         android:key="@string/track_color_mode_fixed_speed_options_key">
         <EditTextPreference android:key="@string/track_color_mode_fixed_speed_slow_key" 
-            android:title="@string/settings_track_color_mode_fixed_speed_slow" 
-            android:summary="@string/settings_track_color_mode_fixed_speed_slow_summary" 
+            android:title="@string/settings_display_track_color_fixed_slow" 
+            android:summary="@string/settings_display_track_color_fixed_slow_summary" 
             android:defaultValue="9" 
             android:inputType="number"
             android:maxLength="3">
         </EditTextPreference>
         
         <EditTextPreference android:key="@string/track_color_mode_fixed_speed_slow_display_key" 
-            android:title="@string/settings_track_color_mode_fixed_speed_slow" 
-            android:summary="@string/settings_track_color_mode_fixed_speed_slow_summary" 
+            android:title="@string/settings_display_track_color_fixed_slow" 
+            android:summary="@string/settings_display_track_color_fixed_slow_summary" 
             android:defaultValue="9" 
             android:inputType="number"
             android:maxLength="3">
         </EditTextPreference>
         
         <EditTextPreference android:key="@string/track_color_mode_fixed_speed_medium_key" 
-            android:title="@string/settings_track_color_mode_fixed_speed_medium" 
-            android:summary="@string/settings_track_color_mode_fixed_speed_medium_summary" 
+            android:title="@string/settings_display_track_color_fixed_medium" 
+            android:summary="@string/settings_display_track_color_fixed_medium_summary" 
             android:defaultValue="15"
             android:inputType="number"
             android:maxLength="3">
         </EditTextPreference>
         
         <EditTextPreference android:key="@string/track_color_mode_fixed_speed_medium_display_key" 
-            android:title="@string/settings_track_color_mode_fixed_speed_medium" 
-            android:summary="@string/settings_track_color_mode_fixed_speed_medium_summary" 
+            android:title="@string/settings_display_track_color_fixed_medium" 
+            android:summary="@string/settings_display_track_color_fixed_medium_summary" 
             android:defaultValue="15"
             android:inputType="number"
             android:maxLength="3">
         </EditTextPreference>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/track_color_mode_option_dynamic">
+    <PreferenceCategory android:title="@string/settings_display_track_color_dynamic">
         <EditTextPreference android:key="@string/track_color_mode_dynamic_speed_variation_key" 
-            android:title="@string/settings_track_color_mode_dynamic_speed_variation" 
-            android:summary="@string/settings_track_color_mode_dynamic_speed_variation_summary" 
+            android:title="@string/settings_display_track_color_dynamic_medium" 
+            android:summary="@string/settings_display_track_color_dynamic_medium_summary" 
             android:defaultValue="25" 
             android:inputType="number"
             android:maxLength="2">

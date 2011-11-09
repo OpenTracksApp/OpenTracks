@@ -284,6 +284,145 @@ limitations under the License.
     (Part %d)
   </string>
   
+  <!-- Settings -->
+  <string name="settings_backup"
+    translation_description="In the Settings page, the option to change the data backup related
+      settings."> 
+    Backup
+  </string>
+  <string name="settings_display"
+    translation_description="In the Settings page, the option to change the display related
+      settings.">  
+    Display
+  </string> 
+  <string name="settings_display_metric"
+    translation_description="In the Display settings, the checkbox option to use the metric units.">
+    Use metric units
+  </string>
+  <string name="settings_display_metric_summary_off"
+    translation_description="In the Display settings, the summary for the 'Use metric units'
+      checkbox when it is unchecked explaining using the imperial units to display distances.">
+    Use imperial units to display distances
+  </string>
+  <string name="settings_display_metric_summary_on"
+    translation_description="In the Display settings, the summary for the 'Use metric units'
+      checkbox when it is checked explaining using the metric units to display distances.">
+    Use metric units to display distances
+  </string>
+  <string name="settings_display_speed"
+    translation_description="In the Display settings, the checkbox option to display speed (e.g., 5
+      miles per hour) instead of pace (e.g., 0.2 hours per mile).">  
+    Display speed
+  </string>
+  <string name="settings_display_speed_summary_off"
+    translation_description="In the Display settings, the summary for the 'Display speed' checkbox
+      when it is unchecked explaining that pace (e.g., 0.2 hours per mile) will be used instead of
+      speed (e.g., 5 miles per hour).">  
+    Display pace (e.g., hours/mile)
+  </string>
+  <string name="settings_display_speed_summary_on"
+    translation_description="In the Display settings, the summary for the 'Display speed' checkbox
+      when it is checked explaining that speed (e.g., 5 miles per hour) will be used instead of pace
+      (e.g., 0.2 hours per mile).">  
+    Display speed (e.g., miles/hour)
+  </string>
+  <string name="settings_display_track_color"
+    translation_description="In the Display settings, the dropdown option to choose a track color
+      mode for how to use different colors to color a track based on speed.">
+    Track color mode
+  </string>  
+  <string name="settings_display_track_color_dynamic"
+    translation_description="In the Display settings, for the 'Track color mode' dropdown, the
+      option to use different colors to color a track based on dynamically determined speed 
+      thresholds. E.g., use one color for segments where the speed is below the average speed of the
+      track.">
+    Dynamic Thresholds
+  </string>
+  <string name="settings_display_track_color_dynamic_medium"
+    translation_description="In the Display settings, under the 'Dynamic Thresholds' configurations,
+      the option for configuring the medium speed range. The track color mode will use different
+      colors to color a track depending on whether the speed is above, in, or below the medium speed
+      range.">
+    Medium speed range
+  </string>
+  <string name="settings_display_track_color_dynamic_medium_summary"
+    translation_description="In the Display settings, under the 'Dynamic Thresholds' configurations,
+      the summary for the 'Medium speed range' option explaining that it sets a percentage from the
+      average speed to determine the medium speed range. The track color mode will use different
+      colors to color a track depending on whether the speed is above, in, or below the medium speed
+      range.">
+    Percentage from the average speed for the medium speed range
+  </string>   
+  <string name="settings_display_track_color_fixed"
+    translation_description="In the Display settings, for the 'Track color mode' dropdown, the
+      option to use different colors to color a track based on fixed speed thresholds. E.g., use
+      one color for segments where the speed is below a fixed speed threshold.">
+    Fixed Thresholds
+  </string>
+  <string name="settings_display_track_color_fixed_medium"
+    translation_description="In the Display settings, under the 'Fixed Thresholds' configurations,
+      the option for configuring the medium speed threshold. Thus any speed lower than the
+      threshold but greater than the slow speed threshold will be colored by the medium speed
+      color.">
+    Medium speed threshold
+  </string>
+  <string name="settings_display_track_color_fixed_medium_summary"
+    translation_description="In the Display settings, under the 'Fixed Thresholds' configurations,
+      the summary for the 'Medium speed threshold' option explaining that it sets a cutoff speed
+      for the medium speed color.">
+    Medium speed top value
+  </string> 
+  <string name="settings_display_track_color_fixed_slow"
+    translation_description="In the Display settings, under the 'Fixed Thresholds' configurations,
+      the option for configuring the slow speed threshold. Thus any speed lower than the threshold
+      will be colored by the slow speed color.">
+    Slow speed threshold
+  </string>
+  <string name="settings_display_track_color_fixed_slow_summary"
+    translation_description="In the Display settings, under the 'Fixed Thresholds' configurations,
+      the summary for the 'Slow speed threshold' option explaining that it sets a cutoff speed for
+      the slow speed color.">
+    Slow speed top value
+  </string>      
+  <string name="settings_display_track_color_single"
+    translation_description="In the Display settings, for the 'Track color mode' dropdown, the
+      option to only use a single color to color a track.">
+    Single Color
+  </string>
+  <string name="settings_display_track_color_summary"
+    translation_description="In the Display settings, the summary for the 'Track color mode'
+      dropdown explaining that it configures how colors are used to color a track based on speed.">
+    The way to color a track based on speed
+  </string>
+  <string name="settings_recording"
+    translation_description="In the Settings page, the option to change the track recording related
+      settings.">  
+    Recording
+  </string>
+  <string name="settings_reset"
+    translation_description="In the Settings page, the option to reset everything to the defaults."> 
+    Reset to defaults
+  </string>
+  <string name="settings_reset_summary"
+    translation_description="In the Settings page, the summary for the 'Reset to defaults'
+      option explaining reverting all the settings to the default values."> 
+    Revert all your settings to the default values
+  </string>
+  <string name="settings_sensor"
+    translation_description="In the Settings page, the option to change the sensor related
+      settings.">
+    Sensor
+  </string>
+  <string name="settings_sharing"
+    translation_description="In the Settings page, the option to change the track sharing related
+      settings.">   
+    Sharing
+  </string>
+  <string name="settings_title"
+    translation_description="The title of the Settings page.">  
+    My Tracks Settings
+  </string>
+       
   <!-- Track -->
   <string name="track_detail_activity_type"
     translation_description="In the detail page for a track, the text field for the activity type,
@@ -751,123 +890,7 @@ limitations under the License.
     Import error for file %s
   </string>
 
-  <!-- Settings page -->
-  <string name="settings_title"
-    translation_description="The title of the Settings page.">  
-    My Tracks Settings
-  </string>
-  <string name="settings_display"
-    translation_description="In the Settings page, the option to change the display related
-      settings.">  
-    Display
-  </string>
-  <string name="settings_recording"
-    translation_description="In the Settings page, the option to change the track recording related
-      settings.">  
-    Recording
-  </string>
-  <string name="settings_sensor"
-    translation_description="In the Settings page, the option to change the sensor related
-      settings.">
-    Sensor
-  </string>
-  <string name="settings_sharing"
-    translation_description="In the Settings page, the option to change the track sharing related
-      settings.">   
-    Sharing
-  </string>
-  <string name="settings_backup"
-    translation_description="In the Settings page, the option to change the data backup related
-      settings."> 
-    Backup
-  </string>
-  <string name="settings_reset"
-    translation_description="In the Settings page, the option to reset everything to defaults."> 
-    Reset to defaults
-  </string>
-  <string name="settings_reset_summary"
-    translation_description="In the Settings page, the summary for the 'Reset to defaults'
-      option explaining reverting all the settings to the default values."> 
-    Revert all your settings to the default values
-  </string>
-  
-  <!--  Display settings -->
-  <string name="settings_metric_units"
-    translation_description="In the Display settings, the checkbox option to use the metrics units."
-      >
-    Use metric units
-  </string>
-  <string name="settings_metric_units_summary_on"
-    translation_description="In the Display settings, the summary for the 'Use metric units'
-      checkbox when it is checked explaining using the metrics units to display distances.">
-    Use metrics units to display distances
-  </string>
-  <string name="settings_metric_units_summary_off"
-    translation_description="In the Display settings, the summary for the 'Use metrics units'
-      checkbox when it is unchecked explaining using the imperial units to display distances.">
-    Use imperial units to display distances
-  </string>
-  <string name="settings_report_speed_or_pace"
-    translation_description="In the Display settings, the checkbox option to display speed (e.g., 5
-      miles per hour) instead of pace (e.g., 0.2 hours per mile).">  
-    Display speed
-  </string>
-  <string name="settings_report_speed_or_pace_summary_on"
-    translation_description="In the Display settings, the summary for the 'Display speed' checkbox
-      when it is checked explaining that speed (e.g., 5 miles per hour) will be used instead of pace
-      (e.g., 0.2 hours per mile).">  
-    Display speed (e.g., miles/hour)
-  </string>
-  <string name="settings_report_speed_or_pace_summary_off"
-    translation_description="In the Display settings, the summary for the 'Display speed' checkbox
-      when it is unchecked explaining that pace (e.g., 0.2 hours per mile) will be used instead of
-      speed (e.g., 5 miles per hour).">  
-    Display pace (e.g., hours/mile)
-  </string>
-  <string name="settings_track_color_mode"
-    translation_description="In the Display settings, the dropdown option to choose a track color
-      mode for how to use different colors to color a track based on speed.">
-    Track color mode
-  </string>
-  <string name="settings_track_color_mode_summary"
-    translation_description="In the Display settings, the summary for the 'Track color mode'
-      dropdown option explaining that it configures how colors are used to color a track based on
-      speed."
-      >
-    The way to color a track based on speed
-  </string>    
-  <string name="settings_track_color_mode_fixed_speed_slow"
-    translation_description="In the Display settings, the option for configuring the slow speed
-      threshold. Thus any speed lower than the threshold will be colored by the slow speed color.">
-    Slow speed threshold
-  </string>
-  <string name="settings_track_color_mode_fixed_speed_slow_summary"
-    translation_description="In the Display settings, the summary for the 'Slow speed threshold'
-      option explaining that it sets a cutoff speed for the slow speed color.">
-    Slow speed top value
-  </string>
-  <string name="settings_track_color_mode_fixed_speed_medium"
-    translation_description="In the Display settings, the option for configuring the medium speed
-      threshold. Thus any speed lower than the threshold but greater than the slow speed threshold
-      will be colored by the medium speed color.">
-    Medium speed threshold
-  </string>
-  <string name="settings_track_color_mode_fixed_speed_medium_summary"
-    translation_description="In the Display settings, the summary for the 'Medium speed threshold'
-      option explaining that it sets a cutoff speed for the medium speed color.">
-    Medium speed top value
-  </string> 
-  <string name="settings_track_color_mode_dynamic_speed_variation"
-    translation_description="In the Display settings, the option for configuring the dynamic
-      speed threshold for using colors to color a track based on speed.">
-    Medium speed range
-  </string>
-  <string name="settings_track_color_mode_dynamic_speed_variation_summary"
-    translation_description="In the Display settings, the summary for the 'Medium speed range'
-      option explaining that it sets a percentage from the average speed to determine the
-      medium speed range for using colors to color a track based on speed.">
-    Percentage from the average speed for the medium speed
-  </string>
+ 
   
   <!-- Recording settings -->
   <!-- TODO decide if voice frequency should be under the Recording settings. -->
@@ -1567,22 +1590,5 @@ limitations under the License.
     Zephyr Bluetooth
   </string>
 
-  <!-- Track Color Mode Options -->
-  <string name="track_color_mode_option_none"
-    translation_description="In the Display settings page, for the Track Color Mode picker, the
-        dropdown option to only use one color to color a track.">
-    One Color
-  </string>
-  <string name="track_color_mode_option_fixed"
-    translation_description="In the Display settings page, for the Track Color Mode picker, the 
-        dropdown option to use different colors to color a track based on fixed speed thresholds.">
-    Fixed Thresholds
-  </string>
-  <string name="track_color_mode_option_dynamic"
-    translation_description="In the Display settings page, for the Track Color Mode picker, the
-        dropdown option to use different colors to color a track based on dynamically determined
-        speed thresholds. E.g., use one color for segments where the speed is below the average
-        speed of the track.">
-    Dynamic Thresholds
-  </string>
+
 </resources>

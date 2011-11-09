@@ -183,17 +183,17 @@ limitations under the License.
   <string name="settings_min_required_accuracy">Precisió mínima</string>
   <string name="settings_min_required_accuracy_summary">S\'aturarà l\'enregistrament si la vostra posició no és així de precisa com a mínim</string>
 
-  <string name="settings_metric_units">Fes servir unitats mètriques</string>
-  <string name="settings_metric_units_summary_on">Totes les distàncies es mostraran en unitats mètriques</string>
-  <string name="settings_metric_units_summary_off">Totes les distàncies es mostraran en unitats imperials</string>
+  <string name="settings_display_metric">Fes servir unitats mètriques</string>
+  <string name="settings_display_metric_summary_on">Totes les distàncies es mostraran en unitats mètriques</string>
+  <string name="settings_display_metric_summary_off">Totes les distàncies es mostraran en unitats imperials</string>
 
   <string name="settings_map_public">Fes el mapa públic</string>
   <string name="settings_map_public_summary_on">Els mapes pujats seran visibles per tothom a maps.google.com</string>
   <string name="settings_map_public_summary_off">Els mapes pujats no es llistaran públicament a maps.google.com</string>
 
-  <string name="settings_report_speed_or_pace">Mostra la velocitat</string>
-  <string name="settings_report_speed_or_pace_summary_on">Es mostrarà la velocitat</string>
-  <string name="settings_report_speed_or_pace_summary_off">Es mostrarà el ritme de pas</string>
+  <string name="settings_display_speed">Mostra la velocitat</string>
+  <string name="settings_display_speed_summary_on">Es mostrarà la velocitat</string>
+  <string name="settings_display_speed_summary_off">Es mostrarà el ritme de pas</string>
 
   <string name="settings_share_url_only">Comparteix només l\'URL</string>
   <string name="settings_share_url_only_summary_on">Només s\'enviarà l\'URL del mapa quan es comparteixi</string>

@@ -212,17 +212,17 @@ limitations under the License.
   <string name="settings_min_required_accuracy">Минимальная точность</string>
   <string name="settings_min_required_accuracy_summary">Запись будет приостановлена, если ваша позиция не является достаточно точной</string>
 
-  <string name="settings_metric_units">Использовать метрические единицы</string>
-  <string name="settings_metric_units_summary_on">Все расстояния будут отображаться в метрических единицах</string>
-  <string name="settings_metric_units_summary_off">Все расстояния будут отображаться в имперских единицах</string>
+  <string name="settings_display_metric">Использовать метрические единицы</string>
+  <string name="settings_display_metric_summary_on">Все расстояния будут отображаться в метрических единицах</string>
+  <string name="settings_display_metric_summary_off">Все расстояния будут отображаться в имперских единицах</string>
 
   <string name="settings_map_public">Обнародовать карты</string>
   <string name="settings_map_public_summary_on">Загруженные карты будут общедоступны на maps.google.com</string>
   <string name="settings_map_public_summary_off">Загруженные карты не будут перечислены публично на maps.google.com</string>
 
-  <string name="settings_report_speed_or_pace">Отображать скорость</string>
-  <string name="settings_report_speed_or_pace_summary_on">Скорость будет отображаться</string>
-  <string name="settings_report_speed_or_pace_summary_off">Темп будет отображаться</string>
+  <string name="settings_display_speed">Отображать скорость</string>
+  <string name="settings_display_speed_summary_on">Скорость будет отображаться</string>
+  <string name="settings_display_speed_summary_off">Темп будет отображаться</string>
 
   <string name="settings_share_url_only">Поделиться только URL</string>
   <string name="settings_share_url_only_summary_on">При обмене будет отправлен только URL-адрес</string>

@@ -186,17 +186,17 @@ limitations under the License.
   <string name="settings_min_required_accuracy">Aufzeichnung pausieren, wenn Genauigkeit kleiner als</string>
   <string name="settings_min_required_accuracy_summary">Die Aufzeichnung wird kurzfristig angehalten, wenn Deine Position nicht genauer als hier angegeben ermittelt werden kann.</string>
 
-  <string name="settings_metric_units">Entfernungen in metrischen Einheiten anzeigen</string>
-  <string name="settings_metric_units_summary_on">Alle Entfernungen werden in metrischen Einheiten angezeigt.</string>
-  <string name="settings_metric_units_summary_off">Alle Entfernungen werden in imperialen Längeneinheiten angezeigt.</string>
+  <string name="settings_display_metric">Entfernungen in metrischen Einheiten anzeigen</string>
+  <string name="settings_display_metric_summary_on">Alle Entfernungen werden in metrischen Einheiten angezeigt.</string>
+  <string name="settings_display_metric_summary_off">Alle Entfernungen werden in imperialen Längeneinheiten angezeigt.</string>
 
   <string name="settings_map_public">Karten auf maps.google.com veröffentlichen</string>
   <string name="settings_map_public_summary_on">Hochgeladene Karten auf maps.google.com sind für alle sichtbar.</string>
   <string name="settings_map_public_summary_off">Hochgeladene Karten auf maps.google.com werden nicht öffentlich sichtbar aufgelistet.</string>
 
-  <string name="settings_report_speed_or_pace">Geschwindigkeitsanzeige</string>
-  <string name="settings_report_speed_or_pace_summary_on">Geschwindigkeit wird angezeigt.</string>
-  <string name="settings_report_speed_or_pace_summary_off">Pace wird angezeigt.</string>
+  <string name="settings_display_speed">Geschwindigkeitsanzeige</string>
+  <string name="settings_display_speed_summary_on">Geschwindigkeit wird angezeigt.</string>
+  <string name="settings_display_speed_summary_off">Pace wird angezeigt.</string>
 
   <string name="settings_share_url_only">Nur URL als Einladung zum Teilen senden</string>
   <string name="settings_share_url_only_summary_on">Beim Teilen mit Freunden wird nur die Karten-URL gesendet.</string>

@@ -174,17 +174,17 @@ limitations under the License.
   <string name="settings_min_required_accuracy">Précision minimum</string>
   <string name="settings_min_required_accuracy_summary">L\'enregistrement sera suspendu si la géolocalisation est moins précise</string>
 
-  <string name="settings_metric_units">Système métrique</string>
-  <string name="settings_metric_units_summary_on">Le système métrique sera utilisé pour l\'affichage des distances</string>
-  <string name="settings_metric_units_summary_off">Le système impérial sera utilisé pour l\'affichage des distances</string>
+  <string name="settings_display_metric">Système métrique</string>
+  <string name="settings_display_metric_summary_on">Le système métrique sera utilisé pour l\'affichage des distances</string>
+  <string name="settings_display_metric_summary_off">Le système impérial sera utilisé pour l\'affichage des distances</string>
 
   <string name="settings_map_public">Cartes publiques</string>
   <string name="settings_map_public_summary_on">Les cartes partagées seront visibles par tout le monde sur maps.google.com</string>
   <string name="settings_map_public_summary_off">Les cartes ne seront pas partagées publiquement sur maps.google.com</string>
 
-  <string name="settings_report_speed_or_pace">Afficher vitesse/rythme</string>
-  <string name="settings_report_speed_or_pace_summary_on">Afficher la vitesse</string>
-  <string name="settings_report_speed_or_pace_summary_off">Afficher le rythme</string>
+  <string name="settings_display_speed">Afficher vitesse/rythme</string>
+  <string name="settings_display_speed_summary_on">Afficher la vitesse</string>
+  <string name="settings_display_speed_summary_off">Afficher le rythme</string>
 
   <string name="settings_share_url_only">Partager URL/parcours</string>
   <string name="settings_share_url_only_summary_on">Seule l\'adresse URL de la carte sera envoyée lors du partage</string>

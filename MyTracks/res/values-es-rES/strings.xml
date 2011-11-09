@@ -58,7 +58,7 @@ limitations under the License.
   <string name="settings_announcement_frequency_not_available">No está disponible en su versión de Android</string>
 
 
-  <string name="settings_report_speed_or_pace">Mostrar velocidad</string>
+  <string name="settings_display_speed">Mostrar velocidad</string>
 
   <!-- Backups -->
 

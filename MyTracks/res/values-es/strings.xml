@@ -224,17 +224,17 @@ limitations under the License.
   <string name="settings_min_required_accuracy">Detener la grabación si la precisión es menor a</string>
   <string name="settings_min_required_accuracy_summary">Precisión mínima de ubicación necesaria para continuar grabando pista</string>
 
-  <string name="settings_metric_units">Usar unidades métricas</string>
-  <string name="settings_metric_units_summary_on">Todas las distancias serán mostradas en unidades métricas</string>
-  <string name="settings_metric_units_summary_off">Todas las distancias serán mostradas en unidades británicas</string>
+  <string name="settings_display_metric">Usar unidades métricas</string>
+  <string name="settings_display_metric_summary_on">Todas las distancias serán mostradas en unidades métricas</string>
+  <string name="settings_display_metric_summary_off">Todas las distancias serán mostradas en unidades británicas</string>
 
   <string name="settings_map_public">Hacer mapas en maps.google.com públicos</string>
   <string name="settings_map_public_summary_on">Mapas subidos serán visibles a cualquier persona en maps.google.com</string>
   <string name="settings_map_public_summary_off">Mapas subidos no serán públicos en maps.google.com</string>
 
-  <string name="settings_report_speed_or_pace">Mostrar</string>
-  <string name="settings_report_speed_or_pace_summary_on">La velocidad será mostrada</string>
-  <string name="settings_report_speed_or_pace_summary_off">El paso será mostrado</string>
+  <string name="settings_display_speed">Mostrar</string>
+  <string name="settings_display_speed_summary_on">La velocidad será mostrada</string>
+  <string name="settings_display_speed_summary_off">El paso será mostrado</string>
 
   <string name="settings_share_url_only">Mandar sólo URL como mensaje al compartir</string>
   <string name="settings_share_url_only_summary_on">Sólo el URL del mapa será enviado al compartir</string>
@@ -269,16 +269,16 @@ limitations under the License.
   <string name="bluetooth_sensor_summary">Sensor Bluetooth al que conectar</string>
   <string name="settings_modular_stats_display_title">Pantalla de estadísticas modular</string>
 
-  <string name="settings_track_color_mode">Modo de Recorrido Coloreado</string>
-  <string name="settings_track_color_mode_summary">La forma de colorear el recorrido</string>
+  <string name="settings_display_track_color">Modo de Recorrido Coloreado</string>
+  <string name="settings_display_track_color_summary">La forma de colorear el recorrido</string>
   <string name="settings_track_color_mode_fixed">Fija</string>
   <string name="settings_track_color_mode_dynamic">Dinámica</string>
-  <string name="settings_track_color_mode_fixed_speed_slow">Velocidad Fija Lenta</string>
-  <string name="settings_track_color_mode_fixed_speed_slow_summary">Velocidad máxima considerada lenta</string>
-  <string name="settings_track_color_mode_fixed_speed_medium">Velocidad Fija Media</string>
-  <string name="settings_track_color_mode_fixed_speed_medium_summary">Velocidad máxima considerada media</string>
-  <string name="settings_track_color_mode_dynamic_speed_variation">Variación de velocidad dinámica</string>
-  <string name="settings_track_color_mode_dynamic_speed_variation_summary">% de margen a partir de la velocidad media de movimiento que se considera velocidad media</string>
+  <string name="settings_display_track_color_fixed_slow">Velocidad Fija Lenta</string>
+  <string name="settings_display_track_color_fixed_slow_summary">Velocidad máxima considerada lenta</string>
+  <string name="settings_display_track_color_fixed_medium">Velocidad Fija Media</string>
+  <string name="settings_display_track_color_fixed_medium_summary">Velocidad máxima considerada media</string>
+  <string name="settings_display_track_color_dynamic_medium">Variación de velocidad dinámica</string>
+  <string name="settings_display_track_color_dynamic_medium_summary">% de margen a partir de la velocidad media de movimiento que se considera velocidad media</string>
   
   <!-- Backups -->
   <string name="settings_backup">Copia seguridad (BETA)</string>
@@ -516,7 +516,7 @@ limitations under the License.
   <string name="sensor_type_option_zephyr">Bluetooth Zephyr</string>
 
   <!-- Track Color Modes -->
-  <string name="track_color_mode_option_none">Ninguno</string>
-  <string name="track_color_mode_option_fixed">Fijo (BETA)</string>
-  <string name="track_color_mode_option_dynamic">Dinámico (BETA)</string>
+  <string name="settings_display_track_color_single">Ninguno</string>
+  <string name="settings_display_track_color_fixed">Fijo (BETA)</string>
+  <string name="settings_display_track_color_dynamic">Dinámico (BETA)</string>
 </resources>

@@ -213,17 +213,17 @@ limitations under the License.
   <string name="settings_min_required_accuracy">最小精度</string>
   <string name="settings_min_required_accuracy_summary">如果位置信息达不到此精度, 记录将被暂停</string>
 
-  <string name="settings_metric_units">使用公制单位</string>
-  <string name="settings_metric_units_summary_on">所有的距离都将以公制单位显示</string>
-  <string name="settings_metric_units_summary_off">所有的距离都将以英制单位显示</string>
+  <string name="settings_display_metric">使用公制单位</string>
+  <string name="settings_display_metric_summary_on">所有的距离都将以公制单位显示</string>
+  <string name="settings_display_metric_summary_off">所有的距离都将以英制单位显示</string>
 
   <string name="settings_map_public">公开地图</string>
   <string name="settings_map_public_summary_on">上传的地图将对所有 maps.google.com 访问者可见</string>
   <string name="settings_map_public_summary_off">上传的地图不会在 maps.google.com 上公开</string>
 
-  <string name="settings_report_speed_or_pace">显示速度</string>
-  <string name="settings_report_speed_or_pace_summary_on">显示速度信息</string>
-  <string name="settings_report_speed_or_pace_summary_off">显示步速</string>
+  <string name="settings_display_speed">显示速度</string>
+  <string name="settings_display_speed_summary_on">显示速度信息</string>
+  <string name="settings_display_speed_summary_off">显示步速</string>
 
   <string name="settings_share_url_only">只分享 URL</string>
   <string name="settings_share_url_only_summary_on">在分享时只发送地图的 URL</string>

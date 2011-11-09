@@ -208,17 +208,17 @@ limitations under the License.
   <string name="settings_min_required_accuracy">最低精度</string>
   <string name="settings_min_required_accuracy_summary">この精度以上でないと記録を休止します</string>
 
-  <string name="settings_metric_units">メートル法を使用</string>
-  <string name="settings_metric_units_summary_on">全ての距離をメートル法で表示します</string>
-  <string name="settings_metric_units_summary_off">全ての距離をヤード・ポンド法で表示します</string>
+  <string name="settings_display_metric">メートル法を使用</string>
+  <string name="settings_display_metric_summary_on">全ての距離をメートル法で表示します</string>
+  <string name="settings_display_metric_summary_off">全ての距離をヤード・ポンド法で表示します</string>
 
   <string name="settings_map_public">マップの公開</string>
   <string name="settings_map_public_summary_on">アップロードされたマップはmaps.google.comで誰でも閲覧できます</string>
   <string name="settings_map_public_summary_off">アップロードされたマップはmaps.google.comのリストに公開されません</string>
 
-  <string name="settings_report_speed_or_pace">速度表示</string>
-  <string name="settings_report_speed_or_pace_summary_on">速度が表示されます</string>
-  <string name="settings_report_speed_or_pace_summary_off">ペースが表示されます</string>
+  <string name="settings_display_speed">速度表示</string>
+  <string name="settings_display_speed_summary_on">速度が表示されます</string>
+  <string name="settings_display_speed_summary_off">ペースが表示されます</string>
 
   <string name="settings_share_url_only">URLのみ共有</string>
   <string name="settings_share_url_only_summary_on">共有時にマップのURLのみ送信します</string>

@@ -216,17 +216,17 @@ limitations under the License.
   <string name="settings_min_required_accuracy">Sallittu tarkkuus</string>
   <string name="settings_min_required_accuracy_summary">Reitin tallennus pysäytetään, jos tarkkuus on tätä pienempi</string>
 
-  <string name="settings_metric_units">Käytä metrijärjestelmää</string>
-  <string name="settings_metric_units_summary_on">Kaikki etäisyydet näytetään metrijärjestelmässä</string>
-  <string name="settings_metric_units_summary_off">Kaikki etäisyydet näytetään U.S yksiköitä käyttäen</string>
+  <string name="settings_display_metric">Käytä metrijärjestelmää</string>
+  <string name="settings_display_metric_summary_on">Kaikki etäisyydet näytetään metrijärjestelmässä</string>
+  <string name="settings_display_metric_summary_off">Kaikki etäisyydet näytetään U.S yksiköitä käyttäen</string>
 
   <string name="settings_map_public">Aseta kartat julkisiksi</string>
   <string name="settings_map_public_summary_on">Lähetetyt kartat näkyvät kaikille osoitteessa maps.google.com</string>
   <string name="settings_map_public_summary_off">Lähetettyjä karttoja ei näytetä julkisesti osoitteessa maps.google.com</string>
 
-  <string name="settings_report_speed_or_pace">Näytä nopeus</string>
-  <string name="settings_report_speed_or_pace_summary_on">Nopeus näytetään</string>
-  <string name="settings_report_speed_or_pace_summary_off">Tahti näytetään</string>
+  <string name="settings_display_speed">Näytä nopeus</string>
+  <string name="settings_display_speed_summary_on">Nopeus näytetään</string>
+  <string name="settings_display_speed_summary_off">Tahti näytetään</string>
 
   <string name="settings_share_url_only">Jaa vain URL</string>
   <string name="settings_share_url_only_summary_on">Ainoastaan kartan URL jaetaan</string>

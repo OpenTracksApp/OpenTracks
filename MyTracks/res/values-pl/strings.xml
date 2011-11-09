@@ -180,17 +180,17 @@ limitations under the License.
   <string name="settings_min_required_accuracy">Minimalna dokładność</string>
   <string name="settings_min_required_accuracy_summary">Zapis zostanie zatrzymany jeśli twoja pozycja jest mniej dokładana niż ta wartość</string>
 
-  <string name="settings_metric_units">Używaj jednostek metrycznych</string>
-  <string name="settings_metric_units_summary_on">Wszystkie odległości będą wyświetlane w jednostkach metrycznych</string>
-  <string name="settings_metric_units_summary_off">Wszystkie odległości będą wyświetlane w jednostkach imperialnych</string>
+  <string name="settings_display_metric">Używaj jednostek metrycznych</string>
+  <string name="settings_display_metric_summary_on">Wszystkie odległości będą wyświetlane w jednostkach metrycznych</string>
+  <string name="settings_display_metric_summary_off">Wszystkie odległości będą wyświetlane w jednostkach imperialnych</string>
 
   <string name="settings_map_public">Ustaw mapy jako publiczne</string>
   <string name="settings_map_public_summary_on">Przesłane mapy będą dostępne dla wszystkich na maps.google.com</string>
   <string name="settings_map_public_summary_off">Przesłane mapy nie będą dostępne publicznie na maps.google.com</string>
 
-  <string name="settings_report_speed_or_pace">Wyświetlanie prędkości</string>
-  <string name="settings_report_speed_or_pace_summary_on">Prędkość będzie wyświetlana</string>
-  <string name="settings_report_speed_or_pace_summary_off">Tempo będzie wyświetlane</string>
+  <string name="settings_display_speed">Wyświetlanie prędkości</string>
+  <string name="settings_display_speed_summary_on">Prędkość będzie wyświetlana</string>
+  <string name="settings_display_speed_summary_off">Tempo będzie wyświetlane</string>
 
   <string name="settings_share_url_only">Dziel się tylko odnośnikiem</string>
   <string name="settings_share_url_only_summary_on">Tylko odnośnik do mapy będzie wysyłany podczas dzielenia się</string>
