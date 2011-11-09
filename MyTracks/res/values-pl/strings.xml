@@ -34,8 +34,8 @@ limitations under the License.
   <!-- Error messages -->
   <string name="error_no_location_manager">Brak menedżera lokalizacji na urządzeniu!</string>
   <string name="gps_not_found">Brak dostawcy lokalizacji GPS na urządzeniu.</string>
-  <string name="error_sending_to_fusion_tables">Podczas przesyłania pliku do Moich Map Google pojawił się błąd. Spróbuj ponownie później.</string>
-  <string name="error_sending_to_docs">Podczas przesyłania pliku do Dokumentów Google pojawił się błąd. Spróbuj ponownie później.</string>
+  <string name="send_google_error_fusion_tables">Podczas przesyłania pliku do Moich Map Google pojawił się błąd. Spróbuj ponownie później.</string>
+  <string name="send_google_error_docs">Podczas przesyłania pliku do Dokumentów Google pojawił się błąd. Spróbuj ponownie później.</string>
   <string name="track_record_error">Nie można rozpocząć rejestrowania. Spróbuj ponownie.</string>
   <string name="error_unable_to_stop_recording">Nie można zakończyć rejestrowania. Spróbuj ponownie.</string>
   <string name="error_import_unable_to_read_file">Nie można czytać z pliku.</string>
@@ -49,10 +49,10 @@ limitations under the License.
   <string name="gps_wait_for_fix">Oczekiwanie na lepsze ustalenie pozycji GPS. Upewnij się, że niebo jest widoczne.</string>
   <string name="track_record_success">Rejestrowanie nowej trasy.</string>
   <string name="status_stopped_recording">Zatrzymano rejestrowanie nowej trasy.</string>
-  <!-- <string name="sending_to_fusion_tables_success">Utworzona nową Mapę Google na maps.google.com.</string> -->
-  <string name="sending_to_my_maps_success_existing_map">Twoja trasa został wysłana do maps.google.com.</string>
-  <string name="sending_to_docs_success_new_doc">Twoja trasa została wysłana do nowego arkusza na docs.google.com.</string>
-  <string name="sending_to_docs_success_existing_doc">Twoja trasa została wysłana do docs.google.com.</string>
+  <!-- <string name="send_google_success_fusion_tables">Utworzona nową Mapę Google na maps.google.com.</string> -->
+  <string name="send_google_success_existing_map">Twoja trasa został wysłana do maps.google.com.</string>
+  <string name="send_google_success_new_doc">Twoja trasa została wysłana do nowego arkusza na docs.google.com.</string>
+  <string name="send_google_success_existing_doc">Twoja trasa została wysłana do docs.google.com.</string>
   <string name="gps_need_to_enable">Tapnij tutaj, aby przejść do ustawień Lokalizacji i zabezpieczeń, a następnie zaznacz Użyj satelitów GPS. Naciśnij klawisz Wstecz, aby powrócić.</string>
   <string name="my_location_approximate_location">Uwaga: używana jest przybliżona lokalizacja ustalona za pomocą stacji komórkowych i sieci WIFI.</string>
   <string name="my_location_no_location">Lokalizacja nie może być obecnie ustalona. Włącz wiecej źródeł (zobacz ustawienia Lokalizacji i zabezpieczeń) i upewnij się, że niebo jest widoczne. Spróbuj później.</string>
@@ -60,15 +60,15 @@ limitations under the License.
   <string name="marker_insert_success">Wstawiono znacznik statystyk.</string>
 
   <!-- Progress dialog -->
-  <string name="progress_title">Proszę czekać...</string>
+  <string name="generic_progress_title">Proszę czekać...</string>
   <string name="progress_message">Przesyłanie trasy do Google.</string>
-  <string name="progress_message_reading_track">Czytanie trasy...</string>
-  <string name="progress_message_preparing_track">Przygotowywanie trasy...</string>
-  <!-- <string name="progress_message_authenticating_fusion_tables">Uwierzytelnianie w Mapach Google...</string> -->
-  <string name="progress_message_authenticating_docs">Uwierzytelnianie w Dokumentach Google...</string>
-  <string name="progress_message_sending_docs">Przesyłanie trasy do Dokumentów Google...</string>
-  <!-- <string name="progress_message_sending_fusion_tables">Przesyłanie trasy do Map Google...</string> -->
-  <!-- <string name="progress_message_creating_fusion_table">Tworzenie nowej Mojej Mapy...</string> -->
+  <string name="send_google_progress_reading_track">Czytanie trasy...</string>
+  <string name="send_google_progress_preparing_track">Przygotowywanie trasy...</string>
+  <!-- <string name="send_google_progress_auth_fusion_tables">Uwierzytelnianie w Mapach Google...</string> -->
+  <string name="send_google_progress_auth_docs">Uwierzytelnianie w Dokumentach Google...</string>
+  <string name="send_google_progress_sending_docs">Przesyłanie trasy do Dokumentów Google...</string>
+  <!-- <string name="send_google_progress_sending_fusion_tables">Przesyłanie trasy do Map Google...</string> -->
+  <!-- <string name="send_google_progress_creating_fusion_table">Tworzenie nowej Mojej Mapy...</string> -->
   <string name="progress_message_import">Importowanie trasy GPS. Poczekaj chwilę.</string>
   <string name="progress_message_export">Zapisywanie pliku na kartę SD. Poczekaj chwilę.</string>
   <string name="progress_message_updating_track">Aktualizacja statystyk trasy...</string>
@@ -81,14 +81,13 @@ limitations under the License.
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="new_map_description">Utworzono za pomocą My Tracks na Android.</string>
-  <string name="send_to_google_by_mytracks">Utworzona przez &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; na Android.</string>
+  <string name="send_google_by_my_tracks">Utworzona przez &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; na Android.</string>
 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">Punkty</string>
-  <string name="recorded_date">Zapisana</string>
-  <string name="category">Typ aktywności</string>
+  <string name="send_google_recorded">Zapisana</string>
   <string name="waypoint_category">Typ znacznika</string>
-  <string name="send_google_track_part_format">(Część %d)</string>
+  <string name="send_google_track_part_label">(Część %d)</string>
 
   <!-- Used by the track recording service -->
   <string name="track_record_notification">Rejestrowanie twojej trasy...</string>
@@ -240,9 +239,9 @@ limitations under the License.
   <string name="share_track_url">Podziel się trasą z przyjaciółmi</string>
 
   <!-- Visibility -->
-  <string name="public_map">Publiczna</string>
-  <string name="unlisted_map">Niepubliczna</string>
-  <string name="mapslist_no_maps_available">Nie masz jeszcze żadnych map.</string>
+  <string name="my_maps_list_public_label">Publiczna</string>
+  <string name="my_maps_list_unlisted_label">Niepubliczna</string>
+  <string name="my_maps_list_no_maps">Nie masz jeszcze żadnych map.</string>
 
   <!-- Statistics View -->
   <!-- Average Moving -->
@@ -336,17 +335,17 @@ limitations under the License.
   <string name="about_support">Wsparcie:</string>
 
   <!-- Send to Google -->
-  <string name="sendtogoogle_title">Wyślij do...</string>
-  <!-- <string name="sendtogoogle_google_fusiontables">Moje Mapy Google</string> -->
-  <string name="sendtogoogle_google_docs">Dokumenty Google</string>
-  <string name="sendtogoogle_send_now">Wyślij teraz</string>
+  <string  name="send_google_title">Wyślij do...</string>
+  <!-- <string name="send_google_fusion_tables">Moje Mapy Google</string> -->
+  <string name="send_google_docs">Dokumenty Google</string>
+  <string name="send_google_send_now">Wyślij teraz</string>
   <string name="sendtogoogle_send_stats">Wyślij statystyki trasy</string>
   <string name="sendtogoogle_send_stats_and_points">Wyślij statystyki i punkty</string>
 
   <!-- Getting the account to upload to. -->
-  <string name="no_account_found_title">Znaleziono nowe konto</string>
-  <string name="no_account_found">Nie znaleziono konta do przesyłu.</string>
-  <string name="choose_account_title">Wybierz konto</string>
+  <string name="send_google_no_account">Znaleziono nowe konto</string>
+  <string name="send_google_no_account_message">Nie znaleziono konta do przesyłu.</string>
+  <string name="send_google_choose_account">Wybierz konto</string>
 
   <!-- SD card -->
   <string name="io_no_external_storage_found">Nie znaleziono zewnętrznej pamięci. Upewniej się, że karta SD jest w telefonie i nie jest podłączona do komputera.</string>

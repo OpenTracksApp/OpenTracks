@@ -35,9 +35,9 @@ limitations under the License.
   <!-- Error messages -->
   <string name="error_no_location_manager">此设备上没有位置管理器!</string>
   <string name="gps_not_found">此设备上没有 GPS 定位装置.</string>
-  <string name="error_sending_to_my_maps">发送轨迹到 Google My Map 时发生错误.</string>
-  <string name="error_sending_to_fusion_tables">发送轨迹到 Google Fusion Tables 时发生错误. 请稍后重试.</string>
-  <string name="error_sending_to_docs">发送轨迹到 Google Docs 时发生错误. 请稍后重试.</string>
+  <string name="send_google_error_my_maps">发送轨迹到 Google My Map 时发生错误.</string>
+  <string name="send_google_error_fusion_tables">发送轨迹到 Google Fusion Tables 时发生错误. 请稍后重试.</string>
+  <string name="send_google_error_docs">发送轨迹到 Google Docs 时发生错误. 请稍后重试.</string>
   <string name="error_sending_generic">请稍后再试.</string>
   <string name="track_record_error">无法开始记录. 请重试.</string>
   <string name="error_unable_to_stop_recording">无法停止记录. 请重试.</string>
@@ -53,32 +53,32 @@ limitations under the License.
   <string name="gps_wait_for_fix">等待更准确的 GPS 定位. 请确定可以看见天空.</string>
   <string name="track_record_success">现在开始记录新的轨迹.</string>
   <string name="status_stopped_recording">停止记录你的轨迹.</string>
-  <string name="sending_to_my_maps_success_new_map">已在 maps.google.com 创建了新的 Google My Map.</string>
-  <string name="sending_to_fusion_tables_success">已在 google.com/fusiontables 创建新 Google Fusion Table.</string>
-  <string name="sending_to_my_maps_success_existing_map">你的轨迹已经发送到 maps.google.com.</string>
-  <string name="sending_to_docs_success_new_doc">你的轨迹已经作为新的电子表格发送到 docs.google.com.</string>
-  <string name="sending_to_docs_success_existing_doc">你的轨迹已经发送到 docs.google.com.</string>
-  <string name="sending_to_google_additional_info">可能需要等待几分钟才能看见新的轨迹.</string>
+  <string name="send_google_success_new_map">已在 maps.google.com 创建了新的 Google My Map.</string>
+  <string name="send_google_success_fusion_tables">已在 google.com/fusiontables 创建新 Google Fusion Table.</string>
+  <string name="send_google_success_existing_map">你的轨迹已经发送到 maps.google.com.</string>
+  <string name="send_google_success_new_doc">你的轨迹已经作为新的电子表格发送到 docs.google.com.</string>
+  <string name="send_google_success_existing_doc">你的轨迹已经发送到 docs.google.com.</string>
+  <string name="send_google_success_footer">可能需要等待几分钟才能看见新的轨迹.</string>
   <string name="gps_need_to_enable">请点击这里进入\'安全和位置设置\'并勾选上\'启用 GPS 卫星\'. 然后用后退键返回.</string>
   <string name="my_location_approximate_location">注意: 当前显示的位置是根据无线信号和无线网络计算的近似位置.</string>
   <string name="my_location_no_location">目前无法定位. 请启用更多的位置来源 (在\'安全和位置设置\'中) 并确认天空是可见的. 再重试.</string>
   <string name="status_waypoint_inserted">插入了一个路点标记.</string>
   <string name="marker_insert_success">插入了一个统计标记.</string>
-  <string name="sending_to_google_upload_status">上传状态:</string>
+  <string name="send_google_result_title">上传状态:</string>
 
   <!-- Progress dialog -->
-  <string name="progress_title">请稍候...</string>
+  <string name="generic_progress_title">请稍候...</string>
   <string name="progress_message">发送你的轨迹到 Google.</string>
-  <string name="progress_message_reading_track">读取轨迹中...</string>
-  <string name="progress_message_preparing_track">准备轨迹中...</string>
-  <string name="progress_message_authenticating_fusion_tables">登录 Google Fusion Tables 中...</string>
-  <string name="progress_message_authenticating_docs">登录 Google Docs 中...</string>
-  <string name="progress_message_sending_docs">发送轨迹到 Google Docs 中...</string>
-  <string name="progress_message_sending_fusion_tables">发送轨迹到 Google Fusion Tables 中...</string>
-  <string name="progress_message_creating_fusion_table">创建新的 Fusion Table 中...</string>
-  <string name="progress_message_creating_map">创建新的 My Map...</string>
-  <string name="progress_message_sending_fusion_tables">发送轨迹到 Fusion Tables...</string>
-  <string name="progress_message_creating_fusion_table">创建新的 Fusion table...</string>
+  <string name="send_google_progress_reading_track">读取轨迹中...</string>
+  <string name="send_google_progress_preparing_track">准备轨迹中...</string>
+  <string name="send_google_progress_auth_fusion_tables">登录 Google Fusion Tables 中...</string>
+  <string name="send_google_progress_auth_docs">登录 Google Docs 中...</string>
+  <string name="send_google_progress_sending_docs">发送轨迹到 Google Docs 中...</string>
+  <string name="send_google_progress_sending_fusion_tables">发送轨迹到 Google Fusion Tables 中...</string>
+  <string name="send_google_progress_creating_fusion_table">创建新的 Fusion Table 中...</string>
+  <string name="send_google_progress_creating_map">创建新的 My Map...</string>
+  <string name="send_google_progress_sending_fusion_tables">发送轨迹到 Fusion Tables...</string>
+  <string name="send_google_progress_creating_fusion_table">创建新的 Fusion table...</string>
   <string name="progress_message_import">导入 GPS 轨迹中. 请稍候.</string>
   <string name="progress_message_export">写入文件到 SD 卡中. 请稍候.</string>
   <string name="progress_message_updating_track">更新轨迹统计信息中...</string>
@@ -91,18 +91,17 @@ limitations under the License.
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">由 Android 平台的 My Tracks 创建.</string>
-  <string name="send_to_google_by_mytracks">由 Android 平台的 &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; 创建.</string>
+  <string name="send_google_by_my_tracks">由 Android 平台的 &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; 创建.</string>
 
   <!-- Text and links when uploading to Google My Maps -->
-  <string name="send_to_google_by_mytracks">由 Android 上的 &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; 创建.</string>
+  <string name="send_google_by_my_tracks">由 Android 上的 &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; 创建.</string>
   <string name="new_map_title">新地图</string>
 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">路点</string>
-  <string name="recorded_date">记录日期</string>
-  <string name="category">活动类型</string>
+  <string name="send_google_recorded">记录日期</string>
   <string name="waypoint_category">标记类型</string>
-  <string name="send_google_track_part_format">(第 %d 部分)</string>
+  <string name="send_google_track_part_label">(第 %d 部分)</string>
 
   <!-- Used by the track recording service -->
   <string name="track_record_notification">记录轨迹中...</string>
@@ -276,11 +275,11 @@ limitations under the License.
   <string name="mytracks_sky">GPS 卫星</string>
 
   <!-- My Maps -->
-  <string name="select_map_message">从你的帐号中选择一个地图:</string>
+  <string name="my_maps_list_pick_map">从你的帐号中选择一个地图:</string>
   <string name="create_new_map">创建新地图...</string>
-  <string name="map_list_title">发送到 Google My Maps</string>
-  <string name="maps_list_loading">载入地图中...</string>
-  <string name="maps_list_failed">现在无法载入你的地图!</string>
+  <string name="my_maps_list_title">发送到 Google My Maps</string>
+  <string name="my_maps_list_loading">载入地图中...</string>
+  <string name="my_maps_list_error">现在无法载入你的地图!</string>
   <string name="open_map">选择此地图</string>
   <string name="edit_map_details">编辑地图详细信息</string>
   <string name="share_track_url">分享轨迹</string>
@@ -304,9 +303,9 @@ limitations under the License.
     请用 Google Earth 或其它地图软件查看此轨迹.</string>
 
   <!-- Visibility -->
-  <string name="public_map">公开</string>
-  <string name="unlisted_map">未公布</string>
-  <string name="mapslist_no_maps_available">你还没有保存任何地图.</string>
+  <string name="my_maps_list_public_label">公开</string>
+  <string name="my_maps_list_unlisted_label">未公布</string>
+  <string name="my_maps_list_no_maps">你还没有保存任何地图.</string>
 
   <!-- Statistics View -->
   <!-- Average Moving -->
@@ -396,17 +395,17 @@ limitations under the License.
   <string name="about_privacy">隐私策略:</string>
 
   <!-- Send to Google -->
-  <string name="sendtogoogle_title">发送到...</string>
-  <string name="sendtogoogle_send_now">立即发送</string>
-  <string name="sendtogoogle_create_new_map">创建新地图</string>
-  <string name="sendtogoogle_pick_existing_map">选择已有地图</string>
+  <string  name="send_google_title">发送到...</string>
+  <string name="send_google_send_now">立即发送</string>
+  <string name="send_google_new_map">创建新地图</string>
+  <string name="send_google_existing_map">选择已有地图</string>
   <string name="sendtogoogle_send_stats">发送轨迹统计信息</string>
   <string name="sendtogoogle_send_stats_and_points">发送统计信息和路点</string>
 
   <!-- Getting the account to upload to. -->
-  <string name="no_account_found_title">没有帐户</string>
-  <string name="no_account_found">没有可用于上传轨迹的帐户.</string>
-  <string name="choose_account_title">选择帐户</string>
+  <string name="send_google_no_account">没有帐户</string>
+  <string name="send_google_no_account_message">没有可用于上传轨迹的帐户.</string>
+  <string name="send_google_choose_account">选择帐户</string>
 
   <!-- SD card -->
   <string name="io_no_external_storage_found">没有发现存储设备. 请确认插入了 SD 存储卡并且你的手机没有将挂载 SD 卡到电脑.</string>

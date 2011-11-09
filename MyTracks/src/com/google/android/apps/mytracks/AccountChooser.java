@@ -78,7 +78,7 @@ public class AccountChooser {
     // Let the user choose.
     Log.e(Constants.TAG, "Multiple matching accounts found.");
     final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-    builder.setTitle(R.string.choose_account_title);
+    builder.setTitle(R.string.send_google_choose_account);
     builder.setCancelable(false);
     builder.setPositiveButton(R.string.ok,
         new DialogInterface.OnClickListener() {
@@ -124,8 +124,8 @@ public class AccountChooser {
       final AccountHandler handler) {
     Log.e(Constants.TAG, "No matching accounts found.");
     final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-    builder.setTitle(R.string.no_account_found_title);
-    builder.setMessage(R.string.no_account_found);
+    builder.setTitle(R.string.send_google_no_account);
+    builder.setMessage(R.string.send_google_no_account_message);
     builder.setCancelable(true);
     builder.setPositiveButton(R.string.ok,
         new DialogInterface.OnClickListener() {

@@ -303,7 +303,7 @@ public class StringUtils implements DescriptionGenerator {
         + "<img border=\"0\" src=\"%s\"/>",
 
         // Line 1
-        context.getString(R.string.send_to_google_by_mytracks),
+        context.getString(R.string.send_google_by_my_tracks),
 
         // Line 2
         context.getString(R.string.stat_total_distance),
@@ -343,11 +343,11 @@ public class StringUtils implements DescriptionGenerator {
         context.getString(R.string.stat_min_grade), minGrade,
 
         // Line 11
-        context.getString(R.string.recorded_date),
+        context.getString(R.string.send_google_recorded),
         new Date(trackStats.getStartTime()),
 
         // Line 12
-        context.getString(R.string.category), category,
+        context.getString(R.string.track_detail_activity_type_hint), category,
 
         // Line 13
         ChartURLGenerator.getChartUrl(distances, elevations, track, context));

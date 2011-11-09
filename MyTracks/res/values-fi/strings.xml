@@ -35,9 +35,9 @@ limitations under the License.
   <!-- Error messages -->
   <string name="error_no_location_manager">Paikkatietoja ei löytynyt!</string>
   <string name="gps_not_found">GPS-palvelua ei löytynyt.</string>
-  <string name="error_sending_to_my_maps">Virhe lähetettäessä reittiä Google My Maps-palveluun.</string>
-  <string name="error_sending_to_fusion_tables">Virhe lähetettäessä reittiä Google Fusion Tables-palveluun.</string>
-  <string name="error_sending_to_docs">Virhe lähetettäessä reittiä Google Docs-palveluun..</string>
+  <string name="send_google_error_my_maps">Virhe lähetettäessä reittiä Google My Maps-palveluun.</string>
+  <string name="send_google_error_fusion_tables">Virhe lähetettäessä reittiä Google Fusion Tables-palveluun.</string>
+  <string name="send_google_error_docs">Virhe lähetettäessä reittiä Google Docs-palveluun..</string>
   <string name="error_sending_generic">Yritä myöhemmin uudelleen.</string>
   <string name="track_record_error">Tallennusta ei voitu aloittaa. Yritä uudelleen.</string>
   <string name="error_unable_to_stop_recording">Tallennusta ei voitu pysäyttää. Yritä uudelleen.</string>
@@ -53,32 +53,32 @@ limitations under the License.
   <string name="gps_wait_for_fix">Odotetaan parempaa GPS-yhteyttä. Varmista että taivas on näkyvissä.</string>
   <string name="track_record_success">Tallennetaan uutta reittiä.</string>
   <string name="status_stopped_recording">Reitin tallentaminen lopetettiin.</string>
-  <string name="sending_to_my_maps_success_new_map">Uusi Google My Map on luotu osoitteeseen maps.google.com.</string>
-  <string name="sending_to_fusion_tables_success">Uusi Google Fusion taulukko on luotu osoitteeseen google.com/fusiontables.</string>
-  <string name="sending_to_my_maps_success_existing_map">Reittisi on lähetetty osoitteeseen maps.google.com.</string>
-  <string name="sending_to_docs_success_new_doc">Reittisi on luotu taulukoksi osoitteeseen  docs.google.com.</string>
-  <string name="sending_to_docs_success_existing_doc">Reittisi on lähetetty osoitteeseen docs.google.com.</string>
-  <string name="sending_to_google_additional_info">Reitin näkyminen saattaa kestää muutaman minuutin.</string>
+  <string name="send_google_success_new_map">Uusi Google My Map on luotu osoitteeseen maps.google.com.</string>
+  <string name="send_google_success_fusion_tables">Uusi Google Fusion taulukko on luotu osoitteeseen google.com/fusiontables.</string>
+  <string name="send_google_success_existing_map">Reittisi on lähetetty osoitteeseen maps.google.com.</string>
+  <string name="send_google_success_new_doc">Reittisi on luotu taulukoksi osoitteeseen  docs.google.com.</string>
+  <string name="send_google_success_existing_doc">Reittisi on lähetetty osoitteeseen docs.google.com.</string>
+  <string name="send_google_success_footer">Reitin näkyminen saattaa kestää muutaman minuutin.</string>
   <string name="gps_need_to_enable">Avaa tästä Sijainti ja suojaus -asetukset ja valitse \'Käytä GPS-satelliitteja\'. Palaa ohjelmaan painamalla Takaisin-näppäintä.</string>
   <string name="my_location_approximate_location">Huomio: Näkyvä sijainti perustuu kännykkämastoista ja WLAN-verkoista arvioituun paikkatietoon.</string>
   <string name="my_location_no_location">Paikkatietoa ei löydy. Aktivoi lisää paikannusmenetelmiä (katso Asetukset) ja varmista että taivas on näkyvissä. Yritä myöhemmin uudelleen.</string>
   <string name="status_waypoint_inserted">Reittimerkintä lisätty.</string>
   <string name="marker_insert_success">Tilastomerkintä lisätty.</string>
-  <string name="sending_to_google_upload_status">Lähetyksen tila:</string>
+  <string name="send_google_result_title">Lähetyksen tila:</string>
 
   <!-- Progress dialog -->
-  <string name="progress_title">Odota...</string>
+  <string name="generic_progress_title">Odota...</string>
   <string name="progress_message">Lähetetään reittiä Google:n palvelimelle.</string>
-  <string name="progress_message_reading_track">Luetaan reittiä...</string>
-  <string name="progress_message_preparing_track">Valmistellaan reittiä...</string>
-  <string name="progress_message_authenticating_fusion_tables">Todennetaan Google Fusion Tables -tiliä...</string>
-  <string name="progress_message_authenticating_my_maps">Todennetaan Google Maps -tiliä...</string>
-  <string name="progress_message_authenticating_docs">Todennetaan Google Docs -tiliä...</string>
-  <string name="progress_message_sending_docs">Lähetetään reittiä Google Docsiin...</string>
-  <string name="progress_message_sending_my_maps">Lähetetään reittiä Google Mapsiin...</string>
-  <string name="progress_message_creating_map">Luodaan uutta My Mapsia...</string>
-  <string name="progress_message_sending_fusion_tables">Lähetetään reittiä Fusion Tablesiin...</string>
-  <string name="progress_message_creating_fusion_table">Luodaan uutta Fusion tablea...</string>
+  <string name="send_google_progress_reading_track">Luetaan reittiä...</string>
+  <string name="send_google_progress_preparing_track">Valmistellaan reittiä...</string>
+  <string name="send_google_progress_auth_fusion_tables">Todennetaan Google Fusion Tables -tiliä...</string>
+  <string name="send_google_progress_auth_my_maps">Todennetaan Google Maps -tiliä...</string>
+  <string name="send_google_progress_auth_docs">Todennetaan Google Docs -tiliä...</string>
+  <string name="send_google_progress_sending_docs">Lähetetään reittiä Google Docsiin...</string>
+  <string name="send_google_progress_sending_my_maps">Lähetetään reittiä Google Mapsiin...</string>
+  <string name="send_google_progress_creating_map">Luodaan uutta My Mapsia...</string>
+  <string name="send_google_progress_sending_fusion_tables">Lähetetään reittiä Fusion Tablesiin...</string>
+  <string name="send_google_progress_creating_fusion_table">Luodaan uutta Fusion tablea...</string>
   <string name="progress_message_import">Tuodaan uutta GPS-reittiä. Odota.</string>
   <string name="progress_message_export">Kirjoitetaan tiedostoa SD-kortille. Odota.</string>
   <string name="progress_message_updating_track">Päivitetään reitin tilastoja...</string>
@@ -91,7 +91,7 @@ limitations under the License.
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Created by My Tracks on Android.</string>
-  <string name="send_to_google_by_mytracks">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
+  <string name="send_google_by_my_tracks">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="my_map_link">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
@@ -99,10 +99,9 @@ limitations under the License.
 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">Pisteet</string>
-  <string name="recorded_date">Tallennettu</string>
-  <string name="category">Liikunnan muoto</string>
+  <string name="send_google_recorded">Tallennettu</string>
   <string name="waypoint_category">Merkinnän tyyppi</string>
-  <string name="send_google_track_part_format">(Osa %d)</string>
+  <string name="send_google_track_part_label">(Osa %d)</string>
 
   <!-- Used by the track recording service -->
   <string name="track_record_notification">Tallennetaan reittiä...</string>
@@ -279,11 +278,11 @@ limitations under the License.
   <string name="mytracks_sky">GPS-satelliitit</string>
 
   <!-- My Maps -->
-  <string name="select_map_message">Valitse kartta tililtäsi:</string>
+  <string name="my_maps_list_pick_map">Valitse kartta tililtäsi:</string>
   <string name="create_new_map">Luo uusi kartta...</string>
-  <string name="map_list_title">Lähetä Google My Mapsiin</string>
-  <string name="maps_list_loading">Ladataan karttoja...</string>
-  <string name="maps_list_failed">Karttoja ei voitu ladata!</string>
+  <string name="my_maps_list_title">Lähetä Google My Mapsiin</string>
+  <string name="my_maps_list_loading">Ladataan karttoja...</string>
+  <string name="my_maps_list_error">Karttoja ei voitu ladata!</string>
   <string name="open_map">Valitse tämä kartta</string>
   <string name="edit_map_details">Muokkaa kartan tietoja</string>
   <string name="share_track_url">Jaa reitti</string>
@@ -307,9 +306,9 @@ limitations under the License.
     Käytä Google Earthia tai jotain muuta karttaohjelmistoa kartan katsomiseen.</string>
 
   <!-- Visibility -->
-  <string name="public_map">Julkinen</string>
-  <string name="unlisted_map">Ei listattu</string>
-  <string name="mapslist_no_maps_available">Ei karttoja saatavilla.</string>
+  <string name="my_maps_list_public_label">Julkinen</string>
+  <string name="my_maps_list_unlisted_label">Ei listattu</string>
+  <string name="my_maps_list_no_maps">Ei karttoja saatavilla.</string>
 
   <!-- Statistics View -->
   <!-- Average Moving -->
@@ -415,20 +414,20 @@ limitations under the License.
   <string name="about_privacy">Yksityisyys:</string>
 
   <!-- Send to Google -->
-  <string name="sendtogoogle_title">Lähetä...</string>
-  <string name="sendtogoogle_google_fusiontables">Google Fusion Tables</string>
-  <string name="sendtogoogle_google_mymaps">Google My Maps</string>
-  <string name="sendtogoogle_google_docs">Google Docs</string>
-  <string name="sendtogoogle_send_now">Lähetä</string>
-  <string name="sendtogoogle_create_new_map">Luo uusi kartta</string>
-  <string name="sendtogoogle_pick_existing_map">Valitse kartta</string>
+  <string  name="send_google_title">Lähetä...</string>
+  <string name="send_google_fusion_tables">Google Fusion Tables</string>
+  <string name="send_google_my_maps">Google My Maps</string>
+  <string name="send_google_docs">Google Docs</string>
+  <string name="send_google_send_now">Lähetä</string>
+  <string name="send_google_new_map">Luo uusi kartta</string>
+  <string name="send_google_existing_map">Valitse kartta</string>
   <string name="sendtogoogle_send_stats">Lähetä reitin statistiikka</string>
   <string name="sendtogoogle_send_stats_and_points">Lähetä reitin statistiikka ja pisteet</string>
 
   <!-- Getting the account to upload to. -->
-  <string name="no_account_found_title">Tiliä ei löytynyt</string>
-  <string name="no_account_found">Tiliä johon reitin voisi lähettää ei löytynyt.</string>
-  <string name="choose_account_title">Valitse tili</string>
+  <string name="send_google_no_account">Tiliä ei löytynyt</string>
+  <string name="send_google_no_account_message">Tiliä johon reitin voisi lähettää ei löytynyt.</string>
+  <string name="send_google_choose_account">Valitse tili</string>
 
   <!-- SD card -->
   <string name="io_no_external_storage_found">Ulkoista tallennusmediaa ei löytynyt. Varmista että SD-kortti on kytketty eikä puhelinta ole liitetty tietokoneeseen.</string>

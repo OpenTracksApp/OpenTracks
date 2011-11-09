@@ -103,9 +103,9 @@ limitations under the License.
   <!-- Send to Google -->
 
   <!-- Getting the account to upload to. -->
-  <string name="no_account_found_title">No se ha encontrado la cuenta</string>
-  <string name="no_account_found">No se ha encontrado la cuenta a la que subir los recorridos.</string>
-  <string name="choose_account_title">Elegir cuenta</string>
+  <string name="send_google_no_account">No se ha encontrado la cuenta</string>
+  <string name="send_google_no_account_message">No se ha encontrado la cuenta a la que subir los recorridos.</string>
+  <string name="send_google_choose_account">Elegir cuenta</string>
 
   <!-- SD card -->
   <string name="io_read_failed">No es posible leer del fichero.</string>

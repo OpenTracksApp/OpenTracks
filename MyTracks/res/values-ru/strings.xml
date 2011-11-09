@@ -35,9 +35,9 @@ limitations under the License.
   <!-- Error messages -->
   <string name="error_no_location_manager">На этом устройстве не был обнаружен диспетчер местоположения!</string>
   <string name="gps_not_found">На этом устройстве не был обнаружен поставщик GPS местоположения.</string>
-  <string name="error_sending_to_my_maps">Ошибка при отправке вашего трека в Google \"Мои карты\".</string>
-  <string name="error_sending_to_fusion_tables">Ошибка при отправке вашего трека в Google Fusion Tables.</string>
-  <string name="error_sending_to_docs">Ошибка при отправке вашего трека в Google Документы.</string>
+  <string name="send_google_error_my_maps">Ошибка при отправке вашего трека в Google \"Мои карты\".</string>
+  <string name="send_google_error_fusion_tables">Ошибка при отправке вашего трека в Google Fusion Tables.</string>
+  <string name="send_google_error_docs">Ошибка при отправке вашего трека в Google Документы.</string>
   <string name="error_sending_generic">Пожалуйста, повторите попытку позже.</string>
   <string name="track_record_error">Не удалось начать запись. Попробуйте еще раз.</string>
   <string name="error_unable_to_stop_recording">Не удалось остановить запись. Попробуйте еще раз.</string>
@@ -52,32 +52,32 @@ limitations under the License.
   <string name="gps_wait_for_fix">Ожидание сигнала GPS. Убедитесь в том, что вы находитесь под открытым небом.</string>
   <string name="track_record_success">Записывается новый трек.</string>
   <string name="status_stopped_recording">Запись вашего трека остановлена.</string>
-  <string name="sending_to_my_maps_success_new_map">Новая Google \"Мои карты\" была создана на maps.google.com.</string>
-  <string name="sending_to_fusion_tables_success">Новая таблица Google Fusion была создана на google.com/fusiontables.</string>
-  <string name="sending_to_my_maps_success_existing_map">Твой трек был отправлен на maps.google.com.</string>
-  <string name="sending_to_docs_success_new_doc">Ваш трек был отправлен в новую электронную таблицу на docs.google.com.</string>
-  <string name="sending_to_docs_success_existing_doc">Ваш трек был отправлен в docs.google.com.</string>
-  <string name="sending_to_google_additional_info">Это может занять несколько минут, прежде чем появятся новые треки.</string>
+  <string name="send_google_success_new_map">Новая Google \"Мои карты\" была создана на maps.google.com.</string>
+  <string name="send_google_success_fusion_tables">Новая таблица Google Fusion была создана на google.com/fusiontables.</string>
+  <string name="send_google_success_existing_map">Твой трек был отправлен на maps.google.com.</string>
+  <string name="send_google_success_new_doc">Ваш трек был отправлен в новую электронную таблицу на docs.google.com.</string>
+  <string name="send_google_success_existing_doc">Ваш трек был отправлен в docs.google.com.</string>
+  <string name="send_google_success_footer">Это может занять несколько минут, прежде чем появятся новые треки.</string>
   <string name="gps_need_to_enable">Пожалуйста, нажмите здесь для перехода к разделу настроек Координаты и отметьте пункт \"Спутники GPS\". Для возвращения нажмите кнопку Назад.</string>
   <string name="my_location_approximate_location">Примечание: приблизительное местоположение определено относительно вышек сотовой связи и беспроводных сетей.</string>
   <string name="my_location_no_location">В настоящее время местоположение не может быть определено. Включите больше источников местоположение (см. раздел настроек Координаты) и убедитесь в том, что находитесь под открытым небом. Повторите попытку позднее.</string>
   <string name="status_waypoint_inserted">Маркер путевой точки был вставлен.</string>
   <string name="marker_insert_success">Маркер статистики был вставлен.</string>
-  <string name="sending_to_google_upload_status">Статус загрузки:</string>
+  <string name="send_google_result_title">Статус загрузки:</string>
 
   <!-- Progress dialog -->
-  <string name="progress_title">Пожалуйста, подождите...</string>
+  <string name="generic_progress_title">Пожалуйста, подождите...</string>
   <string name="progress_message">Отправка вашего трека в Google.</string>
-  <string name="progress_message_reading_track">Чтение трека...</string>
-  <string name="progress_message_preparing_track">Подготовка трека...</string>
-  <string name="progress_message_authenticating_fusion_tables">Аутентификация на Google Fusion Tables...</string>
-  <string name="progress_message_authenticating_my_maps">Аутентификация на Google Карты...</string>
-  <string name="progress_message_authenticating_docs">Аутентификация в Google Документы...</string>
-  <string name="progress_message_sending_docs">Отправка трека в Google Документы...</string>
-  <string name="progress_message_sending_my_maps">Отправка трека в Google Карты...</string>
-  <string name="progress_message_creating_map">Создание новой \"Моей карты\" ...</string>
-  <string name="progress_message_sending_fusion_tables">Отправка трека в Fusion Tables...</string>
-  <string name="progress_message_creating_fusion_table">Создание новой Fusion table...</string>
+  <string name="send_google_progress_reading_track">Чтение трека...</string>
+  <string name="send_google_progress_preparing_track">Подготовка трека...</string>
+  <string name="send_google_progress_auth_fusion_tables">Аутентификация на Google Fusion Tables...</string>
+  <string name="send_google_progress_auth_my_maps">Аутентификация на Google Карты...</string>
+  <string name="send_google_progress_auth_docs">Аутентификация в Google Документы...</string>
+  <string name="send_google_progress_sending_docs">Отправка трека в Google Документы...</string>
+  <string name="send_google_progress_sending_my_maps">Отправка трека в Google Карты...</string>
+  <string name="send_google_progress_creating_map">Создание новой \"Моей карты\" ...</string>
+  <string name="send_google_progress_sending_fusion_tables">Отправка трека в Fusion Tables...</string>
+  <string name="send_google_progress_creating_fusion_table">Создание новой Fusion table...</string>
   <string name="progress_message_import">Импорт GPS трека. Это может занять некоторое время.</string>
   <string name="progress_message_export">Запись файла на SD карту. Это может занять некоторое время.</string>
   <string name="progress_message_updating_track">Обновление статистики трека...</string>
@@ -90,7 +90,7 @@ limitations under the License.
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Создано My Tracks на Android.</string>
-  <string name="send_to_google_by_mytracks">Создано &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; на Android.</string>
+  <string name="send_google_by_my_tracks">Создано &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; на Android.</string>
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="my_map_link">Создано &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; на Android.</string>
@@ -98,10 +98,9 @@ limitations under the License.
 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">Точки</string>
-  <string name="recorded_date">Записан</string>
-  <string name="category">Тип деятельности</string>
+  <string name="send_google_recorded">Записан</string>
   <string name="waypoint_category">Тип маркера</string>
-  <string name="send_google_track_part_format">(Часть %d)</string>
+  <string name="send_google_track_part_label">(Часть %d)</string>
 
   <!-- Used by the track recording service -->
   <string name="track_record_notification">Запись трека...</string>
@@ -275,11 +274,11 @@ limitations under the License.
   <string name="mytracks_sky">Спутники GPS</string>
 
   <!-- My Maps -->
-  <string name="select_map_message">Выберите карту из вашей учетной записи:</string>
+  <string name="my_maps_list_pick_map">Выберите карту из вашей учетной записи:</string>
   <string name="create_new_map">Создать новую карту...</string>
-  <string name="map_list_title">Отправить в Google \"Мои карты\"</string>
-  <string name="maps_list_loading">Загрузка карты ...</string>
-  <string name="maps_list_failed">Ваши карты не могут быть загружены в данный момент!</string>
+  <string name="my_maps_list_title">Отправить в Google \"Мои карты\"</string>
+  <string name="my_maps_list_loading">Загрузка карты ...</string>
+  <string name="my_maps_list_error">Ваши карты не могут быть загружены в данный момент!</string>
   <string name="open_map">Выберите эту карту</string>
   <string name="edit_map_details">Править детали карты</string>
   <string name="share_track_url">Поделиться треком</string>
@@ -303,9 +302,9 @@ limitations under the License.
 Просмотреть трек можно с помощью Google Планета Земля или другого программного обоспечения для карт.</string>
 
   <!-- Visibility -->
-  <string name="public_map">Общественные</string>
-  <string name="unlisted_map">Частные</string>
-  <string name="mapslist_no_maps_available">У вас пока еще нет карт.</string>
+  <string name="my_maps_list_public_label">Общественные</string>
+  <string name="my_maps_list_unlisted_label">Частные</string>
+  <string name="my_maps_list_no_maps">У вас пока еще нет карт.</string>
 
   <!-- Statistics View -->
   <!-- Average Moving -->
@@ -411,20 +410,20 @@ limitations under the License.
   <string name="about_privacy">Приватность:</string>
 
   <!-- Send to Google -->
-  <string name="sendtogoogle_title">Отправить...</string>
-  <string name="sendtogoogle_google_fusiontables">Google Fusion Tables</string>
-  <string name="sendtogoogle_google_mymaps">Google \"Мои карты\"</string>
-  <string name="sendtogoogle_google_docs">Google Документы</string>
-  <string name="sendtogoogle_send_now">Отправить</string>
-  <string name="sendtogoogle_create_new_map">Создать новую карту</string>
-  <string name="sendtogoogle_pick_existing_map">Выбрать существующую карту</string>
+  <string  name="send_google_title">Отправить...</string>
+  <string name="send_google_fusion_tables">Google Fusion Tables</string>
+  <string name="send_google_my_maps">Google \"Мои карты\"</string>
+  <string name="send_google_docs">Google Документы</string>
+  <string name="send_google_send_now">Отправить</string>
+  <string name="send_google_new_map">Создать новую карту</string>
+  <string name="send_google_existing_map">Выбрать существующую карту</string>
   <string name="sendtogoogle_send_stats">Отправить статистику трека</string>
   <string name="sendtogoogle_send_stats_and_points">Отправить статистику и точки</string>
 
   <!-- Getting the account to upload to. -->
-  <string name="no_account_found_title">Учетная запись не найдена</string>
-  <string name="no_account_found">Не найдена учетная запись для загрузки треков.</string>
-  <string name="choose_account_title">Выбор учетной записи</string>
+  <string name="send_google_no_account">Учетная запись не найдена</string>
+  <string name="send_google_no_account_message">Не найдена учетная запись для загрузки треков.</string>
+  <string name="send_google_choose_account">Выбор учетной записи</string>
 
   <!-- SD card -->
   <string name="io_no_external_storage_found">Не обнаружено внешнее устройство хранения данных. Убедитесь, что SD карта вставлена, и что ваш телефон не подключен к компьютеру.</string>

@@ -33,8 +33,8 @@ limitations under the License.
   <!-- Error messages -->
   <string name="error_no_location_manager">Nessuna fonte di posizione trovata su questo dispositivo.</string>
   <string name="gps_not_found">Nessuna fonte di posizione GPS trovata su questo dispositivo.</string>
-  <string name="error_sending_to_fusion_tables">Si è verificato un errore nell\'invio del percorso a Google Fusion Tables. Per favore riprova più tardi.</string>
-  <string name="error_sending_to_docs">Si è verificato un errore nell\'invio del percorso a Google Docs. Per favore riporva più tardi.</string>
+  <string name="send_google_error_fusion_tables">Si è verificato un errore nell\'invio del percorso a Google Fusion Tables. Per favore riprova più tardi.</string>
+  <string name="send_google_error_docs">Si è verificato un errore nell\'invio del percorso a Google Docs. Per favore riporva più tardi.</string>
   <string name="track_record_error">Impossibile iniziare la registrazione. Riprova.</string>
   <string name="error_unable_to_stop_recording">Impossibile fermare la registrazione. Riprova.</string>
   <string name="error_import_unable_to_read_file">Impossibile leggere da un file.</string>
@@ -48,10 +48,10 @@ limitations under the License.
   <string name="gps_wait_for_fix">Sto aspettando il fix del GPS. Accertati che il cielo sia visibile.</string>
   <string name="track_record_success">Sto registrando un nuovo percorso.</string>
   <string name="status_stopped_recording">Registrazione del percorso terminata.</string>
-  <!-- <string name="sending_to_fusion_tables_success">Una nuova mappa è stata creata in «Le mie mappe» su maps.google.com.</string> -->
-  <string name="sending_to_my_maps_success_existing_map">Il tuo percorso è stato inviato a maps.google.com.</string>
-  <string name="sending_to_docs_success_new_doc">Il tuo percorso è stato inviato ad un nuovo foglio di calcolo su docs.google.com.</string>
-  <string name="sending_to_docs_success_existing_doc">Il tuo percorso è stato inviato a docs.google.com.</string>
+  <!-- <string name="send_google_success_fusion_tables">Una nuova mappa è stata creata in «Le mie mappe» su maps.google.com.</string> -->
+  <string name="send_google_success_existing_map">Il tuo percorso è stato inviato a maps.google.com.</string>
+  <string name="send_google_success_new_doc">Il tuo percorso è stato inviato ad un nuovo foglio di calcolo su docs.google.com.</string>
+  <string name="send_google_success_existing_doc">Il tuo percorso è stato inviato a docs.google.com.</string>
   <string name="gps_need_to_enable">Premi qui per andare a «Impostazioni di posizione e protezione» e attiva «Utilizza satelliti GPS». Poi premi il tasto di ritorno per tornare qui.</string>
   <string name="my_location_approximate_location">Nota: la posizione indicata è un\'approssimazione determinata in base alle antenne cellulari e reti WIFI vicine.</string>
   <string name="my_location_no_location">La posizione non può essere determinata. Attiva più fonti di posizione (vedi «Impostazioni di posizione e protezione») e eccertati che il cielo sia visibile. Riprova più tardi.</string>
@@ -59,15 +59,15 @@ limitations under the License.
   <string name="marker_insert_success">Inserito un segnaposto con statistiche.</string>
 
   <!-- Progress dialog -->
-  <string name="progress_title">Attendi per favore...</string>
+  <string name="generic_progress_title">Attendi per favore...</string>
   <string name="progress_message">Invio del percorso a Google in corso.</string>
-  <string name="progress_message_reading_track">Lettura in corso...</string>
-  <string name="progress_message_preparing_track">Elaborazione del percorso in corso...</string>
-  <!-- <string name="progress_message_authenticating_fusion_tables">Autenticazione a Google Maps in corso...</string> -->
-  <string name="progress_message_authenticating_docs">Autenticazione a Google Docs in corso...</string>
-  <string name="progress_message_sending_docs">Invio del percorso a Google Docs in corso...</string>
-  <!-- <string name="progress_message_sending_fusion_tables">Invio del percorso a Google Maps in corso...</string> -->
-  <!-- <string name="progress_message_creating_fusion_table">Creazione di una nuova mappa in «Le mie mappe» in corso...</string> -->
+  <string name="send_google_progress_reading_track">Lettura in corso...</string>
+  <string name="send_google_progress_preparing_track">Elaborazione del percorso in corso...</string>
+  <!-- <string name="send_google_progress_auth_fusion_tables">Autenticazione a Google Maps in corso...</string> -->
+  <string name="send_google_progress_auth_docs">Autenticazione a Google Docs in corso...</string>
+  <string name="send_google_progress_sending_docs">Invio del percorso a Google Docs in corso...</string>
+  <!-- <string name="send_google_progress_sending_fusion_tables">Invio del percorso a Google Maps in corso...</string> -->
+  <!-- <string name="send_google_progress_creating_fusion_table">Creazione di una nuova mappa in «Le mie mappe» in corso...</string> -->
   <string name="progress_message_import">Importazione del percorso GPS in corso. Attendere prego...</string>
   <string name="progress_message_export">Salvataggio del file sulla scheda SD in corso. Attendere prego...</string>
   <string name="progress_message_updating_track">Aggiornamento delle statistiche del percorso in corso...</string>
@@ -80,14 +80,13 @@ limitations under the License.
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="new_map_description">Creato da My Tracks su Android.</string>
-  <string name="send_to_google_by_mytracks">Creato da &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; su Android.</string>
+  <string name="send_google_by_my_tracks">Creato da &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; su Android.</string>
 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">Punti</string>
-  <string name="recorded_date">Registrato</string>
-  <string name="category">Tipo di attività</string>
+  <string name="send_google_recorded">Registrato</string>
   <string name="waypoint_category">Tipo di segnaposto</string>
-  <string name="send_google_track_part_format">(Parte %d)</string>
+  <string name="send_google_track_part_label">(Parte %d)</string>
 
   <!-- Used by the track recording service -->
   <string name="track_record_notification">Registrazione del percorso in corso...</string>
@@ -212,9 +211,9 @@ limitations under the License.
   <string name="share_track_url">Condividi il percorso con amici</string>
 
   <!-- Visibility -->
-  <string name="public_map">Pubblica</string>
-  <string name="unlisted_map">Privata</string>
-  <string name="mapslist_no_maps_available">Non hai ancora alcuna mappa.</string>
+  <string name="my_maps_list_public_label">Pubblica</string>
+  <string name="my_maps_list_unlisted_label">Privata</string>
+  <string name="my_maps_list_no_maps">Non hai ancora alcuna mappa.</string>
 
   <!-- Statistics View -->
   <!-- Average Moving -->
@@ -308,17 +307,17 @@ limitations under the License.
   <string name="about_support">Supporto:</string>
 
   <!-- Send to Google -->
-  <string name="sendtogoogle_title">Invia a...</string>
-  <!-- <string name="sendtogoogle_google_fusiontables">«Le mie mappe» di Google</string> -->
-  <string name="sendtogoogle_google_docs">Google Docs</string>
-  <string name="sendtogoogle_send_now">Invia adesso</string>
+  <string  name="send_google_title">Invia a...</string>
+  <!-- <string name="send_google_fusion_tables">«Le mie mappe» di Google</string> -->
+  <string name="send_google_docs">Google Docs</string>
+  <string name="send_google_send_now">Invia adesso</string>
   <string name="sendtogoogle_send_stats">Invia statistiche del percorso</string>
   <string name="sendtogoogle_send_stats_and_points">Invia statistiche e segnaposti</string>
 
   <!-- Getting the account to upload to. -->
-  <string name="no_account_found_title">Account non trovato</string>
-  <string name="no_account_found">Non ho trovato un account a cui inviare i percorsi.</string>
-  <string name="choose_account_title">Scegli un account</string>
+  <string name="send_google_no_account">Account non trovato</string>
+  <string name="send_google_no_account_message">Non ho trovato un account a cui inviare i percorsi.</string>
+  <string name="send_google_choose_account">Scegli un account</string>
 
   <!-- SD card -->
   <string name="io_no_external_storage_found">Nessuna memoria esterna trovata. Assicurati che la scheda SD sia inserita e che il telefono no sia montato su un computer.</string>

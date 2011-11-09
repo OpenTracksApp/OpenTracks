@@ -99,10 +99,10 @@ public class MyMapsListAdapter implements ListAdapter {
       (TextView) convertView.findViewById(R.id.maplistpublic);
     if (publicList.get(position)) {
       publicUnlisted.setTextColor(Color.RED);
-      publicUnlisted.setText(R.string.public_map);
+      publicUnlisted.setText(R.string.my_maps_list_public_label);
     } else {
       publicUnlisted.setTextColor(Color.GREEN);
-      publicUnlisted.setText(R.string.unlisted_map);
+      publicUnlisted.setText(R.string.my_maps_list_unlisted_label);
     }
 
     return convertView;

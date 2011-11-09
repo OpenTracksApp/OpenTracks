@@ -34,8 +34,8 @@ limitations under the License.
   <!-- Error messages -->
   <string name="error_no_location_manager">Ingen platshanterare hittades på denna enhet!</string>
   <string name="gps_not_found">Ingen GPS-positioneringstjänst hittades på denna enhet.</string>
-  <string name="error_sending_to_fusion_tables">Det uppstod ett fel i sändningen av ditt spår till Google Fusion Tables. Försök igen senare.</string>
-  <string name="error_sending_to_docs">Det uppstod ett fel i sändningen av ditt spår till Google Dokument. Försök igen senare.</string>
+  <string name="send_google_error_fusion_tables">Det uppstod ett fel i sändningen av ditt spår till Google Fusion Tables. Försök igen senare.</string>
+  <string name="send_google_error_docs">Det uppstod ett fel i sändningen av ditt spår till Google Dokument. Försök igen senare.</string>
   <string name="track_record_error">Kan inte starta inspelningen. Försök igen.</string>
   <string name="error_unable_to_stop_recording">Kan inte stoppa inspelningen. Försök igen.</string>
   <string name="error_import_unable_to_read_file">Kan inte läsa från fil.</string>
@@ -49,10 +49,10 @@ limitations under the License.
   <string name="gps_wait_for_fix">Väntar på bättre GPS-position. Se till att himlen är synlig.</string>
   <string name="track_record_success">Spelar nu in ett nytt spår.</string>
   <string name="status_stopped_recording">Stoppade inspelning av ditt spår.</string>
-  <!-- <string name="sending_to_fusion_tables_success">En ny Google Mina Kartor har skapats på maps.google.com.</string> -->
-  <string name="sending_to_my_maps_success_existing_map">Ditt spår har skickats till maps.google.com.</string>
-  <string name="sending_to_docs_success_new_doc">Ditt spår har skickats till ett nytt kalkylblad på docs.google.com.</string>
-  <string name="sending_to_docs_success_existing_doc">Ditt spår har skickats till docs.google.com.</string>
+  <!-- <string name="send_google_success_fusion_tables">En ny Google Mina Kartor har skapats på maps.google.com.</string> -->
+  <string name="send_google_success_existing_map">Ditt spår har skickats till maps.google.com.</string>
+  <string name="send_google_success_new_doc">Ditt spår har skickats till ett nytt kalkylblad på docs.google.com.</string>
+  <string name="send_google_success_existing_doc">Ditt spår har skickats till docs.google.com.</string>
   <string name="gps_need_to_enable">Klicka här för att gå till Säkerhet och Platsinställningar och kryssa i \'aktivera gps-satteliter\'. Tryck på tillbakaknappen för att återgå.</string>
   <string name="my_location_approximate_location">OBS: En ungefärlig position som avgörs från mobilmaster och WIFI-nät visas.</string>
   <string name="my_location_no_location">En position kan för närvarande inte fastställas. Aktivera mer platskällor (se Säkerhet och Platsinställningar) och se till att himlen är synlig. Försök igen senare.</string>
@@ -60,15 +60,15 @@ limitations under the License.
   <string name="marker_insert_success">En statistikmarkör har lagts in.</string>
 
   <!-- Progress dialog -->
-  <string name="progress_title">Var god vänta...</string>
+  <string name="generic_progress_title">Var god vänta...</string>
   <string name="progress_message">Skickar ditt spår till Google.</string>
-  <string name="progress_message_reading_track">Läser spår...</string>
-  <string name="progress_message_preparing_track">Förbereder spår...</string>
-  <!-- <string name="progress_message_authenticating_fusion_tables">Autentiserar till Google Kartor...</string> -->
-  <string name="progress_message_authenticating_docs">Autentiserar till Google Dokument...</string>
-  <string name="progress_message_sending_docs">Skickar spår till Google Dokument...</string>
-  <!-- <string name="progress_message_sending_fusion_tables">Skickar spår till Google Kartor...</string> -->
-  <!-- <string name="progress_message_creating_fusion_table">Skapar en ny Min Karta...</string> -->
+  <string name="send_google_progress_reading_track">Läser spår...</string>
+  <string name="send_google_progress_preparing_track">Förbereder spår...</string>
+  <!-- <string name="send_google_progress_auth_fusion_tables">Autentiserar till Google Kartor...</string> -->
+  <string name="send_google_progress_auth_docs">Autentiserar till Google Dokument...</string>
+  <string name="send_google_progress_sending_docs">Skickar spår till Google Dokument...</string>
+  <!-- <string name="send_google_progress_sending_fusion_tables">Skickar spår till Google Kartor...</string> -->
+  <!-- <string name="send_google_progress_creating_fusion_table">Skapar en ny Min Karta...</string> -->
   <string name="progress_message_import">Importerar ett GPS-spår. Detta kan ta en stund.</string>
   <string name="progress_message_export">Skriver till SD-kortet. Detta kan ta en stund.</string>
   <string name="progress_message_updating_track">Uppdaterar spårstatistik...</string>
@@ -81,14 +81,13 @@ limitations under the License.
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="new_map_description">Skapad av My Tracks på Android.</string>
-  <string name="send_to_google_by_mytracks">Skapad av &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; på Android.</string>
+  <string name="send_google_by_my_tracks">Skapad av &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; på Android.</string>
 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">Punkter</string>
-  <string name="recorded_date">Inspelad</string>
-  <string name="category">Aktivitetstyp</string>
+  <string name="send_google_recorded">Inspelad</string>
   <string name="waypoint_category">Markörtyp</string>
-  <string name="send_google_track_part_format">(Del %d)</string>
+  <string name="send_google_track_part_label">(Del %d)</string>
 
   <!-- Used by the track recording service -->
   <string name="track_record_notification">Spelar in ditt spår...</string>
@@ -215,9 +214,9 @@ limitations under the License.
   <string name="share_track_url">Dela spår med vänner</string>
 
   <!-- Visibility -->
-  <string name="public_map">Publik</string>
-  <string name="unlisted_map">Olistat</string>
-  <string name="mapslist_no_maps_available">Du har inga kartor än.</string>
+  <string name="my_maps_list_public_label">Publik</string>
+  <string name="my_maps_list_unlisted_label">Olistat</string>
+  <string name="my_maps_list_no_maps">Du har inga kartor än.</string>
 
   <!-- Statistics View -->
   <!-- Average Moving -->
@@ -311,17 +310,17 @@ limitations under the License.
   <string name="about_support">Support:</string>
 
   <!-- Send to Google -->
-  <string name="sendtogoogle_title">Skicka till...</string>
-  <!--<string name="sendtogoogle_google_fusiontables">Google Mina Kartor</string>-->
-  <string name="sendtogoogle_google_docs">Google Dokument</string>
-  <string name="sendtogoogle_send_now">Skicka nu</string>
+  <string  name="send_google_title">Skicka till...</string>
+  <!--<string name="send_google_fusion_tables">Google Mina Kartor</string>-->
+  <string name="send_google_docs">Google Dokument</string>
+  <string name="send_google_send_now">Skicka nu</string>
   <string name="sendtogoogle_send_stats">Skicka spårstatistik</string>
   <string name="sendtogoogle_send_stats_and_points">Skicka statistik och punkter</string>
 
   <!-- Getting the account to upload to. -->
-  <string name="no_account_found_title">Inget konto hittades</string>
-  <string name="no_account_found">Inget konto hittades att ladda upp spåret till.</string>
-  <string name="choose_account_title">Välj konto</string>
+  <string name="send_google_no_account">Inget konto hittades</string>
+  <string name="send_google_no_account_message">Inget konto hittades att ladda upp spåret till.</string>
+  <string name="send_google_choose_account">Välj konto</string>
 
   <!-- SD card -->
   <string name="io_no_external_storage_found">Ingen extern lagring hittades. Se till att ett SD-kort sitter i och att telefonen inte är monterad till en dator.</string>

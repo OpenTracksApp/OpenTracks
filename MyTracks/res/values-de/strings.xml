@@ -35,13 +35,13 @@ limitations under the License.
   <!-- Error messages -->
   <string name="error_no_location_manager">Es wurde kein Dienst zur Positionsermittlung auf diesem Gerät gefunden.</string>
   <string name="gps_not_found">Es wurde kein GPS-Empfänger auf diesem Gerät gefunden.</string>
-  <string name="error_sending_to_fusion_tables">Beim Senden des Tracks an Google Fusion Tables ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.</string>
-  <string name="error_sending_to_docs">Beim Senden des Tracks an Google Text &amp; Tabellen ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.</string>
+  <string name="send_google_error_fusion_tables">Beim Senden des Tracks an Google Fusion Tables ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.</string>
+  <string name="send_google_error_docs">Beim Senden des Tracks an Google Text &amp; Tabellen ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.</string>
   <string name="track_record_error">Start der Aufzeichnung fehlgeschlagen. Bitte versuche es noch einmal.</string>
   <string name="error_unable_to_stop_recording">Anhalten unmöglich. Bitte versuche es noch einmal.</string>
   <string name="error_import_unable_to_read_file">Konnte Datei nicht lesen.</string>
   <string name="error_import_invalid_gpx_format">Datei ist nicht im GPX-Format.</string>
-  <string name="error_sending_to_google">Ein Fehler ist aufgetreten. Bitte versuche es noch einmal.</string>
+  <string name="send_google_error">Ein Fehler ist aufgetreten. Bitte versuche es noch einmal.</string>
   <string name="error_export_track_does_not_exist">Track existiert nicht.</string>
   <string name="error_import_out_of_memory">Die Datei ist zu groß (maximal 500 KB). Operation abgebrochen.</string>
   <string name="marker_insert_error">Der Wegpunkt kann nicht einfügt werden. Keine Positionsbestimmung möglich.</string>
@@ -50,10 +50,10 @@ limitations under the License.
   <string name="gps_wait_for_fix">Warte auf ein besseres GPS-Signal. Bitte stelle sicher, dass der Himmel sichtbar ist.</string>
   <string name="track_record_success">Ein neuer Track wird aufgezeichnet.</string>
   <string name="status_stopped_recording">Die Aufzeichnung wurde angehalten.</string>
-  <string name="sending_to_fusion_tables_success">Eine neue Tabelle wurde auf google.com/fusiontables erstellt.</string>
-  <string name="sending_to_my_maps_success_existing_map">Dein Track wurde auf maps.google.com gespeichert.</string>
-  <string name="sending_to_docs_success_new_doc">Dein Track wurde in einer neuen Tabelle bei docs.google.com gespeichert.</string>
-  <string name="sending_to_docs_success_existing_doc">Dein Track wurde an docs.google.com gesendet.</string>
+  <string name="send_google_success_fusion_tables">Eine neue Tabelle wurde auf google.com/fusiontables erstellt.</string>
+  <string name="send_google_success_existing_map">Dein Track wurde auf maps.google.com gespeichert.</string>
+  <string name="send_google_success_new_doc">Dein Track wurde in einer neuen Tabelle bei docs.google.com gespeichert.</string>
+  <string name="send_google_success_existing_doc">Dein Track wurde an docs.google.com gesendet.</string>
   <string name="gps_need_to_enable">Hier berühren, um zu den Sicherheits- und Positionseinstellungen zu gelangen. Aktiviere \'GPS-Satelliten\'. Drücke dann den Zurück-Knopf, um hierher zurückzukehren.</string>
   <string name="my_location_approximate_location">Anmerkung: Eine ungefähre Position wird angezeigt, bestimmt mittels Mobilfunkstationen und WiFi-Netzwerken.</string>
   <string name="my_location_no_location">Die Position kann derzeit nicht bestimmt werden. Aktiviere mehr Positionsquellen (siehe Sicherheits- und Positionseinstellungen) und stelle sicher, dass der Himmel sichtbar ist.</string>
@@ -61,15 +61,15 @@ limitations under the License.
   <string name="marker_insert_success">Ein Statistikwegpunkt wurde eingefügt.</string>
 
   <!-- Progress dialog -->
-  <string name="progress_title">Bitte warten…</string>
+  <string name="generic_progress_title">Bitte warten…</string>
   <string name="progress_message">Dein Track wird an Google gesendet...</string>
-  <string name="progress_message_reading_track">Lese Track...</string>
-  <string name="progress_message_preparing_track">Bereite Track vor...</string>
-  <string name="progress_message_authenticating_fusion_tables">Anmeldung bei Google Fusion Tables...</string>
-  <string name="progress_message_authenticating_docs">Anmeldung bei Google Text &amp; Tabellen...</string>
-  <string name="progress_message_sending_docs">Track wird an Google Text &amp; Tabellen gesendet...</string>
-  <string name="progress_message_sending_fusion_tables">Track wird an Google Fusion Tables gesendet...</string>
-  <string name="progress_message_creating_fusion_table">Neue \'Fusion Tabelle\' wird erstellt...</string>
+  <string name="send_google_progress_reading_track">Lese Track...</string>
+  <string name="send_google_progress_preparing_track">Bereite Track vor...</string>
+  <string name="send_google_progress_auth_fusion_tables">Anmeldung bei Google Fusion Tables...</string>
+  <string name="send_google_progress_auth_docs">Anmeldung bei Google Text &amp; Tabellen...</string>
+  <string name="send_google_progress_sending_docs">Track wird an Google Text &amp; Tabellen gesendet...</string>
+  <string name="send_google_progress_sending_fusion_tables">Track wird an Google Fusion Tables gesendet...</string>
+  <string name="send_google_progress_creating_fusion_table">Neue \'Fusion Tabelle\' wird erstellt...</string>
   <string name="progress_message_import">Importiere GPS-Track. Das kann ein wenig dauern.</string>
   <string name="progress_message_export">Schreibe Datei auf SD-Karte. Das kann ein wenig dauern.</string>
   <string name="progress_message_updating_track">Aktualisiere Trackstatistik...</string>
@@ -82,14 +82,13 @@ limitations under the License.
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Erstellt von My Tracks für Android.</string>
-  <string name="send_to_google_by_mytracks">Erstellt von &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; für Android.</string>
+  <string name="send_google_by_my_tracks">Erstellt von &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; für Android.</string>
 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">Punkte</string>
-  <string name="recorded_date">Aufgezeichnet am</string>
-  <string name="category">Aktivität</string>
+  <string name="send_google_recorded">Aufgezeichnet am</string>
   <string name="waypoint_category">Art des Wegpunktes</string>
-  <string name="send_google_track_part_format">(Teil %d)</string>
+  <string name="send_google_track_part_label">(Teil %d)</string>
 
   <!-- Used by the track recording service -->
   <string name="track_record_notification">Dein Track wird aufgezeichnet…</string>
@@ -257,9 +256,9 @@ limitations under the License.
   <string name="share_track_url">Track mit Freunden teilen</string>
 
   <!-- Visibility -->
-  <string name="public_map">Öffentlich</string>
-  <string name="unlisted_map">Nicht in Suchergebnissen enthalten.</string>
-  <string name="mapslist_no_maps_available">Du hast noch keine Karten.</string>
+  <string name="my_maps_list_public_label">Öffentlich</string>
+  <string name="my_maps_list_unlisted_label">Nicht in Suchergebnissen enthalten.</string>
+  <string name="my_maps_list_no_maps">Du hast noch keine Karten.</string>
 
   <!-- Statistics View -->
   <!-- Average Moving -->
@@ -366,17 +365,17 @@ limitations under the License.
   <string name="about_privacy">Datenschutz:</string>
 
   <!-- Send to Google -->
-  <string name="sendtogoogle_title">Senden an…</string>
-  <!--string name="sendtogoogle_google_fusiontables">Google Fusion Tables</string-->
-  <string name="sendtogoogle_google_docs">Google Text &amp; Tabellen</string>
-  <string name="sendtogoogle_send_now">Jetzt senden</string>
+  <string  name="send_google_title">Senden an…</string>
+  <!--string name="send_google_fusion_tables">Google Fusion Tables</string-->
+  <string name="send_google_docs">Google Text &amp; Tabellen</string>
+  <string name="send_google_send_now">Jetzt senden</string>
   <string name="sendtogoogle_send_stats">Trackstatistik senden</string>
   <string name="sendtogoogle_send_stats_and_points">Statistik und Punkte senden</string>
 
   <!-- Getting the account to upload to. -->
-  <string name="no_account_found_title">Kein Konto vorhanden</string>
-  <string name="no_account_found">Kein Konto gefunden, um Tracks zu versenden.</string>
-  <string name="choose_account_title">Wähle ein Konto</string>
+  <string name="send_google_no_account">Kein Konto vorhanden</string>
+  <string name="send_google_no_account_message">Kein Konto gefunden, um Tracks zu versenden.</string>
+  <string name="send_google_choose_account">Wähle ein Konto</string>
 
   <!-- SD card -->
   <string name="io_no_external_storage_found">Keine externes Speichermedium verfügbar. Stelle sicher, dass eine SD-Karte vorhanden ist und nicht bereits von einem Computer darauf zugegriffen wird.</string>

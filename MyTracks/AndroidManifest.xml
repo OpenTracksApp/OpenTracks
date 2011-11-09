@@ -56,7 +56,7 @@ limitations under the License.
     </activity>
 
     <activity android:name="com.google.android.apps.mytracks.MyMapsList"
-              android:label="@string/map_list_title"
+              android:label="@string/my_maps_list_title"
               android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|fontScale"
               android:exported="false" />
 

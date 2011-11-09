@@ -35,15 +35,15 @@ limitations under the License.
   <!-- Error messages -->
   <string name="error_no_location_manager">Ningún administrador de ubicación fue hallado en este dispositivo! </string>
   <string name="gps_not_found">Ningún proveedor de ubicación GPS fue hallado en este dispositivo.</string>
-  <string name="error_sending_to_my_maps">Se produjo un error al enviar su recorrido a Google Mis Sitios.</string>
-  <string name="error_sending_to_fusion_tables">Se produjo un error al enviar su recorrido a Google Fusion Tables.</string>
-  <string name="error_sending_to_docs">Se produjo un error al enviar su recorrido a Google Docs.</string>
+  <string name="send_google_error_my_maps">Se produjo un error al enviar su recorrido a Google Mis Sitios.</string>
+  <string name="send_google_error_fusion_tables">Se produjo un error al enviar su recorrido a Google Fusion Tables.</string>
+  <string name="send_google_error_docs">Se produjo un error al enviar su recorrido a Google Docs.</string>
   <string name="error_sending_generic">Por favor, inténtelo de nuevo mas tarde.</string>
   <string name="track_record_error">No se puede iniciar la grabación. Inténtelo de nuevo. </string>
   <string name="error_unable_to_stop_recording">No se puede detener la grabación. Inténtelo de nuevo.</string>
   <string name="error_import_unable_to_read_file">No pude leer del archivo.</string>
   <string name="error_import_invalid_gpx_format">El archivo no tiene un format GPX válido.</string>
-  <string name="error_sending_to_google">A ocurrido un error. Por favor, inténtelo de nuevo.</string>
+  <string name="send_google_error">A ocurrido un error. Por favor, inténtelo de nuevo.</string>
   <string name="error_export_track_does_not_exist">El recorrido no existe.</string>
   <string name="error_export_operation_canceled">La operación fue cancelada.</string>
   <string name="error_import_out_of_memory">El archivo es demasiado grande (tiene que ser menor a 500 KB). Abortando.</string>
@@ -53,32 +53,32 @@ limitations under the License.
   <string name="gps_wait_for_fix">Esperando una ubicación mas exacta del GPS. Asegúrese que el cielo sea visible.</string>
   <string name="track_record_success">Grabando un nuevo recorrido.</string>
   <string name="status_stopped_recording">Grabación interrumpida.</string>
-  <string name="sending_to_my_maps_success_new_map">Un nuevo sitio ha sido añadido en maps.google.com.</string>
-  <string name="sending_to_fusion_tables_success">Una nueva tabla de Google Fusion ha sido creada en google.com/fusiontables.</string>
-  <string name="sending_to_my_maps_success_existing_map">Su recorrido ha sido enviado a maps.google.com.</string>
-  <string name="sending_to_docs_success_new_doc">Su recorrido ha sido enviado a una nueva hoja de cálculo de docs.google.com.</string>
-  <string name="sending_to_docs_success_existing_doc">Su recorrido ha sido enviado a docs.google.com.</string>
-  <string name="sending_to_google_additional_info">Es posible que pasen unos minutos hasta que los nuevos recorridos aparezcan.</string>
+  <string name="send_google_success_new_map">Un nuevo sitio ha sido añadido en maps.google.com.</string>
+  <string name="send_google_success_fusion_tables">Una nueva tabla de Google Fusion ha sido creada en google.com/fusiontables.</string>
+  <string name="send_google_success_existing_map">Su recorrido ha sido enviado a maps.google.com.</string>
+  <string name="send_google_success_new_doc">Su recorrido ha sido enviado a una nueva hoja de cálculo de docs.google.com.</string>
+  <string name="send_google_success_existing_doc">Su recorrido ha sido enviado a docs.google.com.</string>
+  <string name="send_google_success_footer">Es posible que pasen unos minutos hasta que los nuevos recorridos aparezcan.</string>
   <string name="gps_need_to_enable">Por favor, presione aquí para ir al menú de Seguridad y Ubicación, y asegúrese que el GPS esté habilitado. Presione el botón "atrás" para regresar.</string>
   <string name="my_location_approximate_location">Nota: Una ubicación aproximada es determinada a partir de torres de telefonía celular y redes WIFI.</string>
   <string name="my_location_no_location">No puede ser determinada la ubicación actual. Habilite más fuentes de datos (vea las configuraciones de Seguridad y Ubicación) y asegúrese que el cielo sea visible. Inténtelo mas tarde.</string>
   <string name="status_waypoint_inserted">Un marcador de recorrido fue insertado.</string>
   <string name="marker_insert_success">Un marcador de estadísticas fue insertado.</string>
-  <string name="sending_to_google_upload_status">Estado del envío:</string>
+  <string name="send_google_result_title">Estado del envío:</string>
   
   <!-- Progress dialog -->
-  <string name="progress_title">Por favor espere...</string>
+  <string name="generic_progress_title">Por favor espere...</string>
   <string name="progress_message">Enviando su recorrido a Google.</string>
-  <string name="progress_message_reading_track">Leyendo recorrido...</string>
-  <string name="progress_message_preparing_track">Preparando recorrido...</string>
-  <string name="progress_message_authenticating_fusion_tables">Autenticando con Google Fusion Tables...</string>
-  <string name="progress_message_authenticating_my_maps">Autenticando con Google Maps...</string>
-  <string name="progress_message_authenticating_docs">Autenticando con Google Docs...</string>
-  <string name="progress_message_sending_docs">Enviando recorrido a Google Docs...</string>
-  <string name="progress_message_sending_my_maps">Enviando recorrido a Google Maps...</string>
-  <string name="progress_message_creating_map">Creando nuevo Sitio...</string>
-  <string name="progress_message_sending_fusion_tables">Enviando recorrido a Google Fusion Tables...</string>
-  <string name="progress_message_creating_fusion_table">Creando nuevo mapa Fusion Tables...</string>
+  <string name="send_google_progress_reading_track">Leyendo recorrido...</string>
+  <string name="send_google_progress_preparing_track">Preparando recorrido...</string>
+  <string name="send_google_progress_auth_fusion_tables">Autenticando con Google Fusion Tables...</string>
+  <string name="send_google_progress_auth_my_maps">Autenticando con Google Maps...</string>
+  <string name="send_google_progress_auth_docs">Autenticando con Google Docs...</string>
+  <string name="send_google_progress_sending_docs">Enviando recorrido a Google Docs...</string>
+  <string name="send_google_progress_sending_my_maps">Enviando recorrido a Google Maps...</string>
+  <string name="send_google_progress_creating_map">Creando nuevo Sitio...</string>
+  <string name="send_google_progress_sending_fusion_tables">Enviando recorrido a Google Fusion Tables...</string>
+  <string name="send_google_progress_creating_fusion_table">Creando nuevo mapa Fusion Tables...</string>
   <string name="progress_message_import">Importando un recorrido GPS. Esto puede tardar.</string>
   <string name="progress_message_export">Escribiendo archivo a tarjeta SD. Esto puede tardar.</string>
   <string name="progress_message_updating_track">Actualizando estadísticas del recorrido...</string>
@@ -92,7 +92,7 @@ limitations under the License.
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Creado por My Tracks para Android.</string>
-  <string name="send_to_google_by_mytracks">Creado por &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; en Android.</string>
+  <string name="send_google_by_my_tracks">Creado por &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; en Android.</string>
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="my_map_link">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; en Android.</string>
@@ -100,10 +100,9 @@ limitations under the License.
   
   <!-- Formatting of track and marker descriptions -->
   <string name="points">Puntos</string>
-  <string name="recorded_date">Grabado</string>
-  <string name="category">Tipo de actividad</string>
+  <string name="send_google_recorded">Grabado</string>
   <string name="waypoint_category">Tipo de señal</string>
-  <string name="send_google_track_part_format">"(Parte %d)"</string>
+  <string name="send_google_track_part_label">"(Parte %d)"</string>
 
   <!-- Used by the track recording service -->
   <string name="track_record_notification">Grabando su recorrido...</string>
@@ -298,11 +297,11 @@ limitations under the License.
   <string name="mytracks_sky">Satélites GPS</string>
 
   <!-- My Maps -->
-  <string name="select_map_message">Seleccione un mapa de su cuenta:</string>
+  <string name="my_maps_list_pick_map">Seleccione un mapa de su cuenta:</string>
   <string name="create_new_map">Crear un nuevo mapa...</string>
-  <string name="map_list_title">Enviar a Google Mis Sitios</string>
-  <string name="maps_list_loading">Cargando mapas...</string>
-  <string name="maps_list_failed">¡No se pudieron cargar sus mapas en este momento!</string>
+  <string name="my_maps_list_title">Enviar a Google Mis Sitios</string>
+  <string name="my_maps_list_loading">Cargando mapas...</string>
+  <string name="my_maps_list_error">¡No se pudieron cargar sus mapas en este momento!</string>
   <string name="open_map">Seleccionar este mapa</string>
   <string name="edit_map_details">Editar detalles del mapa</string>
   <string name="share_track_url">Compartir recorrido</string>
@@ -326,9 +325,9 @@ limitations under the License.
     Para ver este recorrido usa Google Earth o algún otro software de mapeo.</string>
 
   <!-- Visibility -->
-  <string name="public_map">Público</string>
-  <string name="unlisted_map">No listado</string>
-  <string name="mapslist_no_maps_available">Aún no tienes ningún mapa.</string>
+  <string name="my_maps_list_public_label">Público</string>
+  <string name="my_maps_list_unlisted_label">No listado</string>
+  <string name="my_maps_list_no_maps">Aún no tienes ningún mapa.</string>
 
   <!-- Statistics View -->
   <!-- Average Moving -->
@@ -420,19 +419,19 @@ limitations under the License.
   <string name="about_privacy">Privacidad:</string>
   
   <!-- Send to Google -->
-  <string name="sendtogoogle_title">Enviar a...</string>
-  <string name="sendtogoogle_google_fusiontables">Tablas Google Fusion</string>
-  <string name="sendtogoogle_google_mymaps">Mis Sitios Google</string>
-  <string name="sendtogoogle_send_now">Enviar ahora</string>
-  <string name="sendtogoogle_create_new_map">Crear nuevo mapa</string>
-  <string name="sendtogoogle_pick_existing_map">Elegir un mapa existente</string>
+  <string  name="send_google_title">Enviar a...</string>
+  <string name="send_google_fusion_tables">Tablas Google Fusion</string>
+  <string name="send_google_my_maps">Mis Sitios Google</string>
+  <string name="send_google_send_now">Enviar ahora</string>
+  <string name="send_google_new_map">Crear nuevo mapa</string>
+  <string name="send_google_existing_map">Elegir un mapa existente</string>
   <string name="sendtogoogle_send_stats">Enviar estadísticas de recorrido</string>
   <string name="sendtogoogle_send_stats_and_points">Enviar estadísticas y puntos</string>
 
   <!-- Getting the account to upload to. -->
-  <string name="no_account_found_title">Cuenta no encontrada</string>
-  <string name="no_account_found">No se encontro la cuenta a la que subir las rutas.</string>
-  <string name="choose_account_title">Elija una cuenta</string>
+  <string name="send_google_no_account">Cuenta no encontrada</string>
+  <string name="send_google_no_account_message">No se encontro la cuenta a la que subir las rutas.</string>
+  <string name="send_google_choose_account">Elija una cuenta</string>
   
   <!-- SD card -->
   <string name="io_no_external_storage_found">Ningún almacenamiento externo fue encontrado. Asegúrese que la tarjeta SD se encuentre insertada y que su teléfono no este conectado a una computadora.</string>

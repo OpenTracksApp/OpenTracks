@@ -35,9 +35,9 @@ limitations under the License.
   <!-- Error messages -->
   <string name="error_no_location_manager">この端末でロケーションマネージャを発見できませんでした．</string>
   <string name="gps_not_found">この端末でGPSロケーションプロバイダを発見できました．</string>
-  <string name="error_sending_to_my_maps">Googleマイマップへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
-  <string name="error_sending_to_fusion_tables">Google Fusion Tablesへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
-  <string name="error_sending_to_docs">Google Docsへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
+  <string name="send_google_error_my_maps">Googleマイマップへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
+  <string name="send_google_error_fusion_tables">Google Fusion Tablesへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
+  <string name="send_google_error_docs">Google Docsへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
   <string name="track_record_error">記録作成開始できません．もう一度試して下さい．</string>
   <string name="error_unable_to_stop_recording">記録停止できません．もう一度試して下さい．</string>
   <string name="error_import_unable_to_read_file">ファイルからの読み込みができません．</string>
@@ -51,12 +51,12 @@ limitations under the License.
   <string name="gps_wait_for_fix">GPS位置精度がよくなるまで待機しています．空が見えるところにいて下さい．</string>
   <string name="track_record_success">新しいトラックを記録中です．</string>
   <string name="status_stopped_recording">トラック記録を停止しました．</string>
-  <string name="sending_to_my_maps_success_new_map">新しいマイマップをmap.google.comに作成しました．</string>
-  <string name="sending_to_fusion_tables_success">新しいGoogle Fusion Tableをgoogle.com/fusiontablesに作成しました．</string>
-  <string name="sending_to_my_maps_success_existing_map">トラックをmaps.google.comに送信しました．</string>
-  <string name="sending_to_docs_success_new_doc">トラックをdocs.google.comの新しいスプレッドシートに送信しました．</string>
-  <string name="sending_to_docs_success_existing_doc">トラックをdocs.google.comに送信しました．</string>
-  <string name="sending_to_google_additional_info">新しいトラックが表示されるまでに数分かかることがあります．</string>
+  <string name="send_google_success_new_map">新しいマイマップをmap.google.comに作成しました．</string>
+  <string name="send_google_success_fusion_tables">新しいGoogle Fusion Tableをgoogle.com/fusiontablesに作成しました．</string>
+  <string name="send_google_success_existing_map">トラックをmaps.google.comに送信しました．</string>
+  <string name="send_google_success_new_doc">トラックをdocs.google.comの新しいスプレッドシートに送信しました．</string>
+  <string name="send_google_success_existing_doc">トラックをdocs.google.comに送信しました．</string>
+  <string name="send_google_success_footer">新しいトラックが表示されるまでに数分かかることがあります．</string>
   <string name="gps_need_to_enable">ここをタップして「位置情報とセキュリティの設定」を開いて「GPS機能を使用」にチェックを入れて下さい．バックボタンで戻ってください．</string>
   <string name="my_location_approximate_location">ご注意: 携帯電話中継局とWi-Fiネットワークから大まかな位置を特定します．</string>
   <string name="my_location_no_location">現在位置決定ができません．位置取得源を増やし(位置情報とセキュリティの設定 をご覧ください)、空が見えるようにして下さい．もう一度試して下さい．</string>
@@ -64,18 +64,18 @@ limitations under the License.
   <string name="marker_insert_success">統計マーカーを挿入しました．</string>
 
   <!-- Progress dialog -->
-  <string name="progress_title">お待ちください...</string>
+  <string name="generic_progress_title">お待ちください...</string>
   <string name="progress_message">トラックをGoogleに送信しています．</string>
-  <string name="progress_message_reading_track">トラックを読んでいます...</string>
-  <string name="progress_message_preparing_track">トラックを準備しています...</string>
-  <string name="progress_message_authenticating_fusion_tables">Google Fusion Tablesへの認証を行っています...</string>
-  <string name="progress_message_authenticating_my_maps">Googleマップへの認証を行っています...</string>
-  <string name="progress_message_authenticating_docs">Google Docsへの認証を行っています...</string>
-  <string name="progress_message_sending_docs">トラックをGoogle Docsに送信しています...</string>
-  <string name="progress_message_sending_my_maps">トラックをGoogleマップに送信しています...</string>
-  <string name="progress_message_creating_map">新しいマイマップを作成しています...</string>
-  <string name="progress_message_sending_fusion_tables">トラックをFusion Tablesに送信しています...</string>
-  <string name="progress_message_creating_fusion_table">新しいFusionテーブルを生成しています...</string>
+  <string name="send_google_progress_reading_track">トラックを読んでいます...</string>
+  <string name="send_google_progress_preparing_track">トラックを準備しています...</string>
+  <string name="send_google_progress_auth_fusion_tables">Google Fusion Tablesへの認証を行っています...</string>
+  <string name="send_google_progress_auth_my_maps">Googleマップへの認証を行っています...</string>
+  <string name="send_google_progress_auth_docs">Google Docsへの認証を行っています...</string>
+  <string name="send_google_progress_sending_docs">トラックをGoogle Docsに送信しています...</string>
+  <string name="send_google_progress_sending_my_maps">トラックをGoogleマップに送信しています...</string>
+  <string name="send_google_progress_creating_map">新しいマイマップを作成しています...</string>
+  <string name="send_google_progress_sending_fusion_tables">トラックをFusion Tablesに送信しています...</string>
+  <string name="send_google_progress_creating_fusion_table">新しいFusionテーブルを生成しています...</string>
   <string name="progress_message_import">GPSトラックをインポートしています．若干時間がかかります．</string>
   <string name="progress_message_export">SDカードにデータを書き込んでいます．若干時間がかかります．</string>
   <string name="progress_message_updating_track">トラック統計情報を更新しています...</string>
@@ -88,7 +88,7 @@ limitations under the License.
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Android用My Tracksで作成</string>
-  <string name="send_to_google_by_mytracks">Android用&lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt;で作成しました．</string>
+  <string name="send_google_by_my_tracks">Android用&lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt;で作成しました．</string>
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="my_map_link">Android用&lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt;で作成しました．</string>
@@ -96,10 +96,9 @@ limitations under the License.
 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">ポイント</string>
-  <string name="recorded_date">記録日</string>
-  <string name="category">活動タイプ</string>
+  <string name="send_google_recorded">記録日</string>
   <string name="waypoint_category">マーカータイプ</string>
-  <string name="send_google_track_part_format">(パート %d)</string>
+  <string name="send_google_track_part_label">(パート %d)</string>
 
   <!-- Used by the track recording service -->
   <string name="track_record_notification">トラックを保存中...</string>
@@ -266,11 +265,11 @@ limitations under the License.
   <string name="mytracks_sky">GPS衛星</string>
 
   <!-- My Maps -->
-  <string name="select_map_message">アカウントからのマップ選択:</string>
+  <string name="my_maps_list_pick_map">アカウントからのマップ選択:</string>
   <string name="create_new_map">新規マップ作成...</string>
-  <string name="map_list_title">Googleマイマップに送信</string>
-  <string name="maps_list_loading">マップをロード中...</string>
-  <string name="maps_list_failed">今回はマップをロードできませんでした!</string>
+  <string name="my_maps_list_title">Googleマイマップに送信</string>
+  <string name="my_maps_list_loading">マップをロード中...</string>
+  <string name="my_maps_list_error">今回はマップをロードできませんでした!</string>
   <string name="open_map">このマップを選択</string>
   <string name="edit_map_details">マップ詳細編集</string>
   <string name="share_track_url">トラック共有</string>
@@ -295,9 +294,9 @@ limitations under the License.
   <string name="share_track_url">トラックの共有</string>
 
   <!-- Visibility -->
-  <string name="public_map">公開</string>
-  <string name="unlisted_map">リストに出さない</string>
-  <string name="mapslist_no_maps_available">まだ地図がありません．</string>
+  <string name="my_maps_list_public_label">公開</string>
+  <string name="my_maps_list_unlisted_label">リストに出さない</string>
+  <string name="my_maps_list_no_maps">まだ地図がありません．</string>
 
   <!-- Statistics View -->
   <!-- Average Moving -->
@@ -388,18 +387,18 @@ limitations under the License.
   <string name="about_privacy">プライバシー:</string>
 
   <!-- Send to Google -->
-  <string name="sendtogoogle_title">送信...</string>
-  <string name="sendtogoogle_google_mymaps">Googleマイマップ</string>
-  <string name="sendtogoogle_send_now">今すぐ送信</string>
-  <string name="sendtogoogle_create_new_map">新規マップ作成</string>
-  <string name="sendtogoogle_pick_existing_map">既存マップ選択</string>
+  <string  name="send_google_title">送信...</string>
+  <string name="send_google_my_maps">Googleマイマップ</string>
+  <string name="send_google_send_now">今すぐ送信</string>
+  <string name="send_google_new_map">新規マップ作成</string>
+  <string name="send_google_existing_map">既存マップ選択</string>
   <string name="sendtogoogle_send_stats">トラック統計情報送信</string>
   <string name="sendtogoogle_send_stats_and_points">統計情報とポイント送信</string>
 
   <!-- Getting the account to upload to. -->
-  <string name="no_account_found_title">アカウントを発見できませんでした．</string>
-  <string name="no_account_found">トラックをアップロードするためのアカウントを発見できませんでした．</string>
-  <string name="choose_account_title">アカウント選択</string>
+  <string name="send_google_no_account">アカウントを発見できませんでした．</string>
+  <string name="send_google_no_account_message">トラックをアップロードするためのアカウントを発見できませんでした．</string>
+  <string name="send_google_choose_account">アカウント選択</string>
 
   <!-- SD card -->
   <string name="io_no_external_storage_found">外部ストレージを発見できませんでした．SDカードが刺さっているか、端末がコンピュータにマウントされていないか確認してください．</string>

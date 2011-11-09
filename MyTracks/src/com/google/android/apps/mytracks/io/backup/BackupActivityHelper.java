@@ -85,7 +85,7 @@ public class BackupActivityHelper {
 
     final ProgressDialog progressDialog = ProgressDialog.show(
         activity,
-        activity.getString(R.string.progress_title),
+        activity.getString(R.string.generic_progress_title),
         activity.getString(R.string.settings_backup_now_progress_message),
         true);
 
@@ -186,7 +186,7 @@ public class BackupActivityHelper {
     // Show a progress dialog
     ProgressDialog.show(
         activity,
-        activity.getString(R.string.progress_title),
+        activity.getString(R.string.generic_progress_title),
         activity.getString(R.string.settings_backup_restore_progress_message),
         true);
 

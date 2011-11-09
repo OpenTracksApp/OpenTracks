@@ -119,7 +119,7 @@ public class MapsFacade {
         MyMapsMapMetadata metaData = new MyMapsMapMetadata();
         metaData.setTitle(title);
         metaData.setDescription(description + " - "
-            + category + " - " + context.getString(R.string.send_to_google_by_mytracks));
+            + category + " - " + context.getString(R.string.send_google_by_my_tracks));
         metaData.setSearchable(isPublic);
         Entry entry = MyMapsGDataConverter.getMapEntryForMetadata(metaData);
         Log.d(MyMapsConstants.TAG, "Title: " + entry.getTitle());
