@@ -164,21 +164,21 @@ limitations under the License.
   <string name="settings_recording">Inspelning</string>
   <string name="settings_sharing">Delning</string>
 
-  <string name="settings_announcement_frequency">Meddelandefrekvens</string>
-  <string name="settings_announcement_frequency_summary">Minimumtid mellan två röstmeddelanden</string>
+  <string name="settings_recording_voice">Meddelandefrekvens</string>
+  <string name="settings_recording_voice_summary">Minimumtid mellan två röstmeddelanden</string>
   
 
-  <string name="settings_min_recording_distance">Min distans mellan två punkter</string>
-  <string name="settings_min_recording_distance_summary">Minsta distans mellan två inspelningar av din position</string>
+  <string name="settings_recording_distance">Min distans mellan två punkter</string>
+  <string name="settings_recording_distance_summary">Minsta distans mellan två inspelningar av din position</string>
 
-  <string name="settings_max_recording_distance">Max distans mellan punter</string>
-  <string name="settings_max_recording_distance_summary">Om två punkter är längre bort än det här, kommer spåret att delas</string>
+  <string name="settings_recording_track_distance">Max distans mellan punter</string>
+  <string name="settings_recording_track_distance_summary">Om två punkter är längre bort än det här, kommer spåret att delas</string>
 
-  <string name="settings_min_recording_interval">Min tid mellan punkter</string>
-  <string name="settings_min_recording_interval_summary">Minsta tidsintervall mellan två inspelningar av din position</string>
+  <string name="settings_recording_interval">Min tid mellan punkter</string>
+  <string name="settings_recording_interval_summary">Minsta tidsintervall mellan två inspelningar av din position</string>
 
-  <string name="settings_min_required_accuracy">Minsta precision</string>
-  <string name="settings_min_required_accuracy_summary">Inspelningen kommer att pausas om din position inte är minst så här precis</string>
+  <string name="settings_recording_gps_accuracy">Minsta precision</string>
+  <string name="settings_recording_gps_accuracy_summary">Inspelningen kommer att pausas om din position inte är minst så här precis</string>
 
   <string name="settings_display_metric">Använd metersystemet</string>
   <string name="settings_display_metric_summary_on">Alla distanser kommer att visas i metriska enheter</string>
@@ -196,8 +196,8 @@ limitations under the License.
   <string name="settings_share_url_only_summary_on">Bara länken till kartan kommer att skickas vid delning</string>
   <string name="settings_share_url_only_summary_off">Innehållet i spåret kommer också att inkluderas vid delning</string>
 
-  <string name="settings_split_frequency">Delningsfrekvens</string>
-  <string name="settings_split_frequency_summary">Maximala tiden eller distansen varefter en ny delningsmarkör kommer infogas</string>
+  <string name="settings_recording_marker">Delningsfrekvens</string>
+  <string name="settings_recording_marker_summary">Maximala tiden eller distansen varefter en ny delningsmarkör kommer infogas</string>
   <string name="pace_label">Tempo</string>
 
   <!-- MyTracksSky -->

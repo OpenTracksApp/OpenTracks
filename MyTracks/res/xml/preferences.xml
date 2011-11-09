@@ -90,65 +90,65 @@ limitations under the License.
   <PreferenceScreen android:title="@string/settings_recording">
     <com.google.android.apps.mytracks.IntegerListPreference
         android:key="@string/announcement_frequency_key"
-        android:title="@string/settings_announcement_frequency"
-        android:summary="@string/settings_announcement_frequency_summary"
+        android:title="@string/settings_recording_voice"
+        android:summary="@string/settings_recording_voice_summary"
         android:entries="@array/task_frequency_options"
         android:entryValues="@array/task_frequency_values"
         android:defaultValue="0" />
 
     <com.google.android.apps.mytracks.IntegerListPreference
         android:key="@string/split_frequency_key"
-        android:title="@string/settings_split_frequency"
-        android:summary="@string/settings_split_frequency_summary"
+        android:title="@string/settings_recording_marker"
+        android:summary="@string/settings_recording_marker_summary"
         android:entries="@array/task_frequency_options"
         android:entryValues="@array/task_frequency_values"
         android:defaultValue="0" />
 
     <com.google.android.apps.mytracks.IntegerListPreference
         android:key="@string/min_recording_interval_key"
-        android:title="@string/settings_min_recording_interval"
-        android:summary="@string/settings_min_recording_interval_summary"
+        android:title="@string/settings_recording_interval"
+        android:summary="@string/settings_recording_interval_summary"
         android:entries="@array/min_recording_interval_options"
         android:entryValues="@array/min_recording_interval_values"
         android:defaultValue="0" />
 
     <com.google.android.apps.mytracks.IntegerListPreference
         android:key="@string/min_recording_distance_key"
-        android:title="@string/settings_min_recording_distance"
-        android:summary="@string/settings_min_recording_distance_summary"
+        android:title="@string/settings_recording_distance"
+        android:summary="@string/settings_recording_distance_summary"
         android:entries="@array/min_recording_distance_options"
         android:entryValues="@array/min_recording_distance_values"
         android:defaultValue="5" />
 
     <com.google.android.apps.mytracks.IntegerListPreference
         android:key="@string/max_recording_distance_key"
-        android:title="@string/settings_max_recording_distance"
-        android:summary="@string/settings_max_recording_distance_summary"
+        android:title="@string/settings_recording_track_distance"
+        android:summary="@string/settings_recording_track_distance_summary"
         android:entries="@array/max_recording_distance_options"
         android:entryValues="@array/max_recording_distance_values"
         android:defaultValue="200" />
 
     <com.google.android.apps.mytracks.IntegerListPreference
         android:key="@string/min_required_accuracy_key"
-        android:title="@string/settings_min_required_accuracy"
-        android:summary="@string/settings_min_required_accuracy_summary"
+        android:title="@string/settings_recording_gps_accuracy"
+        android:summary="@string/settings_recording_gps_accuracy_summary"
         android:entries="@array/min_required_accuracy_options"
         android:entryValues="@array/min_required_accuracy_values"
         android:defaultValue="200" />
 
     <com.google.android.apps.mytracks.IntegerListPreference
         android:key="@string/auto_resume_track_timeout_key"
-        android:title="@string/settings_auto_resume_track_timeout"
-        android:summary="@string/settings_auto_resume_track_timeout_summary"
+        android:title="@string/settings_recording_auto_resume"
+        android:summary="@string/settings_recording_auto_resume_summary"
         android:entries="@array/auto_resume_track_timeout_options"
         android:entryValues="@array/auto_resume_track_timeout_values"
         android:defaultValue="10" />
 
     <CheckBoxPreference
         android:key="@string/timestamp_track_name_key"
-        android:title="@string/settings_timestamp_track_name"
-        android:summaryOn="@string/settings_timestamp_track_name_summary_on"
-        android:summaryOff="@string/settings_timestamp_track_name_summary_off"
+        android:title="@string/settings_recording_name"
+        android:summaryOn="@string/settings_recording_name_summary_on"
+        android:summaryOff="@string/settings_recording_name_summary_off"
         android:defaultValue="true" />
 
   </PreferenceScreen>
@@ -164,32 +164,26 @@ limitations under the License.
         android:defaultValue="@string/sensor_type_value_none"/>
 
     <!-- Bluetooth -->
-    <PreferenceCategory android:title="@string/bluetooth_options">
+    <PreferenceCategory android:title="@string/settings_sensor_bluetooth_options">
       <ListPreference android:key="@string/bluetooth_sensor_key"
-                      android:title="@string/bluetooth_sensor_title"
-                      android:summary="@string/bluetooth_sensor_summary"
+                      android:title="@string/settings_sensor_bluetooth_sensor"
+                      android:summary="@string/settings_sensor_bluetooth_sensor_summary"
                       android:defaultValue="any" />
 
       <Preference android:key="@string/bluetooth_pairing_key"
-                  android:title="@string/bluetooth_pairing"
-                  android:summary="@string/bluetooth_pairing_summary"
+                  android:title="@string/settings_sensor_bluetooth_pairing"
+                  android:summary="@string/settings_sensor_bluetooth_pairing_summary"
                   android:persistent="false" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/ant_options"
+    <PreferenceCategory android:title="@string/settings_sensor_ant_options"
       android:key="@string/ant_options_key">
 	    <com.google.android.apps.mytracks.AntPreference
 	    	android:key="@string/ant_heart_rate_sensor_id_key"
-	        android:title="@string/settings_heart_rate_ant_sensor_id"/>
-<!--
-	    <com.google.android.apps.mytracks.AntPreference
-	    	android:key="@string/ant_power_sensor_id_key"
-	        android:title="@string/settings_power_ant_sensor_id"/>
--->
-
+	        android:title="@string/settings_sensor_unpair_ant"/>
 	    <com.google.android.apps.mytracks.AntPreference
 	    	android:key="@string/ant_srm_bridge_sensor_id_key"
-	        android:title="@string/settings_srm_bridge_ant_sensor_id"/>
+	        android:title="@string/settings_sensor_unpair_srm"/>
     </PreferenceCategory>
   </PreferenceScreen>
 

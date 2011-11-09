@@ -191,22 +191,22 @@ limitations under the License.
   <string name="settings_recording">記録</string>
   <string name="settings_sharing">共有</string>
 
-  <string name="settings_announcement_frequency_not_available">このAndroidバージョンでは使用できません</string>
+  <string name="settings_recording_voice_not_available">このAndroidバージョンでは使用できません</string>
 
-  <string name="settings_announcement_frequency">定期通知</string>
-  <string name="settings_announcement_frequency_summary">音声通知間隔の最小時間</string>
+  <string name="settings_recording_voice">定期通知</string>
+  <string name="settings_recording_voice_summary">音声通知間隔の最小時間</string>
 
-  <string name="settings_min_recording_distance">ポイント間の最短距離</string>
-  <string name="settings_min_recording_distance_summary">位置記録間の最短距離</string>
+  <string name="settings_recording_distance">ポイント間の最短距離</string>
+  <string name="settings_recording_distance_summary">位置記録間の最短距離</string>
 
-  <string name="settings_max_recording_distance">ポイント間の最長距離</string>
-  <string name="settings_max_recording_distance_summary">これより間隔が長い場合はトラックは分割されます</string>
+  <string name="settings_recording_track_distance">ポイント間の最長距離</string>
+  <string name="settings_recording_track_distance_summary">これより間隔が長い場合はトラックは分割されます</string>
 
-  <string name="settings_min_recording_interval">ポイント間の最小時間間隔</string>
-  <string name="settings_min_recording_interval_summary">位置記録の最短インターバル</string>
+  <string name="settings_recording_interval">ポイント間の最小時間間隔</string>
+  <string name="settings_recording_interval_summary">位置記録の最短インターバル</string>
 
-  <string name="settings_min_required_accuracy">最低精度</string>
-  <string name="settings_min_required_accuracy_summary">この精度以上でないと記録を休止します</string>
+  <string name="settings_recording_gps_accuracy">最低精度</string>
+  <string name="settings_recording_gps_accuracy_summary">この精度以上でないと記録を休止します</string>
 
   <string name="settings_display_metric">メートル法を使用</string>
   <string name="settings_display_metric_summary_on">全ての距離をメートル法で表示します</string>
@@ -224,28 +224,28 @@ limitations under the License.
   <string name="settings_share_url_only_summary_on">共有時にマップのURLのみ送信します</string>
   <string name="settings_share_url_only_summary_off">共有時にトラックのコンテントが含まれます</string>
 
-  <string name="settings_split_frequency">分割頻度</string>
-  <string name="settings_split_frequency_summary">分割マーカーを挿入する時間または距離の間隔</string>
+  <string name="settings_recording_marker">分割頻度</string>
+  <string name="settings_recording_marker_summary">分割マーカーを挿入する時間または距離の間隔</string>
 
-  <string name="settings_auto_resume_track_timeout">記録自動再開の制限時間</string>
-  <string name="settings_auto_resume_track_timeout_summary">指定時間(分単位)以内なら端末再起動時に以前のトラック記録を再開します．</string>
+  <string name="settings_recording_auto_resume">記録自動再開の制限時間</string>
+  <string name="settings_recording_auto_resume_summary">指定時間(分単位)以内なら端末再起動時に以前のトラック記録を再開します．</string>
 
-  <string name="settings_timestamp_track_name">日時をトラック名にする</string>
-  <string name="settings_timestamp_track_name_summary_on">デフォルトのトラック名をトラック開始日時にします．</string>
-  <string name="settings_timestamp_track_name_summary_off">トラック名を昇順の数字にします．</string>
+  <string name="settings_recording_name">日時をトラック名にする</string>
+  <string name="settings_recording_name_summary_on">デフォルトのトラック名をトラック開始日時にします．</string>
+  <string name="settings_recording_name_summary_off">トラック名を昇順の数字にします．</string>
 
   <string name="pace_label">ペース</string>
 
   <string name="eclair_required">Android 2.0以上でのみサポート</string>
   <string name="settings_sensor_type">センサータイプ</string>
   <string name="settings_sensor_type_summary">接続先センサーのタイプ</string>
-  <string name="settings_heart_rate_ant_sensor_id">ANT心拍数センサーとのペアリング解消</string>
+  <string name="settings_sensor_unpair_ant">ANT心拍数センサーとのペアリング解消</string>
   <string name="settings_power_ant_sensor_id">ANT心拍強度センサーとのペアリング解消</string>
-  <string name="settings_srm_bridge_ant_sensor_id">ANT SRMブリッジセンサーとのペアリング解消</string>
-  <string name="settings_ant_not_paired">ANTセンサーとペアリングしていません</string>
-  <string name="settings_ant_paired">ANTセンサーとペアリング: %d</string>
-  <string name="bluetooth_sensor_title">Bluetoothセンサー</string>
-  <string name="bluetooth_sensor_summary">Bluetoothセンサー接続先</string>
+  <string name="settings_sensor_unpair_srm">ANT SRMブリッジセンサーとのペアリング解消</string>
+  <string name="settings_sensor_ant_not_paired">ANTセンサーとペアリングしていません</string>
+  <string name="settings_sensor_ant_paired">ANTセンサーとペアリング: %d</string>
+  <string name="settings_sensor_bluetooth_sensor">Bluetoothセンサー</string>
+  <string name="settings_sensor_bluetooth_sensor_summary">Bluetoothセンサー接続先</string>
   <string name="settings_modular_stats_display_title">モジュール統計表示 </string>
 
   <!-- Backups -->
@@ -437,11 +437,11 @@ limitations under the License.
   <string name="check_units_title">計測単位についてのご注意</string>
 
   <!-- Fake preference keys - never saved, but show options in the preferences screen -->
-  <string name="bluetooth_options">Bluetoothオプション</string>
-  <string name="bluetooth_pairing">ペアリング</string>
-  <string name="bluetooth_pairing_summary">ペアリングを行うには「Bluetooth設定」を開いて下さい</string>
+  <string name="settings_sensor_bluetooth_options">Bluetoothオプション</string>
+  <string name="settings_sensor_bluetooth_pairing">ペアリング</string>
+  <string name="settings_sensor_bluetooth_pairing_summary">ペアリングを行うには「Bluetooth設定」を開いて下さい</string>
   <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
-  <string name="ant_options">ANTオプション</string>
+  <string name="settings_sensor_ant_options">ANTオプション</string>
   <string name="settings_sensor">センサーオプション</string>
 
   <!-- Bluetooth Sensor -->
@@ -463,9 +463,9 @@ limitations under the License.
   <string name="sending">送信中</string>
 
   <!-- Sensor Type Options -->
-  <string name="sensor_type_option_none">なし</string>
-  <string name="sensor_type_option_ant">ANT+ センサー</string>
-  <string name="sensor_type_option_srm_ant_bridge">SRM ANT+ ブリッジ</string>
+  <string name="settings_sensor_type_none">なし</string>
+  <string name="settings_sensor_type_ant">ANT+ センサー</string>
+  <string name="settings_sensor_type_srm">SRM ANT+ ブリッジ</string>
     
   <!-- Manifest description (not seen inside the app) -->
   <string name="permission_notification_label">トラック記録通知受信</string>

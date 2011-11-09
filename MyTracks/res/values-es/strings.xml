@@ -198,7 +198,7 @@ limitations under the License.
   <string name="settings_recording">Grabando</string>
   <string name="settings_sharing">Compartiendo</string>
 
-  <string name="settings_announcement_frequency_not_available">No disponible para tu versión de Android</string>
+  <string name="settings_recording_voice_not_available">No disponible para tu versión de Android</string>
   <string name="settings_not_while_recording">No disponible mientras se graba el recorrido</string>
 
   <string name="settings_allow_access">Permitir acceso</string>
@@ -209,20 +209,20 @@ limitations under the License.
           futuras aplicaciones inclusive, controlen y tengan acceso a los datos de MyTracks? No habra notificaciones 
           posteriores.</string>
 		  
-  <string name="settings_announcement_frequency">Tiempo entre anuncios</string>
-  <string name="settings_announcement_frequency_summary">Tiempo mínimo entre dos anuncios de voz</string>
+  <string name="settings_recording_voice">Tiempo entre anuncios</string>
+  <string name="settings_recording_voice_summary">Tiempo mínimo entre dos anuncios de voz</string>
 
-  <string name="settings_min_recording_distance">Distancia mínima entre puntos consecutivos</string>
-  <string name="settings_min_recording_distance_summary">Distancia mínima entre dos grabaciones de posición</string>
+  <string name="settings_recording_distance">Distancia mínima entre puntos consecutivos</string>
+  <string name="settings_recording_distance_summary">Distancia mínima entre dos grabaciones de posición</string>
 
-  <string name="settings_max_recording_distance">Crear nuevo segmento si distancia es mayor que</string>
-  <string name="settings_max_recording_distance_summary">Empezar un nuevo segmento si los puntos están a una distancia mayor a</string>
+  <string name="settings_recording_track_distance">Crear nuevo segmento si distancia es mayor que</string>
+  <string name="settings_recording_track_distance_summary">Empezar un nuevo segmento si los puntos están a una distancia mayor a</string>
 
-  <string name="settings_min_recording_interval">Grabando frecuencia</string>
-  <string name="settings_min_recording_interval_summary">Diferencia mínima de tiempo entre dos grabaciones de posición</string>
+  <string name="settings_recording_interval">Grabando frecuencia</string>
+  <string name="settings_recording_interval_summary">Diferencia mínima de tiempo entre dos grabaciones de posición</string>
 
-  <string name="settings_min_required_accuracy">Detener la grabación si la precisión es menor a</string>
-  <string name="settings_min_required_accuracy_summary">Precisión mínima de ubicación necesaria para continuar grabando pista</string>
+  <string name="settings_recording_gps_accuracy">Detener la grabación si la precisión es menor a</string>
+  <string name="settings_recording_gps_accuracy_summary">Precisión mínima de ubicación necesaria para continuar grabando pista</string>
 
   <string name="settings_display_metric">Usar unidades métricas</string>
   <string name="settings_display_metric_summary_on">Todas las distancias serán mostradas en unidades métricas</string>
@@ -240,15 +240,15 @@ limitations under the License.
   <string name="settings_share_url_only_summary_on">Sólo el URL del mapa será enviado al compartir</string>
   <string name="settings_share_url_only_summary_off">Los contenidos de la pista también serán incluídos al compartir</string>
 
-  <string name="settings_split_frequency">Dividir frecuencia</string>
-  <string name="settings_split_frequency_summary">Tiempo o distancia máxima para insertar una nueva marca de división</string>
+  <string name="settings_recording_marker">Dividir frecuencia</string>
+  <string name="settings_recording_marker_summary">Tiempo o distancia máxima para insertar una nueva marca de división</string>
 
-  <string name="settings_auto_resume_track_timeout">Temporizador de auto-reinicio de recorrido</string>
-  <string name="settings_auto_resume_track_timeout_summary">Máximo tiempo en minutos después del cual un recorrido previamente grabado no será reiniciado después de un reinicio del teléfono</string>
+  <string name="settings_recording_auto_resume">Temporizador de auto-reinicio de recorrido</string>
+  <string name="settings_recording_auto_resume_summary">Máximo tiempo en minutos después del cual un recorrido previamente grabado no será reiniciado después de un reinicio del teléfono</string>
 
-  <string name="settings_timestamp_track_name">Hora como nombre de recorrido</string>
-  <string name="settings_timestamp_track_name_summary_on">El nombre por defecto del recorrido será la fecha y hora del inicio del recorrido</string>
-  <string name="settings_timestamp_track_name_summary_off">Los nombre de recorrido tendrán números que se incrementarán en cada nuevo recorrido.</string>
+  <string name="settings_recording_name">Hora como nombre de recorrido</string>
+  <string name="settings_recording_name_summary_on">El nombre por defecto del recorrido será la fecha y hora del inicio del recorrido</string>
+  <string name="settings_recording_name_summary_off">Los nombre de recorrido tendrán números que se incrementarán en cada nuevo recorrido.</string>
 
   <string name="settings_reset">Restaurar preferencias</string>
   <string name="settings_reset_summary">Restaura todas tus preferencias a los valores por defecto</string>
@@ -260,13 +260,13 @@ limitations under the License.
   <string name="eclair_required">Sólo soportado en Android 2.0 o superior</string>
   <string name="settings_sensor_type">Tipo de sensor</string>
   <string name="settings_sensor_type_summary">Tipo de sensor al que conectar</string>
-  <string name="settings_heart_rate_ant_sensor_id">Liberar conexión al sensor de corazón ANT</string>
+  <string name="settings_sensor_unpair_ant">Liberar conexión al sensor de corazón ANT</string>
   <string name="settings_power_ant_sensor_id">Liberar conexión al sensor de energía ANT</string>
-  <string name="settings_srm_bridge_ant_sensor_id">Liberar conexión al sensor puente SRM ANT</string>
-  <string name="settings_ant_not_paired">Sensor ANT no conectado</string>
-  <string name="settings_ant_paired">Sensor ANT conectado con: %d</string>
-  <string name="bluetooth_sensor_title">Sensor Bluetooth</string>
-  <string name="bluetooth_sensor_summary">Sensor Bluetooth al que conectar</string>
+  <string name="settings_sensor_unpair_srm">Liberar conexión al sensor puente SRM ANT</string>
+  <string name="settings_sensor_ant_not_paired">Sensor ANT no conectado</string>
+  <string name="settings_sensor_ant_paired">Sensor ANT conectado con: %d</string>
+  <string name="settings_sensor_bluetooth_sensor">Sensor Bluetooth</string>
+  <string name="settings_sensor_bluetooth_sensor_summary">Sensor Bluetooth al que conectar</string>
   <string name="settings_modular_stats_display_title">Pantalla de estadísticas modular</string>
 
   <string name="settings_display_track_color">Modo de Recorrido Coloreado</string>
@@ -471,11 +471,11 @@ limitations under the License.
   <string name="check_units_title">Aviso de unidades de medida</string>
 
   <!-- Fake preference keys - never saved, but show options in the preferences screen -->
-  <string name="bluetooth_options">Opciones Bluetooth</string>
-  <string name="bluetooth_pairing">Conexión de dispositivos</string>
-  <string name="bluetooth_pairing_summary">Abrir la configuración Bluetooth de Android para conectar un dispositivo</string>
+  <string name="settings_sensor_bluetooth_options">Opciones Bluetooth</string>
+  <string name="settings_sensor_bluetooth_pairing">Conexión de dispositivos</string>
+  <string name="settings_sensor_bluetooth_pairing_summary">Abrir la configuración Bluetooth de Android para conectar un dispositivo</string>
   <string name="sensor_bluetooth_options_key">Sensor Bluetooth activado</string>
-  <string name="ant_options">Optiones ANT</string>
+  <string name="settings_sensor_ant_options">Optiones ANT</string>
   <string name="settings_sensor">Opciones del sensor</string>
   <string name="track_color_mode">Modo de Recorrido Coloreado</string>
   <string name="fixed_speed_options">Opciones de velocidad fija</string>
@@ -509,11 +509,11 @@ limitations under the License.
   <string name="permission_write_description">Poder escribir datos, como registrar o añadir puntos de interés.</string>
   
   <!-- Sensor Type Options -->
-  <string name="sensor_type_option_none">Ninguno</string>
-  <string name="sensor_type_option_ant">Sensores ANT+</string>
-  <string name="sensor_type_option_srm_ant_bridge">Puente SRM ANT+</string>
-  <string name="sensor_type_option_polar">Bluetooth Polar</string>
-  <string name="sensor_type_option_zephyr">Bluetooth Zephyr</string>
+  <string name="settings_sensor_type_none">Ninguno</string>
+  <string name="settings_sensor_type_ant">Sensores ANT+</string>
+  <string name="settings_sensor_type_srm">Puente SRM ANT+</string>
+  <string name="settings_sensor_type_polar">Bluetooth Polar</string>
+  <string name="settings_sensor_type_zephyr">Bluetooth Zephyr</string>
 
   <!-- Track Color Modes -->
   <string name="settings_display_track_color_single">Ninguno</string>

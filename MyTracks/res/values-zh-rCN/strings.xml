@@ -195,23 +195,23 @@ limitations under the License.
   <string name="settings_recording">记录</string>
   <string name="settings_sharing">分享</string>
 
-  <string name="settings_announcement_frequency_not_available">不支持当前使用的 Android 版本</string>
+  <string name="settings_recording_voice_not_available">不支持当前使用的 Android 版本</string>
   <string name="settings_not_while_recording">在记录轨迹时不可用</string>
 
-  <string name="settings_announcement_frequency">通知频度</string>
-  <string name="settings_announcement_frequency_summary">语音通知的最小时间间隔</string>
+  <string name="settings_recording_voice">通知频度</string>
+  <string name="settings_recording_voice_summary">语音通知的最小时间间隔</string>
 
-  <string name="settings_min_recording_distance">最小记录间距</string>
-  <string name="settings_min_recording_distance_summary">位置记录的最小间隔距离</string>
+  <string name="settings_recording_distance">最小记录间距</string>
+  <string name="settings_recording_distance_summary">位置记录的最小间隔距离</string>
 
-  <string name="settings_max_recording_distance">最大记录间距</string>
-  <string name="settings_max_recording_distance_summary">如果记录点之间的距离大于这个值, 轨迹将被切割</string>
+  <string name="settings_recording_track_distance">最大记录间距</string>
+  <string name="settings_recording_track_distance_summary">如果记录点之间的距离大于这个值, 轨迹将被切割</string>
 
-  <string name="settings_min_recording_interval">最小记录时间间隔</string>
-  <string name="settings_min_recording_interval_summary">记录位置的最小时间间隔</string>
+  <string name="settings_recording_interval">最小记录时间间隔</string>
+  <string name="settings_recording_interval_summary">记录位置的最小时间间隔</string>
 
-  <string name="settings_min_required_accuracy">最小精度</string>
-  <string name="settings_min_required_accuracy_summary">如果位置信息达不到此精度, 记录将被暂停</string>
+  <string name="settings_recording_gps_accuracy">最小精度</string>
+  <string name="settings_recording_gps_accuracy_summary">如果位置信息达不到此精度, 记录将被暂停</string>
 
   <string name="settings_display_metric">使用公制单位</string>
   <string name="settings_display_metric_summary_on">所有的距离都将以公制单位显示</string>
@@ -229,15 +229,15 @@ limitations under the License.
   <string name="settings_share_url_only_summary_on">在分享时只发送地图的 URL</string>
   <string name="settings_share_url_only_summary_off">在分享时也包括轨迹的内容</string>
 
-  <string name="settings_split_frequency">切割频度</string>
-  <string name="settings_split_frequency_summary">插入新切割标记所需要达到的最大时间或距离</string>
+  <string name="settings_recording_marker">切割频度</string>
+  <string name="settings_recording_marker_summary">插入新切割标记所需要达到的最大时间或距离</string>
 
-  <string name="settings_auto_resume_track_timeout">自动恢复追踪等待时间</string>
-  <string name="settings_auto_resume_track_timeout_summary">手机重启后自动继续上次轨迹记录的最大间隔时间</string>
+  <string name="settings_recording_auto_resume">自动恢复追踪等待时间</string>
+  <string name="settings_recording_auto_resume_summary">手机重启后自动继续上次轨迹记录的最大间隔时间</string>
 
-  <string name="settings_timestamp_track_name">使用时间作为轨迹名称</string>
-  <string name="settings_timestamp_track_name_summary_on">使用轨迹记录的开始时间作为默认名称</string>
-  <string name="settings_timestamp_track_name_summary_off">轨迹使用自动递增的数字进行命名.</string>
+  <string name="settings_recording_name">使用时间作为轨迹名称</string>
+  <string name="settings_recording_name_summary_on">使用轨迹记录的开始时间作为默认名称</string>
+  <string name="settings_recording_name_summary_off">轨迹使用自动递增的数字进行命名.</string>
 
   <string name="settings_reset">恢复默认值</string>
   <string name="settings_reset_summary">将所有设置恢复到默认值</string>
@@ -249,13 +249,13 @@ limitations under the License.
   <string name="eclair_required">只在 Android 2.0 及以上版本支持</string>
   <string name="settings_sensor_type">感应器类型</string>
   <string name="settings_sensor_type_summary">要连接到的感应器类型</string>
-  <string name="settings_heart_rate_ant_sensor_id">清除 ANT 心率计的设备关联</string>
+  <string name="settings_sensor_unpair_ant">清除 ANT 心率计的设备关联</string>
   <string name="settings_power_ant_sensor_id">清除 ANT 能量感应器的设备关联</string>
-  <string name="settings_srm_bridge_ant_sensor_id">清除 ANT SRM 桥接感应器的设备关联</string>
-  <string name="settings_ant_not_paired">ANT 感应器未关联</string>
-  <string name="settings_ant_paired">ANT 感应器已关联到: %d</string>
-  <string name="bluetooth_sensor_title">蓝牙感应器</string>
-  <string name="bluetooth_sensor_summary">想要连接的蓝牙感应器</string>
+  <string name="settings_sensor_unpair_srm">清除 ANT SRM 桥接感应器的设备关联</string>
+  <string name="settings_sensor_ant_not_paired">ANT 感应器未关联</string>
+  <string name="settings_sensor_ant_paired">ANT 感应器已关联到: %d</string>
+  <string name="settings_sensor_bluetooth_sensor">蓝牙感应器</string>
+  <string name="settings_sensor_bluetooth_sensor_summary">想要连接的蓝牙感应器</string>
   <string name="settings_modular_stats_display_title">模块化状态显示</string>
 
   <!-- Backups -->
@@ -446,9 +446,9 @@ limitations under the License.
 
   <!-- Fake preference keys - never saved, but show options in the preferences screen -->
   <string name="method_bluetooth">蓝牙</string>
-  <string name="bluetooth_options">蓝牙设置</string>
-  <string name="bluetooth_pairing">设备关联</string>
-  <string name="bluetooth_pairing_summary">打开 Android 的蓝牙设置关联设备</string>
+  <string name="settings_sensor_bluetooth_options">蓝牙设置</string>
+  <string name="settings_sensor_bluetooth_pairing">设备关联</string>
+  <string name="settings_sensor_bluetooth_pairing_summary">打开 Android 的蓝牙设置关联设备</string>
   <string name="settings_sensor">感应器选项</string>
 
   <!-- Bluetooth Sensor -->
@@ -470,10 +470,10 @@ limitations under the License.
   <string name="sending">发送中</string>
 
   <!-- Sensor Type Options -->
-  <string name="sensor_type_option_none">无</string>
-  <string name="sensor_type_option_ant">ANT+ 感应器</string>
-  <string name="sensor_type_option_srm_ant_bridge">SRM ANT+ 转接器</string>
-  <string name="sensor_type_option_polar">Polar Bluetooth</string>
-  <string name="sensor_type_option_zephyr">Zephyr 蓝牙设备</string>
+  <string name="settings_sensor_type_none">无</string>
+  <string name="settings_sensor_type_ant">ANT+ 感应器</string>
+  <string name="settings_sensor_type_srm">SRM ANT+ 转接器</string>
+  <string name="settings_sensor_type_polar">Polar Bluetooth</string>
+  <string name="settings_sensor_type_zephyr">Zephyr 蓝牙设备</string>
   
 </resources>

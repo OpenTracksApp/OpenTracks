@@ -198,23 +198,23 @@ limitations under the License.
   <string name="settings_recording">Tallennus</string>
   <string name="settings_sharing">Jakaminen</string>
 
-  <string name="settings_announcement_frequency_not_available">Ei tuettu tässä Android-versiossa</string>
+  <string name="settings_recording_voice_not_available">Ei tuettu tässä Android-versiossa</string>
   <string name="settings_not_while_recording">Ei saatavilla reittiä tallennettaessa.</string>
 
-  <string name="settings_announcement_frequency">Äänimerkki</string>
-  <string name="settings_announcement_frequency_summary">Äänimerkkien aikaväli</string>
+  <string name="settings_recording_voice">Äänimerkki</string>
+  <string name="settings_recording_voice_summary">Äänimerkkien aikaväli</string>
 
-  <string name="settings_min_recording_distance">Lyhyin piste-etäisyys</string>
-  <string name="settings_min_recording_distance_summary">Lyhyin sallittu reitintallennuksessa käytetty etäisyys kahden pisteen välillä</string>
+  <string name="settings_recording_distance">Lyhyin piste-etäisyys</string>
+  <string name="settings_recording_distance_summary">Lyhyin sallittu reitintallennuksessa käytetty etäisyys kahden pisteen välillä</string>
 
-  <string name="settings_max_recording_distance">Pisin piste-etäisyys</string>
-  <string name="settings_max_recording_distance_summary">Jos edeltävä piste on valittua etäisyyttä pidemmällä reitti jaetaan</string>
+  <string name="settings_recording_track_distance">Pisin piste-etäisyys</string>
+  <string name="settings_recording_track_distance_summary">Jos edeltävä piste on valittua etäisyyttä pidemmällä reitti jaetaan</string>
 
-  <string name="settings_min_recording_interval">Lyhyin aika</string>
-  <string name="settings_min_recording_interval_summary">Lyhyin aikaintervalli kahden tallennetun pisteen välillä</string>
+  <string name="settings_recording_interval">Lyhyin aika</string>
+  <string name="settings_recording_interval_summary">Lyhyin aikaintervalli kahden tallennetun pisteen välillä</string>
 
-  <string name="settings_min_required_accuracy">Sallittu tarkkuus</string>
-  <string name="settings_min_required_accuracy_summary">Reitin tallennus pysäytetään, jos tarkkuus on tätä pienempi</string>
+  <string name="settings_recording_gps_accuracy">Sallittu tarkkuus</string>
+  <string name="settings_recording_gps_accuracy_summary">Reitin tallennus pysäytetään, jos tarkkuus on tätä pienempi</string>
 
   <string name="settings_display_metric">Käytä metrijärjestelmää</string>
   <string name="settings_display_metric_summary_on">Kaikki etäisyydet näytetään metrijärjestelmässä</string>
@@ -232,15 +232,15 @@ limitations under the License.
   <string name="settings_share_url_only_summary_on">Ainoastaan kartan URL jaetaan</string>
   <string name="settings_share_url_only_summary_off">Myös reitin sisältö ja tiedot jaetaan</string>
 
-  <string name="settings_split_frequency">Reitin jaotus</string>
-  <string name="settings_split_frequency_summary">Etäisyys tai aika jolloin reitti jaetaan osiin</string>
+  <string name="settings_recording_marker">Reitin jaotus</string>
+  <string name="settings_recording_marker_summary">Etäisyys tai aika jolloin reitti jaetaan osiin</string>
 
-  <string name="settings_auto_resume_track_timeout">Reitin jatkaminen</string>
-  <string name="settings_auto_resume_track_timeout_summary">Aika jonka sisällä tallennettavaa reittiä jatketaan, jos puhelin käynnitetään uudelleen.</string>
+  <string name="settings_recording_auto_resume">Reitin jatkaminen</string>
+  <string name="settings_recording_auto_resume_summary">Aika jonka sisällä tallennettavaa reittiä jatketaan, jos puhelin käynnitetään uudelleen.</string>
 
-  <string name="settings_timestamp_track_name">Aikamerkintä nimenä</string>
-  <string name="settings_timestamp_track_name_summary_on">Oletusnimenä reitille käytetään aloituspäivämäärää ja aikaa</string>
-  <string name="settings_timestamp_track_name_summary_off">Oletusnimenä käytetään kasvavaa numerointia.</string>
+  <string name="settings_recording_name">Aikamerkintä nimenä</string>
+  <string name="settings_recording_name_summary_on">Oletusnimenä reitille käytetään aloituspäivämäärää ja aikaa</string>
+  <string name="settings_recording_name_summary_off">Oletusnimenä käytetään kasvavaa numerointia.</string>
 
   <string name="settings_reset">Palauta oletusasetukset</string>
   <string name="settings_reset_summary">Palauta kaikki oletusasetukset</string>
@@ -252,13 +252,13 @@ limitations under the License.
   <string name="eclair_required">Tuettuna vain Android 2.0 tai uudemmassa</string>
   <string name="settings_sensor_type">Sensorin tyyppi</string>
   <string name="settings_sensor_type_summary">Sensorin tyyppi johon yhdistetään</string>
-  <string name="settings_heart_rate_ant_sensor_id">Resetoi ANT sykemittarin paritus</string>
+  <string name="settings_sensor_unpair_ant">Resetoi ANT sykemittarin paritus</string>
   <string name="settings_power_ant_sensor_id">Resetoi ANT tehomittarin paritus</string>
-  <string name="settings_srm_bridge_ant_sensor_id">Resetoi ANT SRM sillan paritus</string>
-  <string name="settings_ant_not_paired">ANT sensori ei paritettu</string>
-  <string name="settings_ant_paired">ANT sensori paritettu: %d</string>
-  <string name="bluetooth_sensor_title">Bluetooth sensori</string>
-  <string name="bluetooth_sensor_summary">Bluetooth-sensori johon yhdistetään</string>
+  <string name="settings_sensor_unpair_srm">Resetoi ANT SRM sillan paritus</string>
+  <string name="settings_sensor_ant_not_paired">ANT sensori ei paritettu</string>
+  <string name="settings_sensor_ant_paired">ANT sensori paritettu: %d</string>
+  <string name="settings_sensor_bluetooth_sensor">Bluetooth sensori</string>
+  <string name="settings_sensor_bluetooth_sensor_summary">Bluetooth-sensori johon yhdistetään</string>
   <string name="settings_modular_stats_display_title">Modular Stats Display</string>
 
   <!-- Backups -->
@@ -468,11 +468,11 @@ limitations under the License.
 
   <!-- Fake preference keys - never saved, but show options in the preferences screen -->
   <string name="method_bluetooth">Bluetooth</string>
-  <string name="bluetooth_options">Bluetooth asetukset</string>
-  <string name="bluetooth_pairing">Laiteparit</string>
-  <string name="bluetooth_pairing_summary">Avaa Androidin bluetooth-asetukset luodaksesi laitepareja</string>
+  <string name="settings_sensor_bluetooth_options">Bluetooth asetukset</string>
+  <string name="settings_sensor_bluetooth_pairing">Laiteparit</string>
+  <string name="settings_sensor_bluetooth_pairing_summary">Avaa Androidin bluetooth-asetukset luodaksesi laitepareja</string>
   <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
-  <string name="ant_options">ANT asetukset</string>
+  <string name="settings_sensor_ant_options">ANT asetukset</string>
   <string name="settings_sensor">Sensorien asetukset</string>
 
   <!-- Bluetooth Sensor -->
@@ -493,11 +493,11 @@ limitations under the License.
   <string name="searching">Etsitään</string>
   <string name="sending">Lähetetään</string>
 
-  <string name="sensor_type_option_none">Ei sensoria</string>
-  <string name="sensor_type_option_ant">ANT+ -sensori</string>
-  <string name="sensor_type_option_srm_ant_bridge">SRM ANT+ -silta</string>
-  <string name="sensor_type_option_polar">Polar bluetooth</string>
-  <string name="sensor_type_option_zephyr">Zephyr bluetooth</string>
+  <string name="settings_sensor_type_none">Ei sensoria</string>
+  <string name="settings_sensor_type_ant">ANT+ -sensori</string>
+  <string name="settings_sensor_type_srm">SRM ANT+ -silta</string>
+  <string name="settings_sensor_type_polar">Polar bluetooth</string>
+  <string name="settings_sensor_type_zephyr">Zephyr bluetooth</string>
 
   <!-- Manifest description (not seen inside the app) -->
   <string name="permission_notification_label">vastaanota huomautuksia reitin tallentamisesta</string>

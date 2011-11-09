@@ -194,23 +194,23 @@ limitations under the License.
   <string name="settings_recording">Запись</string>
   <string name="settings_sharing">Обмен</string>
 
-  <string name="settings_announcement_frequency_not_available">Не доступен в вашем версии Android</string>
+  <string name="settings_recording_voice_not_available">Не доступен в вашем версии Android</string>
   <string name="settings_not_while_recording">Не доступно во время записи трека</string>
 
-  <string name="settings_announcement_frequency">Частота объявлений</string>
-  <string name="settings_announcement_frequency_summary">Минимальное время между двумя голосовыми объявлениями</string>
+  <string name="settings_recording_voice">Частота объявлений</string>
+  <string name="settings_recording_voice_summary">Минимальное время между двумя голосовыми объявлениями</string>
 
-  <string name="settings_min_recording_distance">Минимальное расстояние между точками</string>
-  <string name="settings_min_recording_distance_summary">Наименьшее расстояние между двумя записями вашей позиции</string>
+  <string name="settings_recording_distance">Минимальное расстояние между точками</string>
+  <string name="settings_recording_distance_summary">Наименьшее расстояние между двумя записями вашей позиции</string>
 
-  <string name="settings_max_recording_distance">Максимальное расстояние между точками</string>
-  <string name="settings_max_recording_distance_summary">Если два пункта находятся дальше, чем указано, то трек будет разделен</string>
+  <string name="settings_recording_track_distance">Максимальное расстояние между точками</string>
+  <string name="settings_recording_track_distance_summary">Если два пункта находятся дальше, чем указано, то трек будет разделен</string>
 
-  <string name="settings_min_recording_interval">Минимальное время между точками</string>
-  <string name="settings_min_recording_interval_summary">Наименьший интервал времени между двумя записями вашей позиции</string>
+  <string name="settings_recording_interval">Минимальное время между точками</string>
+  <string name="settings_recording_interval_summary">Наименьший интервал времени между двумя записями вашей позиции</string>
 
-  <string name="settings_min_required_accuracy">Минимальная точность</string>
-  <string name="settings_min_required_accuracy_summary">Запись будет приостановлена, если ваша позиция не является достаточно точной</string>
+  <string name="settings_recording_gps_accuracy">Минимальная точность</string>
+  <string name="settings_recording_gps_accuracy_summary">Запись будет приостановлена, если ваша позиция не является достаточно точной</string>
 
   <string name="settings_display_metric">Использовать метрические единицы</string>
   <string name="settings_display_metric_summary_on">Все расстояния будут отображаться в метрических единицах</string>
@@ -228,15 +228,15 @@ limitations under the License.
   <string name="settings_share_url_only_summary_on">При обмене будет отправлен только URL-адрес</string>
   <string name="settings_share_url_only_summary_off">Содержимое трека будет также включено при обмене</string>
 
-  <string name="settings_split_frequency">Частота деления</string>
-  <string name="settings_split_frequency_summary">Максимальное время или расстояние, после которого будет вставлен новый маркер деления</string>
+  <string name="settings_recording_marker">Частота деления</string>
+  <string name="settings_recording_marker_summary">Максимальное время или расстояние, после которого будет вставлен новый маркер деления</string>
 
-  <string name="settings_auto_resume_track_timeout">Автоматическое возобновление трек тайм-аут</string>
-  <string name="settings_auto_resume_track_timeout_summary">Максимальное время в минутах, после которого предыдущая запись трека не будет возобновлена на перезагруженном телефоне</string>
+  <string name="settings_recording_auto_resume">Автоматическое возобновление трек тайм-аут</string>
+  <string name="settings_recording_auto_resume_summary">Максимальное время в минутах, после которого предыдущая запись трека не будет возобновлена на перезагруженном телефоне</string>
 
-  <string name="settings_timestamp_track_name">Штамп времени как название дорожки</string>
-  <string name="settings_timestamp_track_name_summary_on">По умолчанию имя трека будет складываться из даты и времени старта трека</string>
-  <string name="settings_timestamp_track_name_summary_off">Названия треков будут иметь прирост чисел для каждого нового трека.</string>
+  <string name="settings_recording_name">Штамп времени как название дорожки</string>
+  <string name="settings_recording_name_summary_on">По умолчанию имя трека будет складываться из даты и времени старта трека</string>
+  <string name="settings_recording_name_summary_off">Названия треков будут иметь прирост чисел для каждого нового трека.</string>
 
   <string name="settings_reset">Восстановить значения по умолчанию</string>
   <string name="settings_reset_summary">Восстановить значения по умолчанию во всех настройках</string>
@@ -248,13 +248,13 @@ limitations under the License.
   <string name="eclair_required">Поддерживается только в Android 2.0 или выше</string>
   <string name="settings_sensor_type">Тип датчика</string>
   <string name="settings_sensor_type_summary">Тип подключенного датчика</string>
-  <string name="settings_heart_rate_ant_sensor_id">Очистить ANT подсоединенного датчика пульса</string>
+  <string name="settings_sensor_unpair_ant">Очистить ANT подсоединенного датчика пульса</string>
   <string name="settings_power_ant_sensor_id">Очистить ANT подсоединенного датчика мощности</string>
-  <string name="settings_srm_bridge_ant_sensor_id">Очистить ANT подсоединенного датчика SRM</string>
-  <string name="settings_ant_not_paired">ANT датчик не подсоединен</string>
-  <string name="settings_ant_paired">ANT датчик подсоединен с: %d</string>
-  <string name="bluetooth_sensor_title">Bluetooth датчик</string>
-  <string name="bluetooth_sensor_summary">Подключенный bluetooth датчик</string>
+  <string name="settings_sensor_unpair_srm">Очистить ANT подсоединенного датчика SRM</string>
+  <string name="settings_sensor_ant_not_paired">ANT датчик не подсоединен</string>
+  <string name="settings_sensor_ant_paired">ANT датчик подсоединен с: %d</string>
+  <string name="settings_sensor_bluetooth_sensor">Bluetooth датчик</string>
+  <string name="settings_sensor_bluetooth_sensor_summary">Подключенный bluetooth датчик</string>
   <string name="settings_modular_stats_display_title">Отображение модульной статистики</string>
 
   <!-- Backups -->
@@ -464,11 +464,11 @@ limitations under the License.
  
   <!-- Fake preference keys - never saved, but show options in the preferences screen -->
   <string name="method_bluetooth">Bluetooth</string>
-  <string name="bluetooth_options">Параметры Bluetooth</string>
-  <string name="bluetooth_pairing">Подключение устройства</string>
-  <string name="bluetooth_pairing_summary">Открыть настройки Android по bluetooth для подключения устройства</string>
+  <string name="settings_sensor_bluetooth_options">Параметры Bluetooth</string>
+  <string name="settings_sensor_bluetooth_pairing">Подключение устройства</string>
+  <string name="settings_sensor_bluetooth_pairing_summary">Открыть настройки Android по bluetooth для подключения устройства</string>
   <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
-  <string name="ant_options">Параметры ANT</string>
+  <string name="settings_sensor_ant_options">Параметры ANT</string>
   <string name="settings_sensor">Параметры датчика</string>
 
   <!-- Bluetooth Sensor -->
@@ -490,9 +490,9 @@ limitations under the License.
   <string name="sending">Отправка</string>
 
   <!-- Sensor Type Options -->
-  <string name="sensor_type_option_none">Нет</string>
-  <string name="sensor_type_option_ant">ANT+ Датчик</string>
-  <string name="sensor_type_option_srm_ant_bridge">SRM ANT+ Bridge</string>
+  <string name="settings_sensor_type_none">Нет</string>
+  <string name="settings_sensor_type_ant">ANT+ Датчик</string>
+  <string name="settings_sensor_type_srm">SRM ANT+ Bridge</string>
 
   <!-- Manifest description (not seen inside the app) -->
   <string name="permission_notification_label">получать уведомления о записи трека</string>

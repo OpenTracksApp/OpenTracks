@@ -162,20 +162,20 @@ limitations under the License.
   <string name="settings_recording">Registrazione</string>
   <string name="settings_sharing">Condivisione</string>
 
-  <string name="settings_announcement_frequency">Intervallo fra due annunci:</string>
-  <string name="settings_announcement_frequency_summary">Tempo minimo fra due annunci audio</string>
+  <string name="settings_recording_voice">Intervallo fra due annunci:</string>
+  <string name="settings_recording_voice_summary">Tempo minimo fra due annunci audio</string>
 
-  <string name="settings_min_recording_distance">Distanza minima fra due punti successivi:</string>
-  <string name="settings_min_recording_distance_summary">Distanza minima fra due successive registrazioni della posizione</string>
+  <string name="settings_recording_distance">Distanza minima fra due punti successivi:</string>
+  <string name="settings_recording_distance_summary">Distanza minima fra due successive registrazioni della posizione</string>
 
-  <string name="settings_max_recording_distance">Inizia un nuovo segmento se i punti sono più distanti di:</string>
-  <string name="settings_max_recording_distance_summary">Se due punti sono più lontani di così, il percorso sarà diviso percorsi più brevi</string>
+  <string name="settings_recording_track_distance">Inizia un nuovo segmento se i punti sono più distanti di:</string>
+  <string name="settings_recording_track_distance_summary">Se due punti sono più lontani di così, il percorso sarà diviso percorsi più brevi</string>
 
-  <string name="settings_min_recording_interval">Frequenza di registrazione:</string>
-  <string name="settings_min_recording_interval_summary">Tempo minimo fra due successive registrazioni della posizione</string>
+  <string name="settings_recording_interval">Frequenza di registrazione:</string>
+  <string name="settings_recording_interval_summary">Tempo minimo fra due successive registrazioni della posizione</string>
 
-  <string name="settings_min_required_accuracy">Fai una pausa nella registrazione se l\'accuratezza scende al disotto di:</string>
-  <string name="settings_min_required_accuracy_summary">La registrazione verrà temporaneamente interrotta se l\'accuratezza della posizione è meno di questo valore</string>
+  <string name="settings_recording_gps_accuracy">Fai una pausa nella registrazione se l\'accuratezza scende al disotto di:</string>
+  <string name="settings_recording_gps_accuracy_summary">La registrazione verrà temporaneamente interrotta se l\'accuratezza della posizione è meno di questo valore</string>
 
   <string name="settings_display_metric">Mostra le distanze nel sistema metrico decimale</string>
   <string name="settings_display_metric_summary_on">Tutte le distanze verranno mostrate nel sistema metrico decimale</string>
@@ -193,8 +193,8 @@ limitations under the License.
   <string name="settings_share_url_only_summary_on">Solo l\'URL della mappa sarà inviata quando condividi un percorso</string>
   <string name="settings_share_url_only_summary_off">Anche il contenuto del percorso sarà inviato quando condividi un persorso</string>
 
-  <string name="settings_split_frequency">Frequenza di divisione</string>
-  <string name="settings_split_frequency_summary">Tempo o distanza massima dopo di cui il percorso verrà diviso</string>
+  <string name="settings_recording_marker">Frequenza di divisione</string>
+  <string name="settings_recording_marker_summary">Tempo o distanza massima dopo di cui il percorso verrà diviso</string>
   <string name="pace_label">Andatura</string>
 
   <!-- MyTracksSky -->

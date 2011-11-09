@@ -93,8 +93,7 @@ public class SettingsActivity extends PreferenceActivity {
               getString(R.string.announcement_frequency_key));
       announcementFrequency.setEnabled(false);
       announcementFrequency.setValue("-1");
-      announcementFrequency.setSummary(
-          R.string.settings_announcement_frequency_not_available);
+      announcementFrequency.setSummary(R.string.settings_recording_voice_not_available);
     }
 
     // Hook up switching of displayed list entries between metric and imperial

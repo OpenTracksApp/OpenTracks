@@ -169,22 +169,22 @@ limitations under the License.
   <string name="settings_recording">Aufzeichnung</string>
   <string name="settings_sharing">Mit Freunden teilen</string>
 
-  <string name="settings_announcement_frequency_not_available">In dieser Android-Version nicht verfügbar</string>
+  <string name="settings_recording_voice_not_available">In dieser Android-Version nicht verfügbar</string>
 
-  <string name="settings_announcement_frequency">Dauer zwischen Ansagen</string>
-  <string name="settings_announcement_frequency_summary">Kürzeste Zeit zwischen zwei Ansagen</string>
+  <string name="settings_recording_voice">Dauer zwischen Ansagen</string>
+  <string name="settings_recording_voice_summary">Kürzeste Zeit zwischen zwei Ansagen</string>
 
-  <string name="settings_min_recording_distance">Kleinste Entfernung zwischen Punkten</string>
-  <string name="settings_min_recording_distance_summary">Kleinste Entfernung zwischen zwei Positionsaufzeichnungen</string>
+  <string name="settings_recording_distance">Kleinste Entfernung zwischen Punkten</string>
+  <string name="settings_recording_distance_summary">Kleinste Entfernung zwischen zwei Positionsaufzeichnungen</string>
 
-  <string name="settings_max_recording_distance">Neues Segment, wenn Punkte weiter entfernt als</string>
-  <string name="settings_max_recording_distance_summary">Der Track wird in zwei geteilt, wenn zwei folgende Punkte weiter entfernt sind als hier angegeben.</string>
+  <string name="settings_recording_track_distance">Neues Segment, wenn Punkte weiter entfernt als</string>
+  <string name="settings_recording_track_distance_summary">Der Track wird in zwei geteilt, wenn zwei folgende Punkte weiter entfernt sind als hier angegeben.</string>
 
-  <string name="settings_min_recording_interval">Aufzeichnungsfrequenz</string>
-  <string name="settings_min_recording_interval_summary">Kürzeste Zeit zwischen zwei Positionsaufzeichnungen</string>
+  <string name="settings_recording_interval">Aufzeichnungsfrequenz</string>
+  <string name="settings_recording_interval_summary">Kürzeste Zeit zwischen zwei Positionsaufzeichnungen</string>
 
-  <string name="settings_min_required_accuracy">Aufzeichnung pausieren, wenn Genauigkeit kleiner als</string>
-  <string name="settings_min_required_accuracy_summary">Die Aufzeichnung wird kurzfristig angehalten, wenn Deine Position nicht genauer als hier angegeben ermittelt werden kann.</string>
+  <string name="settings_recording_gps_accuracy">Aufzeichnung pausieren, wenn Genauigkeit kleiner als</string>
+  <string name="settings_recording_gps_accuracy_summary">Die Aufzeichnung wird kurzfristig angehalten, wenn Deine Position nicht genauer als hier angegeben ermittelt werden kann.</string>
 
   <string name="settings_display_metric">Entfernungen in metrischen Einheiten anzeigen</string>
   <string name="settings_display_metric_summary_on">Alle Entfernungen werden in metrischen Einheiten angezeigt.</string>
@@ -202,28 +202,28 @@ limitations under the License.
   <string name="settings_share_url_only_summary_on">Beim Teilen mit Freunden wird nur die Karten-URL gesendet.</string>
   <string name="settings_share_url_only_summary_off">Beim Teilen mit Freunden wird der GPS-Track selbst gesendet.</string>
 
-  <string name="settings_split_frequency">Zerteilungsfrequenz</string>
-  <string name="settings_split_frequency_summary">Längste Dauer oder Entfernung, nach der automatisch ein Marker eingefügt wird.</string>
+  <string name="settings_recording_marker">Zerteilungsfrequenz</string>
+  <string name="settings_recording_marker_summary">Längste Dauer oder Entfernung, nach der automatisch ein Marker eingefügt wird.</string>
 
-   <string name="settings_auto_resume_track_timeout">Zeitbegrenzung der Auto-Wiederaufnahme</string>
-  <string name="settings_auto_resume_track_timeout_summary">Maximale Zeit in Minuten, nach der eine abgebrochene Aufzeichnung nach einem Telefonneustart wiederaufgenommen wird.</string>
+   <string name="settings_recording_auto_resume">Zeitbegrenzung der Auto-Wiederaufnahme</string>
+  <string name="settings_recording_auto_resume_summary">Maximale Zeit in Minuten, nach der eine abgebrochene Aufzeichnung nach einem Telefonneustart wiederaufgenommen wird.</string>
 
-  <string name="settings_timestamp_track_name">Zeitstempel als Trackname</string>
-  <string name="settings_timestamp_track_name_summary_on">Der Trackname wird aus Datum und Zeit zum Aufzeichnungsbeginn zusammengesetzt.</string>
-  <string name="settings_timestamp_track_name_summary_off">Tracknamen erhalten eine fortlaufende Nummer.</string>
+  <string name="settings_recording_name">Zeitstempel als Trackname</string>
+  <string name="settings_recording_name_summary_on">Der Trackname wird aus Datum und Zeit zum Aufzeichnungsbeginn zusammengesetzt.</string>
+  <string name="settings_recording_name_summary_off">Tracknamen erhalten eine fortlaufende Nummer.</string>
 
   <string name="pace_label">Pace</string>
 
   <string name="eclair_required">Wird nur unter Android 2.0 oder höher unterstützt</string>
   <string name="settings_sensor_type">Sensortyp</string>
   <string name="settings_sensor_type_summary">Der Typ des zu verbindenden Sensors</string>
-  <string name="settings_heart_rate_ant_sensor_id">Verbindung mit ANT Herzqrequenzmesser aufheben</string>
+  <string name="settings_sensor_unpair_ant">Verbindung mit ANT Herzqrequenzmesser aufheben</string>
   <string name="settings_power_ant_sensor_id">Verbindung mit ANT Kraftmesser aufheben</string>
-  <string name="settings_srm_bridge_ant_sensor_id">Verbindung mit ANT srm bridge aufheben</string>
-  <string name="settings_ant_not_paired">ANT-Sensor nicht verbunden</string>
-  <string name="settings_ant_paired">ANT-Sensor verbunden mit: %d</string>
-  <string name="bluetooth_sensor_title">Bluetooth-Sensor</string>
-  <string name="bluetooth_sensor_summary">Der zu verbindende Bluetoothsensor</string>
+  <string name="settings_sensor_unpair_srm">Verbindung mit ANT srm bridge aufheben</string>
+  <string name="settings_sensor_ant_not_paired">ANT-Sensor nicht verbunden</string>
+  <string name="settings_sensor_ant_paired">ANT-Sensor verbunden mit: %d</string>
+  <string name="settings_sensor_bluetooth_sensor">Bluetooth-Sensor</string>
+  <string name="settings_sensor_bluetooth_sensor_summary">Der zu verbindende Bluetoothsensor</string>
   <string name="settings_modular_stats_display_title">Art der Datenanzeige</string>
 
   <!-- Backups -->
@@ -416,9 +416,9 @@ limitations under the License.
 
   <!-- Fake preference keys - never saved, but show options in the preferences screen -->
   <string name="method_bluetooth">Bluetooth</string>
-  <string name="bluetooth_options">Bluetooth-Einstellungen</string>
-  <string name="bluetooth_pairing">Geräteverbindung</string>
-  <string name="bluetooth_pairing_summary">Öffnet Androids Bluetooth-Einstellungen, um Geräte zu verbinden.</string>
+  <string name="settings_sensor_bluetooth_options">Bluetooth-Einstellungen</string>
+  <string name="settings_sensor_bluetooth_pairing">Geräteverbindung</string>
+  <string name="settings_sensor_bluetooth_pairing_summary">Öffnet Androids Bluetooth-Einstellungen, um Geräte zu verbinden.</string>
   <!--string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string-->
   <string name="settings_sensor">Sensor-Einstellungen</string>
 

@@ -55,7 +55,7 @@ limitations under the License.
   <!-- MyTracks Waypoint Details -->
 
   <!-- MyTracks Settings -->
-  <string name="settings_announcement_frequency_not_available">No está disponible en su versión de Android</string>
+  <string name="settings_recording_voice_not_available">No está disponible en su versión de Android</string>
 
 
   <string name="settings_display_speed">Mostrar velocidad</string>
@@ -127,7 +127,7 @@ limitations under the License.
   -->
 
   <!-- Sensor Type Options -->
-  <string name="sensor_type_option_none">Ninguna</string>
-  <string name="sensor_type_option_ant">ANT+ Sensores</string>
-  <string name="sensor_type_option_srm_ant_bridge">SRM ANT+ Puente</string>
+  <string name="settings_sensor_type_none">Ninguna</string>
+  <string name="settings_sensor_type_ant">ANT+ Sensores</string>
+  <string name="settings_sensor_type_srm">SRM ANT+ Puente</string>
 </resources>

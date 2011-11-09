@@ -164,21 +164,21 @@ limitations under the License.
   <string name="settings_recording">Rejestrowanie</string>
   <string name="settings_sharing">Dzielenie</string>
 
-  <string name="settings_announcement_frequency">Częstotliwość komunikatów</string>
-  <string name="settings_announcement_frequency_summary">Minimalny czas między dwoma komunikatami głosowymi</string>
+  <string name="settings_recording_voice">Częstotliwość komunikatów</string>
+  <string name="settings_recording_voice_summary">Minimalny czas między dwoma komunikatami głosowymi</string>
   
 
-  <string name="settings_min_recording_distance">Min. odległość między punktami</string>
-  <string name="settings_min_recording_distance_summary">Najmniejsza odległość między dwoma zapisami twojej pozycji</string>
+  <string name="settings_recording_distance">Min. odległość między punktami</string>
+  <string name="settings_recording_distance_summary">Najmniejsza odległość między dwoma zapisami twojej pozycji</string>
 
-  <string name="settings_max_recording_distance">Max. odległość między punktami</string>
-  <string name="settings_max_recording_distance_summary">Jeśli dwa punkty są dalej niż ta wartość, trasa zostanie podzielona</string>
+  <string name="settings_recording_track_distance">Max. odległość między punktami</string>
+  <string name="settings_recording_track_distance_summary">Jeśli dwa punkty są dalej niż ta wartość, trasa zostanie podzielona</string>
 
-  <string name="settings_min_recording_interval">Min. czas między punktami</string>
-  <string name="settings_min_recording_interval_summary">Najmniejsza odstęp czasowy między dwoma zapisami twojej pozycji</string>
+  <string name="settings_recording_interval">Min. czas między punktami</string>
+  <string name="settings_recording_interval_summary">Najmniejsza odstęp czasowy między dwoma zapisami twojej pozycji</string>
 
-  <string name="settings_min_required_accuracy">Minimalna dokładność</string>
-  <string name="settings_min_required_accuracy_summary">Zapis zostanie zatrzymany jeśli twoja pozycja jest mniej dokładana niż ta wartość</string>
+  <string name="settings_recording_gps_accuracy">Minimalna dokładność</string>
+  <string name="settings_recording_gps_accuracy_summary">Zapis zostanie zatrzymany jeśli twoja pozycja jest mniej dokładana niż ta wartość</string>
 
   <string name="settings_display_metric">Używaj jednostek metrycznych</string>
   <string name="settings_display_metric_summary_on">Wszystkie odległości będą wyświetlane w jednostkach metrycznych</string>
@@ -196,19 +196,19 @@ limitations under the License.
   <string name="settings_share_url_only_summary_on">Tylko odnośnik do mapy będzie wysyłany podczas dzielenia się</string>
   <string name="settings_share_url_only_summary_off">Zawartość trasy będzie również przesyłana</string>
 
-  <string name="settings_split_frequency">Częstotliwość rozdzielania</string>
-  <string name="settings_split_frequency_summary">Maksymalny czas lub odległość po którym wstawiony zostanie znacznik rozdzielenia</string>
+  <string name="settings_recording_marker">Częstotliwość rozdzielania</string>
+  <string name="settings_recording_marker_summary">Maksymalny czas lub odległość po którym wstawiony zostanie znacznik rozdzielenia</string>
   
-  <string name="settings_auto_resume_track_timeout">Automatyczne wznawianie rejestracji trasy</string>
-  <string name="settings_auto_resume_track_timeout_summary">Maksymalny czas w minutach, który upłynął od ostatniego restartu telefonu, a po którym nie zostania wznowiona poprzednia trasa</string>
+  <string name="settings_recording_auto_resume">Automatyczne wznawianie rejestracji trasy</string>
+  <string name="settings_recording_auto_resume_summary">Maksymalny czas w minutach, który upłynął od ostatniego restartu telefonu, a po którym nie zostania wznowiona poprzednia trasa</string>
   
   <string name="pace_label">Tempo</string>
   
   <string name="eclair_required">Dostępne tylko w wersji Android 2.0 lub nowszej</string>
   <string name="settings_sensor_type">Typ Czujnika</string>
   <string name="settings_sensor_type_summary">Typ czujnika do podłączenia.</string>
-  <string name="bluetooth_sensor_title">Czujnik bluetooth</string>
-  <string name="bluetooth_sensor_summary">Czujnik bluetooth do podłączenia.</string>
+  <string name="settings_sensor_bluetooth_sensor">Czujnik bluetooth</string>
+  <string name="settings_sensor_bluetooth_sensor_summary">Czujnik bluetooth do podłączenia.</string>
   <string name="settings_modular_stats_display_title">Widok Statystyk Modularnych</string>
 
   <string name="settings_backup">Kopia zapasowa (BETA)</string>
@@ -386,11 +386,11 @@ limitations under the License.
   
   <!-- Fake preference keys - never saved, but show options in the preferences screen -->
   <string name="method_bluetooth">Bluetooth</string>
-  <string name="bluetooth_options">Opcje Bluetooth</string>
-  <string name="bluetooth_pairing">Parowanie urządzenia</string>
-  <string name="bluetooth_pairing_summary">Przejdź do ustawień Bluetooth Androida aby sparować urządzenie</string>
+  <string name="settings_sensor_bluetooth_options">Opcje Bluetooth</string>
+  <string name="settings_sensor_bluetooth_pairing">Parowanie urządzenia</string>
+  <string name="settings_sensor_bluetooth_pairing_summary">Przejdź do ustawień Bluetooth Androida aby sparować urządzenie</string>
   <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
-  <string name="ant_options">Opce ANT</string>
+  <string name="settings_sensor_ant_options">Opce ANT</string>
   <string name="settings_sensor">Opcje Czujników</string>
 
   <!-- Bluetooth Sensor -->

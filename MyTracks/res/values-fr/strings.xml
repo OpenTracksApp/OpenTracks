@@ -159,20 +159,20 @@ limitations under the License.
   <string name="settings_recording">Enregistrement</string>
   <string name="settings_sharing">Partage</string>
 
-  <string name="settings_announcement_frequency">Fréquence des annonces</string>
-  <string name="settings_announcement_frequency_summary">Temps minimum entre deux annonces vocales</string>
+  <string name="settings_recording_voice">Fréquence des annonces</string>
+  <string name="settings_recording_voice_summary">Temps minimum entre deux annonces vocales</string>
 
-  <string name="settings_min_recording_distance">Distance min. entre 2 points</string>
-  <string name="settings_min_recording_distance_summary">Plus petite distance entre deux enregistrements de votre position</string>
+  <string name="settings_recording_distance">Distance min. entre 2 points</string>
+  <string name="settings_recording_distance_summary">Plus petite distance entre deux enregistrements de votre position</string>
 
-  <string name="settings_max_recording_distance">Distance max. entre 2 points</string>
-  <string name="settings_max_recording_distance_summary">Si deux points successifs sont plus éloignés, un nouveau parcours sera créé</string>
+  <string name="settings_recording_track_distance">Distance max. entre 2 points</string>
+  <string name="settings_recording_track_distance_summary">Si deux points successifs sont plus éloignés, un nouveau parcours sera créé</string>
 
-  <string name="settings_min_recording_interval">Fréquence d\'enregistrement</string>
-  <string name="settings_min_recording_interval_summary">Plus petit intervalle de temps entre deux enregistrements de votre position</string>
+  <string name="settings_recording_interval">Fréquence d\'enregistrement</string>
+  <string name="settings_recording_interval_summary">Plus petit intervalle de temps entre deux enregistrements de votre position</string>
 
-  <string name="settings_min_required_accuracy">Précision minimum</string>
-  <string name="settings_min_required_accuracy_summary">L\'enregistrement sera suspendu si la géolocalisation est moins précise</string>
+  <string name="settings_recording_gps_accuracy">Précision minimum</string>
+  <string name="settings_recording_gps_accuracy_summary">L\'enregistrement sera suspendu si la géolocalisation est moins précise</string>
 
   <string name="settings_display_metric">Système métrique</string>
   <string name="settings_display_metric_summary_on">Le système métrique sera utilisé pour l\'affichage des distances</string>
@@ -190,20 +190,20 @@ limitations under the License.
   <string name="settings_share_url_only_summary_on">Seule l\'adresse URL de la carte sera envoyée lors du partage</string>
   <string name="settings_share_url_only_summary_off">Le contenu du parcours sera également inclus lors du partage</string>
 
-  <string name="settings_split_frequency">Fréquence de séparation</string>
-  <string name="settings_split_frequency_summary">Temps ou distance minimum avant l\'insertion d\'un marqueur de séparation</string>
+  <string name="settings_recording_marker">Fréquence de séparation</string>
+  <string name="settings_recording_marker_summary">Temps ou distance minimum avant l\'insertion d\'un marqueur de séparation</string>
   <string name="pace_label">Rythme</string>
 
   <string name="eclair_required">Nécessite au minimum Android 2.0</string>
   <string name="settings_sensor_type">Type de capteur</string>
   <string name="settings_sensor_type_summary">Type du capteur à utiliser</string>
-  <string name="settings_heart_rate_ant_sensor_id">Se désassocier du Cardiofréquencemètre ANT</string>
+  <string name="settings_sensor_unpair_ant">Se désassocier du Cardiofréquencemètre ANT</string>
   <string name="settings_power_ant_sensor_id">Se désassocier du compteur ANT</string>
-  <string name="settings_srm_bridge_ant_sensor_id">Se désassocier du pont SRM ANT</string>
-  <string name="settings_ant_not_paired">Capteur ANT non associé</string>
-  <string name="settings_ant_paired">Capteur ANT associé: %d</string>
-  <string name="bluetooth_sensor_title">Capteur Bluetooth</string>
-  <string name="bluetooth_sensor_summary">Capteur Bluetooth à utiliser</string>
+  <string name="settings_sensor_unpair_srm">Se désassocier du pont SRM ANT</string>
+  <string name="settings_sensor_ant_not_paired">Capteur ANT non associé</string>
+  <string name="settings_sensor_ant_paired">Capteur ANT associé: %d</string>
+  <string name="settings_sensor_bluetooth_sensor">Capteur Bluetooth</string>
+  <string name="settings_sensor_bluetooth_sensor_summary">Capteur Bluetooth à utiliser</string>
   <string name="settings_modular_stats_display_title">Affichage des statistiques modulaires</string>
 
   <!-- Backups -->
@@ -372,9 +372,9 @@ limitations under the License.
  
   <!-- Fake preference keys - never saved, but show options in the preferences screen -->
   <string name="method_bluetooth">Bluetooth</string>
-  <string name="bluetooth_options">Options Bluetooth</string>
-  <string name="bluetooth_pairing">Association d\'un appareil</string>
-  <string name="bluetooth_pairing_summary">Visitez les paramètres Bluetooth d\'Android pour associer un nouvel appareil</string>
+  <string name="settings_sensor_bluetooth_options">Options Bluetooth</string>
+  <string name="settings_sensor_bluetooth_pairing">Association d\'un appareil</string>
+  <string name="settings_sensor_bluetooth_pairing_summary">Visitez les paramètres Bluetooth d\'Android pour associer un nouvel appareil</string>
   <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
   <string name="settings_sensor">Options du capteur</string>
 
@@ -397,11 +397,11 @@ limitations under the License.
   <string name="sending">Envoi</string>
 
   <!-- Sensor Type Options -->
-  <string name="sensor_type_option_none">Aucun</string>
-  <string name="sensor_type_option_ant">Capteur ANT+</string>
-  <string name="sensor_type_option_srm_ant_bridge">Pont SRM ANT+</string>
-  <string name="sensor_type_option_polar">Bluetooth Polar</string>
-  <string name="sensor_type_option_zephyr">Bluetooth Zephyr</string>
+  <string name="settings_sensor_type_none">Aucun</string>
+  <string name="settings_sensor_type_ant">Capteur ANT+</string>
+  <string name="settings_sensor_type_srm">Pont SRM ANT+</string>
+  <string name="settings_sensor_type_polar">Bluetooth Polar</string>
+  <string name="settings_sensor_type_zephyr">Bluetooth Zephyr</string>
 
   <!-- Manifest description (not seen inside the app) -->
   <string name="permission_notification_label">notifications lors de l\'enregistrement de parcours</string>

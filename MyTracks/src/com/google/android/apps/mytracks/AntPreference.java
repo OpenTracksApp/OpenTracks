@@ -43,9 +43,10 @@ public class AntPreference extends Preference {
   private void init() {
     int sensorId = getPersistedInt(0);
     if (sensorId == 0) {
-      setSummary(R.string.settings_ant_not_paired);
+      setSummary(R.string.settings_sensor_ant_not_paired);
     } else {
-      setSummary(String.format(getContext().getString(R.string.settings_ant_paired), sensorId));
+      setSummary(
+          String.format(getContext().getString(R.string.settings_sensor_ant_paired), sensorId));
     }
 
     // Add actions to allow repairing.
@@ -54,7 +55,7 @@ public class AntPreference extends Preference {
           @Override
           public boolean onPreferenceClick(Preference preference) {
             AntPreference.this.persistInt(0);
-            setSummary(R.string.settings_ant_not_paired);
+            setSummary(R.string.settings_sensor_ant_not_paired);
             return true;
           }
         });

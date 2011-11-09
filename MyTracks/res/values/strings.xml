@@ -399,6 +399,105 @@ limitations under the License.
       settings.">  
     Recording
   </string>
+  <string name="settings_recording_auto_resume"
+    translation_description="In the Recording settings, the dropdown option to configure the timeout
+      after which a recorded track will not be continued after phone reboot.">
+    Auto-resume timeout
+  </string>
+  <string name="settings_recording_auto_resume_summary"
+    translation_description="In the Recording settings, the summary for the 'Auto-resume timeout'
+      dropdown option explaining that it configures the maximum time after which a previous
+      recording will not be resumed after phone reboot.">
+    Maximum time after which a previously recording track will not be resumed on phone reboot
+  </string>      
+  <string name="settings_recording_distance"
+    translation_description="In the Recording settings, the dropdown option to configure the
+      distance between two recorded points.">
+    Distance between points
+  </string>
+  <string name="settings_recording_distance_summary"
+    translation_description="In the Recording settings, the summary for the 'Distance between
+      points' dropdown option explaining that it configures the smallest distance between two
+      recordings of your position.">
+    Smallest distance between two recordings of your position
+  </string>
+  <string name="settings_recording_gps_accuracy"
+    translation_description="In the Recording settings, the dropdown option to configure the 
+      required GPS accuracy. If a GPS position's accuracy is below the requirement, then it will
+      not be used.">
+    GPS accuracy
+  </string>
+  <string name="settings_recording_gps_accuracy_summary"
+    translation_description="In the Recording settings, the summary for the 'GPS accuracy' dropdown
+      option explaining that it configures the required accuracy for your position. If a GPS
+      position's accuracy is below the requirement, then it will not be used.">
+    GPS position will be ignored if it is not this accurate
+  </string>
+  <string name="settings_recording_interval"
+    translation_description="In the Recording settings, the dropdown option to configure the
+      time between two recorded points.">
+    Time between points
+  </string>
+  <string name="settings_recording_interval_summary"
+    translation_description="In the Recording settings, the summary for the 'Time between points'
+      dropdown option explaining that it configures the smallest time interval between two
+      recordings of your position.">
+    Smallest time interval between two recordings of your position
+  </string>      
+  <string name="settings_recording_marker"
+    translation_description="In the Recording settings, the dropdown option to configure the time or
+      distance a new marker will be inserted.">
+    Marker frequency
+  </string>
+  <string name="settings_recording_marker_summary"
+    translation_description="In the Recording settings, the summary for the 'Marker frequency'
+      dropdown option explaining that it configures the time or distance after which a new marker
+      will be inserted.">
+    Time/distance after which a new marker will be inserted
+  </string>      
+  <string name="settings_recording_name"
+    translation_description="In the Recording settings, the checkbox on whether the track should be
+      named based on the track's start time or based on a number.">
+    Use time for track name
+  </string>
+  <string name="settings_recording_name_summary_on"
+    translation_description="In the Recording settings, the summary for the 'Use time for track
+      name' checkbox when it is checked explaining using the track's start time as the default track
+      name.">
+    Use the track\'s start time as the default track name
+  </string>
+  <string name="settings_recording_name_summary_off"
+    translation_description="In the Recording settings, the summary for the 'Use time for track
+      name' checkbox when it is unchecked explaining using a number as the default track name.">
+    Use a number as the default track name
+  </string>
+  <string name="settings_recording_track_distance"
+    translation_description="In the Recording settings, the dropdown option to configure the 
+      distance between two tracks.">
+    Distance between tracks
+  </string>
+  <string name="settings_recording_track_distance_summary"
+    translation_description="In the Recording settings, the summary for the 'Distance between
+      tracks' dropdown option explaining that it configures the maximum distance for two recorded
+      points for them to be still considered as the same track.">
+    Track will be split if two recordings of your position are further than this
+  </string>       
+  <string name="settings_recording_voice"
+    translation_description="In the Recording settings, the dropdown option to configure the voice
+      announcement frequency.">
+    Voice frequency
+  </string>
+  <string name="settings_recording_voice_not_available"
+    translation_description="In the Recording settings, the summary for the 'Voice frequency'
+      explaining that this option is not available on your Android phone.">
+    Voice announcement is not available on your Android phone
+  </string>
+  <string name="settings_recording_voice_summary"
+    translation_description="In the Recording settings, the summary for the 'Voice frequency'
+      dropdown option explaining that it configures the time or distance between two voice
+      announcements.">
+    Time/distance between two voice announcements
+  </string>      
   <string name="settings_reset"
     translation_description="In the Settings page, the option to reset everything to the defaults."> 
     Reset to defaults
@@ -413,6 +512,92 @@ limitations under the License.
       settings.">
     Sensor
   </string>
+    <string name="settings_sensor_ant_not_paired"
+    translation_description="In the Sensor settings, the summary for 'Unpair ANT+ heart rate sensor'
+      or 'Unpair SRM ANT+ bridge' when there no ANT+ device paired.">
+    Not paired
+  </string>
+  <string name="settings_sensor_ant_options"
+    translation_description="In the Sensor settings, the section title to configure the ANT+
+      options.">
+    ANT+ Options
+  </string>    
+  <string name="settings_sensor_ant_paired"
+    translation_description="In the Sensor settings, the summary for 'Unpair ANT+ heart rate sensor'
+      or 'Unpair SRM ANT+ bridge' when there is an ANT+ device paired. E.g., 'Paired with: 1'.">
+    Paired with: %d
+  </string>     
+  <string name="settings_sensor_bluetooth_options" 
+    translation_description="In the Sensor settings, the section title to configure the Bluetooth
+      options.">
+   Bluetooth Options
+  </string>
+  <string name="settings_sensor_bluetooth_pairing"
+    translation_description="In the Sensor settings, under the 'Bluetooth Options' configurations,
+      the option to pair with a Bluetooth device.">
+    Bluetooth pairing
+  </string>
+  <string name="settings_sensor_bluetooth_pairing_summary"
+    translation_description="In the Sensor settings, under the 'Bluetooth Options' configurations,
+      the summary for the 'Bluetooth pairing' option explaining that it will open the Android's
+      Bluetooth settings to pair a device.">
+    Open Android\'s Bluetooth settings to pair a device
+  </string>
+  <string name="settings_sensor_bluetooth_sensor"
+    translation_description="In the Sensor settings, under the 'Bluetooth Options' configurations,
+      the dropdown option to pick a Bluetooth sensor.">
+    Bluetooth sensor
+  </string>
+  <string name="settings_sensor_bluetooth_sensor_summary"
+    translation_description="In the Sensor settings, under the 'Bluetooth Options' configurations,
+      the summary for the 'Bluetooth sensor' dropdown option explaining it is to pick a Bluetooth
+      sensor to connect to.">
+    The Bluetooth sensor to connect to
+  </string>       
+  <string name="settings_sensor_type"
+    translation_description="In the Sensor settings, the dropdown option to choose a sensor type.">
+    Sensor Type
+  </string>
+  <string name="settings_sensor_type_ant"
+    translation_description="In the Sensor settings, for the 'Sensor Type' dropdown, the option to
+      connect to an ANT+ heart rate sensor.">  
+    ANT+ Heart Rate Sensor
+  </string>
+  <string name="settings_sensor_type_none"
+    translation_description="In the Sensor settings, for the 'Sensor Type' dropdown, the option to
+      not connect to any sensor.">
+    None
+  </string>
+  <string name="settings_sensor_type_polar"
+    translation_description="In the Sensor settings, for the 'Sensor Type' dropdown, the option to
+      connect to a Polar bluetooth sensor.">  
+    Polar Bluetooth
+  </string>
+  <string name="settings_sensor_type_srm"
+    translation_description="In the Sensor settings, for the 'Sensor Type' dropdown, the option to
+      connect to a SRM ANT+ bridge.">  
+    SRM ANT+ Bridge
+  </string>    
+  <string name="settings_sensor_type_summary"
+    translation_description="In the Sensor settings, the summary for the 'Sensor Type' option
+      explaining that it is to configure the type of sensor to connect to.">
+    The type of sensor to connect to
+  </string>
+  <string name="settings_sensor_type_zephyr"
+    translation_description="In the Sensor settings, for the 'Sensor Type' dropdown, the option to
+      connect to a Zephyr bluetooth sensor.">     
+    Zephyr Bluetooth
+  </string>      
+  <string name="settings_sensor_unpair_ant"
+    translation_description="In the Sensor settings, under the 'ANT+ Options' configurations, the
+      option to unpair an ANT+ heart rate sensor.">
+    Unpair ANT+ heart rate sensor
+  </string>
+  <string name="settings_sensor_unpair_srm"
+    translation_description="In the Sensor settings, under the 'ANT+ Options' configurations, the
+      option to unpair a SRM ANT+ bridge.">
+    Unpair SRM ANT+ bridge
+  </string>    
   <string name="settings_sharing"
     translation_description="In the Settings page, the option to change the track sharing related
       settings.">   
@@ -890,168 +1075,8 @@ limitations under the License.
     Import error for file %s
   </string>
 
- 
-  
-  <!-- Recording settings -->
-  <!-- TODO decide if voice frequency should be under the Recording settings. -->
-  <string name="settings_announcement_frequency"
-    translation_description="In the Recording settings, the dropdown option to configure the voice
-      announcement frequency.">
-    Voice frequency
-  </string>
-  <string name="settings_announcement_frequency_summary"
-    translation_description="In the Recording settings, the summary for the 'Voice frequency'
-      dropdown option explaining that it configures the time or distance between two voice
-      announcements.">
-    Time/distance between two voice announcements
-  </string>
-  <string name="settings_announcement_frequency_not_available"
-    translation_description="In the Recording settings, the summary for the 'Voice frequency'
-      explaining that this option is not available on your Android phone.">
-    Voice announcement is not available on your Android phone
-  </string>
-  <string name="settings_split_frequency"
-    translation_description="In the Recording settings, the dropdown option to configure the
-      time or distance a new marker will be inserted.">
-    Marker frequency
-  </string>
-  <string name="settings_split_frequency_summary"
-    translation_description="In the Recording settings, the summary for the 'Marker frequency' 
-      dropdown option explaining that it configures the time or distance after which a new
-      marker will be inserted.">
-    Time/distance after which a new marker will be inserted
-  </string>
-  <string name="settings_min_recording_interval"
-    translation_description="In the Recording settings, the dropdown option to configure the
-      time between two recorded points.">
-    Time between points
-  </string>
-  <string name="settings_min_recording_interval_summary"
-    translation_description="In the Recording settings, the summary for the 'Time between points'
-      dropdown option explaining that it configures the smallest time interval between two
-      recordings of your position.">
-    Smallest time interval between two recordings of your position
-  </string>    
-  <string name="settings_min_recording_distance"
-    translation_description="In the Recording settings, the dropdown option to configure the
-      distance between two recorded points.">
-    Distance between points
-  </string>
-  <string name="settings_min_recording_distance_summary"
-    translation_description="In the Recording settings, the summary for the 'Distance between
-      points' dropdown option explaining that it configures the smallest distance between two
-      recordings of your position.">
-    Smallest distance between two recordings of your position
-  </string>
-  <string name="settings_max_recording_distance"
-    translation_description="In the Recording settings, the dropdown option to configure the 
-      distance between two tracks.">
-    Distance between tracks
-  </string>
-  <string name="settings_max_recording_distance_summary"
-    translation_description="In the Recording settings, the summary for the 'Distance between
-      tracks' dropdown option explaining that it configures the maximum distance for two recorded
-      points for them to be still considered as the same track.">
-    Track will be split if two recordings of your position are further than this
-  </string>
-  <string name="settings_min_required_accuracy"
-    translation_description="In the Recording settings, the dropdown option to configure the 
-      required GPS accuracy. If a GPS position's accuracy is below the requirement, then it will
-      not be used.">
-    GPS accuracy
-  </string>
-  <string name="settings_min_required_accuracy_summary"
-    translation_description="In the Recording settings, the summary for the 'GPS accuracy' dropdown
-      option explaining that it configures the required accuracy for your position.
-      If a GPS position's accuracy is below the requirement, then it will not be used.">
-    GPS position will be ignored if it is not this accurate
-  </string>
-  <string name="settings_auto_resume_track_timeout"
-    translation_description="In the Recording settings, the dropdown option to configure the timeout
-      after which a recorded track will not be continued after phone reboot.">
-    Auto-resume timeout
-  </string>
-  <string name="settings_auto_resume_track_timeout_summary"
-    translation_description="In the Recording settings, the summary for the 'Auto-resume timeout'
-      dropdown option explaining that it configures the maximum time after which a previous
-      recording will not resumed after phone reboot.">
-    Maximum time after which a previously recording track will not be resumed on phone reboot
-  </string>      
-  <string name="settings_timestamp_track_name"
-    translation_description="In the Recording settings, the checkbox on whether the track should be
-      named based on the track's start time or based on a number.">
-    Use time for track name
-  </string>
-  <string name="settings_timestamp_track_name_summary_on"
-    translation_description="In the Recording settings, the summary for the 'Use time for track
-      name' checkbox when it is checked explaining using the track's start time as the default track
-      name.">
-    Use the track\'s start time as the default track name
-  </string>
-  <string name="settings_timestamp_track_name_summary_off"
-    translation_description="In the Recording settings, the summary for the 'Use time for track
-      name' checkbox when it is unchecked explaining using a number as the default track name.">
-    Use a number as the default track name
-  </string>
       
-  <!-- Sensor settings -->
-  <string name="settings_sensor_type"
-    translation_description="In the Sensor settings, the dropdown option to choose a sensor type.">
-    Sensor Type
-  </string>
-  <string name="settings_sensor_type_summary"
-    translation_description="In the Sensor settings, the summary for the 'Sensor Type' option
-      explaining that it is to configure the type of sensor to connect to.">
-    The type of sensor to connect to
-  </string>
-  <string name="bluetooth_options" 
-    translation_description="In the Sensor settings, the section title to configure the Bluetooth
-      options.">
-   Bluetooth Options
-  </string>
-  <string name="bluetooth_sensor_title"
-    translation_description="In the Sensor settings, the dropdown option to pick a Bluetooth
-      sensor.">
-    Bluetooth sensor
-  </string>
-  <string name="bluetooth_sensor_summary"
-    translation_description="In the Sensor settings, the summary for the 'Bluetooth sensor' dropdown
-      option explaining it is to pick a Bluetooth sensor to connect to.">
-    The Bluetooth sensor to connect to
-  </string>
-  <string name="bluetooth_pairing"
-    translation_description="In the Sensor settings, the option to pair with a Bluetooth device.">
-    Bluetooth pairing
-  </string>
-  <string name="bluetooth_pairing_summary"
-    translation_description="In the Sensor settings, the summary for the 'Bluetooth pairing' option
-      explaining that it will open the Android's Bluetooth settings to pair a device.">
-    Open Android\'s Bluetooth settings to pair a device
-  </string>
-  <string name="ant_options"
-    translation_description="In the Sensor settings, the section title to configure the ANT+
-      options.">
-    ANT+ Options
-  </string>    
-  <string name="settings_heart_rate_ant_sensor_id"
-    translation_description="In the Sensor settings, the option to unpair an ANT+ heart rate
-      sensor.">
-    Unpair ANT+ heart rate sensor
-  </string>
-  <string name="settings_srm_bridge_ant_sensor_id"
-    translation_description="In the Sensor settings, the option to unpair a SRM ANT+ bridge.">
-    Unpair SRM ANT+ bridge
-  </string>    
-  <string name="settings_ant_not_paired"
-    translation_description="In the Sensor settings, the summary under 'Clear ANT+ sensor' or 'Clear
-      SRM ANT+ bridge' when there no ANT+ device paired.">
-    Not paired
-  </string>
-  <string name="settings_ant_paired"
-    translation_description="In the Sensor settings, the summary under 'Clear ANT+ sensor' or 'Clear
-      SRM ANT+ bridge' when there is an ANT+ device paired. E.g., 'Paired with: 1'.">
-    Paired with: %d
-  </string>
+  
   
   <!-- Sharing settings -->
   <string name="settings_map_public"
@@ -1562,33 +1587,4 @@ limitations under the License.
       is sending data.">
     Sending
   </string>
-      
-  <!-- Sensor Type Options -->
-  <string name="sensor_type_option_none"
-    translation_description="In the Sensor Options settings page, for the Sensor Type picker, the
-        dropdown option to not connect to any sensor.">
-    None
-  </string>
-  <string name="sensor_type_option_ant"
-    translation_description="In the Sensor Options settings page, for the Sensor Type picker, the
-        dropdown option to connect to an ANT+ sensor.">  
-    ANT+ Sensor
-  </string>
-  <string name="sensor_type_option_srm_ant_bridge"
-    translation_description="In the Sensor Options settings page, for the Sensor Type picker, the
-        dropdown option to connect to a SRM ANT+ bridge.">  
-    SRM ANT+ Bridge
-  </string>
-  <string name="sensor_type_option_polar"
-    translation_description="In the Sensor Options settings page, for the Sensor Type picker, the
-        dropdown option to connect to a Polar bluetooth sensor.">  
-    Polar Bluetooth
-  </string>
-  <string name="sensor_type_option_zephyr"
-    translation_description="In the Sensor Options settings page, for the Sensor Type picker, the
-        dropdown option to connect to a Zephyr bluetooth sensor.">     
-    Zephyr Bluetooth
-  </string>
-
-
 </resources>

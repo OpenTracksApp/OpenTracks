@@ -166,22 +166,22 @@ limitations under the License.
   <string name="settings_recording">Enregistrament</string>
   <string name="settings_sharing">Compartició</string>
 
-  <string name="settings_announcement_frequency_not_available">No es troba disponible a la vostra versió de l\'Android</string>
+  <string name="settings_recording_voice_not_available">No es troba disponible a la vostra versió de l\'Android</string>
 
-  <string name="settings_announcement_frequency">Freqüència d\'avís</string>
-  <string name="settings_announcement_frequency_summary">Temps mínim entre dos avisos de veu</string>
+  <string name="settings_recording_voice">Freqüència d\'avís</string>
+  <string name="settings_recording_voice_summary">Temps mínim entre dos avisos de veu</string>
 
-  <string name="settings_min_recording_distance">Distància mínima entre punts</string>
-  <string name="settings_min_recording_distance_summary">La distància més petita entre dos punts enregistrats de la vostra posició</string>
+  <string name="settings_recording_distance">Distància mínima entre punts</string>
+  <string name="settings_recording_distance_summary">La distància més petita entre dos punts enregistrats de la vostra posició</string>
 
-  <string name="settings_max_recording_distance">Distància màxima entre punts</string>
-  <string name="settings_max_recording_distance_summary">Si dos punts estan més lluny d\'això, es dividirà la ruta</string>
+  <string name="settings_recording_track_distance">Distància màxima entre punts</string>
+  <string name="settings_recording_track_distance_summary">Si dos punts estan més lluny d\'això, es dividirà la ruta</string>
 
-  <string name="settings_min_recording_interval">Temps mínim entre punts</string>
-  <string name="settings_min_recording_interval_summary">Interval de temps mínim entre dos enregistraments de la vostra posició</string>
+  <string name="settings_recording_interval">Temps mínim entre punts</string>
+  <string name="settings_recording_interval_summary">Interval de temps mínim entre dos enregistraments de la vostra posició</string>
 
-  <string name="settings_min_required_accuracy">Precisió mínima</string>
-  <string name="settings_min_required_accuracy_summary">S\'aturarà l\'enregistrament si la vostra posició no és així de precisa com a mínim</string>
+  <string name="settings_recording_gps_accuracy">Precisió mínima</string>
+  <string name="settings_recording_gps_accuracy_summary">S\'aturarà l\'enregistrament si la vostra posició no és així de precisa com a mínim</string>
 
   <string name="settings_display_metric">Fes servir unitats mètriques</string>
   <string name="settings_display_metric_summary_on">Totes les distàncies es mostraran en unitats mètriques</string>
@@ -199,23 +199,23 @@ limitations under the License.
   <string name="settings_share_url_only_summary_on">Només s\'enviarà l\'URL del mapa quan es comparteixi</string>
   <string name="settings_share_url_only_summary_off">També s\'inclouran els continguts de la ruta quan es comparteixi</string>
 
-  <string name="settings_split_frequency">Freqüència de divisió</string>
-  <string name="settings_split_frequency_summary">Temps o distància màxima a partir de la qual s\'insertarà un marcador de divisió nou</string>
+  <string name="settings_recording_marker">Freqüència de divisió</string>
+  <string name="settings_recording_marker_summary">Temps o distància màxima a partir de la qual s\'insertarà un marcador de divisió nou</string>
 
-  <string name="settings_auto_resume_track_timeout">Temps d\'espera per reprende la ruta</string>
-  <string name="settings_auto_resume_track_timeout_summary">Temps màxim en minuts a partir del qual l\'anterior ruta enregistrada no es reprendrà en actualitzar el telèfon</string>
+  <string name="settings_recording_auto_resume">Temps d\'espera per reprende la ruta</string>
+  <string name="settings_recording_auto_resume_summary">Temps màxim en minuts a partir del qual l\'anterior ruta enregistrada no es reprendrà en actualitzar el telèfon</string>
 
-  <string name="settings_timestamp_track_name">Data i hora com a nom de la ruta</string>
-  <string name="settings_timestamp_track_name_summary_on">El nom per defecte de la ruta serà la data i hora en que s\'ha iniciat.</string>
-  <string name="settings_timestamp_track_name_summary_off">Els noms de les rutes seran números que s\'incrementaran per a cada nova ruta.</string>
+  <string name="settings_recording_name">Data i hora com a nom de la ruta</string>
+  <string name="settings_recording_name_summary_on">El nom per defecte de la ruta serà la data i hora en que s\'ha iniciat.</string>
+  <string name="settings_recording_name_summary_off">Els noms de les rutes seran números que s\'incrementaran per a cada nova ruta.</string>
 
   <string name="pace_label">Ritme de pas</string>
 
   <string name="eclair_required">Suportat només en Android 2.0 i superior</string>
   <string name="settings_sensor_type">Tipus de sensor</string>
   <string name="settings_sensor_type_summary">El tipus de sensor al qual es connecta.</string>
-  <string name="bluetooth_sensor_title">Sensor bluetooth</string>
-  <string name="bluetooth_sensor_summary">El sensor bluetooth al qual es connecta.</string>
+  <string name="settings_sensor_bluetooth_sensor">Sensor bluetooth</string>
+  <string name="settings_sensor_bluetooth_sensor_summary">El sensor bluetooth al qual es connecta.</string>
   <string name="settings_modular_stats_display_title">Pantalla d\'estadístiques modulars</string>
 
   <string name="settings_backup">Còpia de seguretat (BETA)</string>
@@ -383,9 +383,9 @@ limitations under the License.
   <string name="check_units_title">Avís de les unitats de mesura</string>
 
   <!-- Fake preference keys - never saved, but show options in the preferences screen -->
-  <string name="bluetooth_options">Opcions del Bluetooth</string>
-  <string name="bluetooth_pairing">Associació de dispositius</string>
-  <string name="bluetooth_pairing_summary">Obriu els paràmetres de bluetooth de l\'Android per associar un dispositiu</string>
+  <string name="settings_sensor_bluetooth_options">Opcions del Bluetooth</string>
+  <string name="settings_sensor_bluetooth_pairing">Associació de dispositius</string>
+  <string name="settings_sensor_bluetooth_pairing_summary">Obriu els paràmetres de bluetooth de l\'Android per associar un dispositiu</string>
   <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
   <string name="settings_sensor">Opcions del sensor</string>
 
@@ -408,5 +408,5 @@ limitations under the License.
   <string name="sending">S\'està enviant</string>
 
   <!-- Sensor Type Options -->
-  <string name="sensor_type_option_none">Cap</string>
+  <string name="settings_sensor_type_none">Cap</string>
 </resources>
