@@ -86,7 +86,7 @@ public class BackupActivityHelper {
     final ProgressDialog progressDialog = ProgressDialog.show(
         activity,
         activity.getString(R.string.progress_title),
-        activity.getString(R.string.backup_write_progress_message),
+        activity.getString(R.string.settings_backup_now_progress_message),
         true);
 
     // Do the writing in another thread
@@ -119,20 +119,20 @@ public class BackupActivityHelper {
     }
 
     if (!backup.isBackupsDirectoryAvailable(false)) {
-      showToast(R.string.no_backups);
+      showToast(R.string.settings_backup_restore_no_backup);
       return;
     }
 
     final Date[] backupDates = backup.getAvailableBackups();
     if (backupDates == null || backupDates.length == 0) {
-      showToast(R.string.no_backups);
+      showToast(R.string.settings_backup_restore_no_backup);
       return;
     }
     Arrays.sort(backupDates, REVERSE_DATE_ORDER);
 
     // Show a confirmation dialog
     Builder confirmationDialogBuilder = new AlertDialog.Builder(activity);
-    confirmationDialogBuilder.setMessage(R.string.restore_overwrites_warning);
+    confirmationDialogBuilder.setMessage(R.string.settings_backup_restore_confirm_message);
     confirmationDialogBuilder.setCancelable(true);
     confirmationDialogBuilder.setPositiveButton(android.R.string.yes,
         new OnClickListener() {
@@ -166,7 +166,7 @@ public class BackupActivityHelper {
     // Show a dialog for the user to pick which backup to restore
     Builder dialogBuilder = new AlertDialog.Builder(activity);
     dialogBuilder.setCancelable(true);
-    dialogBuilder.setTitle(R.string.select_backup_to_restore);
+    dialogBuilder.setTitle(R.string.settings_backup_restore_select);
     dialogBuilder.setItems(backupDateStrs, new OnClickListener() {
       @Override
       public void onClick(DialogInterface dialog, int which) {
@@ -187,7 +187,7 @@ public class BackupActivityHelper {
     ProgressDialog.show(
         activity,
         activity.getString(R.string.progress_title),
-        activity.getString(R.string.backup_import_progress_message),
+        activity.getString(R.string.settings_backup_restore_progress_message),
         true);
 
     // Do the actual importing in another thread (don't block the UI)

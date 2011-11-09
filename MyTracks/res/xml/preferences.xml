@@ -191,38 +191,38 @@ limitations under the License.
   <PreferenceScreen android:title="@string/settings_sharing">
     <CheckBoxPreference
         android:key="@string/default_map_public_key"
-        android:title="@string/settings_map_public"
-        android:summaryOn="@string/settings_map_public_summary_on"
-        android:summaryOff="@string/settings_map_public_summary_off"
+        android:title="@string/settings_sharing_map_public"
+        android:summaryOn="@string/settings_sharing_map_public_summary_on"
+        android:summaryOff="@string/settings_sharing_map_public_summary_off"
         android:defaultValue="true" />
 
     <CheckBoxPreference
         android:key="@string/share_url_only_key"
-        android:title="@string/settings_share_url_only"
-        android:summaryOn="@string/settings_share_url_only_summary_on"
-        android:summaryOff="@string/settings_share_url_only_summary_off"
+        android:title="@string/settings_sharing_url_only"
+        android:summaryOn="@string/settings_sharing_url_only_summary_on"
+        android:summaryOff="@string/settings_sharing_url_only_summary_off"
         android:defaultValue="false" />
 
     <CheckBoxPreference
         android:key="@string/allow_access_key"
-        android:title="@string/settings_allow_access"
-        android:summaryOn="@string/settings_allow_access_summary_on"
-        android:summaryOff="@string/settings_allow_access_summary_off"
+        android:title="@string/settings_sharing_allow_access"
+        android:summaryOn="@string/settings_sharing_allow_access_summary_on"
+        android:summaryOff="@string/settings_sharing_allow_access_summary_off"
         android:defaultValue="false" />
   </PreferenceScreen>
 
   <!-- Backup settings -->
   <PreferenceScreen android:title="@string/settings_backup">
-    <PreferenceCategory android:title="@string/settings_sd_backup">
+    <PreferenceCategory android:title="@string/settings_backup_sd_card">
       <Preference
           android:key="@string/backup_to_sd_key"
-          android:title="@string/settings_backup_to_sd"
-          android:summary="@string/settings_backup_to_sd_summary"
+          android:title="@string/settings_backup_now"
+          android:summary="@string/settings_backup_now_summary"
           android:persistent="false" />
       <Preference
           android:key="@string/restore_from_sd_key"
-          android:title="@string/settings_restore_from_sd"
-          android:summary="@string/settings_restore_from_sd_summary"
+          android:title="@string/settings_backup_restore"
+          android:summary="@string/settings_backup_restore_summary"
           android:persistent="false" />
     </PreferenceCategory>
   </PreferenceScreen>

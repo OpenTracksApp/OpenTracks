@@ -184,17 +184,17 @@ limitations under the License.
   <string name="settings_display_metric_summary_on">Alla distanser kommer att visas i metriska enheter</string>
   <string name="settings_display_metric_summary_off">Alla distanser kommer att visas i brittiska enheter</string>
 
-  <string name="settings_map_public">Gör kartor offentliga</string>
-  <string name="settings_map_public_summary_on">Uppladdade kartor kommer att vara synliga för alla på maps.google.com</string>
-  <string name="settings_map_public_summary_off">Uppladdade kartor kommer inte att visas offentligt på maps.google.com</string>
+  <string name="settings_sharing_map_public">Gör kartor offentliga</string>
+  <string name="settings_sharing_map_public_summary_on">Uppladdade kartor kommer att vara synliga för alla på maps.google.com</string>
+  <string name="settings_sharing_map_public_summary_off">Uppladdade kartor kommer inte att visas offentligt på maps.google.com</string>
 
   <string name="settings_display_speed">Visa hastighet</string>
   <string name="settings_display_speed_summary_on">Hastighet kommer att visas</string>
   <string name="settings_display_speed_summary_off">Tempo kommer att visas</string>
 
-  <string name="settings_share_url_only">Dela bara länk</string>
+  <string name="settings_sharing_url_only">Dela bara länk</string>
   <string name="settings_share_url_only_summary_on">Bara länken till kartan kommer att skickas vid delning</string>
-  <string name="settings_share_url_only_summary_off">Innehållet i spåret kommer också att inkluderas vid delning</string>
+  <string name="settings_sharing_url_only_summary_off">Innehållet i spåret kommer också att inkluderas vid delning</string>
 
   <string name="settings_recording_marker">Delningsfrekvens</string>
   <string name="settings_recording_marker_summary">Maximala tiden eller distansen varefter en ny delningsmarkör kommer infogas</string>

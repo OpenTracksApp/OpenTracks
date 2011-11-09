@@ -212,17 +212,17 @@ limitations under the License.
   <string name="settings_display_metric_summary_on">全ての距離をメートル法で表示します</string>
   <string name="settings_display_metric_summary_off">全ての距離をヤード・ポンド法で表示します</string>
 
-  <string name="settings_map_public">マップの公開</string>
-  <string name="settings_map_public_summary_on">アップロードされたマップはmaps.google.comで誰でも閲覧できます</string>
-  <string name="settings_map_public_summary_off">アップロードされたマップはmaps.google.comのリストに公開されません</string>
+  <string name="settings_sharing_map_public">マップの公開</string>
+  <string name="settings_sharing_map_public_summary_on">アップロードされたマップはmaps.google.comで誰でも閲覧できます</string>
+  <string name="settings_sharing_map_public_summary_off">アップロードされたマップはmaps.google.comのリストに公開されません</string>
 
   <string name="settings_display_speed">速度表示</string>
   <string name="settings_display_speed_summary_on">速度が表示されます</string>
   <string name="settings_display_speed_summary_off">ペースが表示されます</string>
 
-  <string name="settings_share_url_only">URLのみ共有</string>
+  <string name="settings_sharing_url_only">URLのみ共有</string>
   <string name="settings_share_url_only_summary_on">共有時にマップのURLのみ送信します</string>
-  <string name="settings_share_url_only_summary_off">共有時にトラックのコンテントが含まれます</string>
+  <string name="settings_sharing_url_only_summary_off">共有時にトラックのコンテントが含まれます</string>
 
   <string name="settings_recording_marker">分割頻度</string>
   <string name="settings_recording_marker_summary">分割マーカーを挿入する時間または距離の間隔</string>
@@ -250,17 +250,17 @@ limitations under the License.
 
   <!-- Backups -->
   <string name="settings_backup">バックアップ (ベータ版)</string>
-  <string name="settings_sd_backup">SDカード バックアップ</string>
-  <string name="settings_backup_to_sd">今すぐバックアップ</string>
-  <string name="settings_backup_to_sd_summary">SDカードに全てのトラックと設定をバックアップします</string>
-  <string name="settings_restore_from_sd">今すぐ復元</string>
-  <string name="settings_restore_from_sd_summary">SDカードから全てのトラックと設定を復元します</string>
+  <string name="settings_backup_sd_card">SDカード バックアップ</string>
+  <string name="settings_backup_now">今すぐバックアップ</string>
+  <string name="settings_backup_now_summary">SDカードに全てのトラックと設定をバックアップします</string>
+  <string name="settings_backup_restore">今すぐ復元</string>
+  <string name="settings_backup_restore_summary">SDカードから全てのトラックと設定を復元します</string>
 
-  <string name="restore_overwrites_warning">SDカードからの復元を実行すると、現在のトラックと設定は *全て上書き* されてしまいます．よろしいですか?</string>
-  <string name="select_backup_to_restore">復元するバックアップの選択</string>
-  <string name="no_backups">バックアップがありません．</string>
-  <string name="backup_write_progress_message">SDカードに全てのトラックと設定をバックアップしています．しばらくかかることがあります...</string>
-  <string name="backup_import_progress_message">SDカードから全てのトラックと設定を復元しています．しばらくかかることがあります...</string>
+  <string name="settings_backup_restore_confirm_message">SDカードからの復元を実行すると、現在のトラックと設定は *全て上書き* されてしまいます．よろしいですか?</string>
+  <string name="settings_backup_restore_select">復元するバックアップの選択</string>
+  <string name="settings_backup_restore_no_backup">バックアップがありません．</string>
+  <string name="settings_backup_now_progress_message">SDカードに全てのトラックと設定をバックアップしています．しばらくかかることがあります...</string>
+  <string name="settings_backup_restore_progress_message">SDカードから全てのトラックと設定を復元しています．しばらくかかることがあります...</string>
 
   <!-- MyTracksSky -->
   <string name="mytracks_sky">GPS衛星</string>

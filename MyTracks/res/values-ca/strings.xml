@@ -187,17 +187,17 @@ limitations under the License.
   <string name="settings_display_metric_summary_on">Totes les distàncies es mostraran en unitats mètriques</string>
   <string name="settings_display_metric_summary_off">Totes les distàncies es mostraran en unitats imperials</string>
 
-  <string name="settings_map_public">Fes el mapa públic</string>
-  <string name="settings_map_public_summary_on">Els mapes pujats seran visibles per tothom a maps.google.com</string>
-  <string name="settings_map_public_summary_off">Els mapes pujats no es llistaran públicament a maps.google.com</string>
+  <string name="settings_sharing_map_public">Fes el mapa públic</string>
+  <string name="settings_sharing_map_public_summary_on">Els mapes pujats seran visibles per tothom a maps.google.com</string>
+  <string name="settings_sharing_map_public_summary_off">Els mapes pujats no es llistaran públicament a maps.google.com</string>
 
   <string name="settings_display_speed">Mostra la velocitat</string>
   <string name="settings_display_speed_summary_on">Es mostrarà la velocitat</string>
   <string name="settings_display_speed_summary_off">Es mostrarà el ritme de pas</string>
 
-  <string name="settings_share_url_only">Comparteix només l\'URL</string>
+  <string name="settings_sharing_url_only">Comparteix només l\'URL</string>
   <string name="settings_share_url_only_summary_on">Només s\'enviarà l\'URL del mapa quan es comparteixi</string>
-  <string name="settings_share_url_only_summary_off">També s\'inclouran els continguts de la ruta quan es comparteixi</string>
+  <string name="settings_sharing_url_only_summary_off">També s\'inclouran els continguts de la ruta quan es comparteixi</string>
 
   <string name="settings_recording_marker">Freqüència de divisió</string>
   <string name="settings_recording_marker_summary">Temps o distància màxima a partir de la qual s\'insertarà un marcador de divisió nou</string>
@@ -219,18 +219,18 @@ limitations under the License.
   <string name="settings_modular_stats_display_title">Pantalla d\'estadístiques modulars</string>
 
   <string name="settings_backup">Còpia de seguretat (BETA)</string>
-  <string name="settings_sd_backup">Còpia de seguretat a la targeta SD</string>
-  <string name="settings_backup_to_sd">Fes la còpia ara</string>
-  <string name="settings_backup_to_sd_summary">Escriu una còpia completa de totes les rutes i els paràmetres a la targeta SD</string>
-  <string name="settings_restore_from_sd">Restaura ara</string>
-  <string name="settings_restore_from_sd_summary">Restaura totes les rutes i els paràmetres des de la targeta SD.</string>
+  <string name="settings_backup_sd_card">Còpia de seguretat a la targeta SD</string>
+  <string name="settings_backup_now">Fes la còpia ara</string>
+  <string name="settings_backup_now_summary">Escriu una còpia completa de totes les rutes i els paràmetres a la targeta SD</string>
+  <string name="settings_backup_restore">Restaura ara</string>
+  <string name="settings_backup_restore_summary">Restaura totes les rutes i els paràmetres des de la targeta SD.</string>
 
   <!-- Backups -->
-  <string name="restore_overwrites_warning">La restauració d\'una còpia de seguretat des de la targeta SD sobreescriurà totes les rutes i paràmetres. Esteu segur?</string>
-  <string name="select_backup_to_restore">Seleccioneu la còpia que es restaurarà</string>
-  <string name="no_backups">No s\'ha trobat cap còpia de seguretat.</string>
-  <string name="backup_write_progress_message">S\'estan escrivint totes les rutes i els paràmetres a la targeta SD. Això pot trigar una estona...</string>
-  <string name="backup_import_progress_message">S\'estan llegint totes les rutes i els paràmetres de la targeta SD. Això pot trigar una estona...</string>
+  <string name="settings_backup_restore_confirm_message">La restauració d\'una còpia de seguretat des de la targeta SD sobreescriurà totes les rutes i paràmetres. Esteu segur?</string>
+  <string name="settings_backup_restore_select">Seleccioneu la còpia que es restaurarà</string>
+  <string name="settings_backup_restore_no_backup">No s\'ha trobat cap còpia de seguretat.</string>
+  <string name="settings_backup_now_progress_message">S\'estan escrivint totes les rutes i els paràmetres a la targeta SD. Això pot trigar una estona...</string>
+  <string name="settings_backup_restore_progress_message">S\'estan llegint totes les rutes i els paràmetres de la targeta SD. Això pot trigar una estona...</string>
 
   <!-- MyTracksSky -->
   <string name="mytracks_sky">Satèl·lits GPS</string>

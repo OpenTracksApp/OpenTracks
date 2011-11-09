@@ -201,11 +201,11 @@ limitations under the License.
   <string name="settings_recording_voice_not_available">No disponible para tu versión de Android</string>
   <string name="settings_not_while_recording">No disponible mientras se graba el recorrido</string>
 
-  <string name="settings_allow_access">Permitir acceso</string>
-  <string name="settings_allow_access_summary_on">Otras aplicaciones pueden leer, escribir, comenzar/detener la grabación de 
+  <string name="settings_sharing_allow_access">Permitir acceso</string>
+  <string name="settings_sharing_allow_access_summary_on">Otras aplicaciones pueden leer, escribir, comenzar/detener la grabación de 
           datos de MyTracks</string>
-  <string name="settings_allow_access_summary_off">Otras aplicaciones no pueden leer, escribir, comenzar/detener la grabación de datos de MyTracks</string>
-  <string name="settings_allow_access_dialog_message">¿Esta seguro que desea que otras aplicaciones, 
+  <string name="settings_sharing_allow_access_summary_off">Otras aplicaciones no pueden leer, escribir, comenzar/detener la grabación de datos de MyTracks</string>
+  <string name="settings_sharing_allow_access_confirm_message">¿Esta seguro que desea que otras aplicaciones, 
           futuras aplicaciones inclusive, controlen y tengan acceso a los datos de MyTracks? No habra notificaciones 
           posteriores.</string>
 		  
@@ -228,17 +228,17 @@ limitations under the License.
   <string name="settings_display_metric_summary_on">Todas las distancias serán mostradas en unidades métricas</string>
   <string name="settings_display_metric_summary_off">Todas las distancias serán mostradas en unidades británicas</string>
 
-  <string name="settings_map_public">Hacer mapas en maps.google.com públicos</string>
-  <string name="settings_map_public_summary_on">Mapas subidos serán visibles a cualquier persona en maps.google.com</string>
-  <string name="settings_map_public_summary_off">Mapas subidos no serán públicos en maps.google.com</string>
+  <string name="settings_sharing_map_public">Hacer mapas en maps.google.com públicos</string>
+  <string name="settings_sharing_map_public_summary_on">Mapas subidos serán visibles a cualquier persona en maps.google.com</string>
+  <string name="settings_sharing_map_public_summary_off">Mapas subidos no serán públicos en maps.google.com</string>
 
   <string name="settings_display_speed">Mostrar</string>
   <string name="settings_display_speed_summary_on">La velocidad será mostrada</string>
   <string name="settings_display_speed_summary_off">El paso será mostrado</string>
 
-  <string name="settings_share_url_only">Mandar sólo URL como mensaje al compartir</string>
+  <string name="settings_sharing_url_only">Mandar sólo URL como mensaje al compartir</string>
   <string name="settings_share_url_only_summary_on">Sólo el URL del mapa será enviado al compartir</string>
-  <string name="settings_share_url_only_summary_off">Los contenidos de la pista también serán incluídos al compartir</string>
+  <string name="settings_sharing_url_only_summary_off">Los contenidos de la pista también serán incluídos al compartir</string>
 
   <string name="settings_recording_marker">Dividir frecuencia</string>
   <string name="settings_recording_marker_summary">Tiempo o distancia máxima para insertar una nueva marca de división</string>
@@ -282,17 +282,17 @@ limitations under the License.
   
   <!-- Backups -->
   <string name="settings_backup">Copia seguridad (BETA)</string>
-  <string name="settings_sd_backup">Copia seguridad en tarjeta SD</string>
-  <string name="settings_backup_to_sd">Hacer copia seguridad</string>
-  <string name="settings_backup_to_sd_summary">Hacer una copia total de sus recorridos y configuraciones a la tarjeta SD</string>
-  <string name="settings_restore_from_sd">Restaurar</string>
-  <string name="settings_restore_from_sd_summary">Restaurar todos los recorridos y configuraciones desde la tarjeta SD</string>
+  <string name="settings_backup_sd_card">Copia seguridad en tarjeta SD</string>
+  <string name="settings_backup_now">Hacer copia seguridad</string>
+  <string name="settings_backup_now_summary">Hacer una copia total de sus recorridos y configuraciones a la tarjeta SD</string>
+  <string name="settings_backup_restore">Restaurar</string>
+  <string name="settings_backup_restore_summary">Restaurar todos los recorridos y configuraciones desde la tarjeta SD</string>
 
-  <string name="restore_overwrites_warning">Restaurar una copia seguridad desde la tarjeta SD SOBREESCRIBIRÁ todos sus recorridos y configuraciones actuales. ¿Está usted seguro?</string>
-  <string name="select_backup_to_restore">Seleccionar la copia seguridad para restaurar</string>
-  <string name="no_backups">No se han encontrado copias seguridad.</string>
-  <string name="backup_write_progress_message">Guardando todos los recorridos y configuraciones a la tarjeta SD. Esto puede llevar un rato...</string>
-  <string name="backup_import_progress_message">Leyendo todos los recorridos y configuraciones desde la tarjeta SD. Esto puede llevar un rato...</string>
+  <string name="settings_backup_restore_confirm_message">Restaurar una copia seguridad desde la tarjeta SD SOBREESCRIBIRÁ todos sus recorridos y configuraciones actuales. ¿Está usted seguro?</string>
+  <string name="settings_backup_restore_select">Seleccionar la copia seguridad para restaurar</string>
+  <string name="settings_backup_restore_no_backup">No se han encontrado copias seguridad.</string>
+  <string name="settings_backup_now_progress_message">Guardando todos los recorridos y configuraciones a la tarjeta SD. Esto puede llevar un rato...</string>
+  <string name="settings_backup_restore_progress_message">Leyendo todos los recorridos y configuraciones desde la tarjeta SD. Esto puede llevar un rato...</string>
   
   <!-- MyTracksSky -->
   <string name="mytracks_sky">Satélites GPS</string>

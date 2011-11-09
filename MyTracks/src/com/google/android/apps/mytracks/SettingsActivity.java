@@ -135,8 +135,8 @@ public class SettingsActivity extends PreferenceActivity {
         if ((Boolean) newValue) {
           AlertDialog dialog = new AlertDialog.Builder(SettingsActivity.this)
               .setCancelable(true)
-              .setTitle(getString(R.string.settings_allow_access))
-              .setMessage(getString(R.string.settings_allow_access_dialog_message))
+              .setTitle(getString(R.string.settings_sharing_allow_access))
+              .setMessage(getString(R.string.settings_sharing_allow_access_confirm_message))
               .setPositiveButton(android.R.string.ok, new OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int button) {
@@ -244,10 +244,10 @@ public class SettingsActivity extends PreferenceActivity {
     resetPreference.setEnabled(!recording);
     backupNowPreference.setSummary(
         recording ? R.string.settings_not_while_recording
-                  : R.string.settings_backup_to_sd_summary);
+                  : R.string.settings_backup_now_summary);
     restoreNowPreference.setSummary(
         recording ? R.string.settings_not_while_recording
-                  : R.string.settings_restore_from_sd_summary);
+                  : R.string.settings_backup_restore_summary);
     resetPreference.setSummary(
         recording ? R.string.settings_not_while_recording
                   : R.string.settings_reset_summary);

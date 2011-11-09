@@ -184,17 +184,17 @@ limitations under the License.
   <string name="settings_display_metric_summary_on">Wszystkie odległości będą wyświetlane w jednostkach metrycznych</string>
   <string name="settings_display_metric_summary_off">Wszystkie odległości będą wyświetlane w jednostkach imperialnych</string>
 
-  <string name="settings_map_public">Ustaw mapy jako publiczne</string>
-  <string name="settings_map_public_summary_on">Przesłane mapy będą dostępne dla wszystkich na maps.google.com</string>
-  <string name="settings_map_public_summary_off">Przesłane mapy nie będą dostępne publicznie na maps.google.com</string>
+  <string name="settings_sharing_map_public">Ustaw mapy jako publiczne</string>
+  <string name="settings_sharing_map_public_summary_on">Przesłane mapy będą dostępne dla wszystkich na maps.google.com</string>
+  <string name="settings_sharing_map_public_summary_off">Przesłane mapy nie będą dostępne publicznie na maps.google.com</string>
 
   <string name="settings_display_speed">Wyświetlanie prędkości</string>
   <string name="settings_display_speed_summary_on">Prędkość będzie wyświetlana</string>
   <string name="settings_display_speed_summary_off">Tempo będzie wyświetlane</string>
 
-  <string name="settings_share_url_only">Dziel się tylko odnośnikiem</string>
+  <string name="settings_sharing_url_only">Dziel się tylko odnośnikiem</string>
   <string name="settings_share_url_only_summary_on">Tylko odnośnik do mapy będzie wysyłany podczas dzielenia się</string>
-  <string name="settings_share_url_only_summary_off">Zawartość trasy będzie również przesyłana</string>
+  <string name="settings_sharing_url_only_summary_off">Zawartość trasy będzie również przesyłana</string>
 
   <string name="settings_recording_marker">Częstotliwość rozdzielania</string>
   <string name="settings_recording_marker_summary">Maksymalny czas lub odległość po którym wstawiony zostanie znacznik rozdzielenia</string>
@@ -212,18 +212,18 @@ limitations under the License.
   <string name="settings_modular_stats_display_title">Widok Statystyk Modularnych</string>
 
   <string name="settings_backup">Kopia zapasowa (BETA)</string>
-  <string name="settings_sd_backup">Kopia zapasowa na kartę SD</string>
-  <string name="settings_backup_to_sd">Utwórz kopię</string>
-  <string name="settings_backup_to_sd_summary">Tworzy kopię zapasową wszystkich tras i ustawień i zapisuje je na karcie SD</string>
-  <string name="settings_restore_from_sd">Odtwórz z kopii</string>
-  <string name="settings_restore_from_sd_summary">Odtwarza wszystkie trasy i ustawienia z kopii zapasowej z karty SD</string>
+  <string name="settings_backup_sd_card">Kopia zapasowa na kartę SD</string>
+  <string name="settings_backup_now">Utwórz kopię</string>
+  <string name="settings_backup_now_summary">Tworzy kopię zapasową wszystkich tras i ustawień i zapisuje je na karcie SD</string>
+  <string name="settings_backup_restore">Odtwórz z kopii</string>
+  <string name="settings_backup_restore_summary">Odtwarza wszystkie trasy i ustawienia z kopii zapasowej z karty SD</string>
 
   <!-- Backups -->
-  <string name="restore_overwrites_warning">Odtworzenie z kopii zapasowej z karty SD zastąpi wszystkie bieżące trasy i ustawienia. Jesteś tego pewien?</string>
-  <string name="select_backup_to_restore">Wybierz kopię do odtworzenia</string>
-  <string name="no_backups">Nie znaleziono kopii zapasowych.</string>
-  <string name="backup_write_progress_message">Zapisywanie wszystkich tras i ustawień na kartę SD. To może trochę potrwać...</string>
-  <string name="backup_import_progress_message">Odczytywanie wszystkich tras i ustawień z karty SD. To może trochę potrwać...</string>
+  <string name="settings_backup_restore_confirm_message">Odtworzenie z kopii zapasowej z karty SD zastąpi wszystkie bieżące trasy i ustawienia. Jesteś tego pewien?</string>
+  <string name="settings_backup_restore_select">Wybierz kopię do odtworzenia</string>
+  <string name="settings_backup_restore_no_backup">Nie znaleziono kopii zapasowych.</string>
+  <string name="settings_backup_now_progress_message">Zapisywanie wszystkich tras i ustawień na kartę SD. To może trochę potrwać...</string>
+  <string name="settings_backup_restore_progress_message">Odczytywanie wszystkich tras i ustawień z karty SD. To może trochę potrwać...</string>
 
   <!-- MyTracksSky -->
   <string name="mytracks_sky">Satelity GPS</string>

@@ -220,17 +220,17 @@ limitations under the License.
   <string name="settings_display_metric_summary_on">Kaikki etäisyydet näytetään metrijärjestelmässä</string>
   <string name="settings_display_metric_summary_off">Kaikki etäisyydet näytetään U.S yksiköitä käyttäen</string>
 
-  <string name="settings_map_public">Aseta kartat julkisiksi</string>
-  <string name="settings_map_public_summary_on">Lähetetyt kartat näkyvät kaikille osoitteessa maps.google.com</string>
-  <string name="settings_map_public_summary_off">Lähetettyjä karttoja ei näytetä julkisesti osoitteessa maps.google.com</string>
+  <string name="settings_sharing_map_public">Aseta kartat julkisiksi</string>
+  <string name="settings_sharing_map_public_summary_on">Lähetetyt kartat näkyvät kaikille osoitteessa maps.google.com</string>
+  <string name="settings_sharing_map_public_summary_off">Lähetettyjä karttoja ei näytetä julkisesti osoitteessa maps.google.com</string>
 
   <string name="settings_display_speed">Näytä nopeus</string>
   <string name="settings_display_speed_summary_on">Nopeus näytetään</string>
   <string name="settings_display_speed_summary_off">Tahti näytetään</string>
 
-  <string name="settings_share_url_only">Jaa vain URL</string>
+  <string name="settings_sharing_url_only">Jaa vain URL</string>
   <string name="settings_share_url_only_summary_on">Ainoastaan kartan URL jaetaan</string>
-  <string name="settings_share_url_only_summary_off">Myös reitin sisältö ja tiedot jaetaan</string>
+  <string name="settings_sharing_url_only_summary_off">Myös reitin sisältö ja tiedot jaetaan</string>
 
   <string name="settings_recording_marker">Reitin jaotus</string>
   <string name="settings_recording_marker_summary">Etäisyys tai aika jolloin reitti jaetaan osiin</string>
@@ -263,17 +263,17 @@ limitations under the License.
 
   <!-- Backups -->
   <string name="settings_backup">Varmuuskopioi (BETA)</string>
-  <string name="settings_sd_backup">Varmuuskopioi SD-kortille</string>
-  <string name="settings_backup_to_sd">Varmuuskopioi</string>
-  <string name="settings_backup_to_sd_summary">Tallenna täydellinen kopio reiteistä ja asetuksista SD-kortille</string>
-  <string name="settings_restore_from_sd">Palauta</string>
-  <string name="settings_restore_from_sd_summary">Palauta kaikki reitit ja asetukset SD-kortilta</string>
+  <string name="settings_backup_sd_card">Varmuuskopioi SD-kortille</string>
+  <string name="settings_backup_now">Varmuuskopioi</string>
+  <string name="settings_backup_now_summary">Tallenna täydellinen kopio reiteistä ja asetuksista SD-kortille</string>
+  <string name="settings_backup_restore">Palauta</string>
+  <string name="settings_backup_restore_summary">Palauta kaikki reitit ja asetukset SD-kortilta</string>
 
-  <string name="restore_overwrites_warning">Palautus SD-kortilta ylikirjoittaa kaikki nykyiset reitit ja asetukset. Jatketaanko?</string>
-  <string name="select_backup_to_restore">Valitse palautettava varmuuskopio</string>
-  <string name="no_backups">Varmuuskopioita ei löytynyt.</string>
-  <string name="backup_write_progress_message">Luodaan varmuuskopiota. Odota...</string>
-  <string name="backup_import_progress_message">Luetaan varmuuskopiota SD-kortilta. Odota...</string>
+  <string name="settings_backup_restore_confirm_message">Palautus SD-kortilta ylikirjoittaa kaikki nykyiset reitit ja asetukset. Jatketaanko?</string>
+  <string name="settings_backup_restore_select">Valitse palautettava varmuuskopio</string>
+  <string name="settings_backup_restore_no_backup">Varmuuskopioita ei löytynyt.</string>
+  <string name="settings_backup_now_progress_message">Luodaan varmuuskopiota. Odota...</string>
+  <string name="settings_backup_restore_progress_message">Luetaan varmuuskopiota SD-kortilta. Odota...</string>
 
   <!-- MyTracksSky -->
   <string name="mytracks_sky">GPS-satelliitit</string>

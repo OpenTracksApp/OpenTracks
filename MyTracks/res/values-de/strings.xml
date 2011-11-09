@@ -190,17 +190,17 @@ limitations under the License.
   <string name="settings_display_metric_summary_on">Alle Entfernungen werden in metrischen Einheiten angezeigt.</string>
   <string name="settings_display_metric_summary_off">Alle Entfernungen werden in imperialen Längeneinheiten angezeigt.</string>
 
-  <string name="settings_map_public">Karten auf maps.google.com veröffentlichen</string>
-  <string name="settings_map_public_summary_on">Hochgeladene Karten auf maps.google.com sind für alle sichtbar.</string>
-  <string name="settings_map_public_summary_off">Hochgeladene Karten auf maps.google.com werden nicht öffentlich sichtbar aufgelistet.</string>
+  <string name="settings_sharing_map_public">Karten auf maps.google.com veröffentlichen</string>
+  <string name="settings_sharing_map_public_summary_on">Hochgeladene Karten auf maps.google.com sind für alle sichtbar.</string>
+  <string name="settings_sharing_map_public_summary_off">Hochgeladene Karten auf maps.google.com werden nicht öffentlich sichtbar aufgelistet.</string>
 
   <string name="settings_display_speed">Geschwindigkeitsanzeige</string>
   <string name="settings_display_speed_summary_on">Geschwindigkeit wird angezeigt.</string>
   <string name="settings_display_speed_summary_off">Pace wird angezeigt.</string>
 
-  <string name="settings_share_url_only">Nur URL als Einladung zum Teilen senden</string>
+  <string name="settings_sharing_url_only">Nur URL als Einladung zum Teilen senden</string>
   <string name="settings_share_url_only_summary_on">Beim Teilen mit Freunden wird nur die Karten-URL gesendet.</string>
-  <string name="settings_share_url_only_summary_off">Beim Teilen mit Freunden wird der GPS-Track selbst gesendet.</string>
+  <string name="settings_sharing_url_only_summary_off">Beim Teilen mit Freunden wird der GPS-Track selbst gesendet.</string>
 
   <string name="settings_recording_marker">Zerteilungsfrequenz</string>
   <string name="settings_recording_marker_summary">Längste Dauer oder Entfernung, nach der automatisch ein Marker eingefügt wird.</string>
@@ -228,18 +228,18 @@ limitations under the License.
 
   <!-- Backups -->
   <string name="settings_backup">Datensicherung (BETA)</string>
-  <string name="settings_sd_backup">SD-Karten-Sicherung</string>
-  <string name="settings_backup_to_sd">Jetzt sichern</string>
-  <string name="settings_backup_to_sd_summary">Eine Kopie aller Deiner Tracks und Einstellungen auf die SD-Karte schreiben</string>
-  <string name="settings_restore_from_sd">Jetzt wiederherstellen</string>
-  <string name="settings_restore_from_sd_summary">Alle Tracks und Einstellungen von der SD-Karte holen.</string>
+  <string name="settings_backup_sd_card">SD-Karten-Sicherung</string>
+  <string name="settings_backup_now">Jetzt sichern</string>
+  <string name="settings_backup_now_summary">Eine Kopie aller Deiner Tracks und Einstellungen auf die SD-Karte schreiben</string>
+  <string name="settings_backup_restore">Jetzt wiederherstellen</string>
+  <string name="settings_backup_restore_summary">Alle Tracks und Einstellungen von der SD-Karte holen.</string>
   <string name="settings_no_backup_while_recording">Während ein Track aufgezeichnet wird, kann nicht mit der Datensicherung gearbeitet werden.</string>
 
-  <string name="restore_overwrites_warning">Eine Wiederherstellung von der SD-Karte ÜBERSCHREIBT alle vorhandenen Tracks und Einstellungen. Willst Du das wirklich?</string>
-  <string name="select_backup_to_restore">Wähle die wiederherzustellende Datensicherung aus</string>
-  <string name="no_backups">Keine Datensicherungen gefunden.</string>
-  <string name="backup_write_progress_message">Schreibe alle Tracks und Einstellungen auf die SD-Karte. Dies kann eine Weile dauern...</string>
-  <string name="backup_import_progress_message">Lese alle Tracks und Einstellungen von der SD-Karte. Dies kann eine Weile dauern...</string>
+  <string name="settings_backup_restore_confirm_message">Eine Wiederherstellung von der SD-Karte ÜBERSCHREIBT alle vorhandenen Tracks und Einstellungen. Willst Du das wirklich?</string>
+  <string name="settings_backup_restore_select">Wähle die wiederherzustellende Datensicherung aus</string>
+  <string name="settings_backup_restore_no_backup">Keine Datensicherungen gefunden.</string>
+  <string name="settings_backup_now_progress_message">Schreibe alle Tracks und Einstellungen auf die SD-Karte. Dies kann eine Weile dauern...</string>
+  <string name="settings_backup_restore_progress_message">Lese alle Tracks und Einstellungen von der SD-Karte. Dies kann eine Weile dauern...</string>
 
   <!-- MyTracksSky -->
   <string name="mytracks_sky">GPS-Satelliten</string>

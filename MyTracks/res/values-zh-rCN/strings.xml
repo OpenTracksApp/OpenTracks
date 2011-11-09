@@ -217,17 +217,17 @@ limitations under the License.
   <string name="settings_display_metric_summary_on">所有的距离都将以公制单位显示</string>
   <string name="settings_display_metric_summary_off">所有的距离都将以英制单位显示</string>
 
-  <string name="settings_map_public">公开地图</string>
-  <string name="settings_map_public_summary_on">上传的地图将对所有 maps.google.com 访问者可见</string>
-  <string name="settings_map_public_summary_off">上传的地图不会在 maps.google.com 上公开</string>
+  <string name="settings_sharing_map_public">公开地图</string>
+  <string name="settings_sharing_map_public_summary_on">上传的地图将对所有 maps.google.com 访问者可见</string>
+  <string name="settings_sharing_map_public_summary_off">上传的地图不会在 maps.google.com 上公开</string>
 
   <string name="settings_display_speed">显示速度</string>
   <string name="settings_display_speed_summary_on">显示速度信息</string>
   <string name="settings_display_speed_summary_off">显示步速</string>
 
-  <string name="settings_share_url_only">只分享 URL</string>
+  <string name="settings_sharing_url_only">只分享 URL</string>
   <string name="settings_share_url_only_summary_on">在分享时只发送地图的 URL</string>
-  <string name="settings_share_url_only_summary_off">在分享时也包括轨迹的内容</string>
+  <string name="settings_sharing_url_only_summary_off">在分享时也包括轨迹的内容</string>
 
   <string name="settings_recording_marker">切割频度</string>
   <string name="settings_recording_marker_summary">插入新切割标记所需要达到的最大时间或距离</string>
@@ -260,17 +260,17 @@ limitations under the License.
 
   <!-- Backups -->
   <string name="settings_backup">备份 (测试版)</string>
-  <string name="settings_sd_backup">SD 存储卡备份</string>
-  <string name="settings_backup_to_sd">立即备份</string>
-  <string name="settings_backup_to_sd_summary">将你所有轨迹和设置的完整备份写入到 SD 存储卡</string>
-  <string name="settings_restore_from_sd">立即恢复</string>
-  <string name="settings_restore_from_sd_summary">从 SD 存储卡恢复所有轨迹和设置</string>
+  <string name="settings_backup_sd_card">SD 存储卡备份</string>
+  <string name="settings_backup_now">立即备份</string>
+  <string name="settings_backup_now_summary">将你所有轨迹和设置的完整备份写入到 SD 存储卡</string>
+  <string name="settings_backup_restore">立即恢复</string>
+  <string name="settings_backup_restore_summary">从 SD 存储卡恢复所有轨迹和设置</string>
 
-  <string name="restore_overwrites_warning">从 SD 存储卡恢复备份数据将覆盖掉你当前的所有轨迹和设置. 确定要继续吗?</string>
-  <string name="select_backup_to_restore">请选择要恢复的备份文件</string>
-  <string name="no_backups">没有找到备份文件.</string>
-  <string name="backup_write_progress_message">将所有轨迹和设置写入 SD 存储卡中. 这需要一些时间...</string>
-  <string name="backup_import_progress_message">从 SD 存储卡读取轨迹和设置中. 这需要一些时间...</string>
+  <string name="settings_backup_restore_confirm_message">从 SD 存储卡恢复备份数据将覆盖掉你当前的所有轨迹和设置. 确定要继续吗?</string>
+  <string name="settings_backup_restore_select">请选择要恢复的备份文件</string>
+  <string name="settings_backup_restore_no_backup">没有找到备份文件.</string>
+  <string name="settings_backup_now_progress_message">将所有轨迹和设置写入 SD 存储卡中. 这需要一些时间...</string>
+  <string name="settings_backup_restore_progress_message">从 SD 存储卡读取轨迹和设置中. 这需要一些时间...</string>
 
   <!-- MyTracksSky -->
   <string name="mytracks_sky">GPS 卫星</string>

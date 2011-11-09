@@ -181,17 +181,17 @@ limitations under the License.
   <string name="settings_display_metric_summary_on">Tutte le distanze verranno mostrate nel sistema metrico decimale</string>
   <string name="settings_display_metric_summary_off">Tutte le distanze saranno mostrate nel sistema imperiale</string>
 
-  <string name="settings_map_public">Rendi pubbliche le mappe su maps.google.com</string>
-  <string name="settings_map_public_summary_on">Le mappe inviate a maps.google.com saranno visibili a chiunque</string>
-  <string name="settings_map_public_summary_off">Le mappe inviate a maps.google.com non saranno rese pubbliche</string>
+  <string name="settings_sharing_map_public">Rendi pubbliche le mappe su maps.google.com</string>
+  <string name="settings_sharing_map_public_summary_on">Le mappe inviate a maps.google.com saranno visibili a chiunque</string>
+  <string name="settings_sharing_map_public_summary_off">Le mappe inviate a maps.google.com non saranno rese pubbliche</string>
 
   <string name="settings_display_speed">Mostra:</string>
   <string name="settings_display_speed_summary_on">Mostrerà la velocità</string>
   <string name="settings_display_speed_summary_off">Mostrerà l\'andatura</string>
 
-  <string name="settings_share_url_only">Invia solo l\'URL nei messaggi di condivisione</string>
+  <string name="settings_sharing_url_only">Invia solo l\'URL nei messaggi di condivisione</string>
   <string name="settings_share_url_only_summary_on">Solo l\'URL della mappa sarà inviata quando condividi un percorso</string>
-  <string name="settings_share_url_only_summary_off">Anche il contenuto del percorso sarà inviato quando condividi un persorso</string>
+  <string name="settings_sharing_url_only_summary_off">Anche il contenuto del percorso sarà inviato quando condividi un persorso</string>
 
   <string name="settings_recording_marker">Frequenza di divisione</string>
   <string name="settings_recording_marker_summary">Tempo o distanza massima dopo di cui il percorso verrà diviso</string>

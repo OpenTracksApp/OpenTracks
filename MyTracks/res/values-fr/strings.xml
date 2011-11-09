@@ -178,17 +178,17 @@ limitations under the License.
   <string name="settings_display_metric_summary_on">Le système métrique sera utilisé pour l\'affichage des distances</string>
   <string name="settings_display_metric_summary_off">Le système impérial sera utilisé pour l\'affichage des distances</string>
 
-  <string name="settings_map_public">Cartes publiques</string>
-  <string name="settings_map_public_summary_on">Les cartes partagées seront visibles par tout le monde sur maps.google.com</string>
-  <string name="settings_map_public_summary_off">Les cartes ne seront pas partagées publiquement sur maps.google.com</string>
+  <string name="settings_sharing_map_public">Cartes publiques</string>
+  <string name="settings_sharing_map_public_summary_on">Les cartes partagées seront visibles par tout le monde sur maps.google.com</string>
+  <string name="settings_sharing_map_public_summary_off">Les cartes ne seront pas partagées publiquement sur maps.google.com</string>
 
   <string name="settings_display_speed">Afficher vitesse/rythme</string>
   <string name="settings_display_speed_summary_on">Afficher la vitesse</string>
   <string name="settings_display_speed_summary_off">Afficher le rythme</string>
 
-  <string name="settings_share_url_only">Partager URL/parcours</string>
+  <string name="settings_sharing_url_only">Partager URL/parcours</string>
   <string name="settings_share_url_only_summary_on">Seule l\'adresse URL de la carte sera envoyée lors du partage</string>
-  <string name="settings_share_url_only_summary_off">Le contenu du parcours sera également inclus lors du partage</string>
+  <string name="settings_sharing_url_only_summary_off">Le contenu du parcours sera également inclus lors du partage</string>
 
   <string name="settings_recording_marker">Fréquence de séparation</string>
   <string name="settings_recording_marker_summary">Temps ou distance minimum avant l\'insertion d\'un marqueur de séparation</string>
@@ -208,17 +208,17 @@ limitations under the License.
 
   <!-- Backups -->
   <string name="settings_backup">Sauvegarde (BETA)</string>
-  <string name="settings_sd_backup">Sauvegarde sur carte SD</string>
-  <string name="settings_backup_to_sd">Sauvegarder</string>
-  <string name="settings_backup_to_sd_summary">Copier tous vos parcours et paramètres sur la carte SD</string>
-  <string name="settings_restore_from_sd">Restaurer</string>
-  <string name="settings_restore_from_sd_summary">Restaurer tous les parcours et paramètres depuis la carte SD</string>
+  <string name="settings_backup_sd_card">Sauvegarde sur carte SD</string>
+  <string name="settings_backup_now">Sauvegarder</string>
+  <string name="settings_backup_now_summary">Copier tous vos parcours et paramètres sur la carte SD</string>
+  <string name="settings_backup_restore">Restaurer</string>
+  <string name="settings_backup_restore_summary">Restaurer tous les parcours et paramètres depuis la carte SD</string>
 
-  <string name="restore_overwrites_warning">Restaurer une sauvegarde depuis la carte SD écrasera tous vos parcours et paramètres actuels.</string>
-  <string name="select_backup_to_restore">Choisissez la sauvegarde à restaurer</string>
-  <string name="no_backups">Pas de sauvegarde disponible.</string>
-  <string name="backup_write_progress_message">Écriture de tous vos parcours et paramètres sur la carte SD. Veuillez patienter...</string>
-  <string name="backup_import_progress_message">Lecture de tous vos parcours et paramètres depuis la carte SD. Veuillez patienter...</string>
+  <string name="settings_backup_restore_confirm_message">Restaurer une sauvegarde depuis la carte SD écrasera tous vos parcours et paramètres actuels.</string>
+  <string name="settings_backup_restore_select">Choisissez la sauvegarde à restaurer</string>
+  <string name="settings_backup_restore_no_backup">Pas de sauvegarde disponible.</string>
+  <string name="settings_backup_now_progress_message">Écriture de tous vos parcours et paramètres sur la carte SD. Veuillez patienter...</string>
+  <string name="settings_backup_restore_progress_message">Lecture de tous vos parcours et paramètres depuis la carte SD. Veuillez patienter...</string>
   
   <!-- MyTracksSky -->
   <string name="mytracks_sky">Satellites GPS</string>
