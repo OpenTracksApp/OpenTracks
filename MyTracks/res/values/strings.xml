@@ -880,14 +880,14 @@ limitations under the License.
     Use a number as the default track name
   </string>
   <string name="settings_default_category"
-    translation_description="In the Recording settings, the option to set the default
-      type of the recorded activity.">
+    translation_description="In the Recording settings, the option to specify a new track's default
+	  activity type.">
     Default activity type
   </string>
   <string name="settings_default_category_summary"
     translation_description="In the Recording settings, the summary for the 'Default activity type'
-      option explaining that it sets the default type of the recorded activity.">
-    Default type of the recorded activity
+      option explaining that it sets the default activity type for a new track.">
+    Default activity type for a new track.
   </string>
   
   <!-- Sensor settings -->

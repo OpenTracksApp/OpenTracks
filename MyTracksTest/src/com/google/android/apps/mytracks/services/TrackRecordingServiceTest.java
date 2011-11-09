@@ -382,6 +382,8 @@ public class TrackRecordingServiceTest
     Track track = providerUtils.getTrack(id);
     assertNotNull(track);
     assertEquals(id, track.getId());
+    assertEquals(sharedPreferences.getString(context.getString(R.string.default_category_key), ""),
+        track.getCategory());
     assertEquals(id, sharedPreferences.getLong(
         context.getString(R.string.recording_track_key), -1));
     assertEquals(id, service.getRecordingTrackId());

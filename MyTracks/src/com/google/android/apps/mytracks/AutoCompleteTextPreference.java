@@ -23,7 +23,7 @@ import android.widget.AutoCompleteTextView;
  */
 public class AutoCompleteTextPreference extends EditTextPreference {
 
-  private static AutoCompleteTextView mEditText = null;
+  private AutoCompleteTextView mEditText = null;
 
   public AutoCompleteTextPreference(Context context, AttributeSet attrs) {
     super(context, attrs);
