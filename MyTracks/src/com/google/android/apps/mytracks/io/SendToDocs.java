@@ -22,6 +22,7 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.docs.DocsHelper;
 import com.google.android.apps.mytracks.io.gdata.GDataClientFactory;
 import com.google.android.apps.mytracks.io.gdata.GDataWrapper;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendType;
 import com.google.android.common.gdata.AndroidXmlParserFactory;
 import com.google.android.maps.mytracks.R;
 import com.google.wireless.gdata.client.GDataClient;
@@ -115,13 +116,11 @@ public class SendToDocs {
       Log.d(Constants.TAG, "SendToDocs: Uploading to spreadsheet");
       success = uploadToDocs(track);
       if (success) {
-        if (createdNewSpreadSheet) {
-          statusMessage = activity.getString(
-              R.string.send_google_success_new_doc);
-        } else {
-          statusMessage = activity.getString(
-              R.string.send_google_success_existing_doc);
-        }
+        String format = createdNewSpreadSheet 
+            ? activity.getString(R.string.send_google_success_new_doc) 
+            : activity.getString(R.string.send_google_success_existing_doc);
+        String url = activity.getString(SendType.DOCS.getServiceUrl());
+        statusMessage = String.format(format, url);
       } else {
         statusMessage = activity.getString(R.string.send_google_error_docs);
       }

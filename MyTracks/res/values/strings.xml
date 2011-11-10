@@ -455,9 +455,10 @@ limitations under the License.
   <!-- Send Google -->
   <string name="send_google_by_my_tracks"
     translation_description="When sending a track to Google, a note indicating it is created by
-      My Tracks on Android, with the 'My Tracks' word containing a http link to
-      http://mytracks.appspot.com.">
-    Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.
+      My Tracks on Android. The two string placeholders are used to insert the html link tags around
+      'My Tracks'. E.g., 'Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks
+      &lt;/a&gt; on Android.'.">
+    Created by %1$sMy Tracks%2$s on Android.
   </string>
   <string name="send_google_choose_account"
     translation_description="When sending to Google, the dialog title to choose a Google account.">
@@ -590,13 +591,15 @@ limitations under the License.
   </string>
   <string name="send_google_success_existing_doc"
     translation_description="When sending a track to Google Docs, the message on the result page
-      indicating that the track is sent to an existing spreadsheet.">
-    Your track has been sent to docs.google.com.
+      indicating that the track is sent to an existing spreadsheet. E.g., 'Your track has been sent
+      to docs.google.com.'.">
+    Your track has been sent to %s.
   </string>
   <string name="send_google_success_existing_map"
     translation_description="When sending a track to Google My Maps, the message on the result page
-      indicating that the track is sent to an existing map.">
-    Your track has been sent to maps.google.com.
+      indicating that the track is sent to an existing map. E.g., 'Your track has been sent to
+      maps.google.com.'">
+    Your track has been sent to %s.
   </string>
   <string name="send_google_success_footer"
     translation_description="When sending a track to Google, the additional comment on the bottom of
@@ -605,18 +608,21 @@ limitations under the License.
   </string>
   <string name="send_google_success_fusion_tables"
     translation_description="When sending a track to Google Fusion Tables, the message on the result
-      page indicating success.">
-    A new Google Fusion table has been created at google.com/fusiontables.
+      page indicating success. E.g., 'A new Google Fusion table has been created at
+      google.com/fusiontables.'">
+    A new Google Fusion table has been created at %s.
   </string>
   <string name="send_google_success_new_doc"
     translation_description="When sending a track to Google Docs, the message on the result page
-      indicating that a new spreadsheet is created.">
-    A new spreadsheet is created at docs.google.com.
+      indicating that a new spreadsheet is created. E.g., 'A new spreadsheet is created at
+      docs.google.com.'.">
+    A new spreadsheet is created at %s.
   </string>
   <string name="send_google_success_new_map"
     translation_description="When sending a track to Google My Maps, the message on the result page
-      indicating that a new map is created.">
-    A new Google My Map has been created at maps.google.com.
+      indicating that a new map is created. E.g., 'A new Google My Map has been created at
+      maps.google.com.'.">
+    A new Google My Map has been created at %s.
   </string>
   <string name="send_google_title"
     translation_description="When sending a track to Google, the dialog title to choose the Google

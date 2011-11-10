@@ -96,7 +96,6 @@ limitations under the License.
   <string name="sd_card_error_write_file">Невозможно записать файл.</string>
   <string name="sd_card_success_read_file">Чтение с SD карты закончено.</string>
   <string name="sd_card_success_write_file">Запись на SD карту закончена.</string>
-  <string name="send_google_by_my_tracks">Создано &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; на Android.</string>
   <string name="send_google_choose_account">Выбор учетной записи</string>
   <string name="send_google_docs">Google Документы</string>
   <string name="send_google_error_docs">Ошибка при отправке вашего трека в Google Документы.</string>
@@ -122,12 +121,7 @@ limitations under the License.
   <string name="send_google_result_share_url">Поделиться треком</string>
   <string name="send_google_result_title">Статус загрузки:</string>
   <string name="send_google_send_now">Отправить</string>
-  <string name="send_google_success_existing_doc">Ваш трек был отправлен в docs.google.com.</string>
-  <string name="send_google_success_existing_map">Твой трек был отправлен на maps.google.com.</string>
   <string name="send_google_success_footer">Это может занять несколько минут, прежде чем появятся новые треки.</string>
-  <string name="send_google_success_fusion_tables">Новая таблица Google Fusion была создана на google.com/fusiontables.</string>
-  <string name="send_google_success_new_doc">Ваш трек был отправлен в новую электронную таблицу на docs.google.com.</string>
-  <string name="send_google_success_new_map">Новая Google \"Мои карты\" была создана на maps.google.com.</string>
   <string name="send_google_title">Отправить...</string>
   <string name="send_google_track_part_label">(Часть %d)</string>
   <string name="sensor_state_cadence">Каденс</string>

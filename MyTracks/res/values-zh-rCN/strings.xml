@@ -90,7 +90,6 @@ limitations under the License.
   <string name="sd_card_error_write_file">无法写入文件.</string>
   <string name="sd_card_success_read_file">从 SD 存储卡读取完毕.</string>
   <string name="sd_card_success_write_file">轨迹已导出到 SD 存储卡.</string>
-  <string name="send_google_by_my_tracks">由 Android 上的 &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; 创建.</string>
   <string name="send_google_choose_account">选择帐户</string>
   <string name="send_google_error_docs">发送轨迹到 Google Docs 时发生错误. 请稍后重试.</string>
   <string name="send_google_error_fusion_tables">发送轨迹到 Google Fusion Tables 时发生错误. 请稍后重试.</string>
@@ -111,12 +110,7 @@ limitations under the License.
   <string name="send_google_result_share_url">分享轨迹</string>
   <string name="send_google_result_title">上传状态:</string>
   <string name="send_google_send_now">立即发送</string>
-  <string name="send_google_success_existing_doc">你的轨迹已经发送到 docs.google.com.</string>
-  <string name="send_google_success_existing_map">你的轨迹已经发送到 maps.google.com.</string>
   <string name="send_google_success_footer">可能需要等待几分钟才能看见新的轨迹.</string>
-  <string name="send_google_success_fusion_tables">已在 google.com/fusiontables 创建新 Google Fusion Table.</string>
-  <string name="send_google_success_new_doc">你的轨迹已经作为新的电子表格发送到 docs.google.com.</string>
-  <string name="send_google_success_new_map">已在 maps.google.com 创建了新的 Google My Map.</string>
   <string name="send_google_title">发送到...</string>
   <string name="send_google_track_part_label">(第 %d 部分)</string>
   <string name="sensor_state_cadence">节奏</string>

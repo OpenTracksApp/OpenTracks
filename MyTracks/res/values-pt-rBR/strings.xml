@@ -75,7 +75,6 @@ limitations under the License.
   <string name="sd_card_error_no_storage">Nenhum armazenamento externo foi encontrado. Assegure-se de que um cartão SD esteja inserido e que seu telefone não esteja montado em um computador.</string>
   <string name="sd_card_error_write_file">Impossível gravar arquivo.</string>
   <string name="sd_card_success_write_file">Gravação no cartão SD concluída.</string>
-  <string name="send_google_by_my_tracks">"Criado por &lt;a href='http://mytracks.appspot.com'&gt;My Tracks&lt;/a&gt; no Android.</string>
   <string name="send_google_choose_account">Escolher conta</string>
   <string name="send_google_docs">Google Docs</string>
   <string name="send_google_error_docs">Ocorreu um erro ao enviar seu caminho para o Google Docs. Por favor tente novamente mais tarde.</string>
@@ -92,10 +91,6 @@ limitations under the License.
   <string name="send_google_recorded">Gravado</string>
   <string name="send_google_result_share_url">Compartilhar caminho com amigos</string>
   <string name="send_google_send_now">Enviar agora</string>
-  <string name="send_google_success_existing_doc">Seu caminho foi enviado para docs.google.com.</string>
-  <string name="send_google_success_existing_map">Seu caminho foi enviado para maps.google.com.</string>
-  <string name="send_google_success_fusion_tables">Uma nova Fusion Table Google foi criada em google.com/fusiontables.</string>
-  <string name="send_google_success_new_doc">Seu caminho foi enviado para uma nova planilha em docs.google.com.</string>
   <string name="send_google_title">Enviar para...</string>
   <string name="send_google_track_part_label">"(Parte %d)</string>
   <string name="settings_display">Exibição</string>

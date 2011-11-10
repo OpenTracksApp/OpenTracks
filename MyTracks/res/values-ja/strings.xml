@@ -95,7 +95,6 @@ limitations under the License.
   <string name="sd_card_error_write_file">ファイルへの書き込みができません．</string>
   <string name="sd_card_success_read_file">SDカードからの読み込み終了．</string>
   <string name="sd_card_success_write_file">SDカードへの書き込み終了．</string>
-  <string name="send_google_by_my_tracks">Android用&lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt;で作成しました．</string>
   <string name="send_google_choose_account">アカウント選択</string>
   <string name="send_google_error_docs">Google Docsへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
   <string name="send_google_error_fusion_tables">Google Fusion Tablesへのトラック送信でエラーが発生しました．しばらく待って試して下さい．</string>
@@ -118,12 +117,7 @@ limitations under the License.
   <string name="send_google_recorded">記録日</string>
   <string name="send_google_result_share_url">トラック共有</string>
   <string name="send_google_send_now">今すぐ送信</string>
-  <string name="send_google_success_existing_doc">トラックをdocs.google.comに送信しました．</string>
-  <string name="send_google_success_existing_map">トラックをmaps.google.comに送信しました．</string>
   <string name="send_google_success_footer">新しいトラックが表示されるまでに数分かかることがあります．</string>
-  <string name="send_google_success_fusion_tables">新しいGoogle Fusion Tableをgoogle.com/fusiontablesに作成しました．</string>
-  <string name="send_google_success_new_doc">トラックをdocs.google.comの新しいスプレッドシートに送信しました．</string>
-  <string name="send_google_success_new_map">新しいマイマップをmap.google.comに作成しました．</string>
   <string name="send_google_title">送信...</string>
   <string name="send_google_track_part_label">(パート %d)</string>
   <string name="sensor_state_cadence">ケイデンス</string>

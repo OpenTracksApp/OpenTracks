@@ -19,9 +19,10 @@ limitations under the License.
   <string name="app_name">My Tracks</string>
   <string name="track_recording_service_name">Track Recording Service</string>
   
+  <string name="my_tracks_web_url">mytracks.appspot.com</string>
+  
   <!-- About Dialog -->
   <string name="about_googlegroups">mytracks@googlegroups.com</string>
-  <string name="about_weburl">mytracks.appspot.com</string>
   <string name="about_privacy_weburl">m.google.com/privacy</string>
   <string name="about_copyright_message">Copyright 2009 Google Inc.</string>
   <string name="about_bart">Bartłomiej Niechwiej</string>
@@ -46,9 +47,9 @@ limitations under the License.
   <string name="unknown">-</string>
       
   <!-- Send to Google URLs -->
-  <string name="sendtogoogle_google_fusiontables_url">google.com/fusiontables</string>
-  <string name="sendtogoogle_google_mymaps_url">maps.google.com</string>
-  <string name="sendtogoogle_google_docs_url">docs.google.com</string>
+  <string name="send_google_fusion_tables_url">google.com/fusiontables</string>
+  <string name="send_google_my_maps_url">maps.google.com</string>
+  <string name="send_google_docs_url">docs.google.com</string>
   
   <!-- ID for Google Analytics -->
   <string name="google_analytics_id">UA-7222692-2</string>

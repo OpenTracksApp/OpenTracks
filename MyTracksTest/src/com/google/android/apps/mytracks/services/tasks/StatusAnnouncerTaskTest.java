@@ -478,7 +478,59 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
     task.runWithStatistics(null);
     AndroidMock.verify(mockTask, tts);
   }
+  
+  /**
+   * Tests {@link StatusAnnouncerTask#getAnnounceTime(long)} with time zero.
+   */
+  public void testGetAnnounceTime_time_zero() {
+    long time = 0; // 0 seconds
+    assertEquals("0 minutes 0 seconds", task.getAnnounceTime(time));
+  }
 
+  /**
+   * Tests {@link StatusAnnouncerTask#getAnnounceTime(long)} with time one.
+   */
+  public void testGetAnnounceTime_time_one() {
+    long time = 1 * 1000; // 1 second
+    assertEquals("0 minutes 1 second", task.getAnnounceTime(time));
+  }
+
+  /**
+   * Tests {@link StatusAnnouncerTask#getAnnounceTime(long)} with singular
+   * numbers with the hour unit.
+   */
+  public void testGetAnnounceTime_singular_has_hour() {
+    long time = (1 * 60 * 60 * 1000) + (1 * 60 * 1000) + (1 * 1000); // 1 hour 1 minute 1 second
+    assertEquals("1 hour 1 minute", task.getAnnounceTime(time));
+  }
+
+  /**
+   * Tests {@link StatusAnnouncerTask#getAnnounceTime(long)} with plural numbers
+   * with the hour unit.
+   */
+  public void testGetAnnounceTime_plural_has_hour() {
+    long time = (2 * 60 * 60 * 1000) + (2 * 60 * 1000) + (2 * 1000); // 2 hours 2 minutes 2 seconds
+    assertEquals("2 hours 2 minutes", task.getAnnounceTime(time));
+  }
+  
+  /**
+   * Tests {@link StatusAnnouncerTask#getAnnounceTime(long)} with singular
+   * numbers without the hour unit.
+   */
+  public void testGetAnnounceTime_singular_no_hour() {
+    long time = (1 * 60 * 1000) + (1 * 1000); // 1 minute 1 second
+    assertEquals("1 minute 1 second", task.getAnnounceTime(time));
+  }
+
+  /**
+   * Tests {@link StatusAnnouncerTask#getAnnounceTime(long)} with plural numbers
+   * without the hour unit.
+   */
+  public void testGetAnnounceTime_plural_no_hour() {
+    long time = (2 * 60 * 1000) + (2 * 1000); // 2 minutes 2 seconds
+    assertEquals("2 minutes 2 seconds", task.getAnnounceTime(time));
+  }
+  
   private void startTask(int state) {
     AndroidMock.resetToNice(tts);
     AndroidMock.replay(tts);

@@ -77,7 +77,6 @@ limitations under the License.
   <string name="sd_card_error_no_storage">Ingen extern lagring hittades. Se till att ett SD-kort sitter i och att telefonen inte är monterad till en dator.</string>
   <string name="sd_card_error_write_file">Kan inte skriva till filen.</string>
   <string name="sd_card_success_write_file">Slutförde skrivningen av spåret till SD-kort.</string>
-  <string name="send_google_by_my_tracks">Skapad av &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; på Android.</string>
   <string name="send_google_choose_account">Välj konto</string>
   <string name="send_google_docs">Google Dokument</string>
   <string name="send_google_error_docs">Det uppstod ett fel i sändningen av ditt spår till Google Dokument. Försök igen senare.</string>
@@ -91,9 +90,6 @@ limitations under the License.
   <string name="send_google_recorded">Inspelad</string>
   <string name="send_google_result_share_url">Dela spår med vänner</string>
   <string name="send_google_send_now">Skicka nu</string>
-  <string name="send_google_success_existing_doc">Ditt spår har skickats till docs.google.com.</string>
-  <string name="send_google_success_existing_map">Ditt spår har skickats till maps.google.com.</string>
-  <string name="send_google_success_new_doc">Ditt spår har skickats till ett nytt kalkylblad på docs.google.com.</string>
   <string name="send_google_title">Skicka till...</string>
   <string name="send_google_track_part_label">(Del %d)</string>
   <string name="settings_display">Visning</string>

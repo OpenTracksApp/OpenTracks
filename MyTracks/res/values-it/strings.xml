@@ -77,7 +77,6 @@ limitations under the License.
   <string name="sd_card_error_no_storage">Nessuna memoria esterna trovata. Assicurati che la scheda SD sia inserita e che il telefono no sia montato su un computer.</string>
   <string name="sd_card_error_write_file">Impossibile scrivere su file.</string>
   <string name="sd_card_success_write_file">Finito di salvare il percorso sulla scheda SD.</string>
-  <string name="send_google_by_my_tracks">Creato da &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; su Android.</string>
   <string name="send_google_choose_account">Scegli un account</string>
   <string name="send_google_docs">Google Docs</string>
   <string name="send_google_error_docs">Si è verificato un errore nell\'invio del percorso a Google Docs. Per favore riporva più tardi.</string>
@@ -91,9 +90,6 @@ limitations under the License.
   <string name="send_google_recorded">Registrato</string>
   <string name="send_google_result_share_url">Condividi il percorso con amici</string>
   <string name="send_google_send_now">Invia adesso</string>
-  <string name="send_google_success_existing_doc">Il tuo percorso è stato inviato a docs.google.com.</string>
-  <string name="send_google_success_existing_map">Il tuo percorso è stato inviato a maps.google.com.</string>
-  <string name="send_google_success_new_doc">Il tuo percorso è stato inviato ad un nuovo foglio di calcolo su docs.google.com.</string>
   <string name="send_google_title">Invia a...</string>
   <string name="send_google_track_part_label">(Parte %d)</string>
   <string name="settings_display">Visualizzazione</string>

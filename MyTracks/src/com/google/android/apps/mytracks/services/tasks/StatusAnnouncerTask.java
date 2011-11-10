@@ -24,6 +24,7 @@ import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -327,7 +328,8 @@ public class StatusAnnouncerTask implements PeriodicTask {
    * 
    * @param time the time
    */
-  private String getAnnounceTime(long time) {
+  @VisibleForTesting
+  String getAnnounceTime(long time) {
     int[] parts = StringUtils.getTimeParts(time);
     String secLabel =
         context.getString(parts[0] == 1 ? R.string.voice_second : R.string.voice_seconds);
@@ -343,6 +345,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
       sb.append(hourLabel);
       sb.append(" ");
       sb.append(parts[1]);
+      sb.append(" ");
       sb.append(minLabel);
     } else {
       sb.append(parts[1]);
@@ -350,6 +353,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
       sb.append(minLabel);
       sb.append(" ");
       sb.append(parts[0]);
+      sb.append(" ");
       sb.append(secLabel);
     }
     return sb.toString();

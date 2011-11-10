@@ -84,7 +84,6 @@ limitations under the License.
   <string name="sd_card_error_write_file">Die Datei kann nicht geschrieben werden.</string>
   <string name="sd_card_success_read_file">Lesen von der SD-Karte beendet.</string>
   <string name="sd_card_success_write_file">Der Track wurde auf die SD-Karte geschrieben.</string>
-  <string name="send_google_by_my_tracks">Erstellt von &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; für Android.</string>
   <string name="send_google_choose_account">Wähle ein Konto</string>
   <string name="send_google_docs">Google Text &amp; Tabellen</string>
   <string name="send_google_error">Ein Fehler ist aufgetreten. Bitte versuche es noch einmal.</string>
@@ -102,10 +101,6 @@ limitations under the License.
   <string name="send_google_recorded">Aufgezeichnet am</string>
   <string name="send_google_result_share_url">Track mit Freunden teilen</string>
   <string name="send_google_send_now">Jetzt senden</string>
-  <string name="send_google_success_existing_doc">Dein Track wurde an docs.google.com gesendet.</string>
-  <string name="send_google_success_existing_map">Dein Track wurde auf maps.google.com gespeichert.</string>
-  <string name="send_google_success_fusion_tables">Eine neue Tabelle wurde auf google.com/fusiontables erstellt.</string>
-  <string name="send_google_success_new_doc">Dein Track wurde in einer neuen Tabelle bei docs.google.com gespeichert.</string>
   <string name="send_google_title">Senden an…</string>
   <string name="send_google_track_part_label">(Teil %d)</string>
   <string name="sensor_state_battery">Akkukapazität</string>

@@ -24,6 +24,7 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.gdata.GDataWrapper;
 import com.google.android.apps.mytracks.io.gdata.GDataWrapper.QueryFunction;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendType;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ApiFeatures;
@@ -71,7 +72,7 @@ public class SendToFusionTables implements Runnable {
    * Listener invoked when sending to fusion tables completes.
    */
   public interface OnSendCompletedListener {
-    void onSendCompleted(String tableId, boolean success, int statusMessage);
+    void onSendCompleted(String tableId, boolean success, String statusMessage);
   }
 
   /** The GData service id for Fusion Tables. */
@@ -168,7 +169,7 @@ public class SendToFusionTables implements Runnable {
   }
 
   private void doUpload() {
-    int statusMessageId = R.string.send_google_error_fusion_tables;
+    String statusMessage = context.getString(R.string.send_google_error_fusion_tables);
     boolean success = true;
     try {
       progressIndicator.setProgressValue(PROGRESS_INITIALIZATION);
@@ -205,17 +206,18 @@ public class SendToFusionTables implements Runnable {
         return;
       }
 
-      statusMessageId = R.string.send_google_success_fusion_tables;
+      String format = context.getString(R.string.send_google_success_fusion_tables);
+      String url = context.getString(SendType.FUSION_TABLES.getServiceUrl());
+      statusMessage = String.format(format, url);
       Log.d(Constants.TAG, "SendToFusionTables: Done: " + success);
       progressIndicator.setProgressValue(PROGRESS_COMPLETE);
     } finally {
       final boolean finalSuccess = success;
-      final int finalStatusMessageId = statusMessageId;
+      final String finalStatusMessage = statusMessage;
       context.runOnUiThread(new Runnable() {
         public void run() {
           if (onCompletion != null) {
-            onCompletion.onSendCompleted(
-                tableId, finalSuccess, finalStatusMessageId);
+            onCompletion.onSendCompleted(tableId, finalSuccess, finalStatusMessage);
           }
         }
       });

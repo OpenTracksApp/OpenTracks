@@ -81,7 +81,6 @@ limitations under the License.
   <string name="sd_card_error_write_file">No es pot escriure a un fitxer.</string>
   <string name="sd_card_success_read_file">S\'ha finalitzat la lectura a la targeta SD.</string>
   <string name="sd_card_success_write_file">S\'ha finalitzat l\'escriptura a la targeta SD.</string>
-  <string name="send_google_by_my_tracks">Creat per &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; a l\'Android.</string>
   <string name="send_google_choose_account">Trieu un compte</string>
   <string name="send_google_error">S\'ha produït un error. Proveu de nou.</string>
   <string name="send_google_error_docs">S\'ha prdouït un error quan s\'enviava la ruta a Google Docs. Proveu més tard.</string>
@@ -98,10 +97,6 @@ limitations under the License.
   <string name="send_google_recorded">Enregistrat</string>
   <string name="send_google_result_share_url">Comparteix la ruta amb amics</string>
   <string name="send_google_send_now">Envia ara</string>
-  <string name="send_google_success_existing_doc">S\'ha enviat la ruta a docs.google.com.</string>
-  <string name="send_google_success_existing_map">S\'ha enviat la ruta a maps.google.com.</string>
-  <string name="send_google_success_fusion_tables">S\'ha creat un Google Fusion Table nou a google.com/fusiontables.</string>
-  <string name="send_google_success_new_doc">S\'ha enviat la ruta a un full de càlcul a docs.google.com.</string>
   <string name="send_google_title">Envia a...</string>
   <string name="send_google_track_part_label">(Part %d)</string>
   <string name="sensor_state_cadence">Cadència</string>

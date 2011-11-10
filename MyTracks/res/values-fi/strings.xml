@@ -97,7 +97,6 @@ limitations under the License.
   <string name="sd_card_error_write_file">Kirjoitusvirhe.</string>
   <string name="sd_card_success_read_file">SD-kortin luku valmis.</string>
   <string name="sd_card_success_write_file">SD-kortille kirjoitus valmis.</string>
-  <string name="send_google_by_my_tracks">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
   <string name="send_google_choose_account">Valitse tili</string>
   <string name="send_google_docs">Google Docs</string>
   <string name="send_google_error_docs">Virhe lähetettäessä reittiä Google Docs-palveluun..</string>
@@ -123,12 +122,7 @@ limitations under the License.
   <string name="send_google_result_share_url">Jaa reitti</string>
   <string name="send_google_result_title">Lähetyksen tila:</string>
   <string name="send_google_send_now">Lähetä</string>
-  <string name="send_google_success_existing_doc">Reittisi on lähetetty osoitteeseen docs.google.com.</string>
-  <string name="send_google_success_existing_map">Reittisi on lähetetty osoitteeseen maps.google.com.</string>
   <string name="send_google_success_footer">Reitin näkyminen saattaa kestää muutaman minuutin.</string>
-  <string name="send_google_success_fusion_tables">Uusi Google Fusion taulukko on luotu osoitteeseen google.com/fusiontables.</string>
-  <string name="send_google_success_new_doc">Reittisi on luotu taulukoksi osoitteeseen  docs.google.com.</string>
-  <string name="send_google_success_new_map">Uusi Google My Map on luotu osoitteeseen maps.google.com.</string>
   <string name="send_google_title">Lähetä...</string>
   <string name="send_google_track_part_label">(Osa %d)</string>
   <string name="sensor_state_battery">Akku</string>

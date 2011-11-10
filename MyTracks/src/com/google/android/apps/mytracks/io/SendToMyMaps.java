@@ -23,6 +23,7 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.mymaps.MapsFacade;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendType;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.LocationUtils;
@@ -75,7 +76,7 @@ public class SendToMyMaps implements Runnable {
   private int totalSegmentsUploaded;
 
   public interface OnSendCompletedListener {
-    void onSendCompleted(String mapId, boolean success, int statusMessage);
+    void onSendCompleted(String mapId, boolean success, String statusMessage);
   }
 
   public SendToMyMaps(Activity context, String mapId, AuthManager auth,
@@ -98,7 +99,7 @@ public class SendToMyMaps implements Runnable {
   }
 
   private void doUpload() {
-    int statusMessageId = R.string.send_google_error_my_maps;
+    String statusMessage = context.getString(R.string.send_google_error_my_maps);
     boolean success = true;
     try {
       progressIndicator.setProgressMessage(R.string.send_google_progress_reading_track);
@@ -171,9 +172,11 @@ public class SendToMyMaps implements Runnable {
       }
 
       if (success) {
-        statusMessageId = isNewMap
-            ? R.string.send_google_success_new_map
-            : R.string.send_google_success_existing_map;
+        String format = isNewMap 
+            ? context.getString(R.string.send_google_success_new_map)
+            : context.getString(R.string.send_google_success_existing_map);
+        String url = context.getString(SendType.MYMAPS.getServiceUrl());
+        statusMessage = String.format(format, url);
       }
       Log.d(TAG, "SendToMyMaps: Done: " + success);
       progressIndicator.setProgressValue(100);
@@ -183,12 +186,11 @@ public class SendToMyMaps implements Runnable {
       }
 
       final boolean finalSuccess = success;
-      final int finalStatusMessageId = statusMessageId;
+      final String finalStatusMessage = statusMessage;
       context.runOnUiThread(new Runnable() {
         public void run() {
           if (onCompletion != null) {
-            onCompletion.onSendCompleted(
-                mapId, finalSuccess, finalStatusMessageId);
+            onCompletion.onSendCompleted(mapId, finalSuccess, finalStatusMessage);
           }
         }
       });

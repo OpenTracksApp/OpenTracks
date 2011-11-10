@@ -80,7 +80,6 @@ limitations under the License.
   <string name="sd_card_error_write_file">Nie można zapisać pliku.</string>
   <string name="sd_card_success_read_file">Zakończono odczytywanie z karty SD.</string>  
   <string name="sd_card_success_write_file">Zakończono zapisywanie na karcie SD.</string>
-  <string name="send_google_by_my_tracks">Utworzona przez &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; na Android.</string>
   <string name="send_google_choose_account">Wybierz konto</string>
   <string name="send_google_docs">Dokumenty Google</string>
   <string name="send_google_error_docs">Podczas przesyłania pliku do Dokumentów Google pojawił się błąd. Spróbuj ponownie później.</string>
@@ -94,9 +93,6 @@ limitations under the License.
   <string name="send_google_recorded">Zapisana</string>
   <string name="send_google_result_share_url">Podziel się trasą z przyjaciółmi</string>
   <string name="send_google_send_now">Wyślij teraz</string>
-  <string name="send_google_success_existing_doc">Twoja trasa została wysłana do docs.google.com.</string>
-  <string name="send_google_success_existing_map">Twoja trasa został wysłana do maps.google.com.</string>
-  <string name="send_google_success_new_doc">Twoja trasa została wysłana do nowego arkusza na docs.google.com.</string>
   <string name="send_google_title">Wyślij do...</string>
   <string name="send_google_track_part_label">(Część %d)</string>
   <string name="sensor_state_connected">Podłączony</string>

@@ -94,7 +94,6 @@ limitations under the License.
   <string name="sd_card_error_write_file">No es posible escribir al archivo.</string>
   <string name="sd_card_success_read_file">Lectura de tarjeta SD concluída.</string>
   <string name="sd_card_success_write_file">Grabación a tarjeta SD concluída.</string>
-  <string name="send_google_by_my_tracks">Creado por &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; en Android.</string>
   <string name="send_google_choose_account">Elija una cuenta</string>
   <string name="send_google_error">A ocurrido un error. Por favor, inténtelo de nuevo.</string>
   <string name="send_google_error_docs">Se produjo un error al enviar su recorrido a Google Docs.</string>
@@ -120,12 +119,7 @@ limitations under the License.
   <string name="send_google_result_share_url">Compartir recorrido</string>
   <string name="send_google_result_title">Estado del envío:</string>
   <string name="send_google_send_now">Enviar ahora</string>
-  <string name="send_google_success_existing_doc">Su recorrido ha sido enviado a docs.google.com.</string>
-  <string name="send_google_success_existing_map">Su recorrido ha sido enviado a maps.google.com.</string>
   <string name="send_google_success_footer">Es posible que pasen unos minutos hasta que los nuevos recorridos aparezcan.</string>
-  <string name="send_google_success_fusion_tables">Una nueva tabla de Google Fusion ha sido creada en google.com/fusiontables.</string>
-  <string name="send_google_success_new_doc">Su recorrido ha sido enviado a una nueva hoja de cálculo de docs.google.com.</string>
-  <string name="send_google_success_new_map">Un nuevo sitio ha sido añadido en maps.google.com.</string>
   <string name="send_google_title">Enviar a...</string>
   <string name="send_google_track_part_label">"(Parte %d)"</string>
   <string name="sensor_state_battery">Nivel de batería</string>
