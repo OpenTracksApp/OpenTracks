@@ -15,119 +15,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-  <!-- Used by the Menu -->
-  <string name="menu_markers">Señales</string>
-
-  <!-- Error messages -->
-
-  <!-- Status messages -->
-
-  <!-- Progress dialog -->
-
-  <!-- Used by DeleteAllDataHandler -->
-
-  <!-- Text and links when uploading to Google Fusion Tables -->
-
-  <!-- Formatting of track and marker descriptions -->
-
-  <!-- Used by the track recording service -->
-
-  <!-- Common -->
   <string name="about_license">Licencia</string>
-  <string name="generic_save">Guardar</string>
-
-  <!-- Placemark labels for start and end of track -->
-
-  <!--  TrackList -->
-  <string name="tracklist_send_to_fusiontables">Enviar a Google Fusion Tables</string>
-  <string name="tracklist_send_to_new_fusiontable">Enviar a nueva Google Fusion Table</string>
-  <string name="track_list_save_csv_file">Guardar en archivo CSV</string>
-  <string name="track_list_save_tcx_file">Guardar en archivo TCX</string>
-  <string name="tracklist_btn_send_all_to_fusiontables">Enviar a Google Fusion Tables</string>
-  <!-- Export All -->
-  <string name="track_list_share_csv_file">Un archivo CSV</string>
-  <string name="track_list_share_tcx_file">Un archivo TCX</string>
-
-  <!-- Waypoints list -->
-
-  <!-- MyTracks Details -->
-
-  <!-- MyTracks Waypoint Details -->
-
-  <!-- MyTracks Settings -->
-  <string name="settings_recording_voice_not_available">No está disponible en su versión de Android</string>
-
-
-  <string name="settings_display_speed">Mostrar velocidad</string>
-
-  <!-- Backups -->
-
-  <!-- MyTracksSky -->
-
-  <!-- Sharing -->
-
-  <!-- Visibility -->
-
-  <!-- Statistics View -->
-  <!-- Average Moving -->
-
-  <!-- Average -->
-
-  <!-- Min -->
-
-  <!-- Max -->
-
-  <!-- Chart Settings -->
-  <!-- X Axis -->
-
-  <!-- Y Axis -->
-
-  <!-- Units -->
-  <!-- Time  -->
-
-  <!-- Distance -->
-
-  <!-- Speed and Pace -->
-
-  <!-- Sensors -->
-
-  <!-- Stats Labels -->
-
-  <!-- End User License Agreement -->
-
-  <!-- About -->
-  <string name="about_version">Versión:</string>
-  <string name="about_support">Soporte:</string>
   <string name="about_privacy">Privacidad:</string>
-
-  <!-- Send to Google -->
-
-  <!-- Getting the account to upload to. -->
+  <string name="about_support">Soporte:</string>
+  <string name="about_version">Versión:</string>
+  <string name="generic_save">Guardar</string>
+  <string name="menu_markers">Señales</string>
+  <string name="sd_card_error_read_file">No es posible leer del fichero.</string>
+  <string name="sd_card_success_read_file">Lectura de tarjeta SD terminada.</string>
+  <string name="sd_card_success_write_file">Grabación a tarjeta SD terminada.</string>
+  <string name="send_google_choose_account">Elegir cuenta</string>
   <string name="send_google_no_account">No se ha encontrado la cuenta</string>
   <string name="send_google_no_account_message">No se ha encontrado la cuenta a la que subir los recorridos.</string>
-  <string name="send_google_choose_account">Elegir cuenta</string>
-
-  <!-- SD card -->
-  <string name="sd_card_error_read_file">No es posible leer del fichero.</string>
-  <string name="sd_card_success_write_file">Grabación a tarjeta SD terminada.</string>
-  <string name="sd_card_success_read_file">Lectura de tarjeta SD terminada.</string>
-
-  <!-- VersionChecker -->
-
-  <!-- Welcome -->
-
-  <!-- Announcement -->
-  <!-- Format:
-  $1 : Distance label
-  $2 : Distance value (5)
-  $3 : Distance units (mi, km)
-  $4 : Time description (10 minutes 5 seconds)
-  $5 : Speed value (5.6) : Pace value (5 minutes 6 seconds)
-  $6 : Speed units (mph) : Pace units (per mile)
-  -->
-
-  <!-- Sensor Type Options -->
-  <string name="settings_sensor_type_none">Ninguna</string>
+  <string name="settings_display_speed">Mostrar velocidad</string>
+  <string name="settings_recording_voice_not_available">No está disponible en su versión de Android</string>
   <string name="settings_sensor_type_ant">ANT+ Sensores</string>
+  <string name="settings_sensor_type_none">Ninguna</string>
   <string name="settings_sensor_type_srm">SRM ANT+ Puente</string>
+  <string name="track_list_save_csv_file">Guardar en archivo CSV</string>
+  <string name="track_list_save_tcx_file">Guardar en archivo TCX</string>
+  <string name="track_list_share_csv_file">Un archivo CSV</string>
+  <string name="track_list_share_tcx_file">Un archivo TCX</string>
 </resources>
