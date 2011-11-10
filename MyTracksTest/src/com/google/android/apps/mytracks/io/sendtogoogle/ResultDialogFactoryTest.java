@@ -90,7 +90,7 @@ public class ResultDialogFactoryTest extends ActivityInstrumentationTestCase2<Se
     dialog.show();
 
     assertEquals(View.VISIBLE, dialog.getButton(AlertDialog.BUTTON_POSITIVE).getVisibility());
-    assertEquals(View.VISIBLE, dialog.getButton(AlertDialog.BUTTON_NEUTRAL).getVisibility());
+    assertEquals(View.VISIBLE, dialog.getButton(AlertDialog.BUTTON_NEGATIVE).getVisibility());
   }
 
   public void testFailure_noShare() {
@@ -115,6 +115,6 @@ public class ResultDialogFactoryTest extends ActivityInstrumentationTestCase2<Se
     dialog.show();
 
     assertEquals(View.VISIBLE, dialog.getButton(AlertDialog.BUTTON_POSITIVE).getVisibility());
-    assertEquals(View.VISIBLE, dialog.getButton(AlertDialog.BUTTON_NEUTRAL).getVisibility());
+    assertEquals(View.VISIBLE, dialog.getButton(AlertDialog.BUTTON_NEGATIVE).getVisibility());
   }
 }
