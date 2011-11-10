@@ -45,7 +45,7 @@ limitations under the License.
   <string name="error_import_invalid_gpx_format">El archivo no tiene un format GPX válido.</string>
   <string name="send_google_error">A ocurrido un error. Por favor, inténtelo de nuevo.</string>
   <string name="error_export_track_does_not_exist">El recorrido no existe.</string>
-  <string name="error_export_operation_canceled">La operación fue cancelada.</string>
+  <string name="export_canceled">La operación fue cancelada.</string>
   <string name="error_import_out_of_memory">El archivo es demasiado grande (tiene que ser menor a 500 KB). Abortando.</string>
   <string name="marker_insert_error">No se puede insertar el marcador. La ubicación no está disponible.</string>
 
@@ -80,15 +80,15 @@ limitations under the License.
   <string name="send_google_progress_sending_fusion_tables">Enviando recorrido a Google Fusion Tables...</string>
   <string name="send_google_progress_creating_fusion_table">Creando nuevo mapa Fusion Tables...</string>
   <string name="progress_message_import">Importando un recorrido GPS. Esto puede tardar.</string>
-  <string name="progress_message_export">Escribiendo archivo a tarjeta SD. Esto puede tardar.</string>
+  <string name="export_progress_message">Escribiendo archivo a tarjeta SD. Esto puede tardar.</string>
   <string name="progress_message_updating_track">Actualizando estadísticas del recorrido...</string>
 
   <!-- Used by DeleteAllDataHandler -->
     <string name="delete_track_activity_title">Borrar recorrido</string>
-  <string name="confirmation_title_are_you_sure">¿Está usted seguro?</string>
-  <string name="all_data_will_be_permanently_deleted">Todos los recorridos y señales serán borradas de este teléfono.</string>
-  <string name="track_will_be_permanently_deleted">El recorrido y sus señales serán borrados permanentemente de este teléfono.</string>
-  <string name="marker_will_be_permanently_deleted">La señal será borrada permanentemente de este teléfono.</string>
+  <string name="generic_confirm_title">¿Está usted seguro?</string>
+  <string name="track_list_delete_all_confirm_message">Todos los recorridos y señales serán borradas de este teléfono.</string>
+  <string name="track_list_delete_track_confirm_message">El recorrido y sus señales serán borrados permanentemente de este teléfono.</string>
+  <string name="marker_list_delete_marker_confirm_message">La señal será borrada permanentemente de este teléfono.</string>
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Creado por My Tracks para Android.</string>
@@ -109,12 +109,12 @@ limitations under the License.
   <string name="track_name_format">Recorrido %d</string>
 
   <!-- Common -->
-  <string name="yes">Sí</string>
-  <string name="success">Éxito</string>
+  <string name="generic_yes">Sí</string>
+  <string name="generic_success">Éxito</string>
   <string name="marker_type_waypoint">Marcador de recorrido</string>
   <string name="about_license">Licencia</string>
-  <string name="cancel">Cancelar</string>
-  <string name="save">Guardar</string>
+  <string name="generic_cancel">Cancelar</string>
+  <string name="generic_save">Guardar</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="marker_label_start">(Inicio)</string>
@@ -141,7 +141,7 @@ limitations under the License.
   
   <!-- Export All -->
   <string name="track_list_export_all">Exportar todos</string>
-  <string name="export_done">Exportación concluída</string>
+  <string name="export_success">Exportación concluída</string>
   <string name="track_list_pick_one">Escoja un recorrido. Presione&amp;mantenga presionado para ver más opciones.</string>
   <string name="tracklist_all_tracks">Todos los recorridos:"</string>
   <string name="track_list_this_track">Este recorrido"</string>
@@ -160,8 +160,8 @@ limitations under the License.
   $2 : Attempted imports
   $3 : MyTracks gpx path
   -->
-  <string name="import_multi_done">Importados %1$d de %2$d archivos GPX de %3$s</string>
-  <string name="import_multi_empty">No se encontraron archivos GPX en %s. Es posible que la tarjeta SD no sea accesible o que el directorio no contenga archivos GPX.</string>
+  <string name="import_success">Importados %1$d de %2$d archivos GPX de %3$s</string>
+  <string name="import_no_file">No se encontraron archivos GPX en %s. Es posible que la tarjeta SD no sea accesible o que el directorio no contenga archivos GPX.</string>
   <string name="import_error">Error importando el archivo %s</string>
   <string name="import_title">Importar a My Tracks</string>
   <string name="import_success">Se importaron correctamente %1$d recorrido(s) del archivo.</string>
@@ -304,7 +304,7 @@ limitations under the License.
   <string name="my_maps_list_error">¡No se pudieron cargar sus mapas en este momento!</string>
   <string name="open_map">Seleccionar este mapa</string>
   <string name="edit_map_details">Editar detalles del mapa</string>
-  <string name="share_track_url">Compartir recorrido</string>
+  <string name="send_google_result_share_url">Compartir recorrido</string>
   <string name="delete_map">Borrar mapa de su cuenta</string>
   <string name="map_title">Titulo del mapa:</string>
   <string name="map_description">Descripción del mapa:</string>
@@ -434,12 +434,12 @@ limitations under the License.
   <string name="send_google_choose_account">Elija una cuenta</string>
   
   <!-- SD card -->
-  <string name="io_no_external_storage_found">Ningún almacenamiento externo fue encontrado. Asegúrese que la tarjeta SD se encuentre insertada y que su teléfono no este conectado a una computadora.</string>
-  <string name="io_write_failed">No es posible escribir al archivo.</string>
-  <string name="io_read_failed">No es posible leer el archivo.</string>
-  <string name="io_create_dir_failed">No es posible crear un directorio en su tarjeta SD.</string>
-  <string name="io_write_finished">Grabación a tarjeta SD concluída.</string>
-  <string name="io_read_finished">Lectura de tarjeta SD concluída.</string>
+  <string name="sd_card_error_no_storage">Ningún almacenamiento externo fue encontrado. Asegúrese que la tarjeta SD se encuentre insertada y que su teléfono no este conectado a una computadora.</string>
+  <string name="sd_card_error_write_file">No es posible escribir al archivo.</string>
+  <string name="sd_card_error_read_file">No es posible leer el archivo.</string>
+  <string name="sd_card_error_create_dir">No es posible crear un directorio en su tarjeta SD.</string>
+  <string name="sd_card_success_write_file">Grabación a tarjeta SD concluída.</string>
+  <string name="sd_card_success_read_file">Lectura de tarjeta SD concluída.</string>
   
   <!-- VersionChecker -->
   <string name="version_check_title">Comprobar actualizaciones</string>

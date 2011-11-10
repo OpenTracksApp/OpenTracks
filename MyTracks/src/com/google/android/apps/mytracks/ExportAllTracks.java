@@ -80,8 +80,8 @@ public class ExportAllTracks {
 
     AlertDialog.Builder builder = new AlertDialog.Builder(activity);
     builder.setSingleChoiceItems(R.array.export_formats, 0, itemClick);
-    builder.setPositiveButton(R.string.ok, positiveClick);
-    builder.setNegativeButton(R.string.cancel, null);
+    builder.setPositiveButton(R.string.generic_ok, positiveClick);
+    builder.setNegativeButton(R.string.generic_cancel, null);
     builder.show();
   }
 
@@ -126,7 +126,7 @@ public class ExportAllTracks {
       Log.i(Constants.TAG, "ExportAllTracks: Releasing wake lock.");
     }
     Log.i(Constants.TAG, "ExportAllTracks: Done");
-    showToast(R.string.export_done, Toast.LENGTH_SHORT);
+    showToast(R.string.export_success, Toast.LENGTH_SHORT);
   }
 
   private void makeProgressDialog(final int trackCount) {
@@ -183,7 +183,7 @@ public class ExportAllTracks {
         TrackWriter writer =
             TrackWriterFactory.newWriter(activity, providerUtils, id, format);
         if (writer == null) {
-          showToast(R.string.error_export_generic, Toast.LENGTH_LONG);
+          showToast(R.string.export_error, Toast.LENGTH_LONG);
           return;
         }
 

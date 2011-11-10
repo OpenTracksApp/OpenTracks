@@ -169,7 +169,7 @@ public class SaveActivity extends Activity {
 
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
     builder.setMessage(writer.getErrorMessage());
-    builder.setPositiveButton(R.string.ok, new OnClickListener() {
+    builder.setPositiveButton(R.string.generic_ok, new OnClickListener() {
       @Override
       public void onClick(DialogInterface dialog, int arg1) {
         dialog.dismiss();
@@ -185,7 +185,7 @@ public class SaveActivity extends Activity {
     });
     builder.setIcon(success ? android.R.drawable.ic_dialog_info :
         android.R.drawable.ic_dialog_alert);
-    builder.setTitle(success ? R.string.success : R.string.error);
+    builder.setTitle(success ? R.string.generic_success : R.string.generic_error);
     return builder.create();
   }
 

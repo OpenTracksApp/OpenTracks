@@ -70,14 +70,14 @@ limitations under the License.
   <!-- <string name="send_google_progress_sending_fusion_tables">Przesyłanie trasy do Map Google...</string> -->
   <!-- <string name="send_google_progress_creating_fusion_table">Tworzenie nowej Mojej Mapy...</string> -->
   <string name="progress_message_import">Importowanie trasy GPS. Poczekaj chwilę.</string>
-  <string name="progress_message_export">Zapisywanie pliku na kartę SD. Poczekaj chwilę.</string>
+  <string name="export_progress_message">Zapisywanie pliku na kartę SD. Poczekaj chwilę.</string>
   <string name="progress_message_updating_track">Aktualizacja statystyk trasy...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="confirmation_title_are_you_sure">Jesteś pewien?</string>
-  <string name="all_data_will_be_permanently_deleted">Wszystkie trasy i znaczniki zostaną usunięte z telefonu.</string>
-  <string name="track_will_be_permanently_deleted">Trasa i jej znaczniki zostanie całkowicie usunięta z telefonu.</string>
-  <string name="marker_will_be_permanently_deleted">Znacznik zostanie całkowicie usunięty z telefonu.</string>
+  <string name="generic_confirm_title">Jesteś pewien?</string>
+  <string name="track_list_delete_all_confirm_message">Wszystkie trasy i znaczniki zostaną usunięte z telefonu.</string>
+  <string name="track_list_delete_track_confirm_message">Trasa i jej znaczniki zostanie całkowicie usunięta z telefonu.</string>
+  <string name="marker_list_delete_marker_confirm_message">Znacznik zostanie całkowicie usunięty z telefonu.</string>
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="new_map_description">Utworzono za pomocą My Tracks na Android.</string>
@@ -94,14 +94,14 @@ limitations under the License.
   <string name="track_name_format">Trasa %d</string>
 
   <!-- Common -->
-  <string name="no">Nie</string>
-  <string name="yes">Tak</string>
-  <string name="ok">OK</string>
-  <string name="error">Błąd</string>
-  <string name="success">Powodzenie</string>
+  <string name="generic_no">Nie</string>
+  <string name="generic_yes">Tak</string>
+  <string name="generic_ok">OK</string>
+  <string name="generic_error">Błąd</string>
+  <string name="generic_success">Powodzenie</string>
   <string name="marker_type_waypoint">Punkt orientacyjny</string>
-  <string name="cancel">Anuluj</string>
-  <string name="save">Zapisz</string>
+  <string name="generic_cancel">Anuluj</string>
+  <string name="generic_save">Zapisz</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="marker_label_start">(Początek)</string>
@@ -123,7 +123,7 @@ limitations under the License.
   <string name="track_list_delete_all">Usuń wszystkie trasy</string>
   <!-- Export All -->
   <string name="track_list_export_all">Eksportuj wszystkie trasy</string>
-  <string name="export_done">Eksport zakończony</string>
+  <string name="export_success">Eksport zakończony</string>
   <string name="track_list_pick_one">Wybierz trasę. Naciśnij i przytrzymaj, aby wybrać opcje.</string>
   <string name="tracklist_all_tracks">Wszystkie trasy:</string>
   <string name="track_list_this_track">Ta trasa</string>
@@ -236,7 +236,7 @@ limitations under the License.
   <string name="share_track_file_body_format">Myślę, że może Cię zainteresować ta trasa.
 
     Trasę możesz obejrzeć w Google Earth lub innym programie do obsługi map.</string>
-  <string name="share_track_url">Podziel się trasą z przyjaciółmi</string>
+  <string name="send_google_result_share_url">Podziel się trasą z przyjaciółmi</string>
 
   <!-- Visibility -->
   <string name="my_maps_list_public_label">Publiczna</string>
@@ -348,12 +348,12 @@ limitations under the License.
   <string name="send_google_choose_account">Wybierz konto</string>
 
   <!-- SD card -->
-  <string name="io_no_external_storage_found">Nie znaleziono zewnętrznej pamięci. Upewniej się, że karta SD jest w telefonie i nie jest podłączona do komputera.</string>
-  <string name="io_write_failed">Nie można zapisać pliku.</string>
-  <string name="io_read_failed">Nie można odczytać pliku.</string>
-  <string name="io_create_dir_failed">Nie można utworzyć katalogu na karcie SD.</string>
-  <string name="io_write_finished">Zakończono zapisywanie na karcie SD.</string>
-  <string name="io_read_finished">Zakończono odczytywanie z karty SD.</string>  
+  <string name="sd_card_error_no_storage">Nie znaleziono zewnętrznej pamięci. Upewniej się, że karta SD jest w telefonie i nie jest podłączona do komputera.</string>
+  <string name="sd_card_error_write_file">Nie można zapisać pliku.</string>
+  <string name="sd_card_error_read_file">Nie można odczytać pliku.</string>
+  <string name="sd_card_error_create_dir">Nie można utworzyć katalogu na karcie SD.</string>
+  <string name="sd_card_success_write_file">Zakończono zapisywanie na karcie SD.</string>
+  <string name="sd_card_success_read_file">Zakończono odczytywanie z karty SD.</string>  
 
   <!-- VersionChecker -->
   <string name="version_check_title">Sprawdzanie aktualizacji</string>

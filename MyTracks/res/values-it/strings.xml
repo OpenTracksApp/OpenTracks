@@ -69,14 +69,14 @@ limitations under the License.
   <!-- <string name="send_google_progress_sending_fusion_tables">Invio del percorso a Google Maps in corso...</string> -->
   <!-- <string name="send_google_progress_creating_fusion_table">Creazione di una nuova mappa in «Le mie mappe» in corso...</string> -->
   <string name="progress_message_import">Importazione del percorso GPS in corso. Attendere prego...</string>
-  <string name="progress_message_export">Salvataggio del file sulla scheda SD in corso. Attendere prego...</string>
+  <string name="export_progress_message">Salvataggio del file sulla scheda SD in corso. Attendere prego...</string>
   <string name="progress_message_updating_track">Aggiornamento delle statistiche del percorso in corso...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="confirmation_title_are_you_sure">Sei sicuro?</string>
-  <string name="all_data_will_be_permanently_deleted">Tutti i percorsi e segnaposti saranno eliminati definitivamente da questo telefono.</string>
-  <string name="track_will_be_permanently_deleted">Il percorso e i suoi segnaposti saranno eliminati definitivamente da questo telefono.</string>
-  <string name="marker_will_be_permanently_deleted">Il segnaposto sarà eliminato definitivamente da questo telefono.</string>
+  <string name="generic_confirm_title">Sei sicuro?</string>
+  <string name="track_list_delete_all_confirm_message">Tutti i percorsi e segnaposti saranno eliminati definitivamente da questo telefono.</string>
+  <string name="track_list_delete_track_confirm_message">Il percorso e i suoi segnaposti saranno eliminati definitivamente da questo telefono.</string>
+  <string name="marker_list_delete_marker_confirm_message">Il segnaposto sarà eliminato definitivamente da questo telefono.</string>
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="new_map_description">Creato da My Tracks su Android.</string>
@@ -93,14 +93,14 @@ limitations under the License.
   <string name="track_name_format">Percorso %d</string>
 
   <!-- Common -->
-  <string name="no">No</string>
-  <string name="yes">Sì</string>
-  <string name="ok">OK</string>
-  <string name="error">Errore</string>
-  <string name="success">Successo</string>
+  <string name="generic_no">No</string>
+  <string name="generic_yes">Sì</string>
+  <string name="generic_ok">OK</string>
+  <string name="generic_error">Errore</string>
+  <string name="generic_success">Successo</string>
   <string name="marker_type_waypoint">Punto di passaggio</string>
-  <string name="cancel">Annulla</string>
-  <string name="save">Salva</string>
+  <string name="generic_cancel">Annulla</string>
+  <string name="generic_save">Salva</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="marker_label_start">(Inizio)</string>
@@ -121,7 +121,7 @@ limitations under the License.
   <string name="track_list_delete_all">Elimina tutti i percorsi</string>
   <!-- Export All -->
   <string name="track_list_export_all">Esporta tutti i percorsi</string>
-  <string name="export_done">Esportazione terminata.</string>
+  <string name="export_success">Esportazione terminata.</string>
   <string name="track_list_pick_one">Scegli un percorso. Tieni premuto per più opzioni.</string>
   <string name="tracklist_all_tracks">Tutti i percorsi:</string>
   <string name="track_list_this_track">Questo percorso</string>
@@ -208,7 +208,7 @@ limitations under the License.
   <string name="share_track_file_body_format">Credo che questo percorso potrebbe interessarti.
 
     Per vedere questo percorso, usa Google Earth o un altro software di cartografia.</string>
-  <string name="share_track_url">Condividi il percorso con amici</string>
+  <string name="send_google_result_share_url">Condividi il percorso con amici</string>
 
   <!-- Visibility -->
   <string name="my_maps_list_public_label">Pubblica</string>
@@ -320,10 +320,10 @@ limitations under the License.
   <string name="send_google_choose_account">Scegli un account</string>
 
   <!-- SD card -->
-  <string name="io_no_external_storage_found">Nessuna memoria esterna trovata. Assicurati che la scheda SD sia inserita e che il telefono no sia montato su un computer.</string>
-  <string name="io_write_failed">Impossibile scrivere su file.</string>
-  <string name="io_create_dir_failed">Impossibile creare directory sulla scheda SD.</string>
-  <string name="io_write_finished">Finito di salvare il percorso sulla scheda SD.</string>
+  <string name="sd_card_error_no_storage">Nessuna memoria esterna trovata. Assicurati che la scheda SD sia inserita e che il telefono no sia montato su un computer.</string>
+  <string name="sd_card_error_write_file">Impossibile scrivere su file.</string>
+  <string name="sd_card_error_create_dir">Impossibile creare directory sulla scheda SD.</string>
+  <string name="sd_card_success_write_file">Finito di salvare il percorso sulla scheda SD.</string>
 
   <!-- VersionChecker -->
   <string name="version_check_title">Controlla aggiornamenti</string>

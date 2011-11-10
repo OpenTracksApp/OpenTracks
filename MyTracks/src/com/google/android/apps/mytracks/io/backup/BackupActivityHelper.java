@@ -74,12 +74,12 @@ public class BackupActivityHelper {
    */
   public void writeBackup() {
     if (!fileUtils.isSdCardAvailable()) {
-      showToast(R.string.io_no_external_storage_found);
+      showToast(R.string.sd_card_error_no_storage);
       return;
     }
 
     if (!backup.isBackupsDirectoryAvailable(true)) {
-      showToast(R.string.io_create_dir_failed);
+      showToast(R.string.sd_card_error_create_dir);
       return;
     }
 
@@ -95,10 +95,10 @@ public class BackupActivityHelper {
       public void run() {
         try {
           backup.writeToDefaultFile();
-          showToast(R.string.io_write_finished);
+          showToast(R.string.sd_card_success_write_file);
         } catch (IOException e) {
           Log.e(Constants.TAG, "Failed to write backup", e);
-          showToast(R.string.io_write_failed);
+          showToast(R.string.sd_card_error_write_file);
         } finally {
           dismissDialog(progressDialog);
         }
@@ -114,7 +114,7 @@ public class BackupActivityHelper {
   public void restoreBackup() {
     // Get the list of existing backups
     if (!fileUtils.isSdCardAvailable()) {
-      showToast(R.string.io_no_external_storage_found);
+      showToast(R.string.sd_card_error_no_storage);
       return;
     }
 
@@ -196,10 +196,10 @@ public class BackupActivityHelper {
       public void run() {
         try {
           backup.restoreFromDate(date);
-          showToast(R.string.io_read_finished);
+          showToast(R.string.sd_card_success_read_file);
         } catch (IOException e) {
           Log.e(Constants.TAG, "Failed to restore backup", e);
-          showToast(R.string.io_read_failed);
+          showToast(R.string.sd_card_error_read_file);
         } finally {
           // Data may have been restored, "reboot" the app to catch it
           restartApplication();

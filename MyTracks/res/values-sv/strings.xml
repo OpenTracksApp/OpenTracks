@@ -70,14 +70,14 @@ limitations under the License.
   <!-- <string name="send_google_progress_sending_fusion_tables">Skickar spår till Google Kartor...</string> -->
   <!-- <string name="send_google_progress_creating_fusion_table">Skapar en ny Min Karta...</string> -->
   <string name="progress_message_import">Importerar ett GPS-spår. Detta kan ta en stund.</string>
-  <string name="progress_message_export">Skriver till SD-kortet. Detta kan ta en stund.</string>
+  <string name="export_progress_message">Skriver till SD-kortet. Detta kan ta en stund.</string>
   <string name="progress_message_updating_track">Uppdaterar spårstatistik...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="confirmation_title_are_you_sure">Är du säker?</string>
-  <string name="all_data_will_be_permanently_deleted">Alla spår och markörer kommer att tas bort från telefonen.</string>
-  <string name="track_will_be_permanently_deleted">Spåret och dess markörer kommer att permanent tas bort från telefonen.</string>
-  <string name="marker_will_be_permanently_deleted">Markören kommer att permanent tas bort från telefonen.</string>
+  <string name="generic_confirm_title">Är du säker?</string>
+  <string name="track_list_delete_all_confirm_message">Alla spår och markörer kommer att tas bort från telefonen.</string>
+  <string name="track_list_delete_track_confirm_message">Spåret och dess markörer kommer att permanent tas bort från telefonen.</string>
+  <string name="marker_list_delete_marker_confirm_message">Markören kommer att permanent tas bort från telefonen.</string>
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="new_map_description">Skapad av My Tracks på Android.</string>
@@ -94,14 +94,14 @@ limitations under the License.
   <string name="track_name_format">Spår %d</string>
 
   <!-- Common -->
-  <string name="no">Nej</string>
-  <string name="yes">Ja</string>
-  <string name="ok">OK</string>
-  <string name="error">Fel</string>
-  <string name="success">Lyckades</string>
+  <string name="generic_no">Nej</string>
+  <string name="generic_yes">Ja</string>
+  <string name="generic_ok">OK</string>
+  <string name="generic_error">Fel</string>
+  <string name="generic_success">Lyckades</string>
   <string name="marker_type_waypoint">Positionsmärke</string>
-  <string name="cancel">Avbryt</string>
-  <string name="save">Spara</string>
+  <string name="generic_cancel">Avbryt</string>
+  <string name="generic_save">Spara</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="marker_label_start">(Start)</string>
@@ -123,7 +123,7 @@ limitations under the License.
   <string name="track_list_delete_all">Ta bort alla spår</string>
   <!-- Export All -->
   <string name="track_list_export_all">Exportera alla spår</string>
-  <string name="export_done">Exporteringen slutfördes</string>
+  <string name="export_success">Exporteringen slutfördes</string>
   <string name="track_list_pick_one">Välj ett spår. Tryck &amp; håll för fler alternativ.</string>
   <string name="tracklist_all_tracks">Alla spår:</string>
   <string name="track_list_this_track">Det här spåret</string>
@@ -211,7 +211,7 @@ limitations under the License.
   <string name="share_track_file_body_format">Jag tror att du skulle vara intresserad av det här spåret.
 
     För att se det här spåret använd Google Earth eller något annat kartprogram.</string>
-  <string name="share_track_url">Dela spår med vänner</string>
+  <string name="send_google_result_share_url">Dela spår med vänner</string>
 
   <!-- Visibility -->
   <string name="my_maps_list_public_label">Publik</string>
@@ -323,10 +323,10 @@ limitations under the License.
   <string name="send_google_choose_account">Välj konto</string>
 
   <!-- SD card -->
-  <string name="io_no_external_storage_found">Ingen extern lagring hittades. Se till att ett SD-kort sitter i och att telefonen inte är monterad till en dator.</string>
-  <string name="io_write_failed">Kan inte skriva till filen.</string>
-  <string name="io_create_dir_failed">Kunde inte skapa katalog på SD-kort.</string>
-  <string name="io_write_finished">Slutförde skrivningen av spåret till SD-kort.</string>
+  <string name="sd_card_error_no_storage">Ingen extern lagring hittades. Se till att ett SD-kort sitter i och att telefonen inte är monterad till en dator.</string>
+  <string name="sd_card_error_write_file">Kan inte skriva till filen.</string>
+  <string name="sd_card_error_create_dir">Kunde inte skapa katalog på SD-kort.</string>
+  <string name="sd_card_success_write_file">Slutförde skrivningen av spåret till SD-kort.</string>
 
   <!-- VersionChecker -->
   <string name="version_check_title">Uppgraderingskoll</string>

@@ -45,7 +45,7 @@ limitations under the License.
   <string name="error_import_invalid_gpx_format">Virheellinen GPX-formaatti.</string>
   <string name="error_import_generic">Tapahtui virhe. Yritä uudelleen.</string>
   <string name="error_export_track_does_not_exist">Reittiä ei ole olemassa.</string>
-  <string name="error_export_operation_canceled">Tapahtuma keskeytettiin.</string>
+  <string name="export_canceled">Tapahtuma keskeytettiin.</string>
   <string name="error_import_out_of_memory">Liian suuri tiedosto (maksimi 500 KB). Keskeytetään.</string>
   <string name="marker_insert_error">Merkintää ei voitu lisätä. Paikkatietoa ei saatavilla.</string>
 
@@ -80,14 +80,14 @@ limitations under the License.
   <string name="send_google_progress_sending_fusion_tables">Lähetetään reittiä Fusion Tablesiin...</string>
   <string name="send_google_progress_creating_fusion_table">Luodaan uutta Fusion tablea...</string>
   <string name="progress_message_import">Tuodaan uutta GPS-reittiä. Odota.</string>
-  <string name="progress_message_export">Kirjoitetaan tiedostoa SD-kortille. Odota.</string>
+  <string name="export_progress_message">Kirjoitetaan tiedostoa SD-kortille. Odota.</string>
   <string name="progress_message_updating_track">Päivitetään reitin tilastoja...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="confirmation_title_are_you_sure">Oletko varma?</string>
-  <string name="all_data_will_be_permanently_deleted">Kaikki reitit ja merkinnät poistetaan puhelimesta.</string>
-  <string name="track_will_be_permanently_deleted">Reitti ja se merkinnät poistetaan pysyvästi puhelimesta.</string>
-  <string name="marker_will_be_permanently_deleted">Merkintä poistetaan puhelimesta.</string>
+  <string name="generic_confirm_title">Oletko varma?</string>
+  <string name="track_list_delete_all_confirm_message">Kaikki reitit ja merkinnät poistetaan puhelimesta.</string>
+  <string name="track_list_delete_track_confirm_message">Reitti ja se merkinnät poistetaan pysyvästi puhelimesta.</string>
+  <string name="marker_list_delete_marker_confirm_message">Merkintä poistetaan puhelimesta.</string>
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Created by My Tracks on Android.</string>
@@ -108,15 +108,15 @@ limitations under the License.
   <string name="track_name_format">Reitti %d</string>
 
   <!-- Common -->
-  <string name="no">Ei</string>
-  <string name="yes">Kyllä</string>
-  <string name="ok">OK</string>
-  <string name="error">Virhe</string>
-  <string name="success">Valmis</string>
+  <string name="generic_no">Ei</string>
+  <string name="generic_yes">Kyllä</string>
+  <string name="generic_ok">OK</string>
+  <string name="generic_error">Virhe</string>
+  <string name="generic_success">Valmis</string>
   <string name="marker_type_waypoint">Reittipiste</string>
   <string name="about_license">Lisenssi</string>
-  <string name="cancel">Peruuta</string>
-  <string name="save">Tallenna</string>
+  <string name="generic_cancel">Peruuta</string>
+  <string name="generic_save">Tallenna</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="marker_label_start">(Lähtö)</string>
@@ -142,7 +142,7 @@ limitations under the License.
   <string name="track_list_delete_all">Poista kaikki</string>
   <!-- Export All -->
   <string name="track_list_export_all">Vie kaikki</string>
-  <string name="export_done">Vienti tehty</string>
+  <string name="export_success">Vienti tehty</string>
   <string name="track_list_pick_one">Valitse reitti. Pitkällä painalluksella lisää vaihtoehtoja.</string>
   <string name="tracklist_all_tracks">Kaikki reitit:</string>
   <string name="track_list_this_track">Tämä reitti</string>
@@ -160,8 +160,8 @@ limitations under the License.
   $2 : Attempted imports
   $3 : MyTracks gpx path
   -->
-  <string name="import_multi_done">Tuotu %1$d GPX-tiedostoa %2$d:sta lähteestä %3$s</string>
-  <string name="import_multi_empty">Lähteestä %s ei löytynyt GPX-tiedostoja. SD-kortti saattaa olla lukukelvoton tai hakemistossa ei ole GPX-tiedostoja.</string>
+  <string name="import_success">Tuotu %1$d GPX-tiedostoa %2$d:sta lähteestä %3$s</string>
+  <string name="import_no_file">Lähteestä %s ei löytynyt GPX-tiedostoja. SD-kortti saattaa olla lukukelvoton tai hakemistossa ei ole GPX-tiedostoja.</string>
   <string name="import_error">Virhe tuotaessa tiedostoa %s</string>
   <string name="import_title">Tuo My Tracksiin</string>
   <string name="import_success">%1$d reittiä tuotu.</string>
@@ -285,7 +285,7 @@ limitations under the License.
   <string name="my_maps_list_error">Karttoja ei voitu ladata!</string>
   <string name="open_map">Valitse tämä kartta</string>
   <string name="edit_map_details">Muokkaa kartan tietoja</string>
-  <string name="share_track_url">Jaa reitti</string>
+  <string name="send_google_result_share_url">Jaa reitti</string>
   <string name="delete_map">Poista kartta tililtä</string>
   <string name="map_title">Kartan otsikko:</string>
   <string name="map_description">Kartan kuvaus:</string>
@@ -430,12 +430,12 @@ limitations under the License.
   <string name="send_google_choose_account">Valitse tili</string>
 
   <!-- SD card -->
-  <string name="io_no_external_storage_found">Ulkoista tallennusmediaa ei löytynyt. Varmista että SD-kortti on kytketty eikä puhelinta ole liitetty tietokoneeseen.</string>
-  <string name="io_write_failed">Kirjoitusvirhe.</string>
-  <string name="io_read_failed">Lukuvirhe.</string>
-  <string name="io_create_dir_failed">Hakemistoa ei voitu luoda SD-kortille.</string>
-  <string name="io_write_finished">SD-kortille kirjoitus valmis.</string>
-  <string name="io_read_finished">SD-kortin luku valmis.</string>
+  <string name="sd_card_error_no_storage">Ulkoista tallennusmediaa ei löytynyt. Varmista että SD-kortti on kytketty eikä puhelinta ole liitetty tietokoneeseen.</string>
+  <string name="sd_card_error_write_file">Kirjoitusvirhe.</string>
+  <string name="sd_card_error_read_file">Lukuvirhe.</string>
+  <string name="sd_card_error_create_dir">Hakemistoa ei voitu luoda SD-kortille.</string>
+  <string name="sd_card_success_write_file">SD-kortille kirjoitus valmis.</string>
+  <string name="sd_card_success_read_file">SD-kortin luku valmis.</string>
 
   <!-- VersionChecker -->
   <string name="version_check_title">Tarkista päivitykset</string>

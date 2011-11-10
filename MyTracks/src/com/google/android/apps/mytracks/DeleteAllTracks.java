@@ -51,10 +51,10 @@ public class DeleteAllTracks extends Handler {
     AlertDialog dialog = null;
     AlertDialog.Builder builder = new AlertDialog.Builder(context);
     builder.setMessage(
-        context.getString(R.string.all_data_will_be_permanently_deleted));
-    builder.setTitle(context.getString(R.string.confirmation_title_are_you_sure));
+        context.getString(R.string.track_list_delete_all_confirm_message));
+    builder.setTitle(context.getString(R.string.generic_confirm_title));
     builder.setIcon(android.R.drawable.ic_dialog_alert);
-    builder.setPositiveButton(context.getString(R.string.yes),
+    builder.setPositiveButton(context.getString(R.string.generic_yes),
         new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialogInterface, int i) {
             dialogInterface.dismiss();
@@ -72,7 +72,7 @@ public class DeleteAllTracks extends Handler {
             }
           }
         });
-    builder.setNegativeButton(context.getString(R.string.no),
+    builder.setNegativeButton(context.getString(R.string.generic_no),
         new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialogInterface, int i) {
             dialogInterface.dismiss();

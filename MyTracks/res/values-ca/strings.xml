@@ -71,14 +71,14 @@ limitations under the License.
   <string name="send_google_progress_sending_fusion_tables">S\'està enviant a Google Fusion Tables...</string>
   <string name="send_google_progress_creating_fusion_table">S\'està creant un Fusion Table nou...</string>
   <string name="progress_message_import">S\'està imporant una ruta GPS. Això pot trigar una estona.</string>
-  <string name="progress_message_export">S\'està escrivint a la targeta SD. Això pot trigar una estona.</string>
+  <string name="export_progress_message">S\'està escrivint a la targeta SD. Això pot trigar una estona.</string>
   <string name="progress_message_updating_track">S\'estan actualitzant les estadístiques de la ruta...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="confirmation_title_are_you_sure">Esteu segur?</string>
-  <string name="all_data_will_be_permanently_deleted">Tots els marcadors i rutes s\'eliminaran d\'aquest telèfon.</string>
-  <string name="track_will_be_permanently_deleted">La ruta i els seus marcadors s\'eliminaran de forma permanent d\'aquest telèfon.</string>
-  <string name="marker_will_be_permanently_deleted">El marcador s\'eliminarà de forma permanent d\'aquest telèfon.</string>
+  <string name="generic_confirm_title">Esteu segur?</string>
+  <string name="track_list_delete_all_confirm_message">Tots els marcadors i rutes s\'eliminaran d\'aquest telèfon.</string>
+  <string name="track_list_delete_track_confirm_message">La ruta i els seus marcadors s\'eliminaran de forma permanent d\'aquest telèfon.</string>
+  <string name="marker_list_delete_marker_confirm_message">El marcador s\'eliminarà de forma permanent d\'aquest telèfon.</string>
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="new_map_description">Creat per My Tracks a l\'Android.</string>
@@ -94,14 +94,14 @@ limitations under the License.
   <string name="track_name_format">Ruta %d</string>
 
   <!-- Common -->
-  <string name="no">No</string>
-  <string name="yes">Sí</string>
-  <string name="ok">D\'acord</string>
-  <string name="error">Error</string>
-  <string name="success">Fet</string>
+  <string name="generic_no">No</string>
+  <string name="generic_yes">Sí</string>
+  <string name="generic_ok">D\'acord</string>
+  <string name="generic_error">Error</string>
+  <string name="generic_success">Fet</string>
   <string name="marker_type_waypoint">Punt de referència</string>
-  <string name="cancel">Cancel·la</string>
-  <string name="save">Desa</string>
+  <string name="generic_cancel">Cancel·la</string>
+  <string name="generic_save">Desa</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="marker_label_start">(Inici)</string>
@@ -124,7 +124,7 @@ limitations under the License.
   <string name="track_list_delete_all">Elimina totes les rutes</string>
   <!-- Export All -->
   <string name="track_list_export_all">Exporta totes les rutes</string>
-  <string name="export_done">Exporta les finalitzades</string>
+  <string name="export_success">Exporta les finalitzades</string>
   <string name="track_list_pick_one">Seleccioneu una ruta. Mantingueu el dit per veure més opcions.</string>
   <string name="tracklist_all_tracks">Totes les rutes:</string>
   <string name="track_list_this_track">Aquesta ruta</string>
@@ -243,7 +243,7 @@ limitations under the License.
   <string name="share_track_file_body_format">Em sembla que estaràs interessat en aquesta ruta.
 
     Per veure aquesta ruta fes servir Google Earth o altre programari de mapes.</string>
-  <string name="share_track_url">Comparteix la ruta amb amics</string>
+  <string name="send_google_result_share_url">Comparteix la ruta amb amics</string>
 
   <!-- Visibility -->
   <string name="my_maps_list_public_label">Públic</string>
@@ -346,12 +346,12 @@ limitations under the License.
   <string name="send_google_choose_account">Trieu un compte</string>
 
   <!-- SD card -->
-  <string name="io_no_external_storage_found">No s\'ha trobat cap dispositiu d\'emmagatzematge extern. Assegureu-vos que la targeta SD està inserida i que el telèfon no està connectat a un ordinador.</string>
-  <string name="io_write_failed">No es pot escriure a un fitxer.</string>
-  <string name="io_read_failed">No es pot llegir des del fitxer.</string>
-  <string name="io_create_dir_failed">No es pot crear el directori a la targeta SD.</string>
-  <string name="io_write_finished">S\'ha finalitzat l\'escriptura a la targeta SD.</string>
-  <string name="io_read_finished">S\'ha finalitzat la lectura a la targeta SD.</string>
+  <string name="sd_card_error_no_storage">No s\'ha trobat cap dispositiu d\'emmagatzematge extern. Assegureu-vos que la targeta SD està inserida i que el telèfon no està connectat a un ordinador.</string>
+  <string name="sd_card_error_write_file">No es pot escriure a un fitxer.</string>
+  <string name="sd_card_error_read_file">No es pot llegir des del fitxer.</string>
+  <string name="sd_card_error_create_dir">No es pot crear el directori a la targeta SD.</string>
+  <string name="sd_card_success_write_file">S\'ha finalitzat l\'escriptura a la targeta SD.</string>
+  <string name="sd_card_success_read_file">S\'ha finalitzat la lectura a la targeta SD.</string>
 
   <!-- VersionChecker -->
   <string name="version_check_title">Comprovació d\'actualitzacions</string>

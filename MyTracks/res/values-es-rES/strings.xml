@@ -34,7 +34,7 @@ limitations under the License.
 
   <!-- Common -->
   <string name="about_license">Licencia</string>
-  <string name="save">Guardar</string>
+  <string name="generic_save">Guardar</string>
 
   <!-- Placemark labels for start and end of track -->
 
@@ -108,9 +108,9 @@ limitations under the License.
   <string name="send_google_choose_account">Elegir cuenta</string>
 
   <!-- SD card -->
-  <string name="io_read_failed">No es posible leer del fichero.</string>
-  <string name="io_write_finished">Grabación a tarjeta SD terminada.</string>
-  <string name="io_read_finished">Lectura de tarjeta SD terminada.</string>
+  <string name="sd_card_error_read_file">No es posible leer del fichero.</string>
+  <string name="sd_card_success_write_file">Grabación a tarjeta SD terminada.</string>
+  <string name="sd_card_success_read_file">Lectura de tarjeta SD terminada.</string>
 
   <!-- VersionChecker -->
 

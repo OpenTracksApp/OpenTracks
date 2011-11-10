@@ -80,7 +80,7 @@ public class AccountChooser {
     final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
     builder.setTitle(R.string.send_google_choose_account);
     builder.setCancelable(false);
-    builder.setPositiveButton(R.string.ok,
+    builder.setPositiveButton(R.string.generic_ok,
         new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int which) {
         dialog.dismiss();
@@ -92,7 +92,7 @@ public class AccountChooser {
         handler.onAccountSelected(selectedAccount);
       }
     });
-    builder.setNegativeButton(R.string.cancel,
+    builder.setNegativeButton(R.string.generic_cancel,
         new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int which) {
         dialog.dismiss();
@@ -127,7 +127,7 @@ public class AccountChooser {
     builder.setTitle(R.string.send_google_no_account);
     builder.setMessage(R.string.send_google_no_account_message);
     builder.setCancelable(true);
-    builder.setPositiveButton(R.string.ok,
+    builder.setPositiveButton(R.string.generic_ok,
         new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int which) {
             dialog.dismiss();

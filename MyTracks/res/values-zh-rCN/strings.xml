@@ -45,7 +45,7 @@ limitations under the License.
   <string name="error_import_invalid_gpx_format">文件不是有效的 GPX 格式.</string>
   <string name="error_import_generic">发生错误. 请重试.</string>
   <string name="error_export_track_does_not_exist">轨迹不存在.</string>
-  <string name="error_export_operation_canceled">操作已被取消.</string>
+  <string name="export_canceled">操作已被取消.</string>
   <string name="error_import_out_of_memory">文件太大 (必须小于 500 KB). 中止操作.</string>
   <string name="marker_insert_error">无法插入标记. 定位尚未完成.</string>
 
@@ -80,14 +80,14 @@ limitations under the License.
   <string name="send_google_progress_sending_fusion_tables">发送轨迹到 Fusion Tables...</string>
   <string name="send_google_progress_creating_fusion_table">创建新的 Fusion table...</string>
   <string name="progress_message_import">导入 GPS 轨迹中. 请稍候.</string>
-  <string name="progress_message_export">写入文件到 SD 卡中. 请稍候.</string>
+  <string name="export_progress_message">写入文件到 SD 卡中. 请稍候.</string>
   <string name="progress_message_updating_track">更新轨迹统计信息中...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="confirmation_title_are_you_sure">请确认</string>
-  <string name="all_data_will_be_permanently_deleted">所以轨迹和标记都将被从本机删除.</string>
-  <string name="track_will_be_permanently_deleted">选定轨迹和它相关的标记都将被从本机彻底删除.</string>
-  <string name="marker_will_be_permanently_deleted">选定标记将被从本机删除.</string>
+  <string name="generic_confirm_title">请确认</string>
+  <string name="track_list_delete_all_confirm_message">所以轨迹和标记都将被从本机删除.</string>
+  <string name="track_list_delete_track_confirm_message">选定轨迹和它相关的标记都将被从本机彻底删除.</string>
+  <string name="marker_list_delete_marker_confirm_message">选定标记将被从本机删除.</string>
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">由 Android 平台的 My Tracks 创建.</string>
@@ -108,15 +108,15 @@ limitations under the License.
   <string name="track_name_format">轨迹 %d</string>
 
   <!-- Common -->
-  <string name="no">否</string>
-  <string name="yes">是</string>
-  <string name="ok">确定</string>
-  <string name="error">错误</string>
-  <string name="success">成功</string>
+  <string name="generic_no">否</string>
+  <string name="generic_yes">是</string>
+  <string name="generic_ok">确定</string>
+  <string name="generic_error">错误</string>
+  <string name="generic_success">成功</string>
   <string name="marker_type_waypoint">路点</string>
   <string name="about_license">授权</string>
-  <string name="cancel">取消</string>
-  <string name="save">保存</string>
+  <string name="generic_cancel">取消</string>
+  <string name="generic_save">保存</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="marker_label_start">(开始)</string>
@@ -142,7 +142,7 @@ limitations under the License.
   <string name="track_list_delete_all">删除所有轨迹</string>
   <!-- Export All -->
   <string name="track_list_export_all">导出所有轨迹</string>
-  <string name="export_done">导出完毕</string>
+  <string name="export_success">导出完毕</string>
   <string name="track_list_pick_one">选择一个轨迹. 长按弹出操作菜单.</string>
   <string name="tracklist_all_tracks">全部轨迹:</string>
   <string name="track_list_this_track">此轨迹</string>
@@ -282,7 +282,7 @@ limitations under the License.
   <string name="my_maps_list_error">现在无法载入你的地图!</string>
   <string name="open_map">选择此地图</string>
   <string name="edit_map_details">编辑地图详细信息</string>
-  <string name="share_track_url">分享轨迹</string>
+  <string name="send_google_result_share_url">分享轨迹</string>
   <string name="delete_map">从你的帐号删除地图</string>
   <string name="map_title">地图标题:</string>
   <string name="map_description">地图描述:</string>
@@ -408,12 +408,12 @@ limitations under the License.
   <string name="send_google_choose_account">选择帐户</string>
 
   <!-- SD card -->
-  <string name="io_no_external_storage_found">没有发现存储设备. 请确认插入了 SD 存储卡并且你的手机没有将挂载 SD 卡到电脑.</string>
-  <string name="io_write_failed">无法写入文件.</string>
-  <string name="io_create_dir_failed">无法在 SD 存储卡上创建目录.</string>
-  <string name="io_create_dir_failed">无法在 SD 存储卡上创建目录card.</string>
-  <string name="io_write_finished">轨迹已导出到 SD 存储卡.</string>
-  <string name="io_read_finished">从 SD 存储卡读取完毕.</string>
+  <string name="sd_card_error_no_storage">没有发现存储设备. 请确认插入了 SD 存储卡并且你的手机没有将挂载 SD 卡到电脑.</string>
+  <string name="sd_card_error_write_file">无法写入文件.</string>
+  <string name="sd_card_error_create_dir">无法在 SD 存储卡上创建目录.</string>
+  <string name="sd_card_error_create_dir">无法在 SD 存储卡上创建目录card.</string>
+  <string name="sd_card_success_write_file">轨迹已导出到 SD 存储卡.</string>
+  <string name="sd_card_success_read_file">从 SD 存储卡读取完毕.</string>
 
   <!-- VersionChecker -->
   <string name="version_check_title">检查更新</string>

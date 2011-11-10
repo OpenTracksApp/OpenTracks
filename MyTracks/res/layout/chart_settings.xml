@@ -126,11 +126,11 @@ limitations under the License.
     <LinearLayout style="@style/ButtonSpacer"/>
     <Button android:id="@+id/chart_settings_ok"
       android:layout_gravity="left"
-      android:text="@string/ok"
+      android:text="@string/generic_ok"
       style="@style/Button"/>
     <Button android:id="@+id/chart_settings_cancel"
       android:layout_gravity="right"
-      android:text="@string/cancel"
+      android:text="@string/generic_cancel"
       style="@style/Button"/>
     <LinearLayout style="@style/ButtonSpacer"/>
   </LinearLayout>

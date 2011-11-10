@@ -16,7 +16,7 @@ limitations under the License.
 -->
 <resources>
 
-  <!-- About -->  
+  <!-- About Page -->  
   <string name="about_license"
     translation_description="In the 'About' page, the button on the bottom to view the terms
       of service agreement.">
@@ -64,7 +64,7 @@ limitations under the License.
     translation_description="In the Chart Settings, the section label for configuring the Y axis.">
     Y Axis
   </string>
-  
+      
   <!-- EULA -->
   <string name="eula_accept"
     translation_description="In the 'End User License Agreement' dialog, the button to accept.">
@@ -80,13 +80,65 @@ limitations under the License.
     End User License Agreement
   </string>
   
-  <!-- Generic -->
+  <!-- Export -->
+  <string name="export_canceled"
+    translation_description="When exporting a track to the SD card, a message indicating that the
+      export operation was canceled.">
+    The operation was canceled.
+  </string>
+  <string name="export_error"
+    translation_description="When exporting a track to the SD card, a generic error message
+      indicating unable to export.">
+    Unable to export.
+  </string>
+  <string name="export_progress_message"
+    translation_description="When exporting a track to the SD card, the message on the progress
+      dialog indicating that it may take a while.">
+    Exporting a track to the SD card. This may take a while.
+  </string>
+  <string name="export_success"
+    translation_description="After exporting all the tracks, a toast message indicating success.">
+    Export finished
+  </string>
+  
+  <!-- Generic Strings -->
+  <string name="generic_cancel"
+    translation_description="The text on a button to say cancel.">
+    Cancel
+  </string>
+  <string name="generic_confirm_title"
+    translation_description="The title on a confirmation dialog asking the user if he is sure?">
+    Are you sure?
+  </string>
+  <string name="generic_error"
+    translation_description="The title on an alert dialog indicating error.">
+    Error
+  </string>
+  <string name="generic_no"
+    translation_description="The text on a button to say no.">
+    No
+  </string>
+  <string name="generic_ok"
+    translation_description="The text on a button to say ok.">
+    OK
+  </string>    
   <string name="generic_progress_title"
-    translation_description="When displaying a progress dialog, the title on the dialog asking the
-      user to wait.">
+    translation_description="The title on a progress dialog asking the user to wait.">
     Please wait...
   </string>
-      
+  <string name="generic_save"
+    translation_description="The text on a button to say save.">
+    Save
+  </string>
+  <string name="generic_success"
+    translation_description="The title on an alert dialog indicating success.">
+    Success
+  </string>
+  <string name="generic_yes"
+    translation_description="The text on a button to say yes.">
+    Yes
+  </string>
+
   <!-- GPS -->
   <string name="gps_need_to_enable"
     translation_description="In the main view, the message on the top asking the user to enable
@@ -103,6 +155,24 @@ limitations under the License.
       waiting for a better GPS fix.">
     Waiting for a better GPS fix. Make sure the sky is visible.
   </string> 
+  
+  <!-- Import -->
+  <string name="import_error"
+    translation_description="When importing all the tracks, a toast message indicating error for
+      one of the tracks. E.g., 'Import error for file /mnt/sdcard/MyTacks/gpx/1.gpx'."> 
+    Import error for file %s
+  </string>  
+  <string name="import_no_file"
+    translation_description="After importing all the tracks from the SD card, the alert message
+      indicating that no track is imported. E.g., 'No GPX file found in /mnt/sdcard/MyTracks/gpx/.
+      SD card may be unreadable or directory may not contain any GPX file.'.">
+    No GPX file found in %s. SD card may be unreadable or directory may not contain any GPX file.
+  </string>
+  <string name="import_success"
+    translation_description="After importing all the tracks from the SD card, the alert message
+      indicating success. E.g., 'Imported 5 of 6 GPX files from /mnt/sdcard/MyTracks/gpx/'.">
+    Imported to My Tracks %1$d of %2$d GPX files from %3$s
+  </string>
   
   <!-- Marker -->    
   <string name="marker_detail_marker_description"
@@ -154,6 +224,12 @@ limitations under the License.
       marker.">   
     Delete
   </string>
+  <string name="marker_list_delete_marker_confirm_message"
+    translation_description="In the context menu for a marker, when pressing the 'Delete' option,
+      the confirmation dialog message informing the user that the marker will be permanently
+      deleted from the phone.">
+    The marker will be permanently deleted from the phone.
+  </string>
   <string name="marker_list_edit_marker"
     translation_description="In the context menu for a marker, the menu option to edit the marker's
       metadata (e.g., name, type, etc.)."> 
@@ -193,7 +269,7 @@ limitations under the License.
     Waypoint
   </string>
       
-  <!-- Menu items for the map, chart, and stat view. -->
+  <!-- Menu Items -->
   <string name="menu_aggregated_statistics"
     translation_description="In the menu, to go to the aggregated statistics page.">
     Aggregated Statistics
@@ -259,8 +335,8 @@ limitations under the License.
   
   <!-- My Maps List -->
   <string name="my_maps_list_error"
-     translation_description="When sending a track to an existing Google My Map, the text on the 
-       'My Maps' list page informing the user that his maps cannot be loaded at this time.">
+    translation_description="When sending a track to an existing Google My Map, the text on the 
+      'My Maps' list page informing the user that his maps cannot be loaded at this time.">
     Your maps could not be loaded at this time.
   </string>
   <string name="my_maps_list_loading"
@@ -294,7 +370,7 @@ limitations under the License.
     Unlisted
   </string>
       
-  <!-- Permission - not seen inside the app -->
+  <!-- Permission -->
   <string name="permission_notification_description"
     translation_description="When installing a third-party app that wants to receive My Tracks 
       notifications, the permission description that the Android Market shows to the user.">
@@ -326,7 +402,7 @@ limitations under the License.
     write data to My Tracks and start/stop My Tracks recording
   </string>
   
-  <!--  Preferred Units -->
+  <!-- Preferred Units -->
   <string name="preferred_units_imperial"
     translation_description="In the dialog asking the user to choose a preferred units, the option
       to choose the imperial units.">
@@ -343,10 +419,43 @@ limitations under the License.
     Preferred Units
   </string>
   
+  <!-- SD Card -->
+  <string name="sd_card_error_create_dir"
+    translation_description="When writing to the SD card, the error message when not able to create
+      a directory on the SD card.">
+    Unable to create directory on SD card.
+  </string>
+  <string name="sd_card_error_no_storage"
+    translation_description="When writing to the SD card, the error message when the SD card is not
+      found.">
+    No external storage was found. Make sure that a SD card is inserted and that your phone is not
+    mounted to a computer.
+  </string>
+  <string name="sd_card_error_read_file"
+    translation_description="When reading from the SD card, the error message when not able to read
+      a file.">
+    Unable to read from file.
+  </string>
+  <string name="sd_card_error_write_file"
+    translation_description="When writing to the SD card, the error message when not able to write a
+      file.">
+    Unable to write to file.
+  </string>
+  <string name="sd_card_success_read_file"
+    translation_description="When reading from the SD card, the success message when finish reading
+      from the SD card.">
+    Finished reading from SD card.
+  </string>
+  <string name="sd_card_success_write_file"
+    translation_description="When writing to the SD card, the success message when finish writing to
+      the SD card.">
+    Finished writing to SD card.
+  </string>
+      
   <!-- Send Google -->
   <string name="send_google_by_my_tracks"
     translation_description="When sending a track to Google, a note indicating it is created by
-      My Tracks on Android, with the 'My Tracks' word containng a http link to
+      My Tracks on Android, with the 'My Tracks' word containing a http link to
       http://mytracks.appspot.com.">
     Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.
   </string>
@@ -359,16 +468,6 @@ limitations under the License.
       checkbox option to send to Google Docs.">
     Google Docs
   </string>
-  <string name="send_google_existing_map"
-    translation_description="When sending a track to Google My Maps, the radio option to use an
-      existing map as opposed to create a new map.">
-    Use an existing map
-  </string>
-  <string name="send_google_fusion_tables"
-    translation_description="When sending a track to Google, under the 'Send to...' dialog, the 
-      checkbox option to send to Google Fusion Tables.">
-    Google Fusion Tables
-  </string>  
   <string name="send_google_error"
     translation_description="When sending a track to Google, a message indicating that an error has
       occurred and ask the user to try again.">
@@ -386,9 +485,19 @@ limitations under the License.
   </string>  
   <string name="send_google_error_my_maps"
     translation_description="When sending a track to Google My Maps, a message indicating that an
-      error has occured.">
+      error has occurred.">
     There was an error while sending your track to Google My Maps.
   </string>
+  <string name="send_google_existing_map"
+    translation_description="When sending a track to Google My Maps, the radio option to use an
+      existing map as opposed to create a new map.">
+    Use an existing map
+  </string>
+  <string name="send_google_fusion_tables"
+    translation_description="When sending a track to Google, under the 'Send to...' dialog, the 
+      checkbox option to send to Google Fusion Tables.">
+    Google Fusion Tables
+  </string>  
   <string name="send_google_my_maps"
     translation_description="When sending a track to Google, under the 'Send to...' dialog, the 
       checkbox option to send to Google My Maps.">
@@ -410,27 +519,27 @@ limitations under the License.
     No account found to upload tracks to.
   </string>
   <string name="send_google_progress_auth_docs"
-    translation_description="When sending a track to Google Docs, the messsage on the progress
+    translation_description="When sending a track to Google Docs, the message on the progress
       dialog indicating authenticating to Google Docs.">
     Authenticating to Google Docs...
   </string>   
   <string name="send_google_progress_auth_fusion_tables"
-    translation_description="When sending a track to Google Fusion Tables, the messsage on the
+    translation_description="When sending a track to Google Fusion Tables, the message on the
       progress dialog indicating authenticating to Google Fusion Tables.">
     Authenticating to Google Fusion Tables...
   </string>
   <string name="send_google_progress_auth_my_maps"
-    translation_description="When sending a track to Google My Maps, the messsage on the progress
+    translation_description="When sending a track to Google My Maps, the message on the progress
       dialog indicating authenticating to Google My Maps.">
     Authenticating to Google My Maps...
   </string>
   <string name="send_google_progress_creating_fusion_table"
-    translation_description="When sending a track to Google Fusion Tables, the messsage on the
+    translation_description="When sending a track to Google Fusion Tables, the message on the
       progress dialog indicating My Tracks is creating a new Fusion Table in Google Fusion Tables.">
     Creating a new Fusion Table...
   </string>  
   <string name="send_google_progress_creating_map"
-    translation_description="When sending a track to Google My Maps, the messsage on the progress
+    translation_description="When sending a track to Google My Maps, the message on the progress
       dialog indicating My Tracks is creating a new map in Google My Maps.">
     Creating a new My Map...
   </string>
@@ -463,6 +572,11 @@ limitations under the License.
     translation_description="When sending a track to Google, in the track description, a tag
       for the track recorded date. E.g., 'Recorded: Tue Sep 06 15:08:30 PDT 2011'.">        
     Recorded
+  </string>
+  <string name="send_google_result_share_url"
+    translation_description="When sending a track to Google, in the result dialog, the button on
+      the bottom to share with friends the URL of the uploaded track.">    
+    Share track URL
   </string>
   <string name="send_google_result_title"
     translation_description="When sending a track to Google, the header on the top of the result
@@ -516,7 +630,7 @@ limitations under the License.
     (Part %d)
   </string>
       
-  <!--  Sensor State -->
+  <!-- Sensor State -->
   <string name="sensor_state_battery"
     translation_description="In the 'Sensor State' page, the label for the battery level on the bike
       sensor. E.g, 'Battery Level: 50 %'.">
@@ -538,11 +652,6 @@ limitations under the License.
       connecting.">
     Connecting
   </string>  
-  <string name="sensor_state_last_sensor_time"
-    translation_description="In the 'Sensor State' page, the label for the last time the sensor has
-      sent a data. E.g., 'Last Sensor Time: 10:05 am'.">
-    Last Sensor Time
-  </string>
   <string name="sensor_state_disconnected"
     translation_description="In the 'Sensor State' page, the 'Sensor State' value when the sensor
       has disconnected.">
@@ -552,6 +661,11 @@ limitations under the License.
     translation_description="In the 'Sensor State' page, the label for the heart rate from a heart
       rate sensor. E.g., 'Hear Rate: 100 bpm'.">
     Heart Rate
+  </string>
+  <string name="sensor_state_last_sensor_time"
+    translation_description="In the 'Sensor State' page, the label for the last time the sensor has
+      sent a data. E.g., 'Last Sensor Time: 10:05 am'.">
+    Last Sensor Time
   </string>
   <string name="sensor_state_power"
     translation_description="In the 'Sensor State' page, the label for the power from the bike
@@ -801,16 +915,16 @@ limitations under the License.
       named based on the track's start time or based on a number.">
     Use time for track name
   </string>
+  <string name="settings_recording_name_summary_off"
+    translation_description="In the Recording settings, the summary for the 'Use time for track
+      name' checkbox when it is unchecked explaining using a number as the default track name.">
+    Use a number as the default track name
+  </string>
   <string name="settings_recording_name_summary_on"
     translation_description="In the Recording settings, the summary for the 'Use time for track
       name' checkbox when it is checked explaining using the track's start time as the default track
       name.">
     Use the track\'s start time as the default track name
-  </string>
-  <string name="settings_recording_name_summary_off"
-    translation_description="In the Recording settings, the summary for the 'Use time for track
-      name' checkbox when it is unchecked explaining using a number as the default track name.">
-    Use a number as the default track name
   </string>
   <string name="settings_recording_track_distance"
     translation_description="In the Recording settings, the dropdown option to configure the 
@@ -991,7 +1105,7 @@ limitations under the License.
     translation_description="In the Sharing settings, the summary for the 'Make new maps public'
       checkbox option when it is unchecked explaining that new maps created in Google My Maps will
       be unlisted, as opposed to public.">
-    Make new maps created in Goolge My Maps unlisted
+    Make new maps created in Google My Maps unlisted
   </string>
   <string name="settings_sharing_map_public_summary_on"
     translation_description="In the Sharing settings, the summary for the 'Make new maps public'
@@ -1019,9 +1133,30 @@ limitations under the License.
   <string name="settings_title"
     translation_description="The title of the Settings page.">  
     My Tracks Settings
-  </string> 
+  </string>
+   
+  <!-- Share Track -->
+  <string name="share_track_file_body_format"
+    translation_description="When sharing a track file with friends, the body of the message.">
+    I think you might be interested in this track.\n\nTo view this track use Google Earth or other
+    mapping software.
+  </string>      
+  <string name="share_track_picker_title"
+    translation_description="When sharing a track with friends, the title on the picker to
+      ask the user which application he wants to use.">
+    Share track using:
+  </string>
+  <string name="share_track_subject"
+    translation_description="When sharing a track with friends, the subject line.">    
+    I would like to share a track with you
+  </string>
+  <string name="share_track_url_body_format"
+    translation_description="When sharing a track URL with friends, the body of the message. E.g.,
+      'I think you might be interested in this track:\n\nhttps://maps.google.com/maps'.">
+    I think you might be interested in this track:\n\n%s
+  </string>
       
-  <!-- Stat view -->
+  <!-- Stat Page -->
   <string name="stat_average_moving_pace"
     translation_description="In the Statistic view, the average moving pace.">    
     Average Moving Pace
@@ -1132,11 +1267,23 @@ limitations under the License.
     translation_description="In the Tracks page, the button on the bottom to delete all tracks.">
     Delete all
   </string>
+  <string name="track_list_delete_all_confirm_message"
+    translation_description="In the Tracks page, when pressing the 'Delete all' button, the 
+      confirmation dialog message informing the user that all tracks and markers will be permanently
+      deleted from the phone.">
+    All tracks and markers will be permanently deleted from the phone.
+  </string>
   <string name="track_list_delete_track"
     translation_description="In the context menu for a track, the menu option to delete the
       track from the phone.">
     Delete from phone...
   </string>
+  <string name="track_list_delete_track_confirm_message"
+    translation_description="In the context menu for a track, when pressing the 'Delete from
+      phone...' option, the confirmation dialog message informing the user that the track and its
+      markers will be permanently deleted from the phone.">
+    The track and its markers will be permanently deleted from the phone.
+  </string>  
   <string name="track_list_edit_track"
     translation_description="In the context menu for a track, the menu option to edit the track's 
       metadata (e.g., name, activity type, etc.).">
@@ -1247,7 +1394,7 @@ limitations under the License.
     Now recording a new track.
   </string>
   
-  <!-- Unit - all abbreviations for display-->
+  <!-- Unit -->
   <string name="unit_beat_per_minute"
     translation_description="Abbreviation for beats per minute, unit for heart rate. E.g.,
       'heart rate: 80 bpm'.">
@@ -1372,10 +1519,10 @@ limitations under the License.
       %4$s: Speed value (E.g., 2.2) or pace value (E.g., 2 hours and 30 minutes)
       %5$s: Speed unit (miles per hour or kilometers per hour) or pace unit (per mile or per
         kilometer)">
-      My Tracks total distance %1$.2f %2$s in %3$s at %4$s %5$s
+    My Tracks total distance %1$.2f %2$s in %3$s at %4$s %5$s
   </string>
   
-  <!-- Welcome -->
+  <!-- Welcome Page -->
   <string name="welcome_about"
     translation_description="In the 'Welcome' page, the button on the bottom to read the 'About'
       page.">
@@ -1384,163 +1531,5 @@ limitations under the License.
   <string name="welcome_title"
     translation_description="The title of the welcome page.">
     Welcome
-  </string>
-      
-  <!--  Error messages when exporting a track. -->
-  <string name="error_export_generic"
-    translation_description="When exporting a track to the SD card, a generic error message
-      indicating unable to export.">
-    Unable to export.
-  </string>
-  <string name="error_export_operation_canceled"
-    translation_description="When exporting a track to the SD card, a message indicating that the
-      export operation was canceled.">
-    The operation was canceled.
-  </string>
-  
-  <!-- Export progress messages. -->
-  <string name="progress_message_export"
-    translation_description="When exporting a track to the SD card, the message on the progress
-      dialog indicating that it may take a while.">
-    Exporting a track to the SD card. This may take a while.
-  </string>
-
-  <!-- Used by deletion actions -->
-  <string name="confirmation_title_are_you_sure"
-    translation_description="When deleting data (e.g., deleting all tracks, deleting a track,
-      deleting a marker, etc.), the title on the confirmation dialog asking the user if he is sure."
-      >
-    Are you sure?
-  </string>
-  <string name="all_data_will_be_permanently_deleted"
-    translation_description="When deleting all tracks, the message on the confirmation dialog
-      informing the user that all tracks and markers will be permanently deleted from the phone.">
-    All tracks and markers will be permanently deleted from the phone.
-  </string>
-  <string name="track_will_be_permanently_deleted"
-    translation_description="When deleting a track, the message on the confirmation dialog informing
-      the user that the track and its markers will be permanently deleted from the phone.">
-    The track and its markers will be permanently deleted from the phone.
-  </string>
-  <string name="marker_will_be_permanently_deleted"
-    translation_description="When deleting a marker, the message on the confirmation dialog
-      informing the user that the marker will be permanently deleted from the phone.">
-    The marker will be permanently deleted from the phone.
-  </string>
-  
-  <!-- Button texts -->
-  <string name="yes"
-    translation_description="Text on the button to say yes.">
-    Yes
-  </string>
-  <string name="no"
-    translation_description="Text on the button to say no.">
-    No
-  </string>
-  <string name="ok"
-    translation_description="Text on the button to say ok.">
-    OK
-  </string>
-  <string name="save"
-    translation_description="Text on the button to say save.">
-    Save
-  </string>
-  <string name="cancel"
-    translation_description="Text on the button to say cancel.">
-    Cancel
-  </string>
-  
-  <!-- Alert dialog titles -->    
-  <string name="success"
-    translation_description="The title on the alert dialog to indicate success.">
-    Success
-  </string>
-  <string name="error"
-    translation_description="The title on the alert dialog to indicate error.">
-    Error
-  </string>
-
-  <!-- Export -->
-  <string name="export_done"
-    translation_description="After exporting all the tracks, a toast message indicating success.">
-    Export finished
-  </string>
-
-  <string name="import_multi_done"
-    translation_description="After importing all the tracks from the SD card, the alert message
-      indicating success. E.g., 'Imported 5 of 6 GPX files from /mnt/sdcard/MyTracks/gpx/'.">
-    Imported to My Tracks %1$d of %2$d GPX files from %3$s
-  </string>
-  <string name="import_multi_empty"
-    translation_description="After importing all the tracks from the SD card, the alert message
-      indicating that no track is imported. E.g., 'No GPX file found in /mnt/sdcard/MyTracks/gpx/.
-      SD card may be unreadable or directory may not contain any GPX file.'.">
-    No GPX file found in %s. SD card may be unreadable or directory may not contain any GPX file.
-  </string>
-  <string name="import_error"
-    translation_description="When importing all the tracks, a toast message indicating error for
-      one of the tracks. E.g., 'Import error for file /mnt/sdcard/MyTacks/gpx/1.gpx'."> 
-    Import error for file %s
-  </string>  
-
-  <!-- Share Track -->
-  <string name="share_track_url"
-    translation_description="After sending a track to Google, in the confirmation dialog, a
-      button to share the track URL with friends.">    
-    Share track URL
-  </string>
-  <string name="share_track_picker_title"
-    translation_description="When sharing a track with friends, the title on the picker to
-      ask the user which application he wants to use.">
-    Share track using:
-  </string>
-  <string name="share_track_subject"
-    translation_description="When sharing a track with friends, the subject line.">    
-    I would like to share a track with you
-  </string>
-  <string name="share_track_url_body_format"
-    translation_description="When sharing a track URL with friends, the body of the message. E.g.,
-    'I think you might be interested in this track:\n\nhttps://maps.google.com/maps'.">
-    I think you might be interested in this track:\n\n%s
-  </string>
-  <string name="share_track_file_body_format"
-    translation_description="When sharing a track file with friends, the body of the message.">
-    I think you might be interested in this track.\n\nTo view this track use Google Earth or other
-    mapping software.
-  </string>
-
-  <!-- writing to SD card -->
-  <string name="io_no_external_storage_found"
-    translation_description="When writing to the SD card, the error message when the SD card is not
-      found.">
-    No external storage was found. Make sure that a SD card is inserted and that your phone is not
-    mounted to a computer.
-  </string>
-  <string name="io_create_dir_failed"
-    translation_description="When writing to the SD card, the error message when not able to create
-      a directory on the SD card.">
-    Unable to create directory on SD card.
-  </string>
-  <string name="io_write_failed"
-    translation_description="When writing to the SD card, the error message when not able to write a
-      file to the SD card.">
-    Unable to write to file.
-  </string>
-  <string name="io_write_finished"
-    translation_description="When writing to the SD card, the success message when finish writing to
-      the SD card.">
-    Finished writing to SD card.
-  </string>
-  
-  <!--  reading from SD card -->
-  <string name="io_read_failed"
-    translation_description="When reading from the SD card, the error message when not able to read
-      a file.">
-    Unable to read from file.
-  </string>
-  <string name="io_read_finished"
-    translation_description="When reading from the SD card, the success message when finish reading
-      from the SD card.">
-    Finished reading from SD card.
   </string>
 </resources>

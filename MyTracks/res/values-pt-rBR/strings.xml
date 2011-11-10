@@ -69,14 +69,14 @@ limitations under the License.
   <string name="send_google_progress_sending_fusion_tables">Enviando caminho para o Google Fusion Tables...</string>
   <string name="send_google_progress_creating_fusion_table">Criando nova Fusion Table...</string>
   <string name="progress_message_import">Importando um caminho de GPS. Isso pode demorar alguns instantes.</string>
-  <string name="progress_message_export">Salvando arquivo para o cartão SD. Isso pode demorar alguns instantes.</string>
+  <string name="export_progress_message">Salvando arquivo para o cartão SD. Isso pode demorar alguns instantes.</string>
   <string name="progress_message_updating_track">Atualizando estatísticas do caminho...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="confirmation_title_are_you_sure">Você tem certeza?</string>
-  <string name="all_data_will_be_permanently_deleted">Todos os seus caminhos e marcadores serão apagados deste telefone.</string>
-  <string name="track_will_be_permanently_deleted">O caminho e todos os seus marcadores serão permanentemente apagados deste telefone.</string>
-  <string name="marker_will_be_permanently_deleted">O marcador será permanentemente apagado deste telefone.</string>
+  <string name="generic_confirm_title">Você tem certeza?</string>
+  <string name="track_list_delete_all_confirm_message">Todos os seus caminhos e marcadores serão apagados deste telefone.</string>
+  <string name="track_list_delete_track_confirm_message">O caminho e todos os seus marcadores serão permanentemente apagados deste telefone.</string>
+  <string name="marker_list_delete_marker_confirm_message">O marcador será permanentemente apagado deste telefone.</string>
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="new_map_description">"Criado por My Tracks no Android.</string>
@@ -93,14 +93,14 @@ limitations under the License.
   <string name="track_name_format">"Caminho %d</string>
 
   <!-- Common -->
-  <string name="no">Não</string>
-  <string name="yes">Sim</string>
-  <!-- KEEP_PARENT name="ok" rev="7cbb95c69f35" -->
-  <string name="error">Erro</string>
-  <string name="success">Successo</string>
+  <string name="generic_no">Não</string>
+  <string name="generic_yes">Sim</string>
+  <!-- KEEP_PARENT name="generic_ok" rev="7cbb95c69f35" -->
+  <string name="generic_error">Erro</string>
+  <string name="generic_success">Successo</string>
   <string name="marker_type_waypoint">Ponto de passagem</string>
-  <string name="cancel">Cancelar</string>
-  <string name="save">Salvar</string>
+  <string name="generic_cancel">Cancelar</string>
+  <string name="generic_save">Salvar</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="marker_label_start">(Início)</string>
@@ -197,7 +197,7 @@ limitations under the License.
   <string name="share_track_file_body_format">Eu acredito que você pode se interesasr por este caminho.
 
     Para visualizar este caminho, use o Google Earth ou outro software de mapas.</string>
-  <string name="share_track_url">Compartilhar caminho com amigos</string>
+  <string name="send_google_result_share_url">Compartilhar caminho com amigos</string>
 
   <!-- Visibility -->
   <string name="my_maps_list_public_label">Público</string>
@@ -298,10 +298,10 @@ limitations under the License.
   <string name="send_google_choose_account">Escolher conta</string>
 
   <!-- SD card -->
-  <string name="io_no_external_storage_found">Nenhum armazenamento externo foi encontrado. Assegure-se de que um cartão SD esteja inserido e que seu telefone não esteja montado em um computador.</string>
-  <string name="io_write_failed">Impossível gravar arquivo.</string>
-  <string name="io_create_dir_failed">Impossível criar diretório no cartão SD.</string>
-  <string name="io_write_finished">Gravação no cartão SD concluída.</string>
+  <string name="sd_card_error_no_storage">Nenhum armazenamento externo foi encontrado. Assegure-se de que um cartão SD esteja inserido e que seu telefone não esteja montado em um computador.</string>
+  <string name="sd_card_error_write_file">Impossível gravar arquivo.</string>
+  <string name="sd_card_error_create_dir">Impossível criar diretório no cartão SD.</string>
+  <string name="sd_card_success_write_file">Gravação no cartão SD concluída.</string>
 
   <!-- VersionChecker -->
   <string name="version_check_title">Checar Atualizações</string>

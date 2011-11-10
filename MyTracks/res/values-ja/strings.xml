@@ -77,14 +77,14 @@ limitations under the License.
   <string name="send_google_progress_sending_fusion_tables">トラックをFusion Tablesに送信しています...</string>
   <string name="send_google_progress_creating_fusion_table">新しいFusionテーブルを生成しています...</string>
   <string name="progress_message_import">GPSトラックをインポートしています．若干時間がかかります．</string>
-  <string name="progress_message_export">SDカードにデータを書き込んでいます．若干時間がかかります．</string>
+  <string name="export_progress_message">SDカードにデータを書き込んでいます．若干時間がかかります．</string>
   <string name="progress_message_updating_track">トラック統計情報を更新しています...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="confirmation_title_are_you_sure">よろしいですか?</string>
-  <string name="all_data_will_be_permanently_deleted">全てのトラックとマーカーをこの端末から削除します．</string>
-  <string name="track_will_be_permanently_deleted">トラックとマーカーをこの端末から完全に削除します．</string>
-  <string name="marker_will_be_permanently_deleted">マーカーをこの端末から完全に削除します．</string>
+  <string name="generic_confirm_title">よろしいですか?</string>
+  <string name="track_list_delete_all_confirm_message">全てのトラックとマーカーをこの端末から削除します．</string>
+  <string name="track_list_delete_track_confirm_message">トラックとマーカーをこの端末から完全に削除します．</string>
+  <string name="marker_list_delete_marker_confirm_message">マーカーをこの端末から完全に削除します．</string>
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Android用My Tracksで作成</string>
@@ -105,14 +105,14 @@ limitations under the License.
   <string name="track_name_format">トラック %d</string>
 
   <!-- Common -->
-  <string name="no">いいえ</string>
-  <string name="yes">はい</string>
-  <string name="error">エラー</string>
-  <string name="success">成功</string>
+  <string name="generic_no">いいえ</string>
+  <string name="generic_yes">はい</string>
+  <string name="generic_error">エラー</string>
+  <string name="generic_success">成功</string>
   <string name="marker_type_waypoint">ウェイポイント</string>
   <string name="about_license">ライセンス</string>
-  <string name="cancel">キャンセル</string>
-  <string name="save">保存</string>
+  <string name="generic_cancel">キャンセル</string>
+  <string name="generic_save">保存</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="marker_label_start">(開始)</string>
@@ -138,7 +138,7 @@ limitations under the License.
   <string name="track_list_delete_all">全て削除</string>
   <!-- Export All -->
   <string name="track_list_export_all">全て出力</string>
-  <string name="export_done">出力終了</string>
+  <string name="export_success">出力終了</string>
   <string name="track_list_pick_one">トラックを選択します．オプションを表示するには長押しして下さい．</string>
   <string name="tracklist_all_tracks">全トラック:</string>
   <string name="track_list_this_track">このトラック</string>
@@ -156,8 +156,8 @@ limitations under the License.
   $2 : Attempted imports
   $3 : MyTracks gpx path
   -->
-  <string name="import_multi_done">%3$s からGPXファイル %2$d件のうち %1$d件をインポートしました</string>
-  <string name="import_multi_empty">%s ではGPXファイルがありません．SDカードを読み込めないかディレクトリにGPXファイルが無いかも知れません．</string>
+  <string name="import_success">%3$s からGPXファイル %2$d件のうち %1$d件をインポートしました</string>
+  <string name="import_no_file">%s ではGPXファイルがありません．SDカードを読み込めないかディレクトリにGPXファイルが無いかも知れません．</string>
   <string name="import_error">ファイル %s のインポートエラー</string>
 
   <!-- Waypoints list -->
@@ -272,7 +272,7 @@ limitations under the License.
   <string name="my_maps_list_error">今回はマップをロードできませんでした!</string>
   <string name="open_map">このマップを選択</string>
   <string name="edit_map_details">マップ詳細編集</string>
-  <string name="share_track_url">トラック共有</string>
+  <string name="send_google_result_share_url">トラック共有</string>
   <string name="delete_map">アカウントからマップを削除</string>
   <string name="map_title">マップタイトル:</string>
   <string name="map_description">マップ説明:</string>
@@ -291,7 +291,7 @@ limitations under the License.
   <string name="share_track_file_body_format">このトラックに興味を持って頂けると思います．
 
     このトラックを閲覧するには、Google Earthまたは他のマッピングソフトウェアが必要です．</string>
-  <string name="share_track_url">トラックの共有</string>
+  <string name="send_google_result_share_url">トラックの共有</string>
 
   <!-- Visibility -->
   <string name="my_maps_list_public_label">公開</string>
@@ -401,12 +401,12 @@ limitations under the License.
   <string name="send_google_choose_account">アカウント選択</string>
 
   <!-- SD card -->
-  <string name="io_no_external_storage_found">外部ストレージを発見できませんでした．SDカードが刺さっているか、端末がコンピュータにマウントされていないか確認してください．</string>
-  <string name="io_write_failed">ファイルへの書き込みができません．</string>
-  <string name="io_read_failed">ファイルからの読み込みができません．</string>
-  <string name="io_create_dir_failed">SDカード上でディレクトリを作成できません．</string>
-  <string name="io_write_finished">SDカードへの書き込み終了．</string>
-  <string name="io_read_finished">SDカードからの読み込み終了．</string>
+  <string name="sd_card_error_no_storage">外部ストレージを発見できませんでした．SDカードが刺さっているか、端末がコンピュータにマウントされていないか確認してください．</string>
+  <string name="sd_card_error_write_file">ファイルへの書き込みができません．</string>
+  <string name="sd_card_error_read_file">ファイルからの読み込みができません．</string>
+  <string name="sd_card_error_create_dir">SDカード上でディレクトリを作成できません．</string>
+  <string name="sd_card_success_write_file">SDカードへの書き込み終了．</string>
+  <string name="sd_card_success_read_file">SDカードからの読み込み終了．</string>
 
   <!-- VersionChecker -->
   <string name="version_check_title">アップグレードチェック</string>

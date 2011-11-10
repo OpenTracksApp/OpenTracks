@@ -82,7 +82,7 @@ class Eula {
    */
   static void showEula(Context context) {
     AlertDialog.Builder builder = initDialog(context);
-    builder.setPositiveButton(R.string.ok, null);
+    builder.setPositiveButton(R.string.generic_ok, null);
     builder.show();
   }
   

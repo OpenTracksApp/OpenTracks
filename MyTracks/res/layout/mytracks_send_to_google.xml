@@ -120,7 +120,7 @@ limitations under the License.
       style="@style/Button"/>
     <Button android:id="@+id/sendtogoogle_cancel"
       android:layout_gravity="right"
-      android:text="@string/cancel"
+      android:text="@string/generic_cancel"
       style="@style/Button"/>
     <LinearLayout style="@style/ButtonSpacer"/>
   </LinearLayout>

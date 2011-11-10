@@ -79,14 +79,14 @@ limitations under the License.
   <string name="send_google_progress_sending_fusion_tables">Отправка трека в Fusion Tables...</string>
   <string name="send_google_progress_creating_fusion_table">Создание новой Fusion table...</string>
   <string name="progress_message_import">Импорт GPS трека. Это может занять некоторое время.</string>
-  <string name="progress_message_export">Запись файла на SD карту. Это может занять некоторое время.</string>
+  <string name="export_progress_message">Запись файла на SD карту. Это может занять некоторое время.</string>
   <string name="progress_message_updating_track">Обновление статистики трека...</string>
 
   <!-- Used by DeleteAllDataHandler -->
-  <string name="confirmation_title_are_you_sure">Вы уверены?</string>
-  <string name="all_data_will_be_permanently_deleted">Все треки и маркеры будут удалены с этого телефона.</string>
-  <string name="track_will_be_permanently_deleted">Трек и его маркеры будут удалены из этого телефона.</string>
-  <string name="marker_will_be_permanently_deleted">Маркер будет удален с этого телефона.</string>
+  <string name="generic_confirm_title">Вы уверены?</string>
+  <string name="track_list_delete_all_confirm_message">Все треки и маркеры будут удалены с этого телефона.</string>
+  <string name="track_list_delete_track_confirm_message">Трек и его маркеры будут удалены из этого телефона.</string>
+  <string name="marker_list_delete_marker_confirm_message">Маркер будет удален с этого телефона.</string>
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Создано My Tracks на Android.</string>
@@ -107,15 +107,15 @@ limitations under the License.
   <string name="track_name_format">Трек %d</string>
 
   <!-- Common -->
-  <string name="no">Нет</string>
-  <string name="yes">Да</string>
-  <string name="ok">ОК</string>
-  <string name="error">Ошибка</string>
-  <string name="success">Готово</string>
+  <string name="generic_no">Нет</string>
+  <string name="generic_yes">Да</string>
+  <string name="generic_ok">ОК</string>
+  <string name="generic_error">Ошибка</string>
+  <string name="generic_success">Готово</string>
   <string name="marker_type_waypoint">Путевая точка</string>
   <string name="about_license">Лицензия</string>
-  <string name="cancel">Отмена</string>
-  <string name="save">Сохранить</string>
+  <string name="generic_cancel">Отмена</string>
+  <string name="generic_save">Сохранить</string>
 
   <!-- Placemark labels for start and end of track -->
   <string name="marker_label_start">(Старт)</string>
@@ -141,7 +141,7 @@ limitations under the License.
   <string name="track_list_delete_all">Удалить все</string>
   <!-- Export All -->
   <string name="track_list_export_all">Экспорт всех</string>
-  <string name="export_done">Экспорт закончен</string>
+  <string name="export_success">Экспорт закончен</string>
   <string name="track_list_pick_one">Выберите трек. Нажмите и удерживайте для получения дополнительных возможностей.</string>
   <string name="tracklist_all_tracks">Все треки:</string>
   <string name="track_list_this_track">Этот трек</string>
@@ -159,8 +159,8 @@ limitations under the License.
   $2 : Attempted imports
   $3 : MyTracks gpx path
   -->
-  <string name="import_multi_done">Импортировано %1$d из %2$d GPX файлов с %3$s</string>
-  <string name="import_multi_empty">GPX файлы не найденны в %s. Возможно не читается SD-карта или каталог не содержит GPX файлы.</string>
+  <string name="import_success">Импортировано %1$d из %2$d GPX файлов с %3$s</string>
+  <string name="import_no_file">GPX файлы не найденны в %s. Возможно не читается SD-карта или каталог не содержит GPX файлы.</string>
   <string name="import_error">Ошибка импорта файла %s</string>
 
   <!-- Waypoints list -->
@@ -281,7 +281,7 @@ limitations under the License.
   <string name="my_maps_list_error">Ваши карты не могут быть загружены в данный момент!</string>
   <string name="open_map">Выберите эту карту</string>
   <string name="edit_map_details">Править детали карты</string>
-  <string name="share_track_url">Поделиться треком</string>
+  <string name="send_google_result_share_url">Поделиться треком</string>
   <string name="delete_map">Удалить Карту из вашей учетной записи</string>
   <string name="map_title">Название карты:</string>
   <string name="map_description">Описание карты:</string>
@@ -426,12 +426,12 @@ limitations under the License.
   <string name="send_google_choose_account">Выбор учетной записи</string>
 
   <!-- SD card -->
-  <string name="io_no_external_storage_found">Не обнаружено внешнее устройство хранения данных. Убедитесь, что SD карта вставлена, и что ваш телефон не подключен к компьютеру.</string>
-  <string name="io_write_failed">Невозможно записать файл.</string>
-  <string name="io_read_failed">Невозможно прочитать из файла.</string>
-  <string name="io_create_dir_failed">Невозможно создать папку на SD карте.</string>
-  <string name="io_write_finished">Запись на SD карту закончена.</string>
-  <string name="io_read_finished">Чтение с SD карты закончено.</string>
+  <string name="sd_card_error_no_storage">Не обнаружено внешнее устройство хранения данных. Убедитесь, что SD карта вставлена, и что ваш телефон не подключен к компьютеру.</string>
+  <string name="sd_card_error_write_file">Невозможно записать файл.</string>
+  <string name="sd_card_error_read_file">Невозможно прочитать из файла.</string>
+  <string name="sd_card_error_create_dir">Невозможно создать папку на SD карте.</string>
+  <string name="sd_card_success_write_file">Запись на SD карту закончена.</string>
+  <string name="sd_card_success_read_file">Чтение с SD карты закончено.</string>
 
   <!-- VersionChecker -->
   <string name="version_check_title">Проверить обновления</string>

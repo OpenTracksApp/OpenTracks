@@ -293,10 +293,10 @@ public class WaypointsList extends ListActivity
   public void deleteWaypoint(final long waypointId) {
     AlertDialog dialog = null;
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    builder.setMessage(getString(R.string.marker_will_be_permanently_deleted));
-    builder.setTitle(getString(R.string.confirmation_title_are_you_sure));
+    builder.setMessage(getString(R.string.marker_list_delete_marker_confirm_message));
+    builder.setTitle(getString(R.string.generic_confirm_title));
     builder.setIcon(android.R.drawable.ic_dialog_alert);
-    builder.setPositiveButton(getString(R.string.yes),
+    builder.setPositiveButton(getString(R.string.generic_yes),
         new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialogInterface, int i) {
@@ -305,7 +305,7 @@ public class WaypointsList extends ListActivity
                 new StringUtils(WaypointsList.this));
           }
         });
-    builder.setNegativeButton(getString(R.string.no),
+    builder.setNegativeButton(getString(R.string.generic_no),
         new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialogInterface, int i) {
