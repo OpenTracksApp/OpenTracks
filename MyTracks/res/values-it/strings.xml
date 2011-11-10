@@ -48,10 +48,6 @@ limitations under the License.
   <string name="status_wait_for_gps_fix">Sto aspettando il fix del GPS. Accertati che il cielo sia visibile.</string>
   <string name="status_now_recording">Sto registrando un nuovo percorso.</string>
   <string name="status_stopped_recording">Registrazione del percorso terminata.</string>
-  <!-- <string name="sending_to_fusion_tables_success">Una nuova mappa è stata creata in «Le mie mappe» su maps.google.com.</string> -->
-  <string name="sending_to_my_maps_success_existing_map">Il tuo percorso è stato inviato a maps.google.com.</string>
-  <string name="sending_to_docs_success_new_doc">Il tuo percorso è stato inviato ad un nuovo foglio di calcolo su docs.google.com.</string>
-  <string name="sending_to_docs_success_existing_doc">Il tuo percorso è stato inviato a docs.google.com.</string>
   <string name="status_need_to_enable_gps">Premi qui per andare a «Impostazioni di posizione e protezione» e attiva «Utilizza satelliti GPS». Poi premi il tasto di ritorno per tornare qui.</string>
   <string name="status_approximate_current_location">Nota: la posizione indicata è un\'approssimazione determinata in base alle antenne cellulari e reti WIFI vicine.</string>
   <string name="status_no_current_location">La posizione non può essere determinata. Attiva più fonti di posizione (vedi «Impostazioni di posizione e protezione») e eccertati che il cielo sia visibile. Riprova più tardi.</string>
@@ -80,8 +76,7 @@ limitations under the License.
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="new_map_description">Creato da My Tracks su Android.</string>
-  <string name="send_to_google_by_mytracks">Creato da &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; su Android.</string>
-
+ 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">Punti</string>
   <string name="recorded_date">Registrato</string>

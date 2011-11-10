@@ -168,32 +168,37 @@ limitations under the License.
       the result page.">
     It may take a few minutes before new tracks appear.
   </string>
-  <string name="sending_to_my_maps_success_new_map"
-    translation_description="When sending a track to Google My Maps, the message on the result page
-      indicating that a new map is created.">
-    A new Google My Map has been created at maps.google.com.
+  <string name="send_google_docs_existing_doc_success"
+    translation_description="When sending a track to Google Docs, the message on the result page
+      indicating that the track is sent to an existing spreadsheet. E.g., 'Your track has been sent
+      to docs.google.com.'.">      
+    Your track has been sent to %s.
   </string>
-  <string name="sending_to_my_maps_success_existing_map"
-    translation_description="When sending a track to Google My Maps, the message on the result page
-      indicating that the track is sent to an existing map.">
-    Your track has been sent to maps.google.com.
+  <string name="send_google_docs_new_doc_success"
+    translation_description="When sending a track to Google Docs, the message on the result page
+      indicating that a new spreadsheet is created. E.g., 'A new spreadsheet is created at
+      docs.google.com.'.">
+    A new spreadsheet is created at %s.
   </string>
-  <string name="sending_to_fusion_tables_success"
+  <string name="send_google_fusion_tables_success"
     translation_description="When sending a track to Google Fusion Tables, the message on the result
-      page indicating success.">
-    A new Google Fusion table has been created at google.com/fusiontables.
+      page indicating success. E.g., 'A new Google Fusion table has been created at
+      google.com/fusiontables.'">
+    A new Google Fusion table has been created at %s.
   </string>  
-  <string name="sending_to_docs_success_new_doc"
-    translation_description="When sending a track to Google Docs, the message on the result page
-      indicating that a new spreadsheet is created.">
-    A new spreadsheet is created at docs.google.com.
+  <string name="send_google_my_maps_existing_map_success"
+    translation_description="When sending a track to Google My Maps, the message on the result page
+      indicating that the track is sent to an existing map. E.g., 'Your track has been sent to
+      maps.google.com.'">
+    Your track has been sent to %s.
   </string>
-  <string name="sending_to_docs_success_existing_doc"
-    translation_description="When sending a track to Google Docs, the message on the result page
-      indicating that the track is sent to an existing spreadsheet.">      
-    Your track has been sent to docs.google.com.
+  <string name="send_google_my_maps_new_map_success"
+    translation_description="When sending a track to Google My Maps, the message on the result page
+      indicating that a new map is created. E.g., 'A new Google My Map has been created at
+      maps.google.com.'.">
+    A new Google My Map has been created at %s.
   </string>
-
+    
   <!-- Progress dialog title -->
   <string name="progress_title"
     translation_description="When displaying a progress dialog, the title on the dialog asking the
@@ -284,12 +289,12 @@ limitations under the License.
   </string>
 
   <!-- Text and link when uploading to Google. -->
-  <!-- TODO(jshih@google.com) remove the html href tag from this string. -->
-  <string name="send_to_google_by_mytracks"
+  <string name="send_google_by_my_tracks"
     translation_description="When sending a track to Google, a note indicating it is created by
-      My Tracks on Android, with the 'My Tracks' word containng a http link to
-      http://mytracks.appspot.com.">
-    Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.
+      My Tracks on Android. The two string placeholders are used to insert the html link tags around 
+      'My Tracks'. E.g., 'Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks
+      &lt;/a&gt; on Android.'.">
+    Created by %1$sMy Tracks%2$s on Android.
   </string>
 
   <!-- Tags for a track description. -->

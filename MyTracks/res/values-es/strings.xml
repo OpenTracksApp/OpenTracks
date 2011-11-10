@@ -53,11 +53,6 @@ limitations under the License.
   <string name="status_wait_for_gps_fix">Esperando una ubicación mas exacta del GPS. Asegúrese que el cielo sea visible.</string>
   <string name="status_now_recording">Grabando un nuevo recorrido.</string>
   <string name="status_stopped_recording">Grabación interrumpida.</string>
-  <string name="sending_to_my_maps_success_new_map">Un nuevo sitio ha sido añadido en maps.google.com.</string>
-  <string name="sending_to_fusion_tables_success">Una nueva tabla de Google Fusion ha sido creada en google.com/fusiontables.</string>
-  <string name="sending_to_my_maps_success_existing_map">Su recorrido ha sido enviado a maps.google.com.</string>
-  <string name="sending_to_docs_success_new_doc">Su recorrido ha sido enviado a una nueva hoja de cálculo de docs.google.com.</string>
-  <string name="sending_to_docs_success_existing_doc">Su recorrido ha sido enviado a docs.google.com.</string>
   <string name="sending_to_google_additional_info">Es posible que pasen unos minutos hasta que los nuevos recorridos aparezcan.</string>
   <string name="status_need_to_enable_gps">Por favor, presione aquí para ir al menú de Seguridad y Ubicación, y asegúrese que el GPS esté habilitado. Presione el botón "atrás" para regresar.</string>
   <string name="status_approximate_current_location">Nota: Una ubicación aproximada es determinada a partir de torres de telefonía celular y redes WIFI.</string>
@@ -92,8 +87,7 @@ limitations under the License.
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Creado por My Tracks para Android.</string>
-  <string name="send_to_google_by_mytracks">Creado por &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; en Android.</string>
-
+  
   <!-- Text and links when uploading to Google My Maps -->
   <string name="my_map_link">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; en Android.</string>
   <string name="new_map_title">Nuevo Sitio</string>

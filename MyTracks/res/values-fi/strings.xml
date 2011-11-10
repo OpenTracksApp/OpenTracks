@@ -53,11 +53,6 @@ limitations under the License.
   <string name="status_wait_for_gps_fix">Odotetaan parempaa GPS-yhteyttä. Varmista että taivas on näkyvissä.</string>
   <string name="status_now_recording">Tallennetaan uutta reittiä.</string>
   <string name="status_stopped_recording">Reitin tallentaminen lopetettiin.</string>
-  <string name="sending_to_my_maps_success_new_map">Uusi Google My Map on luotu osoitteeseen maps.google.com.</string>
-  <string name="sending_to_fusion_tables_success">Uusi Google Fusion taulukko on luotu osoitteeseen google.com/fusiontables.</string>
-  <string name="sending_to_my_maps_success_existing_map">Reittisi on lähetetty osoitteeseen maps.google.com.</string>
-  <string name="sending_to_docs_success_new_doc">Reittisi on luotu taulukoksi osoitteeseen  docs.google.com.</string>
-  <string name="sending_to_docs_success_existing_doc">Reittisi on lähetetty osoitteeseen docs.google.com.</string>
   <string name="sending_to_google_additional_info">Reitin näkyminen saattaa kestää muutaman minuutin.</string>
   <string name="status_need_to_enable_gps">Avaa tästä Sijainti ja suojaus -asetukset ja valitse \'Käytä GPS-satelliitteja\'. Palaa ohjelmaan painamalla Takaisin-näppäintä.</string>
   <string name="status_approximate_current_location">Huomio: Näkyvä sijainti perustuu kännykkämastoista ja WLAN-verkoista arvioituun paikkatietoon.</string>
@@ -91,8 +86,7 @@ limitations under the License.
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Created by My Tracks on Android.</string>
-  <string name="send_to_google_by_mytracks">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
-
+ 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="my_map_link">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
   <string name="new_map_title">Uusi kartta</string>
