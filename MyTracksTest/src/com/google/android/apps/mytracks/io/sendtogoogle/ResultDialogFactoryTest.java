@@ -15,6 +15,7 @@
  */
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
+import com.google.android.apps.mytracks.MyTracks;
 import com.google.android.maps.mytracks.R;
 
 import android.app.AlertDialog;
@@ -32,9 +33,9 @@ import java.util.List;
  *
  * @author Matthew Simmons
  */
-public class ResultDialogFactoryTest extends ActivityInstrumentationTestCase2<SendActivity> {
+public class ResultDialogFactoryTest extends ActivityInstrumentationTestCase2<MyTracks> {
   public ResultDialogFactoryTest() {
-    super(SendActivity.class);
+    super(MyTracks.class);
   }
 
   private List<SendResult> makeResults(SendResult... results) {
@@ -49,12 +50,20 @@ public class ResultDialogFactoryTest extends ActivityInstrumentationTestCase2<Se
     @Override
     public void onClick(DialogInterface dialog, int which) {}
   };
-
+  
+  private MyTracks myTracks;
+  
+  protected void setUp() throws Exception {
+    super.setUp();    
+    myTracks = getActivity();
+  };
+  
   public void testSuccess_noShare() {
     List<SendResult> results = makeResults(new SendResult(SendType.MYMAPS, true),
         new SendResult(SendType.DOCS, true));
 
-    AlertDialog dialog = ResultDialogFactory.makeDialog(getActivity(), results, clickListener, null, null);
+    AlertDialog dialog = ResultDialogFactory.makeDialog(
+        myTracks, results, clickListener, null, null);
     dialog.show();
 
     ListView listView = (ListView) dialog.findViewById(R.id.send_to_google_result_list);
@@ -82,22 +91,23 @@ public class ResultDialogFactoryTest extends ActivityInstrumentationTestCase2<Se
   }
 
   public void testSuccess_share() {
-    List<SendResult> results = makeResults(new SendResult(SendType.MYMAPS, true),
-        new SendResult(SendType.DOCS, true));
+    List<SendResult> results = makeResults(
+        new SendResult(SendType.MYMAPS, true), new SendResult(SendType.DOCS, true));
 
-    AlertDialog dialog = ResultDialogFactory.makeDialog(getActivity(), results,
-        clickListener, clickListener, null);
+    AlertDialog dialog = ResultDialogFactory.makeDialog(
+        myTracks, results, clickListener, clickListener, null);
     dialog.show();
 
     assertEquals(View.VISIBLE, dialog.getButton(AlertDialog.BUTTON_POSITIVE).getVisibility());
-    assertEquals(View.VISIBLE, dialog.getButton(AlertDialog.BUTTON_NEUTRAL).getVisibility());
+    assertEquals(View.VISIBLE, dialog.getButton(AlertDialog.BUTTON_NEGATIVE).getVisibility());
   }
 
   public void testFailure_noShare() {
     List<SendResult> results = makeResults(new SendResult(SendType.MYMAPS, true),
         new SendResult(SendType.DOCS, false));
 
-    AlertDialog dialog = ResultDialogFactory.makeDialog(getActivity(), results, clickListener, null, null);
+    AlertDialog dialog = ResultDialogFactory.makeDialog(
+        myTracks, results, clickListener, null, null);
     dialog.show();
 
     assertEquals(View.GONE,
@@ -110,11 +120,11 @@ public class ResultDialogFactoryTest extends ActivityInstrumentationTestCase2<Se
     List<SendResult> results = makeResults(new SendResult(SendType.MYMAPS, true),
         new SendResult(SendType.DOCS, false));
 
-    AlertDialog dialog = ResultDialogFactory.makeDialog(getActivity(), results,
-        clickListener, clickListener, null);
+    AlertDialog dialog = ResultDialogFactory.makeDialog(
+        myTracks, results, clickListener, clickListener, null);
     dialog.show();
 
     assertEquals(View.VISIBLE, dialog.getButton(AlertDialog.BUTTON_POSITIVE).getVisibility());
-    assertEquals(View.VISIBLE, dialog.getButton(AlertDialog.BUTTON_NEUTRAL).getVisibility());
+    assertEquals(View.VISIBLE, dialog.getButton(AlertDialog.BUTTON_NEGATIVE).getVisibility());
   }
 }
