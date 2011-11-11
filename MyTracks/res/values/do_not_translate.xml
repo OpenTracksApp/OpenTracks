@@ -16,6 +16,8 @@ limitations under the License.
 -->
 <resources>
   <!-- DO NOT TRANSLATE ANY STRINGS IN THIS FILE. -->
+
+  <!-- Application Name -->
   <string name="app_name">My Tracks</string>
   <string name="track_recording_service_name">Track Recording Service</string>
   
@@ -24,21 +26,20 @@ limitations under the License.
   <!-- About Dialog -->
   <string name="about_googlegroups">mytracks@googlegroups.com</string>
   <string name="about_privacy_weburl">m.google.com/privacy</string>
-  <string name="about_copyright_message">Copyright 2009 Google Inc.</string>
   <string name="about_bart">Bartłomiej Niechwiej</string>
   <string name="about_dylan">Dylan Casey</string>
   <string name="about_leif">Leif Hendrik Wilden</string>
   <string name="about_rdamazio">Rodrigo Damazio Bovendorp</string>
   <string name="about_sandor">Sandor Dornbush</string>
 
-  <!-- Sensor Type values stored in preference -->
+  <!-- Sensor Type Values -->
   <string name="sensor_type_value_none">NONE</string>
   <string name="sensor_type_value_ant">ANT</string>
   <string name="sensor_type_value_srm_ant_bridge">SRM_ANT_BRIDGE</string>
   <string name="sensor_type_value_polar">POLAR</string>
   <string name="sensor_type_value_zephyr">ZEPHYR</string>
   
-  <!-- Track Color Mode values stored in preference -->
+  <!-- Track Color Mode Values -->
   <string name="track_color_mode_value_none">NONE</string>
   <string name="track_color_mode_value_fixed">FIXED</string>
   <string name="track_color_mode_value_dynamic">DYNAMIC</string>
@@ -51,19 +52,21 @@ limitations under the License.
   <string name="send_google_my_maps_url">maps.google.com</string>
   <string name="send_google_docs_url">docs.google.com</string>
   
-  <!-- ID for Google Analytics -->
+  <!-- Google Analytics ID -->
   <string name="google_analytics_id">UA-7222692-2</string>
-  
-  <!-- Symbols -->
-  <string name="percent">%</string>
 
-  <!-- Intent actions -->
+  <!--  Symbols -->
+  <string name="percent">%</string>
+  
+  <!-- Intent Actions -->
   <string name="save_intent_action">android.intent.action.SAVE</string>
   <string name="start_new_track_action">com.google.android.apps.mytracks.START_NEW_TRACK</string>
-  <string name="end_current_track_action">com.google.android.apps.mytracks.END_CURRENT_TRACK
-          </string>
+  <string name="end_current_track_action">
+    com.google.android.apps.mytracks.END_CURRENT_TRACK
+  </string>
   
-  <!--  Permissions -->
-  <!-- Permission for MyTracks notifications. -->
-  <string name="mytracks_notifications_permission">com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS</string>
+  <!--My Tracks Notifications Permission. -->
+  <string name="mytracks_notifications_permission">
+    com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS
+  </string>
 </resources>

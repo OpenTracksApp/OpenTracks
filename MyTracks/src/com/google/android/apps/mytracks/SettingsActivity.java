@@ -59,6 +59,39 @@ import java.util.Set;
  */
 public class SettingsActivity extends PreferenceActivity {
 
+  // Value when the task frequency is off.
+  private static final String TASK_FREQUENCY_OFF = "0";
+  
+  // Value when the recording interval is 'Adapt battery life'.
+  private static final String RECORDING_INTERVAL_ADAPT_BATTERY_LIFE = "-2";
+  
+  // Value when the recording interval is 'Adapt accuracy'.
+  private static final String RECORDING_INTERVAL_ADAPT_ACCURACY = "-1";
+  
+  // Value for the recommended recording interval.
+  private static final String RECORDING_INTERVAL_RECOMMENDED = "0";
+
+  // Value when the auto resume timeout is never.
+  private static final String AUTO_RESUME_TIMEOUT_NEVER = "0";
+  
+  // Value when the auto resume timeout is always.
+  private static final String AUTO_RESUME_TIMEOUT_ALWAYS = "-1";
+  
+  // Value for the recommended recording distance.
+  private static final String RECORDING_DISTANCE_RECOMMENDED = "5";
+
+  // Value for the recommended track distance.  
+  private static final String TRACK_DISTANCE_RECOMMENDED = "200";
+
+  // Value for the recommended GPS accuracy.
+  private static final String GPS_ACCURACY_RECOMMENDED = "200";
+  
+  // Value when the GPS accuracy is for excellent GPS signal.
+  private static final String GPS_ACCURACY_EXCELLENT = "10";
+  
+  // Value when the GPS accuracy is for poor GPS signal.
+  private static final String GPS_ACCURACY_POOR = "5000";
+
   private BackupPreferencesListener backupListener;
   private SharedPreferences preferences;
   
@@ -86,15 +119,18 @@ public class SettingsActivity extends PreferenceActivity {
     // Load the preferences to be displayed
     addPreferencesFromResource(R.xml.preferences);
 
-    // Disable TTS announcement preference if not available
+    // Disable voice announcement if not available
     if (!apiFeatures.hasTextToSpeech()) {
       IntegerListPreference announcementFrequency =
           (IntegerListPreference) findPreference(
               getString(R.string.announcement_frequency_key));
       announcementFrequency.setEnabled(false);
-      announcementFrequency.setValue("-1");
+      announcementFrequency.setValue(TASK_FREQUENCY_OFF);
       announcementFrequency.setSummary(R.string.settings_recording_voice_not_available);
     }
+    
+    setRecordingIntervalOptions();
+    setAutoResumeTimeoutOptions();
 
     // Hook up switching of displayed list entries between metric and imperial
     // units
@@ -107,11 +143,11 @@ public class SettingsActivity extends PreferenceActivity {
           public boolean onPreferenceChange(Preference preference,
               Object newValue) {
             boolean isMetric = (Boolean) newValue;
-            updatePreferenceUnits(isMetric);
+            updateDisplayOptions(isMetric);
             return true;
           }
         });
-    updatePreferenceUnits(metricUnitsPreference.isChecked());
+    updateDisplayOptions(metricUnitsPreference.isChecked());
 
     customizeSensorOptionsPreferences();
     customizeTrackColorModePreferences();
@@ -126,7 +162,7 @@ public class SettingsActivity extends PreferenceActivity {
       }
     });
     
-    // Add a confirmation dialog for the "Allow access" preference.
+    // Add a confirmation dialog for the 'Allow access' preference.
     final CheckBoxPreference allowAccessPreference = (CheckBoxPreference) findPreference(
         getString(R.string.allow_access_key));
     allowAccessPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
@@ -154,6 +190,58 @@ public class SettingsActivity extends PreferenceActivity {
     });
   }
   
+  /**
+   * Sets the display options for the 'Time between points' option.
+   */
+  private void setRecordingIntervalOptions() {
+    String[] values = getResources().getStringArray(R.array.min_recording_interval_values);
+    String[] options = new String[values.length];
+    for (int i = 0; i < values.length; i++) {
+      if (values[i].equals(RECORDING_INTERVAL_ADAPT_BATTERY_LIFE)) {
+        options[i] = getString(R.string.value_adapt_battery_life);
+      } else if (values[i].equals(RECORDING_INTERVAL_ADAPT_ACCURACY)) {
+        options[i] = getString(R.string.value_adapt_accuracy);
+      } else if (values[i].equals(RECORDING_INTERVAL_RECOMMENDED)) {
+        options[i] = getString(R.string.value_smallest_recommended);
+      } else {
+        int value = Integer.parseInt(values[i]);
+        String format;
+        if (value < 60) {
+          format = getString(R.string.value_integer_second);
+        } else {
+          value = value / 60;
+          format = getString(R.string.value_integer_minute);
+        }
+        options[i] = String.format(format, value);
+      }
+    }
+    ListPreference list = (ListPreference) findPreference(
+        getString(R.string.min_recording_interval_key));
+    list.setEntries(options);
+  }
+
+  /**
+   * Sets the display options for the 'Auto-resume timeout' option.
+   */
+  private void setAutoResumeTimeoutOptions() {
+    String[] values = getResources().getStringArray(R.array.auto_resume_track_timeout_values);
+    String[] options = new String[values.length];
+    for (int i = 0; i < values.length; i++) {
+      if (values[i].equals(AUTO_RESUME_TIMEOUT_NEVER)) {
+        options[i] = getString(R.string.value_never);
+      } else if (values[i].equals(AUTO_RESUME_TIMEOUT_ALWAYS)) {
+        options[i] = getString(R.string.value_always);
+      } else {
+        int value = Integer.parseInt(values[i]);
+        String format = getString(R.string.value_integer_minute);
+        options[i] = String.format(format, value);
+      }
+    }
+    ListPreference list = (ListPreference) findPreference(
+        getString(R.string.auto_resume_track_timeout_key));
+    list.setEntries(options);
+  }
+
   private void customizeSensorOptionsPreferences() {
     ListPreference sensorTypePreference =
         (ListPreference) findPreference(getString(R.string.sensor_type_key));
@@ -217,11 +305,13 @@ public class SettingsActivity extends PreferenceActivity {
     
     setTrackColorModePreferenceListeners();
     
-    PreferenceCategory speedOptionsCategory =
-        (PreferenceCategory) findPreference(getString(R.string.track_color_mode_fixed_speed_options_key));
+    PreferenceCategory speedOptionsCategory = (PreferenceCategory) findPreference(
+        getString(R.string.track_color_mode_fixed_speed_options_key));
 
-    speedOptionsCategory.removePreference(findPreference(getString(R.string.track_color_mode_fixed_speed_slow_key)));
-    speedOptionsCategory.removePreference(findPreference(getString(R.string.track_color_mode_fixed_speed_medium_key)));
+    speedOptionsCategory.removePreference(
+        findPreference(getString(R.string.track_color_mode_fixed_speed_slow_key)));
+    speedOptionsCategory.removePreference(
+        findPreference(getString(R.string.track_color_mode_fixed_speed_medium_key)));
   }
 
   @Override
@@ -305,56 +395,161 @@ public class SettingsActivity extends PreferenceActivity {
   }
 
   private void updateTrackColorModeSettings(String trackColorMode) {
-    boolean usesFixedSpeed = trackColorMode.equals(getString(R.string.track_color_mode_value_fixed));
-    boolean usesDynamicSpeed = trackColorMode.equals(getString(R.string.track_color_mode_value_dynamic));
-    
-    findPreference(
-        getString(R.string.track_color_mode_fixed_speed_slow_display_key)).setEnabled(usesFixedSpeed);
-    findPreference(
-        getString(R.string.track_color_mode_fixed_speed_medium_display_key)).setEnabled(usesFixedSpeed);
-    findPreference(
-        getString(R.string.track_color_mode_dynamic_speed_variation_key)).setEnabled(usesDynamicSpeed);
+    boolean usesFixedSpeed = trackColorMode.equals(
+        getString(R.string.track_color_mode_value_fixed));
+    boolean usesDynamicSpeed = trackColorMode.equals(
+        getString(R.string.track_color_mode_value_dynamic));
+
+    findPreference(getString(R.string.track_color_mode_fixed_speed_slow_display_key))
+        .setEnabled(usesFixedSpeed);
+    findPreference(getString(R.string.track_color_mode_fixed_speed_medium_display_key))
+        .setEnabled(usesFixedSpeed);
+    findPreference(getString(R.string.track_color_mode_dynamic_speed_variation_key))
+        .setEnabled(usesDynamicSpeed);
   }
   
   /**
-   * Updates all the preferences which give options with distance units to use
-   * the proper unit the user has selected.
+   * Updates display options that depends on the preferred distance units, metric or imperial.
    *
    * @param isMetric true to use metric units, false to use imperial
    */
-  private void updatePreferenceUnits(boolean isMetric) {
-    final ListPreference minRecordingDistance =
-        (ListPreference) findPreference(
-            getString(R.string.min_recording_distance_key));
-    final ListPreference maxRecordingDistance =
-        (ListPreference) findPreference(
-            getString(R.string.max_recording_distance_key));
-    final ListPreference minRequiredAccuracy =
-        (ListPreference) findPreference(
-            getString(R.string.min_required_accuracy_key));
-
-    minRecordingDistance.setEntries(isMetric
-        ? R.array.min_recording_distance_options
-        : R.array.min_recording_distance_options_ft);
-    maxRecordingDistance.setEntries(isMetric
-        ? R.array.max_recording_distance_options
-        : R.array.max_recording_distance_options_ft);
-    minRequiredAccuracy.setEntries(isMetric
-        ? R.array.min_required_accuracy_options
-        : R.array.min_required_accuracy_options_ft);
+  private void updateDisplayOptions(boolean isMetric) {
     setTaskOptions(isMetric, R.string.announcement_frequency_key);
     setTaskOptions(isMetric, R.string.split_frequency_key);
+    setRecordingDistanceOptions(isMetric, R.string.min_recording_distance_key);
+    setTrackDistanceOptions(isMetric, R.string.max_recording_distance_key);
+    setGpsAccuracyOptions(isMetric, R.string.min_required_accuracy_key);
   }
 
   /**
-   * Set the user visible options for a periodic task.
+   * Sets the display options for a periodic task.
    */
   private void setTaskOptions(boolean isMetric, int listId) {
-    final ListPreference taskFrequency =
-        (ListPreference) findPreference(getString(listId));
-    taskFrequency.setEntries(isMetric
-        ? R.array.task_frequency_options
-        : R.array.task_frequency_options_ft);
+    String[] values = getResources().getStringArray(R.array.task_frequency_values);
+    String[] options = new String[values.length];
+    for (int i = 0; i < values.length; i++) {
+      if (values[i].equals(TASK_FREQUENCY_OFF)) {
+        options[i] = getString(R.string.value_off);
+      } else if (values[i].startsWith("-")) {
+        int value = Integer.parseInt(values[i].substring(1));
+        int stringId = isMetric ? R.string.value_integer_kilometer : R.string.value_integer_mile;
+        String format = getString(stringId);
+        options[i] = String.format(format, value);
+      } else {
+        int value = Integer.parseInt(values[i]);
+        String format = getString(R.string.value_integer_minute);
+        options[i] = String.format(format, value);
+      }
+    }
+
+    ListPreference list = (ListPreference) findPreference(getString(listId));
+    list.setEntries(options);
+  }
+  
+  /**
+   * Sets the display options for 'Distance between points' option.
+   */
+  private void setRecordingDistanceOptions(boolean isMetric, int listId) {
+    String[] values = getResources().getStringArray(R.array.min_recording_distance_values);
+    String[] options = new String[values.length];
+    for (int i = 0; i < values.length; i++) {
+      int value = Integer.parseInt(values[i]);
+      if (!isMetric) {
+        value = (int) (value * UnitConversions.M_TO_FT);
+      }
+      String format;
+      if (values[i].equals(RECORDING_DISTANCE_RECOMMENDED)) {
+        int stringId = isMetric ? R.string.value_integer_meter_recommended
+            : R.string.value_integer_feet_recommended;
+        format = getString(stringId);
+      } else {
+        int stringId = isMetric ? R.string.value_integer_meter : R.string.value_integer_feet;
+        format = getString(stringId);
+      }
+      options[i] = String.format(format, value);
+    }
+
+    ListPreference list = (ListPreference) findPreference(getString(listId));
+    list.setEntries(options);
+  }
+  
+  /**
+   * Sets the display options for 'Distance between Tracks'.
+   */
+  private void setTrackDistanceOptions(boolean isMetric, int listId) {
+    String[] values = getResources().getStringArray(R.array.max_recording_distance_values);
+    String[] options = new String[values.length];
+    for (int i = 0; i < values.length; i++) {
+      int value = Integer.parseInt(values[i]);
+      String format;
+      if (isMetric) {
+        int stringId = values[i].equals(TRACK_DISTANCE_RECOMMENDED) 
+            ? R.string.value_integer_meter_recommended : R.string.value_integer_meter;
+        format = getString(stringId);
+        options[i] = String.format(format, value);
+      } else {
+        value = (int) (value * UnitConversions.M_TO_FT);
+        if (value < 2000) {
+          int stringId = values[i].equals(TRACK_DISTANCE_RECOMMENDED) 
+              ? R.string.value_integer_feet_recommended : R.string.value_integer_feet;
+          format = getString(stringId);
+          options[i] = String.format(format, value);
+        } else {
+          double mile = value / UnitConversions.MI_TO_FEET;
+          format = getString(R.string.value_float_mile);
+          options[i] = String.format(format, mile);
+        }
+      }
+    }
+
+    ListPreference list = (ListPreference) findPreference(getString(listId));
+    list.setEntries(options);
+  }
+  
+  /**
+   * Sets the display options for 'GPS accuracy'.
+   */
+  private void setGpsAccuracyOptions(boolean isMetric, int listId) {
+    String[] values = getResources().getStringArray(R.array.min_required_accuracy_values);
+    String[] options = new String[values.length];
+    for (int i = 0; i < values.length; i++) {
+      int value = Integer.parseInt(values[i]);
+      String format;
+      if (isMetric) {
+        if (values[i].equals(GPS_ACCURACY_RECOMMENDED)) {
+          format = getString(R.string.value_integer_meter_recommended);
+        } else if (values[i].equals(GPS_ACCURACY_EXCELLENT)) {
+          format = getString(R.string.value_integer_meter_excellent_gps);
+        } else if (values[i].equals(GPS_ACCURACY_POOR)) {
+          format = getString(R.string.value_integer_meter_poor_gps);
+        } else {
+          format = getString(R.string.value_integer_meter);
+        }
+        options[i] = String.format(format, value);
+      } else {
+        value = (int) (value * UnitConversions.M_TO_FT);
+        if (value < 2000) {
+          if (values[i].equals(GPS_ACCURACY_RECOMMENDED)) {
+            format = getString(R.string.value_integer_feet_recommended);
+          } else if (values[i].equals(GPS_ACCURACY_EXCELLENT)) {
+            format = getString(R.string.value_integer_feet_excellent_gps);
+          } else {
+            format = getString(R.string.value_integer_feet);
+          }
+          options[i] = String.format(format, value);
+        } else {
+          double mile = value / UnitConversions.MI_TO_FEET;
+          if (values[i].equals(GPS_ACCURACY_POOR)) {
+            format = getString(R.string.value_float_mile_poor_gps);
+          } else {
+            format = getString(R.string.value_float_mile);
+          }
+          options[i] = String.format(format, mile);    
+        }
+      }
+    }
+    ListPreference list = (ListPreference) findPreference(getString(listId));
+    list.setEntries(options);
   }
 
   /**
@@ -478,7 +673,8 @@ public class SettingsActivity extends PreferenceActivity {
     if(!metricUnitsPreference.isChecked()) {
       // Convert miles/h to km/h
       try {
-        metricspeed = String.valueOf((int) (Double.parseDouble(newValue) * UnitConversions.MPH_TO_KMH) + 1);
+        metricspeed = String.valueOf(
+            (int) (Double.parseDouble(newValue) * UnitConversions.MPH_TO_KMH) + 1);
       } catch (NumberFormatException e) {
         metricspeed = "0";
       }

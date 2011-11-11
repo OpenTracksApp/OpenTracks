@@ -17,9 +17,13 @@ limitations under the License.
 <resources>
 
   <!-- About Page -->
+  <string name="about_copyright_notice"
+    translation_description="In the 'About' page, the copyright notice.">
+    Copyright 2009 Google Inc.
+  </string>
   <string name="about_license"
-    translation_description="In the 'About' page, the button on the bottom to view the terms
-      of service agreement.">
+    translation_description="In the 'About' page, the button on the bottom to view the terms of
+      service agreement.">
     License
   </string>
   <string name="about_privacy"
@@ -41,6 +45,275 @@ limitations under the License.
     translation_description="In the 'About My Tracks' page, label for the version number. E.g.,
       'Version: 1.1.10'.">
     Version:
+  </string>
+
+  <!-- Activity Type -->
+  <string name="activity_type_airplane"
+    translation_description="When entering the Activity Type, an option for airplane.">
+    airplane
+  </string>
+  <string name="activity_type_atv"
+    translation_description="When entering the Activity Type, an option for ATV (All Terrain
+      Vehicles).">
+    ATV
+  </string>
+  <string name="activity_type_blimp"
+    translation_description="When entering the Activity Type, an option for blimp.">
+    blimp
+  </string>
+  <string name="activity_type_climbing"
+    translation_description="When entering the Activity Type, an option for climbing.">
+    climbing
+  </string>
+  <string name="activity_type_commercial_airplane"
+    translation_description="When entering the Activity Type, an option for commercial airplane.">
+    commercial airplane
+  </string>
+  <string name="activity_type_cross_country_skiing_classic"
+    translation_description="When entering the Activity Type, an option for cross-country skiing
+      (classic).">
+    cross-country skiing (classic)
+  </string>
+  <string name="activity_type_cross_country_skiing_skate"
+    translation_description="When entering the Activity Type, an option for cross-country skiing
+      (skate).">
+    cross-country skiing (skate)
+  </string>
+  <string name="activity_type_cycling"
+    translation_description="When entering the Activity Type, an option for cycling.">
+    cycling
+  </string>
+  <string name="activity_type_dirt_bike"
+    translation_description="When entering the Activity Type, an option for dirt bike.">
+    dirt bike
+  </string>
+  <string name="activity_type_donkey_back_riding"
+    translation_description="When entering the Activity Type, an option for donkey back riding.">
+    donkey back riding
+  </string>
+  <string name="activity_type_driving_bus"
+    translation_description="When entering the Activity Type, an option for driving bus.">
+    driving bus
+  </string>
+  <string name="activity_type_driving_car"
+    translation_description="When entering the Activity Type, an option for driving car.">
+    driving car
+  </string>
+  <string name="activity_type_ferry"
+    translation_description="When entering the Activity Type, an option for ferry.">
+    ferry
+  </string>
+  <string name="activity_type_frisbee"
+    translation_description="When entering the Activity Type, an option for frisbee.">
+    frisbee
+  </string>
+  <string name="activity_type_gliding"
+    translation_description="When entering the Activity Type, an option for gliding.">
+    gliding
+  </string>
+  <string name="activity_type_hang_gliding"
+    translation_description="When entering the Activity Type, an option for hang gliding.">
+    hang gliding
+  </string>
+  <string name="activity_type_helicopter"
+    translation_description="When entering the Activity Type, an option for helicopter.">
+    helicopter
+  </string>
+  <string name="activity_type_hiking"
+    translation_description="When entering the Activity Type, an option for hiking.">
+    hiking
+  </string>
+  <string name="activity_type_horse_back_riding"
+    translation_description="When entering the Activity Type, an option for horse back riding.">
+    horse back riding
+  </string>
+  <string name="activity_type_hot_air_balloon"
+    translation_description="When entering the Activity Type, an option for hot air balloon.">
+    hot air balloon
+  </string>
+  <string name="activity_type_ice_sailing"
+    translation_description="When entering the Activity Type, an option for ice sailing.">
+    ice sailing
+  </string>
+  <string name="activity_type_inline_skating"
+    translation_description="When entering the Activity Type, an option for inline skating.">
+    inline skating
+  </string>
+  <string name="activity_type_kayaking"
+    translation_description="When entering the Activity Type, an option for kayaking.">
+    kayaking
+  </string>
+  <string name="activity_type_kite_surfing"
+    translation_description="When entering the Activity Type, an option for kite surfing.">
+    kite surfing
+  </string>
+  <string name="activity_type_land_sailing"
+    translation_description="When entering the Activity Type, an option for land sailing.">
+    land sailing
+  </string>
+  <string name="activity_type_mixed_type"
+    translation_description="When entering the Activity Type, an option for mixed type.">
+    mixed type
+  </string>
+  <string name="activity_type_motor_bike"
+    translation_description="When entering the Activity Type, an option for motor bike.">
+    motor bike
+  </string>
+  <string name="activity_type_motor_boating"
+    translation_description="When entering the Activity Type, an option for motor boating.">
+    motor boating
+  </string>
+  <string name="activity_type_mountain_biking"
+    translation_description="When entering the Activity Type, an option for mountain biking.">
+    mountain biking
+  </string>
+  <string name="activity_type_off_trail_hiking"
+    translation_description="When entering the Activity Type, an option for off trail hiking.">
+    off trail hiking
+  </string>
+  <string name="activity_type_other"
+    translation_description="When entering the Activity Type, an option for other.">
+    other
+  </string>
+  <string name="activity_type_paddling"
+    translation_description="When entering the Activity Type, an option for paddling.">
+    paddling
+  </string>
+  <string name="activity_type_para_gliding"
+    translation_description="When entering the Activity Type, an option for para gliding.">
+    para gliding
+  </string>
+  <string name="activity_type_rc_airplane"
+    translation_description="When entering the Activity Type, an option for RC (Remote Controlled)
+      airplane.">
+    RC airplane
+  </string>
+  <string name="activity_type_rc_boat"
+    translation_description="When entering the Activity Type, an option for RC (Remote Controlled)
+      boat.">
+    RC boat
+  </string>
+  <string name="activity_type_rc_helicopter"
+    translation_description="When entering the Activity Type, an option for RC (Remote Controlled)
+      helicopter.">
+    RC helicopter
+  </string>
+  <string name="activity_type_riding"
+    translation_description="When entering the Activity Type, an option for riding.">
+    riding
+  </string>
+  <string name="activity_type_road_biking"
+    translation_description="When entering the Activity Type, an option for road biking.">
+    road biking
+  </string>
+  <string name="activity_type_roller_skiing_classic"
+    translation_description="When entering the Activity Type, an option for roller skiing
+      (classic).">
+    roller skiing (classic)
+  </string>
+  <string name="activity_type_roller_skiing_skate"
+    translation_description="When entering the Activity Type, an option for roller skiing (skate).">
+    roller skiing (skate)
+  </string>
+  <string name="activity_type_rowing"
+    translation_description="When entering the Activity Type, an option for rowing.">
+    rowing
+  </string>
+  <string name="activity_type_running"
+    translation_description="When entering the Activity Type, an option for running.">
+    running
+  </string>
+  <string name="activity_type_sailing"
+    translation_description="When entering the Activity Type, an option for sailing.">
+    sailing
+  </string>
+  <string name="activity_type_seaplane"
+    translation_description="When entering the Activity Type, an option for seaplane.">
+    seaplane
+  </string>
+  <string name="activity_type_skate_boarding"
+    translation_description="When entering the Activity Type, an option for skate boarding.">
+    skate boarding
+  </string>
+  <string name="activity_type_skating"
+    translation_description="When entering the Activity Type, an option for skating.">
+    skating
+  </string>
+  <string name="activity_type_skiing"
+    translation_description="When entering the Activity Type, an option for skiing.">
+    skiing
+  </string>
+  <string name="activity_type_sky_jumping"
+    translation_description="When entering the Activity Type, an option for sky jumping.">
+    sky jumping
+  </string>
+  <string name="activity_type_sled"
+    translation_description="When entering the Activity Type, an option for sled.">
+    sled
+  </string>
+  <string name="activity_type_snow_boarding"
+    translation_description="When entering the Activity Type, an option for snow boarding.">
+    snow boarding
+  </string>
+  <string name="activity_type_snow_shoeing"
+    translation_description="When entering the Activity Type, an option for snow shoeing.">
+    snow shoeing
+  </string>
+  <string name="activity_type_speed_walking"
+    translation_description="When entering the Activity Type, an option for speed walking.">
+    speed walking
+  </string>
+  <string name="activity_type_street_running"
+    translation_description="When entering the Activity Type, an option for street running.">
+    street running
+  </string>
+  <string name="activity_type_surfing"
+    translation_description="When entering the Activity Type, an option for surfing.">
+    surfing
+  </string>
+  <string name="activity_type_track_cycling"
+    translation_description="When entering the Activity Type, an option for track cycling.">
+    track cycling
+  </string>
+  <string name="activity_type_track_running"
+    translation_description="When entering the Activity Type, an option for track running.">
+    track running
+  </string>
+  <string name="activity_type_trail_hiking"
+    translation_description="When entering the Activity Type, an option for trail hiking.">
+    trail hiking
+  </string>
+  <string name="activity_type_trail_running"
+    translation_description="When entering the Activity Type, an option for trail running.">
+    trail running
+  </string>
+  <string name="activity_type_train"
+    translation_description="When entering the Activity Type, an option for train.">
+    train
+  </string>
+  <string name="activity_type_ultimate_frisbee"
+    translation_description="When entering the Activity Type, an option for ultimate frisbee.">
+    ultimate frisbee
+  </string>
+  <string name="activity_type_unknown"
+    translation_description="When entering the Activity Type, an option for unknown.">
+    unknown
+  </string>
+  <string name="activity_type_wakeboarding"
+    translation_description="When entering the Activity Type, an option for wakeboarding.">
+    wakeboarding
+  </string>
+  <string name="activity_type_walking"
+    translation_description="When entering the Activity Type, an option for walking.">
+    walking
+  </string>
+  <string name="activity_type_water_skiing"
+    translation_description="When entering the Activity Type, an option for water skiing.">
+    water skiing
+  </string>
+  <string name="activity_type_wind_surfing"
+    translation_description="When entering the Activity Type, an option for wind surfing.">
+    wind surfing
   </string>
 
   <!-- Chart Settings -->
@@ -1012,7 +1285,7 @@ limitations under the License.
     Paired with: %d
   </string>
   <string name="settings_sensor_bluetooth_options"
-   translation_description="In the Sensor settings, the section title to configure the Bluetooth
+    translation_description="In the Sensor settings, the section title to configure the Bluetooth
       options.">
    Bluetooth Options
   </string>
@@ -1466,6 +1739,91 @@ limitations under the License.
     W
   </string>
 
+  <!-- Value -->
+  <string name="value_adapt_accuracy"
+    translation_description="In a setting picker, the value to adapt for accuracy.">
+    adapt for accuracy
+  </string>
+  <string name="value_adapt_battery_life"
+    translation_description="In a setting picker, the value to adapt for battery life.">
+    adapt for battery life
+  </string>
+  <string name="value_always"
+    translation_description="In a setting picker, the value to always enable the option.">
+    Always
+  </string>
+  <string name="value_float_mile"
+    translation_description="In a setting picker, a float value in miles. E.g., '2.2 mi'.">
+    %.1f mi
+  </string>
+  <string name="value_float_mile_poor_gps"
+    translation_description="In a setting picker, a float value in miles, recommended when having
+      poor GPS signal. E.g., '2.2 mi (poor GPS)'.">
+    %.1f mi (poor GPS)
+  </string>
+  <string name="value_integer_feet"
+    translation_description="In a setting picker, an integer value in feet. E.g., '2 ft'.">
+    %d ft
+  </string>
+  <string name="value_integer_feet_excellent_gps"
+    translation_description="In a setting picker, an integer value in feet, recommended when having
+      excellent GPS signal. E.g., '2 ft (excellent GPS)'.">
+    %d ft (excellent GPS)
+  </string>
+  <string name="value_integer_feet_recommended"
+    translation_description="In a setting picker, an integer value in feet that is recommended.
+      E.g., '2 ft (recommended)'.">
+    %d ft (recommended)
+  </string>
+  <string name="value_integer_kilometer"
+    translation_description="In a setting picker, an integer value in kilometers. E.g., '2 km'.">
+    %d km
+  </string>
+  <string name="value_integer_meter"
+    translation_description="In a setting picker, an integer value in meters. E.g., '2 m'.">
+    %d m
+  </string>
+  <string name="value_integer_meter_excellent_gps"
+    translation_description="In a setting picker, an integer value in meters, recommended when
+      having excellent GPS signal. E.g., '2 m (excellent GPS)'.">
+    %d m (excellent GPS)
+  </string>
+  <string name="value_integer_meter_poor_gps"
+    translation_description="In a setting picker, an integer value in meters, recommended when
+      having poor GPS signal. E.g., '2 m (poor GPS)'.">
+    %d m (poor GPS)
+  </string>
+  <string name="value_integer_meter_recommended"
+    translation_description="In a setting picker, an integer value in meters that is recommended.
+      E.g., '2 m (recommended)'.">
+    %d m (recommended)
+  </string>
+  <string name="value_integer_mile"
+    translation_description="In a setting picker, an integer value in miles. E.g., '2 mi'.">
+    %d mi
+  </string>
+  <string name="value_integer_minute"
+    translation_description="In a setting picker, an integer value in minutes. E.g., '2 min'.">
+    %d min
+  </string>
+  <string name="value_integer_second"
+    translation_description="In a setting picker, an integer value in seconds. E.g., '2 s'.">
+    %d s
+  </string>
+  <string name="value_never"
+    translation_description="In a setting picker, the value to never use the feature.">
+    Never
+  </string>
+  <string name="value_off"
+    translation_description="In a setting picker, the value to turn off the feature.">
+    Off
+  </string>
+  <string name="value_smallest_recommended"
+    translation_description="In a setting picker, the value to use the smallest value, also the
+      recommended value.">
+    smallest (recommended)
+  </string>
+
   <!-- Voice -->
   <string name="voice_hour"
     translation_description="For voice announcement, to say hour like 'one hour'.">
@@ -1534,8 +1892,214 @@ limitations under the License.
       %3$s: Time value (E.g., 2 hours and 30 minutes)
       %4$s: Speed value (E.g., 2.2) or pace value (E.g., 2 hours and 30 minutes)
       %5$s: Speed unit (miles per hour or kilometers per hour) or pace unit (per mile or per
-        kilometer)">
+      kilometer)">
     My Tracks total distance %1$.2f %2$s in %3$s at %4$s %5$s
+  </string>
+
+  <!-- Waypoint Type -->
+  <string name="waypoint_type_atm"
+    translation_description="When entering the Marker Type, an option for an ATM.">
+    ATM
+  </string>
+  <string name="waypoint_type_bank"
+    translation_description="When entering the Marker Type, an option for a bank.">
+    bank
+  </string>
+  <string name="waypoint_type_bar"
+    translation_description="When entering the Marker Type, an option for a bar.">
+    bar
+  </string>
+  <string name="waypoint_type_barbeque"
+    translation_description="When entering the Marker Type, an option for a barbeque.">
+    barbeque
+  </string>
+  <string name="waypoint_type_building"
+    translation_description="When entering the Marker Type, an option for a building.">
+    building
+  </string>
+  <string name="waypoint_type_bus_stop"
+    translation_description="When entering the Marker Type, an option for a bus stop.">
+    bus stop
+  </string>
+  <string name="waypoint_type_cafe"
+    translation_description="When entering the Marker Type, an option for a cafe.">
+    cafe
+  </string>
+  <string name="waypoint_type_campfire"
+    translation_description="When entering the Marker Type, an option for a campfire.">
+    campfire
+  </string>
+  <string name="waypoint_type_campground"
+    translation_description="When entering the Marker Type, an option for a campground.">
+    campground
+  </string>
+  <string name="waypoint_type_church"
+    translation_description="When entering the Marker Type, an option for a church.">
+    church
+  </string>
+  <string name="waypoint_type_coffee_house"
+    translation_description="When entering the Marker Type, an option for a coffee house.">
+    coffee house
+  </string>
+  <string name="waypoint_type_convenience_store"
+    translation_description="When entering the Marker Type, an option for a convenience store.">
+    convenience store
+  </string>
+  <string name="waypoint_type_drinking_water"
+    translation_description="When entering the Marker Type, an option for a drinking water.">
+    drinking water
+  </string>
+  <string name="waypoint_type_falling_rocks"
+    translation_description="When entering the Marker Type, an option for a falling rocks.">
+    falling rocks
+  </string>
+  <string name="waypoint_type_ferry"
+    translation_description="When entering the Marker Type, an option for a ferry.">
+    ferry
+  </string>
+  <string name="waypoint_type_fire_place"
+    translation_description="When entering the Marker Type, an option for a fire place.">
+    fire place
+  </string>
+  <string name="waypoint_type_fire_station"
+    translation_description="When entering the Marker Type, an option for a fire station.">
+    fire station
+  </string>
+  <string name="waypoint_type_fishing"
+    translation_description="When entering the Marker Type, an option for a fishing location.">
+    fishing
+  </string>
+  <string name="waypoint_type_gas_station"
+    translation_description="When entering the Marker Type, an option for a gas station.">
+    gas station
+  </string>
+  <string name="waypoint_type_golf_course"
+    translation_description="When entering the Marker Type, an option for a golf course.">
+    golf course
+  </string>
+  <string name="waypoint_type_grocery_store"
+    translation_description="When entering the Marker Type, an option for a grocery store.">
+    grocery store
+  </string>
+  <string name="waypoint_type_hair_dresser"
+    translation_description="When entering the Marker Type, an option for a hair dresser.">
+    hair dresser
+  </string>
+  <string name="waypoint_type_harbor"
+    translation_description="When entering the Marker Type, an option for a harbor.">
+    harbor
+  </string>
+  <string name="waypoint_type_hiking_path"
+    translation_description="When entering the Marker Type, an option for a hiking path.">
+    hiking path
+  </string>
+  <string name="waypoint_type_hotel"
+    translation_description="When entering the Marker Type, an option for a hotel.">
+    hotel
+  </string>
+  <string name="waypoint_type_house"
+    translation_description="When entering the Marker Type, an option for a house.">
+    house
+  </string>
+  <string name="waypoint_type_information"
+    translation_description="When entering the Marker Type, an option for an information.">
+    information
+  </string>
+  <string name="waypoint_type_intersection"
+    translation_description="When entering the Marker Type, an option for an intersection.">
+    intersection
+  </string>
+  <string name="waypoint_type_mail_box"
+    translation_description="When entering the Marker Type, an option for a mail box.">
+    mail box
+  </string>
+  <string name="waypoint_type_market"
+    translation_description="When entering the Marker Type, an option for a market.">
+    market
+  </string>
+  <string name="waypoint_type_meeting_point"
+    translation_description="When entering the Marker Type, an option for a meeting point.">
+    meeting point
+  </string>
+  <string name="waypoint_type_opera"
+    translation_description="When entering the Marker Type, an option for an opera.">
+    opera
+  </string>
+  <string name="waypoint_type_parking"
+    translation_description="When entering the Marker Type, an option for a parking.">
+    parking
+  </string>
+  <string name="waypoint_type_police_station"
+    translation_description="When entering the Marker Type, an option for a police station.">
+    police station
+  </string>
+  <string name="waypoint_type_post_office"
+    translation_description="When entering the Marker Type, an option for a post office.">
+    post office
+  </string>
+  <string name="waypoint_type_pothole"
+    translation_description="When entering the Marker Type, an option for a pothole.">
+    pothole
+  </string>
+  <string name="waypoint_type_railway_crossing"
+    translation_description="When entering the Marker Type, an option for a railway crossing.">
+    railway crossing
+  </string>
+  <string name="waypoint_type_restaurant"
+    translation_description="When entering the Marker Type, an option for a restaurant.">
+    restaurant
+  </string>
+  <string name="waypoint_type_shopping"
+    translation_description="When entering the Marker Type, an option for a shopping.">
+    shopping
+  </string>
+  <string name="waypoint_type_sight"
+    translation_description="When entering the Marker Type, an option for a sight.">
+    sight
+  </string>
+  <string name="waypoint_type_store"
+    translation_description="When entering the Marker Type, an option for a store.">
+    store
+  </string>
+  <string name="waypoint_type_swimming_pool"
+    translation_description="When entering the Marker Type, an option for a swimming pool.">
+    swimming pool
+  </string>
+  <string name="waypoint_type_telephone"
+    translation_description="When entering the Marker Type, an option for a telephone.">
+    telephone
+  </string>
+  <string name="waypoint_type_theater"
+    translation_description="When entering the Marker Type, an option for a theater.">
+    theater
+  </string>
+  <string name="waypoint_type_toilet"
+    translation_description="When entering the Marker Type, an option for a toilet.">
+    toilet
+  </string>
+  <string name="waypoint_type_tourist_information"
+    translation_description="When entering the Marker Type, an option for a tourist information.">
+    tourist information
+  </string>
+  <string name="waypoint_type_tree"
+    translation_description="When entering the Marker Type, an option for a tree.">
+    tree
+  </string>
+  <string name="waypoint_type_tunnel"
+    translation_description="When entering the Marker Type, an option for a tunnel.">
+    tunnel
+  </string>
+  <string name="waypoint_type_waterfall"
+    translation_description="When entering the Marker Type, an option for a waterfall.">
+    waterfall
+  </string>
+  <string name="waypoint_type_water_fountain"
+    translation_description="When entering the Marker Type, an option for a water fountain.">
+    water fountain
+  </string>
+  <string name="waypoint_type_way_point"
+    translation_description="When entering the Marker Type, an option for a way point.">
+    way point
   </string>
 
   <!-- Welcome Page -->

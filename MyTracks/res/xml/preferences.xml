@@ -92,7 +92,6 @@ limitations under the License.
         android:key="@string/announcement_frequency_key"
         android:title="@string/settings_recording_voice"
         android:summary="@string/settings_recording_voice_summary"
-        android:entries="@array/task_frequency_options"
         android:entryValues="@array/task_frequency_values"
         android:defaultValue="0" />
 
@@ -100,7 +99,6 @@ limitations under the License.
         android:key="@string/split_frequency_key"
         android:title="@string/settings_recording_marker"
         android:summary="@string/settings_recording_marker_summary"
-        android:entries="@array/task_frequency_options"
         android:entryValues="@array/task_frequency_values"
         android:defaultValue="0" />
 
@@ -108,7 +106,6 @@ limitations under the License.
         android:key="@string/min_recording_interval_key"
         android:title="@string/settings_recording_interval"
         android:summary="@string/settings_recording_interval_summary"
-        android:entries="@array/min_recording_interval_options"
         android:entryValues="@array/min_recording_interval_values"
         android:defaultValue="0" />
 
@@ -116,7 +113,6 @@ limitations under the License.
         android:key="@string/min_recording_distance_key"
         android:title="@string/settings_recording_distance"
         android:summary="@string/settings_recording_distance_summary"
-        android:entries="@array/min_recording_distance_options"
         android:entryValues="@array/min_recording_distance_values"
         android:defaultValue="5" />
 
@@ -124,7 +120,6 @@ limitations under the License.
         android:key="@string/max_recording_distance_key"
         android:title="@string/settings_recording_track_distance"
         android:summary="@string/settings_recording_track_distance_summary"
-        android:entries="@array/max_recording_distance_options"
         android:entryValues="@array/max_recording_distance_values"
         android:defaultValue="200" />
 
@@ -132,7 +127,6 @@ limitations under the License.
         android:key="@string/min_required_accuracy_key"
         android:title="@string/settings_recording_gps_accuracy"
         android:summary="@string/settings_recording_gps_accuracy_summary"
-        android:entries="@array/min_required_accuracy_options"
         android:entryValues="@array/min_required_accuracy_values"
         android:defaultValue="200" />
 
@@ -140,7 +134,6 @@ limitations under the License.
         android:key="@string/auto_resume_track_timeout_key"
         android:title="@string/settings_recording_auto_resume"
         android:summary="@string/settings_recording_auto_resume_summary"
-        android:entries="@array/auto_resume_track_timeout_options"
         android:entryValues="@array/auto_resume_track_timeout_values"
         android:defaultValue="10" />
 
