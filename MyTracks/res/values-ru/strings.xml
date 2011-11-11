@@ -52,11 +52,6 @@ limitations under the License.
   <string name="status_wait_for_gps_fix">Ожидание сигнала GPS. Убедитесь в том, что вы находитесь под открытым небом.</string>
   <string name="status_now_recording">Записывается новый трек.</string>
   <string name="status_stopped_recording">Запись вашего трека остановлена.</string>
-  <string name="sending_to_my_maps_success_new_map">Новая Google \"Мои карты\" была создана на maps.google.com.</string>
-  <string name="sending_to_fusion_tables_success">Новая таблица Google Fusion была создана на google.com/fusiontables.</string>
-  <string name="sending_to_my_maps_success_existing_map">Твой трек был отправлен на maps.google.com.</string>
-  <string name="sending_to_docs_success_new_doc">Ваш трек был отправлен в новую электронную таблицу на docs.google.com.</string>
-  <string name="sending_to_docs_success_existing_doc">Ваш трек был отправлен в docs.google.com.</string>
   <string name="sending_to_google_additional_info">Это может занять несколько минут, прежде чем появятся новые треки.</string>
   <string name="status_need_to_enable_gps">Пожалуйста, нажмите здесь для перехода к разделу настроек Координаты и отметьте пункт \"Спутники GPS\". Для возвращения нажмите кнопку Назад.</string>
   <string name="status_approximate_current_location">Примечание: приблизительное местоположение определено относительно вышек сотовой связи и беспроводных сетей.</string>
@@ -90,8 +85,7 @@ limitations under the License.
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Создано My Tracks на Android.</string>
-  <string name="send_to_google_by_mytracks">Создано &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; на Android.</string>
-
+  
   <!-- Text and links when uploading to Google My Maps -->
   <string name="my_map_link">Создано &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; на Android.</string>
   <string name="new_map_title">Новая карта</string>

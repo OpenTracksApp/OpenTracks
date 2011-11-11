@@ -559,6 +559,11 @@ public class TrackRecordingService extends Service {
     Log.d(TAG,
         "Location listener now unregistered w/ TrackRecordingService.");
   }
+  
+  private String getDefaultActivityType(Context context) {
+    SharedPreferences prefs = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    return prefs.getString(context.getString(R.string.default_category_key), "");
+  }
 
   /*
    * Recording lifecycle.
@@ -582,6 +587,7 @@ public class TrackRecordingService extends Service {
     track.setId(recordingTrackId);
     track.setName(new DefaultTrackNameFactory(this).newTrackName(
         recordingTrackId, startTime));
+    track.setCategory(getDefaultActivityType(this));
     isRecording = true;
     isMoving = true;
 

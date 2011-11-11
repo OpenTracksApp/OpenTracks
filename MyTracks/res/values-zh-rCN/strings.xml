@@ -53,11 +53,6 @@ limitations under the License.
   <string name="status_wait_for_gps_fix">等待更准确的 GPS 定位. 请确定可以看见天空.</string>
   <string name="status_now_recording">现在开始记录新的轨迹.</string>
   <string name="status_stopped_recording">停止记录你的轨迹.</string>
-  <string name="sending_to_my_maps_success_new_map">已在 maps.google.com 创建了新的 Google My Map.</string>
-  <string name="sending_to_fusion_tables_success">已在 google.com/fusiontables 创建新 Google Fusion Table.</string>
-  <string name="sending_to_my_maps_success_existing_map">你的轨迹已经发送到 maps.google.com.</string>
-  <string name="sending_to_docs_success_new_doc">你的轨迹已经作为新的电子表格发送到 docs.google.com.</string>
-  <string name="sending_to_docs_success_existing_doc">你的轨迹已经发送到 docs.google.com.</string>
   <string name="sending_to_google_additional_info">可能需要等待几分钟才能看见新的轨迹.</string>
   <string name="status_need_to_enable_gps">请点击这里进入\'安全和位置设置\'并勾选上\'启用 GPS 卫星\'. 然后用后退键返回.</string>
   <string name="status_approximate_current_location">注意: 当前显示的位置是根据无线信号和无线网络计算的近似位置.</string>
@@ -91,10 +86,6 @@ limitations under the License.
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">由 Android 平台的 My Tracks 创建.</string>
-  <string name="send_to_google_by_mytracks">由 Android 平台的 &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; 创建.</string>
-
-  <!-- Text and links when uploading to Google My Maps -->
-  <string name="send_to_google_by_mytracks">由 Android 上的 &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; 创建.</string>
   <string name="new_map_title">新地图</string>
 
   <!-- Formatting of track and marker descriptions -->

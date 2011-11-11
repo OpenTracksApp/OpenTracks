@@ -3,6 +3,7 @@ package com.google.android.apps.mytracks.io.mymaps;
 
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.AuthManager;
+import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.mytracks.R;
 import com.google.wireless.gdata.client.HttpException;
@@ -119,7 +120,7 @@ public class MapsFacade {
         MyMapsMapMetadata metaData = new MyMapsMapMetadata();
         metaData.setTitle(title);
         metaData.setDescription(description + " - "
-            + category + " - " + context.getString(R.string.send_to_google_by_mytracks));
+            + category + " - " + StringUtils.getCreatedByMyTracks(context, false));
         metaData.setSearchable(isPublic);
         Entry entry = MyMapsGDataConverter.getMapEntryForMetadata(metaData);
         Log.d(MyMapsConstants.TAG, "Title: " + entry.getTitle());

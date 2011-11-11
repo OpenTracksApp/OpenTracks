@@ -23,6 +23,7 @@ limitations under the License.
   <string name="auto_resume_track_timeout_key">autoResumeTrackTimeout</string>
   <string name="bluetooth_pairing_key">bluetoothPairing</string>
   <string name="bluetooth_sensor_key">bluetoothSensor</string>
+  <string name="default_category_key">defaultCategory</string>
   <string name="default_map_public_key">defaultMapPublic</string>
   <string name="max_recording_distance_key">maxRecordingDistance</string>
   <string name="metric_units_key">metricUnits</string>
@@ -57,7 +58,6 @@ limitations under the License.
   <!-- Keys for non-persisted preferences. Sorted alphabetically. - DO NOT TRANSLATE -->
   <string name="ant_options_key">antOptions</string>
   <string name="backup_to_sd_key">backupToSd</string>
-  <string name="display_settings_screen_key">displaySettingsScreen</string>
   <string name="reset_key">resetToDefaults</string>
   <string name="restore_from_sd_key">restoreFromSd</string>
   <string name="sensor_options_key">sensorOptions</string>

@@ -48,10 +48,6 @@ limitations under the License.
   <string name="status_wait_for_gps_fix">Esperando por um sinal melhor do GPS.  Assegure-se de que o céu está visível.</string>
   <string name="status_now_recording">Gravando um novo caminho.</string>
   <string name="status_stopped_recording">Gravação interrompida.</string>
-  <string name="sending_to_fusion_tables_success">Uma nova Fusion Table Google foi criada em google.com/fusiontables.</string>
-  <string name="sending_to_my_maps_success_existing_map">Seu caminho foi enviado para maps.google.com.</string>
-  <string name="sending_to_docs_success_new_doc">Seu caminho foi enviado para uma nova planilha em docs.google.com.</string>
-  <string name="sending_to_docs_success_existing_doc">Seu caminho foi enviado para docs.google.com.</string>
   <string name="status_need_to_enable_gps">"Por favor pressione aqui para ir aos ajustes de segurança e localização e verifique que o GPS esteja habilitado. Pressione o botão de voltar para retornar.</string>
   <string name="status_approximate_current_location">Nota: Uma localização aproximada, determinada por torres de telefonia celular, está sendo mostrada.</string>
   <string name="status_no_current_location">Sua localização não pôde ser determinada.  Habilite fontes adicionais de localização (veja configurações de Segurança e Localização) e assegure-se de que o céu está visível.</string>
@@ -80,8 +76,7 @@ limitations under the License.
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="new_map_description">"Criado por My Tracks no Android.</string>
-  <string name="send_to_google_by_mytracks">"Criado por &lt;a href='http://mytracks.appspot.com'&gt;My Tracks&lt;/a&gt; no Android.</string>
-
+  
   <!-- Formatting of track and marker descriptions -->
   <string name="points">Pontos</string>
   <string name="recorded_date">Gravado</string>

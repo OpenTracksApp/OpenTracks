@@ -24,11 +24,11 @@ import com.google.android.maps.mytracks.R;
  */
 public enum SendType {
   MYMAPS(R.string.sendtogoogle_google_mymaps,
-      R.string.sendtogoogle_google_mymaps_url),
+      R.string.send_google_my_maps_url),
   FUSION_TABLES(R.string.sendtogoogle_google_fusiontables,
-      R.string.sendtogoogle_google_fusiontables_url),
+      R.string.send_google_fusion_tables_url),
   DOCS(R.string.sendtogoogle_google_docs,
-      R.string.sendtogoogle_google_docs_url);
+      R.string.send_google_docs_url);
 
   private int serviceName;
   private int serviceUrl;

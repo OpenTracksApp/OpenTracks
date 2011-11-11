@@ -18,8 +18,7 @@ limitations under the License.
   xmlns:android="http://schemas.android.com/apk/res/android">
 
   <!-- Display settings -->
-  <PreferenceScreen android:title="@string/settings_display"
-                    android:key="@string/display_settings_screen_key">
+  <PreferenceScreen android:title="@string/settings_display">
     <CheckBoxPreference
         android:key="@string/metric_units_key"
         android:title="@string/settings_metric_units"
@@ -144,6 +143,12 @@ limitations under the License.
         android:summaryOn="@string/settings_timestamp_track_name_summary_on"
         android:summaryOff="@string/settings_timestamp_track_name_summary_off"
         android:defaultValue="true" />
+        
+    <com.google.android.apps.mytracks.AutoCompleteTextPreference
+        android:key="@string/default_category_key"
+        android:title="@string/settings_default_category"
+        android:summary="@string/settings_default_category_summary"
+        android:defaultValue="" />
 
   </PreferenceScreen>
 

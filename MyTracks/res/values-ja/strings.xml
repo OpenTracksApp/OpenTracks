@@ -51,11 +51,6 @@ limitations under the License.
   <string name="status_wait_for_gps_fix">GPS位置精度がよくなるまで待機しています．空が見えるところにいて下さい．</string>
   <string name="status_now_recording">新しいトラックを記録中です．</string>
   <string name="status_stopped_recording">トラック記録を停止しました．</string>
-  <string name="sending_to_my_maps_success_new_map">新しいマイマップをmap.google.comに作成しました．</string>
-  <string name="sending_to_fusion_tables_success">新しいGoogle Fusion Tableをgoogle.com/fusiontablesに作成しました．</string>
-  <string name="sending_to_my_maps_success_existing_map">トラックをmaps.google.comに送信しました．</string>
-  <string name="sending_to_docs_success_new_doc">トラックをdocs.google.comの新しいスプレッドシートに送信しました．</string>
-  <string name="sending_to_docs_success_existing_doc">トラックをdocs.google.comに送信しました．</string>
   <string name="sending_to_google_additional_info">新しいトラックが表示されるまでに数分かかることがあります．</string>
   <string name="status_need_to_enable_gps">ここをタップして「位置情報とセキュリティの設定」を開いて「GPS機能を使用」にチェックを入れて下さい．バックボタンで戻ってください．</string>
   <string name="status_approximate_current_location">ご注意: 携帯電話中継局とWi-Fiネットワークから大まかな位置を特定します．</string>
@@ -88,8 +83,7 @@ limitations under the License.
 
   <!-- Text and links when uploading to Google Fusion Tables -->
   <string name="new_map_description">Android用My Tracksで作成</string>
-  <string name="send_to_google_by_mytracks">Android用&lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt;で作成しました．</string>
-
+ 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="my_map_link">Android用&lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt;で作成しました．</string>
   <string name="new_map_title">新規マップ</string>

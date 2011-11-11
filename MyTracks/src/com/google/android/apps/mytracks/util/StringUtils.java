@@ -303,7 +303,7 @@ public class StringUtils implements DescriptionGenerator {
         + "<img border=\"0\" src=\"%s\"/>",
 
         // Line 1
-        context.getString(R.string.send_to_google_by_mytracks),
+        getCreatedByMyTracks(context, true),
 
         // Line 2
         context.getString(R.string.total_distance_label),
@@ -353,6 +353,22 @@ public class StringUtils implements DescriptionGenerator {
         ChartURLGenerator.getChartUrl(distances, elevations, track, context));
   }
 
+  /**
+   * Returns the 'Created by My Tracks on Android' string.
+   * 
+   * @param context the context
+   * @param addLink true to add a link to the My Tracks web site
+   */
+  public static String getCreatedByMyTracks(Context context, boolean addLink) {
+    String format = context.getString(R.string.send_google_by_my_tracks);
+    if (addLink) {
+      String url = context.getString(R.string.my_tracks_web_url);
+      return String.format(format, "<a href='http://" + url + "'>", "</a>");
+    } else {
+      return String.format(format, "", "");
+    }
+  }
+  
   private String getSpeedString(double speed, int speedLabel, int paceLabel,
       boolean displaySpeed) {
     double speedInKph = speed * 3.6;
