@@ -871,6 +871,16 @@ limitations under the License.
       recording will not be resumed after phone reboot.">
     Maximum time after which a previously recording track will not be resumed on phone reboot
   </string>
+  <string name="settings_recording_default_activity"
+    translation_description="In the Recording settings, the option to specify a new track's default
+      activity type.">
+    Default activity type
+  </string>
+  <string name="settings_recording_default_activity_summary"
+    translation_description="In the Recording settings, the summary for the 'Default activity type'
+      option explaining that it sets the default activity type for a new track.">
+    Default activity type for a new track.
+  </string>
   <string name="settings_recording_distance"
     translation_description="In the Recording settings, the dropdown option to configure the
       distance between two recorded points.">

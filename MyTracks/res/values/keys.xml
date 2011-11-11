@@ -25,6 +25,7 @@ limitations under the License.
   <string name="bluetooth_device_key">bluetoothDevice</string>
   <string name="bluetooth_pairing_key">bluetoothPairing</string>
   <string name="bluetooth_sensor_key">bluetoothSensor</string>
+  <string name="default_activity_key">defaultActivity</string>
   <string name="default_map_public_key">defaultMapPublic</string>
   <string name="max_recording_distance_key">maxRecordingDistance</string>
   <string name="metric_units_key">metricUnits</string>

@@ -150,6 +150,12 @@ limitations under the License.
         android:summaryOn="@string/settings_recording_name_summary_on"
         android:summaryOff="@string/settings_recording_name_summary_off"
         android:defaultValue="true" />
+        
+    <com.google.android.apps.mytracks.AutoCompleteTextPreference
+        android:key="@string/default_activity_key"
+        android:title="@string/settings_recording_default_activity"
+        android:summary="@string/settings_recording_default_activity_summary"
+        android:defaultValue="" />
 
   </PreferenceScreen>
 
