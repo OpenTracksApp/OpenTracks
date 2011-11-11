@@ -429,9 +429,9 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
     SendToMyMaps.OnSendCompletedListener onCompletion = new SendToMyMaps.OnSendCompletedListener() {
       @Override
-      public void onSendCompleted(String mapId, boolean success, int statusMessage) {
+      public void onSendCompleted(String mapId, boolean success, String statusMessage) {
         // TODO: Use this message
-        sendToMyMapsMessage = getString(statusMessage);
+        sendToMyMapsMessage = statusMessage;
         sendToMyMapsSuccess = success;
         if (sendToMyMapsSuccess) {
           sendToMyMapsMapId = mapId;
@@ -491,10 +491,9 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
     OnSendCompletedListener onCompletion = new OnSendCompletedListener() {
       @Override
-      public void onSendCompleted(String tableId, boolean success,
-          int statusMessage) {
+      public void onSendCompleted(String tableId, boolean success, String statusMessage) {
         // TODO: Use this message
-        sendToFusionTablesMessage = getString(statusMessage);
+        sendToFusionTablesMessage = statusMessage;
         sendToFusionTablesSuccess = success;
         if (sendToFusionTablesSuccess) {
           sendToFusionTablesTableId = tableId;

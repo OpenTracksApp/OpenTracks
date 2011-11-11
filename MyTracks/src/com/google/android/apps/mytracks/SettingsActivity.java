@@ -54,10 +54,6 @@ import java.util.Set;
 /**
  * An activity that let's the user see and edit the settings.
  * 
- * This activity has two entry points, "root" and "display" preference screen.
- * If bundle.getString("open_settings_screen") is set to "display_settings_screen_key", then
- * the "display" preference screen is shown, otherwise, the "root" display preference is shown.
- * 
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
@@ -71,16 +67,6 @@ public class SettingsActivity extends PreferenceActivity {
   protected void onCreate(Bundle icicle) {
     super.onCreate(icicle);
 
-    initActivityCommons();
-   
-    // If we only need the display setting screen nothing else needs to load.
-    if (processIntent())
-       return;
-      
-    initActivitySpecifics();
-  }
-  
-  private void initActivityCommons() {
     // The volume we want to control is the Text-To-Speech volume
     ApiFeatures apiFeatures = ApiFeatures.getInstance();
     int volumeStream =
@@ -110,9 +96,7 @@ public class SettingsActivity extends PreferenceActivity {
       announcementFrequency.setSummary(
           R.string.settings_announcement_frequency_not_available);
     }
-  }
-  
-  private void initActivitySpecifics() {
+
     // Hook up switching of displayed list entries between metric and imperial
     // units
     CheckBoxPreference metricUnitsPreference =
@@ -171,23 +155,6 @@ public class SettingsActivity extends PreferenceActivity {
     });
   }
   
-  private boolean processIntent() {
-    boolean showDisplaySettings = false;
-    Bundle bundle = getIntent().getExtras();
-    PreferenceScreen preferenceScreen;
-    String intentString = getString(R.string.open_settings_screen);
-    
-    if (bundle != null) {
-      preferenceScreen = (PreferenceScreen) findPreference(bundle.getString(intentString));
-      if (preferenceScreen != null) {
-         showDisplaySettings = true;
-         setPreferenceScreen(preferenceScreen);
-      }
-    }
- 
-    return showDisplaySettings;
-  }
-
   private void customizeSensorOptionsPreferences() {
     ListPreference sensorTypePreference =
         (ListPreference) findPreference(getString(R.string.sensor_type_key));
@@ -262,10 +229,6 @@ public class SettingsActivity extends PreferenceActivity {
   protected void onResume() {
     super.onResume();
     
-    // If we only need the display setting screen nothing else needs to load.
-    if (processIntent())
-      return;
-
     configureBluetoothPreferences();
     Preference backupNowPreference =
         findPreference(getString(R.string.backup_to_sd_key));

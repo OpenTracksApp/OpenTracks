@@ -49,10 +49,6 @@ limitations under the License.
   <string name="status_wait_for_gps_fix">Väntar på bättre GPS-position. Se till att himlen är synlig.</string>
   <string name="status_now_recording">Spelar nu in ett nytt spår.</string>
   <string name="status_stopped_recording">Stoppade inspelning av ditt spår.</string>
-  <!-- <string name="sending_to_fusion_tables_success">En ny Google Mina Kartor har skapats på maps.google.com.</string> -->
-  <string name="sending_to_my_maps_success_existing_map">Ditt spår har skickats till maps.google.com.</string>
-  <string name="sending_to_docs_success_new_doc">Ditt spår har skickats till ett nytt kalkylblad på docs.google.com.</string>
-  <string name="sending_to_docs_success_existing_doc">Ditt spår har skickats till docs.google.com.</string>
   <string name="status_need_to_enable_gps">Klicka här för att gå till Säkerhet och Platsinställningar och kryssa i \'aktivera gps-satteliter\'. Tryck på tillbakaknappen för att återgå.</string>
   <string name="status_approximate_current_location">OBS: En ungefärlig position som avgörs från mobilmaster och WIFI-nät visas.</string>
   <string name="status_no_current_location">En position kan för närvarande inte fastställas. Aktivera mer platskällor (se Säkerhet och Platsinställningar) och se till att himlen är synlig. Försök igen senare.</string>
@@ -81,7 +77,6 @@ limitations under the License.
 
   <!-- Text and links when uploading to Google My Maps -->
   <string name="new_map_description">Skapad av My Tracks på Android.</string>
-  <string name="send_to_google_by_mytracks">Skapad av &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; på Android.</string>
 
   <!-- Formatting of track and marker descriptions -->
   <string name="points">Punkter</string>

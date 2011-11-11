@@ -86,14 +86,12 @@ limitations under the License.
     Unable to insert marker. No GPS location. Try again.
   </string>  
 
-  <!-- A generic error message. -->
-  <string name="error_generic"
-    translation_description="In an alert dialog, a generic error message indicating that an error
-      has occurred and asking the user to try again.">
+  <!-- Error messages when sending to Google. -->
+  <string name="error_sending_to_google"
+    translation_description="When sending a track to Google, a message indicating that an error has
+      occurred and ask the user to try again.">
     An error occurred. Please try again.
   </string>
-      
-  <!-- Error messages when sending to Google. -->
   <string name="error_sending_to_my_maps"
     translation_description="When sending a track to Google My Maps, a message indicating that an
       error has occured.">
@@ -108,27 +106,8 @@ limitations under the License.
     translation_description="When sending a track to Google Docs, a message indicating that an error
       has occurred.">
     There was an error while sending your track to Google Docs.
-  </string>
-  
-  <!-- Error messages when importing a track. -->
-  <string name="error_import_unable_to_read_file"
-    translation_description="When importing a track from the SD card, a messsage indicating that
-      My Tracks is unable to read the file.">
-    Unable to read from file.
-  </string>
-  <string name="error_import_invalid_gpx_format"
-    translation_description="When importing a track from the SD card, a message indicating that
-      the file does not have a valid GPX format.">
-    File does not have a valid GPX format.
-  </string>
-  
-  <!-- TODO(jshih@google.com) confirm if the file size limit is still 500 KB. -->
-  <string name="error_import_out_of_memory"
-    translation_description="When importing a track from the SD card, a message indicating that
-      the file is too big, must be less than 500 KB, and aborting.">
-    This file is too big (must be less than 500 KB). Aborting.
-  </string>
-  
+  </string>  
+
   <!--  Error messages when exporting a track. -->
   <string name="error_export_generic"
     translation_description="When exporting a track to the SD card, a generic error message
@@ -189,32 +168,37 @@ limitations under the License.
       the result page.">
     It may take a few minutes before new tracks appear.
   </string>
-  <string name="sending_to_my_maps_success_new_map"
-    translation_description="When sending a track to Google My Maps, the message on the result page
-      indicating that a new map is created.">
-    A new Google My Map has been created at maps.google.com.
+  <string name="send_google_docs_existing_doc_success"
+    translation_description="When sending a track to Google Docs, the message on the result page
+      indicating that the track is sent to an existing spreadsheet. E.g., 'Your track has been sent
+      to docs.google.com.'.">      
+    Your track has been sent to %s.
   </string>
-  <string name="sending_to_my_maps_success_existing_map"
-    translation_description="When sending a track to Google My Maps, the message on the result page
-      indicating that the track is sent to an existing map.">
-    Your track has been sent to maps.google.com.
+  <string name="send_google_docs_new_doc_success"
+    translation_description="When sending a track to Google Docs, the message on the result page
+      indicating that a new spreadsheet is created. E.g., 'A new spreadsheet is created at
+      docs.google.com.'.">
+    A new spreadsheet is created at %s.
   </string>
-  <string name="sending_to_fusion_tables_success"
+  <string name="send_google_fusion_tables_success"
     translation_description="When sending a track to Google Fusion Tables, the message on the result
-      page indicating success.">
-    A new Google Fusion table has been created at google.com/fusiontables.
+      page indicating success. E.g., 'A new Google Fusion table has been created at
+      google.com/fusiontables.'">
+    A new Google Fusion table has been created at %s.
   </string>  
-  <string name="sending_to_docs_success_new_doc"
-    translation_description="When sending a track to Google Docs, the message on the result page
-      indicating that a new spreadsheet is created.">
-    A new spreadsheet is created at docs.google.com.
+  <string name="send_google_my_maps_existing_map_success"
+    translation_description="When sending a track to Google My Maps, the message on the result page
+      indicating that the track is sent to an existing map. E.g., 'Your track has been sent to
+      maps.google.com.'">
+    Your track has been sent to %s.
   </string>
-  <string name="sending_to_docs_success_existing_doc"
-    translation_description="When sending a track to Google Docs, the message on the result page
-      indicating that the track is sent to an existing spreadsheet.">      
-    Your track has been sent to docs.google.com.
+  <string name="send_google_my_maps_new_map_success"
+    translation_description="When sending a track to Google My Maps, the message on the result page
+      indicating that a new map is created. E.g., 'A new Google My Map has been created at
+      maps.google.com.'.">
+    A new Google My Map has been created at %s.
   </string>
-
+    
   <!-- Progress dialog title -->
   <string name="progress_title"
     translation_description="When displaying a progress dialog, the title on the dialog asking the
@@ -274,12 +258,7 @@ limitations under the License.
     Sending a track to Google Docs...
   </string>
   
-  <!-- Import and Export progress messages. -->
-  <string name="progress_message_import"
-    translation_description="When importing a track from the SD card, the message on the progress
-      dialog indicating that it may take a while.">
-    Importing a track from the SD card. This may take a while.
-  </string>
+  <!-- Export progress messages. -->
   <string name="progress_message_export"
     translation_description="When exporting a track to the SD card, the message on the progress
       dialog indicating that it may take a while.">
@@ -310,12 +289,12 @@ limitations under the License.
   </string>
 
   <!-- Text and link when uploading to Google. -->
-  <!-- TODO(jshih@google.com) remove the html href tag from this string. -->
-  <string name="send_to_google_by_mytracks"
+  <string name="send_google_by_my_tracks"
     translation_description="When sending a track to Google, a note indicating it is created by
-      My Tracks on Android, with the 'My Tracks' word containng a http link to
-      http://mytracks.appspot.com.">
-    Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.
+      My Tracks on Android. The two string placeholders are used to insert the html link tags around 
+      'My Tracks'. E.g., 'Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks
+      &lt;/a&gt; on Android.'.">
+    Created by %1$sMy Tracks%2$s on Android.
   </string>
 
   <!-- Tags for a track description. -->
@@ -528,7 +507,7 @@ limitations under the License.
   <string name="import_multi_done"
     translation_description="After importing all the tracks from the SD card, the alert message
       indicating success. E.g., 'Imported 5 of 6 GPX files from /mnt/sdcard/MyTracks/gpx/'.">
-    Imported %1$d of %2$d GPX files from %3$s
+    Imported to My Tracks %1$d of %2$d GPX files from %3$s
   </string>
   <string name="import_multi_empty"
     translation_description="After importing all the tracks from the SD card, the alert message
@@ -540,15 +519,6 @@ limitations under the License.
     translation_description="When importing all the tracks, a toast message indicating error for
       one of the tracks. E.g., 'Import error for file /mnt/sdcard/MyTacks/gpx/1.gpx'."> 
     Import error for file %s
-  </string>
-  <string name="import_success"
-    translation_description="After successfully importing one track, the message on the confirmation
-      dialog. E.g., 'Successfully imported 5 track(s) from file'.">
-    Successfully imported %d track(s) from file.
-  </string>
-  <string name="import_show_track"
-    translation_description="After importing one track, the button to see the track.">
-    Show track
   </string>
 
   <!-- Markers page. -->
@@ -1552,18 +1522,23 @@ limitations under the License.
       My Tracks total distance %1$.2f %2$s in %3$s at %4$s %5$s
   </string>
 
-  <!-- Check Units -->
-  <string name="check_units_title"
-    translation_description="The title of the dialog asking the user to confirm if he wants to use
-      metrics as the preferred units.">
+  <!--  Preferred Units -->
+  <string name="preferred_units_title"
+    translation_description="The title of the dialog asking the user to choose a preferred units,
+      metric or imperial.">
     Preferred Units
   </string>
-  <string name="check_units_message"
-    translation_description="The message of the dialog asking the user to confirm if he wants to use
-      metrics as the preferred units.">
-    Do you want to use metrics as the preferred units?
+  <string name="preferred_units_metric"
+    translation_description="In the dialog asking the user to choose a preferred units, the option
+      to choose the metric units.">
+    Metric
   </string>
-
+  <string name="preferred_units_imperial"
+    translation_description="In the dialog asking the user to choose a preferred units, the option
+      to choose the imperial units.">
+    Imperial
+  </string>
+        
   <!-- Sensor State page -->
   <string name="sensor_data_time"
     translation_description="In the 'Sensor State' page, the label for the last time the sensor has

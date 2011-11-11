@@ -119,7 +119,7 @@ limitations under the License.
       android:autoLink="web"
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"
-      android:text="@string/about_weburl"
+      android:text="@string/my_tracks_web_url"
       android:textSize="18sp" />
   </TableRow>
 

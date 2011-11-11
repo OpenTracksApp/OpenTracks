@@ -23,73 +23,63 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 
-import java.util.Locale;
-
 /**
- * Check to see if the units are the default for the locale.
- * This comes down to warning Americans that the default is metric.
+ * Checks with the user if he prefers the metric units or the imperial units.
  *
  * @author Sandor Dornbush
  */
 class CheckUnits {
-  private static final String PREFERENCE_UNITS_CHECKED = "checkunits.checked";
-  private static final String PREFERENCES_CHECK_UNITS = "checkunits";
+  private static final String CHECK_UNITS_PREFERENCE_FILE = "checkunits";
+  private static final String CHECK_UNITS_PREFERENCE_KEY = "checkunits.checked";
+  private static boolean metric = true;
 
-  static void check(final Context context) {
-    final SharedPreferences preferences =
-        context.getSharedPreferences(PREFERENCES_CHECK_UNITS, Activity.MODE_PRIVATE);
-
-    // Has the user already warned about the default units?
-    if (preferences.getBoolean(PREFERENCE_UNITS_CHECKED, false)) {
+  public static void check(final Context context) {
+    final SharedPreferences checkUnitsSharedPreferences = context.getSharedPreferences(
+        CHECK_UNITS_PREFERENCE_FILE, Activity.MODE_PRIVATE);
+    if (checkUnitsSharedPreferences.getBoolean(CHECK_UNITS_PREFERENCE_KEY, false)) {
       return;
     }
 
-    // Is the user in the US?
-    Locale current = Locale.getDefault();
-    Locale enUs = new Locale(Locale.ENGLISH.getLanguage(),
-                             Locale.US.getCountry());
-    if (!current.equals(enUs)) {
-      return;
-    }
-
-    final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-    builder.setTitle(R.string.check_units_title);
-    builder.setCancelable(true);
-    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    builder.setTitle(context.getString(R.string.preferred_units_title));
+    CharSequence[] items = { context.getString(R.string.preferred_units_metric),
+        context.getString(R.string.preferred_units_imperial) };
+    builder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+      @Override
       public void onClick(DialogInterface dialog, int which) {
-        recordCheckPerformed(preferences);
+        if (which == 0) {
+          metric = true;
+        } else {
+          metric = false;
+        }
       }
     });
-    builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+    builder.setCancelable(true);
+    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int which) {
-        changeDefaultUnits(context, preferences);
+        recordCheckPerformed(checkUnitsSharedPreferences);
+        SharedPreferences useMetricPreferences = context.getSharedPreferences(
+            Constants.SETTINGS_NAME, Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = useMetricPreferences.edit();
+        String key = context.getString(R.string.metric_units_key);
+        ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(
+            editor.putBoolean(key, metric));
       }
     });
     builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
       public void onCancel(DialogInterface dialog) {
-        recordCheckPerformed(preferences);
+        recordCheckPerformed(checkUnitsSharedPreferences);
       }
     });
-    builder.setMessage(R.string.check_units_message);
     builder.show();
-  }
-
-  private static void changeDefaultUnits(Context context, SharedPreferences preferences) {
-    recordCheckPerformed(preferences);
-    Intent startIntent = new Intent(context, SettingsActivity.class);
-    startIntent.putExtra(context.getString(R.string.open_settings_screen), 
-                         context.getString(R.string.display_settings_screen_key));
-    context.startActivity(startIntent);
   }
 
   private static void recordCheckPerformed(SharedPreferences preferences) {
     ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(
-        preferences.edit().putBoolean(PREFERENCE_UNITS_CHECKED, true));
+        preferences.edit().putBoolean(CHECK_UNITS_PREFERENCE_KEY, true));
   }
 
-  private CheckUnits() {
-  }
+  private CheckUnits() {}
 }
