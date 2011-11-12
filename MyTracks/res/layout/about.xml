@@ -31,7 +31,7 @@ limitations under the License.
       <TextView
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="@string/app_name"
+        android:text="@string/my_tracks_app_name"
         android:textSize="30sp" />
       <TextView
         android:layout_height="wrap_content"
@@ -70,12 +70,17 @@ limitations under the License.
       <TextView
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:text="@string/about_jimmy"
+        android:textSize="20sp" />
+      <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:text="@string/about_leif"
         android:textSize="20sp" />
       <TextView
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="@string/about_rdamazio"
+        android:text="@string/about_rodrigo"
         android:textSize="20sp" />
       <TextView
         android:layout_height="wrap_content"
@@ -100,7 +105,7 @@ limitations under the License.
       android:layout_height="wrap_content"
       android:id="@+id/about_version_register"
       android:layout_width="wrap_content"
-      android:text="@string/unknown"
+      android:text="@string/value_unknown"
       android:textSize="20sp" />
   </TableRow>
 
@@ -138,7 +143,7 @@ limitations under the License.
       android:autoLink="web"
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"
-      android:text="@string/about_privacy_weburl"
+      android:text="@string/my_tracks_privacy_url"
       android:textSize="18sp" />
   </TableRow>
   

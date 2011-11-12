@@ -16,57 +16,40 @@ limitations under the License.
 -->
 <resources>
   <!-- DO NOT TRANSLATE ANY STRINGS IN THIS FILE. -->
-
-  <!-- Application Name -->
-  <string name="app_name">My Tracks</string>
-  <string name="track_recording_service_name">Track Recording Service</string>
-  
-  <string name="my_tracks_web_url">mytracks.appspot.com</string>
-  
-  <!-- About Dialog -->
-  <string name="about_googlegroups">mytracks@googlegroups.com</string>
-  <string name="about_privacy_weburl">m.google.com/privacy</string>
-  <string name="about_bart">Bartłomiej Niechwiej</string>
+  <string name="about_bart">Bart Niechwiej</string>
   <string name="about_dylan">Dylan Casey</string>
-  <string name="about_leif">Leif Hendrik Wilden</string>
-  <string name="about_rdamazio">Rodrigo Damazio Bovendorp</string>
+  <string name="about_jimmy">Jimmy Shih</string>
+  <string name="about_leif">Leif Wilden</string>
+  <string name="about_rodrigo">Rodrigo Damazio</string>
   <string name="about_sandor">Sandor Dornbush</string>
-
-  <!-- Sensor Type Values -->
-  <string name="sensor_type_value_none">NONE</string>
-  <string name="sensor_type_value_ant">ANT</string>
-  <string name="sensor_type_value_srm_ant_bridge">SRM_ANT_BRIDGE</string>
-  <string name="sensor_type_value_polar">POLAR</string>
-  <string name="sensor_type_value_zephyr">ZEPHYR</string>
-  
-  <!-- Track Color Mode Values -->
-  <string name="track_color_mode_value_none">NONE</string>
-  <string name="track_color_mode_value_fixed">FIXED</string>
-  <string name="track_color_mode_value_dynamic">DYNAMIC</string>
-
-  <!-- When a value is unknown. E.g. when speed is unknown '- km/hr'. -->
-  <string name="unknown">-</string>
-      
-  <!-- Send to Google URLs -->
-  <string name="send_google_fusion_tables_url">google.com/fusiontables</string>
-  <string name="send_google_my_maps_url">maps.google.com</string>
-  <string name="send_google_docs_url">docs.google.com</string>
-  
-  <!-- Google Analytics ID -->
-  <string name="google_analytics_id">UA-7222692-2</string>
-
-  <!--  Symbols -->
-  <string name="percent">%</string>
-  
-  <!-- Intent Actions -->
-  <string name="save_intent_action">android.intent.action.SAVE</string>
-  <string name="start_new_track_action">com.google.android.apps.mytracks.START_NEW_TRACK</string>
-  <string name="end_current_track_action">
-    com.google.android.apps.mytracks.END_CURRENT_TRACK
+  <string name="display_track_color_value_dynamic">DYNAMIC</string>
+  <string name="display_track_color_value_fixed">FIXED</string>
+  <string name="display_track_color_value_none">NONE</string>
+  <string name="marker_statistics_icon_url">
+    http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png
   </string>
-  
-  <!--My Tracks Notifications Permission. -->
-  <string name="mytracks_notifications_permission">
+  <string name="marker_waypoint_icon_url">
+    http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png
+  </string>
+  <string name="my_tracks_analytics_id">UA-7222692-2</string> 
+  <string name="my_tracks_app_name">My Tracks</string>
+  <string name="my_tracks_privacy_url">m.google.com/privacy</string>
+
+  <string name="my_tracks_web_url">mytracks.appspot.com</string>
+  <string name="permission_notification_value">
     com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS
   </string>
-</resources>
+  <string name="send_google_docs_url">docs.google.com</string>
+  <string name="send_google_fusion_tables_url">google.com/fusiontables</string>
+  <string name="send_google_my_maps_url">maps.google.com</string>
+  <string name="sensor_type_value_ant">ANT</string>    
+  <string name="sensor_type_value_none">NONE</string>
+  <string name="sensor_type_value_polar">POLAR</string>
+  <string name="sensor_type_value_srm_ant_bridge">SRM_ANT_BRIDGE</string>
+  <string name="sensor_type_value_zephyr">ZEPHYR</string>
+  <string name="track_action_end">com.google.android.apps.mytracks.END_CURRENT_TRACK</string>
+  <string name="track_action_save">android.intent.action.SAVE</string>
+  <string name="track_action_start">com.google.android.apps.mytracks.START_NEW_TRACK</string>
+  <string name="unit_percent">%</string>
+  <string name="value_unknown">-</string>
+ </resources>

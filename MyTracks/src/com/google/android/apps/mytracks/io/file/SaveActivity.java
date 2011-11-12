@@ -74,9 +74,9 @@ public class SaveActivity extends Activity {
     String action = intent.getAction();
     String type = intent.getType();
     Uri data = intent.getData();
-    if (!getString(R.string.save_intent_action).equals(action) ||
-        !TracksColumns.CONTENT_ITEMTYPE.equals(type) ||
-        !UriUtils.matchesContentUri(data, TracksColumns.CONTENT_URI)) {
+    if (!getString(R.string.track_action_save).equals(action)
+        || !TracksColumns.CONTENT_ITEMTYPE.equals(type)
+        || !UriUtils.matchesContentUri(data, TracksColumns.CONTENT_URI)) {
       Log.e(TAG, "Got bad save intent: " + intent);
       finish();
       return;
@@ -228,7 +228,7 @@ public class SaveActivity extends Activity {
     Uri uri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId);
 
     Intent intent = new Intent(ctx, SaveActivity.class);
-    intent.setAction(ctx.getString(R.string.save_intent_action));
+    intent.setAction(ctx.getString(R.string.track_action_save));
     intent.setDataAndType(uri, TracksColumns.CONTENT_ITEMTYPE);
     intent.putExtra(EXTRA_FILE_FORMAT, exportFormat.ordinal());
     intent.putExtra(EXTRA_SHARE_FILE, shareFile);

@@ -188,7 +188,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
 
     String speed = null;
     if ((s == 0) || Double.isNaN(s)) {
-      speed = context.getString(R.string.unknown);
+      speed = context.getString(R.string.value_unknown);
     } else {
       if (reportSpeed) {
         speed = String.format("%.1f", s);

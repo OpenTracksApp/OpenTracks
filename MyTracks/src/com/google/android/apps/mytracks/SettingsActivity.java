@@ -395,10 +395,10 @@ public class SettingsActivity extends PreferenceActivity {
   }
 
   private void updateTrackColorModeSettings(String trackColorMode) {
-    boolean usesFixedSpeed = trackColorMode.equals(
-        getString(R.string.track_color_mode_value_fixed));
-    boolean usesDynamicSpeed = trackColorMode.equals(
-        getString(R.string.track_color_mode_value_dynamic));
+    boolean usesFixedSpeed =
+        trackColorMode.equals(getString(R.string.display_track_color_value_fixed));
+    boolean usesDynamicSpeed =
+        trackColorMode.equals(getString(R.string.display_track_color_value_dynamic));
 
     findPreference(getString(R.string.track_color_mode_fixed_speed_slow_display_key))
         .setEnabled(usesFixedSpeed);

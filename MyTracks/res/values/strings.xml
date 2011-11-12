@@ -645,6 +645,13 @@ limitations under the License.
     Unlisted
   </string>
 
+  <!-- My Tracks Service -->
+  <string name="my_tracks_service_name"
+    translation_description="When viewing the 'Running services' on Android, the name for the My
+      Tracks service.">
+    My Tracks Service
+  </string>
+
   <!-- Permission -->
   <string name="permission_notification_description"
     translation_description="When installing a third-party app that wants to receive My Tracks

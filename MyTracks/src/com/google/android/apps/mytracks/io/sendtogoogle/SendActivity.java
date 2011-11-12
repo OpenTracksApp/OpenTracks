@@ -163,7 +163,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
     tracker = GoogleAnalyticsTracker.getInstance();
     // Start the tracker in manual dispatch mode...
-    tracker.start(getString(R.string.google_analytics_id),
+    tracker.start(getString(R.string.my_tracks_analytics_id),
         getApplicationContext());
     tracker.setProductVersion("android-mytracks",
         SystemUtils.getMyTracksVersion(this));

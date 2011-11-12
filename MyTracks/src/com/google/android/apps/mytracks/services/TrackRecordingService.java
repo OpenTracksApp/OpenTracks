@@ -494,7 +494,7 @@ public class TrackRecordingService extends Service {
       PendingIntent contentIntent = PendingIntent.getActivity(
           this, 0 /* requestCode */, new Intent(this, MyTracks.class),
           0 /* flags */);
-      notification.setLatestEventInfo(this, getString(R.string.app_name),
+      notification.setLatestEventInfo(this, getString(R.string.my_tracks_app_name),
           getString(R.string.track_record_notification), contentIntent);
       notification.flags += Notification.FLAG_NO_CLEAR;
       apiLevelAdapter.startForeground(this, notificationManager, 1,
@@ -963,7 +963,7 @@ public class TrackRecordingService extends Service {
   private void buildMarker(Waypoint wpt, WaypointCreationRequest request) {
     wpt.setType(Waypoint.TYPE_WAYPOINT);
     if (request.getIconUrl() == null) {
-      wpt.setIcon(getString(R.string.waypoint_icon_url));
+      wpt.setIcon(getString(R.string.marker_waypoint_icon_url));
     } else {
       wpt.setIcon(request.getIconUrl());
     }
@@ -999,7 +999,7 @@ public class TrackRecordingService extends Service {
     waypoint.setName(getString(R.string.marker_type_statistics));
     waypoint.setStatistics(waypointStatsBuilder.getStatistics());
     waypoint.setDescription(utils.generateWaypointDescription(waypoint));
-    waypoint.setIcon(getString(R.string.stats_icon_url));
+    waypoint.setIcon(getString(R.string.marker_statistics_icon_url));
 
     waypoint.setStartId(providerUtils.getLastLocationId(recordingTrackId));
 
@@ -1054,7 +1054,7 @@ public class TrackRecordingService extends Service {
     Intent broadcastIntent = new Intent()
         .setAction(getString(actionResId))
         .putExtra(getString(R.string.track_id_broadcast_extra), trackId);
-    sendBroadcast(broadcastIntent, getString(R.string.mytracks_notifications_permission));
+    sendBroadcast(broadcastIntent, getString(R.string.permission_notification_value));
     
     SharedPreferences sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
     if (sharedPreferences.getBoolean(getString(R.string.allow_access_key), false)) {

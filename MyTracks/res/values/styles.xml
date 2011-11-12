@@ -38,7 +38,7 @@ limitations under the License.
     <item name="android:gravity">right</item>
     <item name="android:layout_marginBottom">-9dip</item>
     <item name="android:layout_marginTop">-9dip</item>
-    <item name="android:text">@string/unknown</item>
+    <item name="android:text">@string/value_unknown</item>
     <item name="android:textColor">@color/stat_label_text</item>
     <item name="android:textSize">40sp</item>
   </style>

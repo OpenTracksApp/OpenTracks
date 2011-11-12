@@ -92,9 +92,9 @@ limitations under the License.
   </string-array>
 
   <string-array name="display_track_color_values">
-    <item>@string/track_color_mode_value_none</item>
-    <item>@string/track_color_mode_value_fixed</item>
-    <item>@string/track_color_mode_value_dynamic</item>
+    <item>@string/display_track_color_value_none</item>
+    <item>@string/display_track_color_value_fixed</item>
+    <item>@string/display_track_color_value_dynamic</item>
   </string-array>
 
   <string-array name="file_types">

@@ -77,7 +77,7 @@ public class StatsUtilities {
   }
 
   public void setUnknown(int id) {
-    ((TextView) activity.findViewById(id)).setText(R.string.unknown);
+    ((TextView) activity.findViewById(id)).setText(R.string.value_unknown);
   }
 
   public void setText(int id, double d, NumberFormat format) {

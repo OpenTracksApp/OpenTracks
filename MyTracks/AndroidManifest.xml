@@ -20,7 +20,7 @@ limitations under the License.
           android:versionCode="33"
           android:versionName="1.1.10">
   <application android:icon="@drawable/arrow_icon"
-               android:label="@string/app_name"
+               android:label="@string/my_tracks_app_name"
                android:name="com.google.android.apps.mytracks.MyTracksApplication"
                android:backupAgent="com.google.android.apps.mytracks.io.backup.MyTracksBackupAgent">
     <uses-library android:name="com.google.android.maps" />
@@ -162,7 +162,7 @@ limitations under the License.
               android:exported="false" />
 
     <service android:name="com.google.android.apps.mytracks.services.TrackRecordingService"
-             android:label="@string/track_recording_service_name"
+             android:label="@string/my_tracks_service_name"
              android:icon="@drawable/arrow_320"
              android:enabled="true"
              android:exported="true"

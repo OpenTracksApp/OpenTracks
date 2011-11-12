@@ -143,7 +143,7 @@ limitations under the License.
           <TextView
             style="@style/StatsUnitSolo"
             android:layout_column="5"
-            android:text="@string/percent" />
+            android:text="@string/unit_percent" />
         </TableRow>
 
       </TableLayout>

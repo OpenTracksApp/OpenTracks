@@ -116,7 +116,7 @@ limitations under the License.
             android:layout_column="1"
             android:layout_marginBottom="-9dip"
             android:layout_marginTop="-9dip"
-            android:text="@string/unknown"
+            android:text="@string/value_unknown"
             android:textColor="@color/stat_label_text"
             android:textSize="40sp" />
           <TextView
@@ -145,7 +145,7 @@ limitations under the License.
             android:layout_column="4"
             android:layout_marginBottom="-9dip"
             android:layout_marginTop="-9dip"
-            android:text="@string/unknown"
+            android:text="@string/value_unknown"
             android:textColor="@color/stat_label_text"
             android:textSize="40sp" />
           <LinearLayout
@@ -201,7 +201,7 @@ limitations under the License.
             android:layout_marginTop="-9dip"
             android:layout_span="2"
             android:layout_width="fill_parent"
-            android:text="@string/unknown"
+            android:text="@string/value_unknown"
             android:textColor="@color/stat_label_text"
             android:textSize="40sp" />
           <TextView
@@ -217,7 +217,7 @@ limitations under the License.
             android:layout_column="4"
             android:layout_marginBottom="-9dip"
             android:layout_marginTop="-9dip"
-            android:text="@string/unknown"
+            android:text="@string/value_unknown"
             android:textColor="@color/stat_label_text"
             android:textSize="40sp" />
           <LinearLayout
@@ -273,7 +273,7 @@ limitations under the License.
             android:layout_marginTop="-9dip"
             android:layout_width="fill_parent"
             android:layout_span="2"
-            android:text="@string/unknown"
+            android:text="@string/value_unknown"
             android:textColor="@color/stat_label_text"
             android:textSize="40sp" />
           <TextView
@@ -289,7 +289,7 @@ limitations under the License.
             android:layout_column="4"
             android:layout_marginBottom="-9dip"
             android:layout_marginTop="-9dip"
-            android:text="@string/unknown"
+            android:text="@string/value_unknown"
             android:textColor="@color/stat_label_text"
             android:textSize="40sp" />
           <LinearLayout
@@ -342,7 +342,7 @@ limitations under the License.
             android:layout_column="1"
             android:layout_marginBottom="-9dip"
             android:layout_marginTop="-9dip"
-            android:text="@string/unknown"
+            android:text="@string/value_unknown"
             android:textColor="@color/stat_label_text"
             android:textSize="40sp" />
           <TextView
@@ -366,7 +366,7 @@ limitations under the License.
             android:layout_column="4"
             android:layout_marginBottom="-9dip"
             android:layout_marginTop="-9dip"
-            android:text="@string/unknown"
+            android:text="@string/value_unknown"
             android:textColor="@color/stat_label_text"
             android:textSize="40sp" />
           <TextView
@@ -400,7 +400,7 @@ limitations under the License.
             android:layout_column="1"
             android:layout_marginBottom="-9dip"
             android:layout_marginTop="-9dip"
-            android:text="@string/unknown"
+            android:text="@string/value_unknown"
             android:textColor="@color/stat_label_text"
             android:textSize="40sp" />
           <TextView
@@ -424,7 +424,7 @@ limitations under the License.
             android:layout_column="4"
             android:layout_marginBottom="-9dip"
             android:layout_marginTop="-9dip"
-            android:text="@string/unknown"
+            android:text="@string/value_unknown"
             android:textColor="@color/stat_label_text"
             android:textSize="40sp" />
           <TextView
@@ -461,7 +461,7 @@ limitations under the License.
             android:layout_marginTop="-9dip"
             android:layout_width="fill_parent"
             android:layout_span="2"
-            android:text="@string/unknown"
+            android:text="@string/value_unknown"
             android:textColor="@color/stat_label_text"
             android:textSize="40sp" />
           <TextView
@@ -480,7 +480,7 @@ limitations under the License.
             android:layout_marginTop="-9dip"
             android:layout_width="fill_parent"
             android:layout_span="2"
-            android:text="@string/unknown"
+            android:text="@string/value_unknown"
             android:textColor="@color/stat_label_text"
             android:textSize="40sp" />
         </TableRow>

@@ -38,7 +38,7 @@ limitations under the License.
         android:summary="@string/settings_display_track_color_summary"
         android:entries="@array/display_track_color_options"
         android:entryValues="@array/display_track_color_values"
-        android:defaultValue="@string/track_color_mode_value_none"/>
+        android:defaultValue="@string/display_track_color_value_none"/>
 
     <PreferenceCategory android:title="@string/settings_display_track_color_fixed" 
         android:key="@string/track_color_mode_fixed_speed_options_key">

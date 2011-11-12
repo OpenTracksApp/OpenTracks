@@ -264,7 +264,7 @@ public class StringUtils implements DescriptionGenerator {
       minGrade = Math.round(trackMinGrade * 100);
     }
 
-    String category = context.getString(R.string.unknown);
+    String category = context.getString(R.string.value_unknown);
     String trackCategory = track.getCategory();
     if (trackCategory != null && trackCategory.length() > 0) {
       category = trackCategory;
