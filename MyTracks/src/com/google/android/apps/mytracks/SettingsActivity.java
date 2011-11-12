@@ -194,7 +194,7 @@ public class SettingsActivity extends PreferenceActivity {
    * Sets the display options for the 'Time between points' option.
    */
   private void setRecordingIntervalOptions() {
-    String[] values = getResources().getStringArray(R.array.min_recording_interval_values);
+    String[] values = getResources().getStringArray(R.array.recording_interval_values);
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {
       if (values[i].equals(RECORDING_INTERVAL_ADAPT_BATTERY_LIFE)) {
@@ -224,7 +224,7 @@ public class SettingsActivity extends PreferenceActivity {
    * Sets the display options for the 'Auto-resume timeout' option.
    */
   private void setAutoResumeTimeoutOptions() {
-    String[] values = getResources().getStringArray(R.array.auto_resume_track_timeout_values);
+    String[] values = getResources().getStringArray(R.array.recording_auto_resume_timeout_values);
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {
       if (values[i].equals(AUTO_RESUME_TIMEOUT_NEVER)) {
@@ -263,7 +263,7 @@ public class SettingsActivity extends PreferenceActivity {
 
       Set<Integer> toRemove = new HashSet<Integer>();
 
-      String[] antValues = getResources().getStringArray(R.array.ant_sensor_type_values);
+      String[] antValues = getResources().getStringArray(R.array.sensor_type_ant_values);
       for (String antValue : antValues) {
         toRemove.add(sensorTypePreference.findIndexOfValue(antValue));
       }
@@ -425,7 +425,7 @@ public class SettingsActivity extends PreferenceActivity {
    * Sets the display options for a periodic task.
    */
   private void setTaskOptions(boolean isMetric, int listId) {
-    String[] values = getResources().getStringArray(R.array.task_frequency_values);
+    String[] values = getResources().getStringArray(R.array.recording_task_frequency_values);
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {
       if (values[i].equals(TASK_FREQUENCY_OFF)) {
@@ -450,7 +450,7 @@ public class SettingsActivity extends PreferenceActivity {
    * Sets the display options for 'Distance between points' option.
    */
   private void setRecordingDistanceOptions(boolean isMetric, int listId) {
-    String[] values = getResources().getStringArray(R.array.min_recording_distance_values);
+    String[] values = getResources().getStringArray(R.array.recording_distance_values);
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {
       int value = Integer.parseInt(values[i]);
@@ -477,7 +477,7 @@ public class SettingsActivity extends PreferenceActivity {
    * Sets the display options for 'Distance between Tracks'.
    */
   private void setTrackDistanceOptions(boolean isMetric, int listId) {
-    String[] values = getResources().getStringArray(R.array.max_recording_distance_values);
+    String[] values = getResources().getStringArray(R.array.recording_track_distance_values);
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {
       int value = Integer.parseInt(values[i]);
@@ -510,7 +510,7 @@ public class SettingsActivity extends PreferenceActivity {
    * Sets the display options for 'GPS accuracy'.
    */
   private void setGpsAccuracyOptions(boolean isMetric, int listId) {
-    String[] values = getResources().getStringArray(R.array.min_required_accuracy_values);
+    String[] values = getResources().getStringArray(R.array.recording_gps_accuracy_values);
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {
       int value = Integer.parseInt(values[i]);

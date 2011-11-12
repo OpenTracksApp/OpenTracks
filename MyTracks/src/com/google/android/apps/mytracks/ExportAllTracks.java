@@ -79,11 +79,11 @@ public class ExportAllTracks {
     Log.i(Constants.TAG, "ExportAllTracks: Starting");
 
     String exportFileFormat = activity.getString(R.string.track_list_export_file);
-    String formats[] = activity.getResources().getStringArray(R.array.file_formats);
+    String fileTypes[] = activity.getResources().getStringArray(R.array.file_types);
     
-    String[] choices = new String[formats.length];
-    for (int i = 0; i < formats.length; i++) {
-      choices[i] = String.format(exportFileFormat, formats[i]);
+    String[] choices = new String[fileTypes.length];
+    for (int i = 0; i < fileTypes.length; i++) {
+      choices[i] = String.format(exportFileFormat, fileTypes[i]);
     }
     
     AlertDialog.Builder builder = new AlertDialog.Builder(activity);
