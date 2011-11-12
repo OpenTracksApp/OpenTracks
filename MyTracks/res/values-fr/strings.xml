@@ -80,17 +80,10 @@ limitations under the License.
   <string name="sd_card_error_write_file">Impossible d\'écrire dans le fichier.</string>
   <string name="sd_card_success_write_file">Parcours enregistré sur la carte SD.</string>
   <string name="send_google_choose_account">Choisissez un compte</string>
-  <string name="send_google_error_docs">Il y a eu une erreur lors de l\'envoi de votre parcours à Google Docs. Réessayez plus tard SVP.</string>
-  <string name="send_google_error_fusion_tables">Il y a eu une erreur lors de l\'envoi de votre parcours à Google Fusion Tables. Réessayez plus tard SVP.</string>
   <string name="send_google_no_account">Pas de compte Google</string>
   <string name="send_google_no_account_message">Un compte Google est nécessaire pour télécharger le parcours.</string>
-  <string name="send_google_progress_auth_docs">Authentification à Google Docs...</string>
-  <string name="send_google_progress_auth_fusion_tables">Authentification à Google Fusion Tables...</string>
-  <string name="send_google_progress_creating_fusion_table">Création d\'une nouvelle \'Fusion Table\'...</string>
   <string name="send_google_progress_preparing_track">Préparation du parcours</string>
   <string name="send_google_progress_reading_track">Lecture du parcours...</string>
-  <string name="send_google_progress_sending_docs">Envoi du parcours vers Google Docs...</string>
-  <string name="send_google_progress_sending_fusion_tables">Envoi du parcours vers Google Fusion Tables...</string>
   <string name="send_google_recorded">Enregistré</string>
   <string name="send_google_result_share_url">Partager des parcours.</string>
   <string name="send_google_send_now">Envoyer maintenant</string>

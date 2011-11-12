@@ -749,20 +749,10 @@ limitations under the License.
       occurred and ask the user to try again.">
     An error occurred. Please try again.
   </string>
-  <string name="send_google_error_docs"
-    translation_description="When sending a track to Google Docs, a message indicating that an error
-      has occurred.">
-    There was an error while sending your track to Google Docs.
-  </string>
-  <string name="send_google_error_fusion_tables"
-    translation_description="When sending a track to Google Fusion Table, a message indicating that
-      an error has occurred.">
-    There was an error while sending your track to Google Fusion Tables.
-  </string>
-  <string name="send_google_error_my_maps"
-    translation_description="When sending a track to Google My Maps, a message indicating that an
-      error has occurred.">
-    There was an error while sending your track to Google My Maps.
+  <string name="send_google_error_service"
+    translation_description="When sending a track to a Google service, a message indicating that an
+      error has occurred. E.g., 'There was an error while sending your track to Google Docs.'.">
+    There was an error while sending your track to %s.
   </string>
   <string name="send_google_existing_map"
     translation_description="When sending a track to Google My Maps, the radio option to use an
@@ -794,30 +784,15 @@ limitations under the License.
       found.">
     No account found to upload tracks to.
   </string>
-  <string name="send_google_progress_auth_docs"
-    translation_description="When sending a track to Google Docs, the message on the progress
-      dialog indicating authenticating to Google Docs.">
-    Authenticating to Google Docs...
+  <string name="send_google_progress_authenticating"
+    translation_description="When sending a track to a Google service, the message on the progress
+      dialog indicating authenticating to the service. e.g., 'Authenticating to Google Docs...'.">
+    Authenticating to %s...
   </string>
-  <string name="send_google_progress_auth_fusion_tables"
-    translation_description="When sending a track to Google Fusion Tables, the message on the
-      progress dialog indicating authenticating to Google Fusion Tables.">
-    Authenticating to Google Fusion Tables...
-  </string>
-  <string name="send_google_progress_auth_my_maps"
-    translation_description="When sending a track to Google My Maps, the message on the progress
-      dialog indicating authenticating to Google My Maps.">
-    Authenticating to Google My Maps...
-  </string>
-  <string name="send_google_progress_creating_fusion_table"
-    translation_description="When sending a track to Google Fusion Tables, the message on the
-      progress dialog indicating My Tracks is creating a new Fusion Table in Google Fusion Tables.">
-    Creating a new Fusion Table...
-  </string>
-  <string name="send_google_progress_creating_map"
-    translation_description="When sending a track to Google My Maps, the message on the progress
-      dialog indicating My Tracks is creating a new map in Google My Maps.">
-    Creating a new My Map...
+  <string name="send_google_progress_creating"
+    translation_description="When sending a track to a Google service, the message on the progress
+      dialog indicating creating a new service item. E.g., 'Creating a new Google Docs item...'.">
+    Creating a new %s item...
   </string>
   <string name="send_google_progress_preparing_track"
     translation_description="When sending a track to Google My Maps, the message on the progress
@@ -829,20 +804,11 @@ limitations under the License.
       indicating My Tracks is reading the track from its database.">
     Reading track...
   </string>
-  <string name="send_google_progress_sending_docs"
-    translation_description="When sending a track to Google Docs, the message on the progress dialog
-      indicating My Tracks is sending the track data.">
-    Sending a track to Google Docs...
-  </string>
-  <string name="send_google_progress_sending_fusion_tables"
-    translation_description="When sending a track to Google Fusion Tables, the message on the
-      progress dialog indicating My Tracks is sending the track data.">
-    Sending a track to Google Fusion Tables...
-  </string>
-  <string name="send_google_progress_sending_my_maps"
-    translation_description="When sending a track to Google My Maps, the message on the progress
-      dialog indicating My Tracks is sending the track data.">
-    Sending a track to Google My Maps...
+  <string name="send_google_progress_sending"
+    translation_description="When sending a track to Google service, the message on the progress
+      dialog indicating My Tracks is sending the track data. E.g., 'Sending a track to Google
+      Docs...'.">
+    Sending a track to %s...
   </string>
   <string name="send_google_recorded"
     translation_description="When sending a track to Google, in the track description, a tag
@@ -864,40 +830,24 @@ limitations under the License.
       button on the bottom to send the track to the selected Google services.">
     Send now
   </string>
-  <string name="send_google_success_existing_doc"
-    translation_description="When sending a track to Google Docs, the message on the result page
-      indicating that the track is sent to an existing spreadsheet. E.g., 'Your track has been sent
-      to docs.google.com.'.">
-    Your track has been sent to %s.
-  </string>
-  <string name="send_google_success_existing_map"
-    translation_description="When sending a track to Google My Maps, the message on the result page
-      indicating that the track is sent to an existing map. E.g., 'Your track has been sent to
-      maps.google.com.'">
-    Your track has been sent to %s.
+  <string name="send_google_success_existing"
+    translation_description="When sending a track to a Google service, the message on the result
+      page indicating that the track is sent to an existing item in the service. The first
+      placeholder is the service name. The second placeholder is the service url. E.g., 'Your track
+      has been sent to Google Docs docs.google.com.'.">
+    Your track has been sent to %1$s %2$s.
   </string>
   <string name="send_google_success_footer"
     translation_description="When sending a track to Google, the additional comment on the bottom of
       the result page.">
     It may take a few minutes before new tracks appear.
   </string>
-  <string name="send_google_success_fusion_tables"
-    translation_description="When sending a track to Google Fusion Tables, the message on the result
-      page indicating success. E.g., 'A new Google Fusion table has been created at
-      google.com/fusiontables.'">
-    A new Google Fusion Table has been created at %s.
-  </string>
-  <string name="send_google_success_new_doc"
-    translation_description="When sending a track to Google Docs, the message on the result page
-      indicating that a new spreadsheet is created. E.g., 'A new spreadsheet is created at
+  <string name="send_google_success_new"
+    translation_description="When sending a track to a Google service, the message on the result
+      page indicating that a new item has been created. The first placeholder is the service name.
+      The second placeholder is the service url. E.g., 'A new item has been created at Google Docs
       docs.google.com.'.">
-    A new spreadsheet is created at %s.
-  </string>
-  <string name="send_google_success_new_map"
-    translation_description="When sending a track to Google My Maps, the message on the result page
-      indicating that a new map is created. E.g., 'A new Google My Map has been created at
-      maps.google.com.'.">
-    A new Google My Map has been created at %s.
+    A new item has been created at %1$s %2$s.
   </string>
   <string name="send_google_title"
     translation_description="When sending a track to Google, the dialog title to choose the Google

@@ -93,7 +93,9 @@ public class SendToDocs {
 
   private void doUpload(long trackId) {
     // TODO
-    statusMessage = activity.getString(R.string.send_google_error_docs);
+    String errorFormat = activity.getString(R.string.send_google_error_service);
+    String serviceName = activity.getString(SendType.DOCS.getServiceName());
+    statusMessage = String.format(errorFormat, serviceName);
     success = false;
 
     try {
@@ -116,13 +118,11 @@ public class SendToDocs {
       Log.d(Constants.TAG, "SendToDocs: Uploading to spreadsheet");
       success = uploadToDocs(track);
       if (success) {
-        String format = createdNewSpreadSheet 
-            ? activity.getString(R.string.send_google_success_new_doc) 
-            : activity.getString(R.string.send_google_success_existing_doc);
+        String successFormat = createdNewSpreadSheet 
+            ? activity.getString(R.string.send_google_success_new)
+            : activity.getString(R.string.send_google_success_existing);
         String url = activity.getString(SendType.DOCS.getServiceUrl());
-        statusMessage = String.format(format, url);
-      } else {
-        statusMessage = activity.getString(R.string.send_google_error_docs);
+        statusMessage = String.format(successFormat, serviceName, url);
       }
       Log.d(Constants.TAG, "SendToDocs: Done.");
     } finally {

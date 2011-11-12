@@ -82,14 +82,10 @@ limitations under the License.
   <string name="sd_card_success_write_file">Zakończono zapisywanie na karcie SD.</string>
   <string name="send_google_choose_account">Wybierz konto</string>
   <string name="send_google_docs">Dokumenty Google</string>
-  <string name="send_google_error_docs">Podczas przesyłania pliku do Dokumentów Google pojawił się błąd. Spróbuj ponownie później.</string>
-  <string name="send_google_error_fusion_tables">Podczas przesyłania pliku do Moich Map Google pojawił się błąd. Spróbuj ponownie później.</string>
   <string name="send_google_no_account">Znaleziono nowe konto</string>
   <string name="send_google_no_account_message">Nie znaleziono konta do przesyłu.</string>
-  <string name="send_google_progress_auth_docs">Uwierzytelnianie w Dokumentach Google...</string>
   <string name="send_google_progress_preparing_track">Przygotowywanie trasy...</string>
   <string name="send_google_progress_reading_track">Czytanie trasy...</string>
-  <string name="send_google_progress_sending_docs">Przesyłanie trasy do Dokumentów Google...</string>
   <string name="send_google_recorded">Zapisana</string>
   <string name="send_google_result_share_url">Podziel się trasą z przyjaciółmi</string>
   <string name="send_google_send_now">Wyślij teraz</string>

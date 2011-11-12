@@ -79,14 +79,10 @@ limitations under the License.
   <string name="sd_card_success_write_file">Finito di salvare il percorso sulla scheda SD.</string>
   <string name="send_google_choose_account">Scegli un account</string>
   <string name="send_google_docs">Google Docs</string>
-  <string name="send_google_error_docs">Si è verificato un errore nell\'invio del percorso a Google Docs. Per favore riporva più tardi.</string>
-  <string name="send_google_error_fusion_tables">Si è verificato un errore nell\'invio del percorso a Google Fusion Tables. Per favore riprova più tardi.</string>
   <string name="send_google_no_account">Account non trovato</string>
   <string name="send_google_no_account_message">Non ho trovato un account a cui inviare i percorsi.</string>
-  <string name="send_google_progress_auth_docs">Autenticazione a Google Docs in corso...</string>
   <string name="send_google_progress_preparing_track">Elaborazione del percorso in corso...</string>
   <string name="send_google_progress_reading_track">Lettura in corso...</string>
-  <string name="send_google_progress_sending_docs">Invio del percorso a Google Docs in corso...</string>
   <string name="send_google_recorded">Registrato</string>
   <string name="send_google_result_share_url">Condividi il percorso con amici</string>
   <string name="send_google_send_now">Invia adesso</string>

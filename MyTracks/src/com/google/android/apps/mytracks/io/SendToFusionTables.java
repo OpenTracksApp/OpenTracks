@@ -169,11 +169,14 @@ public class SendToFusionTables implements Runnable {
   }
 
   private void doUpload() {
-    String statusMessage = context.getString(R.string.send_google_error_fusion_tables);
+    String errorFormat = context.getString(R.string.send_google_error_service);
+    String serviceName = context.getString(SendType.FUSION_TABLES.getServiceName());
+    String statusMessage = String.format(errorFormat, serviceName);
     boolean success = true;
     try {
       progressIndicator.setProgressValue(PROGRESS_INITIALIZATION);
-      progressIndicator.setProgressMessage(R.string.send_google_progress_reading_track);
+      progressIndicator.setProgressMessage(
+          context.getString(R.string.send_google_progress_reading_track));
 
       // Get the track meta-data
       Track track = providerUtils.getTrack(trackId);
@@ -186,13 +189,15 @@ public class SendToFusionTables implements Runnable {
 
       // Create a new table:
       progressIndicator.setProgressValue(PROGRESS_FUSION_TABLE_CREATE);
-      progressIndicator.setProgressMessage(R.string.send_google_progress_creating_fusion_table);
+      String creatingFormat = context.getString(R.string.send_google_progress_creating);
+      progressIndicator.setProgressMessage(String.format(creatingFormat, serviceName));
       if (!createNewTable(track) || !makeTableUnlisted()) {
         return;
       }
 
       progressIndicator.setProgressValue(PROGRESS_UPLOAD_DATA_MIN);
-      progressIndicator.setProgressMessage(R.string.send_google_progress_sending_fusion_tables);
+      String sendingFormat = context.getString(R.string.send_google_progress_sending);
+      progressIndicator.setProgressMessage(String.format(sendingFormat, serviceName));
 
       // Upload all of the segments of the track plus start/end markers
       if (!uploadAllTrackPoints(track, originalDescription)) {
@@ -206,9 +211,9 @@ public class SendToFusionTables implements Runnable {
         return;
       }
 
-      String format = context.getString(R.string.send_google_success_fusion_tables);
+      String successFormat = context.getString(R.string.send_google_success_new);
       String url = context.getString(SendType.FUSION_TABLES.getServiceUrl());
-      statusMessage = String.format(format, url);
+      statusMessage = String.format(successFormat, serviceName, url);
       Log.d(Constants.TAG, "SendToFusionTables: Done: " + success);
       progressIndicator.setProgressValue(PROGRESS_COMPLETE);
     } finally {

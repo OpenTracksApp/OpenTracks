@@ -83,17 +83,10 @@ limitations under the License.
   <string name="sd_card_success_write_file">S\'ha finalitzat l\'escriptura a la targeta SD.</string>
   <string name="send_google_choose_account">Trieu un compte</string>
   <string name="send_google_error">S\'ha produït un error. Proveu de nou.</string>
-  <string name="send_google_error_docs">S\'ha prdouït un error quan s\'enviava la ruta a Google Docs. Proveu més tard.</string>
-  <string name="send_google_error_fusion_tables">S\'ha produït un error quan s\'enviava la ruta a Google Fusion Tables. Proveu més tard.</string>
   <string name="send_google_no_account">No s\'ha trobat cap compte</string>
   <string name="send_google_no_account_message">No s\'ha trobat cap compte on pujar les rutes.</string>
-  <string name="send_google_progress_auth_docs">S\'està autenticant a Google Docs...</string>
-  <string name="send_google_progress_auth_fusion_tables">S\'està  to Google Fusion Tables...</string>
-  <string name="send_google_progress_creating_fusion_table">S\'està creant un Fusion Table nou...</string>
   <string name="send_google_progress_preparing_track">S\'està preparant la ruta...</string>
   <string name="send_google_progress_reading_track">S\'està llegint la ruta...</string>
-  <string name="send_google_progress_sending_docs">S\'està enviant la ruta a Google Docs...</string>
-  <string name="send_google_progress_sending_fusion_tables">S\'està enviant a Google Fusion Tables...</string>
   <string name="send_google_recorded">Enregistrat</string>
   <string name="send_google_result_share_url">Comparteix la ruta amb amics</string>
   <string name="send_google_send_now">Envia ara</string>

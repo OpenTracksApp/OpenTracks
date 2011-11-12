@@ -79,14 +79,10 @@ limitations under the License.
   <string name="sd_card_success_write_file">Slutförde skrivningen av spåret till SD-kort.</string>
   <string name="send_google_choose_account">Välj konto</string>
   <string name="send_google_docs">Google Dokument</string>
-  <string name="send_google_error_docs">Det uppstod ett fel i sändningen av ditt spår till Google Dokument. Försök igen senare.</string>
-  <string name="send_google_error_fusion_tables">Det uppstod ett fel i sändningen av ditt spår till Google Fusion Tables. Försök igen senare.</string>
   <string name="send_google_no_account">Inget konto hittades</string>
   <string name="send_google_no_account_message">Inget konto hittades att ladda upp spåret till.</string>
-  <string name="send_google_progress_auth_docs">Autentiserar till Google Dokument...</string>
   <string name="send_google_progress_preparing_track">Förbereder spår...</string>
   <string name="send_google_progress_reading_track">Läser spår...</string>
-  <string name="send_google_progress_sending_docs">Skickar spår till Google Dokument...</string>
   <string name="send_google_recorded">Inspelad</string>
   <string name="send_google_result_share_url">Dela spår med vänner</string>
   <string name="send_google_send_now">Skicka nu</string>

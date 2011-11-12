@@ -87,17 +87,10 @@ limitations under the License.
   <string name="send_google_choose_account">Wähle ein Konto</string>
   <string name="send_google_docs">Google Text &amp; Tabellen</string>
   <string name="send_google_error">Ein Fehler ist aufgetreten. Bitte versuche es noch einmal.</string>
-  <string name="send_google_error_docs">Beim Senden des Tracks an Google Text &amp; Tabellen ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.</string>
-  <string name="send_google_error_fusion_tables">Beim Senden des Tracks an Google Fusion Tables ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.</string>
   <string name="send_google_no_account">Kein Konto vorhanden</string>
   <string name="send_google_no_account_message">Kein Konto gefunden, um Tracks zu versenden.</string>
-  <string name="send_google_progress_auth_docs">Anmeldung bei Google Text &amp; Tabellen...</string>
-  <string name="send_google_progress_auth_fusion_tables">Anmeldung bei Google Fusion Tables...</string>
-  <string name="send_google_progress_creating_fusion_table">Neue \'Fusion Tabelle\' wird erstellt...</string>
   <string name="send_google_progress_preparing_track">Bereite Track vor...</string>
   <string name="send_google_progress_reading_track">Lese Track...</string>
-  <string name="send_google_progress_sending_docs">Track wird an Google Text &amp; Tabellen gesendet...</string>
-  <string name="send_google_progress_sending_fusion_tables">Track wird an Google Fusion Tables gesendet...</string>
   <string name="send_google_recorded">Aufgezeichnet am</string>
   <string name="send_google_result_share_url">Track mit Freunden teilen</string>
   <string name="send_google_send_now">Jetzt senden</string>

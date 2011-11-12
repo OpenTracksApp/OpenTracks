@@ -77,17 +77,10 @@ limitations under the License.
   <string name="sd_card_success_write_file">Gravação no cartão SD concluída.</string>
   <string name="send_google_choose_account">Escolher conta</string>
   <string name="send_google_docs">Google Docs</string>
-  <string name="send_google_error_docs">Ocorreu um erro ao enviar seu caminho para o Google Docs. Por favor tente novamente mais tarde.</string>
-  <string name="send_google_error_fusion_tables">Ocorreu um erro ao enviar seu caminho para o Google Fusion Tables. Por favor tente novamente mais tarde.</string>
   <string name="send_google_no_account">Nenhuma conta encontrada</string>
   <string name="send_google_no_account_message">Não foi encontrada nenhuma conta para a qual trilhas possam ser enviadas.</string>
-  <string name="send_google_progress_auth_docs">Authenticando com o Google Docs...</string>
-  <string name="send_google_progress_auth_fusion_tables">Autenticando com o Google Fusion Tables...</string>
-  <string name="send_google_progress_creating_fusion_table">Criando nova Fusion Table...</string>
   <string name="send_google_progress_preparing_track">Preparando caminho...</string>
   <string name="send_google_progress_reading_track">Lendo caminho...</string>
-  <string name="send_google_progress_sending_docs">Enviando caminho para o Google Docs...</string>
-  <string name="send_google_progress_sending_fusion_tables">Enviando caminho para o Google Fusion Tables...</string>
   <string name="send_google_recorded">Gravado</string>
   <string name="send_google_result_share_url">Compartilhar caminho com amigos</string>
   <string name="send_google_send_now">Enviar agora</string>
