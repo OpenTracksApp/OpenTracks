@@ -32,8 +32,4 @@ limitations under the License.
   <string name="settings_sensor_type_ant">ANT+ Sensores</string>
   <string name="settings_sensor_type_none">Ninguna</string>
   <string name="settings_sensor_type_srm">SRM ANT+ Puente</string>
-  <string name="track_list_save_csv_file">Guardar en archivo CSV</string>
-  <string name="track_list_save_tcx_file">Guardar en archivo TCX</string>
-  <string name="track_list_share_csv_file">Un archivo CSV</string>
-  <string name="track_list_share_tcx_file">Un archivo TCX</string>
 </resources>

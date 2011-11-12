@@ -370,7 +370,8 @@ limitations under the License.
     Exporting a track to the SD card. This may take a while.
   </string>
   <string name="export_success"
-    translation_description="After exporting all the tracks, a toast message indicating success.">
+    translation_description="After exporting all the tracks to the SD card, a toast message
+      indicating success.">
     Export finished
   </string>
 
@@ -443,7 +444,8 @@ limitations under the License.
   </string>
   <string name="import_success"
     translation_description="After importing all the tracks from the SD card, the alert message
-      indicating success. E.g., 'Imported 5 of 6 GPX files from /mnt/sdcard/MyTracks/gpx/'.">
+      indicating success. E.g., 'Imported to My Tracks 5 of 6 GPX files from
+      /mnt/sdcard/MyTracks/gpx/'.">
     Imported to My Tracks %1$d of %2$d GPX files from %3$s
   </string>
 
@@ -597,7 +599,7 @@ limitations under the License.
   <string name="my_location_approximate_location"
     translation_description="When displaying the user's current location, a status message
       indicating that GPS is not available and an approximate location is used instead.">
-    GPS is not available. An approximate location based on cell towers and WIFI networks is shown.
+    GPS is not available. An approximate location based on cell towers and WiFi networks is shown.
   </string>
   <string name="my_location_no_location"
     translation_description="When displaying the user's current location, a status message
@@ -883,7 +885,7 @@ limitations under the License.
     translation_description="When sending a track to Google Fusion Tables, the message on the result
       page indicating success. E.g., 'A new Google Fusion table has been created at
       google.com/fusiontables.'">
-    A new Google Fusion table has been created at %s.
+    A new Google Fusion Table has been created at %s.
   </string>
   <string name="send_google_success_new_doc"
     translation_description="When sending a track to Google Docs, the message on the result page
@@ -1582,6 +1584,11 @@ limitations under the License.
     translation_description="In the Tracks page, the button on the bottom to export all tracks.">
     Export all
   </string>
+  <string name="track_list_export_file"
+    translation_description="In the Tracks page, after pressing the 'Export all' button, the menu
+      option to export all the tracks as a certain file format. E.g., 'Export as GPX'.">
+    Export as %s
+  </string>
   <string name="track_list_import_all"
     translation_description="In the Tracks page, the button on the bottom to import all tracks.">
     Import all
@@ -1591,55 +1598,26 @@ limitations under the License.
       the user he can press and hold a track for more options.">
     Pick a track. Press &amp; hold for more options.
   </string>
-  <string name="track_list_save_csv_file"
+  <string name="track_list_save_file"
     translation_description="In the context menu for a track, under the 'Save to SD card...'
-      option, the menu option to save the track as a CSV file.">
-    Save as a CSV file
-  </string>
-  <string name="track_list_save_gpx_file"
-    translation_description="In the context menu for a track, under the 'Save to SD card...'
-      option, the menu option to save the track as a GPX file.">
-    Save as a GPX file
-  </string>
-  <string name="track_list_save_kml_file"
-    translation_description="In the context menu for a track, under the 'Save to SD card...'
-      option, the menu option to save the track as a KML file.">
-    Save as a KML file
+      option, the menu option to save the track as a certain file format. E.g, 'Save as a GPX
+      file'.">
+    Save as a %s file
   </string>
   <string name="track_list_save_sd"
     translation_description="In the context menu for a track, the menu option to save the track to
       the SD card.">
     Save to SD card...
   </string>
-  <string name="track_list_save_tcx_file"
-    translation_description="In the context menu for a track, under the 'Save to SD card...'
-      option, the menu option to save the track as a TCX file.">
-    Save as a TCX file
-  </string>
   <string name="track_list_send_google"
     translation_description="In the context menu for a track, the menu option to send the track to
       Google.">
     Send to Google...
   </string>
-  <string name="track_list_share_csv_file"
+  <string name="track_list_share_file"
     translation_description="In the context menu for a track, under the 'Share with friends...'
-      option, the menu option to share the track as a CSV file with friends.">
-    A CSV file
-  </string>
-  <string name="track_list_share_gpx_file"
-    translation_description="In the context menu for a track, under the 'Share with friends...'
-      option, the menu option to share the track as a GPX file with friends.">
-    A GPX file
-  </string>
-  <string name="track_list_share_kml_file"
-    translation_description="In the context menu for a track, under the 'Share with friends...'
-      option, the menu option to share the track as a KML file with friends.">
-    A KML file
-  </string>
-  <string name="track_list_share_tcx_file"
-    translation_description="In the context menu for a track, under the 'Share with friends...'
-      option, the menu option to share the track as a TCX file with friends.">
-   A TCX file
+      option, the menu option to share the track as a certain file format. E.g, 'A GPX file'.">
+    A %s file
   </string>
   <string name="track_list_share_track"
     translation_description="In the context menu for a track, the menu option to share the track
@@ -1909,9 +1887,9 @@ limitations under the License.
     translation_description="When entering the Marker Type, an option for a bar.">
     bar
   </string>
-  <string name="waypoint_type_barbeque"
-    translation_description="When entering the Marker Type, an option for a barbeque.">
-    barbeque
+  <string name="waypoint_type_barbecue"
+    translation_description="When entering the Marker Type, an option for a barbecue.">
+    barbecue
   </string>
   <string name="waypoint_type_building"
     translation_description="When entering the Marker Type, an option for a building.">

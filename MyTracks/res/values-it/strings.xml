@@ -154,12 +154,8 @@ limitations under the License.
   <string name="track_list_edit_track">Modifica dettagli</string>
   <string name="track_list_export_all">Esporta tutti i percorsi</string>
   <string name="track_list_pick_one">Scegli un percorso. Tieni premuto per più opzioni.</string>
-  <string name="track_list_save_gpx_file">Salva in un file GPX</string>
-  <string name="track_list_save_kml_file">Salva in un file KML</string>
   <string name="track_list_save_sd">Salva su scheda SD...</string>
   <string name="track_list_send_google">Invia a Google...</string>
-  <string name="track_list_share_gpx_file">Un file GPX</string>
-  <string name="track_list_share_kml_file">Un file KML</string>
   <string name="track_list_share_track">Condividi con amici...</string>
   <string name="track_list_share_url">Un link alla mappa</string>
   <string name="track_list_show_on_map">Mostra</string>

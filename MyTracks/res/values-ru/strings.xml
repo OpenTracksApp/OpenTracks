@@ -234,16 +234,8 @@ limitations under the License.
   <string name="track_list_export_all">Экспорт всех</string>
   <string name="track_list_import_all">Импорт всех</string>
   <string name="track_list_pick_one">Выберите трек. Нажмите и удерживайте для получения дополнительных возможностей.</string>
-  <string name="track_list_save_csv_file">Сохранить файл CSV</string>
-  <string name="track_list_save_gpx_file">Сохранить файл GPX</string>
-  <string name="track_list_save_kml_file">Сохранить файл KML</string>
   <string name="track_list_save_sd">Записать на SD карту...</string>
-  <string name="track_list_save_tcx_file">Сохранить файл TCX</string>
   <string name="track_list_send_google">Отправить в Google ...</string>
-  <string name="track_list_share_csv_file">Файла CSV</string>
-  <string name="track_list_share_gpx_file">Файл GPX</string>
-  <string name="track_list_share_kml_file">Файл KML</string>
-  <string name="track_list_share_tcx_file">Файл TCX</string>
   <string name="track_list_share_track">Поделиться с друзьями...</string>
   <string name="track_list_share_url">Ссылка на карту</string>
   <string name="track_list_show_on_map">Показать</string>

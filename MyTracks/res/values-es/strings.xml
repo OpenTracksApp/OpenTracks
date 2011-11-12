@@ -250,16 +250,8 @@ limitations under the License.
   <string name="track_list_export_all">Exportar todos</string>
   <string name="track_list_import_all">Importar todos</string>
   <string name="track_list_pick_one">Escoja un recorrido. Presione&amp;mantenga presionado para ver más opciones.</string>
-  <string name="track_list_save_csv_file">Guardar en archivo CSV</string>
-  <string name="track_list_save_gpx_file">Guardar en archivo GPX</string>
-  <string name="track_list_save_kml_file">Guardar en archivo KML</string>
   <string name="track_list_save_sd">Guardar en tarjeta SD...</string>
-  <string name="track_list_save_tcx_file">Guardar en archivo TCX</string>
   <string name="track_list_send_google">Enviar a Google...</string>
-  <string name="track_list_share_csv_file">Un archivo CSV</string>
-  <string name="track_list_share_gpx_file">Un archivo GPX"</string>
-  <string name="track_list_share_kml_file">Un archivo KML"</string>
-  <string name="track_list_share_tcx_file">Un archivo TCX</string>
   <string name="track_list_share_track">Compartir con amigos..."</string>
   <string name="track_list_share_url">Un enlace al mapa</string>
   <string name="track_list_show_on_map">Mostrar</string>

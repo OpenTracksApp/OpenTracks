@@ -86,31 +86,31 @@ public class TrackList extends ListActivity
           menu.add(0, Constants.MENU_EDIT, 0,
               R.string.track_list_edit_track);
           if (!isRecording() || trackId != recordingTrackId) {
+            String saveFileFormat = getString(R.string.track_list_save_file);
+            String shareFileFormat = getString(R.string.track_list_share_file);
+            String formats[] = getResources().getStringArray(R.array.file_formats);
+            
             menu.add(0, Constants.MENU_SEND_TO_GOOGLE, 0,
                 R.string.track_list_send_google);
             SubMenu share = menu.addSubMenu(0, Constants.MENU_SHARE, 0,
                 R.string.track_list_share_track);
             share.add(0, Constants.MENU_SHARE_LINK, 0,
                 R.string.track_list_share_url);
-            share.add(0, Constants.MENU_SHARE_GPX_FILE, 0,
-                R.string.track_list_share_gpx_file);
-            share.add(0, Constants.MENU_SHARE_KML_FILE, 0,
-                R.string.track_list_share_kml_file);
-            share.add(0, Constants.MENU_SHARE_CSV_FILE, 0,
-                R.string.track_list_share_csv_file);
-            share.add(0, Constants.MENU_SHARE_TCX_FILE, 0,
-                R.string.track_list_share_tcx_file);
+            share.add(
+                0, Constants.MENU_SHARE_GPX_FILE, 0, String.format(shareFileFormat, formats[0]));
+            share.add(
+                0, Constants.MENU_SHARE_KML_FILE, 0, String.format(shareFileFormat, formats[1]));
+            share.add(
+                0, Constants.MENU_SHARE_CSV_FILE, 0, String.format(shareFileFormat, formats[2]));
+            share.add(
+                0, Constants.MENU_SHARE_TCX_FILE, 0, String.format(shareFileFormat, formats[3]));
             SubMenu save = menu.addSubMenu(0,
                 Constants.MENU_WRITE_TO_SD_CARD, 0,
                 R.string.track_list_save_sd);
-            save.add(0, Constants.MENU_SAVE_GPX_FILE, 0,
-                R.string.track_list_save_gpx_file);
-            save.add(0, Constants.MENU_SAVE_KML_FILE, 0,
-                R.string.track_list_save_kml_file);
-            save.add(0, Constants.MENU_SAVE_CSV_FILE, 0,
-                R.string.track_list_save_csv_file);
-            save.add(0, Constants.MENU_SAVE_TCX_FILE, 0,
-                R.string.track_list_save_tcx_file);
+            save.add(0, Constants.MENU_SAVE_GPX_FILE, 0, String.format(saveFileFormat, formats[0]));
+            save.add(0, Constants.MENU_SAVE_KML_FILE, 0, String.format(saveFileFormat, formats[1]));
+            save.add(0, Constants.MENU_SAVE_CSV_FILE, 0, String.format(saveFileFormat, formats[2]));
+            save.add(0, Constants.MENU_SAVE_TCX_FILE, 0, String.format(saveFileFormat, formats[3]));
             menu.add(0, Constants.MENU_DELETE, 0,
                 R.string.track_list_delete_track);
           }

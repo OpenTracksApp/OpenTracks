@@ -154,12 +154,8 @@ limitations under the License.
   <string name="track_list_delete_track_confirm_message">O caminho e todos os seus marcadores serão permanentemente apagados deste telefone.</string>
   <string name="track_list_edit_track">Editar detalhes</string>
   <string name="track_list_pick_one">Escolha um caminho. Pressione&amp;segure para mais opções.</string>
-  <string name="track_list_save_gpx_file">Salvar arquivo GPX</string>
-  <string name="track_list_save_kml_file">Salvar arquivo KML</string>
   <string name="track_list_save_sd">Salvar no cartão SD...</string>
   <string name="track_list_send_google">Enviar para o Google...</string>
-  <string name="track_list_share_gpx_file">Um arquivo GPX</string>
-  <string name="track_list_share_kml_file">Um arquivo KML</string>
   <string name="track_list_share_track">Compartilhar com amigos...</string>
   <string name="track_list_share_url">Um link para a mapa</string>
   <string name="track_list_show_on_map">Mostrar</string>

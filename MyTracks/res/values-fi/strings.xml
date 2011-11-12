@@ -238,16 +238,8 @@ limitations under the License.
   <string name="track_list_export_all">Vie kaikki</string>
   <string name="track_list_import_all">Tuo kaikki</string>
   <string name="track_list_pick_one">Valitse reitti. Pitkällä painalluksella lisää vaihtoehtoja.</string>
-  <string name="track_list_save_csv_file">Tallenna CSV-tiedosto</string>
-  <string name="track_list_save_gpx_file">Tallenna GPX-tiedosto</string>
-  <string name="track_list_save_kml_file">Tallenna KML-tiedosto</string>
   <string name="track_list_save_sd">Kirjoita SD-kortille...</string>
-  <string name="track_list_save_tcx_file">Tallenna TCX-tiedosto</string>
   <string name="track_list_send_google">Lähetä Googleen...</string>
-  <string name="track_list_share_csv_file">CSV-tiedosto</string>
-  <string name="track_list_share_gpx_file">GPX-tiedosto</string>
-  <string name="track_list_share_kml_file">KML-tiedosto</string>
-  <string name="track_list_share_tcx_file">TCX-tiedosto</string>
   <string name="track_list_share_track">Jaa...</string>
   <string name="track_list_share_url">Linkki karttaan</string>
   <string name="track_list_show_on_map">Näytä</string>

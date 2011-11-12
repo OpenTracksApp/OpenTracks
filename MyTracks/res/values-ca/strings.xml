@@ -195,16 +195,8 @@ limitations under the License.
   <string name="track_list_edit_track">Edita els detalls</string>
   <string name="track_list_export_all">Exporta totes les rutes</string>
   <string name="track_list_pick_one">Seleccioneu una ruta. Mantingueu el dit per veure més opcions.</string>
-  <string name="track_list_save_csv_file">Anomena i desa com un fitxer CSV</string>
-  <string name="track_list_save_gpx_file">Anomena i desa com un fitxer GPX</string>
-  <string name="track_list_save_kml_file">Anomena i desa com un fitxer KML</string>
   <string name="track_list_save_sd">Escriu a la targeta SD...</string>
-  <string name="track_list_save_tcx_file">Anomena i desa com un fitxer TCX</string>
   <string name="track_list_send_google">Envia a Google...</string>
-  <string name="track_list_share_csv_file">Un fitxer CSV</string>
-  <string name="track_list_share_gpx_file">Un fitxer GPX</string>
-  <string name="track_list_share_kml_file">Un fitxer KML</string>
-  <string name="track_list_share_tcx_file">Un fitxer TCX</string>
   <string name="track_list_share_track">Comparteix amb amics...</string>
   <string name="track_list_show_on_map">Mostra</string>
   <string name="track_list_this_track">Aquesta ruta</string>

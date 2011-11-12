@@ -204,16 +204,8 @@ limitations under the License.
   <string name="track_list_edit_track">Bearbeiten</string>
   <string name="track_list_export_all">Alle Tracks exportieren</string>
   <string name="track_list_pick_one">Einen Track auswählen. Lange berühren für mehr Optionen.</string>
-  <string name="track_list_save_csv_file">CSV-Datei exportieren</string>
-  <string name="track_list_save_gpx_file">GPX-Datei exportieren</string>
-  <string name="track_list_save_kml_file">KML-Datei exportieren</string>
   <string name="track_list_save_sd">Auf SD-Karte speichern…</string>
-  <string name="track_list_save_tcx_file">TCX-Datei exportieren</string>
   <string name="track_list_send_google">An Google senden…</string>
-  <string name="track_list_share_csv_file">Eine CSV-Datei</string>
-  <string name="track_list_share_gpx_file">Eine GPX-Datei</string>
-  <string name="track_list_share_kml_file">Eine KML-Datei</string>
-  <string name="track_list_share_tcx_file">Eine TCX-Datei</string>
   <string name="track_list_share_track">Mit Freunden teilen…</string>
   <string name="track_list_show_on_map">Anzeigen</string>
   <string name="track_list_this_track">Dieser Track</string>

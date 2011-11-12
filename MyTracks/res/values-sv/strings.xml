@@ -154,14 +154,8 @@ limitations under the License.
   <string name="track_list_edit_track">Ändra detaljer</string>
   <string name="track_list_export_all">Exportera alla spår</string>
   <string name="track_list_pick_one">Välj ett spår. Tryck &amp; håll för fler alternativ.</string>
-  <string name="track_list_save_csv_file">Spara en CSV-fil</string>
-  <string name="track_list_save_gpx_file">Spara en GPX-fil</string>
-  <string name="track_list_save_kml_file">Spara en KML-fil</string>
   <string name="track_list_save_sd">Skriv till SD-kort...</string>
   <string name="track_list_send_google">Skicka till Google...</string>
-  <string name="track_list_share_csv_file">En CSV-fil</string>
-  <string name="track_list_share_gpx_file">En GPX-fil</string>
-  <string name="track_list_share_kml_file">En KML-fil</string>
   <string name="track_list_share_track">Dela med vänner...</string>
   <string name="track_list_show_on_map">Visa</string>
   <string name="track_list_this_track">Det här spåret</string>

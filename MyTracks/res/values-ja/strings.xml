@@ -225,16 +225,8 @@ limitations under the License.
   <string name="track_list_export_all">全て出力</string>
   <string name="track_list_import_all">全てインポート</string>
   <string name="track_list_pick_one">トラックを選択します．オプションを表示するには長押しして下さい．</string>
-  <string name="track_list_save_csv_file">CVSファイルの保存</string>
-  <string name="track_list_save_gpx_file">GPXファイルの保存</string>
-  <string name="track_list_save_kml_file">KMLファイルの保存</string>
   <string name="track_list_save_sd">SDへの書き込み...</string>
-  <string name="track_list_save_tcx_file">TCXファイルの保存</string>
   <string name="track_list_send_google">Googleに送信...</string>
-  <string name="track_list_share_csv_file">CSVファイル</string>
-  <string name="track_list_share_gpx_file">GPXファイル</string>
-  <string name="track_list_share_kml_file">KMLファイル</string>
-  <string name="track_list_share_tcx_file">TCXファイル</string>
   <string name="track_list_share_track">共有...</string>
   <string name="track_list_share_url">マップへのリンク</string>
   <string name="track_list_show_on_map">表示</string>

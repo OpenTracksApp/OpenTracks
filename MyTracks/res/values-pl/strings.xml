@@ -184,14 +184,8 @@ limitations under the License.
   <string name="track_list_edit_track">Edytuj szczegóły</string>
   <string name="track_list_export_all">Eksportuj wszystkie trasy</string>
   <string name="track_list_pick_one">Wybierz trasę. Naciśnij i przytrzymaj, aby wybrać opcje.</string>
-  <string name="track_list_save_csv_file">Zapisz plik CSV</string>
-  <string name="track_list_save_gpx_file">Zapisz plik GPX</string>
-  <string name="track_list_save_kml_file">Zapisz plik KML</string>
   <string name="track_list_save_sd">Zapisz na karcie SD...</string>
   <string name="track_list_send_google">Wyślij do Google...</string>
-  <string name="track_list_share_csv_file">Plik CSV</string>
-  <string name="track_list_share_gpx_file">Plik GPX</string>
-  <string name="track_list_share_kml_file">PLik KML</string>
   <string name="track_list_share_track">Podziel się z przyjaciółmi...</string>
   <string name="track_list_show_on_map">Pokaż</string>
   <string name="track_list_this_track">Ta trasa</string>

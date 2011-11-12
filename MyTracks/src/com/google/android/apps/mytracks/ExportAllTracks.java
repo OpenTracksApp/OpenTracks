@@ -78,8 +78,16 @@ public class ExportAllTracks {
     this.activity = activity;
     Log.i(Constants.TAG, "ExportAllTracks: Starting");
 
+    String exportFileFormat = activity.getString(R.string.track_list_export_file);
+    String formats[] = activity.getResources().getStringArray(R.array.file_formats);
+    
+    String[] choices = new String[formats.length];
+    for (int i = 0; i < formats.length; i++) {
+      choices[i] = String.format(exportFileFormat, formats[i]);
+    }
+    
     AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-    builder.setSingleChoiceItems(R.array.export_formats, 0, itemClick);
+    builder.setSingleChoiceItems(choices, 0, itemClick);
     builder.setPositiveButton(R.string.generic_ok, positiveClick);
     builder.setNegativeButton(R.string.generic_cancel, null);
     builder.show();

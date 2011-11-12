@@ -224,16 +224,8 @@ limitations under the License.
   <string name="track_list_export_all">导出所有轨迹</string>
   <string name="track_list_import_all">全部导入</string>
   <string name="track_list_pick_one">选择一个轨迹. 长按弹出操作菜单.</string>
-  <string name="track_list_save_csv_file">保存为 CSV 文件</string>
-  <string name="track_list_save_gpx_file">保存为 GPX 文件</string>
-  <string name="track_list_save_kml_file">保存为 KML 文件</string>
   <string name="track_list_save_sd">保存到 SD 卡...</string>
-  <string name="track_list_save_tcx_file">保存为 TCX 文件</string>
   <string name="track_list_send_google">发送到 Google...</string>
-  <string name="track_list_share_csv_file">CSV 文件</string>
-  <string name="track_list_share_gpx_file">GPX 文件</string>
-  <string name="track_list_share_kml_file">KML 文件</string>
-  <string name="track_list_share_tcx_file">TCX 文件</string>
   <string name="track_list_share_track">与朋友分享...</string>
   <string name="track_list_share_url">访问地图的超链接</string>
   <string name="track_list_show_on_map">显示</string>

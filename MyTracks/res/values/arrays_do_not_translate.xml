@@ -128,8 +128,7 @@ limitations under the License.
     <item>@string/sensor_type_value_srm_ant_bridge</item>
   </string-array>
   
-  <!-- Others -->
-  <array name="export_formats">
+  <array name="file_formats">
     <item>GPX</item>
     <item>KML</item>
     <item>CSV</item>
@@ -208,7 +207,7 @@ limitations under the License.
     <item>@string/waypoint_type_atm</item>
     <item>@string/waypoint_type_bank</item>
     <item>@string/waypoint_type_bar</item>
-    <item>@string/waypoint_type_barbeque</item>
+    <item>@string/waypoint_type_barbecue</item>
     <item>@string/waypoint_type_building</item>
     <item>@string/waypoint_type_bus_stop</item>
     <item>@string/waypoint_type_cafe</item>
