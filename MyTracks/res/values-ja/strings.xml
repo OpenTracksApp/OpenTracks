@@ -31,11 +31,11 @@ limitations under the License.
   <string name="export_success">出力終了</string>
   <string name="generic_cancel">キャンセル</string>
   <string name="generic_confirm_title">よろしいですか?</string>
-  <string name="generic_error">エラー</string>
+  <string name="generic_error_title">エラー</string>
   <string name="generic_no">いいえ</string>
   <string name="generic_progress_title">お待ちください...</string>
   <string name="generic_save">保存</string>
-  <string name="generic_success">成功</string>
+  <string name="generic_success_title">成功</string>
   <string name="generic_yes">はい</string>
   <string name="gps_need_to_enable">ここをタップして「位置情報とセキュリティの設定」を開いて「GPS機能を使用」にチェックを入れて下さい．バックボタンで戻ってください．</string>
   <string name="gps_not_found">この端末でGPSロケーションプロバイダを発見できました．</string>
@@ -52,6 +52,7 @@ limitations under the License.
   <string name="marker_insert_success">統計マーカーを挿入しました．</string>
   <string name="marker_label_end">(終了)</string>
   <string name="marker_label_start">(開始)</string>
+  <string name="marker_list_context_menu_title">このマーカー</string>
   <string name="marker_list_delete_marker">削除</string>
   <string name="marker_list_delete_marker_confirm_message">マーカーをこの端末から完全に削除します．</string>
   <string name="marker_list_edit_marker">詳細編集</string>
@@ -59,7 +60,6 @@ limitations under the License.
   <string name="marker_list_insert_waypoint">ウェイポイントの挿入</string>
   <string name="marker_list_pick_one">マーカーを選択します．オプションを表示するには長押しして下さい．</string>
   <string name="marker_list_show_on_map">マップに表示</string>
-  <string name="marker_list_this_marker">このマーカー</string>
   <string name="marker_type_statistics">統計</string>
   <string name="marker_type_waypoint">ウェイポイント</string>
   <string name="menu_aggregated_statistics">集計情報</string>
@@ -95,12 +95,12 @@ limitations under the License.
   <string name="sd_card_error_write_file">ファイルへの書き込みができません．</string>
   <string name="sd_card_success_read_file">SDカードからの読み込み終了．</string>
   <string name="sd_card_success_write_file">SDカードへの書き込み終了．</string>
-  <string name="send_google_choose_account">アカウント選択</string>
+  <string name="send_google_choose_account_title">アカウント選択</string>
   <string name="send_google_existing_map">既存マップ選択</string>
   <string name="send_google_my_maps">Googleマイマップ</string>
   <string name="send_google_new_map">新規マップ作成</string>
-  <string name="send_google_no_account">アカウントを発見できませんでした．</string>
   <string name="send_google_no_account_message">トラックをアップロードするためのアカウントを発見できませんでした．</string>
+  <string name="send_google_no_account_title">アカウントを発見できませんでした．</string>
   <string name="send_google_progress_preparing_track">トラックを準備しています...</string>
   <string name="send_google_progress_reading_track">トラックを読んでいます...</string>
   <string name="send_google_recorded">記録日</string>
@@ -125,7 +125,7 @@ limitations under the License.
   <string name="settings_backup_restore_confirm_message">SDカードからの復元を実行すると、現在のトラックと設定は *全て上書き* されてしまいます．よろしいですか?</string>
   <string name="settings_backup_restore_no_backup">バックアップがありません．</string>
   <string name="settings_backup_restore_progress_message">SDカードから全てのトラックと設定を復元しています．しばらくかかることがあります...</string>
-  <string name="settings_backup_restore_select">復元するバックアップの選択</string>
+  <string name="settings_backup_restore_select_title">復元するバックアップの選択</string>
   <string name="settings_backup_restore_summary">SDカードから全てのトラックと設定を復元します</string>
   <string name="settings_backup_sd_card">SDカード バックアップ</string>
   <string name="settings_display">表示</string>
@@ -206,6 +206,7 @@ limitations under the License.
   <string name="track_detail_track_description">トラック説明</string>
   <string name="track_detail_track_name">トラック名</string>
   <string name="track_list_clear_map">マップのクリア</string>
+  <string name="track_list_context_menu_title">このトラック</string>
   <string name="track_list_delete_all">全て削除</string>
   <string name="track_list_delete_all_confirm_message">全てのトラックとマーカーをこの端末から削除します．</string>
   <string name="track_list_delete_track">端末から削除...</string>
@@ -219,7 +220,6 @@ limitations under the License.
   <string name="track_list_share_track">共有...</string>
   <string name="track_list_share_url">マップへのリンク</string>
   <string name="track_list_show_on_map">表示</string>
-  <string name="track_list_this_track">このトラック</string>
   <string name="track_name_format">トラック %d</string>
   <string name="track_record_error">記録作成開始できません．もう一度試して下さい．</string>
   <string name="track_record_notification">トラックを保存中...</string>

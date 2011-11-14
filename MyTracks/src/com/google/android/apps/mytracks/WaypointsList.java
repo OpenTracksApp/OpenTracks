@@ -73,7 +73,7 @@ public class WaypointsList extends ListActivity
       new OnCreateContextMenuListener() {
         public void onCreateContextMenu(ContextMenu menu, View v,
             ContextMenuInfo menuInfo) {
-          menu.setHeaderTitle(R.string.marker_list_this_marker);
+          menu.setHeaderTitle(R.string.marker_list_context_menu_title);
           AdapterView.AdapterContextMenuInfo info =
               (AdapterView.AdapterContextMenuInfo) menuInfo;
           contextPosition = info.position;

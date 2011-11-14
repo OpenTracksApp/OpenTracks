@@ -29,12 +29,12 @@ limitations under the License.
   <string name="export_success">Eksport zakończony</string>
   <string name="generic_cancel">Anuluj</string>
   <string name="generic_confirm_title">Jesteś pewien?</string>
-  <string name="generic_error">Błąd</string>
+  <string name="generic_error_title">Błąd</string>
   <string name="generic_no">Nie</string>
   <string name="generic_ok">OK</string>
   <string name="generic_progress_title">Proszę czekać...</string>
   <string name="generic_save">Zapisz</string>
-  <string name="generic_success">Powodzenie</string>
+  <string name="generic_success_title">Powodzenie</string>
   <string name="generic_yes">Tak</string>
   <string name="gps_need_to_enable">Tapnij tutaj, aby przejść do ustawień Lokalizacji i zabezpieczeń, a następnie zaznacz Użyj satelitów GPS. Naciśnij klawisz Wstecz, aby powrócić.</string>
   <string name="gps_not_found">Brak dostawcy lokalizacji GPS na urządzeniu.</string>
@@ -48,6 +48,7 @@ limitations under the License.
   <string name="marker_insert_success">Wstawiono znacznik statystyk.</string>
   <string name="marker_label_end">(Koniec)</string>
   <string name="marker_label_start">(Początek)</string>
+  <string name="marker_list_context_menu_title">Ten znacznik</string>
   <string name="marker_list_delete_marker">Usuń</string>
   <string name="marker_list_delete_marker_confirm_message">Znacznik zostanie całkowicie usunięty z telefonu.</string>
   <string name="marker_list_edit_marker">Edytuj szczegóły</string>
@@ -55,7 +56,6 @@ limitations under the License.
   <string name="marker_list_insert_waypoint">Wstaw punkt orientacyjny</string>
   <string name="marker_list_pick_one">Wybierz znacznik. Naciśnij i przytrzymaj, aby wybrać opcje.</string>
   <string name="marker_list_show_on_map">Pokaż na mapie</string>
-  <string name="marker_list_this_marker">Ten znacznik</string>
   <string name="marker_type_statistics">Statystyki</string>
   <string name="marker_type_waypoint">Punkt orientacyjny</string>
   <string name="menu_aggregated_statistics">Statystyki Grupowe</string>
@@ -80,10 +80,10 @@ limitations under the License.
   <string name="sd_card_error_write_file">Nie można zapisać pliku.</string>
   <string name="sd_card_success_read_file">Zakończono odczytywanie z karty SD.</string>  
   <string name="sd_card_success_write_file">Zakończono zapisywanie na karcie SD.</string>
-  <string name="send_google_choose_account">Wybierz konto</string>
+  <string name="send_google_choose_account_title">Wybierz konto</string>
   <string name="send_google_docs">Dokumenty Google</string>
-  <string name="send_google_no_account">Znaleziono nowe konto</string>
   <string name="send_google_no_account_message">Nie znaleziono konta do przesyłu.</string>
+  <string name="send_google_no_account_title">Znaleziono nowe konto</string>
   <string name="send_google_progress_preparing_track">Przygotowywanie trasy...</string>
   <string name="send_google_progress_reading_track">Czytanie trasy...</string>
   <string name="send_google_recorded">Zapisana</string>
@@ -104,7 +104,7 @@ limitations under the License.
   <string name="settings_backup_restore_confirm_message">Odtworzenie z kopii zapasowej z karty SD zastąpi wszystkie bieżące trasy i ustawienia. Jesteś tego pewien?</string>
   <string name="settings_backup_restore_no_backup">Nie znaleziono kopii zapasowych.</string>
   <string name="settings_backup_restore_progress_message">Odczytywanie wszystkich tras i ustawień z karty SD. To może trochę potrwać...</string>
-  <string name="settings_backup_restore_select">Wybierz kopię do odtworzenia</string>
+  <string name="settings_backup_restore_select_title">Wybierz kopię do odtworzenia</string>
   <string name="settings_backup_restore_summary">Odtwarza wszystkie trasy i ustawienia z kopii zapasowej z karty SD</string>
   <string name="settings_backup_sd_card">Kopia zapasowa na kartę SD</string>
   <string name="settings_display">Wyświetlanie</string>
@@ -173,6 +173,7 @@ limitations under the License.
   <string name="track_detail_track_description">Opis trasy</string>
   <string name="track_detail_track_name">Nazwa trasy</string>
   <string name="track_list_clear_map">Wyczyść mapę</string>
+  <string name="track_list_context_menu_title">Ta trasa</string>
   <string name="track_list_delete_all">Usuń wszystkie trasy</string>
   <string name="track_list_delete_all_confirm_message">Wszystkie trasy i znaczniki zostaną usunięte z telefonu.</string>
   <string name="track_list_delete_track">Usuń z telefonu...</string>
@@ -184,7 +185,6 @@ limitations under the License.
   <string name="track_list_send_google">Wyślij do Google...</string>
   <string name="track_list_share_track">Podziel się z przyjaciółmi...</string>
   <string name="track_list_show_on_map">Pokaż</string>
-  <string name="track_list_this_track">Ta trasa</string>
   <string name="track_name_format">Trasa %d</string>
   <string name="track_record_error">Nie można rozpocząć rejestrowania. Spróbuj ponownie.</string>
   <string name="track_record_notification">Rejestrowanie twojej trasy...</string>

@@ -26,7 +26,7 @@ limitations under the License.
   <string name="export_progress_message">Enregistrement du fichier sur la carte SD. Patientez SVP.</string>
   <string name="generic_cancel">Annuler</string>
   <string name="generic_confirm_title">Êtes-vous sûr?</string>
-  <string name="generic_error">Erreur</string>
+  <string name="generic_error_title">Erreur</string>
   <string name="generic_no">Non</string>
   <string name="generic_progress_title">Patientez SVP...</string>
   <string name="generic_save">Enregistrer</string>
@@ -43,6 +43,7 @@ limitations under the License.
   <string name="marker_insert_success">Une balise de statistiques a été insérée.</string>
   <string name="marker_label_end">(Fin)</string>
   <string name="marker_label_start">(Début)</string>
+  <string name="marker_list_context_menu_title">Ce marqueur</string>
   <string name="marker_list_delete_marker">Supprimer</string>
   <string name="marker_list_delete_marker_confirm_message">Les balises vont être supprimées de manière permanente de ce téléphone.</string>
   <string name="marker_list_edit_marker">Consulter les détails</string>
@@ -50,7 +51,6 @@ limitations under the License.
   <string name="marker_list_insert_waypoint">Ajout point de passage</string>
   <string name="marker_list_pick_one">Choisissez une balise. Faites un appui prolongé pour plus d\'options.</string>
   <string name="marker_list_show_on_map">Indiquer sur la carte</string>
-  <string name="marker_list_this_marker">Ce marqueur</string>
   <string name="marker_type_statistics">Statistiques</string>
   <string name="marker_type_waypoint">Point de passage</string>
   <string name="menu_aggregated_statistics">Statistiques consolidées</string>
@@ -79,9 +79,9 @@ limitations under the License.
   <string name="sd_card_error_no_storage">Aucun emplacement externe de sauvegarde n\'a été trouvé. Assurez-vous qu\'une carte SD est insérée et que votre téléphone n\'est pas relié à un ordinateur.</string>
   <string name="sd_card_error_write_file">Impossible d\'écrire dans le fichier.</string>
   <string name="sd_card_success_write_file">Parcours enregistré sur la carte SD.</string>
-  <string name="send_google_choose_account">Choisissez un compte</string>
-  <string name="send_google_no_account">Pas de compte Google</string>
+  <string name="send_google_choose_account_title">Choisissez un compte</string>
   <string name="send_google_no_account_message">Un compte Google est nécessaire pour télécharger le parcours.</string>
+  <string name="send_google_no_account_title">Pas de compte Google</string>
   <string name="send_google_progress_preparing_track">Préparation du parcours</string>
   <string name="send_google_progress_reading_track">Lecture du parcours...</string>
   <string name="send_google_recorded">Enregistré</string>
@@ -105,7 +105,7 @@ limitations under the License.
   <string name="settings_backup_restore_confirm_message">Restaurer une sauvegarde depuis la carte SD écrasera tous vos parcours et paramètres actuels.</string>
   <string name="settings_backup_restore_no_backup">Pas de sauvegarde disponible.</string>
   <string name="settings_backup_restore_progress_message">Lecture de tous vos parcours et paramètres depuis la carte SD. Veuillez patienter...</string>
-  <string name="settings_backup_restore_select">Choisissez la sauvegarde à restaurer</string>
+  <string name="settings_backup_restore_select_title">Choisissez la sauvegarde à restaurer</string>
   <string name="settings_backup_restore_summary">Restaurer tous les parcours et paramètres depuis la carte SD</string>
   <string name="settings_backup_sd_card">Sauvegarde sur carte SD</string>
   <string name="settings_display">Affichage</string>
@@ -179,6 +179,7 @@ limitations under the License.
   <string name="track_detail_track_description">Description du parcours</string>
   <string name="track_detail_track_name">Nom du parcours</string>
   <string name="track_list_clear_map">Effacer la carte</string>
+  <string name="track_list_context_menu_title">Ce parcours</string>
   <string name="track_list_delete_all">Tout supprimer</string>
   <string name="track_list_delete_all_confirm_message">Tous les parcours et balises vont être supprimés de ce téléphone.</string>
   <string name="track_list_delete_track">Effacer du téléphone...</string>
@@ -190,7 +191,6 @@ limitations under the License.
   <string name="track_list_send_google">Envoyer à Google...</string>
   <string name="track_list_share_track">Partager...</string>
   <string name="track_list_show_on_map">Afficher</string>
-  <string name="track_list_this_track">Ce parcours</string>
   <string name="track_name_format">Parcours %d</string>
   <string name="track_record_error">Impossible de débuter l\'enregistrement. Réessayez.</string>
   <string name="track_record_notification">Enregistrement de votre parcours...</string>

@@ -358,7 +358,7 @@ public class MapActivity extends com.google.android.maps.MapActivity
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v,
             ContextMenuInfo menuInfo) {
-          menu.setHeaderTitle(R.string.track_list_this_track);
+          menu.setHeaderTitle(R.string.track_list_context_menu_title);
           menu.add(0, Constants.MENU_EDIT, 0,
               R.string.track_list_edit_track);
           if (!dataHub.isRecordingSelected()) {

@@ -72,10 +72,10 @@ public class ResultDialogFactory {
         .setView(makeDialogContent(activity, results, success));
 
     if (success) {
-      builder.setTitle(R.string.generic_success);
+      builder.setTitle(R.string.generic_success_title);
       builder.setIcon(android.R.drawable.ic_dialog_info);
     } else {
-      builder.setTitle(R.string.generic_error);
+      builder.setTitle(R.string.generic_error_title);
       builder.setIcon(android.R.drawable.ic_dialog_alert);
     }
 

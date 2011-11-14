@@ -185,7 +185,7 @@ public class SaveActivity extends Activity {
     });
     builder.setIcon(success ? android.R.drawable.ic_dialog_info :
         android.R.drawable.ic_dialog_alert);
-    builder.setTitle(success ? R.string.generic_success : R.string.generic_error);
+    builder.setTitle(success ? R.string.generic_success_title : R.string.generic_error_title);
     return builder.create();
   }
 

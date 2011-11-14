@@ -28,11 +28,11 @@ limitations under the License.
   <string name="export_progress_message">Salvando arquivo para o cartão SD. Isso pode demorar alguns instantes.</string>
   <string name="generic_cancel">Cancelar</string>
   <string name="generic_confirm_title">Você tem certeza?</string>
-  <string name="generic_error">Erro</string>
+  <string name="generic_error_title">Erro</string>
   <string name="generic_no">Não</string>
   <string name="generic_progress_title">Por favor aguarde...</string>
   <string name="generic_save">Salvar</string>
-  <string name="generic_success">Successo</string>
+  <string name="generic_success_title">Successo</string>
   <string name="generic_yes">Sim</string>
   <string name="gps_need_to_enable">"Por favor pressione aqui para ir aos ajustes de segurança e localização e verifique que o GPS esteja habilitado. Pressione o botão de voltar para retornar.</string>
   <string name="gps_not_found">"Provedor de posição de GPS não encontrado neste dispositivo.</string>
@@ -46,6 +46,7 @@ limitations under the License.
   <string name="marker_insert_success">Um marcador de estatísticas foi inserido..</string>
   <string name="marker_label_end">(Fim)</string>
   <string name="marker_label_start">(Início)</string>
+  <string name="marker_list_context_menu_title">Este Marcador</string>
   <string name="marker_list_delete_marker">Apagar</string>
   <string name="marker_list_delete_marker_confirm_message">O marcador será permanentemente apagado deste telefone.</string>
   <string name="marker_list_edit_marker">Editar detalhes</string>
@@ -53,7 +54,6 @@ limitations under the License.
   <string name="marker_list_insert_waypoint">Inserir ponto no caminho</string>
   <string name="marker_list_pick_one">Escolha um marcador.  Pressione&amp;segure para mais opções.</string>
   <string name="marker_list_show_on_map">Mostrar no mapa</string>
-  <string name="marker_list_this_marker">Este Marcador</string>
   <string name="marker_type_statistics">Estatísticas</string>
   <string name="marker_type_waypoint">Ponto de passagem</string>
   <string name="menu_chart_view_chart_settings">Configurações do gráfico</string>
@@ -75,10 +75,10 @@ limitations under the License.
   <string name="sd_card_error_no_storage">Nenhum armazenamento externo foi encontrado. Assegure-se de que um cartão SD esteja inserido e que seu telefone não esteja montado em um computador.</string>
   <string name="sd_card_error_write_file">Impossível gravar arquivo.</string>
   <string name="sd_card_success_write_file">Gravação no cartão SD concluída.</string>
-  <string name="send_google_choose_account">Escolher conta</string>
+  <string name="send_google_choose_account_title">Escolher conta</string>
   <string name="send_google_docs">Google Docs</string>
-  <string name="send_google_no_account">Nenhuma conta encontrada</string>
   <string name="send_google_no_account_message">Não foi encontrada nenhuma conta para a qual trilhas possam ser enviadas.</string>
+  <string name="send_google_no_account_title">Nenhuma conta encontrada</string>
   <string name="send_google_progress_preparing_track">Preparando caminho...</string>
   <string name="send_google_progress_reading_track">Lendo caminho...</string>
   <string name="send_google_recorded">Gravado</string>
@@ -141,6 +141,7 @@ limitations under the License.
   <string name="track_detail_track_description">Descrição do Caminho</string>
   <string name="track_detail_track_name">Nome do Caminho</string>
   <string name="track_list_clear_map">Limpar mapa</string>
+  <string name="track_list_context_menu_title">Este Caminho</string>
   <string name="track_list_delete_all">Apagar todos os caminhos</string>
   <string name="track_list_delete_all_confirm_message">Todos os seus caminhos e marcadores serão apagados deste telefone.</string>
   <string name="track_list_delete_track">Apagar do telefone...</string>
@@ -152,7 +153,6 @@ limitations under the License.
   <string name="track_list_share_track">Compartilhar com amigos...</string>
   <string name="track_list_share_url">Um link para a mapa</string>
   <string name="track_list_show_on_map">Mostrar</string>
-  <string name="track_list_this_track">Este Caminho</string>
   <string name="track_name_format">"Caminho %d</string>
   <string name="track_record_error">Impossível iniciar a gravação. Tente novamente.</string>
   <string name="track_record_notification">"Gravando seu caminho...</string>

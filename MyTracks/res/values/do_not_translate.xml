@@ -34,7 +34,7 @@ limitations under the License.
   <string name="my_tracks_analytics_id">UA-7222692-2</string> 
   <string name="my_tracks_app_name">My Tracks</string>
   <string name="my_tracks_privacy_url">m.google.com/privacy</string>
-
+  <string name="my_tracks_recording_service_name">My Tracks Recording Service</string>
   <string name="my_tracks_web_url">mytracks.appspot.com</string>
   <string name="permission_notification_value">
     com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS

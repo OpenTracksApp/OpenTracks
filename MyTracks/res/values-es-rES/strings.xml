@@ -24,9 +24,9 @@ limitations under the License.
   <string name="sd_card_error_read_file">No es posible leer del fichero.</string>
   <string name="sd_card_success_read_file">Lectura de tarjeta SD terminada.</string>
   <string name="sd_card_success_write_file">Grabación a tarjeta SD terminada.</string>
-  <string name="send_google_choose_account">Elegir cuenta</string>
-  <string name="send_google_no_account">No se ha encontrado la cuenta</string>
+  <string name="send_google_choose_account_title">Elegir cuenta</string>
   <string name="send_google_no_account_message">No se ha encontrado la cuenta a la que subir los recorridos.</string>
+  <string name="send_google_no_account_title">No se ha encontrado la cuenta</string>
   <string name="settings_display_speed">Mostrar velocidad</string>
   <string name="settings_recording_voice_not_available">No está disponible en su versión de Android</string>
   <string name="settings_sensor_type_ant">ANT+ Sensores</string>

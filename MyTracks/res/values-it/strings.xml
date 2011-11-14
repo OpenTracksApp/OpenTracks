@@ -29,12 +29,12 @@ limitations under the License.
   <string name="export_success">Esportazione terminata.</string>
   <string name="generic_cancel">Annulla</string>
   <string name="generic_confirm_title">Sei sicuro?</string>
-  <string name="generic_error">Errore</string>
+  <string name="generic_error_title">Errore</string>
   <string name="generic_no">No</string>
   <string name="generic_ok">OK</string>
   <string name="generic_progress_title">Attendi per favore...</string>
   <string name="generic_save">Salva</string>
-  <string name="generic_success">Successo</string>
+  <string name="generic_success_title">Successo</string>
   <string name="generic_yes">Sì</string>
   <string name="gps_need_to_enable">Premi qui per andare a «Impostazioni di posizione e protezione» e attiva «Utilizza satelliti GPS». Poi premi il tasto di ritorno per tornare qui.</string>
   <string name="gps_not_found">Nessuna fonte di posizione GPS trovata su questo dispositivo.</string>
@@ -48,6 +48,7 @@ limitations under the License.
   <string name="marker_insert_success">Inserito un segnaposto con statistiche.</string>
   <string name="marker_label_end">(Fine)</string>
   <string name="marker_label_start">(Inizio)</string>
+  <string name="marker_list_context_menu_title">Questo segnaposto</string>
   <string name="marker_list_delete_marker">Elimina</string>
   <string name="marker_list_delete_marker_confirm_message">Il segnaposto sarà eliminato definitivamente da questo telefono.</string>
   <string name="marker_list_edit_marker">Modifica dettagli</string>
@@ -55,7 +56,6 @@ limitations under the License.
   <string name="marker_list_insert_waypoint">Inserisci punto di passaggio</string>
   <string name="marker_list_pick_one">Scegli un segnaposto. Tieni premuto per più opzioni.</string>
   <string name="marker_list_show_on_map">Mostra sulla mappa</string>
-  <string name="marker_list_this_marker">Questo segnaposto</string>
   <string name="marker_type_statistics">Statistiche</string>
   <string name="marker_type_waypoint">Punto di passaggio</string>
   <string name="menu_chart_view_chart_settings">Impostazioni grafico</string>
@@ -77,10 +77,10 @@ limitations under the License.
   <string name="sd_card_error_no_storage">Nessuna memoria esterna trovata. Assicurati che la scheda SD sia inserita e che il telefono no sia montato su un computer.</string>
   <string name="sd_card_error_write_file">Impossibile scrivere su file.</string>
   <string name="sd_card_success_write_file">Finito di salvare il percorso sulla scheda SD.</string>
-  <string name="send_google_choose_account">Scegli un account</string>
+  <string name="send_google_choose_account_title">Scegli un account</string>
   <string name="send_google_docs">Google Docs</string>
-  <string name="send_google_no_account">Account non trovato</string>
   <string name="send_google_no_account_message">Non ho trovato un account a cui inviare i percorsi.</string>
+  <string name="send_google_no_account_title">Account non trovato</string>
   <string name="send_google_progress_preparing_track">Elaborazione del percorso in corso...</string>
   <string name="send_google_progress_reading_track">Lettura in corso...</string>
   <string name="send_google_recorded">Registrato</string>
@@ -143,6 +143,7 @@ limitations under the License.
   <string name="track_detail_track_description">Descrizione del percorso</string>
   <string name="track_detail_track_name">Nome del percorso</string>
   <string name="track_list_clear_map">Cancella la mappa</string>
+  <string name="track_list_context_menu_title">Questo percorso</string>
   <string name="track_list_delete_all">Elimina tutti i percorsi</string>
   <string name="track_list_delete_all_confirm_message">Tutti i percorsi e segnaposti saranno eliminati definitivamente da questo telefono.</string>
   <string name="track_list_delete_track">Elimina dal telefono...</string>
@@ -155,7 +156,6 @@ limitations under the License.
   <string name="track_list_share_track">Condividi con amici...</string>
   <string name="track_list_share_url">Un link alla mappa</string>
   <string name="track_list_show_on_map">Mostra</string>
-  <string name="track_list_this_track">Questo percorso</string>
   <string name="track_name_format">Percorso %d</string>
   <string name="track_record_error">Impossibile iniziare la registrazione. Riprova.</string>
   <string name="track_record_notification">Registrazione del percorso in corso...</string>

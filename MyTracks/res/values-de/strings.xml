@@ -29,11 +29,11 @@ limitations under the License.
   <string name="export_success">Exportieren beendet</string>
   <string name="generic_cancel">Abbrechen</string>
   <string name="generic_confirm_title">Bist Du Dir wirklich sicher?</string>
-  <string name="generic_error">Fehler</string>
+  <string name="generic_error_title">Fehler</string>
   <string name="generic_no">Nein</string>
   <string name="generic_progress_title">Bitte warten…</string>
   <string name="generic_save">Sichern</string>
-  <string name="generic_success">Erfolgreich</string>
+  <string name="generic_success_title">Erfolgreich</string>
   <string name="generic_yes">Ja</string>
   <string name="gps_need_to_enable">Hier berühren, um zu den Sicherheits- und Positionseinstellungen zu gelangen. Aktiviere \'GPS-Satelliten\'. Drücke dann den Zurück-Knopf, um hierher zurückzukehren.</string>
   <string name="gps_not_found">Es wurde kein GPS-Empfänger auf diesem Gerät gefunden.</string>
@@ -46,6 +46,7 @@ limitations under the License.
   <string name="marker_insert_error">Der Wegpunkt kann nicht einfügt werden. Keine Positionsbestimmung möglich.</string>
   <string name="marker_insert_success">Ein Statistikwegpunkt wurde eingefügt.</string>
   <string name="marker_label_end">(Ende)</string>
+  <string name="marker_list_context_menu_title">Dieser Wegpunkt</string>
   <string name="marker_list_delete_marker">Löschen</string>
   <string name="marker_list_delete_marker_confirm_message">Dieser Wegpunkt wird endgültig von diesem Gerät gelöscht.</string>
   <string name="marker_list_edit_marker">Details bearbeiten</string>
@@ -53,7 +54,6 @@ limitations under the License.
   <string name="marker_list_insert_waypoint">Wegpunkt einfügen</string>
   <string name="marker_list_pick_one">Wegpunkt auswählen. Lange berühren für mehr Optionen.</string>
   <string name="marker_list_show_on_map">Auf der Karte zeigen</string>
-  <string name="marker_list_this_marker">Dieser Wegpunkt</string>
   <string name="marker_type_statistics">Statistik</string>
   <string name="marker_type_waypoint">Wegpunkt</string>
   <string name="menu_aggregated_statistics">Aggregierte Statistiken</string>
@@ -84,11 +84,11 @@ limitations under the License.
   <string name="sd_card_error_write_file">Die Datei kann nicht geschrieben werden.</string>
   <string name="sd_card_success_read_file">Lesen von der SD-Karte beendet.</string>
   <string name="sd_card_success_write_file">Der Track wurde auf die SD-Karte geschrieben.</string>
-  <string name="send_google_choose_account">Wähle ein Konto</string>
+  <string name="send_google_choose_account_title">Wähle ein Konto</string>
   <string name="send_google_docs">Google Text &amp; Tabellen</string>
   <string name="send_google_error">Ein Fehler ist aufgetreten. Bitte versuche es noch einmal.</string>
-  <string name="send_google_no_account">Kein Konto vorhanden</string>
   <string name="send_google_no_account_message">Kein Konto gefunden, um Tracks zu versenden.</string>
+  <string name="send_google_no_account_title">Kein Konto vorhanden</string>
   <string name="send_google_progress_preparing_track">Bereite Track vor...</string>
   <string name="send_google_progress_reading_track">Lese Track...</string>
   <string name="send_google_recorded">Aufgezeichnet am</string>
@@ -113,7 +113,7 @@ limitations under the License.
   <string name="settings_backup_restore_confirm_message">Eine Wiederherstellung von der SD-Karte ÜBERSCHREIBT alle vorhandenen Tracks und Einstellungen. Willst Du das wirklich?</string>
   <string name="settings_backup_restore_no_backup">Keine Datensicherungen gefunden.</string>
   <string name="settings_backup_restore_progress_message">Lese alle Tracks und Einstellungen von der SD-Karte. Dies kann eine Weile dauern...</string>
-  <string name="settings_backup_restore_select">Wähle die wiederherzustellende Datensicherung aus</string>
+  <string name="settings_backup_restore_select_title">Wähle die wiederherzustellende Datensicherung aus</string>
   <string name="settings_backup_restore_summary">Alle Tracks und Einstellungen von der SD-Karte holen.</string>
   <string name="settings_backup_sd_card">SD-Karten-Sicherung</string>
   <string name="settings_display">Anzeige</string>
@@ -190,6 +190,7 @@ limitations under the License.
   <string name="track_detail_track_description">Beschreibung</string>
   <string name="track_detail_track_name">Name</string>
   <string name="track_list_clear_map">Karte zurücksetzen.</string>
+  <string name="track_list_context_menu_title">Dieser Track</string>
   <string name="track_list_delete_all">Alle Tracks löschen</string>
   <string name="track_list_delete_all_confirm_message">Alle Tracks und Wegpunkte werden endgültig von diesem Gerät gelöscht.</string>
   <string name="track_list_delete_track">Vom Gerät löschen…</string>
@@ -201,7 +202,6 @@ limitations under the License.
   <string name="track_list_send_google">An Google senden…</string>
   <string name="track_list_share_track">Mit Freunden teilen…</string>
   <string name="track_list_show_on_map">Anzeigen</string>
-  <string name="track_list_this_track">Dieser Track</string>
   <string name="track_record_error">Start der Aufzeichnung fehlgeschlagen. Bitte versuche es noch einmal.</string>
   <string name="track_record_notification">Dein Track wird aufgezeichnet…</string>
   <string name="track_record_success">Ein neuer Track wird aufgezeichnet.</string>

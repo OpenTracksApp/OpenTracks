@@ -29,12 +29,12 @@ limitations under the License.
   <string name="export_success">Exporta les finalitzades</string>
   <string name="generic_cancel">Cancel·la</string>
   <string name="generic_confirm_title">Esteu segur?</string>
-  <string name="generic_error">Error</string>
+  <string name="generic_error_title">Error</string>
   <string name="generic_no">No</string>
   <string name="generic_ok">D\'acord</string>
   <string name="generic_progress_title">Espereu...</string>
   <string name="generic_save">Desa</string>
-  <string name="generic_success">Fet</string>
+  <string name="generic_success_title">Fet</string>
   <string name="generic_yes">Sí</string>
   <string name="gps_need_to_enable">Toqueu aquí per anar als paràmetres de seguretat i ubicació i activeu \'habilita els satèl·lits GPS\'. Premeu el botó d\'anar enrere per tornar.</string>
   <string name="gps_not_found">No s\'ha trobat cap proveïdor d\'ubicació GPS en aquest dispositiu.</string>
@@ -48,6 +48,7 @@ limitations under the License.
   <string name="marker_insert_success">S\'ha inserit un marcador d\'estadístiques.</string>
   <string name="marker_label_end">(Fi)</string>
   <string name="marker_label_start">(Inici)</string>
+  <string name="marker_list_context_menu_title">Aquest marcador</string>
   <string name="marker_list_delete_marker">Elimina</string>
   <string name="marker_list_delete_marker_confirm_message">El marcador s\'eliminarà de forma permanent d\'aquest telèfon.</string>
   <string name="marker_list_edit_marker">Edita els detalls</string>
@@ -55,7 +56,6 @@ limitations under the License.
   <string name="marker_list_insert_waypoint">Insereix un punt de referència</string>
   <string name="marker_list_pick_one">Seleccioneu un marcador. Mantingueu el dit per veure més opcions.</string>
   <string name="marker_list_show_on_map">Mostra al mapa</string>
-  <string name="marker_list_this_marker">Aquest marcador</string>
   <string name="marker_type_statistics">Estadístiques</string>
   <string name="marker_type_waypoint">Punt de referència</string>
   <string name="menu_aggregated_statistics">Estadístiques agregades</string>
@@ -81,10 +81,10 @@ limitations under the License.
   <string name="sd_card_error_write_file">No es pot escriure a un fitxer.</string>
   <string name="sd_card_success_read_file">S\'ha finalitzat la lectura a la targeta SD.</string>
   <string name="sd_card_success_write_file">S\'ha finalitzat l\'escriptura a la targeta SD.</string>
-  <string name="send_google_choose_account">Trieu un compte</string>
+  <string name="send_google_choose_account_title">Trieu un compte</string>
   <string name="send_google_error">S\'ha produït un error. Proveu de nou.</string>
-  <string name="send_google_no_account">No s\'ha trobat cap compte</string>
   <string name="send_google_no_account_message">No s\'ha trobat cap compte on pujar les rutes.</string>
+  <string name="send_google_no_account_title">No s\'ha trobat cap compte</string>
   <string name="send_google_progress_preparing_track">S\'està preparant la ruta...</string>
   <string name="send_google_progress_reading_track">S\'està llegint la ruta...</string>
   <string name="send_google_recorded">Enregistrat</string>
@@ -108,7 +108,7 @@ limitations under the License.
   <string name="settings_backup_restore_confirm_message">La restauració d\'una còpia de seguretat des de la targeta SD sobreescriurà totes les rutes i paràmetres. Esteu segur?</string>
   <string name="settings_backup_restore_no_backup">No s\'ha trobat cap còpia de seguretat.</string>
   <string name="settings_backup_restore_progress_message">S\'estan llegint totes les rutes i els paràmetres de la targeta SD. Això pot trigar una estona...</string>
-  <string name="settings_backup_restore_select">Seleccioneu la còpia que es restaurarà</string>
+  <string name="settings_backup_restore_select_title">Seleccioneu la còpia que es restaurarà</string>
   <string name="settings_backup_restore_summary">Restaura totes les rutes i els paràmetres des de la targeta SD.</string>
   <string name="settings_backup_sd_card">Còpia de seguretat a la targeta SD</string>
   <string name="settings_display">Visualització</string>
@@ -181,6 +181,7 @@ limitations under the License.
   <string name="track_detail_track_description">Descripció de la ruta</string>
   <string name="track_detail_track_name">Nom de la ruta</string>
   <string name="track_list_clear_map">Neteja el mapa</string>
+  <string name="track_list_context_menu_title">Aquesta ruta</string>
   <string name="track_list_delete_all">Elimina totes les rutes</string>
   <string name="track_list_delete_all_confirm_message">Tots els marcadors i rutes s\'eliminaran d\'aquest telèfon.</string>
   <string name="track_list_delete_track">Elimina del telèfon...</string>
@@ -192,7 +193,6 @@ limitations under the License.
   <string name="track_list_send_google">Envia a Google...</string>
   <string name="track_list_share_track">Comparteix amb amics...</string>
   <string name="track_list_show_on_map">Mostra</string>
-  <string name="track_list_this_track">Aquesta ruta</string>
   <string name="track_name_format">Ruta %d</string>
   <string name="track_record_error">No es pot iniciar l\'enregistrament. Proveu de nou.</string>
   <string name="track_record_notification">S\'està enregistrant la ruta...</string>

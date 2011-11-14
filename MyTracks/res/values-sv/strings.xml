@@ -29,12 +29,12 @@ limitations under the License.
   <string name="export_success">Exporteringen slutfördes</string>
   <string name="generic_cancel">Avbryt</string>
   <string name="generic_confirm_title">Är du säker?</string>
-  <string name="generic_error">Fel</string>
+  <string name="generic_error_title">Fel</string>
   <string name="generic_no">Nej</string>
   <string name="generic_ok">OK</string>
   <string name="generic_progress_title">Var god vänta...</string>
   <string name="generic_save">Spara</string>
-  <string name="generic_success">Lyckades</string>
+  <string name="generic_success_title">Lyckades</string>
   <string name="generic_yes">Ja</string>
   <string name="gps_need_to_enable">Klicka här för att gå till Säkerhet och Platsinställningar och kryssa i \'aktivera gps-satteliter\'. Tryck på tillbakaknappen för att återgå.</string>
   <string name="gps_not_found">Ingen GPS-positioneringstjänst hittades på denna enhet.</string>
@@ -48,6 +48,7 @@ limitations under the License.
   <string name="marker_insert_success">En statistikmarkör har lagts in.</string>
   <string name="marker_label_end">(Slut)</string>
   <string name="marker_label_start">(Start)</string>
+  <string name="marker_list_context_menu_title">Den här markören</string>
   <string name="marker_list_delete_marker">Ta bort</string>
   <string name="marker_list_delete_marker_confirm_message">Markören kommer att permanent tas bort från telefonen.</string>
   <string name="marker_list_edit_marker">Ändra detaljer</string>
@@ -55,7 +56,6 @@ limitations under the License.
   <string name="marker_list_insert_waypoint">Infoga positionspunkt</string>
   <string name="marker_list_pick_one">Välj en markör. Tryck &amp; håll för fler alternativ.</string>
   <string name="marker_list_show_on_map">Visa på karta</string>
-  <string name="marker_list_this_marker">Den här markören</string>
   <string name="marker_type_statistics">Statistik</string>
   <string name="marker_type_waypoint">Positionsmärke</string>
   <string name="menu_chart_view_chart_settings">Diagraminställningar</string>
@@ -77,10 +77,10 @@ limitations under the License.
   <string name="sd_card_error_no_storage">Ingen extern lagring hittades. Se till att ett SD-kort sitter i och att telefonen inte är monterad till en dator.</string>
   <string name="sd_card_error_write_file">Kan inte skriva till filen.</string>
   <string name="sd_card_success_write_file">Slutförde skrivningen av spåret till SD-kort.</string>
-  <string name="send_google_choose_account">Välj konto</string>
+  <string name="send_google_choose_account_title">Välj konto</string>
   <string name="send_google_docs">Google Dokument</string>
-  <string name="send_google_no_account">Inget konto hittades</string>
   <string name="send_google_no_account_message">Inget konto hittades att ladda upp spåret till.</string>
+  <string name="send_google_no_account_title">Inget konto hittades</string>
   <string name="send_google_progress_preparing_track">Förbereder spår...</string>
   <string name="send_google_progress_reading_track">Läser spår...</string>
   <string name="send_google_recorded">Inspelad</string>
@@ -143,6 +143,7 @@ limitations under the License.
   <string name="track_detail_track_description">Spårbeskrivning</string>
   <string name="track_detail_track_name">Spårnamn</string>
   <string name="track_list_clear_map">Rensa karta</string>
+  <string name="track_list_context_menu_title">Det här spåret</string>
   <string name="track_list_delete_all">Ta bort alla spår</string>
   <string name="track_list_delete_all_confirm_message">Alla spår och markörer kommer att tas bort från telefonen.</string>
   <string name="track_list_delete_track">Ta bort från telefonen...</string>
@@ -154,7 +155,6 @@ limitations under the License.
   <string name="track_list_send_google">Skicka till Google...</string>
   <string name="track_list_share_track">Dela med vänner...</string>
   <string name="track_list_show_on_map">Visa</string>
-  <string name="track_list_this_track">Det här spåret</string>
   <string name="track_name_format">Spår %d</string>
   <string name="track_record_error">Kan inte starta inspelningen. Försök igen.</string>
   <string name="track_record_notification">Spelar in ditt spår...</string>

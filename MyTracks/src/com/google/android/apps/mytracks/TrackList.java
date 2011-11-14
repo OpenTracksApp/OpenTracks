@@ -75,7 +75,7 @@ public class TrackList extends ListActivity
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v,
             ContextMenuInfo menuInfo) {
-          menu.setHeaderTitle(R.string.track_list_this_track);
+          menu.setHeaderTitle(R.string.track_list_context_menu_title);
           AdapterView.AdapterContextMenuInfo info =
               (AdapterView.AdapterContextMenuInfo) menuInfo;
           contextPosition = info.position;

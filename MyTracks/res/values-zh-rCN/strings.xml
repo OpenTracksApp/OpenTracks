@@ -32,12 +32,12 @@ limitations under the License.
   <string name="export_success">导出完毕</string>
   <string name="generic_cancel">取消</string>
   <string name="generic_confirm_title">请确认</string>
-  <string name="generic_error">错误</string>
+  <string name="generic_error_title">错误</string>
   <string name="generic_no">否</string>
   <string name="generic_ok">确定</string>
   <string name="generic_progress_title">请稍候...</string>
   <string name="generic_save">保存</string>
-  <string name="generic_success">成功</string>
+  <string name="generic_success_title">成功</string>
   <string name="generic_yes">是</string>
   <string name="gps_need_to_enable">请点击这里进入\'安全和位置设置\'并勾选上\'启用 GPS 卫星\'. 然后用后退键返回.</string>
   <string name="gps_not_found">此设备上没有 GPS 定位装置.</string>
@@ -54,6 +54,7 @@ limitations under the License.
   <string name="marker_insert_success">插入了一个统计标记.</string>
   <string name="marker_label_end">(结束)</string>
   <string name="marker_label_start">(开始)</string>
+  <string name="marker_list_context_menu_title">此标记</string>
   <string name="marker_list_delete_marker">删除</string>
   <string name="marker_list_delete_marker_confirm_message">选定标记将被从本机删除.</string>
   <string name="marker_list_edit_marker">编辑详情</string>
@@ -61,7 +62,6 @@ limitations under the License.
   <string name="marker_list_insert_waypoint">插入路点</string>
   <string name="marker_list_pick_one">选择一个标记. 长按弹出操作菜单.</string>
   <string name="marker_list_show_on_map">在地图上显示</string>
-  <string name="marker_list_this_marker">此标记</string>
   <string name="marker_type_statistics">统计</string>
   <string name="marker_type_waypoint">路点</string>
   <string name="menu_aggregated_statistics">累积统计</string>
@@ -90,16 +90,16 @@ limitations under the License.
   <string name="sd_card_error_write_file">无法写入文件.</string>
   <string name="sd_card_success_read_file">从 SD 存储卡读取完毕.</string>
   <string name="sd_card_success_write_file">轨迹已导出到 SD 存储卡.</string>
-  <string name="send_google_choose_account">选择帐户</string>
+  <string name="send_google_choose_account_title">选择帐户</string>
   <string name="send_google_existing_map">选择已有地图</string>
   <string name="send_google_new_map">创建新地图</string>
-  <string name="send_google_no_account">没有帐户</string>
   <string name="send_google_no_account_message">没有可用于上传轨迹的帐户.</string>
+  <string name="send_google_no_account_title">没有帐户</string>
   <string name="send_google_progress_preparing_track">准备轨迹中...</string>
   <string name="send_google_progress_reading_track">读取轨迹中...</string>
   <string name="send_google_recorded">记录日期</string>
+  <string name="send_google_result_header">上传状态:</string>
   <string name="send_google_result_share_url">分享轨迹</string>
-  <string name="send_google_result_title">上传状态:</string>
   <string name="send_google_send_now">立即发送</string>
   <string name="send_google_success_footer">可能需要等待几分钟才能看见新的轨迹.</string>
   <string name="send_google_title">发送到...</string>
@@ -120,7 +120,7 @@ limitations under the License.
   <string name="settings_backup_restore_confirm_message">从 SD 存储卡恢复备份数据将覆盖掉你当前的所有轨迹和设置. 确定要继续吗?</string>
   <string name="settings_backup_restore_no_backup">没有找到备份文件.</string>
   <string name="settings_backup_restore_progress_message">从 SD 存储卡读取轨迹和设置中. 这需要一些时间...</string>
-  <string name="settings_backup_restore_select">请选择要恢复的备份文件</string>
+  <string name="settings_backup_restore_select_title">请选择要恢复的备份文件</string>
   <string name="settings_backup_restore_summary">从 SD 存储卡恢复所有轨迹和设置</string>
   <string name="settings_backup_sd_card">SD 存储卡备份</string>
   <string name="settings_display">显示</string>
@@ -207,6 +207,7 @@ limitations under the License.
   <string name="track_detail_track_description">轨迹描述</string>
   <string name="track_detail_track_name">轨迹名称</string>
   <string name="track_list_clear_map">清除地图</string>
+  <string name="track_list_context_menu_title">此轨迹</string>
   <string name="track_list_delete_all">删除所有轨迹</string>
   <string name="track_list_delete_all_confirm_message">所以轨迹和标记都将被从本机删除.</string>
   <string name="track_list_delete_track">从手机上删除...</string>
@@ -220,7 +221,6 @@ limitations under the License.
   <string name="track_list_share_track">与朋友分享...</string>
   <string name="track_list_share_url">访问地图的超链接</string>
   <string name="track_list_show_on_map">显示</string>
-  <string name="track_list_this_track">此轨迹</string>
   <string name="track_name_format">轨迹 %d</string>
   <string name="track_record_error">无法开始记录. 请重试.</string>
   <string name="track_record_notification">记录轨迹中...</string>

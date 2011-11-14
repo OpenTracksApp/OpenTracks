@@ -34,7 +34,7 @@ limitations under the License.
   <string name="generic_confirm_title">¿Está usted seguro?</string>
   <string name="generic_progress_title">Por favor espere...</string>
   <string name="generic_save">Guardar</string>
-  <string name="generic_success">Éxito</string>
+  <string name="generic_success_title">Éxito</string>
   <string name="generic_yes">Sí</string>
   <string name="gps_need_to_enable">Por favor, presione aquí para ir al menú de Seguridad y Ubicación, y asegúrese que el GPS esté habilitado. Presione el botón "atrás" para regresar.</string>
   <string name="gps_not_found">Ningún proveedor de ubicación GPS fue hallado en este dispositivo.</string>
@@ -51,6 +51,7 @@ limitations under the License.
   <string name="marker_insert_success">Un marcador de estadísticas fue insertado.</string>
   <string name="marker_label_end">(Fin)</string>
   <string name="marker_label_start">(Inicio)</string>
+  <string name="marker_list_context_menu_title">Este marcador</string>
   <string name="marker_list_delete_marker">Borrar</string>
   <string name="marker_list_delete_marker_confirm_message">La señal será borrada permanentemente de este teléfono.</string>
   <string name="marker_list_edit_marker">Editar detalles"</string>
@@ -58,7 +59,6 @@ limitations under the License.
   <string name="marker_list_insert_waypoint">Insertar marcador"</string>
   <string name="marker_list_pick_one">Escoja un marcador. Presione&amp; mantenga presionado para ver más opciones.</string>
   <string name="marker_list_show_on_map">Mostrar en el mapa"</string>
-  <string name="marker_list_this_marker">Este marcador</string>
   <string name="marker_type_statistics">Estadísticas</string>
   <string name="marker_type_waypoint">Marcador de recorrido</string>
   <string name="menu_aggregated_statistics">Estadísticas recorrido</string>
@@ -94,19 +94,19 @@ limitations under the License.
   <string name="sd_card_error_write_file">No es posible escribir al archivo.</string>
   <string name="sd_card_success_read_file">Lectura de tarjeta SD concluída.</string>
   <string name="sd_card_success_write_file">Grabación a tarjeta SD concluída.</string>
-  <string name="send_google_choose_account">Elija una cuenta</string>
+  <string name="send_google_choose_account_title">Elija una cuenta</string>
   <string name="send_google_error">A ocurrido un error. Por favor, inténtelo de nuevo.</string>
   <string name="send_google_existing_map">Elegir un mapa existente</string>
   <string name="send_google_fusion_tables">Tablas Google Fusion</string>
   <string name="send_google_my_maps">Mis Sitios Google</string>
   <string name="send_google_new_map">Crear nuevo mapa</string>
-  <string name="send_google_no_account">Cuenta no encontrada</string>
   <string name="send_google_no_account_message">No se encontro la cuenta a la que subir las rutas.</string>
+  <string name="send_google_no_account_title">Cuenta no encontrada</string>
   <string name="send_google_progress_preparing_track">Preparando recorrido...</string>
   <string name="send_google_progress_reading_track">Leyendo recorrido...</string>
   <string name="send_google_recorded">Grabado</string>
+  <string name="send_google_result_header">Estado del envío:</string>
   <string name="send_google_result_share_url">Compartir recorrido</string>
-  <string name="send_google_result_title">Estado del envío:</string>
   <string name="send_google_send_now">Enviar ahora</string>
   <string name="send_google_success_footer">Es posible que pasen unos minutos hasta que los nuevos recorridos aparezcan.</string>
   <string name="send_google_title">Enviar a...</string>
@@ -128,7 +128,7 @@ limitations under the License.
   <string name="settings_backup_restore_confirm_message">Restaurar una copia seguridad desde la tarjeta SD SOBREESCRIBIRÁ todos sus recorridos y configuraciones actuales. ¿Está usted seguro?</string>
   <string name="settings_backup_restore_no_backup">No se han encontrado copias seguridad.</string>
   <string name="settings_backup_restore_progress_message">Leyendo todos los recorridos y configuraciones desde la tarjeta SD. Esto puede llevar un rato...</string>
-  <string name="settings_backup_restore_select">Seleccionar la copia seguridad para restaurar</string>
+  <string name="settings_backup_restore_select_title">Seleccionar la copia seguridad para restaurar</string>
   <string name="settings_backup_restore_summary">Restaurar todos los recorridos y configuraciones desde la tarjeta SD</string>
   <string name="settings_backup_sd_card">Copia seguridad en tarjeta SD</string>
   <string name="settings_display">Visualizador</string>
@@ -231,6 +231,7 @@ limitations under the License.
   <string name="track_detail_track_description">Descripción del recorrido</string>
   <string name="track_detail_track_name">Nombre del recorrido</string>
   <string name="track_list_clear_map">"Limpiar mapa"</string>
+  <string name="track_list_context_menu_title">Este recorrido"</string>
   <string name="track_list_delete_all">Borrar todos</string>
   <string name="track_list_delete_all_confirm_message">Todos los recorridos y señales serán borradas de este teléfono.</string>
   <string name="track_list_delete_track">Borrar del teléfono...</string>
@@ -244,7 +245,6 @@ limitations under the License.
   <string name="track_list_share_track">Compartir con amigos..."</string>
   <string name="track_list_share_url">Un enlace al mapa</string>
   <string name="track_list_show_on_map">Mostrar</string>
-  <string name="track_list_this_track">Este recorrido"</string>
   <string name="track_name_format">Recorrido %d</string>
   <string name="track_record_error">No se puede iniciar la grabación. Inténtelo de nuevo. </string>
   <string name="track_record_notification">Grabando su recorrido...</string>

@@ -166,7 +166,7 @@ public class BackupActivityHelper {
     // Show a dialog for the user to pick which backup to restore
     Builder dialogBuilder = new AlertDialog.Builder(activity);
     dialogBuilder.setCancelable(true);
-    dialogBuilder.setTitle(R.string.settings_backup_restore_select);
+    dialogBuilder.setTitle(R.string.settings_backup_restore_select_title);
     dialogBuilder.setItems(backupDateStrs, new OnClickListener() {
       @Override
       public void onClick(DialogInterface dialog, int which) {
