@@ -162,7 +162,7 @@ limitations under the License.
               android:exported="false" />
 
     <service android:name="com.google.android.apps.mytracks.services.TrackRecordingService"
-             android:label="@string/my_tracks_service_name"
+             android:label="@string/my_tracks_recording_service"
              android:icon="@drawable/arrow_320"
              android:enabled="true"
              android:exported="true"

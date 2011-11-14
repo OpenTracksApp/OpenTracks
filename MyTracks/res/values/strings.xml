@@ -653,10 +653,10 @@ limitations under the License.
   </string>
 
   <!-- My Tracks Service -->
-  <string name="my_tracks_service_name"
-    translation_description="When viewing the 'Running services' on Android, the name for the My
-      Tracks service.">
-    My Tracks service
+  <string name="my_tracks_recording_service"
+    translation_description="When viewing the 'Running services' on Android, the name of the My
+      Tracks service that is recording a track in the background.">
+    Track recording service
   </string>
 
   <!-- Permission -->
