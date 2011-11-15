@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+  <string name="about_support">Suporte:</string>
+  <string name="about_team">Equipe:</string>
+  <string name="about_version">Versão:</string>
+  <string name="chart_settings_by_distance">Por Distância</string>
+  <string name="chart_settings_by_time">Por Tempo</string>
+  <string name="chart_settings_x_axis">Eixo X</string>
+  <string name="chart_settings_y_axis">Eixo Y</string>
+  <string name="eula_accept">Aceitar</string>
+  <string name="eula_decline">Recusar</string>
+  <string name="eula_title">Contrato de Licença de Usuário Final</string>
+  <string name="export_progress_message">Salvando arquivo para o cartão SD. Isso pode demorar alguns instantes.</string>
+  <string name="generic_cancel">Cancelar</string>
+  <string name="generic_confirm_title">Você tem certeza?</string>
+  <string name="generic_error_title">Erro</string>
+  <string name="generic_no">Não</string>
+  <string name="generic_progress_title">Por favor aguarde...</string>
+  <string name="generic_save">Salvar</string>
+  <string name="generic_success_title">Successo</string>
+  <string name="generic_yes">Sim</string>
+  <string name="gps_need_to_enable">"Por favor pressione aqui para ir aos ajustes de segurança e localização e verifique que o GPS esteja habilitado. Pressione o botão de voltar para retornar.</string>
+  <string name="gps_not_found">"Provedor de posição de GPS não encontrado neste dispositivo.</string>
+  <string name="gps_wait_for_fix">Esperando por um sinal melhor do GPS.  Assegure-se de que o céu está visível.</string>
+  <string name="marker_detail_marker_description">Descrição do Marcador</string>
+  <string name="marker_detail_marker_name">Nome do Marcador</string>
+  <string name="marker_detail_marker_type">Tipo do Marcador (por ex. Prédio, Mirante, Cachoeira...)</string>
+  <string name="marker_detail_marker_type_hint">Tipo do Marcador</string>
+  <string name="marker_detail_title">Detalhes do Marcador</string>
+  <string name="marker_insert_error">Impossível inserir marcador - posição indisponível.</string>
+  <string name="marker_insert_success">Um marcador de estatísticas foi inserido..</string>
+  <string name="marker_label_end">(Fim)</string>
+  <string name="marker_label_start">(Início)</string>
+  <string name="marker_list_context_menu_title">Este Marcador</string>
+  <string name="marker_list_delete_marker">Apagar</string>
+  <string name="marker_list_delete_marker_confirm_message">O marcador será permanentemente apagado deste telefone.</string>
+  <string name="marker_list_edit_marker">Editar detalhes</string>
+  <string name="marker_list_insert_statistics">Inserir estatísticas</string>
+  <string name="marker_list_insert_waypoint">Inserir ponto no caminho</string>
+  <string name="marker_list_pick_one">Escolha um marcador.  Pressione&amp;segure para mais opções.</string>
+  <string name="marker_list_show_on_map">Mostrar no mapa</string>
+  <string name="marker_type_statistics">Estatísticas</string>
+  <string name="marker_type_waypoint">Ponto de passagem</string>
+  <string name="menu_chart_view_chart_settings">Configurações do gráfico</string>
+  <string name="menu_help">Ajuda</string>
+  <string name="menu_map_view_map_mode">Modo do mapa</string>
+  <string name="menu_map_view_my_location">Minha Localização</string>
+  <string name="menu_map_view_satellite_mode">Modo do satélite</string>
+  <string name="menu_markers">Marcadores</string>
+  <string name="menu_record_track">Gravar caminho</string>
+  <string name="menu_settings">Configurações</string>
+  <string name="menu_stop_recording">Para gravação</string>
+  <string name="menu_tracks">Caminhos</string>
+  <string name="my_location_approximate_location">Nota: Uma localização aproximada, determinada por torres de telefonia celular, está sendo mostrada.</string>
+  <string name="my_location_no_location">Sua localização não pôde ser determinada.  Habilite fontes adicionais de localização (veja configurações de Segurança e Localização) e assegure-se de que o céu está visível.</string>
+  <string name="my_maps_list_no_maps">Você ainda não tem nenhum mapa.</string>
+  <string name="my_maps_list_public_label">Público</string>
+  <string name="my_maps_list_unlisted_label">Não listado</string>
+  <string name="sd_card_error_create_dir">Impossível criar diretório no cartão SD.</string>
+  <string name="sd_card_error_no_storage">Nenhum armazenamento externo foi encontrado. Assegure-se de que um cartão SD esteja inserido e que seu telefone não esteja montado em um computador.</string>
+  <string name="sd_card_error_write_file">Impossível gravar arquivo.</string>
+  <string name="sd_card_success_write_file">Gravação no cartão SD concluída.</string>
+  <string name="send_google_choose_account_title">Escolher conta</string>
+  <string name="send_google_docs">Google Docs</string>
+  <string name="send_google_no_account_message">Não foi encontrada nenhuma conta para a qual trilhas possam ser enviadas.</string>
+  <string name="send_google_no_account_title">Nenhuma conta encontrada</string>
+  <string name="send_google_progress_preparing_track">Preparando caminho...</string>
+  <string name="send_google_progress_reading_track">Lendo caminho...</string>
+  <string name="send_google_recorded">Gravado</string>
+  <string name="send_google_result_share_url">Compartilhar caminho com amigos</string>
+  <string name="send_google_send_now">Enviar agora</string>
+  <string name="send_google_title">Enviar para...</string>
+  <string name="send_google_track_part_label">"(Parte %d)</string>
+  <string name="settings_display">Exibição</string>
+  <string name="settings_display_metric">Unidades métricas</string>
+  <string name="settings_display_metric_summary_off">Todas as distâncias serão exibidas em unidades imperiais</string>
+  <string name="settings_display_metric_summary_on">Todas as distâncias serão exibidas em unidades métricas</string>
+  <string name="settings_display_speed">Exibir velocidade</string>
+  <string name="settings_display_speed_summary_off">O passo será exibido</string>
+  <string name="settings_display_speed_summary_on">A velocidade será exibida</string>
+  <string name="settings_not_while_recording">Não disponível durante a gravação de uma trilha</string>
+  <string name="settings_recording">Gravação</string>
+  <string name="settings_recording_distance">Dist. mín. entre pontos</string>
+  <string name="settings_recording_distance_summary">Menor distância entre duas gravações da sua posição</string>
+  <string name="settings_recording_gps_accuracy">Precisão mínima</string>
+  <string name="settings_recording_gps_accuracy_summary">A gravação será interrompida enquanto a precisão da sua posição for menor que esta</string>
+  <string name="settings_recording_interval">Tempo mín. entre pontos</string>
+  <string name="settings_recording_interval_summary">Menor intervalo de tempo entre a gravação de dois pontos</string>
+  <string name="settings_recording_marker">Freqüência de divisão</string>
+  <string name="settings_recording_marker_summary">Maior tempo ou distância de uma gravação antes que ela seja dividida em duas</string>
+  <string name="settings_recording_track_distance">Dist. máx. entre pontos</string>
+  <string name="settings_recording_track_distance_summary">Se dois pontos forem mais distantes do que isto, a trilha será dividida</string>
+  <string name="settings_recording_voice">Tempo entre anúncios</string>
+  <string name="settings_recording_voice_not_available">Não disponível na sua versão do Android</string>
+  <string name="settings_recording_voice_summary">Tempo mínimo entre dois anúncios de voz</string>
+  <string name="settings_sharing">Compartilhamento</string>
+  <string name="settings_sharing_map_public">Tornar mapas públicos</string>
+  <string name="settings_sharing_map_public_summary_off">Os mapas enviados ao maps.google.com não serão listados publicamente</string>
+  <string name="settings_sharing_map_public_summary_on">Os mapas enviados ao maps.google.com serão visíveis por qualquer pessoa</string>
+  <string name="settings_sharing_url_only">Compartilhar apenas URL</string>
+  <string name="settings_sharing_url_only_summary_off">O conteúdo do mapa também será incluído ao compartilhar</string>
+  <string name="settings_title">Configurações do My Tracks</string>
+  <string name="share_track_file_body_format">Eu acredito que você pode se interesasr por este caminho.\n\nPara visualizar este caminho, use o Google Earth ou outro software de mapas.</string>
+  <string name="share_track_subject">Eu gostaria de compartilhar um caminho com você</string>
+  <string name="share_track_url_body_format">Eu acredito que você pode se interessar por este mapa:\n\n%s</string>
+  <string name="stat_average_moving_pace">Passo Médio em Movimento</string>
+  <string name="stat_average_moving_speed">Velocidade Méd. em Movimento</string>
+  <string name="stat_average_pace">Passo Médio</string>
+  <string name="stat_average_speed">Velocidade Média</string>
+  <string name="stat_elevation">Elevação</string>
+  <string name="stat_elevation_gain">Ganho de elevação</string>
+  <string name="stat_max_elevation">Elevação Máxima</string>
+  <string name="stat_max_grade">Subida máxima</string>
+  <string name="stat_max_speed">Velocidade Máxima</string>
+  <string name="stat_min_elevation">Elevação Mínima</string>
+  <string name="stat_min_grade">Subida mínima</string>
+  <string name="stat_min_pace">Passo Mínimo</string>
+  <string name="stat_moving_time">Tempo em Movimento</string>
+  <string name="stat_pace">Passo</string>
+  <string name="stat_speed">Velocidade</string>
+  <string name="stat_total_distance">Distância Total</string>
+  <string name="stat_total_time">Tempo Total</string>
+  <string name="track_detail_activity_type">Tipo de Atividade (por ex. caminhada, ciclismo, escalada...)</string>
+  <string name="track_detail_activity_type_hint">Tipo de Atividade</string>
+  <string name="track_detail_title">Detalhes do Caminho</string>
+  <string name="track_detail_track_description">Descrição do Caminho</string>
+  <string name="track_detail_track_name">Nome do Caminho</string>
+  <string name="track_list_clear_map">Limpar mapa</string>
+  <string name="track_list_context_menu_title">Este Caminho</string>
+  <string name="track_list_delete_all">Apagar todos os caminhos</string>
+  <string name="track_list_delete_all_confirm_message">Todos os seus caminhos e marcadores serão apagados deste telefone.</string>
+  <string name="track_list_delete_track">Apagar do telefone...</string>
+  <string name="track_list_delete_track_confirm_message">O caminho e todos os seus marcadores serão permanentemente apagados deste telefone.</string>
+  <string name="track_list_edit_track">Editar detalhes</string>
+  <string name="track_list_pick_one">Escolha um caminho. Pressione&amp;segure para mais opções.</string>
+  <string name="track_list_save_sd">Salvar no cartão SD...</string>
+  <string name="track_list_send_google">Enviar para o Google...</string>
+  <string name="track_list_share_track">Compartilhar com amigos...</string>
+  <string name="track_list_share_url">Um link para a mapa</string>
+  <string name="track_list_show_on_map">Mostrar</string>
+  <string name="track_name_format">"Caminho %d</string>
+  <string name="track_record_error">Impossível iniciar a gravação. Tente novamente.</string>
+  <string name="track_record_notification">"Gravando seu caminho...</string>
+  <string name="track_record_success">Gravando um novo caminho.</string>
+  <string name="unit_feet">pés</string>
+  <string name="unit_hour">h</string>
+  <string name="voice_hour">hora</string>
+  <string name="voice_hours">horas</string>
+  <string name="voice_kilometer_per_hour">kilômetros por hora</string>
+  <string name="voice_kilometers">kilômetros</string>
+  <string name="voice_mile_per_hour">milhas por hora</string>
+  <string name="voice_miles">milhas</string>
+  <string name="voice_minute">minuto</string>
+  <string name="voice_minutes">minutos</string>
+  <string name="voice_no_distance">My Tracks sem distância</string>
+  <string name="voice_per_kilometer">por kilômetro</string>
+  <string name="voice_per_mile">por milha</string>
+  <string name="voice_second">segundo</string>
+  <string name="voice_seconds">segundos</string>
+  <string name="voice_template">My Tracks %1$.2f %2$s em %3$s a %4$s %5$s</string>
+  <string name="welcome_about">Sobre My Tracks</string>
+  <string name="welcome_title">Bem-vindo</string>
+</resources>
