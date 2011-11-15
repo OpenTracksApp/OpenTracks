@@ -79,9 +79,9 @@ class WriteProgressController {
   public ProgressDialog createProgressDialog() {
     dialog = new ProgressDialog(activity);
     dialog.setIcon(android.R.drawable.ic_dialog_info);
-    dialog.setTitle(activity.getString(R.string.progress_title));
+    dialog.setTitle(activity.getString(R.string.generic_progress_title));
     dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-    dialog.setMessage(activity.getString(R.string.write_progress_message));
+    dialog.setMessage(activity.getString(R.string.export_progress_message));
     dialog.setIndeterminate(true);
     dialog.setOnCancelListener(dialogCancelListener);
     return dialog;

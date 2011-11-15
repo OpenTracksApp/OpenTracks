@@ -62,7 +62,6 @@ public abstract class Constants {
   public static final int MENU_MY_LOCATION = 1;
   public static final int MENU_TOGGLE_LAYERS = 2;
   public static final int MENU_CHART_SETTINGS = 3;
-  public static final int MENU_CURRENT_SEGMENT = 4;
 
   /*
    * Context menu ids:

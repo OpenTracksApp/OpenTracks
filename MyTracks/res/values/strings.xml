@@ -15,528 +15,2085 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-  <!-- Used by the Menu -->
-  <string name="start_recording">Record track</string>
-  <string name="stop_recording">Stop recording</string>
-  <string name="switch_to_sat">Satellite Mode</string>
-  <string name="switch_to_map">Map Mode</string>
-  <string name="mylocation">My Location</string>
-  <string name="list_tracks">Tracks</string>
-  <string name="list_markers">Markers</string>
-  <string name="delete_all_tracks">Delete all tracks</string>
-  <string name="settings">Settings</string>
-  <string name="elevation">Elevation</string>
-  <string name="choose_track_message">Please select the track to view</string>
-  <string name="current_track">Current track</string>
-  <string name="current_segment">Last segment</string>
-  <string name="sensor_state">Sensor State</string>
-  <string name="aggregated_stats">Aggregated Statistics</string>
 
-  <!-- Error messages -->
-  <string name="error_no_location_manager">No location manager was found on this device!</string>
-  <string name="error_no_gps_location_provider">No GPS location provider was found on this device.</string>
-  <string name="error_sending_to_mymap">There was an error while sending your track to Google My Map.</string>
-  <string name="error_sending_to_fusiontables">There was an error while sending your track to Google Fusion Tables.</string>
-  <string name="error_sending_to_docs">There was an error while sending your track to Google Docs.</string>
-  <string name="error_please_try_again_later">Please try again later.</string>
-  <string name="error_unable_to_start_recording">Unable to start recording. Try again.</string>
-  <string name="error_unable_to_stop_recording">Unable to stop recording. Try again.</string>
-  <string name="error_unable_to_read_file">Unable to read from file.</string>
-  <string name="error_invalid_gpx_format">File does not have a valid GPX format.</string>
-  <string name="error_generic">An error occurred. Please try again.</string>
-  <string name="error_track_does_not_exist">Track does not exist.</string>
-  <string name="error_operation_cancelled">The operation was cancelled.</string>
-  <string name="error_out_of_memory">This file is too big (must be less than 500 KB). Aborting.</string>
-  <string name="error_unable_to_insert_marker">Unable to insert marker. No location fix available.</string>
+  <!-- About Page -->
+  <string name="about_copyright_notice"
+    translation_description="In the 'About My Tracks' page, the copyright notice.">
+    Copyright 2009 Google Inc.
+  </string>
+  <string name="about_license"
+    translation_description="In the 'About My Tracks' page, the button on the bottom to view the
+      terms of service agreement.">
+    License
+  </string>
+  <string name="about_privacy"
+    translation_description="In the 'About My Tracks' page, label for the privacy link. E.g.,
+      'Privacy: m.google.com/privacy'.">
+    Privacy:
+  </string>
+  <string name="about_support"
+    translation_description="In the 'About My Tracks' page, label for the support link. E.g.,
+      'Support: mytracks.appspot.com'.">
+    Support:
+  </string>
+  <string name="about_team"
+    translation_description="In the 'About My Tracks' page, label for the team members. E.g.,
+      'Team: Sandor Dornbush, Rodrigo Damazio'.">
+    Team:
+  </string>
+  <string name="about_version"
+    translation_description="In the 'About My Tracks' page, label for the version number. E.g.,
+      'Version: 1.1.10'.">
+    Version:
+  </string>
 
-  <!-- Status messages -->
-  <string name="wait_for_fix">Waiting for a better GPS fix. Make sure the sky is visible.</string>
-  <string name="status_now_recording">Now recording a new track.</string>
-  <string name="status_stopped_recording">Stopped recording your track.</string>
-  <string name="status_new_mymap_has_been_created">A new Google My Map has been created at maps.google.com.</string>
-  <string name="status_new_fusiontable_has_been_created">A new Google Fusion table has been created at google.com/fusiontables.</string>
-  <string name="status_tracks_have_been_uploaded">Your track has been sent to maps.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_new_doc">Your track has been sent to a new spreadsheet at docs.google.com.</string>
-  <string name="status_tracks_have_been_uploaded_to_docs">Your track has been sent to docs.google.com.</string>
-  <string name="status_mymap_info">It may take a few minutes before new tracks appear.</string>
-  <string name="status_enable_gps">Please tap here to go to Security and Location Settings and check \'enable GPS satellites\'. Press back button to return.</string>
-  <string name="status_approximate_location">Note: An approximate location as determined from cell towers and WIFI networks is shown.</string>
-  <string name="status_no_location">A location can currently not be determined. Enable more location sources (see Security and Location Settings) and make sure the sky is visible. Try again later.</string>
-  <string name="status_waypoint_inserted">A way point marker was inserted.</string>
-  <string name="status_statistics_inserted">A statistics marker was inserted.</string>
-  <string name="status_track_upload_status">Upload status:</string>
-
-  <!-- Progress dialog -->
-  <string name="progress_title">Please wait...</string>
-  <string name="progress_message">Sending your track to Google.</string>
-  <string name="progress_message_reading_track">Reading track...</string>
-  <string name="progress_message_preparing_track">Preparing track...</string>
-  <string name="progress_message_authenticating_fusiontables">Authenticating to Google Fusion Tables...</string>
-  <string name="progress_message_authenticating_mymaps">Authenticating to Google Maps...</string>
-  <string name="progress_message_authenticating_docs">Authenticating to Google Docs...</string>
-  <string name="progress_message_sending_docs">Sending track to Google Docs...</string>
-  <string name="progress_message_sending_mymaps">Sending track to Google Maps...</string>
-  <string name="progress_message_creating_map">Creating new My Map...</string>
-  <string name="progress_message_sending_fusiontables">Sending track to Fusion Tables...</string>
-  <string name="progress_message_creating_fusiontable">Creating new Fusion table...</string>
-  <string name="import_progress_message">Importing a GPS track. This may take a while.</string>
-  <string name="write_progress_message">Writing file to SD card. This may take a while.</string>
-  <string name="progress_message_updating_track">Updating track statistics...</string>
-
-  <!-- Used by deletion actions -->
-  <string name="deletetrack_title">Delete track</string>
-  <string name="are_you_sure_question">Are you sure?</string>
-  <string name="all_data_will_be_permanently_deleted">All tracks and markers will be deleted from this phone.</string>
-  <string name="track_will_be_permanently_deleted">The track and its markers will be permanently deleted from this phone.</string>
-  <string name="marker_will_be_permanently_deleted">The marker will be permanently deleted from this phone.</string>
-
-  <!-- Text and links when uploading to Google Fusion Tables -->
-  <string name="new_map_description">Created by My Tracks on Android.</string>
-  <string name="fusiontable_link">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
-
-  <!-- Text and links when uploading to Google My Maps -->
-  <string name="my_map_link">Created by &lt;a href=\'http://mytracks.appspot.com\'&gt;My Tracks&lt;/a&gt; on Android.</string>
-  <string name="new_map_title">New map</string>
-
-  <!-- Formatting of track and marker descriptions -->
-  <string name="points">Points</string>
-  <string name="recorded_date">Recorded</string>
-  <string name="category">Activity type</string>
-  <string name="waypoint_category">Marker type</string>
-  <string name="part">(Part %d)</string>
-
-  <!-- Used by the track recording service -->
-  <string name="recording_your_track">Recording your track...</string>
-  <string name="new_track">Track %d</string>
-
-  <!-- Common -->
-  <string name="no">No</string>
-  <string name="yes">Yes</string>
-  <string name="ok">OK</string>
-  <string name="error">Error</string>
-  <string name="success">Success</string>
-  <string name="waypoint">Waypoint</string>
-  <string name="license">License</string>
-  <string name="cancel">Cancel</string>
-  <string name="close">Close</string>
-  <string name="edit">Edit</string>
-  <string name="save">Save</string>
-
-  <!-- Placemark labels for start and end of track -->
-  <string name="start">(Start)</string>
-  <string name="end">(End)</string>
-
-  <!--  TrackList -->
-  <string name="tracklist_show_track">Show</string>
-  <string name="tracklist_send_to_mymaps">Send to Google My Maps</string>
-  <string name="tracklist_send_to_new_mymap">Send to New Google My Map</string>
-  <string name="tracklist_send_to_fusiontables">Send to Google Fusion Tables</string>
-  <string name="tracklist_send_to_new_fusiontable">Send to New Google Fusion Table</string>
-  <string name="tracklist_send_to_docs">Send to Google Docs</string>
-  <string name="tracklist_send_to_google">Send to Google...</string>
-  <string name="tracklist_delete_track">Delete from phone...</string>
-  <string name="tracklist_edit_track">Edit details</string>
-  <string name="tracklist_write_to_sd">Write to SD card...</string>
-  <string name="tracklist_save_as_gpx">Save a GPX file</string>
-  <string name="tracklist_save_as_kml">Save a KML file</string>
-  <string name="tracklist_save_as_csv">Save a CSV file</string>
-  <string name="tracklist_save_as_tcx">Save a TCX file</string>
-  <string name="tracklist_btn_send_all_to_fusiontables">Send to Google Fusion Tables</string>
-  <string name="tracklist_btn_send_all_to_mymaps">Send to Google My Maps</string>
-  <string name="tracklist_btn_delete_all">Delete all</string>
-  <!-- Export All -->
-  <string name="tracklist_btn_export_all">Export all</string>
-  <string name="export_done">Export finished</string>
-  <string name="tracklist_pick_one">Pick a track. Press&amp;hold for more options.</string>
-  <string name="tracklist_all_tracks">All Tracks:</string>
-  <string name="tracklist_this_track">This Track</string>
-  <string name="tracklist_share_track">Share with Friends...</string>
-  <string name="tracklist_share_link">A link to the map</string>
-  <string name="tracklist_share_gpx_file">A GPX file</string>
-  <string name="tracklist_share_kml_file">A KML file</string>
-  <string name="tracklist_share_csv_file">A CSV file</string>
-  <string name="tracklist_share_tcx_file">A TCX file</string>
-  <string name="tracklist_clear_map">Clear map</string>
-  <!-- Import All -->
-  <string name="tracklist_btn_import_all">Import all</string>
-  <!-- Format:
-  $1 : Successful imports
-  $2 : Attempted imports
-  $3 : MyTracks gpx path
-  -->
-  <string name="import_multi_done">Imported %1$d of %2$d GPX files from %3$s</string>
-  <string name="import_multi_empty">No GPX files found in %s. SD card may be unreadable or directory may not contain GPX files.</string>
-  <string name="import_error">Import error for file %s</string>
-  <string name="import_title">Import into My Tracks</string>
-  <string name="import_success">Successfully imported %1$d track(s) from file.</string>
-  <string name="import_show_track">Show track</string>
-
-  <!-- Waypoints list -->
-  <string name="waypointslist_btn_delete_all">Delete all markers</string>
-  <string name="waypointslist_this_waypoint">This Marker</string>
-  <string name="waypointslist_delete_waypoint">Delete</string>
-  <string name="waypointslist_edit_waypoint">Edit details</string>
-  <string name="waypointslist_show_waypoint">Show on map</string>
-  <string name="waypointslist_btn_insert_waypoint">Insert waypoint</string>
-  <string name="waypointslist_btn_insert_statistics">Insert statistics</string>
-  <string name="waypointslist_pick_one">Pick a marker. Press&amp;hold for more options.</string>
-
-  <!-- MyTracks Details -->
-  <string name="trackdetails_title">Track Details</string>
-  <string name="trackdetails_name">Track Name</string>
-  <string name="trackdetails_name_hint">Track Name</string>
-  <string name="trackdetails_description">Track Description</string>
-  <string name="trackdetails_description_hint">Track Description</string>
-  <string name="trackdetails_category">Activity Type (e.g. hiking, cycling, running, climbing...)</string>
-  <string name="trackdetails_category_hint">Activity Type</string>
-
-  <!-- MyTracks Waypoint Details -->
-  <string name="waypointdetails_title">Marker Details</string>
-  <string name="waypointdetails_name">Marker Name</string>
-  <string name="waypointdetails_name_hint">Marker Name</string>
-  <string name="waypointdetails_description">Marker Description</string>
-  <string name="waypointdetails_description_hint">Marker Description</string>
-  <string name="waypointdetails_category">Marker Type (e.g. Building, Pothole, Sight...)</string>
-  <string name="waypointdetails_category_hint">Marker Type</string>
-
-  <!-- MyTracks Settings -->
-  <string name="mytracks_settings">My Tracks Settings</string>
-  <string name="settings_display">Display</string>
-  <string name="settings_recording">Recording</string>
-  <string name="settings_sharing">Sharing</string>
-
-  <string name="settings_not_available_summary">Not available in your version of Android</string>
-  <string name="settings_not_while_recording">Not available while recording a track</string>
-
-  <string name="settings_announcement_frequency">Announcement frequency</string>
-  <string name="settings_announcement_frequency_summary">Minimum time between two voice announcements</string>
-
-  <string name="settings_min_recording_distance">Min distance between points</string>
-  <string name="settings_min_recording_distance_summary">Smallest distance between two recordings of your position</string>
-
-  <string name="settings_max_recording_distance">Max distance between points</string>
-  <string name="settings_max_recording_distance_summary">If two points are further than this, the track will be split</string>
-
-  <string name="settings_min_recording_interval">Min time between points</string>
-  <string name="settings_min_recording_interval_summary">Smallest time interval between two recordings of your position</string>
-
-  <string name="settings_min_required_accuracy">Minimum accuracy</string>
-  <string name="settings_min_required_accuracy_summary">Recording will be paused if your position is not at least this accurate</string>
-
-  <string name="settings_metric_units">Use metric units</string>
-  <string name="settings_metric_units_summary_on">All distances will be displayed in metric units</string>
-  <string name="settings_metric_units_summary_off">All distances will be displayed in imperial units</string>
-
-  <string name="settings_map_public">Make maps public</string>
-  <string name="settings_map_public_summary_on">Uploaded maps will be visible to anyone on maps.google.com</string>
-  <string name="settings_map_public_summary_off">Uploaded maps will not be listed publicly on maps.google.com</string>
-
-  <string name="settings_report_speed_or_pace">Display speed</string>
-  <string name="settings_report_speed_or_pace_summary_on">Speed will be displayed</string>
-  <string name="settings_report_speed_or_pace_summary_off">Pace will be displayed</string>
-
-  <string name="settings_share_url_only">Share only URL</string>
-  <string name="settings_share_url_only_summary_on">Only the URL of the map will be sent when sharing</string>
-  <string name="settings_share_url_only_summary_off">The contents of the track will also be included when sharing</string>
-
-  <string name="settings_split_frequency">Split frequency</string>
-  <string name="settings_split_frequency_summary">Maximum time or distance after which a new split marker will be inserted</string>
-
-  <string name="settings_auto_resume_track_timeout">Auto-resume track timeout</string>
-  <string name="settings_auto_resume_track_timeout_summary">Maximum time in minutes after which a previously recording track will not be resumed on phone reboot</string>
-
-  <string name="settings_timestamp_track_name">Timestamp as track name</string>
-  <string name="settings_timestamp_track_name_summary_on">The default track name will be the date and time at the start of the track</string>
-  <string name="settings_timestamp_track_name_summary_off">Track names will have numbers which increment for each new track.</string>
-
-  <string name="settings_reset">Reset to defaults</string>
-  <string name="settings_reset_summary">Revert all your settings to the default values</string>
-  <string name="settings_reset_dialog_message">All your settings will be erased and reverted to the default values. Saved tracks will be preserved. Are you sure?</string>
-  <string name="settings_reset_done">All settings have been reverted to their defaults.</string>
-
-  <string name="pace_label">Pace</string>
-
-  <string name="eclair_required">Only supported in Android 2.0 or above</string>
-  <string name="settings_sensor_type">Sensor Type</string>
-  <string name="settings_sensor_type_summary">The type of sensor to connect to</string>
-  <string name="settings_heart_rate_ant_sensor_id">Clear ANT heart rate sensor pairing</string>
-  <string name="settings_power_ant_sensor_id">Clear ANT power sensor pairing</string>
-  <string name="settings_srm_bridge_ant_sensor_id">Clear ANT SRM bridge sensor pairing</string>
-  <string name="settings_ant_not_paired">ANT sensor not paired</string>
-  <string name="settings_ant_paired">ANT sensor paired with: %d</string>
-  <string name="bluetooth_sensor_title">Bluetooth sensor</string>
-  <string name="bluetooth_sensor_summary">The bluetooth sensor to connect to</string>
-  <string name="settings_modular_stats_display_title">Modular Stats Display</string>
-
-  <string name="settings_track_color_mode">Track Color Mode</string>
-  <string name="settings_track_color_mode_summary">The way to color the track</string>
-  <string name="settings_track_color_mode_fixed">Fixed</string>
-  <string name="settings_track_color_mode_dynamic">Dynamic</string>
-  <string name="settings_track_color_mode_fixed_speed_slow">Fixed Speed Slow</string>
-  <string name="settings_track_color_mode_fixed_speed_slow_summary">Slow speed top value</string>
-  <string name="settings_track_color_mode_fixed_speed_medium">Fixed Speed Medium</string>
-  <string name="settings_track_color_mode_fixed_speed_medium_summary">Medium speed top value</string>
-  <string name="settings_track_color_mode_dynamic_speed_variation">Dynamic Speed Variation</string>
-  <string name="settings_track_color_mode_dynamic_speed_variation_summary">% Margin from average speed to consider medium speed</string>
-  
-  <!-- Backups -->
-  <string name="settings_backup">Backup (BETA)</string>
-  <string name="settings_sd_backup">SD Card Backup</string>
-  <string name="settings_backup_to_sd">Backup now</string>
-  <string name="settings_backup_to_sd_summary">Write a full copy of all your tracks and settings to the SD card</string>
-  <string name="settings_restore_from_sd">Restore now</string>
-  <string name="settings_restore_from_sd_summary">Restore all tracks and settings from the SD card</string>
-
-  <string name="restore_overwrites_warning">Restoring a backup from the SD card will OVERWRITE all your current tracks and settings. Are you sure?</string>
-  <string name="select_backup_to_restore">Select the backup to restore</string>
-  <string name="no_backups">No backups found.</string>
-  <string name="backup_write_progress_message">Writing all tracks and settings to the SD card. This may take a while...</string>
-  <string name="backup_import_progress_message">Reading all tracks and settings from the SD card. This may take a while...</string>
-
-  <!-- MyTracksSky -->
-  <string name="mytracks_sky">GPS Satellites</string>
-
-  <!-- My Maps -->
-  <string name="select_map_message">Pick a map from your account:</string>
-  <string name="create_new_map">Create new map...</string>
-  <string name="map_list_title">Send to Google My Maps</string>
-  <string name="maps_list_loading">Loading maps...</string>
-  <string name="maps_list_failed">Your maps could not be loaded at this time!</string>
-  <string name="open_map">Select this Map</string>
-  <string name="edit_map_details">Edit Map Details</string>
-  <string name="share_track">Share Track</string>
-  <string name="delete_map">Delete Map from your Account</string>
-  <string name="map_title">Map Title:</string>
-  <string name="map_description">Map Description:</string>
-  <string name="map_searchable_edit">Make this map and its contents show up in search results</string>
-  <string name="map_not_searchable_edit">Do not let this map or its contents show up in search results, though they may still be viewed be others through the direct URL</string>
-  <string name="map_searchable">This map and its contents will show in search results</string>
-  <string name="map_not_searchable">Neither this map nor its contents will show in search results, but they may still be viewed by others through a direct link</string>
-
-  <!-- Sharing -->
-  <string name="share_map">Share map with friends</string>
-  <string name="share_map_subject">I would like to share a track with you</string>
-  <string name="share_map_body_format">I think you might be interested in this track:
-
-      %s</string>
-  <string name="send_track_subject">I would like to share a track with you</string>
-  <string name="send_track_body_format">I think you might be interested in this track.
-
-    To view this track use Google Earth or other mapping software.</string>
-
-  <!-- Visibility -->
-  <string name="public_map">Public</string>
-  <string name="unlisted_map">Unlisted</string>
-  <string name="mapslist_no_maps_available">You don\'t have any maps, yet.</string>
-
-  <!-- Statistics View -->
-  <!-- Average Moving -->
-  <string name="average_moving_speed_label">Average Moving Speed</string>
-  <string name="average_moving_pace_label">Average Moving Pace</string>
-
-  <!-- Average -->
-  <string name="average_speed_label">Average Speed</string>
-  <string name="average_pace_label">Average Pace</string>
-
-  <string name="elevation_chart_name">Elevation Chart</string>
-  <string name="elevation_gain_label">Elevation Gain</string>
-  <string name="elevation_label">Elevation</string>
-  <string name="latitude_label">Latitude</string>
-  <string name="longitude_label">Longitude</string>
-
-  <!-- Min -->
-  <string name="min_elevation_label">Min Elevation</string>
-  <string name="min_grade_label">Min Grade</string>
-  <string name="min_pace_label">Min Pace</string>
-
-  <!-- Max -->
-  <string name="max_elevation_label">Max Elevation</string>
-  <string name="max_grade_label">Max Grade</string>
-  <string name="max_speed_label">Max Speed</string>
-
-  <string name="loading_track">Loading track...</string>
+  <!-- Activity Type -->
+  <string name="activity_type_airplane"
+    translation_description="When entering the Activity Type, an option for airplane.">
+    airplane
+  </string>
+  <string name="activity_type_atv"
+    translation_description="When entering the Activity Type, an option for ATV (All Terrain
+      Vehicles).">
+    ATV
+  </string>
+  <string name="activity_type_blimp"
+    translation_description="When entering the Activity Type, an option for blimp.">
+    blimp
+  </string>
+  <string name="activity_type_climbing"
+    translation_description="When entering the Activity Type, an option for climbing.">
+    climbing
+  </string>
+  <string name="activity_type_commercial_airplane"
+    translation_description="When entering the Activity Type, an option for commercial airplane.">
+    commercial airplane
+  </string>
+  <string name="activity_type_cross_country_skiing_classic"
+    translation_description="When entering the Activity Type, an option for cross-country skiing
+      (classic).">
+    cross-country skiing (classic)
+  </string>
+  <string name="activity_type_cross_country_skiing_skate"
+    translation_description="When entering the Activity Type, an option for cross-country skiing
+      (skate).">
+    cross-country skiing (skate)
+  </string>
+  <string name="activity_type_cycling"
+    translation_description="When entering the Activity Type, an option for cycling.">
+    cycling
+  </string>
+  <string name="activity_type_dirt_bike"
+    translation_description="When entering the Activity Type, an option for dirt bike.">
+    dirt bike
+  </string>
+  <string name="activity_type_donkey_back_riding"
+    translation_description="When entering the Activity Type, an option for donkey back riding.">
+    donkey back riding
+  </string>
+  <string name="activity_type_driving_bus"
+    translation_description="When entering the Activity Type, an option for driving bus.">
+    driving bus
+  </string>
+  <string name="activity_type_driving_car"
+    translation_description="When entering the Activity Type, an option for driving car.">
+    driving car
+  </string>
+  <string name="activity_type_ferry"
+    translation_description="When entering the Activity Type, an option for ferry.">
+    ferry
+  </string>
+  <string name="activity_type_frisbee"
+    translation_description="When entering the Activity Type, an option for frisbee.">
+    frisbee
+  </string>
+  <string name="activity_type_gliding"
+    translation_description="When entering the Activity Type, an option for gliding.">
+    gliding
+  </string>
+  <string name="activity_type_hang_gliding"
+    translation_description="When entering the Activity Type, an option for hang gliding.">
+    hang gliding
+  </string>
+  <string name="activity_type_helicopter"
+    translation_description="When entering the Activity Type, an option for helicopter.">
+    helicopter
+  </string>
+  <string name="activity_type_hiking"
+    translation_description="When entering the Activity Type, an option for hiking.">
+    hiking
+  </string>
+  <string name="activity_type_horse_back_riding"
+    translation_description="When entering the Activity Type, an option for horse back riding.">
+    horse back riding
+  </string>
+  <string name="activity_type_hot_air_balloon"
+    translation_description="When entering the Activity Type, an option for hot air balloon.">
+    hot air balloon
+  </string>
+  <string name="activity_type_ice_sailing"
+    translation_description="When entering the Activity Type, an option for ice sailing.">
+    ice sailing
+  </string>
+  <string name="activity_type_inline_skating"
+    translation_description="When entering the Activity Type, an option for inline skating.">
+    inline skating
+  </string>
+  <string name="activity_type_kayaking"
+    translation_description="When entering the Activity Type, an option for kayaking.">
+    kayaking
+  </string>
+  <string name="activity_type_kite_surfing"
+    translation_description="When entering the Activity Type, an option for kite surfing.">
+    kite surfing
+  </string>
+  <string name="activity_type_land_sailing"
+    translation_description="When entering the Activity Type, an option for land sailing.">
+    land sailing
+  </string>
+  <string name="activity_type_mixed_type"
+    translation_description="When entering the Activity Type, an option for mixed type.">
+    mixed type
+  </string>
+  <string name="activity_type_motor_bike"
+    translation_description="When entering the Activity Type, an option for motor bike.">
+    motor bike
+  </string>
+  <string name="activity_type_motor_boating"
+    translation_description="When entering the Activity Type, an option for motor boating.">
+    motor boating
+  </string>
+  <string name="activity_type_mountain_biking"
+    translation_description="When entering the Activity Type, an option for mountain biking.">
+    mountain biking
+  </string>
+  <string name="activity_type_off_trail_hiking"
+    translation_description="When entering the Activity Type, an option for off trail hiking.">
+    off trail hiking
+  </string>
+  <string name="activity_type_other"
+    translation_description="When entering the Activity Type, an option for other.">
+    other
+  </string>
+  <string name="activity_type_paddling"
+    translation_description="When entering the Activity Type, an option for paddling.">
+    paddling
+  </string>
+  <string name="activity_type_para_gliding"
+    translation_description="When entering the Activity Type, an option for para gliding.">
+    para gliding
+  </string>
+  <string name="activity_type_rc_airplane"
+    translation_description="When entering the Activity Type, an option for RC (Remote Controlled)
+      airplane.">
+    RC airplane
+  </string>
+  <string name="activity_type_rc_boat"
+    translation_description="When entering the Activity Type, an option for RC (Remote Controlled)
+      boat.">
+    RC boat
+  </string>
+  <string name="activity_type_rc_helicopter"
+    translation_description="When entering the Activity Type, an option for RC (Remote Controlled)
+      helicopter.">
+    RC helicopter
+  </string>
+  <string name="activity_type_riding"
+    translation_description="When entering the Activity Type, an option for riding.">
+    riding
+  </string>
+  <string name="activity_type_road_biking"
+    translation_description="When entering the Activity Type, an option for road biking.">
+    road biking
+  </string>
+  <string name="activity_type_roller_skiing_classic"
+    translation_description="When entering the Activity Type, an option for roller skiing
+      (classic).">
+    roller skiing (classic)
+  </string>
+  <string name="activity_type_roller_skiing_skate"
+    translation_description="When entering the Activity Type, an option for roller skiing (skate).">
+    roller skiing (skate)
+  </string>
+  <string name="activity_type_rowing"
+    translation_description="When entering the Activity Type, an option for rowing.">
+    rowing
+  </string>
+  <string name="activity_type_running"
+    translation_description="When entering the Activity Type, an option for running.">
+    running
+  </string>
+  <string name="activity_type_sailing"
+    translation_description="When entering the Activity Type, an option for sailing.">
+    sailing
+  </string>
+  <string name="activity_type_seaplane"
+    translation_description="When entering the Activity Type, an option for seaplane.">
+    seaplane
+  </string>
+  <string name="activity_type_skate_boarding"
+    translation_description="When entering the Activity Type, an option for skate boarding.">
+    skate boarding
+  </string>
+  <string name="activity_type_skating"
+    translation_description="When entering the Activity Type, an option for skating.">
+    skating
+  </string>
+  <string name="activity_type_skiing"
+    translation_description="When entering the Activity Type, an option for skiing.">
+    skiing
+  </string>
+  <string name="activity_type_sky_jumping"
+    translation_description="When entering the Activity Type, an option for sky jumping.">
+    sky jumping
+  </string>
+  <string name="activity_type_sled"
+    translation_description="When entering the Activity Type, an option for sled.">
+    sled
+  </string>
+  <string name="activity_type_snow_boarding"
+    translation_description="When entering the Activity Type, an option for snow boarding.">
+    snow boarding
+  </string>
+  <string name="activity_type_snow_shoeing"
+    translation_description="When entering the Activity Type, an option for snow shoeing.">
+    snow shoeing
+  </string>
+  <string name="activity_type_speed_walking"
+    translation_description="When entering the Activity Type, an option for speed walking.">
+    speed walking
+  </string>
+  <string name="activity_type_street_running"
+    translation_description="When entering the Activity Type, an option for street running.">
+    street running
+  </string>
+  <string name="activity_type_surfing"
+    translation_description="When entering the Activity Type, an option for surfing.">
+    surfing
+  </string>
+  <string name="activity_type_track_cycling"
+    translation_description="When entering the Activity Type, an option for track cycling.">
+    track cycling
+  </string>
+  <string name="activity_type_track_running"
+    translation_description="When entering the Activity Type, an option for track running.">
+    track running
+  </string>
+  <string name="activity_type_trail_hiking"
+    translation_description="When entering the Activity Type, an option for trail hiking.">
+    trail hiking
+  </string>
+  <string name="activity_type_trail_running"
+    translation_description="When entering the Activity Type, an option for trail running.">
+    trail running
+  </string>
+  <string name="activity_type_train"
+    translation_description="When entering the Activity Type, an option for train.">
+    train
+  </string>
+  <string name="activity_type_ultimate_frisbee"
+    translation_description="When entering the Activity Type, an option for ultimate frisbee.">
+    ultimate frisbee
+  </string>
+  <string name="activity_type_unknown"
+    translation_description="When entering the Activity Type, an option for unknown.">
+    unknown
+  </string>
+  <string name="activity_type_wakeboarding"
+    translation_description="When entering the Activity Type, an option for wakeboarding.">
+    wakeboarding
+  </string>
+  <string name="activity_type_walking"
+    translation_description="When entering the Activity Type, an option for walking.">
+    walking
+  </string>
+  <string name="activity_type_water_skiing"
+    translation_description="When entering the Activity Type, an option for water skiing.">
+    water skiing
+  </string>
+  <string name="activity_type_wind_surfing"
+    translation_description="When entering the Activity Type, an option for wind surfing.">
+    wind surfing
+  </string>
 
   <!-- Chart Settings -->
-  <string name="chart_settings">Chart Settings</string>
-  <!-- X Axis -->
-  <string name="x_axis">X Axis</string>
-  <string name="by_distance">By Distance</string>
-  <string name="by_time">By Time</string>
+  <string name="chart_settings_by_distance"
+    translation_description="In the Chart Settings, under the 'X axis' section, the radio option
+      to show the charts by distance. The other radio option is to show by time. User can only
+      choose one of the options.">
+    By distance
+  </string>
+  <string name="chart_settings_by_time"
+    translation_description="In the Chart Settings, under the 'X axis' section, the radio option
+      to show the charts by time. The other radio option is to show by distance. User can only
+      choose one of the options.">
+    By time
+  </string>
+  <string name="chart_settings_x_axis"
+    translation_description="In the Chart Settings, the section label for configuring the X axis.">
+    X axis
+  </string>
+  <string name="chart_settings_y_axis"
+    translation_description="In the Chart Settings, the section label for configuring the Y axis.">
+    Y axis
+  </string>
 
-  <!-- Y Axis -->
-  <string name="y_axis">Y Axis</string>
+  <!-- EULA -->
+  <string name="eula_accept"
+    translation_description="In the 'End User License Agreement' dialog, the button to accept.">
+    Accept
+  </string>
+  <string name="eula_decline"
+    translation_description="In the 'End User License Agreement' dialog, the button to decline.">
+    Decline
+  </string>
+  <string name="eula_title"
+    translation_description="The title for the terms of service dialog, asking the user to accept
+      or decline.">
+    End User License Agreement
+  </string>
 
-  <!-- Units -->
-  <!-- Time  -->
-  <string name="hour">hour</string>
-  <string name="hours">hours</string>
-  <string name="hr">hr</string>
-  <string name="min">min</string>
-  <string name="minute">minute</string>
-  <string name="minutes">minutes</string>
-  <string name="second">second</string>
-  <string name="seconds">seconds</string>
-  <string name="milliseconds">ms</string>
+  <!-- Export -->
+  <string name="export_canceled"
+    translation_description="When exporting a track to the SD card, a message indicating that the
+      export operation was canceled.">
+    The operation was canceled.
+  </string>
+  <string name="export_error"
+    translation_description="When exporting a track to the SD card, a generic error message
+      indicating unable to export.">
+    Unable to export.
+  </string>
+  <string name="export_progress_message"
+    translation_description="When exporting a track to the SD card, the message on the progress
+      dialog indicating that it may take a while.">
+    Exporting a track to the SD card. This may take a while.
+  </string>
+  <string name="export_success"
+    translation_description="After exporting all the tracks to the SD card, a toast message
+      indicating success.">
+    Export finished.
+  </string>
 
-  <!-- Distance -->
-  <string name="meter">m</string>
-  <string name="kilometer">km</string>
-  <string name="kilometers_long">kilometers</string>
-  <string name="feet">ft</string>
-  <string name="mile">mi</string>
-  <string name="miles_long">miles</string>
+  <!-- Generic Strings -->
+  <string name="generic_cancel"
+    translation_description="The text on a button to say cancel.">
+    Cancel
+  </string>
+  <string name="generic_confirm_title"
+    translation_description="The title on a confirmation dialog asking the user if he is sure?">
+    Are you sure?
+  </string>
+  <string name="generic_error_title"
+    translation_description="The title on an alert dialog indicating error.">
+    Error
+  </string>
+  <string name="generic_no"
+    translation_description="The text on a button to say no.">
+    No
+  </string>
+  <string name="generic_ok"
+    translation_description="The text on a button to say ok.">
+    OK
+  </string>
+  <string name="generic_progress_title"
+    translation_description="The title on a progress dialog asking the user to wait.">
+    Please wait...
+  </string>
+  <string name="generic_save"
+    translation_description="The text on a button to say save.">
+    Save
+  </string>
+  <string name="generic_success_title"
+    translation_description="The title on an alert dialog indicating success.">
+    Success
+  </string>
+  <string name="generic_yes"
+    translation_description="The text on a button to say yes.">
+    Yes
+  </string>
 
-  <!-- Speed and Pace -->
-  <string name="kilometer_per_hour">km/h</string>
-  <string name="kilometer_per_hour_long">kilometers per hour</string>
-  <string name="min_per_kilometer">min/km</string>
-  <string name="per_kilometer">per kilometer</string>
-  <string name="mile_per_hour">mi/h</string>
-  <string name="mile_per_hour_long">miles per hour</string>
-  <string name="min_per_mile">min/mi</string>
-  <string name="per_mile">per mile</string>
+  <!-- GPS -->
+  <string name="gps_need_to_enable"
+    translation_description="In the main view, the message on the top asking the user to enable
+      GPS.">
+    Please tap here to go to \'Location &amp; security\' settings &amp; check
+    \'Use GPS satellites\'. Press the back button to return.
+  </string>
+  <string name="gps_not_found"
+    translation_description="On application start, message when there is no GPS on the device.">
+    No GPS is found on the device.
+  </string>
+  <string name="gps_wait_for_fix"
+    translation_description="In the main view, the message on the top indicating My Tracks is
+      waiting for a better GPS fix.">
+    Waiting for a better GPS fix. Make sure the sky is visible.
+  </string>
 
-  <!-- Sensors -->
-  <string name="watts">W</string>
+  <!-- Import -->
+  <string name="import_error"
+    translation_description="When importing all the tracks, a toast message indicating import error
+      for one of the tracks.
 
-  <string name="revolutions_per_minute">rpm</string>
-  <string name="bpm">bpm</string>
-  <string name="battery_level">Battery Level</string>
+      %1$s: file path of the track encountering error. E.g., '/mnt/sdcard/MyTacks/gpx/1.gpx'.">
+    Import error for file %1$s.
+  </string>
+  <string name="import_no_file"
+    translation_description="After importing all the tracks from the SD card, the alert message
+      indicating that no track is imported.
 
-  <!-- Stats Labels -->
-  <string name="moving_time_label">Moving Time</string>
-  <string name="total_time_label">Total Time</string>
-  <string name="time_label">Time</string>
-  <string name="sd_unavail">SD Unavailable</string>
-  <string name="speed">Speed</string>
-  <string name="start_trip">You must start a trip.</string>
-  <string name="statistics">Statistics</string>
-  <string name="total_distance_label">Total Distance</string>
-  <string name="distance_label">Distance</string>
-  <string name="power">Power</string>
-  <string name="cadence">Cadence</string>
-  <string name="heart_rate">Heart Rate</string>
-  <string name="max_heart_rate">Max Heart Rate</string>
-  <string name="unknown">-</string>
-  <string name="waiting">Waiting...</string>
+      %1$s: file path of the import directory. E.g., '/mnt/sdcard/MyTracks/gpx/'.">
+    No GPX file found in %1$s. The SD card may be unreadable or the directory may not contain any
+    GPX file.
+  </string>
+  <string name="import_success"
+    translation_description="After importing all the tracks from the SD card, the alert message
+      indicating success.
 
-  <!-- End User License Agreement -->
-  <string name="eula_title">End User License Agreement</string>
-  <string name="accept">Accept</string>
-  <string name="decline">Decline</string>
+      %1$d the number of successfully imported tracks. E.g., '5'.
+      %2$d the number of total tracks to be imported. E.g., '6'.
+      %3$s file path of the import directory. E.g., '/mnt/sdcard/MyTracks/gpx/'.">
+    Imported to My Tracks %1$d of %2$d GPX files from %3$s.
+  </string>
 
-  <!-- About -->
-  <string name="about">About</string>
-  <string name="help">Help</string>
-  <string name="about_team">Team:</string>
-  <string name="about_version">Version:</string>
-  <string name="about_support">Support:</string>
-  <string name="about_privacy">Privacy:</string>
+  <!-- Marker -->
+  <string name="marker_detail_marker_description"
+    translation_description="In the detail page for a waypoint marker, the text field for the marker
+      description.">
+    Marker description
+  </string>
+  <string name="marker_detail_marker_name"
+    translation_description="In the detail page for a waypoint or statistics marker, text field for
+      the marker name.">
+    Marker name
+  </string>
+  <string name="marker_detail_marker_type"
+    translation_description="In the detail page for a waypoint marker, the text field for the
+      marker type, including examples.">
+    Marker type (e.g. building, pothole, sight...)
+  </string>
+  <string name="marker_detail_marker_type_hint"
+    translation_description="In the detail page for a waypoint marker, the hint in the 'Marker type'
+      text field when it is empty.">
+    Marker type
+  </string>
+  <string name="marker_detail_title"
+    translation_description="In the detail page for a waypoint or statistics marker, the title of
+      the page.">
+    Marker details
+  </string>
+  <string name="marker_insert_error"
+    translation_description="When inserting a marker, message when not able to insert due to no GPS
+      location and asking the user to try again.">
+    Unable to insert a marker. No GPS location. Try again.
+  </string>
+  <string name="marker_insert_success"
+    translation_description="When inserting a new marker, a message indicating success.">
+    A marker was inserted.
+  </string>
+  <string name="marker_label_end"
+    translation_description="When inserting a marker to indicate the end of a track, the label at
+      the end of the marker name. E.g., the marker is named 'track_name (End)'.">
+    (End)
+  </string>
+  <string name="marker_label_start"
+    translation_description="When inserting a marker to indicate the beginning of a track, the label
+      at the end of the marker name. E.g., the marker is named 'track_name (Start)'.">
+    (Start)
+  </string>
+  <string name="marker_list_context_menu_title"
+    translation_description="In the context menu for a marker, the title indicating that all the
+      menu options below are for this marker.">
+    This marker
+  </string>
+  <string name="marker_list_delete_marker"
+    translation_description="In the context menu for a marker, the menu option to delete the
+      marker.">
+    Delete
+  </string>
+  <string name="marker_list_delete_marker_confirm_message"
+    translation_description="In the context menu for a marker, when pressing the 'Delete' option,
+      the confirmation dialog message informing the user that the marker will be permanently
+      deleted from the phone.">
+    The marker will be permanently deleted from the phone.
+  </string>
+  <string name="marker_list_edit_marker"
+    translation_description="In the context menu for a marker, the menu option to edit the marker's
+      metadata (e.g., name, type, etc.).">
+    Edit
+  </string>
+  <string name="marker_list_insert_statistics"
+    translation_description="In the Markers page, the button on the bottom to insert a statistics
+      marker.">
+    Insert statistics
+  </string>
+  <string name="marker_list_insert_waypoint"
+    translation_description="In the Markers page, the button on the bottom to insert a waypoint
+      marker.">
+    Insert waypoint
+  </string>
+  <string name="marker_list_pick_one"
+    translation_description="In the Markers page, the instruction at the top of the page informing
+      the user he can press and hold a marker for more options.">
+    Pick a marker. Press &amp; hold for more options.
+  </string>
+  <string name="marker_list_show_on_map"
+    translation_description="In the context menu for a marker, the menu option to show the marker
+      on the map.">
+    Show on map
+  </string>
+  <string name="marker_type_statistics"
+    translation_description="When inserting a statistics marker, the default name of the marker.">
+    Statistics
+  </string>
+  <string name="marker_type_waypoint"
+    translation_description="When inserting a waypoint marker, the default name of the marker.">
+    Waypoint
+  </string>
 
-  <!-- Send to Google -->
-  <string name="sendtogoogle_title">Send to...</string>
-  <string name="sendtogoogle_google_fusiontables">Google Fusion Tables</string>
-  <string name="sendtogoogle_google_mymaps">Google My Maps</string>
-  <string name="sendtogoogle_google_docs">Google Docs</string>
-  <string name="sendtogoogle_send_now">Send now</string>
-  <string name="sendtogoogle_create_new_map">Create a new map</string>
-  <string name="sendtogoogle_pick_existing_map">Pick an existing map</string>
-  <string name="sendtogoogle_send_stats">Send track statistics</string>
-  <string name="sendtogoogle_send_stats_and_points">Send statistics and points</string>
+  <!-- Menu Items -->
+  <string name="menu_aggregated_statistics"
+    translation_description="In the menu, to go to the aggregated statistics page.">
+    Aggregated statistics
+  </string>
+  <string name="menu_chart_view_chart_settings"
+    translation_description="In the menu for the chart view, to change the chart settings.">
+    Chart settings
+  </string>
+  <string name="menu_help"
+    translation_description="In the menu, to go to the help page.">
+    Help
+  </string>
+  <string name="menu_map_view_map_mode"
+    translation_description="In the menu for the map view, to switch the display to the map mode.">
+    Map mode
+  </string>
+  <string name="menu_map_view_my_location"
+    translation_description="In the menu for the map view, to display user's current location.">
+    My location
+  </string>
+  <string name="menu_map_view_satellite_mode"
+    translation_description="In the menu for the map view, to switch the display to the satellite
+      mode.">
+    Satellite mode
+  </string>
+  <string name="menu_markers"
+    translation_description="In the menu, to show a list of markers for the current track.">
+    Markers
+  </string>
+  <string name="menu_record_track"
+    translation_description="In the menu, to start recording a track.">
+    Record track
+  </string>
+  <string name="menu_sensor_state"
+    translation_description="In the menu, to go to the sensor state page.">
+    Sensor state
+  </string>
+  <string name="menu_settings"
+    translation_description="In the menu, to go to the settings page.">
+    Settings
+  </string>
+  <string name="menu_stop_recording"
+    translation_description="In the menu, to stop recording a track.">
+    Stop recording
+  </string>
+  <string name="menu_tracks"
+    translation_description="In the menu, to show a list of all the tracks.">
+    Tracks
+  </string>
 
-  <!-- Getting the account to upload to. -->
-  <string name="no_account_found_title">No Account Found</string>
-  <string name="no_account_found">No account found to upload tracks to.</string>
-  <string name="choose_account_title">Choose Account</string>
+  <!-- My Location -->
+  <string name="my_location_approximate_location"
+    translation_description="When displaying the user's current location, a status message
+      indicating that GPS is not available and an approximate location is used instead.">
+    GPS is not available. An approximate location based on cell towers and WiFi networks is shown.
+  </string>
+  <string name="my_location_no_location"
+    translation_description="When displaying the user's current location, a status message
+      indicating that the current location cannot be determined.">
+    GPS is not available. Current location cannot be determined. Enable more location sources (see
+    \'Location &amp; security\' settings) &amp; make sure the sky is visible. Try again later.
+  </string>
 
-  <!-- SD card -->
-  <string name="io_no_external_storage_found">No external storage was found. Make sure that a SD card is inserted and that your phone is not mounted to a computer.</string>
-  <string name="io_write_failed">Unable to write to file.</string>
-  <string name="io_read_failed">Unable to read from file.</string>
-  <string name="io_create_dir_failed">Unable to create directory on SD card.</string>
-  <string name="io_write_finished">Finished writing to SD card.</string>
-  <string name="io_read_finished">Finished reading from SD card.</string>
+  <!-- My Maps List -->
+  <string name="my_maps_list_error"
+    translation_description="When sending a track to an existing Google My Map, the text on the
+      'My Maps' list page informing the user that his maps cannot be loaded at this time.">
+    Your maps could not be loaded at this time.
+  </string>
+  <string name="my_maps_list_loading"
+    translation_description="When sending a track to an existing Google My Map, the progress dialog
+      message informing the user that his maps are being loaded.">
+    Loading maps...
+  </string>
+  <string name="my_maps_list_no_maps"
+    translation_description="When sending a track to an existing Google My Map, the text on the
+      'My Maps' list page informing the user that he doesn't have any maps.">
+    You don\'t have any maps.
+  </string>
+  <string name="my_maps_list_pick_map"
+    translation_description="When sending a track to an existing Google My Map, the text on the
+      'My Maps' list page asking the user to pick one of his maps.">
+    Pick a map:
+  </string>
+  <string name="my_maps_list_public_label"
+    translation_description="When sending a track to an existing Google My Map, in the 'My Maps'
+      list page, the label next to the maps that are public, as opposed to being unlisted.">
+    Public
+  </string>
+  <string name="my_maps_list_title"
+    translation_description="When sending a track to an existing Google My Map, the title of the
+      page listing the user's maps in Google My Maps.">
+    Your Google My Maps
+  </string>
+  <string name="my_maps_list_unlisted_label"
+    translation_description="When sending a track to an existing Google My Map, in the 'My Maps'
+      list page, the label next to the maps that are unlisted, as opposed to being public.">
+    Unlisted
+  </string>
 
-  <!-- VersionChecker -->
-  <string name="version_check_title">Upgrade Check</string>
-  <string name="version_check_upgrade_button">Upgrade Now</string>
-  <string name="version_check_continue_button">Continue Without Upgrading</string>
-  <string name="upgrade_required">Your version of %1$s may no longer work properly, and is no longer supported. Please upgrade in order to continue using %1$s.</string>
-  <string name="upgrade_recommended">Your version of %1$s may no longer work properly. You may upgrade it now, or continue to use it at your own risk. Some functionality such as server synchronization may not function until you upgrade.</string>
-  <string name="upgrade_available">A new version of %1$s is available. You may continue to use your current version without problems, but you won\'t get the latest features until you upgrade.</string>
+  <!-- My Tracks Service -->
+  <string name="my_tracks_recording_service"
+    translation_description="When viewing the 'Running services' on Android, the name of the My
+      Tracks service that is recording a track in the background.">
+    Track recording service
+  </string>
 
-  <!-- Welcome -->
-  <string name="welcome">Welcome</string>
-  <string name="welcome_read_later">Ok</string>
-  <string name="welcome_about">About My Tracks</string>
+  <!-- Permission -->
+  <string name="permission_notification_description"
+    translation_description="When installing a third-party app that wants to receive My Tracks
+      notifications, the permission description that the Android Market shows to the user.">
+    Allows the application to receive notifications when My Tracks starts or stops a recording.
+  </string>
+  <string name="permission_notification_label"
+    translation_description="When installing a third-party app that wants to receive My Tracks
+      notifications, the permission label that the Android Market shows to the user.">
+    receive My Tracks notifications
+  </string>
+  <string name="permission_read_description"
+    translation_description="When installing a third-party app that wants to read My Tracks data,
+      the permission description that the Android Market shows to the user.">
+    Allows the application to read My Tracks data.
+  </string>
+  <string name="permission_read_label"
+    translation_description="When installing a third-party app that wants to read My Tracks data,
+      the permission label that the Android Market shows to the user.">
+    read My Tracks data
+  </string>
+  <string name="permission_write_description"
+    translation_description="When installing a third-party app that wants to write data to My
+      Tracks, the permission description that the Android Market shows to the user.">
+    Allows the application to write data to My Tracks and start/stop My Tracks recording.
+  </string>
+  <string name="permission_write_label"
+    translation_description="When installing a third-party app that wants to write data to My
+      Tracks, the permission label that the Android Market shows to the user.">
+    write data to My Tracks and start/stop My Tracks recording
+  </string>
 
-  <!-- Announcement -->
-  <string name="announce_no_distance">My Tracks no distance</string>
-  <!-- Format:
-  $1 : Distance label
-  $2 : Distance value (5)
-  $3 : Distance units (mi, km)
-  $4 : Time description (10 minutes 5 seconds)
-  $5 : Speed value (5.6) : Pace value (5 minutes 6 seconds)
-  $6 : Speed units (mph) : Pace units (per mile)
-  -->
-  <string name="announce_template">My Tracks %1$s %2$.2f %3$s in %4$s at %5$s %6$s</string>
+  <!-- Preferred Units -->
+  <string name="preferred_units_imperial"
+    translation_description="In the dialog asking the user to choose a preferred units, the option
+      to choose the imperial units.">
+    Imperial
+  </string>
+  <string name="preferred_units_metric"
+    translation_description="In the dialog asking the user to choose a preferred units, the option
+      to choose the metric units.">
+    Metric
+  </string>
+  <string name="preferred_units_title"
+    translation_description="The title of the dialog asking the user to choose a preferred units,
+      metric or imperial.">
+    Preferred units
+  </string>
 
-  <!-- Check Units -->
-  <string name="check_units_title">Units of Measure Notice</string>
-  <string name="check_units_message">By default units are metric. Would you like to change that setting?</string>
+  <!-- SD Card -->
+  <string name="sd_card_error_create_dir"
+    translation_description="When writing to the SD card, the error message when not able to create
+      a directory on the SD card.">
+    Unable to create a directory on the SD card.
+  </string>
+  <string name="sd_card_error_no_storage"
+    translation_description="When writing to the SD card, the error message when the SD card is not
+      found.">
+    No external storage was found. Make sure that a SD card is inserted and that your phone is not
+    mounted to a computer.
+  </string>
+  <string name="sd_card_error_read_file"
+    translation_description="When reading from the SD card, the error message when not able to read
+      a file.">
+    Unable to read from a file.
+  </string>
+  <string name="sd_card_error_write_file"
+    translation_description="When writing to the SD card, the error message when not able to write a
+      file.">
+    Unable to write to a file.
+  </string>
+  <string name="sd_card_success_read_file"
+    translation_description="When reading from the SD card, the success message when finish reading
+      from the SD card.">
+    Finished reading from the SD card.
+  </string>
+  <string name="sd_card_success_write_file"
+    translation_description="When writing to the SD card, the success message when finish writing to
+      the SD card.">
+    Finished writing to the SD card.
+  </string>
 
-  <!-- Fake preference keys - never saved, but show options in the preferences screen -->
-  <string name="method_bluetooth">Bluetooth</string>
-  <string name="bluetooth_options">Bluetooth options</string>
-  <string name="bluetooth_pairing">Device pairing</string>
-  <string name="bluetooth_pairing_summary">Open Android\'s bluetooth settings to pair a device</string>
-  <string name="sensor_bluetooth_options_key">bluetoothSensorsEnabled</string>
-  <string name="ant_options">ANT options</string>
-  <string name="sensor_options">Sensor Options</string>
-  <string name="track_color_mode">Track Color Mode</string>
-  <string name="fixed_speed_options">Fixed Speed Options</string>
-  <string name="dynamic_speed_options">Dynamic Speed Options</string>
-  
-  <!-- Bluetooth Sensor -->
-  <string name="bluetooth_connected">Connected to %s</string>
-  <string name="bluetooth_connecting">Bluetooth sensor connecting ...</string>
-  <string name="bluetooth_not_connected">Bluetooth sensor not connected</string>
+  <!-- Send Google -->
+  <string name="send_google_by_my_tracks"
+    translation_description="When sending a track to Google, a note indicating it is created by
+      My Tracks on Android.
+
+      %1$s: html anchor opening tag. E.g., '&lt;a href=\'http://mytracks.appspot.com\'&gt;'.
+      %2$s: html anchor closing tag. E.g., '&lt;/a&gt;'.">
+    Created by %1$sMy Tracks%2$s on Android.
+  </string>
+  <string name="send_google_choose_account_title"
+    translation_description="When sending to Google, the dialog title to choose a Google account.">
+    Choose account
+  </string>
+  <string name="send_google_docs"
+    translation_description="When sending a track to Google, under the 'Send to...' dialog, the
+      checkbox option to send to Google Docs.">
+    Google Docs
+  </string>
+  <string name="send_google_error"
+    translation_description="When sending a track to Google, a message indicating that an error has
+      occurred and ask the user to try again.">
+    An error has occurred. Please try again.
+  </string>
+  <string name="send_google_error_service"
+    translation_description="When sending a track to a Google service, a message indicating that an
+      error has occurred.
+
+      %1$s: service name. E.g., 'Google Docs'.">
+    There was an error while sending your track to %1$s.
+  </string>
+  <string name="send_google_existing_map"
+    translation_description="When sending a track to Google My Maps, the radio option to use an
+      existing map as opposed to create a new map.">
+    Use an existing map
+  </string>
+  <string name="send_google_fusion_tables"
+    translation_description="When sending a track to Google, under the 'Send to...' dialog, the
+      checkbox option to send to Google Fusion Tables.">
+    Google Fusion Tables
+  </string>
+  <string name="send_google_my_maps"
+    translation_description="When sending a track to Google, under the 'Send to...' dialog, the
+      checkbox option to send to Google My Maps.">
+    Google My Maps
+  </string>
+  <string name="send_google_new_map"
+    translation_description="When sending a track to Google My Maps, the radio option to create a
+      new map as opposed to use an existing map.">
+    Create a new map
+  </string>
+  <string name="send_google_no_account_message"
+    translation_description="When sending to Google, the dialog message when no Google account is
+      found.">
+    No account found to upload tracks to.
+  </string>
+  <string name="send_google_no_account_title"
+    translation_description="When sending to Google, the dialog title when no Google account is
+      found.">
+    No account found
+  </string>
+  <string name="send_google_progress_authenticating"
+    translation_description="When sending a track to a Google service, the message on the progress
+      dialog indicating authenticating to the service.
+
+      %1$s: service name. E.g., 'Google Docs'.">
+    Authenticating to %1$s...
+  </string>
+  <string name="send_google_progress_creating"
+    translation_description="When sending a track to a Google service, the message on the progress
+      dialog indicating creating a new service item.
+
+      %1$s: service name. E.g., 'Google Docs'.">
+    Creating a new %1$s item...
+  </string>
+  <string name="send_google_progress_preparing_track"
+    translation_description="When sending a track to Google My Maps, the message on the progress
+      dialog indicating My Tracks is preparing the track's data for upload.">
+    Preparing track...
+  </string>
+  <string name="send_google_progress_reading_track"
+    translation_description="When sending a track to Google, the message on the progress dialog
+      indicating My Tracks is reading the track from its database.">
+    Reading track...
+  </string>
+  <string name="send_google_progress_sending"
+    translation_description="When sending a track to Google service, the message on the progress
+      dialog indicating My Tracks is sending the track data.
+
+      %1$s: service name. E.g., 'Google Docs'.">
+    Sending a track to %1$s...
+  </string>
+  <string name="send_google_recorded"
+    translation_description="When sending a track to Google, in the track description, a tag
+      for the track recorded date. E.g., 'Recorded: Tue Sep 06 15:08:30 PDT 2011'.">
+    Recorded
+  </string>
+  <string name="send_google_result_header"
+    translation_description="When sending a track to Google, the header on the top of the result
+      page.">
+    Upload status:
+  </string>
+  <string name="send_google_result_share_url"
+    translation_description="When sending a track to Google, in the result dialog, the button on
+      the bottom to share with friends the URL of the uploaded track.">
+    Share track URL
+  </string>
+  <string name="send_google_send_now"
+    translation_description="When sending a track to Google, under the 'Send to...' dialog, the
+      button on the bottom to send the track to the selected Google services.">
+    Send now
+  </string>
+  <string name="send_google_success_existing"
+    translation_description="When sending a track to a Google service, the message on the result
+      page indicating that the track is sent to an existing item in the service.
+
+      %1$s: service name. E.g., 'Google Docs'.
+      %2$s: service url. E.g., 'docs.google.com'.">
+    Your track has been sent to %1$s %2$s.
+  </string>
+  <string name="send_google_success_footer"
+    translation_description="When sending a track to Google, the additional comment on the bottom of
+      the result page.">
+    It may take a few minutes before new tracks appear.
+  </string>
+  <string name="send_google_success_new"
+    translation_description="When sending a track to a Google service, the message on the result
+      page indicating that a new item has been created.
+
+      %1$s: service name. E.g., 'Google Docs'.
+      %2$s: service url. E.g., 'docs.google.com'.">
+    A new item has been created at %1$s %2$s.
+  </string>
+  <string name="send_google_title"
+    translation_description="When sending a track to Google, the dialog title to choose the Google
+      services to send the track to. The user can choose Google My Maps, Google Fusion
+      Tables, and Google Docs.">
+    Send to...
+  </string>
+  <string name="send_google_track_part_label"
+    translation_description="When sending a track to Google, the label to name segments when
+      splitting a large track.
+
+      %1$d: part number. E.g., '1'.">
+    (Part %1$d)
+  </string>
 
   <!-- Sensor State -->
-  <string name="sensor_data_time">Sensor Data Time</string>
-  <string name="power_meter_enabled">Power meter enabled</string>
-  <string name="heart_rate_monitor_enabled">Heart rate monitor enabled</string>
-  <string name="no_sensor_manager">No Sensor Manager</string>
-  <string name="enabled">Enabled</string>
-  <string name="connecting">Connecting</string>
-  <string name="connected">Connected</string>
-  <string name="disconnected">Disconnected</string>
-  <string name="no_sensor_service">No Sensor Service</string>
-  <string name="searching">Searching</string>
-  <string name="sending">Sending</string>
+  <string name="sensor_state_battery"
+    translation_description="In the 'Sensor state' page, the label for the battery level on the bike
+      sensor. E.g, 'Battery level: 50 %'.">
+    Battery level
+  </string>
+  <string name="sensor_state_cadence"
+    translation_description="In the 'Sensor state' page, the label for the cadence on the bike
+      sensor. Cadence is the number of revolutions of the crank per minute. E.g.,
+      'Cadence: 80 rpm'.">
+    Cadence
+  </string>
+  <string name="sensor_state_connected"
+    translation_description="In the 'Sensor state' page, the 'Sensor state' value when the sensor
+      has connected.">
+    Connected
+  </string>
+  <string name="sensor_state_connecting"
+    translation_description="In the 'Sensor state' page, the 'Sensor state' value when the sensor is
+      connecting.">
+    Connecting
+  </string>
+  <string name="sensor_state_disconnected"
+    translation_description="In the 'Sensor state' page, the 'Sensor state' value when the sensor
+      has disconnected.">
+    Disconnected
+  </string>
+  <string name="sensor_state_heart_rate"
+    translation_description="In the 'Sensor state' page, the label for the heart rate from a heart
+      rate sensor. E.g., 'Hear rate: 100 bpm'.">
+    Heart rate
+  </string>
+  <string name="sensor_state_last_sensor_time"
+    translation_description="In the 'Sensor state' page, the label for the last time the sensor has
+      sent a data. E.g., 'Last sensor time: 10:05 am'.">
+    Last sensor time
+  </string>
+  <string name="sensor_state_power"
+    translation_description="In the 'Sensor state' page, the label for the power from the bike
+      sensor. Power is the power output of the rider. E.g., 'Power: 50 W'.">
+    Power
+  </string>
+  <string name="sensor_state_sending"
+    translation_description="In the 'Sensor state' page, the 'Sensor state' value when the sensor
+      is sending data.">
+    Sending
+  </string>
 
-  <!-- Manifest description (not seen inside the app) -->
-  <string name="notification_permission_label">receive MyTracks notifications</string>
-  <string name="read_tracks_permission_label">read MyTracks data</string>
-  <string name="write_tracks_permission_label">write data to MyTracks and start/stop MyTracks
-          recording</string>
-  <string name="notification_permission_description">Allows the application to receive notifications
-          when MyTracks starts or stops a recording.</string>
-  <string name="read_tracks_permission_description">Allows the application to read MyTracks data.
-          </string>
-  <string name="write_tracks_permission_description">Allows the application to write data to
-          MyTracks and start/stop MyTracks recording.</string>
+  <!-- Settings -->
+  <string name="settings_backup"
+    translation_description="In the Settings page, the option to change the data backup related
+      settings.">
+    Backup
+  </string>
+  <string name="settings_backup_now"
+    translation_description="In the Backup settings, under the 'SD card backup' section, the option
+      to backup to the SD card now.">
+    Backup now
+  </string>
+  <string name="settings_backup_now_progress_message"
+    translation_description="In the Backup settings, after pressing the 'Backup now' option, the
+      progress dialog telling the user that it is writing all tracks and settings and that it may
+      take a while.">
+    Writing all tracks and settings to the SD card. This may take a while...
+  </string>
+  <string name="settings_backup_now_summary"
+    translation_description="In the Backup settings, under the 'SD card backup' section, the summary
+      for the 'Backup now' option explaining that all tracks and settings will be written to the SD
+      card.">
+    Write a full copy of all your tracks and settings to the SD card.
+  </string>
+  <string name="settings_backup_restore"
+    translation_description="In the Backup settings, under the 'SD card backup' section, the option
+      to restore everything from the SD card.">
+    Restore now
+  </string>
+  <string name="settings_backup_restore_confirm_message"
+    translation_description="In the Backup settings, after pressing the 'Restore now' option, the
+      message in the alert dialog asking the user to confirm that he wants to restore from a backup
+      and it will overwrite all the current tracks and settings.">
+    Restoring a backup from the SD card will overwrite all your current tracks and settings. Are you
+    sure?
+  </string>
+  <string name="settings_backup_restore_no_backup"
+    translation_description="In the Backup settings, after pressing the 'Restore now' option, the
+      message in the alert dialog informing the user that there is no backup to restore from.">
+    No backup found.
+  </string>
+  <string name="settings_backup_restore_progress_message"
+    translation_description="In the Backup settings, after pressing the 'Restore now' option, the
+      message on the progress dialog indicating that My Tracks is reading all tracks and settings
+      from the backup on the SD card and that it may take a while.">
+    Reading all tracks and settings from the SD card. This may take a while...
+  </string>
+  <string name="settings_backup_restore_select_title"
+    translation_description="In the Backup settings, after pressing the 'Restore now' option, the
+      title in the picker dialog asking the user to select a backup.">
+    Select a backup to restore
+  </string>
+  <string name="settings_backup_restore_summary"
+    translation_description="In the Backup settings, under the 'SD card backup' section, the summary
+      for the 'Restore now' option explaining that it restores all tracks and settings from the SD
+      card.">
+    Restore all tracks and settings from the SD card.
+  </string>
+  <string name="settings_backup_sd_card"
+    translation_description="In the Backup settings, the section header for configuring backup to
+      the SD card.">
+    SD card backup
+  </string>
+  <string name="settings_display"
+    translation_description="In the Settings page, the option to change the display related
+      settings.">
+    Display
+  </string>
+  <string name="settings_display_metric"
+    translation_description="In the Display settings, the checkbox option to use the metric units.">
+    Use metric units
+  </string>
+  <string name="settings_display_metric_summary_off"
+    translation_description="In the Display settings, the summary for the 'Use metric units'
+      checkbox when it is unchecked explaining using the imperial units to display distances.">
+    Use imperial units to display distances.
+  </string>
+  <string name="settings_display_metric_summary_on"
+    translation_description="In the Display settings, the summary for the 'Use metric units'
+      checkbox when it is checked explaining using the metric units to display distances.">
+    Use metric units to display distances.
+  </string>
+  <string name="settings_display_speed"
+    translation_description="In the Display settings, the checkbox option to display speed (e.g., 5
+      miles per hour) instead of pace (e.g., 0.2 hours per mile).">
+    Display speed
+  </string>
+  <string name="settings_display_speed_summary_off"
+    translation_description="In the Display settings, the summary for the 'Display speed' checkbox
+      when it is unchecked explaining that pace (e.g., 0.2 hours per mile) will be used instead of
+      speed (e.g., 5 miles per hour).">
+    Display pace (e.g., hours/mile).
+  </string>
+  <string name="settings_display_speed_summary_on"
+    translation_description="In the Display settings, the summary for the 'Display speed' checkbox
+      when it is checked explaining that speed (e.g., 5 miles per hour) will be used instead of pace
+      (e.g., 0.2 hours per mile).">
+    Display speed (e.g., miles/hour).
+  </string>
+  <string name="settings_display_track_color"
+    translation_description="In the Display settings, the dropdown option to choose a track color
+      mode for how to use different colors to color a track based on speed.">
+    Track color mode
+  </string>
+  <string name="settings_display_track_color_dynamic"
+    translation_description="In the Display settings, for the 'Track color mode' dropdown, the
+      option to use different colors to color a track based on dynamically determined speed
+      thresholds. E.g., use one color for segments where the speed is below the average speed of the
+      track.">
+    Dynamic thresholds
+  </string>
+  <string name="settings_display_track_color_dynamic_medium"
+    translation_description="In the Display settings, under the 'Dynamic thresholds' configurations,
+      the option for configuring the medium speed percentage. It is the percentage from the average
+      speed to be considered as the medium speed. The track color mode will use different colors to
+      color a track depending on whether the speed is above, in, or below the medium speed range.">
+    Medium speed percentage
+  </string>
+  <string name="settings_display_track_color_dynamic_medium_summary"
+    translation_description="In the Display settings, under the 'Dynamic thresholds' configurations,
+      the summary for the 'Medium speed percentage' option explaining that it sets a percentage from
+      the average speed to be considered as the medium speed color. The track color mode will use
+      different colors to color a track depending on whether the speed is above, in, or below the
+      medium speed range.">
+    Percentage from the average speed for the medium speed color.
+  </string>
+  <string name="settings_display_track_color_fixed"
+    translation_description="In the Display settings, for the 'Track color mode' dropdown, the
+      option to use different colors to color a track based on fixed speed thresholds. E.g., use
+      one color for segments where the speed is below a fixed speed threshold.">
+    Fixed thresholds
+  </string>
+  <string name="settings_display_track_color_fixed_medium"
+    translation_description="In the Display settings, under the 'Fixed thresholds' configurations,
+      the option for configuring the medium speed threshold. Thus any speed lower than the
+      threshold but greater than the slow speed threshold will be colored by the medium speed
+      color.">
+    Medium speed threshold
+  </string>
+  <string name="settings_display_track_color_fixed_medium_summary"
+    translation_description="In the Display settings, under the 'Fixed thresholds' configurations,
+      the summary for the 'Medium speed threshold' option explaining that it sets a cutoff speed
+      for the medium speed color.">
+    Medium speed top value.
+  </string>
+  <string name="settings_display_track_color_fixed_slow"
+    translation_description="In the Display settings, under the 'Fixed thresholds' configurations,
+      the option for configuring the slow speed threshold. Thus any speed lower than the threshold
+      will be colored by the slow speed color.">
+    Slow speed threshold
+  </string>
+  <string name="settings_display_track_color_fixed_slow_summary"
+    translation_description="In the Display settings, under the 'Fixed thresholds' configurations,
+      the summary for the 'Slow speed threshold' option explaining that it sets a cutoff speed for
+      the slow speed color.">
+    Slow speed top value.
+  </string>
+  <string name="settings_display_track_color_single"
+    translation_description="In the Display settings, for the 'Track color mode' dropdown, the
+      option to only use a single color to color a track.">
+    Single color
+  </string>
+  <string name="settings_display_track_color_summary"
+    translation_description="In the Display settings, the summary for the 'Track color mode'
+      dropdown explaining that it configures how colors are used to color a track based on speed.">
+    The way to color a track based on speed.
+  </string>
+  <string name="settings_not_while_recording"
+    translation_description="In the Settings page, the summary for an option that is not available
+      during a track recording.">
+    Not available while recording a track.
+  </string>
+  <string name="settings_recording"
+    translation_description="In the Settings page, the option to change the track recording related
+      settings.">
+    Recording
+  </string>
+  <string name="settings_recording_auto_resume"
+    translation_description="In the Recording settings, the dropdown option to configure the timeout
+      after which a recorded track will not be continued after phone reboot.">
+    Auto-resume timeout
+  </string>
+  <string name="settings_recording_auto_resume_summary"
+    translation_description="In the Recording settings, the summary for the 'Auto-resume timeout'
+      dropdown option explaining that it configures the maximum time after which a previous
+      recording will not be resumed after phone reboot.">
+    Maximum time after which a previously recording track will not be resumed after phone reboot.
+  </string>
+  <string name="settings_recording_default_activity"
+    translation_description="In the Recording settings, the option to specify a new track's default
+      activity type.">
+    Default activity type
+  </string>
+  <string name="settings_recording_default_activity_summary"
+    translation_description="In the Recording settings, the summary for the 'Default activity type'
+      option explaining that it sets the default activity type for a new track.">
+    Default activity type for a new track.
+  </string>
+  <string name="settings_recording_distance"
+    translation_description="In the Recording settings, the dropdown option to configure the
+      distance between two recorded points.">
+    Distance between points
+  </string>
+  <string name="settings_recording_distance_summary"
+    translation_description="In the Recording settings, the summary for the 'Distance between
+      points' dropdown option explaining that it configures the smallest distance between two
+      recordings of your position.">
+    Smallest distance between two recordings of your position.
+  </string>
+  <string name="settings_recording_gps_accuracy"
+    translation_description="In the Recording settings, the dropdown option to configure the
+      required GPS accuracy. If a GPS position's accuracy is below the requirement, then it will
+      not be used.">
+    GPS accuracy
+  </string>
+  <string name="settings_recording_gps_accuracy_summary"
+    translation_description="In the Recording settings, the summary for the 'GPS accuracy' dropdown
+      option explaining that it configures the required accuracy for your position. If a GPS
+      position's accuracy is below the requirement, then it will not be used.">
+    GPS position will be ignored if it is not this accurate.
+  </string>
+  <string name="settings_recording_interval"
+    translation_description="In the Recording settings, the dropdown option to configure the
+      time between two recorded points.">
+    Time between points
+  </string>
+  <string name="settings_recording_interval_summary"
+    translation_description="In the Recording settings, the summary for the 'Time between points'
+      dropdown option explaining that it configures the smallest time interval between two
+      recordings of your position.">
+    Smallest time interval between two recordings of your position.
+  </string>
+  <string name="settings_recording_marker"
+    translation_description="In the Recording settings, the dropdown option to configure the time or
+      distance a new marker will be inserted.">
+    Marker frequency
+  </string>
+  <string name="settings_recording_marker_summary"
+    translation_description="In the Recording settings, the summary for the 'Marker frequency'
+      dropdown option explaining that it configures the time or distance after which a new marker
+      will be inserted.">
+    Time/distance after which a new marker will be inserted.
+  </string>
+  <string name="settings_recording_name"
+    translation_description="In the Recording settings, the checkbox on whether the track should be
+      named based on the track's start time or based on a number.">
+    Use time for track name
+  </string>
+  <string name="settings_recording_name_summary_off"
+    translation_description="In the Recording settings, the summary for the 'Use time for track
+      name' checkbox when it is unchecked explaining using a number as the default track name.">
+    Use a number as the default track name.
+  </string>
+  <string name="settings_recording_name_summary_on"
+    translation_description="In the Recording settings, the summary for the 'Use time for track
+      name' checkbox when it is checked explaining using the track's start time as the default track
+      name.">
+    Use the track\'s start time as the default track name.
+  </string>
+  <string name="settings_recording_track_distance"
+    translation_description="In the Recording settings, the dropdown option to configure the
+      distance between two tracks.">
+    Distance between tracks
+  </string>
+  <string name="settings_recording_track_distance_summary"
+    translation_description="In the Recording settings, the summary for the 'Distance between
+      tracks' dropdown option explaining that it configures the maximum distance for two recorded
+      points for them to be still considered as the same track.">
+    Track will be split if two recordings of your position are further than this.
+  </string>
+  <string name="settings_recording_voice"
+    translation_description="In the Recording settings, the dropdown option to configure the voice
+      announcement frequency.">
+    Voice frequency
+  </string>
+  <string name="settings_recording_voice_not_available"
+    translation_description="In the Recording settings, the summary for the 'Voice frequency'
+      explaining that this option is not available on your Android phone.">
+    Voice announcement is not available on your Android phone.
+  </string>
+  <string name="settings_recording_voice_summary"
+    translation_description="In the Recording settings, the summary for the 'Voice frequency'
+      dropdown option explaining that it configures the time or distance between two voice
+      announcements.">
+    Time/distance between two voice announcements.
+  </string>
+  <string name="settings_reset"
+    translation_description="In the Settings page, the option to reset everything to the defaults.">
+    Reset to defaults
+  </string>
+  <string name="settings_reset_dialog_message"
+    translation_description="In the Settings page, after pressing the 'Reset to defaults' option,
+      the confirmation dialog asking the user to confirm reverting all settings to defaults. But
+      the saved tracks will be preserved.">
+    All your settings will be erased and reverted to the default values. Saved tracks will be
+    preserved. Are you sure?
+  </string>
+  <string name="settings_reset_done"
+    translation_description="In the Settings page, after pressing the 'Reset to defaults' option,
+      the confirmation dialog informing the user that all settings have been reverted to their
+      defaults.">
+    All settings have been reverted to their defaults.
+  </string>
+  <string name="settings_reset_summary"
+    translation_description="In the Settings page, the summary for the 'Reset to defaults'
+      option explaining reverting all the settings to the default values.">
+    Revert all your settings to the default values.
+  </string>
+  <string name="settings_sensor"
+    translation_description="In the Settings page, the option to change the sensor related
+      settings.">
+    Sensor
+  </string>
+  <string name="settings_sensor_ant_not_paired"
+    translation_description="In the Sensor settings, the summary for 'Unpair ANT+ heart rate sensor'
+      or 'Unpair SRM ANT+ bridge' when there no ANT+ device paired.">
+    Not paired.
+  </string>
+  <string name="settings_sensor_ant_options"
+    translation_description="In the Sensor settings, the section header to configure the ANT+
+      options.">
+    ANT+ options
+  </string>
+  <string name="settings_sensor_ant_paired"
+    translation_description="In the Sensor settings, the summary for 'Unpair ANT+ heart rate sensor'
+      or 'Unpair SRM ANT+ bridge' when there is an ANT+ device paired.
 
-  <!-- Sensor Type Options -->
-  <string name="no_sensor_option">NONE</string>
-  <string name="ant_sensor_option">ANT+ Sensors</string>
-  <string name="ant_bridge_sensor_option">SRM ANT+ Bridge</string>
-  <string name="polar_bt_sensor_option">Polar Bluetooth</string>
-  <string name="zephyr_bt_sensor_option">Zephyr Bluetooth</string>
+      %1$d: sensor id number. E.g., '1'.">
+    Paired with: %1$d.
+  </string>
+  <string name="settings_sensor_bluetooth_options"
+    translation_description="In the Sensor settings, the section header to configure the Bluetooth
+      options.">
+   Bluetooth options
+  </string>
+  <string name="settings_sensor_bluetooth_pairing"
+    translation_description="In the Sensor settings, under the 'Bluetooth options' configurations,
+      the option to pair with a Bluetooth device.">
+    Bluetooth pairing
+  </string>
+  <string name="settings_sensor_bluetooth_pairing_summary"
+    translation_description="In the Sensor settings, under the 'Bluetooth options' configurations,
+      the summary for the 'Bluetooth pairing' option explaining that it will open the Android's
+      Bluetooth settings to pair a device.">
+    Open Android\'s Bluetooth settings to pair a device.
+  </string>
+  <string name="settings_sensor_bluetooth_sensor"
+    translation_description="In the Sensor settings, under the 'Bluetooth options' configurations,
+      the dropdown option to pick a Bluetooth sensor.">
+    Bluetooth sensor
+  </string>
+  <string name="settings_sensor_bluetooth_sensor_summary"
+    translation_description="In the Sensor settings, under the 'Bluetooth options' configurations,
+      the summary for the 'Bluetooth sensor' dropdown option explaining it is to pick a Bluetooth
+      sensor to connect to.">
+    The Bluetooth sensor to connect to.
+  </string>
+  <string name="settings_sensor_type"
+    translation_description="In the Sensor settings, the dropdown option to choose a sensor type.">
+    Sensor type
+  </string>
+  <string name="settings_sensor_type_ant"
+    translation_description="In the Sensor settings, for the 'Sensor type' dropdown, the option to
+      connect to an ANT+ heart rate sensor.">
+    ANT+ heart rate sensor
+  </string>
+  <string name="settings_sensor_type_none"
+    translation_description="In the Sensor settings, for the 'Sensor type' dropdown, the option to
+      not connect to any sensor.">
+    None
+  </string>
+  <string name="settings_sensor_type_polar"
+    translation_description="In the Sensor settings, for the 'Sensor type' dropdown, the option to
+      connect to a Polar bluetooth sensor.">
+    Polar Bluetooth
+  </string>
+  <string name="settings_sensor_type_srm"
+    translation_description="In the Sensor settings, for the 'Sensor type' dropdown, the option to
+      connect to a SRM ANT+ bridge.">
+    SRM ANT+ bridge
+  </string>
+  <string name="settings_sensor_type_summary"
+    translation_description="In the Sensor settings, the summary for the 'Sensor type' option
+      explaining that it is to configure the type of sensor to connect to.">
+    The type of sensor to connect to.
+  </string>
+  <string name="settings_sensor_type_zephyr"
+    translation_description="In the Sensor settings, for the 'Sensor type' dropdown, the option to
+      connect to a Zephyr bluetooth sensor.">
+    Zephyr Bluetooth
+  </string>
+  <string name="settings_sensor_unpair_ant"
+    translation_description="In the Sensor settings, under the 'ANT+ options' configurations, the
+      option to unpair an ANT+ heart rate sensor.">
+    Unpair ANT+ heart rate sensor
+  </string>
+  <string name="settings_sensor_unpair_srm"
+    translation_description="In the Sensor settings, under the 'ANT+ options' configurations, the
+      option to unpair a SRM ANT+ bridge.">
+    Unpair SRM ANT+ bridge
+  </string>
+  <string name="settings_sharing"
+    translation_description="In the Settings page, the option to change the track sharing related
+      settings.">
+    Sharing
+  </string>
+  <string name="settings_sharing_allow_access"
+    translation_description="In the Sharing settings, the checkbox option to allow third party apps
+     access to the My Tracks data.">
+    Allow access
+  </string>
+  <string name="settings_sharing_allow_access_confirm_message"
+    translation_description="In the Sharing settings, after checking the 'Allow access' checkbox,
+      the confirmation dialog asking the user if he wants to allow other apps, including apps
+      installed in the future, to control and access My Tracks data. In addition, no further
+      notification of third party app access will be shown.">
+    Are you sure you want to allow other apps, including future apps, to control and access My
+    Tracks data? There will be no further notification.
+  </string>
+  <string name="settings_sharing_allow_access_summary_off"
+    translation_description="In the Sharing settings, the summary for the 'Allow access' checkbox
+      option when it is unchecked explaining that other apps cannot read, write, start/stop
+      recording My Tracks data.">
+    Other apps cannot read, write, start/stop recording My Tracks data.
+  </string>
+  <string name="settings_sharing_allow_access_summary_on"
+    translation_description="In the Sharing settings, the summary for the 'Allow access' checkbox
+      option when it is checked explaining that other apps can read, write, start/stop recording My
+      Tracks data.">
+    Other apps can read, write, start/stop recording My Tracks data.
+  </string>
+  <string name="settings_sharing_map_public"
+    translation_description="In the Sharing settings, the checkbox option to make a new map created
+      in Google My Maps public.">
+    Make new maps public
+  </string>
+  <string name="settings_sharing_map_public_summary_off"
+    translation_description="In the Sharing settings, the summary for the 'Make new maps public'
+      checkbox option when it is unchecked explaining that new maps created in Google My Maps will
+      be unlisted, as opposed to public.">
+    Make new maps created in Google My Maps unlisted.
+  </string>
+  <string name="settings_sharing_map_public_summary_on"
+    translation_description="In the Sharing settings, the summary for the 'Make new maps public'
+      checkbox option when it is checked explaining that new maps created in Google My Maps will
+      be public, as opposed to unlisted.">
+    Make new maps created in Google My Maps public.
+  </string>
+  <string name="settings_sharing_url_only"
+    translation_description="In the Sharing settings, the checkbox option to share only the URL
+      link, without any additional text, when sharing the URL with friends.">
+    Share only URL link
+  </string>
+  <string name="settings_sharing_url_only_summary_off"
+    translation_description="In the Sharing settings, the summary for the 'Share only URL link'
+      checkbox option when it is unchecked explaining that some text and the the URL link will be
+      sent when sharing the URL with friends.">
+    Some text and the URL link will be sent when sharing the URL with friends.
+  </string>
+  <string name="settings_sharing_url_only_summary_on"
+    translation_description="In the Sharing settings, the summary for the 'Share only URL link'
+      checkbox option when it is checked explaining that only the URL link, without any additional
+      text, will be sent when sharing the URL with friends.">
+   Only the URL link will be sent when sharing the URL with friends.
+  </string>
+  <string name="settings_title"
+    translation_description="The title of the Settings page.">
+    My Tracks settings
+  </string>
 
-  <!-- Track Color Modes -->
-  <string name="track_color_mode_none">None</string>
-  <string name="track_color_mode_fixed">Fixed (BETA)</string>
-  <string name="track_color_mode_dynamic">Dynamic (BETA)</string>
+  <!-- Share Track -->
+  <string name="share_track_file_body_format"
+    translation_description="When sharing a track file with friends, the body of the message.">
+    I think you might be interested in this track.\n\nTo view this track use Google Earth or other
+    mapping software.
+  </string>
+  <string name="share_track_picker_title"
+    translation_description="When sharing a track with friends, the title on the picker to
+      ask the user which application he wants to use.">
+    Share track using:
+  </string>
+  <string name="share_track_subject"
+    translation_description="When sharing a track with friends, the subject line.">
+    I would like to share a track with you
+  </string>
+  <string name="share_track_url_body_format"
+    translation_description="When sharing a track URL with friends, the body of the message.
+
+      %1$s: url. E.g, 'https://maps.google.com/maps'.">
+    I think you might be interested in this track:\n\n%1$s
+  </string>
+
+  <!-- Stat Page -->
+  <string name="stat_average_moving_pace"
+    translation_description="In the Statistic view, the average moving pace.">
+    Average moving pace
+  </string>
+  <string name="stat_average_moving_speed"
+    translation_description="In the Statistic view, the average moving speed.">
+    Average moving speed
+  </string>
+  <string name="stat_average_pace"
+    translation_description="In the Statistic view, the average pace.">
+    Average pace
+  </string>
+  <string name="stat_average_speed"
+    translation_description="In the Statistic view, the average speed.">
+    Average speed
+  </string>
+  <string name="stat_elevation"
+    translation_description="In the Statistic view, the elevation.">
+    Elevation
+  </string>
+  <string name="stat_elevation_gain"
+    translation_description="In the Statistic view, the elevation gain.">
+    Elevation gain
+  </string>
+  <string name="stat_latitude"
+    translation_description="In the Statistic view, the latitude.">
+    Latitude
+  </string>
+  <string name="stat_longitude"
+    translation_description="In the Statistic view, the longitude.">
+    Longitude
+  </string>
+  <string name="stat_max_elevation"
+    translation_description="In the Statistic view, the maximum elevation.">
+    Max elevation
+  </string>
+  <string name="stat_max_grade"
+    translation_description="In the Statistic view, the maximum grade.">
+    Max grade
+  </string>
+  <string name="stat_max_speed"
+    translation_description="In the Statistic view, the maximum speed.">
+    Max speed
+  </string>
+  <string name="stat_min_elevation"
+    translation_description="In the Statistic view, the minimum elevation.">
+    Min elevation
+  </string>
+  <string name="stat_min_grade"
+    translation_description="In the Statistic view, the minimum grade.">
+    Min grade
+  </string>
+  <string name="stat_min_pace"
+    translation_description="In the Statistic view, the minimum pace.">
+    Min pace
+  </string>
+  <string name="stat_moving_time"
+    translation_description="In the Statistic view, the moving time.">
+    Moving time
+  </string>
+  <string name="stat_pace"
+    translation_description="In the Statistic view, the pace like hours per mile.">
+    Pace
+  </string>
+  <string name="stat_speed"
+    translation_description="In the Statistic view, the speed like miles per hour.">
+    Speed
+  </string>
+  <string name="stat_total_distance"
+    translation_description="In the Statistic view, the total distance.">
+    Total distance
+  </string>
+  <string name="stat_total_time"
+    translation_description="In the Statistic view, the total time.">
+    Total time
+  </string>
+
+  <!-- Track -->
+  <string name="track_detail_activity_type"
+    translation_description="In the detail page for a track, the text field for the activity type,
+      including for examples.">
+    Activity type (e.g. hiking, cycling, running, climbing...)
+  </string>
+  <string name="track_detail_activity_type_hint"
+    translation_description="In the detail page for a track, the hint in the 'Activity type' text
+      field when it is empty.">
+    Activity type
+  </string>
+  <string name="track_detail_title"
+    translation_description="In the detail page for a track, the title of the page.">
+    Track details
+  </string>
+  <string name="track_detail_track_description"
+    translation_description="In the detail page for a track, the text field for the track
+      description.">
+    Track description
+  </string>
+  <string name="track_detail_track_name"
+    translation_description="In the detail page for a track, the text field for the track name.">
+    Track name
+  </string>
+  <string name="track_list_clear_map"
+    translation_description="In the context menu for a track, the menu option to clear the map
+      of any track.">
+    Clear map
+  </string>
+  <string name="track_list_context_menu_title"
+    translation_description="In the context menu for a track, the title indicating that all the menu
+      options below are for this track.">
+    This track
+  </string>
+  <string name="track_list_delete_all"
+    translation_description="In the Tracks page, the button on the bottom to delete all tracks.">
+    Delete all
+  </string>
+  <string name="track_list_delete_all_confirm_message"
+    translation_description="In the Tracks page, when pressing the 'Delete all' button, the
+      confirmation dialog message informing the user that all tracks and markers will be permanently
+      deleted from the phone.">
+    All tracks and markers will be permanently deleted from the phone.
+  </string>
+  <string name="track_list_delete_track"
+    translation_description="In the context menu for a track, the menu option to delete the
+      track from the phone.">
+    Delete from phone...
+  </string>
+  <string name="track_list_delete_track_confirm_message"
+    translation_description="In the context menu for a track, when pressing the 'Delete from
+      phone...' option, the confirmation dialog message informing the user that the track and its
+      markers will be permanently deleted from the phone.">
+    The track and its markers will be permanently deleted from the phone.
+  </string>
+  <string name="track_list_edit_track"
+    translation_description="In the context menu for a track, the menu option to edit the track's
+      metadata (e.g., name, activity type, etc.).">
+    Edit
+  </string>
+  <string name="track_list_export_all"
+    translation_description="In the Tracks page, the button on the bottom to export all tracks.">
+    Export all
+  </string>
+  <string name="track_list_export_file"
+    translation_description="In the Tracks page, after pressing the 'Export all' button, the menu
+      option to export all the tracks as a certain file format.
+
+      %1$s: file format. E.g, 'GPX'.">
+    Export as %1$s
+  </string>
+  <string name="track_list_import_all"
+    translation_description="In the Tracks page, the button on the bottom to import all tracks.">
+    Import all
+  </string>
+  <string name="track_list_pick_one"
+    translation_description="In the Tracks page, the instruction at the top of the page informing
+      the user he can press and hold a track for more options.">
+    Pick a track. Press &amp; hold for more options.
+  </string>
+  <string name="track_list_save_file"
+    translation_description="In the context menu for a track, under the 'Save to SD card...'
+      option, the menu option to save the track as a certain file format.
+
+      %1$s: file format. E.g, 'GPX'.">
+    As a %1$s file
+  </string>
+  <string name="track_list_save_sd"
+    translation_description="In the context menu for a track, the menu option to save the track to
+      the SD card.">
+    Save to SD card...
+  </string>
+  <string name="track_list_send_google"
+    translation_description="In the context menu for a track, the menu option to send the track to
+      Google.">
+    Send to Google...
+  </string>
+  <string name="track_list_share_file"
+    translation_description="In the context menu for a track, under the 'Share with friends...'
+      option, the menu option to share the track as a certain file format.
+
+      %1$s: file format. E.g, 'GPX'.">
+    A %1$s file
+  </string>
+  <string name="track_list_share_track"
+    translation_description="In the context menu for a track, the menu option to share the track
+      with friends through other applications.">
+    Share with friends...
+  </string>
+  <string name="track_list_share_url"
+    translation_description="In the context menu for a track, under the 'Share with friends...'
+      option, the menu option to save a track to My Maps or Fusion Tables and share the URL with
+      friends.">
+    My Map or Fusion Table URL
+  </string>
+  <string name="track_list_show_on_map"
+    translation_description="In the context menu for a track, the menu option to show the track on
+      the map.">
+    Show on map
+  </string>
+  <string name="track_name_format"
+    translation_description="When creating a new track, the string format to name the track.
+
+      %1$d: track number. E.g., '1'.">
+    Track %1$d
+  </string>
+  <string name="track_record_error"
+    translation_description="When starting a recording, message when not able to start due to no GPS
+      location and asking the user to try again.">
+    Unable to start recording. No GPS location. Try again.
+  </string>
+  <string name="track_record_notification"
+    translation_description="When recording a track, the message on the My Tracks notification
+      informing the user that My Tracks is actively recording his track.">
+    Recording your track...
+  </string>
+  <string name="track_record_success"
+    translation_description="When starting a new track recording, a status message indicating
+      success.">
+    Now recording a new track.
+  </string>
+
+  <!-- Unit -->
+  <string name="unit_beat_per_minute"
+    translation_description="Abbreviation for beats per minute, unit for heart rate. E.g.,
+      'Heart rate: 80 bpm'.">
+    bpm
+  </string>
+  <string name="unit_feet"
+    translation_description="Abbreviation for feet. E.g., '2 ft'.">
+    ft
+  </string>
+  <string name="unit_hour"
+    translation_description="Abbreviation for hours. E.g, '2 hr'.">
+    hr
+  </string>
+  <string name="unit_kilometer"
+    translation_description="Abbreviation for kilometers. E.g., '2 km'.">
+    km
+  </string>
+  <string name="unit_kilometer_per_hour"
+    translation_description="Abbreviation for kilometers per hour. E.g, '5 km/h'.">
+    km/h
+  </string>
+  <string name="unit_meter"
+    translation_description="Abbreviation for meters. E.g., '2 m'.">
+    m
+  </string>
+  <string name="unit_mile"
+    translation_description="Abbreviation for miles. E.g., '2 mi'.">
+    mi
+  </string>
+  <string name="unit_mile_per_hour"
+    translation_description="Abbreviation for miles per hour. E.g, '5 mi/h'.">
+    mi/h
+  </string>
+  <string name="unit_minute"
+    translation_description="Abbreviation for minutes. E.g, '2 min'.">
+    min
+  </string>
+  <string name="unit_minute_per_kilometer"
+    translation_description="Abbreviation for minutes per kilometer. E.g, '5 min/km'.">
+    min/km
+  </string>
+  <string name="unit_minute_per_mile"
+    translation_description="Abbreviation for minutes per mile. E.g, '5 min/mi'.">
+    min/mi
+  </string>
+  <string name="unit_revolution_per_minute"
+    translation_description="Abbreviation for revolutions per minute, unit for cadence. E.g.,
+      'Cadence: 80 rpm'.">
+    rpm
+  </string>
+  <string name="unit_watt"
+    translation_description="Abbreviation for watts, unit for power. E.g., 'Power: 80 W'.">
+    W
+  </string>
+
+  <!-- Value -->
+  <string name="value_adapt_accuracy"
+    translation_description="In a setting picker, the value to adapt for accuracy.">
+    Adapt for accuracy
+  </string>
+  <string name="value_adapt_battery_life"
+    translation_description="In a setting picker, the value to adapt for battery life.">
+    Adapt for battery life
+  </string>
+  <string name="value_always"
+    translation_description="In a setting picker, the value to always enable the option.">
+    Always
+  </string>
+  <string name="value_float_mile"
+    translation_description="In a setting picker, a float value in miles.
+
+      %1$.1f: mile as a float number. E.g., '2.2'">
+    %1$.1f mi
+  </string>
+  <string name="value_float_mile_poor_gps"
+    translation_description="In a setting picker, a float value in miles, recommended when having
+      poor GPS signal.
+
+      %1$.1f: mile as a float number. E.g., '2.2'">
+    %1$.1f mi (poor GPS)
+  </string>
+  <string name="value_integer_feet"
+    translation_description="In a setting picker, an integer value in feet.
+
+      %1$d: feet as an integer value. E.g., '2'">
+    %1$d ft
+  </string>
+  <string name="value_integer_feet_excellent_gps"
+    translation_description="In a setting picker, an integer value in feet, recommended when having
+      excellent GPS signal.
+
+      %1$d: feet as an integer value. E.g., '2'">
+    %1$d ft (excellent GPS)
+  </string>
+  <string name="value_integer_feet_recommended"
+    translation_description="In a setting picker, an integer value in feet that is recommended.
+
+      %1$d: feet as an integer value. E.g., '2'">
+    %1$d ft (recommended)
+  </string>
+  <string name="value_integer_kilometer"
+    translation_description="In a setting picker, an integer value in kilometers.
+
+      %1$d: kilometer as an integer value. E.g., '2'">
+    %1$d km
+  </string>
+  <string name="value_integer_meter"
+    translation_description="In a setting picker, an integer value in meters.
+
+      %1$d: meter as an integer value. E.g., '2'">
+    %1$d m
+  </string>
+  <string name="value_integer_meter_excellent_gps"
+    translation_description="In a setting picker, an integer value in meters, recommended when
+      having excellent GPS signal.
+
+      %1$d: meter as an integer value. E.g., '2'">
+    %1$d m (excellent GPS)
+  </string>
+  <string name="value_integer_meter_poor_gps"
+    translation_description="In a setting picker, an integer value in meters, recommended when
+      having poor GPS signal.
+
+      %1$d: meter as an integer value. E.g., '2'">
+    %1$d m (poor GPS)
+  </string>
+  <string name="value_integer_meter_recommended"
+    translation_description="In a setting picker, an integer value in meters that is recommended.
+
+      %1$d: meter as an integer value. E.g., '2'">
+    %1$d m (recommended)
+  </string>
+  <string name="value_integer_mile"
+    translation_description="In a setting picker, an integer value in miles.
+
+      %1$d: mile as an integer value. E.g., '2'">
+    %1$d mi
+  </string>
+  <string name="value_integer_minute"
+    translation_description="In a setting picker, an integer value in minutes.
+
+      %1$d: minute as an integer value. E.g., '2'">
+    %1$d min
+  </string>
+  <string name="value_integer_second"
+    translation_description="In a setting picker, an integer value in seconds.
+
+      %1$d: second as an integer value. E.g., '2'">
+    %1$d s
+  </string>
+  <string name="value_never"
+    translation_description="In a setting picker, the value to never use the feature.">
+    Never
+  </string>
+  <string name="value_off"
+    translation_description="In a setting picker, the value to turn off the feature.">
+    Off
+  </string>
+  <string name="value_smallest_recommended"
+    translation_description="In a setting picker, the value to use the smallest value, also the
+      recommended value.">
+    Smallest (recommended)
+  </string>
+
+  <!-- Voice -->
+  <string name="voice_hour"
+    translation_description="For voice announcement, to say hour like 'one hour'.">
+    hour
+  </string>
+  <string name="voice_hours"
+    translation_description="For voice announcement, to say hours like 'two hours'.">
+    hours
+  </string>
+  <string name="voice_kilometer_per_hour"
+    translation_description="For voice announcement, to say 'kilometers per hour' for speed like
+      'two kilometers per hour'.">
+    kilometers per hour
+  </string>
+  <string name="voice_kilometers"
+    translation_description="For voice announcement, to say kilometers like 'two kilometers'.">
+    kilometers
+  </string>
+  <string name="voice_mile_per_hour"
+    translation_description="For voice announcement, to say 'miles per hour' for speed like 'two
+      miles per hour'.">
+    miles per hour
+  </string>
+  <string name="voice_miles"
+    translation_description="For voice announcement, to say miles like 'two miles'.">
+    miles
+  </string>
+  <string name="voice_minute"
+    translation_description="For voice announcement, to say minute like 'one minute'.">
+    minute
+  </string>
+  <string name="voice_minutes"
+    translation_description="For voice announcement, to say minutes like 'two minutes'.">
+    minutes
+  </string>
+  <string name="voice_no_distance"
+    translation_description="For the voice announcement, the announcement when the current track's
+      total distance is zero.">
+    My Tracks no distance.
+  </string>
+  <string name="voice_per_kilometer"
+    translation_description="For voice announcement, to say 'per kilometer' for pace like 'two
+      minutes per kilometer'.">
+    per kilometer
+  </string>
+  <string name="voice_per_mile"
+    translation_description="For voice announcement, to say 'per mile' for pace like 'two minutes
+      per mile'.">
+    per mile
+  </string>
+  <string name="voice_second"
+    translation_description="For voice announcement, to say second like 'one second'.">
+    second
+  </string>
+  <string name="voice_seconds"
+    translation_description="For voice announcement, to say seconds like 'two seconds'.">
+    seconds
+  </string>
+  <string name="voice_template"
+    translation_description="For the voice announcement, the template to make an announcement.
+
+      %1$.2f: distance value. E.g., '5.2'.
+      %2$s: distance unit. E.g., 'miles'.
+      %3$s: time value. E.g., '2 hours and 30 minutes'.
+      %4$s: speed/pace value. E.g., '2 hours and 30 minutes'.
+      %5$s: speed/pace unit. E.g., 'per mile'.">
+    My Tracks total distance %1$.2f %2$s in %3$s at %4$s %5$s.
+  </string>
+
+  <!-- Waypoint Type -->
+  <string name="waypoint_type_atm"
+    translation_description="When entering the Marker Type, an option for an ATM.">
+    ATM
+  </string>
+  <string name="waypoint_type_bank"
+    translation_description="When entering the Marker Type, an option for a bank.">
+    bank
+  </string>
+  <string name="waypoint_type_bar"
+    translation_description="When entering the Marker Type, an option for a bar.">
+    bar
+  </string>
+  <string name="waypoint_type_barbecue"
+    translation_description="When entering the Marker Type, an option for a barbecue.">
+    barbecue
+  </string>
+  <string name="waypoint_type_building"
+    translation_description="When entering the Marker Type, an option for a building.">
+    building
+  </string>
+  <string name="waypoint_type_bus_stop"
+    translation_description="When entering the Marker Type, an option for a bus stop.">
+    bus stop
+  </string>
+  <string name="waypoint_type_cafe"
+    translation_description="When entering the Marker Type, an option for a cafe.">
+    cafe
+  </string>
+  <string name="waypoint_type_campfire"
+    translation_description="When entering the Marker Type, an option for a campfire.">
+    campfire
+  </string>
+  <string name="waypoint_type_campground"
+    translation_description="When entering the Marker Type, an option for a campground.">
+    campground
+  </string>
+  <string name="waypoint_type_church"
+    translation_description="When entering the Marker Type, an option for a church.">
+    church
+  </string>
+  <string name="waypoint_type_coffee_house"
+    translation_description="When entering the Marker Type, an option for a coffee house.">
+    coffee house
+  </string>
+  <string name="waypoint_type_convenience_store"
+    translation_description="When entering the Marker Type, an option for a convenience store.">
+    convenience store
+  </string>
+  <string name="waypoint_type_drinking_water"
+    translation_description="When entering the Marker Type, an option for a drinking water.">
+    drinking water
+  </string>
+  <string name="waypoint_type_falling_rocks"
+    translation_description="When entering the Marker Type, an option for a falling rocks.">
+    falling rocks
+  </string>
+  <string name="waypoint_type_ferry"
+    translation_description="When entering the Marker Type, an option for a ferry.">
+    ferry
+  </string>
+  <string name="waypoint_type_fire_place"
+    translation_description="When entering the Marker Type, an option for a fire place.">
+    fire place
+  </string>
+  <string name="waypoint_type_fire_station"
+    translation_description="When entering the Marker Type, an option for a fire station.">
+    fire station
+  </string>
+  <string name="waypoint_type_fishing"
+    translation_description="When entering the Marker Type, an option for a fishing location.">
+    fishing
+  </string>
+  <string name="waypoint_type_gas_station"
+    translation_description="When entering the Marker Type, an option for a gas station.">
+    gas station
+  </string>
+  <string name="waypoint_type_golf_course"
+    translation_description="When entering the Marker Type, an option for a golf course.">
+    golf course
+  </string>
+  <string name="waypoint_type_grocery_store"
+    translation_description="When entering the Marker Type, an option for a grocery store.">
+    grocery store
+  </string>
+  <string name="waypoint_type_hair_dresser"
+    translation_description="When entering the Marker Type, an option for a hair dresser.">
+    hair dresser
+  </string>
+  <string name="waypoint_type_harbor"
+    translation_description="When entering the Marker Type, an option for a harbor.">
+    harbor
+  </string>
+  <string name="waypoint_type_hiking_path"
+    translation_description="When entering the Marker Type, an option for a hiking path.">
+    hiking path
+  </string>
+  <string name="waypoint_type_hotel"
+    translation_description="When entering the Marker Type, an option for a hotel.">
+    hotel
+  </string>
+  <string name="waypoint_type_house"
+    translation_description="When entering the Marker Type, an option for a house.">
+    house
+  </string>
+  <string name="waypoint_type_information"
+    translation_description="When entering the Marker Type, an option for an information.">
+    information
+  </string>
+  <string name="waypoint_type_intersection"
+    translation_description="When entering the Marker Type, an option for an intersection.">
+    intersection
+  </string>
+  <string name="waypoint_type_mail_box"
+    translation_description="When entering the Marker Type, an option for a mail box.">
+    mail box
+  </string>
+  <string name="waypoint_type_market"
+    translation_description="When entering the Marker Type, an option for a market.">
+    market
+  </string>
+  <string name="waypoint_type_meeting_point"
+    translation_description="When entering the Marker Type, an option for a meeting point.">
+    meeting point
+  </string>
+  <string name="waypoint_type_opera"
+    translation_description="When entering the Marker Type, an option for an opera.">
+    opera
+  </string>
+  <string name="waypoint_type_parking"
+    translation_description="When entering the Marker Type, an option for a parking.">
+    parking
+  </string>
+  <string name="waypoint_type_police_station"
+    translation_description="When entering the Marker Type, an option for a police station.">
+    police station
+  </string>
+  <string name="waypoint_type_post_office"
+    translation_description="When entering the Marker Type, an option for a post office.">
+    post office
+  </string>
+  <string name="waypoint_type_pothole"
+    translation_description="When entering the Marker Type, an option for a pothole.">
+    pothole
+  </string>
+  <string name="waypoint_type_railway_crossing"
+    translation_description="When entering the Marker Type, an option for a railway crossing.">
+    railway crossing
+  </string>
+  <string name="waypoint_type_restaurant"
+    translation_description="When entering the Marker Type, an option for a restaurant.">
+    restaurant
+  </string>
+  <string name="waypoint_type_shopping"
+    translation_description="When entering the Marker Type, an option for a shopping.">
+    shopping
+  </string>
+  <string name="waypoint_type_sight"
+    translation_description="When entering the Marker Type, an option for a sight.">
+    sight
+  </string>
+  <string name="waypoint_type_store"
+    translation_description="When entering the Marker Type, an option for a store.">
+    store
+  </string>
+  <string name="waypoint_type_swimming_pool"
+    translation_description="When entering the Marker Type, an option for a swimming pool.">
+    swimming pool
+  </string>
+  <string name="waypoint_type_telephone"
+    translation_description="When entering the Marker Type, an option for a telephone.">
+    telephone
+  </string>
+  <string name="waypoint_type_theater"
+    translation_description="When entering the Marker Type, an option for a theater.">
+    theater
+  </string>
+  <string name="waypoint_type_toilet"
+    translation_description="When entering the Marker Type, an option for a toilet.">
+    toilet
+  </string>
+  <string name="waypoint_type_tourist_information"
+    translation_description="When entering the Marker Type, an option for a tourist information.">
+    tourist information
+  </string>
+  <string name="waypoint_type_tree"
+    translation_description="When entering the Marker Type, an option for a tree.">
+    tree
+  </string>
+  <string name="waypoint_type_tunnel"
+    translation_description="When entering the Marker Type, an option for a tunnel.">
+    tunnel
+  </string>
+  <string name="waypoint_type_waterfall"
+    translation_description="When entering the Marker Type, an option for a waterfall.">
+    waterfall
+  </string>
+  <string name="waypoint_type_water_fountain"
+    translation_description="When entering the Marker Type, an option for a water fountain.">
+    water fountain
+  </string>
+  <string name="waypoint_type_way_point"
+    translation_description="When entering the Marker Type, an option for a way point.">
+    way point
+  </string>
+
+  <!-- Welcome Page -->
+  <string name="welcome_about"
+    translation_description="In the 'Welcome' page, the button on the bottom to read the 'About My
+      Tracks' page.">
+    About My Tracks
+  </string>
+  <string name="welcome_title"
+    translation_description="The title of the welcome page.">
+    Welcome
+  </string>
 </resources>

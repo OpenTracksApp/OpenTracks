@@ -16,7 +16,6 @@
 package com.google.android.apps.mytracks.maps;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.MockPath;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -47,23 +46,24 @@ public class TrackPathPainterFactoryTest extends TrackPathPainterTestCase {
       return;
     }
     
-    testTrackPathPainterFactorySpecific(context, prefs, R.string.track_color_mode_none, 
+    testTrackPathPainterFactorySpecific(context, prefs, R.string.display_track_color_value_none, 
         SingleColorTrackPathPainter.class);
-    testTrackPathPainterFactorySpecific(context, prefs, R.string.track_color_mode_fixed, 
+    testTrackPathPainterFactorySpecific(context, prefs, R.string.display_track_color_value_fixed, 
         DynamicSpeedTrackPathPainter.class);
-    testTrackPathPainterFactorySpecific(context, prefs, R.string.track_color_mode_dynamic, 
+    testTrackPathPainterFactorySpecific(context, prefs, R.string.display_track_color_value_dynamic, 
         DynamicSpeedTrackPathPainter.class);
   }
   
   private <T> void testTrackPathPainterFactorySpecific(Context context, SharedPreferences prefs, 
       int track_color_mode, Class <?> c) {
-    prefs.edit().putString(context.getString(track_color_mode), 
-        context.getString(R.string.track_color_mode_key)).commit();
+    prefs.edit().putString(context.getString(R.string.track_color_mode_key), 
+        context.getString(track_color_mode)).commit();
     
     int startLocationIdx = 0;
     Boolean alwaysVisible = true;
     
     TrackPathPainter painter = TrackPathPainterFactory.getTrackPathPainter(context);
+    myTracksOverlay.setTrackPathPainter(painter);
     
     assertNotNull(painter);
     assertTrue(c.isInstance(painter));
@@ -71,8 +71,7 @@ public class TrackPathPainterFactoryTest extends TrackPathPainterTestCase {
     painter.updatePath(myTracksOverlay.getMapProjection(mockView), 
         myTracksOverlay.getMapViewRect(mockView), startLocationIdx, alwaysVisible,
         myTracksOverlay.getPoints());
-    assertNotNull(myTracksOverlay.getLastPath());
-    assertTrue(myTracksOverlay.getLastPath() instanceof MockPath);
+    assertNotNull(myTracksOverlay.getTrackPathPainter().getLastPath());      
     painter.drawTrack(canvas);
   }
 }

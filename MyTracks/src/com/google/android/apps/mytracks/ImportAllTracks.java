@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.file.GpxImporter;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
@@ -24,7 +25,11 @@ import com.google.android.maps.mytracks.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ContentUris;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
 import android.widget.Toast;
@@ -49,22 +54,36 @@ import org.xml.sax.SAXException;
 public class ImportAllTracks {
 
   private final Activity activity;
+  private FileUtils fileUtils;
+  private boolean singleTrackSelected;
+  private String gpxPath;  
   private WakeLock wakeLock;
   private ProgressDialog progress;
-  private FileUtils fileUtils;
-  private String gpxPath;
   private int gpxFileCount;
   private int importSuccessCount;
-
+  private long importedTrackIds[];
+  
   public ImportAllTracks(Activity activity) {
-    this.activity = activity;
-    Log.i(Constants.TAG, "ImportAllTracks: Starting");
-    fileUtils = new FileUtils();
-    gpxPath = fileUtils.buildExternalDirectoryPath("gpx");
-
-    new Thread(runner).start();
+    this(activity, null);
   }
 
+  /**
+   * Constructor to import tracks.
+   *
+   * @param activity the activity
+   * @param path path of the gpx file to import and display. If null, then just
+   *          import all the gpx files under MyTracks/gpx and do not display any
+   *          track.
+   */
+  public ImportAllTracks(Activity activity, String path) {
+    Log.i(Constants.TAG, "ImportAllTracks: Starting");
+    this.activity = activity;
+    fileUtils = new FileUtils();
+    singleTrackSelected = path != null;
+    gpxPath = path == null ? fileUtils.buildExternalDirectoryPath("gpx") : path;
+    new Thread(runner).start();
+  }
+  
   private final Runnable runner = new Runnable() {
     public void run() {
       aquireLocksAndImport();
@@ -81,7 +100,7 @@ public class ImportAllTracks {
     if (prefs != null) {
       recordingTrackId = prefs.getLong(activity.getString(R.string.recording_track_key), -1);
     }
-    if (recordingTrackId != -1) {
+    if (recordingTrackId == -1) {
       wakeLock = SystemUtils.acquireWakeLock(activity, wakeLock);
     }
 
@@ -107,17 +126,31 @@ public class ImportAllTracks {
     Log.i(Constants.TAG, "ImportAllTracks: Done");
     AlertDialog.Builder builder = new AlertDialog.Builder(activity);
     if (gpxFileCount == 0) {
-      builder.setMessage(activity.getString(R.string.import_multi_empty, gpxPath + "/"));
+      builder.setMessage(activity.getString(R.string.import_no_file, gpxPath));
     } else {
-      builder.setMessage(activity.getString(R.string.import_multi_done, importSuccessCount, gpxFileCount,
-          gpxPath + "/"));
+      builder.setMessage(
+          activity.getString(R.string.import_success, importSuccessCount, gpxFileCount, gpxPath));
     }
-    builder.setPositiveButton(R.string.ok, null);
+    builder.setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+        if (singleTrackSelected) {
+          long lastTrackId = importedTrackIds[importedTrackIds.length - 1];
+          Uri trackUri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, lastTrackId);
+
+          Intent intent = new Intent(Intent.ACTION_VIEW);
+          intent.setDataAndType(trackUri, TracksColumns.CONTENT_ITEMTYPE);
+          intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+          activity.startActivity(intent);
+          activity.finish();
+        }
+      }
+    });
     builder.show();
   }
 
   private void makeProgressDialog(final int trackCount) {
-    String importMsg = activity.getString(R.string.tracklist_btn_import_all);
+    String importMsg = activity.getString(R.string.track_list_import_all);
     progress = new ProgressDialog(activity);
     progress.setIcon(android.R.drawable.ic_dialog_info);
     progress.setTitle(importMsg);
@@ -185,7 +218,7 @@ public class ImportAllTracks {
   private boolean importFile(File gpxFile, MyTracksProviderUtils providerUtils) {
     Log.i(Constants.TAG, "ImportAllTracks: importing: " + gpxFile.getName());
     try {
-      GpxImporter.importGPXFile(new FileInputStream(gpxFile), providerUtils);
+      importedTrackIds = GpxImporter.importGPXFile(new FileInputStream(gpxFile), providerUtils);
       return true;
     } catch (FileNotFoundException e) {
       Log.w(Constants.TAG, "GPX file wasn't found/went missing: "
@@ -203,15 +236,22 @@ public class ImportAllTracks {
   }
 
   /**
-   * Returns a list of the GPX Files found in the GPX directory.
+   * Gets a list of the GPX files. If singleTrackSelected is true, returns a
+   * list containing just the gpxPath file. If singleTrackSelected is false,
+   * returns a list of GPX files under the gpxPath directory.
    */
   private List<File> getGpxFiles() {
-    List<File> gpxFiles = new LinkedList<File>();
-    File[] gpxFileCandidates = new File(gpxPath).listFiles();
-    if (gpxFileCandidates != null) {
-      for (File file : gpxFileCandidates) {
-        if (!file.isDirectory() && file.getName().endsWith(".gpx")) {
-          gpxFiles.add(file);
+    List<File> gpxFiles = new LinkedList<File>();    
+    File file = new File(gpxPath);
+    if (singleTrackSelected) {
+      gpxFiles.add(file);
+    } else {      
+      File[] gpxFileCandidates = file.listFiles();
+      if (gpxFileCandidates != null) {
+        for (File candidate : gpxFileCandidates) {
+          if (!candidate.isDirectory() && candidate.getName().endsWith(".gpx")) {
+            gpxFiles.add(candidate);
+          }
         }
       }
     }

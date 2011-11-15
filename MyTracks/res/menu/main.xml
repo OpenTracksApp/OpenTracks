@@ -1,38 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-  <item android:id="@+id/menu_start_recording"
+  <item android:id="@+id/menu_record_track"
     android:icon="@drawable/ic_menu_recordtrack"
-    android:title="@string/start_recording"/>
+    android:title="@string/menu_record_track"/>
 
   <item android:id="@+id/menu_stop_recording"
     android:icon="@drawable/ic_menu_stoprecording"
-    android:title="@string/stop_recording"/>
+    android:title="@string/menu_stop_recording"/>
 
-  <item android:id="@+id/menu_list_tracks"
+  <item android:id="@+id/menu_tracks"
     android:icon="@drawable/ic_menu_tracklist"
-    android:title="@string/list_tracks"/>
+    android:title="@string/menu_tracks"/>
 
-  <item android:id="@+id/menu_list_markers"
+  <item android:id="@+id/menu_markers"
     android:icon="@drawable/ic_menu_waypoints"
-    android:title="@string/list_markers"/>
-
-  <item android:id="@+id/menu_settings"
-    android:icon="@android:drawable/ic_menu_preferences"
-    android:orderInCategory="1001"
-    android:title="@string/settings"/>
-    
-  <item android:id="@+id/menu_aggregated_stats"
-    android:orderInCategory="1002"
-    android:title="@string/aggregated_stats"/>
+    android:title="@string/menu_markers"/>
 
   <item android:id="@+id/menu_sensor_state"
     android:icon="@drawable/ic_menu_sensorstatus"
     android:orderInCategory="1000"
-    android:title="@string/sensor_state"/>
+    android:title="@string/menu_sensor_state"/>
+  
+  <item android:id="@+id/menu_settings"
+    android:icon="@android:drawable/ic_menu_preferences"
+    android:orderInCategory="1001"
+    android:title="@string/menu_settings"/>
+    
+  <item android:id="@+id/menu_aggregated_statistics"
+    android:orderInCategory="1002"
+    android:title="@string/menu_aggregated_statistics"/>
     
   <item android:id="@+id/menu_help"
     android:icon="@android:drawable/ic_menu_info_details"
     android:orderInCategory="1003"
-    android:title="@string/help"/>
-
+    android:title="@string/menu_help"/>
 </menu>

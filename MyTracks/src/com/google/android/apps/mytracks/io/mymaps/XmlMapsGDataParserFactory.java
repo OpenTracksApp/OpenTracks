@@ -12,11 +12,11 @@ import com.google.wireless.gdata.serializer.xml.XmlEntryGDataSerializer;
 
 import android.util.Log;
 
-import org.xmlpull.v1.XmlPullParserException;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import org.xmlpull.v1.XmlPullParserException;
 
 /**
  * Factory of Xml parsers for gdata maps data.
@@ -39,7 +39,7 @@ class XmlMapsGDataParserFactory implements GDataParserFactory {
     }
   }
 
-  @SuppressWarnings({ "unchecked", "rawtypes" })
+  @SuppressWarnings("unchecked")
   @Override
   public GDataParser createParser(Class cls, InputStream is)
       throws ParseException {

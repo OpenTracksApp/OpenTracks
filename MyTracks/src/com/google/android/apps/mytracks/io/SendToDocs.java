@@ -22,6 +22,7 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.docs.DocsHelper;
 import com.google.android.apps.mytracks.io.gdata.GDataClientFactory;
 import com.google.android.apps.mytracks.io.gdata.GDataWrapper;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendType;
 import com.google.android.common.gdata.AndroidXmlParserFactory;
 import com.google.android.maps.mytracks.R;
 import com.google.wireless.gdata.client.GDataClient;
@@ -92,7 +93,9 @@ public class SendToDocs {
 
   private void doUpload(long trackId) {
     // TODO
-    statusMessage = activity.getString(R.string.error_sending_to_fusiontables);
+    String errorFormat = activity.getString(R.string.send_google_error_service);
+    String serviceName = activity.getString(SendType.DOCS.getServiceName());
+    statusMessage = String.format(errorFormat, serviceName);
     success = false;
 
     try {
@@ -115,15 +118,11 @@ public class SendToDocs {
       Log.d(Constants.TAG, "SendToDocs: Uploading to spreadsheet");
       success = uploadToDocs(track);
       if (success) {
-        if (createdNewSpreadSheet) {
-          statusMessage = activity.getString(
-              R.string.status_tracks_have_been_uploaded_to_new_doc);
-        } else {
-          statusMessage = activity.getString(
-              R.string.status_tracks_have_been_uploaded_to_docs);
-        }
-      } else {
-        statusMessage = activity.getString(R.string.error_sending_to_docs);
+        String successFormat = createdNewSpreadSheet 
+            ? activity.getString(R.string.send_google_success_new)
+            : activity.getString(R.string.send_google_success_existing);
+        String url = activity.getString(SendType.DOCS.getServiceUrl());
+        statusMessage = String.format(successFormat, serviceName, url);
       }
       Log.d(Constants.TAG, "SendToDocs: Done.");
     } finally {

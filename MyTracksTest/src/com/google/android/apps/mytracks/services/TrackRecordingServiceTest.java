@@ -382,6 +382,8 @@ public class TrackRecordingServiceTest
     Track track = providerUtils.getTrack(id);
     assertNotNull(track);
     assertEquals(id, track.getId());
+    assertEquals(sharedPreferences.getString(context.getString(R.string.default_activity_key), ""),
+        track.getCategory());
     assertEquals(id, sharedPreferences.getLong(
         context.getString(R.string.recording_track_key), -1));
     assertEquals(id, service.getRecordingTrackId());
@@ -405,12 +407,10 @@ public class TrackRecordingServiceTest
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertTrue(service.isRecording());
 
-    try {
-      service.startNewTrack();
-      fail("Expecting IllegalStateException");
-    } catch (IllegalStateException e) {
-      // Expected.
-    }
+    // Starting a new track when there is a recording should just return -1L.
+    long newTrack = service.startNewTrack();
+    assertEquals(-1L, newTrack);
+
     assertEquals(123, sharedPreferences.getLong(
         context.getString(R.string.recording_track_key), 0));
     assertEquals(123, service.getRecordingTrackId());
@@ -452,13 +452,9 @@ public class TrackRecordingServiceTest
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertFalse(service.isRecording());
 
-    // End the current track.
-    try {
-      service.endCurrentTrack();
-      fail("Expecting IllegalStateException");
-    } catch (IllegalStateException e) {
-      // Expected.
-    }
+    // Ending the current track when there is no recording should not result in any error.
+    service.endCurrentTrack();
+
     assertEquals(-1, sharedPreferences.getLong(
         context.getString(R.string.recording_track_key), 0));
     assertEquals(-1, service.getRecordingTrackId());
@@ -495,9 +491,9 @@ public class TrackRecordingServiceTest
     assertEquals(2, service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS));
 
     Waypoint wpt = providerUtils.getWaypoint(1);
-    assertEquals(getContext().getString(R.string.stats_icon_url),
+    assertEquals(getContext().getString(R.string.marker_statistics_icon_url),
         wpt.getIcon());
-    assertEquals(getContext().getString(R.string.statistics),
+    assertEquals(getContext().getString(R.string.marker_type_statistics),
         wpt.getName());
     assertEquals(Waypoint.TYPE_STATISTICS, wpt.getType());
     assertEquals(123, wpt.getTrackId());
@@ -531,9 +527,9 @@ public class TrackRecordingServiceTest
 
     assertEquals(1, service.insertWaypoint(WaypointCreationRequest.DEFAULT_MARKER));
     Waypoint wpt = providerUtils.getWaypoint(1);
-    assertEquals(getContext().getString(R.string.waypoint_icon_url),
+    assertEquals(getContext().getString(R.string.marker_waypoint_icon_url),
         wpt.getIcon());
-    assertEquals(getContext().getString(R.string.waypoint),
+    assertEquals(getContext().getString(R.string.marker_type_waypoint),
         wpt.getName());
     assertEquals(Waypoint.TYPE_WAYPOINT, wpt.getType());
     assertEquals(123, wpt.getTrackId());
@@ -631,7 +627,7 @@ public class TrackRecordingServiceTest
   @MediumTest
   public void testWithProperties_zephyrSensorType() throws Exception {
     functionalTest(R.string.sensor_type_key,
-        context.getString(R.string.zephyr_sensor_type));
+        context.getString(R.string.sensor_type_value_zephyr));
   }
 
   private ITrackRecordingService bindAndGetService(Intent intent) {

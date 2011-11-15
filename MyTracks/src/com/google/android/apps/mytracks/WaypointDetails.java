@@ -110,7 +110,7 @@ public class WaypointDetails extends Activity
       cancel.setOnClickListener(this);
       cancel.setVisibility(View.VISIBLE);
     } else {
-      cancel.setVisibility(View.GONE);
+      cancel.setVisibility(View.INVISIBLE);
     }
     Button save = (Button) findViewById(R.id.waypointdetails_save);
     save.setOnClickListener(this);

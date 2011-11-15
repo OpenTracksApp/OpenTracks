@@ -190,7 +190,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
     super.onCreateOptionsMenu(menu);
     chartSettingsMenuItem =
         menu.add(0, Constants.MENU_CHART_SETTINGS, 0,
-            R.string.chart_settings);
+            R.string.menu_chart_view_chart_settings);
     chartSettingsMenuItem.setIcon(R.drawable.chart_settings);
     return true;
   }
@@ -260,7 +260,6 @@ public class ChartActivity extends Activity implements TrackDataListener {
    *
    * @param location the location to get data for (this method takes ownership of that location)
    * @param result the resulting point to fill out
-   * @return the previous location, now available for reuse
    */
   private void fillDataPoint(Location location, double result[]) {
     double timeOrDistance = Double.NaN,

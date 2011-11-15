@@ -135,9 +135,6 @@ public class ModernAuthManager implements AuthManager {
    *        {@link Activity#onActivityResult} function
    * @param results The data passed in to the {@link Activity}'s
    *        {@link Activity#onActivityResult} function
-   * @return True if the auth token was fetched or we aren't done fetching
-   *         the auth token, or False if there was an error or the request was
-   *         canceled
    */
   public void authResult(int resultCode, Intent results) {
     boolean retry = false;
@@ -169,12 +166,11 @@ public class ModernAuthManager implements AuthManager {
   }
 
   /**
-   * Invalidates the existing auth token and request a new one. The
-   * {@link Runnable} provided will be executed when the new auth token is
-   * successfully fetched.
+   * Invalidates the existing auth token and request a new one. The callback
+   * provided will be executed when the new auth token is successfully fetched.
    *
-   * @param runnable A {@link Runnable} to execute when a new auth token
-   *        is successfully fetched
+   * @param callback A callback to execute when a new auth token is successfully
+   *          fetched
    */
   public void invalidateAndRefresh(final AuthCallback callback) {
     this.authCallback = callback;

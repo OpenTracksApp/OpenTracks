@@ -37,7 +37,7 @@ limitations under the License.
         <TextView
           android:id="@+id/speed_label"
           android:layout_span="5"
-          android:text="@string/speed" />
+          android:text="@string/stat_speed" />
       </TableRow>
       <TableRow
         android:background="@color/stat_label_background">
@@ -73,12 +73,12 @@ limitations under the License.
           android:id="@+id/total_distance_label"
           android:layout_column="1"
           android:layout_span="3"
-          android:text="@string/total_distance_label" />
+          android:text="@string/stat_total_distance" />
         <TextView
           android:id="@+id/max_speed_label"
           android:layout_column="4"
           android:layout_span="2"
-          android:text="@string/max_speed_label" />
+          android:text="@string/stat_max_speed" />
       </TableRow>
       <TableRow
         android:background="@color/stat_label_background">
@@ -125,12 +125,12 @@ limitations under the License.
           android:id="@+id/track_time_label"
           android:layout_column="1"
           android:layout_span="3"
-          android:text="@string/total_time_label" />
+          android:text="@string/stat_total_time" />
         <TextView
           android:id="@+id/average_speed_label"
           android:layout_column="4"
           android:layout_span="2"
-          android:text="@string/average_speed_label" />
+          android:text="@string/stat_average_speed" />
       </TableRow>
       <TableRow
         android:background="@color/stat_label_background">
@@ -171,12 +171,12 @@ limitations under the License.
           android:id="@+id/moving_time_label"
           android:layout_column="1"
           android:layout_span="3"
-          android:text="@string/moving_time_label" />
+          android:text="@string/stat_moving_time" />
         <TextView
           android:id="@+id/average_moving_speed_label"
           android:layout_column="4"
           android:layout_span="2"
-          android:text="@string/average_moving_speed_label" />
+          android:text="@string/stat_average_moving_speed" />
       </TableRow>
       <TableRow
         android:background="@color/stat_label_background">
@@ -218,12 +218,12 @@ limitations under the License.
           android:id="@+id/elevation_label"
           android:layout_column="1"
           android:layout_span="3"
-          android:text="@string/elevation_label" />
+          android:text="@string/stat_elevation" />
         <TextView
           android:id="@+id/elevation_gain_label"
           android:layout_column="4"
           android:layout_span="2"
-          android:text="@string/elevation_gain_label" />
+          android:text="@string/stat_elevation_gain" />
       </TableRow>
       <TableRow
         android:background="@color/stat_label_background">
@@ -254,12 +254,12 @@ limitations under the License.
           android:id="@+id/min_elevation_label"
           android:layout_column="1"
           android:layout_span="3"
-          android:text="@string/min_elevation_label" />
+          android:text="@string/stat_min_elevation" />
         <TextView
           android:id="@+id/max_elevation_label"
           android:layout_column="4"
           android:layout_span="3"
-          android:text="@string/max_elevation_label" />
+          android:text="@string/stat_max_elevation" />
       </TableRow>
       <TableRow
         android:background="@color/stat_label_background">
@@ -290,12 +290,12 @@ limitations under the License.
           android:id="@+id/min_grade_label"
           android:layout_column="1"
           android:layout_span="3"
-          android:text="@string/min_grade_label" />
+          android:text="@string/stat_min_grade" />
         <TextView
           android:id="@+id/max_grade_label"
           android:layout_column="4"
           android:layout_span="2"
-          android:text="@string/max_grade_label" />
+          android:text="@string/stat_max_grade" />
       </TableRow>
       <TableRow
         android:background="@color/stat_label_background">
@@ -319,11 +319,11 @@ limitations under the License.
         <TextView
           android:layout_column="1"
           android:layout_span="3"
-          android:text="@string/latitude_label" />
+          android:text="@string/stat_latitude" />
         <TextView
           android:layout_column="4"
           android:layout_span="2"
-          android:text="@string/longitude_label" />
+          android:text="@string/stat_longitude" />
       </TableRow>
       <TableRow
         android:background="@color/stat_label_background">

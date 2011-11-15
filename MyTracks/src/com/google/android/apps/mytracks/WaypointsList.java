@@ -73,7 +73,7 @@ public class WaypointsList extends ListActivity
       new OnCreateContextMenuListener() {
         public void onCreateContextMenu(ContextMenu menu, View v,
             ContextMenuInfo menuInfo) {
-          menu.setHeaderTitle(R.string.waypointslist_this_waypoint);
+          menu.setHeaderTitle(R.string.marker_list_context_menu_title);
           AdapterView.AdapterContextMenuInfo info =
               (AdapterView.AdapterContextMenuInfo) menuInfo;
           contextPosition = info.position;
@@ -83,11 +83,11 @@ public class WaypointsList extends ListActivity
           if (waypoint != null) {
             int type = waypoint.getType();
             menu.add(0, Constants.MENU_SHOW, 0,
-                R.string.waypointslist_show_waypoint);
+                R.string.marker_list_show_on_map);
             menu.add(0, Constants.MENU_EDIT, 0,
-                R.string.waypointslist_edit_waypoint);
+                R.string.marker_list_edit_marker);
             menu.add(0, Constants.MENU_DELETE, 0,
-                R.string.waypointslist_delete_waypoint).setEnabled(
+                R.string.marker_list_delete_marker).setEnabled(
                     recordingTrackId < 0 || type == Waypoint.TYPE_WAYPOINT ||
                     info.id != providerUtils.getLastWaypointId(recordingTrackId));
           }
@@ -211,8 +211,7 @@ public class WaypointsList extends ListActivity
     }
     long id = insertWaypoint(request);
     if (id < 0) {
-      Toast.makeText(this, R.string.error_unable_to_insert_marker,
-          Toast.LENGTH_LONG).show();
+      Toast.makeText(this, R.string.marker_insert_error, Toast.LENGTH_LONG).show();
       Log.e(Constants.TAG, "Failed to insert marker.");
       return;
     }
@@ -227,8 +226,7 @@ public class WaypointsList extends ListActivity
       if (trackRecordingService != null) {
         long waypointId = trackRecordingService.insertWaypoint(request);
         if (waypointId >= 0) {
-          Toast.makeText(this, R.string.status_statistics_inserted,
-              Toast.LENGTH_LONG).show();
+          Toast.makeText(this, R.string.marker_insert_success, Toast.LENGTH_LONG).show();
           return waypointId;
         }
       } else {
@@ -295,10 +293,10 @@ public class WaypointsList extends ListActivity
   public void deleteWaypoint(final long waypointId) {
     AlertDialog dialog = null;
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    builder.setMessage(getString(R.string.marker_will_be_permanently_deleted));
-    builder.setTitle(getString(R.string.are_you_sure_question));
+    builder.setMessage(getString(R.string.marker_list_delete_marker_confirm_message));
+    builder.setTitle(getString(R.string.generic_confirm_title));
     builder.setIcon(android.R.drawable.ic_dialog_alert);
-    builder.setPositiveButton(getString(R.string.yes),
+    builder.setPositiveButton(getString(R.string.generic_yes),
         new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialogInterface, int i) {
@@ -307,7 +305,7 @@ public class WaypointsList extends ListActivity
                 new StringUtils(WaypointsList.this));
           }
         });
-    builder.setNegativeButton(getString(R.string.no),
+    builder.setNegativeButton(getString(R.string.generic_no),
         new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialogInterface, int i) {

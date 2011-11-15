@@ -51,10 +51,10 @@ public class DeleteAllTracks extends Handler {
     AlertDialog dialog = null;
     AlertDialog.Builder builder = new AlertDialog.Builder(context);
     builder.setMessage(
-        context.getString(R.string.all_data_will_be_permanently_deleted));
-    builder.setTitle(context.getString(R.string.are_you_sure_question));
+        context.getString(R.string.track_list_delete_all_confirm_message));
+    builder.setTitle(context.getString(R.string.generic_confirm_title));
     builder.setIcon(android.R.drawable.ic_dialog_alert);
-    builder.setPositiveButton(context.getString(R.string.yes),
+    builder.setPositiveButton(context.getString(R.string.generic_yes),
         new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialogInterface, int i) {
             dialogInterface.dismiss();
@@ -65,14 +65,14 @@ public class DeleteAllTracks extends Handler {
             SharedPreferences.Editor editor = prefs.edit();
             // TODO: Go through data manager
             editor.putLong(context.getString(R.string.selected_track_key), -1);
-            ApiFeatures.getInstance().getApiPlatformAdapter().applyPreferenceChanges(editor);
+            ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);
             if (done != null) {
               Handler h = new Handler();
               h.post(done);
             }
           }
         });
-    builder.setNegativeButton(context.getString(R.string.no),
+    builder.setNegativeButton(context.getString(R.string.generic_no),
         new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialogInterface, int i) {
             dialogInterface.dismiss();

@@ -53,13 +53,13 @@ public class SensorManagerFactory {
 
     if (sensor == null) {
       return null;
-    } else if (sensor.equals(context.getString(R.string.ant_sensor_type))) {
+    } else if (sensor.equals(context.getString(R.string.sensor_type_value_ant))) {
       return new AntDirectSensorManager(context);
-    } else if (sensor.equals(context.getString(R.string.srm_ant_bridge_sensor_type))) {
+    } else if (sensor.equals(context.getString(R.string.sensor_type_value_srm_ant_bridge))) {
       return new AntSRMSensorManager(context);
-    } else if (sensor.equals(context.getString(R.string.zephyr_sensor_type))) {
+    } else if (sensor.equals(context.getString(R.string.sensor_type_value_zephyr))) {
       return new ZephyrSensorManager(context);
-    } else if (sensor.equals(context.getString(R.string.polar_sensor_type))) {
+    } else if (sensor.equals(context.getString(R.string.sensor_type_value_polar))) {
       return new PolarSensorManager(context);
     } else  {
       Log.w(Constants.TAG, "Unable to find sensor type: " + sensor);

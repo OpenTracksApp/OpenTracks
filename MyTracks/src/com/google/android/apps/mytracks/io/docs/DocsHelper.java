@@ -34,6 +34,7 @@ import com.google.wireless.gdata.parser.ParseException;
 import com.google.wireless.gdata2.client.AuthenticationException;
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -44,7 +45,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
-import java.text.DateFormat;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -275,25 +275,22 @@ public class DocsHelper {
   public void addTrackRow(Context context, AuthManager trixAuth,
       String spreadsheetId, String worksheetId, Track track,
       boolean metricUnits) throws IOException {
-
     String worksheetUri = String.format(DOCS_SPREADSHEET_URL_FORMAT,
         spreadsheetId, worksheetId);
     TripStatistics stats = track.getStatistics();
 
     String distanceUnit = context.getString(metricUnits ?
-        R.string.kilometer : R.string.mile);
+        R.string.unit_kilometer : R.string.unit_mile);
     String speedUnit = context.getString(metricUnits ?
-        R.string.kilometer_per_hour : R.string.mile_per_hour);
+        R.string.unit_kilometer_per_hour : R.string.unit_mile_per_hour);
     String elevationUnit = context.getString(metricUnits ?
-        R.string.meter : R.string.feet);
-
-    DateFormat trackDateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
+        R.string.unit_meter : R.string.unit_feet);
 
     // Prepare the Post-Text we are going to send.
     DocsTagBuilder tagBuilder = new DocsTagBuilder(metricUnits)
         .append("name", track.getName())
         .append("description", track.getDescription())
-        .append("date", trackDateFormat.format(new Date(stats.getStartTime())))
+        .append("date", getDisplayDate(context, stats.getStartTime()))
         .append("totaltime", StringUtils.formatTimeAlwaysShowingHours(
             stats.getTotalTime()))
         .append("movingtime", StringUtils.formatTimeAlwaysShowingHours(
@@ -331,6 +328,21 @@ public class DocsHelper {
     writeRowData(trixAuth, worksheetUri, postText);
 
     Log.i(Constants.TAG, "Post finished.");
+  }
+
+  /**
+   * Gets the display string for a time based on the phone's setting.
+   *
+   * @param context the context to obtain the phone's setting.
+   * @param time the time
+   * @return the display string of the time
+   */
+  protected String getDisplayDate(Context context, long time) {
+    java.text.DateFormat dateFormat = DateFormat.getDateFormat(context);
+    java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
+    Date startTime = new Date(time);
+    String dateString = dateFormat.format(startTime) + " " + timeFormat.format(startTime);
+    return dateString;
   }
 
   /**

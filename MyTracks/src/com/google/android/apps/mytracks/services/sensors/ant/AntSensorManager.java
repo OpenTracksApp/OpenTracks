@@ -22,6 +22,7 @@ import com.dsi.ant.AntInterface;
 import com.dsi.ant.AntInterfaceIntent;
 import com.dsi.ant.AntMesg;
 import com.dsi.ant.exception.AntInterfaceException;
+import com.dsi.ant.exception.AntServiceNotConnectedException;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.services.sensors.SensorManager;
@@ -65,10 +66,6 @@ public abstract class AntSensorManager extends SensorManager {
   protected static final short WILDCARD = 0;
 
   private AntInterface antReceiver;
-
-  // Flag to know if the ANT App was interrupted
-  // TODO: This code path is not used but probably should be.
-  private boolean antInterrupted;
 
   /**
    * The data from the sensors.
@@ -125,30 +122,19 @@ public abstract class AntSensorManager extends SensorManager {
 
   public AntSensorManager(Context context) {
     this.context = context;
+    
+    // We register for ANT intents early because we want to have a record of
+    // the status intents in the log as we start up.
+    registerForAntIntents();
+
   }
 
   @Override
   public void onDestroy() {
     Log.i(TAG, "destroying AntSensorManager");
-    try {
-      context.unregisterReceiver(statusReceiver);
-    } catch (IllegalArgumentException e) {
-      Log.w(TAG, "Failed to unregister ANT status receiver", e);
-    }
-
-    try {
-      context.unregisterReceiver(dataReceiver);
-    } catch (IllegalArgumentException e) {
-      Log.w(TAG, "Failed to unregister ANT data receiver", e);
-    }
-
-    try {
-      antReceiver.releaseInterface();
-    } catch (AntInterfaceException e) {
-      Log.e(TAG, "failed to release ANT interface", e);
-    }
-
-    antReceiver.destroy();
+    
+    cleanAntInterface();
+    unregisterForAntIntents();
   }
 
   @Override
@@ -173,16 +159,18 @@ public abstract class AntSensorManager extends SensorManager {
    */
   @Override
   protected final void setupChannel() {
+    setup();
+  }
+  
+  private synchronized void setup() {
     // We handle this unpleasantly because the UI should've checked for ANT
     // support before it even instantiated this class.
     if (!AntInterface.hasAntSupport(context)) {
       throw new IllegalStateException("device does not have ANT support");
     }
-
-    // We register for ANT intents early because we want to have a record of
-    // the status intents in the log as we start up.
-    registerForAntIntents();
-
+    
+    cleanAntInterface();
+    
     antReceiver = AntInterface.getInstance(context, antServiceListener);
 
     if (antReceiver == null) {
@@ -193,6 +181,29 @@ public abstract class AntSensorManager extends SensorManager {
     setSensorState(Sensor.SensorState.CONNECTING);
   }
 
+  /**
+   * Cleans up the ANT+ receiver interface, by releasing the interface
+   * and destroying it.
+   */
+  private void cleanAntInterface()
+  {
+    Log.i(TAG, "Destroying AntSensorManager");
+    
+    if (antReceiver != null) {
+      try {
+        antReceiver.releaseInterface();
+      } catch (AntServiceNotConnectedException e) {
+        Log.i(TAG, "ANT service not connected", e);
+      } catch (AntInterfaceException e) {
+        Log.e(TAG, "failed to release ANT interface", e);
+      }
+  
+      antReceiver.destroy();
+      
+      antReceiver = null;
+    }
+  }
+  
   /**
    * This method is invoked via the ServiceListener when we're connected to
    * the ANT service.  If we're just starting up, this is our first opportunity
@@ -210,10 +221,8 @@ public abstract class AntSensorManager extends SensorManager {
       if (!antReceiver.isEnabled()) {
         // Make sure not to call AntInterface.enable() again, if it has been
         // already called before
-        if (antInterrupted == false) {
-          Log.i(TAG, "Powering on Radio");
-          antReceiver.enable();
-        }
+        Log.i(TAG, "Powering on Radio");
+        antReceiver.enable();
       } else {
         Log.i(TAG, "Radio already enabled");
       }
@@ -236,7 +245,7 @@ public abstract class AntSensorManager extends SensorManager {
   /**
    * Process a raw ANT message.
    * @param antMessage the ANT message, including the size and message ID bytes
-   * @deprecated Use {@link #handleMessage(int, byte[])} instead.
+   * @deprecated Use {@link #handleMessage(byte, byte[])} instead.
    */
   protected void handleMessage(byte[] antMessage) {
     int len = antMessage[0];
@@ -333,6 +342,23 @@ public abstract class AntSensorManager extends SensorManager {
     dataIntentFilter.addAction(AntInterfaceIntent.ANT_RX_MESSAGE_ACTION);
     context.registerReceiver(dataReceiver, dataIntentFilter);
   }
+  
+  private void unregisterForAntIntents()
+  {
+    Log.i(TAG, "Unregistering ANT Intents.");
+    
+    try {
+      context.unregisterReceiver(statusReceiver);
+    } catch (IllegalArgumentException e) {
+      Log.w(TAG, "Failed to unregister ANT status receiver", e);
+    }
+
+    try {
+      context.unregisterReceiver(dataReceiver);
+    } catch (IllegalArgumentException e) {
+      Log.w(TAG, "Failed to unregister ANT data receiver", e);
+    }
+  }  
 
   private String messageToString(byte[] message) {
     StringBuilder out = new StringBuilder();

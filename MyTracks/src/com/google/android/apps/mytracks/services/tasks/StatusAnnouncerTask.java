@@ -24,6 +24,7 @@ import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -52,11 +53,6 @@ public class StatusAnnouncerTask implements PeriodicTask {
    * A pointer to the service context.
    */
   private final Context context;
-
-  /**
-   * String utilities.
-   */
-  private final StringUtils stringUtils;
 
   /**
    * The interface to the text to speech engine.
@@ -93,14 +89,8 @@ public class StatusAnnouncerTask implements PeriodicTask {
     }
   };
 
-
   public StatusAnnouncerTask(Context context) {
-    this(context, new StringUtils(context));
-  }
-
-  public StatusAnnouncerTask(Context context, StringUtils stringUtils) {
     this.context = context;
-    this.stringUtils = stringUtils;
   }
 
   /**
@@ -176,29 +166,29 @@ public class StatusAnnouncerTask implements PeriodicTask {
     double d =  stats.getTotalDistance() / 1000;
     double s =  stats.getAverageMovingSpeed() * 3.6;
     if (d == 0) {
-      return context.getString(R.string.announce_no_distance);
+      return context.getString(R.string.voice_no_distance);
     }
 
     int speedLabel;
     if (metricUnits) {
       if (reportSpeed) {
-        speedLabel = R.string.kilometer_per_hour_long;
+        speedLabel = R.string.voice_kilometer_per_hour;
       } else {
-        speedLabel = R.string.per_kilometer;
+        speedLabel = R.string.voice_per_kilometer;
       }
     } else {
       s *= UnitConversions.KMH_TO_MPH;
       d *= UnitConversions.KM_TO_MI;
       if (reportSpeed) {
-        speedLabel = R.string.mile_per_hour_long;
+        speedLabel = R.string.voice_mile_per_hour;
       } else {
-        speedLabel = R.string.per_mile;
+        speedLabel = R.string.voice_per_mile;
       }
     }
 
     String speed = null;
     if ((s == 0) || Double.isNaN(s)) {
-      speed = context.getString(R.string.unknown);
+      speed = context.getString(R.string.value_unknown);
     } else {
       if (reportSpeed) {
         speed = String.format("%.1f", s);
@@ -206,17 +196,16 @@ public class StatusAnnouncerTask implements PeriodicTask {
         double pace = 3600000.0 / s;
         Log.w(Constants.TAG,
               "Converted speed: " + s + " to pace: " + pace);
-        speed = stringUtils.formatTimeLong((long) pace);
+        speed = getAnnounceTime((long) pace);
       }
     }
 
-    return context.getString(R.string.announce_template,
-        context.getString(R.string.total_distance_label),
+    return context.getString(R.string.voice_template,
         d,
         context.getString(metricUnits
-                          ? R.string.kilometers_long
-                          : R.string.miles_long),
-        stringUtils.formatTimeLong(stats.getMovingTime()),
+                          ? R.string.voice_kilometers
+                          : R.string.voice_miles),
+        getAnnounceTime(stats.getMovingTime()),
         speed,
         context.getString(speedLabel));
   }
@@ -332,5 +321,41 @@ public class StatusAnnouncerTask implements PeriodicTask {
    */
   public static int getVolumeStream() {
     return TextToSpeech.Engine.DEFAULT_STREAM;
+  }
+  
+  /**
+   * Gets a string to announce the time.
+   * 
+   * @param time the time
+   */
+  @VisibleForTesting
+  String getAnnounceTime(long time) {
+    int[] parts = StringUtils.getTimeParts(time);
+    String secLabel =
+        context.getString(parts[0] == 1 ? R.string.voice_second : R.string.voice_seconds);
+    String minLabel =
+        context.getString(parts[1] == 1 ? R.string.voice_minute : R.string.voice_minutes);
+    String hourLabel =
+        context.getString(parts[2] == 1 ? R.string.voice_hour : R.string.voice_hours);
+
+    StringBuilder sb = new StringBuilder();
+    if (parts[2] != 0) {
+      sb.append(parts[2]);
+      sb.append(" ");
+      sb.append(hourLabel);
+      sb.append(" ");
+      sb.append(parts[1]);
+      sb.append(" ");
+      sb.append(minLabel);
+    } else {
+      sb.append(parts[1]);
+      sb.append(" ");
+      sb.append(minLabel);
+      sb.append(" ");
+      sb.append(parts[0]);
+      sb.append(" ");
+      sb.append(secLabel);
+    }
+    return sb.toString();
   }
 }

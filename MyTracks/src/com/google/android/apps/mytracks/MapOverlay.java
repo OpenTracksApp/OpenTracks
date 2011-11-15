@@ -35,7 +35,6 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -78,7 +77,6 @@ public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListe
   private GeoPoint lastReferencePoint;
   private Rect lastViewRect;
   private boolean lastPathExists;
-  private Location lastLocation;
   private TrackPathPainter trackPathPainter;
 
   /**
@@ -305,17 +303,17 @@ public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListe
     int cy = mapView.getMapCenter().getLatitudeE6();
     return new Rect(cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2);
   }
-
-  // Visible for testing.
-  Path newPath() {
-    return new Path();
-  }
-
-  // Visible for testing.
-  public Path getLastPath() {
-    return trackPathPainter.getLastPath();
+ 
+  // For use in testing only.
+  public TrackPathPainter getTrackPathPainter() {
+    return trackPathPainter;
   }
   
+  // For use in testing only.
+  public void setTrackPathPainter(TrackPathPainter trackPathPainter) {
+    this.trackPathPainter = trackPathPainter;
+  }
+
   private void drawWaypoints(Canvas canvas, Projection projection) {
     synchronized (waypoints) {;
       for (Waypoint wpt : waypoints) {

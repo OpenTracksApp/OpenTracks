@@ -77,11 +77,11 @@ public class DeleteTrack extends Activity
     }
 
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    builder.setMessage(getString(R.string.track_will_be_permanently_deleted));
-    builder.setTitle(getString(R.string.are_you_sure_question));
+    builder.setMessage(getString(R.string.track_list_delete_track_confirm_message));
+    builder.setTitle(getString(R.string.generic_confirm_title));
     builder.setIcon(android.R.drawable.ic_dialog_alert);
-    builder.setPositiveButton(getString(R.string.yes), this);
-    builder.setNegativeButton(getString(R.string.no), this);
+    builder.setPositiveButton(getString(R.string.generic_yes), this);
+    builder.setNegativeButton(getString(R.string.generic_no), this);
     builder.setOnCancelListener(this);
     return builder.create();
   }
@@ -108,7 +108,7 @@ public class DeleteTrack extends Activity
     SharedPreferences preferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
     if (preferences.getLong(selectedKey, -1) == deleteTrackId) {
       Editor editor = preferences.edit().putLong(selectedKey, -1);
-      ApiFeatures.getInstance().getApiPlatformAdapter().applyPreferenceChanges(editor);
+      ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);
     }
   }
 }

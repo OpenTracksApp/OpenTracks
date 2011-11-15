@@ -15,8 +15,6 @@
  */
 package com.google.android.apps.mytracks.maps;
 
-import com.google.android.apps.mytracks.MockPath;
-
 import android.location.Location;
 
 /**
@@ -37,7 +35,10 @@ public class TrackPathDescriptorFixedSpeedTest extends TrackPathPainterTestCase 
       myTracksOverlay.addLocation(location);
     }
     
-    TrackPathPainter painter = new DynamicSpeedTrackPathPainter(getContext(), new FixedSpeedTrackPathDescriptor(getContext()));
+    TrackPathPainter painter = new DynamicSpeedTrackPathPainter(
+        getContext(), new FixedSpeedTrackPathDescriptor(getContext()));
+    myTracksOverlay.setTrackPathPainter(painter);
+    
     int startLocationIdx = 0;
     Boolean alwaysVisible = true;
     
@@ -45,8 +46,7 @@ public class TrackPathDescriptorFixedSpeedTest extends TrackPathPainterTestCase 
     painter.updatePath(myTracksOverlay.getMapProjection(mockView), 
         myTracksOverlay.getMapViewRect(mockView), startLocationIdx, alwaysVisible,
         myTracksOverlay.getPoints());
-    assertNotNull(myTracksOverlay.getLastPath());
-    assertTrue(myTracksOverlay.getLastPath() instanceof MockPath);
+    assertNotNull(myTracksOverlay.getTrackPathPainter().getLastPath());
     painter.drawTrack(canvas);
   }
 }

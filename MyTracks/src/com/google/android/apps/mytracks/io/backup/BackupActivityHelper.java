@@ -15,8 +15,8 @@
  */
 package com.google.android.apps.mytracks.io.backup;
 
-import com.google.android.apps.mytracks.MyTracks;
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.MyTracks;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -74,19 +74,19 @@ public class BackupActivityHelper {
    */
   public void writeBackup() {
     if (!fileUtils.isSdCardAvailable()) {
-      showToast(R.string.io_no_external_storage_found);
+      showToast(R.string.sd_card_error_no_storage);
       return;
     }
 
     if (!backup.isBackupsDirectoryAvailable(true)) {
-      showToast(R.string.io_create_dir_failed);
+      showToast(R.string.sd_card_error_create_dir);
       return;
     }
 
     final ProgressDialog progressDialog = ProgressDialog.show(
         activity,
-        activity.getString(R.string.progress_title),
-        activity.getString(R.string.backup_write_progress_message),
+        activity.getString(R.string.generic_progress_title),
+        activity.getString(R.string.settings_backup_now_progress_message),
         true);
 
     // Do the writing in another thread
@@ -95,10 +95,10 @@ public class BackupActivityHelper {
       public void run() {
         try {
           backup.writeToDefaultFile();
-          showToast(R.string.io_write_finished);
+          showToast(R.string.sd_card_success_write_file);
         } catch (IOException e) {
           Log.e(Constants.TAG, "Failed to write backup", e);
-          showToast(R.string.io_write_failed);
+          showToast(R.string.sd_card_error_write_file);
         } finally {
           dismissDialog(progressDialog);
         }
@@ -114,25 +114,25 @@ public class BackupActivityHelper {
   public void restoreBackup() {
     // Get the list of existing backups
     if (!fileUtils.isSdCardAvailable()) {
-      showToast(R.string.io_no_external_storage_found);
+      showToast(R.string.sd_card_error_no_storage);
       return;
     }
 
     if (!backup.isBackupsDirectoryAvailable(false)) {
-      showToast(R.string.no_backups);
+      showToast(R.string.settings_backup_restore_no_backup);
       return;
     }
 
     final Date[] backupDates = backup.getAvailableBackups();
     if (backupDates == null || backupDates.length == 0) {
-      showToast(R.string.no_backups);
+      showToast(R.string.settings_backup_restore_no_backup);
       return;
     }
     Arrays.sort(backupDates, REVERSE_DATE_ORDER);
 
     // Show a confirmation dialog
     Builder confirmationDialogBuilder = new AlertDialog.Builder(activity);
-    confirmationDialogBuilder.setMessage(R.string.restore_overwrites_warning);
+    confirmationDialogBuilder.setMessage(R.string.settings_backup_restore_confirm_message);
     confirmationDialogBuilder.setCancelable(true);
     confirmationDialogBuilder.setPositiveButton(android.R.string.yes,
         new OnClickListener() {
@@ -148,7 +148,6 @@ public class BackupActivityHelper {
   /**
    * Shows a backup list for the user to pick, then restores it.
    *
-   * @param backupDir the backup directory
    * @param backupDates the list of available backup files
    */
   private void pickBackupForRestore(final Date[] backupDates) {
@@ -167,7 +166,7 @@ public class BackupActivityHelper {
     // Show a dialog for the user to pick which backup to restore
     Builder dialogBuilder = new AlertDialog.Builder(activity);
     dialogBuilder.setCancelable(true);
-    dialogBuilder.setTitle(R.string.select_backup_to_restore);
+    dialogBuilder.setTitle(R.string.settings_backup_restore_select_title);
     dialogBuilder.setItems(backupDateStrs, new OnClickListener() {
       @Override
       public void onClick(DialogInterface dialog, int which) {
@@ -179,16 +178,16 @@ public class BackupActivityHelper {
   }
 
   /**
-   * Shows a progress dialog, then starts restoring the backup osynchronously.
+   * Shows a progress dialog, then starts restoring the backup asynchronously.
    *
-   * @param inputFile the file to restore from
+   * @param date the date
    */
   private void restoreFromDateAsync(final Date date) {
     // Show a progress dialog
     ProgressDialog.show(
         activity,
-        activity.getString(R.string.progress_title),
-        activity.getString(R.string.backup_import_progress_message),
+        activity.getString(R.string.generic_progress_title),
+        activity.getString(R.string.settings_backup_restore_progress_message),
         true);
 
     // Do the actual importing in another thread (don't block the UI)
@@ -197,10 +196,10 @@ public class BackupActivityHelper {
       public void run() {
         try {
           backup.restoreFromDate(date);
-          showToast(R.string.io_read_finished);
+          showToast(R.string.sd_card_success_read_file);
         } catch (IOException e) {
           Log.e(Constants.TAG, "Failed to restore backup", e);
-          showToast(R.string.io_read_failed);
+          showToast(R.string.sd_card_error_read_file);
         } finally {
           // Data may have been restored, "reboot" the app to catch it
           restartApplication();

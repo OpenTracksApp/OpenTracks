@@ -72,16 +72,16 @@ public class ResultDialogFactory {
         .setView(makeDialogContent(activity, results, success));
 
     if (success) {
-      builder.setTitle(R.string.success);
+      builder.setTitle(R.string.generic_success_title);
       builder.setIcon(android.R.drawable.ic_dialog_info);
     } else {
-      builder.setTitle(R.string.error);
+      builder.setTitle(R.string.generic_error_title);
       builder.setIcon(android.R.drawable.ic_dialog_alert);
     }
 
-    builder.setPositiveButton(activity.getString(R.string.ok), onOkClickListener);
+    builder.setPositiveButton(activity.getString(R.string.generic_ok), onOkClickListener);
     if (onShareClickListener != null) {
-      builder.setNeutralButton(activity.getString(R.string.share_track),
+      builder.setNegativeButton(activity.getString(R.string.send_google_result_share_url),
           onShareClickListener);
     }
 

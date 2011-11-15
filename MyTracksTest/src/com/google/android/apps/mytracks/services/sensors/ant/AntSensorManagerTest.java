@@ -15,19 +15,19 @@
  */
 package com.google.android.apps.mytracks.services.sensors.ant;
 
-import com.google.android.apps.mytracks.services.sensors.ant.AntSensorManager;
-
+import android.content.Context;
 import android.test.AndroidTestCase;
 import android.test.MoreAsserts;
 
 public class AntSensorManagerTest extends AndroidTestCase {
   private class TestAntSensorManager extends AntSensorManager {
+
+    public TestAntSensorManager(Context context) {
+      super(context);
+    }
+
     public byte messageId;
     public byte[] messageData;
-
-    public TestAntSensorManager() {
-      super(null);
-    }
 
     @Override
     protected void setupAntSensorChannels() {}
@@ -47,7 +47,13 @@ public class AntSensorManagerTest extends AndroidTestCase {
     }
   }
 
-  private final TestAntSensorManager sensorManager = new TestAntSensorManager();
+  private TestAntSensorManager sensorManager;
+  
+  @Override
+  protected void setUp() throws Exception {
+    super.setUp();
+    sensorManager = new TestAntSensorManager(getContext());
+  }  
 
   public void testSimple() {
     byte[] rawMessage = {

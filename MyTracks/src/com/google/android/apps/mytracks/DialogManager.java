@@ -30,8 +30,8 @@ import android.view.WindowManager.BadTokenException;
 public class DialogManager {
 
   /**
-   * The equivalent of {@link #showDialogSafely(int)}, but for a specific
-   * dialog instance.
+   * The equivalent of {@link Dialog#show()}, but for a specific dialog
+   * instance.
    */
   public static void showDialogSafely(Activity activity, final Dialog dialog) {
     if (activity.isFinishing()) {
@@ -53,8 +53,8 @@ public class DialogManager {
   }
 
   /**
-   * The equivalent of {@link #dismissDialogSafely(int)}, but for a specific
-   * dialog instance.
+   * The equivalent of {@link Dialog#dismiss()}, but for a specific dialog
+   * instance.
    */
   public static void dismissDialogSafely(Activity activity, final Dialog dialog) {
     if (activity.isFinishing()) {

@@ -78,9 +78,9 @@ public class AccountChooser {
     // Let the user choose.
     Log.e(Constants.TAG, "Multiple matching accounts found.");
     final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-    builder.setTitle(R.string.choose_account_title);
+    builder.setTitle(R.string.send_google_choose_account_title);
     builder.setCancelable(false);
-    builder.setPositiveButton(R.string.ok,
+    builder.setPositiveButton(R.string.generic_ok,
         new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int which) {
         dialog.dismiss();
@@ -92,7 +92,7 @@ public class AccountChooser {
         handler.onAccountSelected(selectedAccount);
       }
     });
-    builder.setNegativeButton(R.string.cancel,
+    builder.setNegativeButton(R.string.generic_cancel,
         new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int which) {
         dialog.dismiss();
@@ -124,10 +124,10 @@ public class AccountChooser {
       final AccountHandler handler) {
     Log.e(Constants.TAG, "No matching accounts found.");
     final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-    builder.setTitle(R.string.no_account_found_title);
-    builder.setMessage(R.string.no_account_found);
+    builder.setTitle(R.string.send_google_no_account_title);
+    builder.setMessage(R.string.send_google_no_account_message);
     builder.setCancelable(true);
-    builder.setNegativeButton(R.string.ok,
+    builder.setPositiveButton(R.string.generic_ok,
         new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int which) {
             dialog.dismiss();

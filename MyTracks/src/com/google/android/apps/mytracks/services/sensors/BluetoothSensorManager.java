@@ -15,6 +15,8 @@
  */
 package com.google.android.apps.mytracks.services.sensors;
 
+import static com.google.android.apps.mytracks.Constants.TAG;
+
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.maps.mytracks.R;
@@ -24,9 +26,12 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 /**
  * Manage the connection to a bluetooth sensor.
@@ -36,8 +41,8 @@ import android.widget.Toast;
 public class BluetoothSensorManager extends SensorManager {
 
   // Local Bluetooth adapter
-  private BluetoothAdapter bluetoothAdapter = null;
-
+  private static final BluetoothAdapter bluetoothAdapter = getDefaultBluetoothAdapter();
+  
   // Member object for the sensor threads and connections.
   private BluetoothConnectionManager connectionManager = null;
 
@@ -54,8 +59,6 @@ public class BluetoothSensorManager extends SensorManager {
       Context context, MessageParser parser) {
     this.context = context;
     this.parser = parser;
-    // Get local Bluetooth adapter
-    bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     // If BT is not available or not enabled quit.
     if (!isEnabled()) {
       return;
@@ -71,6 +74,50 @@ public class BluetoothSensorManager extends SensorManager {
     connectionManager = new BluetoothConnectionManager(messageHandler, parser);
   }
 
+  /**
+   * Code for assigning the local bluetooth adapter
+   * 
+   * @return The default bluetooth adapter, if one is available, NULL if it isn't.
+   */
+  private static BluetoothAdapter getDefaultBluetoothAdapter() {
+    // Check if the calling thread is the main application thread,
+    // if it is, do it directly.
+    if (Thread.currentThread().equals(Looper.getMainLooper().getThread())) {
+      return BluetoothAdapter.getDefaultAdapter();
+    }
+    
+    // If the calling thread, isn't the main application thread,
+    // then get the main application thread to return the default adapter.
+    final ArrayList<BluetoothAdapter> adapters = new ArrayList<BluetoothAdapter>(1);
+    final Object mutex = new Object();
+    
+    Handler handler = new Handler(Looper.getMainLooper());
+    handler.post(new Runnable() {
+      @Override
+      public void run() {
+        adapters.add(BluetoothAdapter.getDefaultAdapter());
+        synchronized (mutex) {
+          mutex.notify();
+        }
+      }
+    });
+    
+    while (adapters.isEmpty()) {
+      synchronized (mutex) {
+        try {
+          mutex.wait(1000L);
+        } catch (InterruptedException e) {
+          Log.e(TAG, "Interrupted while waiting for default bluetooth adapter", e);
+        }
+      }
+    }
+    
+    if (adapters.get(0) == null) {
+      Log.w(TAG, "No bluetooth adapter found!");
+    }
+    return adapters.get(0);
+  }
+  
   public boolean isEnabled() {
     return bluetoothAdapter != null && bluetoothAdapter.isEnabled();
   }
@@ -125,7 +172,7 @@ public class BluetoothSensorManager extends SensorManager {
   }
 
   // The Handler that gets information back from the BluetoothSensorService
-  private final Handler messageHandler = new Handler() {
+  private final Handler messageHandler = new Handler(Looper.getMainLooper()) {
     @Override
     public void handleMessage(Message msg) {
       switch (msg.what) {

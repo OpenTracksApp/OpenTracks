@@ -20,7 +20,6 @@ import static com.google.android.testing.mocking.AndroidMock.eq;
 import static com.google.android.testing.mocking.AndroidMock.expect;
 import static com.google.android.testing.mocking.AndroidMock.same;
 
-import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerTask;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.testing.mocking.AndroidMock;
@@ -55,7 +54,6 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
   private Locale oldDefaultLocale;
 
   private StatusAnnouncerTask task;
-  private StringUtils stringUtils;
   private StatusAnnouncerTask mockTask;
   private Capture<OnInitListener> initListenerCapture;
   private Capture<PhoneStateListener> phoneListenerCapture;
@@ -263,7 +261,6 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
 
     oldDefaultLocale = Locale.getDefault();
     Locale.setDefault(DEFAULT_LOCALE);
-    stringUtils = AndroidMock.createMock(StringUtils.class, getContext());
 
     // Eww, the effort required just to mock TextToSpeech is insane
     final AtomicBoolean listenerCalled = new AtomicBoolean();
@@ -294,9 +291,8 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
     phoneListenerCapture = new Capture<PhoneStateListener>();
 
     // Create a partial forwarding mock
-    mockTask = AndroidMock.createMock(StatusAnnouncerTask.class,
-        getContext(), stringUtils);
-    task = new StatusAnnouncerTask(getContext(), stringUtils) {
+    mockTask = AndroidMock.createMock(StatusAnnouncerTask.class, getContext());
+    task = new StatusAnnouncerTask(getContext()) {
       @Override
       protected TextToSpeech newTextToSpeech(Context ctx,
           OnInitListener onInitListener) {
@@ -333,11 +329,11 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
     expect(tts.setSpeechRate(StatusAnnouncerTask.TTS_SPEECH_RATE))
         .andReturn(TextToSpeech.SUCCESS);
 
-    AndroidMock.replay(tts, stringUtils);
+    AndroidMock.replay(tts);
 
     ttsInitListener.onInit(TextToSpeech.SUCCESS);
 
-    AndroidMock.verify(mockTask, tts, stringUtils);
+    AndroidMock.verify(mockTask, tts);
   }
 
   public void testStart_languageNotSupported() {
@@ -352,11 +348,11 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
     expect(tts.setSpeechRate(StatusAnnouncerTask.TTS_SPEECH_RATE))
         .andReturn(TextToSpeech.SUCCESS);
 
-    AndroidMock.replay(tts, stringUtils);
+    AndroidMock.replay(tts);
 
     ttsInitListener.onInit(TextToSpeech.SUCCESS);
 
-    AndroidMock.verify(mockTask, tts, stringUtils);
+    AndroidMock.verify(mockTask, tts);
   }
 
   public void testStart_notReady() {
@@ -364,11 +360,11 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
     OnInitListener ttsInitListener = initListenerCapture.getValue();
     assertNotNull(ttsInitListener);
 
-    AndroidMock.replay(tts, stringUtils);
+    AndroidMock.replay(tts);
 
     ttsInitListener.onInit(TextToSpeech.ERROR);
 
-    AndroidMock.verify(mockTask, tts, stringUtils);
+    AndroidMock.verify(mockTask, tts);
   }
 
   public void testShutdown() {
@@ -382,9 +378,9 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
     mockTask.listenToPhoneState(
         same(phoneListener), eq(PhoneStateListener.LISTEN_NONE));
     tts.shutdown();
-    AndroidMock.replay(mockTask, tts, stringUtils);
+    AndroidMock.replay(mockTask, tts);
     task.shutdown();
-    AndroidMock.verify(mockTask, tts, stringUtils);
+    AndroidMock.verify(mockTask, tts);
   }
 
   public void testRun() throws Exception {
@@ -404,9 +400,9 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
             .andReturn(TextToSpeech.SUCCESS);
 
     // Run the announcement
-    AndroidMock.replay(tts, stringUtils);
+    AndroidMock.replay(tts);
     task.runWithStatistics(stats);
-    AndroidMock.verify(mockTask, tts, stringUtils);
+    AndroidMock.verify(mockTask, tts);
   }
 
   public void testRun_notReady() throws Exception {
@@ -414,9 +410,9 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
     startTask(TextToSpeech.ERROR);
 
     // Run the announcement
-    AndroidMock.replay(tts, stringUtils);
+    AndroidMock.replay(tts);
     task.runWithStatistics(null);
-    AndroidMock.verify(mockTask, tts, stringUtils);
+    AndroidMock.verify(mockTask, tts);
   }
 
   public void testRun_duringCall() throws Exception {
@@ -425,11 +421,11 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
     expect(tts.isSpeaking()).andStubReturn(false);
 
     // Run the announcement
-    AndroidMock.replay(tts, stringUtils);
+    AndroidMock.replay(tts);
     PhoneStateListener phoneListener = phoneListenerCapture.getValue();
     phoneListener.onCallStateChanged(TelephonyManager.CALL_STATE_OFFHOOK, null);
     task.runWithStatistics(null);
-    AndroidMock.verify(mockTask, tts, stringUtils);
+    AndroidMock.verify(mockTask, tts);
   }
 
   public void testRun_ringWhileSpeaking() throws Exception {
@@ -438,7 +434,7 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
     expect(tts.isSpeaking()).andStubReturn(true);
     expect(tts.stop()).andReturn(TextToSpeech.SUCCESS);
 
-    AndroidMock.replay(tts, stringUtils);
+    AndroidMock.replay(tts);
 
     // Update the state to ringing - this should stop the current announcement.
     PhoneStateListener phoneListener = phoneListenerCapture.getValue();
@@ -447,7 +443,7 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
     // Run the announcement - this should do nothing.
     task.runWithStatistics(null);
 
-    AndroidMock.verify(mockTask, tts, stringUtils);
+    AndroidMock.verify(mockTask, tts);
   }
 
   public void testRun_whileRinging() throws Exception {
@@ -456,20 +452,20 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
     expect(tts.isSpeaking()).andStubReturn(false);
 
     // Run the announcement
-    AndroidMock.replay(tts, stringUtils);
+    AndroidMock.replay(tts);
     PhoneStateListener phoneListener = phoneListenerCapture.getValue();
     phoneListener.onCallStateChanged(TelephonyManager.CALL_STATE_RINGING, null);
     task.runWithStatistics(null);
-    AndroidMock.verify(mockTask, tts, stringUtils);
+    AndroidMock.verify(mockTask, tts);
   }
 
   public void testRun_noService() throws Exception {
     startTask(TextToSpeech.SUCCESS);
 
     // Run the announcement
-    AndroidMock.replay(tts, stringUtils);
+    AndroidMock.replay(tts);
     task.run(null);
-    AndroidMock.verify(mockTask, tts, stringUtils);
+    AndroidMock.verify(mockTask, tts);
   }
 
   public void testRun_noStats() throws Exception {
@@ -478,18 +474,70 @@ public class StatusAnnouncerTaskTest extends AndroidTestCase {
     startTask(TextToSpeech.SUCCESS);
 
     // Run the announcement
-    AndroidMock.replay(tts, stringUtils);
+    AndroidMock.replay(tts);
     task.runWithStatistics(null);
-    AndroidMock.verify(mockTask, tts, stringUtils);
+    AndroidMock.verify(mockTask, tts);
+  }
+  
+  /**
+   * Tests {@link StatusAnnouncerTask#getAnnounceTime(long)} with time zero.
+   */
+  public void testGetAnnounceTime_time_zero() {
+    long time = 0; // 0 seconds
+    assertEquals("0 minutes 0 seconds", task.getAnnounceTime(time));
   }
 
+  /**
+   * Tests {@link StatusAnnouncerTask#getAnnounceTime(long)} with time one.
+   */
+  public void testGetAnnounceTime_time_one() {
+    long time = 1 * 1000; // 1 second
+    assertEquals("0 minutes 1 second", task.getAnnounceTime(time));
+  }
+
+  /**
+   * Tests {@link StatusAnnouncerTask#getAnnounceTime(long)} with singular
+   * numbers with the hour unit.
+   */
+  public void testGetAnnounceTime_singular_has_hour() {
+    long time = (1 * 60 * 60 * 1000) + (1 * 60 * 1000) + (1 * 1000); // 1 hour 1 minute 1 second
+    assertEquals("1 hour 1 minute", task.getAnnounceTime(time));
+  }
+
+  /**
+   * Tests {@link StatusAnnouncerTask#getAnnounceTime(long)} with plural numbers
+   * with the hour unit.
+   */
+  public void testGetAnnounceTime_plural_has_hour() {
+    long time = (2 * 60 * 60 * 1000) + (2 * 60 * 1000) + (2 * 1000); // 2 hours 2 minutes 2 seconds
+    assertEquals("2 hours 2 minutes", task.getAnnounceTime(time));
+  }
+  
+  /**
+   * Tests {@link StatusAnnouncerTask#getAnnounceTime(long)} with singular
+   * numbers without the hour unit.
+   */
+  public void testGetAnnounceTime_singular_no_hour() {
+    long time = (1 * 60 * 1000) + (1 * 1000); // 1 minute 1 second
+    assertEquals("1 minute 1 second", task.getAnnounceTime(time));
+  }
+
+  /**
+   * Tests {@link StatusAnnouncerTask#getAnnounceTime(long)} with plural numbers
+   * without the hour unit.
+   */
+  public void testGetAnnounceTime_plural_no_hour() {
+    long time = (2 * 60 * 1000) + (2 * 1000); // 2 minutes 2 seconds
+    assertEquals("2 minutes 2 seconds", task.getAnnounceTime(time));
+  }
+  
   private void startTask(int state) {
-    AndroidMock.resetToNice(tts, stringUtils);
-    AndroidMock.replay(tts, stringUtils);
+    AndroidMock.resetToNice(tts);
+    AndroidMock.replay(tts);
     doStart();
     OnInitListener ttsInitListener = initListenerCapture.getValue();
     ttsInitListener.onInit(state);
-    AndroidMock.resetToDefault(tts, stringUtils);
+    AndroidMock.resetToDefault(tts);
   }
 
   private void doStart() {

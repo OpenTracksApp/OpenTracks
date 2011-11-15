@@ -19,7 +19,6 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.Projection;
 
 import android.content.Context;
-import android.graphics.Path;
 import android.graphics.Rect;
 
 /**
@@ -32,7 +31,7 @@ import android.graphics.Rect;
  * {@class MapView}. 
  */
 public class MockMyTracksOverlay extends MapOverlay {
-    
+   
   private Projection mockProjection;
   
   public MockMyTracksOverlay(Context context) {
@@ -48,10 +47,5 @@ public class MockMyTracksOverlay extends MapOverlay {
   @Override
   public Rect getMapViewRect(MapView mapView) {
     return new Rect(0, 0, 100, 100);
-  }
-  
-  @Override
-  public Path newPath() {
-    return new MockPath();
   }
 }

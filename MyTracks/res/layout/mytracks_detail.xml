@@ -20,7 +20,7 @@ limitations under the License.
   android:layout_height="fill_parent"
   android:paddingTop="10dip"
   android:background="#c000">
-  <TextView android:text="@string/trackdetails_name"
+  <TextView android:text="@string/track_detail_track_name"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"/>
   <LinearLayout
@@ -41,19 +41,19 @@ limitations under the License.
       android:autoText="true"
       android:capitalize="words"
       android:selectAllOnFocus="true"
-      android:hint="@string/trackdetails_name_hint"
+      android:hint="@string/track_detail_track_name"
       android:imeOptions="actionNext"/>
   </LinearLayout>
-  <TextView android:text="@string/trackdetails_category"
+  <TextView android:text="@string/track_detail_activity_type"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"/>
   <AutoCompleteTextView android:id="@+id/trackdetails_category"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:singleLine="true"
-    android:hint="@string/trackdetails_category_hint"
+    android:hint="@string/track_detail_activity_type_hint"
     android:imeOptions="actionNext"/>
-  <TextView android:text="@string/trackdetails_description"
+  <TextView android:text="@string/track_detail_track_description"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"/>
   <EditText android:id="@+id/trackdetails_description"
@@ -66,29 +66,18 @@ limitations under the License.
     android:maxLines="50"
     android:gravity="top"
     android:layout_weight="1"
-    android:hint="@string/trackdetails_description_hint"
+    android:hint="@string/track_detail_track_description"
     android:imeOptions="actionDone"/>
-    <LinearLayout
-      android:orientation="horizontal"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:background="@drawable/list_bar"
-      android:padding="3dip">
-      <Button android:id="@+id/trackdetails_cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="48dip"
-        android:layout_gravity="right"
-        android:text="@string/cancel"
-        android:textSize="14dip"/>
-      <TextView
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"/>
-      <Button android:id="@+id/trackdetails_save"
-        android:layout_width="wrap_content"
-        android:layout_height="48dip"
-        android:layout_gravity="right"
-        android:text="@string/save"
-        android:textSize="14dip"/>
-   </LinearLayout>
+  <LinearLayout style="@style/ButtonLayout">
+    <LinearLayout style="@style/ButtonSpacer"/>
+    <Button android:id="@+id/trackdetails_save"
+      android:layout_gravity="left"
+      android:text="@string/generic_save"
+      style="@style/Button"/>
+    <Button android:id="@+id/trackdetails_cancel"
+      android:layout_gravity="right"
+      android:text="@string/generic_cancel"
+      style="@style/Button"/>
+    <LinearLayout style="@style/ButtonSpacer"/>
+  </LinearLayout>
 </LinearLayout>

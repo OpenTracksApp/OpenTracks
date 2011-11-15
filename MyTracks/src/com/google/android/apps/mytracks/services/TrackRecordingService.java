@@ -37,7 +37,7 @@ import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.ApiFeatures;
-import com.google.android.apps.mytracks.util.ApiPlatformAdapter;
+import com.google.android.apps.mytracks.util.ApiLevelAdapter;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
@@ -56,11 +56,13 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.os.Process;
 import android.util.Log;
 
 import java.util.Timer;
@@ -229,6 +231,13 @@ public class TrackRecordingService extends Service {
    * Application lifetime events:
    */
 
+  /*
+   * Note that this service, through the AndroidManifest.xml, is configured to
+   * allow both MyTracks and third party apps to invoke it. For the onCreate
+   * callback, we cannot tell whether the caller is MyTracks or a third party
+   * app, thus it cannot start/stop a recording or write/update MyTracks
+   * database. However, it can resume a recording.
+   */
   @Override
   public void onCreate() {
     super.onCreate();
@@ -268,49 +277,41 @@ public class TrackRecordingService extends Service {
     showNotification();
   }
 
+  /*
+   * Note that this service, through the AndroidManifest.xml, is configured to
+   * allow both MyTracks and third party apps to invoke it. For the onStart
+   * callback, we cannot tell whether the caller is MyTracks or a third party
+   * app, thus it cannot start/stop a recording or write/update MyTracks
+   * database. However, it can resume a recording.
+   */
   @Override
   public void onStart(Intent intent, int startId) {
     handleStartCommand(intent, startId);
   }
 
+  /*
+   * Note that this service, through the AndroidManifest.xml, is configured to
+   * allow both MyTracks and third party apps to invoke it. For the
+   * onStartCommand callback, we cannot tell whether the caller is MyTracks or a
+   * third party app, thus it cannot start/stop a recording or write/update
+   * MyTracks database. However, it can resume a recording.
+   */
   @Override
   public int onStartCommand(Intent intent, int flags, int startId) {
     handleStartCommand(intent, startId);
     return START_STICKY;
   }
-
+  
   private void handleStartCommand(Intent intent, int startId) {
-    Log.d(TAG,
-        "TrackRecordingService.handleStartCommand: " + startId);
+    Log.d(TAG, "TrackRecordingService.handleStartCommand: " + startId);
 
-    if (intent == null)
+    if (intent == null) {
       return;
-      
+    }
+
     // Check if called on phone reboot with resume intent.
     if (intent.getBooleanExtra(RESUME_TRACK_EXTRA_NAME, false)) {
       resumeTrack(startId);
-    } else {
-      // Process actions for controlling the service.
-      processStartStopIntent(intent);
-    }
-  }
-  
-  private void processStartStopIntent(Intent intent) {
-    String action = intent.getAction();
-
-    if (isNewTrackAction(action)) {
-      if (!isTrackInProgress()) {
-        boolean selectNewTrack = intent.getBooleanExtra(getString(R.string.select_new_track_extra), false);
-        
-        startNewTrack();
-        if (selectNewTrack) {
-          prefManager.setSelectedTrack(recordingTrackId);
-        }
-      }
-    } else if (isEndTrackAction(action)) {
-      if (isTrackInProgress()) {
-        endCurrentTrack();
-      }
     }
   }
 
@@ -318,14 +319,6 @@ public class TrackRecordingService extends Service {
     return recordingTrackId != -1 || isRecording;
   }
   
-  private boolean isNewTrackAction(String action) {
-    return getString(R.string.start_new_track_action).equals(action);
-  }
-  
-  private boolean isEndTrackAction(String action) {
-    return getString(R.string.end_current_track_action).equals(action);
-  }
-
   private void resumeTrack(int startId) {
     Log.d(TAG, "TrackRecordingService: requested resume");
 
@@ -492,8 +485,8 @@ public class TrackRecordingService extends Service {
    * Shows the notification message and icon in the notification bar.
    */
   private void showNotification() {
-    final ApiPlatformAdapter apiPlatformAdapter =
-        ApiFeatures.getInstance().getApiPlatformAdapter();
+    final ApiLevelAdapter apiLevelAdapter =
+        ApiFeatures.getInstance().getApiAdapter();
     if (isRecording) {
       Notification notification = new Notification(
           R.drawable.arrow_320, null /* tickerText */,
@@ -501,13 +494,13 @@ public class TrackRecordingService extends Service {
       PendingIntent contentIntent = PendingIntent.getActivity(
           this, 0 /* requestCode */, new Intent(this, MyTracks.class),
           0 /* flags */);
-      notification.setLatestEventInfo(this, getString(R.string.app_name),
-          getString(R.string.recording_your_track), contentIntent);
+      notification.setLatestEventInfo(this, getString(R.string.my_tracks_app_name),
+          getString(R.string.track_record_notification), contentIntent);
       notification.flags += Notification.FLAG_NO_CLEAR;
-      apiPlatformAdapter.startForeground(this, notificationManager, 1,
+      apiLevelAdapter.startForeground(this, notificationManager, 1,
           notification);
     } else {
-      apiPlatformAdapter.stopForeground(this, notificationManager, 1);
+      apiLevelAdapter.stopForeground(this, notificationManager, 1);
     }
   }
 
@@ -566,15 +559,20 @@ public class TrackRecordingService extends Service {
     Log.d(TAG,
         "Location listener now unregistered w/ TrackRecordingService.");
   }
+  
+  private String getDefaultActivityType(Context context) {
+    SharedPreferences prefs = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    return prefs.getString(context.getString(R.string.default_activity_key), "");
+  }
 
   /*
    * Recording lifecycle.
    */
 
-  public long startNewTrack() {
+  private long startNewTrack() {
     Log.d(TAG, "TrackRecordingService.startNewTrack");
     if (isTrackInProgress()) {
-      throw new IllegalStateException("A track is already in progress!");
+      return -1L;
     }
 
     long startTime = System.currentTimeMillis();
@@ -589,6 +587,7 @@ public class TrackRecordingService extends Service {
     track.setId(recordingTrackId);
     track.setName(new DefaultTrackNameFactory(this).newTrackName(
         recordingTrackId, startTime));
+    track.setCategory(getDefaultActivityType(this));
     isRecording = true;
     isMoving = true;
 
@@ -964,12 +963,12 @@ public class TrackRecordingService extends Service {
   private void buildMarker(Waypoint wpt, WaypointCreationRequest request) {
     wpt.setType(Waypoint.TYPE_WAYPOINT);
     if (request.getIconUrl() == null) {
-      wpt.setIcon(getString(R.string.waypoint_icon_url));
+      wpt.setIcon(getString(R.string.marker_waypoint_icon_url));
     } else {
       wpt.setIcon(request.getIconUrl());
     }
     if (request.getName() == null) {
-      wpt.setName(getString(R.string.waypoint));
+      wpt.setName(getString(R.string.marker_type_waypoint));
     } else {
       wpt.setName(request.getName());
     }
@@ -982,8 +981,7 @@ public class TrackRecordingService extends Service {
    * Build a statistics marker.
    * A statistics marker holds the stats for the* last segment up to this marker.
    *
-   * @param Waypoint The waypoint which will be populated with stats data.
-   * @return the unique id of the inserted marker
+   * @param waypoint The waypoint which will be populated with stats data.
    */
   private void buildStatisticsMarker(Waypoint waypoint) {
     StringUtils utils = new StringUtils(TrackRecordingService.this);
@@ -998,10 +996,10 @@ public class TrackRecordingService extends Service {
 
     // Set the rest of the waypoint data
     waypoint.setType(Waypoint.TYPE_STATISTICS);
-    waypoint.setName(getString(R.string.statistics));
+    waypoint.setName(getString(R.string.marker_type_statistics));
     waypoint.setStatistics(waypointStatsBuilder.getStatistics());
     waypoint.setDescription(utils.generateWaypointDescription(waypoint));
-    waypoint.setIcon(getString(R.string.stats_icon_url));
+    waypoint.setIcon(getString(R.string.marker_statistics_icon_url));
 
     waypoint.setStartId(providerUtils.getLastLocationId(recordingTrackId));
 
@@ -1012,7 +1010,7 @@ public class TrackRecordingService extends Service {
   private void endCurrentTrack() {
     Log.d(TAG, "TrackRecordingService.endCurrentTrack");
     if (!isTrackInProgress()) {
-      throw new IllegalStateException("No recording track in progress!");
+      return;
     }
 
     announcementExecutor.shutdown();
@@ -1053,12 +1051,15 @@ public class TrackRecordingService extends Service {
   }
 
   private void sendTrackBroadcast(int actionResId, long trackId) {
-    Intent broadcastIntent =
-        new Intent()
-            .setAction(getString(actionResId))
-            .putExtra(getString(R.string.track_id_broadcast_extra), trackId);
-    sendBroadcast(broadcastIntent,
-        getString(R.string.broadcast_notifications_permission));
+    Intent broadcastIntent = new Intent()
+        .setAction(getString(actionResId))
+        .putExtra(getString(R.string.track_id_broadcast_extra), trackId);
+    sendBroadcast(broadcastIntent, getString(R.string.permission_notification_value));
+    
+    SharedPreferences sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    if (sharedPreferences.getBoolean(getString(R.string.allow_access_key), false)) {
+      sendBroadcast(broadcastIntent, getString(R.string.broadcast_notifications_permission));
+    }
   }
 
   /*
@@ -1190,9 +1191,32 @@ public class TrackRecordingService extends Service {
       }
     }
 
+    /**
+     * Checks if the service is available. If not, throws an
+     * {@link IllegalStateException}.
+     */
     private void checkService() {
       if (service == null) {
         throw new IllegalStateException("The service has been already detached!");
+      }
+    }
+    
+    /**
+     * Returns true if the RPC caller is from the same application or if the
+     * "Allow access" setting indicates that another app can invoke this service's
+     * RPCs. 
+     */
+    private boolean canAccess() {
+      
+      // As a precondition for access, must check if the service is available.
+      checkService();
+      
+      if (Process.myPid() == Binder.getCallingPid()) {
+        return true;
+      } else {
+        SharedPreferences sharedPreferences = service.getSharedPreferences(
+            Constants.SETTINGS_NAME, 0);
+        return sharedPreferences.getBoolean(service.getString(R.string.allow_access_key), false);
       }
     }
 
@@ -1200,19 +1224,25 @@ public class TrackRecordingService extends Service {
 
     @Override
     public boolean isRecording() {
-      checkService();
+      if (!canAccess()) {
+        return false;
+      }
       return service.isRecording();
     }
 
     @Override
     public long getRecordingTrackId() {
-      checkService();
+      if (!canAccess()) {
+        return -1L;
+      }
       return service.recordingTrackId;
     }
 
     @Override
     public long startNewTrack() {
-      checkService();
+      if (!canAccess()) {
+        return -1L;
+      }
       return service.startNewTrack();
     }
 
@@ -1223,25 +1253,33 @@ public class TrackRecordingService extends Service {
      * @return the unique ID of the inserted marker
      */
     public long insertWaypoint(WaypointCreationRequest request) {
-      checkService();
+      if (!canAccess()) {
+        return -1L;
+      }
       return service.insertWaypoint(request);
     }
 
     @Override
     public void endCurrentTrack() {
-      checkService();
+      if (!canAccess()) {
+        return;
+      }
       service.endCurrentTrack();
     }
 
     @Override
     public void recordLocation(Location loc) {
-      checkService();
+      if (!canAccess()) {
+        return;
+      }
       service.locationListener.onLocationChanged(loc);
     }
 
     @Override
     public byte[] getSensorData() {
-      checkService();
+      if (!canAccess()) {
+        return null;
+      }
       if (service.sensorManager == null) {
         Log.d(TAG, "No sensor manager for data.");
         return null;
@@ -1255,7 +1293,9 @@ public class TrackRecordingService extends Service {
 
     @Override
     public int getSensorState() {
-      checkService();
+      if (!canAccess()) {
+        return Sensor.SensorState.NONE.getNumber();
+      }      
       if (service.sensorManager == null) {
         Log.d(TAG, "No sensor manager for data.");
         return Sensor.SensorState.NONE.getNumber();

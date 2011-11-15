@@ -4,7 +4,7 @@ syntax:glob
 */gen/**
 */proguard/**
 .metadata
-MyTracksTest/annotations.log
+MyTracksTest/AnnotationProcessor.log
 **/*.pyc
 **/*.pyo
 syntax: glob

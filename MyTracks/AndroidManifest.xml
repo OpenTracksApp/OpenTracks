@@ -17,10 +17,10 @@ limitations under the License.
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.google.android.maps.mytracks"
           android:installLocation="auto"
-          android:versionCode="32"
-          android:versionName="1.1.9">
+          android:versionCode="33"
+          android:versionName="1.1.10">
   <application android:icon="@drawable/arrow_icon"
-               android:label="@string/app_name"
+               android:label="@string/my_tracks_app_name"
                android:name="com.google.android.apps.mytracks.MyTracksApplication"
                android:backupAgent="com.google.android.apps.mytracks.io.backup.MyTracksBackupAgent">
     <uses-library android:name="com.google.android.maps" />
@@ -35,7 +35,6 @@ limitations under the License.
               android:writePermission="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
 
     <activity android:name="com.google.android.apps.mytracks.MyTracks"
-              android:label="My Tracks"
               android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|fontScale">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -50,7 +49,6 @@ limitations under the License.
     </activity>
 
     <activity android:name="com.google.android.apps.mytracks.MapActivity"
-              android:label="MyTracks"
               android:exported="false">
       <intent-filter>
         <category android:name="android.intent.category.TAB" />
@@ -58,20 +56,18 @@ limitations under the License.
     </activity>
 
     <activity android:name="com.google.android.apps.mytracks.MyMapsList"
-              android:label="@string/map_list_title"
+              android:label="@string/my_maps_list_title"
               android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|fontScale"
               android:exported="false" />
 
     <!-- TODO: VIEW and PICK for track cursor dir -->
-    <activity android:name="com.google.android.apps.mytracks.TrackList"
-              android:label="Recorded Tracks" />
+    <activity android:name="com.google.android.apps.mytracks.TrackList" />
 
     <!-- TODO: VIEW and PICK for waypoint cursor dir -->
-    <activity android:name="com.google.android.apps.mytracks.WaypointsList"
-              android:label="Recorded Waypoints" />
+    <activity android:name="com.google.android.apps.mytracks.WaypointsList" />
 
     <activity android:name="com.google.android.apps.mytracks.TrackDetails"
-              android:label="@string/trackdetails_title">
+              android:label="@string/track_detail_title">
       <intent-filter>
         <action android:name="android.intent.action.EDIT" />
         <category android:name="android.intent.category.DEFAULT" />
@@ -81,7 +77,6 @@ limitations under the License.
     </activity>
 
     <activity android:name="com.google.android.apps.mytracks.DeleteTrack"
-              android:label="@string/deletetrack_title"
               android:theme="@android:style/Theme.Translucent.NoTitleBar"
               android:noHistory="true">
       <intent-filter>
@@ -92,7 +87,7 @@ limitations under the License.
     </activity>
 
     <activity android:name="com.google.android.apps.mytracks.WaypointDetails"
-              android:label="@string/waypointdetails_title">
+              android:label="@string/marker_detail_title">
       <intent-filter>
         <action android:name="android.intent.action.VIEW" />
         <action android:name="android.intent.action.EDIT" />
@@ -103,17 +98,16 @@ limitations under the License.
     </activity>
 
     <activity android:name="com.google.android.apps.mytracks.SettingsActivity"
-              android:label="@string/mytracks_settings" >
+              android:label="@string/settings_title" >
       <intent-filter>
         <category android:name="android.intent.category.PREFERENCE" />
       </intent-filter>
     </activity>
 
     <activity android:name="com.google.android.apps.mytracks.AggregatedStatsActivity"
-              android:label="@string/aggregated_stats" />
+              android:label="@string/menu_aggregated_statistics" />
 
     <activity android:name="com.google.android.apps.mytracks.StatsActivity"
-              android:label="@string/statistics"
               android:exported="false">
       <intent-filter>
         <category android:name="android.intent.category.TAB" />
@@ -121,10 +115,9 @@ limitations under the License.
     </activity>
 
     <activity android:name="com.google.android.apps.mytracks.SensorStateActivity"
-              android:label="@string/sensor_state" />
+              android:label="@string/menu_sensor_state" />
 
     <activity android:name="com.google.android.apps.mytracks.ChartActivity"
-              android:label="@string/elevation_label"
               android:exported="false">
       <intent-filter>
         <category android:name="android.intent.category.TAB" />
@@ -132,7 +125,6 @@ limitations under the License.
     </activity>
 
     <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.SendActivity"
-              android:label="@string/sendtogoogle_title"
               android:theme="@android:style/Theme.Translucent.NoTitleBar">
       <intent-filter>
         <action android:name="android.intent.action.SEND" />
@@ -141,7 +133,6 @@ limitations under the License.
     </activity>
 
     <activity android:name="com.google.android.apps.mytracks.io.file.SaveActivity"
-              android:label="@string/tracklist_write_to_sd"
               android:theme="@android:style/Theme.Translucent.NoTitleBar"
               android:noHistory="true">
       <intent-filter>
@@ -151,7 +142,6 @@ limitations under the License.
     </activity>
 
     <activity android:name="com.google.android.apps.mytracks.io.file.ImportActivity"
-              android:label="@string/import_title"
               android:theme="@android:style/Theme.Translucent.NoTitleBar"
               android:noHistory="true">
       <intent-filter>
@@ -168,16 +158,19 @@ limitations under the License.
     </activity>
 
     <activity android:name="com.google.android.apps.mytracks.WelcomeActivity"
-              android:label="@string/welcome"
+              android:label="@string/welcome_title"
               android:exported="false" />
 
     <service android:name="com.google.android.apps.mytracks.services.TrackRecordingService"
-             android:label="Track Recording Service"
+             android:label="@string/my_tracks_recording_service"
              android:icon="@drawable/arrow_320"
              android:enabled="true"
              android:exported="true"
              android:permission="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
 
+    <service android:name="com.google.android.apps.mytracks.services.ControlRecordingService"
+             android:exported="false" />
+             
     <receiver android:name="com.google.android.apps.mytracks.BootReceiver">
       <intent-filter>
         <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -189,7 +182,6 @@ limitations under the License.
         <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
         <action android:name="com.google.android.apps.mytracks.TRACK_STARTED" />
         <action android:name="com.google.android.apps.mytracks.TRACK_STOPPED" />
-        <action android:name="com.google.android.apps.mytracks.TRACK_UPDATED" />
       </intent-filter>
       <meta-data android:name="android.appwidget.provider"
                  android:resource="@xml/track_widget_info" />
@@ -229,26 +221,33 @@ limitations under the License.
   <!-- Permission to get track start/end broadcasts -->
   <permission android:name="com.google.android.apps.mytracks.TRACK_NOTIFICATIONS"
               android:permissionGroup="android.permission-group.LOCATION"
-              android:label="@string/notification_permission_label"
-              android:description="@string/notification_permission_description"
-              android:protectionLevel="normal" />
+              android:label="@string/permission_notification_label"
+              android:description="@string/permission_notification_description"
+              android:protectionLevel="dangerous" />
   <!-- Permission to read raw track data (points, etc.) -->
   <permission android:name="com.google.android.apps.mytracks.READ_TRACK_DATA"
               android:permissionGroup="android.permission-group.LOCATION"
-              android:label="@string/read_tracks_permission_label"
-              android:description="@string/read_tracks_permission_description"
+              android:label="@string/permission_read_label"
+              android:description="@string/permission_read_description"
               android:protectionLevel="dangerous" />
   <!-- Permission to write track data, either raw or by making service calls -->
   <permission android:name="com.google.android.apps.mytracks.WRITE_TRACK_DATA"
               android:permissionGroup="android.permission-group.LOCATION"
-              android:label="@string/write_tracks_permission_label"
-              android:description="@string/write_tracks_permission_description"
+              android:label="@string/permission_write_label"
+              android:description="@string/permission_write_description"
               android:protectionLevel="dangerous" />
+
+  <!-- Permission to get MyTracks broadcasts. For internal MyTracks communication. -->
+  <permission android:name="com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS"
+              android:permissionGroup="android.permission-group.LOCATION"
+              android:label="@string/permission_notification_label"
+              android:description="@string/permission_notification_label"
+              android:protectionLevel="signature" />
 
   <!-- We read and write raw track data, obviously. -->
   <uses-permission android:name="com.google.android.apps.mytracks.READ_TRACK_DATA" />
   <uses-permission android:name="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
-  <uses-permission android:name="com.google.android.apps.mytracks.TRACK_NOTIFICATIONS" />
+  <uses-permission android:name="com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS" />
 
   <!-- Features required -->
   <uses-feature android:name="android.hardware.location" android:required="true"/>

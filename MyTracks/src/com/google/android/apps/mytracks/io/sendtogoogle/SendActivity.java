@@ -163,7 +163,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
     tracker = GoogleAnalyticsTracker.getInstance();
     // Start the tracker in manual dispatch mode...
-    tracker.start(getString(R.string.google_analytics_id),
+    tracker.start(getString(R.string.my_tracks_analytics_id),
         getApplicationContext());
     tracker.setProductVersion("android-mytracks",
         SystemUtils.getMyTracksVersion(this));
@@ -392,7 +392,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
     progressDialog = new ProgressDialog(this);
     progressDialog.setCancelable(false);
     progressDialog.setIcon(android.R.drawable.ic_dialog_info);
-    progressDialog.setTitle(R.string.progress_title);
+    progressDialog.setTitle(R.string.generic_progress_title);
     progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
     progressDialog.setMax(100);
     progressDialog.setProgress(0);
@@ -403,8 +403,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
   private SendState authenticateToGoogleMaps() {
     Log.d(TAG, "SendActivity.authenticateToGoogleMaps");
     progressDialog.setProgress(0);
-    progressDialog.setMessage(getString(
-        R.string.progress_message_authenticating_mymaps));
+    progressDialog.setMessage(getAuthenticatingProgressMessage(SendType.MYMAPS));
     authenticate(Constants.AUTHENTICATE_TO_MY_MAPS, MyMapsConstants.SERVICE_NAME);
     // AUTHENTICATE_TO_MY_MAPS callback calls sendToGoogleMaps
     return SendState.NOT_READY;
@@ -429,9 +428,9 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
     SendToMyMaps.OnSendCompletedListener onCompletion = new SendToMyMaps.OnSendCompletedListener() {
       @Override
-      public void onSendCompleted(String mapId, boolean success, int statusMessage) {
+      public void onSendCompleted(String mapId, boolean success, String statusMessage) {
         // TODO: Use this message
-        sendToMyMapsMessage = getString(statusMessage);
+        sendToMyMapsMessage = statusMessage;
         sendToMyMapsSuccess = success;
         if (sendToMyMapsSuccess) {
           sendToMyMapsMapId = mapId;
@@ -479,8 +478,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
   private SendState authenticateToFusionTables() {
     progressDialog.setProgress(0);
-    progressDialog.setMessage(getString(
-        R.string.progress_message_authenticating_fusiontables));
+    progressDialog.setMessage(getAuthenticatingProgressMessage(SendType.FUSION_TABLES));
     authenticate(Constants.AUTHENTICATE_TO_FUSION_TABLES, SendToFusionTables.SERVICE_ID);
     // AUTHENTICATE_TO_FUSION_TABLES callback calls sendToFusionTables
     return SendState.NOT_READY;
@@ -491,10 +489,9 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
     OnSendCompletedListener onCompletion = new OnSendCompletedListener() {
       @Override
-      public void onSendCompleted(String tableId, boolean success,
-          int statusMessage) {
+      public void onSendCompleted(String tableId, boolean success, String statusMessage) {
         // TODO: Use this message
-        sendToFusionTablesMessage = getString(statusMessage);
+        sendToFusionTablesMessage = statusMessage;
         sendToFusionTablesSuccess = success;
         if (sendToFusionTablesSuccess) {
           sendToFusionTablesTableId = tableId;
@@ -536,8 +533,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
   private SendState authenticateToGoogleDocs() {
     setProgressValue(0);
-    setProgressMessage(
-        R.string.progress_message_authenticating_docs);
+    setProgressMessage(getAuthenticatingProgressMessage(SendType.DOCS));
     authenticate(Constants.AUTHENTICATE_TO_DOCLIST, SendToDocs.GDATA_SERVICE_NAME_DOCLIST);
     // AUTHENTICATE_TO_DOCLIST callback calls authenticateToGoogleTrix
     return SendState.NOT_READY;
@@ -545,8 +541,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
   private SendState authenticateToGoogleTrix() {
     setProgressValue(30);
-    setProgressMessage(
-        R.string.progress_message_authenticating_docs);
+    setProgressMessage(getAuthenticatingProgressMessage(SendType.DOCS));
     authenticate(Constants.AUTHENTICATE_TO_TRIX, SendToDocs.GDATA_SERVICE_NAME_TRIX);
     // AUTHENTICATE_TO_TRIX callback calls sendToGoogleDocs
     return SendState.NOT_READY;
@@ -557,7 +552,9 @@ public class SendActivity extends Activity implements ProgressIndicator {
     tracker.trackPageView("/send/docs");
 
     setProgressValue(50);
-    setProgressMessage(R.string.progress_message_sending_docs);
+    String format = getString(R.string.send_google_progress_sending);
+    String serviceName = getString(SendType.DOCS.getServiceName());
+    setProgressMessage(String.format(format, serviceName));
     final SendToDocs sender = new SendToDocs(this,
         authMap.get(SendToDocs.GDATA_SERVICE_NAME_TRIX),
         authMap.get(SendToDocs.GDATA_SERVICE_NAME_DOCLIST),
@@ -692,15 +689,15 @@ public class SendActivity extends Activity implements ProgressIndicator {
     boolean shareUrlOnly = sharedPreferences.getBoolean(
         getString(R.string.share_url_only_key), false);
     String msg = shareUrlOnly ? url : String.format(
-        getResources().getText(R.string.share_map_body_format).toString(), url);
+        getResources().getText(R.string.share_track_url_body_format).toString(), url);
 
     Intent shareIntent = new Intent(Intent.ACTION_SEND);
     shareIntent.setType("text/plain");
     shareIntent.putExtra(Intent.EXTRA_SUBJECT,
-        getResources().getText(R.string.share_map_subject).toString());
+        getResources().getText(R.string.share_track_subject).toString());
     shareIntent.putExtra(Intent.EXTRA_TEXT, msg);
     startActivity(Intent.createChooser(shareIntent,
-        getResources().getText(R.string.share_map).toString()));
+        getResources().getText(R.string.share_track_picker_title).toString()));
   }
 
   protected String getFusionTablesUrl(long trackId) {
@@ -883,12 +880,24 @@ public class SendActivity extends Activity implements ProgressIndicator {
     sendToFusionTablesTableId = null;
   }
 
+  /**
+   * Gets a progress message indicating My Tracks is authenticating to a
+   * service.
+   *
+   * @param type the type of service
+   */
+  private String getAuthenticatingProgressMessage(SendType type) {
+    String format = getString(R.string.send_google_progress_authenticating);
+    String serviceName = getString(type.getServiceName());
+    return String.format(format, serviceName);
+  }
+
   @Override
-  public void setProgressMessage(final int resId) {
+  public void setProgressMessage(final String message) {
     runOnUiThread(new Runnable() {
       public void run() {
         if (progressDialog != null) {
-          progressDialog.setMessage(getString(resId));
+          progressDialog.setMessage(message);
         }
       }
     });

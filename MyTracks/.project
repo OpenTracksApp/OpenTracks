@@ -31,11 +31,4 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>MyTracksLib_src</name>
-			<type>2</type>
-			<locationURI>_android_MyTracksLib_e2802071/src</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>

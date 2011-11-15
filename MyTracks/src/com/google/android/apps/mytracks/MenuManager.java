@@ -42,10 +42,9 @@ class MenuManager {
 
   public void onPrepareOptionsMenu(Menu menu, boolean hasRecorded,
       boolean isRecording, boolean hasSelectedTrack) {
-    menu.findItem(R.id.menu_list_tracks);
-    menu.findItem(R.id.menu_list_markers)
+    menu.findItem(R.id.menu_markers)
         .setEnabled(hasRecorded && hasSelectedTrack);
-    menu.findItem(R.id.menu_start_recording)
+    menu.findItem(R.id.menu_record_track)
         .setEnabled(!isRecording)
         .setVisible(!isRecording);
     menu.findItem(R.id.menu_stop_recording)
@@ -55,7 +54,7 @@ class MenuManager {
 
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
-      case R.id.menu_start_recording: {
+      case R.id.menu_record_track: {
         activity.startRecording();
         return true;
       }
@@ -63,12 +62,12 @@ class MenuManager {
         activity.stopRecording();
         return true;
       }
-      case R.id.menu_list_tracks: {
+      case R.id.menu_tracks: {
 	    activity.startActivityForResult(new Intent(activity, TrackList.class),
 	    		Constants.SHOW_TRACK);
         return true;
       }
-      case R.id.menu_list_markers: {
+      case R.id.menu_markers: {
         Intent startIntent = new Intent(activity, WaypointsList.class);
         startIntent.putExtra("trackid", activity.getSelectedTrackId());
         activity.startActivityForResult(startIntent, Constants.SHOW_WAYPOINT);
@@ -80,7 +79,7 @@ class MenuManager {
       case R.id.menu_settings: {
         return startActivity(SettingsActivity.class);
       }
-      case R.id.menu_aggregated_stats: {
+      case R.id.menu_aggregated_statistics: {
         return startActivity(AggregatedStatsActivity.class);
       }
       case R.id.menu_help: {

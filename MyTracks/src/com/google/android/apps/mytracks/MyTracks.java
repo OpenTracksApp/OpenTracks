@@ -134,12 +134,12 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     super.onCreate(savedInstanceState);
     ApiFeatures apiFeatures = ApiFeatures.getInstance();
     if (!SystemUtils.isRelease(this)) {
-      apiFeatures.getApiPlatformAdapter().enableStrictMode();
+      apiFeatures.getApiAdapter().enableStrictMode();
     }
 
     tracker = GoogleAnalyticsTracker.getInstance();
     // Start the tracker in manual dispatch mode...
-    tracker.start(getString(R.string.google_analytics_id), getApplicationContext());
+    tracker.start(getString(R.string.my_tracks_analytics_id), getApplicationContext());
     tracker.setProductVersion("android-mytracks", SystemUtils.getMyTracksVersion(this));
     tracker.trackPageView("/appstart");
     tracker.dispatch();
@@ -369,13 +369,11 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     try {
       long waypointId = trackRecordingService.insertWaypoint(request);
       if (waypointId >= 0) {
-        Toast.makeText(this, R.string.status_statistics_inserted,
-            Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.marker_insert_success, Toast.LENGTH_LONG).show();
       }
       return waypointId;
     } catch (RemoteException e) {
-      Toast.makeText(this, R.string.error_unable_to_insert_marker,
-          Toast.LENGTH_LONG).show();
+      Toast.makeText(this, R.string.marker_insert_error, Toast.LENGTH_LONG).show();
       throw e;
     }
   }
@@ -386,14 +384,11 @@ public class MyTracks extends TabActivity implements OnTouchListener {
       long recordingTrackId = trackRecordingService.startNewTrack();
       // Select the recording track.
       dataHub.loadTrack(recordingTrackId);
-      Toast.makeText(this, getString(R.string.status_now_recording),
-          Toast.LENGTH_SHORT).show();
+      Toast.makeText(this, getString(R.string.track_record_success), Toast.LENGTH_SHORT).show();
       // TODO: We catch Exception, because after eliminating the service process
       // all exceptions it may throw are no longer wrapped in a RemoteException.
     } catch (Exception e) {
-      Toast.makeText(this,
-          getString(R.string.error_unable_to_start_recording),
-          Toast.LENGTH_SHORT).show();
+      Toast.makeText(this, getString(R.string.track_record_error), Toast.LENGTH_SHORT).show();
       Log.w(TAG, "Unable to start recording.", e);
     }
   }

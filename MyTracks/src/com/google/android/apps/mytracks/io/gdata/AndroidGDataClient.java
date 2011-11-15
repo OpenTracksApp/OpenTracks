@@ -23,8 +23,16 @@ import com.google.wireless.gdata.parser.ParseException;
 import com.google.wireless.gdata.serializer.GDataSerializer;
 
 import android.text.TextUtils;
-import android.util.Config;
 import android.util.Log;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.util.zip.GZIPInputStream;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -39,15 +47,6 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URLEncoder;
-import java.util.zip.GZIPInputStream;
-
 /**
  * Implementation of a GDataClient using GoogleHttpClient to make HTTP requests.
  * Always issues GETs and POSTs, using the X-HTTP-Method-Override header when a
@@ -58,8 +57,7 @@ public class AndroidGDataClient implements GDataClient {
 
   private static final String TAG = "GDataClient";
   private static final boolean DEBUG = false;
-  private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
-
+ 
   private static final String X_HTTP_METHOD_OVERRIDE = "X-HTTP-Method-Override";
 
   private static final int MAX_REDIRECTS = 10;
@@ -196,7 +194,7 @@ public class AndroidGDataClient implements GDataClient {
       if (!TextUtils.isEmpty(authToken)) {
         request.addHeader("Authorization", "GoogleLogin auth=" + authToken);
       }
-      if (LOCAL_LOGV) {
+      if (DEBUG) {
         for (Header h : request.getAllHeaders()) {
           Log.v(TAG, h.getName() + ": " + h.getValue());
         }

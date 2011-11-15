@@ -30,17 +30,17 @@ public class SensorManagerFactoryTest extends AndroidTestCase {
   
   @SmallTest
   public void testCreateZephyr() throws Exception {
-    assertClassForName(ZephyrSensorManager.class, R.string.zephyr_sensor_type);
+    assertClassForName(ZephyrSensorManager.class, R.string.sensor_type_value_zephyr);
   }
   
   @SmallTest
   public void testCreateAnt() throws Exception {
-    assertClassForName(AntDirectSensorManager.class, R.string.ant_sensor_type);
+    assertClassForName(AntDirectSensorManager.class, R.string.sensor_type_value_ant);
   }
 
   @SmallTest
   public void testCreateAntSRM() throws Exception {
-    assertClassForName(AntSRMSensorManager.class, R.string.srm_ant_bridge_sensor_type);
+    assertClassForName(AntSRMSensorManager.class, R.string.sensor_type_value_srm_ant_bridge);
   }
 
   private void assertClassForName(Class<?> c, int i) {

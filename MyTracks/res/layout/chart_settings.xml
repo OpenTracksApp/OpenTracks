@@ -26,7 +26,7 @@ limitations under the License.
     <TextView
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
-      android:text="@string/chart_settings"
+      android:text="@string/menu_chart_view_chart_settings"
       android:textSize="20dip"
       android:textColor="#fff"
       android:layout_marginLeft="10dip"/>
@@ -57,7 +57,7 @@ limitations under the License.
             <TextView
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:text="@string/x_axis"
+              android:text="@string/chart_settings_x_axis"
               android:textSize="20dip" />
           </LinearLayout>
           <RadioGroup  android:id="@+id/chart_settings_x"
@@ -66,11 +66,11 @@ limitations under the License.
             <RadioButton android:id="@+id/chart_settings_by_distance"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:text="@string/by_distance"/>
+              android:text="@string/chart_settings_by_distance"/>
             <RadioButton android:id="@+id/chart_settings_by_time"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:text="@string/by_time"/>
+              android:text="@string/chart_settings_by_time"/>
           </RadioGroup>
         </LinearLayout>
       </TableRow>
@@ -90,59 +90,48 @@ limitations under the License.
             <TextView
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:text="@string/y_axis"
+              android:text="@string/chart_settings_y_axis"
               android:textSize="20dip" />
           </LinearLayout>
           <CheckBox android:id="@+id/chart_settings_elevation"
             android:checked="true"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/elevation"/>
+            android:text="@string/stat_elevation"/>
           <CheckBox android:id="@+id/chart_settings_speed"
             android:checked="true"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/speed"/>
+            android:text="@string/stat_speed"/>
           <CheckBox android:id="@+id/chart_settings_power"
             android:checked="true"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/power"/>
+            android:text="@string/sensor_state_power"/>
           <CheckBox android:id="@+id/chart_settings_cadence"
             android:checked="true"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/cadence"/>
+            android:text="@string/sensor_state_cadence"/>
           <CheckBox android:id="@+id/chart_settings_heart_rate"
             android:checked="true"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/heart_rate"/>
+            android:text="@string/sensor_state_heart_rate"/>
         </LinearLayout>
       </TableRow>
     </TableLayout>
   </ScrollView>
-  <LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/list_bar"
-    android:padding="3dip">
-    <Button android:id="@+id/chart_settings_cancel"
-      android:layout_width="wrap_content"
-      android:layout_height="48dip"
-      android:layout_gravity="right"
-      android:text="@string/cancel"
-      android:textSize="14dip"/>
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_weight="1"/>
+  <LinearLayout style="@style/ButtonLayout">
+    <LinearLayout style="@style/ButtonSpacer"/>
     <Button android:id="@+id/chart_settings_ok"
-      android:layout_width="wrap_content"
-      android:layout_height="48dip"
+      android:layout_gravity="left"
+      android:text="@string/generic_ok"
+      style="@style/Button"/>
+    <Button android:id="@+id/chart_settings_cancel"
       android:layout_gravity="right"
-      android:text="@string/ok"
-      android:textSize="14dip"/>
+      android:text="@string/generic_cancel"
+      style="@style/Button"/>
+    <LinearLayout style="@style/ButtonSpacer"/>
   </LinearLayout>
 </LinearLayout>
