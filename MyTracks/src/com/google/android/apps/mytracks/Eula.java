@@ -16,7 +16,6 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.util.ApiFeatures;
-import com.google.android.apps.mytracks.util.ResourceUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -90,7 +89,7 @@ class Eula {
     AlertDialog.Builder builder = new AlertDialog.Builder(context);
     builder.setCancelable(true);
     builder.setTitle(R.string.eula_title);
-    builder.setMessage(ResourceUtils.readFile(context, R.raw.eula));
+    builder.setMessage(R.string.eula_message);
     return builder;
   }
 
