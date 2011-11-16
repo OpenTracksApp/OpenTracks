@@ -25,8 +25,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
-import android.webkit.WebView;
 import android.widget.TextView;
 
 /**
@@ -39,49 +37,40 @@ public class WelcomeActivity extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    requestWindowFeature(Window.FEATURE_NO_TITLE);
-    requestWindowFeature(Window.FEATURE_PROGRESS);
-
     setContentView(R.layout.welcome);
 
-    WebView web = (WebView) findViewById(R.id.welcome_web);
-    web.loadUrl("file:///android_asset/welcome.html");
-
-    findViewById(R.id.welcome_ok).setOnClickListener(
-        new OnClickListener() {
-          public void onClick(View v) {
-            finish();
-          }
-        });
+    findViewById(R.id.welcome_ok).setOnClickListener(new OnClickListener() {
+      public void onClick(View v) {
+        finish();
+      }
+    });
 
     findViewById(R.id.welcome_about).setOnClickListener(new OnClickListener() {
       public void onClick(View v) {
-        about();
+        showAbout();
       }
     });
   }
 
   /**
-   * Shows the "about" dialog.
-   * 
-   * TODO: Add a menu option for showing the same thing.
-   */
-  public void about() {
-    LayoutInflater li = LayoutInflater.from(this);
-    View view = li.inflate(R.layout.about, null);
+   * Shows the "About My Tracks" dialog.
+   */   
+  private void showAbout() {
+    LayoutInflater layoutInflator = LayoutInflater.from(this);
+    View view = layoutInflator.inflate(R.layout.about, null);
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
     builder.setView(view);
     builder.setPositiveButton(R.string.generic_ok, null);
     builder.setNegativeButton(R.string.about_license, new DialogInterface.OnClickListener() {
-      @Override 
+      @Override
       public void onClick(DialogInterface dialog, int which) {
         Eula.showEula(WelcomeActivity.this);
       }
     });
-    builder.setIcon(R.drawable.arrow_icon);
     AlertDialog dialog = builder.create();
     dialog.show();
-    ((TextView) dialog.findViewById(R.id.about_version_register)).
-        setText(SystemUtils.getMyTracksVersion(this));
+    
+    TextView aboutVersionTextView = (TextView) dialog.findViewById(R.id.about_version);
+    aboutVersionTextView.setText(SystemUtils.getMyTracksVersion(this));
   }
 }

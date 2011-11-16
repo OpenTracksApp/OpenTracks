@@ -103,7 +103,7 @@ limitations under the License.
       android:textSize="20sp" />
     <TextView
       android:layout_height="wrap_content"
-      android:id="@+id/about_version_register"
+      android:id="@+id/about_version"
       android:layout_width="wrap_content"
       android:text="@string/value_unknown"
       android:textSize="20sp" />

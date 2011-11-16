@@ -113,5 +113,19 @@ limitations under the License.
     <item name="android:layout_width">0dip</item>
     <item name="android:orientation">horizontal</item>
     <item name="android:visibility">gone</item>
+  </style>
+  
+  <style name="WelcomeText">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:paddingLeft">10sp</item>
+    <item name="android:paddingRight">10sp</item>
+    <item name="android:textColor">@color/black</item>
+    <item name="android:textSize">16sp</item>
   </style>  
+  
+  <style name="WelcomeText.Question">
+    <item name="android:paddingTop">10sp</item>
+    <item name="android:textStyle">bold</item>
+  </style>    
 </resources>
