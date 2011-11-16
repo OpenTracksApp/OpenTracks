@@ -1047,18 +1047,18 @@ limitations under the License.
   </string>
   <string name="settings_display_track_color_dynamic_medium"
     translation_description="In the Display settings, under the 'Dynamic thresholds' configurations,
-      the option for configuring the medium speed percentage. It is the percentage from the average
-      speed to be considered as the medium speed. The track color mode will use different colors to
-      color a track depending on whether the speed is above, in, or below the medium speed range.">
-    Medium speed percentage
+      the option for configuring the percentage from the average speed to be considered as the
+      medium speed. The track color mode will use different colors to color a track depending on
+      whether the speed is above, in, or below the medium speed range.">
+    Medium percentage
   </string>
   <string name="settings_display_track_color_dynamic_medium_summary"
     translation_description="In the Display settings, under the 'Dynamic thresholds' configurations,
-      the summary for the 'Medium speed percentage' option explaining that it sets a percentage from
-      the average speed to be considered as the medium speed color. The track color mode will use
+      the summary for the 'Medium percentage' option explaining that it sets the percentage from
+      the average speed to be considered as the medium speed. The track color mode will use
       different colors to color a track depending on whether the speed is above, in, or below the
       medium speed range.">
-    Percentage from the average speed for the medium speed color.
+    Percentage from the average speed for the medium speed range.
   </string>
   <string name="settings_display_track_color_fixed"
     translation_description="In the Display settings, for the 'Track color mode' dropdown, the
@@ -1099,7 +1099,7 @@ limitations under the License.
   <string name="settings_display_track_color_summary"
     translation_description="In the Display settings, the summary for the 'Track color mode'
       dropdown explaining that it configures how colors are used to color a track based on speed.">
-    The way to color a track based on speed.
+    The way to color a track based on slow, medium, and high speed.
   </string>
   <string name="settings_not_while_recording"
     translation_description="In the Settings page, the summary for an option that is not available
