@@ -92,7 +92,7 @@ public class TrackWidgetProvider
     this.context = aContext;
     trackObserver = new TrackObserver();
     providerUtils = MyTracksProviderUtils.Factory.get(context);
-    unknown = context.getString(R.string.unknown);
+    unknown = context.getString(R.string.value_unknown);
 
     sharedPreferences = context.getSharedPreferences(SETTINGS_NAME, 0);
     sharedPreferences.registerOnSharedPreferenceChangeListener(this);
@@ -173,13 +173,11 @@ public class TrackWidgetProvider
     if (TRACK_STARTED_ACTION.equals(action)) {
       // If a new track is started by this appwidget or elsewhere,
       // toggle the button to active and have it disable the track if pressed.
-      setButtonIntent(
-          views, R.string.end_current_track_action, R.drawable.appwidget_button_enabled);
+      setButtonIntent(views, R.string.track_action_end, R.drawable.appwidget_button_enabled);
     } else {
       // If a track is stopped by this appwidget or elsewhere,
       // toggle the button to inactive and have it start a new track if pressed.
-      setButtonIntent(
-          views, R.string.start_new_track_action, R.drawable.appwidget_button_disabled);
+      setButtonIntent(views, R.string.track_action_start, R.drawable.appwidget_button_disabled);
     }
   }
 
@@ -253,8 +251,10 @@ public class TrackWidgetProvider
     if (key == null || key.equals(metricUnitsKey)) {
       isMetric = prefs.getBoolean(metricUnitsKey, true);
       distanceLabel = context.getString(isMetric ? R.string.unit_kilometer : R.string.unit_mile);
-      speedLabel = context.getString(isMetric ? R.string.kilometer_per_hour : R.string.mile_per_hour);
-      paceLabel = context.getString(isMetric ? R.string.min_per_kilometer : R.string.min_per_mile);
+      speedLabel = context.getString(
+          isMetric ? R.string.unit_kilometer_per_hour : R.string.unit_mile_per_hour);
+      paceLabel = context.getString(
+          isMetric ? R.string.unit_minute_per_kilometer : R.string.unit_minute_per_mile);
     }
 
     String reportSpeedKey = context.getString(R.string.report_speed_key);

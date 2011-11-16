@@ -31,7 +31,7 @@ public class AutoCompleteTextPreference extends EditTextPreference {
     mEditText.setThreshold(0);
 
     // Gets autocomplete values for 'Default Activity' preference
-    if (getKey().equals(context.getString(R.string.default_category_key))) {
+    if (getKey().equals(context.getString(R.string.default_activity_key))) {
       ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
           R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
       mEditText.setAdapter(adapter);

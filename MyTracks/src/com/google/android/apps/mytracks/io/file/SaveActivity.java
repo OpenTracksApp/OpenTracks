@@ -74,9 +74,9 @@ public class SaveActivity extends Activity {
     String action = intent.getAction();
     String type = intent.getType();
     Uri data = intent.getData();
-    if (!getString(R.string.save_intent_action).equals(action) ||
-        !TracksColumns.CONTENT_ITEMTYPE.equals(type) ||
-        !UriUtils.matchesContentUri(data, TracksColumns.CONTENT_URI)) {
+    if (!getString(R.string.track_action_save).equals(action)
+        || !TracksColumns.CONTENT_ITEMTYPE.equals(type)
+        || !UriUtils.matchesContentUri(data, TracksColumns.CONTENT_URI)) {
       Log.e(TAG, "Got bad save intent: " + intent);
       finish();
       return;
@@ -169,7 +169,7 @@ public class SaveActivity extends Activity {
 
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
     builder.setMessage(writer.getErrorMessage());
-    builder.setPositiveButton(R.string.ok, new OnClickListener() {
+    builder.setPositiveButton(R.string.generic_ok, new OnClickListener() {
       @Override
       public void onClick(DialogInterface dialog, int arg1) {
         dialog.dismiss();
@@ -185,7 +185,7 @@ public class SaveActivity extends Activity {
     });
     builder.setIcon(success ? android.R.drawable.ic_dialog_info :
         android.R.drawable.ic_dialog_alert);
-    builder.setTitle(success ? R.string.success : R.string.error);
+    builder.setTitle(success ? R.string.generic_success_title : R.string.generic_error_title);
     return builder.create();
   }
 
@@ -228,7 +228,7 @@ public class SaveActivity extends Activity {
     Uri uri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId);
 
     Intent intent = new Intent(ctx, SaveActivity.class);
-    intent.setAction(ctx.getString(R.string.save_intent_action));
+    intent.setAction(ctx.getString(R.string.track_action_save));
     intent.setDataAndType(uri, TracksColumns.CONTENT_ITEMTYPE);
     intent.putExtra(EXTRA_FILE_FORMAT, exportFormat.ordinal());
     intent.putExtra(EXTRA_SHARE_FILE, shareFile);

@@ -147,10 +147,10 @@ class DataSourcesWrapperImpl implements DataSourcesWrapper {
       // We don't have a recent GPS fix, just use cell towers if available
       loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
-      int toastResId = R.string.status_approximate_current_location;
+      int toastResId = R.string.my_location_approximate_location;
       if (loc == null || loc.getTime() < now - MAX_NETWORK_AGE_MS) {
         // We don't have a recent cell tower location, let the user know:
-        toastResId = R.string.status_no_current_location;
+        toastResId = R.string.my_location_no_location;
       }
 
       // Let the user know we have only an approximate location:

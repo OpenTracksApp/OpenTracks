@@ -23,7 +23,7 @@ package com.google.android.apps.mytracks;
  */
 public interface ProgressIndicator {
 
-  public void setProgressMessage(int resId);
+  public void setProgressMessage(String message);
   public void clearProgressMessage();
 
   public void setProgressValue(int percent);

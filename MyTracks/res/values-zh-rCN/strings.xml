@@ -15,460 +15,232 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-  <!-- Used by the Menu -->
-  <string name="start_recording">记录轨迹</string>
-  <string name="stop_recording">停止记录</string>
-  <string name="switch_to_sat">卫星图模式</string>
-  <string name="switch_to_map">地图模式</string>
-  <string name="mylocation">我的位置</string>
-  <string name="list_tracks">轨迹列表</string>
-  <string name="list_markers">标记</string>
-  <string name="delete_all_tracks">删除所有轨迹</string>
-  <string name="settings">设置</string>
-  <string name="elevation">海拔</string>
-  <string name="choose_track_message">请选择要查看的轨迹</string>
-  <string name="current_track">当前轨迹</string>
-  <string name="current_segment">上一段轨迹</string>
-  <string name="sensor_state">感应器状态</string>
-  <string name="aggregated_stats">累积统计</string>
-
-  <!-- Error messages -->
-  <string name="error_no_location_manager">此设备上没有位置管理器!</string>
-  <string name="error_no_gps">此设备上没有 GPS 定位装置.</string>
-  <string name="error_sending_to_my_maps">发送轨迹到 Google My Map 时发生错误.</string>
-  <string name="error_sending_to_fusion_tables">发送轨迹到 Google Fusion Tables 时发生错误. 请稍后重试.</string>
-  <string name="error_sending_to_docs">发送轨迹到 Google Docs 时发生错误. 请稍后重试.</string>
-  <string name="error_sending_generic">请稍后再试.</string>
-  <string name="error_unable_to_start_recording">无法开始记录. 请重试.</string>
-  <string name="error_unable_to_stop_recording">无法停止记录. 请重试.</string>
-  <string name="error_import_unable_to_read_file">无法读取文件.</string>
-  <string name="error_import_invalid_gpx_format">文件不是有效的 GPX 格式.</string>
-  <string name="error_import_generic">发生错误. 请重试.</string>
-  <string name="error_export_track_does_not_exist">轨迹不存在.</string>
-  <string name="error_export_operation_canceled">操作已被取消.</string>
-  <string name="error_import_out_of_memory">文件太大 (必须小于 500 KB). 中止操作.</string>
-  <string name="error_unable_to_insert_marker">无法插入标记. 定位尚未完成.</string>
-
-  <!-- Status messages -->
-  <string name="status_wait_for_gps_fix">等待更准确的 GPS 定位. 请确定可以看见天空.</string>
-  <string name="status_now_recording">现在开始记录新的轨迹.</string>
-  <string name="status_stopped_recording">停止记录你的轨迹.</string>
-  <string name="sending_to_google_additional_info">可能需要等待几分钟才能看见新的轨迹.</string>
-  <string name="status_need_to_enable_gps">请点击这里进入\'安全和位置设置\'并勾选上\'启用 GPS 卫星\'. 然后用后退键返回.</string>
-  <string name="status_approximate_current_location">注意: 当前显示的位置是根据无线信号和无线网络计算的近似位置.</string>
-  <string name="status_no_current_location">目前无法定位. 请启用更多的位置来源 (在\'安全和位置设置\'中) 并确认天空是可见的. 再重试.</string>
-  <string name="status_waypoint_inserted">插入了一个路点标记.</string>
-  <string name="status_marker_inserted">插入了一个统计标记.</string>
-  <string name="sending_to_google_upload_status">上传状态:</string>
-
-  <!-- Progress dialog -->
-  <string name="progress_title">请稍候...</string>
-  <string name="progress_message">发送你的轨迹到 Google.</string>
-  <string name="progress_message_reading_track">读取轨迹中...</string>
-  <string name="progress_message_preparing_track">准备轨迹中...</string>
-  <string name="progress_message_authenticating_fusion_tables">登录 Google Fusion Tables 中...</string>
-  <string name="progress_message_authenticating_docs">登录 Google Docs 中...</string>
-  <string name="progress_message_sending_docs">发送轨迹到 Google Docs 中...</string>
-  <string name="progress_message_sending_fusion_tables">发送轨迹到 Google Fusion Tables 中...</string>
-  <string name="progress_message_creating_fusion_table">创建新的 Fusion Table 中...</string>
-  <string name="progress_message_creating_map">创建新的 My Map...</string>
-  <string name="progress_message_sending_fusion_tables">发送轨迹到 Fusion Tables...</string>
-  <string name="progress_message_creating_fusion_table">创建新的 Fusion table...</string>
-  <string name="progress_message_import">导入 GPS 轨迹中. 请稍候.</string>
-  <string name="progress_message_export">写入文件到 SD 卡中. 请稍候.</string>
-  <string name="progress_message_updating_track">更新轨迹统计信息中...</string>
-
-  <!-- Used by DeleteAllDataHandler -->
-  <string name="confirmation_title_are_you_sure">请确认</string>
-  <string name="all_data_will_be_permanently_deleted">所以轨迹和标记都将被从本机删除.</string>
-  <string name="track_will_be_permanently_deleted">选定轨迹和它相关的标记都将被从本机彻底删除.</string>
-  <string name="marker_will_be_permanently_deleted">选定标记将被从本机删除.</string>
-
-  <!-- Text and links when uploading to Google Fusion Tables -->
-  <string name="new_map_description">由 Android 平台的 My Tracks 创建.</string>
-  <string name="new_map_title">新地图</string>
-
-  <!-- Formatting of track and marker descriptions -->
-  <string name="points">路点</string>
-  <string name="recorded_date">记录日期</string>
-  <string name="category">活动类型</string>
-  <string name="waypoint_category">标记类型</string>
-  <string name="track_part_format">(第 %d 部分)</string>
-
-  <!-- Used by the track recording service -->
-  <string name="recording_your_track">记录轨迹中...</string>
-  <string name="new_track_format">轨迹 %d</string>
-
-  <!-- Common -->
-  <string name="no">否</string>
-  <string name="yes">是</string>
-  <string name="ok">确定</string>
-  <string name="error">错误</string>
-  <string name="success">成功</string>
-  <string name="waypoint">路点</string>
-  <string name="license">授权</string>
-  <string name="cancel">取消</string>
-  <string name="save">保存</string>
-
-  <!-- Placemark labels for start and end of track -->
-  <string name="start">(开始)</string>
-  <string name="end">(结束)</string>
-
-  <!--  TrackList -->
-  <string name="tracklist_show_track">显示</string>
-  <string name="tracklist_send_to_mymaps">发送到 Google My Maps</string>
-  <string name="tracklist_send_to_new_mymap">发送到新建的 Google My Map</string>
-  <string name="tracklist_send_to_fusiontables">发送到 Google Fusion Table</string>
-  <string name="tracklist_send_to_new_fusiontable">发送到新建的 Google Fusion Table</string>
-  <string name="tracklist_send_to_docs">发送到 Google Docs</string>
-  <string name="tracklist_send_to_google">发送到 Google...</string>
-  <string name="tracklist_delete_track">从手机上删除...</string>
-  <string name="tracklist_edit_track">编辑详细信息</string>
-  <string name="tracklist_write_to_sd">保存到 SD 卡...</string>
-  <string name="tracklist_save_as_gpx">保存为 GPX 文件</string>
-  <string name="tracklist_save_as_kml">保存为 KML 文件</string>
-  <string name="tracklist_save_as_csv">保存为 CSV 文件</string>
-  <string name="tracklist_save_as_tcx">保存为 TCX 文件</string>
-  <string name="tracklist_btn_send_all_to_fusiontables">发送到 Google Fusion Tables</string>
-  <string name="tracklist_btn_send_all_to_mymaps">发送到 Google My Maps</string>
-  <string name="tracklist_btn_delete_all">删除所有轨迹</string>
-  <!-- Export All -->
-  <string name="tracklist_btn_export_all">导出所有轨迹</string>
-  <string name="export_done">导出完毕</string>
-  <string name="tracklist_pick_one">选择一个轨迹. 长按弹出操作菜单.</string>
-  <string name="tracklist_all_tracks">全部轨迹:</string>
-  <string name="tracklist_this_track">此轨迹</string>
-  <string name="tracklist_share_track">与朋友分享...</string>
-  <string name="tracklist_share_link">访问地图的超链接</string>
-  <string name="tracklist_share_gpx_file">GPX 文件</string>
-  <string name="tracklist_share_kml_file">KML 文件</string>
-  <string name="tracklist_share_csv_file">CSV 文件</string>
-  <string name="tracklist_share_tcx_file">TCX 文件</string>
-  <string name="tracklist_clear_map">清除地图</string>
-  <!-- Import All -->
-  <string name="tracklist_btn_import_all">全部导入</string>
-  <!-- Format:
-  $1 : Successful imports
-  $2 : Attempted imports
-  $3 : MyTracks gpx path
-  -->
-  <string name="import_done">已从 %3$s 导入 %1$d 个 GPX 文件, 共 %2$d 个.</string>
-  <string name="import_empty">在 %s 中未找到 GPX 文件. SD 存储卡不可用或者目录中没有 GPX 文件.</string>
-  <string name="import_error">导入文件 %s 出错.</string>
-
-  <!-- Waypoints list -->
-  <string name="waypointslist_btn_delete_all">删除所有标记</string>
-  <string name="waypointslist_this_waypoint">此标记</string>
-  <string name="waypointslist_delete_waypoint">删除</string>
-  <string name="waypointslist_edit_waypoint">编辑详情</string>
-  <string name="waypointslist_show_waypoint">在地图上显示</string>
-  <string name="waypointslist_btn_insert_waypoint">插入路点</string>
-  <string name="waypointslist_btn_insert_statistics">插入统计信息</string>
-  <string name="waypointslist_pick_one">选择一个标记. 长按弹出操作菜单.</string>
-
-  <!-- MyTracks Details -->
-  <string name="trackdetails_title">轨迹详细信息</string>
-  <string name="trackdetails_name">轨迹名称</string>
-  <string name="trackdetails_name_hint">轨迹名称</string>
-  <string name="trackdetails_description">轨迹描述</string>
-  <string name="trackdetails_description_hint">轨迹描述</string>
-  <string name="trackdetails_category">活动类型 (例如: 徒步, 骑行, 跑步, 攀岩...)</string>
-  <string name="trackdetails_category_hint">活动类型</string>
-
-  <!-- MyTracks Waypoint Details -->
-  <string name="waypointdetails_title">标记详细信息</string>
-  <string name="waypointdetails_name">标记名称</string>
-  <string name="waypointdetails_name_hint">标记名称</string>
-  <string name="waypointdetails_description">标记描述</string>
-  <string name="waypointdetails_description_hint">标记描述</string>
-  <string name="waypointdetails_category">标记类型 (例如: 建筑, 陷坑, 景点...)</string>
-  <string name="waypointdetails_category_hint">标记类型</string>
-
-  <!-- MyTracks Settings -->
-  <string name="settings_title">My Tracks 设置</string>
-  <string name="settings_display">显示</string>
-  <string name="settings_recording">记录</string>
-  <string name="settings_sharing">分享</string>
-
-  <string name="settings_announcement_frequency_not_available">不支持当前使用的 Android 版本</string>
-  <string name="settings_not_while_recording">在记录轨迹时不可用</string>
-
-  <string name="settings_announcement_frequency">通知频度</string>
-  <string name="settings_announcement_frequency_summary">语音通知的最小时间间隔</string>
-
-  <string name="settings_min_recording_distance">最小记录间距</string>
-  <string name="settings_min_recording_distance_summary">位置记录的最小间隔距离</string>
-
-  <string name="settings_max_recording_distance">最大记录间距</string>
-  <string name="settings_max_recording_distance_summary">如果记录点之间的距离大于这个值, 轨迹将被切割</string>
-
-  <string name="settings_min_recording_interval">最小记录时间间隔</string>
-  <string name="settings_min_recording_interval_summary">记录位置的最小时间间隔</string>
-
-  <string name="settings_min_required_accuracy">最小精度</string>
-  <string name="settings_min_required_accuracy_summary">如果位置信息达不到此精度, 记录将被暂停</string>
-
-  <string name="settings_metric_units">使用公制单位</string>
-  <string name="settings_metric_units_summary_on">所有的距离都将以公制单位显示</string>
-  <string name="settings_metric_units_summary_off">所有的距离都将以英制单位显示</string>
-
-  <string name="settings_map_public">公开地图</string>
-  <string name="settings_map_public_summary_on">上传的地图将对所有 maps.google.com 访问者可见</string>
-  <string name="settings_map_public_summary_off">上传的地图不会在 maps.google.com 上公开</string>
-
-  <string name="settings_report_speed_or_pace">显示速度</string>
-  <string name="settings_report_speed_or_pace_summary_on">显示速度信息</string>
-  <string name="settings_report_speed_or_pace_summary_off">显示步速</string>
-
-  <string name="settings_share_url_only">只分享 URL</string>
-  <string name="settings_share_url_only_summary_on">在分享时只发送地图的 URL</string>
-  <string name="settings_share_url_only_summary_off">在分享时也包括轨迹的内容</string>
-
-  <string name="settings_split_frequency">切割频度</string>
-  <string name="settings_split_frequency_summary">插入新切割标记所需要达到的最大时间或距离</string>
-
-  <string name="settings_auto_resume_track_timeout">自动恢复追踪等待时间</string>
-  <string name="settings_auto_resume_track_timeout_summary">手机重启后自动继续上次轨迹记录的最大间隔时间</string>
-
-  <string name="settings_timestamp_track_name">使用时间作为轨迹名称</string>
-  <string name="settings_timestamp_track_name_summary_on">使用轨迹记录的开始时间作为默认名称</string>
-  <string name="settings_timestamp_track_name_summary_off">轨迹使用自动递增的数字进行命名.</string>
-
-  <string name="settings_reset">恢复默认值</string>
-  <string name="settings_reset_summary">将所有设置恢复到默认值</string>
-  <string name="settings_reset_dialog_message">你的所有设置都将恢复到默认值. 已保存的轨迹不会丢失. 确定要继续吗?</string>
-  <string name="settings_reset_done">所有设置已恢复到默认值.</string>
-
-  <string name="pace_label">节奏</string>
-
-  <string name="eclair_required">只在 Android 2.0 及以上版本支持</string>
-  <string name="settings_sensor_type">感应器类型</string>
-  <string name="settings_sensor_type_summary">要连接到的感应器类型</string>
-  <string name="settings_heart_rate_ant_sensor_id">清除 ANT 心率计的设备关联</string>
-  <string name="settings_power_ant_sensor_id">清除 ANT 能量感应器的设备关联</string>
-  <string name="settings_srm_bridge_ant_sensor_id">清除 ANT SRM 桥接感应器的设备关联</string>
-  <string name="settings_ant_not_paired">ANT 感应器未关联</string>
-  <string name="settings_ant_paired">ANT 感应器已关联到: %d</string>
-  <string name="bluetooth_sensor_title">蓝牙感应器</string>
-  <string name="bluetooth_sensor_summary">想要连接的蓝牙感应器</string>
-  <string name="settings_modular_stats_display_title">模块化状态显示</string>
-
-  <!-- Backups -->
-  <string name="settings_backup">备份 (测试版)</string>
-  <string name="settings_sd_backup">SD 存储卡备份</string>
-  <string name="settings_backup_to_sd">立即备份</string>
-  <string name="settings_backup_to_sd_summary">将你所有轨迹和设置的完整备份写入到 SD 存储卡</string>
-  <string name="settings_restore_from_sd">立即恢复</string>
-  <string name="settings_restore_from_sd_summary">从 SD 存储卡恢复所有轨迹和设置</string>
-
-  <string name="restore_overwrites_warning">从 SD 存储卡恢复备份数据将覆盖掉你当前的所有轨迹和设置. 确定要继续吗?</string>
-  <string name="select_backup_to_restore">请选择要恢复的备份文件</string>
-  <string name="no_backups">没有找到备份文件.</string>
-  <string name="backup_write_progress_message">将所有轨迹和设置写入 SD 存储卡中. 这需要一些时间...</string>
-  <string name="backup_import_progress_message">从 SD 存储卡读取轨迹和设置中. 这需要一些时间...</string>
-
-  <!-- MyTracksSky -->
-  <string name="mytracks_sky">GPS 卫星</string>
-
-  <!-- My Maps -->
-  <string name="select_map_message">从你的帐号中选择一个地图:</string>
-  <string name="create_new_map">创建新地图...</string>
-  <string name="map_list_title">发送到 Google My Maps</string>
-  <string name="maps_list_loading">载入地图中...</string>
-  <string name="maps_list_failed">现在无法载入你的地图!</string>
-  <string name="open_map">选择此地图</string>
-  <string name="edit_map_details">编辑地图详细信息</string>
-  <string name="share_track_url">分享轨迹</string>
-  <string name="delete_map">从你的帐号删除地图</string>
-  <string name="map_title">地图标题:</string>
-  <string name="map_description">地图描述:</string>
-  <string name="map_searchable_edit">让此地图和它的内容出现在搜索结果中</string>
-  <string name="map_not_searchable_edit">不要让这个地图的的内容出现在搜索结果中, 但其它用户依然可以通过直接 URL 访问它</string>
-  <string name="map_searchable">此地图和它的内容将在搜索结果中出现</string>
-  <string name="map_not_searchable">此地图和它的内容不会在搜索结果中出现, 但其它用户依然可以通过直接 URL 访问它</string>
-
-  <!-- Sharing -->
-  <string name="share_track_picker_title">与朋友分享地图</string>
-  <string name="share_map_subject">我想与你分享一张地图</string>
-  <string name="share_track_url_body_format">我想你可能会对这个地图感兴趣:
-
-      %s</string>
-  <string name="share_track_subject">我想与你分享一条轨迹</string>
-  <string name="share_track_file_body_format">我想你可能会对这条轨迹感兴趣.
-
-    请用 Google Earth 或其它地图软件查看此轨迹.</string>
-
-  <!-- Visibility -->
-  <string name="public_map">公开</string>
-  <string name="unlisted_map">未公布</string>
-  <string name="mapslist_no_maps_available">你还没有保存任何地图.</string>
-
-  <!-- Statistics View -->
-  <!-- Average Moving -->
-  <string name="average_moving_speed_label">平均移动速度</string>
-  <string name="average_moving_pace_label">平均移动步速</string>
-
-  <!-- Average -->
-  <string name="average_speed_label">平均速度</string>
-  <string name="average_pace_label">平均步速</string>
-
-  <string name="elevation_chart_name">海拔图表</string>
-  <string name="elevation_gain_label">爬升</string>
-  <string name="elevation_label">海拔</string>
-  <string name="latitude_label">纬度</string>
-  <string name="longitude_label">经度</string>
-
-  <!-- Min -->
-  <string name="min_elevation_label">最小海拔</string>
-  <string name="min_grade_label">最小落差</string>
-  <string name="min_pace_label">最小步速</string>
-
-  <!-- Max -->
-  <string name="max_elevation_label">最大海拔</string>
-  <string name="max_grade_label">最大落差</string>
-  <string name="max_speed_label">最大速度</string>
-
-  <string name="loading_track">载入轨迹中...</string>
-
-  <!-- Chart Settings -->
-  <string name="chart_settings">图表设置</string>
-  <!-- X Axis -->
-  <string name="x_axis">横轴</string>
-  <string name="by_distance">按距离显示</string>
-  <string name="by_time">按时间显示</string>
-
-  <!-- Y Axis -->
-  <string name="y_axis">纵轴</string>
-
-  <!-- Units -->
-  <!-- Time  -->
-  <string name="voice_hour">小时</string>
-  <string name="voice_hours">小时</string>
-  <string name="unit_hour">时</string>
-  <string name="unit_minute">分</string>
-  <string name="voice_minute">分钟</string>
-  <string name="voice_minutes">分钟</string>
-  <string name="voice_second">秒</string>
-  <string name="voice_seconds">秒</string>
-
-  <!-- Distance -->
-  <string name="voice_kilometers">千米</string>
-  <string name="voice_miles">英里</string>
-
-  <!-- Speed and Pace -->
-  <string name="voice_kilometer_per_hour">千米每小时</string>
-  <string name="voice_per_kilometer">每千米</string>
-  <string name="voice_mile_per_hour">英里每小时</string>
-  <string name="voice_per_mile">每英里</string>
-
-  <!-- Stats Labels -->
-  <string name="moving_time_label">移动时间</string>
-  <string name="total_time_label">总时间</string>
-  <string name="time_label">时间</string>
-  <string name="sd_unavail">没有 SD 卡</string>
-  <string name="speed">速度</string>
-  <string name="start_trip">你必须先记录轨迹.</string>
-  <string name="statistics">统计</string>
-  <string name="total_distance_label">总距离</string>
-  <string name="distance_label">距离</string>
-  <string name="power">电源</string>
-  <string name="cadence">节奏</string>
-  <string name="heart_rate">心率</string>
-  <string name="max_heart_rate">最大心率</string>
-  <string name="waiting">请稍候...</string>
-
-  <!-- End User License Agreement -->
-  <string name="eula_title">最终用户协议</string>
-  <string name="accept">同意</string>
-  <string name="decline">拒绝</string>
-
-  <!-- About -->
-  <string name="about">关于</string>
-  <string name="help">帮助</string>
+  <string name="about_license">授权</string>
+  <string name="about_privacy">隐私策略:</string>
+  <string name="about_support">技术支持:</string>
   <string name="about_team">开发团队:</string>
   <string name="about_version">版本:</string>
-  <string name="about_support">技术支持:</string>
-  <string name="about_privacy">隐私策略:</string>
-
-  <!-- Send to Google -->
-  <string name="sendtogoogle_title">发送到...</string>
-  <string name="sendtogoogle_send_now">立即发送</string>
-  <string name="sendtogoogle_create_new_map">创建新地图</string>
-  <string name="sendtogoogle_pick_existing_map">选择已有地图</string>
-  <string name="sendtogoogle_send_stats">发送轨迹统计信息</string>
-  <string name="sendtogoogle_send_stats_and_points">发送统计信息和路点</string>
-
-  <!-- Getting the account to upload to. -->
-  <string name="no_account_found_title">没有帐户</string>
-  <string name="no_account_found">没有可用于上传轨迹的帐户.</string>
-  <string name="choose_account_title">选择帐户</string>
-
-  <!-- SD card -->
-  <string name="io_no_external_storage_found">没有发现存储设备. 请确认插入了 SD 存储卡并且你的手机没有将挂载 SD 卡到电脑.</string>
-  <string name="io_write_failed">无法写入文件.</string>
-  <string name="io_create_dir_failed">无法在 SD 存储卡上创建目录.</string>
-  <string name="io_create_dir_failed">无法在 SD 存储卡上创建目录card.</string>
-  <string name="io_write_finished">轨迹已导出到 SD 存储卡.</string>
-  <string name="io_read_finished">从 SD 存储卡读取完毕.</string>
-
-  <!-- VersionChecker -->
-  <string name="version_check_title">检查更新</string>
-  <string name="version_check_upgrade_button">立即更新</string>
-  <string name="version_check_continue_button">放弃更新并继续</string>
-  <string name="upgrade_required">你所使用的 %1$s 版本可能无法继续正常工作, 技术支持也将结束. 请升级以便继续使用 %1$s.</string>
-  <string name="upgrade_recommended">你所使用的 %1$s 版本可能无法继续正常工作. 你可以现在就更新它, 或者自负风险继续使用. 一些如服务器同步之类的功能在更新前可能不能使用.</string>
-  <string name="upgrade_available">%1$s 的新版本已经发布. 你可以继续使用现在的版本, 但在更新前无法使用到最新的功能.</string>
-
-  <!-- Welcome -->
-  <string name="welcome">欢迎</string>
-  <string name="welcome_read_later">确定</string>
-  <string name="welcome_about">关于 My Tracks</string>
-
-  <!-- Announcement -->
-  <string name="announce_no_distance">My Tracks 无距离</string>
-  <!-- Format:
-  $1 : Distance label
-  $2 : Distance value (5)
-  $3 : Distance units (mi, km)
-  $4 : Time description (10 minutes 5 seconds)
-  $5 : Speed value (5.6) : Pace value (5 minutes 6 seconds)
-  $6 : Speed units (mph) : Pace units (per mile)
-  -->
-  <string name="announce_template">My Tracks %1$s %2$.2f %3$s 用时 %4$s 速度 %5$s %6$s</string>
-
-  <!-- Check Units -->
-  <string name="check_units_title">测量单位提示</string>
-
-  <!-- Fake preference keys - never saved, but show options in the preferences screen -->
-  <string name="method_bluetooth">蓝牙</string>
-  <string name="bluetooth_options">蓝牙设置</string>
-  <string name="bluetooth_pairing">设备关联</string>
-  <string name="bluetooth_pairing_summary">打开 Android 的蓝牙设置关联设备</string>
+  <string name="chart_settings_by_distance">按距离显示</string>
+  <string name="chart_settings_by_time">按时间显示</string>
+  <string name="chart_settings_x_axis">横轴</string>
+  <string name="chart_settings_y_axis">纵轴</string>
+  <string name="eula_accept">同意</string>
+  <string name="eula_decline">拒绝</string>
+  <string name="eula_title">最终用户协议</string>
+  <string name="export_canceled">操作已被取消.</string>
+  <string name="export_progress_message">写入文件到 SD 卡中. 请稍候.</string>
+  <string name="export_success">导出完毕</string>
+  <string name="generic_cancel">取消</string>
+  <string name="generic_confirm_title">请确认</string>
+  <string name="generic_error_title">错误</string>
+  <string name="generic_no">否</string>
+  <string name="generic_ok">确定</string>
+  <string name="generic_progress_title">请稍候...</string>
+  <string name="generic_save">保存</string>
+  <string name="generic_success_title">成功</string>
+  <string name="generic_yes">是</string>
+  <string name="gps_need_to_enable">请点击这里进入\'安全和位置设置\'并勾选上\'启用 GPS 卫星\'. 然后用后退键返回.</string>
+  <string name="gps_not_found">此设备上没有 GPS 定位装置.</string>
+  <string name="gps_wait_for_fix">等待更准确的 GPS 定位. 请确定可以看见天空.</string>
+  <string name="import_error">导入文件 %s 出错.</string>
+  <string name="import_no_file">在 %s 中未找到 GPX 文件. SD 存储卡不可用或者目录中没有 GPX 文件.</string>
+  <string name="import_success">已从 %3$s 导入 %1$d 个 GPX 文件, 共 %2$d 个.</string>
+  <string name="marker_detail_marker_description">标记描述</string>
+  <string name="marker_detail_marker_name">标记名称</string>
+  <string name="marker_detail_marker_type">标记类型 (例如: 建筑, 陷坑, 景点...)</string>
+  <string name="marker_detail_marker_type_hint">标记类型</string>
+  <string name="marker_detail_title">标记详细信息</string>
+  <string name="marker_insert_error">无法插入标记. 定位尚未完成.</string>
+  <string name="marker_insert_success">插入了一个统计标记.</string>
+  <string name="marker_label_end">(结束)</string>
+  <string name="marker_label_start">(开始)</string>
+  <string name="marker_list_context_menu_title">此标记</string>
+  <string name="marker_list_delete_marker">删除</string>
+  <string name="marker_list_delete_marker_confirm_message">选定标记将被从本机删除.</string>
+  <string name="marker_list_edit_marker">编辑详情</string>
+  <string name="marker_list_insert_statistics">插入统计信息</string>
+  <string name="marker_list_insert_waypoint">插入路点</string>
+  <string name="marker_list_pick_one">选择一个标记. 长按弹出操作菜单.</string>
+  <string name="marker_list_show_on_map">在地图上显示</string>
+  <string name="marker_type_statistics">统计</string>
+  <string name="marker_type_waypoint">路点</string>
+  <string name="menu_aggregated_statistics">累积统计</string>
+  <string name="menu_chart_view_chart_settings">图表设置</string>
+  <string name="menu_help">帮助</string>
+  <string name="menu_map_view_map_mode">地图模式</string>
+  <string name="menu_map_view_my_location">我的位置</string>
+  <string name="menu_map_view_satellite_mode">卫星图模式</string>
+  <string name="menu_markers">标记</string>
+  <string name="menu_record_track">记录轨迹</string>
+  <string name="menu_sensor_state">感应器状态</string>
+  <string name="menu_settings">设置</string>
+  <string name="menu_stop_recording">停止记录</string>
+  <string name="menu_tracks">轨迹列表</string>
+  <string name="my_location_approximate_location">注意: 当前显示的位置是根据无线信号和无线网络计算的近似位置.</string>
+  <string name="my_location_no_location">目前无法定位. 请启用更多的位置来源 (在\'安全和位置设置\'中) 并确认天空是可见的. 再重试.</string>
+  <string name="my_maps_list_error">现在无法载入你的地图!</string>
+  <string name="my_maps_list_loading">载入地图中...</string>
+  <string name="my_maps_list_no_maps">你还没有保存任何地图.</string>
+  <string name="my_maps_list_pick_map">从你的帐号中选择一个地图:</string>
+  <string name="my_maps_list_public_label">公开</string>
+  <string name="my_maps_list_title">发送到 Google My Maps</string>
+  <string name="my_maps_list_unlisted_label">未公布</string>
+  <string name="sd_card_error_create_dir">无法在 SD 存储卡上创建目录.</string>
+  <string name="sd_card_error_no_storage">没有发现存储设备. 请确认插入了 SD 存储卡并且你的手机没有将挂载 SD 卡到电脑.</string>
+  <string name="sd_card_error_write_file">无法写入文件.</string>
+  <string name="sd_card_success_read_file">从 SD 存储卡读取完毕.</string>
+  <string name="sd_card_success_write_file">轨迹已导出到 SD 存储卡.</string>
+  <string name="send_google_choose_account_title">选择帐户</string>
+  <string name="send_google_existing_map">选择已有地图</string>
+  <string name="send_google_new_map">创建新地图</string>
+  <string name="send_google_no_account_message">没有可用于上传轨迹的帐户.</string>
+  <string name="send_google_no_account_title">没有帐户</string>
+  <string name="send_google_progress_preparing_track">准备轨迹中...</string>
+  <string name="send_google_progress_reading_track">读取轨迹中...</string>
+  <string name="send_google_recorded">记录日期</string>
+  <string name="send_google_result_header">上传状态:</string>
+  <string name="send_google_result_share_url">分享轨迹</string>
+  <string name="send_google_send_now">立即发送</string>
+  <string name="send_google_success_footer">可能需要等待几分钟才能看见新的轨迹.</string>
+  <string name="send_google_title">发送到...</string>
+  <string name="send_google_track_part_label">(第 %d 部分)</string>
+  <string name="sensor_state_cadence">节奏</string>
+  <string name="sensor_state_connected">已连接</string>
+  <string name="sensor_state_connecting">连接中</string>
+  <string name="sensor_state_disconnected">未连接</string>
+  <string name="sensor_state_heart_rate">心率</string>
+  <string name="sensor_state_last_sensor_time">感应器数据时间</string>
+  <string name="sensor_state_power">电源</string>
+  <string name="sensor_state_sending">发送中</string>
+  <string name="settings_backup">备份 (测试版)</string>
+  <string name="settings_backup_now">立即备份</string>
+  <string name="settings_backup_now_progress_message">将所有轨迹和设置写入 SD 存储卡中. 这需要一些时间...</string>
+  <string name="settings_backup_now_summary">将你所有轨迹和设置的完整备份写入到 SD 存储卡</string>
+  <string name="settings_backup_restore">立即恢复</string>
+  <string name="settings_backup_restore_confirm_message">从 SD 存储卡恢复备份数据将覆盖掉你当前的所有轨迹和设置. 确定要继续吗?</string>
+  <string name="settings_backup_restore_no_backup">没有找到备份文件.</string>
+  <string name="settings_backup_restore_progress_message">从 SD 存储卡读取轨迹和设置中. 这需要一些时间...</string>
+  <string name="settings_backup_restore_select_title">请选择要恢复的备份文件</string>
+  <string name="settings_backup_restore_summary">从 SD 存储卡恢复所有轨迹和设置</string>
+  <string name="settings_backup_sd_card">SD 存储卡备份</string>
+  <string name="settings_display">显示</string>
+  <string name="settings_display_metric">使用公制单位</string>
+  <string name="settings_display_metric_summary_off">所有的距离都将以英制单位显示</string>
+  <string name="settings_display_metric_summary_on">所有的距离都将以公制单位显示</string>
+  <string name="settings_display_speed">显示速度</string>
+  <string name="settings_display_speed_summary_off">显示步速</string>
+  <string name="settings_display_speed_summary_on">显示速度信息</string>
+  <string name="settings_not_while_recording">在记录轨迹时不可用</string>
+  <string name="settings_recording">记录</string>
+  <string name="settings_recording_auto_resume">自动恢复追踪等待时间</string>
+  <string name="settings_recording_auto_resume_summary">手机重启后自动继续上次轨迹记录的最大间隔时间</string>
+  <string name="settings_recording_distance">最小记录间距</string>
+  <string name="settings_recording_distance_summary">位置记录的最小间隔距离</string>
+  <string name="settings_recording_gps_accuracy">最小精度</string>
+  <string name="settings_recording_gps_accuracy_summary">如果位置信息达不到此精度, 记录将被暂停</string>
+  <string name="settings_recording_interval">最小记录时间间隔</string>
+  <string name="settings_recording_interval_summary">记录位置的最小时间间隔</string>
+  <string name="settings_recording_marker">切割频度</string>
+  <string name="settings_recording_marker_summary">插入新切割标记所需要达到的最大时间或距离</string>
+  <string name="settings_recording_name">使用时间作为轨迹名称</string>
+  <string name="settings_recording_name_summary_off">轨迹使用自动递增的数字进行命名.</string>
+  <string name="settings_recording_name_summary_on">使用轨迹记录的开始时间作为默认名称</string>
+  <string name="settings_recording_track_distance">最大记录间距</string>
+  <string name="settings_recording_track_distance_summary">如果记录点之间的距离大于这个值, 轨迹将被切割</string>
+  <string name="settings_recording_voice">通知频度</string>
+  <string name="settings_recording_voice_not_available">不支持当前使用的 Android 版本</string>
+  <string name="settings_recording_voice_summary">语音通知的最小时间间隔</string>
+  <string name="settings_reset">恢复默认值</string>
+  <string name="settings_reset_dialog_message">你的所有设置都将恢复到默认值. 已保存的轨迹不会丢失. 确定要继续吗?</string>
+  <string name="settings_reset_done">所有设置已恢复到默认值.</string>
+  <string name="settings_reset_summary">将所有设置恢复到默认值</string>
   <string name="settings_sensor">感应器选项</string>
-
-  <!-- Bluetooth Sensor -->
-  <string name="bluetooth_connected">连接到 %s</string>
-  <string name="bluetooth_connecting">蓝牙感应器连接中 ...</string>
-  <string name="bluetooth_not_connected">未连接蓝牙感应器</string>
-
-  <!-- Sensor State -->
-  <string name="sensor_data_time">感应器数据时间</string>
-  <string name="power_meter_enabled">电源计量器已启用</string>
-  <string name="heart_rate_monitor_enabled">心率监视器已启用</string>
-  <string name="no_sensor_manager">没有感应器管理器</string>
-  <string name="enabled">已启用</string>
-  <string name="connecting">连接中</string>
-  <string name="connected">已连接</string>
-  <string name="disconnected">未连接</string>
-  <string name="no_sensor_service">没有感应器服务</string>
-  <string name="searching">搜索中</string>
-  <string name="sending">发送中</string>
-
-  <!-- Sensor Type Options -->
-  <string name="sensor_type_option_none">无</string>
-  <string name="sensor_type_option_ant">ANT+ 感应器</string>
-  <string name="sensor_type_option_srm_ant_bridge">SRM ANT+ 转接器</string>
-  <string name="sensor_type_option_polar">Polar Bluetooth</string>
-  <string name="sensor_type_option_zephyr">Zephyr 蓝牙设备</string>
-  
+  <string name="settings_sensor_ant_not_paired">ANT 感应器未关联</string>
+  <string name="settings_sensor_ant_paired">ANT 感应器已关联到: %d</string>
+  <string name="settings_sensor_bluetooth_options">蓝牙设置</string>
+  <string name="settings_sensor_bluetooth_pairing">设备关联</string>
+  <string name="settings_sensor_bluetooth_pairing_summary">打开 Android 的蓝牙设置关联设备</string>
+  <string name="settings_sensor_bluetooth_sensor">蓝牙感应器</string>
+  <string name="settings_sensor_bluetooth_sensor_summary">想要连接的蓝牙感应器</string>
+  <string name="settings_sensor_type">感应器类型</string>
+  <string name="settings_sensor_type_ant">ANT+ 感应器</string>
+  <string name="settings_sensor_type_none">无</string>
+  <string name="settings_sensor_type_polar">Polar Bluetooth</string>
+  <string name="settings_sensor_type_srm">SRM ANT+ 转接器</string>
+  <string name="settings_sensor_type_summary">要连接到的感应器类型</string>
+  <string name="settings_sensor_type_zephyr">Zephyr 蓝牙设备</string>
+  <string name="settings_sensor_unpair_ant">清除 ANT 心率计的设备关联</string>
+  <string name="settings_sensor_unpair_srm">清除 ANT SRM 桥接感应器的设备关联</string>
+  <string name="settings_sharing">分享</string>
+  <string name="settings_sharing_map_public">公开地图</string>
+  <string name="settings_sharing_map_public_summary_off">上传的地图不会在 maps.google.com 上公开</string>
+  <string name="settings_sharing_map_public_summary_on">上传的地图将对所有 maps.google.com 访问者可见</string>
+  <string name="settings_sharing_url_only">只分享 URL</string>
+  <string name="settings_sharing_url_only_summary_off">在分享时也包括轨迹的内容</string>
+  <string name="settings_title">My Tracks 设置</string>
+  <string name="share_track_file_body_format">我想你可能会对这条轨迹感兴趣.\n\n请用 Google Earth 或其它地图软件查看此轨迹.</string>
+  <string name="share_track_picker_title">与朋友分享地图</string>
+  <string name="share_track_subject">我想与你分享一条轨迹</string>
+  <string name="share_track_url_body_format">我想你可能会对这个地图感兴趣:\n\n%s</string>
+  <string name="stat_average_moving_pace">平均移动步速</string>
+  <string name="stat_average_moving_speed">平均移动速度</string>
+  <string name="stat_average_pace">平均步速</string>
+  <string name="stat_average_speed">平均速度</string>
+  <string name="stat_elevation">海拔</string>
+  <string name="stat_elevation_gain">爬升</string>
+  <string name="stat_latitude">纬度</string>
+  <string name="stat_longitude">经度</string>
+  <string name="stat_max_elevation">最大海拔</string>
+  <string name="stat_max_grade">最大落差</string>
+  <string name="stat_max_speed">最大速度</string>
+  <string name="stat_min_elevation">最小海拔</string>
+  <string name="stat_min_grade">最小落差</string>
+  <string name="stat_min_pace">最小步速</string>
+  <string name="stat_moving_time">移动时间</string>
+  <string name="stat_pace">节奏</string>
+  <string name="stat_speed">速度</string>
+  <string name="stat_total_distance">总距离</string>
+  <string name="stat_total_time">总时间</string>
+  <string name="track_detail_activity_type">活动类型 (例如: 徒步, 骑行, 跑步, 攀岩...)</string>
+  <string name="track_detail_activity_type_hint">活动类型</string>
+  <string name="track_detail_title">轨迹详细信息</string>
+  <string name="track_detail_track_description">轨迹描述</string>
+  <string name="track_detail_track_name">轨迹名称</string>
+  <string name="track_list_clear_map">清除地图</string>
+  <string name="track_list_context_menu_title">此轨迹</string>
+  <string name="track_list_delete_all">删除所有轨迹</string>
+  <string name="track_list_delete_all_confirm_message">所以轨迹和标记都将被从本机删除.</string>
+  <string name="track_list_delete_track">从手机上删除...</string>
+  <string name="track_list_delete_track_confirm_message">选定轨迹和它相关的标记都将被从本机彻底删除.</string>
+  <string name="track_list_edit_track">编辑详细信息</string>
+  <string name="track_list_export_all">导出所有轨迹</string>
+  <string name="track_list_import_all">全部导入</string>
+  <string name="track_list_pick_one">选择一个轨迹. 长按弹出操作菜单.</string>
+  <string name="track_list_save_sd">保存到 SD 卡...</string>
+  <string name="track_list_send_google">发送到 Google...</string>
+  <string name="track_list_share_track">与朋友分享...</string>
+  <string name="track_list_share_url">访问地图的超链接</string>
+  <string name="track_list_show_on_map">显示</string>
+  <string name="track_name_format">轨迹 %d</string>
+  <string name="track_record_error">无法开始记录. 请重试.</string>
+  <string name="track_record_notification">记录轨迹中...</string>
+  <string name="track_record_success">现在开始记录新的轨迹.</string>
+  <string name="unit_hour">时</string>
+  <string name="unit_minute">分</string>
+  <string name="voice_hour">小时</string>
+  <string name="voice_hours">小时</string>
+  <string name="voice_kilometer_per_hour">千米每小时</string>
+  <string name="voice_kilometers">千米</string>
+  <string name="voice_mile_per_hour">英里每小时</string>
+  <string name="voice_miles">英里</string>
+  <string name="voice_minute">分钟</string>
+  <string name="voice_minutes">分钟</string>
+  <string name="voice_no_distance">My Tracks 无距离</string>
+  <string name="voice_per_kilometer">每千米</string>
+  <string name="voice_per_mile">每英里</string>
+  <string name="voice_second">秒</string>
+  <string name="voice_seconds">秒</string>
+  <string name="voice_template">My Tracks %1$.2f %2$s 用时 %3$s 速度 %4$s %5$s</string>
+  <string name="welcome_about">关于 My Tracks</string>
+  <string name="welcome_title">欢迎</string>
 </resources>

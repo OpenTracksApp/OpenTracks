@@ -57,7 +57,7 @@ class CheckUnits {
       }
     });
     builder.setCancelable(true);
-    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+    builder.setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int which) {
         recordCheckPerformed(checkUnitsSharedPreferences);
         SharedPreferences useMetricPreferences = context.getSharedPreferences(

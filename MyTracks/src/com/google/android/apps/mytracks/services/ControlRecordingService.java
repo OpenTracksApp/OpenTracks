@@ -97,9 +97,9 @@ public class ControlRecordingService extends IntentService implements ServiceCon
     String action = intent.getAction();
     if (action != null) {
       try {
-        if (action.equals(getString(R.string.start_new_track_action))) {
+        if (action.equals(getString(R.string.track_action_start))) {
           trackRecordingService.startNewTrack();
-        } else if (action.equals(getString(R.string.end_current_track_action))) {
+        } else if (action.equals(getString(R.string.track_action_end))) {
           trackRecordingService.endCurrentTrack();
         }
       } catch (RemoteException e) {

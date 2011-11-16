@@ -166,7 +166,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
     double d =  stats.getTotalDistance() / 1000;
     double s =  stats.getAverageMovingSpeed() * 3.6;
     if (d == 0) {
-      return context.getString(R.string.announce_no_distance);
+      return context.getString(R.string.voice_no_distance);
     }
 
     int speedLabel;
@@ -188,7 +188,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
 
     String speed = null;
     if ((s == 0) || Double.isNaN(s)) {
-      speed = context.getString(R.string.unknown);
+      speed = context.getString(R.string.value_unknown);
     } else {
       if (reportSpeed) {
         speed = String.format("%.1f", s);
@@ -200,7 +200,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
       }
     }
 
-    return context.getString(R.string.announce_template,
+    return context.getString(R.string.voice_template,
         d,
         context.getString(metricUnits
                           ? R.string.voice_kilometers

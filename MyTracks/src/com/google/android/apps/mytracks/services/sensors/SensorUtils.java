@@ -101,13 +101,13 @@ public class SensorUtils {
       case NONE:
         return c.getString(R.string.sensor_type_value_none);
       case CONNECTING:
-        return c.getString(R.string.connecting);
+        return c.getString(R.string.sensor_state_connecting);
       case CONNECTED:
-        return c.getString(R.string.connected);
+        return c.getString(R.string.sensor_state_connected);
       case DISCONNECTED:
-        return c.getString(R.string.disconnected);
+        return c.getString(R.string.sensor_state_disconnected);
       case SENDING:
-        return c.getString(R.string.sending);
+        return c.getString(R.string.sensor_state_sending);
       default:
         return "";
     }

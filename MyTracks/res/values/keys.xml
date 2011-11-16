@@ -23,7 +23,7 @@ limitations under the License.
   <string name="auto_resume_track_timeout_key">autoResumeTrackTimeout</string>
   <string name="bluetooth_pairing_key">bluetoothPairing</string>
   <string name="bluetooth_sensor_key">bluetoothSensor</string>
-  <string name="default_category_key">defaultCategory</string>
+  <string name="default_activity_key">defaultActivity</string>
   <string name="default_map_public_key">defaultMapPublic</string>
   <string name="max_recording_distance_key">maxRecordingDistance</string>
   <string name="metric_units_key">metricUnits</string>

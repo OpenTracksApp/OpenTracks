@@ -99,11 +99,13 @@ public class SendToMyMaps implements Runnable {
   }
 
   private void doUpload() {
-    String statusMessage = context.getString(R.string.error_sending_to_my_maps);
+    String errorFormat = context.getString(R.string.send_google_error_service);
+    String serviceName = context.getString(SendType.MYMAPS.getServiceName());
+    String statusMessage = String.format(errorFormat, serviceName);
     boolean success = true;
     try {
       progressIndicator.setProgressMessage(
-          R.string.progress_message_reading_track);
+          context.getString(R.string.send_google_progress_reading_track));
 
       // Get the track meta-data
       Track track = providerUtils.getTrack(trackId);
@@ -129,8 +131,8 @@ public class SendToMyMaps implements Runnable {
               context.getString(R.string.default_map_public_key), true);
         }
 
-        progressIndicator.setProgressMessage(
-            R.string.progress_message_creating_map);
+        String creatingFormat = context.getString(R.string.send_google_progress_creating);
+        progressIndicator.setProgressMessage(String.format(creatingFormat, serviceName));
 
         StringBuilder mapIdBuilder = new StringBuilder();
         success = mapsClient.createNewMap(
@@ -174,11 +176,10 @@ public class SendToMyMaps implements Runnable {
       }
 
       if (success) {
-        String format = isNewMap 
-            ? context.getString(R.string.send_google_my_maps_new_map_success)
-            : context.getString(R.string.send_google_my_maps_existing_map_success);
+        String successFormat = isNewMap ? context.getString(R.string.send_google_success_new)
+                                        : context.getString(R.string.send_google_success_existing);
         String url = context.getString(SendType.MYMAPS.getServiceUrl());
-        statusMessage = String.format(format, url);
+        statusMessage = String.format(successFormat, serviceName, url);
       }
       Log.d(TAG, "SendToMyMaps: Done: " + success);
       progressIndicator.setProgressValue(100);
@@ -239,7 +240,7 @@ public class SendToMyMaps implements Runnable {
 
       List<Location> locations = new ArrayList<Location>(MAX_POINTS_PER_UPLOAD);
       progressIndicator.setProgressMessage(
-          R.string.progress_message_reading_track);
+          context.getString(R.string.send_google_progress_reading_track));
       Location lastLocation = null;
       do {
         if (totalLocationsRead % 100 == 0) {
@@ -313,7 +314,7 @@ public class SendToMyMaps implements Runnable {
 
   private boolean prepareAndUploadPoints(Track track, List<Location> locations) {
     progressIndicator.setProgressMessage(
-        R.string.progress_message_preparing_track);
+        context.getString(R.string.send_google_progress_preparing_track));
     updateProgress();
 
     int numLocations = locations.size();
@@ -327,13 +328,14 @@ public class SendToMyMaps implements Runnable {
     ArrayList<Track> splitTracks = prepareLocations(track, locations);
 
     // Start uploading them
-    progressIndicator.setProgressMessage(
-        R.string.progress_message_sending_my_maps);
+    String sendingFormat = context.getString(R.string.send_google_progress_sending);
+    String serviceName = context.getString(SendType.MYMAPS.getServiceName());
+    progressIndicator.setProgressMessage(String.format(sendingFormat, serviceName));
     for (Track splitTrack : splitTracks) {
       if (totalSegmentsUploaded > 1) {
         splitTrack.setName(splitTrack.getName() + " "
             + String.format(
-                context.getString(R.string.track_part_format), totalSegmentsUploaded));
+                context.getString(R.string.send_google_track_part_label), totalSegmentsUploaded));
       }
       totalSegmentsUploaded++;
       Log.d(TAG,

@@ -264,7 +264,7 @@ public class StringUtils implements DescriptionGenerator {
       minGrade = Math.round(trackMinGrade * 100);
     }
 
-    String category = context.getString(R.string.unknown);
+    String category = context.getString(R.string.value_unknown);
     String trackCategory = track.getCategory();
     if (trackCategory != null && trackCategory.length() > 0) {
       category = trackCategory;
@@ -272,20 +272,20 @@ public class StringUtils implements DescriptionGenerator {
 
     String averageSpeed =
         getSpeedString(trackStats.getAverageSpeed(),
-            R.string.average_speed_label,
-            R.string.average_pace_label,
+            R.string.stat_average_speed,
+            R.string.stat_average_pace,
             displaySpeed);
 
     String averageMovingSpeed =
         getSpeedString(trackStats.getAverageMovingSpeed(),
-            R.string.average_moving_speed_label,
-            R.string.average_moving_pace_label,
+            R.string.stat_average_moving_speed,
+            R.string.stat_average_moving_pace,
             displaySpeed);
 
     String maxSpeed =
         getSpeedString(trackStats.getMaxSpeed(),
-            R.string.max_speed_label,
-            R.string.min_pace_label,
+            R.string.stat_max_speed,
+            R.string.stat_min_pace,
             displaySpeed);
 
     return String.format("%s<p>"
@@ -306,48 +306,48 @@ public class StringUtils implements DescriptionGenerator {
         getCreatedByMyTracks(context, true),
 
         // Line 2
-        context.getString(R.string.total_distance_label),
+        context.getString(R.string.stat_total_distance),
         distanceInKm, context.getString(R.string.unit_kilometer),
         distanceInMiles, context.getString(R.string.unit_mile),
 
         // Line 3
-        context.getString(R.string.total_time_label),
+        context.getString(R.string.stat_total_time),
         StringUtils.formatTime(trackStats.getTotalTime()),
 
         // Line 4
-        context.getString(R.string.moving_time_label),
+        context.getString(R.string.stat_moving_time),
         StringUtils.formatTime(trackStats.getMovingTime()),
 
         // Line 5
         averageSpeed, averageMovingSpeed, maxSpeed,
 
         // Line 6
-        context.getString(R.string.min_elevation_label),
+        context.getString(R.string.stat_min_elevation),
         minElevationInMeters, context.getString(R.string.unit_meter),
         minElevationInFeet, context.getString(R.string.unit_feet),
 
         // Line 7
-        context.getString(R.string.max_elevation_label),
+        context.getString(R.string.stat_max_elevation),
         maxElevationInMeters, context.getString(R.string.unit_meter),
         maxElevationInFeet, context.getString(R.string.unit_feet),
 
         // Line 8
-        context.getString(R.string.elevation_gain_label),
+        context.getString(R.string.stat_elevation_gain),
         elevationGainInMeters, context.getString(R.string.unit_meter),
         elevationGainInFeet, context.getString(R.string.unit_feet),
 
         // Line 9
-        context.getString(R.string.max_grade_label), maxGrade,
+        context.getString(R.string.stat_max_grade), maxGrade,
 
         // Line 10
-        context.getString(R.string.min_grade_label), minGrade,
+        context.getString(R.string.stat_min_grade), minGrade,
 
         // Line 11
-        context.getString(R.string.recorded_date),
+        context.getString(R.string.send_google_recorded),
         new Date(trackStats.getStartTime()),
 
         // Line 12
-        context.getString(R.string.category), category,
+        context.getString(R.string.track_detail_activity_type_hint), category,
 
         // Line 13
         ChartURLGenerator.getChartUrl(distances, elevations, track, context));
@@ -376,8 +376,8 @@ public class StringUtils implements DescriptionGenerator {
     if (displaySpeed) {
       return String.format("%s: %.2f %s (%.1f %s)<br>",
           context.getString(speedLabel),
-          speedInKph, context.getString(R.string.kilometer_per_hour),
-          speedInMph, context.getString(R.string.mile_per_hour));
+          speedInKph, context.getString(R.string.unit_kilometer_per_hour),
+          speedInMph, context.getString(R.string.unit_mile_per_hour));
     } else {
       double paceInKm;
       double paceInMi;
@@ -390,8 +390,8 @@ public class StringUtils implements DescriptionGenerator {
       }
       return String.format("%s: %.2f %s (%.1f %s)<br>",
           context.getString(paceLabel),
-          paceInKm, context.getString(R.string.min_per_kilometer),
-          paceInMi, context.getString(R.string.min_per_mile));
+          paceInKm, context.getString(R.string.unit_minute_per_kilometer),
+          paceInMi, context.getString(R.string.unit_minute_per_mile));
     }
   }
 
@@ -450,34 +450,34 @@ public class StringUtils implements DescriptionGenerator {
         + "%s: %d %s (%d %s)\n"
         + "%s: %d %s\n"
         + "%s: %d %s\n",
-        context.getString(R.string.total_distance_label),
+        context.getString(R.string.stat_total_distance),
             distanceInKm, context.getString(R.string.unit_kilometer),
             distanceInMiles, context.getString(R.string.unit_mile),
-        context.getString(R.string.total_time_label),
+        context.getString(R.string.stat_total_time),
             StringUtils.formatTime(stats.getTotalTime()),
-        context.getString(R.string.moving_time_label),
+        context.getString(R.string.stat_moving_time),
             StringUtils.formatTime(stats.getMovingTime()),
-        context.getString(R.string.average_speed_label),
-            averageSpeedInKmh, context.getString(R.string.kilometer_per_hour),
-            averageSpeedInMph, context.getString(R.string.mile_per_hour),
-        context.getString(R.string.average_moving_speed_label),
-            movingSpeedInKmh, context.getString(R.string.kilometer_per_hour),
-            movingSpeedInMph, context.getString(R.string.mile_per_hour),
-        context.getString(R.string.max_speed_label),
-            maxSpeedInKmh, context.getString(R.string.kilometer_per_hour),
-            maxSpeedInMph, context.getString(R.string.mile_per_hour),
-        context.getString(R.string.min_elevation_label),
+        context.getString(R.string.stat_average_speed),
+            averageSpeedInKmh, context.getString(R.string.unit_kilometer_per_hour),
+            averageSpeedInMph, context.getString(R.string.unit_mile_per_hour),
+        context.getString(R.string.stat_average_moving_speed),
+            movingSpeedInKmh, context.getString(R.string.unit_kilometer_per_hour),
+            movingSpeedInMph, context.getString(R.string.unit_mile_per_hour),
+        context.getString(R.string.stat_max_speed),
+            maxSpeedInKmh, context.getString(R.string.unit_kilometer_per_hour),
+            maxSpeedInMph, context.getString(R.string.unit_mile_per_hour),
+        context.getString(R.string.stat_min_elevation),
             minElevationInMeters, context.getString(R.string.unit_meter),
             minElevationInFeet, context.getString(R.string.unit_feet),
-        context.getString(R.string.max_elevation_label),
+        context.getString(R.string.stat_max_elevation),
             maxElevationInMeters, context.getString(R.string.unit_meter),
             maxElevationInFeet, context.getString(R.string.unit_feet),
-        context.getString(R.string.elevation_gain_label),
+        context.getString(R.string.stat_elevation_gain),
             elevationGainInMeters, context.getString(R.string.unit_meter),
             elevationGainInFeet, context.getString(R.string.unit_feet),
-        context.getString(R.string.max_grade_label),
+        context.getString(R.string.stat_max_grade),
             theMaxGrade, percent,
-        context.getString(R.string.min_grade_label),
+        context.getString(R.string.stat_min_grade),
             theMinGrade, percent);
   }
 }

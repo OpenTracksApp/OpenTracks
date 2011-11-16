@@ -77,7 +77,7 @@ public class StatsUtilities {
   }
 
   public void setUnknown(int id) {
-    ((TextView) activity.findViewById(id)).setText(R.string.unknown);
+    ((TextView) activity.findViewById(id)).setText(R.string.value_unknown);
   }
 
   public void setText(int id, double d, NumberFormat format) {
@@ -251,13 +251,13 @@ public class StatsUtilities {
 
   public void setSpeedLabels() {
     setSpeedLabel(R.id.average_speed_label,
-                  R.string.average_speed_label,
-                  R.string.average_pace_label);
+                  R.string.stat_average_speed,
+                  R.string.stat_average_pace);
     setSpeedLabel(R.id.average_moving_speed_label,
-                  R.string.average_moving_speed_label,
-                  R.string.average_moving_pace_label);
+                  R.string.stat_average_moving_speed,
+                  R.string.stat_average_moving_pace);
     setSpeedLabel(R.id.max_speed_label,
-                  R.string.max_speed_label,
-                  R.string.min_pace_label);
+                  R.string.stat_max_speed,
+                  R.string.stat_min_pace);
   }
 }

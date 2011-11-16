@@ -52,7 +52,7 @@ limitations under the License.
           android:id="@+id/appwidget_distance_text" />
         <TextView
           style="@style/WidgetText"
-          android:text="@string/total_distance_label" />
+          android:text="@string/stat_total_distance" />
       </LinearLayout>
       <ImageView
         android:layout_width="fill_parent"
@@ -68,7 +68,7 @@ limitations under the License.
           android:id="@+id/appwidget_time_text" />
         <TextView
           style="@style/WidgetText"
-          android:text="@string/moving_time_label" />
+          android:text="@string/stat_moving_time" />
       </LinearLayout>
       <ImageView
         android:layout_width="fill_parent"
@@ -83,7 +83,7 @@ limitations under the License.
           android:id="@+id/appwidget_speed_text" />
         <TextView
           style="@style/WidgetText"
-          android:text="@string/speed" />
+          android:text="@string/stat_speed" />
       </LinearLayout>
     </LinearLayout>
   </LinearLayout>

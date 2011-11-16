@@ -126,14 +126,14 @@ public class DocsHelper_AddTrackRowTest extends TestCase {
     if (useMetric) {
       AndroidMock.expect(mockResources.getString(R.string.unit_kilometer))
           .andReturn("km");
-      AndroidMock.expect(mockResources.getString(R.string.kilometer_per_hour))
+      AndroidMock.expect(mockResources.getString(R.string.unit_kilometer_per_hour))
           .andReturn("kph");
       AndroidMock.expect(mockResources.getString(R.string.unit_meter))
           .andReturn("meter");
     } else {
       AndroidMock.expect(mockResources.getString(R.string.unit_mile))
           .andReturn("mile");
-      AndroidMock.expect(mockResources.getString(R.string.mile_per_hour))
+      AndroidMock.expect(mockResources.getString(R.string.unit_mile_per_hour))
           .andReturn("mph");
       AndroidMock.expect(mockResources.getString(R.string.unit_feet))
           .andReturn("feet");

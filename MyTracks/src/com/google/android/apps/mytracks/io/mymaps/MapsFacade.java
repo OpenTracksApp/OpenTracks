@@ -202,8 +202,8 @@ public class MapsFacade {
       iconUrl = END_ICON_URL;
     }
     String title = trackName + " "
-        + (isStart ? context.getString(R.string.start)
-                   : context.getString(R.string.end));
+        + (isStart ? context.getString(R.string.marker_label_start)
+                   : context.getString(R.string.marker_label_end));
     String description = isStart ? "" : trackDescription;
     return buildMyMapsPlacemarkFeature(title, description, iconUrl, geoPoint);
   }

@@ -126,8 +126,7 @@ public class SettingsActivity extends PreferenceActivity {
               getString(R.string.announcement_frequency_key));
       announcementFrequency.setEnabled(false);
       announcementFrequency.setValue(TASK_FREQUENCY_OFF);
-      announcementFrequency.setSummary(
-          R.string.settings_announcement_frequency_not_available);
+      announcementFrequency.setSummary(R.string.settings_recording_voice_not_available);
     }
     
     setRecordingIntervalOptions();
@@ -172,8 +171,8 @@ public class SettingsActivity extends PreferenceActivity {
         if ((Boolean) newValue) {
           AlertDialog dialog = new AlertDialog.Builder(SettingsActivity.this)
               .setCancelable(true)
-              .setTitle(getString(R.string.settings_allow_access))
-              .setMessage(getString(R.string.settings_allow_access_dialog_message))
+              .setTitle(getString(R.string.settings_sharing_allow_access))
+              .setMessage(getString(R.string.settings_sharing_allow_access_confirm_message))
               .setPositiveButton(android.R.string.ok, new OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int button) {
@@ -195,7 +194,7 @@ public class SettingsActivity extends PreferenceActivity {
    * Sets the display options for the 'Time between points' option.
    */
   private void setRecordingIntervalOptions() {
-    String[] values = getResources().getStringArray(R.array.min_recording_interval_values);
+    String[] values = getResources().getStringArray(R.array.recording_interval_values);
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {
       if (values[i].equals(RECORDING_INTERVAL_ADAPT_BATTERY_LIFE)) {
@@ -225,7 +224,7 @@ public class SettingsActivity extends PreferenceActivity {
    * Sets the display options for the 'Auto-resume timeout' option.
    */
   private void setAutoResumeTimeoutOptions() {
-    String[] values = getResources().getStringArray(R.array.auto_resume_track_timeout_values);
+    String[] values = getResources().getStringArray(R.array.recording_auto_resume_timeout_values);
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {
       if (values[i].equals(AUTO_RESUME_TIMEOUT_NEVER)) {
@@ -264,7 +263,7 @@ public class SettingsActivity extends PreferenceActivity {
 
       Set<Integer> toRemove = new HashSet<Integer>();
 
-      String[] antValues = getResources().getStringArray(R.array.ant_sensor_type_values);
+      String[] antValues = getResources().getStringArray(R.array.sensor_type_ant_values);
       for (String antValue : antValues) {
         toRemove.add(sensorTypePreference.findIndexOfValue(antValue));
       }
@@ -335,10 +334,10 @@ public class SettingsActivity extends PreferenceActivity {
     resetPreference.setEnabled(!recording);
     backupNowPreference.setSummary(
         recording ? R.string.settings_not_while_recording
-                  : R.string.settings_backup_to_sd_summary);
+                  : R.string.settings_backup_now_summary);
     restoreNowPreference.setSummary(
         recording ? R.string.settings_not_while_recording
-                  : R.string.settings_restore_from_sd_summary);
+                  : R.string.settings_backup_restore_summary);
     resetPreference.setSummary(
         recording ? R.string.settings_not_while_recording
                   : R.string.settings_reset_summary);
@@ -396,10 +395,10 @@ public class SettingsActivity extends PreferenceActivity {
   }
 
   private void updateTrackColorModeSettings(String trackColorMode) {
-    boolean usesFixedSpeed = trackColorMode.equals(
-        getString(R.string.track_color_mode_value_fixed));
-    boolean usesDynamicSpeed = trackColorMode.equals(
-        getString(R.string.track_color_mode_value_dynamic));
+    boolean usesFixedSpeed =
+        trackColorMode.equals(getString(R.string.display_track_color_value_fixed));
+    boolean usesDynamicSpeed =
+        trackColorMode.equals(getString(R.string.display_track_color_value_dynamic));
 
     findPreference(getString(R.string.track_color_mode_fixed_speed_slow_display_key))
         .setEnabled(usesFixedSpeed);
@@ -426,7 +425,7 @@ public class SettingsActivity extends PreferenceActivity {
    * Sets the display options for a periodic task.
    */
   private void setTaskOptions(boolean isMetric, int listId) {
-    String[] values = getResources().getStringArray(R.array.task_frequency_values);
+    String[] values = getResources().getStringArray(R.array.recording_task_frequency_values);
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {
       if (values[i].equals(TASK_FREQUENCY_OFF)) {
@@ -451,7 +450,7 @@ public class SettingsActivity extends PreferenceActivity {
    * Sets the display options for 'Distance between points' option.
    */
   private void setRecordingDistanceOptions(boolean isMetric, int listId) {
-    String[] values = getResources().getStringArray(R.array.min_recording_distance_values);
+    String[] values = getResources().getStringArray(R.array.recording_distance_values);
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {
       int value = Integer.parseInt(values[i]);
@@ -478,7 +477,7 @@ public class SettingsActivity extends PreferenceActivity {
    * Sets the display options for 'Distance between Tracks'.
    */
   private void setTrackDistanceOptions(boolean isMetric, int listId) {
-    String[] values = getResources().getStringArray(R.array.max_recording_distance_values);
+    String[] values = getResources().getStringArray(R.array.recording_track_distance_values);
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {
       int value = Integer.parseInt(values[i]);
@@ -511,7 +510,7 @@ public class SettingsActivity extends PreferenceActivity {
    * Sets the display options for 'GPS accuracy'.
    */
   private void setGpsAccuracyOptions(boolean isMetric, int listId) {
-    String[] values = getResources().getStringArray(R.array.min_required_accuracy_values);
+    String[] values = getResources().getStringArray(R.array.recording_gps_accuracy_values);
     String[] options = new String[values.length];
     for (int i = 0; i < values.length; i++) {
       int value = Integer.parseInt(values[i]);

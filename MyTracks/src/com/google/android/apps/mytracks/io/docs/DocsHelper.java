@@ -282,7 +282,7 @@ public class DocsHelper {
     String distanceUnit = context.getString(metricUnits ?
         R.string.unit_kilometer : R.string.unit_mile);
     String speedUnit = context.getString(metricUnits ?
-        R.string.kilometer_per_hour : R.string.mile_per_hour);
+        R.string.unit_kilometer_per_hour : R.string.unit_mile_per_hour);
     String elevationUnit = context.getString(metricUnits ?
         R.string.unit_meter : R.string.unit_feet);
 

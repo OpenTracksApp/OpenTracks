@@ -52,14 +52,14 @@ class Eula {
     }
 
     final AlertDialog.Builder builder = initDialog(activity);
-    builder.setPositiveButton(R.string.accept,
+    builder.setPositiveButton(R.string.eula_accept,
         new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
             accept(activity, preferences);
           }
         });
-    builder.setNegativeButton(R.string.decline,
+    builder.setNegativeButton(R.string.eula_decline,
         new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
@@ -82,7 +82,7 @@ class Eula {
    */
   static void showEula(Context context) {
     AlertDialog.Builder builder = initDialog(context);
-    builder.setPositiveButton(R.string.ok, null);
+    builder.setPositiveButton(R.string.generic_ok, null);
     builder.show();
   }
   
