@@ -25,8 +25,8 @@ public class AntMessage {
 
   /** Build a short value from its constituent bytes */
   protected static short decodeShort(byte b0, byte b1) {
-    short value = b0;
-    value |= ((short) b1) << 8;
-    return value;
+    int value = b0 & 0xFF;
+    value |= (b1 & 0xFF) << 8;
+    return (short)value;
   }
 }
