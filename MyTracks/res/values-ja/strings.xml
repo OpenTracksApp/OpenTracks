@@ -42,7 +42,6 @@ limitations under the License.
   <string name="gps_wait_for_fix">GPS位置精度がよくなるまで待機しています．空が見えるところにいて下さい．</string>
   <string name="import_error">ファイル %s のインポートエラー</string>
   <string name="import_no_file">%s ではGPXファイルがありません．SDカードを読み込めないかディレクトリにGPXファイルが無いかも知れません．</string>
-  <string name="import_success">%3$s からGPXファイル %2$d件のうち %1$d件をインポートしました</string>
   <string name="marker_detail_marker_description">マーカー説明</string>
   <string name="marker_detail_marker_name">マーカー名</string>
   <string name="marker_detail_marker_type">マーカータイプ(建物、洞穴、名所...)</string>
@@ -226,20 +225,9 @@ limitations under the License.
   <string name="track_record_success">新しいトラックを記録中です．</string>
   <string name="unit_hour">時</string>
   <string name="unit_minute">分</string>
-  <string name="voice_hour">時</string>
-  <string name="voice_hours">時</string>
-  <string name="voice_kilometer_per_hour">キロメータ毎時</string>
-  <string name="voice_kilometers">キロメータ</string>
-  <string name="voice_mile_per_hour">マイル毎時</string>
-  <string name="voice_miles">マイル</string>
-  <string name="voice_minute">分</string>
-  <string name="voice_minutes">分</string>
-  <string name="voice_no_distance">My Tracks 移動していません</string>
+  <string name="voice_total_distance_zero">My Tracks 移動していません</string>
   <string name="voice_per_kilometer">毎キロメータ</string>
   <string name="voice_per_mile">毎マイル</string>
-  <string name="voice_second">秒</string>
-  <string name="voice_seconds">秒</string>
-  <string name="voice_template">My Tracks %1$.2f %2$s 時間 %3$s 速度/ペース %4$s %5$s</string>
   <string name="welcome_about">My Tracksについて</string>
   <string name="welcome_title">ようこそ</string>
 </resources>

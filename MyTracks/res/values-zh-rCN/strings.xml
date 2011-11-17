@@ -44,7 +44,6 @@ limitations under the License.
   <string name="gps_wait_for_fix">等待更准确的 GPS 定位. 请确定可以看见天空.</string>
   <string name="import_error">导入文件 %s 出错.</string>
   <string name="import_no_file">在 %s 中未找到 GPX 文件. SD 存储卡不可用或者目录中没有 GPX 文件.</string>
-  <string name="import_success">已从 %3$s 导入 %1$d 个 GPX 文件, 共 %2$d 个.</string>
   <string name="marker_detail_marker_description">标记描述</string>
   <string name="marker_detail_marker_name">标记名称</string>
   <string name="marker_detail_marker_type">标记类型 (例如: 建筑, 陷坑, 景点...)</string>
@@ -227,20 +226,9 @@ limitations under the License.
   <string name="track_record_success">现在开始记录新的轨迹.</string>
   <string name="unit_hour">时</string>
   <string name="unit_minute">分</string>
-  <string name="voice_hour">小时</string>
-  <string name="voice_hours">小时</string>
-  <string name="voice_kilometer_per_hour">千米每小时</string>
-  <string name="voice_kilometers">千米</string>
-  <string name="voice_mile_per_hour">英里每小时</string>
-  <string name="voice_miles">英里</string>
-  <string name="voice_minute">分钟</string>
-  <string name="voice_minutes">分钟</string>
-  <string name="voice_no_distance">My Tracks 无距离</string>
+  <string name="voice_total_distance_zero">My Tracks 无距离</string>
   <string name="voice_per_kilometer">每千米</string>
   <string name="voice_per_mile">每英里</string>
-  <string name="voice_second">秒</string>
-  <string name="voice_seconds">秒</string>
-  <string name="voice_template">My Tracks %1$.2f %2$s 用时 %3$s 速度 %4$s %5$s</string>
   <string name="welcome_about">关于 My Tracks</string>
   <string name="welcome_title">欢迎</string>
 </resources>

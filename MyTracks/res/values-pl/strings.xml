@@ -199,20 +199,9 @@ limitations under the License.
   <string name="unit_minute">min</string>
   <string name="unit_minute_per_kilometer">min/km</string>
   <string name="unit_minute_per_mile">min/mi</string>
-  <string name="voice_hour">godzina</string>
-  <string name="voice_hours">godziny</string>
-  <string name="voice_kilometer_per_hour">kilometry na godzinę</string>
-  <string name="voice_kilometers">kilometerów</string>
-  <string name="voice_mile_per_hour">mile na godzinę</string>
-  <string name="voice_miles">mil</string>
-  <string name="voice_minute">minuta</string>
-  <string name="voice_minutes">minuty</string>
-  <string name="voice_no_distance">My Tracks brak odległości</string>
+  <string name="voice_total_distance_zero">My Tracks brak odległości</string>
   <string name="voice_per_kilometer">na kilometr</string>
   <string name="voice_per_mile">na milę</string>
-  <string name="voice_second">sekunda</string>
-  <string name="voice_seconds">sekundy</string>
-  <string name="voice_template">My Tracks %1$.2f %2$s w %3$s w tempie %4$s %5$s</string>
   <string name="welcome_about">O My Tracks</string>
   <string name="welcome_title">Witamy</string>
 </resources>

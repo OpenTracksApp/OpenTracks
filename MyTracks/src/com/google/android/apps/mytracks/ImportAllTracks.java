@@ -128,8 +128,10 @@ public class ImportAllTracks {
     if (gpxFileCount == 0) {
       builder.setMessage(activity.getString(R.string.import_no_file, gpxPath));
     } else {
+      String totalFiles = activity.getResources().getQuantityString(
+          R.plurals.importGpxFiles, gpxFileCount, gpxFileCount);
       builder.setMessage(
-          activity.getString(R.string.import_success, importSuccessCount, gpxFileCount, gpxPath));
+          activity.getString(R.string.import_success, importSuccessCount, totalFiles, gpxPath));
     }
     builder.setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
       @Override

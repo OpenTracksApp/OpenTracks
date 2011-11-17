@@ -41,7 +41,6 @@ limitations under the License.
   <string name="gps_wait_for_fix">Esperando una ubicación mas exacta del GPS. Asegúrese que el cielo sea visible.</string>
   <string name="import_error">Error importando el archivo %s</string>
   <string name="import_no_file">No se encontraron archivos GPX en %s. Es posible que la tarjeta SD no sea accesible o que el directorio no contenga archivos GPX.</string>
-  <string name="import_success">Importados %1$d de %2$d archivos GPX de %3$s</string>
   <string name="marker_detail_marker_description">Descripción  de señal</string>
   <string name="marker_detail_marker_name">Nombre de señal</string>
   <string name="marker_detail_marker_type">Tipo de señal (por ejemplo, edificio, bache, atracción...)</string>
@@ -250,20 +249,9 @@ limitations under the License.
   <string name="track_record_notification">Grabando su recorrido...</string>
   <string name="track_record_success">Grabando un nuevo recorrido.</string>
   <string name="unit_feet">pies</string>
-  <string name="voice_hour">hora</string>
-  <string name="voice_hours">horas</string>
-  <string name="voice_kilometer_per_hour">kilómetros por hora</string>
-  <string name="voice_kilometers">kilómetros</string>
-  <string name="voice_mile_per_hour">millas por hora</string>
-  <string name="voice_miles">millas</string>
-  <string name="voice_minute">minuto</string>
-  <string name="voice_minutes">minutos</string>
-  <string name="voice_no_distance">My Tracks sin distancia</string>
+  <string name="voice_total_distance_zero">My Tracks sin distancia</string>
   <string name="voice_per_kilometer">por kilómetro</string>
   <string name="voice_per_mile">por milla</string>
-  <string name="voice_second">segundo</string>
-  <string name="voice_seconds">segundos</string>
-  <string name="voice_template">My Tracks %1$.2f %2$s en %3$s a %4$s %5$s</string>
   <string name="welcome_about">Sobre My Tracks</string>
   <string name="welcome_title">Bienvenido</string>
 </resources>

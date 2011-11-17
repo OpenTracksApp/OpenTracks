@@ -170,20 +170,9 @@ limitations under the License.
   <string name="unit_minute">min</string>
   <string name="unit_minute_per_kilometer">min/km</string>
   <string name="unit_minute_per_mile">min/mi</string>
-  <string name="voice_hour">ora</string>
-  <string name="voice_hours">ore</string>
-  <string name="voice_kilometer_per_hour">chilometri orari</string>
-  <string name="voice_kilometers">chilometri</string>
-  <string name="voice_mile_per_hour">miglia orarie</string>
-  <string name="voice_miles">miglia</string>
-  <string name="voice_minute">minuto</string>
-  <string name="voice_minutes">minuti</string>
-  <string name="voice_no_distance">Mai Tracks Distanza non disponibile</string>
+  <string name="voice_total_distance_zero">Mai Tracks Distanza non disponibile</string>
   <string name="voice_per_kilometer">per chilometro</string>
   <string name="voice_per_mile">per miglio</string>
-  <string name="voice_second">secondo</string>
-  <string name="voice_seconds">secondi</string>
-  <string name="voice_template">Mai Tracks %1$.2f %2$s in %3$s a %4$s %5$s</string>
   <string name="welcome_about">Informazioni su My Tracks</string>
   <string name="welcome_title">Benvenuto</string>
 </resources>

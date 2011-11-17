@@ -208,20 +208,9 @@ limitations under the License.
   <string name="unit_feet">Fuß</string>
   <string name="unit_hour">Std</string>
   <string name="unit_minute">Min</string>
-  <string name="voice_hour">Stunde</string>
-  <string name="voice_hours">Stunden</string>
-  <string name="voice_kilometer_per_hour">Kilometer pro Stunde</string>
-  <string name="voice_kilometers">Kilometer</string>
-  <string name="voice_mile_per_hour">Meilen pro Stunde</string>
-  <string name="voice_miles">Meilen</string>
-  <string name="voice_minute">Minute</string>
-  <string name="voice_minutes">Minuten</string>
-  <string name="voice_no_distance">My Tracks keine Entfernung</string>
+  <string name="voice_total_distance_zero">My Tracks keine Entfernung</string>
   <string name="voice_per_kilometer">pro Kilometer</string>
   <string name="voice_per_mile">pro Meile</string>
-  <string name="voice_second">Sekunde</string>
-  <string name="voice_seconds">Sekunden</string>
-  <string name="voice_template">My Tracks %1$.2f %2$s in %3$s mit %4$s %5$s</string>
   <string name="welcome_about">Über My Tracks</string>
   <string name="welcome_title">Willkommen</string>
 </resources>
