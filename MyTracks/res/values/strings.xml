@@ -1209,35 +1209,34 @@ limitations under the License.
   </string>
   <string name="settings_display_track_color"
     translation_description="In the Display settings, the dropdown option to choose a track color
-      mode for how to use different colors to color a track based on speed.">
+      mode for how to use different colors to color a track based on slow, medium, and fast speed.">
     Track color mode
   </string>
   <string name="settings_display_track_color_dynamic"
     translation_description="In the Display settings, for the 'Track color mode' dropdown, the
       option to use different colors to color a track based on dynamically determined speed
-      thresholds. E.g., use one color for segments where the speed is below the average speed of the
-      track.">
+      thresholds. E.g., use one color when the speed is below the slow speed threshold.">
     Dynamic thresholds
   </string>
   <string name="settings_display_track_color_dynamic_medium"
     translation_description="In the Display settings, under the 'Dynamic thresholds' configurations,
-      the option for configuring the percentage from the average speed to be considered as the
-      medium speed. The track color mode will use different colors to color a track depending on
-      whether the speed is above, in, or below the medium speed range.">
-    Medium percentage
+      the option for configuring the percentage from the average speed for the medium speed range.
+      The track color mode will use different colors to color a track depending on whether the speed
+      is above, in, or below the medium speed range.">
+    Percentage from average
   </string>
   <string name="settings_display_track_color_dynamic_medium_summary"
     translation_description="In the Display settings, under the 'Dynamic thresholds' configurations,
-      the summary for the 'Medium percentage' option explaining that it sets the percentage from
-      the average speed to be considered as the medium speed. The track color mode will use
-      different colors to color a track depending on whether the speed is above, in, or below the
-      medium speed range.">
+      the summary for the 'Percentage from average' option explaining that it sets the percentage
+      from the average speed for the medium speed range. The track color mode will use different
+      colors to color a track depending on whether the speed is above, in, or below the medium speed
+      range.">
     Percentage from the average speed for the medium speed range.
   </string>
   <string name="settings_display_track_color_fixed"
     translation_description="In the Display settings, for the 'Track color mode' dropdown, the
       option to use different colors to color a track based on fixed speed thresholds. E.g., use
-      one color for segments where the speed is below a fixed speed threshold.">
+      one color when the speed is below the slow speed threshold.">
     Fixed thresholds
   </string>
   <string name="settings_display_track_color_fixed_medium"
@@ -1267,13 +1266,14 @@ limitations under the License.
   </string>
   <string name="settings_display_track_color_single"
     translation_description="In the Display settings, for the 'Track color mode' dropdown, the
-      option to only use a single color to color a track.">
+      option to use a single color for all speeds.">
     Single color
   </string>
   <string name="settings_display_track_color_summary"
     translation_description="In the Display settings, the summary for the 'Track color mode'
-      dropdown explaining that it configures how colors are used to color a track based on speed.">
-    The way to color a track based on slow, medium, and high speed.
+      dropdown explaining that it configures how colors are used to color a track based on
+      slow, medium, and fast speed.">
+    The way to color a track based on slow, medium, and fast speed.
   </string>
   <string name="settings_not_while_recording"
     translation_description="In the Settings page, the summary for an option that is not available
