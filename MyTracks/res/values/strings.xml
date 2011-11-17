@@ -316,6 +316,46 @@ limitations under the License.
     wind surfing
   </string>
 
+  <!-- Android Market -->
+  <string name="android_market_description_text"
+    translation_description="For the Android Market (not used in the app), the description text.
+      4000 characters limit.">
+    Use My Tracks while you run, bike, hike, or do anything else outdoors, and it will use the GPS
+    sensor in your phone to record the path you took. It will also gather useful statistics such as
+    time, speed, distance, and elevation. You can review all of this data live, or you can save it
+    for use later. While you\'re out, you can mark relevant waypoints, and can ask to hear automatic
+    voice announcements about your progress.\n
+    \n
+    My Tracks can record data from external sensors:\n
+    - Zephyr Technology Consumer HxM Bluetooth heart rate monitor\n
+    - Polar Bluetooth heart rate monitor\n
+    - ANT+ heart rate monitors (*)\n
+    - SRM power meters, speed, and cadence sensors (*)\n
+    - More sensor support coming soon\n
+    \n
+    * ANT+ and SRM support requires an ANT+ compatible phone\n
+    \n
+    My Tracks can share your track data:\n
+    - As a GPX, KML, CSV, or TCX file\n
+    - Using Google My Maps, Google Fusion Tables, or Google Docs\n
+    - Via Twitter or Facebook\n
+    \n
+    Other features:\n
+    - Record in Metric or Imperial units (configured from the Recording menu, under Settings)\n
+    - Display your movement in terms of Speed or Pace (configured from the Display menu, under
+    Settings)\n
+    \n
+    My Tracks is run by volunteers and Googlers in their 20% time. If you would like to contribute,
+    please visit:\n
+    \n
+    http://mytracks.googlecode.com\n  
+  </string>
+  <string name="android_market_promo_text"
+    translation_description="For the Android Market (not used in the app), the promotion text. 80
+      characters limit.">
+    My Tracks allows you to record and share your GPS tracks, including statistics.
+  </string>
+      
   <!-- Chart Settings -->
   <string name="chart_settings_by_distance"
     translation_description="In the Chart Settings, under the 'X axis' section, the radio option
@@ -2320,7 +2360,7 @@ limitations under the License.
     depends on the quality of the GPS signal. The blue circle around the orange location arrow
     indicates estimated precision. (You may need to zoom in or out to see the circle.) You can
     change the GPS precision at Settings -> Recording -> GPS accuracy. If the precision is too low,
-    at the top of the screen, you will see the message \"Waiting for a better GPS fix.\" 
+    at the top of the screen, you will see the message \"Waiting for a better GPS fix.\". 
   </string>
   <string name="welcome_location_precision_question"
     translation_description="In the 'Welcome' page, the help content question on location
