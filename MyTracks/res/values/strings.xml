@@ -603,14 +603,14 @@ limitations under the License.
     translation_description="When importing all the tracks, a toast message indicating import error
       for one of the tracks.
 
-      %1$s: file path of the track encountering error. E.g., '/mnt/sdcard/MyTacks/gpx/1.gpx'.">
+      %1$s: the track's file path. E.g., '/mnt/sdcard/MyTacks/gpx/1.gpx'.">
     Import error for file %1$s.
   </string>
   <string name="import_no_file"
     translation_description="After importing all the tracks from the SD card, the alert message
       indicating that no track is imported.
 
-      %1$s: file path of the import directory. E.g., '/mnt/sdcard/MyTracks/gpx/'.">
+      %1$s: the directory path. E.g., '/mnt/sdcard/MyTracks/gpx/'.">
     No GPX file found in %1$s. The SD card may be unreadable or the directory may not contain any
     GPX file.
   </string>
@@ -620,7 +620,7 @@ limitations under the License.
 
       %1$d the number of successfully imported tracks. E.g., '5'.
       %2$d the number of total tracks to be imported. E.g., '6'.
-      %3$s file path of the import directory. E.g., '/mnt/sdcard/MyTracks/gpx/'.">
+      %3$s the directory path. E.g., '/mnt/sdcard/MyTracks/gpx/'.">
     Imported to My Tracks %1$d of %2$d GPX files from %3$s.
   </string>
 
@@ -918,8 +918,10 @@ limitations under the License.
     translation_description="When sending a track to Google, a note indicating it is created by
       My Tracks on Android.
 
-      %1$s: html anchor opening tag. E.g., '&lt;a href=\'http://mytracks.appspot.com\'&gt;'.
-      %2$s: html anchor closing tag. E.g., '&lt;/a&gt;'.">
+      %1$s: the html anchor opening tag, '&lt;a href=\'http://mytracks.appspot.com\'&gt;'. Please
+      place this placeholder before the app name, 'My Tracks'.
+      %2$s: the html anchor closing tag, '&lt;/a&gt;'. Please place this placeholder after the app
+      name, 'My Tracks'.">
     Created by %1$sMy Tracks%2$s on Android.
   </string>
   <string name="send_google_choose_account_title"
@@ -940,7 +942,7 @@ limitations under the License.
     translation_description="When sending a track to a Google service, a message indicating that an
       error has occurred.
 
-      %1$s: service name. E.g., 'Google Docs'.">
+      %1$s: service name. 'Google My Maps', 'Google Fusion Tables', or 'Google Docs'.">
     There was an error while sending your track to %1$s.
   </string>
   <string name="send_google_existing_map"
@@ -977,14 +979,14 @@ limitations under the License.
     translation_description="When sending a track to a Google service, the message on the progress
       dialog indicating authenticating to the service.
 
-      %1$s: service name. E.g., 'Google Docs'.">
+      %1$s: service name. 'Google My Maps', 'Google Fusion Tables', or 'Google Docs'.">
     Authenticating to %1$s...
   </string>
   <string name="send_google_progress_creating"
     translation_description="When sending a track to a Google service, the message on the progress
       dialog indicating creating a new service item.
 
-      %1$s: service name. E.g., 'Google Docs'.">
+      %1$s: service name. 'Google My Maps', 'Google Fusion Tables', or 'Google Docs'.">
     Creating a new %1$s item...
   </string>
   <string name="send_google_progress_preparing_track"
@@ -1001,7 +1003,7 @@ limitations under the License.
     translation_description="When sending a track to Google service, the message on the progress
       dialog indicating My Tracks is sending the track data.
 
-      %1$s: service name. E.g., 'Google Docs'.">
+      %1$s: service name. 'Google My Maps', 'Google Fusion Tables', or 'Google Docs'.">
     Sending a track to %1$s...
   </string>
   <string name="send_google_recorded"
@@ -1028,8 +1030,8 @@ limitations under the License.
     translation_description="When sending a track to a Google service, the message on the result
       page indicating that the track is sent to an existing item in the service.
 
-      %1$s: service name. E.g., 'Google Docs'.
-      %2$s: service url. E.g., 'docs.google.com'.">
+      %1$s: service name. 'Google My Maps', 'Google Fusion Tables', or 'Google Docs'.
+      %2$s: service url. 'maps.google.com', 'google.com/fusiontable', or 'docs.google.com'.">
     Your track has been sent to %1$s %2$s.
   </string>
   <string name="send_google_success_footer"
@@ -1041,8 +1043,8 @@ limitations under the License.
     translation_description="When sending a track to a Google service, the message on the result
       page indicating that a new item has been created.
 
-      %1$s: service name. E.g., 'Google Docs'.
-      %2$s: service url. E.g., 'docs.google.com'.">
+      %1$s: service name. 'Google My Maps', 'Google Fusion Tables', or 'Google Docs'.
+      %2$s: service url. 'maps.google.com', 'google.com/fusiontable', or 'docs.google.com'.">
     A new item has been created at %1$s %2$s.
   </string>
   <string name="send_google_title"
@@ -1744,7 +1746,7 @@ limitations under the License.
     translation_description="In the Tracks page, after pressing the 'Export all' button, the menu
       option to export all the tracks as a certain file format.
 
-      %1$s: file format. E.g, 'GPX'.">
+      %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
     Export as %1$s
   </string>
   <string name="track_list_import_all"
@@ -1760,7 +1762,7 @@ limitations under the License.
     translation_description="In the context menu for a track, under the 'Save to SD card...'
       option, the menu option to save the track as a certain file format.
 
-      %1$s: file format. E.g, 'GPX'.">
+      %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
     As a %1$s file
   </string>
   <string name="track_list_save_sd"
@@ -1777,7 +1779,7 @@ limitations under the License.
     translation_description="In the context menu for a track, under the 'Share with friends...'
       option, the menu option to share the track as a certain file format.
 
-      %1$s: file format. E.g, 'GPX'.">
+      %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
     A %1$s file
   </string>
   <string name="track_list_share_track"
@@ -1888,85 +1890,94 @@ limitations under the License.
     Always
   </string>
   <string name="value_float_mile"
-    translation_description="In a setting picker, a float value in miles.
+    translation_description="In a setting picker, the string format to display a float value in
+      miles (mi).
 
-      %1$.1f: mile as a float number. E.g., '2.2'">
+      %1$.1f: a float number. E.g., '2.2'">
     %1$.1f mi
   </string>
   <string name="value_float_mile_poor_gps"
-    translation_description="In a setting picker, a float value in miles, recommended when having
-      poor GPS signal.
+    translation_description="In a setting picker, the string format to display a float value in
+      miles (mi), recommended when having poor GPS signal.
 
-      %1$.1f: mile as a float number. E.g., '2.2'">
+      %1$.1f: a float number. E.g., '2.2'">
     %1$.1f mi (poor GPS)
   </string>
   <string name="value_integer_feet"
-    translation_description="In a setting picker, an integer value in feet.
+    translation_description="In a setting picker, the string format to display an integer value in
+      feet (ft).
 
-      %1$d: feet as an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'">
     %1$d ft
   </string>
   <string name="value_integer_feet_excellent_gps"
-    translation_description="In a setting picker, an integer value in feet, recommended when having
-      excellent GPS signal.
+    translation_description="In a setting picker, the string format to display an integer value in
+      feet (ft), recommended when having excellent GPS signal.
 
-      %1$d: feet as an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'">
     %1$d ft (excellent GPS)
   </string>
   <string name="value_integer_feet_recommended"
-    translation_description="In a setting picker, an integer value in feet that is recommended.
+    translation_description="In a setting picker, the string format to display an integer value in
+      feet (ft) and that the value is the recommended value.
 
-      %1$d: feet as an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'">
     %1$d ft (recommended)
   </string>
   <string name="value_integer_kilometer"
-    translation_description="In a setting picker, an integer value in kilometers.
+    translation_description="In a setting picker, the string format to display an integer value in
+      kilometers (km).
 
-      %1$d: kilometer as an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'">
     %1$d km
   </string>
   <string name="value_integer_meter"
-    translation_description="In a setting picker, an integer value in meters.
+    translation_description="In a setting picker, the string format to display an integer value in
+      meters (m).
 
-      %1$d: meter as an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'">
     %1$d m
   </string>
   <string name="value_integer_meter_excellent_gps"
-    translation_description="In a setting picker, an integer value in meters, recommended when
-      having excellent GPS signal.
+    translation_description="In a setting picker, the string format to display an integer value in
+      meters (m), recommended when having excellent GPS signal.
 
-      %1$d: meter as an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'">
     %1$d m (excellent GPS)
   </string>
   <string name="value_integer_meter_poor_gps"
-    translation_description="In a setting picker, an integer value in meters, recommended when
-      having poor GPS signal.
+    translation_description="In a setting picker, the string format to display an integer value in
+      meters (m), recommended when having poor GPS signal.
 
-      %1$d: meter as an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'">
     %1$d m (poor GPS)
   </string>
   <string name="value_integer_meter_recommended"
-    translation_description="In a setting picker, an integer value in meters that is recommended.
+    translation_description="In a setting picker, the string format to display an integer value in
+      meters (m) and that the value is the recommended value.
 
-      %1$d: meter as an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'">
     %1$d m (recommended)
   </string>
   <string name="value_integer_mile"
-    translation_description="In a setting picker, an integer value in miles.
+    translation_description="In a setting picker, the string format to display an integer value in
+      miles (mi).
 
-      %1$d: mile as an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'">
     %1$d mi
   </string>
   <string name="value_integer_minute"
-    translation_description="In a setting picker, an integer value in minutes.
+    translation_description="In a setting picker, the string format to display an integer value in
+      minutes (min).
 
-      %1$d: minute as an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'">
     %1$d min
   </string>
   <string name="value_integer_second"
-    translation_description="In a setting picker, an integer value in seconds.
+    translation_description="In a setting picker, the string format to display an integer value in
+      seconds (s).
 
-      %1$d: second as an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'">
     %1$d s
   </string>
   <string name="value_never"
@@ -2045,10 +2056,11 @@ limitations under the License.
     translation_description="For the voice announcement, the template to make an announcement.
 
       %1$.2f: distance value. E.g., '5.2'.
-      %2$s: distance unit. E.g., 'miles'.
-      %3$s: time value. E.g., '2 hours and 30 minutes'.
-      %4$s: speed/pace value. E.g., '2 hours and 30 minutes'.
-      %5$s: speed/pace unit. E.g., 'per mile'.">
+      %2$s: distance unit. 'miles' or 'kilometers'
+      %3$s: time value. E.g., '1 hour and 30 minutes' or '20 minutes and 1 second'
+      %4$s: speed/pace value. For speed, e.g., '2.2'. For pace, e.g., '2 hours and 1 minute'.
+      %5$s: speed/pace unit. For speed, 'miles per hour' or 'kilometers per hour'. For pace, 'per
+      mile' or 'per kilometer'.">
     My Tracks total distance %1$.2f %2$s in %3$s at %4$s %5$s.
   </string>
 
