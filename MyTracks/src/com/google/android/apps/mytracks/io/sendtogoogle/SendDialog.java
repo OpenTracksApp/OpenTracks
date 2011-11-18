@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Dialog;
@@ -40,11 +41,11 @@ import android.widget.RadioGroup;
  */
 public class SendDialog extends Dialog {
 
-  private RadioButton createNewMapRadioButton;
-  private RadioButton pickMapRadioButton;
-  private CheckBox sendToMyMapsCheckBox;
-  private CheckBox sendToFusionTablesCheckBox;
-  private CheckBox sendToDocsCheckBox;
+  private RadioButton newMapRadioButton;
+  private RadioButton existingMapRadioButton;
+  private CheckBox myMapsCheckBox;
+  private CheckBox fusionTablesCheckBox;
+  private CheckBox docsCheckBox;
   private OnClickListener clickListener;
 
   public SendDialog(Context context) {
@@ -57,19 +58,17 @@ public class SendDialog extends Dialog {
     requestWindowFeature(Window.FEATURE_NO_TITLE);
     setContentView(R.layout.mytracks_send_to_google);
 
-    final Button sendButton = (Button) findViewById(R.id.sendtogoogle_send_now);
-    final RadioGroup groupMyMaps = (RadioGroup) findViewById(R.id.sendtogoogle_group_mymaps);
-    sendToMyMapsCheckBox =
-        (CheckBox) findViewById(R.id.sendtogoogle_google_mymaps);
-    sendToFusionTablesCheckBox =
-        (CheckBox) findViewById(R.id.sendtogoogle_google_fusiontables);
-    sendToDocsCheckBox = (CheckBox) findViewById(R.id.sendtogoogle_google_docs);
-    createNewMapRadioButton =
-        (RadioButton) findViewById(R.id.sendtogoogle_create_new_map);
-    pickMapRadioButton =
-        (RadioButton) findViewById(R.id.sendtogoogle_pick_existing_map);
+    final Button sendButton = (Button) findViewById(R.id.send_google_send_now);
 
-    Button cancel = (Button) findViewById(R.id.sendtogoogle_cancel);
+    final RadioGroup myMapsGroup = (RadioGroup) findViewById(R.id.send_google_my_maps_group);
+    newMapRadioButton = (RadioButton) findViewById(R.id.send_google_new_map);
+    existingMapRadioButton = (RadioButton) findViewById(R.id.send_google_existing_map);
+    
+    myMapsCheckBox = (CheckBox) findViewById(R.id.send_google_my_maps);
+    fusionTablesCheckBox = (CheckBox) findViewById(R.id.send_google_fusion_tables);
+    docsCheckBox = (CheckBox) findViewById(R.id.send_google_docs);
+
+    Button cancel = (Button) findViewById(R.id.send_google_cancel);
     cancel.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         if (clickListener != null) {
@@ -79,7 +78,7 @@ public class SendDialog extends Dialog {
       }
     });
 
-    Button send = (Button) findViewById(R.id.sendtogoogle_send_now);
+    Button send = (Button) findViewById(R.id.send_google_send_now);
     send.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         if (clickListener != null) {
@@ -91,80 +90,72 @@ public class SendDialog extends Dialog {
 
     OnCheckedChangeListener checkBoxListener = new OnCheckedChangeListener() {
       public void onCheckedChanged(CompoundButton button, boolean checked) {
-        sendButton.setEnabled(
-            sendToMyMapsCheckBox.isChecked() ||
-            sendToFusionTablesCheckBox.isChecked() ||
-            sendToDocsCheckBox.isChecked());
-        groupMyMaps.setVisibility(sendToMyMapsCheckBox.isChecked() ? View.VISIBLE : View.INVISIBLE);
+        sendButton.setEnabled(myMapsCheckBox.isChecked() || fusionTablesCheckBox.isChecked()
+            || docsCheckBox.isChecked());
+        myMapsGroup.setVisibility(myMapsCheckBox.isChecked() ? View.VISIBLE : View.GONE);
       }
     };
-    sendToMyMapsCheckBox.setOnCheckedChangeListener(checkBoxListener);
-    sendToFusionTablesCheckBox.setOnCheckedChangeListener(checkBoxListener);
-    sendToDocsCheckBox.setOnCheckedChangeListener(checkBoxListener);
+    
+    myMapsCheckBox.setOnCheckedChangeListener(checkBoxListener);
+    fusionTablesCheckBox.setOnCheckedChangeListener(checkBoxListener);
+    docsCheckBox.setOnCheckedChangeListener(checkBoxListener);
 
-    SharedPreferences prefs =
-        getContext().getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    SharedPreferences prefs = getContext().getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     if (prefs != null) {
-      sendToMyMapsCheckBox.setChecked(
-          prefs.getBoolean(
-              getContext().getString(R.string.send_to_my_maps_key), true));
-      sendToFusionTablesCheckBox.setChecked(
-          prefs.getBoolean(
-              getContext().getString(R.string.send_to_fusion_tables_key), true));
-      sendToDocsCheckBox.setChecked(
-          prefs.getBoolean(
-              getContext().getString(R.string.send_to_docs_key), true));
-      pickMapRadioButton.setChecked(
-          prefs.getBoolean(
-              getContext().getString(R.string.pick_existing_map_key), false));
-      createNewMapRadioButton.setChecked(
-          !prefs.getBoolean(
-              getContext().getString(R.string.pick_existing_map_key), false));
+      boolean pickExistingMap = prefs.getBoolean(
+          getContext().getString(R.string.pick_existing_map_key), false);
+
+      newMapRadioButton.setChecked(!pickExistingMap);
+      existingMapRadioButton.setChecked(pickExistingMap);
+      
+      myMapsCheckBox.setChecked(
+          prefs.getBoolean(getContext().getString(R.string.send_to_my_maps_key), true));
+      fusionTablesCheckBox.setChecked(
+          prefs.getBoolean(getContext().getString(R.string.send_to_fusion_tables_key), true));
+      docsCheckBox.setChecked(
+          prefs.getBoolean(getContext().getString(R.string.send_to_docs_key), true));
     }
   }
 
   @Override
   protected void onStop() {
-    SharedPreferences prefs =
-        getContext().getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    super.onStop();
+    SharedPreferences prefs = getContext().getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     if (prefs != null) {
       Editor editor = prefs.edit();
       if (editor != null) {
-        editor.putBoolean(
-            getContext().getString(R.string.send_to_my_maps_key),
-            sendToMyMapsCheckBox.isChecked());
-        editor.putBoolean(
-            getContext().getString(R.string.send_to_fusion_tables_key),
-            sendToFusionTablesCheckBox.isChecked());
-        editor.putBoolean(
-            getContext().getString(R.string.send_to_docs_key),
-            sendToDocsCheckBox.isChecked());
-        editor.putBoolean(
-            getContext().getString(R.string.pick_existing_map_key),
-            pickMapRadioButton.isChecked());
-        editor.commit();
+        editor.putBoolean(getContext().getString(R.string.pick_existing_map_key),
+            existingMapRadioButton.isChecked());        
+        editor.putBoolean(getContext().getString(R.string.send_to_my_maps_key),
+            myMapsCheckBox.isChecked());
+        editor.putBoolean(getContext().getString(R.string.send_to_fusion_tables_key),
+            fusionTablesCheckBox.isChecked());
+        editor.putBoolean(getContext().getString(R.string.send_to_docs_key),
+            docsCheckBox.isChecked());
+        ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);
       }
     }
-    super.onStop();
   }
 
   public void setOnClickListener(OnClickListener clickListener) {
     this.clickListener = clickListener;
   }
 
-  public boolean getSendToMyMaps() {
-    return sendToMyMapsCheckBox.isChecked();
+  public boolean getCreateNewMap() {
+    return newMapRadioButton.isChecked();
   }
 
+  public boolean getSendToMyMaps() {
+    return myMapsCheckBox.isChecked();
+  }
+  
   public boolean getSendToFusionTables() {
-    return sendToFusionTablesCheckBox.isChecked();
+    return fusionTablesCheckBox.isChecked();
   }
 
   public boolean getSendToDocs() {
-    return sendToDocsCheckBox.isChecked();
-  }
-
-  public boolean getCreateNewMap() {
-    return createNewMapRadioButton.isChecked();
+    return docsCheckBox.isChecked();
   }
 }

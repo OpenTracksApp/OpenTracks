@@ -15,110 +15,121 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:id="@+id/screen"
-  android:layout_width="fill_parent"
   android:layout_height="fill_parent"
+  android:layout_width="fill_parent"
   android:orientation="vertical">
   <LinearLayout
-    android:layout_width="fill_parent"
+    android:background="@drawable/list_bar"
     android:layout_height="wrap_content"
-    android:background="@drawable/list_bar">
+    android:layout_width="fill_parent">
     <TextView
-      android:layout_width="fill_parent"
       android:layout_height="wrap_content"
+      android:layout_marginLeft="10dip"
+      android:layout_width="fill_parent"
       android:text="@string/send_google_title"
-      android:textSize="20dip"
       android:textColor="#fff"
-      android:layout_marginLeft="10dip"/>
+      android:textSize="20dip"/>
   </LinearLayout>
-  <ScrollView android:id="@+id/sendtogoogle_scrollview"
-    android:layout_width="fill_parent"
+  <ScrollView
     android:layout_height="0dip"
-    android:layout_weight="1">
+    android:layout_marginBottom="5dip"
+    android:layout_marginLeft="5dip"
+    android:layout_marginTop="5dip"
+    android:layout_weight="1"
+    android:layout_width="fill_parent">
     <TableLayout
-      android:layout_width="fill_parent"
       android:layout_height="wrap_content"
-      android:stretchColumns="1"
-      android:layout_marginTop="5dip"
-      android:layout_marginLeft="5dip">
+      android:layout_width="fill_parent"
+      android:stretchColumns="1">
       
-      <!-- My Maps -->
+      <!-- Google My Maps -->
       <TableRow>
-        <ImageView android:src="@drawable/mymaps_icon"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"/>
-        <LinearLayout
-          android:layout_width="fill_parent"
+        <ImageView
           android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:layout_marginLeft="10dip">
-          <CheckBox android:id="@+id/sendtogoogle_google_mymaps"
-            android:layout_width="fill_parent"
+          android:layout_width="wrap_content"
+          android:src="@drawable/mymaps_icon"/>
+        <LinearLayout
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dip"
+          android:layout_width="fill_parent"
+          android:orientation="vertical">
+          <CheckBox
+            android:checked="true"
+            android:id="@+id/send_google_my_maps"
             android:layout_height="wrap_content"
-            android:text="@string/send_google_my_maps"
-            android:textSize="20dip"
-            android:checked="true"/>
-          <RadioGroup android:id="@+id/sendtogoogle_group_mymaps"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-            <RadioButton android:id="@+id/sendtogoogle_create_new_map"
-              android:layout_width="fill_parent"
+            android:text="@string/send_google_my_maps"
+            android:textSize="18dip"/>
+          <RadioGroup
+            android:id="@+id/send_google_my_maps_group"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent">
+            <RadioButton
+              android:id="@+id/send_google_new_map"
               android:layout_height="wrap_content"
+              android:layout_width="fill_parent"
               android:text="@string/send_google_new_map"/>
-            <RadioButton android:id="@+id/sendtogoogle_pick_existing_map"
-              android:layout_width="fill_parent"
+            <RadioButton
+              android:id="@+id/send_google_existing_map"
               android:layout_height="wrap_content"
+              android:layout_width="fill_parent"
               android:text="@string/send_google_existing_map"/>
           </RadioGroup>
         </LinearLayout>
       </TableRow>
 
-      <!-- Fusion Tables -->
+      <!-- Google Fusion Tables -->
       <TableRow>
-        <ImageView android:src="@drawable/googledocs_icon"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"/>
-        <LinearLayout
-          android:layout_width="fill_parent"
+        <ImageView
           android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:layout_marginLeft="10dip">
-          <CheckBox android:id="@+id/sendtogoogle_google_fusiontables"
-            android:layout_width="fill_parent"
+          android:layout_width="wrap_content"
+          android:src="@drawable/googledocs_icon"/>
+        <LinearLayout
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dip"
+          android:layout_width="fill_parent"
+          android:orientation="vertical">
+          <CheckBox
+            android:checked="true"
+            android:id="@+id/send_google_fusion_tables"
             android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
             android:text="@string/send_google_fusion_tables"
-            android:textSize="20dip"
-            android:checked="true"/>
+            android:textSize="18dip"/>
         </LinearLayout>
       </TableRow>
 
       <!-- Google Docs -->
       <TableRow>
-        <ImageView android:src="@drawable/googledocs_icon"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"/>
-        <LinearLayout
-          android:layout_width="fill_parent"
+        <ImageView
           android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:layout_marginLeft="10dip">
-          <CheckBox android:id="@+id/sendtogoogle_google_docs"
-            android:layout_width="fill_parent"
+          android:layout_width="wrap_content"
+          android:src="@drawable/googledocs_icon"/>
+        <LinearLayout
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dip"
+          android:layout_width="fill_parent"
+          android:orientation="vertical">
+          <CheckBox
+            android:checked="true"
+            android:id="@+id/send_google_docs"
             android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
             android:text="@string/send_google_docs"
-            android:textSize="20dip"
-            android:checked="true"/>
+            android:textSize="18dip"/>
         </LinearLayout>
       </TableRow>
     </TableLayout>
   </ScrollView>
   <LinearLayout style="@style/ButtonLayout">
     <LinearLayout style="@style/ButtonSpacer"/>
-    <Button android:id="@+id/sendtogoogle_send_now"
+    <Button
+      android:id="@+id/send_google_send_now"
       android:layout_gravity="left"
       android:text="@string/send_google_send_now"
       style="@style/Button"/>
-    <Button android:id="@+id/sendtogoogle_cancel"
+    <Button
+      android:id="@+id/send_google_cancel"
       android:layout_gravity="right"
       android:text="@string/generic_cancel"
       style="@style/Button"/>

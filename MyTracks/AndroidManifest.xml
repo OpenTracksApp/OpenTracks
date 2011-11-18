@@ -17,8 +17,8 @@ limitations under the License.
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.google.android.maps.mytracks"
           android:installLocation="auto"
-          android:versionCode="33"
-          android:versionName="1.1.10">
+          android:versionCode="34"
+          android:versionName="1.1.11">
   <application android:icon="@drawable/arrow_icon"
                android:label="@string/my_tracks_app_name"
                android:name="com.google.android.apps.mytracks.MyTracksApplication"
