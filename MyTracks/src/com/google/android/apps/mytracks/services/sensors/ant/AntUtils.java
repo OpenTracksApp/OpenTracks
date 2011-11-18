@@ -15,9 +15,15 @@
  */
 package com.google.android.apps.mytracks.services.sensors.ant;
 
+import com.dsi.ant.AntDefine;
 import com.dsi.ant.AntInterface;
 
 import android.content.Context;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Utility methods for ANT functionality.
@@ -31,5 +37,48 @@ public class AntUtils {
   /** Returns true if this device supports ANT sensors. */
   public static boolean hasAntSupport(Context context) {
     return AntInterface.hasAntSupport(context);
+  }
+  
+  /**
+   * Finds the names of in the messages with the given value
+   */
+  public static String antMessageToString(byte msg) {
+    return findConstByteInClass(AntDefine.class, msg, "MESG_.*_ID");
+  }
+
+  /**
+   * Finds the names of in the events with the given value
+   */
+  public static String antEventToStr(byte event) {
+    return findConstByteInClass(AntDefine.class, event, ".*EVENT.*");
+  }
+  
+  /**
+   * Finds a set of constant static byte field declarations in the class that have the given value
+   * and whose name match the given pattern
+   * @param cl class to search in
+   * @param value value of constant static byte field declarations to match
+   * @param regexPattern pattern to match against the name of the field     
+   * @return a set of the names of fields, expressed as a string
+   */
+  private static String findConstByteInClass(Class<?> cl, byte value, String regexPattern)
+  {
+    Field[] fields = cl.getDeclaredFields();
+    Set<String> fieldSet = new HashSet<String>();
+    for (Field f : fields) {
+      try {
+        if (f.getType() == Byte.TYPE &&
+            (f.getModifiers() & Modifier.STATIC) != 0 &&
+            f.getName().matches(regexPattern) &&
+            f.getByte(null) == value) {
+          fieldSet.add(f.getName());
+        }
+      } catch (IllegalArgumentException e) {
+        //  ignore
+      } catch (IllegalAccessException e) {
+        //  ignore
+      }
+    }
+    return fieldSet.toString();
   }
 }
