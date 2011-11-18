@@ -33,8 +33,6 @@ import android.util.Log;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 
 /**
  * API level 3 specific implementation of the {@link ApiLevelAdapter}.
@@ -112,11 +110,6 @@ public class ApiLevel3Adapter implements ApiLevelAdapter {
     return output;
   }
   
-  @Override
-  public DecimalFormatSymbols getDecimalFormatSymbols(Locale locale) {
-    return new DecimalFormatSymbols(locale);
-  }
-
   @Override
   public HttpTransport getHttpTransport() {
     return new ApacheHttpTransport();

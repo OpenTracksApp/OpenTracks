@@ -24,7 +24,6 @@ import android.app.Activity;
 import android.util.Log;
 import android.widget.TextView;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 /**
@@ -35,15 +34,20 @@ import java.text.NumberFormat;
 public class StatsUtilities {
 
   private final Activity activity;
-  private static final NumberFormat LAT_LONG_FORMAT =
-      new DecimalFormat("##,###.00000");
-  private static final NumberFormat ALTITUDE_FORMAT =
-      new DecimalFormat("###,###");
-  private static final NumberFormat SPEED_FORMAT =
-      new DecimalFormat("#,###,###.00");
-  private static final NumberFormat GRADE_FORMAT =
-      new DecimalFormat("##.0%");
+  private static final NumberFormat LAT_LONG_FORMAT = NumberFormat.getNumberInstance();
+  private static final NumberFormat ALTITUDE_FORMAT = NumberFormat.getIntegerInstance();
+  private static final NumberFormat SPEED_FORMAT = NumberFormat.getNumberInstance();
+  private static final NumberFormat GRADE_FORMAT = NumberFormat.getPercentInstance();
 
+  static {
+    LAT_LONG_FORMAT.setMaximumFractionDigits(5);
+    LAT_LONG_FORMAT.setMinimumFractionDigits(5);
+    SPEED_FORMAT.setMaximumFractionDigits(2);
+    SPEED_FORMAT.setMinimumFractionDigits(2);
+    GRADE_FORMAT.setMaximumFractionDigits(1);
+    GRADE_FORMAT.setMinimumFractionDigits(1);
+  }
+  
   /**
    * True if distances should be displayed in metric units (from shared
    * preferences).

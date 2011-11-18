@@ -23,7 +23,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 
-import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 /**
  * This class encapsulates meta data about one series of values for a chart.
@@ -33,7 +33,7 @@ import java.text.DecimalFormat;
 public class ChartValueSeries {
 
   private final ExtremityMonitor monitor = new ExtremityMonitor();
-  private final DecimalFormat format;
+  private final NumberFormat format;
   private final Path path = new Path();
   private final Paint fillPaint;
   private final Paint strokePaint;
@@ -132,7 +132,6 @@ public class ChartValueSeries {
    * Constructs a new chart value series.
    *
    * @param context The context for the chart
-   * @param formatString The format of the decimal format for this series
    * @param fillColor The paint for filling the chart
    * @param strokeColor The paint for stroking the outside the chart, optional
    * @param zoomSettings The settings related to zooming
@@ -140,9 +139,9 @@ public class ChartValueSeries {
    *
    * TODO: Get rid of Context and inject appropriate values instead.
    */
-  public ChartValueSeries(Context context, String formatString, int fillColor, int strokeColor,
-      ZoomSettings zoomSettings, int titleId) {
-    this.format = new DecimalFormat(formatString);
+  public ChartValueSeries(
+      Context context, int fillColor, int strokeColor, ZoomSettings zoomSettings, int titleId) {
+    this.format = NumberFormat.getIntegerInstance();
     fillPaint = new Paint();
     fillPaint.setStyle(Style.FILL);
     fillPaint.setColor(context.getResources().getColor(fillColor));
@@ -251,9 +250,9 @@ public class ChartValueSeries {
   }
 
   /**
-   * @return The format for the decimal format for this series
+   * @return The number format for this series
    */
-  DecimalFormat getFormat() {
+  NumberFormat getFormat() {
     return format;
   }
 

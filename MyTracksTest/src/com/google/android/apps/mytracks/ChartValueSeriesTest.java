@@ -30,7 +30,6 @@ public class ChartValueSeriesTest extends AndroidTestCase {
   @Override
   protected void setUp() throws Exception {
     series = new ChartValueSeries(getContext(),
-        "###,###",
         R.color.elevation_fill,
         R.color.elevation_border,
         new ZoomSettings(5, new int[] {100}),
