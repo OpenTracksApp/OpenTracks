@@ -2622,8 +2622,8 @@ limitations under the License.
       with friends.">
     Tap the Options button located at the bottom right corner of the map view and select \"Share
     with friends...\". You can share the track as a link to Google My Map or Google Fusion Table
-    (you will be prompted to upload the track first if you have not done so already) or as a GPX,
-    KML, CSV, or TCS file in an e-mail attachment.
+    (you will be prompted to upload the track first) or as a GPX, KML, CSV, or TCS file in an e-mail
+    attachment.
   </string>
   <string name="welcome_share_friends_question"
     translation_description="In the 'Welcome' page, the help content question on sharing a track
