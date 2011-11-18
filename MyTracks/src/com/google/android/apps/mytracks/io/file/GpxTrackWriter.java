@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.io.file;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
+import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 
 import android.location.Location;
@@ -27,10 +28,8 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * Log of one track.
@@ -38,11 +37,8 @@ import java.util.TimeZone;
  * @author Sandor Dornbush
  */
 public class GpxTrackWriter implements TrackFormatWriter {
-  private static final String TIMESTAMP_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
-
   private final NumberFormat elevationFormatter;
   private final NumberFormat coordinateFormatter;
-  private final SimpleDateFormat timestampFormatter;
   private PrintWriter pw = null;
   private Track track;
 
@@ -57,9 +53,6 @@ public class GpxTrackWriter implements TrackFormatWriter {
     coordinateFormatter.setMaximumFractionDigits(5);
     coordinateFormatter.setMaximumIntegerDigits(3);
     coordinateFormatter.setGroupingUsed(false);
-
-    timestampFormatter = new SimpleDateFormat(TIMESTAMP_FORMAT);
-    timestampFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
   }
 
   private String formatLocation(Location l) {
@@ -144,7 +137,7 @@ public class GpxTrackWriter implements TrackFormatWriter {
       pw.println("<trkpt " + formatLocation(l) + ">");
       Date d = new Date(l.getTime());
       pw.println("<ele>" + elevationFormatter.format(l.getAltitude()) + "</ele>");
-      pw.println("<time>" + timestampFormatter.format(d) + "</time>");
+      pw.println("<time>" + FileUtils.FILE_TIMESTAMP_FORMAT.format(d) + "</time>");
       pw.println("</trkpt>");
     }
   }
@@ -164,7 +157,7 @@ public class GpxTrackWriter implements TrackFormatWriter {
       if (l != null) {
         pw.println("<wpt " + formatLocation(l) + ">");
         pw.println("<ele>" + elevationFormatter.format(l.getAltitude()) + "</ele>");
-        pw.println("<time>" + timestampFormatter.format(l.getTime()) + "</time>");
+        pw.println("<time>" + FileUtils.FILE_TIMESTAMP_FORMAT.format(l.getTime()) + "</time>");
         pw.println("<name>" + StringUtils.stringAsCData(waypoint.getName())
             + "</name>");
         pw.println("<desc>"

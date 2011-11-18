@@ -18,15 +18,14 @@ package com.google.android.apps.mytracks.io.file;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
+import com.google.android.apps.mytracks.util.FileUtils;
 
 import android.location.Location;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 
 /**
  * Exports a track as a CSV file, according to RFC 4180.
@@ -46,13 +45,10 @@ import java.util.TimeZone;
  */
 public class CsvTrackWriter implements TrackFormatWriter {
 
-  static final NumberFormat SHORT_FORMAT = NumberFormat.getInstance();
-  static final SimpleDateFormat TIMESTAMP_FORMAT =
-      new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+  private static final NumberFormat SHORT_FORMAT = NumberFormat.getInstance();
 
   static {
     SHORT_FORMAT.setMaximumFractionDigits(4);
-    TIMESTAMP_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
   }
 
   private int segmentIdx = 0;
@@ -93,7 +89,7 @@ public class CsvTrackWriter implements TrackFormatWriter {
 
   @Override
   public void writeLocation(Location location) {
-    String timeStr = TIMESTAMP_FORMAT.format(new Date(location.getTime()));
+    String timeStr = FileUtils.FILE_TIMESTAMP_FORMAT.format(new Date(location.getTime()));
     writeCommaSeparatedLine("P",
         timeStr,
         Double.toString(location.getLatitude()),
@@ -109,7 +105,7 @@ public class CsvTrackWriter implements TrackFormatWriter {
   @Override
   public void writeWaypoint(Waypoint waypoint) {
     Location location = waypoint.getLocation();
-    String timeStr = TIMESTAMP_FORMAT.format(new Date(location.getTime()));
+    String timeStr = FileUtils.FILE_TIMESTAMP_FORMAT.format(new Date(location.getTime()));
     writeCommaSeparatedLine("WAYPOINT",
         timeStr,
         Double.toString(location.getLatitude()),

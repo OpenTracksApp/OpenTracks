@@ -18,7 +18,7 @@ package com.google.android.apps.mytracks.services;
 import android.content.Context;
 import android.test.AndroidTestCase;
 
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import java.util.Date;
 
 /**
@@ -52,7 +52,7 @@ public class DefaultTrackNameFactoryTest extends AndroidTestCase {
     DefaultTrackNameFactory factory =
         new MockDefaultTrackNameFactory(getContext(), true);
     
-    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
     assertEquals(formatter.format(new Date(TIMESTAMP)),
         factory.newTrackName(1, TIMESTAMP));
   }

@@ -20,6 +20,8 @@ import com.google.android.apps.mytracks.Constants;
 import android.os.Environment;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 import java.util.regex.Pattern;
 
 /**
@@ -39,6 +41,16 @@ public class FileUtils {
   private static final Pattern PROHIBITED_CHAR_PATTERN =
       Pattern.compile("[^ A-Za-z0-9_.()-]+");
 
+  /**
+   * Timestamp format in UTC time zone.
+   */
+  public static final SimpleDateFormat FILE_TIMESTAMP_FORMAT =
+      new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+  static {
+    FILE_TIMESTAMP_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
+  }
+  
   /**
    * Builds a path inside the My Tracks directory in the SD card.
    *

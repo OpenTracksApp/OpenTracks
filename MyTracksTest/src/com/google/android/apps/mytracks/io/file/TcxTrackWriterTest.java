@@ -3,13 +3,9 @@ package com.google.android.apps.mytracks.io.file;
 
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.Sensor;
-import com.google.android.apps.mytracks.io.file.TcxTrackWriter;
-import com.google.android.apps.mytracks.io.file.TrackFormatWriter;
+import com.google.android.apps.mytracks.util.FileUtils;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.TimeZone;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -20,15 +16,6 @@ import org.w3c.dom.Element;
  * @author Sandor Dornbush
  */
 public class TcxTrackWriterTest extends TrackFormatWriterTest {
-  private DateFormat timestampFormatter;
-
-  @Override
-  public void setUp() throws Exception {
-    super.setUp();
-
-    timestampFormatter = new SimpleDateFormat(TcxTrackWriter.TIMESTAMP_FORMAT);
-    timestampFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
-  }
 
   public void testXmlOutput() throws Exception {
     TrackFormatWriter writer = new TcxTrackWriter(getContext());
@@ -72,7 +59,7 @@ public class TcxTrackWriterTest extends TrackFormatWriterTest {
     assertEquals(Double.toString(loc.getLongitude()),
         getChildTextValue(posTag, "LongitudeDegrees"));
 
-    assertEquals(timestampFormatter.format(loc.getTime()),
+    assertEquals(FileUtils.FILE_TIMESTAMP_FORMAT.format(loc.getTime()),
         getChildTextValue(tag, "Time"));
     assertEquals(Double.toString(loc.getAltitude()),
         getChildTextValue(tag, "AltitudeMeters"));

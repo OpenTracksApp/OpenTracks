@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
+import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
 
 import android.content.Context;
@@ -30,10 +31,8 @@ import android.os.Build;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * Write out a a track in the Garmin training center database, tcx format.
@@ -44,10 +43,9 @@ import java.util.TimeZone;
  * Garmin Training Center 3.5.3.
  *
  * @author Sandor Dornbush
- * @author Dominik Ršttsches
+ * @author Dominik RÂšttsches
  */
 public class TcxTrackWriter implements TrackFormatWriter {
-  protected static final String TIMESTAMP_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
   // These are the only sports allowed by the TCX v2 specification for fields
   // of type Sport_t.
@@ -59,7 +57,6 @@ public class TcxTrackWriter implements TrackFormatWriter {
   private static final String TCX_TYPE_RELEASE = "Release";
   private static final String TCX_TYPE_INTERNAL = "Internal";
 
-  private final SimpleDateFormat timestampFormatter;
   private final Context context;
 
   private PrintWriter pw = null;
@@ -70,9 +67,6 @@ public class TcxTrackWriter implements TrackFormatWriter {
 
   public TcxTrackWriter(Context context) {
     this.context = context;
-
-    timestampFormatter = new SimpleDateFormat(TIMESTAMP_FORMAT);
-    timestampFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
   }
 
   @SuppressWarnings("hiding")
@@ -117,7 +111,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
       return;
     }
 
-    String startTime = timestampFormatter.format(track.getStatistics().getStartTime());
+    String startTime = FileUtils.FILE_TIMESTAMP_FORMAT.format(track.getStatistics().getStartTime());
 
     pw.println("  <Activities>");
     pw.format("    <Activity Sport=\"%s\">\n", categoryToTcxSport(track.getCategory()));
@@ -150,7 +144,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
     }
     pw.println("        <Trackpoint>");
     Date d = new Date(location.getTime());
-    pw.println("          <Time>" + timestampFormatter.format(d) + "</Time>");
+    pw.println("          <Time>" + FileUtils.FILE_TIMESTAMP_FORMAT.format(d) + "</Time>");
     pw.println("          <Position>");
 
     pw.print("            <LatitudeDegrees>");

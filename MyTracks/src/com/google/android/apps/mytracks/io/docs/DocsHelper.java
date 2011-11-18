@@ -34,7 +34,6 @@ import com.google.wireless.gdata.parser.ParseException;
 import com.google.wireless.gdata2.client.AuthenticationException;
 
 import android.content.Context;
-import android.text.format.DateFormat;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -45,6 +44,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -290,7 +290,7 @@ public class DocsHelper {
     DocsTagBuilder tagBuilder = new DocsTagBuilder(metricUnits)
         .append("name", track.getName())
         .append("description", track.getDescription())
-        .append("date", getDisplayDate(context, stats.getStartTime()))
+        .append("date", getDisplayDate(stats.getStartTime()))
         .append("totaltime", StringUtils.formatTimeAlwaysShowingHours(
             stats.getTotalTime()))
         .append("movingtime", StringUtils.formatTimeAlwaysShowingHours(
@@ -331,17 +331,15 @@ public class DocsHelper {
   }
 
   /**
-   * Gets the display string for a time based on the phone's setting.
+   * Gets the display string for a time.
    *
-   * @param context the context to obtain the phone's setting.
    * @param time the time
    * @return the display string of the time
    */
-  protected String getDisplayDate(Context context, long time) {
-    java.text.DateFormat dateFormat = DateFormat.getDateFormat(context);
-    java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
+  private String getDisplayDate(long time) {
+    DateFormat format = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
     Date startTime = new Date(time);
-    String dateString = dateFormat.format(startTime) + " " + timeFormat.format(startTime);
+    String dateString = format.format(startTime);
     return dateString;
   }
 

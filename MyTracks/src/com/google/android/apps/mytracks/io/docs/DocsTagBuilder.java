@@ -43,12 +43,12 @@ import java.text.NumberFormat;
  */
 class DocsTagBuilder {
   
-  private static final NumberFormat LARGE_UNIT_FORMAT = NumberFormat.getIntegerInstance();
-  private static final NumberFormat SMALL_UNIT_FORMAT = NumberFormat.getNumberInstance();
+  private static final NumberFormat LARGE_UNIT_FORMAT = NumberFormat.getNumberInstance();
+  private static final NumberFormat SMALL_UNIT_FORMAT = NumberFormat.getIntegerInstance();
   
   static {
-    SMALL_UNIT_FORMAT.setMaximumFractionDigits(2);
-    SMALL_UNIT_FORMAT.setMinimumFractionDigits(2);
+    LARGE_UNIT_FORMAT.setMaximumFractionDigits(2);
+    LARGE_UNIT_FORMAT.setMinimumFractionDigits(2);
   }
 
   protected final boolean metricUnits;

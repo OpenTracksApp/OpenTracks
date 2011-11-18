@@ -32,7 +32,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
@@ -47,8 +47,8 @@ import java.util.Date;
 public class BackupActivityHelper {
 
   // Since the user sees this format, we use the local timezone
-  private static final SimpleDateFormat DISPLAY_BACKUP_FORMAT =
-      new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+  private static final DateFormat DISPLAY_BACKUP_FORMAT = DateFormat.getDateTimeInstance(
+      DateFormat.SHORT, DateFormat.SHORT);
 
   private static final Comparator<Date> REVERSE_DATE_ORDER =
       new Comparator<Date>() {
