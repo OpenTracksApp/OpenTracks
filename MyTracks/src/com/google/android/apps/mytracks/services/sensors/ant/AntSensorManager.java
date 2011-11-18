@@ -188,11 +188,12 @@ public abstract class AntSensorManager extends SensorManager {
   private void cleanAntInterface() {
     Log.i(TAG, "Destroying AntSensorManager");
 
+    if (antReceiver == null) {
+      Log.e(TAG, "no ANT receiver");
+      return;
+    }
+    
     try {
-      if (antReceiver == null) {
-        Log.e(TAG, "no ANT receiver");
-        return;
-      }
       antReceiver.releaseInterface();
       antReceiver.destroy();
       antReceiver = null;
@@ -213,12 +214,12 @@ public abstract class AntSensorManager extends SensorManager {
   private synchronized void serviceConnected() {
     Log.d(TAG, "ANT service connected");
 
+    if (antReceiver == null) {
+      Log.e(TAG, "no ANT receiver");
+      return;
+    }
+    
     try {
-      if (antReceiver == null) {
-        Log.e(TAG, "no ANT receiver");
-        return;
-      }
-      
       if (!antReceiver.claimInterface()) {
         Log.e(TAG, "failed to claim ANT interface");
         return;
@@ -305,12 +306,12 @@ public abstract class AntSensorManager extends SensorManager {
       short deviceNumber, byte deviceType, byte txType, short channelPeriod,
       byte radioFreq, byte proxSearch) {
 
+    if (antReceiver == null) {
+      Log.e(TAG, "no ANT receiver");
+      return false;        
+    }
+    
     try {
-      if (antReceiver == null) {
-        Log.e(TAG, "no ANT receiver");
-        return false;        
-      }
-      
       // Assign as slave channel on selected network (0 = public, 1 = ANT+, 2 =
       // ANTFS)
       antReceiver.ANTAssignChannel(channelNumber, AntDefine.PARAMETER_RX_NOT_TX, networkNumber);
