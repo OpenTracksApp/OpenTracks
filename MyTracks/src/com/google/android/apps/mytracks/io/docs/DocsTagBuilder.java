@@ -19,6 +19,7 @@ import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 
 import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  * <p>This class builds a string of XML tags used to talk to Docs using GData.
@@ -43,9 +44,12 @@ import java.text.NumberFormat;
  */
 class DocsTagBuilder {
   
-  private static final NumberFormat LARGE_UNIT_FORMAT = NumberFormat.getNumberInstance();
-  private static final NumberFormat SMALL_UNIT_FORMAT = NumberFormat.getIntegerInstance();
-  
+  // Google Docs can only parse numbers in the English locale.
+  private static final NumberFormat LARGE_UNIT_FORMAT = NumberFormat.getNumberInstance(
+      Locale.ENGLISH);
+  private static final NumberFormat SMALL_UNIT_FORMAT = NumberFormat.getIntegerInstance(
+      Locale.ENGLISH);
+
   static {
     LARGE_UNIT_FORMAT.setMaximumFractionDigits(2);
     LARGE_UNIT_FORMAT.setMinimumFractionDigits(2);
