@@ -365,7 +365,7 @@ public class MapActivity extends com.google.android.maps.MapActivity
             String saveFileFormat = getString(R.string.track_list_save_file);
             String shareFileFormat = getString(R.string.track_list_share_file);
             String fileTypes[] = getResources().getStringArray(R.array.file_types);
-            
+
             menu.add(0, Constants.MENU_SEND_TO_GOOGLE, 0,
                 R.string.track_list_send_google);
             SubMenu share = menu.addSubMenu(0, Constants.MENU_SHARE, 0,
@@ -468,6 +468,9 @@ public class MapActivity extends com.google.android.maps.MapActivity
         keepMyLocationVisible = true;
         if (mapView.getZoomLevel() < 18) {
           mapView.getController().setZoom(18);
+        }
+        if (currentLocation != null) {
+          showCurrentLocation();
         }
         return true;
       }

@@ -92,7 +92,7 @@ public abstract class AntSensorManager extends SensorManager {
       String antAction = intent.getAction();
       Log.i(TAG, "enter data onReceive" + antAction);
 
-      if (antAction.equals(AntInterfaceIntent.ANT_RX_MESSAGE_ACTION)) {
+      if (antAction != null && antAction.equals(AntInterfaceIntent.ANT_RX_MESSAGE_ACTION)) {
         byte[] antMessage = intent.getByteArrayExtra(AntInterfaceIntent.ANT_MESSAGE);
         if (DEBUGGING) {
           Log.d(TAG, "Received RX message " + messageToString(antMessage));
@@ -185,22 +185,24 @@ public abstract class AntSensorManager extends SensorManager {
    * Cleans up the ANT+ receiver interface, by releasing the interface
    * and destroying it.
    */
-  private void cleanAntInterface()
-  {
+  private void cleanAntInterface() {
     Log.i(TAG, "Destroying AntSensorManager");
+
+    if (antReceiver == null) {
+      Log.e(TAG, "no ANT receiver");
+      return;
+    }
     
-    if (antReceiver != null) {
-      try {
-        antReceiver.releaseInterface();
-      } catch (AntServiceNotConnectedException e) {
-        Log.i(TAG, "ANT service not connected", e);
-      } catch (AntInterfaceException e) {
-        Log.e(TAG, "failed to release ANT interface", e);
-      }
-  
+    try {
+      antReceiver.releaseInterface();
       antReceiver.destroy();
-      
       antReceiver = null;
+    } catch (AntServiceNotConnectedException e) {
+      Log.i(TAG, "ANT service not connected", e);
+    } catch (AntInterfaceException e) {
+      Log.e(TAG, "failed to release ANT interface", e);
+    } catch (RuntimeException e) {
+      Log.e(TAG, "run-time exception when cleaning the ANT interface", e);
     }
   }
   
@@ -212,6 +214,11 @@ public abstract class AntSensorManager extends SensorManager {
   private synchronized void serviceConnected() {
     Log.d(TAG, "ANT service connected");
 
+    if (antReceiver == null) {
+      Log.e(TAG, "no ANT receiver");
+      return;
+    }
+    
     try {
       if (!antReceiver.claimInterface()) {
         Log.e(TAG, "failed to claim ANT interface");
@@ -299,6 +306,11 @@ public abstract class AntSensorManager extends SensorManager {
       short deviceNumber, byte deviceType, byte txType, short channelPeriod,
       byte radioFreq, byte proxSearch) {
 
+    if (antReceiver == null) {
+      Log.e(TAG, "no ANT receiver");
+      return false;        
+    }
+    
     try {
       // Assign as slave channel on selected network (0 = public, 1 = ANT+, 2 =
       // ANTFS)
