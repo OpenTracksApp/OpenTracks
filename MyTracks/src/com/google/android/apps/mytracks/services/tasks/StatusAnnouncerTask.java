@@ -185,8 +185,8 @@ public class StatusAnnouncerTask implements PeriodicTask {
           : R.plurals.voiceSpeedMilesPerHour;
       speed = context.getResources().getQuantityString(speedId, getQuantityCount(s), s);
     } else {
-      int perDistancelId = metricUnits ? R.string.voice_per_kilometer : R.string.voice_per_mile;
-      speed = getAnnounceTime((long) s) + " " + context.getString(perDistancelId);
+      int paceId = metricUnits ? R.string.voice_pace_per_kilometer : R.string.voice_pace_per_mile;
+      speed = String.format(context.getString(paceId), getAnnounceTime((long) s));
     }
 
     int totalDistanceId = metricUnits ? R.plurals.voiceTotalDistanceKilometers
@@ -199,8 +199,16 @@ public class StatusAnnouncerTask implements PeriodicTask {
   }
   
   /**
-   * Gets the plural count to be used by getQuantityString.
-   * 
+   * Gets the plural count to be used by getQuantityString. getQuantityString
+   * only supports integer quantities, not a double quantity like "2.2".
+   * <p>
+   * As a temporary workaround, we convert a double quantity to an integer
+   * quantity. If the double quantity is exactly 0, 1, or 2, then we can return
+   * these integer quantities. Otherwise, we cast the double quantity to an
+   * integer quantity. However, we need to make sure that if the casted value is
+   * 0, 1, or 2, we don't return those, instead, return the next biggest integer
+   * 3.
+   *
    * @param d the double value
    */
   private int getQuantityCount(double d) {

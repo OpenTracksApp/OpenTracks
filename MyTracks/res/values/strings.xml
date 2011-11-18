@@ -609,13 +609,13 @@ limitations under the License.
   <string name="import_gpx_files_few"
     translation_description="When importing all the tracks, phrase for 'few' GPX files.
 
-    %1$d an integer number. The number is a small number.">
+      %1$d an integer number. The number is a small number.">
     %1$d GPX files
   </string>
   <string name="import_gpx_files_many"
     translation_description="When importing all the tracks, phrase for 'many' GPX files.
 
-    %1$d an integer number. The number is a large number.">
+      %1$d an integer number. The number is a large number.">
     %1$d GPX files
   </string>
   <string name="import_gpx_files_one"
@@ -623,9 +623,10 @@ limitations under the License.
     1 GPX file
   </string>
   <string name="import_gpx_files_other"
-    translation_description="When importing all the tracks, phrase for 'other' GPX files.
-
-    %1$d an integer number. The number doesn't require special treatment.">
+    translation_description="When importing all the tracks, phrase for 'other' GPX files, 'other'
+      means for cases that the language does not require special treatment of the given quantity.
+      
+      %1$d an integer number.">
     %1$d GPX files
   </string>
   <string name="import_gpx_files_two"
@@ -1546,7 +1547,7 @@ limitations under the License.
   </string>
   <string name="settings_sharing_allow_access"
     translation_description="In the Sharing settings, the checkbox option to allow third party apps
-     access to the My Tracks data.">
+      access to the My Tracks data.">
     Allow access
   </string>
   <string name="settings_sharing_allow_access_confirm_message"
@@ -2028,13 +2029,13 @@ limitations under the License.
   <string name="voice_hours_few"
     translation_description="For voice announcement, to say 'few' hours.
 
-    %1$d an integer number. The number is a small number.">
+      %1$d an integer number. The number is a small number.">
     %1$d hours
   </string>
   <string name="voice_hours_many"
     translation_description="For voice announcement, to say 'many' hours.
 
-    %1$d an integer number. The number is a large number.">
+      %1$d an integer number. The number is a large number.">
     %1$d hours
   </string>
   <string name="voice_hours_one"
@@ -2042,9 +2043,10 @@ limitations under the License.
     1 hour
   </string>
   <string name="voice_hours_other"
-    translation_description="For voice announcement, to say 'other' hours.
-
-    %1$d an integer number. The number doesn't require special treatment.">
+    translation_description="For voice announcement, to say 'other' hours, 'other' means for cases
+      that the language does not require special treatment of the given quantity.
+      
+      %1$d an integer number.">
     %1$d hours
   </string>
   <string name="voice_hours_two"
@@ -2058,13 +2060,13 @@ limitations under the License.
   <string name="voice_minutes_few"
     translation_description="For voice announcement, to say 'few' minutes.
 
-    %1$d an integer number. The number is a small number.">
+      %1$d an integer number. The number is a small number.">
     %1$d minutes
   </string>
   <string name="voice_minutes_many"
     translation_description="For voice announcement, to say 'many' minutes.
 
-    %1$d an integer number. The number is a large number.">
+      %1$d an integer number. The number is a large number.">
     %1$d minutes
   </string>
   <string name="voice_minutes_one"
@@ -2072,9 +2074,10 @@ limitations under the License.
     1 minute
   </string>
   <string name="voice_minutes_other"
-    translation_description="For voice announcement, to say 'other' minutes.
-
-    %1$d an integer number. The number doesn't require special treatment.">
+    translation_description="For voice announcement, to say 'other' minutes, 'other' means for cases
+      that the language does not require special treatment of the given quantity.
+      
+      %1$d an integer number.">
     %1$d minutes
   </string>
   <string name="voice_minutes_two"
@@ -2085,26 +2088,30 @@ limitations under the License.
     translation_description="For voice announcement, to say 0 minutes.">
     0 minutes
   </string>
-  <string name="voice_per_kilometer"
-    translation_description="For voice announcement, to say 'per kilometer' for pace like 'two
-      hours 2 minutes per kilometer'.">
-    per kilometer
+  <string name="voice_pace_per_kilometer"
+    translation_description="For voice announcement, to say 'time per kilometer' like 'two hours 2
+      minutes per kilometer'.
+    
+      %1$s time. E.g., 'two hours 2 minutes'.">    
+    %1$s per kilometer
   </string>
-  <string name="voice_per_mile"
-    translation_description="For voice announcement, to say 'per mile' for pace like 'two hours 2
-      minutes per mile'.">
-    per mile
+  <string name="voice_pace_per_mile"
+    translation_description="For voice announcement, to say 'time per mile' like 'two hours 2
+      minutes per mile'.
+      
+      %1$s time. E.g., 'two hours 2 minutes'.">
+    %1$s per mile
   </string>
   <string name="voice_seconds_few"
     translation_description="For voice announcement, to say 'few' seconds.
 
-    %1$d an integer number. The number is a small number.">
+      %1$d an integer number. The number is a small number.">
     %1$d seconds
   </string>
   <string name="voice_seconds_many"
     translation_description="For voice announcement, to say 'many' seconds.
 
-    %1$d an integer number. The number is a large number.">
+      %1$d an integer number. The number is a large number.">
     %1$d seconds
   </string>
   <string name="voice_seconds_one"
@@ -2112,9 +2119,10 @@ limitations under the License.
     1 second
   </string>
   <string name="voice_seconds_other"
-    translation_description="For voice announcement, to say 'other' seconds.
-
-    %1$d an integer number. The number doesn't require special treatment.">
+    translation_description="For voice announcement, to say 'other' seconds, 'other' means for cases
+      that the language does not require special treatment of the given quantity.
+      
+      %1$d an integer number.">
     %1$d seconds
   </string>
   <string name="voice_seconds_two"
@@ -2128,13 +2136,13 @@ limitations under the License.
   <string name="voice_speed_kilometers_per_hour_few"
     translation_description="For voice announcement, to say 'few' kilometers per hour.
 
-    %1$.1f a float number. The number is a small number.">
+      %1$.1f a float number. The number is a small number.">
     %1$.1f kilometers per hour
   </string>
   <string name="voice_speed_kilometers_per_hour_many"
     translation_description="For voice announcement, to say 'many' kilometers per hour.
 
-    %1$.1f a float number. The number is a large number.">
+      %1$.1f a float number. The number is a large number.">
     %1$.1f kilometers per hour
   </string>
   <string name="voice_speed_kilometers_per_hour_one"
@@ -2142,9 +2150,10 @@ limitations under the License.
     1 kilometer per hour
   </string>
   <string name="voice_speed_kilometers_per_hour_other"
-    translation_description="For voice announcement, to say 'other' kilometers per hour.
-
-    %1$.1f a float number. The number doesn't require special treatment.">
+    translation_description="For voice announcement, to say 'other' kilometers per hour, 'other'
+      means for cases that the language does not require special treatment of the given quantity.
+      
+      %1$.1f a float number.">
     %1$.1f kilometers per hour
   </string>
   <string name="voice_speed_kilometers_per_hour_two"
@@ -2158,13 +2167,13 @@ limitations under the License.
   <string name="voice_speed_miles_per_hour_few"
     translation_description="For voice announcement, to say 'few' miles per hour.
 
-    %1$.1f a float number. The number is a small number.">
+      %1$.1f a float number. The number is a small number.">
     %1$.1f miles per hour
   </string>
   <string name="voice_speed_miles_per_hour_many"
     translation_description="For voice announcement, to say 'many' miles per hour.
 
-    %1$.1f a float number. The number is a large number.">
+      %1$.1f a float number. The number is a large number.">
     %1$.1f miles per hour
   </string>
   <string name="voice_speed_miles_per_hour_one"
@@ -2172,9 +2181,10 @@ limitations under the License.
     1 mile per hour
   </string>
   <string name="voice_speed_miles_per_hour_other"
-    translation_description="For voice announcement, to say 'other' miles per hour.
-
-    %1$.1f a float number. The number doesn't require special treatment.">
+    translation_description="For voice announcement, to say 'other' miles per hour, 'other' means
+      for cases that the language does not require special treatment of the given quantity.
+      
+      %1$.1f a float number.">
     %1$.1f miles per hour
   </string>
   <string name="voice_speed_miles_per_hour_two"
@@ -2191,19 +2201,19 @@ limitations under the License.
       %1$s: distance string. E.g., '1 mile' or '1.2 miles', '1 kilometer', '2.2 kilometers'
       %2$s: time string. E.g., '1 hour and 30 minutes' or '20 minutes 1 second'
       %3$s: speed/pace string. For speed, e.g., '2.2 miles per hour', '1 kilometer per hour'. For
-        pace, e.g., '2 hours 1 minute per mile', '30 minutes 1 second per kilometer'.">
+      pace, e.g., '2 hours 1 minute per mile', '30 minutes 1 second per kilometer'.">
     My Tracks total distance %1$s in %2$s at %3$s.
   </string>
   <string name="voice_total_distance_kilometers_few"
     translation_description="For voice announcement, to say total distance 'few' kilometers.
 
-    %1$.2f a float number. The number is a small number.">
+      %1$.2f a float number. The number is a small number.">
     total distance %1$.2f kilometers
   </string>
   <string name="voice_total_distance_kilometers_many"
     translation_description="For voice announcement, to say total distance 'many' kilometers.
 
-    %1$.2f a float number. The number is a large number.">
+      %1$.2f a float number. The number is a large number.">
     total distance %1$.2f kilometers
   </string>
   <string name="voice_total_distance_kilometers_one"
@@ -2211,9 +2221,11 @@ limitations under the License.
     total distance 1 kilometer
   </string>
   <string name="voice_total_distance_kilometers_other"
-    translation_description="For voice announcement, to say total distance 'other' kilometers.
-
-    %1$.2f a float number. The number doesn't require special treatment.">
+    translation_description="For voice announcement, to say total distance 'other' kilometers,
+      'other' means for cases that the language does not require special treatment of the given
+      quantity.
+      
+      %1$.2f a float number.">
     total distance %1$.2f kilometers
   </string>
   <string name="voice_total_distance_kilometers_two"
@@ -2227,13 +2239,13 @@ limitations under the License.
   <string name="voice_total_distance_miles_few"
     translation_description="For voice announcement, to say total distance 'few' miles.
 
-    %1$.2f a float number. The number is a small number.">
+      %1$.2f a float number. The number is a small number.">
     total distance %1$.2f miles
   </string>
   <string name="voice_total_distance_miles_many"
     translation_description="For voice announcement, to say total distance 'many' miles.
 
-    %1$.2f a float number. The number is a large number.">
+      %1$.2f a float number. The number is a large number.">
     total distance %1$.2f miles
   </string>
   <string name="voice_total_distance_miles_one"
@@ -2241,9 +2253,10 @@ limitations under the License.
     total distance 1 mile
   </string>
   <string name="voice_total_distance_miles_other"
-    translation_description="For voice announcement, to say total distance 'other' miles.
-
-    %1$.2f a float number. The number doesn't require special treatment.">
+    translation_description="For voice announcement, to say total distance 'other' miles, 'other'
+      means for cases that the language does not require special treatment of the given quantity.
+      
+      %1$.2f a float number.">
     total distance %1$.2f miles
   </string>
   <string name="voice_total_distance_miles_two"
