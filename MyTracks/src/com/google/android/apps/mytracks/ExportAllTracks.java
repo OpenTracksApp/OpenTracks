@@ -87,6 +87,7 @@ public class ExportAllTracks {
     }
     
     AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+    builder.setTitle(R.string.track_list_export_all);
     builder.setSingleChoiceItems(choices, 0, itemClick);
     builder.setPositiveButton(R.string.generic_ok, positiveClick);
     builder.setNegativeButton(R.string.generic_cancel, null);
