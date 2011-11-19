@@ -24,8 +24,8 @@ limitations under the License.
     Copyright 2009 Google Inc.
   </string>
   <string name="about_license"
-    translation_description="In the 'About My Tracks' page, the button on the bottom to view the
-      terms of service agreement.
+    translation_description="In the 'About My Tracks' page, the button on the bottom to open the
+      'Terms of service' dialog.
       
       Screenshot: about.png">
     License
@@ -462,17 +462,21 @@ limitations under the License.
 
   <!-- EULA -->
   <string name="eula_accept"
-    translation_description="In the 'End User License Agreement' dialog, the button to accept.">
+    translation_description="In the 'Terms of service' dialog, the button to accept.
+    
+      Screenshot: eula.png">    
     Accept
   </string>
   <string name="eula_decline"
-    translation_description="In the 'End User License Agreement' dialog, the button to decline.">
+    translation_description="In the 'Terms of service' dialog, the button to decline.
+    
+      Screenshot: eula.png">
     Decline
   </string>
   <string name="eula_message"
-    translation_description="The message for the terms of service dialog.">
-    End User License Agreement\n
-    \n
+    translation_description="The message for the 'Terms of service' dialog.
+        
+      Screenshot: eula.png">      
     By downloading, installing or using this application or any portion thereof ("Application"), you
     agree to the following terms and conditions (the "Terms and Conditions").\n
     \n
@@ -598,8 +602,10 @@ limitations under the License.
     for injunctive remedies (or an equivalent type of urgent legal relief) in any jurisdiction.\n
   </string>
   <string name="eula_title"
-    translation_description="The title for the terms of service dialog, asking the user to accept
-      or decline.">
+    translation_description="The title for the 'Terms of service' dialog, asking the user to accept
+      or decline.
+              
+      Screenshot: eula.png">
     End User License Agreement
   </string>
 
@@ -834,52 +840,76 @@ limitations under the License.
 
   <!-- Menu Items -->
   <string name="menu_aggregated_statistics"
-    translation_description="In the menu, to go to the aggregated statistics page.">
+    translation_description="In the menu, to go to the aggregated statistics page.
+    
+      Screenshot: menu_record_track_more.png">
     Aggregated statistics
   </string>
   <string name="menu_chart_view_chart_settings"
-    translation_description="In the menu for the chart view, to change the chart settings.">
+    translation_description="In the menu for the chart view, to change the chart settings.
+    
+      Screenshot: menu_chart_settings.png">
     Chart settings
   </string>
   <string name="menu_help"
-    translation_description="In the menu, to go to the help page.">
+    translation_description="In the menu, to go to the help page.
+    
+      Screenshot: menu_record_track_more.png">
     Help
   </string>
   <string name="menu_map_view_map_mode"
-    translation_description="In the menu for the map view, to switch the display to the map mode.">
+    translation_description="In the menu for the map view, to switch the display to the map mode.
+    
+      Screenshot: menu_map_mode.png">
     Map mode
   </string>
   <string name="menu_map_view_my_location"
-    translation_description="In the menu for the map view, to display user's current location.">
+    translation_description="In the menu for the map view, to display user's current location.
+    
+      Screenshot: menu_record_track.png">
     My location
   </string>
   <string name="menu_map_view_satellite_mode"
     translation_description="In the menu for the map view, to switch the display to the satellite
-      mode.">
+      mode.
+    
+      Screenshot: menu_record_track.png">
     Satellite mode
   </string>
   <string name="menu_markers"
-    translation_description="In the menu, to show a list of markers for the current track.">
+    translation_description="In the menu, to show a list of markers for the current track.
+    
+      Screenshot: menu_record_track.png">
     Markers
   </string>
   <string name="menu_record_track"
-    translation_description="In the menu, to start recording a track.">
+    translation_description="In the menu, to start recording a track.
+    
+      Screenshot: menu_record_track.png">
     Record track
   </string>
   <string name="menu_sensor_state"
-    translation_description="In the menu, to go to the sensor state page.">
+    translation_description="In the menu, to go to the sensor state page.
+    
+      Screenshot: menu_record_track_more.png">
     Sensor state
   </string>
   <string name="menu_settings"
-    translation_description="In the menu, to go to the settings page.">
+    translation_description="In the menu, to go to the settings page.
+    
+      Screenshot: menu_record_track_more.png">
     Settings
   </string>
   <string name="menu_stop_recording"
-    translation_description="In the menu, to stop recording a track.">
+    translation_description="In the menu, to stop recording a track.
+    
+      Screenshot: menu_stop_recording.png">
     Stop recording
   </string>
   <string name="menu_tracks"
-    translation_description="In the menu, to show a list of all the tracks.">
+    translation_description="In the menu, to show a list of all the tracks.
+    
+      Screenshot: menu_record_track.png">
     Tracks
   </string>
 
@@ -979,17 +1009,23 @@ limitations under the License.
   <!-- Preferred Units -->
   <string name="preferred_units_imperial"
     translation_description="In the dialog asking the user to choose a preferred units, the option
-      to choose the imperial units.">
+      to choose the imperial units.
+      
+      Screenshot: preferred_units.png">
     Imperial
   </string>
   <string name="preferred_units_metric"
     translation_description="In the dialog asking the user to choose a preferred units, the option
-      to choose the metric units.">
+      to choose the metric units.
+      
+      Screenshot: preferred_units.png">
     Metric
   </string>
   <string name="preferred_units_title"
     translation_description="The title of the dialog asking the user to choose a preferred units,
-      metric or imperial.">
+      metric or imperial.
+      
+      Screenshot: preferred_units.png">
     Preferred units
   </string>
 
@@ -2334,237 +2370,300 @@ limitations under the License.
 
   <!-- Waypoint Type -->
   <string name="waypoint_type_atm"
-    translation_description="When entering the Marker Type, an option for an ATM.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the 
+      completion suggestion for an ATM.">
     ATM
   </string>
   <string name="waypoint_type_bank"
-    translation_description="When entering the Marker Type, an option for a bank.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a bank.">
     bank
   </string>
   <string name="waypoint_type_bar"
-    translation_description="When entering the Marker Type, an option for a bar.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a bar.">
     bar
   </string>
   <string name="waypoint_type_barbecue"
-    translation_description="When entering the Marker Type, an option for a barbecue.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a barbecue.">
     barbecue
   </string>
   <string name="waypoint_type_building"
-    translation_description="When entering the Marker Type, an option for a building.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a building.">
     building
   </string>
   <string name="waypoint_type_bus_stop"
-    translation_description="When entering the Marker Type, an option for a bus stop.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a bus stop.">
     bus stop
   </string>
   <string name="waypoint_type_cafe"
-    translation_description="When entering the Marker Type, an option for a cafe.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a cafe.">
     cafe
   </string>
   <string name="waypoint_type_campfire"
-    translation_description="When entering the Marker Type, an option for a campfire.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a campfire.">
     campfire
   </string>
   <string name="waypoint_type_campground"
-    translation_description="When entering the Marker Type, an option for a campground.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a campground.">
     campground
   </string>
   <string name="waypoint_type_church"
-    translation_description="When entering the Marker Type, an option for a church.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a church.">
     church
   </string>
   <string name="waypoint_type_coffee_house"
-    translation_description="When entering the Marker Type, an option for a coffee house.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a coffee house.">
     coffee house
   </string>
   <string name="waypoint_type_convenience_store"
-    translation_description="When entering the Marker Type, an option for a convenience store.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a convenience store.">
     convenience store
   </string>
   <string name="waypoint_type_drinking_water"
-    translation_description="When entering the Marker Type, an option for a drinking water.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a drinking water.">
     drinking water
   </string>
   <string name="waypoint_type_falling_rocks"
-    translation_description="When entering the Marker Type, an option for a falling rocks.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a falling rocks.">
     falling rocks
   </string>
   <string name="waypoint_type_ferry"
-    translation_description="When entering the Marker Type, an option for a ferry.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a ferry.">
     ferry
   </string>
   <string name="waypoint_type_fire_place"
-    translation_description="When entering the Marker Type, an option for a fire place.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a fire place.">
     fire place
   </string>
   <string name="waypoint_type_fire_station"
-    translation_description="When entering the Marker Type, an option for a fire station.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a fire station.">
     fire station
   </string>
   <string name="waypoint_type_fishing"
-    translation_description="When entering the Marker Type, an option for a fishing location.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a fishing location.">
     fishing
   </string>
   <string name="waypoint_type_gas_station"
-    translation_description="When entering the Marker Type, an option for a gas station.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a gas station.">
     gas station
   </string>
   <string name="waypoint_type_golf_course"
-    translation_description="When entering the Marker Type, an option for a golf course.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a golf course.">
     golf course
   </string>
   <string name="waypoint_type_grocery_store"
-    translation_description="When entering the Marker Type, an option for a grocery store.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a grocery store.">
     grocery store
   </string>
   <string name="waypoint_type_hair_dresser"
-    translation_description="When entering the Marker Type, an option for a hair dresser.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a hair dresser.">
     hair dresser
   </string>
   <string name="waypoint_type_harbor"
-    translation_description="When entering the Marker Type, an option for a harbor.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a harbor.">
     harbor
   </string>
   <string name="waypoint_type_hiking_path"
-    translation_description="When entering the Marker Type, an option for a hiking path.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a hiking path.">
     hiking path
   </string>
   <string name="waypoint_type_hotel"
-    translation_description="When entering the Marker Type, an option for a hotel.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a hotel.">
     hotel
   </string>
   <string name="waypoint_type_house"
-    translation_description="When entering the Marker Type, an option for a house.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a house.">
     house
   </string>
   <string name="waypoint_type_information"
-    translation_description="When entering the Marker Type, an option for an information.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for an information.">
     information
   </string>
   <string name="waypoint_type_intersection"
-    translation_description="When entering the Marker Type, an option for an intersection.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for an intersection.">
     intersection
   </string>
   <string name="waypoint_type_mail_box"
-    translation_description="When entering the Marker Type, an option for a mail box.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a mail box.">
     mail box
   </string>
   <string name="waypoint_type_market"
-    translation_description="When entering the Marker Type, an option for a market.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a market.">
     market
   </string>
   <string name="waypoint_type_meeting_point"
-    translation_description="When entering the Marker Type, an option for a meeting point.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a meeting point.">
     meeting point
   </string>
   <string name="waypoint_type_opera"
-    translation_description="When entering the Marker Type, an option for an opera.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for an opera.">
     opera
   </string>
   <string name="waypoint_type_parking"
-    translation_description="When entering the Marker Type, an option for a parking.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a parking.">
     parking
   </string>
   <string name="waypoint_type_police_station"
-    translation_description="When entering the Marker Type, an option for a police station.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a police station.">
     police station
   </string>
   <string name="waypoint_type_post_office"
-    translation_description="When entering the Marker Type, an option for a post office.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a post office.">
     post office
   </string>
   <string name="waypoint_type_pothole"
-    translation_description="When entering the Marker Type, an option for a pothole.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a pothole.">
     pothole
   </string>
   <string name="waypoint_type_railway_crossing"
-    translation_description="When entering the Marker Type, an option for a railway crossing.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a railway crossing.">
     railway crossing
   </string>
   <string name="waypoint_type_restaurant"
-    translation_description="When entering the Marker Type, an option for a restaurant.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a restaurant.">
     restaurant
   </string>
   <string name="waypoint_type_shopping"
-    translation_description="When entering the Marker Type, an option for a shopping.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a shopping.">
     shopping
   </string>
   <string name="waypoint_type_sight"
-    translation_description="When entering the Marker Type, an option for a sight.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a sight.">
     sight
   </string>
   <string name="waypoint_type_store"
-    translation_description="When entering the Marker Type, an option for a store.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a store.">
     store
   </string>
   <string name="waypoint_type_swimming_pool"
-    translation_description="When entering the Marker Type, an option for a swimming pool.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a swimming pool.">
     swimming pool
   </string>
   <string name="waypoint_type_telephone"
-    translation_description="When entering the Marker Type, an option for a telephone.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a telephone.">
     telephone
   </string>
   <string name="waypoint_type_theater"
-    translation_description="When entering the Marker Type, an option for a theater.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a theater.">
     theater
   </string>
   <string name="waypoint_type_toilet"
-    translation_description="When entering the Marker Type, an option for a toilet.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a toilet.">
     toilet
   </string>
   <string name="waypoint_type_tourist_information"
-    translation_description="When entering the Marker Type, an option for a tourist information.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a tourist information.">
     tourist information
   </string>
   <string name="waypoint_type_tree"
-    translation_description="When entering the Marker Type, an option for a tree.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a tree.">
     tree
   </string>
   <string name="waypoint_type_tunnel"
-    translation_description="When entering the Marker Type, an option for a tunnel.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a tunnel.">
     tunnel
   </string>
   <string name="waypoint_type_waterfall"
-    translation_description="When entering the Marker Type, an option for a waterfall.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a waterfall.">
     waterfall
   </string>
   <string name="waypoint_type_water_fountain"
-    translation_description="When entering the Marker Type, an option for a water fountain.">
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a water fountain.">
     water fountain
   </string>
-  <string name="waypoint_type_way_point"
-    translation_description="When entering the Marker Type, an option for a way point.">
-    way point
+  <string name="waypoint_type_waypoint"
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
+      completion suggestion for a waypoint.">
+    waypoint
   </string>
 
   <!-- Welcome Page -->
   <string name="welcome_about"
-    translation_description="In the 'Welcome' page, the button on the bottom to read the 'About My
-      Tracks' page.">
+    translation_description="In the 'Welcome' page, the button on the bottom to open the 'About My
+      Tracks' dialog.
+        
+      Screenshot: welcome.png">
     About My Tracks
   </string>
   <string name="welcome_add_graph_answer"
     translation_description="In the 'Welcome' page, the help content answer on adding graphs to the
-      graphs view.">
+      graphs view.
+        
+      Screenshot: welcome.png">
     In the graphs view, Menu -> Chart settings.
   </string>
   <string name="welcome_add_graph_question"
     translation_description="In the 'Welcome' page, the help content question on adding graphs to
-      the graphs view.">
+      the graphs view.
+        
+      Screenshot: welcome.png">
     How do I add more graphs?
   </string>
   <string name="welcome_app_navigation_answer"
-    translation_description="In the 'Welcome' page, the help content answer on app navigation.">
+    translation_description="In the 'Welcome' page, the help content answer on app navigation.
+        
+      Screenshot: welcome.png">
     Touch the map. Left and right arrows will appear. Tap on these arrows to cycle between the map,
     statistics, and graphs view.
   </string>
   <string name="welcome_app_navigation_question"
-    translation_description="In the 'Welcome' page, the help content question on app navigation.">
+    translation_description="In the 'Welcome' page, the help content question on app navigation.
+        
+      Screenshot: welcome.png">
     How do I see the map, statistics, and graphs view?
   </string>
   <string name="welcome_battery_life_answer"
-    translation_description="In the 'Welcome' page, the help content answer on battery life.">
+    translation_description="In the 'Welcome' page, the help content answer on battery life.
+        
+      Screenshot: welcome.png">
     The GPS receiver draws a relatively high amount of power, so a fully charged battery typically
     survives less than 5 hours. Battery life depends on many factors, including signal strength,
     battery freshness, and tasks running in parallel. Switching off some or all of the phone\'s
@@ -2572,44 +2671,58 @@ limitations under the License.
     results.
   </string>
   <string name="welcome_battery_life_question"
-    translation_description="In the 'Welcome' page, the help content question on battery life.">
+    translation_description="In the 'Welcome' page, the help content question on battery life.
+        
+      Screenshot: welcome.png">
     How long does the battery last when recording tracks?
   </string>
   <string name="welcome_data_connection_answer"
-    translation_description="In the 'Welcome' page, the help content answer on data connection.">
+    translation_description="In the 'Welcome' page, the help content answer on data connection.
+        
+      Screenshot: welcome.png">
     Cell signal or data connection is not required to record GPS tracks. However, if there is no
     data connection, you will not be able to see a map. Instead, you will see a grey screen or a
     partial map. Tracks, represented as simple lines, can still be recorded even if there is no data
     connection.
   </string>
   <string name="welcome_data_connection_question"
-    translation_description="In the 'Welcome' page, the help content question on data connection.">
+    translation_description="In the 'Welcome' page, the help content question on data connection.
+        
+      Screenshot: welcome.png">
     Do I need cell signal and data connection to use My Tracks?
   </string>
   <string name="welcome_delete_all_answer"
-    translation_description="In the 'Welcome' page, the help content answer on deleting all
-      tracks.">
+    translation_description="In the 'Welcome' page, the help content answer on deleting all tracks.
+        
+      Screenshot: welcome.png">
     Menu -> Tracks -> Delete all. This permanently deletes the recorded tracks from memory. If you
     have saved tracks to the SD card, you must delete them separately. Tracks uploaded to Google My
     Maps, Google Fusion Tables, and Google Docs must also be deleted separately.
   </string>
   <string name="welcome_delete_all_question"
     translation_description="In the 'Welcome' page, the help content question on deleting all
-      tracks.">
+      tracks.
+        
+      Screenshot: welcome.png">
     How do I delete all the tracks from the phone?
   </string>
   <string name="welcome_edit_accuracy_answer"
-    translation_description="In the 'Welcome' page, the help content answer on editing points.">
+    translation_description="In the 'Welcome' page, the help content answer on editing points.
+        
+      Screenshot: welcome.png">
     Once you upload tracks to Google My Maps, Google Fusion Tables, or Google Docs, you can move,
     delete or insert individual track points as desired.
   </string>
   <string name="welcome_edit_accuracy_question"
-    translation_description="In the 'Welcome' page, the help content question on editing points.">
+    translation_description="In the 'Welcome' page, the help content question on editing points.
+        
+      Screenshot: welcome.png">
     How can I edit or correct tracks for accuracy?
   </string>
   <string name="welcome_elevation_precision_answer"
-    translation_description="In the 'Welcome' page, the help content answer on elevation
-      precision.">
+    translation_description="In the 'Welcome' page, the help content answer on elevation precision.
+        
+      Screenshot: welcome.png">
     GPS receivers measure elevations much less precisely than latitude and longitude. Elevations
     can sometimes be off by a few hundred feet, though relative changes are tracked more precisely.
     To get a good elevation measurement, make sure that you have a strong GPS signal and wait a few
@@ -2617,12 +2730,15 @@ limitations under the License.
   </string>
   <string name="welcome_elevation_precision_question"
     translation_description="In the 'Welcome' page, the help content question on elevation
-      precision.">
+      precision.
+        
+      Screenshot: welcome.png">
     How precise is the elevation measurement?
   </string>
   <string name="welcome_gps_fix_answer"
-    translation_description="In the 'Welcome' page, the help content answer on the GPS fix
-      message.">
+    translation_description="In the 'Welcome' page, the help content answer on the GPS fix message.
+        
+      Screenshot: welcome.png">
     For My Tracks to work, your phone needs to be in line-of-sight contact with the GPS satellites.
     If the line-of-sight is obstructed by trees, buildings or canyon walls, you may not get an
     accurate fix. If you see the message, wait a minute or two. If your device does not achieve a
@@ -2630,12 +2746,16 @@ limitations under the License.
   </string>
   <string name="welcome_gps_fix_question"
     translation_description="In the 'Welcome' page, the help content question on the GPS fix
-      message.">
+      message.
+        
+      Screenshot: welcome.png">
     Why does the application sometimes display \"Waiting for a better GPS fix. Make sure the sky is
     visible.\"?
   </string>
   <string name="welcome_location_precision_answer"
-    translation_description="In the 'Welcome' page, the help content answer on location precision.">
+    translation_description="In the 'Welcome' page, the help content answer on location precision.
+        
+      Screenshot: welcome.png">
     Under optimal conditions, the location error can be +/- 20 feet (6 meters). However, precision
     depends on the quality of the GPS signal. The blue circle around the orange location arrow
     indicates estimated precision. (You may need to zoom in or out to see the circle.) You can
@@ -2643,55 +2763,73 @@ limitations under the License.
     at the top of the screen, you will see the message \"Waiting for a better GPS fix.\".
   </string>
   <string name="welcome_location_precision_question"
-    translation_description="In the 'Welcome' page, the help content question on location
-      precision.">
+    translation_description="In the 'Welcome' page, the help content question on location precision.
+        
+      Screenshot: welcome.png">
     How precise are the recorded tracks?
   </string>
   <string name="welcome_my_maps_sharing_answer"
     translation_description="In the 'Welcome' page, the help content answer on Google My Maps
-      visibility.">
+      visibility.
+        
+      Screenshot: welcome.png">
     By default, new maps are public. To change the default to unlisted, uncheck Settings -> Sharing
     -> Make new maps public. You can change the visibility of all your maps at Google My Maps.
   </string>
   <string name="welcome_my_maps_sharing_question"
     translation_description="In the 'Welcome' page, the help content question on Google My Maps
-      visibility.">
+      visibility.
+        
+      Screenshot: welcome.png">
     Who can see the maps I send to Google My Maps?
   </string>
   <string name="welcome_my_tracks_answer"
-    translation_description="In the 'Welcome' page, the help content answer on what is My Tracks.">
+    translation_description="In the 'Welcome' page, the help content answer on what is My Tracks.
+        
+      Screenshot: welcome.png">
     My Tracks allows you to record GPS tracks and visualize your hiking, running, biking or any
     other activity while watching live performance statistics. My Tracks makes it easy to archive
     your training history with Google My Maps, Google Fusion Tables, and Google Docs, and share your
     activities with friends and the world.
   </string>
   <string name="welcome_my_tracks_question"
-    translation_description="In the 'Welcome' page, the help content question on what is My
-      Tracks.">
+    translation_description="In the 'Welcome' page, the help content question on what is My Tracks.
+        
+      Screenshot: welcome.png">
     What is My Tracks?
   </string>
   <string name="welcome_send_google_answer"
-    translation_description="In the 'Welcome' page, the help content answer on sending a track
-      to Google.">
+    translation_description="In the 'Welcome' page, the help content answer on sending a track to
+      Google.
+        
+      Screenshot: welcome.png">
     Tap the Options button located at the bottom right corner of the map view and select \"Send to
     Google...\".
   </string>
   <string name="welcome_send_google_question"
-    translation_description="In the 'Welcome' page, the help content question on sending a track
-      to Google.">
+    translation_description="In the 'Welcome' page, the help content question on sending a track to
+      Google.
+        
+      Screenshot: welcome.png">
     How do I send my tracks to Google My Maps, Google Fusion Tables, and Google Docs?
   </string>
   <string name="welcome_share_file_answer"
-    translation_description="In the 'Welcome' page, the help content answer on sharing a file.">
+    translation_description="In the 'Welcome' page, the help content answer on sharing a file.
+        
+      Screenshot: welcome.png">
     You can use Google Earth or similar applications to visualize and edit GPS tracks.
   </string>
   <string name="welcome_share_file_question"
-    translation_description="In the 'Welcome' page, the help content question on sharing a file.">
+    translation_description="In the 'Welcome' page, the help content question on sharing a file.
+        
+      Screenshot: welcome.png">
     What can I do with tracks after saving them to the SD card or sharing such files with friends?
   </string>
   <string name="welcome_share_friends_answer"
-    translation_description="In the 'Welcome' page, the help content answer on sharing a track
-      with friends.">
+    translation_description="In the 'Welcome' page, the help content answer on sharing a track with
+      friends.
+        
+      Screenshot: welcome.png">
     Tap the Options button located at the bottom right corner of the map view and select \"Share
     with friends...\". You can share the track as a link to Google My Map or Google Fusion Table
     (you will be prompted to upload the track first) or as a GPX, KML, CSV, or TCS file in an e-mail
@@ -2699,43 +2837,58 @@ limitations under the License.
   </string>
   <string name="welcome_share_friends_question"
     translation_description="In the 'Welcome' page, the help content question on sharing a track
-      with friends.">
+      with friends.
+        
+      Screenshot: welcome.png">
     How do I share tracks with friends and the rest of the world?
   </string>
   <string name="welcome_split_track_answer"
     translation_description="In the 'Welcome' page, the help content answer on splitting long
-      tracks.">
+      tracks.
+        
+      Screenshot: welcome.png">
     Tracks on Google My Maps and Google Fusion Tables are limited to certain sizes.
   </string>
   <string name="welcome_split_track_question"
     translation_description="In the 'Welcome' page, the help content question on splitting long
-      tracks.">
+      tracks.
+        
+      Screenshot: welcome.png">
     Why do very long tracks split into multiple segments upon sending them to Google My Maps and
     Google Fusion Tables?
   </string>
   <string name="welcome_statistics_marker_answer"
-    translation_description="In the 'Welcome' page, the help content answer on statistics markers.">
+    translation_description="In the 'Welcome' page, the help content answer on statistics markers.
+        
+      Screenshot: welcome.png">
     Statistics markers are used to segment a track to calculate statistics for each segment. For
     example, let\'s say you are recording a bike ride up a hill, you can insert a statistics marker
     at the bottom of the hill and another at the top by pressing Menu -> Markers -> Insert
     statistics.
   </string>
   <string name="welcome_statistics_marker_question"
-    translation_description="In the 'Welcome' page, the help content question on statistics
-      markers.">
+    translation_description="In the 'Welcome' page, the help content question on statistics markers.
+          
+      Screenshot: welcome.png">
     What are statistics markers?
   </string>
   <string name="welcome_title"
-    translation_description="In the 'Welcome' page, the title of the page.">
+    translation_description="In the 'Welcome' page, the title of the page.
+    
+      Screenshot: welcome.png">
     My Tracks Welcome
   </string>
   <string name="welcome_waypoint_marker_answer"
-    translation_description="In the 'Welcome' page, the help content answer on waypoint markers.">
+    translation_description="In the 'Welcome' page, the help content answer on waypoint markers.
+        
+      Screenshot: welcome.png">
     Waypoint markers are used to annotate a location. For example, if you are recording a track and
     you are close to an interesting place, press Menu -> Markers -> Insert waypoint.
   </string>
   <string name="welcome_waypoint_marker_question"
-    translation_description="In the 'Welcome' page, the help content question on waypoint markers.">
+    translation_description="In the 'Welcome' page, the help content question on waypoint markers.
+        
+      Screenshot: welcome.png">
     What are waypoint markers?
   </string>
 </resources>
