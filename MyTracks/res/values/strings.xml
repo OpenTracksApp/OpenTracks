@@ -1237,470 +1237,682 @@ limitations under the License.
 
   <!-- Settings -->
   <string name="settings_backup"
-    translation_description="In the Settings page, the option to change the data backup related
-      settings.">
+    translation_description="In the 'Settings' page, the option to change the data backup related
+      settings.    
+      
+      Character limit: ~26 (1 line)
+      Screenshot: settings.png">
     Backup
   </string>
   <string name="settings_backup_now"
-    translation_description="In the Backup settings, under the 'SD card backup' section, the option
-      to backup to the SD card now.">
+    translation_description="In the 'Backup' settings, under the 'SD card backup' section, the
+      option to backup to the SD card now.    
+      
+      Character limit: ~26 (1 line)
+      Screenshot: settings_backup.png">
     Backup now
   </string>
   <string name="settings_backup_now_progress_message"
-    translation_description="In the Backup settings, after pressing the 'Backup now' option, the
+    translation_description="In the 'Backup' settings, after pressing the 'Backup now' option, the
       progress dialog telling the user that it is writing all tracks and settings and that it may
-      take a while.">
+      take a while.
+      
+      Screenshot: settings_backup_now_progress_message.png">
     Writing all tracks and settings to the SD card. This may take a while...
   </string>
   <string name="settings_backup_now_summary"
-    translation_description="In the Backup settings, under the 'SD card backup' section, the summary
-      for the 'Backup now' option explaining that all tracks and settings will be written to the SD
-      card.">
+    translation_description="In the 'Backup' settings, under the 'SD card backup' section, the
+      summary for the 'Backup now' option explaining that all tracks and settings will be written to
+      the SD card.    
+      
+      Screenshot: settings_backup.png">
     Write a full copy of all your tracks and settings to the SD card.
   </string>
   <string name="settings_backup_restore"
-    translation_description="In the Backup settings, under the 'SD card backup' section, the option
-      to restore everything from the SD card.">
+    translation_description="In the 'Backup' settings, under the 'SD card backup' section, the
+      option to restore everything from the SD card.    
+      
+      Character limit: ~26 (1 line)
+      Screenshot: settings_backup.png">
     Restore now
   </string>
   <string name="settings_backup_restore_confirm_message"
-    translation_description="In the Backup settings, after pressing the 'Restore now' option, the
+    translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
       message in the alert dialog asking the user to confirm that he wants to restore from a backup
-      and it will overwrite all the current tracks and settings.">
+      and it will overwrite all the current tracks and settings.
+      
+      Screenshot: settings_backup_restore_confirm_message.png">
     Restoring a backup from the SD card will overwrite all your current tracks and settings. Are you
     sure?
   </string>
   <string name="settings_backup_restore_no_backup"
-    translation_description="In the Backup settings, after pressing the 'Restore now' option, the
-      message in the alert dialog informing the user that there is no backup to restore from.">
+    translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
+      message in the alert dialog informing the user that there is no backup to restore from.
+      
+      Screenshot: settings_backup_restore_no_backup.png">      
     No backup found.
   </string>
   <string name="settings_backup_restore_progress_message"
-    translation_description="In the Backup settings, after pressing the 'Restore now' option, the
+    translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
       message on the progress dialog indicating that My Tracks is reading all tracks and settings
-      from the backup on the SD card and that it may take a while.">
+      from the backup on the SD card and that it may take a while.
+      
+      Screenshot: settings_backup_restore_progress.png">
     Reading all tracks and settings from the SD card. This may take a while...
   </string>
   <string name="settings_backup_restore_select_title"
-    translation_description="In the Backup settings, after pressing the 'Restore now' option, the
-      title in the picker dialog asking the user to select a backup.">
+    translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
+      title in the picker dialog asking the user to select a backup.
+      
+      Screenshot: settings_backup_restore_select_title.png">
     Select a backup to restore
   </string>
   <string name="settings_backup_restore_summary"
-    translation_description="In the Backup settings, under the 'SD card backup' section, the summary
-      for the 'Restore now' option explaining that it restores all tracks and settings from the SD
-      card.">
+    translation_description="In the 'Backup' settings, under the 'SD card backup' section, the
+      summary for the 'Restore now' option explaining that it restores all tracks and settings from
+      the SD card.    
+      
+      Character limit: ~26 (1 line)
+      Screenshot: settings_backup.png">
     Restore all tracks and settings from the SD card.
   </string>
   <string name="settings_backup_sd_card"
-    translation_description="In the Backup settings, the section header for configuring backup to
-      the SD card.">
+    translation_description="In the 'Backup' settings, the section header for configuring backup to
+      the SD card.    
+      
+      Character limit: ~40 (1 line)
+      Screenshot: settings_backup.png">
     SD card backup
   </string>
   <string name="settings_display"
-    translation_description="In the Settings page, the option to change the display related
-      settings.">
+    translation_description="In the 'Settings' page, the option to change the display related
+      settings.
+      
+      Character limit: ~26 (1 line)
+      Screenshot: settings.png">
     Display
   </string>
   <string name="settings_display_metric"
-    translation_description="In the Display settings, the checkbox option to use the metric units.">
+    translation_description="In the 'Display' settings, the checkbox option to use the metric units.
+          
+      Character limit: ~23 (1 line)
+      Screenshot: settings_display.png">
     Use metric units
   </string>
   <string name="settings_display_metric_summary_off"
-    translation_description="In the Display settings, the summary for the 'Use metric units'
-      checkbox when it is unchecked explaining using the imperial units to display distances.">
+    translation_description="In the 'Display' settings, the summary for the 'Use metric units'
+      checkbox when it is unchecked explaining using the imperial units to display distances.
+          
+      Screenshot: settings_display_unchecked.png">
     Use imperial units to display distances.
   </string>
   <string name="settings_display_metric_summary_on"
-    translation_description="In the Display settings, the summary for the 'Use metric units'
-      checkbox when it is checked explaining using the metric units to display distances.">
+    translation_description="In the 'Display' settings, the summary for the 'Use metric units'
+      checkbox when it is checked explaining using the metric units to display distances.
+
+      Screenshot: settings_display.png">
     Use metric units to display distances.
   </string>
   <string name="settings_display_speed"
-    translation_description="In the Display settings, the checkbox option to display speed (e.g., 5
-      miles per hour) instead of pace (e.g., 0.2 hours per mile).">
+    translation_description="In the 'Display' settings, the checkbox option to display speed (e.g.,
+      5 miles per hour) instead of pace (e.g., 0.2 hours per mile).
+          
+      Character limit: ~23 (1 line)
+      Screenshot: settings_display.png">
     Display speed
   </string>
   <string name="settings_display_speed_summary_off"
-    translation_description="In the Display settings, the summary for the 'Display speed' checkbox
+    translation_description="In the 'Display' settings, the summary for the 'Display speed' checkbox
       when it is unchecked explaining that pace (e.g., 0.2 hours per mile) will be used instead of
-      speed (e.g., 5 miles per hour).">
+      speed (e.g., 5 miles per hour).
+          
+      Screenshot: settings_display_unchecked.png">
     Display pace (e.g., hours/mile).
   </string>
   <string name="settings_display_speed_summary_on"
-    translation_description="In the Display settings, the summary for the 'Display speed' checkbox
+    translation_description="In the 'Display' settings, the summary for the 'Display speed' checkbox
       when it is checked explaining that speed (e.g., 5 miles per hour) will be used instead of pace
-      (e.g., 0.2 hours per mile).">
+      (e.g., 0.2 hours per mile).
+      
+      Screenshot: settings_display.png">
     Display speed (e.g., miles/hour).
   </string>
   <string name="settings_display_track_color"
-    translation_description="In the Display settings, the dropdown option to choose a track color
-      mode for how to use different colors to color a track based on slow, medium, and fast speed.">
+    translation_description="In the 'Display' settings, the dropdown option to choose a track color
+      mode for how to use different colors to color a track based on slow, medium, and fast speed.
+          
+      Character limit: ~23 (1 line)
+      Screenshot: settings_display.png">
     Track color mode
   </string>
   <string name="settings_display_track_color_dynamic"
-    translation_description="In the Display settings, for the 'Track color mode' dropdown, the
+    translation_description="In the 'Display' settings, for the 'Track color mode' dropdown, the
       option to use different colors to color a track based on dynamically determined speed
-      thresholds. E.g., use one color when the speed is below the slow speed threshold.">
+      thresholds. E.g., use one color when the speed is below the slow speed threshold.
+      
+      Character limit: ~21 (1 line)
+      Screenshot: settings_display_track_color_option.png">
     Dynamic thresholds
   </string>
   <string name="settings_display_track_color_dynamic_medium"
-    translation_description="In the Display settings, under the 'Dynamic thresholds' configurations,
-      the option for configuring the percentage from the average speed for the medium speed range.
-      The track color mode will use different colors to color a track depending on whether the speed
-      is above, in, or below the medium speed range.">
+    translation_description="In the 'Display' settings, under the 'Dynamic thresholds'
+      configurations, the option for configuring the percentage from the average speed for the
+      medium speed range. The track color mode will use different colors to color a track depending
+      on whether the speed is above, in, or below the medium speed range.
+          
+      Character limit: ~23 (1 line)
+      Screenshot: settings_display.png">
     Percentage from average
   </string>
   <string name="settings_display_track_color_dynamic_medium_summary"
-    translation_description="In the Display settings, under the 'Dynamic thresholds' configurations,
-      the summary for the 'Percentage from average' option explaining that it sets the percentage
-      from the average speed for the medium speed range. The track color mode will use different
-      colors to color a track depending on whether the speed is above, in, or below the medium speed
-      range.">
+    translation_description="In the 'Display' settings, under the 'Dynamic thresholds'
+      configurations, the summary for the 'Percentage from average' option explaining that it sets
+      the percentage from the average speed for the medium speed range. The track color mode will
+      use different colors to color a track depending on whether the speed is above, in, or below
+      the medium speed range.
+      
+      Screenshot: settings_display.png">
     Percentage from the average speed for the medium speed range.
   </string>
   <string name="settings_display_track_color_fixed"
-    translation_description="In the Display settings, for the 'Track color mode' dropdown, the
+    translation_description="In the 'Display' settings, for the 'Track color mode' dropdown, the
       option to use different colors to color a track based on fixed speed thresholds. E.g., use
-      one color when the speed is below the slow speed threshold.">
+      one color when the speed is below the slow speed threshold.
+      
+      Character limit: ~21 (1 line)
+      Screenshot: settings_display_track_color_option.png">
     Fixed thresholds
   </string>
   <string name="settings_display_track_color_fixed_medium"
-    translation_description="In the Display settings, under the 'Fixed thresholds' configurations,
+    translation_description="In the 'Display' settings, under the 'Fixed thresholds' configurations,
       the option for configuring the medium speed threshold. Thus any speed lower than the
       threshold but greater than the slow speed threshold will be colored by the medium speed
-      color.">
+      color.
+          
+      Character limit: ~23 (1 line)
+      Screenshot: settings_display.png">
     Medium speed threshold
   </string>
   <string name="settings_display_track_color_fixed_medium_summary"
-    translation_description="In the Display settings, under the 'Fixed thresholds' configurations,
+    translation_description="In the 'Display' settings, under the 'Fixed thresholds' configurations,
       the summary for the 'Medium speed threshold' option explaining that it sets a cutoff speed
-      for the medium speed color.">
+      for the medium speed color.
+      
+      Screenshot: settings_display.png">
     Medium speed top value.
   </string>
   <string name="settings_display_track_color_fixed_slow"
-    translation_description="In the Display settings, under the 'Fixed thresholds' configurations,
+    translation_description="In the 'Display' settings, under the 'Fixed thresholds' configurations,
       the option for configuring the slow speed threshold. Thus any speed lower than the threshold
-      will be colored by the slow speed color.">
+      will be colored by the slow speed color.
+          
+      Character limit: ~23 (1 line)
+      Screenshot: settings_display.png">
     Slow speed threshold
   </string>
   <string name="settings_display_track_color_fixed_slow_summary"
-    translation_description="In the Display settings, under the 'Fixed thresholds' configurations,
+    translation_description="In the 'Display' settings, under the 'Fixed thresholds' configurations,
       the summary for the 'Slow speed threshold' option explaining that it sets a cutoff speed for
-      the slow speed color.">
+      the slow speed color.
+      
+      Screenshot: settings_display.png">
     Slow speed top value.
   </string>
   <string name="settings_display_track_color_single"
-    translation_description="In the Display settings, for the 'Track color mode' dropdown, the
-      option to use a single color for all speeds.">
+    translation_description="In the 'Display' settings, for the 'Track color mode' dropdown, the
+      option to use a single color for all speeds.
+      
+      Character limit: ~21 (1 line)
+      Screenshot: settings_display_track_color_option.png">
     Single color
   </string>
   <string name="settings_display_track_color_summary"
-    translation_description="In the Display settings, the summary for the 'Track color mode'
+    translation_description="In the 'Display' settings, the summary for the 'Track color mode'
       dropdown explaining that it configures how colors are used to color a track based on
-      slow, medium, and fast speed.">
+      slow, medium, and fast speed.
+      
+      Screenshot: settings_display.png">
     The way to color a track based on slow, medium, and fast speed.
   </string>
   <string name="settings_not_while_recording"
-    translation_description="In the Settings page, the summary for an option that is not available
-      during a track recording.">
+    translation_description="In settings, the summary for an option that is not available during a
+      track recording.
+      
+      Screenshot: settings_not_while_recording.png">
     Not available while recording a track.
   </string>
   <string name="settings_recording"
-    translation_description="In the Settings page, the option to change the track recording related
-      settings.">
+    translation_description="In the 'Settings' page, the option to change the track recording
+      related settings.
+      
+      Character limit: ~26 (1 line)
+      Screenshot: settings.png">
     Recording
   </string>
   <string name="settings_recording_auto_resume"
-    translation_description="In the Recording settings, the dropdown option to configure the timeout
-      after which a recorded track will not be continued after phone reboot.">
+    translation_description="In the 'Recording' settings, the dropdown option to configure the
+      timeout after which a recorded track will not be continued after phone reboot.
+      
+      Character limit: ~23 (1 line)
+      Screenshot: settings_recording_bottom.png">
     Auto-resume timeout
   </string>
   <string name="settings_recording_auto_resume_summary"
-    translation_description="In the Recording settings, the summary for the 'Auto-resume timeout'
+    translation_description="In the 'Recording' settings, the summary for the 'Auto-resume timeout'
       dropdown option explaining that it configures the maximum time after which a previous
-      recording will not be resumed after phone reboot.">
+      recording will not be resumed after phone reboot.
+      
+      Screenshot: settings_recording_bottom.png">
     Maximum time after which a previously recording track will not be resumed after phone reboot.
   </string>
   <string name="settings_recording_default_activity"
-    translation_description="In the Recording settings, the option to specify a new track's default
-      activity type.">
+    translation_description="In the 'Recording' settings, the option to specify a new track's
+      default activity type.
+      
+      Character limit: ~23 (1 line)
+      Screenshot: settings_recording_bottom.png">
     Default activity type
   </string>
   <string name="settings_recording_default_activity_summary"
-    translation_description="In the Recording settings, the summary for the 'Default activity type'
-      option explaining that it sets the default activity type for a new track.">
+    translation_description="In the 'Recording' settings, the summary for the 'Default activity
+      type' option explaining that it sets the default activity type for a new track.
+      
+      Screenshot: settings_recording_bottom.png">
     Default activity type for a new track.
   </string>
   <string name="settings_recording_distance"
-    translation_description="In the Recording settings, the dropdown option to configure the
-      distance between two recorded points.">
+    translation_description="In the 'Recording' settings, the dropdown option to configure the
+      distance between two recorded points.
+      
+      Character limit: ~23 (1 line)
+      Screenshot: settings_recording_top.png">
     Distance between points
   </string>
   <string name="settings_recording_distance_summary"
-    translation_description="In the Recording settings, the summary for the 'Distance between
+    translation_description="In the 'Recording' settings, the summary for the 'Distance between
       points' dropdown option explaining that it configures the smallest distance between two
-      recordings of your position.">
+      recordings of your position.
+      
+      Screenshot: settings_recording_top.png">
     Smallest distance between two recordings of your position.
   </string>
   <string name="settings_recording_gps_accuracy"
-    translation_description="In the Recording settings, the dropdown option to configure the
+    translation_description="In the 'Recording' settings, the dropdown option to configure the
       required GPS accuracy. If a GPS position's accuracy is below the requirement, then it will
-      not be used.">
+      not be used.
+      
+      Character limit: ~23 (1 line)
+      Screenshot: settings_recording_top.png">
     GPS accuracy
   </string>
   <string name="settings_recording_gps_accuracy_summary"
-    translation_description="In the Recording settings, the summary for the 'GPS accuracy' dropdown
-      option explaining that it configures the required accuracy for your position. If a GPS
-      position's accuracy is below the requirement, then it will not be used.">
+    translation_description="In the 'Recording' settings, the summary for the 'GPS accuracy'
+      dropdown option explaining that it configures the required accuracy for your position. If a
+      GPS position's accuracy is below the requirement, then it will not be used.
+      
+      Screenshot: settings_recording_top.png">
     GPS position will be ignored if it is not this accurate.
   </string>
   <string name="settings_recording_interval"
-    translation_description="In the Recording settings, the dropdown option to configure the
-      time between two recorded points.">
+    translation_description="In the 'Recording' settings, the dropdown option to configure the
+      time between two recorded points.
+      
+      Character limit: ~23 (1 line)
+      Screenshot: settings_recording_top.png">
     Time between points
   </string>
   <string name="settings_recording_interval_summary"
-    translation_description="In the Recording settings, the summary for the 'Time between points'
+    translation_description="In the 'Recording' settings, the summary for the 'Time between points'
       dropdown option explaining that it configures the smallest time interval between two
-      recordings of your position.">
+      recordings of your position.
+      
+      Screenshot: settings_recording_top.png">
     Smallest time interval between two recordings of your position.
   </string>
   <string name="settings_recording_marker"
-    translation_description="In the Recording settings, the dropdown option to configure the time or
-      distance a new marker will be inserted.">
+    translation_description="In the 'Recording' settings, the dropdown option to configure the time
+      or distance a new marker will be inserted.
+      
+      Character limit: ~23 (1 line)
+      Screenshot: settings_recording_top.png">
     Marker frequency
   </string>
   <string name="settings_recording_marker_summary"
-    translation_description="In the Recording settings, the summary for the 'Marker frequency'
+    translation_description="In the 'Recording' settings, the summary for the 'Marker frequency'
       dropdown option explaining that it configures the time or distance after which a new marker
-      will be inserted.">
+      will be inserted.
+      
+      Screenshot: settings_recording_top.png">
     Time/distance after which a new marker will be inserted.
   </string>
   <string name="settings_recording_name"
-    translation_description="In the Recording settings, the checkbox on whether the track should be
-      named based on the track's start time or based on a number.">
+    translation_description="In the 'Recording' settings, the checkbox on whether the track should
+      be named based on the track's start time or based on a number.
+      
+      Character limit: ~23 (1 line)
+      Screenshot: settings_recording_bottom.png">
     Use time for track name
   </string>
   <string name="settings_recording_name_summary_off"
-    translation_description="In the Recording settings, the summary for the 'Use time for track
-      name' checkbox when it is unchecked explaining using a number as the default track name.">
+    translation_description="In the 'Recording' settings, the summary for the 'Use time for track
+      name' checkbox when it is unchecked explaining using a number as the default track name.
+      
+      Screenshot: settings_recording_bottom_unchecked.png">
     Use a number as the default track name.
   </string>
   <string name="settings_recording_name_summary_on"
-    translation_description="In the Recording settings, the summary for the 'Use time for track
+    translation_description="In the 'Recording' settings, the summary for the 'Use time for track
       name' checkbox when it is checked explaining using the track's start time as the default track
-      name.">
+      name.
+      
+      Screenshot: settings_recording_bottom.png">
     Use the track\'s start time as the default track name.
   </string>
   <string name="settings_recording_track_distance"
-    translation_description="In the Recording settings, the dropdown option to configure the
-      distance between two tracks.">
+    translation_description="In the 'Recording' settings, the dropdown option to configure the
+      distance between two tracks.
+      
+      Character limit: ~23 (1 line)
+      Screenshot: settings_recording_top.png">
     Distance between tracks
   </string>
   <string name="settings_recording_track_distance_summary"
-    translation_description="In the Recording settings, the summary for the 'Distance between
+    translation_description="In the 'Recording' settings, the summary for the 'Distance between
       tracks' dropdown option explaining that it configures the maximum distance for two recorded
-      points for them to be still considered as the same track.">
+      points for them to be still considered as the same track.
+      
+      Screenshot: settings_recording_top.png">
     Track will be split if two recordings of your position are further than this.
   </string>
   <string name="settings_recording_voice"
-    translation_description="In the Recording settings, the dropdown option to configure the voice
-      announcement frequency.">
+    translation_description="In the 'Recording' settings, the dropdown option to configure the voice
+      announcement frequency.
+      
+      Character limit: ~23 (1 line)
+      Screenshot: settings_recording_top.png">
     Voice frequency
   </string>
   <string name="settings_recording_voice_not_available"
-    translation_description="In the Recording settings, the summary for the 'Voice frequency'
-      explaining that this option is not available on your Android phone.">
+    translation_description="In the 'Recording' settings, the summary for the 'Voice frequency'
+      explaining that this option is not available on your Android phone.
+      
+      Screenshot: settings_recording_voice_not_available.png">
     Voice announcement is not available on your Android phone.
   </string>
   <string name="settings_recording_voice_summary"
-    translation_description="In the Recording settings, the summary for the 'Voice frequency'
+    translation_description="In the 'Recording' settings, the summary for the 'Voice frequency'
       dropdown option explaining that it configures the time or distance between two voice
-      announcements.">
+      announcements.
+      
+      Screenshot: settings_recording_top.png">
     Time/distance between two voice announcements.
   </string>
   <string name="settings_reset"
-    translation_description="In the Settings page, the option to reset everything to the defaults.">
+    translation_description="In the 'Settings' page, the option to reset everything to the defaults.
+      
+      Character limit: ~26 (1 line)
+      Screenshot: settings.png">
     Reset to defaults
   </string>
   <string name="settings_reset_dialog_message"
-    translation_description="In the Settings page, after pressing the 'Reset to defaults' option,
+    translation_description="In the 'Settings' page, after pressing the 'Reset to defaults' option,
       the confirmation dialog asking the user to confirm reverting all settings to defaults. But
-      the saved tracks will be preserved.">
+      the saved tracks will be preserved.
+      
+      Screenshot: settings_reset_dialog_message.png">
     All your settings will be erased and reverted to the default values. Saved tracks will be
     preserved. Are you sure?
   </string>
   <string name="settings_reset_done"
-    translation_description="In the Settings page, after pressing the 'Reset to defaults' option,
+    translation_description="In the 'Settings' page, after pressing the 'Reset to defaults' option,
       the confirmation dialog informing the user that all settings have been reverted to their
-      defaults.">
+      defaults.
+      
+      Screenshot: settings_reset_done.png">
     All settings have been reverted to their defaults.
   </string>
   <string name="settings_reset_summary"
-    translation_description="In the Settings page, the summary for the 'Reset to defaults'
-      option explaining reverting all the settings to the default values.">
+    translation_description="In the 'Settings' page, the summary for the 'Reset to defaults' option
+      explaining reverting all the settings to the default values.
+
+      Screenshot: settings.png">
     Revert all your settings to the default values.
   </string>
   <string name="settings_sensor"
-    translation_description="In the Settings page, the option to change the sensor related
-      settings.">
+    translation_description="In the 'Settings' page, the option to change the sensor related
+      settings.
+      
+      Character limit: ~26 (1 line)
+      Screenshot: settings.png">
     Sensor
   </string>
   <string name="settings_sensor_ant_not_paired"
-    translation_description="In the Sensor settings, the summary for 'Unpair ANT+ heart rate sensor'
-      or 'Unpair SRM ANT+ bridge' when there no ANT+ device paired.">
+    translation_description="In the 'Sensor' settings, the summary for 'Unpair ANT+ heart rate
+      sensor' or 'Unpair SRM ANT+ bridge' when there no ANT+ device paired.
+
+      Screenshot: settings_sensor.png">
     Not paired.
   </string>
   <string name="settings_sensor_ant_options"
-    translation_description="In the Sensor settings, the section header to configure the ANT+
-      options.">
+    translation_description="In the 'Sensor' settings, the section header to configure the ANT+
+      options.
+
+      Character limit: ~40 (1 line)
+      Screenshot: settings_sensor.png">
     ANT+ options
   </string>
   <string name="settings_sensor_ant_paired"
-    translation_description="In the Sensor settings, the summary for 'Unpair ANT+ heart rate sensor'
-      or 'Unpair SRM ANT+ bridge' when there is an ANT+ device paired.
+    translation_description="In the 'Sensor' settings, the summary for 'Unpair ANT+ heart rate
+      sensor' or 'Unpair SRM ANT+ bridge' when there is an ANT+ device paired.
 
-      %1$d: sensor id number. E.g., '1'.">
+      %1$d: sensor id number. E.g., '1'.
+      Screenshot: settings_sensor_ant_paired.png">
     Paired with: %1$d.
   </string>
   <string name="settings_sensor_bluetooth_options"
-    translation_description="In the Sensor settings, the section header to configure the Bluetooth
-      options.">
+    translation_description="In the 'Sensor' settings, the section header to configure the Bluetooth
+      options.
+
+      Character limit: ~40 (1 line)
+      Screenshot: settings_sensor.png">
    Bluetooth options
   </string>
   <string name="settings_sensor_bluetooth_pairing"
-    translation_description="In the Sensor settings, under the 'Bluetooth options' configurations,
-      the option to pair with a Bluetooth device.">
+    translation_description="In the 'Sensor' settings, under the 'Bluetooth options' configurations,
+      the option to pair with a Bluetooth device.
+      
+      Character limit: ~26 (1 line)
+      Screenshot: settings_sensor.png">
     Bluetooth pairing
   </string>
   <string name="settings_sensor_bluetooth_pairing_summary"
-    translation_description="In the Sensor settings, under the 'Bluetooth options' configurations,
+    translation_description="In the 'Sensor' settings, under the 'Bluetooth options' configurations,
       the summary for the 'Bluetooth pairing' option explaining that it will open the Android's
-      Bluetooth settings to pair a device.">
+      Bluetooth settings to pair a device.
+
+      Screenshot: settings_sensor.png">
     Open Android\'s Bluetooth settings to pair a device.
   </string>
   <string name="settings_sensor_bluetooth_sensor"
-    translation_description="In the Sensor settings, under the 'Bluetooth options' configurations,
-      the dropdown option to pick a Bluetooth sensor.">
+    translation_description="In the 'Sensor' settings, under the 'Bluetooth options' configurations,
+      the dropdown option to pick a Bluetooth sensor.
+      
+      Character limit: ~23 (1 line)
+      Screenshot: settings_sensor.png">
     Bluetooth sensor
   </string>
   <string name="settings_sensor_bluetooth_sensor_summary"
-    translation_description="In the Sensor settings, under the 'Bluetooth options' configurations,
+    translation_description="In the 'Sensor' settings, under the 'Bluetooth options' configurations,
       the summary for the 'Bluetooth sensor' dropdown option explaining it is to pick a Bluetooth
-      sensor to connect to.">
+      sensor to connect to.
+
+      Screenshot: settings_sensor.png">
     The Bluetooth sensor to connect to.
   </string>
   <string name="settings_sensor_type"
-    translation_description="In the Sensor settings, the dropdown option to choose a sensor type.">
+    translation_description="In the 'Sensor' settings, the dropdown option to choose a sensor type.
+      
+      Character limit: ~23 (1 line)
+      Screenshot: settings_sensor.png">
     Sensor type
   </string>
   <string name="settings_sensor_type_ant"
-    translation_description="In the Sensor settings, for the 'Sensor type' dropdown, the option to
-      connect to an ANT+ heart rate sensor.">
+    translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
+      connect to an ANT+ heart rate sensor.
+
+      Character limit: ~21 (1 line)
+      Screenshot: settings_sensor_type.png">
     ANT+ heart rate sensor
   </string>
   <string name="settings_sensor_type_none"
-    translation_description="In the Sensor settings, for the 'Sensor type' dropdown, the option to
-      not connect to any sensor.">
+    translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
+      not connect to any sensor.
+
+      Character limit: ~21 (1 line)
+      Screenshot: settings_sensor_type.png">
     None
   </string>
   <string name="settings_sensor_type_polar"
-    translation_description="In the Sensor settings, for the 'Sensor type' dropdown, the option to
-      connect to a Polar bluetooth sensor.">
+    translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
+      connect to a Polar bluetooth sensor.
+
+      Character limit: ~21 (1 line)
+      Screenshot: settings_sensor_type.png">
     Polar Bluetooth
   </string>
   <string name="settings_sensor_type_srm"
-    translation_description="In the Sensor settings, for the 'Sensor type' dropdown, the option to
-      connect to a SRM ANT+ bridge.">
+    translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
+      connect to a SRM ANT+ bridge.
+
+      Character limit: ~21 (1 line)
+      Screenshot: settings_sensor_type.png">
     SRM ANT+ bridge
   </string>
   <string name="settings_sensor_type_summary"
-    translation_description="In the Sensor settings, the summary for the 'Sensor type' option
-      explaining that it is to configure the type of sensor to connect to.">
+    translation_description="In the 'Sensor' settings, the summary for the 'Sensor type' option
+      explaining that it is to configure the type of sensor to connect to.
+
+      Screenshot: settings_sensor.png">
     The type of sensor to connect to.
   </string>
   <string name="settings_sensor_type_zephyr"
-    translation_description="In the Sensor settings, for the 'Sensor type' dropdown, the option to
-      connect to a Zephyr bluetooth sensor.">
+    translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
+      connect to a Zephyr bluetooth sensor.
+
+      Character limit: ~21 (1 line)
+      Screenshot: settings_sensor_type.png">
     Zephyr Bluetooth
   </string>
   <string name="settings_sensor_unpair_ant"
-    translation_description="In the Sensor settings, under the 'ANT+ options' configurations, the
-      option to unpair an ANT+ heart rate sensor.">
+    translation_description="In the 'Sensor' settings, under the 'ANT+ options' configurations, the
+      option to unpair an ANT+ heart rate sensor.
+      
+      Character limit: ~26 (1 line)
+      Screenshot: settings_sensor.png">
     Unpair ANT+ heart rate sensor
   </string>
   <string name="settings_sensor_unpair_srm"
-    translation_description="In the Sensor settings, under the 'ANT+ options' configurations, the
-      option to unpair a SRM ANT+ bridge.">
+    translation_description="In the 'Sensor' settings, under the 'ANT+ options' configurations, the
+      option to unpair a SRM ANT+ bridge.
+      
+      Character limit: ~26 (1 line)
+      Screenshot: settings_sensor.png">
     Unpair SRM ANT+ bridge
   </string>
   <string name="settings_sharing"
-    translation_description="In the Settings page, the option to change the track sharing related
-      settings.">
+    translation_description="In the 'Settings' page, the option to change the track sharing related
+      settings.
+      
+      Character limit: ~26 (1 line)
+      Screenshot: settings.png">
     Sharing
   </string>
   <string name="settings_sharing_allow_access"
-    translation_description="In the Sharing settings, the checkbox option to allow third party apps
-      access to the My Tracks data.">
+    translation_description="In the 'Sharing' settings, the checkbox option to allow third party
+      apps access to the My Tracks data.
+      
+      Character limit: ~23 (1 line)
+      Screenshot: settings_sharing.png">
     Allow access
   </string>
   <string name="settings_sharing_allow_access_confirm_message"
-    translation_description="In the Sharing settings, after checking the 'Allow access' checkbox,
+    translation_description="In the 'Sharing' settings, after checking the 'Allow access' checkbox,
       the confirmation dialog asking the user if he wants to allow other apps, including apps
       installed in the future, to control and access My Tracks data. In addition, no further
-      notification of third party app access will be shown.">
+      notification of third party app access will be shown.
+      
+      Screenshot: settings_sharing_allow_access_confirm_message.png">
     Are you sure you want to allow other apps, including future apps, to control and access My
     Tracks data? There will be no further notification.
   </string>
   <string name="settings_sharing_allow_access_summary_off"
-    translation_description="In the Sharing settings, the summary for the 'Allow access' checkbox
+    translation_description="In the 'Sharing' settings, the summary for the 'Allow access' checkbox
       option when it is unchecked explaining that other apps cannot read, write, start/stop
-      recording My Tracks data.">
+      recording My Tracks data.
+      
+      Screenshot: settings_sharing_unchecked.png">
     Other apps cannot read, write, start/stop recording My Tracks data.
   </string>
   <string name="settings_sharing_allow_access_summary_on"
-    translation_description="In the Sharing settings, the summary for the 'Allow access' checkbox
+    translation_description="In the 'Sharing' settings, the summary for the 'Allow access' checkbox
       option when it is checked explaining that other apps can read, write, start/stop recording My
-      Tracks data.">
+      Tracks data.
+      
+      Screenshot: settings_sharing.png">
     Other apps can read, write, start/stop recording My Tracks data.
   </string>
   <string name="settings_sharing_map_public"
-    translation_description="In the Sharing settings, the checkbox option to make a new map created
-      in Google My Maps public.">
+    translation_description="In the 'Sharing' settings, the checkbox option to make a new map
+      created in Google My Maps public.
+      
+      Character limit: ~23 (1 line)
+      Screenshot: settings_sharing.png">
     Make new maps public
   </string>
   <string name="settings_sharing_map_public_summary_off"
-    translation_description="In the Sharing settings, the summary for the 'Make new maps public'
+    translation_description="In the 'Sharing' settings, the summary for the 'Make new maps public'
       checkbox option when it is unchecked explaining that new maps created in Google My Maps will
-      be unlisted, as opposed to public.">
+      be unlisted, as opposed to public.
+      
+      Screenshot: settings_sharing_unchecked.png">
     Make new maps created in Google My Maps unlisted.
   </string>
   <string name="settings_sharing_map_public_summary_on"
-    translation_description="In the Sharing settings, the summary for the 'Make new maps public'
+    translation_description="In the 'Sharing' settings, the summary for the 'Make new maps public'
       checkbox option when it is checked explaining that new maps created in Google My Maps will
-      be public, as opposed to unlisted.">
+      be public, as opposed to unlisted.
+      
+      Screenshot: settings_sharing.png">
     Make new maps created in Google My Maps public.
   </string>
   <string name="settings_sharing_url_only"
-    translation_description="In the Sharing settings, the checkbox option to share only the URL
-      link, without any additional text, when sharing the URL with friends.">
+    translation_description="In the 'Sharing' settings, the checkbox option to share only the URL
+      link, without any additional text, when sharing the URL with friends.
+      
+      Character limit: ~23 (1 line)
+      Screenshot: settings_sharing.png">
     Share only URL link
   </string>
   <string name="settings_sharing_url_only_summary_off"
-    translation_description="In the Sharing settings, the summary for the 'Share only URL link'
+    translation_description="In the 'Sharing' settings, the summary for the 'Share only URL link'
       checkbox option when it is unchecked explaining that some text and the the URL link will be
-      sent when sharing the URL with friends.">
+      sent when sharing the URL with friends.
+      
+      Screenshot: settings_sharing_unchecked.png">
     Some text and the URL link will be sent when sharing the URL with friends.
   </string>
   <string name="settings_sharing_url_only_summary_on"
-    translation_description="In the Sharing settings, the summary for the 'Share only URL link'
+    translation_description="In the 'Sharing' settings, the summary for the 'Share only URL link'
       checkbox option when it is checked explaining that only the URL link, without any additional
-      text, will be sent when sharing the URL with friends.">
+      text, will be sent when sharing the URL with friends.
+      
+      Screenshot: settings_sharing.png">
    Only the URL link will be sent when sharing the URL with friends.
   </string>
   <string name="settings_title"
-    translation_description="The title of the Settings page.">
+    translation_description="The title of the 'Settings' page.    
+    
+      Screenshot: settings.png">
     My Tracks settings
   </string>
 
