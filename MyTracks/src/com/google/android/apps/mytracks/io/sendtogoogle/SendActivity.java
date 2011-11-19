@@ -67,9 +67,6 @@ public class SendActivity extends Activity implements ProgressIndicator {
   private static final String STATE_SEND_TO_MAPS = "mapsSend";
   private static final String STATE_SEND_TO_FUSION_TABLES = "fusionSend";
   private static final String STATE_SEND_TO_DOCS = "docsSend";
-  private static final String STATE_DOCS_MESSAGE = "docsMsg";
-  private static final String STATE_FUSION_TABLES_MESSAGE = "fusionMsg";
-  private static final String STATE_MAPS_MESSAGE = "mapsMsg";
   private static final String STATE_DOCS_SUCCESS = "docsSuccess";
   private static final String STATE_FUSION_SUCCESS = "fusionSuccess";
   private static final String STATE_MAPS_SUCCESS = "mapsSuccess";
@@ -134,10 +131,6 @@ public class SendActivity extends Activity implements ProgressIndicator {
   private boolean sendToMyMapsSuccess = false;
   private boolean sendToFusionTablesSuccess = false;
   private boolean sendToDocsSuccess = false;
-  // TODO: Make these be used for showing results
-  private String sendToMyMapsMessage;
-  private String sendToFusionTablesMessage;
-  private String sendToDocsMessage;
 
   // Send result information, used to share a link.
   private String sendToMyMapsMapId;
@@ -259,10 +252,6 @@ public class SendActivity extends Activity implements ProgressIndicator {
     sendToFusionTablesSuccess = savedInstanceState.getBoolean(STATE_FUSION_SUCCESS);
     sendToDocsSuccess = savedInstanceState.getBoolean(STATE_DOCS_SUCCESS);
 
-    sendToMyMapsMessage = savedInstanceState.getString(STATE_MAPS_MESSAGE);
-    sendToFusionTablesMessage = savedInstanceState.getString(STATE_FUSION_TABLES_MESSAGE);
-    sendToDocsMessage = savedInstanceState.getString(STATE_DOCS_MESSAGE);
-
     sendToMyMapsMapId = savedInstanceState.getString(STATE_MAP_ID);
     sendToFusionTablesTableId = savedInstanceState.getString(STATE_TABLE_ID);
 
@@ -279,10 +268,6 @@ public class SendActivity extends Activity implements ProgressIndicator {
     outState.putBoolean(STATE_MAPS_SUCCESS, sendToMyMapsSuccess);
     outState.putBoolean(STATE_FUSION_SUCCESS, sendToFusionTablesSuccess);
     outState.putBoolean(STATE_DOCS_SUCCESS, sendToDocsSuccess);
-
-    outState.putString(STATE_MAPS_MESSAGE, sendToMyMapsMessage);
-    outState.putString(STATE_FUSION_TABLES_MESSAGE, sendToFusionTablesMessage);
-    outState.putString(STATE_DOCS_MESSAGE, sendToDocsMessage);
 
     outState.putString(STATE_MAP_ID, sendToMyMapsMapId);
     outState.putString(STATE_TABLE_ID, sendToFusionTablesTableId);
@@ -428,9 +413,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
     SendToMyMaps.OnSendCompletedListener onCompletion = new SendToMyMaps.OnSendCompletedListener() {
       @Override
-      public void onSendCompleted(String mapId, boolean success, String statusMessage) {
-        // TODO: Use this message
-        sendToMyMapsMessage = statusMessage;
+      public void onSendCompleted(String mapId, boolean success) {
         sendToMyMapsSuccess = success;
         if (sendToMyMapsSuccess) {
           sendToMyMapsMapId = mapId;
@@ -489,9 +472,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
     OnSendCompletedListener onCompletion = new OnSendCompletedListener() {
       @Override
-      public void onSendCompleted(String tableId, boolean success, String statusMessage) {
-        // TODO: Use this message
-        sendToFusionTablesMessage = statusMessage;
+      public void onSendCompleted(String tableId, boolean success) {
         sendToFusionTablesSuccess = success;
         if (sendToFusionTablesSuccess) {
           sendToFusionTablesTableId = tableId;
@@ -562,11 +543,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
     Runnable onCompletion = new Runnable() {
       public void run() {
         setProgressValue(100);
-
-        // TODO: Use this message
-        sendToDocsMessage = sender.getStatusMessage();
         sendToDocsSuccess = sender.wasSuccess();
-
         executeStateMachine(SendState.SEND_TO_DOCS_DONE);
       }
     };
@@ -871,11 +848,8 @@ public class SendActivity extends Activity implements ProgressIndicator {
   private void resetState() {
     currentState = SendState.SEND_OPTIONS;
     sendToMyMapsMapId = null;
-    sendToMyMapsMessage = "";
     sendToMyMapsSuccess = true;
-    sendToFusionTablesMessage = "";
     sendToFusionTablesSuccess = true;
-    sendToDocsMessage = "";
     sendToDocsSuccess = true;
     sendToFusionTablesTableId = null;
   }

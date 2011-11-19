@@ -72,7 +72,7 @@ public class SendToFusionTables implements Runnable {
    * Listener invoked when sending to fusion tables completes.
    */
   public interface OnSendCompletedListener {
-    void onSendCompleted(String tableId, boolean success, String statusMessage);
+    void onSendCompleted(String tableId, boolean success);
   }
 
   /** The GData service id for Fusion Tables. */
@@ -169,9 +169,6 @@ public class SendToFusionTables implements Runnable {
   }
 
   private void doUpload() {
-    String errorFormat = context.getString(R.string.send_google_error_service);
-    String serviceName = context.getString(SendType.FUSION_TABLES.getServiceName());
-    String statusMessage = String.format(errorFormat, serviceName);
     boolean success = true;
     try {
       progressIndicator.setProgressValue(PROGRESS_INITIALIZATION);
@@ -190,6 +187,7 @@ public class SendToFusionTables implements Runnable {
       // Create a new table:
       progressIndicator.setProgressValue(PROGRESS_FUSION_TABLE_CREATE);
       String creatingFormat = context.getString(R.string.send_google_progress_creating);
+      String serviceName = context.getString(SendType.FUSION_TABLES.getServiceName());
       progressIndicator.setProgressMessage(String.format(creatingFormat, serviceName));
       if (!createNewTable(track) || !makeTableUnlisted()) {
         return;
@@ -211,18 +209,14 @@ public class SendToFusionTables implements Runnable {
         return;
       }
 
-      String successFormat = context.getString(R.string.send_google_success_new);
-      String url = context.getString(SendType.FUSION_TABLES.getServiceUrl());
-      statusMessage = String.format(successFormat, serviceName, url);
       Log.d(Constants.TAG, "SendToFusionTables: Done: " + success);
       progressIndicator.setProgressValue(PROGRESS_COMPLETE);
     } finally {
       final boolean finalSuccess = success;
-      final String finalStatusMessage = statusMessage;
       context.runOnUiThread(new Runnable() {
         public void run() {
           if (onCompletion != null) {
-            onCompletion.onSendCompleted(tableId, finalSuccess, finalStatusMessage);
+            onCompletion.onSendCompleted(tableId, finalSuccess);
           }
         }
       });

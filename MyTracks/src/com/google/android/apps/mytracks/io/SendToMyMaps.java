@@ -76,7 +76,7 @@ public class SendToMyMaps implements Runnable {
   private int totalSegmentsUploaded;
 
   public interface OnSendCompletedListener {
-    void onSendCompleted(String mapId, boolean success, String statusMessage);
+    void onSendCompleted(String mapId, boolean success);
   }
 
   public SendToMyMaps(Activity context, String mapId, AuthManager auth,
@@ -99,9 +99,6 @@ public class SendToMyMaps implements Runnable {
   }
 
   private void doUpload() {
-    String errorFormat = context.getString(R.string.send_google_error_service);
-    String serviceName = context.getString(SendType.MYMAPS.getServiceName());
-    String statusMessage = String.format(errorFormat, serviceName);
     boolean success = true;
     try {
       progressIndicator.setProgressMessage(
@@ -132,6 +129,7 @@ public class SendToMyMaps implements Runnable {
         }
 
         String creatingFormat = context.getString(R.string.send_google_progress_creating);
+        String serviceName = context.getString(SendType.MYMAPS.getServiceName());
         progressIndicator.setProgressMessage(String.format(creatingFormat, serviceName));
 
         StringBuilder mapIdBuilder = new StringBuilder();
@@ -175,12 +173,6 @@ public class SendToMyMaps implements Runnable {
         }
       }
 
-      if (success) {
-        String successFormat = isNewMap ? context.getString(R.string.send_google_success_new)
-                                        : context.getString(R.string.send_google_success_existing);
-        String url = context.getString(SendType.MYMAPS.getServiceUrl());
-        statusMessage = String.format(successFormat, serviceName, url);
-      }
       Log.d(TAG, "SendToMyMaps: Done: " + success);
       progressIndicator.setProgressValue(100);
     } finally {
@@ -189,11 +181,10 @@ public class SendToMyMaps implements Runnable {
       }
 
       final boolean finalSuccess = success;
-      final String finalStatusMessage = statusMessage;
       context.runOnUiThread(new Runnable() {
         public void run() {
           if (onCompletion != null) {
-            onCompletion.onSendCompleted(mapId, finalSuccess, finalStatusMessage);
+            onCompletion.onSendCompleted(mapId, finalSuccess);
           }
         }
       });

@@ -969,13 +969,6 @@ limitations under the License.
       occurred and ask the user to try again.">
     An error has occurred. Please try again.
   </string>
-  <string name="send_google_error_service"
-    translation_description="When sending a track to a Google service, a message indicating that an
-      error has occurred.
-
-      %1$s: service name. 'Google My Maps', 'Google Fusion Tables', or 'Google Docs'.">
-    There was an error while sending your track to %1$s.
-  </string>
   <string name="send_google_existing_map"
     translation_description="When sending a track to Google My Maps, the radio option to use an
       existing map as opposed to create a new map.">
@@ -1057,26 +1050,10 @@ limitations under the License.
       button on the bottom to send the track to the selected Google services.">
     Send now
   </string>
-  <string name="send_google_success_existing"
-    translation_description="When sending a track to a Google service, the message on the result
-      page indicating that the track is sent to an existing item in the service.
-
-      %1$s: service name. 'Google My Maps', 'Google Fusion Tables', or 'Google Docs'.
-      %2$s: service url. 'maps.google.com', 'google.com/fusiontable', or 'docs.google.com'.">
-    Your track has been sent to %1$s %2$s.
-  </string>
   <string name="send_google_success_footer"
     translation_description="When sending a track to Google, the additional comment on the bottom of
       the result page.">
     It may take a few minutes before new tracks appear.
-  </string>
-  <string name="send_google_success_new"
-    translation_description="When sending a track to a Google service, the message on the result
-      page indicating that a new item has been created.
-
-      %1$s: service name. 'Google My Maps', 'Google Fusion Tables', or 'Google Docs'.
-      %2$s: service url. 'maps.google.com', 'google.com/fusiontable', or 'docs.google.com'.">
-    A new item has been created at %1$s %2$s.
   </string>
   <string name="send_google_title"
     translation_description="When sending a track to Google, the dialog title to choose the Google

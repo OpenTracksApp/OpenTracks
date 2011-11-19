@@ -22,7 +22,6 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.docs.DocsHelper;
 import com.google.android.apps.mytracks.io.gdata.GDataClientFactory;
 import com.google.android.apps.mytracks.io.gdata.GDataWrapper;
-import com.google.android.apps.mytracks.io.sendtogoogle.SendType;
 import com.google.android.common.gdata.AndroidXmlParserFactory;
 import com.google.android.maps.mytracks.R;
 import com.google.wireless.gdata.client.GDataClient;
@@ -55,10 +54,7 @@ public class SendToDocs {
   private final ProgressIndicator progressIndicator;
   private final boolean metricUnits;
 
-  private boolean createdNewSpreadSheet = false;
-
   private boolean success = true;
-  private String statusMessage = "";
   private Runnable onCompletion = null;
 
 
@@ -92,12 +88,7 @@ public class SendToDocs {
   }
 
   private void doUpload(long trackId) {
-    // TODO
-    String errorFormat = activity.getString(R.string.send_google_error_service);
-    String serviceName = activity.getString(SendType.DOCS.getServiceName());
-    statusMessage = String.format(errorFormat, serviceName);
     success = false;
-
     try {
       if (trackId == -1) {
         Log.w(Constants.TAG, "Cannot get track id.");
@@ -117,13 +108,6 @@ public class SendToDocs {
 
       Log.d(Constants.TAG, "SendToDocs: Uploading to spreadsheet");
       success = uploadToDocs(track);
-      if (success) {
-        String successFormat = createdNewSpreadSheet 
-            ? activity.getString(R.string.send_google_success_new)
-            : activity.getString(R.string.send_google_success_existing);
-        String url = activity.getString(SendType.DOCS.getServiceUrl());
-        statusMessage = String.format(successFormat, serviceName, url);
-      }
       Log.d(Constants.TAG, "SendToDocs: Done.");
     } finally {
       if (onCompletion != null) {
@@ -134,10 +118,6 @@ public class SendToDocs {
 
   public boolean wasSuccess() {
     return success;
-  }
-
-  public String getStatusMessage() {
-    return statusMessage;
   }
 
   public void setOnCompletion(Runnable onCompletion) {
@@ -222,7 +202,6 @@ public class SendToDocs {
           return false;
         }
         progressIndicator.setProgressValue(80);
-        createdNewSpreadSheet = true;
 
         if (spreadsheetId == null) {
           progressIndicator.setProgressValue(85);
