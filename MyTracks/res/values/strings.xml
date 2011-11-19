@@ -18,308 +18,379 @@ limitations under the License.
 
   <!-- About Page -->
   <string name="about_copyright_notice"
-    translation_description="In the 'About My Tracks' page, the copyright notice.">
+    translation_description="In the 'About My Tracks' page, the copyright notice.
+
+      Screenshot: about.png">
     Copyright 2009 Google Inc.
   </string>
   <string name="about_license"
     translation_description="In the 'About My Tracks' page, the button on the bottom to view the
-      terms of service agreement.">
+      terms of service agreement.
+      
+      Screenshot: about.png">
     License
   </string>
   <string name="about_privacy"
     translation_description="In the 'About My Tracks' page, label for the privacy link. E.g.,
-      'Privacy: m.google.com/privacy'.">
+      'Privacy: m.google.com/privacy'.
+      
+      Screenshot: about.png">
     Privacy:
   </string>
   <string name="about_support"
     translation_description="In the 'About My Tracks' page, label for the support link. E.g.,
-      'Support: mytracks.appspot.com'.">
+      'Support: mytracks.appspot.com'.
+      
+      Screenshot: about.png">    
     Support:
   </string>
   <string name="about_team"
     translation_description="In the 'About My Tracks' page, label for the team members. E.g.,
-      'Team: Sandor Dornbush, Rodrigo Damazio'.">
+      'Team: Bart Niechwiej'.
+    
+    Screenshot: about.png">    
     Team:
   </string>
   <string name="about_version"
     translation_description="In the 'About My Tracks' page, label for the version number. E.g.,
-      'Version: 1.1.10'.">
+      'Version: 1.1.11'.
+
+    Screenshot: about.png">   
     Version:
   </string>
 
   <!-- Activity Type -->
   <string name="activity_type_airplane"
-    translation_description="When entering the Activity Type, an option for airplane.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for airplane.">
     airplane
   </string>
   <string name="activity_type_atv"
-    translation_description="When entering the Activity Type, an option for ATV (All Terrain
-      Vehicles).">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for ATV (All Terrain Vehicles).">
     ATV
   </string>
   <string name="activity_type_blimp"
-    translation_description="When entering the Activity Type, an option for blimp.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for blimp.">
     blimp
   </string>
   <string name="activity_type_climbing"
-    translation_description="When entering the Activity Type, an option for climbing.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for climbing.">
     climbing
   </string>
   <string name="activity_type_commercial_airplane"
-    translation_description="When entering the Activity Type, an option for commercial airplane.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for commercial airplane.">
     commercial airplane
   </string>
   <string name="activity_type_cross_country_skiing_classic"
-    translation_description="When entering the Activity Type, an option for cross-country skiing
-      (classic).">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for cross-country skiing (classic).">
     cross-country skiing (classic)
   </string>
   <string name="activity_type_cross_country_skiing_skate"
-    translation_description="When entering the Activity Type, an option for cross-country skiing
-      (skate).">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for cross-country skiing (skate).">
     cross-country skiing (skate)
   </string>
   <string name="activity_type_cycling"
-    translation_description="When entering the Activity Type, an option for cycling.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for cycling.">
     cycling
   </string>
   <string name="activity_type_dirt_bike"
-    translation_description="When entering the Activity Type, an option for dirt bike.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for dirt bike.">
     dirt bike
   </string>
   <string name="activity_type_donkey_back_riding"
-    translation_description="When entering the Activity Type, an option for donkey back riding.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for donkey back riding.">
     donkey back riding
   </string>
   <string name="activity_type_driving_bus"
-    translation_description="When entering the Activity Type, an option for driving bus.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for driving bus.">
     driving bus
   </string>
   <string name="activity_type_driving_car"
-    translation_description="When entering the Activity Type, an option for driving car.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for driving car.">
     driving car
   </string>
   <string name="activity_type_ferry"
-    translation_description="When entering the Activity Type, an option for ferry.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for ferry.">
     ferry
   </string>
   <string name="activity_type_frisbee"
-    translation_description="When entering the Activity Type, an option for frisbee.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for frisbee.">
     frisbee
   </string>
   <string name="activity_type_gliding"
-    translation_description="When entering the Activity Type, an option for gliding.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for gliding.">
     gliding
   </string>
   <string name="activity_type_hang_gliding"
-    translation_description="When entering the Activity Type, an option for hang gliding.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for hang gliding.">
     hang gliding
   </string>
   <string name="activity_type_helicopter"
-    translation_description="When entering the Activity Type, an option for helicopter.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for helicopter.">
     helicopter
   </string>
   <string name="activity_type_hiking"
-    translation_description="When entering the Activity Type, an option for hiking.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for hiking.">
     hiking
   </string>
   <string name="activity_type_horse_back_riding"
-    translation_description="When entering the Activity Type, an option for horse back riding.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for horse back riding.">
     horse back riding
   </string>
   <string name="activity_type_hot_air_balloon"
-    translation_description="When entering the Activity Type, an option for hot air balloon.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for hot air balloon.">
     hot air balloon
   </string>
   <string name="activity_type_ice_sailing"
-    translation_description="When entering the Activity Type, an option for ice sailing.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for ice sailing.">
     ice sailing
   </string>
   <string name="activity_type_inline_skating"
-    translation_description="When entering the Activity Type, an option for inline skating.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for inline skating.">
     inline skating
   </string>
   <string name="activity_type_kayaking"
-    translation_description="When entering the Activity Type, an option for kayaking.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for kayaking.">
     kayaking
   </string>
   <string name="activity_type_kite_surfing"
-    translation_description="When entering the Activity Type, an option for kite surfing.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for kite surfing.">
     kite surfing
   </string>
   <string name="activity_type_land_sailing"
-    translation_description="When entering the Activity Type, an option for land sailing.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for land sailing.">
     land sailing
   </string>
   <string name="activity_type_mixed_type"
-    translation_description="When entering the Activity Type, an option for mixed type.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for mixed type.">
     mixed type
   </string>
   <string name="activity_type_motor_bike"
-    translation_description="When entering the Activity Type, an option for motor bike.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for motor bike.">
     motor bike
   </string>
   <string name="activity_type_motor_boating"
-    translation_description="When entering the Activity Type, an option for motor boating.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for motor boating.">
     motor boating
   </string>
   <string name="activity_type_mountain_biking"
-    translation_description="When entering the Activity Type, an option for mountain biking.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for mountain biking.">
     mountain biking
   </string>
   <string name="activity_type_off_trail_hiking"
-    translation_description="When entering the Activity Type, an option for off trail hiking.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for off trail hiking.">
     off trail hiking
   </string>
   <string name="activity_type_other"
-    translation_description="When entering the Activity Type, an option for other.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for other.">
     other
   </string>
   <string name="activity_type_paddling"
-    translation_description="When entering the Activity Type, an option for paddling.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for paddling.">
     paddling
   </string>
   <string name="activity_type_para_gliding"
-    translation_description="When entering the Activity Type, an option for para gliding.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for para gliding.">
     para gliding
   </string>
   <string name="activity_type_rc_airplane"
-    translation_description="When entering the Activity Type, an option for RC (Remote Controlled)
-      airplane.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for RC (Remote Controlled) airplane.">
     RC airplane
   </string>
   <string name="activity_type_rc_boat"
-    translation_description="When entering the Activity Type, an option for RC (Remote Controlled)
-      boat.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for RC (Remote Controlled) boat.">
     RC boat
   </string>
   <string name="activity_type_rc_helicopter"
-    translation_description="When entering the Activity Type, an option for RC (Remote Controlled)
-      helicopter.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for RC (Remote Controlled) helicopter.">
     RC helicopter
   </string>
   <string name="activity_type_riding"
-    translation_description="When entering the Activity Type, an option for riding.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for riding.">
     riding
   </string>
   <string name="activity_type_road_biking"
-    translation_description="When entering the Activity Type, an option for road biking.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for road biking.">
     road biking
   </string>
   <string name="activity_type_roller_skiing_classic"
-    translation_description="When entering the Activity Type, an option for roller skiing
-      (classic).">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for roller skiing (classic).">
     roller skiing (classic)
   </string>
   <string name="activity_type_roller_skiing_skate"
-    translation_description="When entering the Activity Type, an option for roller skiing (skate).">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for roller skiing (skate).">
     roller skiing (skate)
   </string>
   <string name="activity_type_rowing"
-    translation_description="When entering the Activity Type, an option for rowing.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for rowing.">
     rowing
   </string>
   <string name="activity_type_running"
-    translation_description="When entering the Activity Type, an option for running.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for running.">
     running
   </string>
   <string name="activity_type_sailing"
-    translation_description="When entering the Activity Type, an option for sailing.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for sailing.">
     sailing
   </string>
   <string name="activity_type_seaplane"
-    translation_description="When entering the Activity Type, an option for seaplane.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for seaplane.">
     seaplane
   </string>
   <string name="activity_type_skate_boarding"
-    translation_description="When entering the Activity Type, an option for skate boarding.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for skate boarding.">
     skate boarding
   </string>
   <string name="activity_type_skating"
-    translation_description="When entering the Activity Type, an option for skating.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for skating.">
     skating
   </string>
   <string name="activity_type_skiing"
-    translation_description="When entering the Activity Type, an option for skiing.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for skiing.">
     skiing
   </string>
   <string name="activity_type_sky_jumping"
-    translation_description="When entering the Activity Type, an option for sky jumping.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for sky jumping.">
     sky jumping
   </string>
   <string name="activity_type_sled"
-    translation_description="When entering the Activity Type, an option for sled.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for sled.">
     sled
   </string>
   <string name="activity_type_snow_boarding"
-    translation_description="When entering the Activity Type, an option for snow boarding.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for snow boarding.">
     snow boarding
   </string>
   <string name="activity_type_snow_shoeing"
-    translation_description="When entering the Activity Type, an option for snow shoeing.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for snow shoeing.">
     snow shoeing
   </string>
   <string name="activity_type_speed_walking"
-    translation_description="When entering the Activity Type, an option for speed walking.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for speed walking.">
     speed walking
   </string>
   <string name="activity_type_street_running"
-    translation_description="When entering the Activity Type, an option for street running.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for street running.">
     street running
   </string>
   <string name="activity_type_surfing"
-    translation_description="When entering the Activity Type, an option for surfing.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for surfing.">
     surfing
   </string>
   <string name="activity_type_track_cycling"
-    translation_description="When entering the Activity Type, an option for track cycling.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for track cycling.">
     track cycling
   </string>
   <string name="activity_type_track_running"
-    translation_description="When entering the Activity Type, an option for track running.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for track running.">
     track running
   </string>
   <string name="activity_type_trail_hiking"
-    translation_description="When entering the Activity Type, an option for trail hiking.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for trail hiking.">
     trail hiking
   </string>
   <string name="activity_type_trail_running"
-    translation_description="When entering the Activity Type, an option for trail running.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for trail running.">
     trail running
   </string>
   <string name="activity_type_train"
-    translation_description="When entering the Activity Type, an option for train.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for train.">
     train
   </string>
   <string name="activity_type_ultimate_frisbee"
-    translation_description="When entering the Activity Type, an option for ultimate frisbee.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for ultimate frisbee.">
     ultimate frisbee
   </string>
   <string name="activity_type_unknown"
-    translation_description="When entering the Activity Type, an option for unknown.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for unknown.">
     unknown
   </string>
   <string name="activity_type_wakeboarding"
-    translation_description="When entering the Activity Type, an option for wakeboarding.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for wakeboarding.">
     wakeboarding
   </string>
   <string name="activity_type_walking"
-    translation_description="When entering the Activity Type, an option for walking.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for walking.">
     walking
   </string>
   <string name="activity_type_water_skiing"
-    translation_description="When entering the Activity Type, an option for water skiing.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for water skiing.">
     water skiing
   </string>
   <string name="activity_type_wind_surfing"
-    translation_description="When entering the Activity Type, an option for wind surfing.">
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for wind surfing.">
     wind surfing
   </string>
 
   <!-- Android Market -->
   <string name="android_market_description_text"
     translation_description="For the Android Market (not used in the app), the description text.
-      4000 characters limit.">
+    
+      Character limit: 4000.">
     Use My Tracks while you run, bike, hike, or do anything else outdoors, and it will use the GPS
     sensor in your phone to record the path you took. It will also gather useful statistics such as
     time, speed, distance, and elevation. You can review all of this data live, or you can save it
@@ -351,30 +422,41 @@ limitations under the License.
     http://mytracks.googlecode.com\n
   </string>
   <string name="android_market_promo_text"
-    translation_description="For the Android Market (not used in the app), the promotion text. 80
-      characters limit.">
+    translation_description="For the Android Market (not used in the app), the promotion text.
+    
+      Character limit: 80.">
     My Tracks allows you to record and share your GPS tracks, including statistics.
   </string>
 
   <!-- Chart Settings -->
   <string name="chart_settings_by_distance"
-    translation_description="In the Chart Settings, under the 'X axis' section, the radio option
-      to show the charts by distance. The other radio option is to show by time. User can only
-      choose one of the options.">
+    translation_description="In the 'Chart settings' dialog, under the 'X axis' section, the radio
+      option to show the charts by distance. The other radio option is to show by time. User can
+      only choose one of the options.
+      
+      Screenshot: chart_settings.png">
     By distance
   </string>
   <string name="chart_settings_by_time"
-    translation_description="In the Chart Settings, under the 'X axis' section, the radio option
-      to show the charts by time. The other radio option is to show by distance. User can only
-      choose one of the options.">
+    translation_description="In the 'Chart settings' dialog, under the 'X axis' section, the radio
+      option to show the charts by time. The other radio option is to show by distance. User can
+      only choose one of the options.
+      
+      Screenshot: chart_settings.png">
     By time
   </string>
   <string name="chart_settings_x_axis"
-    translation_description="In the Chart Settings, the section label for configuring the X axis.">
+    translation_description="In the 'Chart settings' dialog, the section label for configuring the X
+      axis.
+    
+      Screenshot: chart_settings.png">
     X axis
   </string>
   <string name="chart_settings_y_axis"
-    translation_description="In the Chart Settings, the section label for configuring the Y axis.">
+    translation_description="In the 'Chart settings' dialog, the section label for configuring the Y
+      axis.
+      
+      Screenshot: chart_settings.png">
     Y axis
   </string>
 

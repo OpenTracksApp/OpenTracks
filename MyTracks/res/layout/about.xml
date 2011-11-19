@@ -14,139 +14,141 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<TableLayout
+<ScrollView
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_height="wrap_content"
-  android:layout_width="wrap_content"
-  android:stretchColumns="2">
-  <TableRow>
-    <ImageView
-      android:layout_column="1"
-      android:src="@drawable/arrow_icon" />
-    <LinearLayout
-      android:layout_column="2"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      android:orientation="vertical">
-      <TextView
+  android:fillViewport="true">
+  <TableLayout
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:stretchColumns="2">
+    <TableRow>
+      <ImageView
+        android:layout_column="1"
+        android:src="@drawable/arrow_icon"/>
+      <LinearLayout
+        android:layout_column="2"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="@string/my_tracks_app_name"
-        android:textSize="30sp" />
-      <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="@string/about_copyright_notice"
-        android:textSize="15sp" />
-    </LinearLayout>
-  </TableRow>
-
-  <View android:layout_height="2dip" />
-
-  <TableRow>
-    <TextView
-      android:paddingLeft="10dip"
-      android:paddingRight="10dip"
-      android:layout_column="1"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      android:text="@string/about_team"
-      android:textSize="20sp" />
-    <LinearLayout
-      android:layout_column="2"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      android:orientation="vertical">
-      <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="@string/about_bart"
-        android:textSize="20sp" />
-      <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="@string/about_dylan"
-        android:textSize="20sp" />
-      <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="@string/about_jimmy"
-        android:textSize="20sp" />
-      <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="@string/about_leif"
-        android:textSize="20sp" />
-      <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="@string/about_rodrigo"
-        android:textSize="20sp" />
-      <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="@string/about_sandor"
-        android:textSize="20sp" />
-    </LinearLayout>
-  </TableRow>
-
-  <View android:layout_height="2dip" />
-
-  <TableRow>
-    <TextView
-      android:paddingLeft="10dip"
-      android:paddingRight="10dip"
-      android:layout_column="1"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      android:text="@string/about_version"
-      android:textSize="20sp" />
-    <TextView
-      android:layout_height="wrap_content"
-      android:id="@+id/about_version"
-      android:layout_width="wrap_content"
-      android:text="@string/value_unknown"
-      android:textSize="20sp" />
-  </TableRow>
-
-  <View android:layout_height="2dip" />
-
-  <TableRow>
-    <TextView
-      android:paddingLeft="10dip"
-      android:paddingRight="10dip"
-      android:layout_column="1"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      android:text="@string/about_support"
-      android:textSize="20sp" />
-    <TextView
-      android:autoLink="web"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      android:text="@string/my_tracks_web_url"
-      android:textSize="18sp" />
-  </TableRow>
-
-  <View android:layout_height="2dip" />
+        android:orientation="vertical">
+        <TextView
+          android:layout_height="wrap_content"
+          android:layout_width="wrap_content"
+          android:text="@string/my_tracks_app_name"
+          android:textSize="30sp" />
+        <TextView
+          android:layout_height="wrap_content"
+          android:layout_width="wrap_content"
+          android:text="@string/about_copyright_notice"
+          android:textSize="15sp" />
+      </LinearLayout>
+    </TableRow>
   
-  <TableRow>
-    <TextView
-      android:paddingLeft="10dip"
-      android:paddingRight="10dip"
-      android:layout_column="1"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      android:text="@string/about_privacy"
-      android:textSize="20sp" />
-    <TextView
-      android:autoLink="web"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      android:text="@string/my_tracks_privacy_url"
-      android:textSize="18sp" />
-  </TableRow>
+    <View android:layout_height="2dip" />
   
-  <View android:layout_height="4dip" />
-
-</TableLayout>
+    <TableRow>
+      <TextView
+        android:layout_column="1"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:text="@string/about_team"
+        android:textSize="20sp" />
+      <LinearLayout
+        android:layout_column="2"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="vertical">
+        <TextView
+          android:layout_height="wrap_content"
+          android:layout_width="wrap_content"
+          android:text="@string/about_bart"
+          android:textSize="20sp" />
+        <TextView
+          android:layout_height="wrap_content"
+          android:layout_width="wrap_content"
+          android:text="@string/about_dylan"
+          android:textSize="20sp" />
+        <TextView
+          android:layout_height="wrap_content"
+          android:layout_width="wrap_content"
+          android:text="@string/about_jimmy"
+          android:textSize="20sp" />
+        <TextView
+          android:layout_height="wrap_content"
+          android:layout_width="wrap_content"
+          android:text="@string/about_leif"
+          android:textSize="20sp" />
+        <TextView
+          android:layout_height="wrap_content"
+          android:layout_width="wrap_content"
+          android:text="@string/about_rodrigo"
+          android:textSize="20sp" />
+        <TextView
+          android:layout_height="wrap_content"
+          android:layout_width="wrap_content"
+          android:text="@string/about_sandor"
+          android:textSize="20sp" />
+      </LinearLayout>
+    </TableRow>
+  
+    <View android:layout_height="2dip" />
+  
+    <TableRow>
+      <TextView
+        android:layout_column="1"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:text="@string/about_version"
+        android:textSize="20sp" />
+      <TextView
+        android:id="@+id/about_version"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/value_unknown"
+        android:textSize="20sp" />
+    </TableRow>
+  
+    <View android:layout_height="2dip" />
+  
+    <TableRow>
+      <TextView
+        android:layout_column="1"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:text="@string/about_support"
+        android:textSize="20sp" />
+      <TextView
+        android:autoLink="web"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/my_tracks_web_url"
+        android:textSize="18sp" />
+    </TableRow>
+  
+    <View android:layout_height="2dip" />
+    
+    <TableRow>
+      <TextView
+        android:layout_column="1"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:text="@string/about_privacy"
+        android:textSize="20sp" />
+      <TextView
+        android:autoLink="web"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/my_tracks_privacy_url"
+        android:textSize="18sp" />
+    </TableRow>
+    
+    <View android:layout_height="4dip" />
+  </TableLayout>
+</ScrollView>
