@@ -1190,48 +1190,66 @@ limitations under the License.
   <!-- Sensor State -->
   <string name="sensor_state_battery"
     translation_description="In the 'Sensor state' page, the label for the battery level on the bike
-      sensor. E.g, 'Battery level: 50 %'.">
+      sensor. E.g, 'Battery level: 50 %'.   
+
+      Screenshot: sensor_state_none.png">
     Battery level
   </string>
   <string name="sensor_state_cadence"
     translation_description="In the 'Sensor state' page, the label for the cadence on the bike
       sensor. Cadence is the number of revolutions of the crank per minute. E.g.,
-      'Cadence: 80 rpm'.">
+      'Cadence: 80 rpm'.   
+
+      Screenshot: sensor_state_none.png">
     Cadence
   </string>
   <string name="sensor_state_connected"
     translation_description="In the 'Sensor state' page, the 'Sensor state' value when the sensor
-      has connected.">
+      has connected.   
+
+      Screenshot: sensor_state_connected.png">
     Connected
   </string>
   <string name="sensor_state_connecting"
     translation_description="In the 'Sensor state' page, the 'Sensor state' value when the sensor is
-      connecting.">
+      connecting.  
+
+      Screenshot: sensor_state_connecting.png">
     Connecting
   </string>
   <string name="sensor_state_disconnected"
     translation_description="In the 'Sensor state' page, the 'Sensor state' value when the sensor
-      has disconnected.">
+      has disconnected.  
+
+      Screenshot: sensor_state_disconnected.png">
     Disconnected
   </string>
   <string name="sensor_state_heart_rate"
     translation_description="In the 'Sensor state' page, the label for the heart rate from a heart
-      rate sensor. E.g., 'Hear rate: 100 bpm'.">
+      rate sensor. E.g., 'Hear rate: 100 bpm'.   
+
+      Screenshot: sensor_state_none.png">
     Heart rate
   </string>
   <string name="sensor_state_last_sensor_time"
     translation_description="In the 'Sensor state' page, the label for the last time the sensor has
-      sent a data. E.g., 'Last sensor time: 10:05 am'.">
+      sent a data. E.g., 'Last sensor time: 10:05 am'.   
+
+      Screenshot: sensor_state_none.png">
     Last sensor time
   </string>
   <string name="sensor_state_power"
-    translation_description="In the 'Sensor state' page, the label for the power from the bike
-      sensor. Power is the power output of the rider. E.g., 'Power: 50 W'.">
+    translation_description="In the 'Sensor state' page, the label for the power from the bike 
+      sensor. Power is the power output of the rider. E.g., 'Power: 50 W'.   
+
+      Screenshot: sensor_state_none.png">
     Power
   </string>
   <string name="sensor_state_sending"
-    translation_description="In the 'Sensor state' page, the 'Sensor state' value when the sensor
-      is sending data.">
+    translation_description="In the 'Sensor state' page, the 'Sensor state' value when the sensor is
+      sending data.  
+
+      Screenshot: sensor_state_sending.png">
     Sending
   </string>
 
@@ -1918,101 +1936,146 @@ limitations under the License.
 
   <!-- Share Track -->
   <string name="share_track_file_body_format"
-    translation_description="When sharing a track file with friends, the body of the message.">
+    translation_description="When sharing a track file with friends, the body of the message.
+
+      Screenshot: share_track_file.png">
     I think you might be interested in this track.\n\nTo view this track use Google Earth or other
     mapping software.
   </string>
   <string name="share_track_picker_title"
-    translation_description="When sharing a track with friends, the title on the picker to
-      ask the user which application he wants to use.">
+    translation_description="When sharing a track URL with friends, the title on the picker to ask
+      the user which application he wants to use.
+
+      Screenshot: share_track_pick_title.png">
     Share track using:
   </string>
   <string name="share_track_subject"
-    translation_description="When sharing a track with friends, the subject line.">
+    translation_description="When sharing a track with friends, the subject line.
+
+      Screenshot: share_track_url.png">
     I would like to share a track with you
   </string>
   <string name="share_track_url_body_format"
     translation_description="When sharing a track URL with friends, the body of the message.
 
-      %1$s: url. E.g, 'https://maps.google.com/maps'.">
+      %1$s: url. E.g, 'https://maps.google.com/maps'.
+      Screenshot: share_track_url.png">
     I think you might be interested in this track:\n\n%1$s
   </string>
 
   <!-- Stat Page -->
   <string name="stat_average_moving_pace"
-    translation_description="In the Statistic view, the average moving pace.">
+    translation_description="In the 'Statistics' page, the average moving pace.
+
+      Screenshot: stat_pace.png">
     Average moving pace
   </string>
   <string name="stat_average_moving_speed"
-    translation_description="In the Statistic view, the average moving speed.">
+    translation_description="In the 'Statistics' page, the average moving speed.
+
+      Screenshot: stat_speed.png">
     Average moving speed
   </string>
   <string name="stat_average_pace"
-    translation_description="In the Statistic view, the average pace.">
+    translation_description="In the 'Statistics' page, the average pace.
+
+      Screenshot: stat_pace.png">
     Average pace
   </string>
   <string name="stat_average_speed"
-    translation_description="In the Statistic view, the average speed.">
+    translation_description="In the 'Statistics' page, the average speed.
+
+      Screenshot: stat_speed.png">
     Average speed
   </string>
   <string name="stat_elevation"
-    translation_description="In the Statistic view, the elevation.">
+    translation_description="In the 'Statistics' page, the elevation.
+
+      Screenshot: stat_speed.png">
     Elevation
   </string>
   <string name="stat_elevation_gain"
-    translation_description="In the Statistic view, the elevation gain.">
+    translation_description="In the 'Statistics' page, the elevation gain.
+
+      Screenshot: stat_speed.png">
     Elevation gain
   </string>
   <string name="stat_latitude"
-    translation_description="In the Statistic view, the latitude.">
+    translation_description="In the 'Statistics' page, the latitude.
+
+      Screenshot: stat_speed.png">
     Latitude
   </string>
   <string name="stat_longitude"
-    translation_description="In the Statistic view, the longitude.">
+    translation_description="In the 'Statistics' page, the longitude.
+
+      Screenshot: stat_speed.png">
     Longitude
   </string>
   <string name="stat_max_elevation"
-    translation_description="In the Statistic view, the maximum elevation.">
+    translation_description="In the 'Statistics' page, the maximum elevation.
+
+      Screenshot: stat_speed.png">
     Max elevation
   </string>
   <string name="stat_max_grade"
-    translation_description="In the Statistic view, the maximum grade.">
+    translation_description="In the 'Statistics' page, the maximum grade.
+
+      Screenshot: stat_speed.png">
     Max grade
   </string>
   <string name="stat_max_speed"
-    translation_description="In the Statistic view, the maximum speed.">
+    translation_description="In the 'Statistics' page, the maximum speed.
+
+      Screenshot: stat_speed.png">
     Max speed
   </string>
   <string name="stat_min_elevation"
-    translation_description="In the Statistic view, the minimum elevation.">
+    translation_description="In the 'Statistics' page, the minimum elevation.
+
+      Screenshot: stat_speed.png">
     Min elevation
   </string>
   <string name="stat_min_grade"
-    translation_description="In the Statistic view, the minimum grade.">
+    translation_description="In the 'Statistics' page, the minimum grade.
+
+      Screenshot: stat_speed.png">
     Min grade
   </string>
   <string name="stat_min_pace"
-    translation_description="In the Statistic view, the minimum pace.">
+    translation_description="In the 'Statistics' page, the minimum pace.
+
+      Screenshot: stat_pace.png">
     Min pace
   </string>
   <string name="stat_moving_time"
-    translation_description="In the Statistic view, the moving time.">
+    translation_description="In the 'Statistics' page, the moving time.
+
+      Screenshot: stat_speed.png">
     Moving time
   </string>
   <string name="stat_pace"
-    translation_description="In the Statistic view, the pace like hours per mile.">
+    translation_description="In the 'Statistics' page, the pace like hours per mile.
+
+      Screenshot: stat_pace.png">
     Pace
   </string>
   <string name="stat_speed"
-    translation_description="In the Statistic view, the speed like miles per hour.">
+    translation_description="In the 'Statistics' page, the speed like miles per hour.
+
+      Screenshot: stat_speed.png">
     Speed
   </string>
   <string name="stat_total_distance"
-    translation_description="In the Statistic view, the total distance.">
+    translation_description="In the 'Statistics' page, the total distance.
+
+      Screenshot: stat_speed.png">
     Total distance
   </string>
   <string name="stat_total_time"
-    translation_description="In the Statistic view, the total time.">
+    translation_description="In the 'Statistics' page, the total time.
+
+      Screenshot: stat_speed.png">
     Total time
   </string>
 
@@ -2266,119 +2329,144 @@ limitations under the License.
 
   <!-- Value -->
   <string name="value_adapt_accuracy"
-    translation_description="In a setting picker, the value to adapt for accuracy.">
+    translation_description="In a setting picker, the value to adapt for accuracy.
+
+      Screenshot: value_interval.png">    
     Adapt for accuracy
   </string>
   <string name="value_adapt_battery_life"
-    translation_description="In a setting picker, the value to adapt for battery life.">
+    translation_description="In a setting picker, the value to adapt for battery life.
+
+      Screenshot: value_interval.png">    
     Adapt for battery life
   </string>
   <string name="value_always"
-    translation_description="In a setting picker, the value to always enable the option.">
+    translation_description="In a setting picker, the value to always enable the option.
+
+      Screenshot: value_auto_resume.png">    
     Always
   </string>
   <string name="value_float_mile"
     translation_description="In a setting picker, the string format to display a float value in
       miles (mi).
 
-      %1$.1f: a float number. E.g., '2.2'">
+      %1$.1f: a float number. E.g., '2.2'
+      Screenshot: value_gps_accuracy_mile_poor_gps.png">
     %1$.1f mi
   </string>
   <string name="value_float_mile_poor_gps"
     translation_description="In a setting picker, the string format to display a float value in
       miles (mi), recommended when having poor GPS signal.
 
-      %1$.1f: a float number. E.g., '2.2'">
+      %1$.1f: a float number. E.g., '2.2'
+      Screenshot: value_gps_accuracy_mile_poor_gps.png">
     %1$.1f mi (poor GPS)
   </string>
   <string name="value_integer_feet"
     translation_description="In a setting picker, the string format to display an integer value in
       feet (ft).
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'
+      Screenshot: value_gps_accuracy_feet_excellent_gps.png">
     %1$d ft
   </string>
   <string name="value_integer_feet_excellent_gps"
     translation_description="In a setting picker, the string format to display an integer value in
       feet (ft), recommended when having excellent GPS signal.
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'
+      Screenshot: value_gps_accuracy_feet_excellent_gps.png">
     %1$d ft (excellent GPS)
   </string>
   <string name="value_integer_feet_recommended"
     translation_description="In a setting picker, the string format to display an integer value in
       feet (ft) and that the value is the recommended value.
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'
+      Screenshot: value_gps_accuracy_feet_excellent_gps.png"> 
     %1$d ft (recommended)
   </string>
   <string name="value_integer_kilometer"
     translation_description="In a setting picker, the string format to display an integer value in
       kilometers (km).
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'
+      Screenshot: value_voice.png">
     %1$d km
   </string>
   <string name="value_integer_meter"
     translation_description="In a setting picker, the string format to display an integer value in
       meters (m).
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'
+      Screenshot: value_gps_accuracy_meter_excellent_gps.png"> 
     %1$d m
   </string>
   <string name="value_integer_meter_excellent_gps"
     translation_description="In a setting picker, the string format to display an integer value in
       meters (m), recommended when having excellent GPS signal.
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'
+      Screenshot: value_gps_accuracy_meter_excellent_gps.png">    
     %1$d m (excellent GPS)
   </string>
   <string name="value_integer_meter_poor_gps"
     translation_description="In a setting picker, the string format to display an integer value in
       meters (m), recommended when having poor GPS signal.
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'
+      Screenshot: value_gps_accuracy_meter_poor_gps.png"> 
     %1$d m (poor GPS)
   </string>
   <string name="value_integer_meter_recommended"
     translation_description="In a setting picker, the string format to display an integer value in
       meters (m) and that the value is the recommended value.
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'
+      Screenshot: value_gps_accuracy_meter_excellent_gps.png">
     %1$d m (recommended)
   </string>
   <string name="value_integer_mile"
     translation_description="In a setting picker, the string format to display an integer value in
       miles (mi).
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'
+      Screenshot: value_gps_accuracy_mile_poor_gps.png">
     %1$d mi
   </string>
   <string name="value_integer_minute"
     translation_description="In a setting picker, the string format to display an integer value in
       minutes (min).
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'
+      Screenshot: value_auto_resume.png"> 
     %1$d min
   </string>
   <string name="value_integer_second"
     translation_description="In a setting picker, the string format to display an integer value in
       seconds (s).
 
-      %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'
+      Screenshot: value_interval.png">    
     %1$d s
   </string>
   <string name="value_never"
-    translation_description="In a setting picker, the value to never use the feature.">
+    translation_description="In a setting picker, the value to never use the feature.
+
+      Screenshot: value_auto_resume.png">    
     Never
   </string>
   <string name="value_off"
-    translation_description="In a setting picker, the value to turn off the feature.">
+    translation_description="In a setting picker, the value to turn off the feature.
+
+      Screenshot: value_voice.png">    
     Off
   </string>
   <string name="value_smallest_recommended"
     translation_description="In a setting picker, the value to use the smallest value, also the
-      recommended value.">
+      recommended value.
+
+      Screenshot: value_interval.png">    
     Smallest (recommended)
   </string>
 
