@@ -23,7 +23,6 @@ limitations under the License.
   <string name="eula_accept">Accepter</string>
   <string name="eula_decline">Décliner</string>
   <string name="eula_title">Accord de licence utilisateur</string>
-  <string name="export_progress_message">Enregistrement du fichier sur la carte SD. Patientez SVP.</string>
   <string name="generic_cancel">Annuler</string>
   <string name="generic_confirm_title">Êtes-vous sûr?</string>
   <string name="generic_error_title">Erreur</string>
@@ -78,6 +77,7 @@ limitations under the License.
   <string name="sd_card_error_create_dir">Impossible de créer un dossier dans la carte SD.</string>
   <string name="sd_card_error_no_storage">Aucun emplacement externe de sauvegarde n\'a été trouvé. Assurez-vous qu\'une carte SD est insérée et que votre téléphone n\'est pas relié à un ordinateur.</string>
   <string name="sd_card_error_write_file">Impossible d\'écrire dans le fichier.</string>
+  <string name="sd_card_progress_write_file">Enregistrement du fichier sur la carte SD. Patientez SVP.</string>
   <string name="sd_card_success_write_file">Parcours enregistré sur la carte SD.</string>
   <string name="send_google_choose_account_title">Choisissez un compte</string>
   <string name="send_google_no_account_message">Un compte Google est nécessaire pour télécharger le parcours.</string>
@@ -198,9 +198,9 @@ limitations under the License.
   <string name="unit_feet">pied</string>
   <string name="unit_kilometer_per_hour">km/h</string>
   <string name="unit_mile_per_hour">mi/h</string>
-  <string name="voice_total_distance_zero">My Tracks pas de distance disponible</string>
   <string name="voice_per_kilometer">par kilomètre</string>
   <string name="voice_per_mile">per mile</string>
+  <string name="voice_total_distance_zero">My Tracks pas de distance disponible</string>
   <string name="welcome_about">À propos de My Tracks</string>
   <string name="welcome_title">Bienvenue</string>
 </resources>

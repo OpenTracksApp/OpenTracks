@@ -25,7 +25,6 @@ limitations under the License.
   <string name="eula_accept">Accetto</string>
   <string name="eula_decline">Non accetto</string>
   <string name="eula_title">Termini di servizio</string>
-  <string name="export_progress_message">Salvataggio del file sulla scheda SD in corso. Attendere prego...</string>
   <string name="export_success">Esportazione terminata.</string>
   <string name="generic_cancel">Annulla</string>
   <string name="generic_confirm_title">Sei sicuro?</string>
@@ -76,6 +75,7 @@ limitations under the License.
   <string name="sd_card_error_create_dir">Impossibile creare directory sulla scheda SD.</string>
   <string name="sd_card_error_no_storage">Nessuna memoria esterna trovata. Assicurati che la scheda SD sia inserita e che il telefono no sia montato su un computer.</string>
   <string name="sd_card_error_write_file">Impossibile scrivere su file.</string>
+  <string name="sd_card_progress_write_file">Salvataggio del file sulla scheda SD in corso. Attendere prego...</string>
   <string name="sd_card_success_write_file">Finito di salvare il percorso sulla scheda SD.</string>
   <string name="send_google_choose_account_title">Scegli un account</string>
   <string name="send_google_docs">Google Docs</string>
@@ -170,9 +170,9 @@ limitations under the License.
   <string name="unit_minute">min</string>
   <string name="unit_minute_per_kilometer">min/km</string>
   <string name="unit_minute_per_mile">min/mi</string>
-  <string name="voice_total_distance_zero">Mai Tracks Distanza non disponibile</string>
   <string name="voice_per_kilometer">per chilometro</string>
   <string name="voice_per_mile">per miglio</string>
+  <string name="voice_total_distance_zero">Mai Tracks Distanza non disponibile</string>
   <string name="welcome_about">Informazioni su My Tracks</string>
   <string name="welcome_title">Benvenuto</string>
 </resources>

@@ -610,24 +610,16 @@ limitations under the License.
   </string>
 
   <!-- Export -->
-  <string name="export_canceled"
-    translation_description="When exporting a track to the SD card, a message indicating that the
-      export operation was canceled.">
-    The operation was canceled.
-  </string>
   <string name="export_error"
-    translation_description="When exporting a track to the SD card, a generic error message
-      indicating unable to export.">
+    translation_description="When exporting all the tracks to the SD card, a toast message
+      indicating error.">
     Unable to export.
   </string>
-  <string name="export_progress_message"
-    translation_description="When exporting a track to the SD card, the message on the progress
-      dialog indicating that it may take a while.">
-    Exporting a track to the SD card. This may take a while.
-  </string>
   <string name="export_success"
-    translation_description="After exporting all the tracks to the SD card, a toast message
-      indicating success.">
+    translation_description="When exporting all the tracks to the SD card, a toast message
+      indicating success.
+
+      Screenshot: export_success">
     Export finished.
   </string>
 
@@ -637,7 +629,9 @@ limitations under the License.
     Cancel
   </string>
   <string name="generic_confirm_title"
-    translation_description="The title on a confirmation dialog asking the user if he is sure?">
+    translation_description="The title on a confirmation dialog asking the user if he is sure?
+
+      Screenshot: marker_list_delete_marker_confirm_message.png">
     Are you sure?
   </string>
   <string name="generic_error_title"
@@ -653,7 +647,9 @@ limitations under the License.
     OK
   </string>
   <string name="generic_progress_title"
-    translation_description="The title on a progress dialog asking the user to wait.">
+    translation_description="The title on a progress dialog asking the user to wait.
+
+      Screenshot: sc_card_progress_write_file.png">
     Please wait...
   </string>
   <string name="generic_save"
@@ -661,7 +657,9 @@ limitations under the License.
     Save
   </string>
   <string name="generic_success_title"
-    translation_description="The title on an alert dialog indicating success.">
+    translation_description="The title on an alert dialog indicating success.
+
+      Screenshot: sc_card_success_write_file.png">
     Success
   </string>
   <string name="generic_yes"
@@ -671,18 +669,23 @@ limitations under the License.
 
   <!-- GPS -->
   <string name="gps_need_to_enable"
-    translation_description="In the main view, the message on the top asking the user to enable
-      GPS.">
+    translation_description="In the main view, the message on the top asking the user to enable GPS.
+
+      Screenshot: gps_not_found.png">
     Please tap here to go to \'Location &amp; security\' settings &amp; check
     \'Use GPS satellites\'. Press the back button to return.
   </string>
   <string name="gps_not_found"
-    translation_description="On application start, message when there is no GPS on the device.">
+    translation_description="On application start, message when there is no GPS on the device.
+
+      Screenshot: gps_not_found.png">
     No GPS is found on the device.
   </string>
   <string name="gps_wait_for_fix"
     translation_description="In the main view, the message on the top indicating My Tracks is
-      waiting for a better GPS fix.">
+      waiting for a better GPS fix.
+
+      Screenshot: gps_wait_fix.png">
     Waiting for a better GPS fix. Make sure the sky is visible.
   </string>
 
@@ -729,7 +732,8 @@ limitations under the License.
     translation_description="After importing all the tracks from the SD card, the alert message
       indicating that no track is imported.
 
-      %1$s: the SD card directory path. E.g., '/mnt/sdcard/MyTracks/gpx/'.">
+      %1$s: the SD card directory path. E.g., '/mnt/sdcard/MyTracks/gpx/'.
+      Screenshot: import_no_file.png">
     No GPX file found in %1$s. The SD card may be unreadable or the directory may not contain any
     GPX file.
   </string>
@@ -739,34 +743,45 @@ limitations under the License.
 
       %1$d the number of successfully imported tracks. E.g., '1'.
       %2$s the number of GPX files in the SD card. E.g., '1 GPX file' or '2 GPX files'.
-      %3$s the SD card directory path. E.g., '/mnt/sdcard/MyTracks/gpx/'.">
+      %3$s the SD card directory path. E.g., '/mnt/sdcard/MyTracks/gpx/'.
+      Screenshot: import_success.png">
     My Tracks: Imported %1$d of %2$s from %3$s.
   </string>
 
   <!-- Marker -->
   <string name="marker_detail_marker_description"
     translation_description="In the detail page for a waypoint marker, the text field for the marker
-      description.">
+      description.
+
+      Screenshot: marker_detail.png">
     Marker description
   </string>
   <string name="marker_detail_marker_name"
     translation_description="In the detail page for a waypoint or statistics marker, text field for
-      the marker name.">
+      the marker name.
+
+      Screenshot: marker_detail.png">
     Marker name
   </string>
   <string name="marker_detail_marker_type"
     translation_description="In the detail page for a waypoint marker, the text field for the
-      marker type, including examples.">
+      marker type, including examples.
+
+      Screenshot: marker_detail.png">
     Marker type (e.g. building, pothole, sight...)
   </string>
   <string name="marker_detail_marker_type_hint"
     translation_description="In the detail page for a waypoint marker, the hint in the 'Marker type'
-      text field when it is empty.">
+      text field when it is empty.
+
+      Screenshot: marker_detail.png">
     Marker type
   </string>
   <string name="marker_detail_title"
     translation_description="In the detail page for a waypoint or statistics marker, the title of
-      the page.">
+      the page.
+
+      Screenshot: marker_detail.png">
     Marker details
   </string>
   <string name="marker_insert_error"
@@ -775,7 +790,9 @@ limitations under the License.
     Unable to insert a marker. No GPS location. Try again.
   </string>
   <string name="marker_insert_success"
-    translation_description="When inserting a new marker, a message indicating success.">
+    translation_description="When inserting a new marker, a message indicating success.
+
+      Screenshot: marker_insert_success.png">
     A marker was inserted.
   </string>
   <string name="marker_label_end"
@@ -790,51 +807,71 @@ limitations under the License.
   </string>
   <string name="marker_list_context_menu_title"
     translation_description="In the context menu for a marker, the title indicating that all the
-      menu options below are for this marker.">
+      menu options below are for this marker.
+
+      Screenshot: marker_list_context_menu.png">
     This marker
   </string>
   <string name="marker_list_delete_marker"
     translation_description="In the context menu for a marker, the menu option to delete the
-      marker.">
+      marker.
+
+      Screenshot: marker_list_context_menu.png">
     Delete
   </string>
   <string name="marker_list_delete_marker_confirm_message"
     translation_description="In the context menu for a marker, when pressing the 'Delete' option,
       the confirmation dialog message informing the user that the marker will be permanently
-      deleted from the phone.">
+      deleted from the phone.
+
+      Screenshot: marker_list_delete_marker_confirm_message.png">
     The marker will be permanently deleted from the phone.
   </string>
   <string name="marker_list_edit_marker"
     translation_description="In the context menu for a marker, the menu option to edit the marker's
-      metadata (e.g., name, type, etc.).">
+      metadata (e.g., name, type, etc.).
+
+      Screenshot: marker_list_context_menu.png">
     Edit
   </string>
   <string name="marker_list_insert_statistics"
     translation_description="In the Markers page, the button on the bottom to insert a statistics
-      marker.">
+      marker.
+
+      Screenshot: marker_list.png">
     Insert statistics
   </string>
   <string name="marker_list_insert_waypoint"
     translation_description="In the Markers page, the button on the bottom to insert a waypoint
-      marker.">
+      marker.      
+
+      Screenshot: marker_list.png">
     Insert waypoint
   </string>
   <string name="marker_list_pick_one"
     translation_description="In the Markers page, the instruction at the top of the page informing
-      the user he can press and hold a marker for more options.">
+      the user he can press and hold a marker for more options.
+      
+      Screenshot: marker_list.png">
     Pick a marker. Press &amp; hold for more options.
   </string>
   <string name="marker_list_show_on_map"
     translation_description="In the context menu for a marker, the menu option to show the marker
-      on the map.">
+      on the map.
+
+      Screenshot: marker_list_context_menu.png">
     Show on map
   </string>
   <string name="marker_type_statistics"
-    translation_description="When inserting a statistics marker, the default name of the marker.">
+    translation_description="When inserting a statistics marker, the default name of the marker.
+
+      Screenshot: marker_type_statistics.png">
     Statistics
   </string>
   <string name="marker_type_waypoint"
-    translation_description="When inserting a waypoint marker, the default name of the marker.">
+    translation_description="When inserting a waypoint marker, the default name of the marker.
+
+      Screenshot: marker_detail.png">
     Waypoint
   </string>
 
@@ -1047,6 +1084,13 @@ limitations under the License.
   </string>
 
   <!-- SD Card -->
+  <string name="sd_card_canceled"
+    translation_description="When exporting a track to the SD card, a message indicating that the
+      export operation was canceled.
+      
+      Screenshot: sd_card_canceled.png">      
+    The operation was canceled.
+  </string>
   <string name="sd_card_error_create_dir"
     translation_description="When writing to the SD card, the error message when not able to create
       a directory on the SD card.">
@@ -1068,14 +1112,25 @@ limitations under the License.
       file.">
     Unable to write to a file.
   </string>
+  <string name="sd_card_progress_write_file"
+    translation_description="When writing to the SD card, the progress dialog message indicating
+      that it may take a while.
+
+      Screenshot: sd_card_progress_write_file.png">      
+    Exporting a track to the SD card. This may take a while.
+  </string>
   <string name="sd_card_success_read_file"
     translation_description="When reading from the SD card, the success message when finish reading
-      from the SD card.">
+      from the SD card.
+
+      Screenshot: sc_card_success_read_file.png">
     Finished reading from the SD card.
   </string>
   <string name="sd_card_success_write_file"
     translation_description="When writing to the SD card, the success message when finish writing to
-      the SD card.">
+      the SD card.
+
+      Screenshot: sd_card_success_write_file.png">  
     Finished writing to the SD card.
   </string>
 

@@ -25,7 +25,6 @@ limitations under the License.
   <string name="eula_accept">Akzeptieren</string>
   <string name="eula_decline">Ablehnen</string>
   <string name="eula_title">Lizenzvereinbarung für Endverbraucher</string>
-  <string name="export_progress_message">Schreibe Datei auf SD-Karte. Das kann ein wenig dauern.</string>
   <string name="export_success">Exportieren beendet</string>
   <string name="generic_cancel">Abbrechen</string>
   <string name="generic_confirm_title">Bist Du Dir wirklich sicher?</string>
@@ -82,6 +81,7 @@ limitations under the License.
   <string name="sd_card_error_no_storage">Keine externes Speichermedium verfügbar. Stelle sicher, dass eine SD-Karte vorhanden ist und nicht bereits von einem Computer darauf zugegriffen wird.</string>
   <string name="sd_card_error_read_file">Die Datei konnte nicht gelesen werden.</string>
   <string name="sd_card_error_write_file">Die Datei kann nicht geschrieben werden.</string>
+  <string name="sd_card_progress_write_file">Schreibe Datei auf SD-Karte. Das kann ein wenig dauern.</string>
   <string name="sd_card_success_read_file">Lesen von der SD-Karte beendet.</string>
   <string name="sd_card_success_write_file">Der Track wurde auf die SD-Karte geschrieben.</string>
   <string name="send_google_choose_account_title">Wähle ein Konto</string>
@@ -208,9 +208,9 @@ limitations under the License.
   <string name="unit_feet">Fuß</string>
   <string name="unit_hour">Std</string>
   <string name="unit_minute">Min</string>
-  <string name="voice_total_distance_zero">My Tracks keine Entfernung</string>
   <string name="voice_per_kilometer">pro Kilometer</string>
   <string name="voice_per_mile">pro Meile</string>
+  <string name="voice_total_distance_zero">My Tracks keine Entfernung</string>
   <string name="welcome_about">Über My Tracks</string>
   <string name="welcome_title">Willkommen</string>
 </resources>

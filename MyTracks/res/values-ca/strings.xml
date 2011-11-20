@@ -25,7 +25,6 @@ limitations under the License.
   <string name="eula_accept">Accepta</string>
   <string name="eula_decline">Rebutja</string>
   <string name="eula_title">Acord de llicencia d\'usuari final</string>
-  <string name="export_progress_message">S\'està escrivint a la targeta SD. Això pot trigar una estona.</string>
   <string name="export_success">Exporta les finalitzades</string>
   <string name="generic_cancel">Cancel·la</string>
   <string name="generic_confirm_title">Esteu segur?</string>
@@ -79,6 +78,7 @@ limitations under the License.
   <string name="sd_card_error_no_storage">No s\'ha trobat cap dispositiu d\'emmagatzematge extern. Assegureu-vos que la targeta SD està inserida i que el telèfon no està connectat a un ordinador.</string>
   <string name="sd_card_error_read_file">No es pot llegir des del fitxer.</string>
   <string name="sd_card_error_write_file">No es pot escriure a un fitxer.</string>
+  <string name="sd_card_progress_write_file">S\'està escrivint a la targeta SD. Això pot trigar una estona.</string>
   <string name="sd_card_success_read_file">S\'ha finalitzat la lectura a la targeta SD.</string>
   <string name="sd_card_success_write_file">S\'ha finalitzat l\'escriptura a la targeta SD.</string>
   <string name="send_google_choose_account_title">Trieu un compte</string>
@@ -197,9 +197,9 @@ limitations under the License.
   <string name="track_record_error">No es pot iniciar l\'enregistrament. Proveu de nou.</string>
   <string name="track_record_notification">S\'està enregistrant la ruta...</string>
   <string name="track_record_success">Ara s\'està enregistrant una ruta nova.</string>
-  <string name="voice_total_distance_zero">Sense distància My Tracks</string>
   <string name="voice_per_kilometer">per kilòmetre</string>
   <string name="voice_per_mile">per milla</string>
+  <string name="voice_total_distance_zero">Sense distància My Tracks</string>
   <string name="welcome_about">Quant a My Tracks</string>
   <string name="welcome_title">Benvingut</string>
 </resources>

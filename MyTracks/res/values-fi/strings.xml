@@ -27,8 +27,6 @@ limitations under the License.
   <string name="eula_accept">Hyväksy</string>
   <string name="eula_decline">Hylkää</string>
   <string name="eula_title">End User License Agreement</string>
-  <string name="export_canceled">Tapahtuma keskeytettiin.</string>
-  <string name="export_progress_message">Kirjoitetaan tiedostoa SD-kortille. Odota.</string>
   <string name="export_success">Vienti tehty</string>
   <string name="generic_cancel">Peruuta</string>
   <string name="generic_confirm_title">Oletko varma?</string>
@@ -90,10 +88,12 @@ limitations under the License.
   <string name="permission_read_label">lue tallennettua reittidataa</string>
   <string name="permission_write_description">Mahdollista reittidatan kirjoittaminen, kuten tallennuksen aloittaminen, merkintöjen lisääminen jne.</string>
   <string name="permission_write_label">kirjoita tallennettua reittidataa, aloita/pysäytä reitin tallennus</string>
+  <string name="sd_card_canceled">Tapahtuma keskeytettiin.</string>
   <string name="sd_card_error_create_dir">Hakemistoa ei voitu luoda SD-kortille.</string>
   <string name="sd_card_error_no_storage">Ulkoista tallennusmediaa ei löytynyt. Varmista että SD-kortti on kytketty eikä puhelinta ole liitetty tietokoneeseen.</string>
   <string name="sd_card_error_read_file">Lukuvirhe.</string>
   <string name="sd_card_error_write_file">Kirjoitusvirhe.</string>
+  <string name="sd_card_progress_write_file">Kirjoitetaan tiedostoa SD-kortille. Odota.</string>
   <string name="sd_card_success_read_file">SD-kortin luku valmis.</string>
   <string name="sd_card_success_write_file">SD-kortille kirjoitus valmis.</string>
   <string name="send_google_choose_account_title">Valitse tili</string>
@@ -249,9 +249,9 @@ limitations under the License.
   <string name="unit_minute_per_mile">min/mi</string>
   <string name="unit_revolution_per_minute">rpm</string>
   <string name="unit_watt">W</string>
-  <string name="voice_total_distance_zero">My Tracks ei etäisyyttä</string>
   <string name="voice_per_kilometer">per kilometri</string>
   <string name="voice_per_mile">per maili</string>
+  <string name="voice_total_distance_zero">My Tracks ei etäisyyttä</string>
   <string name="welcome_about">Tietoa My Tracksista</string>
   <string name="welcome_title">Tervetuloa</string>
 </resources>

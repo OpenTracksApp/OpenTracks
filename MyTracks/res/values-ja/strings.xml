@@ -27,7 +27,6 @@ limitations under the License.
   <string name="eula_accept">同意する</string>
   <string name="eula_decline">拒否する</string>
   <string name="eula_title">エンドユーザライセンス契約書</string>
-  <string name="export_progress_message">SDカードにデータを書き込んでいます．若干時間がかかります．</string>
   <string name="export_success">出力終了</string>
   <string name="generic_cancel">キャンセル</string>
   <string name="generic_confirm_title">よろしいですか?</string>
@@ -92,6 +91,7 @@ limitations under the License.
   <string name="sd_card_error_no_storage">外部ストレージを発見できませんでした．SDカードが刺さっているか、端末がコンピュータにマウントされていないか確認してください．</string>
   <string name="sd_card_error_read_file">ファイルからの読み込みができません．</string>
   <string name="sd_card_error_write_file">ファイルへの書き込みができません．</string>
+  <string name="sd_card_progress_write_file">SDカードにデータを書き込んでいます．若干時間がかかります．</string>
   <string name="sd_card_success_read_file">SDカードからの読み込み終了．</string>
   <string name="sd_card_success_write_file">SDカードへの書き込み終了．</string>
   <string name="send_google_choose_account_title">アカウント選択</string>
@@ -225,9 +225,9 @@ limitations under the License.
   <string name="track_record_success">新しいトラックを記録中です．</string>
   <string name="unit_hour">時</string>
   <string name="unit_minute">分</string>
-  <string name="voice_total_distance_zero">My Tracks 移動していません</string>
   <string name="voice_per_kilometer">毎キロメータ</string>
   <string name="voice_per_mile">毎マイル</string>
+  <string name="voice_total_distance_zero">My Tracks 移動していません</string>
   <string name="welcome_about">My Tracksについて</string>
   <string name="welcome_title">ようこそ</string>
 </resources>

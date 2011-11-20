@@ -27,8 +27,6 @@ limitations under the License.
   <string name="eula_accept">同意</string>
   <string name="eula_decline">拒绝</string>
   <string name="eula_title">最终用户协议</string>
-  <string name="export_canceled">操作已被取消.</string>
-  <string name="export_progress_message">写入文件到 SD 卡中. 请稍候.</string>
   <string name="export_success">导出完毕</string>
   <string name="generic_cancel">取消</string>
   <string name="generic_confirm_title">请确认</string>
@@ -84,9 +82,11 @@ limitations under the License.
   <string name="my_maps_list_public_label">公开</string>
   <string name="my_maps_list_title">发送到 Google My Maps</string>
   <string name="my_maps_list_unlisted_label">未公布</string>
+  <string name="sd_card_canceled">操作已被取消.</string>
   <string name="sd_card_error_create_dir">无法在 SD 存储卡上创建目录.</string>
   <string name="sd_card_error_no_storage">没有发现存储设备. 请确认插入了 SD 存储卡并且你的手机没有将挂载 SD 卡到电脑.</string>
   <string name="sd_card_error_write_file">无法写入文件.</string>
+  <string name="sd_card_progress_write_file">写入文件到 SD 卡中. 请稍候.</string>
   <string name="sd_card_success_read_file">从 SD 存储卡读取完毕.</string>
   <string name="sd_card_success_write_file">轨迹已导出到 SD 存储卡.</string>
   <string name="send_google_choose_account_title">选择帐户</string>
@@ -226,9 +226,9 @@ limitations under the License.
   <string name="track_record_success">现在开始记录新的轨迹.</string>
   <string name="unit_hour">时</string>
   <string name="unit_minute">分</string>
-  <string name="voice_total_distance_zero">My Tracks 无距离</string>
   <string name="voice_per_kilometer">每千米</string>
   <string name="voice_per_mile">每英里</string>
+  <string name="voice_total_distance_zero">My Tracks 无距离</string>
   <string name="welcome_about">关于 My Tracks</string>
   <string name="welcome_title">欢迎</string>
 </resources>

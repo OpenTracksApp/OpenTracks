@@ -27,7 +27,6 @@ limitations under the License.
   <string name="eula_accept">Принять</string>
   <string name="eula_decline">Отклонить</string>
   <string name="eula_title">Лицензионное соглашение</string>
-  <string name="export_progress_message">Запись файла на SD карту. Это может занять некоторое время.</string>
   <string name="export_success">Экспорт закончен</string>
   <string name="generic_cancel">Отмена</string>
   <string name="generic_confirm_title">Вы уверены?</string>
@@ -93,6 +92,7 @@ limitations under the License.
   <string name="sd_card_error_no_storage">Не обнаружено внешнее устройство хранения данных. Убедитесь, что SD карта вставлена, и что ваш телефон не подключен к компьютеру.</string>
   <string name="sd_card_error_read_file">Невозможно прочитать из файла.</string>
   <string name="sd_card_error_write_file">Невозможно записать файл.</string>
+  <string name="sd_card_progress_write_file">Запись файла на SD карту. Это может занять некоторое время.</string>
   <string name="sd_card_success_read_file">Чтение с SD карты закончено.</string>
   <string name="sd_card_success_write_file">Запись на SD карту закончена.</string>
   <string name="send_google_choose_account_title">Выбор учетной записи</string>
@@ -245,9 +245,9 @@ limitations under the License.
   <string name="unit_minute_per_mile">мин/миля</string>
   <string name="unit_revolution_per_minute">об/мин</string>
   <string name="unit_watt">Вт</string>
-  <string name="voice_total_distance_zero">My Tracks нет расстояния</string>
   <string name="voice_per_kilometer">за километр</string>
   <string name="voice_per_mile">за милю</string>
+  <string name="voice_total_distance_zero">My Tracks нет расстояния</string>
   <string name="welcome_about">О My Tracks</string>
   <string name="welcome_title">Добро пожаловать</string>
 </resources>

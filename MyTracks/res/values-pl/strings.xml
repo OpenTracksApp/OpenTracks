@@ -25,7 +25,6 @@ limitations under the License.
   <string name="eula_accept">Zaakceptuj</string>
   <string name="eula_decline">Odrzuć</string>
   <string name="eula_title">Licencja użytkownika końcowego</string>
-  <string name="export_progress_message">Zapisywanie pliku na kartę SD. Poczekaj chwilę.</string>
   <string name="export_success">Eksport zakończony</string>
   <string name="generic_cancel">Anuluj</string>
   <string name="generic_confirm_title">Jesteś pewien?</string>
@@ -78,6 +77,7 @@ limitations under the License.
   <string name="sd_card_error_no_storage">Nie znaleziono zewnętrznej pamięci. Upewniej się, że karta SD jest w telefonie i nie jest podłączona do komputera.</string>
   <string name="sd_card_error_read_file">Nie można odczytać pliku.</string>
   <string name="sd_card_error_write_file">Nie można zapisać pliku.</string>
+  <string name="sd_card_progress_write_file">Zapisywanie pliku na kartę SD. Poczekaj chwilę.</string>
   <string name="sd_card_success_read_file">Zakończono odczytywanie z karty SD.</string>  
   <string name="sd_card_success_write_file">Zakończono zapisywanie na karcie SD.</string>
   <string name="send_google_choose_account_title">Wybierz konto</string>
@@ -199,9 +199,9 @@ limitations under the License.
   <string name="unit_minute">min</string>
   <string name="unit_minute_per_kilometer">min/km</string>
   <string name="unit_minute_per_mile">min/mi</string>
-  <string name="voice_total_distance_zero">My Tracks brak odległości</string>
   <string name="voice_per_kilometer">na kilometr</string>
   <string name="voice_per_mile">na milę</string>
+  <string name="voice_total_distance_zero">My Tracks brak odległości</string>
   <string name="welcome_about">O My Tracks</string>
   <string name="welcome_title">Witamy</string>
 </resources>

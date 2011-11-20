@@ -25,7 +25,6 @@ limitations under the License.
   <string name="eula_accept">Aceitar</string>
   <string name="eula_decline">Recusar</string>
   <string name="eula_title">Contrato de Licença de Usuário Final</string>
-  <string name="export_progress_message">Salvando arquivo para o cartão SD. Isso pode demorar alguns instantes.</string>
   <string name="generic_cancel">Cancelar</string>
   <string name="generic_confirm_title">Você tem certeza?</string>
   <string name="generic_error_title">Erro</string>
@@ -74,6 +73,7 @@ limitations under the License.
   <string name="sd_card_error_create_dir">Impossível criar diretório no cartão SD.</string>
   <string name="sd_card_error_no_storage">Nenhum armazenamento externo foi encontrado. Assegure-se de que um cartão SD esteja inserido e que seu telefone não esteja montado em um computador.</string>
   <string name="sd_card_error_write_file">Impossível gravar arquivo.</string>
+  <string name="sd_card_progress_write_file">Salvando arquivo para o cartão SD. Isso pode demorar alguns instantes.</string>
   <string name="sd_card_success_write_file">Gravação no cartão SD concluída.</string>
   <string name="send_google_choose_account_title">Escolher conta</string>
   <string name="send_google_docs">Google Docs</string>
@@ -159,9 +159,9 @@ limitations under the License.
   <string name="track_record_success">Gravando um novo caminho.</string>
   <string name="unit_feet">pés</string>
   <string name="unit_hour">h</string>
-  <string name="voice_total_distance_zero">My Tracks sem distância</string>
   <string name="voice_per_kilometer">por kilômetro</string>
   <string name="voice_per_mile">por milha</string>
+  <string name="voice_total_distance_zero">My Tracks sem distância</string>
   <string name="welcome_about">Sobre My Tracks</string>
   <string name="welcome_title">Bem-vindo</string>
 </resources>

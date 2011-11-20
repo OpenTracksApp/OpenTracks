@@ -25,7 +25,6 @@ limitations under the License.
   <string name="eula_accept">Acceptera</string>
   <string name="eula_decline">Avböj</string>
   <string name="eula_title">Licensavtal för slutanvändare</string>
-  <string name="export_progress_message">Skriver till SD-kortet. Detta kan ta en stund.</string>
   <string name="export_success">Exporteringen slutfördes</string>
   <string name="generic_cancel">Avbryt</string>
   <string name="generic_confirm_title">Är du säker?</string>
@@ -76,6 +75,7 @@ limitations under the License.
   <string name="sd_card_error_create_dir">Kunde inte skapa katalog på SD-kort.</string>
   <string name="sd_card_error_no_storage">Ingen extern lagring hittades. Se till att ett SD-kort sitter i och att telefonen inte är monterad till en dator.</string>
   <string name="sd_card_error_write_file">Kan inte skriva till filen.</string>
+  <string name="sd_card_progress_write_file">Skriver till SD-kortet. Detta kan ta en stund.</string>
   <string name="sd_card_success_write_file">Slutförde skrivningen av spåret till SD-kort.</string>
   <string name="send_google_choose_account_title">Välj konto</string>
   <string name="send_google_docs">Google Dokument</string>
@@ -169,9 +169,9 @@ limitations under the License.
   <string name="unit_minute">min</string>
   <string name="unit_minute_per_kilometer">min/km</string>
   <string name="unit_minute_per_mile">min/mi</string>
-  <string name="voice_total_distance_zero">My Tracks ingen distans</string>
   <string name="voice_per_kilometer">per kilometer</string>
   <string name="voice_per_mile">per mile</string>
+  <string name="voice_total_distance_zero">My Tracks ingen distans</string>
   <string name="welcome_about">Om My Tracks</string>
   <string name="welcome_title">Välkommen</string>
 </resources>

@@ -27,8 +27,6 @@ limitations under the License.
   <string name="eula_accept">Aceptar</string>
   <string name="eula_decline">Declinar</string>
   <string name="eula_title">Contrato de Licencia de Usuario Final</string>
-  <string name="export_canceled">La operación fue cancelada.</string>
-  <string name="export_progress_message">Escribiendo archivo a tarjeta SD. Esto puede tardar.</string>
   <string name="export_success">Exportación concluída</string>
   <string name="generic_cancel">Cancelar</string>
   <string name="generic_confirm_title">¿Está usted seguro?</string>
@@ -87,10 +85,12 @@ limitations under the License.
   <string name="permission_read_label">leer datos de recorridos grabados</string>
   <string name="permission_write_description">Poder escribir datos, como registrar o añadir puntos de interés.</string>
   <string name="permission_write_label">escribir datos de recorridos grabados, iniciar/detener recorridos</string>
+  <string name="sd_card_canceled">La operación fue cancelada.</string>
   <string name="sd_card_error_create_dir">No es posible crear un directorio en su tarjeta SD.</string>
   <string name="sd_card_error_no_storage">Ningún almacenamiento externo fue encontrado. Asegúrese que la tarjeta SD se encuentre insertada y que su teléfono no este conectado a una computadora.</string>
   <string name="sd_card_error_read_file">No es posible leer el archivo.</string>
   <string name="sd_card_error_write_file">No es posible escribir al archivo.</string>
+  <string name="sd_card_progress_write_file">Escribiendo archivo a tarjeta SD. Esto puede tardar.</string>
   <string name="sd_card_success_read_file">Lectura de tarjeta SD concluída.</string>
   <string name="sd_card_success_write_file">Grabación a tarjeta SD concluída.</string>
   <string name="send_google_choose_account_title">Elija una cuenta</string>
@@ -249,9 +249,9 @@ limitations under the License.
   <string name="track_record_notification">Grabando su recorrido...</string>
   <string name="track_record_success">Grabando un nuevo recorrido.</string>
   <string name="unit_feet">pies</string>
-  <string name="voice_total_distance_zero">My Tracks sin distancia</string>
   <string name="voice_per_kilometer">por kilómetro</string>
   <string name="voice_per_mile">por milla</string>
+  <string name="voice_total_distance_zero">My Tracks sin distancia</string>
   <string name="welcome_about">Sobre My Tracks</string>
   <string name="welcome_title">Bienvenido</string>
 </resources>
