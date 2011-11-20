@@ -916,12 +916,16 @@ limitations under the License.
   <!-- My Location -->
   <string name="my_location_approximate_location"
     translation_description="When displaying the user's current location, a status message
-      indicating that GPS is not available and an approximate location is used instead.">
+      indicating that GPS is not available and an approximate location is used instead.
+      
+      Screenshot: my_location_approximate_location.png">
     GPS is not available. An approximate location based on cell towers and WiFi networks is shown.
   </string>
   <string name="my_location_no_location"
     translation_description="When displaying the user's current location, a status message
-      indicating that the current location cannot be determined.">
+      indicating that the current location cannot be determined.
+      
+      Screenshot: my_location_no_location.png">
     GPS is not available. Current location cannot be determined. Enable more location sources (see
     \'Location &amp; security\' settings) &amp; make sure the sky is visible. Try again later.
   </string>
@@ -939,27 +943,37 @@ limitations under the License.
   </string>
   <string name="my_maps_list_no_maps"
     translation_description="When sending a track to an existing Google My Map, the text on the
-      'My Maps' list page informing the user that he doesn't have any maps.">
+      'My Maps' list page informing the user that he doesn't have any maps.
+
+      Screenshot: my_maps_list_no_maps.png">
     You don\'t have any maps.
   </string>
   <string name="my_maps_list_pick_map"
     translation_description="When sending a track to an existing Google My Map, the text on the
-      'My Maps' list page asking the user to pick one of his maps.">
+      'My Maps' list page asking the user to pick one of his maps.
+
+      Screenshot: my_maps.png">
     Pick a map:
   </string>
   <string name="my_maps_list_public_label"
     translation_description="When sending a track to an existing Google My Map, in the 'My Maps'
-      list page, the label next to the maps that are public, as opposed to being unlisted.">
+      list page, the label next to the maps that are public, as opposed to being unlisted.
+
+      Screenshot: my_maps.png">
     Public
   </string>
   <string name="my_maps_list_title"
     translation_description="When sending a track to an existing Google My Map, the title of the
-      page listing the user's maps in Google My Maps.">
+      page listing the user's maps in Google My Maps.
+
+      Screenshot: my_maps.png">
     Your Google My Maps
   </string>
   <string name="my_maps_list_unlisted_label"
     translation_description="When sending a track to an existing Google My Map, in the 'My Maps'
-      list page, the label next to the maps that are unlisted, as opposed to being public.">
+      list page, the label next to the maps that are unlisted, as opposed to being public.
+
+      Screenshot: my_maps.png">
     Unlisted
   </string>
 
@@ -970,7 +984,10 @@ limitations under the License.
   </string>
   <string name="my_tracks_recording_service"
     translation_description="When viewing the 'Running services' on Android, the name of the My
-      Tracks service that is recording a track in the background.">
+      Tracks service that is recording a track in the background.
+
+      Character limit: ~23 (1 line)
+      Screenshot: my_tracks_recording_service.png">
     Track recording service
   </string>
 
@@ -1074,12 +1091,16 @@ limitations under the License.
     Created by %1$sMy Tracks%2$s on Android.
   </string>
   <string name="send_google_choose_account_title"
-    translation_description="When sending to Google, the dialog title to choose a Google account.">
+    translation_description="When sending to Google, the dialog title to choose a Google account.
+
+      Screenshot: send_google_choose_account.png">
     Choose account
   </string>
   <string name="send_google_docs"
     translation_description="When sending a track to Google, under the 'Send to...' dialog, the
-      checkbox option to send to Google Docs.">
+      checkbox option to send to Google Docs.
+
+      Screenshot: send_google_choose_service.png">
     Google Docs
   </string>
   <string name="send_google_error"
@@ -1089,22 +1110,30 @@ limitations under the License.
   </string>
   <string name="send_google_existing_map"
     translation_description="When sending a track to Google My Maps, the radio option to use an
-      existing map as opposed to create a new map.">
+      existing map as opposed to create a new map.
+
+      Screenshot: send_google_choose_service.png">
     Use an existing map
   </string>
   <string name="send_google_fusion_tables"
     translation_description="When sending a track to Google, under the 'Send to...' dialog, the
-      checkbox option to send to Google Fusion Tables.">
+      checkbox option to send to Google Fusion Tables.
+
+      Screenshot: send_google_choose_service.png">
     Google Fusion Tables
   </string>
   <string name="send_google_my_maps"
     translation_description="When sending a track to Google, under the 'Send to...' dialog, the
-      checkbox option to send to Google My Maps.">
+      checkbox option to send to Google My Maps.
+
+      Screenshot: send_google_choose_service.png">
     Google My Maps
   </string>
   <string name="send_google_new_map"
     translation_description="When sending a track to Google My Maps, the radio option to create a
-      new map as opposed to use an existing map.">
+      new map as opposed to use an existing map.
+
+      Screenshot: send_google_choose_service.png">
     Create a new map
   </string>
   <string name="send_google_no_account_message"
@@ -1155,28 +1184,38 @@ limitations under the License.
   </string>
   <string name="send_google_result_header"
     translation_description="When sending a track to Google, the header on the top of the result
-      page.">
+      page.
+
+      Screenshot: send_google_success.png">
     Upload status:
   </string>
   <string name="send_google_result_share_url"
     translation_description="When sending a track to Google, in the result dialog, the button on
-      the bottom to share with friends the URL of the uploaded track.">
+      the bottom to share with friends the URL of the uploaded track.
+
+      Screenshot: send_google_success.png">
     Share track URL
   </string>
   <string name="send_google_send_now"
     translation_description="When sending a track to Google, under the 'Send to...' dialog, the
-      button on the bottom to send the track to the selected Google services.">
+      button on the bottom to send the track to the selected Google services.
+
+      Screenshot: send_google_choose_service.png">
     Send now
   </string>
   <string name="send_google_success_footer"
     translation_description="When sending a track to Google, the additional comment on the bottom of
-      the result page.">
+      the result page.
+
+      Screenshot: send_google_success.png">
     It may take a few minutes before new tracks appear.
   </string>
   <string name="send_google_title"
     translation_description="When sending a track to Google, the dialog title to choose the Google
       services to send the track to. The user can choose Google My Maps, Google Fusion
-      Tables, and Google Docs.">
+      Tables, and Google Docs.
+
+      Screenshot: send_google_choose_service.png">
     Send to...
   </string>
   <string name="send_google_track_part_label"
