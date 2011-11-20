@@ -26,36 +26,36 @@ limitations under the License.
   <string name="about_license"
     translation_description="In the 'About My Tracks' page, the button on the bottom to open the
       'Terms of service' dialog.
-      
+
       Screenshot: about.png">
     License
   </string>
   <string name="about_privacy"
     translation_description="In the 'About My Tracks' page, label for the privacy link. E.g.,
       'Privacy: m.google.com/privacy'.
-      
+
       Screenshot: about.png">
     Privacy:
   </string>
   <string name="about_support"
     translation_description="In the 'About My Tracks' page, label for the support link. E.g.,
       'Support: mytracks.appspot.com'.
-      
-      Screenshot: about.png">    
+
+      Screenshot: about.png">
     Support:
   </string>
   <string name="about_team"
     translation_description="In the 'About My Tracks' page, label for the team members. E.g.,
       'Team: Bart Niechwiej'.
-    
-    Screenshot: about.png">    
+
+      Screenshot: about.png">
     Team:
   </string>
   <string name="about_version"
     translation_description="In the 'About My Tracks' page, label for the version number. E.g.,
       'Version: 1.1.11'.
 
-    Screenshot: about.png">   
+      Screenshot: about.png">
     Version:
   </string>
 
@@ -389,7 +389,7 @@ limitations under the License.
   <!-- Android Market -->
   <string name="android_market_description_text"
     translation_description="For the Android Market (not used in the app), the description text.
-    
+
       Character limit: 4000.">
     Use My Tracks while you run, bike, hike, or do anything else outdoors, and it will use the GPS
     sensor in your phone to record the path you took. It will also gather useful statistics such as
@@ -423,7 +423,7 @@ limitations under the License.
   </string>
   <string name="android_market_promo_text"
     translation_description="For the Android Market (not used in the app), the promotion text.
-    
+
       Character limit: 80.">
     My Tracks allows you to record and share your GPS tracks, including statistics.
   </string>
@@ -433,7 +433,7 @@ limitations under the License.
     translation_description="In the 'Chart settings' dialog, under the 'X axis' section, the radio
       option to show the charts by distance. The other radio option is to show by time. User can
       only choose one of the options.
-      
+
       Screenshot: chart_settings.png">
     By distance
   </string>
@@ -441,21 +441,21 @@ limitations under the License.
     translation_description="In the 'Chart settings' dialog, under the 'X axis' section, the radio
       option to show the charts by time. The other radio option is to show by distance. User can
       only choose one of the options.
-      
+
       Screenshot: chart_settings.png">
     By time
   </string>
   <string name="chart_settings_x_axis"
     translation_description="In the 'Chart settings' dialog, the section label for configuring the X
       axis.
-    
+
       Screenshot: chart_settings.png">
     X axis
   </string>
   <string name="chart_settings_y_axis"
     translation_description="In the 'Chart settings' dialog, the section label for configuring the Y
       axis.
-      
+
       Screenshot: chart_settings.png">
     Y axis
   </string>
@@ -463,20 +463,20 @@ limitations under the License.
   <!-- EULA -->
   <string name="eula_accept"
     translation_description="In the 'Terms of service' dialog, the button to accept.
-    
-      Screenshot: eula.png">    
+
+      Screenshot: eula.png">
     Accept
   </string>
   <string name="eula_decline"
     translation_description="In the 'Terms of service' dialog, the button to decline.
-    
+
       Screenshot: eula.png">
     Decline
   </string>
   <string name="eula_message"
     translation_description="The message for the 'Terms of service' dialog.
-        
-      Screenshot: eula.png">      
+
+      Screenshot: eula.png">
     By downloading, installing or using this application or any portion thereof ("Application"), you
     agree to the following terms and conditions (the "Terms and Conditions").\n
     \n
@@ -604,7 +604,7 @@ limitations under the License.
   <string name="eula_title"
     translation_description="The title for the 'Terms of service' dialog, asking the user to accept
       or decline.
-              
+
       Screenshot: eula.png">
     End User License Agreement
   </string>
@@ -716,7 +716,7 @@ limitations under the License.
   <string name="import_gpx_files_other"
     translation_description="When importing all the tracks, phrase for 'other' GPX files, 'other'
       means for cases that the language does not require special treatment of the given quantity.
-      
+
       %1$d an integer number.">
     %1$d GPX files
   </string>
@@ -843,7 +843,7 @@ limitations under the License.
   </string>
   <string name="marker_list_insert_waypoint"
     translation_description="In the Markers page, the button on the bottom to insert a waypoint
-      marker.      
+      marker.
 
       Screenshot: marker_list.png">
     Insert waypoint
@@ -851,7 +851,7 @@ limitations under the License.
   <string name="marker_list_pick_one"
     translation_description="In the Markers page, the instruction at the top of the page informing
       the user he can press and hold a marker for more options.
-      
+
       Screenshot: marker_list.png">
     Pick a marker. Press &amp; hold for more options.
   </string>
@@ -878,74 +878,74 @@ limitations under the License.
   <!-- Menu Items -->
   <string name="menu_aggregated_statistics"
     translation_description="In the menu, to go to the aggregated statistics page.
-    
+
       Screenshot: menu_record_track_more.png">
     Aggregated statistics
   </string>
   <string name="menu_chart_view_chart_settings"
     translation_description="In the menu for the chart view, to change the chart settings.
-    
+
       Screenshot: menu_chart_settings.png">
     Chart settings
   </string>
   <string name="menu_help"
     translation_description="In the menu, to go to the help page.
-    
+
       Screenshot: menu_record_track_more.png">
     Help
   </string>
   <string name="menu_map_view_map_mode"
     translation_description="In the menu for the map view, to switch the display to the map mode.
-    
+
       Screenshot: menu_map_mode.png">
     Map mode
   </string>
   <string name="menu_map_view_my_location"
     translation_description="In the menu for the map view, to display user's current location.
-    
+
       Screenshot: menu_record_track.png">
     My location
   </string>
   <string name="menu_map_view_satellite_mode"
     translation_description="In the menu for the map view, to switch the display to the satellite
       mode.
-    
+
       Screenshot: menu_record_track.png">
     Satellite mode
   </string>
   <string name="menu_markers"
     translation_description="In the menu, to show a list of markers for the current track.
-    
+
       Screenshot: menu_record_track.png">
     Markers
   </string>
   <string name="menu_record_track"
     translation_description="In the menu, to start recording a track.
-    
+
       Screenshot: menu_record_track.png">
     Record track
   </string>
   <string name="menu_sensor_state"
     translation_description="In the menu, to go to the sensor state page.
-    
+
       Screenshot: menu_record_track_more.png">
     Sensor state
   </string>
   <string name="menu_settings"
     translation_description="In the menu, to go to the settings page.
-    
+
       Screenshot: menu_record_track_more.png">
     Settings
   </string>
   <string name="menu_stop_recording"
     translation_description="In the menu, to stop recording a track.
-    
+
       Screenshot: menu_stop_recording.png">
     Stop recording
   </string>
   <string name="menu_tracks"
     translation_description="In the menu, to show a list of all the tracks.
-    
+
       Screenshot: menu_record_track.png">
     Tracks
   </string>
@@ -954,14 +954,14 @@ limitations under the License.
   <string name="my_location_approximate_location"
     translation_description="When displaying the user's current location, a status message
       indicating that GPS is not available and an approximate location is used instead.
-      
+
       Screenshot: my_location_approximate_location.png">
     GPS is not available. An approximate location based on cell towers and WiFi networks is shown.
   </string>
   <string name="my_location_no_location"
     translation_description="When displaying the user's current location, a status message
       indicating that the current location cannot be determined.
-      
+
       Screenshot: my_location_no_location.png">
     GPS is not available. Current location cannot be determined. Enable more location sources (see
     \'Location &amp; security\' settings) &amp; make sure the sky is visible. Try again later.
@@ -1031,32 +1031,44 @@ limitations under the License.
   <!-- Permission -->
   <string name="permission_notification_description"
     translation_description="When installing a third-party app that wants to receive My Tracks
-      notifications, the permission description that the Android Market shows to the user.">
+      notifications, the permission description that the Android Market shows to the user.
+
+      Screenshot: permission_detail_top.png">
     Allows the application to receive notifications when My Tracks starts or stops a recording.
   </string>
   <string name="permission_notification_label"
     translation_description="When installing a third-party app that wants to receive My Tracks
-      notifications, the permission label that the Android Market shows to the user.">
+      notifications, the permission label that the Android Market shows to the user.
+
+      Screenshot: permission.png">
     receive My Tracks notifications
   </string>
   <string name="permission_read_description"
     translation_description="When installing a third-party app that wants to read My Tracks data,
-      the permission description that the Android Market shows to the user.">
+      the permission description that the Android Market shows to the user.
+
+      Screenshot: permission_detail_top.png">
     Allows the application to read My Tracks data.
   </string>
   <string name="permission_read_label"
     translation_description="When installing a third-party app that wants to read My Tracks data,
-      the permission label that the Android Market shows to the user.">
+      the permission label that the Android Market shows to the user.
+
+      Screenshot: permission.png">
     read My Tracks data
   </string>
   <string name="permission_write_description"
     translation_description="When installing a third-party app that wants to write data to My
-      Tracks, the permission description that the Android Market shows to the user.">
+      Tracks, the permission description that the Android Market shows to the user.
+
+      Screenshot: permission_detail_bottom.png">
     Allows the application to write data to My Tracks and start/stop My Tracks recording.
   </string>
   <string name="permission_write_label"
     translation_description="When installing a third-party app that wants to write data to My
-      Tracks, the permission label that the Android Market shows to the user.">
+      Tracks, the permission label that the Android Market shows to the user.
+
+      Screenshot: permission.png">
     write data to My Tracks and start/stop My Tracks recording
   </string>
 
@@ -1064,21 +1076,21 @@ limitations under the License.
   <string name="preferred_units_imperial"
     translation_description="In the dialog asking the user to choose a preferred units, the option
       to choose the imperial units.
-      
+
       Screenshot: preferred_units.png">
     Imperial
   </string>
   <string name="preferred_units_metric"
     translation_description="In the dialog asking the user to choose a preferred units, the option
       to choose the metric units.
-      
+
       Screenshot: preferred_units.png">
     Metric
   </string>
   <string name="preferred_units_title"
     translation_description="The title of the dialog asking the user to choose a preferred units,
       metric or imperial.
-      
+
       Screenshot: preferred_units.png">
     Preferred units
   </string>
@@ -1087,8 +1099,8 @@ limitations under the License.
   <string name="sd_card_canceled"
     translation_description="When exporting a track to the SD card, a message indicating that the
       export operation was canceled.
-      
-      Screenshot: sd_card_canceled.png">      
+
+      Screenshot: sd_card_canceled.png">
     The operation was canceled.
   </string>
   <string name="sd_card_error_create_dir"
@@ -1116,7 +1128,7 @@ limitations under the License.
     translation_description="When writing to the SD card, the progress dialog message indicating
       that it may take a while.
 
-      Screenshot: sd_card_progress_write_file.png">      
+      Screenshot: sd_card_progress_write_file.png">
     Exporting a track to the SD card. This may take a while.
   </string>
   <string name="sd_card_success_read_file"
@@ -1130,7 +1142,7 @@ limitations under the License.
     translation_description="When writing to the SD card, the success message when finish writing to
       the SD card.
 
-      Screenshot: sd_card_success_write_file.png">  
+      Screenshot: sd_card_success_write_file.png">
     Finished writing to the SD card.
   </string>
 
@@ -1284,7 +1296,7 @@ limitations under the License.
   <!-- Sensor State -->
   <string name="sensor_state_battery"
     translation_description="In the 'Sensor state' page, the label for the battery level on the bike
-      sensor. E.g, 'Battery level: 50 %'.   
+      sensor. E.g, 'Battery level: 50 %'.
 
       Screenshot: sensor_state_none.png">
     Battery level
@@ -1292,56 +1304,56 @@ limitations under the License.
   <string name="sensor_state_cadence"
     translation_description="In the 'Sensor state' page, the label for the cadence on the bike
       sensor. Cadence is the number of revolutions of the crank per minute. E.g.,
-      'Cadence: 80 rpm'.   
+      'Cadence: 80 rpm'.
 
       Screenshot: sensor_state_none.png">
     Cadence
   </string>
   <string name="sensor_state_connected"
     translation_description="In the 'Sensor state' page, the 'Sensor state' value when the sensor
-      has connected.   
+      has connected.
 
       Screenshot: sensor_state_connected.png">
     Connected
   </string>
   <string name="sensor_state_connecting"
     translation_description="In the 'Sensor state' page, the 'Sensor state' value when the sensor is
-      connecting.  
+      connecting.
 
       Screenshot: sensor_state_connecting.png">
     Connecting
   </string>
   <string name="sensor_state_disconnected"
     translation_description="In the 'Sensor state' page, the 'Sensor state' value when the sensor
-      has disconnected.  
+      has disconnected.
 
       Screenshot: sensor_state_disconnected.png">
     Disconnected
   </string>
   <string name="sensor_state_heart_rate"
     translation_description="In the 'Sensor state' page, the label for the heart rate from a heart
-      rate sensor. E.g., 'Hear rate: 100 bpm'.   
+      rate sensor. E.g., 'Hear rate: 100 bpm'.
 
       Screenshot: sensor_state_none.png">
     Heart rate
   </string>
   <string name="sensor_state_last_sensor_time"
     translation_description="In the 'Sensor state' page, the label for the last time the sensor has
-      sent a data. E.g., 'Last sensor time: 10:05 am'.   
+      sent a data. E.g., 'Last sensor time: 10:05 am'.
 
       Screenshot: sensor_state_none.png">
     Last sensor time
   </string>
   <string name="sensor_state_power"
-    translation_description="In the 'Sensor state' page, the label for the power from the bike 
-      sensor. Power is the power output of the rider. E.g., 'Power: 50 W'.   
+    translation_description="In the 'Sensor state' page, the label for the power from the bike
+      sensor. Power is the power output of the rider. E.g., 'Power: 50 W'.
 
       Screenshot: sensor_state_none.png">
     Power
   </string>
   <string name="sensor_state_sending"
     translation_description="In the 'Sensor state' page, the 'Sensor state' value when the sensor is
-      sending data.  
+      sending data.
 
       Screenshot: sensor_state_sending.png">
     Sending
@@ -1350,16 +1362,16 @@ limitations under the License.
   <!-- Settings -->
   <string name="settings_backup"
     translation_description="In the 'Settings' page, the option to change the data backup related
-      settings.    
-      
+      settings.
+
       Character limit: ~26 (1 line)
       Screenshot: settings.png">
     Backup
   </string>
   <string name="settings_backup_now"
     translation_description="In the 'Backup' settings, under the 'SD card backup' section, the
-      option to backup to the SD card now.    
-      
+      option to backup to the SD card now.
+
       Character limit: ~26 (1 line)
       Screenshot: settings_backup.png">
     Backup now
@@ -1368,22 +1380,22 @@ limitations under the License.
     translation_description="In the 'Backup' settings, after pressing the 'Backup now' option, the
       progress dialog telling the user that it is writing all tracks and settings and that it may
       take a while.
-      
+
       Screenshot: settings_backup_now_progress_message.png">
     Writing all tracks and settings to the SD card. This may take a while...
   </string>
   <string name="settings_backup_now_summary"
     translation_description="In the 'Backup' settings, under the 'SD card backup' section, the
       summary for the 'Backup now' option explaining that all tracks and settings will be written to
-      the SD card.    
-      
+      the SD card.
+
       Screenshot: settings_backup.png">
     Write a full copy of all your tracks and settings to the SD card.
   </string>
   <string name="settings_backup_restore"
     translation_description="In the 'Backup' settings, under the 'SD card backup' section, the
-      option to restore everything from the SD card.    
-      
+      option to restore everything from the SD card.
+
       Character limit: ~26 (1 line)
       Screenshot: settings_backup.png">
     Restore now
@@ -1392,7 +1404,7 @@ limitations under the License.
     translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
       message in the alert dialog asking the user to confirm that he wants to restore from a backup
       and it will overwrite all the current tracks and settings.
-      
+
       Screenshot: settings_backup_restore_confirm_message.png">
     Restoring a backup from the SD card will overwrite all your current tracks and settings. Are you
     sure?
@@ -1400,38 +1412,38 @@ limitations under the License.
   <string name="settings_backup_restore_no_backup"
     translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
       message in the alert dialog informing the user that there is no backup to restore from.
-      
-      Screenshot: settings_backup_restore_no_backup.png">      
+
+      Screenshot: settings_backup_restore_no_backup.png">
     No backup found.
   </string>
   <string name="settings_backup_restore_progress_message"
     translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
       message on the progress dialog indicating that My Tracks is reading all tracks and settings
       from the backup on the SD card and that it may take a while.
-      
+
       Screenshot: settings_backup_restore_progress.png">
     Reading all tracks and settings from the SD card. This may take a while...
   </string>
   <string name="settings_backup_restore_select_title"
     translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
       title in the picker dialog asking the user to select a backup.
-      
+
       Screenshot: settings_backup_restore_select_title.png">
     Select a backup to restore
   </string>
   <string name="settings_backup_restore_summary"
     translation_description="In the 'Backup' settings, under the 'SD card backup' section, the
       summary for the 'Restore now' option explaining that it restores all tracks and settings from
-      the SD card.    
-      
+      the SD card.
+
       Character limit: ~26 (1 line)
       Screenshot: settings_backup.png">
     Restore all tracks and settings from the SD card.
   </string>
   <string name="settings_backup_sd_card"
     translation_description="In the 'Backup' settings, the section header for configuring backup to
-      the SD card.    
-      
+      the SD card.
+
       Character limit: ~40 (1 line)
       Screenshot: settings_backup.png">
     SD card backup
@@ -1439,14 +1451,14 @@ limitations under the License.
   <string name="settings_display"
     translation_description="In the 'Settings' page, the option to change the display related
       settings.
-      
+
       Character limit: ~26 (1 line)
       Screenshot: settings.png">
     Display
   </string>
   <string name="settings_display_metric"
     translation_description="In the 'Display' settings, the checkbox option to use the metric units.
-          
+
       Character limit: ~23 (1 line)
       Screenshot: settings_display.png">
     Use metric units
@@ -1454,7 +1466,7 @@ limitations under the License.
   <string name="settings_display_metric_summary_off"
     translation_description="In the 'Display' settings, the summary for the 'Use metric units'
       checkbox when it is unchecked explaining using the imperial units to display distances.
-          
+
       Screenshot: settings_display_unchecked.png">
     Use imperial units to display distances.
   </string>
@@ -1468,7 +1480,7 @@ limitations under the License.
   <string name="settings_display_speed"
     translation_description="In the 'Display' settings, the checkbox option to display speed (e.g.,
       5 miles per hour) instead of pace (e.g., 0.2 hours per mile).
-          
+
       Character limit: ~23 (1 line)
       Screenshot: settings_display.png">
     Display speed
@@ -1477,7 +1489,7 @@ limitations under the License.
     translation_description="In the 'Display' settings, the summary for the 'Display speed' checkbox
       when it is unchecked explaining that pace (e.g., 0.2 hours per mile) will be used instead of
       speed (e.g., 5 miles per hour).
-          
+
       Screenshot: settings_display_unchecked.png">
     Display pace (e.g., hours/mile).
   </string>
@@ -1485,14 +1497,14 @@ limitations under the License.
     translation_description="In the 'Display' settings, the summary for the 'Display speed' checkbox
       when it is checked explaining that speed (e.g., 5 miles per hour) will be used instead of pace
       (e.g., 0.2 hours per mile).
-      
+
       Screenshot: settings_display.png">
     Display speed (e.g., miles/hour).
   </string>
   <string name="settings_display_track_color"
     translation_description="In the 'Display' settings, the dropdown option to choose a track color
       mode for how to use different colors to color a track based on slow, medium, and fast speed.
-          
+
       Character limit: ~23 (1 line)
       Screenshot: settings_display.png">
     Track color mode
@@ -1501,7 +1513,7 @@ limitations under the License.
     translation_description="In the 'Display' settings, for the 'Track color mode' dropdown, the
       option to use different colors to color a track based on dynamically determined speed
       thresholds. E.g., use one color when the speed is below the slow speed threshold.
-      
+
       Character limit: ~21 (1 line)
       Screenshot: settings_display_track_color_option.png">
     Dynamic thresholds
@@ -1511,7 +1523,7 @@ limitations under the License.
       configurations, the option for configuring the percentage from the average speed for the
       medium speed range. The track color mode will use different colors to color a track depending
       on whether the speed is above, in, or below the medium speed range.
-          
+
       Character limit: ~23 (1 line)
       Screenshot: settings_display.png">
     Percentage from average
@@ -1522,7 +1534,7 @@ limitations under the License.
       the percentage from the average speed for the medium speed range. The track color mode will
       use different colors to color a track depending on whether the speed is above, in, or below
       the medium speed range.
-      
+
       Screenshot: settings_display.png">
     Percentage from the average speed for the medium speed range.
   </string>
@@ -1530,7 +1542,7 @@ limitations under the License.
     translation_description="In the 'Display' settings, for the 'Track color mode' dropdown, the
       option to use different colors to color a track based on fixed speed thresholds. E.g., use
       one color when the speed is below the slow speed threshold.
-      
+
       Character limit: ~21 (1 line)
       Screenshot: settings_display_track_color_option.png">
     Fixed thresholds
@@ -1540,7 +1552,7 @@ limitations under the License.
       the option for configuring the medium speed threshold. Thus any speed lower than the
       threshold but greater than the slow speed threshold will be colored by the medium speed
       color.
-          
+
       Character limit: ~23 (1 line)
       Screenshot: settings_display.png">
     Medium speed threshold
@@ -1549,7 +1561,7 @@ limitations under the License.
     translation_description="In the 'Display' settings, under the 'Fixed thresholds' configurations,
       the summary for the 'Medium speed threshold' option explaining that it sets a cutoff speed
       for the medium speed color.
-      
+
       Screenshot: settings_display.png">
     Medium speed top value.
   </string>
@@ -1557,7 +1569,7 @@ limitations under the License.
     translation_description="In the 'Display' settings, under the 'Fixed thresholds' configurations,
       the option for configuring the slow speed threshold. Thus any speed lower than the threshold
       will be colored by the slow speed color.
-          
+
       Character limit: ~23 (1 line)
       Screenshot: settings_display.png">
     Slow speed threshold
@@ -1566,14 +1578,14 @@ limitations under the License.
     translation_description="In the 'Display' settings, under the 'Fixed thresholds' configurations,
       the summary for the 'Slow speed threshold' option explaining that it sets a cutoff speed for
       the slow speed color.
-      
+
       Screenshot: settings_display.png">
     Slow speed top value.
   </string>
   <string name="settings_display_track_color_single"
     translation_description="In the 'Display' settings, for the 'Track color mode' dropdown, the
       option to use a single color for all speeds.
-      
+
       Character limit: ~21 (1 line)
       Screenshot: settings_display_track_color_option.png">
     Single color
@@ -1582,21 +1594,21 @@ limitations under the License.
     translation_description="In the 'Display' settings, the summary for the 'Track color mode'
       dropdown explaining that it configures how colors are used to color a track based on
       slow, medium, and fast speed.
-      
+
       Screenshot: settings_display.png">
     The way to color a track based on slow, medium, and fast speed.
   </string>
   <string name="settings_not_while_recording"
     translation_description="In settings, the summary for an option that is not available during a
       track recording.
-      
+
       Screenshot: settings_not_while_recording.png">
     Not available while recording a track.
   </string>
   <string name="settings_recording"
     translation_description="In the 'Settings' page, the option to change the track recording
       related settings.
-      
+
       Character limit: ~26 (1 line)
       Screenshot: settings.png">
     Recording
@@ -1604,7 +1616,7 @@ limitations under the License.
   <string name="settings_recording_auto_resume"
     translation_description="In the 'Recording' settings, the dropdown option to configure the
       timeout after which a recorded track will not be continued after phone reboot.
-      
+
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_bottom.png">
     Auto-resume timeout
@@ -1613,14 +1625,14 @@ limitations under the License.
     translation_description="In the 'Recording' settings, the summary for the 'Auto-resume timeout'
       dropdown option explaining that it configures the maximum time after which a previous
       recording will not be resumed after phone reboot.
-      
+
       Screenshot: settings_recording_bottom.png">
     Maximum time after which a previously recording track will not be resumed after phone reboot.
   </string>
   <string name="settings_recording_default_activity"
     translation_description="In the 'Recording' settings, the option to specify a new track's
       default activity type.
-      
+
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_bottom.png">
     Default activity type
@@ -1628,14 +1640,14 @@ limitations under the License.
   <string name="settings_recording_default_activity_summary"
     translation_description="In the 'Recording' settings, the summary for the 'Default activity
       type' option explaining that it sets the default activity type for a new track.
-      
+
       Screenshot: settings_recording_bottom.png">
     Default activity type for a new track.
   </string>
   <string name="settings_recording_distance"
     translation_description="In the 'Recording' settings, the dropdown option to configure the
       distance between two recorded points.
-      
+
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_top.png">
     Distance between points
@@ -1644,7 +1656,7 @@ limitations under the License.
     translation_description="In the 'Recording' settings, the summary for the 'Distance between
       points' dropdown option explaining that it configures the smallest distance between two
       recordings of your position.
-      
+
       Screenshot: settings_recording_top.png">
     Smallest distance between two recordings of your position.
   </string>
@@ -1652,7 +1664,7 @@ limitations under the License.
     translation_description="In the 'Recording' settings, the dropdown option to configure the
       required GPS accuracy. If a GPS position's accuracy is below the requirement, then it will
       not be used.
-      
+
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_top.png">
     GPS accuracy
@@ -1661,14 +1673,14 @@ limitations under the License.
     translation_description="In the 'Recording' settings, the summary for the 'GPS accuracy'
       dropdown option explaining that it configures the required accuracy for your position. If a
       GPS position's accuracy is below the requirement, then it will not be used.
-      
+
       Screenshot: settings_recording_top.png">
     GPS position will be ignored if it is not this accurate.
   </string>
   <string name="settings_recording_interval"
     translation_description="In the 'Recording' settings, the dropdown option to configure the
       time between two recorded points.
-      
+
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_top.png">
     Time between points
@@ -1677,14 +1689,14 @@ limitations under the License.
     translation_description="In the 'Recording' settings, the summary for the 'Time between points'
       dropdown option explaining that it configures the smallest time interval between two
       recordings of your position.
-      
+
       Screenshot: settings_recording_top.png">
     Smallest time interval between two recordings of your position.
   </string>
   <string name="settings_recording_marker"
     translation_description="In the 'Recording' settings, the dropdown option to configure the time
       or distance a new marker will be inserted.
-      
+
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_top.png">
     Marker frequency
@@ -1693,14 +1705,14 @@ limitations under the License.
     translation_description="In the 'Recording' settings, the summary for the 'Marker frequency'
       dropdown option explaining that it configures the time or distance after which a new marker
       will be inserted.
-      
+
       Screenshot: settings_recording_top.png">
     Time/distance after which a new marker will be inserted.
   </string>
   <string name="settings_recording_name"
     translation_description="In the 'Recording' settings, the checkbox on whether the track should
       be named based on the track's start time or based on a number.
-      
+
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_bottom.png">
     Use time for track name
@@ -1708,7 +1720,7 @@ limitations under the License.
   <string name="settings_recording_name_summary_off"
     translation_description="In the 'Recording' settings, the summary for the 'Use time for track
       name' checkbox when it is unchecked explaining using a number as the default track name.
-      
+
       Screenshot: settings_recording_bottom_unchecked.png">
     Use a number as the default track name.
   </string>
@@ -1716,14 +1728,14 @@ limitations under the License.
     translation_description="In the 'Recording' settings, the summary for the 'Use time for track
       name' checkbox when it is checked explaining using the track's start time as the default track
       name.
-      
+
       Screenshot: settings_recording_bottom.png">
     Use the track\'s start time as the default track name.
   </string>
   <string name="settings_recording_track_distance"
     translation_description="In the 'Recording' settings, the dropdown option to configure the
       distance between two tracks.
-      
+
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_top.png">
     Distance between tracks
@@ -1732,14 +1744,14 @@ limitations under the License.
     translation_description="In the 'Recording' settings, the summary for the 'Distance between
       tracks' dropdown option explaining that it configures the maximum distance for two recorded
       points for them to be still considered as the same track.
-      
+
       Screenshot: settings_recording_top.png">
     Track will be split if two recordings of your position are further than this.
   </string>
   <string name="settings_recording_voice"
     translation_description="In the 'Recording' settings, the dropdown option to configure the voice
       announcement frequency.
-      
+
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_top.png">
     Voice frequency
@@ -1747,7 +1759,7 @@ limitations under the License.
   <string name="settings_recording_voice_not_available"
     translation_description="In the 'Recording' settings, the summary for the 'Voice frequency'
       explaining that this option is not available on your Android phone.
-      
+
       Screenshot: settings_recording_voice_not_available.png">
     Voice announcement is not available on your Android phone.
   </string>
@@ -1755,13 +1767,13 @@ limitations under the License.
     translation_description="In the 'Recording' settings, the summary for the 'Voice frequency'
       dropdown option explaining that it configures the time or distance between two voice
       announcements.
-      
+
       Screenshot: settings_recording_top.png">
     Time/distance between two voice announcements.
   </string>
   <string name="settings_reset"
     translation_description="In the 'Settings' page, the option to reset everything to the defaults.
-      
+
       Character limit: ~26 (1 line)
       Screenshot: settings.png">
     Reset to defaults
@@ -1770,7 +1782,7 @@ limitations under the License.
     translation_description="In the 'Settings' page, after pressing the 'Reset to defaults' option,
       the confirmation dialog asking the user to confirm reverting all settings to defaults. But
       the saved tracks will be preserved.
-      
+
       Screenshot: settings_reset_dialog_message.png">
     All your settings will be erased and reverted to the default values. Saved tracks will be
     preserved. Are you sure?
@@ -1779,7 +1791,7 @@ limitations under the License.
     translation_description="In the 'Settings' page, after pressing the 'Reset to defaults' option,
       the confirmation dialog informing the user that all settings have been reverted to their
       defaults.
-      
+
       Screenshot: settings_reset_done.png">
     All settings have been reverted to their defaults.
   </string>
@@ -1793,7 +1805,7 @@ limitations under the License.
   <string name="settings_sensor"
     translation_description="In the 'Settings' page, the option to change the sensor related
       settings.
-      
+
       Character limit: ~26 (1 line)
       Screenshot: settings.png">
     Sensor
@@ -1832,7 +1844,7 @@ limitations under the License.
   <string name="settings_sensor_bluetooth_pairing"
     translation_description="In the 'Sensor' settings, under the 'Bluetooth options' configurations,
       the option to pair with a Bluetooth device.
-      
+
       Character limit: ~26 (1 line)
       Screenshot: settings_sensor.png">
     Bluetooth pairing
@@ -1848,7 +1860,7 @@ limitations under the License.
   <string name="settings_sensor_bluetooth_sensor"
     translation_description="In the 'Sensor' settings, under the 'Bluetooth options' configurations,
       the dropdown option to pick a Bluetooth sensor.
-      
+
       Character limit: ~23 (1 line)
       Screenshot: settings_sensor.png">
     Bluetooth sensor
@@ -1863,7 +1875,7 @@ limitations under the License.
   </string>
   <string name="settings_sensor_type"
     translation_description="In the 'Sensor' settings, the dropdown option to choose a sensor type.
-      
+
       Character limit: ~23 (1 line)
       Screenshot: settings_sensor.png">
     Sensor type
@@ -1918,7 +1930,7 @@ limitations under the License.
   <string name="settings_sensor_unpair_ant"
     translation_description="In the 'Sensor' settings, under the 'ANT+ options' configurations, the
       option to unpair an ANT+ heart rate sensor.
-      
+
       Character limit: ~26 (1 line)
       Screenshot: settings_sensor.png">
     Unpair ANT+ heart rate sensor
@@ -1926,7 +1938,7 @@ limitations under the License.
   <string name="settings_sensor_unpair_srm"
     translation_description="In the 'Sensor' settings, under the 'ANT+ options' configurations, the
       option to unpair a SRM ANT+ bridge.
-      
+
       Character limit: ~26 (1 line)
       Screenshot: settings_sensor.png">
     Unpair SRM ANT+ bridge
@@ -1934,7 +1946,7 @@ limitations under the License.
   <string name="settings_sharing"
     translation_description="In the 'Settings' page, the option to change the track sharing related
       settings.
-      
+
       Character limit: ~26 (1 line)
       Screenshot: settings.png">
     Sharing
@@ -1942,7 +1954,7 @@ limitations under the License.
   <string name="settings_sharing_allow_access"
     translation_description="In the 'Sharing' settings, the checkbox option to allow third party
       apps access to the My Tracks data.
-      
+
       Character limit: ~23 (1 line)
       Screenshot: settings_sharing.png">
     Allow access
@@ -1952,7 +1964,7 @@ limitations under the License.
       the confirmation dialog asking the user if he wants to allow other apps, including apps
       installed in the future, to control and access My Tracks data. In addition, no further
       notification of third party app access will be shown.
-      
+
       Screenshot: settings_sharing_allow_access_confirm_message.png">
     Are you sure you want to allow other apps, including future apps, to control and access My
     Tracks data? There will be no further notification.
@@ -1961,7 +1973,7 @@ limitations under the License.
     translation_description="In the 'Sharing' settings, the summary for the 'Allow access' checkbox
       option when it is unchecked explaining that other apps cannot read, write, start/stop
       recording My Tracks data.
-      
+
       Screenshot: settings_sharing_unchecked.png">
     Other apps cannot read, write, start/stop recording My Tracks data.
   </string>
@@ -1969,14 +1981,14 @@ limitations under the License.
     translation_description="In the 'Sharing' settings, the summary for the 'Allow access' checkbox
       option when it is checked explaining that other apps can read, write, start/stop recording My
       Tracks data.
-      
+
       Screenshot: settings_sharing.png">
     Other apps can read, write, start/stop recording My Tracks data.
   </string>
   <string name="settings_sharing_map_public"
     translation_description="In the 'Sharing' settings, the checkbox option to make a new map
       created in Google My Maps public.
-      
+
       Character limit: ~23 (1 line)
       Screenshot: settings_sharing.png">
     Make new maps public
@@ -1985,7 +1997,7 @@ limitations under the License.
     translation_description="In the 'Sharing' settings, the summary for the 'Make new maps public'
       checkbox option when it is unchecked explaining that new maps created in Google My Maps will
       be unlisted, as opposed to public.
-      
+
       Screenshot: settings_sharing_unchecked.png">
     Make new maps created in Google My Maps unlisted.
   </string>
@@ -1993,14 +2005,14 @@ limitations under the License.
     translation_description="In the 'Sharing' settings, the summary for the 'Make new maps public'
       checkbox option when it is checked explaining that new maps created in Google My Maps will
       be public, as opposed to unlisted.
-      
+
       Screenshot: settings_sharing.png">
     Make new maps created in Google My Maps public.
   </string>
   <string name="settings_sharing_url_only"
     translation_description="In the 'Sharing' settings, the checkbox option to share only the URL
       link, without any additional text, when sharing the URL with friends.
-      
+
       Character limit: ~23 (1 line)
       Screenshot: settings_sharing.png">
     Share only URL link
@@ -2009,7 +2021,7 @@ limitations under the License.
     translation_description="In the 'Sharing' settings, the summary for the 'Share only URL link'
       checkbox option when it is unchecked explaining that some text and the the URL link will be
       sent when sharing the URL with friends.
-      
+
       Screenshot: settings_sharing_unchecked.png">
     Some text and the URL link will be sent when sharing the URL with friends.
   </string>
@@ -2017,13 +2029,13 @@ limitations under the License.
     translation_description="In the 'Sharing' settings, the summary for the 'Share only URL link'
       checkbox option when it is checked explaining that only the URL link, without any additional
       text, will be sent when sharing the URL with friends.
-      
+
       Screenshot: settings_sharing.png">
    Only the URL link will be sent when sharing the URL with friends.
   </string>
   <string name="settings_title"
-    translation_description="The title of the 'Settings' page.    
-    
+    translation_description="The title of the 'Settings' page.
+
       Screenshot: settings.png">
     My Tracks settings
   </string>
@@ -2325,14 +2337,14 @@ limitations under the License.
     translation_description="In the context menu for a track, under the 'Share with friends...'
       option, the menu option to save a track to My Maps or Fusion Tables and share the URL with
       friends.
-      
+
       Screenshot: track_list_share_options.png">
     My Map or Fusion Table URL
   </string>
   <string name="track_list_show_on_map"
     translation_description="In the context menu for a track, the menu option to show the track on
       the map.
-      
+
       Screenshot: track_list_show_on_map.png">
     Show on map
   </string>
@@ -2346,21 +2358,21 @@ limitations under the License.
   <string name="track_record_error"
     translation_description="When starting a recording, message when not able to start due to no GPS
       location and asking the user to try again.
-      
+
       Screenshot: track_record_error.png">
     Unable to start recording. No GPS location. Try again.
   </string>
   <string name="track_record_notification"
     translation_description="When recording a track, the message on the My Tracks notification
       informing the user that My Tracks is actively recording his track.
-      
+
       Screenshot: track_record_notification.png">
     Recording your track...
   </string>
   <string name="track_record_success"
     translation_description="When starting a new track recording, a status message indicating
       success.
-      
+
       Screenshot: track_record_success.png">
     Now recording a new track.
   </string>
@@ -2425,19 +2437,19 @@ limitations under the License.
   <string name="value_adapt_accuracy"
     translation_description="In a setting picker, the value to adapt for accuracy.
 
-      Screenshot: value_interval.png">    
+      Screenshot: value_interval.png">
     Adapt for accuracy
   </string>
   <string name="value_adapt_battery_life"
     translation_description="In a setting picker, the value to adapt for battery life.
 
-      Screenshot: value_interval.png">    
+      Screenshot: value_interval.png">
     Adapt for battery life
   </string>
   <string name="value_always"
     translation_description="In a setting picker, the value to always enable the option.
 
-      Screenshot: value_auto_resume.png">    
+      Screenshot: value_auto_resume.png">
     Always
   </string>
   <string name="value_float_mile"
@@ -2477,7 +2489,7 @@ limitations under the License.
       feet (ft) and that the value is the recommended value.
 
       %1$d: an integer value. E.g., '2'
-      Screenshot: value_gps_accuracy_feet_excellent_gps.png"> 
+      Screenshot: value_gps_accuracy_feet_excellent_gps.png">
     %1$d ft (recommended)
   </string>
   <string name="value_integer_kilometer"
@@ -2493,7 +2505,7 @@ limitations under the License.
       meters (m).
 
       %1$d: an integer value. E.g., '2'
-      Screenshot: value_gps_accuracy_meter_excellent_gps.png"> 
+      Screenshot: value_gps_accuracy_meter_excellent_gps.png">
     %1$d m
   </string>
   <string name="value_integer_meter_excellent_gps"
@@ -2501,7 +2513,7 @@ limitations under the License.
       meters (m), recommended when having excellent GPS signal.
 
       %1$d: an integer value. E.g., '2'
-      Screenshot: value_gps_accuracy_meter_excellent_gps.png">    
+      Screenshot: value_gps_accuracy_meter_excellent_gps.png">
     %1$d m (excellent GPS)
   </string>
   <string name="value_integer_meter_poor_gps"
@@ -2509,7 +2521,7 @@ limitations under the License.
       meters (m), recommended when having poor GPS signal.
 
       %1$d: an integer value. E.g., '2'
-      Screenshot: value_gps_accuracy_meter_poor_gps.png"> 
+      Screenshot: value_gps_accuracy_meter_poor_gps.png">
     %1$d m (poor GPS)
   </string>
   <string name="value_integer_meter_recommended"
@@ -2533,7 +2545,7 @@ limitations under the License.
       minutes (min).
 
       %1$d: an integer value. E.g., '2'
-      Screenshot: value_auto_resume.png"> 
+      Screenshot: value_auto_resume.png">
     %1$d min
   </string>
   <string name="value_integer_second"
@@ -2541,26 +2553,26 @@ limitations under the License.
       seconds (s).
 
       %1$d: an integer value. E.g., '2'
-      Screenshot: value_interval.png">    
+      Screenshot: value_interval.png">
     %1$d s
   </string>
   <string name="value_never"
     translation_description="In a setting picker, the value to never use the feature.
 
-      Screenshot: value_auto_resume.png">    
+      Screenshot: value_auto_resume.png">
     Never
   </string>
   <string name="value_off"
     translation_description="In a setting picker, the value to turn off the feature.
 
-      Screenshot: value_voice.png">    
+      Screenshot: value_voice.png">
     Off
   </string>
   <string name="value_smallest_recommended"
     translation_description="In a setting picker, the value to use the smallest value, also the
       recommended value.
 
-      Screenshot: value_interval.png">    
+      Screenshot: value_interval.png">
     Smallest (recommended)
   </string>
 
@@ -2584,7 +2596,7 @@ limitations under the License.
   <string name="voice_hours_other"
     translation_description="For voice announcement, to say 'other' hours, 'other' means for cases
       that the language does not require special treatment of the given quantity.
-      
+
       %1$d an integer number.">
     %1$d hours
   </string>
@@ -2615,7 +2627,7 @@ limitations under the License.
   <string name="voice_minutes_other"
     translation_description="For voice announcement, to say 'other' minutes, 'other' means for cases
       that the language does not require special treatment of the given quantity.
-      
+
       %1$d an integer number.">
     %1$d minutes
   </string>
@@ -2630,14 +2642,14 @@ limitations under the License.
   <string name="voice_pace_per_kilometer"
     translation_description="For voice announcement, to say 'time per kilometer' like 'two hours 2
       minutes per kilometer'.
-    
-      %1$s time. E.g., 'two hours 2 minutes'.">    
+
+      %1$s time. E.g., 'two hours 2 minutes'.">
     %1$s per kilometer
   </string>
   <string name="voice_pace_per_mile"
     translation_description="For voice announcement, to say 'time per mile' like 'two hours 2
       minutes per mile'.
-      
+
       %1$s time. E.g., 'two hours 2 minutes'.">
     %1$s per mile
   </string>
@@ -2660,7 +2672,7 @@ limitations under the License.
   <string name="voice_seconds_other"
     translation_description="For voice announcement, to say 'other' seconds, 'other' means for cases
       that the language does not require special treatment of the given quantity.
-      
+
       %1$d an integer number.">
     %1$d seconds
   </string>
@@ -2691,7 +2703,7 @@ limitations under the License.
   <string name="voice_speed_kilometers_per_hour_other"
     translation_description="For voice announcement, to say 'other' kilometers per hour, 'other'
       means for cases that the language does not require special treatment of the given quantity.
-      
+
       %1$.1f a float number.">
     %1$.1f kilometers per hour
   </string>
@@ -2722,7 +2734,7 @@ limitations under the License.
   <string name="voice_speed_miles_per_hour_other"
     translation_description="For voice announcement, to say 'other' miles per hour, 'other' means
       for cases that the language does not require special treatment of the given quantity.
-      
+
       %1$.1f a float number.">
     %1$.1f miles per hour
   </string>
@@ -2763,7 +2775,7 @@ limitations under the License.
     translation_description="For voice announcement, to say total distance 'other' kilometers,
       'other' means for cases that the language does not require special treatment of the given
       quantity.
-      
+
       %1$.2f a float number.">
     total distance %1$.2f kilometers
   </string>
@@ -2794,7 +2806,7 @@ limitations under the License.
   <string name="voice_total_distance_miles_other"
     translation_description="For voice announcement, to say total distance 'other' miles, 'other'
       means for cases that the language does not require special treatment of the given quantity.
-      
+
       %1$.2f a float number.">
     total distance %1$.2f miles
   </string>
@@ -2814,7 +2826,7 @@ limitations under the License.
 
   <!-- Waypoint Type -->
   <string name="waypoint_type_atm"
-    translation_description="When entering a 'Marker type', in the auto-complete text box, the 
+    translation_description="When entering a 'Marker type', in the auto-complete text box, the
       completion suggestion for an ATM.">
     ATM
   </string>
@@ -3073,40 +3085,40 @@ limitations under the License.
   <string name="welcome_about"
     translation_description="In the 'Welcome' page, the button on the bottom to open the 'About My
       Tracks' dialog.
-        
+
       Screenshot: welcome.png">
     About My Tracks
   </string>
   <string name="welcome_add_graph_answer"
     translation_description="In the 'Welcome' page, the help content answer on adding graphs to the
       graphs view.
-        
+
       Screenshot: welcome.png">
     In the graphs view, Menu -> Chart settings.
   </string>
   <string name="welcome_add_graph_question"
     translation_description="In the 'Welcome' page, the help content question on adding graphs to
       the graphs view.
-        
+
       Screenshot: welcome.png">
     How do I add more graphs?
   </string>
   <string name="welcome_app_navigation_answer"
     translation_description="In the 'Welcome' page, the help content answer on app navigation.
-        
+
       Screenshot: welcome.png">
     Touch the map. Left and right arrows will appear. Tap on these arrows to cycle between the map,
     statistics, and graphs view.
   </string>
   <string name="welcome_app_navigation_question"
     translation_description="In the 'Welcome' page, the help content question on app navigation.
-        
+
       Screenshot: welcome.png">
     How do I see the map, statistics, and graphs view?
   </string>
   <string name="welcome_battery_life_answer"
     translation_description="In the 'Welcome' page, the help content answer on battery life.
-        
+
       Screenshot: welcome.png">
     The GPS receiver draws a relatively high amount of power, so a fully charged battery typically
     survives less than 5 hours. Battery life depends on many factors, including signal strength,
@@ -3116,13 +3128,13 @@ limitations under the License.
   </string>
   <string name="welcome_battery_life_question"
     translation_description="In the 'Welcome' page, the help content question on battery life.
-        
+
       Screenshot: welcome.png">
     How long does the battery last when recording tracks?
   </string>
   <string name="welcome_data_connection_answer"
     translation_description="In the 'Welcome' page, the help content answer on data connection.
-        
+
       Screenshot: welcome.png">
     Cell signal or data connection is not required to record GPS tracks. However, if there is no
     data connection, you will not be able to see a map. Instead, you will see a grey screen or a
@@ -3131,13 +3143,13 @@ limitations under the License.
   </string>
   <string name="welcome_data_connection_question"
     translation_description="In the 'Welcome' page, the help content question on data connection.
-        
+
       Screenshot: welcome.png">
     Do I need cell signal and data connection to use My Tracks?
   </string>
   <string name="welcome_delete_all_answer"
     translation_description="In the 'Welcome' page, the help content answer on deleting all tracks.
-        
+
       Screenshot: welcome.png">
     Menu -> Tracks -> Delete all. This permanently deletes the recorded tracks from memory. If you
     have saved tracks to the SD card, you must delete them separately. Tracks uploaded to Google My
@@ -3146,26 +3158,26 @@ limitations under the License.
   <string name="welcome_delete_all_question"
     translation_description="In the 'Welcome' page, the help content question on deleting all
       tracks.
-        
+
       Screenshot: welcome.png">
     How do I delete all the tracks from the phone?
   </string>
   <string name="welcome_edit_accuracy_answer"
     translation_description="In the 'Welcome' page, the help content answer on editing points.
-        
+
       Screenshot: welcome.png">
     Once you upload tracks to Google My Maps, Google Fusion Tables, or Google Docs, you can move,
     delete or insert individual track points as desired.
   </string>
   <string name="welcome_edit_accuracy_question"
     translation_description="In the 'Welcome' page, the help content question on editing points.
-        
+
       Screenshot: welcome.png">
     How can I edit or correct tracks for accuracy?
   </string>
   <string name="welcome_elevation_precision_answer"
     translation_description="In the 'Welcome' page, the help content answer on elevation precision.
-        
+
       Screenshot: welcome.png">
     GPS receivers measure elevations much less precisely than latitude and longitude. Elevations
     can sometimes be off by a few hundred feet, though relative changes are tracked more precisely.
@@ -3175,13 +3187,13 @@ limitations under the License.
   <string name="welcome_elevation_precision_question"
     translation_description="In the 'Welcome' page, the help content question on elevation
       precision.
-        
+
       Screenshot: welcome.png">
     How precise is the elevation measurement?
   </string>
   <string name="welcome_gps_fix_answer"
     translation_description="In the 'Welcome' page, the help content answer on the GPS fix message.
-        
+
       Screenshot: welcome.png">
     For My Tracks to work, your phone needs to be in line-of-sight contact with the GPS satellites.
     If the line-of-sight is obstructed by trees, buildings or canyon walls, you may not get an
@@ -3191,14 +3203,14 @@ limitations under the License.
   <string name="welcome_gps_fix_question"
     translation_description="In the 'Welcome' page, the help content question on the GPS fix
       message.
-        
+
       Screenshot: welcome.png">
     Why does the application sometimes display \"Waiting for a better GPS fix. Make sure the sky is
     visible.\"?
   </string>
   <string name="welcome_location_precision_answer"
     translation_description="In the 'Welcome' page, the help content answer on location precision.
-        
+
       Screenshot: welcome.png">
     Under optimal conditions, the location error can be +/- 20 feet (6 meters). However, precision
     depends on the quality of the GPS signal. The blue circle around the orange location arrow
@@ -3208,14 +3220,14 @@ limitations under the License.
   </string>
   <string name="welcome_location_precision_question"
     translation_description="In the 'Welcome' page, the help content question on location precision.
-        
+
       Screenshot: welcome.png">
     How precise are the recorded tracks?
   </string>
   <string name="welcome_my_maps_sharing_answer"
     translation_description="In the 'Welcome' page, the help content answer on Google My Maps
       visibility.
-        
+
       Screenshot: welcome.png">
     By default, new maps are public. To change the default to unlisted, uncheck Settings -> Sharing
     -> Make new maps public. You can change the visibility of all your maps at Google My Maps.
@@ -3223,13 +3235,13 @@ limitations under the License.
   <string name="welcome_my_maps_sharing_question"
     translation_description="In the 'Welcome' page, the help content question on Google My Maps
       visibility.
-        
+
       Screenshot: welcome.png">
     Who can see the maps I send to Google My Maps?
   </string>
   <string name="welcome_my_tracks_answer"
     translation_description="In the 'Welcome' page, the help content answer on what is My Tracks.
-        
+
       Screenshot: welcome.png">
     My Tracks allows you to record GPS tracks and visualize your hiking, running, biking or any
     other activity while watching live performance statistics. My Tracks makes it easy to archive
@@ -3238,14 +3250,14 @@ limitations under the License.
   </string>
   <string name="welcome_my_tracks_question"
     translation_description="In the 'Welcome' page, the help content question on what is My Tracks.
-        
+
       Screenshot: welcome.png">
     What is My Tracks?
   </string>
   <string name="welcome_send_google_answer"
     translation_description="In the 'Welcome' page, the help content answer on sending a track to
       Google.
-        
+
       Screenshot: welcome.png">
     Tap the Options button located at the bottom right corner of the map view and select \"Send to
     Google...\".
@@ -3253,57 +3265,57 @@ limitations under the License.
   <string name="welcome_send_google_question"
     translation_description="In the 'Welcome' page, the help content question on sending a track to
       Google.
-        
+
       Screenshot: welcome.png">
     How do I send my tracks to Google My Maps, Google Fusion Tables, and Google Docs?
   </string>
   <string name="welcome_share_file_answer"
     translation_description="In the 'Welcome' page, the help content answer on sharing a file.
-        
+
       Screenshot: welcome.png">
     You can use Google Earth or similar applications to visualize and edit GPS tracks.
   </string>
   <string name="welcome_share_file_question"
     translation_description="In the 'Welcome' page, the help content question on sharing a file.
-        
+
       Screenshot: welcome.png">
     What can I do with tracks after saving them to the SD card or sharing such files with friends?
   </string>
   <string name="welcome_share_friends_answer"
     translation_description="In the 'Welcome' page, the help content answer on sharing a track with
       friends.
-        
+
       Screenshot: welcome.png">
     Tap the Options button located at the bottom right corner of the map view and select \"Share
     with friends...\". You can share the track as a link to Google My Map or Google Fusion Table
-    (you will be prompted to upload the track first) or as a GPX, KML, CSV, or TCS file in an e-mail
+    (you will be prompted to upload the track first) or as a GPX, KML, CSV, or TCX file in an e-mail
     attachment.
   </string>
   <string name="welcome_share_friends_question"
     translation_description="In the 'Welcome' page, the help content question on sharing a track
       with friends.
-        
+
       Screenshot: welcome.png">
     How do I share tracks with friends and the rest of the world?
   </string>
   <string name="welcome_split_track_answer"
     translation_description="In the 'Welcome' page, the help content answer on splitting long
       tracks.
-        
+
       Screenshot: welcome.png">
     Tracks on Google My Maps and Google Fusion Tables are limited to certain sizes.
   </string>
   <string name="welcome_split_track_question"
     translation_description="In the 'Welcome' page, the help content question on splitting long
       tracks.
-        
+
       Screenshot: welcome.png">
     Why do very long tracks split into multiple segments upon sending them to Google My Maps and
     Google Fusion Tables?
   </string>
   <string name="welcome_statistics_marker_answer"
     translation_description="In the 'Welcome' page, the help content answer on statistics markers.
-        
+
       Screenshot: welcome.png">
     Statistics markers are used to segment a track to calculate statistics for each segment. For
     example, let\'s say you are recording a bike ride up a hill, you can insert a statistics marker
@@ -3312,26 +3324,26 @@ limitations under the License.
   </string>
   <string name="welcome_statistics_marker_question"
     translation_description="In the 'Welcome' page, the help content question on statistics markers.
-          
+
       Screenshot: welcome.png">
     What are statistics markers?
   </string>
   <string name="welcome_title"
     translation_description="In the 'Welcome' page, the title of the page.
-    
+
       Screenshot: welcome.png">
     My Tracks Welcome
   </string>
   <string name="welcome_waypoint_marker_answer"
     translation_description="In the 'Welcome' page, the help content answer on waypoint markers.
-        
+
       Screenshot: welcome.png">
     Waypoint markers are used to annotate a location. For example, if you are recording a track and
     you are close to an interesting place, press Menu -> Markers -> Insert waypoint.
   </string>
   <string name="welcome_waypoint_marker_question"
     translation_description="In the 'Welcome' page, the help content question on waypoint markers.
-        
+
       Screenshot: welcome.png">
     What are waypoint markers?
   </string>
