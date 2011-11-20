@@ -1019,6 +1019,13 @@ limitations under the License.
     translation_description="The My Tracks application name.">
       My Tracks
   </string>
+  <string name="my_tracks_importer"
+    translation_description="When opening a GPX file from a file manager, the name of the My Tracks
+      application that can import the file to My Tracks.
+
+      Screenshot: my_tracks_importer.png">
+      My Tracks Importer
+  </string>
   <string name="my_tracks_recording_service"
     translation_description="When viewing the 'Running services' on Android, the name of the My
       Tracks service that is recording a track in the background.
