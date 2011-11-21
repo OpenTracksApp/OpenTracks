@@ -15,6 +15,33 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
+
+  <!--  About dialog TableRow -->
+  <style name="AboutTableRow">
+    <item name="android:paddingBottom">2dp</item>
+  </style>
+  
+  <!--  About dialog TextView -->
+  <style name="AboutTextView">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textSize">20sp</item>  
+  </style>
+
+  <!--  About dialog TextView Column1 -->
+  <style name="AboutTextView.Column1">
+    <item name="android:gravity">right</item>
+    <item name="android:layout_column">0</item>
+    <item name="android:paddingLeft">10dp</item>
+    <item name="android:paddingRight">10dp</item>
+  </style>
+    
+  <!--  About dialog TextView Url -->
+  <style name="AboutTextView.Url">
+    <item name="android:autoLink">web</item>
+    <item name="android:textSize">18sp</item>  
+  </style>
+  
   <!-- The style for the unit on the statistics activity. -->
   <style name="StatsUnit" parent="@android:Widget.TextView">
     <item name="android:gravity">bottom</item>
