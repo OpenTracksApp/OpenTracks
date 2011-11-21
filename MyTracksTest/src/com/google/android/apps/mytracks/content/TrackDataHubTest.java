@@ -138,7 +138,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
     Track track = new Track();
     prefs.edit().putLong("recordingTrack", TRACK_ID)
-                .putLong("selectedTrack", TRACK_ID).commit();
+                .putLong("selectedTrack", TRACK_ID).apply();
     expect(providerUtils.getTrack(TRACK_ID)).andStubReturn(track);
     expectStart();
     dataSources.registerContentObserver(
@@ -297,7 +297,7 @@ public class TrackDataHubTest extends AndroidTestCase {
   public void testWaypointListen() {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
     prefs.edit().putLong("recordingTrack", TRACK_ID)
-                .putLong("selectedTrack", TRACK_ID).commit();
+                .putLong("selectedTrack", TRACK_ID).apply();
 
     Waypoint wpt1 = new Waypoint(),
              wpt2 = new Waypoint(),
@@ -411,7 +411,7 @@ public class TrackDataHubTest extends AndroidTestCase {
   public void testPointsListen() {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
     prefs.edit().putLong("recordingTrack", TRACK_ID)
-                .putLong("selectedTrack", TRACK_ID).commit();
+                .putLong("selectedTrack", TRACK_ID).apply();
 
     expectStart();
     dataSources.registerContentObserver(
@@ -498,7 +498,7 @@ public class TrackDataHubTest extends AndroidTestCase {
   public void testPointsListen_reRegister() {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
     prefs.edit().putLong("recordingTrack", TRACK_ID)
-                .putLong("selectedTrack", TRACK_ID).commit();
+                .putLong("selectedTrack", TRACK_ID).apply();
 
     expectStart();
     dataSources.registerContentObserver(
@@ -570,7 +570,7 @@ public class TrackDataHubTest extends AndroidTestCase {
   public void testPointsListen_reRegisterTrackChanged() {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
     prefs.edit().putLong("recordingTrack", TRACK_ID)
-                .putLong("selectedTrack", TRACK_ID).commit();
+                .putLong("selectedTrack", TRACK_ID).apply();
 
     expectStart();
     dataSources.registerContentObserver(
@@ -628,7 +628,7 @@ public class TrackDataHubTest extends AndroidTestCase {
   public void testPointsListen_largeTrackSampling() {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
     prefs.edit().putLong("recordingTrack", TRACK_ID)
-                .putLong("selectedTrack", TRACK_ID).commit();
+                .putLong("selectedTrack", TRACK_ID).apply();
 
     expectStart();
     dataSources.registerContentObserver(
@@ -661,7 +661,7 @@ public class TrackDataHubTest extends AndroidTestCase {
   public void testPointsListen_resampling() {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
     prefs.edit().putLong("recordingTrack", TRACK_ID)
-                .putLong("selectedTrack", TRACK_ID).commit();
+                .putLong("selectedTrack", TRACK_ID).apply();
 
     expectStart();
     dataSources.registerContentObserver(
@@ -814,7 +814,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     prefs.edit()
         .putBoolean(metricUnitsKey, true)
         .putBoolean(speedKey, true)
-        .commit();
+        .apply();
 
     Capture<OnSharedPreferenceChangeListener> listenerCapture =
         new Capture<OnSharedPreferenceChangeListener>();
@@ -840,7 +840,7 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     prefs.edit()
         .putBoolean(speedKey, false)
-        .commit();
+        .apply();
     OnSharedPreferenceChangeListener listener = listenerCapture.getValue();
     listener.onSharedPreferenceChanged(prefs, speedKey);
 
@@ -854,7 +854,7 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     prefs.edit()
         .putBoolean(metricUnitsKey, false)
-        .commit();
+        .apply();
     listener.onSharedPreferenceChanged(prefs, metricUnitsKey);
 
     verifyAndReset();

@@ -154,14 +154,14 @@ public class TrackRecordingServiceTest
     sharedPreferences = context.getSharedPreferences(
         Constants.SETTINGS_NAME, 0);
     // Let's use default values.
-    sharedPreferences.edit().clear().commit();
+    sharedPreferences.edit().clear().apply();
 
     // Disable auto resume by default.
     updateAutoResumePrefs(0, -1);
     // No recording track.
     Editor editor = sharedPreferences.edit();
     editor.putLong(context.getString(R.string.recording_track_key), -1);
-    editor.commit();
+    editor.apply();
   }
 
   @SmallTest
@@ -654,7 +654,7 @@ public class TrackRecordingServiceTest
     R.string.auto_resume_track_current_retry_key), attempts);
     editor.putInt(context.getString(
         R.string.auto_resume_track_timeout_key), timeoutMins);
-    editor.commit();
+    editor.apply();
   }
 
   private Intent createStartIntent() {
@@ -673,7 +673,7 @@ public class TrackRecordingServiceTest
   private void setRecordingTrack(long id) {
     Editor editor = sharedPreferences.edit();
     editor.putLong(context.getString(R.string.recording_track_key), id);
-    editor.commit();
+    editor.apply();
   }
 
   // TODO: We support multiple values for readability, however this test's
@@ -697,7 +697,7 @@ public class TrackRecordingServiceTest
       } else if (value == null) {
         // Do nothing, as clear above has already removed this property.
       }
-      editor.commit();
+      editor.apply();
 
       fullRecordingSession();
     }

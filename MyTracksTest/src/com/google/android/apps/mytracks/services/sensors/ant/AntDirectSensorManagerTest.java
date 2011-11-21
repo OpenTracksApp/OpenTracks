@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.services.sensors.ant;
 import com.dsi.ant.AntMesg;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Sensor;
-import com.google.android.apps.mytracks.services.sensors.ant.AntDirectSensorManager;
 import com.google.android.maps.mytracks.R;
 
 import android.content.SharedPreferences;
@@ -34,7 +33,7 @@ public class AntDirectSensorManagerTest extends AndroidTestCase {
     sharedPreferences = getContext().getSharedPreferences(
         Constants.SETTINGS_NAME, 0);
     // Let's use default values.
-    sharedPreferences.edit().clear().commit();
+    sharedPreferences.edit().clear().apply();
     manager = new AntDirectSensorManager(getContext());
   }
 

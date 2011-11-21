@@ -22,6 +22,7 @@ import com.dsi.ant.AntMesg;
 import com.dsi.ant.exception.AntInterfaceException;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Sensor;
+import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -197,7 +198,7 @@ public class AntSrmBridgeSensorManager extends AntSensorManager {
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     SharedPreferences.Editor editor = prefs.edit();
     editor.putInt(context.getString(R.string.ant_srm_bridge_sensor_id_key), deviceNumber);
-    editor.commit();
+    ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);    
   }
 
   private void handleMessageResponse(byte[] rawMessage) {
