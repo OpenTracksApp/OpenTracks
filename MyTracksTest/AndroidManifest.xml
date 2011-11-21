@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="com.google.android.maps.mytracks.test"
+      android:versionCode="1"
+      android:versionName="1.0"
+      android:debuggable="true">
+    <application android:icon="@android:drawable/sym_def_app_icon"
+                 android:label="My Tracks Tests">
+      <uses-library android:name="android.test.runner" />
+    </application>
+    <uses-sdk android:minSdkVersion="3" />
+    <instrumentation android:targetPackage="com.google.android.maps.mytracks"
+                     android:name="android.test.InstrumentationTestRunner" />
+</manifest>
