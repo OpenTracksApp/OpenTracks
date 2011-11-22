@@ -223,7 +223,7 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     editor.putLong(getActivity().getString(R.string.recording_track_key), -1);
 
     editor.clear();
-    editor.commit();
+    editor.apply();
   }
 
   /**

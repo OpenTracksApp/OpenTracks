@@ -20,7 +20,7 @@ public class SensorManagerFactoryTest extends AndroidTestCase {
     sharedPreferences = getContext().getSharedPreferences(
         Constants.SETTINGS_NAME, 0);
     // Let's use default values.
-    sharedPreferences.edit().clear().commit();
+    sharedPreferences.edit().clear().apply();
   }
   
   @SmallTest
@@ -47,7 +47,7 @@ public class SensorManagerFactoryTest extends AndroidTestCase {
     sharedPreferences.edit()
         .putString(getContext().getString(R.string.sensor_type_key),
             getContext().getString(i))
-        .commit();
+        .apply();
     SensorManager sm = SensorManagerFactory.getSensorManager(getContext());
     assertNotNull(sm);
     assertTrue(c.isInstance(sm));

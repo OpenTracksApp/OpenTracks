@@ -31,6 +31,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
@@ -682,7 +683,9 @@ public class SettingsActivity extends PreferenceActivity {
       metricspeed = newValue;
     }
     SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
-    prefs.edit().putString(getString(id), metricspeed).commit();
+    Editor editor = prefs.edit();
+    editor.putString(getString(id), metricspeed);
+    ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);
   }
   
   /** 
