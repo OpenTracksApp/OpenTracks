@@ -619,9 +619,7 @@ public class SettingsActivity extends PreferenceActivity {
         Log.i(TAG, "Resetting all settings");
 
         // Actually wipe preferences (and save synchronously).
-        Editor editor = preferences.edit();
-        editor.clear();
-        editor.commit();
+        preferences.edit().clear().commit();
 
         // Give UI feedback in the UI thread.
         runOnUiThread(new Runnable() {
