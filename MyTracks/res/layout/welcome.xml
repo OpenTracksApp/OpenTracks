@@ -35,106 +35,106 @@ limitations under the License.
         android:src="@drawable/arrow_icon"/>
       <TextView
         android:text="@string/welcome_my_tracks_question"
-        style="@style/WelcomeText.Question"/>
+        style="@style/WelcomeTextView.Question"/>
       <TextView
         android:text="@string/welcome_my_tracks_answer"
-        style="@style/WelcomeText"/>
+        style="@style/WelcomeTextView"/>
       <TextView
         android:text="@string/welcome_app_navigation_question"
-        style="@style/WelcomeText.Question"/>
+        style="@style/WelcomeTextView.Question"/>
       <TextView
         android:text="@string/welcome_app_navigation_answer"
-        style="@style/WelcomeText"/>
+        style="@style/WelcomeTextView"/>
       <TextView
         android:text="@string/welcome_add_graph_question"
-        style="@style/WelcomeText.Question"/>
+        style="@style/WelcomeTextView.Question"/>
       <TextView
         android:text="@string/welcome_add_graph_answer"
-        style="@style/WelcomeText"/>
+        style="@style/WelcomeTextView"/>
       <TextView
         android:text="@string/welcome_gps_fix_question"
-        style="@style/WelcomeText.Question"/>
+        style="@style/WelcomeTextView.Question"/>
       <TextView
         android:text="@string/welcome_gps_fix_answer"
-        style="@style/WelcomeText"/>
+        style="@style/WelcomeTextView"/>
       <TextView
         android:text="@string/welcome_send_google_question"
-        style="@style/WelcomeText.Question"/>
+        style="@style/WelcomeTextView.Question"/>
       <TextView
         android:text="@string/welcome_send_google_answer"
-        style="@style/WelcomeText"/>
+        style="@style/WelcomeTextView"/>
       <TextView
         android:text="@string/welcome_share_friends_question"
-        style="@style/WelcomeText.Question"/>
+        style="@style/WelcomeTextView.Question"/>
       <TextView
         android:text="@string/welcome_share_friends_answer"
-        style="@style/WelcomeText"/>
+        style="@style/WelcomeTextView"/>
       <TextView
         android:text="@string/welcome_waypoint_marker_question"
-        style="@style/WelcomeText.Question"/>
+        style="@style/WelcomeTextView.Question"/>
       <TextView
         android:text="@string/welcome_waypoint_marker_answer"
-        style="@style/WelcomeText"/>
+        style="@style/WelcomeTextView"/>
       <TextView
         android:text="@string/welcome_statistics_marker_question"
-        style="@style/WelcomeText.Question"/>
+        style="@style/WelcomeTextView.Question"/>
       <TextView
         android:text="@string/welcome_statistics_marker_answer"
-        style="@style/WelcomeText"/>      
+        style="@style/WelcomeTextView"/>      
       <TextView
         android:text="@string/welcome_data_connection_question"
-        style="@style/WelcomeText.Question"/>
+        style="@style/WelcomeTextView.Question"/>
       <TextView
         android:text="@string/welcome_data_connection_answer"
-        style="@style/WelcomeText"/>  
+        style="@style/WelcomeTextView"/>  
       <TextView
         android:text="@string/welcome_battery_life_question"
-        style="@style/WelcomeText.Question"/>
+        style="@style/WelcomeTextView.Question"/>
       <TextView
         android:text="@string/welcome_battery_life_answer"
-        style="@style/WelcomeText"/> 
+        style="@style/WelcomeTextView"/> 
       <TextView
         android:text="@string/welcome_share_file_question"
-        style="@style/WelcomeText.Question"/>
+        style="@style/WelcomeTextView.Question"/>
       <TextView
         android:text="@string/welcome_share_file_answer"
-        style="@style/WelcomeText"/> 
+        style="@style/WelcomeTextView"/> 
       <TextView
         android:text="@string/welcome_location_precision_question"
-        style="@style/WelcomeText.Question"/>
+        style="@style/WelcomeTextView.Question"/>
       <TextView
         android:text="@string/welcome_location_precision_answer"
-        style="@style/WelcomeText"/> 
+        style="@style/WelcomeTextView"/> 
       <TextView
         android:text="@string/welcome_elevation_precision_question"
-        style="@style/WelcomeText.Question"/>
+        style="@style/WelcomeTextView.Question"/>
       <TextView
         android:text="@string/welcome_elevation_precision_answer"
-        style="@style/WelcomeText"/>                               
+        style="@style/WelcomeTextView"/>                               
       <TextView
         android:text="@string/welcome_edit_accuracy_question"
-        style="@style/WelcomeText.Question"/>
+        style="@style/WelcomeTextView.Question"/>
       <TextView
         android:text="@string/welcome_edit_accuracy_answer"
-        style="@style/WelcomeText"/>     
+        style="@style/WelcomeTextView"/>     
       <TextView
         android:text="@string/welcome_split_track_question"
-        style="@style/WelcomeText.Question"/>
+        style="@style/WelcomeTextView.Question"/>
       <TextView
         android:text="@string/welcome_split_track_answer"
-        style="@style/WelcomeText"/>           
+        style="@style/WelcomeTextView"/>           
       <TextView
         android:text="@string/welcome_delete_all_question"
-        style="@style/WelcomeText.Question"/>
+        style="@style/WelcomeTextView.Question"/>
       <TextView
         android:text="@string/welcome_delete_all_answer"
-        style="@style/WelcomeText"/>     
+        style="@style/WelcomeTextView"/>     
       <TextView
         android:text="@string/welcome_my_maps_sharing_question"
-        style="@style/WelcomeText.Question"/>
+        style="@style/WelcomeTextView.Question"/>
       <TextView
         android:text="@string/welcome_my_maps_sharing_answer"
-        style="@style/WelcomeText"/>    
+        style="@style/WelcomeTextView"/>    
     </LinearLayout>
   </ScrollView>
   <LinearLayout style="@style/ButtonLayout">

@@ -58,7 +58,7 @@ public class TrackPathPainterFactoryTest extends TrackPathPainterTestCase {
   private <T> void testTrackPathPainterFactorySpecific(Context context, SharedPreferences prefs, 
       int track_color_mode, Class <?> c) {
     prefs.edit().putString(context.getString(R.string.track_color_mode_key), 
-        context.getString(track_color_mode)).commit();
+        context.getString(track_color_mode)).apply();
     
     int startLocationIdx = 0;
     Boolean alwaysVisible = true;

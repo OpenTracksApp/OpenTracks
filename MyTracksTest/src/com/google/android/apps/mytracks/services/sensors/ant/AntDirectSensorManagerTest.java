@@ -34,7 +34,7 @@ public class AntDirectSensorManagerTest extends AndroidTestCase {
     sharedPreferences = getContext().getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     // Let's use default values.
-    sharedPreferences.edit().clear().commit();
+    sharedPreferences.edit().clear().apply();
     manager = new AntDirectSensorManager(getContext());
   }
 

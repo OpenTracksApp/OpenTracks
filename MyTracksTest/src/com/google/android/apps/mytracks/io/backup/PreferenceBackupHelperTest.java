@@ -48,13 +48,13 @@ public class PreferenceBackupHelperTest extends TestCase {
 
     @Override
     public boolean commit() {
-      preferenceValues = newPreferences;
+      apply();
       return true;
     }
 
     @Override
     public void apply() {
-      commit();
+      preferenceValues = newPreferences;
     }
 
     @Override
@@ -185,7 +185,7 @@ public class PreferenceBackupHelperTest extends TestCase {
     editor.putInt("int1", 42);
     editor.putLong("long1", 123456789L);
     editor.putString("str1", "lolcat");
-    editor.commit();
+    editor.apply();
 
     // Export it
     byte[] exported = preferenceBackupHelper.exportPreferences(preferences);
@@ -195,7 +195,7 @@ public class PreferenceBackupHelperTest extends TestCase {
     editor.clear();
     editor.putString("str2", "Shouldn't be there after restore");
     editor.putBoolean("bool2", true);
-    editor.commit();
+    editor.apply();
 
     // Import it back
     preferenceBackupHelper.importPreferences(exported, preferences);

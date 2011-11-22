@@ -22,6 +22,7 @@ import com.dsi.ant.AntMesg;
 import com.dsi.ant.exception.AntInterfaceException;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Sensor;
+import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -151,6 +152,7 @@ public class AntSrmBridgeSensorManager extends AntSensorManager {
       
       int powerVal = (((msg[INDEX_MESSAGE_POWER] & 0xFF) << 8) |
           (msg[INDEX_MESSAGE_POWER+1] & 0xFF));
+      @SuppressWarnings("unused")
       int speedVal = (((msg[INDEX_MESSAGE_SPEED] & 0xFF) << 8) |
           (msg[INDEX_MESSAGE_SPEED+1] & 0xFF));
       int cadenceVal = (msg[INDEX_MESSAGE_CADENCE] & 0xFF);
@@ -162,12 +164,12 @@ public class AntSrmBridgeSensorManager extends AntSensorManager {
             .setValue(powerVal)
             .setState(Sensor.SensorState.SENDING);
     
-      // Although speed is available from the SRM Bridge, MyTracks doesn't
-      // use the value, and computes speed from the GPS location data.
-//      Sensor.SensorData.Builder speed = 
-//        Sensor.SensorData.newBuilder()
-//            .setValue(speedVal)
-//            .setState(Sensor.SensorState.SENDING);
+      /*
+       * Although speed is available from the SRM Bridge, MyTracks doesn't use the value, and
+       * computes speed from the GPS location data.
+       */
+//    Sensor.SensorData.Builder speed = Sensor.SensorData.newBuilder().setValue(speedVal).setState(
+//        Sensor.SensorState.SENDING);
 
       Sensor.SensorData.Builder cadence = 
         Sensor.SensorData.newBuilder()
@@ -197,7 +199,7 @@ public class AntSrmBridgeSensorManager extends AntSensorManager {
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     SharedPreferences.Editor editor = prefs.edit();
     editor.putInt(context.getString(R.string.ant_srm_bridge_sensor_id_key), deviceNumber);
-    editor.commit();
+    ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);    
   }
 
   private void handleMessageResponse(byte[] rawMessage) {

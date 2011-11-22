@@ -16,10 +16,12 @@
 package com.google.android.apps.mytracks.services;
 
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.util.Log;
 
@@ -170,24 +172,21 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
   }
 
   public void setAutoResumeTrackCurrentRetry(int retryAttempts) {
-    sharedPreferences
-        .edit()
-        .putInt(autoResumeTrackCurrentRetryKey, retryAttempts)
-        .commit();
+    Editor editor = sharedPreferences.edit();
+    editor.putInt(autoResumeTrackCurrentRetryKey, retryAttempts);
+    ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);
   }
 
   public void setRecordingTrack(long id) {
-    sharedPreferences
-        .edit()
-        .putLong(recordingTrackKey, id)
-        .commit();
+    Editor editor = sharedPreferences.edit();
+    editor.putLong(recordingTrackKey, id);
+    ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);    
   }
 
   public void setSelectedTrack(long id) {
-    sharedPreferences
-        .edit()
-        .putLong(selectedTrackKey, id)
-        .commit();
+    Editor editor = sharedPreferences.edit();
+    editor.putLong(selectedTrackKey, id);
+    ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);    
   }
 
   public void shutdown() {
