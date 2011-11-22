@@ -48,7 +48,7 @@ limitations under the License.
     <TableRow style="@style/AboutTableRow">
       <TextView
         android:text="@string/about_team"
-        style="@style/AboutTextView.Column1"/>
+        style="@style/AboutTextView.Column0"/>
       <LinearLayout
         android:layout_column="1"
         android:layout_height="wrap_content"
@@ -77,7 +77,7 @@ limitations under the License.
     <TableRow style="@style/AboutTableRow">
       <TextView
         android:text="@string/about_version"
-        style="@style/AboutTextView.Column1"/>
+        style="@style/AboutTextView.Column0"/>
       <TextView
         android:id="@+id/about_version"
         style="@style/AboutTextView"/>
@@ -85,7 +85,7 @@ limitations under the License.
     <TableRow style="@style/AboutTableRow">
       <TextView
         android:text="@string/about_support"
-        style="@style/AboutTextView.Column1"/>
+        style="@style/AboutTextView.Column0"/>
       <TextView
         android:text="@string/my_tracks_web_url"
         style="@style/AboutTextView.Url"/>
@@ -93,7 +93,7 @@ limitations under the License.
     <TableRow style="@style/AboutTableRow">
       <TextView
         android:text="@string/about_privacy"
-        style="@style/AboutTextView.Column1"/>
+        style="@style/AboutTextView.Column0"/>
       <TextView
         android:text="@string/my_tracks_privacy_url"
         style="@style/AboutTextView.Url"/>
