@@ -43,8 +43,10 @@ public class TrackPathPainterFactoryTest extends TrackPathPainterTestCase {
     Context context = getContext();
     SharedPreferences prefs = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    if (prefs == null) { return; }
-    
+    if (prefs == null) {
+      return;
+    }
+
     testTrackPathPainterFactorySpecific(context, prefs, R.string.display_track_color_value_none, 
         SingleColorTrackPathPainter.class);
     testTrackPathPainterFactorySpecific(context, prefs, R.string.display_track_color_value_fixed, 
