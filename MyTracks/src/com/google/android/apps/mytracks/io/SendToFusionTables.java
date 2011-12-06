@@ -69,7 +69,7 @@ import java.util.Vector;
  */
 public class SendToFusionTables implements Runnable {
 
- private static final String CONTENT_TYPE = "application/x-www-form-urlencoded";
+  private static final String CONTENT_TYPE = "application/x-www-form-urlencoded";
 
   /**
    * Listener invoked when sending to fusion tables completes.
@@ -94,6 +94,9 @@ public class SendToFusionTables implements Runnable {
   private static final int MAX_POINTS_PER_UPLOAD = 2048;
 
   private static final String GDATA_VERSION = "2";
+
+  /** Response line which identifies a table ID. */
+  private static final String TABLE_ID_LINE = "tableid";
 
   // This class reports upload status to the user as a completion percentage
   // using a progress bar.  Progress is defined as follows:
@@ -148,7 +151,7 @@ public class SendToFusionTables implements Runnable {
 
   @Override
   public void run() {
-    Log.d(Constants.TAG, "Sending to Fusion tables: trackId = " + trackId);
+    Log.d(TAG, "Sending to Fusion tables: trackId = " + trackId);
     doUpload();
   }
 
@@ -181,7 +184,7 @@ public class SendToFusionTables implements Runnable {
       // Get the track meta-data
       Track track = providerUtils.getTrack(trackId);
       if (track == null) {
-        Log.w(Constants.TAG, "Cannot get track.");
+        Log.w(TAG, "Cannot get track.");
         return;
       }
 
@@ -212,7 +215,7 @@ public class SendToFusionTables implements Runnable {
         return;
       }
 
-      Log.d(Constants.TAG, "SendToFusionTables: Done: " + success);
+      Log.d(TAG, "SendToFusionTables: Done: " + success);
       progressIndicator.setProgressValue(PROGRESS_COMPLETE);
     } finally {
       final boolean finalSuccess = success;
@@ -233,21 +236,21 @@ public class SendToFusionTables implements Runnable {
    * @return true in case of success.
    */
   private boolean createNewTable(Track track) {
-    Log.d(Constants.TAG, "Creating a new fusion table.");
+    Log.d(TAG, "Creating a new fusion table.");
     String query = "CREATE TABLE '" + sqlEscape(track.getName()) +
         "' (name:STRING,description:STRING,geometry:LOCATION,marker:STRING)";
 
     List<String> resultLines = new ArrayList<String>();
     boolean success = runUpdate(query, resultLines);
-    if (success && resultLines.size() >= 2 && resultLines.get(0).equals("tableid")) {
+    if (success && resultLines.size() >= 2 && resultLines.get(0).equals(TABLE_ID_LINE)) {
       tableId = resultLines.get(1);
-      Log.d(Constants.TAG, "tableId = " + tableId);
+      Log.d(TAG, "tableId = " + tableId);
     }
     return success;
   }
 
   private boolean makeTableUnlisted() {
-    Log.d(Constants.TAG, "Setting visibility to unlisted.");
+    Log.d(TAG, "Setting visibility to unlisted.");
     String query = "UPDATE TABLE " + tableId + " SET VISIBILITY = UNLISTED";
     return runUpdate(query, null);
   }
@@ -286,7 +289,7 @@ public class SendToFusionTables implements Runnable {
    */
   private boolean createNewPoint(String name, String description, Location location,
       String marker) {
-    Log.d(Constants.TAG, "Creating a new row with a point.");
+    Log.d(TAG, "Creating a new row with a point.");
     String query = "INSERT INTO " + tableId + " (name,description,geometry,marker) VALUES "
         + values(name, description, getKmlPoint(location), marker);
     return runUpdate(query, null);
@@ -299,7 +302,7 @@ public class SendToFusionTables implements Runnable {
    * @return true in case of success.
    */
   private boolean createNewLineString(Track track) {
-    Log.d(Constants.TAG, "Creating a new row with a point.");
+    Log.d(TAG, "Creating a new row with a point.");
     String query = "INSERT INTO " + tableId
         + " (name,description,geometry) VALUES "
         + values(track.getName(), track.getDescription(), getKmlLineString(track));
@@ -317,7 +320,7 @@ public class SendToFusionTables implements Runnable {
     Cursor locationsCursor = providerUtils.getLocationsCursor(track.getId(), 0, -1, false);
     try {
       if (locationsCursor == null || !locationsCursor.moveToFirst()) {
-        Log.w(Constants.TAG, "Unable to get any points to upload");
+        Log.w(TAG, "Unable to get any points to upload");
         return false;
       }
 
@@ -330,7 +333,7 @@ public class SendToFusionTables implements Runnable {
       // Limit the number of elevation readings. Ideally we would want around 250.
       int elevationSamplingFrequency =
           Math.max(1, (int) (totalLocations / 250.0));
-      Log.d(Constants.TAG,
+      Log.d(TAG,
           "Using elevation sampling factor: " + elevationSamplingFrequency
           + " on " + totalLocations);
       double totalDistance = 0;
@@ -461,7 +464,7 @@ public class SendToFusionTables implements Runnable {
 
     int numLocations = locations.size();
     if (numLocations < 2) {
-      Log.d(Constants.TAG, "Not preparing/uploading too few points");
+      Log.d(TAG, "Not preparing/uploading too few points");
       totalLocationsUploaded += numLocations;
       return true;
     }
@@ -477,16 +480,16 @@ public class SendToFusionTables implements Runnable {
                 context.getString(R.string.send_google_track_part_label), totalSegmentsUploaded));
       }
       totalSegmentsUploaded++;
-      Log.d(Constants.TAG,
+      Log.d(TAG,
           "SendToFusionTables: Prepared feature for upload w/ "
           + splitTrack.getLocations().size() + " points.");
 
       // Transmit tracks via GData feed:
       // -------------------------------
-      Log.d(Constants.TAG,
+      Log.d(TAG,
             "SendToFusionTables: Uploading to table " + tableId + " w/ auth " + auth);
       if (!uploadTrackPoints(splitTrack)) {
-        Log.e(Constants.TAG, "Uploading failed");
+        Log.e(TAG, "Uploading failed");
         return false;
       }
     }
@@ -532,7 +535,7 @@ public class SendToFusionTables implements Runnable {
         // Close up the last segment.
         prepareTrackSegment(segment, splitTracks);
 
-        Log.d(Constants.TAG,
+        Log.d(TAG,
             "MyTracksSendToFusionTables: Starting new track segment...");
         startNewTrackSegment = false;
         segment = new Track();
@@ -595,7 +598,7 @@ public class SendToFusionTables implements Runnable {
     int numLocations = splitTrack.getLocations().size();
     if (numLocations < 2) {
       // Need at least two points for a polyline:
-      Log.w(Constants.TAG, "Not uploading too few points");
+      Log.w(TAG, "Not uploading too few points");
       return true;
     }
     return createNewLineString(splitTrack);
@@ -625,7 +628,7 @@ public class SendToFusionTables implements Runnable {
           // last segment).
           while (c.moveToNext()) {
             Waypoint wpt = providerUtils.createWaypoint(c);
-            Log.d(Constants.TAG, "SendToFusionTables: Creating waypoint.");
+            Log.d(TAG, "SendToFusionTables: Creating waypoint.");
             success = createNewPoint(wpt.getName(), wpt.getDescription(), wpt.getLocation(),
                 MARKER_TYPE_WAYPOINT);
             if (!success) {
@@ -635,7 +638,7 @@ public class SendToFusionTables implements Runnable {
         }
       }
       if (!success) {
-        Log.w(Constants.TAG, "SendToFusionTables: upload waypoints failed.");
+        Log.w(TAG, "SendToFusionTables: upload waypoints failed.");
       }
       return success;
     } finally {
@@ -671,7 +674,7 @@ public class SendToFusionTables implements Runnable {
     wrapper.setAuthManager(auth);
     wrapper.setRetryOnAuthFailure(true);
     wrapper.setClient(httpRequestFactory);
-    Log.d(Constants.TAG, "GData connection prepared: " + this.auth);
+    Log.d(TAG, "GData connection prepared: " + this.auth);
     wrapper.runQuery(new QueryFunction<HttpRequestFactory>() {
       @Override
       public void query(HttpRequestFactory factory)
@@ -692,7 +695,7 @@ public class SendToFusionTables implements Runnable {
         headers.setContentType(CONTENT_TYPE);
         request.setHeaders(headers);
 
-        Log.d(Constants.TAG, "Running update query " + url.toString() + ": " + sql);
+        Log.d(TAG, "Running update query " + url.toString() + ": " + sql);
         HttpResponse response;
         try {
           response = request.execute();
@@ -712,7 +715,7 @@ public class SendToFusionTables implements Runnable {
             resultReader.close();
           }
         } else {
-          Log.d(Constants.TAG,
+          Log.d(TAG,
               "Query failed: " + response.getStatusMessage() + " ("
                   + response.getStatusCode() + ")");
           throw new GDataWrapper.HttpException(
