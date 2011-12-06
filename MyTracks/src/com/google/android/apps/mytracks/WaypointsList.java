@@ -89,7 +89,7 @@ public class WaypointsList extends ListActivity
                 R.string.marker_list_edit_marker);
             menu.add(0, Constants.MENU_DELETE, 0,
                 R.string.marker_list_delete_marker).setEnabled(
-                    recordingTrackId < 0 || type == Waypoint.TYPE_WAYPOINT ||
+                    recordingTrackId < 0 || type == Waypoint.TYPE_WAYPOINT || type == Waypoint.TYPE_STATISTICS ||
                     info.id != providerUtils.getLastWaypointId(recordingTrackId));
           }
         }
