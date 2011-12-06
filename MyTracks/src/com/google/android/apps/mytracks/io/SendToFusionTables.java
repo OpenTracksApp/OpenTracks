@@ -43,6 +43,7 @@ import com.google.api.client.http.HttpResponseException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.InputStreamContent;
 import com.google.api.client.util.Strings;
+import com.google.common.io.LineReader;
 
 import android.app.Activity;
 import android.content.Context;
@@ -53,6 +54,7 @@ import android.util.Log;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -234,13 +236,20 @@ public class SendToFusionTables implements Runnable {
     Log.d(Constants.TAG, "Creating a new fusion table.");
     String query = "CREATE TABLE '" + sqlEscape(track.getName()) +
         "' (name:STRING,description:STRING,geometry:LOCATION,marker:STRING)";
-    return runUpdate(query);
+
+    List<String> resultLines = new ArrayList<String>();
+    boolean success = runUpdate(query, resultLines);
+    if (success && resultLines.size() >= 2 && resultLines.get(0).equals("tableid")) {
+      tableId = resultLines.get(1);
+      Log.d(Constants.TAG, "tableId = " + tableId);
+    }
+    return success;
   }
 
   private boolean makeTableUnlisted() {
     Log.d(Constants.TAG, "Setting visibility to unlisted.");
     String query = "UPDATE TABLE " + tableId + " SET VISIBILITY = UNLISTED";
-    return runUpdate(query);
+    return runUpdate(query, null);
   }
 
   /**
@@ -280,7 +289,7 @@ public class SendToFusionTables implements Runnable {
     Log.d(Constants.TAG, "Creating a new row with a point.");
     String query = "INSERT INTO " + tableId + " (name,description,geometry,marker) VALUES "
         + values(name, description, getKmlPoint(location), marker);
-    return runUpdate(query);
+    return runUpdate(query, null);
   }
 
   /**
@@ -294,7 +303,7 @@ public class SendToFusionTables implements Runnable {
     String query = "INSERT INTO " + tableId
         + " (name,description,geometry) VALUES "
         + values(track.getName(), track.getDescription(), getKmlLineString(track));
-    return runUpdate(query);
+    return runUpdate(query, null);
   }
 
   private boolean uploadAllTrackPoints(final Track track, String originalDescription) {
@@ -654,9 +663,10 @@ public class SendToFusionTables implements Runnable {
    * Runs an update query. Handles authentication.
    *
    * @param query The given SQL like query
+   * @param resultLines a list to fill with the query result's lines (or null to ignore results)
    * @return true in case of success
    */
-  private boolean runUpdate(final String query) {
+  private boolean runUpdate(final String query, final List<String> resultLines) {
     GDataWrapper<HttpRequestFactory> wrapper = new GDataWrapper<HttpRequestFactory>();
     wrapper.setAuthManager(auth);
     wrapper.setRetryOnAuthFailure(true);
@@ -674,14 +684,14 @@ public class SendToFusionTables implements Runnable {
         InputStreamContent isc = new InputStreamContent(null, inputStream );
 
         HttpRequest request = factory.buildPostRequest(url, isc);
-        
+
         GoogleHeaders headers = new GoogleHeaders();
         headers.setApplicationName("Google-MyTracks-" + SystemUtils.getMyTracksVersion(context));
         headers.gdataVersion = GDATA_VERSION;
         headers.setGoogleLogin(auth.getAuthToken());
         headers.setContentType(CONTENT_TYPE);
         request.setHeaders(headers);
-        
+
         Log.d(Constants.TAG, "Running update query " + url.toString() + ": " + sql);
         HttpResponse response;
         try {
@@ -692,15 +702,14 @@ public class SendToFusionTables implements Runnable {
         }
         boolean success = response.isSuccessStatusCode();
         if (success) {
-          byte[] result = new byte[1024];
-          int read = response.getContent().read(result);
-          String s = new String(result, 0, read, "UTF8");
-          String[] lines = s.split(Strings.LINE_SEPARATOR);
-          if (lines[0].equals("tableid")) {
-            tableId = lines[1];
-            Log.d(Constants.TAG, "tableId = " + tableId);
-          } else {
-            Log.w(Constants.TAG, "Unrecognized response: " + lines[0]);
+          if (resultLines != null) {
+            InputStreamReader resultReader = new InputStreamReader(response.getContent(), "UTF8");
+            LineReader lineReader = new LineReader(resultReader);
+            String line;
+            while ((line = lineReader.readLine()) != null) {
+              resultLines.add(line);
+            }
+            resultReader.close();
           }
         } else {
           Log.d(Constants.TAG,
