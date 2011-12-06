@@ -150,66 +150,81 @@ public class StatusAnnouncerTask implements PeriodicTask {
    */
   // @VisibleForTesting
   protected String getAnnouncement(TripStatistics stats) {
-    SharedPreferences preferences =
-        context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
     boolean metricUnits = true;
     boolean reportSpeed = true;
+    SharedPreferences preferences = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     if (preferences != null) {
-      metricUnits =
-          preferences.getBoolean(context.getString(R.string.metric_units_key),
-              true);
-      reportSpeed =
-          preferences.getBoolean(context.getString(R.string.report_speed_key),
-              true);
+      metricUnits = preferences.getBoolean(context.getString(R.string.metric_units_key), true);
+      reportSpeed = preferences.getBoolean(context.getString(R.string.report_speed_key), true);
     }
 
-    double d =  stats.getTotalDistance() / 1000;
-    double s =  stats.getAverageMovingSpeed() * 3.6;
+    double d =  stats.getTotalDistance() / 1000; // d is in kilometers
+    double s =  stats.getAverageMovingSpeed() * 3.6; // s is in kilometers per hour
+    
     if (d == 0) {
-      return context.getString(R.string.voice_no_distance);
+      return context.getString(R.string.voice_total_distance_zero);
     }
 
-    int speedLabel;
-    if (metricUnits) {
-      if (reportSpeed) {
-        speedLabel = R.string.voice_kilometer_per_hour;
-      } else {
-        speedLabel = R.string.voice_per_kilometer;
-      }
-    } else {
-      s *= UnitConversions.KMH_TO_MPH;
+    if (!metricUnits) {
       d *= UnitConversions.KM_TO_MI;
-      if (reportSpeed) {
-        speedLabel = R.string.voice_mile_per_hour;
-      } else {
-        speedLabel = R.string.voice_per_mile;
-      }
+      s *= UnitConversions.KMH_TO_MPH;
     }
 
-    String speed = null;
-    if ((s == 0) || Double.isNaN(s)) {
-      speed = context.getString(R.string.value_unknown);
+    if (!reportSpeed) {
+      s = 3600000.0 / s; // converts from speed to pace
+    }
+
+    // Makes sure s is not NaN.
+    if (Double.isNaN(s)) {
+      s = 0;
+    } 
+    
+    String speed;
+    if (reportSpeed) {
+      int speedId = metricUnits ? R.plurals.voiceSpeedKilometersPerHour
+          : R.plurals.voiceSpeedMilesPerHour;
+      speed = context.getResources().getQuantityString(speedId, getQuantityCount(s), s);
     } else {
-      if (reportSpeed) {
-        speed = String.format("%.1f", s);
-      } else {
-        double pace = 3600000.0 / s;
-        Log.w(Constants.TAG,
-              "Converted speed: " + s + " to pace: " + pace);
-        speed = getAnnounceTime((long) pace);
-      }
+      int paceId = metricUnits ? R.string.voice_pace_per_kilometer : R.string.voice_pace_per_mile;
+      speed = String.format(context.getString(paceId), getAnnounceTime((long) s));
     }
 
-    return context.getString(R.string.voice_template,
-        d,
-        context.getString(metricUnits
-                          ? R.string.voice_kilometers
-                          : R.string.voice_miles),
-        getAnnounceTime(stats.getMovingTime()),
-        speed,
-        context.getString(speedLabel));
-  }
+    int totalDistanceId = metricUnits ? R.plurals.voiceTotalDistanceKilometers
+        : R.plurals.voiceTotalDistanceMiles;
+    String totalDistance = context.getResources().getQuantityString(
+        totalDistanceId, getQuantityCount(d), d);
 
+    return context.getString(
+        R.string.voice_template, totalDistance, getAnnounceTime(stats.getMovingTime()), speed);
+  }
+  
+  /**
+   * Gets the plural count to be used by getQuantityString. getQuantityString
+   * only supports integer quantities, not a double quantity like "2.2".
+   * <p>
+   * As a temporary workaround, we convert a double quantity to an integer
+   * quantity. If the double quantity is exactly 0, 1, or 2, then we can return
+   * these integer quantities. Otherwise, we cast the double quantity to an
+   * integer quantity. However, we need to make sure that if the casted value is
+   * 0, 1, or 2, we don't return those, instead, return the next biggest integer
+   * 3.
+   *
+   * @param d the double value
+   */
+  private int getQuantityCount(double d) {
+    if (d == 0) {
+      return 0;
+    } else if (d == 1) {
+      return 1;
+    } else if (d == 2) {
+      return 2;
+    } else {
+      int count = (int) d;
+      return count < 3 ? 3 : count;
+    }
+  }
+  
   @Override
   public void start() {
     Log.i(Constants.TAG, "Starting TTS");
@@ -331,30 +346,22 @@ public class StatusAnnouncerTask implements PeriodicTask {
   @VisibleForTesting
   String getAnnounceTime(long time) {
     int[] parts = StringUtils.getTimeParts(time);
-    String secLabel =
-        context.getString(parts[0] == 1 ? R.string.voice_second : R.string.voice_seconds);
-    String minLabel =
-        context.getString(parts[1] == 1 ? R.string.voice_minute : R.string.voice_minutes);
-    String hourLabel =
-        context.getString(parts[2] == 1 ? R.string.voice_hour : R.string.voice_hours);
+    String seconds = context.getResources().getQuantityString(
+        R.plurals.voiceSeconds, parts[0], parts[0]);
+    String minutes = context.getResources().getQuantityString(
+        R.plurals.voiceMinutes, parts[1], parts[1]);
+    String hours = context.getResources().getQuantityString(
+        R.plurals.voiceHours, parts[2], parts[2]);
 
     StringBuilder sb = new StringBuilder();
     if (parts[2] != 0) {
-      sb.append(parts[2]);
+      sb.append(hours);
       sb.append(" ");
-      sb.append(hourLabel);
-      sb.append(" ");
-      sb.append(parts[1]);
-      sb.append(" ");
-      sb.append(minLabel);
+      sb.append(minutes);
     } else {
-      sb.append(parts[1]);
+      sb.append(minutes);
       sb.append(" ");
-      sb.append(minLabel);
-      sb.append(" ");
-      sb.append(parts[0]);
-      sb.append(" ");
-      sb.append(secLabel);
+      sb.append(seconds);
     }
     return sb.toString();
   }

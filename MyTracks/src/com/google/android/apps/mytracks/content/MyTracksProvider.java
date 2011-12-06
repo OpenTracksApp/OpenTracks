@@ -193,7 +193,7 @@ public class MyTracksProvider extends ContentProvider {
     } else {
       Context context = getContext();
       SharedPreferences sharedPreferences = context.getSharedPreferences(
-          Constants.SETTINGS_NAME, 0);
+          Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
       return sharedPreferences.getBoolean(context.getString(R.string.allow_access_key), false);
     }
   }

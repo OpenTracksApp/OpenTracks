@@ -23,6 +23,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -60,9 +61,9 @@ public class DeleteAllTracks extends Handler {
             dialogInterface.dismiss();
             Log.w(Constants.TAG, "deleting all!");
             MyTracksProviderUtils.Factory.get(context).deleteAllTracks();
-            SharedPreferences prefs =
-                context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
-            SharedPreferences.Editor editor = prefs.edit();
+            SharedPreferences prefs = context.getSharedPreferences(
+                Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+            Editor editor = prefs.edit();
             // TODO: Go through data manager
             editor.putLong(context.getString(R.string.selected_track_key), -1);
             ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);

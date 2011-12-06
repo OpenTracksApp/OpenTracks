@@ -6,6 +6,7 @@ import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
@@ -67,7 +68,7 @@ public class AggregatedStatsActivity extends Activity implements
     sv.setScrollBarStyle(ScrollView.SCROLLBARS_OUTSIDE_INSET);
 
     SharedPreferences preferences = getSharedPreferences(
-            Constants.SETTINGS_NAME, 0);
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     if (preferences != null) {
       metricUnits = preferences.getBoolean(getString(R.string.metric_units_key), true);
       preferences.registerOnSharedPreferenceChangeListener(this);

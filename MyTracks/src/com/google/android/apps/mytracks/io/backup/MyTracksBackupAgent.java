@@ -20,6 +20,7 @@ import com.google.android.apps.mytracks.Constants;
 import android.app.backup.BackupAgent;
 import android.app.backup.BackupDataInput;
 import android.app.backup.BackupDataOutput;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
@@ -41,7 +42,7 @@ public class MyTracksBackupAgent extends BackupAgent {
       ParcelFileDescriptor newState) throws IOException {
     Log.i(Constants.TAG, "Performing backup");
     SharedPreferences preferences = this.getSharedPreferences(
-        Constants.SETTINGS_NAME, 0);
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
     backupPreferences(data, preferences);
     Log.i(Constants.TAG, "Backup complete");
@@ -91,7 +92,7 @@ public class MyTracksBackupAgent extends BackupAgent {
     }
 
     SharedPreferences preferences = this.getSharedPreferences(
-        Constants.SETTINGS_NAME, 0);
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     PreferenceBackupHelper importer = createPreferenceBackupHelper();
     importer.importPreferences(dataBuffer, preferences);
   }

@@ -114,7 +114,7 @@ class TrackWriterImpl implements TrackWriter {
   private void doWriteTrack() {
     // Open the input and output
     success = false;
-    errorMessage = R.string.export_error;
+    errorMessage = R.string.sd_card_error_write_file;
     if (track != null) {
       if (openFile()) {
         try {
@@ -127,7 +127,7 @@ class TrackWriterImpl implements TrackWriter {
             }
           }
           success = false;
-          errorMessage = R.string.export_canceled;
+          errorMessage = R.string.sd_card_canceled;
         }
       }
     }

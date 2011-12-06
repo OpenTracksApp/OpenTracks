@@ -127,8 +127,8 @@ public class BluetoothSensorManager extends SensorManager {
       Log.w(Constants.TAG, "Disabled manager onStartTrack");
       return;
     }
-    SharedPreferences prefs =
-        context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    SharedPreferences prefs = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     String address =
       prefs.getString(context.getString(R.string.bluetooth_sensor_key), null);
     if (address == null) {

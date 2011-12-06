@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks.io.backup;
 
 import com.google.android.apps.mytracks.content.ContentTypeIds;
+import com.google.android.apps.mytracks.util.ApiFeatures;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -77,15 +78,14 @@ class PreferenceBackupHelper {
    *
    * @param data the byte array to read preferences from
    * @param preferences the shared preferences to edit
-   * @return whether the preference change was successful
    * @throws IOException if there are any errors while reading
    */
-  public boolean importPreferences(byte[] data, SharedPreferences preferences)
+  public void importPreferences(byte[] data, SharedPreferences preferences)
       throws IOException {
     ByteArrayInputStream bufStream = new ByteArrayInputStream(data);
     DataInputStream reader = new DataInputStream(bufStream);
 
-    return importPreferences(reader, preferences);
+    importPreferences(reader, preferences);
   }
 
   /**
@@ -93,10 +93,9 @@ class PreferenceBackupHelper {
    *
    * @param reader the stream to read from
    * @param preferences the shared preferences to edit
-   * @return whether the preference change was successful
    * @throws IOException if there are any errors while reading
    */
-  public boolean importPreferences(DataInputStream reader,
+  public void importPreferences(DataInputStream reader,
       SharedPreferences preferences) throws IOException {
     Editor editor = preferences.edit();
     editor.clear();
@@ -107,8 +106,7 @@ class PreferenceBackupHelper {
       byte typeId = reader.readByte();
       readAndSetPreference(name, typeId, reader, editor);
     }
-
-    return editor.commit();
+    ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);
   }
 
   /**

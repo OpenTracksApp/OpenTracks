@@ -28,13 +28,18 @@ import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.EulaUtil;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.apps.mytracks.util.UriUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.TabActivity;
 import android.content.ContentUris;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -61,6 +66,8 @@ import android.widget.Toast;
  */
 @SuppressWarnings("deprecation")
 public class MyTracks extends TabActivity implements OnTouchListener {
+  private static final int DIALOG_EULA_ID = 0;
+  
   private TrackDataHub dataHub;
 
   /**
@@ -145,7 +152,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     tracker.dispatch();
 
     providerUtils = MyTracksProviderUtils.Factory.get(this);
-    preferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    preferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     dataHub = ((MyTracksApplication) getApplication()).getTrackDataHub();
     menuManager = new MenuManager(this);
     serviceConnection = new TrackRecordingServiceConnection(this, serviceBindCallback);
@@ -191,10 +198,11 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     tabHost.addView(layout);
     layout.setOnTouchListener(this);
 
-    // This will show the eula until the user accepts or quits the app.
-    Eula.showEulaRequireAcceptance(this);
+    if (!EulaUtil.getEulaValue(this)) {
+      showDialog(DIALOG_EULA_ID);
+    }
   }
-
+ 
   @Override
   protected void onStart() {
     Log.d(TAG, "MyTracks.onStart");
@@ -255,6 +263,40 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     super.onDestroy();
   }
 
+  @Override
+  protected Dialog onCreateDialog(int id) {
+    switch (id) {
+      case DIALOG_EULA_ID:
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.eula_title);
+        builder.setMessage(R.string.eula_message);
+        builder.setPositiveButton(R.string.eula_accept, new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            EulaUtil.setEulaValue(MyTracks.this);
+            Intent startIntent = new Intent(MyTracks.this, WelcomeActivity.class);
+            startActivityForResult(startIntent, Constants.WELCOME);
+          }
+        });
+        builder.setNegativeButton(R.string.eula_decline, new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            finish();
+          }
+        });
+        builder.setCancelable(true);
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+          @Override
+          public void onCancel(DialogInterface dialog) {
+            finish();
+          }
+        });
+        return builder.create();
+      default:
+        return null;
+    }
+  }
+  
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     super.onCreateOptionsMenu(menu);
@@ -419,7 +461,8 @@ public class MyTracks extends TabActivity implements OnTouchListener {
    */
   void stopRecording() {
     // Save the track id as the shared preference will overwrite the recording track id.
-    SharedPreferences sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    SharedPreferences sharedPreferences = getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     long currentTrackId = sharedPreferences.getLong(getString(R.string.recording_track_key), -1);
 
     ITrackRecordingService trackRecordingService = serviceConnection.getServiceIfBound();

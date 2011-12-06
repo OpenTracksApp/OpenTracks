@@ -23,6 +23,7 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -65,8 +66,8 @@ public class WaypointDetails extends Activity
     setContentView(R.layout.mytracks_waypoint_details);
 
     utils = new StatsUtilities(this);
-    SharedPreferences preferences =
-        getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    SharedPreferences preferences = getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     if (preferences != null) {
       boolean useMetric =
           preferences.getBoolean(getString(R.string.metric_units_key), true);

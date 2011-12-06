@@ -19,7 +19,6 @@ package com.google.android.apps.mytracks;
 import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.maps.mytracks.R;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -37,7 +36,7 @@ class CheckUnits {
 
   public static void check(final Context context) {
     final SharedPreferences checkUnitsSharedPreferences = context.getSharedPreferences(
-        CHECK_UNITS_PREFERENCE_FILE, Activity.MODE_PRIVATE);
+        CHECK_UNITS_PREFERENCE_FILE, Context.MODE_PRIVATE);
     if (checkUnitsSharedPreferences.getBoolean(CHECK_UNITS_PREFERENCE_KEY, false)) {
       return;
     }
@@ -61,7 +60,7 @@ class CheckUnits {
       public void onClick(DialogInterface dialog, int which) {
         recordCheckPerformed(checkUnitsSharedPreferences);
         SharedPreferences useMetricPreferences = context.getSharedPreferences(
-            Constants.SETTINGS_NAME, Activity.MODE_PRIVATE);
+            Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = useMetricPreferences.edit();
         String key = context.getString(R.string.metric_units_key);
         ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(

@@ -40,8 +40,8 @@ public class TrackPathPainterFactory {
    * @return The TrackPathPainter that corresponds to the track color mode setting.
    */
   public static TrackPathPainter getTrackPathPainter(Context context) {
-    SharedPreferences prefs =
-        context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    SharedPreferences prefs = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     if (prefs == null) {
       return new SingleColorTrackPathPainter(context);
     }

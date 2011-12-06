@@ -201,8 +201,8 @@ class ExternalFileBackup {
       }
 
       // Dump preferences
-      SharedPreferences preferences =
-          context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
+      SharedPreferences preferences = context.getSharedPreferences(
+          Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
       preferencesHelper.exportPreferences(preferences, outWriter);
     } catch (IOException e) {
       // We tried to delete the partially created file, but do nothing
@@ -255,8 +255,8 @@ class ExternalFileBackup {
       pointImporter.importAllRows(reader);
 
       // Restore preferences
-      SharedPreferences preferences =
-          context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
+      SharedPreferences preferences = context.getSharedPreferences(
+          Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
       preferencesHelper.importPreferences(reader, preferences);
     } finally {
       compressedStream.close();

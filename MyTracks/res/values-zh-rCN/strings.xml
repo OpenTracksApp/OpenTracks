@@ -27,8 +27,6 @@ limitations under the License.
   <string name="eula_accept">同意</string>
   <string name="eula_decline">拒绝</string>
   <string name="eula_title">最终用户协议</string>
-  <string name="export_canceled">操作已被取消.</string>
-  <string name="export_progress_message">写入文件到 SD 卡中. 请稍候.</string>
   <string name="export_success">导出完毕</string>
   <string name="generic_cancel">取消</string>
   <string name="generic_confirm_title">请确认</string>
@@ -44,7 +42,6 @@ limitations under the License.
   <string name="gps_wait_for_fix">等待更准确的 GPS 定位. 请确定可以看见天空.</string>
   <string name="import_error">导入文件 %s 出错.</string>
   <string name="import_no_file">在 %s 中未找到 GPX 文件. SD 存储卡不可用或者目录中没有 GPX 文件.</string>
-  <string name="import_success">已从 %3$s 导入 %1$d 个 GPX 文件, 共 %2$d 个.</string>
   <string name="marker_detail_marker_description">标记描述</string>
   <string name="marker_detail_marker_name">标记名称</string>
   <string name="marker_detail_marker_type">标记类型 (例如: 建筑, 陷坑, 景点...)</string>
@@ -85,9 +82,11 @@ limitations under the License.
   <string name="my_maps_list_public_label">公开</string>
   <string name="my_maps_list_title">发送到 Google My Maps</string>
   <string name="my_maps_list_unlisted_label">未公布</string>
+  <string name="sd_card_canceled">操作已被取消.</string>
   <string name="sd_card_error_create_dir">无法在 SD 存储卡上创建目录.</string>
   <string name="sd_card_error_no_storage">没有发现存储设备. 请确认插入了 SD 存储卡并且你的手机没有将挂载 SD 卡到电脑.</string>
   <string name="sd_card_error_write_file">无法写入文件.</string>
+  <string name="sd_card_progress_write_file">写入文件到 SD 卡中. 请稍候.</string>
   <string name="sd_card_success_read_file">从 SD 存储卡读取完毕.</string>
   <string name="sd_card_success_write_file">轨迹已导出到 SD 存储卡.</string>
   <string name="send_google_choose_account_title">选择帐户</string>
@@ -227,20 +226,9 @@ limitations under the License.
   <string name="track_record_success">现在开始记录新的轨迹.</string>
   <string name="unit_hour">时</string>
   <string name="unit_minute">分</string>
-  <string name="voice_hour">小时</string>
-  <string name="voice_hours">小时</string>
-  <string name="voice_kilometer_per_hour">千米每小时</string>
-  <string name="voice_kilometers">千米</string>
-  <string name="voice_mile_per_hour">英里每小时</string>
-  <string name="voice_miles">英里</string>
-  <string name="voice_minute">分钟</string>
-  <string name="voice_minutes">分钟</string>
-  <string name="voice_no_distance">My Tracks 无距离</string>
   <string name="voice_per_kilometer">每千米</string>
   <string name="voice_per_mile">每英里</string>
-  <string name="voice_second">秒</string>
-  <string name="voice_seconds">秒</string>
-  <string name="voice_template">My Tracks %1$.2f %2$s 用时 %3$s 速度 %4$s %5$s</string>
+  <string name="voice_total_distance_zero">My Tracks 无距离</string>
   <string name="welcome_about">关于 My Tracks</string>
   <string name="welcome_title">欢迎</string>
 </resources>

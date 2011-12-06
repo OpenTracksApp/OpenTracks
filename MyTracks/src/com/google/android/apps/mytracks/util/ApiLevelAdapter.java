@@ -25,9 +25,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
-
 /**
  * A set of methods that may be implemented differently depending on the Android API level. 
  *  
@@ -106,16 +103,6 @@ public interface ApiLevelAdapter {
    */
   byte[] copyByteArray(byte[] input, int start, int end);
   
-  
-  /**
-   * Gets an instance of {@link DecimalFormatSymbols} for a locale.
-   * 
-   * Due to changes in API level 9.
-   *    
-   * @param locale the locale
-   * @return a new instance of {@link DecimalFormatSymbols}
-   */
-  DecimalFormatSymbols getDecimalFormatSymbols(Locale locale);
   
   /**
    * Gets a {@link HttpTransport}. 

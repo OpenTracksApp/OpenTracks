@@ -32,7 +32,7 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -44,8 +44,7 @@ import java.util.TimerTask;
  */
 public class SensorStateActivity extends Activity {
 
-  private static final SimpleDateFormat TIMESTAMP_FORMAT =
-      new SimpleDateFormat("HH:mm:ss");
+  private static final DateFormat TIMESTAMP_FORMAT = DateFormat.getTimeInstance(DateFormat.SHORT);
   private static final long REFRESH_PERIOD_MS = 250;
 
   private final StatsUtilities utils;

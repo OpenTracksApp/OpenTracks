@@ -48,10 +48,10 @@ limitations under the License.
         android:layout_width="fill_parent"
         android:orientation="horizontal">
         <TextView
-          style="@style/WidgetText.Register"
+          style="@style/WidgetTextView.Value"
           android:id="@+id/appwidget_distance_text" />
         <TextView
-          style="@style/WidgetText"
+          style="@style/WidgetTextView"
           android:text="@string/stat_total_distance" />
       </LinearLayout>
       <ImageView
@@ -64,10 +64,10 @@ limitations under the License.
         android:orientation="horizontal"
         android:paddingBottom="2px">
         <TextView
-          style="@style/WidgetText.Register"
+          style="@style/WidgetTextView.Value"
           android:id="@+id/appwidget_time_text" />
         <TextView
-          style="@style/WidgetText"
+          style="@style/WidgetTextView"
           android:text="@string/stat_moving_time" />
       </LinearLayout>
       <ImageView
@@ -79,10 +79,10 @@ limitations under the License.
         android:layout_width="fill_parent"
         android:orientation="horizontal">
         <TextView
-          style="@style/WidgetText.Register"
+          style="@style/WidgetTextView.Value"
           android:id="@+id/appwidget_speed_text" />
         <TextView
-          style="@style/WidgetText"
+          style="@style/WidgetTextView"
           android:text="@string/stat_speed" />
       </LinearLayout>
     </LinearLayout>

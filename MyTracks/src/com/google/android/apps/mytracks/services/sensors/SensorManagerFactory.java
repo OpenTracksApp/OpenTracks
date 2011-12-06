@@ -40,8 +40,8 @@ public class SensorManagerFactory {
    * @return The sensor manager that corresponds to the sensor type setting.
    */
   public static SensorManager getSensorManager(Context context) {
-    SharedPreferences prefs =
-        context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    SharedPreferences prefs = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     if (prefs == null) {
       return null;
     }

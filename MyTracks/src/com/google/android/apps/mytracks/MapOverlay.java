@@ -163,8 +163,8 @@ public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListe
     
     trackPathPainter = TrackPathPainterFactory.getTrackPathPainter(context);
     
-    context.getSharedPreferences(Constants.SETTINGS_NAME, 0)
-      .registerOnSharedPreferenceChangeListener(this);
+    context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
+        .registerOnSharedPreferenceChangeListener(this);
   }
 
   /**

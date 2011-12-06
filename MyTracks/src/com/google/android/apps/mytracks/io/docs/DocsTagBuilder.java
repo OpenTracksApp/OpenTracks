@@ -15,12 +15,9 @@
  */
 package com.google.android.apps.mytracks.io.docs;
 
-import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -47,12 +44,16 @@ import java.util.Locale;
  */
 class DocsTagBuilder {
   
-  private static final DecimalFormatSymbols FORMAT_SYMBOLS =
-      ApiFeatures.getInstance().getApiAdapter().getDecimalFormatSymbols(Locale.ENGLISH);
-  private static final NumberFormat LARGE_UNIT_FORMAT =
-      new DecimalFormat("#,###,###.00", FORMAT_SYMBOLS);
-  private static final NumberFormat SMALL_UNIT_FORMAT =
-      new DecimalFormat("###,###", FORMAT_SYMBOLS);
+  // Google Docs can only parse numbers in the English locale.
+  private static final NumberFormat LARGE_UNIT_FORMAT = NumberFormat.getNumberInstance(
+      Locale.ENGLISH);
+  private static final NumberFormat SMALL_UNIT_FORMAT = NumberFormat.getIntegerInstance(
+      Locale.ENGLISH);
+
+  static {
+    LARGE_UNIT_FORMAT.setMaximumFractionDigits(2);
+    LARGE_UNIT_FORMAT.setMinimumFractionDigits(2);
+  }
 
   protected final boolean metricUnits;
   protected final StringBuilder stringBuilder;

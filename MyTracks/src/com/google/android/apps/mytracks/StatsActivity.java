@@ -28,6 +28,7 @@ import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
@@ -100,7 +101,7 @@ public class StatsActivity extends Activity implements TrackDataListener {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    preferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    preferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     utils = new StatsUtilities(this);
 
     // The volume we want to control is the Text-To-Speech volume

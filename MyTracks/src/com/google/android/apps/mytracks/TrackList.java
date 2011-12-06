@@ -28,6 +28,7 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.ListActivity;
 import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -235,7 +236,7 @@ public class TrackList extends ListActivity
     listView = getListView();
     listView.setOnCreateContextMenuListener(contextMenuListener);
 
-    preferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    preferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     serviceConnection = new TrackRecordingServiceConnection(this, serviceBindingChanged);
 
     View deleteAll = findViewById(R.id.tracklist_btn_delete_all);

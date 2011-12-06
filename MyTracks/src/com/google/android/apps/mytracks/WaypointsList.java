@@ -28,6 +28,7 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -151,8 +152,8 @@ public class WaypointsList extends ListActivity
     insertStatisticsButton =
         (Button) findViewById(R.id.waypointslist_btn_insert_statistics);
     insertStatisticsButton.setOnClickListener(this);
-    SharedPreferences preferences =
-        getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    SharedPreferences preferences = getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
     // TODO: Get rid of selected and recording track IDs
     long selectedTrackId = -1;

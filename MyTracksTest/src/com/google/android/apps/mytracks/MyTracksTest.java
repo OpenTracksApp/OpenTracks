@@ -21,6 +21,7 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.app.Instrumentation.ActivityMonitor;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -223,7 +224,7 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
     editor.putLong(getActivity().getString(R.string.recording_track_key), -1);
 
     editor.clear();
-    editor.commit();
+    editor.apply();
   }
 
   /**
@@ -253,7 +254,8 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
 
   private SharedPreferences getSharedPreferences() {
     if (sharedPreferences == null) {
-      sharedPreferences = getActivity().getSharedPreferences(Constants.SETTINGS_NAME, 0);
+      sharedPreferences = getActivity().getSharedPreferences(
+          Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     }
     return sharedPreferences;
   }

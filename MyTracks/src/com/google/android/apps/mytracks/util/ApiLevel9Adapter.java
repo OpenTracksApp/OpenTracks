@@ -8,9 +8,7 @@ import android.content.SharedPreferences.Editor;
 import android.os.StrictMode;
 import android.util.Log;
 
-import java.text.DecimalFormatSymbols;
 import java.util.Arrays;
-import java.util.Locale;
 
 /**
  * API level 9 specific implementation of the {@link ApiLevelAdapter}.
@@ -43,12 +41,7 @@ public class ApiLevel9Adapter extends ApiLevel8Adapter {
   public byte[] copyByteArray(byte[] input, int start, int end) {
     return Arrays.copyOfRange(input, start, end);
   }
-  
-  @Override
-  public DecimalFormatSymbols getDecimalFormatSymbols(Locale locale) {
-    return DecimalFormatSymbols.getInstance(locale);
-  }
-  
+ 
   @Override
   public HttpTransport getHttpTransport() {
     return new NetHttpTransport();

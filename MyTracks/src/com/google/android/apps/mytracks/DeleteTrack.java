@@ -27,6 +27,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentUris;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
@@ -105,7 +106,8 @@ public class DeleteTrack extends Activity
 
     // If the track we just deleted was selected, unselect it.
     String selectedKey = getString(R.string.selected_track_key);
-    SharedPreferences preferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    SharedPreferences preferences = getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     if (preferences.getLong(selectedKey, -1) == deleteTrackId) {
       Editor editor = preferences.edit().putLong(selectedKey, -1);
       ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);

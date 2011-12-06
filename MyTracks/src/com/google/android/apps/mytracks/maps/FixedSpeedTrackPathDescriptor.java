@@ -39,15 +39,15 @@ public class FixedSpeedTrackPathDescriptor implements TrackPathDescriptor, OnSha
   public FixedSpeedTrackPathDescriptor(Context context) {
 	
     this.context = context;
-    context.getSharedPreferences(Constants.SETTINGS_NAME, 0)
-        .registerOnSharedPreferenceChangeListener(this);
-	
-    SharedPreferences prefs = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    SharedPreferences prefs = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     if (prefs == null) {
       slowSpeed = 9; 
       normalSpeed = 17;
       return;
     }
+    prefs.registerOnSharedPreferenceChangeListener(this);
+    
     try {
       slowSpeed = Integer.parseInt(prefs.getString(context.getString(
           R.string.track_color_mode_fixed_speed_slow_key), "9"));
@@ -87,7 +87,8 @@ public class FixedSpeedTrackPathDescriptor implements TrackPathDescriptor, OnSha
     	    && !key.equals(context.getString(R.string.track_color_mode_fixed_speed_medium_key)))) {
       return;
     }
-    SharedPreferences prefs = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    SharedPreferences prefs = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     if (prefs == null) {
       slowSpeed = 9; 
       normalSpeed = 17;

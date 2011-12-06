@@ -2,9 +2,10 @@ package com.google.android.apps.mytracks.services.sensors;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.services.sensors.ant.AntDirectSensorManager;
-import com.google.android.apps.mytracks.services.sensors.ant.AntSRMSensorManager;
+import com.google.android.apps.mytracks.services.sensors.ant.AntSrmBridgeSensorManager;
 import com.google.android.maps.mytracks.R;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
@@ -18,9 +19,9 @@ public class SensorManagerFactoryTest extends AndroidTestCase {
     super.setUp();
     
     sharedPreferences = getContext().getSharedPreferences(
-        Constants.SETTINGS_NAME, 0);
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     // Let's use default values.
-    sharedPreferences.edit().clear().commit();
+    sharedPreferences.edit().clear().apply();
   }
   
   @SmallTest
@@ -40,14 +41,14 @@ public class SensorManagerFactoryTest extends AndroidTestCase {
 
   @SmallTest
   public void testCreateAntSRM() throws Exception {
-    assertClassForName(AntSRMSensorManager.class, R.string.sensor_type_value_srm_ant_bridge);
+    assertClassForName(AntSrmBridgeSensorManager.class, R.string.sensor_type_value_srm_ant_bridge);
   }
 
   private void assertClassForName(Class<?> c, int i) {
     sharedPreferences.edit()
         .putString(getContext().getString(R.string.sensor_type_key),
             getContext().getString(i))
-        .commit();
+        .apply();
     SensorManager sm = SensorManagerFactory.getSensorManager(getContext());
     assertNotNull(sm);
     assertTrue(c.isInstance(sm));

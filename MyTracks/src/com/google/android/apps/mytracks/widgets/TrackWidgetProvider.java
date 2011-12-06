@@ -94,7 +94,7 @@ public class TrackWidgetProvider
     providerUtils = MyTracksProviderUtils.Factory.get(context);
     unknown = context.getString(R.string.value_unknown);
 
-    sharedPreferences = context.getSharedPreferences(SETTINGS_NAME, 0);
+    sharedPreferences = context.getSharedPreferences(SETTINGS_NAME, Context.MODE_PRIVATE);
     sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     onSharedPreferenceChanged(sharedPreferences, null);
 

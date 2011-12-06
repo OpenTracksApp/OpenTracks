@@ -26,6 +26,7 @@ import com.google.android.maps.mytracks.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -87,6 +88,7 @@ public class ExportAllTracks {
     }
 
     AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+    builder.setTitle(R.string.track_list_export_all);
     builder.setSingleChoiceItems(choices, 0, itemClick);
     builder.setPositiveButton(R.string.generic_ok, positiveClick);
     builder.setNegativeButton(R.string.generic_cancel, null);
@@ -113,8 +115,8 @@ public class ExportAllTracks {
    * current track.
    */
   private void aquireLocksAndExport() {
-    SharedPreferences prefs =
-        activity.getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    SharedPreferences prefs = activity.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     long recordingTrackId = -1;
     if (prefs != null) {
       recordingTrackId =

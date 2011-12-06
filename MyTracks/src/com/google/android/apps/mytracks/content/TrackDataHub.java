@@ -201,7 +201,8 @@ public class TrackDataHub {
    * Builds a new {@link TrackDataHub} instance.
    */
   public synchronized static TrackDataHub newInstance(Context context) {
-    SharedPreferences preferences = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    SharedPreferences preferences = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     MyTracksProviderUtils providerUtils = MyTracksProviderUtils.Factory.get(context);
     return new TrackDataHub(context,
         new TrackDataListeners(),

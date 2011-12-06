@@ -59,7 +59,7 @@ public class ServiceUtils {
     }
 
     if (preferences == null) {
-      preferences = ctx.getSharedPreferences(Constants.SETTINGS_NAME, 0);
+      preferences = ctx.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     }
     return preferences.getLong(ctx.getString(R.string.recording_track_key), -1) > 0;
   }

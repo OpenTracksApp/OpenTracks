@@ -392,8 +392,8 @@ public class TrackRecordingService extends Service {
         + autoResumeTrackTimeout);
 
     // Check if we haven't exceeded the maximum number of retry attempts.
-    SharedPreferences sharedPreferences =
-        getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    SharedPreferences sharedPreferences = getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     int retries = sharedPreferences.getInt(
         getString(R.string.auto_resume_track_current_retry_key), 0);
     Log.d(TAG,
@@ -561,7 +561,8 @@ public class TrackRecordingService extends Service {
   }
   
   private String getDefaultActivityType(Context context) {
-    SharedPreferences prefs = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    SharedPreferences prefs = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     return prefs.getString(context.getString(R.string.default_activity_key), "");
   }
 
@@ -1056,7 +1057,8 @@ public class TrackRecordingService extends Service {
         .putExtra(getString(R.string.track_id_broadcast_extra), trackId);
     sendBroadcast(broadcastIntent, getString(R.string.permission_notification_value));
     
-    SharedPreferences sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    SharedPreferences sharedPreferences = getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     if (sharedPreferences.getBoolean(getString(R.string.allow_access_key), false)) {
       sendBroadcast(broadcastIntent, getString(R.string.broadcast_notifications_permission));
     }
@@ -1215,7 +1217,7 @@ public class TrackRecordingService extends Service {
         return true;
       } else {
         SharedPreferences sharedPreferences = service.getSharedPreferences(
-            Constants.SETTINGS_NAME, 0);
+            Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean(service.getString(R.string.allow_access_key), false);
       }
     }

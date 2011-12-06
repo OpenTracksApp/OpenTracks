@@ -251,6 +251,6 @@ limitations under the License.
     <item>@string/waypoint_type_tunnel</item>
     <item>@string/waypoint_type_waterfall</item>
     <item>@string/waypoint_type_water_fountain</item>
-    <item>@string/waypoint_type_way_point</item>
+    <item>@string/waypoint_type_waypoint</item>
   </string-array>
 </resources>

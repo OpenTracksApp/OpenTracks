@@ -44,7 +44,8 @@ public class DynamicSpeedTrackPathDescriptor
   
   public DynamicSpeedTrackPathDescriptor(Context context){
     this.context = context;
-    SharedPreferences prefs = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    SharedPreferences prefs = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
     if (prefs == null) {
       speedMargin = 25;
@@ -83,7 +84,8 @@ public class DynamicSpeedTrackPathDescriptor
     	|| !key.equals(context.getString(R.string.track_color_mode_dynamic_speed_variation_key))) {
       return;
     }
-    SharedPreferences prefs = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    SharedPreferences prefs = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     	
     if (prefs == null) {
       speedMargin = 25;
@@ -98,7 +100,8 @@ public class DynamicSpeedTrackPathDescriptor
 
   @Override
   public boolean needsRedraw() {
-    SharedPreferences prefs = context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    SharedPreferences prefs = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     long currentTrackId = prefs.getLong(context.getString(R.string.selected_track_key), -1);
     if(currentTrackId == -1) {
       // Could not find track. 

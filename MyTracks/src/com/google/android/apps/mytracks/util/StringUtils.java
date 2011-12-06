@@ -25,7 +25,7 @@ import com.google.android.maps.mytracks.R;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -66,7 +66,12 @@ public class StringUtils implements DescriptionGenerator {
     return formatTimeInternal(time, true);
   }
 
-  private static final DecimalFormat SINGLE_DECIMAL_PLACE_FORMAT = new DecimalFormat("#.#");
+  private static final NumberFormat SINGLE_DECIMAL_PLACE_FORMAT = NumberFormat.getNumberInstance();
+  
+  static {
+    SINGLE_DECIMAL_PLACE_FORMAT.setMaximumFractionDigits(1);
+    SINGLE_DECIMAL_PLACE_FORMAT.setMinimumFractionDigits(1);
+  }
 
   /**
    * Formats a double precision number as decimal number with a single decimal
@@ -231,8 +236,8 @@ public class StringUtils implements DescriptionGenerator {
   public String generateTrackDescription(Track track, Vector<Double> distances,
       Vector<Double> elevations) {
     boolean displaySpeed = true;
-    SharedPreferences preferences =
-        context.getSharedPreferences(Constants.SETTINGS_NAME, 0);
+    SharedPreferences preferences = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     if (preferences != null) {
       displaySpeed =
           preferences.getBoolean(context.getString(R.string.report_speed_key), true);
