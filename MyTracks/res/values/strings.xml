@@ -1158,10 +1158,8 @@ limitations under the License.
     translation_description="When sending a track to Google, a note indicating it is created by
       My Tracks on Android.
 
-      %1$s: the html anchor opening tag, '&lt;a href=\'http://mytracks.appspot.com\'&gt;'. Please
-      place this placeholder before the app name, 'My Tracks'.
-      %2$s: the html anchor closing tag, '&lt;/a&gt;'. Please place this placeholder after the app
-      name, 'My Tracks'.">
+      %1$s: the html anchor opening tag, Place this placeholder before the app name, 'My Tracks'.
+      %2$s: the html anchor closing tag, Place this placeholder after the app name, 'My Tracks'.">
     Created by %1$sMy Tracks%2$s on Android.
   </string>
   <string name="send_google_choose_account_title"
