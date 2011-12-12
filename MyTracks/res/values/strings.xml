@@ -408,7 +408,7 @@ limitations under the License.
     \n
     My Tracks can share your track data:\n
     - As a GPX, KML, CSV, or TCX file\n
-    - Using Google My Maps, Google Fusion Tables, or Google Docs\n
+    - Using Google Maps, Google Fusion Tables, or Google Docs\n
     - Via Twitter or Facebook\n
     \n
     Other features:\n
@@ -967,47 +967,47 @@ limitations under the License.
     \'Location &amp; security\' settings) &amp; make sure the sky is visible. Try again later.
   </string>
 
-  <!-- My Maps List -->
+  <!-- Maps List -->
   <string name="my_maps_list_error"
-    translation_description="When sending a track to an existing Google My Map, the text on the
-      'My Maps' list page informing the user that his maps cannot be loaded at this time.">
+    translation_description="When sending a track to an existing Google Map, the text on the
+      'Maps' list page informing the user that his maps cannot be loaded at this time.">
     Your maps could not be loaded at this time.
   </string>
   <string name="my_maps_list_loading"
-    translation_description="When sending a track to an existing Google My Map, the progress dialog
+    translation_description="When sending a track to an existing Google Map, the progress dialog
       message informing the user that his maps are being loaded.">
     Loading maps...
   </string>
   <string name="my_maps_list_no_maps"
-    translation_description="When sending a track to an existing Google My Map, the text on the
-      'My Maps' list page informing the user that he doesn't have any maps.
+    translation_description="When sending a track to an existing Google Map, the text on the
+      'Maps' list page informing the user that he doesn't have any maps.
 
       Screenshot: my_maps_list_no_maps.png">
     You don\'t have any maps.
   </string>
   <string name="my_maps_list_pick_map"
-    translation_description="When sending a track to an existing Google My Map, the text on the
-      'My Maps' list page asking the user to pick one of his maps.
+    translation_description="When sending a track to an existing Google Map, the text on the
+      'Maps' list page asking the user to pick one of his maps.
 
       Screenshot: my_maps.png">
     Pick a map:
   </string>
   <string name="my_maps_list_public_label"
-    translation_description="When sending a track to an existing Google My Map, in the 'My Maps'
+    translation_description="When sending a track to an existing Google Map, in the 'Maps'
       list page, the label next to the maps that are public, as opposed to being unlisted.
 
       Screenshot: my_maps.png">
     Public
   </string>
   <string name="my_maps_list_title"
-    translation_description="When sending a track to an existing Google My Map, the title of the
-      page listing the user's maps in Google My Maps.
+    translation_description="When sending a track to an existing Google Map, the title of the
+      page listing the user's maps in Google Maps.
 
       Screenshot: my_maps.png">
-    Your Google My Maps
+    Your Google Maps
   </string>
   <string name="my_maps_list_unlisted_label"
-    translation_description="When sending a track to an existing Google My Map, in the 'My Maps'
+    translation_description="When sending a track to an existing Google Map, in the 'Maps'
       list page, the label next to the maps that are unlisted, as opposed to being public.
 
       Screenshot: my_maps.png">
@@ -1158,8 +1158,8 @@ limitations under the License.
     translation_description="When sending a track to Google, a note indicating it is created by
       My Tracks on Android.
 
-      %1$s: the html anchor opening tag, Place this placeholder before the app name, 'My Tracks'.
-      %2$s: the html anchor closing tag, Place this placeholder after the app name, 'My Tracks'.">
+      %1$s: the html anchor opening tag. Place this placeholder before the app name, 'My Tracks'.
+      %2$s: the html anchor closing tag. Place this placeholder after the app name, 'My Tracks'.">
     Created by %1$sMy Tracks%2$s on Android.
   </string>
   <string name="send_google_choose_account_title"
@@ -1181,7 +1181,7 @@ limitations under the License.
     An error has occurred. Please try again.
   </string>
   <string name="send_google_existing_map"
-    translation_description="When sending a track to Google My Maps, the radio option to use an
+    translation_description="When sending a track to Google Maps, the radio option to use an
       existing map as opposed to create a new map.
 
       Screenshot: send_google_choose_service.png">
@@ -1196,13 +1196,13 @@ limitations under the License.
   </string>
   <string name="send_google_my_maps"
     translation_description="When sending a track to Google, under the 'Send to...' dialog, the
-      checkbox option to send to Google My Maps.
+      checkbox option to send to Google Maps.
 
       Screenshot: send_google_choose_service.png">
-    Google My Maps
+    Google Maps
   </string>
   <string name="send_google_new_map"
-    translation_description="When sending a track to Google My Maps, the radio option to create a
+    translation_description="When sending a track to Google Maps, the radio option to create a
       new map as opposed to use an existing map.
 
       Screenshot: send_google_choose_service.png">
@@ -1222,18 +1222,18 @@ limitations under the License.
     translation_description="When sending a track to a Google service, the message on the progress
       dialog indicating authenticating to the service.
 
-      %1$s: service name. 'Google My Maps', 'Google Fusion Tables', or 'Google Docs'.">
+      %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Docs'.">
     Authenticating to %1$s...
   </string>
   <string name="send_google_progress_creating"
     translation_description="When sending a track to a Google service, the message on the progress
       dialog indicating creating a new service item.
 
-      %1$s: service name. 'Google My Maps', 'Google Fusion Tables', or 'Google Docs'.">
+      %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Docs'.">
     Creating a new %1$s item...
   </string>
   <string name="send_google_progress_preparing_track"
-    translation_description="When sending a track to Google My Maps, the message on the progress
+    translation_description="When sending a track to Google Maps, the message on the progress
       dialog indicating My Tracks is preparing the track's data for upload.">
     Preparing track...
   </string>
@@ -1246,7 +1246,7 @@ limitations under the License.
     translation_description="When sending a track to Google service, the message on the progress
       dialog indicating My Tracks is sending the track data.
 
-      %1$s: service name. 'Google My Maps', 'Google Fusion Tables', or 'Google Docs'.">
+      %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Docs'.">
     Sending a track to %1$s...
   </string>
   <string name="send_google_recorded"
@@ -1284,8 +1284,8 @@ limitations under the License.
   </string>
   <string name="send_google_title"
     translation_description="When sending a track to Google, the dialog title to choose the Google
-      services to send the track to. The user can choose Google My Maps, Google Fusion
-      Tables, and Google Docs.
+      services to send the track to. The user can choose Google Maps, Google Fusion Tables, and
+      Google Docs.
 
       Screenshot: send_google_choose_service.png">
     Send to...
@@ -1992,7 +1992,7 @@ limitations under the License.
   </string>
   <string name="settings_sharing_map_public"
     translation_description="In the 'Sharing' settings, the checkbox option to make a new map
-      created in Google My Maps public.
+      created in Google Maps public.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_sharing.png">
@@ -2000,43 +2000,43 @@ limitations under the License.
   </string>
   <string name="settings_sharing_map_public_summary_off"
     translation_description="In the 'Sharing' settings, the summary for the 'Make new maps public'
-      checkbox option when it is unchecked explaining that new maps created in Google My Maps will
+      checkbox option when it is unchecked explaining that new maps created in Google Maps will
       be unlisted, as opposed to public.
 
       Screenshot: settings_sharing_unchecked.png">
-    Make new maps created in Google My Maps unlisted.
+    Make new maps created in Google Maps unlisted.
   </string>
   <string name="settings_sharing_map_public_summary_on"
     translation_description="In the 'Sharing' settings, the summary for the 'Make new maps public'
-      checkbox option when it is checked explaining that new maps created in Google My Maps will
+      checkbox option when it is checked explaining that new maps created in Google Maps will
       be public, as opposed to unlisted.
 
       Screenshot: settings_sharing.png">
-    Make new maps created in Google My Maps public.
+    Make new maps created in Google Maps public.
   </string>
   <string name="settings_sharing_url_only"
-    translation_description="In the 'Sharing' settings, the checkbox option to share only the URL
-      link, without any additional text, when sharing the URL with friends.
+    translation_description="In the 'Sharing' settings, the checkbox option to share only the URL,
+      without any descriptive text, when sharing a URL with friends.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_sharing.png">
-    Share only URL link
+    Share only URL
   </string>
   <string name="settings_sharing_url_only_summary_off"
-    translation_description="In the 'Sharing' settings, the summary for the 'Share only URL link'
-      checkbox option when it is unchecked explaining that some text and the the URL link will be
-      sent when sharing the URL with friends.
+    translation_description="In the 'Sharing' settings, the summary for the 'Share only URL'
+      checkbox option when it is unchecked explaining that it will include descriptive text when
+      sharing a URL with friends.
 
       Screenshot: settings_sharing_unchecked.png">
-    Some text and the URL link will be sent when sharing the URL with friends.
+    Include descriptive text when sharing a URL with friends.
   </string>
   <string name="settings_sharing_url_only_summary_on"
-    translation_description="In the 'Sharing' settings, the summary for the 'Share only URL link'
-      checkbox option when it is checked explaining that only the URL link, without any additional
-      text, will be sent when sharing the URL with friends.
+    translation_description="In the 'Sharing' settings, the summary for the 'Share only URL'
+      checkbox option when it is checked explaining that it will remove any descriptive text when
+      sharing a URL with friends.
 
       Screenshot: settings_sharing.png">
-   Only the URL link will be sent when sharing the URL with friends.
+   Remove any descriptive text when sharing a URL with friends.
   </string>
   <string name="settings_title"
     translation_description="The title of the 'Settings' page.
@@ -2340,11 +2340,11 @@ limitations under the License.
   </string>
   <string name="track_list_share_url"
     translation_description="In the context menu for a track, under the 'Share with friends...'
-      option, the menu option to save a track to My Maps or Fusion Tables and share the URL with
-      friends.
+      option, the menu option to save a track to Google Maps or Google Fusion Tables and share the
+      URL with friends.
 
       Screenshot: track_list_share_options.png">
-    My Map or Fusion Table URL
+    Map or Fusion Table URL
   </string>
   <string name="track_list_show_on_map"
     translation_description="In the context menu for a track, the menu option to show the track on
@@ -3157,7 +3157,7 @@ limitations under the License.
 
       Screenshot: welcome.png">
     Menu -> Tracks -> Delete all. This permanently deletes the recorded tracks from memory. If you
-    have saved tracks to the SD card, you must delete them separately. Tracks uploaded to Google My
+    have saved tracks to the SD card, you must delete them separately. Tracks uploaded to Google
     Maps, Google Fusion Tables, and Google Docs must also be deleted separately.
   </string>
   <string name="welcome_delete_all_question"
@@ -3171,7 +3171,7 @@ limitations under the License.
     translation_description="In the 'Welcome' page, the help content answer on editing points.
 
       Screenshot: welcome.png">
-    Once you upload tracks to Google My Maps, Google Fusion Tables, or Google Docs, you can move,
+    Once you upload tracks to Google Maps, Google Fusion Tables, or Google Docs, you can move,
     delete or insert individual track points as desired.
   </string>
   <string name="welcome_edit_accuracy_question"
@@ -3230,19 +3230,20 @@ limitations under the License.
     How precise are the recorded tracks?
   </string>
   <string name="welcome_my_maps_sharing_answer"
-    translation_description="In the 'Welcome' page, the help content answer on Google My Maps
+    translation_description="In the 'Welcome' page, the help content answer on Google Maps
       visibility.
 
       Screenshot: welcome.png">
     By default, new maps are public. To change the default to unlisted, uncheck Settings -> Sharing
-    -> Make new maps public. You can change the visibility of all your maps at Google My Maps.
+    -> Make new maps public. You can change the visibility of all your maps at My places in Google
+    Maps.
   </string>
   <string name="welcome_my_maps_sharing_question"
-    translation_description="In the 'Welcome' page, the help content question on Google My Maps
+    translation_description="In the 'Welcome' page, the help content question on Google Maps
       visibility.
 
       Screenshot: welcome.png">
-    Who can see the maps I send to Google My Maps?
+    Who can see the maps I send to Google Maps?
   </string>
   <string name="welcome_my_tracks_answer"
     translation_description="In the 'Welcome' page, the help content answer on what is My Tracks.
@@ -3250,7 +3251,7 @@ limitations under the License.
       Screenshot: welcome.png">
     My Tracks allows you to record GPS tracks and visualize your hiking, running, biking or any
     other activity while watching live performance statistics. My Tracks makes it easy to archive
-    your training history with Google My Maps, Google Fusion Tables, and Google Docs, and share your
+    your training history with Google Maps, Google Fusion Tables, and Google Docs, and share your
     activities with friends and the world.
   </string>
   <string name="welcome_my_tracks_question"
@@ -3272,7 +3273,7 @@ limitations under the License.
       Google.
 
       Screenshot: welcome.png">
-    How do I send my tracks to Google My Maps, Google Fusion Tables, and Google Docs?
+    How do I send my tracks to Google Maps, Google Fusion Tables, and Google Docs?
   </string>
   <string name="welcome_share_file_answer"
     translation_description="In the 'Welcome' page, the help content answer on sharing a file.
@@ -3292,7 +3293,7 @@ limitations under the License.
 
       Screenshot: welcome.png">
     Tap the Options button located at the bottom right corner of the map view and select \"Share
-    with friends...\". You can share the track as a link to Google My Map or Google Fusion Table
+    with friends...\". You can share the track as a link to Google Map or Google Fusion Table
     (you will be prompted to upload the track first) or as a GPX, KML, CSV, or TCX file in an e-mail
     attachment.
   </string>
@@ -3308,14 +3309,14 @@ limitations under the License.
       tracks.
 
       Screenshot: welcome.png">
-    Tracks on Google My Maps and Google Fusion Tables are limited to certain sizes.
+    Tracks on Google Maps and Google Fusion Tables are limited to certain sizes.
   </string>
   <string name="welcome_split_track_question"
     translation_description="In the 'Welcome' page, the help content question on splitting long
       tracks.
 
       Screenshot: welcome.png">
-    Why do very long tracks split into multiple segments upon sending them to Google My Maps and
+    Why do very long tracks split into multiple segments upon sending them to Google Maps and
     Google Fusion Tables?
   </string>
   <string name="welcome_statistics_marker_answer"
