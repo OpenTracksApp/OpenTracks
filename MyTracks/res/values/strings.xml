@@ -2015,28 +2015,28 @@ limitations under the License.
     Make new maps created in Google Maps public.
   </string>
   <string name="settings_sharing_url_only"
-    translation_description="In the 'Sharing' settings, the checkbox option to share only the URL
-      link, without any additional text, when sharing the URL with friends.
+    translation_description="In the 'Sharing' settings, the checkbox option to share only the URL,
+      without any descriptive text, when sharing a URL with friends.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_sharing.png">
-    Share only URL link
+    Share only URL
   </string>
   <string name="settings_sharing_url_only_summary_off"
-    translation_description="In the 'Sharing' settings, the summary for the 'Share only URL link'
-      checkbox option when it is unchecked explaining that some text and the the URL link will be
-      sent when sharing the URL with friends.
+    translation_description="In the 'Sharing' settings, the summary for the 'Share only URL'
+      checkbox option when it is unchecked explaining that it will include descriptive text when
+      sharing a URL with friends.
 
       Screenshot: settings_sharing_unchecked.png">
-    Some text and the URL link will be sent when sharing the URL with friends.
+    Include descriptive text when sharing a URL with friends.
   </string>
   <string name="settings_sharing_url_only_summary_on"
-    translation_description="In the 'Sharing' settings, the summary for the 'Share only URL link'
-      checkbox option when it is checked explaining that only the URL link, without any additional
-      text, will be sent when sharing the URL with friends.
+    translation_description="In the 'Sharing' settings, the summary for the 'Share only URL'
+      checkbox option when it is checked explaining that it will remove any descriptive text when
+      sharing a URL with friends.
 
       Screenshot: settings_sharing.png">
-   Only the URL link will be sent when sharing the URL with friends.
+   Remove any descriptive text when sharing a URL with friends.
   </string>
   <string name="settings_title"
     translation_description="The title of the 'Settings' page.
