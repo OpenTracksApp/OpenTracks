@@ -416,8 +416,7 @@ limitations under the License.
     - Display your movement in terms of Speed or Pace (configured from the Display menu, under
     Settings)\n
     \n
-    My Tracks is run by volunteers and Googlers in their 20% time. If you would like to contribute,
-    please visit:\n
+    My Tracks is an open source project, if you would like to contribute, please visit:\n
     \n
     http://mytracks.googlecode.com\n
   </string>
@@ -476,137 +475,46 @@ limitations under the License.
   <string name="eula_message"
     translation_description="The message for the 'Terms of service' dialog.
 
-      Screenshot: eula.png">
-    By downloading, installing or using this application or any portion thereof ("Application"), you
-    agree to the following terms and conditions (the "Terms and Conditions").\n
+      Google Mobile Terms of Service. Already translated at http://m.google.com/toscountry. Please
+      cut and paste the translations from the web site.">
+    December 1, 2010\n
     \n
-    1. USE OF APPLICATION\n
-    a. Google grants you the non-exclusive, non-transferable, limited right and license to install
-    and use this Application solely and exclusively for your personal use.\n
-    b. You may not use the Application in any manner that could damage, disable, overburden, or
-    impair the Application (or servers or networks connected to the Application), nor may you use
-    the Application in any manner that could interfere with any other party\'s use and enjoyment of
-    the Application (or servers or networks connected to the Application).\n
-    c. You agree that you are solely responsible for (and that Google has no responsibility to you
-    or to any third party for) your use of the Application, any breach of your obligations under the
-    Terms and Conditions, and for the consequences (including any loss or damage which Google may
-    suffer) of any such breach.\n
+    Mobile Terms of Service\n 
     \n
-    2. PROPRIETARY RIGHTS\n
-    You acknowledge that (a) the Application contains proprietary and confidential information that
-    is protected by applicable intellectual property and other laws, and (b) Google and/or third
-    parties own all right, title and interest in and to the Application and content, excluding
-    content provided by you, that may be presented or accessed through the Application, including
-    without limitation all Intellectual Property Rights therein and thereto.
-    "Intellectual Property Rights" means any and all rights existing from time to time under patent
-    law, copyright law, trade secret law, trademark law, unfair competition law, and any and all
-    other proprietary rights, and any and all applications, renewals, extensions and restorations
-    thereof, now or hereafter in force and effect worldwide.  You agree that you will not, and will
-    not allow any third party to, (i) copy, sell, license, distribute, transfer, modify, adapt,
-    translate, prepare derivative works from, decompile, reverse engineer, disassemble or otherwise
-    attempt to derive source code from the Application or content that may be presented or accessed
-    through the Application for any purpose, unless otherwise permitted, (ii) take any action to
-    circumvent or defeat the security or content usage rules provided, deployed or enforced by any
-    functionality (including without limitation digital rights management functionality) contained
-    in the Application, (iii) use the Application to access, copy, transfer, transcode or retransmit
-    content in violation of any law or third party rights, or (iv) remove, obscure, or alter
-    Google\'s or any third party\'s copyright notices, trademarks, or other proprietary rights
-    notices affixed to or contained within or accessed in conjunction with or through the
-    Application.\n
+    By using Google\'s mobile products and services ("Services"), you:\n
     \n
-    3. GOOGLE TERMS OF SERVICE AND PRIVACY POLICY\n
-    a. Google\'s Privacy Policy (located at http://www.google.com/privacypolicy.html) explains how
-    Google treats your information and protects your privacy when you use the Application. You agree
-    to the use of your data in accordance with Google’s privacy policies.\n
-    b. The Application may contain features that are used in conjunction with Google\'s search and
-    other services. Accordingly, your use of such features of the Application is also governed by
-    Google\'s Terms of Service located at http://www.google.com/terms_of_service.html, Google\'s
-    Privacy Policy located at http://www.google.com/privacypolicy.html, as well as any applicable
-    Google Service-specific Terms of Service and Privacy Policy, which may be updated from time to
-    time and without notice.\n
+    1. Agree to be bound by these terms and a) the YouTube Terms of Use (m.google.com/tos_youtube)
+    for YouTube-related Services, b) the Google Maps Terms and Conditions (m.google.com/tos_maps)
+    for mapping, local and location-based Services, c) the Google Buzz Terms and Conditions for
+    Google Buzz-related Services (m.google.com/tos_buzz), d) the Google Books Terms of Service
+    (m.google.com/tos_books) for Books-related Services, and e) the Google Terms of Service
+    (m.google.com/utos) for all other Services, as updated from time to time. You may use the
+    Services only as set forth in these agreements. Do not manipulate while driving.\n
     \n
-    4. U.S. GOVERNMENT RESTRICTED RIGHTS\n
-    This Application, related materials and documentation have been developed entirely with private
-    funds. If the user of the Application is an agency, department, employee, or other entity of the
-    United States Government, the use, duplication, reproduction, release, modification, disclosure,
-    or transfer of the Application, including technical data or manuals, is restricted by the terms,
-    conditions and covenants contained in these Terms and Conditions. In accordance with Federal
-    Acquisition Regulation 12.212 for civilian agencies and Defense Federal Acquisition Regulation
-    Supplement 227.7202 for military agencies, use of the Application is further restricted by these
-    Terms and Conditions.\n
+    2. Acknowledge and agree that third parties may offer Services, and that you may be subject to
+    third party terms and that third parties may enforce terms against you. Google is not
+    responsible for third party changes to the Services.\n
+    \n 
+    3. Consent to the collection, use, sharing, and onward transfer of your data, including but not
+    limited to voice and location data, as outlined in the Mobile Privacy Policy
+    (m.google.com/privacy). Location data may be from mixed sources and may not be accurate. Use at
+    your own risk.\n
     \n
-    5. EXPORT RESTRICTIONS\n
-    The Application may be subject to export controls or restrictions by the United States or other
-    countries or territories. You agree to comply with all applicable U.S. and international export
-    laws and regulations. These laws include restrictions on destinations, end users, and end use.\n
+    4. Acknowledge that certain Services require phone service, data access or text messaging
+    capability. Except as otherwise noted, Google does not charge for the Services, but carrier
+    rates for phone, data and text messaging may apply.\n
     \n
-    6. TERMINATION\n
-    These Terms and Conditions will continue to apply until terminated by either you or Google as
-    set forth below. You may terminate these Terms and Conditions at any time by permanently
-    deleting the Application from your mobile device in its entirety. Your rights automatically and
-    immediately terminate without notice from Google or any Third Party if you fail to comply with
-    any provision of these Terms and Conditions. In such event, you must immediately delete the
-    Application.\n
+    The Services may contain third party content. Any required attribution or notice for the third
+    party content may be found at m.google.com/legalnotices.\n
     \n
-    7. INDEMNITY\n
-    To the maximum extent permitted by law, you agree to defend, indemnify and hold harmless Google,
-    its affiliates and their respective directors, officers, employees and agents from and against
-    any and all claims, actions, suits or proceedings, as well as any and all losses, liabilities,
-    damages, costs and expenses (including reasonable attorneys fees) arising out of or accruing
-    from your use of the Application, including your downloading, installation, or use of the
-    Application, or your violation of these Terms and Conditions.\n
-    \n
-    8. DISCLAIMER OF WARRANTIES\n
-    A. You expressly understand and agree that your use of the application is at your sole
-    discretion and risk and that the application is provided "as is" and "as available" without
-    warranty of any kind.\n
-    B. You are solely responsible for any damage to your mobile device, or other device, or loss of
-    data that results from such use.\n
-    C. Google further expressly disclaims all warranties and conditions of any kind, whether express
-    or implied, including, but not limited to the implied warranties and conditions of
-    merchantability, fitness for a particular purpose and non-infringement, with respect to the
-    application.\n
-    D. The application is not intended for use in the operation of nuclear facilities, life support
-    systems, emergency communications, aircraft navigation or communication systems, air traffic
-    control systems, or any other activities in which the failure of the application could lead to
-    death, personal injury, or severe physical or environmental damage.\n
-    \n
-    9.LIMITATION OF LIABILITY\n
-    You expressly understand and agree that google, its subsidiaries and affiliates, and its
-    licensors are not liable to you under any theory of liability for any direct, indirect,
-    incidental, special consequential or exemplary damages that may be incurred by you through your
-    use of the application, including any loss of data or damage to your mobile device, whether or
-    not google or its representatives have been advised of or should have been aware of the
-    possibility of any such losses arising.\n
-    \n
-    10. MISCELLANEOUS\n
-    a. These Terms and Conditions constitute the entire Agreement between you and Google relating
-    to the Application and govern your use of the Application, and completely replace any prior or
-    contemporaneous agreements between you and Google regarding the Application.\n
-    b. The failure of Google to exercise or enforce any right or provision of these Terms and
-    Conditions does not constitute a waiver of such right or provision, which will still be
-    available to Google.\n
-    c. If any court of law, having the jurisdiction to decide on this matter, rules that any
-    provision of these Terms and Conditions is invalid, then that provision will be removed from the
-    Terms and Conditions without affecting the rest of the Terms and Conditions. The remaining
-    provisions of these Terms and Conditions will continue to be valid and enforceable.\n
-    d. The rights granted in these Terms and Conditions may not be assigned or transferred by either
-    you or Google without the prior written approval of the other party. Neither you nor Google are
-    permitted to delegate their responsibilities or obligations under these Terms and Conditions
-    without the prior written approval of the other party.\n
-    e. These Terms and Conditions and your relationship with Google under these Terms and Conditions
-    will be governed by the laws of the State of California without regard to its conflict of laws
-    provisions. You and Google agree to submit to the exclusive jurisdiction of the courts located
-    within the county of Santa Clara, California to resolve any legal matter arising from these
-    Terms and Conditions. Notwithstanding this, you agree that Google will still be allowed to apply
-    for injunctive remedies (or an equivalent type of urgent legal relief) in any jurisdiction.\n
+    ©2011\n    
   </string>
   <string name="eula_title"
     translation_description="The title for the 'Terms of service' dialog, asking the user to accept
       or decline.
 
       Screenshot: eula.png">
-    End User License Agreement
+    Terms of Service
   </string>
 
   <!-- Export -->

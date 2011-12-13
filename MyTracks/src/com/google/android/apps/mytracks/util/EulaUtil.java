@@ -24,7 +24,9 @@ import android.content.SharedPreferences.Editor;
  */
 public class EulaUtil {
   private static final String EULA_PREFERENCE_FILE = "eula";
-  private static final String EULA_PREFERENCE_KEY = "eula.accepted";
+  
+  // Accepting Google mobile terms of service
+  private static final String EULA_PREFERENCE_KEY = "eula.google_mobile_tos_accepted";
 
   private EulaUtil() {}
 
