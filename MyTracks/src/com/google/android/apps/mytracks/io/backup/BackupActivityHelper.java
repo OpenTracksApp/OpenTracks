@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.io.backup;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.MyTracks;
 import com.google.android.apps.mytracks.util.FileUtils;
+import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -32,7 +33,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
@@ -45,10 +45,6 @@ import java.util.Date;
  * @author Rodrigo Damazio
  */
 public class BackupActivityHelper {
-
-  // Since the user sees this format, we use the local timezone
-  private static final DateFormat DISPLAY_BACKUP_FORMAT = DateFormat.getDateTimeInstance(
-      DateFormat.SHORT, DateFormat.SHORT);
 
   private static final Comparator<Date> REVERSE_DATE_ORDER =
       new Comparator<Date>() {
@@ -160,7 +156,7 @@ public class BackupActivityHelper {
     // Make a user-visible version of the backup filenames
     final String backupDateStrs[] = new String[backupDates.length];
     for (int i = 0; i < backupDates.length; i++) {
-      backupDateStrs[i] = DISPLAY_BACKUP_FORMAT.format(backupDates[i]);
+      backupDateStrs[i] = StringUtils.formatDateTime(backupDates[i].getTime());
     }
 
     // Show a dialog for the user to pick which backup to restore

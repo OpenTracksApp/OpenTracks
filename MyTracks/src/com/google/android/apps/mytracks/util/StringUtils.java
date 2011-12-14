@@ -25,6 +25,7 @@ import com.google.android.maps.mytracks.R;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -44,6 +45,16 @@ public class StringUtils implements DescriptionGenerator {
 
   private final Context context;
 
+  /**
+   * Formats the time based on user locale.
+   * 
+   * @param time time
+   */
+  public static String formatDateTime(long time) {
+    DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
+    return formatter.format(new Date(time));    
+  }
+  
   /**
    * Formats a number of milliseconds as a string.
    *
@@ -303,7 +314,7 @@ public class StringUtils implements DescriptionGenerator {
         + "%s: %d %s (%d %s)<br>"
         + "%s: %d %%<br>"
         + "%s: %d %%<br>"
-        + "%s: %tc<br>"
+        + "%s: %s<br>"
         + "%s: %s<br>"
         + "<img border=\"0\" src=\"%s\"/>",
 
@@ -349,7 +360,7 @@ public class StringUtils implements DescriptionGenerator {
 
         // Line 11
         context.getString(R.string.send_google_recorded),
-        new Date(trackStats.getStartTime()),
+        StringUtils.formatDateTime(trackStats.getStartTime()),
 
         // Line 12
         context.getString(R.string.track_detail_activity_type_hint), category,
