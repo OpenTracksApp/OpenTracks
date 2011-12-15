@@ -472,42 +472,67 @@ limitations under the License.
       Screenshot: eula.png">
     Decline
   </string>
-  <string name="eula_message"
-    translation_description="The message for the 'Terms of service' dialog.
+  <string name="eula_message_body"
+    translation_description="The body in the Google mobile terms of service. See
+      http://m.google.com/toscountry.">
+    By using Google\'s mobile products and services ("Services"), you:
+  </string>
+  <string name="eula_message_date"
+    translation_description="The date in the Google mobile terms of service. See
+      http://m.google.com/toscountry.">
+    December 1, 2010
+  </string>
+  <string name="eula_message_footer"
+    translation_description="The footer in the Google mobile terms of service. See
+      http://m.google.com/toscountry.
 
-      Google Mobile Terms of Service. Already translated at http://m.google.com/toscountry. Please
-      cut and paste the translations from the web site.">
-    December 1, 2010\n
-    \n
-    Mobile Terms of Service\n 
-    \n
-    By using Google\'s mobile products and services ("Services"), you:\n
-    \n
-    1. Agree to be bound by these terms and a) the YouTube Terms of Use (m.google.com/tos_youtube)
-    for YouTube-related Services, b) the Google Maps Terms and Conditions (m.google.com/tos_maps)
-    for mapping, local and location-based Services, c) the Google Buzz Terms and Conditions for
-    Google Buzz-related Services (m.google.com/tos_buzz), d) the Google Books Terms of Service
-    (m.google.com/tos_books) for Books-related Services, and e) the Google Terms of Service
-    (m.google.com/utos) for all other Services, as updated from time to time. You may use the
-    Services only as set forth in these agreements. Do not manipulate while driving.\n
-    \n
+      %1$s: legal notice url, 'm.google.com/legalnotices'">
+    The Services may contain third party content. Any required attribution or notice for the third
+    party content may be found at %1$s.
+  </string>
+  <string name="eula_message_header"
+    translation_description="The header in the Google mobile terms of service. See
+      http://m.google.com/toscountry.">
+    Mobile Terms of Service
+  </string>
+  <string name="eula_message_item1"
+    translation_description="The first item in the Google mobile terms of service. See
+      http://m.google.com/toscountry.
+
+      %1$s: youtube terms of service url, 'm.google.com/tos_youtube'
+      %2$s: maps terms of service url, 'm.google.com/tos_maps'
+      %3$s: buzz terms of service url, 'm.google.com/tos_buzz'
+      %4$s: books terms of service url, 'm.google.com/tos_books'
+      %5$s: google terms of service url, 'm.google.com/utos'">
+    1. Agree to be bound by these terms and a) the YouTube Terms of Use (%1$s) for YouTube-related
+    Services, b) the Google Maps Terms and Conditions (%2$s) for mapping, local and location-based
+    Services, c) the Google Buzz Terms and Conditions for Google Buzz-related Services (%3$s), d)
+    the Google Books Terms of Service (%4$s) for Books-related Services, and e) the Google Terms of
+    Service (%5$s) for all other Services, as updated from time to time. You may use the Services
+    only as set forth in these agreements. Do not manipulate while driving.
+  </string>
+  <string name="eula_message_item2"
+    translation_description="The second item in the Google mobile terms of service. See
+      http://m.google.com/toscountry.">
     2. Acknowledge and agree that third parties may offer Services, and that you may be subject to
     third party terms and that third parties may enforce terms against you. Google is not
-    responsible for third party changes to the Services.\n
-    \n 
+    responsible for third party changes to the Services.
+  </string>
+  <string name="eula_message_item3"
+    translation_description="The third item in the Google mobile terms of service. See
+      http://m.google.com/toscountry.
+
+       %1$s: privacy url, 'm.google.com/privacy'">
     3. Consent to the collection, use, sharing, and onward transfer of your data, including but not
-    limited to voice and location data, as outlined in the Mobile Privacy Policy
-    (m.google.com/privacy). Location data may be from mixed sources and may not be accurate. Use at
-    your own risk.\n
-    \n
+    limited to voice and location data, as outlined in the Mobile Privacy Policy (%1$s). Location
+    data may be from mixed sources and may not be accurate. Use at your own risk.
+  </string>
+  <string name="eula_message_item4"
+    translation_description="The fourth item in the Google mobile terms of service. See
+      http://m.google.com/toscountry.">
     4. Acknowledge that certain Services require phone service, data access or text messaging
     capability. Except as otherwise noted, Google does not charge for the Services, but carrier
-    rates for phone, data and text messaging may apply.\n
-    \n
-    The Services may contain third party content. Any required attribution or notice for the third
-    party content may be found at m.google.com/legalnotices.\n
-    \n
-    ©2011\n    
+    rates for phone, data and text messaging may apply.
   </string>
   <string name="eula_title"
     translation_description="The title for the 'Terms of service' dialog, asking the user to accept
