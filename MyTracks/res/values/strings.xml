@@ -1757,7 +1757,7 @@ limitations under the License.
   </string>
   <string name="settings_sensor_ant_options"
     translation_description="In the 'Sensor' settings, the section header to configure the ANT+
-      options.
+      options. Note that ANT+ is a radio standard.
 
       Character limit: ~40 (1 line)
       Screenshot: settings_sensor.png">
@@ -1820,7 +1820,7 @@ limitations under the License.
   </string>
   <string name="settings_sensor_type_ant"
     translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
-      connect to an ANT+ heart rate sensor.
+      connect to an ANT+ heart rate sensor. Note that ANT+ is a radio standard.
 
       Character limit: ~21 (1 line)
       Screenshot: settings_sensor_type.png">
@@ -1836,7 +1836,8 @@ limitations under the License.
   </string>
   <string name="settings_sensor_type_polar"
     translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
-      connect to a Polar bluetooth sensor.
+      connect to a Polar bluetooth sensor. Do not translate Polar, the company name, but can
+      translate Bluetooth, the radio standard.
 
       Character limit: ~21 (1 line)
       Screenshot: settings_sensor_type.png">
@@ -1844,7 +1845,8 @@ limitations under the License.
   </string>
   <string name="settings_sensor_type_srm"
     translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
-      connect to a SRM ANT+ bridge.
+      connect to a SRM ANT+ bridge.  Do not trasnlate SRM, the company name, but can translate
+      ANT+, the radio standard, and bridge (network bridge).
 
       Character limit: ~21 (1 line)
       Screenshot: settings_sensor_type.png">
@@ -1859,7 +1861,8 @@ limitations under the License.
   </string>
   <string name="settings_sensor_type_zephyr"
     translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
-      connect to a Zephyr bluetooth sensor.
+      connect to a Zephyr bluetooth sensor. Do not translate Zephyr, the company name, but can
+      translate Bluetooth, the radio standard.
 
       Character limit: ~21 (1 line)
       Screenshot: settings_sensor_type.png">
@@ -1867,7 +1870,7 @@ limitations under the License.
   </string>
   <string name="settings_sensor_unpair_ant"
     translation_description="In the 'Sensor' settings, under the 'ANT+ options' configurations, the
-      option to unpair an ANT+ heart rate sensor.
+      option to unpair an ANT+ heart rate sensor. Note that ANT+ is a radio standard.
 
       Character limit: ~26 (1 line)
       Screenshot: settings_sensor.png">
@@ -1875,7 +1878,8 @@ limitations under the License.
   </string>
   <string name="settings_sensor_unpair_srm"
     translation_description="In the 'Sensor' settings, under the 'ANT+ options' configurations, the
-      option to unpair a SRM ANT+ bridge.
+      option to unpair a SRM ANT+ bridge. Do not trasnlate SRM, the company name, but can translate
+      ANT+, the radio standard, and bridge (network bridge).
 
       Character limit: ~26 (1 line)
       Screenshot: settings_sensor.png">
