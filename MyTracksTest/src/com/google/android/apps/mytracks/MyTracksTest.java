@@ -154,7 +154,7 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
 
     // Watch for MyTracksDetails activity.
     ActivityMonitor monitor = getInstrumentation().addMonitor(
-        TrackDetails.class.getName(), null, false);
+        TrackDetail.class.getName(), null, false);
 
     // Now, stop the track and make sure that it is still selected, but
     // no longer recording.
@@ -162,13 +162,13 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
 
     // Check if we got back MyTracksDetails activity.
     Activity activity = getInstrumentation().waitForMonitor(monitor);
-    assertTrue(activity instanceof TrackDetails);
+    assertTrue(activity instanceof TrackDetail);
 
     // TODO: Update track name and other properties and test if they were
     // properly saved.
 
     // Simulate a click on Save button.
-    final Button save = (Button) activity.findViewById(R.id.trackdetails_save);
+    final Button save = (Button) activity.findViewById(R.id.track_detail_save);
     getActivity().runOnUiThread(new Runnable() {
       @Override
       public void run() {
