@@ -265,9 +265,13 @@ public class WaypointsList extends ListActivity
         if (columnIndex == timeIdx) {
           long time = cursor.getLong(timeIdx);
           TextView textView = (TextView) view;
-          textView.setText(String.format("%tc", time));
-          textView.setVisibility(
-              textView.getText().length() < 1 ? View.GONE : View.VISIBLE);
+          
+          if (time == 0) {
+            textView.setVisibility(View.GONE);
+          } else {         
+            textView.setText(StringUtils.formatDateTime(time));
+            textView.setVisibility(View.VISIBLE);
+          }
         } else if (columnIndex == typeIdx) {
           int type = cursor.getInt(typeIdx);
           ImageView imageView = (ImageView) view;

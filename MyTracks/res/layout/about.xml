@@ -21,7 +21,8 @@ limitations under the License.
   <TableLayout
     android:layout_height="wrap_content"
     android:layout_width="wrap_content"
-    android:paddingBottom="2dp"
+    android:padding="2dp"
+    android:shrinkColumns="0"
     android:stretchColumns="1">
     <TableRow style="@style/AboutTableRow">
       <ImageView

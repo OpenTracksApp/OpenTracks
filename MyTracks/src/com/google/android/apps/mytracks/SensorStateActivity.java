@@ -80,7 +80,7 @@ public class SensorStateActivity extends Activity {
   /**
    * A temporary sensor manager, when none is available.
    */
-  SensorManager tempSensorManager = null;
+  private SensorManager tempSensorManager = null;
   
   /**
    * A state flag set to true when the activity is active/visible,
@@ -91,7 +91,7 @@ public class SensorStateActivity extends Activity {
    * it could cause the {@link #tempSensorManager} to be recreated, after it
    * is destroyed at the pause event.
    */
-  boolean isVisible = false;
+  private boolean isVisible = false;
 
   public SensorStateActivity() {
     utils = new StatsUtilities(this);
@@ -139,7 +139,7 @@ public class SensorStateActivity extends Activity {
     super.onDestroy();
   }
 
-  protected void updateState() {
+  private void updateState() {
     Log.d(TAG, "Updating SensorStateActivity");
     
     ITrackRecordingService service = serviceConnection.getServiceIfBound();
@@ -162,8 +162,7 @@ public class SensorStateActivity extends Activity {
     }
   }
   
-  private void updateFromTempSensorManager()
-  {
+  private void updateFromTempSensorManager() {
     //  Use variables to hold the sensor state and data set.
     Sensor.SensorState currentState = null;
     Sensor.SensorDataSet currentDataSet = null;
@@ -186,8 +185,7 @@ public class SensorStateActivity extends Activity {
     updateSensorStateAndData(currentState, currentDataSet);
   }
   
-  private void updateFromSysSensorManager()
-  {
+  private void updateFromSysSensorManager() {
     //  Use variables to hold the sensor state and data set.
     Sensor.SensorState currentState = null;
     Sensor.SensorDataSet currentDataSet = null;
@@ -228,91 +226,115 @@ public class SensorStateActivity extends Activity {
   /**
    * Stops the temporary sensor manager, if one exists. 
    */
-  private void stopTempSensorManager()
-  {
+  private void stopTempSensorManager() {
     if (tempSensorManager != null) {
       tempSensorManager.shutdown();
       tempSensorManager = null;
     }
   }
   
-  private void updateSensorStateAndData(Sensor.SensorState state, Sensor.SensorDataSet dataSet)
-  {
+  private void updateSensorStateAndData(Sensor.SensorState state, Sensor.SensorDataSet dataSet) {
     updateSensorState(state == null ? Sensor.SensorState.NONE : state);
     updateSensorData(dataSet);
   }
 
   private void updateSensorState(Sensor.SensorState state) {
-    TextView sensorTime =
-        ((TextView) findViewById(R.id.sensor_state_register));
-    sensorTime.setText(SensorUtils.getStateAsString(state, this));
+    ((TextView) findViewById(R.id.sensor_state)).setText(SensorUtils.getStateAsString(state, this));
   }
 
-  protected void updateSensorData(Sensor.SensorDataSet sds) {
+  private void updateSensorData(Sensor.SensorDataSet sds) {
     if (sds == null) {
-      utils.setUnknown(R.id.sensor_data_time_register);
-      utils.setUnknown(R.id.cadence_state_register);
-      utils.setUnknown(R.id.power_state_register);
-      utils.setUnknown(R.id.heart_rate_register);
-      utils.setUnknown(R.id.battery_level_register);
-      return;
+      utils.setUnknown(R.id.sensor_state_last_sensor_time);
+      utils.setUnknown(R.id.sensor_state_power);
+      utils.setUnknown(R.id.sensor_state_cadence);
+      utils.setUnknown(R.id.sensor_state_battery);
+    } else {
+      ((TextView) findViewById(R.id.sensor_state_last_sensor_time)).setText(getLastSensorTime(sds));
+      ((TextView) findViewById(R.id.sensor_state_power)).setText(getPower(sds));
+      ((TextView) findViewById(R.id.sensor_state_cadence)).setText(getCadence(sds));
+      ((TextView) findViewById(R.id.sensor_state_heart_rate)).setText(getHeartRate(sds));
+      ((TextView) findViewById(R.id.sensor_state_battery)).setText(getBattery(sds));
     }
+  }
 
-    TextView sensorTime =
-        ((TextView) findViewById(R.id.sensor_data_time_register));
-    sensorTime.setText(
-        TIMESTAMP_FORMAT.format(new Date(sds.getCreationTime())));
+  /**
+   * Gets the last sensor time.
+   *
+   * @param sds sensor data set
+   */
+  private String getLastSensorTime(Sensor.SensorDataSet sds) {
+    return TIMESTAMP_FORMAT.format(new Date(sds.getCreationTime()));
+  }
 
+  /**
+   * Gets the power.
+   *
+   * @param sds sensor data set
+   */
+  private String getPower(Sensor.SensorDataSet sds) {
+    String value;
     if (sds.hasPower() && sds.getPower().hasValue()
         && sds.getPower().getState() == Sensor.SensorState.SENDING) {
-      utils.setText(R.id.power_state_register,
-          Integer.toString(sds.getPower().getValue()));
+      String format = getString(R.string.sensor_state_power_value);
+      value = String.format(format, sds.getPower().getValue());
     } else {
-      utils.setText(R.id.power_state_register,
-          SensorUtils.getStateAsString(
-              sds.hasPower()
-                  ? sds.getPower().getState()
-                  : Sensor.SensorState.NONE,
-              this));
+      value = SensorUtils.getStateAsString(
+          sds.hasPower() ? sds.getPower().getState() : Sensor.SensorState.NONE, this);
     }
+    return value;
+  }
 
+  /**
+   * Gets the cadence.
+   *
+   * @param sds sensor data set
+   */
+  private String getCadence(Sensor.SensorDataSet sds) {
+    String value;
     if (sds.hasCadence() && sds.getCadence().hasValue()
         && sds.getCadence().getState() == Sensor.SensorState.SENDING) {
-      utils.setText(R.id.cadence_state_register,
-          Integer.toString(sds.getCadence().getValue()));
+      String format = getString(R.string.sensor_state_cadence_value);
+      value = String.format(format, sds.getCadence().getValue());
     } else {
-      utils.setText(R.id.cadence_state_register,
-          SensorUtils.getStateAsString(
-              sds.hasCadence()
-                  ? sds.getCadence().getState()
-                  : Sensor.SensorState.NONE,
-              this));
+      value = SensorUtils.getStateAsString(
+          sds.hasCadence() ? sds.getCadence().getState() : Sensor.SensorState.NONE, this);
     }
+    return value;
+  }
 
+  /**
+   * Gets the heart rate.
+   *
+   * @param sds sensor data set
+   */
+  private String getHeartRate(Sensor.SensorDataSet sds) {
+    String value;
     if (sds.hasHeartRate() && sds.getHeartRate().hasValue()
         && sds.getHeartRate().getState() == Sensor.SensorState.SENDING) {
-      utils.setText(R.id.heart_rate_register,
-          Integer.toString(sds.getHeartRate().getValue()));
+      String format = getString(R.string.sensor_state_heart_rate_value);
+      value = String.format(format, sds.getHeartRate().getValue());
     } else {
-      utils.setText(R.id.heart_rate_register,
-          SensorUtils.getStateAsString(
-              sds.hasHeartRate()
-                  ? sds.getHeartRate().getState()
-                  : Sensor.SensorState.NONE,
-              this));
+      value = SensorUtils.getStateAsString(
+          sds.hasHeartRate() ? sds.getHeartRate().getState() : Sensor.SensorState.NONE, this);
     }
-    
+    return value;
+  }
+
+  /**
+   * Gets the battery.
+   *
+   * @param sds sensor data set
+   */
+  private String getBattery(Sensor.SensorDataSet sds) {
+    String value;
     if (sds.hasBatteryLevel() && sds.getBatteryLevel().hasValue()
         && sds.getBatteryLevel().getState() == Sensor.SensorState.SENDING) {
-      utils.setText(R.id.battery_level_register,
-          Integer.toString(sds.getBatteryLevel().getValue()));
+      String format = getString(R.string.sensor_state_battery_value);
+      value = String.format(format, sds.getBatteryLevel().getValue());
     } else {
-      utils.setText(R.id.battery_level_register,
-          SensorUtils.getStateAsString(
-              sds.hasBatteryLevel()
-                  ?  sds.getBatteryLevel().getState()
-                  : Sensor.SensorState.NONE,
-              this));
+      value = SensorUtils.getStateAsString(
+          sds.hasBatteryLevel() ? sds.getBatteryLevel().getState() : Sensor.SensorState.NONE, this);
     }
+    return value;
   }
 }

@@ -266,7 +266,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
       case DIALOG_EULA_ID:
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.eula_title);
-        builder.setMessage(R.string.eula_message);
+        builder.setMessage(EulaUtil.getEulaMessage(this));
         builder.setPositiveButton(R.string.eula_accept, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {

@@ -310,7 +310,7 @@ public class TrackList extends ListActivity
         TextView textView = (TextView) view;
         if (columnIndex == startTimeIdx) {
           long time = cursor.getLong(startTimeIdx);
-          textView.setText(String.format("%tc", time));
+          textView.setText(StringUtils.formatDateTime(time));
         } else if (columnIndex == totalDistanceIdx) {
           double length = cursor.getDouble(totalDistanceIdx);
           String lengthUnit = null;

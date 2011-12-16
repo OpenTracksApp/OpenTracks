@@ -44,8 +44,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -290,7 +288,7 @@ public class DocsHelper {
     DocsTagBuilder tagBuilder = new DocsTagBuilder(metricUnits)
         .append("name", track.getName())
         .append("description", track.getDescription())
-        .append("date", getDisplayDate(stats.getStartTime()))
+        .append("date", StringUtils.formatDateTime(stats.getStartTime()))
         .append("totaltime", StringUtils.formatTimeAlwaysShowingHours(
             stats.getTotalTime()))
         .append("movingtime", StringUtils.formatTimeAlwaysShowingHours(
@@ -328,19 +326,6 @@ public class DocsHelper {
     writeRowData(trixAuth, worksheetUri, postText);
 
     Log.i(Constants.TAG, "Post finished.");
-  }
-
-  /**
-   * Gets the display string for a time.
-   *
-   * @param time the time
-   * @return the display string of the time
-   */
-  private String getDisplayDate(long time) {
-    DateFormat format = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
-    Date startTime = new Date(time);
-    String dateString = format.format(startTime);
-    return dateString;
   }
 
   /**

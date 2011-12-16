@@ -16,13 +16,11 @@
 package com.google.android.apps.mytracks.services;
 
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
-import java.text.DateFormat;
-import java.util.Date;
 
 /**
  * Creates a default track name based on the current default track name policy.
@@ -46,8 +44,7 @@ class DefaultTrackNameFactory {
    */
   String newTrackName(long trackId, long startTime) {
     if (useTimestampTrackName()) {
-      DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
-      return formatter.format(new Date(startTime));
+      return StringUtils.formatDateTime(startTime);
     } else {
       return String.format(context.getString(R.string.track_name_format), trackId);
     }

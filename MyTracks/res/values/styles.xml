@@ -71,6 +71,24 @@ limitations under the License.
     <item name="android:visibility">gone</item>
   </style>
   
+  <style name="SensorStateLabel">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:paddingLeft">4dp</item>
+    <item name="android:paddingRight">4dp</item>
+  </style>
+
+  <style name="SensorStateValue">
+    <item name="android:background">@color/stat_label_background</item>
+    <item name="android:gravity">right</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:paddingLeft">4dp</item>
+    <item name="android:paddingRight">4dp</item>
+    <item name="android:textColor">@color/stat_label_text</item>
+    <item name="android:textSize">40sp</item>
+  </style>
+
   <!-- The style for a view which divides the numerator and denominator of the units on the statistics activity. -->
   <style name="StatsDivider" parent="@android:Widget.TextView">
     <item name="android:background">@color/black</item>
