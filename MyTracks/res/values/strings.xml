@@ -1239,6 +1239,14 @@ limitations under the License.
       Screenshot: sensor_state_none.png">
     Battery level
   </string>
+  <string name="sensor_state_battery_value"
+    translation_description="In the 'Sensor state' page, the value for the 'Battery level'. E.g,
+      'Battery level: 50 %'.
+
+      %1$d: a number. E.g., '50'.
+      %%: escape sequence for the '%' character.">
+    %1$d %%
+  </string>
   <string name="sensor_state_cadence"
     translation_description="In the 'Sensor state' page, the label for the cadence on the bike
       sensor. Cadence is the number of revolutions of the crank per minute. E.g.,
@@ -1246,6 +1254,13 @@ limitations under the License.
 
       Screenshot: sensor_state_none.png">
     Cadence
+  </string>
+  <string name="sensor_state_cadence_value"
+    translation_description="In the 'Sensor state' page, the value for the 'Cadence'. Cadence is the
+      number of revolutions of the crank per minute. E.g., 'Cadence: 80 rpm'.
+
+      %1$d: a number. E.g., '80'.">
+    %1$d rpm
   </string>
   <string name="sensor_state_connected"
     translation_description="In the 'Sensor state' page, the 'Sensor state' value when the sensor
@@ -1275,6 +1290,13 @@ limitations under the License.
       Screenshot: sensor_state_none.png">
     Heart rate
   </string>
+  <string name="sensor_state_heart_rate_value"
+    translation_description="In the 'Sensor state' page, the value for the 'Heart rate'. E.g.,
+      'Hear rate: 100 bpm'.
+      
+      %1$d: a number. E.g., '100'.">
+    %1$d bpm
+  </string>
   <string name="sensor_state_last_sensor_time"
     translation_description="In the 'Sensor state' page, the label for the last time the sensor has
       sent a data. E.g., 'Last sensor time: 10:05 am'.
@@ -1288,6 +1310,13 @@ limitations under the License.
 
       Screenshot: sensor_state_none.png">
     Power
+  </string>
+  <string name="sensor_state_power_value"
+    translation_description="In the 'Sensor state' page, the value for the 'Power'. Power is the
+      power output of the rider. E.g., 'Power: 50 W'.
+
+      %1$d: a number. E.g., '50'.">
+    %1$d W
   </string>
   <string name="sensor_state_sending"
     translation_description="In the 'Sensor state' page, the 'Sensor state' value when the sensor is
@@ -2320,11 +2349,6 @@ limitations under the License.
   </string>
 
   <!-- Unit -->
-  <string name="unit_beat_per_minute"
-    translation_description="Abbreviation for beats per minute, unit for heart rate. E.g.,
-      'Heart rate: 80 bpm'.">
-    bpm
-  </string>
   <string name="unit_feet"
     translation_description="Abbreviation for feet. E.g., '2 ft'.">
     ft
@@ -2364,15 +2388,6 @@ limitations under the License.
   <string name="unit_minute_per_mile"
     translation_description="Abbreviation for minutes per mile. E.g, '5 min/mi'.">
     min/mi
-  </string>
-  <string name="unit_revolution_per_minute"
-    translation_description="Abbreviation for revolutions per minute, unit for cadence. E.g.,
-      'Cadence: 80 rpm'.">
-    rpm
-  </string>
-  <string name="unit_watt"
-    translation_description="Abbreviation for watts, unit for power. E.g., 'Power: 80 W'.">
-    W
   </string>
 
   <!-- Value -->
