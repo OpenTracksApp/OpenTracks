@@ -31,62 +31,50 @@ limitations under the License.
       <!-- Sensor state -->
       <TextView
         android:text="@string/menu_sensor_state"
-        style="@style/SensorStateHeader"
-        />
+        style="@style/SensorStateLabel"/>
       <TextView
         android:id="@+id/sensor_state"
-        style="@style/SensorStateValue"
-      />
+        style="@style/SensorStateValue"/>
   
       <!--  Last sensor time -->
       <TextView
         android:text="@string/sensor_state_last_sensor_time"
-        style="@style/SensorStateHeader"
-        />
+        style="@style/SensorStateLabel"/>
       <TextView
         android:id="@+id/sensor_state_last_sensor_time"
-        style="@style/SensorStateValue"
-        />
+        style="@style/SensorStateValue"/>
   
       <!-- Power -->
       <TextView
         android:text="@string/sensor_state_power"
-        style="@style/SensorStateHeader"
-      />
+        style="@style/SensorStateLabel"/>
       <TextView
         android:id="@+id/sensor_state_power"
-        style="@style/SensorStateValue"
-        />
+        style="@style/SensorStateValue"/>
   
       <!-- Cadence -->
       <TextView
         android:text="@string/sensor_state_cadence"
-        style="@style/SensorStateHeader"
-        />
+        style="@style/SensorStateLabel"/>
       <TextView
         android:id="@+id/sensor_state_cadence"
-        style="@style/SensorStateValue"
-        />
+        style="@style/SensorStateValue"/>
   
       <!-- Heart rate -->
       <TextView
         android:text="@string/sensor_state_heart_rate"
-        style="@style/SensorStateHeader"
-        />
+        style="@style/SensorStateLabel"/>
       <TextView
         android:id="@+id/sensor_state_heart_rate"
-        style="@style/SensorStateValue"
-        />
+        style="@style/SensorStateValue"/>
   
       <!-- Battery level -->
       <TextView
         android:text="@string/sensor_state_battery"
-        style="@style/SensorStateHeader"
-        />
+        style="@style/SensorStateLabel"/>
       <TextView
         android:id="@+id/sensor_state_battery"
-        style="@style/SensorStateValue"
-        />
+        style="@style/SensorStateValue"/>
     </LinearLayout>
   </ScrollView>
 </LinearLayout>
