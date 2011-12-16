@@ -486,9 +486,9 @@ limitations under the License.
     translation_description="The footer in the Google mobile terms of service. See
       http://m.google.com/toscountry.
 
-      %1$s: legal notice url, 'm.google.com/legalnotices'">
+      %1$s: host name, 'm.google.com'">
     The Services may contain third party content. Any required attribution or notice for the third
-    party content may be found at %1$s.
+    party content may be found at %1$s/legalnotices.
   </string>
   <string name="eula_message_header"
     translation_description="The header in the Google mobile terms of service. See
@@ -499,22 +499,23 @@ limitations under the License.
     translation_description="The first item in the Google mobile terms of service. See
       http://m.google.com/toscountry.
 
-      %1$s: youtube terms of service url, 'm.google.com/tos_youtube'
-      %2$s: maps terms of service url, 'm.google.com/tos_maps'
-      %3$s: buzz terms of service url, 'm.google.com/tos_buzz'
-      %4$s: books terms of service url, 'm.google.com/tos_books'
-      %5$s: google terms of service url, 'm.google.com/utos'">
-    1. Agree to be bound by these terms and a) the YouTube Terms of Use (%1$s) for YouTube-related
-    Services, b) the Google Maps Terms and Conditions (%2$s) for mapping, local and location-based
-    Services, c) the Google Buzz Terms and Conditions for Google Buzz-related Services (%3$s), d)
-    the Google Books Terms of Service (%4$s) for Books-related Services, and e) the Google Terms of
-    Service (%5$s) for all other Services, as updated from time to time. You may use the Services
-    only as set forth in these agreements. Do not manipulate while driving.
+      %1$s: host name, 'm.google.com'
+      %2$s: host name, 'm.google.com'
+      %3$s: host name, 'm.google.com'
+      %4$s: host name, 'm.google.com'
+      %5$s: host name, 'm.google.com'">
+    Agree to be bound by these terms and a) the YouTube Terms of Use (%1$s/tos_youtube) for
+    YouTube-related Services, b) the Google Maps Terms and Conditions (%2$s/tos_maps) for mapping,
+    local and location-based Services, c) the Google Buzz Terms and Conditions for Google
+    Buzz-related Services (%3$s/tos_buzz), d) the Google Books Terms of Service (%4$s/tos_books) for
+    Books-related Services, and e) the Google Terms of Service (%5$s/utos) for all other Services,
+    as updated from time to time. You may use the Services only as set forth in these agreements. Do
+    not manipulate while driving.
   </string>
   <string name="eula_message_item2"
     translation_description="The second item in the Google mobile terms of service. See
       http://m.google.com/toscountry.">
-    2. Acknowledge and agree that third parties may offer Services, and that you may be subject to
+    Acknowledge and agree that third parties may offer Services, and that you may be subject to
     third party terms and that third parties may enforce terms against you. Google is not
     responsible for third party changes to the Services.
   </string>
@@ -522,15 +523,15 @@ limitations under the License.
     translation_description="The third item in the Google mobile terms of service. See
       http://m.google.com/toscountry.
 
-       %1$s: privacy url, 'm.google.com/privacy'">
-    3. Consent to the collection, use, sharing, and onward transfer of your data, including but not
-    limited to voice and location data, as outlined in the Mobile Privacy Policy (%1$s). Location
-    data may be from mixed sources and may not be accurate. Use at your own risk.
+       %1$s: host name, 'm.google.com'">
+    Consent to the collection, use, sharing, and onward transfer of your data, including but not
+    limited to voice and location data, as outlined in the Mobile Privacy Policy (%1$s/privacy).
+    Location data may be from mixed sources and may not be accurate. Use at your own risk.
   </string>
   <string name="eula_message_item4"
     translation_description="The fourth item in the Google mobile terms of service. See
       http://m.google.com/toscountry.">
-    4. Acknowledge that certain Services require phone service, data access or text messaging
+    Acknowledge that certain Services require phone service, data access or text messaging
     capability. Except as otherwise noted, Google does not charge for the Services, but carrier
     rates for phone, data and text messaging may apply.
   </string>

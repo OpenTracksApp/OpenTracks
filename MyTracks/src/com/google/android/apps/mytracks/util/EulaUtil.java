@@ -31,13 +31,7 @@ public class EulaUtil {
   private static final String EULA_PREFERENCE_KEY = "eula.google_mobile_tos_accepted";
 
   private static final String COPYRIGHT = "©2011";
-  private static final String LEGAL_NOTICES_URL = "m.google.com/legalnotices";
-  private static final String PRIVACY_URL = "m.google.com/privacy";
-  private static final String YOUTUBE_TOS_URL = "m.google.com/tos_youtube";
-  private static final String MAPS_TOS_URL = "m.google.com/tos_maps";
-  private static final String BUZZ_TOS_URL = "m.google.com/tos_buzz";
-  private static final String BOOKS_TOS_URL = "m.google.com/tos_books";
-  private static final String GOOGLE_TOS_URL = "m.google.com/utos";
+  private static final String HOST_NAME = "m.google.com";
 
   private EulaUtil() {}
 
@@ -56,11 +50,10 @@ public class EulaUtil {
   }
 
   public static String getEulaMessage(Context context) {
-    String item1 = String.format(context.getString(R.string.eula_message_item1), YOUTUBE_TOS_URL,
-        MAPS_TOS_URL, BUZZ_TOS_URL, BOOKS_TOS_URL, GOOGLE_TOS_URL);
-    String item3 = String.format(context.getString(R.string.eula_message_item3), PRIVACY_URL);
-    String footer = String.format(
-        context.getString(R.string.eula_message_footer), LEGAL_NOTICES_URL);
+    String item1 = String.format(context.getString(R.string.eula_message_item1), HOST_NAME,
+        HOST_NAME, HOST_NAME, HOST_NAME, HOST_NAME);
+    String item3 = String.format(context.getString(R.string.eula_message_item3), HOST_NAME);
+    String footer = String.format(context.getString(R.string.eula_message_footer), HOST_NAME);
 
     return context.getString(R.string.eula_message_date)
         + "\n\n"
@@ -68,13 +61,13 @@ public class EulaUtil {
         + "\n\n"
         + context.getString(R.string.eula_message_body)
         + "\n\n"
-        + item1
+        + "1. " + item1
         + "\n\n"
-        + context.getString(R.string.eula_message_item2)
+        + "2. " + context.getString(R.string.eula_message_item2)
         + "\n\n"
-        + item3
+        + "3. " + item3
         + "\n\n"
-        + context.getString(R.string.eula_message_item4)
+        + "4. " + context.getString(R.string.eula_message_item4)
         + "\n\n"
         + footer
         + "\n\n"
