@@ -424,7 +424,7 @@ limitations under the License.
     translation_description="For the Android Market (not used in the app), the promotion text.
 
       Character limit: 80.">
-    My Tracks allows you to record and share your GPS tracks, including statistics.
+    Record and share your GPS tracks with My Tracks.
   </string>
 
   <!-- Chart Settings -->
@@ -583,7 +583,7 @@ limitations under the License.
   <string name="generic_progress_title"
     translation_description="The title on a progress dialog asking the user to wait.
 
-      Screenshot: sc_card_progress_write_file.png">
+      Screenshot: sd_card_progress_write_file.png">
     Please wait...
   </string>
   <string name="generic_save"
@@ -593,7 +593,7 @@ limitations under the License.
   <string name="generic_success_title"
     translation_description="The title on an alert dialog indicating success.
 
-      Screenshot: sc_card_success_write_file.png">
+      Screenshot: sd_card_success_write_file.png">
     Success
   </string>
   <string name="generic_yes"
@@ -966,7 +966,7 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: my_tracks_recording_service.png">
-    Track recording service
+    Recording service
   </string>
 
   <!-- Permission -->
@@ -1076,7 +1076,7 @@ limitations under the License.
     translation_description="When reading from the SD card, the success message when finish reading
       from the SD card.
 
-      Screenshot: sc_card_success_read_file.png">
+      Screenshot: sd_card_success_read_file.png">
     Finished reading from the SD card.
   </string>
   <string name="sd_card_success_write_file"
@@ -1118,8 +1118,9 @@ limitations under the License.
     translation_description="When sending a track to Google Maps, the radio option to use an
       existing map as opposed to create a new map.
 
+      Character limit: ~21 (1 line)
       Screenshot: send_google_choose_service.png">
-    Use an existing map
+    Use existing map
   </string>
   <string name="send_google_fusion_tables"
     translation_description="When sending a track to Google, under the 'Send to...' dialog, the
@@ -1139,8 +1140,9 @@ limitations under the License.
     translation_description="When sending a track to Google Maps, the radio option to create a
       new map as opposed to use an existing map.
 
+      Character limit: ~21 (1 line)
       Screenshot: send_google_choose_service.png">
-    Create a new map
+    Create new map
   </string>
   <string name="send_google_no_account_message"
     translation_description="When sending to Google, the dialog message when no Google account is
@@ -1294,7 +1296,7 @@ limitations under the License.
   <string name="sensor_state_heart_rate_value"
     translation_description="In the 'Sensor state' page, the value for the 'Heart rate'. E.g.,
       'Hear rate: 100 bpm'.
-      
+
       %1$d: a number. E.g., '100'.">
     %1$d bpm
   </string>
@@ -1337,7 +1339,7 @@ limitations under the License.
     Backup
   </string>
   <string name="settings_backup_now"
-    translation_description="In the 'Backup' settings, under the 'SD card backup' section, the
+    translation_description="In the 'Backup' settings, under the 'SD card' section, the
       option to backup to the SD card now.
 
       Character limit: ~26 (1 line)
@@ -1353,7 +1355,7 @@ limitations under the License.
     Writing all tracks and settings to the SD card. This may take a while...
   </string>
   <string name="settings_backup_now_summary"
-    translation_description="In the 'Backup' settings, under the 'SD card backup' section, the
+    translation_description="In the 'Backup' settings, under the 'SD card' section, the
       summary for the 'Backup now' option explaining that all tracks and settings will be written to
       the SD card.
 
@@ -1361,7 +1363,7 @@ limitations under the License.
     Write a full copy of all your tracks and settings to the SD card.
   </string>
   <string name="settings_backup_restore"
-    translation_description="In the 'Backup' settings, under the 'SD card backup' section, the
+    translation_description="In the 'Backup' settings, under the 'SD card' section, the
       option to restore everything from the SD card.
 
       Character limit: ~26 (1 line)
@@ -1400,11 +1402,10 @@ limitations under the License.
     Select a backup to restore
   </string>
   <string name="settings_backup_restore_summary"
-    translation_description="In the 'Backup' settings, under the 'SD card backup' section, the
+    translation_description="In the 'Backup' settings, under the 'SD card' section, the
       summary for the 'Restore now' option explaining that it restores all tracks and settings from
       the SD card.
 
-      Character limit: ~26 (1 line)
       Screenshot: settings_backup.png">
     Restore all tracks and settings from the SD card.
   </string>
@@ -1414,7 +1415,7 @@ limitations under the License.
 
       Character limit: ~40 (1 line)
       Screenshot: settings_backup.png">
-    SD card backup
+    SD card
   </string>
   <string name="settings_display"
     translation_description="In the 'Settings' page, the option to change the display related
@@ -1429,17 +1430,17 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_display.png">
-    Use metric units
+    Use metric
   </string>
   <string name="settings_display_metric_summary_off"
-    translation_description="In the 'Display' settings, the summary for the 'Use metric units'
+    translation_description="In the 'Display' settings, the summary for the 'Use metric'
       checkbox when it is unchecked explaining using the imperial units to display distances.
 
       Screenshot: settings_display_unchecked.png">
     Use imperial units to display distances.
   </string>
   <string name="settings_display_metric_summary_on"
-    translation_description="In the 'Display' settings, the summary for the 'Use metric units'
+    translation_description="In the 'Display' settings, the summary for the 'Use metric'
       checkbox when it is checked explaining using the metric units to display distances.
 
       Screenshot: settings_display.png">
@@ -1475,10 +1476,10 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_display.png">
-    Track color mode
+    Color mode
   </string>
   <string name="settings_display_track_color_dynamic"
-    translation_description="In the 'Display' settings, for the 'Track color mode' dropdown, the
+    translation_description="In the 'Display' settings, for the 'Color mode' dropdown, the
       option to use different colors to color a track based on dynamically determined speed
       thresholds. E.g., use one color when the speed is below the slow speed threshold.
 
@@ -1489,17 +1490,17 @@ limitations under the License.
   <string name="settings_display_track_color_dynamic_medium"
     translation_description="In the 'Display' settings, under the 'Dynamic thresholds'
       configurations, the option for configuring the percentage from the average speed for the
-      medium speed range. The track color mode will use different colors to color a track depending
+      medium speed range. The color mode will use different colors to color a track depending
       on whether the speed is above, in, or below the medium speed range.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_display.png">
-    Percentage from average
+    Percentage
   </string>
   <string name="settings_display_track_color_dynamic_medium_summary"
     translation_description="In the 'Display' settings, under the 'Dynamic thresholds'
-      configurations, the summary for the 'Percentage from average' option explaining that it sets
-      the percentage from the average speed for the medium speed range. The track color mode will
+      configurations, the summary for the 'Percentage' option explaining that it sets
+      the percentage from the average speed for the medium speed range. The color mode will
       use different colors to color a track depending on whether the speed is above, in, or below
       the medium speed range.
 
@@ -1507,7 +1508,7 @@ limitations under the License.
     Percentage from the average speed for the medium speed range.
   </string>
   <string name="settings_display_track_color_fixed"
-    translation_description="In the 'Display' settings, for the 'Track color mode' dropdown, the
+    translation_description="In the 'Display' settings, for the 'Color mode' dropdown, the
       option to use different colors to color a track based on fixed speed thresholds. E.g., use
       one color when the speed is below the slow speed threshold.
 
@@ -1523,11 +1524,11 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_display.png">
-    Medium speed threshold
+    Medium speed
   </string>
   <string name="settings_display_track_color_fixed_medium_summary"
     translation_description="In the 'Display' settings, under the 'Fixed thresholds' configurations,
-      the summary for the 'Medium speed threshold' option explaining that it sets a cutoff speed
+      the summary for the 'Medium speed' option explaining that it sets a cutoff speed
       for the medium speed color.
 
       Screenshot: settings_display.png">
@@ -1540,18 +1541,18 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_display.png">
-    Slow speed threshold
+    Slow speed
   </string>
   <string name="settings_display_track_color_fixed_slow_summary"
     translation_description="In the 'Display' settings, under the 'Fixed thresholds' configurations,
-      the summary for the 'Slow speed threshold' option explaining that it sets a cutoff speed for
+      the summary for the 'Slow speed' option explaining that it sets a cutoff speed for
       the slow speed color.
 
       Screenshot: settings_display.png">
     Slow speed top value.
   </string>
   <string name="settings_display_track_color_single"
-    translation_description="In the 'Display' settings, for the 'Track color mode' dropdown, the
+    translation_description="In the 'Display' settings, for the 'Color mode' dropdown, the
       option to use a single color for all speeds.
 
       Character limit: ~21 (1 line)
@@ -1559,7 +1560,7 @@ limitations under the License.
     Single color
   </string>
   <string name="settings_display_track_color_summary"
-    translation_description="In the 'Display' settings, the summary for the 'Track color mode'
+    translation_description="In the 'Display' settings, the summary for the 'Color mode'
       dropdown explaining that it configures how colors are used to color a track based on
       slow, medium, and fast speed.
 
@@ -1587,10 +1588,10 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_bottom.png">
-    Auto-resume timeout
+    Auto-resume
   </string>
   <string name="settings_recording_auto_resume_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Auto-resume timeout'
+    translation_description="In the 'Recording' settings, the summary for the 'Auto-resume'
       dropdown option explaining that it configures the maximum time after which a previous
       recording will not be resumed after phone reboot.
 
@@ -1603,11 +1604,11 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_bottom.png">
-    Default activity type
+    Default activity
   </string>
   <string name="settings_recording_default_activity_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Default activity
-      type' option explaining that it sets the default activity type for a new track.
+    translation_description="In the 'Recording' settings, the summary for the 'Default activity'
+      option explaining that it sets the default activity type for a new track.
 
       Screenshot: settings_recording_bottom.png">
     Default activity type for a new track.
@@ -1618,11 +1619,11 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_top.png">
-    Distance between points
+    Distance interval
   </string>
   <string name="settings_recording_distance_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Distance between
-      points' dropdown option explaining that it configures the smallest distance between two
+    translation_description="In the 'Recording' settings, the summary for the 'Distance interval'
+      dropdown option explaining that it configures the smallest distance between two
       recordings of your position.
 
       Screenshot: settings_recording_top.png">
@@ -1651,10 +1652,10 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_top.png">
-    Time between points
+    Time interval
   </string>
   <string name="settings_recording_interval_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Time between points'
+    translation_description="In the 'Recording' settings, the summary for the 'Time interval'
       dropdown option explaining that it configures the smallest time interval between two
       recordings of your position.
 
@@ -1667,10 +1668,10 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_top.png">
-    Marker frequency
+    Marker
   </string>
   <string name="settings_recording_marker_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Marker frequency'
+    translation_description="In the 'Recording' settings, the summary for the 'Marker'
       dropdown option explaining that it configures the time or distance after which a new marker
       will be inserted.
 
@@ -1683,19 +1684,18 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_bottom.png">
-    Use time for track name
+    Use timestamp
   </string>
   <string name="settings_recording_name_summary_off"
-    translation_description="In the 'Recording' settings, the summary for the 'Use time for track
-      name' checkbox when it is unchecked explaining using a number as the default track name.
+    translation_description="In the 'Recording' settings, the summary for the 'Use timestamp'
+      checkbox when it is unchecked explaining using a number as the default track name.
 
       Screenshot: settings_recording_bottom_unchecked.png">
     Use a number as the default track name.
   </string>
   <string name="settings_recording_name_summary_on"
-    translation_description="In the 'Recording' settings, the summary for the 'Use time for track
-      name' checkbox when it is checked explaining using the track's start time as the default track
-      name.
+    translation_description="In the 'Recording' settings, the summary for the 'Use timestamp'
+      checkbox when it is checked explaining using the track's start time as the default track name.
 
       Screenshot: settings_recording_bottom.png">
     Use the track\'s start time as the default track name.
@@ -1706,15 +1706,16 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_top.png">
-    Distance between tracks
+    Max interval
   </string>
   <string name="settings_recording_track_distance_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Distance between
-      tracks' dropdown option explaining that it configures the maximum distance for two recorded
+    translation_description="In the 'Recording' settings, the summary for the 'Max interval'
+      dropdown option explaining that it configures the maximum distance for two recorded
       points for them to be still considered as the same track.
 
       Screenshot: settings_recording_top.png">
-    Track will be split if two recordings of your position are further than this.
+    Maximum distance between two recordings of your position. If two positions are further than
+    this, the track will be split.
   </string>
   <string name="settings_recording_voice"
     translation_description="In the 'Recording' settings, the dropdown option to configure the voice
@@ -1722,17 +1723,17 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_top.png">
-    Voice frequency
+    Voice
   </string>
   <string name="settings_recording_voice_not_available"
-    translation_description="In the 'Recording' settings, the summary for the 'Voice frequency'
+    translation_description="In the 'Recording' settings, the summary for the 'Voice'
       explaining that this option is not available on your Android phone.
 
       Screenshot: settings_recording_voice_not_available.png">
     Voice announcement is not available on your Android phone.
   </string>
   <string name="settings_recording_voice_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Voice frequency'
+    translation_description="In the 'Recording' settings, the summary for the 'Voice'
       dropdown option explaining that it configures the time or distance between two voice
       announcements.
 
@@ -1744,10 +1745,10 @@ limitations under the License.
 
       Character limit: ~26 (1 line)
       Screenshot: settings.png">
-    Reset to defaults
+    Reset
   </string>
   <string name="settings_reset_dialog_message"
-    translation_description="In the 'Settings' page, after pressing the 'Reset to defaults' option,
+    translation_description="In the 'Settings' page, after pressing the 'Reset' option,
       the confirmation dialog asking the user to confirm reverting all settings to defaults. But
       the saved tracks will be preserved.
 
@@ -1756,7 +1757,7 @@ limitations under the License.
     preserved. Are you sure?
   </string>
   <string name="settings_reset_done"
-    translation_description="In the 'Settings' page, after pressing the 'Reset to defaults' option,
+    translation_description="In the 'Settings' page, after pressing the 'Reset' option,
       the confirmation dialog informing the user that all settings have been reverted to their
       defaults.
 
@@ -1764,7 +1765,7 @@ limitations under the License.
     All settings have been reverted to their defaults.
   </string>
   <string name="settings_reset_summary"
-    translation_description="In the 'Settings' page, the summary for the 'Reset to defaults' option
+    translation_description="In the 'Settings' page, the summary for the 'Reset' option
       explaining reverting all the settings to the default values.
 
       Screenshot: settings.png">
@@ -1854,7 +1855,7 @@ limitations under the License.
 
       Character limit: ~21 (1 line)
       Screenshot: settings_sensor_type.png">
-    ANT+ heart rate sensor
+    ANT+ heart rate
   </string>
   <string name="settings_sensor_type_none"
     translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
@@ -1875,7 +1876,7 @@ limitations under the License.
   </string>
   <string name="settings_sensor_type_srm"
     translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
-      connect to a SRM ANT+ bridge.  Do not trasnlate SRM, the company name, but can translate
+      connect to a SRM ANT+ bridge.  Do not translate SRM, the company name, but can translate
       ANT+, the radio standard, and bridge (network bridge).
 
       Character limit: ~21 (1 line)
@@ -1904,11 +1905,11 @@ limitations under the License.
 
       Character limit: ~26 (1 line)
       Screenshot: settings_sensor.png">
-    Unpair ANT+ heart rate sensor
+    Unpair ANT+ heart rate
   </string>
   <string name="settings_sensor_unpair_srm"
     translation_description="In the 'Sensor' settings, under the 'ANT+ options' configurations, the
-      option to unpair a SRM ANT+ bridge. Do not trasnlate SRM, the company name, but can translate
+      option to unpair a SRM ANT+ bridge. Do not translate SRM, the company name, but can translate
       ANT+, the radio standard, and bridge (network bridge).
 
       Character limit: ~26 (1 line)
@@ -1963,10 +1964,10 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_sharing.png">
-    Make new maps public
+    New maps public
   </string>
   <string name="settings_sharing_map_public_summary_off"
-    translation_description="In the 'Sharing' settings, the summary for the 'Make new maps public'
+    translation_description="In the 'Sharing' settings, the summary for the 'New maps public'
       checkbox option when it is unchecked explaining that new maps created in Google Maps will
       be unlisted, as opposed to public.
 
@@ -1974,7 +1975,7 @@ limitations under the License.
     Make new maps created in Google Maps unlisted.
   </string>
   <string name="settings_sharing_map_public_summary_on"
-    translation_description="In the 'Sharing' settings, the summary for the 'Make new maps public'
+    translation_description="In the 'Sharing' settings, the summary for the 'New maps public'
       checkbox option when it is checked explaining that new maps created in Google Maps will
       be public, as opposed to unlisted.
 
