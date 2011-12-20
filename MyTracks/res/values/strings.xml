@@ -477,6 +477,11 @@ limitations under the License.
       http://m.google.com/toscountry.">
     By using Google\'s mobile products and services ("Services"), you:
   </string>
+  <string name="eula_message_copyright"
+    translation_description="The copyright in the Google mobile terms of service. See
+      http://m.google.com/toscountry.">
+    ©2011
+  </string>
   <string name="eula_message_date"
     translation_description="The date in the Google mobile terms of service. See
       http://m.google.com/toscountry.">
