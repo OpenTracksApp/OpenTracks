@@ -452,19 +452,18 @@ public class ChartActivity extends Activity implements TrackDataListener {
 
   @Override
   public boolean onUnitsChanged(boolean metric) {
-    if (this.metricUnits == metric) {
+    if (metricUnits == metric) {
       return false;
-    } else {
-      this.metricUnits = metric;
-      chartView.setMetricUnits(metric);
-      runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-          chartView.requestLayout();
-        }
-      });  
-      return true;
     }
+    metricUnits = metric;
+    chartView.setMetricUnits(metricUnits);
+    runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        chartView.requestLayout();
+      }
+    });
+    return true;
   }
 
   @SuppressWarnings("hiding")
