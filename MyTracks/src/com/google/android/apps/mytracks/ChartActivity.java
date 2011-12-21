@@ -77,7 +77,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
   private double trackMaxSpeed;
 
   // Modes of operation
-  private boolean metricUnits;
+  private boolean metricUnits = true;
   private boolean reportSpeed;
 
   /*
@@ -452,14 +452,19 @@ public class ChartActivity extends Activity implements TrackDataListener {
 
   @Override
   public boolean onUnitsChanged(boolean metric) {
-    boolean changed = metric != this.metricUnits;
-    if (!changed) return false;
-
-    this.metricUnits = metric;
-
-    chartView.setMetricUnits(metric);
-
-    return true;  // Reload data
+    if (this.metricUnits == metric) {
+      return false;
+    } else {
+      this.metricUnits = metric;
+      chartView.setMetricUnits(metric);
+      runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+          chartView.requestLayout();
+        }
+      });  
+      return true;
+    }
   }
 
   @SuppressWarnings("hiding")
