@@ -2717,7 +2717,7 @@ limitations under the License.
       %2$s: time string. E.g., '1 hour and 30 minutes' or '20 minutes 1 second'
       %3$s: speed/pace string. For speed, e.g., '2.2 miles per hour', '1 kilometer per hour'. For
       pace, e.g., '2 hours 1 minute per mile', '30 minutes 1 second per kilometer'.">
-    My Tracks total distance %1$s in %2$s at %3$s.
+    My Tracks %1$s in %2$s at %3$s.
   </string>
   <string name="voice_total_distance_kilometers_few"
     translation_description="For voice announcement, to say total distance 'few' kilometers.
