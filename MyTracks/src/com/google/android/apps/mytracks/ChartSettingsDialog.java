@@ -89,6 +89,15 @@ public class ChartSettingsDialog extends Dialog {
              ? R.id.chart_settings_by_distance
              : R.id.chart_settings_by_time);
   }
+  
+  /**
+   * Sets whether to display speed or pace.
+   * 
+   * @param displaySpeed true to display speed
+   */
+  public void setDisplaySpeed(boolean displaySpeed) {
+    series[ChartView.SPEED_SERIES].setText(displaySpeed ? R.string.stat_speed : R.string.stat_pace);
+  }
 
   public void setSeriesEnabled(int seriesIdx, boolean enabled) {
     series[seriesIdx].setChecked(enabled);

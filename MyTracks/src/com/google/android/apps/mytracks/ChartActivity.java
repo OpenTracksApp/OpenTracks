@@ -240,6 +240,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
 
   private void prepareSettingsDialog(ChartSettingsDialog settingsDialog) {
     settingsDialog.setMode(chartView.getMode());
+    settingsDialog.setDisplaySpeed(reportSpeed);
     for (int i = 0; i < ChartView.NUM_SERIES; i++) {
       settingsDialog.setSeriesEnabled(i, chartView.isChartValueSeriesEnabled(i));
     }
