@@ -78,7 +78,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
 
   // Modes of operation
   private boolean metricUnits = true;
-  private boolean reportSpeed;
+  private boolean reportSpeed = true;
 
   /*
    * UI elements:
@@ -466,16 +466,19 @@ public class ChartActivity extends Activity implements TrackDataListener {
     return true;
   }
 
-  @SuppressWarnings("hiding")
   @Override
-  public boolean onReportSpeedChanged(boolean reportSpeed) {
-    boolean changed = reportSpeed != this.reportSpeed;
-    if (!changed) return false;
-
-    this.reportSpeed = reportSpeed;
-
-    chartView.setReportSpeed(reportSpeed, this);
-
-    return true;  // Reload data
+  public boolean onReportSpeedChanged(boolean speed) {
+    if (reportSpeed == speed) {
+      return false;
+    }
+    reportSpeed = speed;
+    chartView.setReportSpeed(speed, this);
+    runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        chartView.requestLayout();
+      }
+    });
+    return true;
   }
 }
