@@ -36,6 +36,9 @@ import android.util.Log;
  */
 public class DynamicSpeedTrackPathDescriptor 
   implements TrackPathDescriptor, OnSharedPreferenceChangeListener {
+  
+  private static int DEFAULT_SPEED_MARGIN = 25;
+  
   private int slowSpeed;
   private int normalSpeed;
   private int speedMargin;
@@ -48,15 +51,23 @@ public class DynamicSpeedTrackPathDescriptor
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
     if (prefs == null) {
-      speedMargin = 25;
+      speedMargin = DEFAULT_SPEED_MARGIN;
       return;
     }
     prefs.registerOnSharedPreferenceChangeListener(this);
 
-    speedMargin = Integer.parseInt(prefs.getString(
-        context.getString(R.string.track_color_mode_dynamic_speed_variation_key), "25"));
+    speedMargin = getSpeedMargin(prefs);
   }
-  
+
+  private int getSpeedMargin(SharedPreferences sharedPreferences) {
+    String key = context.getString(R.string.track_color_mode_dynamic_speed_variation_key);
+    String percentage = sharedPreferences.getString(key, DEFAULT_SPEED_MARGIN + "");
+    if (percentage.isEmpty()) {
+      return DEFAULT_SPEED_MARGIN;
+    }
+    return Integer.parseInt(percentage);
+  }
+
   /**
    * Get the slow speed calculated based on the % below the average speed.
    * @return The speed limit considered as slow.
@@ -88,15 +99,12 @@ public class DynamicSpeedTrackPathDescriptor
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     	
     if (prefs == null) {
-      speedMargin = 25;
+      speedMargin = DEFAULT_SPEED_MARGIN;
       return;
     }
-        
-    speedMargin = 
-        Integer.parseInt(
-    	    prefs.getString(
-    	        context.getString(R.string.track_color_mode_dynamic_speed_variation_key), "25"));
-    }
+
+    speedMargin = getSpeedMargin(prefs);
+  }
 
   @Override
   public boolean needsRedraw() {
