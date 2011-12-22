@@ -64,7 +64,7 @@ public class DynamicSpeedTrackPathDescriptor
     try {
       return Integer.parseInt(sharedPreferences.getString(
           context.getString(R.string.track_color_mode_dynamic_speed_variation_key),
-          speedMarginDefault + ""));
+          Integer.toString(speedMarginDefault)));
     } catch (NumberFormatException e) {
       return speedMarginDefault;
     }

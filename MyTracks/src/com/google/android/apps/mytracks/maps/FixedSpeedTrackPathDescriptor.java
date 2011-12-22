@@ -55,14 +55,14 @@ public class FixedSpeedTrackPathDescriptor implements TrackPathDescriptor, OnSha
     
     try {
       slowSpeed = Integer.parseInt(prefs.getString(context.getString(
-          R.string.track_color_mode_fixed_speed_slow_key), slowDefault + ""));
+          R.string.track_color_mode_fixed_speed_slow_key), Integer.toString(slowDefault)));
     } catch (NumberFormatException e) {
       slowSpeed = slowDefault;
     }
     
     try {
       normalSpeed = Integer.parseInt(prefs.getString(context.getString(
-          R.string.track_color_mode_fixed_speed_medium_key), normalDefault + "")); 
+          R.string.track_color_mode_fixed_speed_medium_key), Integer.toString(normalDefault))); 
     } catch (NumberFormatException e) {
       normalSpeed = normalDefault;
     }
@@ -102,13 +102,13 @@ public class FixedSpeedTrackPathDescriptor implements TrackPathDescriptor, OnSha
     
     try {
       slowSpeed = Integer.parseInt(prefs.getString(context.getString(
-	    R.string.track_color_mode_fixed_speed_slow_key), slowDefault + ""));
+	    R.string.track_color_mode_fixed_speed_slow_key), Integer.toString(slowDefault)));
     } catch (NumberFormatException e) {
       slowSpeed = slowDefault;
     }
     try {
       normalSpeed = Integer.parseInt(prefs.getString(context.getString(
-	    R.string.track_color_mode_fixed_speed_medium_key), normalDefault + ""));
+	    R.string.track_color_mode_fixed_speed_medium_key), Integer.toString(normalDefault)));
     } catch (NumberFormatException e) {
       normalSpeed = normalDefault;
     }
