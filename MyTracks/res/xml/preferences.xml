@@ -167,7 +167,7 @@ limitations under the License.
       <ListPreference android:key="@string/bluetooth_sensor_key"
                       android:title="@string/settings_sensor_bluetooth_sensor"
                       android:summary="@string/settings_sensor_bluetooth_sensor_summary"
-                      android:defaultValue="any" />
+                      android:defaultValue="" />
 
       <Preference android:key="@string/bluetooth_pairing_key"
                   android:title="@string/settings_sensor_bluetooth_pairing"
