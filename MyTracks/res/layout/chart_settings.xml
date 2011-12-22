@@ -17,120 +17,90 @@ limitations under the License.
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_height="fill_parent"
   android:layout_width="fill_parent"
-  android:minWidth="300dp"
   android:orientation="vertical">
-  <LinearLayout
-    android:background="@drawable/list_bar"
+  <TableLayout
     android:layout_height="wrap_content"
-    android:layout_width="fill_parent">
-    <TextView
-      android:layout_height="wrap_content"
-      android:layout_marginLeft="10dp"
-      android:layout_width="fill_parent"
-      android:text="@string/menu_chart_view_chart_settings"
-      android:textColor="#fff"
-      android:textSize="20sp"/>
-  </LinearLayout>
+    android:layout_width="fill_parent"
+    android:shrinkColumns="0"
+    android:stretchColumns="0">
+    <TableRow>
+      <TextView
+        android:background="@drawable/list_bar"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:paddingLeft="10dp"
+        android:text="@string/menu_chart_view_chart_settings"
+        android:textColor="@color/white"
+        android:textSize="20sp"/>
+    </TableRow>
+  </TableLayout>
   <ScrollView
     android:layout_height="0dp"
     android:layout_weight="1"
     android:layout_width="fill_parent">
-    <TableLayout
+    <LinearLayout 
       android:layout_height="wrap_content"
-      android:layout_marginLeft="5dp"
-      android:layout_marginTop="5dp"
       android:layout_width="fill_parent"
-      android:stretchColumns="1">
-      <TableRow>
-        <LinearLayout
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="10dp"
-          android:layout_width="fill_parent"
-          android:orientation="vertical">
-          <LinearLayout
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:orientation="horizontal">
-            <ImageView
-              android:layout_height="wrap_content"
-              android:layout_width="wrap_content"
-              android:src="@drawable/x_axis"/>
-            <TextView
-              android:layout_height="wrap_content"
-              android:layout_width="fill_parent"
-              android:text="@string/chart_settings_x_axis"
-              android:textSize="20sp"/>
-          </LinearLayout>
-          <RadioGroup
-            android:id="@+id/chart_settings_x"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent">
-            <RadioButton
-              android:id="@+id/chart_settings_by_distance"
-              android:layout_height="wrap_content"
-              android:layout_width="fill_parent"
-              android:text="@string/chart_settings_by_distance"/>
-            <RadioButton
-              android:id="@+id/chart_settings_by_time"
-              android:layout_height="wrap_content"
-              android:layout_width="fill_parent"
-              android:text="@string/chart_settings_by_time"/>
-          </RadioGroup>
-        </LinearLayout>
-      </TableRow>
-      <TableRow>
-        <LinearLayout
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="10dp"
-          android:layout_width="fill_parent"
-          android:orientation="vertical">
-          <LinearLayout
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:orientation="horizontal">
-            <ImageView
-              android:layout_height="wrap_content"
-              android:layout_width="wrap_content"
-              android:src="@drawable/y_axis"/>
-            <TextView
-              android:layout_height="wrap_content"
-              android:layout_width="fill_parent"
-              android:text="@string/chart_settings_y_axis"
-              android:textSize="20sp" />
-          </LinearLayout>
-          <CheckBox
-            android:id="@+id/chart_settings_elevation"
-            android:checked="true"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:text="@string/stat_elevation"/>
-          <CheckBox
-            android:id="@+id/chart_settings_speed"
-            android:checked="true"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:text="@string/stat_speed"/>
-          <CheckBox
-            android:id="@+id/chart_settings_power"
-            android:checked="true"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:text="@string/sensor_state_power"/>
-          <CheckBox
-            android:id="@+id/chart_settings_cadence"
-            android:checked="true"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:text="@string/sensor_state_cadence"/>
-          <CheckBox
-            android:id="@+id/chart_settings_heart_rate"
-            android:checked="true"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:text="@string/sensor_state_heart_rate"/>
-        </LinearLayout>
-      </TableRow>
-    </TableLayout>
+      android:orientation="vertical"
+      android:padding="10dp">
+      
+      <!-- X axis -->
+      <LinearLayout style="@style/ChartSettingsAxisLayout">
+        <ImageView
+          android:src="@drawable/x_axis"
+          style="@style/ChartSettingsAxisImage"/>
+        <TextView
+          android:text="@string/chart_settings_x_axis"
+          style="@style/ChartSettingsAxisText"/>
+      </LinearLayout>
+
+      <RadioGroup
+        android:id="@+id/chart_settings_x"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent">
+        <RadioButton
+          android:id="@+id/chart_settings_by_distance"
+          android:text="@string/chart_settings_by_distance"
+          style="@style/ChartSettingsRadioButton"/>
+        <RadioButton
+          android:id="@+id/chart_settings_by_time"
+          android:text="@string/chart_settings_by_time"
+          style="@style/ChartSettingsRadioButton"/>
+      </RadioGroup>
+
+      <!-- Y axis -->
+      <LinearLayout
+        android:paddingTop="10dp"
+        style="@style/ChartSettingsAxisLayout">
+        <ImageView
+          android:src="@drawable/y_axis"
+          style="@style/ChartSettingsAxisImage"/>
+        <TextView
+          android:text="@string/chart_settings_y_axis"
+          style="@style/ChartSettingsAxisText"/>
+      </LinearLayout>
+
+      <CheckBox
+        android:id="@+id/chart_settings_elevation"
+        android:text="@string/stat_elevation"
+        style="@style/ChartSettingsCheckbox"/>
+      <CheckBox
+        android:id="@+id/chart_settings_speed"
+        android:text="@string/stat_speed"
+        style="@style/ChartSettingsCheckbox"/>
+      <CheckBox
+        android:id="@+id/chart_settings_power"
+        android:text="@string/sensor_state_power"
+        style="@style/ChartSettingsCheckbox"/>
+      <CheckBox
+        android:id="@+id/chart_settings_cadence"
+        android:text="@string/sensor_state_cadence"
+        style="@style/ChartSettingsCheckbox"/>
+      <CheckBox
+        android:id="@+id/chart_settings_heart_rate"
+        android:text="@string/sensor_state_heart_rate"
+        style="@style/ChartSettingsCheckbox"/>
+    </LinearLayout>
   </ScrollView>
   <LinearLayout style="@style/ButtonLayout">
     <LinearLayout style="@style/ButtonSpacer"/>

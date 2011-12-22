@@ -15,33 +15,33 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-
-  <!--  About dialog TableRow -->
-  <style name="AboutTableRow">
-    <item name="android:paddingBottom">2dp</item>
-  </style>
-  
-  <!--  About dialog TextView -->
-  <style name="AboutTextView">
+  <!--  About page label -->
+  <style name="AboutLabel">
     <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:textSize">20sp</item>  
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:paddingBottom">2dp</item>
+    <item name="android:textSize">20sp</item>
   </style>
 
-  <!--  About dialog TextView column 0 -->
-  <style name="AboutTextView.Column0">
-    <item name="android:gravity">right</item>
-    <item name="android:layout_column">0</item>
-    <item name="android:paddingLeft">10dp</item>
-    <item name="android:paddingRight">10dp</item>
+  <!-- About page item -->
+  <style name="AboutItem">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:paddingBottom">2dp</item>
+    <item name="android:paddingLeft">20dp</item>
+    <item name="android:textSize">18sp</item>
   </style>
-    
-  <!--  About dialog TextView Url -->
-  <style name="AboutTextView.Url">
+
+  <!--  About page url -->
+  <style name="AboutUrl">
     <item name="android:autoLink">web</item>
-    <item name="android:textSize">18sp</item>  
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:paddingBottom">2dp</item>
+    <item name="android:paddingLeft">20dp</item>
+    <item name="android:textSize">18sp</item>
   </style>
-  
+
   <!-- Button -->
   <style name="Button">
     <item name="android:layout_height">fill_parent</item>
@@ -50,7 +50,7 @@ limitations under the License.
     <item name="android:maxLines">2</item>
     <item name="android:textSize">14dip</item>
   </style>
-  
+
   <!-- Button layout -->
   <style name="ButtonLayout">
     <item name="android:background">@drawable/list_bar</item>
@@ -61,7 +61,7 @@ limitations under the License.
     <item name="android:paddingRight">2dip</item>
     <item name="android:paddingTop">4dip</item>
   </style>
-  
+
   <!-- Button spacer -->
   <style name="ButtonSpacer">
     <item name="android:layout_height">wrap_content</item>
@@ -70,7 +70,42 @@ limitations under the License.
     <item name="android:orientation">horizontal</item>
     <item name="android:visibility">gone</item>
   </style>
-  
+
+  <!-- Chart settings axis image -->
+  <style name="ChartSettingsAxisImage">
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:layout_width">wrap_content</item>
+  </style>
+
+  <!-- Chart settings axis layout -->
+  <style name="ChartSettingsAxisLayout">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:orientation">horizontal</item>
+  </style>
+
+  <!-- Chart settings axis text -->
+  <style name="ChartSettingsAxisText">
+    <item name="android:gravity">bottom</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:paddingLeft">10dp</item>
+    <item name="android:textSize">20sp</item>
+  </style>
+
+  <!-- Chart settings checkbox -->
+  <style name="ChartSettingsCheckbox">
+    <item name="android:checked">true</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+  </style>
+
+  <!-- Chart settings radio button -->
+  <style name="ChartSettingsRadioButton">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+  </style>
+
   <style name="SensorStateLabel">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">fill_parent</item>
@@ -95,7 +130,7 @@ limitations under the License.
     <item name="android:layout_height">3dip</item>
     <item name="android:layout_width">fill_parent</item>
   </style>
-  
+
   <!-- The style for a text view for displaying a value on the statistics activity. -->
   <style name="StatsRegister" parent="@android:Widget.TextView">
     <item name="android:gravity">right</item>
@@ -130,7 +165,7 @@ limitations under the License.
     <item name="android:layout_width">5dip</item>
     <item name="android:textSize">40sp</item>
   </style>
-  
+
   <!-- The style for the unit on the statistics activity. -->
   <style name="StatsUnit" parent="@android:Widget.TextView">
     <item name="android:gravity">bottom</item>
@@ -147,8 +182,8 @@ limitations under the License.
     <item name="android:layout_marginBottom">-9dip</item>
     <item name="android:layout_marginTop">-9dip</item>
     <item name="android:textColor">@color/stat_label_text</item>
-  </style>  
-  
+  </style>
+
   <!-- Welcome page TextView -->
   <style name="WelcomeTextView">
     <item name="android:layout_height">wrap_content</item>
@@ -157,13 +192,13 @@ limitations under the License.
     <item name="android:paddingRight">10sp</item>
     <item name="android:textColor">@color/black</item>
     <item name="android:textSize">16sp</item>
-  </style>  
-  
+  </style>
+
   <!-- Welcome page TextView question -->
   <style name="WelcomeTextView.Question">
     <item name="android:paddingTop">10sp</item>
     <item name="android:textStyle">bold</item>
-  </style>    
+  </style>
 
   <!-- Widget TextView -->
   <style name="WidgetTextView">
@@ -172,7 +207,7 @@ limitations under the License.
     <item name="android:textColor">@color/appwidget_text</item>
     <item name="android:textSize">14sp</item>
   </style>
-  
+
   <!-- Widget TextView value  -->
   <style name="WidgetTextView.Value">
     <item name="android:width">160px</item>

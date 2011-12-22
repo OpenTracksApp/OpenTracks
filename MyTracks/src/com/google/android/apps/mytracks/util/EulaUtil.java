@@ -30,7 +30,6 @@ public class EulaUtil {
   // Accepting Google mobile terms of service
   private static final String EULA_PREFERENCE_KEY = "eula.google_mobile_tos_accepted";
 
-  private static final String COPYRIGHT = "©2011";
   private static final String HOST_NAME = "m.google.com";
 
   private EulaUtil() {}
@@ -71,6 +70,6 @@ public class EulaUtil {
         + "\n\n"
         + footer
         + "\n\n"
-        + COPYRIGHT;
+        + context.getString(R.string.eula_message_copyright);
   }
 }

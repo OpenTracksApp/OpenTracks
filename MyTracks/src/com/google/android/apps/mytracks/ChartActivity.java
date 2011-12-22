@@ -77,8 +77,8 @@ public class ChartActivity extends Activity implements TrackDataListener {
   private double trackMaxSpeed;
 
   // Modes of operation
-  private boolean metricUnits;
-  private boolean reportSpeed;
+  private boolean metricUnits = true;
+  private boolean reportSpeed = true;
 
   /*
    * UI elements:
@@ -240,6 +240,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
 
   private void prepareSettingsDialog(ChartSettingsDialog settingsDialog) {
     settingsDialog.setMode(chartView.getMode());
+    settingsDialog.setDisplaySpeed(reportSpeed);
     for (int i = 0; i < ChartView.NUM_SERIES; i++) {
       settingsDialog.setSeriesEnabled(i, chartView.isChartValueSeriesEnabled(i));
     }
@@ -452,26 +453,33 @@ public class ChartActivity extends Activity implements TrackDataListener {
 
   @Override
   public boolean onUnitsChanged(boolean metric) {
-    boolean changed = metric != this.metricUnits;
-    if (!changed) return false;
-
-    this.metricUnits = metric;
-
-    chartView.setMetricUnits(metric);
-
-    return true;  // Reload data
+    if (metricUnits == metric) {
+      return false;
+    }
+    metricUnits = metric;
+    chartView.setMetricUnits(metricUnits);
+    runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        chartView.requestLayout();
+      }
+    });
+    return true;
   }
 
-  @SuppressWarnings("hiding")
   @Override
-  public boolean onReportSpeedChanged(boolean reportSpeed) {
-    boolean changed = reportSpeed != this.reportSpeed;
-    if (!changed) return false;
-
-    this.reportSpeed = reportSpeed;
-
-    chartView.setReportSpeed(reportSpeed, this);
-
-    return true;  // Reload data
+  public boolean onReportSpeedChanged(boolean speed) {
+    if (reportSpeed == speed) {
+      return false;
+    }
+    reportSpeed = speed;
+    chartView.setReportSpeed(speed, this);
+    runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        chartView.requestLayout();
+      }
+    });
+    return true;
   }
 }

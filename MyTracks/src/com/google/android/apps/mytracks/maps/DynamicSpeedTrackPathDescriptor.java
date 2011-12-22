@@ -36,27 +36,40 @@ import android.util.Log;
  */
 public class DynamicSpeedTrackPathDescriptor 
   implements TrackPathDescriptor, OnSharedPreferenceChangeListener {
+  
   private int slowSpeed;
   private int normalSpeed;
   private int speedMargin;
+  private final int speedMarginDefault;
   private double averageMovingSpeed;
   private final Context context;
   
   public DynamicSpeedTrackPathDescriptor(Context context){
     this.context = context;
+    speedMarginDefault = Integer.parseInt(
+        context.getString(R.string.color_mode_dynamic_percentage_default));
     SharedPreferences prefs = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
     if (prefs == null) {
-      speedMargin = 25;
+      speedMargin = speedMarginDefault;
       return;
     }
     prefs.registerOnSharedPreferenceChangeListener(this);
 
-    speedMargin = Integer.parseInt(prefs.getString(
-        context.getString(R.string.track_color_mode_dynamic_speed_variation_key), "25"));
+    speedMargin = getSpeedMargin(prefs);
   }
-  
+
+  private int getSpeedMargin(SharedPreferences sharedPreferences) {
+    try {
+      return Integer.parseInt(sharedPreferences.getString(
+          context.getString(R.string.track_color_mode_dynamic_speed_variation_key),
+          Integer.toString(speedMarginDefault)));
+    } catch (NumberFormatException e) {
+      return speedMarginDefault;
+    }
+  }
+
   /**
    * Get the slow speed calculated based on the % below the average speed.
    * @return The speed limit considered as slow.
@@ -88,15 +101,12 @@ public class DynamicSpeedTrackPathDescriptor
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     	
     if (prefs == null) {
-      speedMargin = 25;
+      speedMargin = speedMarginDefault;
       return;
     }
-        
-    speedMargin = 
-        Integer.parseInt(
-    	    prefs.getString(
-    	        context.getString(R.string.track_color_mode_dynamic_speed_variation_key), "25"));
-    }
+
+    speedMargin = getSpeedMargin(prefs);
+  }
 
   @Override
   public boolean needsRedraw() {
