@@ -37,21 +37,22 @@ import android.util.Log;
 public class DynamicSpeedTrackPathDescriptor 
   implements TrackPathDescriptor, OnSharedPreferenceChangeListener {
   
-  private static int DEFAULT_SPEED_MARGIN = 25;
-  
   private int slowSpeed;
   private int normalSpeed;
   private int speedMargin;
+  private final int speedMarginDefault;
   private double averageMovingSpeed;
   private final Context context;
   
   public DynamicSpeedTrackPathDescriptor(Context context){
     this.context = context;
+    speedMarginDefault = Integer.parseInt(
+        context.getString(R.string.color_mode_dynamic_percentage_default));
     SharedPreferences prefs = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
     if (prefs == null) {
-      speedMargin = DEFAULT_SPEED_MARGIN;
+      speedMargin = speedMarginDefault;
       return;
     }
     prefs.registerOnSharedPreferenceChangeListener(this);
@@ -60,12 +61,13 @@ public class DynamicSpeedTrackPathDescriptor
   }
 
   private int getSpeedMargin(SharedPreferences sharedPreferences) {
-    String key = context.getString(R.string.track_color_mode_dynamic_speed_variation_key);
-    String percentage = sharedPreferences.getString(key, DEFAULT_SPEED_MARGIN + "");
-    if (percentage.isEmpty()) {
-      return DEFAULT_SPEED_MARGIN;
+    try {
+      return Integer.parseInt(sharedPreferences.getString(
+          context.getString(R.string.track_color_mode_dynamic_speed_variation_key),
+          speedMarginDefault + ""));
+    } catch (NumberFormatException e) {
+      return speedMarginDefault;
     }
-    return Integer.parseInt(percentage);
   }
 
   /**
@@ -99,7 +101,7 @@ public class DynamicSpeedTrackPathDescriptor
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     	
     if (prefs == null) {
-      speedMargin = DEFAULT_SPEED_MARGIN;
+      speedMargin = speedMarginDefault;
       return;
     }
 

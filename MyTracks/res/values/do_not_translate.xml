@@ -22,6 +22,9 @@ limitations under the License.
   <string name="about_leif">Leif Wilden</string>
   <string name="about_rodrigo">Rodrigo Damazio</string>
   <string name="about_sandor">Sandor Dornbush</string>
+  <string name="color_mode_dynamic_percentage_default">25</string>
+  <string name="color_mode_fixed_medium_default">15</string>
+  <string name="color_mode_fixed_slow_default">9</string>
   <string name="display_track_color_value_dynamic">DYNAMIC</string>
   <string name="display_track_color_value_fixed">FIXED</string>
   <string name="display_track_color_value_none">NONE</string>
