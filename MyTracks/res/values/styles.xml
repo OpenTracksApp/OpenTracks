@@ -46,9 +46,9 @@ limitations under the License.
   <style name="Button">
     <item name="android:layout_height">fill_parent</item>
     <item name="android:layout_weight">1</item>
-    <item name="android:layout_width">0dip</item>
+    <item name="android:layout_width">0dp</item>
     <item name="android:maxLines">2</item>
-    <item name="android:textSize">14dip</item>
+    <item name="android:textSize">14sp</item>
   </style>
 
   <!-- Button layout -->
@@ -56,17 +56,18 @@ limitations under the License.
     <item name="android:background">@drawable/list_bar</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">fill_parent</item>
+    <item name="android:measureWithLargestChild">true</item>
     <item name="android:orientation">horizontal</item>
-    <item name="android:paddingLeft">2dip</item>
-    <item name="android:paddingRight">2dip</item>
-    <item name="android:paddingTop">4dip</item>
+    <item name="android:paddingLeft">2dp</item>
+    <item name="android:paddingRight">2dp</item>
+    <item name="android:paddingTop">4dp</item>
   </style>
 
   <!-- Button spacer -->
   <style name="ButtonSpacer">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_weight">0.25</item>
-    <item name="android:layout_width">0dip</item>
+    <item name="android:layout_width">0dp</item>
     <item name="android:orientation">horizontal</item>
     <item name="android:visibility">gone</item>
   </style>
