@@ -116,7 +116,7 @@ public class ImportAllTracks {
       Log.i(Constants.TAG, "ImportAllTracks: Releasing wake lock.");
     }
 
-    activity.runOnUiThread(new Thread() {
+    activity.runOnUiThread(new Runnable() {
       @Override
       public void run() {
         showDoneDialog();
@@ -219,7 +219,7 @@ public class ImportAllTracks {
    * Attempts to import a GPX file. Returns true on success, issues error
    * notifications and returns false on failure.
    */
-  private boolean importFile(File gpxFile, MyTracksProviderUtils providerUtils) {
+  private boolean importFile(final File gpxFile, MyTracksProviderUtils providerUtils) {
     Log.i(Constants.TAG, "ImportAllTracks: importing: " + gpxFile.getName());
     try {
       importedTrackIds = GpxImporter.importGPXFile(new FileInputStream(gpxFile), providerUtils);
@@ -234,8 +234,13 @@ public class ImportAllTracks {
     } catch (IOException e) {
       Log.w(Constants.TAG, "Error reading file: " + gpxFile.getAbsolutePath(), e);
     }
-    Toast.makeText(activity, activity.getString(R.string.import_error, gpxFile.getName()),
-        Toast.LENGTH_LONG).show();
+    activity.runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        Toast.makeText(activity, activity.getString(R.string.import_error, gpxFile.getName()),
+            Toast.LENGTH_LONG).show();
+      }
+    });
     return false;
   }
 

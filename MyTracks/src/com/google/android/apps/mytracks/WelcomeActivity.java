@@ -15,6 +15,7 @@
  */
 package com.google.android.apps.mytracks;
 
+import com.google.android.apps.mytracks.util.EulaUtil;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -77,7 +78,7 @@ public class WelcomeActivity extends Activity {
       case DIALOG_EULA_ID:
         builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.eula_title);
-        builder.setMessage(R.string.eula_message);
+        builder.setMessage(EulaUtil.getEulaMessage(this));
         builder.setPositiveButton(R.string.generic_ok, null);
         builder.setCancelable(true);
         return builder.create();     

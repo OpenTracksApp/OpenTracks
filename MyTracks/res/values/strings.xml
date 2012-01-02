@@ -408,7 +408,7 @@ limitations under the License.
     \n
     My Tracks can share your track data:\n
     - As a GPX, KML, CSV, or TCX file\n
-    - Using Google My Maps, Google Fusion Tables, or Google Docs\n
+    - Using Google Maps, Google Fusion Tables, or Google Docs\n
     - Via Twitter or Facebook\n
     \n
     Other features:\n
@@ -416,16 +416,21 @@ limitations under the License.
     - Display your movement in terms of Speed or Pace (configured from the Display menu, under
     Settings)\n
     \n
-    My Tracks is run by volunteers and Googlers in their 20% time. If you would like to contribute,
-    please visit:\n
+    My Tracks is an open source project, if you would like to contribute, please visit:\n
     \n
     http://mytracks.googlecode.com\n
+  </string>
+  <string name="android_market_recent_changes_text"
+    translation_description="For the Android Market (not used in the app), the recent changes text.
+
+      Character limit: 500.">
+    Please see the English version for more information.
   </string>
   <string name="android_market_promo_text"
     translation_description="For the Android Market (not used in the app), the promotion text.
 
       Character limit: 80.">
-    My Tracks allows you to record and share your GPS tracks, including statistics.
+    Record and share your GPS tracks with My Tracks.
   </string>
 
   <!-- Chart Settings -->
@@ -473,140 +478,80 @@ limitations under the License.
       Screenshot: eula.png">
     Decline
   </string>
-  <string name="eula_message"
-    translation_description="The message for the 'Terms of service' dialog.
+  <string name="eula_message_body"
+    translation_description="The body in the Google mobile terms of service. See
+      http://m.google.com/toscountry.">
+    By using Google\'s mobile products and services ("Services"), you:
+  </string>
+  <string name="eula_message_copyright"
+    translation_description="The copyright in the Google mobile terms of service. See
+      http://m.google.com/toscountry.">
+    ©2011
+  </string>
+  <string name="eula_message_date"
+    translation_description="The date in the Google mobile terms of service. See
+      http://m.google.com/toscountry.">
+    December 1, 2010
+  </string>
+  <string name="eula_message_footer"
+    translation_description="The footer in the Google mobile terms of service. See
+      http://m.google.com/toscountry.
 
-      Screenshot: eula.png">
-    By downloading, installing or using this application or any portion thereof ("Application"), you
-    agree to the following terms and conditions (the "Terms and Conditions").\n
-    \n
-    1. USE OF APPLICATION\n
-    a. Google grants you the non-exclusive, non-transferable, limited right and license to install
-    and use this Application solely and exclusively for your personal use.\n
-    b. You may not use the Application in any manner that could damage, disable, overburden, or
-    impair the Application (or servers or networks connected to the Application), nor may you use
-    the Application in any manner that could interfere with any other party\'s use and enjoyment of
-    the Application (or servers or networks connected to the Application).\n
-    c. You agree that you are solely responsible for (and that Google has no responsibility to you
-    or to any third party for) your use of the Application, any breach of your obligations under the
-    Terms and Conditions, and for the consequences (including any loss or damage which Google may
-    suffer) of any such breach.\n
-    \n
-    2. PROPRIETARY RIGHTS\n
-    You acknowledge that (a) the Application contains proprietary and confidential information that
-    is protected by applicable intellectual property and other laws, and (b) Google and/or third
-    parties own all right, title and interest in and to the Application and content, excluding
-    content provided by you, that may be presented or accessed through the Application, including
-    without limitation all Intellectual Property Rights therein and thereto.
-    "Intellectual Property Rights" means any and all rights existing from time to time under patent
-    law, copyright law, trade secret law, trademark law, unfair competition law, and any and all
-    other proprietary rights, and any and all applications, renewals, extensions and restorations
-    thereof, now or hereafter in force and effect worldwide.  You agree that you will not, and will
-    not allow any third party to, (i) copy, sell, license, distribute, transfer, modify, adapt,
-    translate, prepare derivative works from, decompile, reverse engineer, disassemble or otherwise
-    attempt to derive source code from the Application or content that may be presented or accessed
-    through the Application for any purpose, unless otherwise permitted, (ii) take any action to
-    circumvent or defeat the security or content usage rules provided, deployed or enforced by any
-    functionality (including without limitation digital rights management functionality) contained
-    in the Application, (iii) use the Application to access, copy, transfer, transcode or retransmit
-    content in violation of any law or third party rights, or (iv) remove, obscure, or alter
-    Google\'s or any third party\'s copyright notices, trademarks, or other proprietary rights
-    notices affixed to or contained within or accessed in conjunction with or through the
-    Application.\n
-    \n
-    3. GOOGLE TERMS OF SERVICE AND PRIVACY POLICY\n
-    a. Google\'s Privacy Policy (located at http://www.google.com/privacypolicy.html) explains how
-    Google treats your information and protects your privacy when you use the Application. You agree
-    to the use of your data in accordance with Google’s privacy policies.\n
-    b. The Application may contain features that are used in conjunction with Google\'s search and
-    other services. Accordingly, your use of such features of the Application is also governed by
-    Google\'s Terms of Service located at http://www.google.com/terms_of_service.html, Google\'s
-    Privacy Policy located at http://www.google.com/privacypolicy.html, as well as any applicable
-    Google Service-specific Terms of Service and Privacy Policy, which may be updated from time to
-    time and without notice.\n
-    \n
-    4. U.S. GOVERNMENT RESTRICTED RIGHTS\n
-    This Application, related materials and documentation have been developed entirely with private
-    funds. If the user of the Application is an agency, department, employee, or other entity of the
-    United States Government, the use, duplication, reproduction, release, modification, disclosure,
-    or transfer of the Application, including technical data or manuals, is restricted by the terms,
-    conditions and covenants contained in these Terms and Conditions. In accordance with Federal
-    Acquisition Regulation 12.212 for civilian agencies and Defense Federal Acquisition Regulation
-    Supplement 227.7202 for military agencies, use of the Application is further restricted by these
-    Terms and Conditions.\n
-    \n
-    5. EXPORT RESTRICTIONS\n
-    The Application may be subject to export controls or restrictions by the United States or other
-    countries or territories. You agree to comply with all applicable U.S. and international export
-    laws and regulations. These laws include restrictions on destinations, end users, and end use.\n
-    \n
-    6. TERMINATION\n
-    These Terms and Conditions will continue to apply until terminated by either you or Google as
-    set forth below. You may terminate these Terms and Conditions at any time by permanently
-    deleting the Application from your mobile device in its entirety. Your rights automatically and
-    immediately terminate without notice from Google or any Third Party if you fail to comply with
-    any provision of these Terms and Conditions. In such event, you must immediately delete the
-    Application.\n
-    \n
-    7. INDEMNITY\n
-    To the maximum extent permitted by law, you agree to defend, indemnify and hold harmless Google,
-    its affiliates and their respective directors, officers, employees and agents from and against
-    any and all claims, actions, suits or proceedings, as well as any and all losses, liabilities,
-    damages, costs and expenses (including reasonable attorneys fees) arising out of or accruing
-    from your use of the Application, including your downloading, installation, or use of the
-    Application, or your violation of these Terms and Conditions.\n
-    \n
-    8. DISCLAIMER OF WARRANTIES\n
-    A. You expressly understand and agree that your use of the application is at your sole
-    discretion and risk and that the application is provided "as is" and "as available" without
-    warranty of any kind.\n
-    B. You are solely responsible for any damage to your mobile device, or other device, or loss of
-    data that results from such use.\n
-    C. Google further expressly disclaims all warranties and conditions of any kind, whether express
-    or implied, including, but not limited to the implied warranties and conditions of
-    merchantability, fitness for a particular purpose and non-infringement, with respect to the
-    application.\n
-    D. The application is not intended for use in the operation of nuclear facilities, life support
-    systems, emergency communications, aircraft navigation or communication systems, air traffic
-    control systems, or any other activities in which the failure of the application could lead to
-    death, personal injury, or severe physical or environmental damage.\n
-    \n
-    9.LIMITATION OF LIABILITY\n
-    You expressly understand and agree that google, its subsidiaries and affiliates, and its
-    licensors are not liable to you under any theory of liability for any direct, indirect,
-    incidental, special consequential or exemplary damages that may be incurred by you through your
-    use of the application, including any loss of data or damage to your mobile device, whether or
-    not google or its representatives have been advised of or should have been aware of the
-    possibility of any such losses arising.\n
-    \n
-    10. MISCELLANEOUS\n
-    a. These Terms and Conditions constitute the entire Agreement between you and Google relating
-    to the Application and govern your use of the Application, and completely replace any prior or
-    contemporaneous agreements between you and Google regarding the Application.\n
-    b. The failure of Google to exercise or enforce any right or provision of these Terms and
-    Conditions does not constitute a waiver of such right or provision, which will still be
-    available to Google.\n
-    c. If any court of law, having the jurisdiction to decide on this matter, rules that any
-    provision of these Terms and Conditions is invalid, then that provision will be removed from the
-    Terms and Conditions without affecting the rest of the Terms and Conditions. The remaining
-    provisions of these Terms and Conditions will continue to be valid and enforceable.\n
-    d. The rights granted in these Terms and Conditions may not be assigned or transferred by either
-    you or Google without the prior written approval of the other party. Neither you nor Google are
-    permitted to delegate their responsibilities or obligations under these Terms and Conditions
-    without the prior written approval of the other party.\n
-    e. These Terms and Conditions and your relationship with Google under these Terms and Conditions
-    will be governed by the laws of the State of California without regard to its conflict of laws
-    provisions. You and Google agree to submit to the exclusive jurisdiction of the courts located
-    within the county of Santa Clara, California to resolve any legal matter arising from these
-    Terms and Conditions. Notwithstanding this, you agree that Google will still be allowed to apply
-    for injunctive remedies (or an equivalent type of urgent legal relief) in any jurisdiction.\n
+      %1$s: host name, 'm.google.com'">
+    The Services may contain third party content. Any required attribution or notice for the third
+    party content may be found at %1$s/legalnotices.
+  </string>
+  <string name="eula_message_header"
+    translation_description="The header in the Google mobile terms of service. See
+      http://m.google.com/toscountry.">
+    Mobile Terms of Service
+  </string>
+  <string name="eula_message_item1"
+    translation_description="The first item in the Google mobile terms of service. See
+      http://m.google.com/toscountry.
+
+      %1$s: host name, 'm.google.com'
+      %2$s: host name, 'm.google.com'
+      %3$s: host name, 'm.google.com'
+      %4$s: host name, 'm.google.com'
+      %5$s: host name, 'm.google.com'">
+    Agree to be bound by these terms and a) the YouTube Terms of Use (%1$s/tos_youtube) for
+    YouTube-related Services, b) the Google Maps Terms and Conditions (%2$s/tos_maps) for mapping,
+    local and location-based Services, c) the Google Buzz Terms and Conditions for Google
+    Buzz-related Services (%3$s/tos_buzz), d) the Google Books Terms of Service (%4$s/tos_books) for
+    Books-related Services, and e) the Google Terms of Service (%5$s/utos) for all other Services,
+    as updated from time to time. You may use the Services only as set forth in these agreements. Do
+    not manipulate while driving.
+  </string>
+  <string name="eula_message_item2"
+    translation_description="The second item in the Google mobile terms of service. See
+      http://m.google.com/toscountry.">
+    Acknowledge and agree that third parties may offer Services, and that you may be subject to
+    third party terms and that third parties may enforce terms against you. Google is not
+    responsible for third party changes to the Services.
+  </string>
+  <string name="eula_message_item3"
+    translation_description="The third item in the Google mobile terms of service. See
+      http://m.google.com/toscountry.
+
+       %1$s: host name, 'm.google.com'">
+    Consent to the collection, use, sharing, and onward transfer of your data, including but not
+    limited to voice and location data, as outlined in the Mobile Privacy Policy (%1$s/privacy).
+    Location data may be from mixed sources and may not be accurate. Use at your own risk.
+  </string>
+  <string name="eula_message_item4"
+    translation_description="The fourth item in the Google mobile terms of service. See
+      http://m.google.com/toscountry.">
+    Acknowledge that certain Services require phone service, data access or text messaging
+    capability. Except as otherwise noted, Google does not charge for the Services, but carrier
+    rates for phone, data and text messaging may apply.
   </string>
   <string name="eula_title"
     translation_description="The title for the 'Terms of service' dialog, asking the user to accept
       or decline.
 
       Screenshot: eula.png">
-    End User License Agreement
+    Terms of Service
   </string>
 
   <!-- Export -->
@@ -649,7 +594,7 @@ limitations under the License.
   <string name="generic_progress_title"
     translation_description="The title on a progress dialog asking the user to wait.
 
-      Screenshot: sc_card_progress_write_file.png">
+      Screenshot: sd_card_progress_write_file.png">
     Please wait...
   </string>
   <string name="generic_save"
@@ -659,7 +604,7 @@ limitations under the License.
   <string name="generic_success_title"
     translation_description="The title on an alert dialog indicating success.
 
-      Screenshot: sc_card_success_write_file.png">
+      Screenshot: sd_card_success_write_file.png">
     Success
   </string>
   <string name="generic_yes"
@@ -971,47 +916,47 @@ limitations under the License.
     \'Location &amp; security\' settings) &amp; make sure the sky is visible. Try again later.
   </string>
 
-  <!-- My Maps List -->
+  <!-- Maps List -->
   <string name="my_maps_list_error"
-    translation_description="When sending a track to an existing Google My Map, the text on the
-      'My Maps' list page informing the user that his maps cannot be loaded at this time.">
+    translation_description="When sending a track to an existing Google Map, the text on the
+      'Maps' list page informing the user that his maps cannot be loaded at this time.">
     Your maps could not be loaded at this time.
   </string>
   <string name="my_maps_list_loading"
-    translation_description="When sending a track to an existing Google My Map, the progress dialog
+    translation_description="When sending a track to an existing Google Map, the progress dialog
       message informing the user that his maps are being loaded.">
     Loading maps...
   </string>
   <string name="my_maps_list_no_maps"
-    translation_description="When sending a track to an existing Google My Map, the text on the
-      'My Maps' list page informing the user that he doesn't have any maps.
+    translation_description="When sending a track to an existing Google Map, the text on the
+      'Maps' list page informing the user that he doesn't have any maps.
 
       Screenshot: my_maps_list_no_maps.png">
     You don\'t have any maps.
   </string>
   <string name="my_maps_list_pick_map"
-    translation_description="When sending a track to an existing Google My Map, the text on the
-      'My Maps' list page asking the user to pick one of his maps.
+    translation_description="When sending a track to an existing Google Map, the text on the
+      'Maps' list page asking the user to pick one of his maps.
 
       Screenshot: my_maps.png">
     Pick a map:
   </string>
   <string name="my_maps_list_public_label"
-    translation_description="When sending a track to an existing Google My Map, in the 'My Maps'
+    translation_description="When sending a track to an existing Google Map, in the 'Maps'
       list page, the label next to the maps that are public, as opposed to being unlisted.
 
       Screenshot: my_maps.png">
     Public
   </string>
   <string name="my_maps_list_title"
-    translation_description="When sending a track to an existing Google My Map, the title of the
-      page listing the user's maps in Google My Maps.
+    translation_description="When sending a track to an existing Google Map, the title of the
+      page listing the user's maps in Google Maps.
 
       Screenshot: my_maps.png">
-    Your Google My Maps
+    Your Google Maps
   </string>
   <string name="my_maps_list_unlisted_label"
-    translation_description="When sending a track to an existing Google My Map, in the 'My Maps'
+    translation_description="When sending a track to an existing Google Map, in the 'Maps'
       list page, the label next to the maps that are unlisted, as opposed to being public.
 
       Screenshot: my_maps.png">
@@ -1036,7 +981,7 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: my_tracks_recording_service.png">
-    Track recording service
+    Recording service
   </string>
 
   <!-- Permission -->
@@ -1146,7 +1091,7 @@ limitations under the License.
     translation_description="When reading from the SD card, the success message when finish reading
       from the SD card.
 
-      Screenshot: sc_card_success_read_file.png">
+      Screenshot: sd_card_success_read_file.png">
     Finished reading from the SD card.
   </string>
   <string name="sd_card_success_write_file"
@@ -1162,10 +1107,8 @@ limitations under the License.
     translation_description="When sending a track to Google, a note indicating it is created by
       My Tracks on Android.
 
-      %1$s: the html anchor opening tag, '&lt;a href=\'http://mytracks.appspot.com\'&gt;'. Please
-      place this placeholder before the app name, 'My Tracks'.
-      %2$s: the html anchor closing tag, '&lt;/a&gt;'. Please place this placeholder after the app
-      name, 'My Tracks'.">
+      %1$s: the html anchor opening tag. Place this placeholder before the app name, 'My Tracks'.
+      %2$s: the html anchor closing tag. Place this placeholder after the app name, 'My Tracks'.">
     Created by %1$sMy Tracks%2$s on Android.
   </string>
   <string name="send_google_choose_account_title"
@@ -1187,11 +1130,12 @@ limitations under the License.
     An error has occurred. Please try again.
   </string>
   <string name="send_google_existing_map"
-    translation_description="When sending a track to Google My Maps, the radio option to use an
+    translation_description="When sending a track to Google Maps, the radio option to use an
       existing map as opposed to create a new map.
 
+      Character limit: ~21 (1 line)
       Screenshot: send_google_choose_service.png">
-    Use an existing map
+    Use existing map
   </string>
   <string name="send_google_fusion_tables"
     translation_description="When sending a track to Google, under the 'Send to...' dialog, the
@@ -1202,17 +1146,18 @@ limitations under the License.
   </string>
   <string name="send_google_my_maps"
     translation_description="When sending a track to Google, under the 'Send to...' dialog, the
-      checkbox option to send to Google My Maps.
+      checkbox option to send to Google Maps.
 
       Screenshot: send_google_choose_service.png">
-    Google My Maps
+    Google Maps
   </string>
   <string name="send_google_new_map"
-    translation_description="When sending a track to Google My Maps, the radio option to create a
+    translation_description="When sending a track to Google Maps, the radio option to create a
       new map as opposed to use an existing map.
 
+      Character limit: ~21 (1 line)
       Screenshot: send_google_choose_service.png">
-    Create a new map
+    Create new map
   </string>
   <string name="send_google_no_account_message"
     translation_description="When sending to Google, the dialog message when no Google account is
@@ -1228,18 +1173,18 @@ limitations under the License.
     translation_description="When sending a track to a Google service, the message on the progress
       dialog indicating authenticating to the service.
 
-      %1$s: service name. 'Google My Maps', 'Google Fusion Tables', or 'Google Docs'.">
+      %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Docs'.">
     Authenticating to %1$s...
   </string>
   <string name="send_google_progress_creating"
     translation_description="When sending a track to a Google service, the message on the progress
       dialog indicating creating a new service item.
 
-      %1$s: service name. 'Google My Maps', 'Google Fusion Tables', or 'Google Docs'.">
+      %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Docs'.">
     Creating a new %1$s item...
   </string>
   <string name="send_google_progress_preparing_track"
-    translation_description="When sending a track to Google My Maps, the message on the progress
+    translation_description="When sending a track to Google Maps, the message on the progress
       dialog indicating My Tracks is preparing the track's data for upload.">
     Preparing track...
   </string>
@@ -1252,7 +1197,7 @@ limitations under the License.
     translation_description="When sending a track to Google service, the message on the progress
       dialog indicating My Tracks is sending the track data.
 
-      %1$s: service name. 'Google My Maps', 'Google Fusion Tables', or 'Google Docs'.">
+      %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Docs'.">
     Sending a track to %1$s...
   </string>
   <string name="send_google_recorded"
@@ -1290,8 +1235,8 @@ limitations under the License.
   </string>
   <string name="send_google_title"
     translation_description="When sending a track to Google, the dialog title to choose the Google
-      services to send the track to. The user can choose Google My Maps, Google Fusion
-      Tables, and Google Docs.
+      services to send the track to. The user can choose Google Maps, Google Fusion Tables, and
+      Google Docs.
 
       Screenshot: send_google_choose_service.png">
     Send to...
@@ -1312,6 +1257,14 @@ limitations under the License.
       Screenshot: sensor_state_none.png">
     Battery level
   </string>
+  <string name="sensor_state_battery_value"
+    translation_description="In the 'Sensor state' page, the value for the 'Battery level'. E.g,
+      'Battery level: 50 %'.
+
+      %1$d: a number. E.g., '50'.
+      %%: escape sequence for the '%' character.">
+    %1$d %%
+  </string>
   <string name="sensor_state_cadence"
     translation_description="In the 'Sensor state' page, the label for the cadence on the bike
       sensor. Cadence is the number of revolutions of the crank per minute. E.g.,
@@ -1319,6 +1272,13 @@ limitations under the License.
 
       Screenshot: sensor_state_none.png">
     Cadence
+  </string>
+  <string name="sensor_state_cadence_value"
+    translation_description="In the 'Sensor state' page, the value for the 'Cadence'. Cadence is the
+      number of revolutions of the crank per minute. E.g., 'Cadence: 80 rpm'.
+
+      %1$d: a number. E.g., '80'.">
+    %1$d rpm
   </string>
   <string name="sensor_state_connected"
     translation_description="In the 'Sensor state' page, the 'Sensor state' value when the sensor
@@ -1348,6 +1308,13 @@ limitations under the License.
       Screenshot: sensor_state_none.png">
     Heart rate
   </string>
+  <string name="sensor_state_heart_rate_value"
+    translation_description="In the 'Sensor state' page, the value for the 'Heart rate'. E.g.,
+      'Hear rate: 100 bpm'.
+
+      %1$d: a number. E.g., '100'.">
+    %1$d bpm
+  </string>
   <string name="sensor_state_last_sensor_time"
     translation_description="In the 'Sensor state' page, the label for the last time the sensor has
       sent a data. E.g., 'Last sensor time: 10:05 am'.
@@ -1361,6 +1328,13 @@ limitations under the License.
 
       Screenshot: sensor_state_none.png">
     Power
+  </string>
+  <string name="sensor_state_power_value"
+    translation_description="In the 'Sensor state' page, the value for the 'Power'. Power is the
+      power output of the rider. E.g., 'Power: 50 W'.
+
+      %1$d: a number. E.g., '50'.">
+    %1$d W
   </string>
   <string name="sensor_state_sending"
     translation_description="In the 'Sensor state' page, the 'Sensor state' value when the sensor is
@@ -1380,7 +1354,7 @@ limitations under the License.
     Backup
   </string>
   <string name="settings_backup_now"
-    translation_description="In the 'Backup' settings, under the 'SD card backup' section, the
+    translation_description="In the 'Backup' settings, under the 'SD card' section, the
       option to backup to the SD card now.
 
       Character limit: ~26 (1 line)
@@ -1396,7 +1370,7 @@ limitations under the License.
     Writing all tracks and settings to the SD card. This may take a while...
   </string>
   <string name="settings_backup_now_summary"
-    translation_description="In the 'Backup' settings, under the 'SD card backup' section, the
+    translation_description="In the 'Backup' settings, under the 'SD card' section, the
       summary for the 'Backup now' option explaining that all tracks and settings will be written to
       the SD card.
 
@@ -1404,7 +1378,7 @@ limitations under the License.
     Write a full copy of all your tracks and settings to the SD card.
   </string>
   <string name="settings_backup_restore"
-    translation_description="In the 'Backup' settings, under the 'SD card backup' section, the
+    translation_description="In the 'Backup' settings, under the 'SD card' section, the
       option to restore everything from the SD card.
 
       Character limit: ~26 (1 line)
@@ -1443,11 +1417,10 @@ limitations under the License.
     Select a backup to restore
   </string>
   <string name="settings_backup_restore_summary"
-    translation_description="In the 'Backup' settings, under the 'SD card backup' section, the
+    translation_description="In the 'Backup' settings, under the 'SD card' section, the
       summary for the 'Restore now' option explaining that it restores all tracks and settings from
       the SD card.
 
-      Character limit: ~26 (1 line)
       Screenshot: settings_backup.png">
     Restore all tracks and settings from the SD card.
   </string>
@@ -1457,7 +1430,7 @@ limitations under the License.
 
       Character limit: ~40 (1 line)
       Screenshot: settings_backup.png">
-    SD card backup
+    SD card
   </string>
   <string name="settings_display"
     translation_description="In the 'Settings' page, the option to change the display related
@@ -1472,17 +1445,17 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_display.png">
-    Use metric units
+    Use metric
   </string>
   <string name="settings_display_metric_summary_off"
-    translation_description="In the 'Display' settings, the summary for the 'Use metric units'
+    translation_description="In the 'Display' settings, the summary for the 'Use metric'
       checkbox when it is unchecked explaining using the imperial units to display distances.
 
       Screenshot: settings_display_unchecked.png">
     Use imperial units to display distances.
   </string>
   <string name="settings_display_metric_summary_on"
-    translation_description="In the 'Display' settings, the summary for the 'Use metric units'
+    translation_description="In the 'Display' settings, the summary for the 'Use metric'
       checkbox when it is checked explaining using the metric units to display distances.
 
       Screenshot: settings_display.png">
@@ -1518,10 +1491,10 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_display.png">
-    Track color mode
+    Color mode
   </string>
   <string name="settings_display_track_color_dynamic"
-    translation_description="In the 'Display' settings, for the 'Track color mode' dropdown, the
+    translation_description="In the 'Display' settings, for the 'Color mode' dropdown, the
       option to use different colors to color a track based on dynamically determined speed
       thresholds. E.g., use one color when the speed is below the slow speed threshold.
 
@@ -1532,17 +1505,17 @@ limitations under the License.
   <string name="settings_display_track_color_dynamic_medium"
     translation_description="In the 'Display' settings, under the 'Dynamic thresholds'
       configurations, the option for configuring the percentage from the average speed for the
-      medium speed range. The track color mode will use different colors to color a track depending
+      medium speed range. The color mode will use different colors to color a track depending
       on whether the speed is above, in, or below the medium speed range.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_display.png">
-    Percentage from average
+    Percentage
   </string>
   <string name="settings_display_track_color_dynamic_medium_summary"
     translation_description="In the 'Display' settings, under the 'Dynamic thresholds'
-      configurations, the summary for the 'Percentage from average' option explaining that it sets
-      the percentage from the average speed for the medium speed range. The track color mode will
+      configurations, the summary for the 'Percentage' option explaining that it sets
+      the percentage from the average speed for the medium speed range. The color mode will
       use different colors to color a track depending on whether the speed is above, in, or below
       the medium speed range.
 
@@ -1550,7 +1523,7 @@ limitations under the License.
     Percentage from the average speed for the medium speed range.
   </string>
   <string name="settings_display_track_color_fixed"
-    translation_description="In the 'Display' settings, for the 'Track color mode' dropdown, the
+    translation_description="In the 'Display' settings, for the 'Color mode' dropdown, the
       option to use different colors to color a track based on fixed speed thresholds. E.g., use
       one color when the speed is below the slow speed threshold.
 
@@ -1566,11 +1539,11 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_display.png">
-    Medium speed threshold
+    Medium speed
   </string>
   <string name="settings_display_track_color_fixed_medium_summary"
     translation_description="In the 'Display' settings, under the 'Fixed thresholds' configurations,
-      the summary for the 'Medium speed threshold' option explaining that it sets a cutoff speed
+      the summary for the 'Medium speed' option explaining that it sets a cutoff speed
       for the medium speed color.
 
       Screenshot: settings_display.png">
@@ -1583,18 +1556,18 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_display.png">
-    Slow speed threshold
+    Slow speed
   </string>
   <string name="settings_display_track_color_fixed_slow_summary"
     translation_description="In the 'Display' settings, under the 'Fixed thresholds' configurations,
-      the summary for the 'Slow speed threshold' option explaining that it sets a cutoff speed for
+      the summary for the 'Slow speed' option explaining that it sets a cutoff speed for
       the slow speed color.
 
       Screenshot: settings_display.png">
     Slow speed top value.
   </string>
   <string name="settings_display_track_color_single"
-    translation_description="In the 'Display' settings, for the 'Track color mode' dropdown, the
+    translation_description="In the 'Display' settings, for the 'Color mode' dropdown, the
       option to use a single color for all speeds.
 
       Character limit: ~21 (1 line)
@@ -1602,7 +1575,7 @@ limitations under the License.
     Single color
   </string>
   <string name="settings_display_track_color_summary"
-    translation_description="In the 'Display' settings, the summary for the 'Track color mode'
+    translation_description="In the 'Display' settings, the summary for the 'Color mode'
       dropdown explaining that it configures how colors are used to color a track based on
       slow, medium, and fast speed.
 
@@ -1630,10 +1603,10 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_bottom.png">
-    Auto-resume timeout
+    Auto-resume
   </string>
   <string name="settings_recording_auto_resume_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Auto-resume timeout'
+    translation_description="In the 'Recording' settings, the summary for the 'Auto-resume'
       dropdown option explaining that it configures the maximum time after which a previous
       recording will not be resumed after phone reboot.
 
@@ -1646,11 +1619,11 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_bottom.png">
-    Default activity type
+    Default activity
   </string>
   <string name="settings_recording_default_activity_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Default activity
-      type' option explaining that it sets the default activity type for a new track.
+    translation_description="In the 'Recording' settings, the summary for the 'Default activity'
+      option explaining that it sets the default activity type for a new track.
 
       Screenshot: settings_recording_bottom.png">
     Default activity type for a new track.
@@ -1661,11 +1634,11 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_top.png">
-    Distance between points
+    Distance interval
   </string>
   <string name="settings_recording_distance_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Distance between
-      points' dropdown option explaining that it configures the smallest distance between two
+    translation_description="In the 'Recording' settings, the summary for the 'Distance interval'
+      dropdown option explaining that it configures the smallest distance between two
       recordings of your position.
 
       Screenshot: settings_recording_top.png">
@@ -1694,10 +1667,10 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_top.png">
-    Time between points
+    Time interval
   </string>
   <string name="settings_recording_interval_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Time between points'
+    translation_description="In the 'Recording' settings, the summary for the 'Time interval'
       dropdown option explaining that it configures the smallest time interval between two
       recordings of your position.
 
@@ -1710,10 +1683,10 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_top.png">
-    Marker frequency
+    Marker
   </string>
   <string name="settings_recording_marker_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Marker frequency'
+    translation_description="In the 'Recording' settings, the summary for the 'Marker'
       dropdown option explaining that it configures the time or distance after which a new marker
       will be inserted.
 
@@ -1726,19 +1699,18 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_bottom.png">
-    Use time for track name
+    Use timestamp
   </string>
   <string name="settings_recording_name_summary_off"
-    translation_description="In the 'Recording' settings, the summary for the 'Use time for track
-      name' checkbox when it is unchecked explaining using a number as the default track name.
+    translation_description="In the 'Recording' settings, the summary for the 'Use timestamp'
+      checkbox when it is unchecked explaining using a number as the default track name.
 
       Screenshot: settings_recording_bottom_unchecked.png">
     Use a number as the default track name.
   </string>
   <string name="settings_recording_name_summary_on"
-    translation_description="In the 'Recording' settings, the summary for the 'Use time for track
-      name' checkbox when it is checked explaining using the track's start time as the default track
-      name.
+    translation_description="In the 'Recording' settings, the summary for the 'Use timestamp'
+      checkbox when it is checked explaining using the track's start time as the default track name.
 
       Screenshot: settings_recording_bottom.png">
     Use the track\'s start time as the default track name.
@@ -1749,15 +1721,16 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_top.png">
-    Distance between tracks
+    Max interval
   </string>
   <string name="settings_recording_track_distance_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Distance between
-      tracks' dropdown option explaining that it configures the maximum distance for two recorded
+    translation_description="In the 'Recording' settings, the summary for the 'Max interval'
+      dropdown option explaining that it configures the maximum distance for two recorded
       points for them to be still considered as the same track.
 
       Screenshot: settings_recording_top.png">
-    Track will be split if two recordings of your position are further than this.
+    Maximum distance between two recordings of your position. If two positions are further than
+    this, the track will be split.
   </string>
   <string name="settings_recording_voice"
     translation_description="In the 'Recording' settings, the dropdown option to configure the voice
@@ -1765,17 +1738,17 @@ limitations under the License.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_top.png">
-    Voice frequency
+    Voice
   </string>
   <string name="settings_recording_voice_not_available"
-    translation_description="In the 'Recording' settings, the summary for the 'Voice frequency'
+    translation_description="In the 'Recording' settings, the summary for the 'Voice'
       explaining that this option is not available on your Android phone.
 
       Screenshot: settings_recording_voice_not_available.png">
     Voice announcement is not available on your Android phone.
   </string>
   <string name="settings_recording_voice_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Voice frequency'
+    translation_description="In the 'Recording' settings, the summary for the 'Voice'
       dropdown option explaining that it configures the time or distance between two voice
       announcements.
 
@@ -1787,10 +1760,10 @@ limitations under the License.
 
       Character limit: ~26 (1 line)
       Screenshot: settings.png">
-    Reset to defaults
+    Reset
   </string>
   <string name="settings_reset_dialog_message"
-    translation_description="In the 'Settings' page, after pressing the 'Reset to defaults' option,
+    translation_description="In the 'Settings' page, after pressing the 'Reset' option,
       the confirmation dialog asking the user to confirm reverting all settings to defaults. But
       the saved tracks will be preserved.
 
@@ -1799,7 +1772,7 @@ limitations under the License.
     preserved. Are you sure?
   </string>
   <string name="settings_reset_done"
-    translation_description="In the 'Settings' page, after pressing the 'Reset to defaults' option,
+    translation_description="In the 'Settings' page, after pressing the 'Reset' option,
       the confirmation dialog informing the user that all settings have been reverted to their
       defaults.
 
@@ -1807,7 +1780,7 @@ limitations under the License.
     All settings have been reverted to their defaults.
   </string>
   <string name="settings_reset_summary"
-    translation_description="In the 'Settings' page, the summary for the 'Reset to defaults' option
+    translation_description="In the 'Settings' page, the summary for the 'Reset' option
       explaining reverting all the settings to the default values.
 
       Screenshot: settings.png">
@@ -1830,7 +1803,7 @@ limitations under the License.
   </string>
   <string name="settings_sensor_ant_options"
     translation_description="In the 'Sensor' settings, the section header to configure the ANT+
-      options.
+      options. Note that ANT+ is a radio standard.
 
       Character limit: ~40 (1 line)
       Screenshot: settings_sensor.png">
@@ -1893,11 +1866,11 @@ limitations under the License.
   </string>
   <string name="settings_sensor_type_ant"
     translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
-      connect to an ANT+ heart rate sensor.
+      connect to an ANT+ heart rate sensor. Note that ANT+ is a radio standard.
 
       Character limit: ~21 (1 line)
       Screenshot: settings_sensor_type.png">
-    ANT+ heart rate sensor
+    ANT+ heart rate
   </string>
   <string name="settings_sensor_type_none"
     translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
@@ -1909,7 +1882,8 @@ limitations under the License.
   </string>
   <string name="settings_sensor_type_polar"
     translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
-      connect to a Polar bluetooth sensor.
+      connect to a Polar bluetooth sensor. Do not translate Polar, the company name, but can
+      translate Bluetooth, the radio standard.
 
       Character limit: ~21 (1 line)
       Screenshot: settings_sensor_type.png">
@@ -1917,7 +1891,8 @@ limitations under the License.
   </string>
   <string name="settings_sensor_type_srm"
     translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
-      connect to a SRM ANT+ bridge.
+      connect to a SRM ANT+ bridge.  Do not translate SRM, the company name, but can translate
+      ANT+, the radio standard, and bridge (network bridge).
 
       Character limit: ~21 (1 line)
       Screenshot: settings_sensor_type.png">
@@ -1932,7 +1907,8 @@ limitations under the License.
   </string>
   <string name="settings_sensor_type_zephyr"
     translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
-      connect to a Zephyr bluetooth sensor.
+      connect to a Zephyr bluetooth sensor. Do not translate Zephyr, the company name, but can
+      translate Bluetooth, the radio standard.
 
       Character limit: ~21 (1 line)
       Screenshot: settings_sensor_type.png">
@@ -1940,15 +1916,16 @@ limitations under the License.
   </string>
   <string name="settings_sensor_unpair_ant"
     translation_description="In the 'Sensor' settings, under the 'ANT+ options' configurations, the
-      option to unpair an ANT+ heart rate sensor.
+      option to unpair an ANT+ heart rate sensor. Note that ANT+ is a radio standard.
 
       Character limit: ~26 (1 line)
       Screenshot: settings_sensor.png">
-    Unpair ANT+ heart rate sensor
+    Unpair ANT+ heart rate
   </string>
   <string name="settings_sensor_unpair_srm"
     translation_description="In the 'Sensor' settings, under the 'ANT+ options' configurations, the
-      option to unpair a SRM ANT+ bridge.
+      option to unpair a SRM ANT+ bridge. Do not translate SRM, the company name, but can translate
+      ANT+, the radio standard, and bridge (network bridge).
 
       Character limit: ~26 (1 line)
       Screenshot: settings_sensor.png">
@@ -1998,51 +1975,51 @@ limitations under the License.
   </string>
   <string name="settings_sharing_map_public"
     translation_description="In the 'Sharing' settings, the checkbox option to make a new map
-      created in Google My Maps public.
+      created in Google Maps public.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_sharing.png">
-    Make new maps public
+    New maps public
   </string>
   <string name="settings_sharing_map_public_summary_off"
-    translation_description="In the 'Sharing' settings, the summary for the 'Make new maps public'
-      checkbox option when it is unchecked explaining that new maps created in Google My Maps will
+    translation_description="In the 'Sharing' settings, the summary for the 'New maps public'
+      checkbox option when it is unchecked explaining that new maps created in Google Maps will
       be unlisted, as opposed to public.
 
       Screenshot: settings_sharing_unchecked.png">
-    Make new maps created in Google My Maps unlisted.
+    Make new maps created in Google Maps unlisted.
   </string>
   <string name="settings_sharing_map_public_summary_on"
-    translation_description="In the 'Sharing' settings, the summary for the 'Make new maps public'
-      checkbox option when it is checked explaining that new maps created in Google My Maps will
+    translation_description="In the 'Sharing' settings, the summary for the 'New maps public'
+      checkbox option when it is checked explaining that new maps created in Google Maps will
       be public, as opposed to unlisted.
 
       Screenshot: settings_sharing.png">
-    Make new maps created in Google My Maps public.
+    Make new maps created in Google Maps public.
   </string>
   <string name="settings_sharing_url_only"
-    translation_description="In the 'Sharing' settings, the checkbox option to share only the URL
-      link, without any additional text, when sharing the URL with friends.
+    translation_description="In the 'Sharing' settings, the checkbox option to share only the URL,
+      without any descriptive text, when sharing a URL with friends.
 
       Character limit: ~23 (1 line)
       Screenshot: settings_sharing.png">
-    Share only URL link
+    Share only URL
   </string>
   <string name="settings_sharing_url_only_summary_off"
-    translation_description="In the 'Sharing' settings, the summary for the 'Share only URL link'
-      checkbox option when it is unchecked explaining that some text and the the URL link will be
-      sent when sharing the URL with friends.
+    translation_description="In the 'Sharing' settings, the summary for the 'Share only URL'
+      checkbox option when it is unchecked explaining that it will include descriptive text when
+      sharing a URL with friends.
 
       Screenshot: settings_sharing_unchecked.png">
-    Some text and the URL link will be sent when sharing the URL with friends.
+    Include descriptive text when sharing a URL with friends.
   </string>
   <string name="settings_sharing_url_only_summary_on"
-    translation_description="In the 'Sharing' settings, the summary for the 'Share only URL link'
-      checkbox option when it is checked explaining that only the URL link, without any additional
-      text, will be sent when sharing the URL with friends.
+    translation_description="In the 'Sharing' settings, the summary for the 'Share only URL'
+      checkbox option when it is checked explaining that it will remove any descriptive text when
+      sharing a URL with friends.
 
       Screenshot: settings_sharing.png">
-   Only the URL link will be sent when sharing the URL with friends.
+   Remove any descriptive text when sharing a URL with friends.
   </string>
   <string name="settings_title"
     translation_description="The title of the 'Settings' page.
@@ -2346,11 +2323,11 @@ limitations under the License.
   </string>
   <string name="track_list_share_url"
     translation_description="In the context menu for a track, under the 'Share with friends...'
-      option, the menu option to save a track to My Maps or Fusion Tables and share the URL with
-      friends.
+      option, the menu option to save a track to Google Maps or Google Fusion Tables and share the
+      URL with friends.
 
       Screenshot: track_list_share_options.png">
-    My Map or Fusion Table URL
+    Map or Fusion Table URL
   </string>
   <string name="track_list_show_on_map"
     translation_description="In the context menu for a track, the menu option to show the track on
@@ -2389,11 +2366,6 @@ limitations under the License.
   </string>
 
   <!-- Unit -->
-  <string name="unit_beat_per_minute"
-    translation_description="Abbreviation for beats per minute, unit for heart rate. E.g.,
-      'Heart rate: 80 bpm'.">
-    bpm
-  </string>
   <string name="unit_feet"
     translation_description="Abbreviation for feet. E.g., '2 ft'.">
     ft
@@ -2433,15 +2405,6 @@ limitations under the License.
   <string name="unit_minute_per_mile"
     translation_description="Abbreviation for minutes per mile. E.g, '5 min/mi'.">
     min/mi
-  </string>
-  <string name="unit_revolution_per_minute"
-    translation_description="Abbreviation for revolutions per minute, unit for cadence. E.g.,
-      'Cadence: 80 rpm'.">
-    rpm
-  </string>
-  <string name="unit_watt"
-    translation_description="Abbreviation for watts, unit for power. E.g., 'Power: 80 W'.">
-    W
   </string>
 
   <!-- Value -->
@@ -2764,7 +2727,7 @@ limitations under the License.
       %2$s: time string. E.g., '1 hour and 30 minutes' or '20 minutes 1 second'
       %3$s: speed/pace string. For speed, e.g., '2.2 miles per hour', '1 kilometer per hour'. For
       pace, e.g., '2 hours 1 minute per mile', '30 minutes 1 second per kilometer'.">
-    My Tracks total distance %1$s in %2$s at %3$s.
+    My Tracks %1$s in %2$s at %3$s.
   </string>
   <string name="voice_total_distance_kilometers_few"
     translation_description="For voice announcement, to say total distance 'few' kilometers.
@@ -3163,7 +3126,7 @@ limitations under the License.
 
       Screenshot: welcome.png">
     Menu -> Tracks -> Delete all. This permanently deletes the recorded tracks from memory. If you
-    have saved tracks to the SD card, you must delete them separately. Tracks uploaded to Google My
+    have saved tracks to the SD card, you must delete them separately. Tracks uploaded to Google
     Maps, Google Fusion Tables, and Google Docs must also be deleted separately.
   </string>
   <string name="welcome_delete_all_question"
@@ -3177,7 +3140,7 @@ limitations under the License.
     translation_description="In the 'Welcome' page, the help content answer on editing points.
 
       Screenshot: welcome.png">
-    Once you upload tracks to Google My Maps, Google Fusion Tables, or Google Docs, you can move,
+    Once you upload tracks to Google Maps, Google Fusion Tables, or Google Docs, you can move,
     delete or insert individual track points as desired.
   </string>
   <string name="welcome_edit_accuracy_question"
@@ -3236,19 +3199,20 @@ limitations under the License.
     How precise are the recorded tracks?
   </string>
   <string name="welcome_my_maps_sharing_answer"
-    translation_description="In the 'Welcome' page, the help content answer on Google My Maps
+    translation_description="In the 'Welcome' page, the help content answer on Google Maps
       visibility.
 
       Screenshot: welcome.png">
     By default, new maps are public. To change the default to unlisted, uncheck Settings -> Sharing
-    -> Make new maps public. You can change the visibility of all your maps at Google My Maps.
+    -> Make new maps public. You can change the visibility of all your maps at My places in Google
+    Maps.
   </string>
   <string name="welcome_my_maps_sharing_question"
-    translation_description="In the 'Welcome' page, the help content question on Google My Maps
+    translation_description="In the 'Welcome' page, the help content question on Google Maps
       visibility.
 
       Screenshot: welcome.png">
-    Who can see the maps I send to Google My Maps?
+    Who can see the maps I send to Google Maps?
   </string>
   <string name="welcome_my_tracks_answer"
     translation_description="In the 'Welcome' page, the help content answer on what is My Tracks.
@@ -3256,7 +3220,7 @@ limitations under the License.
       Screenshot: welcome.png">
     My Tracks allows you to record GPS tracks and visualize your hiking, running, biking or any
     other activity while watching live performance statistics. My Tracks makes it easy to archive
-    your training history with Google My Maps, Google Fusion Tables, and Google Docs, and share your
+    your training history with Google Maps, Google Fusion Tables, and Google Docs, and share your
     activities with friends and the world.
   </string>
   <string name="welcome_my_tracks_question"
@@ -3278,7 +3242,7 @@ limitations under the License.
       Google.
 
       Screenshot: welcome.png">
-    How do I send my tracks to Google My Maps, Google Fusion Tables, and Google Docs?
+    How do I send my tracks to Google Maps, Google Fusion Tables, and Google Docs?
   </string>
   <string name="welcome_share_file_answer"
     translation_description="In the 'Welcome' page, the help content answer on sharing a file.
@@ -3298,7 +3262,7 @@ limitations under the License.
 
       Screenshot: welcome.png">
     Tap the Options button located at the bottom right corner of the map view and select \"Share
-    with friends...\". You can share the track as a link to Google My Map or Google Fusion Table
+    with friends...\". You can share the track as a link to Google Map or Google Fusion Table
     (you will be prompted to upload the track first) or as a GPX, KML, CSV, or TCX file in an e-mail
     attachment.
   </string>
@@ -3314,14 +3278,14 @@ limitations under the License.
       tracks.
 
       Screenshot: welcome.png">
-    Tracks on Google My Maps and Google Fusion Tables are limited to certain sizes.
+    Tracks on Google Maps and Google Fusion Tables are limited to certain sizes.
   </string>
   <string name="welcome_split_track_question"
     translation_description="In the 'Welcome' page, the help content question on splitting long
       tracks.
 
       Screenshot: welcome.png">
-    Why do very long tracks split into multiple segments upon sending them to Google My Maps and
+    Why do very long tracks split into multiple segments upon sending them to Google Maps and
     Google Fusion Tables?
   </string>
   <string name="welcome_statistics_marker_answer"

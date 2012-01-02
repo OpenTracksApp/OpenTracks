@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.io.docs;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.AuthManager;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.android.testing.mocking.AndroidMock;
 import com.google.android.testing.mocking.UsesMocks;
@@ -28,8 +29,6 @@ import android.test.mock.MockContext;
 import android.test.mock.MockResources;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.util.Date;
 
 import junit.framework.TestCase;
 
@@ -40,9 +39,7 @@ import junit.framework.TestCase;
  */
 public class DocsHelper_AddTrackRowTest extends TestCase {
   private static final long TIME = 1288721514000L;
-  private static final DateFormat DATE_FORMAT = DateFormat.getDateTimeInstance(
-      DateFormat.SHORT, DateFormat.SHORT); 
-  
+
   private static class StringWritingDocsHelper extends DocsHelper {
     String writtenSheetUri = null;
     String writtenData = null;
@@ -64,7 +61,7 @@ public class DocsHelper_AddTrackRowTest extends TestCase {
       + "xmlns:gsx='http://schemas.google.com/spreadsheets/2006/extended'>"
       + "<gsx:name><![CDATA[trackName]]></gsx:name>"
       + "<gsx:description><![CDATA[trackDescription]]></gsx:description>"
-      + "<gsx:date><![CDATA[" + DATE_FORMAT.format(new Date(TIME)) + "]]></gsx:date>"
+      + "<gsx:date><![CDATA[" + StringUtils.formatDateTime(TIME) + "]]></gsx:date>"
       + "<gsx:totaltime><![CDATA[0:00:05]]></gsx:totaltime>"
       + "<gsx:movingtime><![CDATA[0:00:04]]></gsx:movingtime>"
       + "<gsx:distance><![CDATA[12.43]]></gsx:distance>"

@@ -212,9 +212,21 @@ public class SendActivity extends Activity implements ProgressIndicator {
         return createProgressDialog();
       case DONE_DIALOG:
         return createDoneDialog();
+      default:
+        return null;
     }
-
-    return null;
+  }
+  
+  @Override
+  protected void onPrepareDialog(int id, Dialog dialog) {
+    switch (id) {
+      case SEND_DIALOG:
+        SendDialog sendDialog = (SendDialog) dialog;
+        sendDialog.setDocsEnabled(!shareRequested);
+        return;
+      default:
+        return;
+    }
   }
 
   private Dialog createSendDialog() {

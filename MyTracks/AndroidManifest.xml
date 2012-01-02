@@ -17,8 +17,8 @@ limitations under the License.
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.google.android.maps.mytracks"
           android:installLocation="auto"
-          android:versionCode="34"
-          android:versionName="1.1.11">
+          android:versionCode="36"
+          android:versionName="1.1.13">
   <application android:icon="@drawable/arrow_icon"
                android:label="@string/my_tracks_app_name"
                android:name="com.google.android.apps.mytracks.MyTracksApplication"
@@ -84,7 +84,7 @@ limitations under the License.
                  android:value="com.google.android.apps.mytracks.SearchActivity" />
     </activity>
 
-    <activity android:name="com.google.android.apps.mytracks.TrackDetails"
+    <activity android:name="com.google.android.apps.mytracks.TrackDetail"
               android:label="@string/track_detail_title">
       <intent-filter>
         <action android:name="android.intent.action.EDIT" />

@@ -34,32 +34,37 @@ import android.util.Log;
 public class FixedSpeedTrackPathDescriptor implements TrackPathDescriptor, OnSharedPreferenceChangeListener {
   private int slowSpeed;
   private int normalSpeed;
+  private final int slowDefault;
+  private final int normalDefault;
   private final Context context;
   
   public FixedSpeedTrackPathDescriptor(Context context) {
 	
     this.context = context;
+    slowDefault = Integer.parseInt(context.getString(R.string.color_mode_fixed_slow_default));
+    normalDefault = Integer.parseInt(context.getString(R.string.color_mode_fixed_medium_default));
+    
     SharedPreferences prefs = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     if (prefs == null) {
-      slowSpeed = 9; 
-      normalSpeed = 17;
+      slowSpeed = slowDefault; 
+      normalSpeed = normalDefault;
       return;
     }
     prefs.registerOnSharedPreferenceChangeListener(this);
     
     try {
       slowSpeed = Integer.parseInt(prefs.getString(context.getString(
-          R.string.track_color_mode_fixed_speed_slow_key), "9"));
+          R.string.track_color_mode_fixed_speed_slow_key), Integer.toString(slowDefault)));
     } catch (NumberFormatException e) {
-      slowSpeed = 9;
+      slowSpeed = slowDefault;
     }
     
     try {
       normalSpeed = Integer.parseInt(prefs.getString(context.getString(
-          R.string.track_color_mode_fixed_speed_medium_key), "17")); 
+          R.string.track_color_mode_fixed_speed_medium_key), Integer.toString(normalDefault))); 
     } catch (NumberFormatException e) {
-      normalSpeed = 17;
+      normalSpeed = normalDefault;
     }
   }
   
@@ -90,22 +95,22 @@ public class FixedSpeedTrackPathDescriptor implements TrackPathDescriptor, OnSha
     SharedPreferences prefs = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     if (prefs == null) {
-      slowSpeed = 9; 
-      normalSpeed = 17;
+      slowSpeed = slowDefault; 
+      normalSpeed = normalDefault;
       return;
     }
     
     try {
       slowSpeed = Integer.parseInt(prefs.getString(context.getString(
-	    R.string.track_color_mode_fixed_speed_slow_key), "9"));
+	    R.string.track_color_mode_fixed_speed_slow_key), Integer.toString(slowDefault)));
     } catch (NumberFormatException e) {
-      slowSpeed = 9;
+      slowSpeed = slowDefault;
     }
     try {
       normalSpeed = Integer.parseInt(prefs.getString(context.getString(
-	    R.string.track_color_mode_fixed_speed_medium_key), "17"));
+	    R.string.track_color_mode_fixed_speed_medium_key), Integer.toString(normalDefault)));
     } catch (NumberFormatException e) {
-      normalSpeed = 17;
+      normalSpeed = normalDefault;
     }
   }
 

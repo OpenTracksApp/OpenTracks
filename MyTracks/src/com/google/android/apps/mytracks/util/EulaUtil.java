@@ -15,16 +15,22 @@
  */
 package com.google.android.apps.mytracks.util;
 
+import com.google.android.maps.mytracks.R;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 /**
- * Utilities for the EULA preference value.
+ * Utilities for EULA.
  */
 public class EulaUtil {
   private static final String EULA_PREFERENCE_FILE = "eula";
-  private static final String EULA_PREFERENCE_KEY = "eula.accepted";
+
+  // Accepting Google mobile terms of service
+  private static final String EULA_PREFERENCE_KEY = "eula.google_mobile_tos_accepted";
+
+  private static final String HOST_NAME = "m.google.com";
 
   private EulaUtil() {}
 
@@ -40,5 +46,30 @@ public class EulaUtil {
     Editor editor = preferences.edit();
     editor.putBoolean(EULA_PREFERENCE_KEY, true);
     ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);
+  }
+
+  public static String getEulaMessage(Context context) {
+    String item1 = String.format(context.getString(R.string.eula_message_item1), HOST_NAME,
+        HOST_NAME, HOST_NAME, HOST_NAME, HOST_NAME);
+    String item3 = String.format(context.getString(R.string.eula_message_item3), HOST_NAME);
+    String footer = String.format(context.getString(R.string.eula_message_footer), HOST_NAME);
+
+    return context.getString(R.string.eula_message_date)
+        + "\n\n"
+        + context.getString(R.string.eula_message_header)
+        + "\n\n"
+        + context.getString(R.string.eula_message_body)
+        + "\n\n"
+        + "1. " + item1
+        + "\n\n"
+        + "2. " + context.getString(R.string.eula_message_item2)
+        + "\n\n"
+        + "3. " + item3
+        + "\n\n"
+        + "4. " + context.getString(R.string.eula_message_item4)
+        + "\n\n"
+        + footer
+        + "\n\n"
+        + context.getString(R.string.eula_message_copyright);
   }
 }

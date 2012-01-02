@@ -118,7 +118,8 @@ public class StatsActivity extends Activity implements TrackDataListener {
     sv.setScrollBarStyle(ScrollView.SCROLLBARS_OUTSIDE_INSET);
 
     showUnknownLocation();
-
+    updateLabels();
+    
     DisplayMetrics metrics = new DisplayMetrics();
     getWindowManager().getDefaultDisplay().getMetrics(metrics);
     if (metrics.heightPixels > 600) {
@@ -153,24 +154,22 @@ public class StatsActivity extends Activity implements TrackDataListener {
 
   @Override
   public boolean onUnitsChanged(boolean metric) {
-    // Ignore if unchanged.
-    if (metric == utils.isMetricUnits()) return false;
-
+    if (utils.isMetricUnits() == metric) {
+      return false;
+    }
     utils.setMetricUnits(metric);
     updateLabels();
-
-    return true;  // Reload data
+    return true;
   }
 
   @Override
-  public boolean onReportSpeedChanged(boolean displaySpeed) {
-    // Ignore if unchanged.
-    if (displaySpeed == utils.isReportSpeed()) return false;
-
-    utils.setReportSpeed(displaySpeed);
+  public boolean onReportSpeedChanged(boolean speed) {
+    if (utils.isReportSpeed() == speed) {
+      return false;
+    }
+    utils.setReportSpeed(speed);
     updateLabels();
-
-    return true;  // Reload data
+    return true;
   }
 
   private void updateLabels() {

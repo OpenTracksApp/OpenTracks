@@ -32,6 +32,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TableRow;
 
 /**
  * A dialog where the user can choose where to send the tracks to, i.e.
@@ -46,6 +47,9 @@ public class SendDialog extends Dialog {
   private CheckBox myMapsCheckBox;
   private CheckBox fusionTablesCheckBox;
   private CheckBox docsCheckBox;
+  private TableRow docsTableRow;
+  private boolean docsEnabled;
+
   private OnClickListener clickListener;
 
   public SendDialog(Context context) {
@@ -67,7 +71,9 @@ public class SendDialog extends Dialog {
     myMapsCheckBox = (CheckBox) findViewById(R.id.send_google_my_maps);
     fusionTablesCheckBox = (CheckBox) findViewById(R.id.send_google_fusion_tables);
     docsCheckBox = (CheckBox) findViewById(R.id.send_google_docs);
-
+    
+    docsTableRow = (TableRow) findViewById(R.id.send_google_docs_table_row);
+    
     Button cancel = (Button) findViewById(R.id.send_google_cancel);
     cancel.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
@@ -90,9 +96,8 @@ public class SendDialog extends Dialog {
 
     OnCheckedChangeListener checkBoxListener = new OnCheckedChangeListener() {
       public void onCheckedChanged(CompoundButton button, boolean checked) {
-        sendButton.setEnabled(myMapsCheckBox.isChecked() || fusionTablesCheckBox.isChecked()
-            || docsCheckBox.isChecked());
-        myMapsGroup.setVisibility(myMapsCheckBox.isChecked() ? View.VISIBLE : View.GONE);
+        sendButton.setEnabled(getSendToMyMaps() || getSendToFusionTables() || getSendToDocs());
+        myMapsGroup.setVisibility(getSendToMyMaps() ? View.VISIBLE : View.GONE);
       }
     };
     
@@ -126,19 +131,29 @@ public class SendDialog extends Dialog {
     if (prefs != null) {
       Editor editor = prefs.edit();
       if (editor != null) {
-        editor.putBoolean(getContext().getString(R.string.pick_existing_map_key),
-            existingMapRadioButton.isChecked());        
-        editor.putBoolean(getContext().getString(R.string.send_to_my_maps_key),
-            myMapsCheckBox.isChecked());
-        editor.putBoolean(getContext().getString(R.string.send_to_fusion_tables_key),
-            fusionTablesCheckBox.isChecked());
-        editor.putBoolean(getContext().getString(R.string.send_to_docs_key),
-            docsCheckBox.isChecked());
+        editor.putBoolean(
+            getContext().getString(R.string.pick_existing_map_key), !getCreateNewMap());
+        editor.putBoolean(getContext().getString(R.string.send_to_my_maps_key), getSendToMyMaps());
+        editor.putBoolean(
+            getContext().getString(R.string.send_to_fusion_tables_key), getSendToFusionTables());
+        if (docsEnabled) {
+          editor.putBoolean(getContext().getString(R.string.send_to_docs_key), getSendToDocs());
+        }
         ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);
       }
     }
   }
 
+  /**
+   * To enable the Google Docs option.
+   * 
+   * @param docsEnabled true to enable the Google Docs option
+   */
+  public void setDocsEnabled(boolean docsEnabled) {
+    this.docsEnabled = docsEnabled;
+    docsTableRow.setVisibility(docsEnabled ? View.VISIBLE : View.GONE);
+  }
+  
   public void setOnClickListener(OnClickListener clickListener) {
     this.clickListener = clickListener;
   }
@@ -156,6 +171,6 @@ public class SendDialog extends Dialog {
   }
 
   public boolean getSendToDocs() {
-    return docsCheckBox.isChecked();
+    return docsEnabled && docsCheckBox.isChecked();
   }
 }

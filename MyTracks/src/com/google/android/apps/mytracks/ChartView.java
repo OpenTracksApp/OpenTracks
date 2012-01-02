@@ -91,7 +91,7 @@ public class ChartView extends View {
    */
   private int bottomBorder;
 
-  private static final int RIGHT_BORDER = 17;
+  private static final int RIGHT_BORDER = 40;
 
   /** Space to leave for drawing the unit labels */
   private static final int UNIT_BORDER = 15;

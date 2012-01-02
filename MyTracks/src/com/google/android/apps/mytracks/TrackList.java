@@ -167,8 +167,8 @@ public class TrackList extends ListActivity
         return true;
       }
       case Constants.MENU_EDIT: {
-        Intent intent = new Intent(this, TrackDetails.class);
-        intent.putExtra("trackid", trackId);
+        Intent intent = new Intent(this, TrackDetail.class);
+        intent.putExtra(TrackDetail.TRACK_ID, trackId);
         startActivity(intent);
         return true;
       }
@@ -310,7 +310,7 @@ public class TrackList extends ListActivity
         TextView textView = (TextView) view;
         if (columnIndex == startTimeIdx) {
           long time = cursor.getLong(startTimeIdx);
-          textView.setText(String.format("%tc", time));
+          textView.setText(StringUtils.formatDateTime(time));
         } else if (columnIndex == totalDistanceIdx) {
           double length = cursor.getDouble(totalDistanceIdx);
           String lengthUnit = null;

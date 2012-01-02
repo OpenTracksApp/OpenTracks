@@ -420,9 +420,8 @@ public class MapActivity extends com.google.android.maps.MapActivity
             Constants.getActionFromMenuId(item.getItemId()));
         return true;
       case Constants.MENU_EDIT: {
-        Intent intent = new Intent(this, TrackDetails.class);
-        // TODO: Pass in a content URI
-        intent.putExtra("trackid", dataHub.getSelectedTrackId());
+        Intent intent = new Intent(this, TrackDetail.class);
+        intent.putExtra(TrackDetail.TRACK_ID, dataHub.getSelectedTrackId());
         startActivity(intent);
         return true;
       }

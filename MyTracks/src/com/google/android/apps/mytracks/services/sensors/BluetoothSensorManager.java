@@ -130,8 +130,8 @@ public class BluetoothSensorManager extends SensorManager {
     SharedPreferences prefs = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     String address =
-      prefs.getString(context.getString(R.string.bluetooth_sensor_key), null);
-    if (address == null) {
+      prefs.getString(context.getString(R.string.bluetooth_sensor_key), "");
+    if (address == null || address.equals("")) {
       return;
     }
     Log.w(Constants.TAG, "Connecting to bluetooth sensor: " + address);

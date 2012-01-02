@@ -15,11 +15,10 @@
  */
 package com.google.android.apps.mytracks.services;
 
+import com.google.android.apps.mytracks.util.StringUtils;
+
 import android.content.Context;
 import android.test.AndroidTestCase;
-
-import java.text.DateFormat;
-import java.util.Date;
 
 /**
  * Tests {@link DefaultTrackNameFactory}
@@ -52,9 +51,7 @@ public class DefaultTrackNameFactoryTest extends AndroidTestCase {
     DefaultTrackNameFactory factory =
         new MockDefaultTrackNameFactory(getContext(), true);
     
-    DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
-    assertEquals(formatter.format(new Date(TIMESTAMP)),
-        factory.newTrackName(1, TIMESTAMP));
+    assertEquals(StringUtils.formatDateTime(TIMESTAMP), factory.newTrackName(1, TIMESTAMP));
   }
 
   public void testIncrementingTrackName() {

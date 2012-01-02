@@ -89,7 +89,7 @@ public class WaypointsList extends ListActivity
                 R.string.marker_list_edit_marker);
             menu.add(0, Constants.MENU_DELETE, 0,
                 R.string.marker_list_delete_marker).setEnabled(
-                    recordingTrackId < 0 || type == Waypoint.TYPE_WAYPOINT ||
+                    recordingTrackId < 0 || type == Waypoint.TYPE_WAYPOINT || type == Waypoint.TYPE_STATISTICS ||
                     info.id != providerUtils.getLastWaypointId(recordingTrackId));
           }
         }
@@ -265,9 +265,13 @@ public class WaypointsList extends ListActivity
         if (columnIndex == timeIdx) {
           long time = cursor.getLong(timeIdx);
           TextView textView = (TextView) view;
-          textView.setText(String.format("%tc", time));
-          textView.setVisibility(
-              textView.getText().length() < 1 ? View.GONE : View.VISIBLE);
+          
+          if (time == 0) {
+            textView.setVisibility(View.GONE);
+          } else {         
+            textView.setText(StringUtils.formatDateTime(time));
+            textView.setVisibility(View.VISIBLE);
+          }
         } else if (columnIndex == typeIdx) {
           int type = cursor.getInt(typeIdx);
           ImageView imageView = (ImageView) view;

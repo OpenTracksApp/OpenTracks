@@ -100,7 +100,7 @@ limitations under the License.
       </TableRow>
 
       <!-- Google Docs -->
-      <TableRow>
+      <TableRow android:id="@+id/send_google_docs_table_row">
         <ImageView
           android:layout_height="wrap_content"
           android:layout_width="wrap_content"
