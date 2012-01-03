@@ -54,6 +54,16 @@ import java.util.TreeSet;
  */
 public class SearchActivity extends ListActivity {
 
+  private static final double TRACK_CATEGORY_PROMOTION = 2.0;
+
+  private static final double TRACK_DESCRIPTION_PROMOTION = 8.0;
+
+  private static final double TRACK_NAME_PROMOTION = 16.0;
+
+  private static final double CURRENT_TRACK_WAYPOINT_PROMOTION = 2.0;
+
+  private static final double CURRENT_TRACK_DEMOTION = 0.5;
+
   private static final String EXTRA_CURRENT_TRACK_ID = "trackId";
 
   /** Maximum number of waypoints which will be retrieved and scored. */
@@ -257,7 +267,7 @@ public class SearchActivity extends ListActivity {
 
     // Score the currently-selected track lower (user is already there, wouldn't be searching for it).
     if (track.getId() == query.currentTrackId) {
-      score *= 0.5;
+      score *= CURRENT_TRACK_DEMOTION;
     }
 
     return score;
@@ -283,7 +293,7 @@ public class SearchActivity extends ListActivity {
 
     // Score waypoints in the currently-selected track higher (searching inside the current track).
     if (waypoint.getTrackId() == query.currentTrackId) {
-      score *= 2.0;
+      score *= CURRENT_TRACK_WAYPOINT_PROMOTION;
     }
 
     return score;
@@ -294,13 +304,13 @@ public class SearchActivity extends ListActivity {
     // Title boost: track name > description > category.
     double boost = 1.0;
     if (name.toLowerCase().contains(query.textQuery)) {
-      boost *= 16.0;
+      boost *= TRACK_NAME_PROMOTION;
     }
     if (description.toLowerCase().contains(query.textQuery)) {
-      boost *= 8.0;
+      boost *= TRACK_DESCRIPTION_PROMOTION;
     }
     if (category.toLowerCase().contains(query.textQuery)) {
-      boost *= 2.0;
+      boost *= TRACK_CATEGORY_PROMOTION;
     }
     return boost;
   }
@@ -309,7 +319,7 @@ public class SearchActivity extends ListActivity {
     // Score recent tracks higher.
     long timeAgoHours = (query.currentTimestamp - timestamp) / (60L * 60L);
     if (timeAgoHours > 0L) {
-      return 1.0 / Math.log(1.0 + timeAgoHours);
+      return squash(timeAgoHours);
     } else {
       // Should rarely happen (track recorded in the last hour).
       return Double.POSITIVE_INFINITY;
@@ -332,7 +342,7 @@ public class SearchActivity extends ListActivity {
     double distanceKm = distanceResults[0] / 1000.0;
     if (distanceKm > 0.0) {
       // Use the inverse of the amortized distance.
-      return 1.0 / Math.log(1.0 + distanceKm);
+      return squash(distanceKm);
     } else {
       // Should rarely happen (distance is exactly 0).
       return Double.POSITIVE_INFINITY;
@@ -421,5 +431,9 @@ public class SearchActivity extends ListActivity {
       intent.setDataAndType(uri, TracksColumns.CONTENT_ITEMTYPE);
       startActivity(intent);
     }
+  }
+
+  private static double squash(double timeAgoHours) {
+    return 1.0 / Math.log1p(timeAgoHours);
   }
 }

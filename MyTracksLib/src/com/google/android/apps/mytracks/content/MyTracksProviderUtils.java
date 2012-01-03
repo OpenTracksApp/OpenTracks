@@ -154,7 +154,7 @@ public interface MyTracksProviderUtils {
   /**
    * Creates a cursor over the locations in the track points provider which
    * iterates over a given range of unique ids.
-   * Caller gets to own the returned cursor. Don't forget to close it.
+   * Caller owns the returned cursor and is responsible for closing it.
    *
    * @param trackId the id of the track for which to get the points
    * @param minTrackPointId the minimum id for the track points
@@ -168,7 +168,7 @@ public interface MyTracksProviderUtils {
 
   /**
    * Creates a cursor over the waypoints of a track.
-   * Caller gets to own the returned cursor. Don't forget to close it.
+   * Caller owns the returned cursor and is responsible for closing it.
    *
    * @param trackId the id of the track for which to get the points
    * @param minWaypointId the minimum id for the track points
@@ -180,7 +180,7 @@ public interface MyTracksProviderUtils {
 
   /**
    * Creates a cursor over waypoints with the given selection.
-   * Caller gets to own the returned cursor. Don't forget to close it.
+   * Caller owns the returned cursor and is responsible for closing it.
    *
    * @param selection a given selection
    * @param selectionArgs arguments for the given selection
@@ -211,7 +211,7 @@ public interface MyTracksProviderUtils {
 
   /**
    * Creates a cursor over the tracks provider with a given selection.
-   * Caller gets to own the returned cursor. Don't forget to close it.
+   * Caller owns the returned cursor and is responsible for closing it.
    *
    * @param selection a given selection
    * @param selecttionArgs parameters for the given selection

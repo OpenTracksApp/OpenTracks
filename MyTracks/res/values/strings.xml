@@ -1102,6 +1102,24 @@ limitations under the License.
     Finished writing to the SD card.
   </string>
 
+  <!-- Search interface -->
+  <string name="search_hint"
+    translation_description="The hint shown on the search box until the user types a search query.
+      See suggestion at http://developer.android.com/guide/topics/search/search-dialog.html about
+      keeping this consistent with other Android apps.">
+    Search My Tracks tracks and waypoints
+  </string>
+  <string name="search_global_description"
+    translation_description="Description of what is searched in My Tracks, to be displayed in the
+      global system search settings.">
+    My Tracks tracks and waypoints
+  </string>
+  <string name="search_voice_prompt"
+    translation_description="Prompt shown when the user activates voice search, asking him to
+      speak what will be searched for.">
+    Speak the name of a track or waypoint.
+  </string>
+
   <!-- Send Google -->
   <string name="send_google_by_my_tracks"
     translation_description="When sending a track to Google, a note indicating it is created by
@@ -3321,23 +3339,5 @@ limitations under the License.
 
       Screenshot: welcome.png">
     What are waypoint markers?
-  </string>
-
-  <!-- Search interface -->
-  <string name="search_hint"
-    translation_description="The hint shown on the search box until the user types a search query.
-      See suggestion at http://developer.android.com/guide/topics/search/search-dialog.html about
-      keeping this consistent with other Android apps.">
-    Search My Tracks tracks and waypoints
-  </string>
-  <string name="search_global_description"
-    translation_description="Description of what is searched in My Tracks, to be displayed in the
-      global system search settings.">
-    My Tracks tracks and waypoints
-  </string>
-  <string name="search_voice_prompt"
-    translation_description="Prompt shown when the user activates voice search, asking him to
-      speak what will be searched for.">
-    Speak the name of a track or waypoint.
   </string>
 </resources>

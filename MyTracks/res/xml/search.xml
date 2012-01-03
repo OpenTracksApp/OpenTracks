@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <searchable xmlns:android="http://schemas.android.com/apk/res/android"
-    android:label="@string/my_tracks_app_name"
     android:hint="@string/search_hint"
     android:includeInGlobalSearch="true"
+    android:label="@string/my_tracks_app_name"
     android:searchSettingsDescription="@string/search_global_description"
-    android:voiceSearchMode="showVoiceSearchButton|launchRecognizer"
-    android:voicePromptText="@string/search_voice_prompt">
-  <!-- TODO: Add search suggestions -->
+    android:voicePromptText="@string/search_voice_prompt"
+    android:voiceSearchMode="showVoiceSearchButton|launchRecognizer">
+    <!-- TODO: Add search suggestions -->
 </searchable>
