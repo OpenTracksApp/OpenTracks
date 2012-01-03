@@ -1129,7 +1129,6 @@ limitations under the License.
     translation_description="When sending a track to Google Maps, the radio option to use an
       existing map as opposed to create a new map.
 
-      Character limit: ~21 (1 line)
       Screenshot: send_google_choose_service.png">
     Use existing map
   </string>
@@ -1151,7 +1150,6 @@ limitations under the License.
     translation_description="When sending a track to Google Maps, the radio option to create a
       new map as opposed to use an existing map.
 
-      Character limit: ~21 (1 line)
       Screenshot: send_google_choose_service.png">
     Create new map
   </string>
