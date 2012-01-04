@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_waypoints">Add a waypoint to all the tracks</string>
+    <string name="app_name">MyTracksApiSample</string>
+    <string name="start_recording">Start recording</string>
+    <string name="stop_recording">Stop recording</string>
+</resources>
