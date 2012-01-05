@@ -73,16 +73,16 @@ public class SearchActivity extends ListActivity {
       new Comparator<SearchActivity.ScoredResult>() {
         @Override
         public int compare(ScoredResult r1, ScoredResult r2) {
+          // Score ordering.
           int scoreDiff = (int) (r2.score - r1.score);
           if (scoreDiff != 0) {
             return scoreDiff;
           }
 
-          if (r1.track != null) {
-            return (int) (r2.track.getId() - r1.track.getId());
-          } else {
-            return (int) (r2.waypoint.getId() - r1.waypoint.getId());
-          }
+          // Arbitrary ordering, by ID.
+          long id1 = r1.track != null ? r1.track.getId() : r1.waypoint.getId();
+          long id2 = r2.track != null ? r2.track.getId() : r2.waypoint.getId();
+          return (int) (id2 - id1);
         }
       };
 
@@ -421,16 +421,18 @@ public class SearchActivity extends ListActivity {
   protected void onListItemClick(ListView l, View v, int position, long id) {
     @SuppressWarnings("unchecked")
     Map<String, Object> clickedData = (Map<String, Object>) getListAdapter().getItem(position);
-    long trackId = (Long) clickedData.get("trackId");
+
+    Intent intent = new Intent(Intent.ACTION_VIEW);
     if (clickedData.containsKey("waypointId")) {
       long waypointId = (Long) clickedData.get("waypointId");
-      // TODO: Add support for loading track + showing waypoint in MyTracks.java.
+      Uri uri = ContentUris.withAppendedId(WaypointsColumns.CONTENT_URI, waypointId);
+      intent.setDataAndType(uri, WaypointsColumns.CONTENT_ITEMTYPE);
     } else {
-      Intent intent = new Intent(Intent.ACTION_VIEW);
+      long trackId = (Long) clickedData.get("trackId");
       Uri uri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId);
       intent.setDataAndType(uri, TracksColumns.CONTENT_ITEMTYPE);
-      startActivity(intent);
     }
+    startActivity(intent);
   }
 
   private static double squash(double timeAgoHours) {

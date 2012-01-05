@@ -21,7 +21,9 @@ import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TracksColumns;
+import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
+import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.io.file.TempFileCleaner;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.ServiceUtils;
@@ -67,7 +69,7 @@ import android.widget.Toast;
 @SuppressWarnings("deprecation")
 public class MyTracks extends TabActivity implements OnTouchListener {
   private static final int DIALOG_EULA_ID = 0;
-  
+
   private TrackDataHub dataHub;
 
   /**
@@ -202,7 +204,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
       showDialog(DIALOG_EULA_ID);
     }
   }
- 
+
   @Override
   protected void onStart() {
     Log.d(TAG, "MyTracks.onStart");
@@ -221,6 +223,19 @@ public class MyTracks extends TabActivity implements OnTouchListener {
         && TracksColumns.CONTENT_ITEMTYPE.equals(intent.getType())
         && UriUtils.matchesContentUri(data, TracksColumns.CONTENT_URI)) {
       long trackId = ContentUris.parseId(data);
+      dataHub.loadTrack(trackId);
+    } else if (Intent.ACTION_VIEW.equals(action)
+        && WaypointsColumns.CONTENT_ITEMTYPE.equals(intent.getType())
+        && UriUtils.matchesContentUri(data, WaypointsColumns.CONTENT_URI)) {
+      // TODO(rdamazio): Waypoint URIs should be base/trackid/waypointid
+      long waypointId = ContentUris.parseId(data);
+      Waypoint waypoint = providerUtils.getWaypoint(waypointId);
+      long trackId = waypoint.getTrackId();
+
+      // Request that the waypoint is shown (now or when the right track is loaded).
+      showWaypoint(trackId, waypointId);
+
+      // Load the right track, if not loaded already.
       dataHub.loadTrack(trackId);
     }
   }
@@ -296,7 +311,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
         return null;
     }
   }
-  
+
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     super.onCreateOptionsMenu(menu);
@@ -367,14 +382,9 @@ public class MyTracks extends TabActivity implements OnTouchListener {
       }
       case Constants.SHOW_WAYPOINT: {
         if (results != null) {
-          final long waypointId = results.getLongExtra("waypointid", -1);
+          final long waypointId = results.getLongExtra(WaypointDetails.WAYPOINT_ID_EXTRA, -1);
           if (waypointId >= 0) {
-            MapActivity map =
-                (MapActivity) getLocalActivityManager().getActivity("tab1");
-            if (map != null) {
-              getTabHost().setCurrentTab(0);
-              map.showWaypoint(waypointId);
-            }
+            showWaypoint(trackId, waypointId);
           }
         }
         break;
@@ -387,6 +397,17 @@ public class MyTracks extends TabActivity implements OnTouchListener {
       default: {
         Log.w(TAG, "Warning unhandled request code: " + requestCode);
       }
+    }
+  }
+
+  private void showWaypoint(long trackId, long waypointId) {
+    MapActivity map =
+        (MapActivity) getLocalActivityManager().getActivity("tab1");
+    if (map != null) {
+      getTabHost().setCurrentTab(0);
+      map.showWaypoint(trackId, waypointId);
+    } else {
+      Log.e(TAG, "Couldnt' get map tab");
     }
   }
 
