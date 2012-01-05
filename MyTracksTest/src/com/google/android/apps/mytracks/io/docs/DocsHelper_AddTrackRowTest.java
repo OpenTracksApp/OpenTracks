@@ -19,25 +19,20 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.AuthManager;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.maps.mytracks.R;
 import com.google.android.testing.mocking.AndroidMock;
 import com.google.android.testing.mocking.UsesMocks;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.test.mock.MockContext;
+import android.test.AndroidTestCase;
 import android.test.mock.MockResources;
 
 import java.io.IOException;
-
-import junit.framework.TestCase;
 
 /**
  * Tests for {@link DocsHelper#addTrackRow}
  *
  * @author Matthew Simmons
  */
-public class DocsHelper_AddTrackRowTest extends TestCase {
+public class DocsHelper_AddTrackRowTest extends AndroidTestCase {
   private static final long TIME = 1288721514000L;
 
   private static class StringWritingDocsHelper extends DocsHelper {
@@ -61,20 +56,20 @@ public class DocsHelper_AddTrackRowTest extends TestCase {
       + "xmlns:gsx='http://schemas.google.com/spreadsheets/2006/extended'>"
       + "<gsx:name><![CDATA[trackName]]></gsx:name>"
       + "<gsx:description><![CDATA[trackDescription]]></gsx:description>"
-      + "<gsx:date><![CDATA[" + StringUtils.formatDateTime(TIME) + "]]></gsx:date>"
-      + "<gsx:totaltime><![CDATA[0:00:05]]></gsx:totaltime>"
-      + "<gsx:movingtime><![CDATA[0:00:04]]></gsx:movingtime>"
+      + "<gsx:date><![CDATA[" + StringUtils.formatDateTime(getContext(), TIME) + "]]></gsx:date>"
+      + "<gsx:totaltime><![CDATA[00:05]]></gsx:totaltime>"
+      + "<gsx:movingtime><![CDATA[00:04]]></gsx:movingtime>"
       + "<gsx:distance><![CDATA[12.43]]></gsx:distance>"
-      + "<gsx:distanceunit><![CDATA[mile]]></gsx:distanceunit>"
+      + "<gsx:distanceunit><![CDATA[mi]]></gsx:distanceunit>"
       + "<gsx:averagespeed><![CDATA[8,947.75]]></gsx:averagespeed>"
       + "<gsx:averagemovingspeed><![CDATA[11,184.68]]>"
       + "</gsx:averagemovingspeed>"
       + "<gsx:maxspeed><![CDATA[3,355.40]]></gsx:maxspeed>"
-      + "<gsx:speedunit><![CDATA[mph]]></gsx:speedunit>"
+      + "<gsx:speedunit><![CDATA[mi/h]]></gsx:speedunit>"
       + "<gsx:elevationgain><![CDATA[19,685]]></gsx:elevationgain>"
       + "<gsx:minelevation><![CDATA[-1,640]]></gsx:minelevation>"
       + "<gsx:maxelevation><![CDATA[1,804]]></gsx:maxelevation>"
-      + "<gsx:elevationunit><![CDATA[feet]]></gsx:elevationunit>"
+      + "<gsx:elevationunit><![CDATA[ft]]></gsx:elevationunit>"
       + "<gsx:map>"
       + "<![CDATA[https://maps.google.com/maps/ms?msa=0&msid=trackMapId]]>"
       + "</gsx:map>"
@@ -97,9 +92,9 @@ public class DocsHelper_AddTrackRowTest extends TestCase {
     assertTrue(docsHelper.writtenData.contains(
         "<gsx:distanceunit><![CDATA[km]]></gsx:distanceunit>"));
     assertTrue(docsHelper.writtenData.contains(
-        "<gsx:speedunit><![CDATA[kph]]></gsx:speedunit>"));
+        "<gsx:speedunit><![CDATA[km/h]]></gsx:speedunit>"));
     assertTrue(docsHelper.writtenData.contains(
-        "<gsx:elevationunit><![CDATA[meter]]></gsx:elevationunit>"));
+        "<gsx:elevationunit><![CDATA[m]]></gsx:elevationunit>"));
 
     assertTrue(docsHelper.writtenData.contains(
         "<gsx:distance><![CDATA[20.00]]></gsx:distance>"));
@@ -107,34 +102,7 @@ public class DocsHelper_AddTrackRowTest extends TestCase {
 
   /** Adds a row to the spreadsheet, using the provided helper. */
   @UsesMocks({AuthManager.class, MockResources.class, Track.class})
-  private void addTrackRow(DocsHelper docsHelper, boolean useMetric)
-      throws IOException {
-    final Resources mockResources = AndroidMock.createMock(MockResources.class);
-
-    if (useMetric) {
-      AndroidMock.expect(mockResources.getString(R.string.unit_kilometer))
-          .andReturn("km");
-      AndroidMock.expect(mockResources.getString(R.string.unit_kilometer_per_hour))
-          .andReturn("kph");
-      AndroidMock.expect(mockResources.getString(R.string.unit_meter))
-          .andReturn("meter");
-    } else {
-      AndroidMock.expect(mockResources.getString(R.string.unit_mile))
-          .andReturn("mile");
-      AndroidMock.expect(mockResources.getString(R.string.unit_mile_per_hour))
-          .andReturn("mph");
-      AndroidMock.expect(mockResources.getString(R.string.unit_feet))
-          .andReturn("feet");
-    }
-    AndroidMock.replay(mockResources);
-
-    Context mockContext = new MockContext() {
-      @Override
-      public Resources getResources() {
-        return mockResources;
-      }
-    };
-
+  private void addTrackRow(DocsHelper docsHelper, boolean useMetric) throws IOException {
     AuthManager mockAuthManager = AndroidMock.createMock(AuthManager.class);
     AndroidMock.replay(mockAuthManager);
 
@@ -154,7 +122,7 @@ public class DocsHelper_AddTrackRowTest extends TestCase {
     track.setMapId("trackMapId");
     track.setStatistics(stats);
 
-    docsHelper.addTrackRow(mockContext, mockAuthManager, "ssid", "wsid",
+    docsHelper.addTrackRow(getContext(), mockAuthManager, "ssid", "wsid",
         track, useMetric);
   }
 }

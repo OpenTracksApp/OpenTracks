@@ -269,7 +269,7 @@ public class WaypointsList extends ListActivity
           if (time == 0) {
             textView.setVisibility(View.GONE);
           } else {         
-            textView.setText(StringUtils.formatDateTime(time));
+            textView.setText(StringUtils.formatDateTime(WaypointsList.this, time));
             textView.setVisibility(View.VISIBLE);
           }
         } else if (columnIndex == typeIdx) {

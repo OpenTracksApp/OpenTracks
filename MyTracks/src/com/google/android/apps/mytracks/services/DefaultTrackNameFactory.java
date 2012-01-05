@@ -44,7 +44,7 @@ class DefaultTrackNameFactory {
    */
   String newTrackName(long trackId, long startTime) {
     if (useTimestampTrackName()) {
-      return StringUtils.formatDateTime(startTime);
+      return StringUtils.formatDateTime(context, startTime);
     } else {
       return String.format(context.getString(R.string.track_name_format), trackId);
     }
