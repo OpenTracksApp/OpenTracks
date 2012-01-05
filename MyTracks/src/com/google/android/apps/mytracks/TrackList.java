@@ -310,7 +310,7 @@ public class TrackList extends ListActivity
         TextView textView = (TextView) view;
         if (columnIndex == startTimeIdx) {
           long time = cursor.getLong(startTimeIdx);
-          textView.setText(StringUtils.formatDateTime(time));
+          textView.setText(StringUtils.formatDateTime(TrackList.this, time));
         } else if (columnIndex == totalDistanceIdx) {
           double length = cursor.getDouble(totalDistanceIdx);
           String lengthUnit = null;
@@ -331,7 +331,7 @@ public class TrackList extends ListActivity
             }
           }
           textView.setText(String.format("%s  %.2f %s",
-              StringUtils.formatTime(cursor.getLong(totalTimeIdx)),
+              StringUtils.formatElapsedTime(cursor.getLong(totalTimeIdx)),
               length,
               lengthUnit));
         } else {

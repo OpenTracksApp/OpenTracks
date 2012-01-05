@@ -24,6 +24,7 @@ import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.format.DateUtils;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -46,35 +47,34 @@ public class StringUtils implements DescriptionGenerator {
   private final Context context;
 
   /**
-   * Formats the time based on user locale.
-   * 
-   * @param time time
-   */
-  public static String formatDateTime(long time) {
-    DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
-    return formatter.format(new Date(time));    
-  }
-  
-  /**
-   * Formats a number of milliseconds as a string.
+   * Formats the date and time based on user's phone date/time preferences.
    *
-   * @param time - A period of time in milliseconds.
-   * @return A string of the format M:SS, MM:SS or HH:MM:SS
+   * @param context the context
+   * @param time the time in milliseconds
    */
-  public static String formatTime(long time) {
-    return formatTimeInternal(time, false);
+  public static String formatDateTime(Context context, long time) {
+    DateFormat dateFormatter = android.text.format.DateFormat.getDateFormat(context);
+    return dateFormatter.format(new Date(time)) + " " + formatTime(context, time);
   }
 
   /**
-   * Formats a number of milliseconds as a string. To be used when we need the
-   * hours to be shown even when it is zero, e.g. exporting data to a
-   * spreadsheet.
+   * Formats the time based on user's phone date/time preferences.
    *
-   * @param time - A period of time in milliseconds
-   * @return A string of the format HH:MM:SS even if time is less than 1 hour
+   * @param context the context
+   * @param time the time in milliseconds
    */
-  public static String formatTimeAlwaysShowingHours(long time) {
-    return formatTimeInternal(time, true);
+  public static String formatTime(Context context, long time) {
+    DateFormat timeFormatter = android.text.format.DateFormat.getTimeFormat(context);
+    return timeFormatter.format(new Date(time));
+  }
+
+  /**
+   * Formats the elapsed timed in the form "MM:SS" or "H:MM:SS".
+   *
+   * @param time the time in milliseconds
+   */
+  public static String formatElapsedTime(long time) {
+    return DateUtils.formatElapsedTime(time / 1000);
   }
 
   private static final NumberFormat SINGLE_DECIMAL_PLACE_FORMAT = NumberFormat.getNumberInstance();
@@ -180,35 +180,6 @@ public class StringUtils implements DescriptionGenerator {
     }
 
     return time;
-  }
-
-  /**
-   * Formats a number of milliseconds as a string.
-   *
-   * @param time - A period of time in milliseconds
-   * @param alwaysShowHours - Whether to display 00 hours if time is less than 1
-   *        hour
-   * @return A string of the format HH:MM:SS
-   */
-  private static String formatTimeInternal(long time, boolean alwaysShowHours) {
-    int[] parts = getTimeParts(time);
-    StringBuilder builder = new StringBuilder();
-    if (parts[2] > 0 || alwaysShowHours) {
-      builder.append(parts[2]);
-      builder.append(':');
-      if (parts[1] <= 9) {
-        builder.append("0");
-      }
-    }
-
-    builder.append(parts[1]);
-    builder.append(':');
-    if (parts[0] <= 9) {
-      builder.append("0");
-    }
-    builder.append(parts[0]);
-
-    return builder.toString();
   }
 
   /**
@@ -328,11 +299,11 @@ public class StringUtils implements DescriptionGenerator {
 
         // Line 3
         context.getString(R.string.stat_total_time),
-        StringUtils.formatTime(trackStats.getTotalTime()),
+        StringUtils.formatElapsedTime(trackStats.getTotalTime()),
 
         // Line 4
         context.getString(R.string.stat_moving_time),
-        StringUtils.formatTime(trackStats.getMovingTime()),
+        StringUtils.formatElapsedTime(trackStats.getMovingTime()),
 
         // Line 5
         averageSpeed, averageMovingSpeed, maxSpeed,
@@ -360,7 +331,7 @@ public class StringUtils implements DescriptionGenerator {
 
         // Line 11
         context.getString(R.string.send_google_recorded),
-        StringUtils.formatDateTime(trackStats.getStartTime()),
+        StringUtils.formatDateTime(context, trackStats.getStartTime()),
 
         // Line 12
         context.getString(R.string.track_detail_activity_type_hint), category,
@@ -470,9 +441,9 @@ public class StringUtils implements DescriptionGenerator {
             distanceInKm, context.getString(R.string.unit_kilometer),
             distanceInMiles, context.getString(R.string.unit_mile),
         context.getString(R.string.stat_total_time),
-            StringUtils.formatTime(stats.getTotalTime()),
+            StringUtils.formatElapsedTime(stats.getTotalTime()),
         context.getString(R.string.stat_moving_time),
-            StringUtils.formatTime(stats.getMovingTime()),
+            StringUtils.formatElapsedTime(stats.getMovingTime()),
         context.getString(R.string.stat_average_speed),
             averageSpeedInKmh, context.getString(R.string.unit_kilometer_per_hour),
             averageSpeedInMph, context.getString(R.string.unit_mile_per_hour),
