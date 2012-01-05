@@ -364,7 +364,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
       }
       case Constants.SHOW_WAYPOINT: {
         if (results != null) {
-          final long waypointId = results.getLongExtra("waypointid", -1);
+          final long waypointId = results.getLongExtra(WaypointDetails.WAYPOINT_ID_EXTRA, -1);
           if (waypointId >= 0) {
             MapActivity map =
                 (MapActivity) getLocalActivityManager().getActivity("tab1");

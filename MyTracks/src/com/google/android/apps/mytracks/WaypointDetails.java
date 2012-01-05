@@ -47,7 +47,7 @@ public class WaypointDetails extends Activity
   public static final String WAYPOINT_ID_EXTRA = "com.google.android.apps.mytracks.WAYPOINT_ID";
 
   /**
-   * The id of the way point being edited (taken from bundle, "waypointid")
+   * The id of the way point being edited (taken from bundle with the above name).
    */
   private Long waypointId;
 
