@@ -224,7 +224,7 @@ public class TrackWidgetProvider
         StringUtils.formatSingleDecimalPlace(displayDistance) + " " + this.distanceLabel;
 
     // convert ms to minutes
-    String time = StringUtils.formatTime(stats.getMovingTime());
+    String time = StringUtils.formatElapsedTime(stats.getMovingTime());
     String speed = unknown;
     if (!Double.isNaN(stats.getAverageMovingSpeed())) {
       // Convert m/s to km/h
@@ -236,7 +236,7 @@ public class TrackWidgetProvider
         speed = StringUtils.formatSingleDecimalPlace(displaySpeed) + " " + this.speedLabel;
       } else {
         long displayPace = (long) (3600000.0 / displaySpeed);
-        speed = StringUtils.formatTime(displayPace) + " " + paceLabel;
+        speed = StringUtils.formatElapsedTime(displayPace) + " " + paceLabel;
       }
     }
 

@@ -153,7 +153,7 @@ public class StatsUtilities {
   }
 
   public void setTime(int id, long l) {
-    setText(id, StringUtils.formatTime(l));
+    setText(id, StringUtils.formatElapsedTime(l));
   }
 
   public void setGrade(int id, double d) {
