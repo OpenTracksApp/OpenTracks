@@ -28,7 +28,7 @@ limitations under the License.
 
     <LinearLayout
       android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
+      android:layout_height="wrap_content"
       android:orientation="vertical">
       <TextView android:text="@string/marker_detail_marker_name"
         android:layout_width="fill_parent"
