@@ -188,9 +188,8 @@ public class ChartActivity extends Activity implements TrackDataListener {
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     super.onCreateOptionsMenu(menu);
-    chartSettingsMenuItem =
-        menu.add(0, Constants.MENU_CHART_SETTINGS, 0,
-            R.string.menu_chart_view_chart_settings);
+    chartSettingsMenuItem = menu.add(Menu.NONE, Constants.MENU_CHART_SETTINGS, Menu.NONE,
+        R.string.menu_chart_view_chart_settings);
     chartSettingsMenuItem.setIcon(R.drawable.chart_settings);
     return true;
   }
