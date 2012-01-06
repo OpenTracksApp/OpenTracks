@@ -199,6 +199,10 @@ public class SearchActivity extends ListActivity {
     @SuppressWarnings("unchecked")
     Map<String, Object> clickedData = (Map<String, Object>) getListAdapter().getItem(position);
 
+    startActivity(createViewDataIntent(clickedData));
+  }
+
+  private Intent createViewDataIntent(Map<String, Object> clickedData) {
     Intent intent = new Intent(Intent.ACTION_VIEW);
     if (clickedData.containsKey("waypointId")) {
       long waypointId = (Long) clickedData.get("waypointId");
@@ -209,6 +213,6 @@ public class SearchActivity extends ListActivity {
       Uri uri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId);
       intent.setDataAndType(uri, TracksColumns.CONTENT_ITEMTYPE);
     }
-    startActivity(intent);
+    return intent;
   }
 }
