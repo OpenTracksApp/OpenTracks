@@ -27,21 +27,34 @@ import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+/**
+ * Engine for searching for tracks and waypoints by text.
+ *
+ * @author Rodrigo Damazio
+ */
 public class SearchEngine {
 
+  /** How much we promote a match in the track category. */
   private static final double TRACK_CATEGORY_PROMOTION = 2.0;
 
+  /** How much we promote a match in the track description. */
   private static final double TRACK_DESCRIPTION_PROMOTION = 8.0;
 
+  /** How much we promote a match in the track name. */
   private static final double TRACK_NAME_PROMOTION = 16.0;
 
+  /** How much we promote a waypoint result if it's in the currently-selected track. */
   private static final double CURRENT_TRACK_WAYPOINT_PROMOTION = 2.0;
 
+  /** How much we promote a track result if it's the currently-selected track. */
   private static final double CURRENT_TRACK_DEMOTION = 0.5;
 
   /** Maximum number of waypoints which will be retrieved and scored. */
   private static final int MAX_SCORED_WAYPOINTS = 100;
 
+  /**
+   * Description of a search query, along with all contextual data needed to execute it.
+   */
   public static class SearchQuery {
     public SearchQuery(String textQuery, Location currentLocation, long currentTrackId,
         long currentTimestamp) {
@@ -51,12 +64,15 @@ public class SearchEngine {
       this.currentTimestamp = currentTimestamp;
     }
 
-    final String textQuery;
-    final Location currentLocation;
-    final long currentTrackId;
-    final long currentTimestamp;
+    public final String textQuery;
+    public final Location currentLocation;
+    public final long currentTrackId;
+    public final long currentTimestamp;
   }
 
+  /**
+   * Description of a search result which has been retrieved and scored.
+   */
   public static class ScoredResult {
     ScoredResult(Track track, double score) {
       this.track = track;
@@ -70,11 +86,12 @@ public class SearchEngine {
       this.score = score;
     }
 
-    final Track track;
-    final Waypoint waypoint;
-    final double score;
+    public final Track track;
+    public final Waypoint waypoint;
+    public final double score;
   }
 
+  /** Comparador for scored results. */
   private static final Comparator<ScoredResult> SCORED_RESULT_COMPARATOR =
       new Comparator<ScoredResult>() {
         @Override
@@ -88,7 +105,8 @@ public class SearchEngine {
           // Arbitrary ordering, by ID.
           long id1 = r1.track != null ? r1.track.getId() : r1.waypoint.getId();
           long id2 = r2.track != null ? r2.track.getId() : r2.waypoint.getId();
-          return (int) (id2 - id1);
+          long diff = id2 - id1;
+          return Long.signum(diff);
         }
       };
 
@@ -98,6 +116,12 @@ public class SearchEngine {
     providerUtils = MyTracksProviderUtils.Factory.get(ctx);
   }
 
+  /**
+   * Executes a search query and returns a set of sorted results.
+   *
+   * @param query the query to execute
+   * @return a set of results, sorted according to their score
+   */
   public SortedSet<ScoredResult> doSearch(SearchQuery query) {
     ArrayList<Track> tracks = new ArrayList<Track>();
     ArrayList<Waypoint> waypoints = new ArrayList<Waypoint>();
@@ -112,20 +136,25 @@ public class SearchEngine {
     return scoredResults;
   }
 
+  /**
+   * Retrieves tracks matching the given query from the database.
+   *
+   * @param query the query to retrieve for
+   * @param tracks list to fill with the resulting tracks
+   */
   private void retrieveTracks(SearchQuery query, ArrayList<Track> tracks) {
-    // TODO: Use a different sort order as a ranking function.
     String queryLikeSelection = "%" + query.textQuery + "%";
     String trackSelection =
         TracksColumns.NAME + " LIKE ? OR " +
         TracksColumns.DESCRIPTION + " LIKE ? OR " +
         TracksColumns.CATEGORY + " LIKE ?";
+    String order = TracksColumns._ID + " DESC LIMIT 1000";  // Favor recent tracks.
     String[] trackSelectionArgs = new String[] {
         queryLikeSelection,
         queryLikeSelection,
         queryLikeSelection };
 
-    // TODO: Limit number of results to be scored.
-    Cursor tracksCursor = providerUtils.getTracksCursor(trackSelection, trackSelectionArgs);
+    Cursor tracksCursor = providerUtils.getTracksCursor(trackSelection, trackSelectionArgs, order);
     if (tracksCursor != null) {
       try {
         tracks.ensureCapacity(tracksCursor.getCount());
@@ -139,18 +168,25 @@ public class SearchEngine {
     }
   }
 
+  /**
+   * Retrieves waypoints matching the given query from the database.
+   *
+   * @param query the query to retrieve for
+   * @param tracks list to fill with the resulting waypoints
+   */
   private void retrieveWaypoints(SearchQuery query, ArrayList<Waypoint> waypoints) {
-    // TODO: Use a different sort order as a ranking function.
     String queryLikeSelection2 = "%" + query.textQuery + "%";
     String waypointSelection =
         WaypointsColumns.NAME + " LIKE ? OR " +
         WaypointsColumns.DESCRIPTION + " LIKE ? OR " +
         WaypointsColumns.CATEGORY + " LIKE ?";
+    String order = WaypointsColumns._ID + " DESC";  // Favor recent waypoints.
     String[] waypointSelectionArgs = new String[] {
         queryLikeSelection2,
         queryLikeSelection2,
         queryLikeSelection2 };
-    Cursor waypointsCursor = providerUtils.getWaypointsCursor(waypointSelection, waypointSelectionArgs, MAX_SCORED_WAYPOINTS);
+    Cursor waypointsCursor = providerUtils.getWaypointsCursor(waypointSelection, waypointSelectionArgs, order,
+        MAX_SCORED_WAYPOINTS);
     if (waypointsCursor != null) {
       try {
         waypoints.ensureCapacity(waypointsCursor.getCount());
@@ -164,6 +200,13 @@ public class SearchEngine {
     }
   }
 
+  /**
+   * Scores a collection of track results.
+   *
+   * @param tracks the results to score
+   * @param query the query to score for
+   * @param output the collection to fill with scored results
+   */
   private void scoreTrackResults(Collection<Track> tracks, SearchQuery query, Collection<ScoredResult> output) {
     for (Track track : tracks) {
       // Calculate the score.
@@ -174,12 +217,20 @@ public class SearchEngine {
     }
   }
 
+  /**
+   * Scores a single track result.
+   *
+   * @param query the query to score for
+   * @param track the results to score
+   * @return the score for the track
+   */
   private double scoreTrackResult(SearchQuery query, Track track) {
     double score = 1.0;
 
     score *= getTitleBoost(query, track.getName(), track.getDescription(), track.getCategory());
 
     TripStatistics statistics = track.getStatistics();
+    // TODO: Also boost for proximity to the currently-centered position on the map.
     double meanLatitude = (statistics.getTop() + statistics.getBottom()) / 2000000.0;
     double meanLongitude = (statistics.getRight() + statistics.getLeft()) / 2000000.0;
     score *= getDistanceBoost(query, meanLatitude, meanLongitude);
@@ -195,6 +246,13 @@ public class SearchEngine {
     return score;
   }
 
+  /**
+   * Scores a collection of waypoint results.
+   *
+   * @param waypoints the results to score
+   * @param query the query to score for
+   * @param output the collection to fill with scored results
+   */
   private void scoreWaypointResults(Collection<Waypoint> waypoints, SearchQuery query, Collection<ScoredResult> output) {
     for (Waypoint waypoint : waypoints) {
       // Calculate the score.
@@ -205,11 +263,19 @@ public class SearchEngine {
     }
   }
 
+  /**
+   * Scores a single waypoint result.
+   *
+   * @param query the query to score for
+   * @param waypoint the results to score
+   * @return the score for the waypoint
+   */
   private double scoreWaypointResult(SearchQuery query, Waypoint waypoint) {
     double score = 1.0;
 
     Location location = waypoint.getLocation();
     score *= getTitleBoost(query, waypoint.getName(), waypoint.getDescription(), waypoint.getCategory());
+    // TODO: Also boost for proximity to the currently-centered position on the map.
     score *= getDistanceBoost(query, location.getLatitude(), location.getLongitude());
     score *= getTimeBoost(query, location.getTime());
 
@@ -221,6 +287,15 @@ public class SearchEngine {
     return score;
   }
 
+  /**
+   * Calculates the boosting of the score due to the field(s) in which the match occured.
+   *
+   * @param query the query to boost for
+   * @param name the name of the track or waypoint
+   * @param description the description of the track or waypoint
+   * @param category the category of the track or waypoint
+   * @return the total boost to be applied to the result
+   */
   private double getTitleBoost(SearchQuery query,
       String name, String description, String category) {
     // Title boost: track name > description > category.
@@ -237,6 +312,13 @@ public class SearchEngine {
     return boost;
   }
 
+  /**
+   * Calculates the boosting of the score due to the recency of the matched entity.
+   *
+   * @param query the query to boost for
+   * @param timestamp the timestamp to calculate the boost for
+   * @return the total boost to be applied to the result
+   */
   private double getTimeBoost(SearchQuery query, long timestamp) {
     // Score recent tracks higher.
     long timeAgoHours = (query.currentTimestamp - timestamp) / (60L * 60L);
@@ -248,6 +330,14 @@ public class SearchEngine {
     }
   }
 
+  /**
+   * Calculates the boosting of the score due to proximity to a location.
+   *
+   * @param query the query to boost for
+   * @param latitude the latitude to calculate the boost for
+   * @param longitude the longitude to calculate the boost for
+   * @return the total boost to be applied to the result
+   */
   private double getDistanceBoost(SearchQuery query, double latitude, double longitude) {
     if (query.currentLocation == null) {
       return 1.0;
@@ -271,7 +361,10 @@ public class SearchEngine {
     }
   }
 
-  private static double squash(double timeAgoHours) {
-    return 1.0 / Math.log1p(timeAgoHours);
+  /**
+   * Squashes a number by calculating 1 / log (1 + x).
+   */
+  private static double squash(double x) {
+    return 1.0 / Math.log1p(x);
   }
 }

@@ -160,7 +160,7 @@ public class ExportAllTracks {
     try {
       MyTracksProviderUtils providerUtils =
           MyTracksProviderUtils.Factory.get(activity);
-      cursor = providerUtils.getTracksCursor(null, null);
+      cursor = providerUtils.getTracksCursor(null, null, TracksColumns._ID);
       if (cursor == null) {
         return;
       }

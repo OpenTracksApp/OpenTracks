@@ -184,10 +184,11 @@ public interface MyTracksProviderUtils {
    *
    * @param selection a given selection
    * @param selectionArgs arguments for the given selection
+   * @param order the order in which to return results
    * @param maxWaypoints the maximum number of waypoints to return
    * @return a cursor of the selected waypoints
    */
-  Cursor getWaypointsCursor(String selection, String[] selectionArgs, int maxWaypoints);
+  Cursor getWaypointsCursor(String selection, String[] selectionArgs, String order, int maxWaypoints);
 
   /**
    * Finds a track by given unique track id.
@@ -215,9 +216,10 @@ public interface MyTracksProviderUtils {
    *
    * @param selection a given selection
    * @param selecttionArgs parameters for the given selection
+   * @param order the order to return results in
    * @return a cursor of the selected tracks
    */
-  Cursor getTracksCursor(String selection, String[] selectionArgs);
+  Cursor getTracksCursor(String selection, String[] selectionArgs, String order);
 
   /**
    * Inserts a track in the tracks provider.

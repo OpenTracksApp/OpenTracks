@@ -889,18 +889,20 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       selectionArgs = new String[] { Long.toString(trackId) };
     }
 
-    return getWaypointsCursor(selection, selectionArgs, maxWaypoints);
+    return getWaypointsCursor(selection, selectionArgs, null, maxWaypoints);
   }
 
   @Override
-  public Cursor getWaypointsCursor(String selection, String[] selectionArgs, int maxWaypoints) {
-    String sortOrder = "_id ASC";
+  public Cursor getWaypointsCursor(String selection, String[] selectionArgs, String order, int maxWaypoints) {
+    if (order == null) {
+      order = "_id ASC";
+    }
     if (maxWaypoints > 0) {
-      sortOrder += " LIMIT " + maxWaypoints;
+      order += " LIMIT " + maxWaypoints;
     }
 
     return contentResolver.query(
-        WaypointsColumns.CONTENT_URI, null, selection, selectionArgs, sortOrder);
+        WaypointsColumns.CONTENT_URI, null, selection, selectionArgs, order);
   }
 
   @Override
@@ -915,7 +917,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public List<Track> getAllTracks() {
-    Cursor cursor = getTracksCursor(null, null);
+    Cursor cursor = getTracksCursor(null, null, TracksColumns._ID);
     ArrayList<Track> tracks = new ArrayList<Track>();
     if (cursor != null) {
       tracks.ensureCapacity(cursor.getCount());
@@ -933,9 +935,9 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   @Override
-  public Cursor getTracksCursor(String selection, String[] selectionArgs) {
+  public Cursor getTracksCursor(String selection, String[] selectionArgs, String order) {
     return contentResolver.query(
-        TracksColumns.CONTENT_URI, null, selection, selectionArgs, "_id");
+        TracksColumns.CONTENT_URI, null, selection, selectionArgs, order);
   }
 
   @Override

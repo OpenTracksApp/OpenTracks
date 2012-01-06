@@ -196,7 +196,7 @@ public class TrackDataHub {
   private DoubleBufferedLocationFactory locationFactory;
 
   private boolean started = false;
-  
+
   /**
    * Builds a new {@link TrackDataHub} instance.
    */
@@ -274,7 +274,7 @@ public class TrackDataHub {
       Log.w(TAG, "Not started, ignoring");
       return;
     }
-    
+
     // Unregister internal listeners even if there are external listeners registered.
     dataSourceManager.unregisterAllListeners();
     listenerHandlerThread.getLooper().quit();
