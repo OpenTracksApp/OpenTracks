@@ -23,39 +23,33 @@ limitations under the License.
     android:layout_width="fill_parent"
     android:orientation="vertical"
     android:padding="10dp">
-    
+
     <!-- Title -->
-    <TableLayout
+    <LinearLayout
       android:layout_height="wrap_content"
       android:layout_width="fill_parent"
-      android:padding="2dp"
-      android:shrinkColumns="0"
-      android:stretchColumns="1">
-      <TableRow>
-        <ImageView
-          android:layout_column="0"
+      android:orientation="horizontal">
+      <ImageView
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:src="@drawable/arrow_icon"/>
+      <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:orientation="vertical">
+        <TextView
           android:layout_height="wrap_content"
-          android:layout_width="wrap_content"
-          android:scaleType="center"
-          android:src="@drawable/arrow_icon"/>
-        <LinearLayout
-          android:layout_column="1"
+          android:layout_width="fill_parent"
+          android:text="@string/my_tracks_app_name"
+          android:textSize="30sp"/>
+        <TextView
           android:layout_height="wrap_content"
-          android:layout_width="wrap_content"
-          android:orientation="vertical">
-          <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/my_tracks_app_name"
-            android:textSize="30sp"/>
-          <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/about_copyright_notice"
-            android:textSize="15sp"/>
-        </LinearLayout>
-      </TableRow>
-    </TableLayout>
+          android:layout_width="fill_parent"
+          android:text="@string/about_copyright_notice"
+          android:textSize="16sp"/>
+      </LinearLayout>
+    </LinearLayout>
 
     <!-- Team -->
     <TextView

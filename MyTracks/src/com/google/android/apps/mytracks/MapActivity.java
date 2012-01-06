@@ -26,6 +26,7 @@ import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendActivity;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendType;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ApiFeatures;
@@ -370,8 +371,9 @@ public class MapActivity extends com.google.android.maps.MapActivity
                 R.string.track_list_send_google);
             SubMenu share = menu.addSubMenu(0, Constants.MENU_SHARE, 0,
                 R.string.track_list_share_track);
-            share.add(0, Constants.MENU_SHARE_LINK, 0,
-                R.string.track_list_share_url);
+            share.add(0, Constants.MENU_SHARE_MAP, 0, R.string.track_list_share_map);
+            share.add(
+                0, Constants.MENU_SHARE_FUSION_TABLE, 0, R.string.track_list_share_fusion_table);
             share.add(
                 0, Constants.MENU_SHARE_GPX_FILE, 0, String.format(shareFileFormat, fileTypes[0]));
             share.add(
@@ -403,10 +405,13 @@ public class MapActivity extends com.google.android.maps.MapActivity
   public boolean onMenuItemSelected(int featureId, MenuItem item) {
     switch (item.getItemId()) {
       case Constants.MENU_SEND_TO_GOOGLE:
-        SendActivity.sendToGoogle(this, dataHub.getSelectedTrackId(), false);
+        SendActivity.sendToGoogle(this, dataHub.getSelectedTrackId(), null);
         return true;
-      case Constants.MENU_SHARE_LINK:
-        SendActivity.sendToGoogle(this, dataHub.getSelectedTrackId(), true);
+      case Constants.MENU_SHARE_MAP:
+        SendActivity.sendToGoogle(this, dataHub.getSelectedTrackId(), SendType.MYMAPS);
+        return true;
+      case Constants.MENU_SHARE_FUSION_TABLE:
+        SendActivity.sendToGoogle(this, dataHub.getSelectedTrackId(), SendType.FUSION_TABLES);
         return true;
       case Constants.MENU_SAVE_GPX_FILE:
       case Constants.MENU_SAVE_KML_FILE:

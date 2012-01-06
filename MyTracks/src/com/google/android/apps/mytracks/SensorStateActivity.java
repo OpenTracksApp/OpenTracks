@@ -23,6 +23,7 @@ import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection
 import com.google.android.apps.mytracks.services.sensors.SensorManager;
 import com.google.android.apps.mytracks.services.sensors.SensorManagerFactory;
 import com.google.android.apps.mytracks.services.sensors.SensorUtils;
+import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.protobuf.InvalidProtocolBufferException;
 
@@ -32,8 +33,6 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.widget.TextView;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -44,7 +43,6 @@ import java.util.TimerTask;
  */
 public class SensorStateActivity extends Activity {
 
-  private static final DateFormat TIMESTAMP_FORMAT = DateFormat.getTimeInstance(DateFormat.SHORT);
   private static final long REFRESH_PERIOD_MS = 250;
 
   private final StatsUtilities utils;
@@ -263,7 +261,7 @@ public class SensorStateActivity extends Activity {
    * @param sds sensor data set
    */
   private String getLastSensorTime(Sensor.SensorDataSet sds) {
-    return TIMESTAMP_FORMAT.format(new Date(sds.getCreationTime()));
+    return StringUtils.formatTime(this, sds.getCreationTime());
   }
 
   /**

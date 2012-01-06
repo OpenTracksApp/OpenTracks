@@ -51,6 +51,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -71,11 +72,11 @@ public class SendActivity extends Activity implements ProgressIndicator {
   private static final String STATE_FUSION_SUCCESS = "fusionSuccess";
   private static final String STATE_MAPS_SUCCESS = "mapsSuccess";
   private static final String STATE_STATE = "state";
-  private static final String EXTRA_SHARE_LINK = "shareLink";
   private static final String STATE_ACCOUNT_TYPE = "accountType";
   private static final String STATE_ACCOUNT_NAME = "accountName";
   private static final String STATE_TABLE_ID = "tableId";
   private static final String STATE_MAP_ID = "mapId";
+  private static final String SEND_TYPE = "sendType";
 
   /** States for the state machine that defines the upload process. */
   private enum SendState {
@@ -120,7 +121,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
   private String lastAccountType;
 
   // Send request information.
-  private boolean shareRequested = false;
+  private SendType sendType;
   private long sendTrackId;
   private boolean sendToMyMaps;
   private boolean sendToMyMapsNewMap;
@@ -198,8 +199,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
     }
 
     sendTrackId = ContentUris.parseId(data);
-    shareRequested = intent.getBooleanExtra(EXTRA_SHARE_LINK, false);
-
+    sendType = intent.getParcelableExtra(SEND_TYPE);
     return true;
   }
 
@@ -222,7 +222,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
     switch (id) {
       case SEND_DIALOG:
         SendDialog sendDialog = (SendDialog) dialog;
-        sendDialog.setDocsEnabled(!shareRequested);
+        sendDialog.setSendType(sendType);
         return;
       default:
         return;
@@ -633,12 +633,13 @@ public class SendActivity extends Activity implements ProgressIndicator {
       };
     }
 
-    DialogInterface.OnClickListener onOkListener = (canShare && shareRequested)
+    DialogInterface.OnClickListener onOkListener = (canShare && sendType != null)
         ? doShareListener : finishListener;
-    DialogInterface.OnClickListener onShareListener = (canShare && !shareRequested)
+    DialogInterface.OnClickListener onShareListener = (canShare && sendType == null)
         ? doShareListener : null;
 
-    return ResultDialogFactory.makeDialog(this, results, onOkListener, onShareListener, finishOnCancelListener);
+    return ResultDialogFactory.makeDialog(
+        this, results, onOkListener, onShareListener, finishOnCancelListener);
   }
 
   private SendState onAllDone() {
@@ -905,13 +906,13 @@ public class SendActivity extends Activity implements ProgressIndicator {
     progressDialog.setMessage("");
   }
 
-  public static void sendToGoogle(Context ctx, long trackId, boolean shareLink) {
+  public static void sendToGoogle(Context ctx, long trackId, SendType sendType) {
     Uri uri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId);
 
     Intent intent = new Intent(ctx, SendActivity.class);
     intent.setAction(Intent.ACTION_SEND);
     intent.setDataAndType(uri, TracksColumns.CONTENT_ITEMTYPE);
-    intent.putExtra(SendActivity.EXTRA_SHARE_LINK, shareLink);
+    intent.putExtra(SEND_TYPE, (Parcelable) sendType);
     ctx.startActivity(intent);
   }
 }

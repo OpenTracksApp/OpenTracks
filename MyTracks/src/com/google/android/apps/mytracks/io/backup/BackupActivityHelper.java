@@ -156,7 +156,7 @@ public class BackupActivityHelper {
     // Make a user-visible version of the backup filenames
     final String backupDateStrs[] = new String[backupDates.length];
     for (int i = 0; i < backupDates.length; i++) {
-      backupDateStrs[i] = StringUtils.formatDateTime(backupDates[i].getTime());
+      backupDateStrs[i] = StringUtils.formatDateTime(activity, backupDates[i].getTime());
     }
 
     // Show a dialog for the user to pick which backup to restore

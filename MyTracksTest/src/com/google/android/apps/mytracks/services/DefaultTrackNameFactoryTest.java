@@ -50,8 +50,9 @@ public class DefaultTrackNameFactoryTest extends AndroidTestCase {
   public void testTimestampTrackName() {
     DefaultTrackNameFactory factory =
         new MockDefaultTrackNameFactory(getContext(), true);
-    
-    assertEquals(StringUtils.formatDateTime(TIMESTAMP), factory.newTrackName(1, TIMESTAMP));
+
+    assertEquals(
+        StringUtils.formatDateTime(getContext(), TIMESTAMP), factory.newTrackName(1, TIMESTAMP));
   }
 
   public void testIncrementingTrackName() {

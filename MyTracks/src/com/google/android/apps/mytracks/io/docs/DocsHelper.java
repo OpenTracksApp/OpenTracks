@@ -288,11 +288,9 @@ public class DocsHelper {
     DocsTagBuilder tagBuilder = new DocsTagBuilder(metricUnits)
         .append("name", track.getName())
         .append("description", track.getDescription())
-        .append("date", StringUtils.formatDateTime(stats.getStartTime()))
-        .append("totaltime", StringUtils.formatTimeAlwaysShowingHours(
-            stats.getTotalTime()))
-        .append("movingtime", StringUtils.formatTimeAlwaysShowingHours(
-            stats.getMovingTime()))
+        .append("date", StringUtils.formatDateTime(context, stats.getStartTime()))
+        .append("totaltime", StringUtils.formatElapsedTime(stats.getTotalTime()))
+        .append("movingtime", StringUtils.formatElapsedTime(stats.getMovingTime()))
         .appendLargeUnits("distance", stats.getTotalDistance() / 1000)
         .append("distanceunit", distanceUnit)
         .appendLargeUnits("averagespeed", stats.getAverageSpeed() * 3.6)

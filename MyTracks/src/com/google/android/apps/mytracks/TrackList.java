@@ -20,6 +20,7 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendActivity;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendType;
 import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.StringUtils;
@@ -95,8 +96,9 @@ public class TrackList extends ListActivity
                 R.string.track_list_send_google);
             SubMenu share = menu.addSubMenu(0, Constants.MENU_SHARE, 0,
                 R.string.track_list_share_track);
-            share.add(0, Constants.MENU_SHARE_LINK, 0,
-                R.string.track_list_share_url);
+            share.add(0, Constants.MENU_SHARE_MAP, 0, R.string.track_list_share_map);
+            share.add(
+                0, Constants.MENU_SHARE_FUSION_TABLE, 0, R.string.track_list_share_fusion_table);
             share.add(
                 0, Constants.MENU_SHARE_GPX_FILE, 0, String.format(shareFileFormat, fileTypes[0]));
             share.add(
@@ -176,10 +178,13 @@ public class TrackList extends ListActivity
       case Constants.MENU_WRITE_TO_SD_CARD:
         return false;
       case Constants.MENU_SEND_TO_GOOGLE:
-        SendActivity.sendToGoogle(this, trackId, false);
+        SendActivity.sendToGoogle(this, trackId, null);
         return true;
-      case Constants.MENU_SHARE_LINK:
-        SendActivity.sendToGoogle(this, trackId, true);
+      case Constants.MENU_SHARE_MAP:
+        SendActivity.sendToGoogle(this, trackId, SendType.MYMAPS);
+        return true;
+      case Constants.MENU_SHARE_FUSION_TABLE:
+        SendActivity.sendToGoogle(this, trackId, SendType.FUSION_TABLES);
         return true;
       case Constants.MENU_SAVE_GPX_FILE:
       case Constants.MENU_SAVE_KML_FILE:
@@ -310,7 +315,7 @@ public class TrackList extends ListActivity
         TextView textView = (TextView) view;
         if (columnIndex == startTimeIdx) {
           long time = cursor.getLong(startTimeIdx);
-          textView.setText(StringUtils.formatDateTime(time));
+          textView.setText(StringUtils.formatDateTime(TrackList.this, time));
         } else if (columnIndex == totalDistanceIdx) {
           double length = cursor.getDouble(totalDistanceIdx);
           String lengthUnit = null;
@@ -331,7 +336,7 @@ public class TrackList extends ListActivity
             }
           }
           textView.setText(String.format("%s  %.2f %s",
-              StringUtils.formatTime(cursor.getLong(totalTimeIdx)),
+              StringUtils.formatElapsedTime(cursor.getLong(totalTimeIdx)),
               length,
               lengthUnit));
         } else {
