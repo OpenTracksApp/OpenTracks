@@ -130,10 +130,10 @@ limitations under the License.
         android:text="@string/welcome_delete_all_answer"
         style="@style/WelcomeTextView"/>     
       <TextView
-        android:text="@string/welcome_my_maps_sharing_question"
+        android:text="@string/welcome_maps_sharing_question"
         style="@style/WelcomeTextView.Question"/>
       <TextView
-        android:text="@string/welcome_my_maps_sharing_answer"
+        android:text="@string/welcome_maps_sharing_answer"
         style="@style/WelcomeTextView"/>    
     </LinearLayout>
   </ScrollView>

@@ -20,8 +20,8 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 import com.google.android.apps.mytracks.io.AuthManager;
 import com.google.android.apps.mytracks.io.AuthManager.AuthCallback;
 import com.google.android.apps.mytracks.io.AuthManagerFactory;
-import com.google.android.apps.mytracks.io.mymaps.MapsFacade;
-import com.google.android.apps.mytracks.io.mymaps.MyMapsConstants;
+import com.google.android.apps.mytracks.io.maps.MapsConstants;
+import com.google.android.apps.mytracks.io.maps.MapsFacade;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -35,12 +35,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 /**
- * Activity which displays the list of current My Maps tracks for the user.
+ * Activity which displays the list of current Google Maps for the user.
  * Returns RESULT_OK if the user picked a map, and returns "mapid" as an extra.
  *
  * @author Rodrigo Damazio
  */
-public class MyMapsList extends Activity implements MapsFacade.MapsListCallback {
+public class MapsList extends Activity implements MapsFacade.MapsListCallback {
   private static final int GET_LOGIN = 1;
 
   public static final String EXTRA_ACCOUNT_NAME = "accountName";
@@ -48,7 +48,7 @@ public class MyMapsList extends Activity implements MapsFacade.MapsListCallback 
 
   private MapsFacade mapsClient;
   private AuthManager auth;
-  private MyMapsListAdapter listAdapter;
+  private MapsListAdapter listAdapter;
 
   private final OnItemClickListener clickListener =
       new OnItemClickListener() {
@@ -68,11 +68,11 @@ public class MyMapsList extends Activity implements MapsFacade.MapsListCallback 
     super.onCreate(icicle);
 
     auth = AuthManagerFactory.getAuthManager(this, GET_LOGIN, null, true,
-        MyMapsConstants.SERVICE_NAME);
+        MapsConstants.SERVICE_NAME);
 
     setContentView(R.layout.list);
 
-    listAdapter = new MyMapsListAdapter(this);
+    listAdapter = new MapsListAdapter(this);
 
     ListView list = (ListView) findViewById(R.id.maplist);
     list.setOnItemClickListener(clickListener);
@@ -113,7 +113,7 @@ public class MyMapsList extends Activity implements MapsFacade.MapsListCallback 
         }
 
         // Runs in UI thread.
-        mapsClient = new MapsFacade(MyMapsList.this, auth);
+        mapsClient = new MapsFacade(MapsList.this, auth);
 
         startLookup();
       }
@@ -127,7 +127,7 @@ public class MyMapsList extends Activity implements MapsFacade.MapsListCallback 
       public void run() {
         // Communication with Maps happens in its own thread.
         // This will call onReceivedMapListing below.
-        final boolean success = mapsClient.getMapsList(MyMapsList.this);
+        final boolean success = mapsClient.getMapsList(MapsList.this);
 
         runOnUiThread(new Runnable() {
           @Override

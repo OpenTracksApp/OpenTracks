@@ -81,7 +81,7 @@ public class SendDialog extends Dialog {
       }
     };
 
-    mapsCheckBox = (CheckBox) findViewById(R.id.send_google_my_maps);
+    mapsCheckBox = (CheckBox) findViewById(R.id.send_google_maps);
     mapsCheckBox.setOnCheckedChangeListener(checkBoxListener);
 
     fusionTablesCheckBox = (CheckBox) findViewById(R.id.send_google_fusion_tables);
@@ -127,7 +127,7 @@ public class SendDialog extends Dialog {
             getContext().getString(R.string.pick_existing_map_key), !getCreateNewMap());
         if (mapsEnabled && fusionTablesEnabled && docsEnabled) {
           editor.putBoolean(
-              getContext().getString(R.string.send_to_my_maps_key), getSendToMyMaps());
+              getContext().getString(R.string.send_to_maps_key), getSendToMaps());
           editor.putBoolean(
               getContext().getString(R.string.send_to_fusion_tables_key), getSendToFusionTables());
           editor.putBoolean(getContext().getString(R.string.send_to_docs_key), getSendToDocs());
@@ -150,7 +150,7 @@ public class SendDialog extends Dialog {
      * Note that sendType can be null, so cannot use a switch statement based on
      * the sendType.
      */
-    if (sendType == SendType.MYMAPS) {
+    if (sendType == SendType.MAPS) {
       mapsEnabled = true;
       fusionTablesEnabled = false;
       docsEnabled = false;
@@ -185,7 +185,7 @@ public class SendDialog extends Dialog {
       existingMapRadioButton.setChecked(pickExistingMap);
 
       mapsCheckBox.setChecked(
-          prefs.getBoolean(getContext().getString(R.string.send_to_my_maps_key), true));
+          prefs.getBoolean(getContext().getString(R.string.send_to_maps_key), true));
       fusionTablesCheckBox.setChecked(
           prefs.getBoolean(getContext().getString(R.string.send_to_fusion_tables_key), true));
       docsCheckBox.setChecked(
@@ -197,8 +197,8 @@ public class SendDialog extends Dialog {
    * Updates the UI display based on the current state.
    */
   private void updateDisplay() {
-    send.setEnabled(getSendToMyMaps() || getSendToFusionTables() || getSendToDocs());
-    mapsOptionTableRow.setVisibility(getSendToMyMaps() ? View.VISIBLE : View.GONE);
+    send.setEnabled(getSendToMaps() || getSendToFusionTables() || getSendToDocs());
+    mapsOptionTableRow.setVisibility(getSendToMaps() ? View.VISIBLE : View.GONE);
   }
 
   public void setOnClickListener(OnClickListener clickListener) {
@@ -209,7 +209,7 @@ public class SendDialog extends Dialog {
     return newMapRadioButton.isChecked();
   }
 
-  public boolean getSendToMyMaps() {
+  public boolean getSendToMaps() {
     return mapsEnabled && mapsCheckBox.isChecked();
   }
 

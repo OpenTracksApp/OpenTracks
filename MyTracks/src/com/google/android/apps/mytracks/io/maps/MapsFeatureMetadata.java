@@ -1,10 +1,10 @@
 // Copyright 2009 Google Inc. All Rights Reserved.
-package com.google.android.apps.mytracks.io.mymaps;
+package com.google.android.apps.mytracks.io.maps;
 
 /**
  * Metadata about a maps feature.
  */
-class MyMapsFeatureMetadata {
+class MapsFeatureMetadata {
 
   private static final String BLUE_DOT_URL =
       "http://maps.google.com/mapfiles/ms/micons/blue-dot.png";
@@ -19,10 +19,10 @@ class MyMapsFeatureMetadata {
   private int fillColor;
   private String iconUrl;
 
-  public MyMapsFeatureMetadata() {
+  public MapsFeatureMetadata() {
     title = "";
     description = "";
-    type = MyMapsFeature.MARKER;
+    type = MapsFeature.MARKER;
     color = DEFAULT_COLOR;
     lineWidth = 5;
     fillColor = DEFAULT_FILL_COLOR;

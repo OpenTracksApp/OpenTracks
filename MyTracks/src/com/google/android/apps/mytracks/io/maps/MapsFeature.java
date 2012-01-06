@@ -1,5 +1,5 @@
 // Copyright 2009 Google Inc. All Rights Reserved.
-package com.google.android.apps.mytracks.io.mymaps;
+package com.google.android.apps.mytracks.io.maps;
 
 import com.google.android.maps.GeoPoint;
 
@@ -7,12 +7,12 @@ import java.util.Random;
 import java.util.Vector;
 
 /**
- * MyMapsFeature contains all of the data associated with a feature in My Maps,
- * where a feature is a marker, line, or shape. Some of the data is stored in a
- * {@link MyMapsFeatureMetadata} object so that it can be more efficiently
+ * MapsFeature contains all of the data associated with a feature in Google
+ * Maps, where a feature is a marker, line, or shape. Some of the data is stored
+ * in a {@link MapsFeatureMetadata} object so that it can be more efficiently
  * transmitted to other activities.
  */
-class MyMapsFeature {
+class MapsFeature {
 
   private static final long serialVersionUID = 8439035544430497236L;
 
@@ -47,7 +47,7 @@ class MyMapsFeature {
   private final Vector<Integer> longitudeE6 = new Vector<Integer>();
 
   /** The metadata of this feature in a format efficient for transmission. */
-  private MyMapsFeatureMetadata featureInfo = new MyMapsFeatureMetadata();
+  private MapsFeatureMetadata featureInfo = new MapsFeatureMetadata();
 
   private final Random random = new Random();
 
@@ -56,7 +56,7 @@ class MyMapsFeature {
    * {@link #MARKER} with a blue placemark with a dot as an icon at the
    * location (0, 0).
    */
-  public MyMapsFeature() {
+  public MapsFeature() {
   }
 
   /**

@@ -43,7 +43,7 @@ limitations under the License.
   </string>
   <string name="send_google_docs_url">docs.google.com</string>
   <string name="send_google_fusion_tables_url">google.com/fusiontables</string>
-  <string name="send_google_my_maps_url">maps.google.com</string>
+  <string name="send_google_maps_url">maps.google.com</string>
   <string name="sensor_type_value_ant">ANT</string>    
   <string name="sensor_type_value_none">NONE</string>
   <string name="sensor_type_value_polar">POLAR</string>

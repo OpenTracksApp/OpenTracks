@@ -31,7 +31,7 @@ limitations under the License.
       android:layout_height="wrap_content"
       android:textSize="16dip"
       android:textColor="#fff"
-      android:text="@string/my_maps_list_pick_map"
+      android:text="@string/maps_list_pick_map"
       android:layout_weight="0"/>
   </LinearLayout>
   <ListView android:id="@+id/maplist"
@@ -47,7 +47,7 @@ limitations under the License.
       android:textSize="16dip"
       android:textColor="#c00"
       android:textStyle="bold"
-      android:text="@string/my_maps_list_no_maps"
+      android:text="@string/maps_list_no_maps"
       android:visibility="gone"/>
     <TextView android:id="@+id/failed"
     android:layout_width="fill_parent"
@@ -58,7 +58,7 @@ limitations under the License.
     android:textSize="16dip"
     android:textColor="#c00"
     android:textStyle="bold"
-    android:text="@string/my_maps_list_error"
+    android:text="@string/maps_list_error"
     android:visibility="gone"/>
     <LinearLayout
     android:orientation="horizontal"
@@ -89,7 +89,7 @@ limitations under the License.
           android:textSize="16dip"
           android:textColor="#fff"
           android:textStyle="bold"
-          android:text="@string/my_maps_list_loading"/>
+          android:text="@string/maps_list_loading"/>
         <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"

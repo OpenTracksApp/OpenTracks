@@ -1,17 +1,17 @@
 // Copyright 2009 Google Inc. All Rights Reserved.
-package com.google.android.apps.mytracks.io.mymaps;
+package com.google.android.apps.mytracks.io.maps;
 
 /**
- * Metadata about a "my maps" map.
+ * Metadata about a Google Maps map.
  */
-class MyMapsMapMetadata {
+class MapsMapMetadata {
 
   private String title;
   private String description;
   private String gdataEditUri;
   private boolean searchable;
 
-  public MyMapsMapMetadata() {
+  public MapsMapMetadata() {
     title = "";
     description = "";
     gdataEditUri = "";

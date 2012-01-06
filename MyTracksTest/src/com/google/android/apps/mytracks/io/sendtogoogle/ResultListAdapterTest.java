@@ -69,7 +69,7 @@ public class ResultListAdapterTest extends AndroidTestCase {
     }
   }
 
-  private final SendType sendType = SendType.MYMAPS;
+  private final SendType sendType = SendType.MAPS;
 
   private View inflateContentView(int viewId) {
     LayoutInflater layoutInflater

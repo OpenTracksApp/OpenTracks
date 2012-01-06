@@ -1,5 +1,5 @@
 // Copyright 2010 Google Inc. All Rights Reserved.
-package com.google.android.apps.mytracks.io.mymaps;
+package com.google.android.apps.mytracks.io.maps;
 
 import com.google.wireless.gdata.client.GDataParserFactory;
 import com.google.wireless.gdata.data.Entry;

@@ -1,5 +1,5 @@
 // Copyright 2009 Google Inc. All Rights Reserved.
-package com.google.android.apps.mytracks.io.mymaps;
+package com.google.android.apps.mytracks.io.maps;
 
 import com.google.wireless.gdata.data.Entry;
 import com.google.wireless.gdata.data.StringUtils;
@@ -7,27 +7,27 @@ import com.google.wireless.gdata.data.StringUtils;
 import android.graphics.Color;
 import android.util.Log;
 
+import java.io.IOException;
+import java.io.StringWriter;
+
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 import org.xmlpull.v1.XmlSerializer;
 
-import java.io.IOException;
-import java.io.StringWriter;
-
 /**
- * Converter from GData objects to MyMaps objects.
+ * Converter from GData objects to Maps objects.
  */
-class MyMapsGDataConverter {
+class MapsGDataConverter {
 
   private final XmlSerializer xmlSerializer;
 
-  public MyMapsGDataConverter() throws XmlPullParserException {
+  public MapsGDataConverter() throws XmlPullParserException {
     xmlSerializer = XmlPullParserFactory.newInstance().newSerializer();
   }
 
-  public static MyMapsMapMetadata getMapMetadataForEntry(
+  public static MapsMapMetadata getMapMetadataForEntry(
       MapFeatureEntry entry) {
-    MyMapsMapMetadata metadata = new MyMapsMapMetadata();
+    MapsMapMetadata metadata = new MapsMapMetadata();
     if ("public".equals(entry.getPrivacy())) {
       metadata.setSearchable(true);
     } else {
@@ -52,7 +52,7 @@ class MyMapsGDataConverter {
     return MapsClient.getMapIdFromMapEntryId(entry.getId());
   }
 
-  public static Entry getMapEntryForMetadata(MyMapsMapMetadata metadata) {
+  public static Entry getMapEntryForMetadata(MapsMapMetadata metadata) {
     MapFeatureEntry entry = new MapFeatureEntry();
     entry.setEditUri(metadata.getGDataEditUri());
     entry.setTitle(metadata.getTitle());
@@ -63,7 +63,7 @@ class MyMapsGDataConverter {
     return entry;
   }
 
-  public MapFeatureEntry getEntryForFeature(MyMapsFeature feature) {
+  public MapFeatureEntry getEntryForFeature(MapsFeature feature) {
     MapFeatureEntry entry = new MapFeatureEntry();
     entry.setTitle(feature.getTitle());
     entry.setAuthor("android");
@@ -80,7 +80,7 @@ class MyMapsGDataConverter {
       xmlSerializer.startTag(null, "Placemark");
       xmlSerializer.attribute(null, "xmlns", "http://earth.google.com/kml/2.2");
       xmlSerializer.startTag(null, "Style");
-      if (feature.getType() == MyMapsFeature.MARKER) {
+      if (feature.getType() == MapsFeature.MARKER) {
         xmlSerializer.startTag(null, "IconStyle");
         xmlSerializer.startTag(null, "Icon");
         xmlSerializer.startTag(null, "href");
@@ -102,7 +102,7 @@ class MyMapsGDataConverter {
         xmlSerializer.endTag(null, "width");
         xmlSerializer.endTag(null, "LineStyle");
 
-        if (feature.getType() == MyMapsFeature.SHAPE) {
+        if (feature.getType() == MapsFeature.SHAPE) {
           xmlSerializer.startTag(null, "PolyStyle");
           xmlSerializer.startTag(null, "color");
           int fcolor = feature.getFillColor();
@@ -137,13 +137,13 @@ class MyMapsGDataConverter {
         pointBuilder.append(",0.000000");
       }
       String pointString = pointBuilder.toString();
-      if (feature.getType() == MyMapsFeature.MARKER) {
+      if (feature.getType() == MapsFeature.MARKER) {
         xmlSerializer.startTag(null, "Point");
         xmlSerializer.startTag(null, "coordinates");
         xmlSerializer.text(pointString);
         xmlSerializer.endTag(null, "coordinates");
         xmlSerializer.endTag(null, "Point");
-      } else if (feature.getType() == MyMapsFeature.LINE) {
+      } else if (feature.getType() == MapsFeature.LINE) {
         xmlSerializer.startTag(null, "LineString");
         xmlSerializer.startTag(null, "tessellate");
         xmlSerializer.text("1");

@@ -20,7 +20,7 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.google.android.apps.mytracks.AccountChooser;
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.MyMapsList;
+import com.google.android.apps.mytracks.MapsList;
 import com.google.android.apps.mytracks.ProgressIndicator;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
@@ -31,9 +31,9 @@ import com.google.android.apps.mytracks.io.AuthManagerFactory;
 import com.google.android.apps.mytracks.io.SendToDocs;
 import com.google.android.apps.mytracks.io.SendToFusionTables;
 import com.google.android.apps.mytracks.io.SendToFusionTables.OnSendCompletedListener;
-import com.google.android.apps.mytracks.io.SendToMyMaps;
-import com.google.android.apps.mytracks.io.mymaps.MapsFacade;
-import com.google.android.apps.mytracks.io.mymaps.MyMapsConstants;
+import com.google.android.apps.mytracks.io.SendToMaps;
+import com.google.android.apps.mytracks.io.maps.MapsConstants;
+import com.google.android.apps.mytracks.io.maps.MapsFacade;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.apps.mytracks.util.UriUtils;
 import com.google.android.maps.mytracks.R;
@@ -123,18 +123,18 @@ public class SendActivity extends Activity implements ProgressIndicator {
   // Send request information.
   private SendType sendType;
   private long sendTrackId;
-  private boolean sendToMyMaps;
-  private boolean sendToMyMapsNewMap;
+  private boolean sendToMaps;
+  private boolean sendToMapsNewMap;
   private boolean sendToFusionTables;
   private boolean sendToDocs;
 
   // Send result information, used by results dialog.
-  private boolean sendToMyMapsSuccess = false;
+  private boolean sendToMapsSuccess = false;
   private boolean sendToFusionTablesSuccess = false;
   private boolean sendToDocsSuccess = false;
 
   // Send result information, used to share a link.
-  private String sendToMyMapsMapId;
+  private String sendToMapsMapId;
   private String sendToFusionTablesTableId;
 
   // Current sending state.
@@ -241,8 +241,8 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
         dialog.dismiss();
 
-        sendToMyMaps = sendDialog.getSendToMyMaps();
-        sendToMyMapsNewMap = sendDialog.getCreateNewMap();
+        sendToMaps = sendDialog.getSendToMaps();
+        sendToMapsNewMap = sendDialog.getCreateNewMap();
         sendToFusionTables = sendDialog.getSendToFusionTables();
         sendToDocs = sendDialog.getSendToDocs();
 
@@ -256,15 +256,15 @@ public class SendActivity extends Activity implements ProgressIndicator {
   private void restoreInstanceState(Bundle savedInstanceState) {
     currentState = SendState.values()[savedInstanceState.getInt(STATE_STATE)];
 
-    sendToMyMaps = savedInstanceState.getBoolean(STATE_SEND_TO_MAPS);
+    sendToMaps = savedInstanceState.getBoolean(STATE_SEND_TO_MAPS);
     sendToFusionTables = savedInstanceState.getBoolean(STATE_SEND_TO_FUSION_TABLES);
     sendToDocs = savedInstanceState.getBoolean(STATE_SEND_TO_DOCS);
 
-    sendToMyMapsSuccess = savedInstanceState.getBoolean(STATE_MAPS_SUCCESS);
+    sendToMapsSuccess = savedInstanceState.getBoolean(STATE_MAPS_SUCCESS);
     sendToFusionTablesSuccess = savedInstanceState.getBoolean(STATE_FUSION_SUCCESS);
     sendToDocsSuccess = savedInstanceState.getBoolean(STATE_DOCS_SUCCESS);
 
-    sendToMyMapsMapId = savedInstanceState.getString(STATE_MAP_ID);
+    sendToMapsMapId = savedInstanceState.getString(STATE_MAP_ID);
     sendToFusionTablesTableId = savedInstanceState.getString(STATE_TABLE_ID);
 
     lastAccountName = savedInstanceState.getString(STATE_ACCOUNT_NAME);
@@ -277,11 +277,11 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
     outState.putInt(STATE_STATE, currentState.ordinal());
 
-    outState.putBoolean(STATE_MAPS_SUCCESS, sendToMyMapsSuccess);
+    outState.putBoolean(STATE_MAPS_SUCCESS, sendToMapsSuccess);
     outState.putBoolean(STATE_FUSION_SUCCESS, sendToFusionTablesSuccess);
     outState.putBoolean(STATE_DOCS_SUCCESS, sendToDocsSuccess);
 
-    outState.putString(STATE_MAP_ID, sendToMyMapsMapId);
+    outState.putString(STATE_MAP_ID, sendToMapsMapId);
     outState.putString(STATE_TABLE_ID, sendToFusionTablesTableId);
 
     outState.putString(STATE_ACCOUNT_NAME, lastAccountName);
@@ -373,7 +373,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
   private SendState startSend() {
     showDialog(PROGRESS_DIALOG);
 
-    if (sendToMyMaps) {
+    if (sendToMaps) {
       return SendState.AUTHENTICATE_MAPS;
     } else if (sendToFusionTables) {
       return SendState.AUTHENTICATE_FUSION_TABLES;
@@ -400,18 +400,18 @@ public class SendActivity extends Activity implements ProgressIndicator {
   private SendState authenticateToGoogleMaps() {
     Log.d(TAG, "SendActivity.authenticateToGoogleMaps");
     progressDialog.setProgress(0);
-    progressDialog.setMessage(getAuthenticatingProgressMessage(SendType.MYMAPS));
-    authenticate(Constants.AUTHENTICATE_TO_MY_MAPS, MyMapsConstants.SERVICE_NAME);
-    // AUTHENTICATE_TO_MY_MAPS callback calls sendToGoogleMaps
+    progressDialog.setMessage(getAuthenticatingProgressMessage(SendType.MAPS));
+    authenticate(Constants.AUTHENTICATE_TO_MAPS, MapsConstants.SERVICE_NAME);
+    // AUTHENTICATE_TO_MAPS callback calls sendToGoogleMaps
     return SendState.NOT_READY;
   }
 
   private SendState pickMap() {
-    if (!sendToMyMapsNewMap) {
+    if (!sendToMapsNewMap) {
       // Ask the user to choose a map to upload into
-      Intent listIntent = new Intent(this, MyMapsList.class);
-      listIntent.putExtra(MyMapsList.EXTRA_ACCOUNT_NAME, lastAccountName);
-      listIntent.putExtra(MyMapsList.EXTRA_ACCOUNT_TYPE, lastAccountType);
+      Intent listIntent = new Intent(this, MapsList.class);
+      listIntent.putExtra(MapsList.EXTRA_ACCOUNT_NAME, lastAccountName);
+      listIntent.putExtra(MapsList.EXTRA_ACCOUNT_TYPE, lastAccountType);
       startActivityForResult(listIntent, Constants.GET_MAP);
       // The callback for GET_MAP calls authenticateToGoogleMaps
       return SendState.NOT_READY;
@@ -423,12 +423,12 @@ public class SendActivity extends Activity implements ProgressIndicator {
   private SendState sendToGoogleMaps() {
     tracker.trackPageView("/send/maps");
 
-    SendToMyMaps.OnSendCompletedListener onCompletion = new SendToMyMaps.OnSendCompletedListener() {
+    SendToMaps.OnSendCompletedListener onCompletion = new SendToMaps.OnSendCompletedListener() {
       @Override
       public void onSendCompleted(String mapId, boolean success) {
-        sendToMyMapsSuccess = success;
-        if (sendToMyMapsSuccess) {
-          sendToMyMapsMapId = mapId;
+        sendToMapsSuccess = success;
+        if (sendToMapsSuccess) {
+          sendToMapsMapId = mapId;
           // Update the map id for this track:
           try {
             Track track = providerUtils.getTrack(sendTrackId);
@@ -449,14 +449,14 @@ public class SendActivity extends Activity implements ProgressIndicator {
       }
     };
 
-    if (sendToMyMapsMapId == null) {
-      sendToMyMapsMapId = SendToMyMaps.NEW_MAP_ID;
+    if (sendToMapsMapId == null) {
+      sendToMapsMapId = SendToMaps.NEW_MAP_ID;
     }
 
-    final SendToMyMaps sender = new SendToMyMaps(this, sendToMyMapsMapId, lastAuth,
+    final SendToMaps sender = new SendToMaps(this, sendToMapsMapId, lastAuth,
         sendTrackId, this /*progressIndicator*/, onCompletion);
 
-    new Thread(sender, "SendToMyMaps").start();
+    new Thread(sender, "SendToMaps").start();
 
     return SendState.NOT_READY;
   }
@@ -611,7 +611,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
     //    sharing.  We won't display a share button.
 
     List<SendResult> results = makeSendToGoogleResults();
-    final boolean canShare = sendToFusionTablesTableId != null || sendToMyMapsMapId != null;
+    final boolean canShare = sendToFusionTablesTableId != null || sendToMapsMapId != null;
 
     final OnClickListener finishListener = new DialogInterface.OnClickListener() {
       @Override
@@ -654,9 +654,9 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
   private SendState shareLink() {
     String url = null;
-    if (sendToMyMaps && sendToMyMapsSuccess) {
-      // Prefer a link to My Maps
-      url = MapsFacade.buildMapUrl(sendToMyMapsMapId);
+    if (sendToMaps && sendToMapsSuccess) {
+      // Prefer a link to Maps
+      url = MapsFacade.buildMapUrl(sendToMapsMapId);
     } else if (sendToFusionTables && sendToFusionTablesSuccess) {
       // Otherwise try using the link to fusion tables
       url = getFusionTablesUrl(sendTrackId);
@@ -672,7 +672,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
   }
 
   /**
-   * Shares a link to a My Map or Fusion Table via external app (email, gmail, ...)
+   * Shares a link to a Map or Fusion Table via external app (email, gmail, ...)
    * A chooser with apps that support text/plain will be shown to the user.
    */
   private void shareLinkToMap(String url) {
@@ -702,8 +702,8 @@ public class SendActivity extends Activity implements ProgressIndicator {
    */
   private List<SendResult> makeSendToGoogleResults() {
     List<SendResult> results = new ArrayList<SendResult>();
-    if (sendToMyMaps) {
-      results.add(new SendResult(SendType.MYMAPS, sendToMyMapsSuccess));
+    if (sendToMaps) {
+      results.add(new SendResult(SendType.MAPS, sendToMapsSuccess));
     }
     if (sendToFusionTables) {
       results.add(new SendResult(SendType.FUSION_TABLES,
@@ -807,7 +807,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
         Log.d(TAG, "Get map result: " + resultCode);
         if (resultCode == RESULT_OK) {
           if (results.hasExtra("mapid")) {
-            sendToMyMapsMapId = results.getStringExtra("mapid");
+            sendToMapsMapId = results.getStringExtra("mapid");
           }
           nextState = SendState.SEND_TO_MAPS;
         } else {
@@ -829,8 +829,8 @@ public class SendActivity extends Activity implements ProgressIndicator {
   private void onLoginSuccess(int requestCode) {
     SendState nextState;
     switch (requestCode) {
-      case Constants.AUTHENTICATE_TO_MY_MAPS:
-        // Authenticated with Google My Maps
+      case Constants.AUTHENTICATE_TO_MAPS:
+        // Authenticated with Google Maps
         nextState = SendState.PICK_MAP;
         break;
       case Constants.AUTHENTICATE_TO_FUSION_TABLES:
@@ -856,12 +856,12 @@ public class SendActivity extends Activity implements ProgressIndicator {
   }
 
   /**
-   * Resets status information for sending to MyMaps/Docs.
+   * Resets status information for sending to Maps/Fusion Tables/Docs.
    */
   private void resetState() {
     currentState = SendState.SEND_OPTIONS;
-    sendToMyMapsMapId = null;
-    sendToMyMapsSuccess = true;
+    sendToMapsMapId = null;
+    sendToMapsSuccess = true;
     sendToFusionTablesSuccess = true;
     sendToDocsSuccess = true;
     sendToFusionTablesTableId = null;

@@ -1,10 +1,10 @@
 // Copyright 2009 Google Inc. All Rights Reserved.
-package com.google.android.apps.mytracks.io.mymaps;
+package com.google.android.apps.mytracks.io.maps;
 
 /**
- * Constants for My Maps.
+ * Constants for Google Maps.
  */
-public class MyMapsConstants {
+public class MapsConstants {
   static final String TAG = "MapsApi";
   static final String MAPSHOP_BASE_URL =
       "https://maps.google.com/maps/ms";
@@ -13,5 +13,5 @@ public class MyMapsConstants {
   /**
    * Private constructor to prevent instantiation.
    */
-  private MyMapsConstants() { }
+  private MapsConstants() { }
 }

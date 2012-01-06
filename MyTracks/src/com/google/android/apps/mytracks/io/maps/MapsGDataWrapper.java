@@ -1,5 +1,5 @@
 // Copyright 2010 Google Inc. All Rights Reserved.
-package com.google.android.apps.mytracks.io.mymaps;
+package com.google.android.apps.mytracks.io.maps;
 
 import com.google.android.apps.mytracks.io.AuthManager;
 import com.google.android.apps.mytracks.io.AuthManager.AuthCallback;
@@ -17,12 +17,12 @@ import android.util.Log;
 import java.io.IOException;
 
 /**
- * MyMapsGDataWrapper provides a wrapper around GData operations that maintains
+ * MapsGDataWrapper provides a wrapper around GData operations that maintains
  * the GData client, and provides a method to run gdata queries with proper
  * error handling. After a query is run, the wrapper can be queried about the
  * error that occurred.
  */
-class MyMapsGDataWrapper {
+class MapsGDataWrapper {
   /**
    * A QueryFunction is passed in when executing a query. The query function
    * of the class is called with the GData client as a parameter. The
@@ -67,7 +67,7 @@ class MyMapsGDataWrapper {
   private int retriesPending;
   private boolean cleanupCalled;
 
-  public MyMapsGDataWrapper(Context context, AuthManager auth) {
+  public MapsGDataWrapper(Context context, AuthManager auth) {
     androidGdataClient = GDataClientFactory.getGDataClient(context);
     this.auth = auth;
     client =
@@ -92,11 +92,11 @@ class MyMapsGDataWrapper {
       errorMessage = null;
       return true;
     } catch (AuthenticationException e) {
-      Log.e(MyMapsConstants.TAG, "Exception", e);
+      Log.e(MapsConstants.TAG, "Exception", e);
       errorType = ERROR_AUTH;
       errorMessage = e.getMessage();
     } catch (HttpException e) {
-      Log.e(MyMapsConstants.TAG, "HttpException", e);
+      Log.e(MapsConstants.TAG, "HttpException", e);
       errorMessage = e.getMessage();
       if (errorMessage != null && errorMessage.contains("401")) {
         errorType = ERROR_AUTH;
@@ -104,7 +104,7 @@ class MyMapsGDataWrapper {
         errorType = ERROR_CONNECTION;
       }
     } catch (IOException e) {
-      Log.e(MyMapsConstants.TAG, "Exception", e);
+      Log.e(MapsConstants.TAG, "Exception", e);
       errorMessage = e.getMessage();
       if (errorMessage != null && errorMessage.contains("503")) {
         errorType = ERROR_INTERNAL;
@@ -112,20 +112,20 @@ class MyMapsGDataWrapper {
         errorType = ERROR_CONNECTION;
       }
     } catch (ParseException e) {
-      Log.e(MyMapsConstants.TAG, "Exception", e);
+      Log.e(MapsConstants.TAG, "Exception", e);
       errorType = ERROR_LOCAL;
       errorMessage = e.getMessage();
     } catch (ConflictDetectedException e) {
-      Log.e(MyMapsConstants.TAG, "Exception", e);
+      Log.e(MapsConstants.TAG, "Exception", e);
       errorType = ERROR_CONFLICT;
       errorMessage = e.getMessage();
     } catch (Exception e) {
-      Log.e(MyMapsConstants.TAG, "Exception", e);
+      Log.e(MapsConstants.TAG, "Exception", e);
       errorType = ERROR_UNKNOWN;
       errorMessage = e.getMessage();
       e.printStackTrace();
     }
-    Log.d(MyMapsConstants.TAG, "GData error encountered: " + errorMessage);
+    Log.d(MapsConstants.TAG, "GData error encountered: " + errorMessage);
     if (errorType == ERROR_AUTH && auth != null) {
       AuthCallback whenFinished = null;
       if (retryOnAuthFailure) {

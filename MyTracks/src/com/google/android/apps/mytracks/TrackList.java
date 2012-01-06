@@ -53,7 +53,7 @@ import android.widget.TextView;
 /**
  * A list activity displaying all the recorded tracks. There's a context
  * menu (via long press) displaying various options such as showing, editing,
- * deleting, sending to MyMaps, or writing to SD card.
+ * deleting, sending to Google, or writing to SD card.
  *
  * @author Leif Hendrik Wilden
  */
@@ -176,7 +176,7 @@ public class TrackList extends ListActivity
         SendActivity.sendToGoogle(this, trackId, null);
         return true;
       case Constants.MENU_SHARE_MAP:
-        SendActivity.sendToGoogle(this, trackId, SendType.MYMAPS);
+        SendActivity.sendToGoogle(this, trackId, SendType.MAPS);
         return true;
       case Constants.MENU_SHARE_FUSION_TABLE:
         SendActivity.sendToGoogle(this, trackId, SendType.FUSION_TABLES);

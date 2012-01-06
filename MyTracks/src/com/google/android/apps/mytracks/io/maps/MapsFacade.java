@@ -1,5 +1,5 @@
 // Copyright 2011 Google Inc. All Rights Reserved.
-package com.google.android.apps.mytracks.io.mymaps;
+package com.google.android.apps.mytracks.io.maps;
 
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.AuthManager;
@@ -43,19 +43,19 @@ public class MapsFacade {
     "http://maps.google.com/mapfiles/ms/micons/green-dot.png";
   
   private final Context context;
-  private final MyMapsGDataWrapper wrapper;
-  private final MyMapsGDataConverter gdataConverter;
+  private final MapsGDataWrapper wrapper;
+  private final MapsGDataConverter gdataConverter;
   private final String authToken;
 
   public MapsFacade(Context context, AuthManager auth) {
     this.context = context;
     this.authToken = auth.getAuthToken();
 
-    wrapper = new MyMapsGDataWrapper(context, auth);
+    wrapper = new MapsGDataWrapper(context, auth);
     wrapper.setRetryOnAuthFailure(true);
 
     try {
-      gdataConverter = new MyMapsGDataConverter();
+      gdataConverter = new MapsGDataConverter();
     } catch (XmlPullParserException e) {
       throw new IllegalStateException("Unable to create maps data converter", e);
     }
@@ -72,7 +72,7 @@ public class MapsFacade {
    * @return true on success, false otherwise
    */
   public boolean getMapsList(final MapsListCallback callback) {
-    return wrapper.runQuery(new MyMapsGDataWrapper.QueryFunction() {
+    return wrapper.runQuery(new MapsGDataWrapper.QueryFunction() {
       @Override
       public void query(MapsClient client) throws IOException, Exception {
         GDataParser listParser = client.getParserForFeed(
@@ -81,9 +81,9 @@ public class MapsFacade {
         while (listParser.hasMoreData()) {
           MapFeatureEntry entry =
               (MapFeatureEntry) listParser.readNextEntry(null);
-          MyMapsMapMetadata metadata =
-              MyMapsGDataConverter.getMapMetadataForEntry(entry);
-          String mapId = MyMapsGDataConverter.getMapidForEntry(entry);
+          MapsMapMetadata metadata =
+              MapsGDataConverter.getMapMetadataForEntry(entry);
+          String mapId = MapsGDataConverter.getMapidForEntry(entry);
 
           callback.onReceivedMapListing(
               mapId, metadata.getTitle(), metadata.getDescription(), metadata.getSearchable());
@@ -111,24 +111,24 @@ public class MapsFacade {
       throw new IllegalArgumentException("mapIdBuilder should be empty");
     }
 
-    return wrapper.runQuery(new MyMapsGDataWrapper.QueryFunction() {
+    return wrapper.runQuery(new MapsGDataWrapper.QueryFunction() {
       @Override
       public void query(MapsClient client) throws IOException, Exception {
-        Log.d(MyMapsConstants.TAG, "Creating a new map.");
+        Log.d(MapsConstants.TAG, "Creating a new map.");
         String mapFeed = MapsClient.getMapsFeed();
-        Log.d(MyMapsConstants.TAG, "Map feed is " + mapFeed);
-        MyMapsMapMetadata metaData = new MyMapsMapMetadata();
+        Log.d(MapsConstants.TAG, "Map feed is " + mapFeed);
+        MapsMapMetadata metaData = new MapsMapMetadata();
         metaData.setTitle(title);
         metaData.setDescription(description + " - "
             + category + " - " + StringUtils.getCreatedByMyTracks(context, false));
         metaData.setSearchable(isPublic);
-        Entry entry = MyMapsGDataConverter.getMapEntryForMetadata(metaData);
-        Log.d(MyMapsConstants.TAG, "Title: " + entry.getTitle());
+        Entry entry = MapsGDataConverter.getMapEntryForMetadata(metaData);
+        Log.d(MapsConstants.TAG, "Title: " + entry.getTitle());
         Entry map = client.createEntry(mapFeed, authToken, entry);
 
         String mapId = MapsClient.getMapIdFromMapEntryId(map.getId());
         mapIdBuilder.append(mapId);
-        Log.d(MyMapsConstants.TAG, "New map id is: " + mapId);
+        Log.d(MapsConstants.TAG, "New map id is: " + mapId);
       }
     });
   }
@@ -145,7 +145,7 @@ public class MapsFacade {
    */
   public boolean uploadMarker(final String mapId, final String trackName,
       final String trackDescription, final Location loc, final boolean isStart) {
-    return wrapper.runQuery(new MyMapsGDataWrapper.QueryFunction() {
+    return wrapper.runQuery(new MapsGDataWrapper.QueryFunction() {
       @Override
       public void query(MapsClient client)
           throws IOException, Exception {
@@ -165,34 +165,34 @@ public class MapsFacade {
                             String trackName, String trackDescription,
                             GeoPoint geoPoint,
                             boolean isStart) throws IOException, Exception {
-    MyMapsFeature feature =
-        buildMyMapsPlacemarkFeature(trackName, trackDescription, geoPoint, isStart);
+    MapsFeature feature =
+        buildMapsPlacemarkFeature(trackName, trackDescription, geoPoint, isStart);
     Entry entry = gdataConverter.getEntryForFeature(feature);
-    Log.d(MyMapsConstants.TAG, "SendToMyMaps: Creating placemark "
+    Log.d(MapsConstants.TAG, "SendToMaps: Creating placemark "
         + entry.getTitle());
     try {
       client.createEntry(featureFeed, authToken, entry);
-      Log.d(MyMapsConstants.TAG, "SendToMyMaps: createEntry success!");
+      Log.d(MapsConstants.TAG, "SendToMaps: createEntry success!");
     } catch (IOException e) {
-      Log.w(MyMapsConstants.TAG,
-          "SendToMyMaps: createEntry 1st try failed. Trying again.");
+      Log.w(MapsConstants.TAG,
+          "SendToMaps: createEntry 1st try failed. Trying again.");
       // Retry once (often IOException is thrown on a timeout):
       client.createEntry(featureFeed, authToken, entry);
-      Log.d(MyMapsConstants.TAG,
-          "SendToMyMaps: createEntry success on 2nd try!");
+      Log.d(MapsConstants.TAG,
+          "SendToMaps: createEntry success on 2nd try!");
     }
   }
 
   /**
-   * Builds a placemark MyMapsFeature from a track.
+   * Builds a placemark MapsFeature from a track.
    *
    * @param trackName the track
    * @param trackDescription the track description
    * @param geoPoint the geo point
    * @param isStart true if it's the start of the track, or false for end
-   * @return a MyMapsFeature
+   * @return a MapsFeature
    */
-  private MyMapsFeature buildMyMapsPlacemarkFeature(
+  private MapsFeature buildMapsPlacemarkFeature(
       String trackName, String trackDescription,
       GeoPoint geoPoint, boolean isStart) {
     String iconUrl;
@@ -205,34 +205,34 @@ public class MapsFacade {
         + (isStart ? context.getString(R.string.marker_label_start)
                    : context.getString(R.string.marker_label_end));
     String description = isStart ? "" : trackDescription;
-    return buildMyMapsPlacemarkFeature(title, description, iconUrl, geoPoint);
+    return buildMapsPlacemarkFeature(title, description, iconUrl, geoPoint);
   }
 
   /**
-   * Builds a MyMapsFeature from a waypoint.
+   * Builds a MapsFeature from a waypoint.
    * 
    * @param title the title
    * @param description the description
    * @param iconUrl the icon url
    * @param geoPoint the waypoint
-   * @return a MyMapsFeature
+   * @return a MapsFeature
    */
-  private static MyMapsFeature buildMyMapsPlacemarkFeature(
+  private static MapsFeature buildMapsPlacemarkFeature(
       String title, String description, String iconUrl, GeoPoint geoPoint) {
-    MyMapsFeature myMapsFeature = new MyMapsFeature();
-    myMapsFeature.generateAndroidId();
-    myMapsFeature.setType(MyMapsFeature.MARKER);
-    myMapsFeature.setIconUrl(iconUrl);
-    myMapsFeature.setDescription(description);
-    myMapsFeature.addPoint(geoPoint);
+    MapsFeature mapsFeature = new MapsFeature();
+    mapsFeature.generateAndroidId();
+    mapsFeature.setType(MapsFeature.MARKER);
+    mapsFeature.setIconUrl(iconUrl);
+    mapsFeature.setDescription(description);
+    mapsFeature.addPoint(geoPoint);
     if (TextUtils.isEmpty(title)) {
       // Features must have a name (otherwise GData upload may fail):
-      myMapsFeature.setTitle("-");
+      mapsFeature.setTitle("-");
     } else {
-      myMapsFeature.setTitle(title);
+      mapsFeature.setTitle(title);
     }
-    myMapsFeature.setDescription(description.replaceAll("\n", "<br>"));
-    return myMapsFeature;
+    mapsFeature.setDescription(description.replaceAll("\n", "<br>"));
+    return mapsFeature;
   }
 
   /**
@@ -244,7 +244,7 @@ public class MapsFacade {
    */
   public boolean uploadWaypoints(
       final String mapId, final Iterable<Waypoint> waypoints) {
-    return wrapper.runQuery(new MyMapsGDataWrapper.QueryFunction() {
+    return wrapper.runQuery(new MapsGDataWrapper.QueryFunction() {
       public void query(MapsClient client) {
         // TODO(rdamazio): Stream through the waypoints in chunks.
         // I am leaving the number of waypoints very high which should not be a
@@ -254,33 +254,33 @@ public class MapsFacade {
 
         try {
           for (Waypoint waypoint : waypoints) {
-            MyMapsFeature feature = buildMyMapsPlacemarkFeature(
+            MapsFeature feature = buildMapsPlacemarkFeature(
                 waypoint.getName(), waypoint.getDescription(), waypoint.getIcon(),
                 getGeoPoint(waypoint.getLocation()));
             Entry entry = gdataConverter.getEntryForFeature(feature);
 
-            Log.d(MyMapsConstants.TAG,
-                "SendToMyMaps: Creating waypoint.");
+            Log.d(MapsConstants.TAG,
+                "SendToMaps: Creating waypoint.");
             try {
               client.createEntry(featureFeed, authToken, entry);
-              Log.d(MyMapsConstants.TAG,
-                  "SendToMyMaps: createEntry success!");
+              Log.d(MapsConstants.TAG,
+                  "SendToMaps: createEntry success!");
             } catch (IOException e) {
-              Log.w(MyMapsConstants.TAG,
-                  "SendToMyMaps: createEntry 1st try failed. Retrying.");
+              Log.w(MapsConstants.TAG,
+                  "SendToMaps: createEntry 1st try failed. Retrying.");
     
               // Retry once (often IOException is thrown on a timeout):
               client.createEntry(featureFeed, authToken, entry);
-              Log.d(MyMapsConstants.TAG,
-                  "SendToMyMaps: createEntry success on 2nd try!");
+              Log.d(MapsConstants.TAG,
+                  "SendToMaps: createEntry success on 2nd try!");
             }
           }
         } catch (ParseException e) {
-          Log.w(MyMapsConstants.TAG, "ParseException caught.", e);
+          Log.w(MapsConstants.TAG, "ParseException caught.", e);
         } catch (HttpException e) {
-          Log.w(MyMapsConstants.TAG, "HttpException caught.", e);
+          Log.w(MapsConstants.TAG, "HttpException caught.", e);
         } catch (IOException e) {
-          Log.w(MyMapsConstants.TAG, "IOException caught.", e);
+          Log.w(MapsConstants.TAG, "IOException caught.", e);
         }
       }
     });
@@ -296,12 +296,12 @@ public class MapsFacade {
    */
   public boolean uploadTrackPoints(
       final String mapId, final String trackName, final Collection<Location> locations) {
-    return wrapper.runQuery(new MyMapsGDataWrapper.QueryFunction() {
+    return wrapper.runQuery(new MapsGDataWrapper.QueryFunction() {
       @Override
       public void query(MapsClient client)
           throws IOException, Exception {
         String featureFeed = MapsClient.getFeaturesFeed(mapId);
-        Log.d(MyMapsConstants.TAG, "Feature feed url: " + featureFeed);
+        Log.d(MapsConstants.TAG, "Feature feed url: " + featureFeed);
         uploadTrackPoints(client, featureFeed, trackName, locations);
       }
     });
@@ -316,52 +316,52 @@ public class MapsFacade {
     int numLocations = locations.size();
     if (numLocations < 2) {
       // Need at least two points for a polyline:
-      Log.w(MyMapsConstants.TAG, "Not uploading too few points");
+      Log.w(MapsConstants.TAG, "Not uploading too few points");
       return true;
     }
   
     // Put the line:
     entry = gdataConverter.getEntryForFeature(
-        buildMyMapsLineFeature(trackName, locations));
-    Log.d(MyMapsConstants.TAG,
-        "SendToMyMaps: Creating line " + entry.getTitle());
+        buildMapsLineFeature(trackName, locations));
+    Log.d(MapsConstants.TAG,
+        "SendToMaps: Creating line " + entry.getTitle());
     try {
       client.createEntry(featureFeed, authToken, entry);
-      Log.d(MyMapsConstants.TAG, "SendToMyMaps: createEntry success!");
+      Log.d(MapsConstants.TAG, "SendToMaps: createEntry success!");
     } catch (IOException e) {
-      Log.w(MyMapsConstants.TAG,
-          "SendToMyMaps: createEntry 1st try failed. Trying again.");
+      Log.w(MapsConstants.TAG,
+          "SendToMaps: createEntry 1st try failed. Trying again.");
       // Retry once (often IOException is thrown on a timeout):
       client.createEntry(featureFeed, authToken, entry);
-      Log.d(MyMapsConstants.TAG,
-          "SendToMyMaps: createEntry success on 2nd try!");
+      Log.d(MapsConstants.TAG,
+          "SendToMaps: createEntry success on 2nd try!");
     }
     return true;
   }
 
   /**
-   * Builds a MyMapsFeature from a track.
+   * Builds a MapsFeature from a track.
    *
    * @param trackName the track name
    * @param locations locations on the track
-   * @return a MyMapsFeature
+   * @return a MapsFeature
    */
-  private static MyMapsFeature buildMyMapsLineFeature(String trackName,
+  private static MapsFeature buildMapsLineFeature(String trackName,
       Iterable<Location> locations) {
-    MyMapsFeature myMapsFeature = new MyMapsFeature();
-    myMapsFeature.generateAndroidId();
-    myMapsFeature.setType(MyMapsFeature.LINE);
+    MapsFeature mapsFeature = new MapsFeature();
+    mapsFeature.generateAndroidId();
+    mapsFeature.setType(MapsFeature.LINE);
     if (TextUtils.isEmpty(trackName)) {
       // Features must have a name (otherwise GData upload may fail):
-      myMapsFeature.setTitle("-");
+      mapsFeature.setTitle("-");
     } else {
-      myMapsFeature.setTitle(trackName);
+      mapsFeature.setTitle(trackName);
     }
-    myMapsFeature.setColor(0x80FF0000);
+    mapsFeature.setColor(0x80FF0000);
     for (Location loc : locations) {
-      myMapsFeature.addPoint(getGeoPoint(loc));
+      mapsFeature.addPoint(getGeoPoint(loc));
     }
-    return myMapsFeature;
+    return mapsFeature;
   }
 
   /**

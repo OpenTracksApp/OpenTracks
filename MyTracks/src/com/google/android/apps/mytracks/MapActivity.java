@@ -404,7 +404,7 @@ public class MapActivity extends com.google.android.maps.MapActivity
         SendActivity.sendToGoogle(this, dataHub.getSelectedTrackId(), null);
         return true;
       case Constants.MENU_SHARE_MAP:
-        SendActivity.sendToGoogle(this, dataHub.getSelectedTrackId(), SendType.MYMAPS);
+        SendActivity.sendToGoogle(this, dataHub.getSelectedTrackId(), SendType.MAPS);
         return true;
       case Constants.MENU_SHARE_FUSION_TABLE:
         SendActivity.sendToGoogle(this, dataHub.getSelectedTrackId(), SendType.FUSION_TABLES);

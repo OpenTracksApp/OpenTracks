@@ -39,11 +39,11 @@ limitations under the License.
       <!-- Google Maps -->
       <TableRow android:id="@+id/send_google_maps_row">
         <ImageView
-          android:src="@drawable/mymaps_icon"
+          android:src="@drawable/maps_icon"
           style="@style/SendGoogleImageView"/>
         <CheckBox
-          android:id="@+id/send_google_my_maps"
-          android:text="@string/send_google_my_maps"
+          android:id="@+id/send_google_maps"
+          android:text="@string/send_google_maps"
           style="@style/SendGoogleCheckBox"/>
       </TableRow>
       <TableRow android:id="@+id/send_google_maps_option_row">

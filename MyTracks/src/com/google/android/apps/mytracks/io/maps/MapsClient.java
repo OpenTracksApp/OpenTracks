@@ -1,5 +1,5 @@
 // Copyright 2010 Google Inc. All Rights Reserved.
-package com.google.android.apps.mytracks.io.mymaps;
+package com.google.android.apps.mytracks.io.maps;
 
 import com.google.wireless.gdata.client.GDataClient;
 import com.google.wireless.gdata.client.GDataParserFactory;
@@ -33,11 +33,11 @@ class MapsClient extends GDataServiceClient {
 
   @Override
   public String getServiceName() {
-    return MyMapsConstants.SERVICE_NAME;
+    return MapsConstants.SERVICE_NAME;
   }
 
   public static String buildMapUrl(String mapId) {
-    return MyMapsConstants.MAPSHOP_BASE_URL + "?msa=0&msid=" + mapId;
+    return MapsConstants.MAPSHOP_BASE_URL + "?msa=0&msid=" + mapId;
   }
 
   public static String getMapsFeed() {

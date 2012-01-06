@@ -22,7 +22,7 @@ import com.google.android.apps.mytracks.ProgressIndicator;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.io.mymaps.MapsFacade;
+import com.google.android.apps.mytracks.io.maps.MapsFacade;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendType;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatistics;
@@ -43,7 +43,7 @@ import java.util.List;
 import java.util.Vector;
 
 /**
- * A helper class used to transmit tracks to Google MyMaps.
+ * A helper class used to transmit tracks to Google Maps.
  * A new instance should be used for each upload.
  *
  * IMPORTANT: while this code is Apache-licensed, please notice that usage of
@@ -53,7 +53,7 @@ import java.util.Vector;
  *
  * @author Leif Hendrik Wilden
  */
-public class SendToMyMaps implements Runnable {
+public class SendToMaps implements Runnable {
 
   public static final String NEW_MAP_ID = "new";
   private static final int MAX_POINTS_PER_UPLOAD = 2048;
@@ -80,7 +80,7 @@ public class SendToMyMaps implements Runnable {
     void onSendCompleted(String mapId, boolean success);
   }
 
-  public SendToMyMaps(Activity context, String mapId, AuthManager auth,
+  public SendToMaps(Activity context, String mapId, AuthManager auth,
       long trackId, ProgressIndicator progressIndicator,
       OnSendCompletedListener onCompletion) {
     this.context = context;
@@ -95,7 +95,7 @@ public class SendToMyMaps implements Runnable {
 
   @Override
   public void run() {
-    Log.d(TAG, "Sending to MyMaps: trackId = " + trackId);
+    Log.d(TAG, "Sending to Maps: trackId = " + trackId);
     doUpload();
   }
 
@@ -130,7 +130,7 @@ public class SendToMyMaps implements Runnable {
         }
 
         String creatingFormat = context.getString(R.string.send_google_progress_creating);
-        String serviceName = context.getString(SendType.MYMAPS.getServiceName());
+        String serviceName = context.getString(SendType.MAPS.getServiceName());
         progressIndicator.setProgressMessage(String.format(creatingFormat, serviceName));
 
         StringBuilder mapIdBuilder = new StringBuilder();
@@ -170,11 +170,11 @@ public class SendToMyMaps implements Runnable {
         }
 
         if (!success) {
-          Log.w(TAG, "SendToMyMaps: upload waypoints failed.");
+          Log.w(TAG, "SendToMaps: upload waypoints failed.");
         }
       }
 
-      Log.d(TAG, "SendToMyMaps: Done: " + success);
+      Log.d(TAG, "SendToMaps: Done: " + success);
       progressIndicator.setProgressValue(100);
     } finally {
       if (mapsClient != null) {
@@ -321,7 +321,7 @@ public class SendToMyMaps implements Runnable {
 
     // Start uploading them
     String sendingFormat = context.getString(R.string.send_google_progress_sending);
-    String serviceName = context.getString(SendType.MYMAPS.getServiceName());
+    String serviceName = context.getString(SendType.MAPS.getServiceName());
     progressIndicator.setProgressMessage(String.format(sendingFormat, serviceName));
     for (Track splitTrack : splitTracks) {
       if (totalSegmentsUploaded > 1) {
@@ -331,13 +331,13 @@ public class SendToMyMaps implements Runnable {
       }
       totalSegmentsUploaded++;
       Log.d(TAG,
-          "SendToMyMaps: Prepared feature for upload w/ "
+          "SendToMaps: Prepared feature for upload w/ "
           + splitTrack.getLocations().size() + " points.");
 
       // Transmit tracks via GData feed:
       // -------------------------------
       Log.d(TAG,
-            "SendToMyMaps: Uploading to map " + mapId + " w/ auth " + auth);
+            "SendToMaps: Uploading to map " + mapId + " w/ auth " + auth);
       if (!mapsClient.uploadTrackPoints(mapId, splitTrack.getName(), splitTrack.getLocations())) {
         Log.e(TAG, "Uploading failed");
         return false;
@@ -386,7 +386,7 @@ public class SendToMyMaps implements Runnable {
         prepareTrackSegment(segment, splitTracks);
 
         Log.d(TAG,
-            "MyTracksSendToMyMaps: Starting new track segment...");
+            "MyTracksSendToMaps: Starting new track segment...");
         startNewTrackSegment = false;
         segment = new Track();
         segment.setId(track.getId());

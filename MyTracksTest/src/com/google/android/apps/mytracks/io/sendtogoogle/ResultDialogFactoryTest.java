@@ -59,7 +59,7 @@ public class ResultDialogFactoryTest extends ActivityInstrumentationTestCase2<My
   };
   
   public void testSuccess_noShare() {
-    List<SendResult> results = makeResults(new SendResult(SendType.MYMAPS, true),
+    List<SendResult> results = makeResults(new SendResult(SendType.MAPS, true),
         new SendResult(SendType.DOCS, true));
 
     AlertDialog dialog = ResultDialogFactory.makeDialog(
@@ -70,7 +70,7 @@ public class ResultDialogFactoryTest extends ActivityInstrumentationTestCase2<My
     ListAdapter listAdapter = listView.getAdapter();
     assertEquals(2, listAdapter.getCount());
 
-    assertEquals(SendType.MYMAPS, ((SendResult) listAdapter.getItem(0)).getType());
+    assertEquals(SendType.MAPS, ((SendResult) listAdapter.getItem(0)).getType());
     assertEquals(SendType.DOCS, ((SendResult) listAdapter.getItem(1)).getType());
 
     // Checking the return code of Dialog#getButton doesn't appear to be
@@ -92,7 +92,7 @@ public class ResultDialogFactoryTest extends ActivityInstrumentationTestCase2<My
 
   public void testSuccess_share() {
     List<SendResult> results = makeResults(
-        new SendResult(SendType.MYMAPS, true), new SendResult(SendType.DOCS, true));
+        new SendResult(SendType.MAPS, true), new SendResult(SendType.DOCS, true));
 
     AlertDialog dialog = ResultDialogFactory.makeDialog(
         myTracks, results, clickListener, clickListener, null);
@@ -103,7 +103,7 @@ public class ResultDialogFactoryTest extends ActivityInstrumentationTestCase2<My
   }
 
   public void testFailure_noShare() {
-    List<SendResult> results = makeResults(new SendResult(SendType.MYMAPS, true),
+    List<SendResult> results = makeResults(new SendResult(SendType.MAPS, true),
         new SendResult(SendType.DOCS, false));
 
     AlertDialog dialog = ResultDialogFactory.makeDialog(
@@ -117,7 +117,7 @@ public class ResultDialogFactoryTest extends ActivityInstrumentationTestCase2<My
   }
 
   public void testFailure_share() {
-    List<SendResult> results = makeResults(new SendResult(SendType.MYMAPS, true),
+    List<SendResult> results = makeResults(new SendResult(SendType.MAPS, true),
         new SendResult(SendType.DOCS, false));
 
     AlertDialog dialog = ResultDialogFactory.makeDialog(

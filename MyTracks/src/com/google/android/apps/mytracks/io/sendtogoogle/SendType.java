@@ -26,8 +26,8 @@ import android.os.Parcelable;
  * @author Matthew Simmons
  */
 public enum SendType implements Parcelable {
-  MYMAPS(R.string.send_google_my_maps,
-      R.string.send_google_my_maps_url),
+  MAPS(R.string.send_google_maps,
+      R.string.send_google_maps_url),
   FUSION_TABLES(R.string.send_google_fusion_tables,
       R.string.send_google_fusion_tables_url),
   DOCS(R.string.send_google_docs,

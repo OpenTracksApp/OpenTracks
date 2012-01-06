@@ -15,13 +15,13 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Vector;
 
-public class MyMapsListAdapter implements ListAdapter {
+public class MapsListAdapter implements ListAdapter {
   private Vector<String[]> mapsList;
   private Vector<Boolean> publicList;
   private Set<DataSetObserver> observerSet;
   private final Activity activity;
 
-  public MyMapsListAdapter(Activity activity) {
+  public MapsListAdapter(Activity activity) {
     this.activity = activity;
 
     mapsList = new Vector<String[]>();
@@ -99,10 +99,10 @@ public class MyMapsListAdapter implements ListAdapter {
       (TextView) convertView.findViewById(R.id.maplistpublic);
     if (publicList.get(position)) {
       publicUnlisted.setTextColor(Color.RED);
-      publicUnlisted.setText(R.string.my_maps_list_public_label);
+      publicUnlisted.setText(R.string.maps_list_public_label);
     } else {
       publicUnlisted.setTextColor(Color.GREEN);
-      publicUnlisted.setText(R.string.my_maps_list_unlisted_label);
+      publicUnlisted.setText(R.string.maps_list_unlisted_label);
     }
 
     return convertView;
