@@ -18,12 +18,13 @@ package com.google.android.apps.mytracks;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.content.SearchEngine;
+import com.google.android.apps.mytracks.content.SearchEngine.ScoredResult;
+import com.google.android.apps.mytracks.content.SearchEngine.SearchQuery;
+import com.google.android.apps.mytracks.content.SearchEngineProvider;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
-import com.google.android.apps.mytracks.content.SearchEngine.ScoredResult;
-import com.google.android.apps.mytracks.content.SearchEngine.SearchQuery;
 import com.google.android.maps.mytracks.R;
 
 import android.app.ListActivity;
@@ -34,6 +35,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.SearchRecentSuggestions;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -60,11 +62,14 @@ public class SearchActivity extends ListActivity {
   private SearchEngine engine;
   private LocationManager locationManager;
 
+  private SearchRecentSuggestions suggestions;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
     engine = new SearchEngine(this);
+    suggestions = SearchEngineProvider.newHelper(this);
     locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
     handleIntent(getIntent());
@@ -116,6 +121,9 @@ public class SearchActivity extends ListActivity {
         showSearchResults(displayResults);
       }
     });
+
+    // Save the query as a suggestion for the future.
+    suggestions.saveRecentQuery(query.textQuery, null);
   }
 
   private List<Map<String, Object>> prepareResultsforDisplay(

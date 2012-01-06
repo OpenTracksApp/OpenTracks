@@ -112,12 +112,19 @@ limitations under the License.
     <meta-data android:name="com.google.android.backup.api_key"
                android:value="AEdPqrEAAAAIi-_QiwoRSc9_bAC9cmuNXTQyU8ajJmGtKdhskQ" />
 
+    <!-- Main track data provider -->
     <provider android:name="com.google.android.apps.mytracks.content.MyTracksProvider"
               android:authorities="com.google.android.maps.mytracks"
               android:exported="true"
               android:readPermission="com.google.android.apps.mytracks.READ_TRACK_DATA"
               android:writePermission="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
 
+    <!-- Provider for search suggestions -->
+    <provider android:name="com.google.android.apps.mytracks.content.SearchEngineProvider"
+              android:authorities="com.google.android.maps.mytracks.search"
+              android:exported="false" />
+
+    <!-- Main activity -->
     <activity android:name="com.google.android.apps.mytracks.MyTracks"
               android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|fontScale">
       <intent-filter>

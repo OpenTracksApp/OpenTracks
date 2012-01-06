@@ -5,6 +5,7 @@
     android:label="@string/my_tracks_app_name"
     android:searchSettingsDescription="@string/search_global_description"
     android:voicePromptText="@string/search_voice_prompt"
-    android:voiceSearchMode="showVoiceSearchButton|launchRecognizer">
-    <!-- TODO: Add search suggestions -->
-</searchable>
+    android:voiceSearchMode="showVoiceSearchButton|launchRecognizer"
+    android:searchSuggestAuthority="com.google.android.maps.mytracks.search"
+    android:searchSuggestThreshold="2"
+    android:searchSuggestSelection=" ? " />
