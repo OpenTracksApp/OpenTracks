@@ -38,6 +38,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
@@ -90,7 +91,7 @@ public class TrackList extends ListActivity
             String saveFileFormat = getString(R.string.track_list_save_file);
             String shareFileFormat = getString(R.string.track_list_share_file);
             String fileTypes[] = getResources().getStringArray(R.array.file_types);
-            
+
             menu.add(0, Constants.MENU_SEND_TO_GOOGLE, 0,
                 R.string.track_list_send_google);
             SubMenu share = menu.addSubMenu(0, Constants.MENU_SHARE, 0,
@@ -273,6 +274,17 @@ public class TrackList extends ListActivity
     serviceConnection.unbind();
 
     super.onDestroy();
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.search_only, menu);
+    return true;
+  }
+
+  /* Callback from menu/search_only.xml */
+  public void onSearch(@SuppressWarnings("unused") MenuItem i) {
+    onSearchRequested();
   }
 
   private void updateButtonsEnabled() {
