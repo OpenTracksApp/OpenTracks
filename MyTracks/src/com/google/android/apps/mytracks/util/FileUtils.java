@@ -32,7 +32,8 @@ import java.util.TimeZone;
 public class FileUtils {
 
   /**
-   * The maximum Fat32 path length.
+   * The maximum Fat32 path length. See
+   * http://www.scribd.com/doc/2187273/FAT32-File-System-Specification
    */
   @VisibleForTesting
   static final int MAX_FAT32_PATH_LENGTH = 260;
@@ -143,12 +144,11 @@ public class FileUtils {
    */
   @VisibleForTesting
   String sanitizeFileName(String name) {
-    StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer(name.length());
     for (int i = 0; i < name.length(); i++) {
       int codePoint = name.codePointAt(i);
-      if (codePoint > 127) {
-        buffer.appendCodePoint(codePoint);
-      } else if (Character.isLetterOrDigit(name.charAt(i))) {
+      char character = name.charAt(i);
+      if (Character.isLetterOrDigit(character) || codePoint > 127 || character == '-') {
         buffer.appendCodePoint(codePoint);
       } else {
         buffer.append("_");
@@ -159,7 +159,7 @@ public class FileUtils {
   }
 
   /**
-   * Truncates the name if necessary thus the filename path length (directory +
+   * Truncates the name if necessary so the filename path length (directory +
    * name + suffix) meets the Fat32 path limit.
    *
    * @param directory directory
@@ -168,8 +168,7 @@ public class FileUtils {
    */
   @VisibleForTesting
   String truncateFileName(File directory, String name, String suffix) {
-
-    // 1 at the end accounts for the trailing NUL character
+    // 1 at the end accounts for the FAT32 filename trailing NUL character 
     int requiredLength = directory.getPath().length() + suffix.length() + 1;
     if (name.length() + requiredLength > MAX_FAT32_PATH_LENGTH) {
       int limit = MAX_FAT32_PATH_LENGTH - requiredLength;

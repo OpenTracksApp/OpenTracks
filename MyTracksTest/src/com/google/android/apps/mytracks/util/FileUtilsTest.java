@@ -31,9 +31,6 @@ import junit.framework.TestCase;
  * @author Rodrigo Damazio
  */
 public class FileUtilsTest extends TestCase {
-  private static final String ORIGINAL_NAME = "Swim\10ming-^across: the/ pacific (ocean).";
-  private static final String SANITIZED_NAME = "Swim_ming_across_the_pacific_ocean_";
-
   private FileUtils fileUtils;
   private Set<String> existingFiles;
 
@@ -66,7 +63,10 @@ public class FileUtilsTest extends TestCase {
   }
 
   public void testSanitizeFileName() {
-    assertEquals(SANITIZED_NAME, fileUtils.sanitizeFileName(ORIGINAL_NAME));
+    String name = "Swim\10ming-^across: the/ pacific (ocean).您好-привет_";
+    String expected = "Swim_ming-_across_the_pacific_ocean_您好-привет_";
+    
+    assertEquals(expected, fileUtils.sanitizeFileName(name));
   }
 
   public void testTruncateFileName() {
@@ -78,16 +78,10 @@ public class FileUtilsTest extends TestCase {
     }
     String nameString = new String(name);
     
-    int expectedLength = FileUtils.MAX_FAT32_PATH_LENGTH - directory.getPath().length()
-        - suffix.length() - 1;
-    char[] expected = new char[expectedLength];
-    for (int i = 0; i < expected.length; i++) {
-      expected[i] = 'a';
-    }
-    String expectedString = new String(expected);
-    
     String truncated = fileUtils.truncateFileName(directory, nameString, suffix);
-    assertEquals(expectedString, truncated);
+    for (int i = 0; i < truncated.length(); i++) {
+      assertEquals('a', truncated.charAt(i));
+    }
     assertEquals(FileUtils.MAX_FAT32_PATH_LENGTH,
         new File(directory, truncated + suffix).getPath().length());
   }
