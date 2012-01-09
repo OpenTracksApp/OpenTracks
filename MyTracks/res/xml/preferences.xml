@@ -137,7 +137,7 @@ limitations under the License.
         android:entryValues="@array/recording_auto_resume_timeout_values"
         android:defaultValue="10" />
 
-    <ListPreference android:key="@string/settings_recording_track_name_key"
+    <ListPreference android:key="@string/track_name_key"
         android:title="@string/settings_recording_track_name"
         android:summary="@string/settings_recording_track_name_summary"
         android:entries="@array/settings_recording_track_name_options"

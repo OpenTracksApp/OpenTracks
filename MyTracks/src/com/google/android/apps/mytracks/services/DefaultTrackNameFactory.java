@@ -47,11 +47,7 @@ public class DefaultTrackNameFactory {
    * @param startTime the track start time
    */
   public String getDefaultTrackName(long trackId, long startTime) {
-    SharedPreferences sharedPreferences = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    String trackNameSetting = sharedPreferences.getString(
-        context.getString(R.string.settings_recording_track_name_key),
-        context.getString(R.string.settings_recording_track_name_date_local_value));
+    String trackNameSetting = getTrackNameSetting();
 
     if (trackNameSetting.equals(
         context.getString(R.string.settings_recording_track_name_date_local_value))) {
@@ -61,10 +57,21 @@ public class DefaultTrackNameFactory {
       SimpleDateFormat dateFormat = new SimpleDateFormat(ISO_8601_FORMAT);
       return dateFormat.format(startTime);
     } else {
-
       // trackNameSetting equals
       // R.string.settings_recording_track_name_number_value
       return String.format(context.getString(R.string.track_name_format), trackId);
     }
+  }
+
+  /**
+   * Gets the track name setting.
+   */
+  @VisibleForTesting
+  String getTrackNameSetting() {
+    SharedPreferences sharedPreferences = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    return sharedPreferences.getString(
+        context.getString(R.string.settings_recording_track_name_key),
+        context.getString(R.string.settings_recording_track_name_date_local_value));
   }
 }

@@ -15,12 +15,9 @@
  */
 package com.google.android.apps.mytracks.services;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.test.AndroidTestCase;
 
 import java.text.SimpleDateFormat;
@@ -37,20 +34,23 @@ public class DefaultTrackNameFactoryTest extends AndroidTestCase {
   private static final long START_TIME = 1288213406000L;
 
   public void testDefaultTrackName_date_local() {
-    String value = getContext().getString(R.string.settings_recording_track_name_date_local_value);
-    setTrackNameSeting(value);
-
-    DefaultTrackNameFactory defaultTrackNameFactory = new DefaultTrackNameFactory(getContext());
+    DefaultTrackNameFactory defaultTrackNameFactory = new DefaultTrackNameFactory(getContext()) {
+      @Override
+      String getTrackNameSetting() {
+        return getContext().getString(R.string.settings_recording_track_name_date_local_value);
+      }
+    };
     assertEquals(StringUtils.formatDateTime(getContext(), START_TIME),
         defaultTrackNameFactory.getDefaultTrackName(TRACK_ID, START_TIME));
   }
 
   public void testDefaultTrackName_date_iso_8601() {
-    String value = getContext().getString(
-        R.string.settings_recording_track_name_date_iso_8601_value);
-    setTrackNameSeting(value);
-
-    DefaultTrackNameFactory defaultTrackNameFactory = new DefaultTrackNameFactory(getContext());
+    DefaultTrackNameFactory defaultTrackNameFactory = new DefaultTrackNameFactory(getContext()) {
+      @Override
+      String getTrackNameSetting() {
+        return getContext().getString(R.string.settings_recording_track_name_date_iso_8601_value);
+      }
+    };
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
         DefaultTrackNameFactory.ISO_8601_FORMAT);
     assertEquals(simpleDateFormat.format(new Date(START_TIME)),
@@ -58,18 +58,13 @@ public class DefaultTrackNameFactoryTest extends AndroidTestCase {
   }
 
   public void testDefaultTrackName_number() {
-    String value = getContext().getString(R.string.settings_recording_track_name_number_value);
-    setTrackNameSeting(value);
-
-    DefaultTrackNameFactory defaultTrackNameFactory = new DefaultTrackNameFactory(getContext());
+    DefaultTrackNameFactory defaultTrackNameFactory = new DefaultTrackNameFactory(getContext()) {
+      @Override
+      String getTrackNameSetting() {
+        return getContext().getString(R.string.settings_recording_track_name_number_value);
+      }
+    };
     assertEquals(
         "Track " + TRACK_ID, defaultTrackNameFactory.getDefaultTrackName(TRACK_ID, START_TIME));
-  }
-
-  private void setTrackNameSeting(String value) {
-    SharedPreferences sharedPreferences = getContext().getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    String key = getContext().getString(R.string.settings_recording_track_name_key);
-    sharedPreferences.edit().putString(key, value).apply();
   }
 }
