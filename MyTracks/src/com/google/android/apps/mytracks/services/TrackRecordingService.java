@@ -586,7 +586,7 @@ public class TrackRecordingService extends Service {
     Uri trackUri = providerUtils.insertTrack(track);
     recordingTrackId = Long.parseLong(trackUri.getLastPathSegment());
     track.setId(recordingTrackId);
-    track.setName(new DefaultTrackNameFactory(this).newTrackName(
+    track.setName(new DefaultTrackNameFactory(this).getDefaultTrackName(
         recordingTrackId, startTime));
     track.setCategory(getDefaultActivityType(this));
     isRecording = true;

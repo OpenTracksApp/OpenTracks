@@ -200,6 +200,18 @@ limitations under the License.
     <item>@string/sensor_type_value_zephyr</item>
   </string-array>
 
+  <string-array name="settings_recording_track_name_options">
+    <item>@string/settings_recording_track_name_date_local_option</item>
+    <item>@string/settings_recording_track_name_date_iso_8601_option</item>
+    <item>@string/settings_recording_track_name_number_option</item>
+  </string-array>
+
+  <string-array name="settings_recording_track_name_values">
+    <item>@string/settings_recording_track_name_date_local_value</item>
+    <item>@string/settings_recording_track_name_date_iso_8601_value</item>
+    <item>@string/settings_recording_track_name_number_value</item>
+  </string-array>
+
   <string-array name="waypoint_types">
     <item>@string/waypoint_type_atm</item>
     <item>@string/waypoint_type_bank</item>

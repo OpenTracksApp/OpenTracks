@@ -36,9 +36,9 @@ limitations under the License.
   <string name="send_to_fusion_tables_key">sendToFusionTables</string>
   <string name="send_to_maps_key">sendToMaps</string>
   <string name="sensor_type_key">sensorType</string>
+  <string name="settings_recording_track_name_key">settingsRecordingTrackName</string>
   <string name="share_url_only_key">shareUrlOnly</string>
   <string name="split_frequency_key">splitFrequency</string>
-  <string name="timestamp_track_name_key">timestampTrackName</string>
   <string name="track_color_mode_dynamic_speed_variation_key">trackColorModeDynamicVariation
           </string>  
   <string name="track_color_mode_fixed_speed_medium_display_key">trackColorModeFixedMediumDisplay

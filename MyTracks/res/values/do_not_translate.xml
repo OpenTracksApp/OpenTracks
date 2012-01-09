@@ -49,6 +49,9 @@ limitations under the License.
   <string name="sensor_type_value_polar">POLAR</string>
   <string name="sensor_type_value_srm_ant_bridge">SRM_ANT_BRIDGE</string>
   <string name="sensor_type_value_zephyr">ZEPHYR</string>
+  <string name="settings_recording_track_name_date_iso_8601_value">DATE_ISO_8601</string>
+  <string name="settings_recording_track_name_date_local_value">DATE_LOCAL</string>
+  <string name="settings_recording_track_name_number_value">NUMBER</string>
   <string name="track_action_end">com.google.android.apps.mytracks.END_CURRENT_TRACK</string>
   <string name="track_action_save">android.intent.action.SAVE</string>
   <string name="track_action_start">com.google.android.apps.mytracks.START_NEW_TRACK</string>

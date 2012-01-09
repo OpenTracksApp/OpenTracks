@@ -1677,28 +1677,6 @@ limitations under the License.
       Screenshot: settings_recording_top.png">
     Time/distance after which a new marker will be inserted.
   </string>
-  <string name="settings_recording_name"
-    translation_description="In the 'Recording' settings, the checkbox on whether the track should
-      be named based on the track's start time or based on a number.
-
-      Character limit: ~23 (1 line)
-      Screenshot: settings_recording_bottom.png">
-    Use timestamp
-  </string>
-  <string name="settings_recording_name_summary_off"
-    translation_description="In the 'Recording' settings, the summary for the 'Use timestamp'
-      checkbox when it is unchecked explaining using a number as the default track name.
-
-      Screenshot: settings_recording_bottom_unchecked.png">
-    Use a number as the default track name.
-  </string>
-  <string name="settings_recording_name_summary_on"
-    translation_description="In the 'Recording' settings, the summary for the 'Use timestamp'
-      checkbox when it is checked explaining using the track's start time as the default track name.
-
-      Screenshot: settings_recording_bottom.png">
-    Use the track\'s start time as the default track name.
-  </string>
   <string name="settings_recording_track_distance"
     translation_description="In the 'Recording' settings, the dropdown option to configure the
       distance between two tracks.
@@ -1715,6 +1693,39 @@ limitations under the License.
       Screenshot: settings_recording_top.png">
     Maximum distance between two recordings of your position. If two positions are further than
     this, the track will be split.
+  </string>
+  <string name="settings_recording_track_name"
+    translation_description="In the 'Recording' settings, the title for the dropdown list to choose
+      the default track name.
+      
+      Character limit: ~23 (1 line)">
+    Track name
+  </string>
+  <string name="settings_recording_track_name_date_iso_8601_option"
+    translation_description="In the 'Recording' settings, the option in the 'Track name' dropdown 
+      list to use the track start time in ISO-8601 date format as the track name.
+      
+      Character limit: ~21 (1 line)">
+    Date (ISO 8601)
+  </string>
+  <string name="settings_recording_track_name_date_local_option"
+    translation_description="In the 'Recording' settings, the option in the 'Track name' dropdown
+      list to use the track start time in local date format as the track name.
+      
+      Character limit: ~21 (1 line)">
+    Date (local)
+  </string>
+  <string name="settings_recording_track_name_number_option"
+    translation_description="In the 'Recording' settings, the option in the 'Track name' dropdown
+      list to use a number as the track name.
+      
+      Character limit: ~21 (1 line)">
+    Number
+  </string>
+  <string name="settings_recording_track_name_summary"
+    translation_description="In the 'Recording' settings, the summary for the 'Track name' dropdown
+      list explaining that it chooses the default track name format.">
+    Default track name
   </string>
   <string name="settings_recording_voice"
     translation_description="In the 'Recording' settings, the dropdown option to configure the voice

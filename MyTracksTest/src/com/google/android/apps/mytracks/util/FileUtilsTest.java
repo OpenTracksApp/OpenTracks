@@ -62,13 +62,45 @@ public class FileUtilsTest extends TestCase {
     assertEquals(expectedName, dirName);
   }
 
+  /**
+   * Tests sanitize filename.
+   */
   public void testSanitizeFileName() {
-    String name = "Swim\10ming-^across: the/ pacific (ocean).您好-привет_";
-    String expected = "Swim_ming-_across_the_pacific_ocean_您好-привет_";
+    String name = "Swim\10ming-^across:/the/ pacific (ocean).";
+    String expected = "Swim_ming-^across_the_ pacific (ocean)_";
+    assertEquals(expected, fileUtils.sanitizeFileName(name));
+  }
+
+  /**
+   * Tests characters in other languages, like Chinese and Russian, are allowed.
+   */
+  public void testSanitizeFileName_i18n() {
+    String name = "您好-привет";
+    String expected = "您好-привет";
+    
+    assertEquals(expected, fileUtils.sanitizeFileName(name));
+  }
+  
+  /**
+   * Tests special FAT32 characters are allowed.
+   */
+  public void testSanitizeFileName_special_characters() {
+    String name = "$%'-_@~`!(){}^#&+,;=[] ";
+    String expected = "$%'-_@~`!(){}^#&+,;=[] ";
     
     assertEquals(expected, fileUtils.sanitizeFileName(name));
   }
 
+  /**
+   * Testing collapsing multiple underscores characters.
+   */
+  public void testSanitizeFileName_collapse() {
+    String name = "hello//there";
+    String expected = "hello_there";
+    
+    assertEquals(expected, fileUtils.sanitizeFileName(name));
+  }
+  
   public void testTruncateFileName() {
     File directory = new File("/dir1/dir2/");
     String suffix = ".gpx";

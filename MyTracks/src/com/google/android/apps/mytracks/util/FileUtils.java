@@ -32,8 +32,8 @@ import java.util.TimeZone;
 public class FileUtils {
 
   /**
-   * The maximum Fat32 path length. See
-   * http://www.scribd.com/doc/2187273/FAT32-File-System-Specification
+   * The maximum FAT32 path length. See the FAT32 spec at
+   * http://msdn.microsoft.com/en-us/windows/hardware/gg463080
    */
   @VisibleForTesting
   static final int MAX_FAT32_PATH_LENGTH = 260;
@@ -148,7 +148,7 @@ public class FileUtils {
     for (int i = 0; i < name.length(); i++) {
       int codePoint = name.codePointAt(i);
       char character = name.charAt(i);
-      if (Character.isLetterOrDigit(character) || codePoint > 127 || character == '-') {
+      if (Character.isLetterOrDigit(character) || codePoint > 127 || isSpecialFat32(character)) {
         buffer.appendCodePoint(codePoint);
       } else {
         buffer.append("_");
@@ -156,6 +156,42 @@ public class FileUtils {
     }
     String result = buffer.toString();
     return result.replaceAll("_+", "_");
+  }
+  
+  /**
+   * Returns true if it is a special FAT32 character.
+   * 
+   * @param character the character
+   */
+  private boolean isSpecialFat32(char character) {
+    switch (character) {
+      case '$':
+      case '%':
+      case '\'':
+      case '-':
+      case '_':
+      case '@':
+      case '~':
+      case '`':
+      case '!':
+      case '(':
+      case ')':
+      case '{':
+      case '}':
+      case '^':
+      case '#':
+      case '&':
+      case '+':
+      case ',':
+      case ';':
+      case '=':
+      case '[':
+      case ']':
+      case ' ':
+        return true;
+      default:
+        return false;
+    }
   }
 
   /**

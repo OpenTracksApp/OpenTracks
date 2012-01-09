@@ -18,43 +18,57 @@ package com.google.android.apps.mytracks.services;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.text.SimpleDateFormat;
+
 /**
- * Creates a default track name based on the current default track name policy.
+ * Creates a default track name based on the track name setting.
  * 
  * @author Matthew Simmons
  */
-class DefaultTrackNameFactory {
+public class DefaultTrackNameFactory {
+  
+  @VisibleForTesting
+  static final String ISO_8601_FORMAT = "yyyy-MM-dd HH:mm";
   private final Context context;
 
-  DefaultTrackNameFactory(Context context) {
+  public DefaultTrackNameFactory(Context context) {
     this.context = context;
   }
 
   /**
-   * Creates a new track name.
+   * Gets the default track name.
    * 
-   * @param trackId The ID for the current track.
-   * @param startTime The start time, in milliseconds since the epoch, of the
-   *     current track.
-   * @return The new track name.
+   * @param trackId the track id
+   * @param startTime the track start time
    */
-  String newTrackName(long trackId, long startTime) {
-    if (useTimestampTrackName()) {
+  public String getDefaultTrackName(long trackId, long startTime) {
+    String trackNameSetting = getTrackNameSetting();
+    if (trackNameSetting.equals(
+        context.getString(R.string.settings_recording_track_name_date_local_value))) {
       return StringUtils.formatDateTime(context, startTime);
+    } else if (trackNameSetting.equals(
+        context.getString(R.string.settings_recording_track_name_date_iso_8601_value))) {
+      SimpleDateFormat dateFormat = new SimpleDateFormat(ISO_8601_FORMAT);
+      return dateFormat.format(startTime);
     } else {
       return String.format(context.getString(R.string.track_name_format), trackId);
     }
   }
-
-  /** Determines whether the preferences allow a timestamp-based track name */
-  protected boolean useTimestampTrackName() {
-    SharedPreferences prefs = context.getSharedPreferences(
+  
+  /**
+   * Gets the track name setting from the shared preferences.
+   */
+  @VisibleForTesting
+  String getTrackNameSetting() {
+    SharedPreferences sharedPreferences = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    return prefs.getBoolean(
-        context.getString(R.string.timestamp_track_name_key), true);
+    return sharedPreferences.getString(
+        context.getString(R.string.settings_recording_track_name_key),
+        context.getString(R.string.settings_recording_track_name_date_local_value));
   }
 }
