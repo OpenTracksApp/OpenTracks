@@ -27,11 +27,11 @@ import java.text.SimpleDateFormat;
 
 /**
  * Creates a default track name based on the track name setting.
- * 
+ *
  * @author Matthew Simmons
  */
 public class DefaultTrackNameFactory {
-  
+
   @VisibleForTesting
   static final String ISO_8601_FORMAT = "yyyy-MM-dd HH:mm";
   private final Context context;
@@ -42,12 +42,17 @@ public class DefaultTrackNameFactory {
 
   /**
    * Gets the default track name.
-   * 
+   *
    * @param trackId the track id
    * @param startTime the track start time
    */
   public String getDefaultTrackName(long trackId, long startTime) {
-    String trackNameSetting = getTrackNameSetting();
+    SharedPreferences sharedPreferences = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    String trackNameSetting = sharedPreferences.getString(
+        context.getString(R.string.settings_recording_track_name_key),
+        context.getString(R.string.settings_recording_track_name_date_local_value));
+
     if (trackNameSetting.equals(
         context.getString(R.string.settings_recording_track_name_date_local_value))) {
       return StringUtils.formatDateTime(context, startTime);
@@ -56,19 +61,10 @@ public class DefaultTrackNameFactory {
       SimpleDateFormat dateFormat = new SimpleDateFormat(ISO_8601_FORMAT);
       return dateFormat.format(startTime);
     } else {
+
+      // trackNameSetting equals
+      // R.string.settings_recording_track_name_number_value
       return String.format(context.getString(R.string.track_name_format), trackId);
     }
-  }
-  
-  /**
-   * Gets the track name setting from the shared preferences.
-   */
-  @VisibleForTesting
-  String getTrackNameSetting() {
-    SharedPreferences sharedPreferences = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    return sharedPreferences.getString(
-        context.getString(R.string.settings_recording_track_name_key),
-        context.getString(R.string.settings_recording_track_name_date_local_value));
   }
 }
