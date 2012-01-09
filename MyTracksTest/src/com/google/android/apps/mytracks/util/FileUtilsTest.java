@@ -31,9 +31,6 @@ import junit.framework.TestCase;
  * @author Rodrigo Damazio
  */
 public class FileUtilsTest extends TestCase {
-  private static final String ORIGINAL_NAME = "Swim\10ming-^across: the/ pacific (ocean).";
-  private static final String SANITIZED_NAME = "Swimming-across the pacific (ocean).";
-
   private FileUtils fileUtils;
   private Set<String> existingFiles;
 
@@ -65,31 +62,51 @@ public class FileUtilsTest extends TestCase {
     assertEquals(expectedName, dirName);
   }
 
-  public void testSanitizeName() {
-    assertEquals(SANITIZED_NAME, fileUtils.sanitizeName(ORIGINAL_NAME));
+  public void testSanitizeFileName() {
+    String name = "Swim\10ming-^across: the/ pacific (ocean).您好-привет_";
+    String expected = "Swim_ming-_across_the_pacific_ocean_您好-привет_";
+    
+    assertEquals(expected, fileUtils.sanitizeFileName(name));
   }
 
+  public void testTruncateFileName() {
+    File directory = new File("/dir1/dir2/");
+    String suffix = ".gpx";
+    char[] name = new char[FileUtils.MAX_FAT32_PATH_LENGTH];
+    for (int i = 0; i < name.length; i++) {
+      name[i] = 'a';
+    }
+    String nameString = new String(name);
+    
+    String truncated = fileUtils.truncateFileName(directory, nameString, suffix);
+    for (int i = 0; i < truncated.length(); i++) {
+      assertEquals('a', truncated.charAt(i));
+    }
+    assertEquals(FileUtils.MAX_FAT32_PATH_LENGTH,
+        new File(directory, truncated + suffix).getPath().length());
+  }
+  
   public void testBuildUniqueFileName_someExist() {
     existingFiles = new HashSet<String>();
     existingFiles.add("Filename.ext");
-    existingFiles.add("Filename (1).ext");
-    existingFiles.add("Filename (2).ext");
-    existingFiles.add("Filename (3).ext");
-    existingFiles.add("Filename (4).ext");
+    existingFiles.add("Filename(1).ext");
+    existingFiles.add("Filename(2).ext");
+    existingFiles.add("Filename(3).ext");
+    existingFiles.add("Filename(4).ext");
 
-    String filename = fileUtils.buildUniqueFileName(null, "Filename", "ext");
-    assertEquals("Filename (5).ext", filename);
+    String filename = fileUtils.buildUniqueFileName(new File("/dir/"), "Filename", "ext");
+    assertEquals("Filename(5).ext", filename);
   }
 
   public void testBuildUniqueFileName_oneExists() {
     existingFiles.add("Filename.ext");
 
-    String filename = fileUtils.buildUniqueFileName(null, "Filename", "ext");
-    assertEquals("Filename (1).ext", filename);
+    String filename = fileUtils.buildUniqueFileName(new File("/dir/"), "Filename", "ext");
+    assertEquals("Filename(1).ext", filename);
   }
 
   public void testBuildUniqueFileName_noneExists() {
-    String filename = fileUtils.buildUniqueFileName(null, "Filename", "ext");
+    String filename = fileUtils.buildUniqueFileName(new File("/dir/"), "Filename", "ext");
     assertEquals("Filename.ext", filename);
   }
 }
