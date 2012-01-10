@@ -246,6 +246,8 @@ limitations under the License.
               android:label="@string/welcome_title"
               android:exported="false" />
 
+    <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.ServicePickerActivity"/>
+
     <service android:name="com.google.android.apps.mytracks.services.TrackRecordingService"
              android:label="@string/my_tracks_recording_service"
              android:icon="@drawable/arrow_320"

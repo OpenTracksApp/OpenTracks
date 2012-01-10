@@ -24,7 +24,6 @@ import com.google.android.apps.mytracks.MapsList;
 import com.google.android.apps.mytracks.ProgressIndicator;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.AuthManager;
 import com.google.android.apps.mytracks.io.AuthManager.AuthCallback;
 import com.google.android.apps.mytracks.io.AuthManagerFactory;
@@ -35,23 +34,19 @@ import com.google.android.apps.mytracks.io.SendToMaps;
 import com.google.android.apps.mytracks.io.maps.MapsConstants;
 import com.google.android.apps.mytracks.io.maps.MapsFacade;
 import com.google.android.apps.mytracks.util.SystemUtils;
-import com.google.android.apps.mytracks.util.UriUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.accounts.Account;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -64,6 +59,14 @@ import java.util.List;
  * @author Rodrigo Damazio
  */
 public class SendActivity extends Activity implements ProgressIndicator {
+  
+  public static final String TRACK_ID = "trackId";
+  public static final String SHARE_URL = "shareUrl";
+  public static final String SEND_MAPS = "sendMaps";
+  public static final String SEND_FUSION_TABLES = "sendFusionTables";
+  public static final String SEND_DOCS = "sendDocs";
+  public static final String CREATE_MAP = "createMap";
+  
   // Keys for saved state variables.
   private static final String STATE_SEND_TO_MAPS = "mapsSend";
   private static final String STATE_SEND_TO_FUSION_TABLES = "fusionSend";
@@ -76,11 +79,9 @@ public class SendActivity extends Activity implements ProgressIndicator {
   private static final String STATE_ACCOUNT_NAME = "accountName";
   private static final String STATE_TABLE_ID = "tableId";
   private static final String STATE_MAP_ID = "mapId";
-  private static final String SEND_TYPE = "sendType";
 
   /** States for the state machine that defines the upload process. */
   private enum SendState {
-    SEND_OPTIONS,
     START,
     AUTHENTICATE_MAPS,
     PICK_MAP,
@@ -100,10 +101,9 @@ public class SendActivity extends Activity implements ProgressIndicator {
     NOT_READY
   }
 
-  private static final int SEND_DIALOG = 1;
-  private static final int PROGRESS_DIALOG = 2;
+  private static final int PROGRESS_DIALOG = 1;
   /* @VisibleForTesting */
-  static final int DONE_DIALOG = 3;
+  static final int DONE_DIALOG = 2;
 
   // UI
   private ProgressDialog progressDialog;
@@ -121,8 +121,8 @@ public class SendActivity extends Activity implements ProgressIndicator {
   private String lastAccountType;
 
   // Send request information.
-  private SendType sendType;
   private long sendTrackId;
+  private boolean shareRequest;
   private boolean sendToMaps;
   private boolean sendToMapsNewMap;
   private boolean sendToFusionTables;
@@ -174,7 +174,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
     }
 
     // Only consider the intent if we're not restoring from a previous state.
-    if (currentState == SendState.SEND_OPTIONS) {
+    if (currentState == SendState.START) {
       if (!handleIntent()) {
         finish();
         return;
@@ -185,29 +185,27 @@ public class SendActivity extends Activity implements ProgressIndicator {
     Log.w(TAG, "Starting at state " + currentState);
     executeStateMachine(currentState);
   }
+  
 
   private boolean handleIntent() {
     Intent intent = getIntent();
-    String action = intent.getAction();
-    String type = intent.getType();
-    Uri data = intent.getData();
-    if (!Intent.ACTION_SEND.equals(action) ||
-        !TracksColumns.CONTENT_ITEMTYPE.equals(type) ||
-        !UriUtils.matchesContentUri(data, TracksColumns.CONTENT_URI)) {
-      Log.e(TAG, "Got bad send intent: " + intent);
+    sendTrackId = intent.getLongExtra(TRACK_ID, -1L);
+    if (sendTrackId == -1L) {
       return false;
     }
-
-    sendTrackId = ContentUris.parseId(data);
-    sendType = intent.getParcelableExtra(SEND_TYPE);
+    sendToMaps = intent.getBooleanExtra(SEND_MAPS, false);
+    sendToFusionTables = intent.getBooleanExtra(SEND_FUSION_TABLES, false);
+    sendToDocs = intent.getBooleanExtra(SEND_DOCS, false);
+    if (!sendToMaps && !sendToFusionTables && !sendToDocs) {
+      return false;
+    }
+    sendToMapsNewMap = intent.getBooleanExtra(CREATE_MAP, true);
     return true;
   }
 
   @Override
   protected Dialog onCreateDialog(int id) {
     switch (id) {
-      case SEND_DIALOG:
-        return createSendDialog();
       case PROGRESS_DIALOG:
         return createProgressDialog();
       case DONE_DIALOG:
@@ -215,42 +213,6 @@ public class SendActivity extends Activity implements ProgressIndicator {
       default:
         return null;
     }
-  }
-  
-  @Override
-  protected void onPrepareDialog(int id, Dialog dialog) {
-    switch (id) {
-      case SEND_DIALOG:
-        SendDialog sendDialog = (SendDialog) dialog;
-        sendDialog.setSendType(sendType);
-        return;
-      default:
-        return;
-    }
-  }
-
-  private Dialog createSendDialog() {
-    final SendDialog sendDialog = new SendDialog(this);
-    sendDialog.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(DialogInterface dialog, int which) {
-        if (which != DialogInterface.BUTTON_POSITIVE) {
-          finish();
-          return;
-        }
-
-        dialog.dismiss();
-
-        sendToMaps = sendDialog.getSendToMaps();
-        sendToMapsNewMap = sendDialog.getCreateNewMap();
-        sendToFusionTables = sendDialog.getSendToFusionTables();
-        sendToDocs = sendDialog.getSendToDocs();
-
-        executeStateMachine(SendState.START);
-      }
-    });
-    sendDialog.setOnCancelListener(finishOnCancelListener);
-    return sendDialog;
   }
 
   private void restoreInstanceState(Bundle savedInstanceState) {
@@ -321,8 +283,6 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
   private SendState executeState(SendState state) {
     switch (state) {
-      case SEND_OPTIONS:
-        return showSendOptions();
       case START:
         return startSend();
       case AUTHENTICATE_MAPS:
@@ -357,12 +317,6 @@ public class SendActivity extends Activity implements ProgressIndicator {
         Log.e(TAG, "Reached a non-executable state");
         return null;
     }
-  }
-
-  private SendState showSendOptions() {
-    showDialog(SEND_DIALOG);
-
-    return SendState.NOT_READY;
   }
 
   /**
@@ -577,8 +531,6 @@ public class SendActivity extends Activity implements ProgressIndicator {
       public void run() {
         Log.d(TAG, "Sending to Google done.");
         dismissDialog(PROGRESS_DIALOG);
-        dismissDialog(SEND_DIALOG);
-
         // Ensure a new done dialog is created each time.
         // This is required because the send results must be available at the
         // time the dialog is created.
@@ -633,9 +585,9 @@ public class SendActivity extends Activity implements ProgressIndicator {
       };
     }
 
-    DialogInterface.OnClickListener onOkListener = (canShare && sendType != null)
+    DialogInterface.OnClickListener onOkListener = (canShare && shareRequest)
         ? doShareListener : finishListener;
-    DialogInterface.OnClickListener onShareListener = (canShare && sendType == null)
+    DialogInterface.OnClickListener onShareListener = (canShare && !shareRequest)
         ? doShareListener : null;
 
     return ResultDialogFactory.makeDialog(
@@ -645,7 +597,6 @@ public class SendActivity extends Activity implements ProgressIndicator {
   private SendState onAllDone() {
     Log.d(TAG, "All sending done.");
     removeDialog(PROGRESS_DIALOG);
-    removeDialog(SEND_DIALOG);
     removeDialog(DONE_DIALOG);
     progressDialog = null;
     finish();
@@ -859,7 +810,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
    * Resets status information for sending to Maps/Fusion Tables/Docs.
    */
   private void resetState() {
-    currentState = SendState.SEND_OPTIONS;
+    currentState = SendState.START;
     sendToMapsMapId = null;
     sendToMapsSuccess = true;
     sendToFusionTablesSuccess = true;
@@ -904,15 +855,5 @@ public class SendActivity extends Activity implements ProgressIndicator {
   @Override
   public void clearProgressMessage() {
     progressDialog.setMessage("");
-  }
-
-  public static void sendToGoogle(Context ctx, long trackId, SendType sendType) {
-    Uri uri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId);
-
-    Intent intent = new Intent(ctx, SendActivity.class);
-    intent.setAction(Intent.ACTION_SEND);
-    intent.setDataAndType(uri, TracksColumns.CONTENT_ITEMTYPE);
-    intent.putExtra(SEND_TYPE, (Parcelable) sendType);
-    ctx.startActivity(intent);
   }
 }

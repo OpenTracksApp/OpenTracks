@@ -25,8 +25,8 @@ import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
-import com.google.android.apps.mytracks.io.sendtogoogle.SendActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendType;
+import com.google.android.apps.mytracks.io.sendtogoogle.ServicePickerActivity;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ApiFeatures;
@@ -42,6 +42,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -399,15 +400,25 @@ public class MapActivity extends com.google.android.maps.MapActivity
 
   @Override
   public boolean onMenuItemSelected(int featureId, MenuItem item) {
+    Intent intent;
+    long trackId = dataHub.getSelectedTrackId();
     switch (item.getItemId()) {
       case Constants.MENU_SEND_TO_GOOGLE:
-        SendActivity.sendToGoogle(this, dataHub.getSelectedTrackId(), null);
+        intent = new Intent(this, ServicePickerActivity.class);
+        intent.putExtra(ServicePickerActivity.TRACK_ID, trackId);
+        startActivity(intent);
         return true;
       case Constants.MENU_SHARE_MAP:
-        SendActivity.sendToGoogle(this, dataHub.getSelectedTrackId(), SendType.MAPS);
+        intent = new Intent(this, ServicePickerActivity.class);
+        intent.putExtra(ServicePickerActivity.TRACK_ID, trackId);
+        intent.putExtra(ServicePickerActivity.SEND_TYPE, (Parcelable) SendType.MAPS);
+        startActivity(intent);
         return true;
       case Constants.MENU_SHARE_FUSION_TABLE:
-        SendActivity.sendToGoogle(this, dataHub.getSelectedTrackId(), SendType.FUSION_TABLES);
+        intent = new Intent(this, ServicePickerActivity.class);
+        intent.putExtra(ServicePickerActivity.TRACK_ID, trackId);
+        intent.putExtra(ServicePickerActivity.SEND_TYPE, (Parcelable) SendType.FUSION_TABLES);
+        startActivity(intent);
         return true;
       case Constants.MENU_SAVE_GPX_FILE:
       case Constants.MENU_SAVE_KML_FILE:
@@ -417,19 +428,18 @@ public class MapActivity extends com.google.android.maps.MapActivity
       case Constants.MENU_SHARE_KML_FILE:
       case Constants.MENU_SHARE_CSV_FILE:
       case Constants.MENU_SHARE_TCX_FILE:
-        SaveActivity.handleExportTrackAction(this, dataHub.getSelectedTrackId(),
-            Constants.getActionFromMenuId(item.getItemId()));
+        SaveActivity.handleExportTrackAction(
+            this, trackId, Constants.getActionFromMenuId(item.getItemId()));
         return true;
       case Constants.MENU_EDIT: {
-        Intent intent = new Intent(this, TrackDetail.class);
-        intent.putExtra(TrackDetail.TRACK_ID, dataHub.getSelectedTrackId());
+        intent = new Intent(this, TrackDetail.class);
+        intent.putExtra(TrackDetail.TRACK_ID, trackId);
         startActivity(intent);
         return true;
       }
       case Constants.MENU_DELETE: {
-        Uri uri = ContentUris.withAppendedId(
-            TracksColumns.CONTENT_URI, dataHub.getSelectedTrackId());
-        Intent intent = new Intent(Intent.ACTION_DELETE, uri);
+        Uri uri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId);
+        intent = new Intent(Intent.ACTION_DELETE, uri);
         startActivity(intent);
         return true;
       }

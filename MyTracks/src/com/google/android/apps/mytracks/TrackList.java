@@ -19,8 +19,8 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
-import com.google.android.apps.mytracks.io.sendtogoogle.SendActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendType;
+import com.google.android.apps.mytracks.io.sendtogoogle.ServicePickerActivity;
 import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.StringUtils;
@@ -36,6 +36,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -158,13 +159,14 @@ public class TrackList extends ListActivity
 
   @Override
   public boolean onMenuItemSelected(int featureId, MenuItem item) {
+    Intent intent;
     switch (item.getItemId()) {
       case Constants.MENU_SHOW: {
         onListItemClick(null, null, 0, trackId);
         return true;
       }
       case Constants.MENU_EDIT: {
-        Intent intent = new Intent(this, TrackDetail.class);
+        intent = new Intent(this, TrackDetail.class);
         intent.putExtra(TrackDetail.TRACK_ID, trackId);
         startActivity(intent);
         return true;
@@ -173,13 +175,21 @@ public class TrackList extends ListActivity
       case Constants.MENU_WRITE_TO_SD_CARD:
         return false;
       case Constants.MENU_SEND_TO_GOOGLE:
-        SendActivity.sendToGoogle(this, trackId, null);
+        intent = new Intent(this, ServicePickerActivity.class);
+        intent.putExtra(ServicePickerActivity.TRACK_ID, trackId);
+        startActivity(intent);
         return true;
       case Constants.MENU_SHARE_MAP:
-        SendActivity.sendToGoogle(this, trackId, SendType.MAPS);
+        intent = new Intent(this, ServicePickerActivity.class);
+        intent.putExtra(ServicePickerActivity.TRACK_ID, trackId);
+        intent.putExtra(ServicePickerActivity.SEND_TYPE, (Parcelable) SendType.MAPS);
+        startActivity(intent);
         return true;
       case Constants.MENU_SHARE_FUSION_TABLE:
-        SendActivity.sendToGoogle(this, trackId, SendType.FUSION_TABLES);
+        intent = new Intent(this, ServicePickerActivity.class);
+        intent.putExtra(ServicePickerActivity.TRACK_ID, trackId);
+        intent.putExtra(ServicePickerActivity.SEND_TYPE, (Parcelable) SendType.FUSION_TABLES);
+        startActivity(intent);
         return true;
       case Constants.MENU_SAVE_GPX_FILE:
       case Constants.MENU_SAVE_KML_FILE:
@@ -193,7 +203,7 @@ public class TrackList extends ListActivity
             Constants.getActionFromMenuId(item.getItemId()));
         return true;
       case Constants.MENU_DELETE: {
-        Intent intent = new Intent(Intent.ACTION_DELETE);
+        intent = new Intent(Intent.ACTION_DELETE);
         Uri uri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId);
         intent.setDataAndType(uri, TracksColumns.CONTENT_ITEMTYPE);
         startActivity(intent);
