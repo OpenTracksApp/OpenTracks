@@ -34,6 +34,24 @@ import java.util.TreeSet;
  */
 public class SearchEngine {
 
+  /** WHERE query to get tracks by name. */
+  private static final String TRACK_SELECTION_QUERY =
+      TracksColumns.NAME + " LIKE ? OR " +
+      TracksColumns.DESCRIPTION + " LIKE ? OR " +
+      TracksColumns.CATEGORY + " LIKE ?";
+
+  /** WHERE query to get waypoints by name. */
+  private static final String WAYPOINT_SELECTION_QUERY =
+      WaypointsColumns.NAME + " LIKE ? OR " +
+      WaypointsColumns.DESCRIPTION + " LIKE ? OR " +
+      WaypointsColumns.CATEGORY + " LIKE ?";
+
+  /** Order of track results. */
+  private static final String TRACK_SELECTION_ORDER = TracksColumns._ID + " DESC LIMIT 1000";
+
+  /** Order of waypoint results. */
+  private static final String WAYPOINT_SELECTION_ORDER = WaypointsColumns._ID + " DESC";
+
   /** How much we promote a match in the track category. */
   private static final double TRACK_CATEGORY_PROMOTION = 2.0;
 
@@ -122,7 +140,7 @@ public class SearchEngine {
    * @param query the query to execute
    * @return a set of results, sorted according to their score
    */
-  public SortedSet<ScoredResult> doSearch(SearchQuery query) {
+  public SortedSet<ScoredResult> search(SearchQuery query) {
     ArrayList<Track> tracks = new ArrayList<Track>();
     ArrayList<Waypoint> waypoints = new ArrayList<Waypoint>();
     TreeSet<ScoredResult> scoredResults = new TreeSet<ScoredResult>(SCORED_RESULT_COMPARATOR);
@@ -144,17 +162,13 @@ public class SearchEngine {
    */
   private void retrieveTracks(SearchQuery query, ArrayList<Track> tracks) {
     String queryLikeSelection = "%" + query.textQuery + "%";
-    String trackSelection =
-        TracksColumns.NAME + " LIKE ? OR " +
-        TracksColumns.DESCRIPTION + " LIKE ? OR " +
-        TracksColumns.CATEGORY + " LIKE ?";
-    String order = TracksColumns._ID + " DESC LIMIT 1000";  // Favor recent tracks.
     String[] trackSelectionArgs = new String[] {
         queryLikeSelection,
         queryLikeSelection,
         queryLikeSelection };
 
-    Cursor tracksCursor = providerUtils.getTracksCursor(trackSelection, trackSelectionArgs, order);
+    Cursor tracksCursor = providerUtils.getTracksCursor(
+        TRACK_SELECTION_QUERY, trackSelectionArgs, TRACK_SELECTION_ORDER);
     if (tracksCursor != null) {
       try {
         tracks.ensureCapacity(tracksCursor.getCount());
@@ -176,16 +190,12 @@ public class SearchEngine {
    */
   private void retrieveWaypoints(SearchQuery query, ArrayList<Waypoint> waypoints) {
     String queryLikeSelection2 = "%" + query.textQuery + "%";
-    String waypointSelection =
-        WaypointsColumns.NAME + " LIKE ? OR " +
-        WaypointsColumns.DESCRIPTION + " LIKE ? OR " +
-        WaypointsColumns.CATEGORY + " LIKE ?";
-    String order = WaypointsColumns._ID + " DESC";  // Favor recent waypoints.
     String[] waypointSelectionArgs = new String[] {
         queryLikeSelection2,
         queryLikeSelection2,
         queryLikeSelection2 };
-    Cursor waypointsCursor = providerUtils.getWaypointsCursor(waypointSelection, waypointSelectionArgs, order,
+    Cursor waypointsCursor = providerUtils.getWaypointsCursor(
+        WAYPOINT_SELECTION_QUERY, waypointSelectionArgs, WAYPOINT_SELECTION_ORDER,
         MAX_SCORED_WAYPOINTS);
     if (waypointsCursor != null) {
       try {
@@ -231,9 +241,7 @@ public class SearchEngine {
 
     TripStatistics statistics = track.getStatistics();
     // TODO: Also boost for proximity to the currently-centered position on the map.
-    double meanLatitude = (statistics.getTop() + statistics.getBottom()) / 2000000.0;
-    double meanLongitude = (statistics.getRight() + statistics.getLeft()) / 2000000.0;
-    score *= getDistanceBoost(query, meanLatitude, meanLongitude);
+    score *= getDistanceBoost(query, statistics.getMeanLatitude(), statistics.getMeanLongitude());
 
     long meanTimestamp = (statistics.getStartTime() + statistics.getStopTime()) / 2L;
     score *= getTimeBoost(query, meanTimestamp);

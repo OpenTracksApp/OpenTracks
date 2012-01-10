@@ -106,7 +106,7 @@ public class SearchActivity extends ListActivity {
   }
 
   private void doSearch(SearchQuery query) {
-    SortedSet<ScoredResult> scoredResults = engine.doSearch(query);
+    SortedSet<ScoredResult> scoredResults = engine.search(query);
 
     final List<? extends Map<String, ?>> displayResults = prepareResultsforDisplay(scoredResults);
 
