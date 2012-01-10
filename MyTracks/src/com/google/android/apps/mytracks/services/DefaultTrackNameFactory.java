@@ -71,7 +71,7 @@ public class DefaultTrackNameFactory {
     SharedPreferences sharedPreferences = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     return sharedPreferences.getString(
-        context.getString(R.string.settings_recording_track_name_key),
+        context.getString(R.string.track_name_key),
         context.getString(R.string.settings_recording_track_name_date_local_value));
   }
 }
