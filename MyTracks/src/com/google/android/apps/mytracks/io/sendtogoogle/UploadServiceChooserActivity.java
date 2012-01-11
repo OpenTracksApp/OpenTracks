@@ -37,11 +37,11 @@ import android.widget.RadioButton;
 import android.widget.TableRow;
 
 /**
- * A picker to select the Google services to send a track to.
+ * A chooser to select the Google services to upload a track to.
  *
  * @author jshih@google.com (Jimmy Shih)
  */
-public class ServicePickerActivity extends Activity {
+public class UploadServiceChooserActivity extends Activity {
 
   /**
    * The track id.
@@ -89,7 +89,7 @@ public class ServicePickerActivity extends Activity {
       case SERVICE_PICKER_DIALOG:
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.mytracks_send_to_google);
+        dialog.setContentView(R.layout.upload_service_chooser);
         dialog.setCancelable(true);
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
           @Override
@@ -131,7 +131,7 @@ public class ServicePickerActivity extends Activity {
         send.setOnClickListener(new View.OnClickListener() {
           public void onClick(View v) {
             saveState();
-            Intent intent = new Intent(ServicePickerActivity.this, SendActivity.class);
+            Intent intent = new Intent(UploadServiceChooserActivity.this, SendActivity.class);
             intent.putExtra(SendActivity.TRACK_ID, trackId);
             intent.putExtra(SendActivity.SHARE_URL, sendType != null);
             intent.putExtra(SendActivity.SEND_MAPS, sendMaps());

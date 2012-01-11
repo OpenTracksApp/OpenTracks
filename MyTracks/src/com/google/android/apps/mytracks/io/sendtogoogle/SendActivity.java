@@ -185,7 +185,6 @@ public class SendActivity extends Activity implements ProgressIndicator {
     Log.w(TAG, "Starting at state " + currentState);
     executeStateMachine(currentState);
   }
-  
 
   private boolean handleIntent() {
     Intent intent = getIntent();
