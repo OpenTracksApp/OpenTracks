@@ -80,7 +80,18 @@ public class UploadServiceChooserActivity extends Activity {
     Intent intent = getIntent();
     trackId = intent.getLongExtra(TRACK_ID, -1L);
     sendType = intent.getParcelableExtra(SEND_TYPE);
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
     showDialog(SERVICE_PICKER_DIALOG);
+  }
+
+  @Override
+  protected void onPause() {
+    super.onPause();
+    removeDialog(SERVICE_PICKER_DIALOG);
   }
 
   @Override
