@@ -95,7 +95,7 @@ limitations under the License.
   <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
   <uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="false"/>
 
-  <uses-sdk android:minSdkVersion="3"/>
+  <uses-sdk android:minSdkVersion="7"/>
   <supports-screens
           android:xlargeScreens="true"
           android:largeScreens="true"
@@ -247,7 +247,8 @@ limitations under the License.
               android:exported="false" />
 
     <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.UploadServiceChooserActivity"/>
-
+    <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.AccountChooserActivity"/>
+    
     <service android:name="com.google.android.apps.mytracks.services.TrackRecordingService"
              android:label="@string/my_tracks_recording_service"
              android:icon="@drawable/arrow_320"

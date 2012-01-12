@@ -31,6 +31,7 @@ limitations under the License.
   <string name="min_recording_interval_key">minRecordingInterval</string>
   <string name="min_required_accuracy_key">minRequiredAccuracy</string>
   <string name="pick_existing_map_key">pickExistingMap</string>
+  <string name="preferred_account_key">preferredAccount</string>
   <string name="report_speed_key">reportSpeed</string>
   <string name="send_to_docs_key">sendToDocs</string>
   <string name="send_to_fusion_tables_key">sendToFusionTables</string>

@@ -26,7 +26,10 @@ import android.util.Log;
 
 /**
  * Choose which account to upload track information to.
+ * 
  * @author Sandor Dornbush
+ * 
+ * @deprecated To be removed.
  */
 public class AccountChooser {
 

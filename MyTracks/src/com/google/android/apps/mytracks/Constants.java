@@ -35,8 +35,11 @@ public abstract class Constants {
 
   /*
    * onActivityResult request codes:
+   * 
+   * TODO: These should be moved to the
+   * activities that call startActivityForResult. Thus do not need to keep a
+   * global order across all activities.
    */
-
   public static final int GET_LOGIN = 0;
   public static final int GET_MAP = 1;
   public static final int SHOW_TRACK = 2;
@@ -54,6 +57,7 @@ public abstract class Constants {
   public static final int SAVE_TCX_FILE = 14;
   public static final int SHOW_WAYPOINT = 15;
   public static final int WELCOME = 16;
+  public static final int CHOOSE_ACCOUNT = 17;
 
   /*
    * Menu ids:

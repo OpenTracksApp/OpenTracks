@@ -89,12 +89,6 @@ public class UploadServiceChooserActivity extends Activity {
   }
 
   @Override
-  protected void onPause() {
-    super.onPause();
-    removeDialog(SERVICE_PICKER_DIALOG);
-  }
-
-  @Override
   protected Dialog onCreateDialog(int id) {
     switch (id) {
       case SERVICE_PICKER_DIALOG:

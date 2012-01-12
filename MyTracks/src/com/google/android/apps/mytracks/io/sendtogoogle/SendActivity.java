@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.io.sendtogoogle;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
-import com.google.android.apps.mytracks.AccountChooser;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.MapsList;
 import com.google.android.apps.mytracks.ProgressIndicator;
@@ -60,6 +59,7 @@ import java.util.List;
  */
 public class SendActivity extends Activity implements ProgressIndicator {
   
+  // Items in the intent that starts the activity.
   public static final String TRACK_ID = "trackId";
   public static final String SHARE_URL = "shareUrl";
   public static final String SEND_MAPS = "sendMaps";
@@ -68,20 +68,17 @@ public class SendActivity extends Activity implements ProgressIndicator {
   public static final String CREATE_MAP = "createMap";
   
   // Keys for saved state variables.
-  private static final String STATE_SEND_TO_MAPS = "mapsSend";
-  private static final String STATE_SEND_TO_FUSION_TABLES = "fusionSend";
-  private static final String STATE_SEND_TO_DOCS = "docsSend";
+  private static final String STATE_ACCOUNT = "account";
+  private static final String STATE_STATE = "state";
   private static final String STATE_DOCS_SUCCESS = "docsSuccess";
   private static final String STATE_FUSION_SUCCESS = "fusionSuccess";
   private static final String STATE_MAPS_SUCCESS = "mapsSuccess";
-  private static final String STATE_STATE = "state";
-  private static final String STATE_ACCOUNT_TYPE = "accountType";
-  private static final String STATE_ACCOUNT_NAME = "accountName";
   private static final String STATE_TABLE_ID = "tableId";
   private static final String STATE_MAP_ID = "mapId";
 
   /** States for the state machine that defines the upload process. */
   private enum SendState {
+    CHOOSE_ACCOUNT,
     START,
     AUTHENTICATE_MAPS,
     PICK_MAP,
@@ -108,37 +105,32 @@ public class SendActivity extends Activity implements ProgressIndicator {
   // UI
   private ProgressDialog progressDialog;
 
-  // Services
+  // Set in Activity.onCreate
   private MyTracksProviderUtils providerUtils;
   private SharedPreferences sharedPreferences;
   private GoogleAnalyticsTracker tracker;
 
-  // Authentication
-  private AuthManager lastAuth;
-  private final HashMap<String, AuthManager> authMap = new HashMap<String, AuthManager>();
-  private AccountChooser accountChooser;
-  private String lastAccountName;
-  private String lastAccountType;
-
-  // Send request information.
+  // Send request information. Set by the intent that starts the activity.
   private long sendTrackId;
   private boolean shareRequest;
   private boolean sendToMaps;
   private boolean sendToMapsNewMap;
   private boolean sendToFusionTables;
   private boolean sendToDocs;
-
-  // Send result information, used by results dialog.
-  private boolean sendToMapsSuccess = false;
-  private boolean sendToFusionTablesSuccess = false;
-  private boolean sendToDocsSuccess = false;
-
-  // Send result information, used to share a link.
-  private String sendToMapsMapId;
-  private String sendToFusionTablesTableId;
-
+  
+  // Authentication information.
+  private Account account;
+  private HashMap<String, AuthManager> authMap = new HashMap<String, AuthManager>();
+  
   // Current sending state.
   private SendState currentState;
+  
+  // Send result information. Used by the results dialog.
+  private boolean sendToMapsSuccess;
+  private boolean sendToFusionTablesSuccess;
+  private boolean sendToDocsSuccess;
+  private String sendToMapsMapId;
+  private String sendToFusionTablesTableId;
 
   private final OnCancelListener finishOnCancelListener = new OnCancelListener() {
     @Override
@@ -174,7 +166,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
     }
 
     // Only consider the intent if we're not restoring from a previous state.
-    if (currentState == SendState.START) {
+    if (currentState == SendState.CHOOSE_ACCOUNT) {
       if (!handleIntent()) {
         finish();
         return;
@@ -215,41 +207,29 @@ public class SendActivity extends Activity implements ProgressIndicator {
   }
 
   private void restoreInstanceState(Bundle savedInstanceState) {
+    account = savedInstanceState.getParcelable(STATE_ACCOUNT);
+    
     currentState = SendState.values()[savedInstanceState.getInt(STATE_STATE)];
-
-    sendToMaps = savedInstanceState.getBoolean(STATE_SEND_TO_MAPS);
-    sendToFusionTables = savedInstanceState.getBoolean(STATE_SEND_TO_FUSION_TABLES);
-    sendToDocs = savedInstanceState.getBoolean(STATE_SEND_TO_DOCS);
 
     sendToMapsSuccess = savedInstanceState.getBoolean(STATE_MAPS_SUCCESS);
     sendToFusionTablesSuccess = savedInstanceState.getBoolean(STATE_FUSION_SUCCESS);
     sendToDocsSuccess = savedInstanceState.getBoolean(STATE_DOCS_SUCCESS);
-
     sendToMapsMapId = savedInstanceState.getString(STATE_MAP_ID);
     sendToFusionTablesTableId = savedInstanceState.getString(STATE_TABLE_ID);
-
-    lastAccountName = savedInstanceState.getString(STATE_ACCOUNT_NAME);
-    lastAccountType = savedInstanceState.getString(STATE_ACCOUNT_TYPE);
   }
 
   @Override
   protected void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
-
+    outState.putParcelable(STATE_ACCOUNT, account);
+    
     outState.putInt(STATE_STATE, currentState.ordinal());
 
     outState.putBoolean(STATE_MAPS_SUCCESS, sendToMapsSuccess);
     outState.putBoolean(STATE_FUSION_SUCCESS, sendToFusionTablesSuccess);
     outState.putBoolean(STATE_DOCS_SUCCESS, sendToDocsSuccess);
-
     outState.putString(STATE_MAP_ID, sendToMapsMapId);
     outState.putString(STATE_TABLE_ID, sendToFusionTablesTableId);
-
-    outState.putString(STATE_ACCOUNT_NAME, lastAccountName);
-    outState.putString(STATE_ACCOUNT_TYPE, lastAccountType);
-
-    // TODO: Ideally we should serialize/restore the authenticator map and lastAuth somehow,
-    //       but it's highly unlikely we'll get killed while an auth dialog is displayed.
   }
 
   @Override
@@ -282,6 +262,8 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
   private SendState executeState(SendState state) {
     switch (state) {
+      case CHOOSE_ACCOUNT:
+        return chooseAccount();
       case START:
         return startSend();
       case AUTHENTICATE_MAPS:
@@ -318,6 +300,12 @@ public class SendActivity extends Activity implements ProgressIndicator {
     }
   }
 
+  private SendState chooseAccount() {
+    Intent intent = new Intent(this, AccountChooserActivity.class);
+    startActivityForResult(intent, Constants.CHOOSE_ACCOUNT);
+    return SendState.NOT_READY;
+  }
+  
   /**
    * Initiates the process to send tracks to google.
    * This is called once the user has selected sending options via the
@@ -363,8 +351,8 @@ public class SendActivity extends Activity implements ProgressIndicator {
     if (!sendToMapsNewMap) {
       // Ask the user to choose a map to upload into
       Intent listIntent = new Intent(this, MapsList.class);
-      listIntent.putExtra(MapsList.EXTRA_ACCOUNT_NAME, lastAccountName);
-      listIntent.putExtra(MapsList.EXTRA_ACCOUNT_TYPE, lastAccountType);
+      listIntent.putExtra(MapsList.EXTRA_ACCOUNT_NAME, account.name);
+      listIntent.putExtra(MapsList.EXTRA_ACCOUNT_TYPE, account.type);
       startActivityForResult(listIntent, Constants.GET_MAP);
       // The callback for GET_MAP calls authenticateToGoogleMaps
       return SendState.NOT_READY;
@@ -406,8 +394,9 @@ public class SendActivity extends Activity implements ProgressIndicator {
       sendToMapsMapId = SendToMaps.NEW_MAP_ID;
     }
 
-    final SendToMaps sender = new SendToMaps(this, sendToMapsMapId, lastAuth,
-        sendTrackId, this /*progressIndicator*/, onCompletion);
+    final SendToMaps sender = new SendToMaps(this, sendToMapsMapId,
+        getAuthManager(MapsConstants.SERVICE_NAME), sendTrackId, this /*progressIndicator*/,
+        onCompletion);
 
     new Thread(sender, "SendToMaps").start();
 
@@ -461,8 +450,9 @@ public class SendActivity extends Activity implements ProgressIndicator {
       }
     };
 
-    final SendToFusionTables sender = new SendToFusionTables(this, lastAuth,
-        sendTrackId, this /*progressIndicator*/, onCompletion);
+    final SendToFusionTables sender = new SendToFusionTables(
+        this, getAuthManager(SendToFusionTables.SERVICE_ID), sendTrackId,
+        this /* progressIndicator */, onCompletion);
 
     new Thread(sender, "SendToFusionTables").start();
 
@@ -502,8 +492,8 @@ public class SendActivity extends Activity implements ProgressIndicator {
     String serviceName = getString(SendType.DOCS.getServiceName());
     setProgressMessage(String.format(format, serviceName));
     final SendToDocs sender = new SendToDocs(this,
-        authMap.get(SendToDocs.GDATA_SERVICE_NAME_TRIX),
-        authMap.get(SendToDocs.GDATA_SERVICE_NAME_DOCLIST),
+        getAuthManager(SendToDocs.GDATA_SERVICE_NAME_TRIX),
+        getAuthManager(SendToDocs.GDATA_SERVICE_NAME_DOCLIST),
         this);
     Runnable onCompletion = new Runnable() {
       public void run() {
@@ -671,59 +661,8 @@ public class SendActivity extends Activity implements ProgressIndicator {
    * token, prompting the user for a login and password if needed.
    */
   private void authenticate(final int requestCode, final String service) {
-    lastAuth = authMap.get(service);
-    if (lastAuth == null) {
-      Log.i(TAG, "Creating a new authentication for service: " + service);
-      lastAuth = AuthManagerFactory.getAuthManager(this,
-          Constants.GET_LOGIN,
-          null,
-          true,
-          service);
-      authMap.put(service, lastAuth);
-    }
-
-    Log.d(TAG, "Logging in to " + service + "...");
-    if (AuthManagerFactory.useModernAuthManager()) {
-      runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-          chooseAccount(requestCode, service);
-        }
-      });
-    } else {
-      doLogin(requestCode, service, null);
-    }
-  }
-
-  private void chooseAccount(final int requestCode, final String service) {
-    if (accountChooser == null) {
-      accountChooser = new AccountChooser();
-
-      // Restore state if necessary.
-      if (lastAccountName != null && lastAccountType != null) {
-        accountChooser.setChosenAccount(lastAccountName, lastAccountType);
-      }
-    }
-
-    accountChooser.chooseAccount(SendActivity.this,
-        new AccountChooser.AccountHandler() {
-          @Override
-          public void onAccountSelected(Account account) {
-            if (account == null) {
-              dismissDialog(PROGRESS_DIALOG);
-              finish();
-              return;
-            }
-
-            lastAccountName = account.name;
-            lastAccountType = account.type;
-            doLogin(requestCode, service, account);
-          }
-        });
-  }
-
-  private void doLogin(final int requestCode, final String service, final Object account) {
-    lastAuth.doLogin(new AuthCallback() {
+    AuthManager authManager = getAuthManager(service);
+    authManager.doLogin(new AuthCallback() {
       @Override
       public void onAuthResult(boolean success) {
         Log.i(TAG, "Login success for " + service + ": " + success);
@@ -742,16 +681,6 @@ public class SendActivity extends Activity implements ProgressIndicator {
       final Intent results) {
     SendState nextState = null;
     switch (requestCode) {
-      case Constants.GET_LOGIN: {
-        if (resultCode == RESULT_CANCELED || lastAuth == null) {
-          nextState = SendState.FINISH;
-          break;
-        }
-
-        // This will invoke onAuthResult appropriately.
-        lastAuth.authResult(resultCode, results);
-        break;
-      }
       case Constants.GET_MAP: {
         // User picked a map to upload to
         Log.d(TAG, "Get map result: " + resultCode);
@@ -763,6 +692,19 @@ public class SendActivity extends Activity implements ProgressIndicator {
         } else {
           nextState = SendState.FINISH;
         }
+        break;
+      }
+      case Constants.CHOOSE_ACCOUNT: {
+        if (resultCode == RESULT_CANCELED) {
+          nextState = SendState.FINISH;
+          break;
+        }
+        account = results.getParcelableExtra(AccountChooserActivity.ACCOUNT);
+        if (account == null) {
+          nextState = SendState.FINISH;
+          break;
+        }
+        nextState = SendState.START;
         break;
       }
       default: {
@@ -805,15 +747,29 @@ public class SendActivity extends Activity implements ProgressIndicator {
     executeStateMachine(nextState);
   }
 
+  private AuthManager getAuthManager(String service) {
+    AuthManager authManager = authMap.get(service);
+    if (authManager == null) {
+      authManager = AuthManagerFactory.getAuthManager(this,
+          Constants.GET_LOGIN,
+          null,
+          true,
+          service);
+      authMap.put(service, authManager);
+    }
+    return authManager;
+  }
   /**
    * Resets status information for sending to Maps/Fusion Tables/Docs.
    */
   private void resetState() {
-    currentState = SendState.START;
+    account = null;
+    authMap.clear();
+    currentState = SendState.CHOOSE_ACCOUNT;
+    sendToMapsSuccess = false;
+    sendToFusionTablesSuccess = false;
+    sendToDocsSuccess = false;
     sendToMapsMapId = null;
-    sendToMapsSuccess = true;
-    sendToFusionTablesSuccess = true;
-    sendToDocsSuccess = true;
     sendToFusionTablesTableId = null;
   }
 
