@@ -39,18 +39,11 @@ import android.accounts.Account;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Helper activity for managing the sending of tracks to Google services.
@@ -92,22 +85,16 @@ public class SendActivity extends Activity implements ProgressIndicator {
     SEND_TO_DOCS,
     SEND_TO_DOCS_DONE,
     SHOW_RESULTS,
-    SHARE_LINK,
     FINISH,
     DONE,
     NOT_READY
   }
 
   private static final int PROGRESS_DIALOG = 1;
-  /* @VisibleForTesting */
-  static final int DONE_DIALOG = 2;
-
-  // UI
   private ProgressDialog progressDialog;
 
   // Set in Activity.onCreate
   private MyTracksProviderUtils providerUtils;
-  private SharedPreferences sharedPreferences;
   private GoogleAnalyticsTracker tracker;
 
   // Send request information. Set by the intent that starts the activity.
@@ -132,20 +119,17 @@ public class SendActivity extends Activity implements ProgressIndicator {
   private String sendToMapsMapId;
   private String sendToFusionTablesTableId;
 
-  private final OnCancelListener finishOnCancelListener = new OnCancelListener() {
-    @Override
-    public void onCancel(DialogInterface arg0) {
-      onAllDone();
-    }
-  };
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     Log.d(TAG, "SendActivity.onCreate");
     super.onCreate(savedInstanceState);
 
+    if (!handleIntent()) {
+      finish();
+      return;
+     }
+    
     providerUtils = MyTracksProviderUtils.Factory.get(this);
-    sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
     tracker = GoogleAnalyticsTracker.getInstance();
     // Start the tracker in manual dispatch mode...
@@ -163,14 +147,6 @@ public class SendActivity extends Activity implements ProgressIndicator {
     // If we had the instance restored after it was done, reset it.
     if (currentState == SendState.DONE) {
       resetState();
-    }
-
-    // Only consider the intent if we're not restoring from a previous state.
-    if (currentState == SendState.CHOOSE_ACCOUNT) {
-      if (!handleIntent()) {
-        finish();
-        return;
-      }
     }
 
     // Execute the state machine, at the start or restored state.
@@ -199,8 +175,6 @@ public class SendActivity extends Activity implements ProgressIndicator {
     switch (id) {
       case PROGRESS_DIALOG:
         return createProgressDialog();
-      case DONE_DIALOG:
-        return createDoneDialog();
       default:
         return null;
     }
@@ -234,17 +208,10 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
   @Override
   protected void onStop() {
+    super.onStop();
     Log.d(TAG, "SendActivity.onStop, state=" + currentState);
     tracker.dispatch();
     tracker.stop();
-
-    super.onStop();
-  }
-
-  @Override
-  protected void onDestroy() {
-    Log.d(TAG, "SendActivity.onDestroy, state=" + currentState);
-    super.onDestroy();
   }
 
   private void executeStateMachine(SendState startState) {
@@ -290,8 +257,6 @@ public class SendActivity extends Activity implements ProgressIndicator {
         return onSendToGoogleDocsDone();
       case SHOW_RESULTS:
         return onSendToGoogleDone();
-      case SHARE_LINK:
-        return shareLink();
       case FINISH:
         return onAllDone();
       default:
@@ -514,146 +479,30 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
   private SendState onSendToGoogleDone() {
     tracker.dispatch();
-
-    runOnUiThread(new Runnable() {
-      @Override
-      public void run() {
-        Log.d(TAG, "Sending to Google done.");
-        dismissDialog(PROGRESS_DIALOG);
-        // Ensure a new done dialog is created each time.
-        // This is required because the send results must be available at the
-        // time the dialog is created.
-        removeDialog(DONE_DIALOG);
-        showDialog(DONE_DIALOG);
-      }
-    });
-
-    return SendState.NOT_READY;
-  }
-
-  private Dialog createDoneDialog() {
-    Log.d(TAG, "Creating done dialog");
-    // We've finished sending the track to the user-selected services.  Now
-    // we tell them the results of the upload, and optionally share the track.
-    // There are a few different paths through this code:
-    //
-    // 1. The user pre-requested a share (shareRequested == true).  We're going
-    //    to display the result dialog *without* the share button (the share
-    //    listener will be null).  The OK button listener will initiate the
-    //    share.
-    //
-    // 2. The user did not pre-request a share, and the set of services to
-    //    which we succeeded in uploading the track are compatible with
-    //    sharing.  We'll display a share button (the share listener will be
-    //    non-null), and will share the link if the user clicks it.
-    //
-    // 3. The user did not pre-request a share, and the set of services to
-    //    which we succeeded in uploading the track are incompatible with
-    //    sharing.  We won't display a share button.
-
-    List<SendResult> results = makeSendToGoogleResults();
-    final boolean canShare = sendToFusionTablesTableId != null || sendToMapsMapId != null;
-
-    final OnClickListener finishListener = new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick(DialogInterface dialog, int which) {
-        dialog.dismiss();
-        executeStateMachine(SendState.FINISH);
-      }
-    };
-
-    DialogInterface.OnClickListener doShareListener = null;
-    if (canShare) {
-      doShareListener = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-          dialog.dismiss();
-
-          executeStateMachine(SendState.SHARE_LINK);
-        }
-      };
-    }
-
-    DialogInterface.OnClickListener onOkListener = (canShare && shareRequest)
-        ? doShareListener : finishListener;
-    DialogInterface.OnClickListener onShareListener = (canShare && !shareRequest)
-        ? doShareListener : null;
-
-    return ResultDialogFactory.makeDialog(
-        this, results, onOkListener, onShareListener, finishOnCancelListener);
-  }
-
-  private SendState onAllDone() {
-    Log.d(TAG, "All sending done.");
-    removeDialog(PROGRESS_DIALOG);
-    removeDialog(DONE_DIALOG);
-    progressDialog = null;
-    finish();
-    return SendState.DONE;
-  }
-
-  private SendState shareLink() {
-    String url = null;
-    if (sendToMaps && sendToMapsSuccess) {
-      // Prefer a link to Maps
-      url = MapsFacade.buildMapUrl(sendToMapsMapId);
-    } else if (sendToFusionTables && sendToFusionTablesSuccess) {
-      // Otherwise try using the link to fusion tables
-      url = getFusionTablesUrl(sendTrackId);
-    }
-
-    if (url != null) {
-      shareLinkToMap(url);
-    } else {
-      Log.w(TAG, "Failed to share link");
-    }
-
+    Intent intent = new Intent(this, UploadResultActivity.class);
+    intent.putExtra(UploadResultActivity.HAS_MAPS_RESULT, sendToMaps);
+    intent.putExtra(UploadResultActivity.HAS_FUSION_TABLES_RESULT, sendToFusionTables);
+    intent.putExtra(UploadResultActivity.HAS_DOCS_RESULT, sendToDocs);
+    intent.putExtra(UploadResultActivity.MAPS_SUCCESS, sendToMapsSuccess);
+    intent.putExtra(UploadResultActivity.FUSION_TABLES_SUCCESS, sendToFusionTablesSuccess);
+    intent.putExtra(UploadResultActivity.DOCS_SUCCESS, sendToDocsSuccess);
+    intent.putExtra(UploadResultActivity.SHARE_REQUEST, shareRequest);
+    intent.putExtra(UploadResultActivity.MAPS_URL,
+        sendToMaps && sendToMapsSuccess ? MapsFacade.buildMapUrl(sendToMapsMapId) : null);
+    intent.putExtra(UploadResultActivity.FUSION_TABLES_SUCCESS,
+        sendToFusionTables && sendToFusionTablesSuccess ? getFusionTablesUrl(sendTrackId) : null);
+    startActivity(intent);
     return SendState.FINISH;
   }
-
-  /**
-   * Shares a link to a Map or Fusion Table via external app (email, gmail, ...)
-   * A chooser with apps that support text/plain will be shown to the user.
-   */
-  private void shareLinkToMap(String url) {
-    boolean shareUrlOnly = sharedPreferences.getBoolean(
-        getString(R.string.share_url_only_key), false);
-    String msg = shareUrlOnly ? url : String.format(
-        getResources().getText(R.string.share_track_url_body_format).toString(), url);
-
-    Intent shareIntent = new Intent(Intent.ACTION_SEND);
-    shareIntent.setType("text/plain");
-    shareIntent.putExtra(Intent.EXTRA_SUBJECT,
-        getResources().getText(R.string.share_track_subject).toString());
-    shareIntent.putExtra(Intent.EXTRA_TEXT, msg);
-    startActivity(Intent.createChooser(shareIntent,
-        getResources().getText(R.string.share_track_picker_title).toString()));
+ 
+  private SendState onAllDone() {
+    finish();
+    return SendState.DONE;
   }
 
   protected String getFusionTablesUrl(long trackId) {
     Track track = providerUtils.getTrack(trackId);
     return SendToFusionTables.getMapVisualizationUrl(track);
-  }
-
-  /**
-   * Creates a list of {@link SendResult} instances based on the set of
-   * services selected in {@link SendDialog} and the results as known to
-   * this class.
-   */
-  private List<SendResult> makeSendToGoogleResults() {
-    List<SendResult> results = new ArrayList<SendResult>();
-    if (sendToMaps) {
-      results.add(new SendResult(SendType.MAPS, sendToMapsSuccess));
-    }
-    if (sendToFusionTables) {
-      results.add(new SendResult(SendType.FUSION_TABLES,
-          sendToFusionTablesSuccess));
-    }
-    if (sendToDocs) {
-      results.add(new SendResult(SendType.DOCS, sendToDocsSuccess));
-    }
-
-    return results;
   }
 
   /**
