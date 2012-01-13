@@ -65,6 +65,7 @@ public class AccountChooserActivity extends Activity {
       intent.putExtra(ACCOUNT, accounts[0]);
       setResult(RESULT_OK, intent);
       finish();
+      return;
     }
 
     SharedPreferences prefs = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
