@@ -15,6 +15,9 @@
  */
 package com.google.android.apps.mytracks;
 
+import static com.google.android.apps.mytracks.Constants.CHART_TAB_TAG;
+import static com.google.android.apps.mytracks.Constants.MAP_TAB_TAG;
+import static com.google.android.apps.mytracks.Constants.STATS_TAB_TAG;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
@@ -168,14 +171,14 @@ public class MyTracks extends TabActivity implements OnTouchListener {
 
     final Resources res = getResources();
     final TabHost tabHost = getTabHost();
-    tabHost.addTab(tabHost.newTabSpec("tab1")
+    tabHost.addTab(tabHost.newTabSpec(MAP_TAB_TAG)
         .setIndicator("Map", res.getDrawable(
             android.R.drawable.ic_menu_mapmode))
         .setContent(new Intent(this, MapActivity.class)));
-    tabHost.addTab(tabHost.newTabSpec("tab2")
+    tabHost.addTab(tabHost.newTabSpec(STATS_TAB_TAG)
         .setIndicator("Stats", res.getDrawable(R.drawable.menu_stats))
         .setContent(new Intent(this, StatsActivity.class)));
-    tabHost.addTab(tabHost.newTabSpec("tab3")
+    tabHost.addTab(tabHost.newTabSpec(CHART_TAB_TAG)
         .setIndicator("Chart", res.getDrawable(R.drawable.menu_elevation))
         .setContent(new Intent(this, ChartActivity.class)));
 
@@ -303,9 +306,15 @@ public class MyTracks extends TabActivity implements OnTouchListener {
 
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
+    MapActivity map = getMapTab();
+    boolean isSatelliteView = map != null ? map.isSatelliteView() : false;
+
     menuManager.onPrepareOptionsMenu(menu, providerUtils.getLastTrack() != null,
         ServiceUtils.isRecording(this, serviceConnection.getServiceIfBound(), preferences),
-        dataHub.isATrackSelected());
+        dataHub.isATrackSelected(),
+        isSatelliteView,
+        getTabHost().getCurrentTabTag());
+
     return super.onPrepareOptionsMenu(menu);
   }
 
@@ -367,8 +376,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
         if (results != null) {
           final long waypointId = results.getLongExtra(WaypointDetails.WAYPOINT_ID_EXTRA, -1);
           if (waypointId >= 0) {
-            MapActivity map =
-                (MapActivity) getLocalActivityManager().getActivity("tab1");
+            MapActivity map = getMapTab();
             if (map != null) {
               getTabHost().setCurrentTab(0);
               map.showWaypoint(waypointId);
@@ -484,5 +492,34 @@ public class MyTracks extends TabActivity implements OnTouchListener {
 
   long getSelectedTrackId() {
     return dataHub.getSelectedTrackId();
+  }
+
+  public void showChartSettings() {
+    ChartActivity chart = getChartTab();
+    if (chart != null) {
+      chart.showDialog(ChartActivity.CHART_SETTINGS_DIALOG);
+    }
+  }
+
+  public void toggleSatelliteView() {
+    MapActivity mapTab = getMapTab();
+    if (mapTab != null) {
+      mapTab.setSatelliteView(!getMapTab().isSatelliteView());
+    }
+  }
+
+  public void showMyLocation() {
+    MapActivity mapTab = getMapTab();
+    if (mapTab != null) {
+      mapTab.showMyLocation();
+    }
+  }
+
+  private MapActivity getMapTab() {
+    return (MapActivity) getLocalActivityManager().getActivity(MAP_TAB_TAG);
+  }
+
+  private ChartActivity getChartTab() {
+    return (ChartActivity) getLocalActivityManager().getActivity(CHART_TAB_TAG);
   }
 }

@@ -15,6 +15,9 @@
  */
 package com.google.android.apps.mytracks;
 
+import static com.google.android.apps.mytracks.Constants.CHART_TAB_TAG;
+import static com.google.android.apps.mytracks.Constants.MAP_TAB_TAG;
+
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -41,7 +44,8 @@ class MenuManager {
   }
 
   public void onPrepareOptionsMenu(Menu menu, boolean hasRecorded,
-      boolean isRecording, boolean hasSelectedTrack) {
+      boolean isRecording, boolean hasSelectedTrack,
+      boolean isSatelliteMode, String currentTabTag) {
     menu.findItem(R.id.menu_markers)
         .setEnabled(hasRecorded && hasSelectedTrack);
     menu.findItem(R.id.menu_record_track)
@@ -50,6 +54,18 @@ class MenuManager {
     menu.findItem(R.id.menu_stop_recording)
         .setEnabled(isRecording)
         .setVisible(isRecording);
+
+    menu.findItem(R.id.menu_chart_settings)
+        .setVisible(CHART_TAB_TAG.equals(currentTabTag));
+
+    boolean isMapTab = MAP_TAB_TAG.equals(currentTabTag);
+    menu.findItem(R.id.menu_my_location)
+        .setVisible(isMapTab);
+    menu.findItem(R.id.menu_layers)
+        .setVisible(isMapTab)
+        .setTitle(isSatelliteMode
+            ? R.string.menu_map_view_map_mode
+            : R.string.menu_map_view_satellite_mode);
   }
 
   public boolean onOptionsItemSelected(MenuItem item) {
@@ -85,7 +101,20 @@ class MenuManager {
       case R.id.menu_help: {
         return startActivity(WelcomeActivity.class);
       }
+      case R.id.menu_chart_settings: {
+        activity.showChartSettings();
+        return true;
+      }
+      case R.id.menu_my_location: {
+        activity.showMyLocation();
+        return true;
+      }
+      case R.id.menu_layers: {
+        activity.toggleSatelliteView();
+        return true;
+      }
     }
+
     return false;
   }
 

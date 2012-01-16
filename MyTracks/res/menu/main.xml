@@ -20,6 +20,24 @@
     android:title="@string/menu_markers"
     android:showAsAction="ifRoom"/>
 
+  <item android:id="@+id/menu_chart_settings"
+    android:icon="@drawable/chart_settings"
+    android:title="@string/menu_chart_view_chart_settings"
+    android:showAsAction="ifRoom"
+    android:visible="false"/>
+
+  <item android:id="@+id/menu_my_location"
+    android:icon="@android:drawable/ic_menu_mylocation"
+    android:title="@string/menu_map_view_my_location"
+    android:showAsAction="ifRoom"
+    android:visible="false"/>
+
+  <item android:id="@+id/menu_layers"
+    android:icon="@android:drawable/ic_menu_mapmode"
+    android:title="@string/menu_map_view_satellite_mode"
+    android:showAsAction="ifRoom"
+    android:visible="false"/>
+
   <item android:id="@+id/menu_sensor_state"
     android:icon="@drawable/ic_menu_sensorstatus"
     android:orderInCategory="1000"

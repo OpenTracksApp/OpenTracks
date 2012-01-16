@@ -41,8 +41,6 @@ import android.content.DialogInterface.OnClickListener;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -60,7 +58,8 @@ import java.util.EnumSet;
  */
 public class ChartActivity extends Activity implements TrackDataListener {
 
-  private static final int CHART_SETTINGS_DIALOG = 1;
+  public static final int CHART_SETTINGS_DIALOG = 1;
+
   private final DoubleBuffer elevationBuffer =
       new DoubleBuffer(Constants.ELEVATION_SMOOTHING_FACTOR);
   private final DoubleBuffer speedBuffer =
@@ -83,7 +82,6 @@ public class ChartActivity extends Activity implements TrackDataListener {
    * UI elements:
    */
   private ChartView chartView;
-  private MenuItem chartSettingsMenuItem;
   private LinearLayout busyPane;
   private ZoomControls zoomControls;
 
@@ -185,25 +183,6 @@ public class ChartActivity extends Activity implements TrackDataListener {
       chartView.setMode(newMode);
       dataHub.reloadDataForListener(this);
     }
-  }
-
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    super.onCreateOptionsMenu(menu);
-    chartSettingsMenuItem = menu.add(Menu.NONE, Constants.MENU_CHART_SETTINGS, Menu.NONE,
-        R.string.menu_chart_view_chart_settings);
-    chartSettingsMenuItem.setIcon(R.drawable.chart_settings);
-    return true;
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case Constants.MENU_CHART_SETTINGS:
-        showDialog(CHART_SETTINGS_DIALOG);
-        return true;
-    }
-    return super.onOptionsItemSelected(item);
   }
 
   @Override
