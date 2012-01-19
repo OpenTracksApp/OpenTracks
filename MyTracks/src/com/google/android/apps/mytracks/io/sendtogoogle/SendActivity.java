@@ -480,16 +480,16 @@ public class SendActivity extends Activity implements ProgressIndicator {
   private SendState onSendToGoogleDone() {
     tracker.dispatch();
     Intent intent = new Intent(this, UploadResultActivity.class);
-    intent.putExtra(UploadResultActivity.HAS_MAPS_RESULT, sendToMaps);
-    intent.putExtra(UploadResultActivity.HAS_FUSION_TABLES_RESULT, sendToFusionTables);
-    intent.putExtra(UploadResultActivity.HAS_DOCS_RESULT, sendToDocs);
-    intent.putExtra(UploadResultActivity.MAPS_SUCCESS, sendToMapsSuccess);
-    intent.putExtra(UploadResultActivity.FUSION_TABLES_SUCCESS, sendToFusionTablesSuccess);
-    intent.putExtra(UploadResultActivity.DOCS_SUCCESS, sendToDocsSuccess);
-    intent.putExtra(UploadResultActivity.SHARE_REQUEST, shareRequest);
-    intent.putExtra(UploadResultActivity.MAPS_URL,
-        sendToMaps && sendToMapsSuccess ? MapsFacade.buildMapUrl(sendToMapsMapId) : null);
-    intent.putExtra(UploadResultActivity.FUSION_TABLES_SUCCESS,
+    intent.putExtra(UploadResultActivity.HAS_MAPS_RESULT, sendToMaps)
+    .putExtra(UploadResultActivity.HAS_FUSION_TABLES_RESULT, sendToFusionTables)
+    .putExtra(UploadResultActivity.HAS_DOCS_RESULT, sendToDocs)
+    .putExtra(UploadResultActivity.MAPS_SUCCESS, sendToMapsSuccess)
+    .putExtra(UploadResultActivity.FUSION_TABLES_SUCCESS, sendToFusionTablesSuccess)
+    .putExtra(UploadResultActivity.DOCS_SUCCESS, sendToDocsSuccess)
+    .putExtra(UploadResultActivity.SHARE_REQUEST, shareRequest)
+    .putExtra(UploadResultActivity.MAPS_URL,
+        sendToMaps && sendToMapsSuccess ? MapsFacade.buildMapUrl(sendToMapsMapId) : null)
+    .putExtra(UploadResultActivity.FUSION_TABLES_SUCCESS,
         sendToFusionTables && sendToFusionTablesSuccess ? getFusionTablesUrl(sendTrackId) : null);
     startActivity(intent);
     return SendState.FINISH;
