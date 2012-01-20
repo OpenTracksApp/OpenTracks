@@ -84,16 +84,6 @@ public interface ApiLevelAdapter {
   void applyPreferenceChanges(SharedPreferences.Editor editor);
 
   /**
-   * Shows the action bar, if the current system supports it.
-   * If it's not supported, the title bar will be kept hidden.
-   *
-   * Due to changes in API level 11.
-   *
-   * @param activity the current activity
-   */
-  void showActionBar(Activity activity);
-
-  /**
    * Enables strict mode where supported, only if this is a development build.
    *
    * Due to changes in API level 9.
@@ -121,4 +111,14 @@ public interface ApiLevelAdapter {
    * Due to changes in API level 9.
    */
   HttpTransport getHttpTransport();
+
+  /**
+   * Shows the action bar, if the current system supports it.
+   * If it's not supported, the title bar will be kept hidden.
+   *
+   * Due to changes in API level 11.
+   *
+   * @param activity the current activity
+   */
+  void showActionBar(Activity activity);
 }

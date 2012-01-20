@@ -494,6 +494,9 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     return dataHub.getSelectedTrackId();
   }
 
+  /**
+   * Asks the chart tab to show its settings.
+   */
   public void showChartSettings() {
     ChartActivity chart = getChartTab();
     if (chart != null) {
@@ -501,13 +504,19 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     }
   }
 
+  /**
+   * Asks the map tab to show the map in satellite mode.
+   */
   public void toggleSatelliteView() {
     MapActivity mapTab = getMapTab();
     if (mapTab != null) {
-      mapTab.setSatelliteView(!getMapTab().isSatelliteView());
+      mapTab.setSatelliteView(!mapTab.isSatelliteView());
     }
   }
 
+  /**
+   * Asks the map tab to jump to the current location.
+   */
   public void showMyLocation() {
     MapActivity mapTab = getMapTab();
     if (mapTab != null) {
@@ -515,10 +524,16 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     }
   }
 
+  /**
+   * Returns the map tab instance if available, or null otherwise.
+   */
   private MapActivity getMapTab() {
     return (MapActivity) getLocalActivityManager().getActivity(MAP_TAB_TAG);
   }
 
+  /**
+   * Returns the chart tab instance if available, or null otherwise.
+   */
   private ChartActivity getChartTab() {
     return (ChartActivity) getLocalActivityManager().getActivity(CHART_TAB_TAG);
   }

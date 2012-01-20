@@ -32,7 +32,7 @@
     android:showAsAction="ifRoom"
     android:visible="false"/>
 
-  <item android:id="@+id/menu_layers"
+  <item android:id="@+id/menu_satellite_mode"
     android:icon="@android:drawable/ic_menu_mapmode"
     android:title="@string/menu_map_view_satellite_mode"
     android:showAsAction="ifRoom"

@@ -86,6 +86,12 @@ public class MapActivity extends com.google.android.maps.MapActivity
   private boolean keepMyLocationVisible;
 
   /**
+   * True if we've already zoomed into the current location.
+   * Only relevant when {@link #keepMyLocationVisible} is true.
+   */
+  private boolean myLocationWasZoomedIn;
+
+  /**
    * The current pointer location.
    * This is kept to quickly center on it when the user requests.
    */
@@ -260,9 +266,7 @@ public class MapActivity extends com.google.android.maps.MapActivity
   public void showMyLocation() {
     dataHub.forceUpdateLocation();
     keepMyLocationVisible = true;
-    if (mapView.getZoomLevel() < 18) {
-      mapView.getController().setZoom(18);
-    }
+    myLocationWasZoomedIn = false;
     if (currentLocation != null) {
       showCurrentLocation();
     }
@@ -284,6 +288,11 @@ public class MapActivity extends com.google.android.maps.MapActivity
       GeoPoint geoPoint = LocationUtils.getGeoPoint(currentLocation);
       MapController controller = mapView.getController();
       controller.animateTo(geoPoint);
+      if (!myLocationWasZoomedIn && mapView.getZoomLevel() < 18) {
+        // Only zoom in the first time we show the location.
+        myLocationWasZoomedIn = true;
+        controller.setZoom(18);
+      }
     }
   }
 

@@ -38,11 +38,27 @@ class MenuManager {
     this.activity = activity;
   }
 
+  /**
+   * Fills the menu with its initial options.
+   *
+   * @param menu the menu to fill
+   * @return true on success, false otherwise
+   */
   public boolean onCreateOptionsMenu(Menu menu) {
     activity.getMenuInflater().inflate(R.menu.main, menu);
     return true;
   }
 
+  /**
+   * Prepares the menu for display.
+   *
+   * @param menu the menu to update for display
+   * @param hasRecorded whether any track has been recorded
+   * @param isRecording whether we're recording a track now
+   * @param hasSelectedTrack whether there's a track currently selected for display
+   * @param isSatelliteMode whether the map is currently in satellite mode
+   * @param currentTabTag the tag for the currently-displayed tab
+   */
   public void onPrepareOptionsMenu(Menu menu, boolean hasRecorded,
       boolean isRecording, boolean hasSelectedTrack,
       boolean isSatelliteMode, String currentTabTag) {
@@ -61,13 +77,19 @@ class MenuManager {
     boolean isMapTab = MAP_TAB_TAG.equals(currentTabTag);
     menu.findItem(R.id.menu_my_location)
         .setVisible(isMapTab);
-    menu.findItem(R.id.menu_layers)
+    menu.findItem(R.id.menu_satellite_mode)
         .setVisible(isMapTab)
         .setTitle(isSatelliteMode
             ? R.string.menu_map_view_map_mode
             : R.string.menu_map_view_satellite_mode);
   }
 
+  /**
+   * Called when an option from the menu is selected.
+   *
+   * @param item the selected item
+   * @return true if the action was handled, false otherwise
+   */
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.menu_record_track: {
@@ -109,7 +131,7 @@ class MenuManager {
         activity.showMyLocation();
         return true;
       }
-      case R.id.menu_layers: {
+      case R.id.menu_satellite_mode: {
         activity.toggleSatelliteView();
         return true;
       }
@@ -118,6 +140,9 @@ class MenuManager {
     return false;
   }
 
+  /**
+   * Starts an activity with the given class.
+   */
   private boolean startActivity(Class<? extends Activity> activityClass) {
     activity.startActivity(new Intent(activity, activityClass));
     return true;
