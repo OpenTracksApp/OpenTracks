@@ -374,9 +374,9 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
   private SendState authenticateToFusionTables() {
     tracker.trackPageView("/send/fusion_tables");
-    Intent intent = new Intent(this, SendFusionTablesActivity.class);
-    intent.putExtra(SendFusionTablesActivity.ACCOUNT, account);
-    intent.putExtra(SendFusionTablesActivity.TRACK_ID, sendTrackId);
+    Intent intent = new Intent(this, SendFusionTablesActivity.class)
+        .putExtra(SendFusionTablesActivity.ACCOUNT, account)
+        .putExtra(SendFusionTablesActivity.TRACK_ID, sendTrackId);
     startActivityForResult(intent, Constants.SEND_FUSION_TABLES);
     return SendState.NOT_READY;
   }
@@ -440,9 +440,8 @@ public class SendActivity extends Activity implements ProgressIndicator {
     String mapsUrl = sendToMaps && sendToMapsSuccess
                      ? MapsFacade.buildMapUrl(sendToMapsMapId)
                      : null;
-    Track track = providerUtils.getTrack(sendTrackId);
     String fusionTablesUrl = sendToFusionTables && sendToFusionTablesSuccess 
-                             ? SendFusionTablesUtils.getMapUrl(track)
+                             ? SendFusionTablesUtils.getMapUrl(providerUtils.getTrack(sendTrackId))
                              : null;
     Intent intent = new Intent(this, UploadResultActivity.class)
         .putExtra(UploadResultActivity.HAS_MAPS_RESULT, sendToMaps)
