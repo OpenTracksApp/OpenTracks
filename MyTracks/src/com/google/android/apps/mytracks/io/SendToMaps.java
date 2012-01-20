@@ -325,9 +325,8 @@ public class SendToMaps implements Runnable {
     progressIndicator.setProgressMessage(String.format(sendingFormat, serviceName));
     for (Track splitTrack : splitTracks) {
       if (totalSegmentsUploaded > 1) {
-        splitTrack.setName(splitTrack.getName() + " "
-            + String.format(
-                context.getString(R.string.send_google_track_part_label), totalSegmentsUploaded));
+        splitTrack.setName(context.getString(
+            R.string.send_google_track_part_label, splitTrack.getName(), totalSegmentsUploaded));
       }
       totalSegmentsUploaded++;
       Log.d(TAG,

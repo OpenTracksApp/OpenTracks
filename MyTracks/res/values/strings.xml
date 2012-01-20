@@ -741,14 +741,18 @@ limitations under the License.
     A marker was inserted.
   </string>
   <string name="marker_label_end"
-    translation_description="When inserting a marker to indicate the end of a track, the label at
-      the end of the marker name. E.g., the marker is named 'track_name (End)'.">
-    (End)
+    translation_description="When inserting a marker to indicate the end of a track, the marker's
+      name. E.g., 'track_name (End)'.
+      
+      %1$s track name. E.g., 'track_name'.">
+    %1$s (End)
   </string>
   <string name="marker_label_start"
-    translation_description="When inserting a marker to indicate the beginning of a track, the label
-      at the end of the marker name. E.g., the marker is named 'track_name (Start)'.">
-    (Start)
+    translation_description="When inserting a marker to indicate the start of a track, the marker's
+      name. E.g., 'track_name (Start)'.
+      
+      %1$s track name. E.g., 'track_name'.">
+     %1$s (Start)
   </string>
   <string name="marker_list_context_menu_title"
     translation_description="In the context menu for a marker, the title indicating that all the
@@ -1172,6 +1176,13 @@ limitations under the License.
       dialog indicating My Tracks is preparing the track's data for upload.">
     Preparing track...
   </string>
+  <string name="send_google_progress_title"
+    translation_description="When sending a track to a Google service, the title on the progress
+      dialog.
+
+      %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Docs'.">
+    Sending to %1$s. Please wait...
+  </string>
   <string name="send_google_progress_reading_track"
     translation_description="When sending a track to Google, the message on the progress dialog
       indicating My Tracks is reading the track from its database.">
@@ -1226,11 +1237,12 @@ limitations under the License.
     Send to...
   </string>
   <string name="send_google_track_part_label"
-    translation_description="When sending a track to Google, the label to name segments when
-      splitting a large track.
+    translation_description="When sending a track to Google, the label to name segments of a large
+      track. E.g., 'track_name (Part 1)'
 
-      %1$d: part number. E.g., '1'.">
-    (Part %1$d)
+      %1$s: track name. E.g., 'track_name'
+      %2$d: part number. E.g., '1'.">
+    %1$s (Part %2$d)
   </string>
 
   <!-- Sensor State -->

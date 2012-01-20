@@ -248,6 +248,7 @@ limitations under the License.
 
     <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.UploadServiceChooserActivity"/>
     <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.AccountChooserActivity"/>
+    <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.SendFusionTablesActivity"/>
     <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.UploadResultActivity"/>
         
     <service android:name="com.google.android.apps.mytracks.services.TrackRecordingService"

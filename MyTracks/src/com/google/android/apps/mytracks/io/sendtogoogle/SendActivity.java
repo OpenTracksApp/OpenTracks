@@ -27,8 +27,6 @@ import com.google.android.apps.mytracks.io.AuthManager;
 import com.google.android.apps.mytracks.io.AuthManager.AuthCallback;
 import com.google.android.apps.mytracks.io.AuthManagerFactory;
 import com.google.android.apps.mytracks.io.SendToDocs;
-import com.google.android.apps.mytracks.io.SendToFusionTables;
-import com.google.android.apps.mytracks.io.SendToFusionTables.OnSendCompletedListener;
 import com.google.android.apps.mytracks.io.SendToMaps;
 import com.google.android.apps.mytracks.io.maps.MapsConstants;
 import com.google.android.apps.mytracks.io.maps.MapsFacade;
@@ -78,7 +76,6 @@ public class SendActivity extends Activity implements ProgressIndicator {
     SEND_TO_MAPS,
     SEND_TO_MAPS_DONE,
     AUTHENTICATE_FUSION_TABLES,
-    SEND_TO_FUSION_TABLES,
     SEND_TO_FUSION_TABLES_DONE,
     AUTHENTICATE_DOCS,
     AUTHENTICATE_TRIX,
@@ -243,8 +240,6 @@ public class SendActivity extends Activity implements ProgressIndicator {
         return onSendToGoogleMapsDone();
       case AUTHENTICATE_FUSION_TABLES:
         return authenticateToFusionTables();
-      case SEND_TO_FUSION_TABLES:
-        return sendToFusionTables();
       case SEND_TO_FUSION_TABLES_DONE:
         return onSendToFusionTablesDone();
       case AUTHENTICATE_DOCS:
@@ -277,8 +272,6 @@ public class SendActivity extends Activity implements ProgressIndicator {
    * SendToGoogleDialog.
    */
   private SendState startSend() {
-    showDialog(PROGRESS_DIALOG);
-
     if (sendToMaps) {
       return SendState.AUTHENTICATE_MAPS;
     } else if (sendToFusionTables) {
@@ -305,6 +298,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
   private SendState authenticateToGoogleMaps() {
     Log.d(TAG, "SendActivity.authenticateToGoogleMaps");
+    showDialog(PROGRESS_DIALOG);
     progressDialog.setProgress(0);
     progressDialog.setMessage(getAuthenticatingProgressMessage(SendType.MAPS));
     authenticate(Constants.AUTHENTICATE_TO_MAPS, MapsConstants.SERVICE_NAME);
@@ -379,48 +373,11 @@ public class SendActivity extends Activity implements ProgressIndicator {
   }
 
   private SendState authenticateToFusionTables() {
-    progressDialog.setProgress(0);
-    progressDialog.setMessage(getAuthenticatingProgressMessage(SendType.FUSION_TABLES));
-    authenticate(Constants.AUTHENTICATE_TO_FUSION_TABLES, SendToFusionTables.SERVICE_ID);
-    // AUTHENTICATE_TO_FUSION_TABLES callback calls sendToFusionTables
-    return SendState.NOT_READY;
-  }
-
-  private SendState sendToFusionTables() {
     tracker.trackPageView("/send/fusion_tables");
-
-    OnSendCompletedListener onCompletion = new OnSendCompletedListener() {
-      @Override
-      public void onSendCompleted(String tableId, boolean success) {
-        sendToFusionTablesSuccess = success;
-        if (sendToFusionTablesSuccess) {
-          sendToFusionTablesTableId = tableId;
-          // Update the table id for this track:
-          try {
-            Track track = providerUtils.getTrack(sendTrackId);
-            if (track != null) {
-              track.setTableId(tableId);
-              providerUtils.updateTrack(track);
-            } else {
-              Log.w(TAG, "Updating table id failed.");
-            }
-          } catch (RuntimeException e) {
-            // If that fails whatever reasons we'll just log an error, but
-            // continue.
-            Log.w(TAG, "Updating table id failed.", e);
-          }
-        }
-
-        executeStateMachine(SendState.SEND_TO_FUSION_TABLES_DONE);
-      }
-    };
-
-    final SendToFusionTables sender = new SendToFusionTables(
-        this, getAuthManager(SendToFusionTables.SERVICE_ID), sendTrackId,
-        this /* progressIndicator */, onCompletion);
-
-    new Thread(sender, "SendToFusionTables").start();
-
+    Intent intent = new Intent(this, SendFusionTablesActivity.class)
+        .putExtra(SendFusionTablesActivity.ACCOUNT, account)
+        .putExtra(SendFusionTablesActivity.TRACK_ID, sendTrackId);
+    startActivityForResult(intent, Constants.SEND_FUSION_TABLES);
     return SendState.NOT_READY;
   }
 
@@ -433,6 +390,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
   }
 
   private SendState authenticateToGoogleDocs() {
+    showDialog(PROGRESS_DIALOG);
     setProgressValue(0);
     setProgressMessage(getAuthenticatingProgressMessage(SendType.DOCS));
     authenticate(Constants.AUTHENTICATE_TO_DOCLIST, SendToDocs.GDATA_SERVICE_NAME_DOCLIST);
@@ -483,7 +441,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
                      ? MapsFacade.buildMapUrl(sendToMapsMapId)
                      : null;
     String fusionTablesUrl = sendToFusionTables && sendToFusionTablesSuccess 
-                             ? getFusionTablesUrl(sendTrackId)
+                             ? SendFusionTablesUtils.getMapUrl(providerUtils.getTrack(sendTrackId))
                              : null;
     Intent intent = new Intent(this, UploadResultActivity.class)
         .putExtra(UploadResultActivity.HAS_MAPS_RESULT, sendToMaps)
@@ -504,12 +462,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
     return SendState.DONE;
   }
 
-  protected String getFusionTablesUrl(long trackId) {
-    Track track = providerUtils.getTrack(trackId);
-    return SendToFusionTables.getMapVisualizationUrl(track);
-  }
-
-  /**
+    /**
    * Initializes the authentication manager which obtains an authentication
    * token, prompting the user for a login and password if needed.
    */
@@ -560,6 +513,17 @@ public class SendActivity extends Activity implements ProgressIndicator {
         nextState = SendState.START;
         break;
       }
+      case Constants.SEND_FUSION_TABLES: {
+        if (resultCode == RESULT_CANCELED) {
+          nextState = SendState.FINISH;
+          break;
+        }
+        sendToFusionTablesSuccess = results.getBooleanExtra(
+            SendFusionTablesActivity.SUCCESS, false);
+        sendToFusionTablesTableId = results.getStringExtra(SendFusionTablesActivity.TABLE_ID);
+        nextState = SendState.SEND_TO_FUSION_TABLES_DONE;
+        break;
+      }
       default: {
         Log.e(TAG, "Unrequested result: " + requestCode);
         return;
@@ -577,10 +541,6 @@ public class SendActivity extends Activity implements ProgressIndicator {
       case Constants.AUTHENTICATE_TO_MAPS:
         // Authenticated with Google Maps
         nextState = SendState.PICK_MAP;
-        break;
-      case Constants.AUTHENTICATE_TO_FUSION_TABLES:
-        // Authenticated with Google Fusion Tables
-        nextState = SendState.SEND_TO_FUSION_TABLES;
         break;
       case Constants.AUTHENTICATE_TO_DOCLIST:
         // Authenticated with Google Docs
@@ -612,6 +572,7 @@ public class SendActivity extends Activity implements ProgressIndicator {
     }
     return authManager;
   }
+
   /**
    * Resets status information for sending to Maps/Fusion Tables/Docs.
    */

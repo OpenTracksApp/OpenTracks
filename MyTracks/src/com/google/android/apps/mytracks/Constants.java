@@ -44,20 +44,20 @@ public abstract class Constants {
   public static final int GET_MAP = 1;
   public static final int SHOW_TRACK = 2;
   public static final int AUTHENTICATE_TO_MAPS = 3;
-  public static final int AUTHENTICATE_TO_FUSION_TABLES = 4;
-  public static final int AUTHENTICATE_TO_DOCLIST = 5;
-  public static final int AUTHENTICATE_TO_TRIX = 6;
-  public static final int SHARE_GPX_FILE = 7;
-  public static final int SHARE_KML_FILE = 8;
-  public static final int SHARE_CSV_FILE = 9;
-  public static final int SHARE_TCX_FILE = 10;
-  public static final int SAVE_GPX_FILE = 11;
-  public static final int SAVE_KML_FILE = 12;
-  public static final int SAVE_CSV_FILE = 13;
-  public static final int SAVE_TCX_FILE = 14;
-  public static final int SHOW_WAYPOINT = 15;
-  public static final int WELCOME = 16;
-  public static final int CHOOSE_ACCOUNT = 17;
+  public static final int AUTHENTICATE_TO_DOCLIST = 4;
+  public static final int AUTHENTICATE_TO_TRIX = 5;
+  public static final int SHARE_GPX_FILE = 6;
+  public static final int SHARE_KML_FILE = 7;
+  public static final int SHARE_CSV_FILE = 8;
+  public static final int SHARE_TCX_FILE = 9;
+  public static final int SAVE_GPX_FILE = 10;
+  public static final int SAVE_KML_FILE = 11;
+  public static final int SAVE_CSV_FILE = 12;
+  public static final int SAVE_TCX_FILE = 13;
+  public static final int SHOW_WAYPOINT = 14;
+  public static final int WELCOME = 15;
+  public static final int CHOOSE_ACCOUNT = 16;
+  public static final int SEND_FUSION_TABLES = 17;
 
   /*
    * Menu ids:
