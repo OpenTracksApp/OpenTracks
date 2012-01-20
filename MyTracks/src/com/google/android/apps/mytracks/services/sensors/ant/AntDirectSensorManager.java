@@ -29,240 +29,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import java.util.LinkedList;
-
 /**
  * A sensor manager to connect ANT+ sensors.
- * This can include heart rate monitors.
  *
  * @author Sandor Dornbush
  * @author Laszlo Molnar
  */
-public class AntDirectSensorManager extends AntSensorManager {
-
-  /*
-   * These constants are defined by the ANT+ spec.
-   */
-  public static final byte NETWORK_NUMBER = 1;
-  public static final byte RF_FREQUENCY = 57;
-
-  public abstract class AntSensorBase {
-
-    protected byte channel;
-    protected short deviceNumber;
-    private byte deviceType;
-    private short channelPeriod;
-
-    AntSensorBase(byte channel, short deviceNumber, byte deviceType,
-              String deviceTypeString, short channelPeriod) {
-      this.channel = channel;
-      this.deviceNumber = deviceNumber;
-      this.deviceType = deviceType;
-      this.channelPeriod = channelPeriod;
-
-      Log.i(TAG, "Will pair with " + deviceTypeString + " device: " + ((int) deviceNumber & 0xFFFF));
-    }
-
-    protected void resolveWildcardDeviceNumber() {
-      if (!isPaired()) {
-        try {
-          getAntReceiver().ANTRequestMessage(channel, AntMesg.MESG_CHANNEL_ID_ID);
-        } catch (AntInterfaceException e) {
-          Log.e(TAG, "ANT error handling broadcast data", e);
-        }
-        Log.d(TAG, "Requesting channel id id on channel: " + channel);
-      }
-    }
-
-    public abstract void handleBroadcastData(byte[] antMessage);
-
-    public boolean setupChannel() {
-      Log.i(TAG, "ant sensor setupChannel " + channel + " " + deviceType);
-
-      return setupAntSensorChannel(NETWORK_NUMBER, channel, deviceNumber,
-                                   deviceType, (byte) 0x01, channelPeriod,
-                                   RF_FREQUENCY, (byte) 0);
-    }
-
-    public void setDeviceNumber(short dn) {
-      deviceNumber = dn;
-    }
-
-    public boolean isPaired() {
-      return deviceNumber != WILDCARD;
-    }
-  };
-
-  // Heart reate monitor sensor
-  public class HeartRateSensor extends AntSensorBase {
-    /*
-     * These constants are defined by the ANT+ heart rate monitor spec.
-     */
-    public static final byte HEART_RATE_DEVICE_TYPE = 120;
-    public static final short HEART_RATE_CHANNEL_PERIOD = 8070;
-
-    HeartRateSensor(byte channel, short devNum) {
-      super(channel, devNum, HEART_RATE_DEVICE_TYPE,
-            "heart rate monitor", HEART_RATE_CHANNEL_PERIOD);
-    }
-
-    /**
-     * Decode an ANT+ heart rate monitor message.
-     * @param antMessage The byte array received from the heart rate monitor.
-     */
-    public void handleBroadcastData(byte[] antMessage) {
-      resolveWildcardDeviceNumber();
-
-      int bpm = (int) antMessage[8] & 0xFF;
-      Log.d(TAG, "now:" + System.currentTimeMillis() + " heart rate=" + bpm);
-      sendHeartRate(bpm);
-    }
-  };
-
-  /**
-   * Processes an ANT sensor data + timestamp pair,
-   * and returns the instantaneous value of the sensor
-   */
-  public class SensorDataProcessor {
-
-    /**
-     * History is used for looking back at the old data
-     * when no new data is present, but an instantaneous value is needed
-     */
-    private class HistoryElement {
-      public long sysTime;
-      public int data;
-      public int sensorTime;
-
-      HistoryElement(long sys, int d, int sens) {
-        sysTime = sys;
-        data = d;
-        sensorTime = sens;
-      }
-    };
-
-    // Removes old data from the history.
-    // Returns true if the remaining history is not empty.
-    protected boolean removeOldHistory(long now) {
-      HistoryElement h;
-      while ((h = history.peek()) != null) {
-        if (now - h.sysTime <= historyLengthMillis) {
-          return true;
-        }
-        history.removeFirst();
-      }
-      return false;
-    }
-
-    private int counter = -1;  // the latest counter value reported by the sensor
-    private int actValue = 0;
-    public static final int historyLengthMillis = 5000; // 5 sec
-    private LinkedList<HistoryElement> history = new LinkedList<HistoryElement>();
-
-    public int getValue(int data, int sensorTime) {
-      long now = System.currentTimeMillis();
-      int dDelta = (data - counter) & 0xFFFF;
-
-      Log.d(TAG, "now=" + now + " data=" + data + " sensortime=" + sensorTime);
-
-      if (counter < 0) {
-         // store the actual counter value from the sensor
-        counter = data;
-        return actValue = 0;
-      }
-      counter = data;
-
-      if (dDelta != 0) {
-        if (removeOldHistory(now)) {
-          HistoryElement h = history.getLast();
-          actValue = ((int) ((data - h.data) & 0xFFFF)) * 1024 * 60
-                    / (int) ((sensorTime - h.sensorTime) & 0xFFFF);
-        }
-        history.addLast(new HistoryElement(now, data, sensorTime));
-      } else if (!history.isEmpty()) {
-        HistoryElement h = history.getLast();
-        if (60000 < (now - h.sysTime) * actValue) {
-          if (!removeOldHistory(now)) {
-            actValue = 0;
-          } else {
-            HistoryElement f = history.getFirst();
-            HistoryElement l = history.getLast();
-            int sDelta = (l.sensorTime - f.sensorTime) & 0xFFFF;
-            int cDelta = (data - f.data) & 0xFFFF;
-
-            // the saved actValue is not overwritten by this
-            // the returned value is computed from the history
-            int v = (int) (cDelta * 60 * 1000 / (now - l.sysTime + (sDelta / 1024) * 1000));
-            Log.d(TAG, "getValue returns (2):" + v);
-            return v < actValue ? v : actValue;
-          }
-        } else {
-          // the current actValue is still valid, nothing to do here
-        }
-      } else {
-        actValue = 0;
-      }
-
-      Log.d(TAG, "getValue returns:" + actValue);
-      return actValue;
-    }
-  }
-
-  // Cadence sensor
-  public class CadenseSensor extends AntSensorBase {
-    /*
-     * These constants are defined by the ANT+ bike speed and cadence sensor spec.
-     */
-    public static final byte CADENCE_DEVICE_TYPE = 122;
-    public static final short CADENCE_CHANNEL_PERIOD = 8102;
-
-    SensorDataProcessor cadence = new SensorDataProcessor();
-
-    CadenseSensor(byte channel, short devNum) {
-      super(channel, devNum, CADENCE_DEVICE_TYPE,
-            "cadence sensor", CADENCE_CHANNEL_PERIOD);
-    }
-
-    /**
-     * Decode an ANT+ cadence sensor message.
-     * @param antMessage The byte array received from the cadence sensor.
-     */
-    public void handleBroadcastData(byte[] antMessage) {
-      resolveWildcardDeviceNumber();
-
-      int sensorTime = ((int) antMessage[5] & 0xFF) + ((int) antMessage[6] & 0xFF) * 256;
-      int crankRevs = ((int) antMessage[7] & 0xFF) + ((int) antMessage[8] & 0xFF) * 256;
-      sendCadence(cadence.getValue(crankRevs, sensorTime));
-    }
-  };
-
-  // Combined cadence and speed sensor
-  public class CadenceSpeedSensor extends AntSensorBase {
-    /*
-     * These constants are defined by the ANT+ bike speed and cadence sensor spec.
-     */
-    public static final byte CADENCE_SPEED_DEVICE_TYPE = 121;
-    public static final short CADENCE_SPEED_CHANNEL_PERIOD = 8086;
-
-    SensorDataProcessor cadence = new SensorDataProcessor();
-
-    CadenceSpeedSensor(byte channel, short devNum) {
-      super(channel, devNum, CADENCE_SPEED_DEVICE_TYPE,
-            "speed&cadence sensor", CADENCE_SPEED_CHANNEL_PERIOD);
-    }
-
-    /**
-     * Decode an ANT+ cadence&speed sensor message.
-     * @param antMessage The byte array received from the sensor.
-     */
-    public void handleBroadcastData(byte[] antMessage) {
-      resolveWildcardDeviceNumber();
-
-      int sensorTime = ((int) antMessage[1] & 0xFF) + ((int) antMessage[2] & 0xFF) * 256;
-      int crankRevs = ((int) antMessage[3] & 0xFF) + ((int) antMessage[4] & 0xFF) * 256;
-      sendCadence(cadence.getValue(crankRevs, sensorTime));
-    }
-  };
+public class AntDirectSensorManager extends AntSensorManager
+    implements AntSensorDataCollector {
 
   // allocating one channel for each sensor type
   private static final byte HEART_RATE_CHANNEL = 0;
@@ -305,7 +79,10 @@ public class AntDirectSensorManager extends AntSensorManager {
     AntSensorBase sensor = sensors[channel];
     switch (messageId) {
       case AntMesg.MESG_BROADCAST_DATA_ID:
-        sensor.handleBroadcastData(messageData);
+        if (sensor.getDeviceNumber() == WILDCARD) {
+          resolveWildcardDeviceNumber((byte) channel);
+        }
+        sensor.handleBroadcastData(messageData, this);
         break;
       case AntMesg.MESG_RESPONSE_EVENT_ID:
         handleMessageResponse(messageData);
@@ -320,7 +97,7 @@ public class AntDirectSensorManager extends AntSensorManager {
     return true;
   }
 
-  short handleChannelId(byte[] rawMessage) {
+  private short handleChannelId(byte[] rawMessage) {
     AntChannelIdMessage message = new AntChannelIdMessage(rawMessage);
     short deviceNumber = message.getDeviceNumber();
     byte channel = message.getChannelNumber();
@@ -347,9 +124,9 @@ public class AntDirectSensorManager extends AntSensorManager {
     connectingChannelsBitmap &= ~(1 << channel);
     Log.i(TAG, "ANT channel " + channel + " disconnected.");
 
-    if (sensors[channel].isPaired()) {
+    if (sensors[channel].getDeviceNumber() != WILDCARD) {
       Log.i(TAG, "Retrying....");
-      if (sensors[channel].setupChannel()) {
+      if (setupChannel(sensors[channel], channel)) {
         connectingChannelsBitmap |= 1 << channel;
       }
     }
@@ -381,6 +158,15 @@ public class AntDirectSensorManager extends AntSensorManager {
     }
   }
 
+  private void resolveWildcardDeviceNumber(byte channel) {
+    try {
+      getAntReceiver().ANTRequestMessage(channel, AntMesg.MESG_CHANNEL_ID_ID);
+    } catch (AntInterfaceException e) {
+      Log.e(TAG, "ANT error handling broadcast data", e);
+    }
+    Log.d(TAG, "Requesting channel id id on channel: " + channel);
+  }
+
   @Override
   protected void setupAntSensorChannels() {
     short devIds[] = new short[sensorIdKeys.length];
@@ -394,20 +180,33 @@ public class AntDirectSensorManager extends AntSensorManager {
     }
 
     sensors = new AntSensorBase[] {
-        new HeartRateSensor(HEART_RATE_CHANNEL, devIds[HEART_RATE_CHANNEL]),
-        new CadenseSensor(CADENCE_CHANNEL, devIds[CADENCE_CHANNEL]),
-        new CadenceSpeedSensor(CADENCE_SPEED_CHANNEL, devIds[CADENCE_SPEED_CHANNEL]),
+        new HeartRateSensor(devIds[HEART_RATE_CHANNEL]),
+        new CadenceSensor(devIds[CADENCE_CHANNEL]),
+        new CadenceSpeedSensor(devIds[CADENCE_SPEED_CHANNEL]),
     };
 
     connectingChannelsBitmap = 0;
     for (int i = 0; i < sensors.length; ++i) {
-      if (sensors[i].setupChannel()) {
+      if (setupChannel(sensors[i], (byte) i)) {
         connectingChannelsBitmap |= 1 << i;
       }
     }
     if (connectingChannelsBitmap == 0) {
       setSensorState(Sensor.SensorState.DISCONNECTED);
     }
+  }
+
+  private boolean setupChannel(AntSensorBase sensor, byte channel) {
+    Log.i(TAG, "setup channel=" + channel + " deviceType=" + sensor.getDeviceType());
+
+    return setupAntSensorChannel(sensor.getNetworkNumber(),
+                                 channel,
+                                 sensor.getDeviceNumber(),
+                                 sensor.getDeviceType(),
+                                 (byte) 0x01,
+                                 sensor.getChannelPeriod(),
+                                 sensor.getFrequency(),
+                                 (byte) 0);
   }
 
   private void sendSensorData(byte index, int value) {
