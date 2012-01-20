@@ -94,16 +94,16 @@ public class AntDirectSensorManager extends AntSensorManager {
   };
 
   // Heart reate monitor sensor
-  public class HRMSensor extends AntSensorBase {
+  public class HeartRateSensor extends AntSensorBase {
     /*
      * These constants are defined by the ANT+ heart rate monitor spec.
      */
     public static final byte HEART_RATE_DEVICE_TYPE = 120;
-    public static final short HRM_CHANNEL_PERIOD = 8070;
+    public static final short HEART_RATE_CHANNEL_PERIOD = 8070;
 
-    HRMSensor(byte channel, short devNum) {
+    HeartRateSensor(byte channel, short devNum) {
       super(channel, devNum, HEART_RATE_DEVICE_TYPE,
-            "heart rate monitor", HRM_CHANNEL_PERIOD);
+            "heart rate monitor", HEART_RATE_CHANNEL_PERIOD);
     }
 
     /**
@@ -146,8 +146,9 @@ public class AntDirectSensorManager extends AntSensorManager {
     protected boolean removeOldHistory(long now) {
       HistoryElement h;
       while ((h = history.peek()) != null) {
-        if (now - h.sysTime <= historyLengthMillis)
+        if (now - h.sysTime <= historyLengthMillis) {
           return true;
+        }
         history.removeFirst();
       }
       return false;
@@ -181,9 +182,9 @@ public class AntDirectSensorManager extends AntSensorManager {
       } else if (!history.isEmpty()) {
         HistoryElement h = history.getLast();
         if (60000 < (now - h.sysTime) * actValue) {
-          if (!removeOldHistory(now))
+          if (!removeOldHistory(now)) {
             actValue = 0;
-          else {
+          } else {
             HistoryElement f = history.getFirst();
             HistoryElement l = history.getLast();
             int sDelta = (l.sensorTime - f.sensorTime) & 0xFFFF;
@@ -198,8 +199,9 @@ public class AntDirectSensorManager extends AntSensorManager {
         } else {
           // the current actValue is still valid, nothing to do here
         }
-      } else
+      } else {
         actValue = 0;
+      }
 
       Log.d(TAG, "getValue returns:" + actValue);
       return actValue;
@@ -207,7 +209,7 @@ public class AntDirectSensorManager extends AntSensorManager {
   }
 
   // Cadence sensor
-  public class CADSensor extends AntSensorBase {
+  public class CadenseSensor extends AntSensorBase {
     /*
      * These constants are defined by the ANT+ bike speed and cadence sensor spec.
      */
@@ -216,7 +218,7 @@ public class AntDirectSensorManager extends AntSensorManager {
 
     SensorDataProcessor cadence = new SensorDataProcessor();
 
-    CADSensor(byte channel, short devNum) {
+    CadenseSensor(byte channel, short devNum) {
       super(channel, devNum, CADENCE_DEVICE_TYPE,
             "cadence sensor", CADENCE_CHANNEL_PERIOD);
     }
@@ -235,18 +237,18 @@ public class AntDirectSensorManager extends AntSensorManager {
   };
 
   // Combined cadence and speed sensor
-  public class CADSPDSensor extends AntSensorBase {
+  public class CadenceSpeedSensor extends AntSensorBase {
     /*
      * These constants are defined by the ANT+ bike speed and cadence sensor spec.
      */
-    public static final byte CADSPD_DEVICE_TYPE = 121;
-    public static final short CADSPD_CHANNEL_PERIOD = 8086;
+    public static final byte CADENCE_SPEED_DEVICE_TYPE = 121;
+    public static final short CADENCE_SPEED_CHANNEL_PERIOD = 8086;
 
     SensorDataProcessor cadence = new SensorDataProcessor();
 
-    CADSPDSensor(byte channel, short devNum) {
-      super(channel, devNum, CADSPD_DEVICE_TYPE,
-            "speed&cadence sensor", CADSPD_CHANNEL_PERIOD);
+    CadenceSpeedSensor(byte channel, short devNum) {
+      super(channel, devNum, CADENCE_SPEED_DEVICE_TYPE,
+            "speed&cadence sensor", CADENCE_SPEED_CHANNEL_PERIOD);
     }
 
     /**
@@ -263,22 +265,22 @@ public class AntDirectSensorManager extends AntSensorManager {
   };
 
   // allocating one channel for each sensor type
-  private static final byte HRM_CHANNEL = 0;
-  private static final byte CAD_CHANNEL = 1;
-  private static final byte CADSPD_CHANNEL = 2;
+  private static final byte HEART_RATE_CHANNEL = 0;
+  private static final byte CADENCE_CHANNEL = 1;
+  private static final byte CADENCE_SPEED_CHANNEL = 2;
 
   // ids for device number preferences
   private static final int sensorIdKeys[] = {
     R.string.ant_heart_rate_sensor_id_key,
     R.string.ant_cadence_sensor_id_key,
-    R.string.ant_cadspd_sensor_id_key,
+    R.string.ant_cadence_speed_sensor_id_key,
   };
 
   private AntSensorBase sensors[] = null;
 
   // current data to be sent for SensorDataSet
-  private static final byte HRM_DATA_INDEX = 0;
-  private static final byte CAD_DATA_INDEX = 1;
+  private static final byte HEART_RATE_DATA_INDEX = 0;
+  private static final byte CADENCE_DATA_INDEX = 1;
   private int currentSensorData[] = { -1, -1 };
 
   private long lastDataSentMillis = 0;
@@ -322,6 +324,10 @@ public class AntDirectSensorManager extends AntSensorManager {
     AntChannelIdMessage message = new AntChannelIdMessage(rawMessage);
     short deviceNumber = message.getDeviceNumber();
     byte channel = message.getChannelNumber();
+    if (channel >= sensors.length) {
+      Log.d(TAG, "Unknown channel in message: " + channel);
+      return WILDCARD;
+    }
     Log.i(TAG, "Found ANT device id: " + deviceNumber + " on channel: " + channel);
 
     SharedPreferences prefs = context.getSharedPreferences(
@@ -334,16 +340,22 @@ public class AntDirectSensorManager extends AntSensorManager {
 
   private void channelOut(byte channel)
   {
+    if (channel >= sensors.length) {
+      Log.d(TAG, "Unknown channel in message: " + channel);
+      return;
+    }
     connectingChannelsBitmap &= ~(1 << channel);
     Log.i(TAG, "ANT channel " + channel + " disconnected.");
 
     if (sensors[channel].isPaired()) {
       Log.i(TAG, "Retrying....");
-      if (sensors[channel].setupChannel())
+      if (sensors[channel].setupChannel()) {
         connectingChannelsBitmap |= 1 << channel;
+      }
     }
-    if (connectingChannelsBitmap == 0)
+    if (connectingChannelsBitmap == 0) {
       setSensorState(Sensor.SensorState.DISCONNECTED);
+    }
   }
 
   private void handleMessageResponse(byte[] rawMessage) {
@@ -373,59 +385,69 @@ public class AntDirectSensorManager extends AntSensorManager {
   protected void setupAntSensorChannels() {
     short devIds[] = new short[sensorIdKeys.length];
 
-    SharedPreferences prefs = context.getSharedPreferences(Constants.SETTINGS_NAME,
-                                                           Context.MODE_PRIVATE);
+    SharedPreferences prefs = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     if (prefs != null) {
-      for (int i = 0; i < sensorIdKeys.length; ++i)
-        devIds[i] = (short) prefs.getInt(context.getString(sensorIdKeys[i]),
-                                         WILDCARD);
+      for (int i = 0; i < sensorIdKeys.length; ++i) {
+        devIds[i] = (short) prefs.getInt(context.getString(sensorIdKeys[i]), WILDCARD);
+      }
     }
 
     sensors = new AntSensorBase[] {
-        new HRMSensor(HRM_CHANNEL, devIds[HRM_CHANNEL]),
-        new CADSensor(CAD_CHANNEL, devIds[CAD_CHANNEL]),
-        new CADSPDSensor(CADSPD_CHANNEL, devIds[CADSPD_CHANNEL]),
-        };
+        new HeartRateSensor(HEART_RATE_CHANNEL, devIds[HEART_RATE_CHANNEL]),
+        new CadenseSensor(CADENCE_CHANNEL, devIds[CADENCE_CHANNEL]),
+        new CadenceSpeedSensor(CADENCE_SPEED_CHANNEL, devIds[CADENCE_SPEED_CHANNEL]),
+    };
 
     connectingChannelsBitmap = 0;
-    for (int i = 0; i < sensors.length; ++i)
-      if (sensors[i].setupChannel())
+    for (int i = 0; i < sensors.length; ++i) {
+      if (sensors[i].setupChannel()) {
         connectingChannelsBitmap |= 1 << i;
-    if (connectingChannelsBitmap == 0)
+      }
+    }
+    if (connectingChannelsBitmap == 0) {
       setSensorState(Sensor.SensorState.DISCONNECTED);
+    }
   }
 
   private void sendSensorData(byte index, int value) {
+    if (index >= currentSensorData.length) {
+      Log.w(TAG, "invalid index in sendSensorData:" + index);
+      return;
+    }
     currentSensorData[index] = value;
 
     long now = System.currentTimeMillis();
     // data comes in at ~4Hz rate from the sensors, so after >300 msec
     // fresh data is here from all the connected sensors
-    if (now < lastDataSentMillis + 300)
+    if (now < lastDataSentMillis + 300) {
       return;
-
+    }
     lastDataSentMillis = now;
     setSensorState(Sensor.SensorState.CONNECTED);
 
     Sensor.SensorDataSet.Builder b = Sensor.SensorDataSet.newBuilder();
-    if (currentSensorData[HRM_DATA_INDEX] >= 0)
-      b.setHeartRate(Sensor.SensorData.newBuilder()
-                     .setValue(currentSensorData[HRM_DATA_INDEX])
-                     .setState(Sensor.SensorState.SENDING));
+    if (currentSensorData[HEART_RATE_DATA_INDEX] >= 0) {
+      b.setHeartRate(
+          Sensor.SensorData.newBuilder()
+              .setValue(currentSensorData[HEART_RATE_DATA_INDEX])
+              .setState(Sensor.SensorState.SENDING));
+    }
 
-    if (currentSensorData[CAD_DATA_INDEX] >= 0)
-      b.setCadence(Sensor.SensorData.newBuilder()
-                   .setValue(currentSensorData[CAD_DATA_INDEX])
-                   .setState(Sensor.SensorState.SENDING));
-
+    if (currentSensorData[CADENCE_DATA_INDEX] >= 0) {
+      b.setCadence(
+          Sensor.SensorData.newBuilder()
+              .setValue(currentSensorData[CADENCE_DATA_INDEX])
+              .setState(Sensor.SensorState.SENDING));
+    }
     sensorData = b.setCreationTime(now).build();
   }
 
   public void sendCadence(int value) {
-    sendSensorData(CAD_DATA_INDEX, value);
+    sendSensorData(CADENCE_DATA_INDEX, value);
   }
 
   public void sendHeartRate(int value) {
-    sendSensorData(HRM_DATA_INDEX, value);
+    sendSensorData(HEART_RATE_DATA_INDEX, value);
   }
 }

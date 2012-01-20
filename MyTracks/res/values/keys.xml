@@ -19,7 +19,7 @@ limitations under the License.
   <string name="allow_access_key">allowAccess</string>
   <string name="announcement_frequency_key">announcementFrequency</string>
   <string name="ant_cadence_sensor_id_key">antCadenceSensorId</string>
-  <string name="ant_cadspd_sensor_id_key">antCadSpdSensorId</string>
+  <string name="ant_cadence_speed_sensor_id_key">antCadSpdSensorId</string>
   <string name="ant_heart_rate_sensor_id_key">antHeartRateSensorId</string>
   <string name="ant_srm_bridge_sensor_id_key">antSRMBridgeSensorId</string>
   <string name="auto_resume_track_timeout_key">autoResumeTrackTimeout</string>
