@@ -81,8 +81,15 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
   private final MyTracksProviderUtils myTracksProviderUtils;
   private final HttpRequestFactory httpRequestFactory;
 
-  private boolean canRetry; // true if can retry the upload
-  private boolean completed; // true if the AsyncTask has completed
+  /**
+   * True if can retry sending to Google Fusion Tables.
+   */
+  private boolean canRetry;
+
+  /**
+   * True if the AsyncTask has completed.
+   */
+  private boolean completed;
 
   // The following variables are for per upload states
   private String authToken;
@@ -104,8 +111,6 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
     canRetry = true;
     completed = false;
   }
-
-  // The following methods interact with the activity
 
   /**
    * Sets the activity associated with this AyncTask.
@@ -152,8 +157,6 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
       activity.onAsyncTaskCompleted(success, tableId);
     }
   }
-
-  // The following methods send a track to Google Fusion Tables
 
   /**
    * Uploads a track to Google Fusion Tables.
