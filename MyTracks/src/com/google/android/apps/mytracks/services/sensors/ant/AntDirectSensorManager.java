@@ -200,13 +200,13 @@ public class AntDirectSensorManager extends AntSensorManager
     Log.i(TAG, "setup channel=" + channel + " deviceType=" + sensor.getDeviceType());
 
     return setupAntSensorChannel(sensor.getNetworkNumber(),
-                                 channel,
-                                 sensor.getDeviceNumber(),
-                                 sensor.getDeviceType(),
-                                 (byte) 0x01,
-                                 sensor.getChannelPeriod(),
-                                 sensor.getFrequency(),
-                                 (byte) 0);
+        channel,
+        sensor.getDeviceNumber(),
+        sensor.getDeviceType(),
+        (byte) 0x01,
+        sensor.getChannelPeriod(),
+        sensor.getFrequency(),
+        (byte) 0);
   }
 
   private void sendSensorData(byte index, int value) {
@@ -242,11 +242,11 @@ public class AntDirectSensorManager extends AntSensorManager
     sensorData = b.setCreationTime(now).build();
   }
 
-  public void sendCadence(int value) {
+  public void setCadence(int value) {
     sendSensorData(CADENCE_DATA_INDEX, value);
   }
 
-  public void sendHeartRate(int value) {
+  public void setHeartRate(int value) {
     sendSensorData(HEART_RATE_DATA_INDEX, value);
   }
 }

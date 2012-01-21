@@ -17,14 +17,19 @@
 package com.google.android.apps.mytracks.services.sensors.ant;
 
 /**
- * Interface for collecting data from the sensor classes
- *
+ * Interface for collecting data from the sensors.
  * @author Laszlo Molnar
  */
 
 public interface AntSensorDataCollector {
 
-  public void sendCadence(int value);
+  /**
+   * Sets the current cadence to the value specified.
+   */
+  void setCadence(int value);
 
-  public void sendHeartRate(int value);
+  /**
+   * Sets the current heart rate to the value specified.
+   */
+  void setHeartRate(int value);
 }

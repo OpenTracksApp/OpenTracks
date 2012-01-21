@@ -20,7 +20,7 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 import android.util.Log;
 
 /**
- * Heart reate monitor sensor.
+ * Ant+ heart reate monitor sensor.
  *
  * @author Laszlo Molnar
  */
@@ -33,17 +33,17 @@ public class HeartRateSensor extends AntSensorBase {
   public static final short HEART_RATE_CHANNEL_PERIOD = 8070;
 
   HeartRateSensor(short devNum) {
-    super(devNum, HEART_RATE_DEVICE_TYPE,
-          "heart rate monitor", HEART_RATE_CHANNEL_PERIOD);
+    super(devNum, HEART_RATE_DEVICE_TYPE, "heart rate monitor", HEART_RATE_CHANNEL_PERIOD);
   }
 
   /**
    * Decode an ANT+ heart rate monitor message.
    * @param antMessage The byte array received from the heart rate monitor.
    */
+  @Override
   public void handleBroadcastData(byte[] antMessage, AntSensorDataCollector c) {
     int bpm = (int) antMessage[8] & 0xFF;
     Log.d(TAG, "now:" + System.currentTimeMillis() + " heart rate=" + bpm);
-    c.sendHeartRate(bpm);
+    c.setHeartRate(bpm);
   }
 };

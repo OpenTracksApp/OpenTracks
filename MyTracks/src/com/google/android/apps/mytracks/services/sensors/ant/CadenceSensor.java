@@ -17,7 +17,7 @@ package com.google.android.apps.mytracks.services.sensors.ant;
 
 
 /**
- * Cadence sensor.
+ * Ant+ cadence sensor.
  *
  * @author Laszlo Molnar
  */
@@ -29,20 +29,20 @@ public class CadenceSensor extends AntSensorBase {
   public static final byte CADENCE_DEVICE_TYPE = 122;
   public static final short CADENCE_CHANNEL_PERIOD = 8102;
 
-  SensorDataProcessor cadence = new SensorDataProcessor();
+  SensorDataProcessor dataProcessor = new SensorDataProcessor();
 
   CadenceSensor(short devNum) {
-    super(devNum, CADENCE_DEVICE_TYPE,
-          "cadence sensor", CADENCE_CHANNEL_PERIOD);
+    super(devNum, CADENCE_DEVICE_TYPE, "cadence sensor", CADENCE_CHANNEL_PERIOD);
   }
 
   /**
    * Decode an ANT+ cadence sensor message.
    * @param antMessage The byte array received from the cadence sensor.
    */
+  @Override
   public void handleBroadcastData(byte[] antMessage, AntSensorDataCollector c) {
     int sensorTime = ((int) antMessage[5] & 0xFF) + ((int) antMessage[6] & 0xFF) * 256;
     int crankRevs = ((int) antMessage[7] & 0xFF) + ((int) antMessage[8] & 0xFF) * 256;
-    c.sendCadence(cadence.getValue(crankRevs, sensorTime));
+    c.setCadence(dataProcessor.getValue(crankRevs, sensorTime));
   }
 };

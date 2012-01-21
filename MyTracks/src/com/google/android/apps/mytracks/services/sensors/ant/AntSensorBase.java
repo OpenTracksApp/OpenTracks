@@ -32,9 +32,9 @@ public abstract class AntSensorBase {
   public static final byte NETWORK_NUMBER = 1;
   public static final byte RF_FREQUENCY = 57;
 
-  protected short deviceNumber;
-  private byte deviceType;
-  private short channelPeriod;
+  private short deviceNumber;
+  private final byte deviceType;
+  private final short channelPeriod;
 
   AntSensorBase(short deviceNumber, byte deviceType,
                 String deviceTypeString, short channelPeriod) {
