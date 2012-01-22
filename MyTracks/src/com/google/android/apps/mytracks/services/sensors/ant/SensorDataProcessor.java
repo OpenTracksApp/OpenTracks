@@ -16,7 +16,9 @@
 package com.google.android.apps.mytracks.services.sensors.ant;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
+
 import android.util.Log;
+
 import java.util.LinkedList;
 
 /**
@@ -32,12 +34,12 @@ public class SensorDataProcessor {
    */
   private static class HistoryElement {
     final long systemTime;
-    final int data;
+    final int counter;
     final int sensorTime;
 
-    HistoryElement(long systemTime, int data, int sensorTime) {
+    HistoryElement(long systemTime, int counter, int sensorTime) {
       this.systemTime = systemTime;
-      this.data = data;
+      this.counter = counter;
       this.sensorTime = sensorTime;
     }
   }
@@ -64,12 +66,12 @@ public class SensorDataProcessor {
   /**
    * The latest counter value reported by the sensor
    */
-  private int counter = -1;
+  private int counter;
 
   /**
    * The calculated instantaneous sensor value to be displayed
    */
-  private int displayedValue = 0;
+  private int displayedValue;
 
   private static final int ONE_SECOND_MILLIS = 1000;
   private static final int HISTORY_LENGTH_MILLIS = ONE_SECOND_MILLIS * 5;
@@ -81,13 +83,19 @@ public class SensorDataProcessor {
    * History of previous sensor data - oldest first
    * only the latest HISTORY_LENGTH_MILLIS milliseconds of data is stored
    */
-  private LinkedList<HistoryElement> history = new LinkedList<HistoryElement>();
+  private LinkedList<HistoryElement> history;
+
+  SensorDataProcessor() {
+    counter = -1;
+    displayedValue = 0;
+    history = new LinkedList<HistoryElement>();
+  }
 
   /**
    * Calculates the instantaneous sensor value to be displayed
    * using the history when the sensor only resends the old data
    */
-  private int getValueFromHistory(int data, long now) {
+  private int getValueFromHistory(long now) {
     if (!removeOldHistory(now)) {
       // there is nothing in the history, return 0
       return displayedValue = 0;
@@ -95,7 +103,7 @@ public class SensorDataProcessor {
     HistoryElement f = history.getFirst();
     HistoryElement l = history.getLast();
     int sensorTimeChange = (l.sensorTime - f.sensorTime) & 0xFFFF;
-    int counterChange = (data - f.data) & 0xFFFF;
+    int counterChange = (counter - f.counter) & 0xFFFF;
 
     // difference between now and systemTime of the oldest history entry
     // for better precision sensor timestamps are considered between
@@ -108,41 +116,45 @@ public class SensorDataProcessor {
     int v = (counterChange * ONE_MINUTE_MILLIS) / systemTimeChange;
     Log.d(TAG, "getValue returns (2):" + v);
 
-    // do not return larger number than displayedValue
+    // do not return larger number than displayedValue, because the reason
+    // this function got called is that more time has passed after the last
+    // sensor counter value change than the current displayedValue
+    // would be valid
     return v < displayedValue ? v : displayedValue;
   }
 
   /**
    * Calculates the instantaneous sensor value to be displayed
    *
-   * @param data sensor reported counter value
+   * @param newCounter sensor reported counter value
    * @param sensorTime sensor reported timestamp
    * @return the calculated value
    */
-  public int getValue(int data, int sensorTime) {
+  public int getValue(int newCounter, int sensorTime) {
     long now = System.currentTimeMillis();
-    int counterChange = (data - counter) & 0xFFFF;
+    int counterChange = (newCounter - counter) & 0xFFFF;
 
-    Log.d(TAG, "now=" + now + " data=" + data + " sensortime=" + sensorTime);
+    Log.d(TAG, "now=" + now + " counter=" + newCounter + " sensortime=" + sensorTime);
 
     if (counter < 0) {
       // store the initial counter value reported by the sensor
       // the timestamp is probably out of date, so the history is not updated
-      counter = data;
+      counter = newCounter;
       return displayedValue = 0;
     }
-    counter = data;
+    counter = newCounter;
 
     if (counterChange != 0) {
-      // if new data is arrived from the sensor ...
+      // if new data has arrived from the sensor ...
       if (removeOldHistory(now)) {
         // ... and the history is not empty, then use the latest entry
         HistoryElement h = history.getLast();
         int sensorTimeChange = (sensorTime - h.sensorTime) & 0xFFFF;
-        counterChange = (data - h.data) & 0xFFFF;
+        counterChange = (counter - h.counter) & 0xFFFF;
         displayedValue = counterChange * SENSOR_TIME_ONE_MINUTE / sensorTimeChange;
       }
-      history.addLast(new HistoryElement(now, data, sensorTime));
+      // the previous removeOldHistory() call makes the length of the history capped
+      history.addLast(new HistoryElement(now, counter, sensorTime));
     } else if (!history.isEmpty()) {
       // the sensor has resent an old (counter,timestamp) pair,
       // but the history is not empty
@@ -151,11 +163,11 @@ public class SensorDataProcessor {
       if (ONE_MINUTE_MILLIS < (now - h.systemTime) * displayedValue) {
         // Too much time has passed since the last counter change.
         // This means that a smaller value than displayedValue must be
-        // returned. So the history is looked up, and a calculated
-        // average number is returned.
+        // returned. This value is extrapolated from the history of
+        // HISTORY_LENGTH_MILLIS data.
         // Note, that displayedValue is NOT updated unless the history
         // is empty or contains outdated entries. In that case it is zeroed.
-        return getValueFromHistory(data, now);
+        return getValueFromHistory(now);
       } // else the current displayedValue is still valid, nothing to do here
     } else {
       // no new data from the sensor & the history is empty -> return 0
