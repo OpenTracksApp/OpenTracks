@@ -29,7 +29,7 @@ public class CadenceSensor extends AntSensorBase {
   public static final byte CADENCE_DEVICE_TYPE = 122;
   public static final short CADENCE_CHANNEL_PERIOD = 8102;
 
-  SensorDataProcessor dataProcessor = new SensorDataProcessor();
+  SensorEventCounter dataProcessor = new SensorEventCounter();
 
   CadenceSensor(short devNum) {
     super(devNum, CADENCE_DEVICE_TYPE, "cadence sensor", CADENCE_CHANNEL_PERIOD);

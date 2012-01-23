@@ -27,7 +27,7 @@ import java.util.LinkedList;
  *
  * @author Laszlo Molnar
  */
-public class SensorDataProcessor {
+public class SensorEventCounter {
 
   /**
    * HistoryElement stores a time stamped sensor counter
@@ -67,7 +67,7 @@ public class SensorDataProcessor {
    */
   private LinkedList<HistoryElement> history;
 
-  SensorDataProcessor() {
+  SensorEventCounter() {
     counter = -1;
     eventsPerMinute = 0;
     history = new LinkedList<HistoryElement>();
