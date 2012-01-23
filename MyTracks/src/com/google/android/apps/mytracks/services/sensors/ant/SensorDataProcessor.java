@@ -54,7 +54,7 @@ public class SensorDataProcessor {
     HistoryElement h;
     while ((h = history.peek()) != null) {
       // if the first element of the list is in our desired time range then return
-      if (now - h.systemTime <= HISTORY_LENGTH_MILLIS) {
+      if (now - h.systemTime <= HISTORY_LENGTH_MILLIS && history.size() < HISTORY_MAX_LENGTH) {
         return true;
       }
       // otherwise remove the too old element, and look at the next (newer) one
@@ -71,10 +71,11 @@ public class SensorDataProcessor {
   /**
    * The calculated instantaneous sensor value to be displayed
    */
-  private int displayedValue;
+  private int eventsPerMinute;
 
   private static final int ONE_SECOND_MILLIS = 1000;
   private static final int HISTORY_LENGTH_MILLIS = ONE_SECOND_MILLIS * 5;
+  private static final int HISTORY_MAX_LENGTH = 100;
   private static final int ONE_MINUTE_MILLIS = ONE_SECOND_MILLIS * 60;
   private static final int SENSOR_TIME_RESOLUTION = 1024; // in a second
   private static final int SENSOR_TIME_ONE_MINUTE = SENSOR_TIME_RESOLUTION * 60;
@@ -87,7 +88,7 @@ public class SensorDataProcessor {
 
   SensorDataProcessor() {
     counter = -1;
-    displayedValue = 0;
+    eventsPerMinute = 0;
     history = new LinkedList<HistoryElement>();
   }
 
@@ -98,7 +99,7 @@ public class SensorDataProcessor {
   private int getValueFromHistory(long now) {
     if (!removeOldHistory(now)) {
       // there is nothing in the history, return 0
-      return displayedValue = 0;
+      return eventsPerMinute = 0;
     }
     HistoryElement f = history.getFirst();
     HistoryElement l = history.getLast();
@@ -111,16 +112,16 @@ public class SensorDataProcessor {
     int systemTimeChange = (int) (now - l.systemTime
       + (sensorTimeChange * ONE_SECOND_MILLIS) / SENSOR_TIME_RESOLUTION);
 
-    // displayedValue is not overwritten by this calculated value
+    // eventsPerMinute is not overwritten by this calculated value
     // because it is still needed when a new sensor event arrives
     int v = (counterChange * ONE_MINUTE_MILLIS) / systemTimeChange;
-    Log.d(TAG, "getValue returns (2):" + v);
+    Log.d(TAG, "getEventsPerMinute returns (2):" + v);
 
-    // do not return larger number than displayedValue, because the reason
+    // do not return larger number than eventsPerMinute, because the reason
     // this function got called is that more time has passed after the last
-    // sensor counter value change than the current displayedValue
+    // sensor counter value change than the current eventsPerMinute
     // would be valid
-    return v < displayedValue ? v : displayedValue;
+    return v < eventsPerMinute ? v : eventsPerMinute;
   }
 
   /**
@@ -130,7 +131,7 @@ public class SensorDataProcessor {
    * @param sensorTime sensor reported timestamp
    * @return the calculated value
    */
-  public int getValue(int newCounter, int sensorTime) {
+  public int getEventsPerMinute(int newCounter, int sensorTime) {
     long now = System.currentTimeMillis();
     int counterChange = (newCounter - counter) & 0xFFFF;
 
@@ -140,7 +141,7 @@ public class SensorDataProcessor {
       // store the initial counter value reported by the sensor
       // the timestamp is probably out of date, so the history is not updated
       counter = newCounter;
-      return displayedValue = 0;
+      return eventsPerMinute = 0;
     }
     counter = newCounter;
 
@@ -151,7 +152,7 @@ public class SensorDataProcessor {
         HistoryElement h = history.getLast();
         int sensorTimeChange = (sensorTime - h.sensorTime) & 0xFFFF;
         counterChange = (counter - h.counter) & 0xFFFF;
-        displayedValue = counterChange * SENSOR_TIME_ONE_MINUTE / sensorTimeChange;
+        eventsPerMinute = counterChange * SENSOR_TIME_ONE_MINUTE / sensorTimeChange;
       }
       // the previous removeOldHistory() call makes the length of the history capped
       history.addLast(new HistoryElement(now, counter, sensorTime));
@@ -160,21 +161,21 @@ public class SensorDataProcessor {
       // but the history is not empty
 
       HistoryElement h = history.getLast();
-      if (ONE_MINUTE_MILLIS < (now - h.systemTime) * displayedValue) {
+      if (ONE_MINUTE_MILLIS < (now - h.systemTime) * eventsPerMinute) {
         // Too much time has passed since the last counter change.
-        // This means that a smaller value than displayedValue must be
+        // This means that a smaller value than eventsPerMinute must be
         // returned. This value is extrapolated from the history of
         // HISTORY_LENGTH_MILLIS data.
-        // Note, that displayedValue is NOT updated unless the history
+        // Note, that eventsPerMinute is NOT updated unless the history
         // is empty or contains outdated entries. In that case it is zeroed.
         return getValueFromHistory(now);
-      } // else the current displayedValue is still valid, nothing to do here
+      } // else the current eventsPerMinute is still valid, nothing to do here
     } else {
       // no new data from the sensor & the history is empty -> return 0
-      displayedValue = 0;
+      eventsPerMinute = 0;
     }
 
-    Log.d(TAG, "getValue returns:" + displayedValue);
-    return displayedValue;
+    Log.d(TAG, "getEventsPerMinute returns:" + eventsPerMinute);
+    return eventsPerMinute;
   }
 }

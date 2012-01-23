@@ -43,6 +43,6 @@ public class CadenceSpeedSensor extends AntSensorBase {
   public void handleBroadcastData(byte[] antMessage, AntSensorDataCollector c) {
     int sensorTime = ((int) antMessage[1] & 0xFF) + ((int) antMessage[2] & 0xFF) * 256;
     int crankRevs = ((int) antMessage[3] & 0xFF) + ((int) antMessage[4] & 0xFF) * 256;
-    c.setCadence(dataProcessor.getValue(crankRevs, sensorTime));
+    c.setCadence(dataProcessor.getEventsPerMinute(crankRevs, sensorTime));
   }
 };
