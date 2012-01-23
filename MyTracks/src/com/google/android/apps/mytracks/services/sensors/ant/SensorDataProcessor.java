@@ -45,25 +45,6 @@ public class SensorDataProcessor {
   }
 
   /**
-   * Removes old data from the history.
-   *
-   * @param now the current system time
-   * @return true if the remaining history is not empty
-   */
-  protected boolean removeOldHistory(long now) {
-    HistoryElement h;
-    while ((h = history.peek()) != null) {
-      // if the first element of the list is in our desired time range then return
-      if (now - h.systemTime <= HISTORY_LENGTH_MILLIS && history.size() < HISTORY_MAX_LENGTH) {
-        return true;
-      }
-      // otherwise remove the too old element, and look at the next (newer) one
-      history.removeFirst();
-    }
-    return false;
-  }
-
-  /**
    * The latest counter value reported by the sensor
    */
   private int counter;
@@ -90,38 +71,6 @@ public class SensorDataProcessor {
     counter = -1;
     eventsPerMinute = 0;
     history = new LinkedList<HistoryElement>();
-  }
-
-  /**
-   * Calculates the instantaneous sensor value to be displayed
-   * using the history when the sensor only resends the old data
-   */
-  private int getValueFromHistory(long now) {
-    if (!removeOldHistory(now)) {
-      // there is nothing in the history, return 0
-      return eventsPerMinute = 0;
-    }
-    HistoryElement f = history.getFirst();
-    HistoryElement l = history.getLast();
-    int sensorTimeChange = (l.sensorTime - f.sensorTime) & 0xFFFF;
-    int counterChange = (counter - f.counter) & 0xFFFF;
-
-    // difference between now and systemTime of the oldest history entry
-    // for better precision sensor timestamps are considered between
-    // the first and the last history entry (could be overkill)
-    int systemTimeChange = (int) (now - l.systemTime
-      + (sensorTimeChange * ONE_SECOND_MILLIS) / SENSOR_TIME_RESOLUTION);
-
-    // eventsPerMinute is not overwritten by this calculated value
-    // because it is still needed when a new sensor event arrives
-    int v = (counterChange * ONE_MINUTE_MILLIS) / systemTimeChange;
-    Log.d(TAG, "getEventsPerMinute returns (2):" + v);
-
-    // do not return larger number than eventsPerMinute, because the reason
-    // this function got called is that more time has passed after the last
-    // sensor counter value change than the current eventsPerMinute
-    // would be valid
-    return v < eventsPerMinute ? v : eventsPerMinute;
   }
 
   /**
@@ -177,5 +126,56 @@ public class SensorDataProcessor {
 
     Log.d(TAG, "getEventsPerMinute returns:" + eventsPerMinute);
     return eventsPerMinute;
+  }
+
+  /**
+   * Calculates the instantaneous sensor value to be displayed
+   * using the history when the sensor only resends the old data
+   */
+  private int getValueFromHistory(long now) {
+    if (!removeOldHistory(now)) {
+      // there is nothing in the history, return 0
+      return eventsPerMinute = 0;
+    }
+    HistoryElement f = history.getFirst();
+    HistoryElement l = history.getLast();
+    int sensorTimeChange = (l.sensorTime - f.sensorTime) & 0xFFFF;
+    int counterChange = (counter - f.counter) & 0xFFFF;
+
+    // difference between now and systemTime of the oldest history entry
+    // for better precision sensor timestamps are considered between
+    // the first and the last history entry (could be overkill)
+    int systemTimeChange = (int) (now - l.systemTime
+      + (sensorTimeChange * ONE_SECOND_MILLIS) / SENSOR_TIME_RESOLUTION);
+
+    // eventsPerMinute is not overwritten by this calculated value
+    // because it is still needed when a new sensor event arrives
+    int v = (counterChange * ONE_MINUTE_MILLIS) / systemTimeChange;
+    Log.d(TAG, "getEventsPerMinute returns (2):" + v);
+
+    // do not return larger number than eventsPerMinute, because the reason
+    // this function got called is that more time has passed after the last
+    // sensor counter value change than the current eventsPerMinute
+    // would be valid
+    return v < eventsPerMinute ? v : eventsPerMinute;
+  }
+
+  /**
+   * Removes old data from the history.
+   *
+   * @param now the current system time
+   * @return true if the remaining history is not empty
+   */
+  private boolean removeOldHistory(long now) {
+    HistoryElement h;
+    while ((h = history.peek()) != null) {
+      // if the first element of the list is in our desired time range then return
+      if (now - h.systemTime <= HISTORY_LENGTH_MILLIS && history.size() < HISTORY_MAX_LENGTH) {
+        return true;
+      }
+      // otherwise remove the too old element, and look at the next (newer) one
+      history.removeFirst();
+    }
+    return false;
   }
 }
