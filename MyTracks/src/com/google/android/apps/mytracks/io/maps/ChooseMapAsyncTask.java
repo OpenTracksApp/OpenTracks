@@ -1,5 +1,18 @@
-// Copyright 2012 Google Inc. All Rights Reserved.
-
+/*
+ * Copyright 2012 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.google.android.apps.mytracks.io.maps;
 
 import com.google.android.apps.mytracks.io.gdata.GDataClientFactory;
@@ -129,22 +142,22 @@ public class ChooseMapAsyncTask extends AsyncTask<Void, Integer, Boolean> {
       authToken = AccountManager.get(context).blockingGetAuthToken(
           account, MapsConstants.SERVICE_NAME, false);
     } catch (OperationCanceledException e) {
-      Log.d(TAG, e.getMessage());
+      Log.d(TAG, "Unable to get auth token", e);
       return retryUpload();
     } catch (AuthenticatorException e) {
-      Log.d(TAG, e.getMessage());
+      Log.d(TAG, "Unable to get auth token", e);
       return retryUpload();
     } catch (IOException e) {
-      Log.d(TAG, e.getMessage());
+      Log.d(TAG, "Unable to get auth token", e);
       return retryUpload();
     }
 
     if (isCancelled()) {
       return false;
     }
-    
+    GDataParser gDataParser = null;
     try {
-      GDataParser gDataParser = mapsClient.getParserForFeed(
+      gDataParser = mapsClient.getParserForFeed(
           MapFeatureEntry.class, MapsClient.getMapsFeed(), authToken);
       gDataParser.init();
       while (gDataParser.hasMoreData()) {
@@ -152,16 +165,19 @@ public class ChooseMapAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         mapIds.add(MapsGDataConverter.getMapidForEntry(entry));
         mapData.add(MapsGDataConverter.getMapMetadataForEntry(entry));
       }
-      gDataParser.close();
     } catch (ParseException e) {
-      Log.d(TAG, e.getMessage());
+      Log.d(TAG, "Unable to get maps", e);
       return retryUpload();
     } catch (IOException e) {
-      Log.d(TAG, e.getMessage());
+      Log.d(TAG, "Unable to get maps", e);
       return retryUpload();
     } catch (HttpException e) {
-      Log.d(TAG, e.getMessage());
+      Log.d(TAG, "Unable to get maps", e);
       return retryUpload();
+    } finally {
+      if (gDataParser != null) {
+        gDataParser.close();
+      }
     }
 
     return true;

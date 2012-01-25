@@ -52,7 +52,7 @@ public class SendFusionTablesUtils {
    */
   public static String getMapUrl(Track track) {
     if (track == null || track.getStatistics() == null || track.getTableId() == null) {
-      Log.e(TAG, "Invalid track.");
+      Log.e(TAG, "Invalid track");
       return null;
     }
 
@@ -168,7 +168,7 @@ public class SendFusionTablesUtils {
     try {
       read = inputStream.read(result);
     } catch (IOException e) {
-      Log.d(TAG, e.getMessage());
+      Log.d(TAG, "Unable to read result", e);
       return null;
     }
     if (read == -1) {
@@ -179,7 +179,7 @@ public class SendFusionTablesUtils {
     try {
       s = new String(result, 0, read, UTF8);
     } catch (UnsupportedEncodingException e) {
-      Log.d(TAG, e.getMessage());
+      Log.d(TAG, "Unable to parse result", e);
       return null;
     }
 

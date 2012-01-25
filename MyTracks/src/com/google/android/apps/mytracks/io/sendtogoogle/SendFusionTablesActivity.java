@@ -66,7 +66,19 @@ public class SendFusionTablesActivity extends Activity {
     } else {
       Intent intent = getIntent();
       Account account = intent.getParcelableExtra(ACCOUNT);
+      if (account == null) {
+        setResult(
+            RESULT_OK, new Intent().putExtra(SUCCESS, false).putExtra(TABLE_ID, (String) null));
+        finish();
+        return;
+      }
       long trackId = intent.getLongExtra(TRACK_ID, -1L);
+      if (trackId == -1L) {
+        setResult(
+            RESULT_OK, new Intent().putExtra(SUCCESS, false).putExtra(TABLE_ID, (String) null));
+        finish();
+        return;
+      }
 
       asyncTask = new SendFusionTablesAsyncTask(this, account, trackId);
       asyncTask.execute();
@@ -112,8 +124,7 @@ public class SendFusionTablesActivity extends Activity {
    * @param tableId tableId if available
    */
   public void onAsyncTaskCompleted(boolean success, String tableId) {
-    Intent intent = new Intent().putExtra(SUCCESS, success).putExtra(TABLE_ID, tableId);
-    setResult(RESULT_OK, intent);
+    setResult(RESULT_OK, new Intent().putExtra(SUCCESS, success).putExtra(TABLE_ID, tableId));
     finish();
   }
 

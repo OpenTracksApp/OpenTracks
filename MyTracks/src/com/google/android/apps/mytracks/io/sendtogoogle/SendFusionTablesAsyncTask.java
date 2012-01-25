@@ -178,13 +178,13 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
     try {
       authToken = AccountManager.get(context).blockingGetAuthToken(account, SERVICE_ID, false);
     } catch (OperationCanceledException e) {
-      Log.d(TAG, e.getMessage());
+      Log.d(TAG, "Unable to get auth token", e);
       return retryUpload();
     } catch (AuthenticatorException e) {
-      Log.d(TAG, e.getMessage());
+      Log.d(TAG, "Unable to get auth token", e);
       return retryUpload();
     } catch (IOException e) {
-      Log.d(TAG, e.getMessage());
+      Log.d(TAG, "Unable to get auth token", e);
       return retryUpload();
     }
 
@@ -370,18 +370,11 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
    * @param lastBatch true if it is the last batch of locations
    */
   private boolean prepareAndUploadPoints(Track track, List<Location> locations, boolean lastBatch) {
-    int numLocations = locations.size();
-    if (numLocations < 2) {
-      Log.d(TAG, "Not preparing/uploading, too few points");
-      return true;
-    }
-
     // Prepare locations
     ArrayList<Track> splitTracks = prepareLocations(track, locations);
 
-    boolean onlyOneSegment = lastBatch && currentSegment == 1 && splitTracks.size() == 1;
-    
     // Upload segments
+    boolean onlyOneSegment = lastBatch && currentSegment == 1 && splitTracks.size() == 1;
     for (Track splitTrack : splitTracks) {
       if (!onlyOneSegment) {
         splitTrack.setName(context.getString(
@@ -447,7 +440,6 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
         if (segmentStats.getStartTime() < 0) {
           segmentStats.setStartTime(loc.getTime());
         }
-        segmentStats.setStopTime(loc.getTime());
       }
     }
 
@@ -460,9 +452,9 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
    * Prepares a track segment for sending to Google Fusion Tables. The main
    * steps are:
    * <ul>
-   * <li>set the stop time</li>
+   * <li>make sure the segment has at least 2 points</li>
+   * <li>set the segment stop time if necessary</li>
    * <li>decimate locations precision</li>
-   * <li>make sure the segment has more than 1 point</li>
    * </ul>
    * The prepared track will be added to the splitTracks.
    *
@@ -470,11 +462,16 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
    * @param splitTracks an array of track segments
    */
   private void prepareTrackSegment(Track segment, ArrayList<Track> splitTracks) {
+    // Make sure the segment has at least 2 points
+    if (segment.getLocations().size() < 2) {
+      Log.d(TAG, "segment has less than 2 points");
+      return;
+    }
+
     // For a new segment, sets it stop time
     TripStatistics segmentStats = segment.getStatistics();
-    ArrayList<Location> locations = segment.getLocations();
-    if (segmentStats.getStopTime() < 0 && locations.size() > 0) {
-      Location lastLocation = locations.get(locations.size() - 1);
+    if (segmentStats.getStopTime() < 0) {
+      Location lastLocation = segment.getLocations().get(segment.getLocations().size() - 1);
       segmentStats.setStopTime(lastLocation.getTime());
     }
 
@@ -482,10 +479,7 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
     // points.
     LocationUtils.decimate(segment, 2.0);
     
-    // Only add the segment if it has more than 1 point.
-    if (segment.getLocations().size() > 1) {
-      splitTracks.add(segment);
-    }
+    splitTracks.add(segment);
   }
 
   /**
@@ -572,7 +566,7 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
     try {
       request = httpRequestFactory.buildPostRequest(url, inputStreamContent);
     } catch (IOException e) {
-      Log.d(TAG, e.getMessage());
+      Log.d(TAG, "Unable to build request", e);
       return false;
     }
 
@@ -587,7 +581,7 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
     try {
       response = request.execute();
     } catch (IOException e) {
-      Log.d(TAG, e.getMessage());
+      Log.d(TAG, "Unable to execute request", e);
       return false;
     }
     boolean isSuccess = response.isSuccessStatusCode();
@@ -596,7 +590,7 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
       try {
         content = response.getContent();
       } catch (IOException e) {
-        Log.d(TAG, e.getMessage());
+        Log.d(TAG, "Unable to get response", e);
         return false;
       }
       if (setTableId) {

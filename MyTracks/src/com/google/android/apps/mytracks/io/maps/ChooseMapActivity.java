@@ -98,22 +98,25 @@ public class ChooseMapActivity extends Activity {
     list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent result = new Intent();
-        result.putExtra(MAP_ID, arrayAdapter.getItem(position).getMapId());
-        setResult(RESULT_OK, result);
+        setResult(
+            RESULT_OK, new Intent().putExtra(MAP_ID, arrayAdapter.getItem(position).getMapId()));
         finish();
       }
     });
     list.setAdapter(arrayAdapter);
-
-    Intent intent = getIntent();
-    Account account = intent.getParcelableExtra(ACCOUNT);
 
     Object retained = getLastNonConfigurationInstance();
     if (retained instanceof ChooseMapAsyncTask) {
       asyncTask = (ChooseMapAsyncTask) retained;
       asyncTask.setActivity(this);
     } else {
+      Intent intent = getIntent();
+      Account account = intent.getParcelableExtra(ACCOUNT);
+      if (account == null) {
+        setResult(RESULT_OK, new Intent().putExtra(MAP_ID, (String) null));
+        finish();
+        return;
+      }
       asyncTask = new ChooseMapAsyncTask(this, account);
       asyncTask.execute();
     }
@@ -152,18 +155,14 @@ public class ChooseMapActivity extends Activity {
         builder.setPositiveButton(R.string.generic_ok, new OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int arg1) {
-            Intent result = new Intent();
-            result.putExtra(MAP_ID, (String) null);
-            setResult(RESULT_OK, result);
+            setResult(RESULT_OK, new Intent().putExtra(MAP_ID, (String) null));
             finish();
           }
         });
         builder.setOnCancelListener(new OnCancelListener() {
           @Override
           public void onCancel(DialogInterface dialog) {
-            Intent result = new Intent();
-            result.putExtra(MAP_ID, (String) null);
-            setResult(RESULT_OK, result);
+            setResult(RESULT_OK, new Intent().putExtra(MAP_ID, (String) null));
             finish();
           }
         });
