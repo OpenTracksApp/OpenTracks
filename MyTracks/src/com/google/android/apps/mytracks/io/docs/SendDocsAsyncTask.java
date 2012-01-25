@@ -107,7 +107,7 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
    */
   public void setActivity(SendDocsActivity activity) {
     this.activity = activity;
-    if (completed) {
+    if (completed && activity != null) {
       activity.onAsyncTaskCompleted(success);
     }
   }
@@ -168,10 +168,13 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
       spreadsheetsAuthToken = AccountManager.get(context).blockingGetAuthToken(
           account, spreadsheetsClient.getServiceName(), false);
     } catch (OperationCanceledException e) {
+      Log.d(TAG, "Unable to get auth token", e);
       return retryUpload();
     } catch (AuthenticatorException e) {
+      Log.d(TAG, "Unable to get auth token", e);
       return retryUpload();
     } catch (IOException e) {
+      Log.d(TAG, "Unable to get auth token", e);
       return retryUpload();
     }
 
@@ -188,7 +191,7 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
     // Get the spreadsheet ID
     publishProgress(PROGRESS_GET_SPREADSHEET_ID);
-    if (!getSpreadSheetId(title, false)) {
+    if (!fetchSpreadSheetId(title, false)) {
       return retryUpload(); 
     }
 
@@ -205,7 +208,7 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
       // See http://code.google.com/p/gdata-issues/issues/detail?id=929
       // Try to find the created spreadsheet.
       if (spreadsheetId == null) {
-        if (!getSpreadSheetId(title, true)) {
+        if (!fetchSpreadSheetId(title, true)) {
           Log.d(TAG, "Unable to check if the new spreadsheet is created");
           return false;
         }
@@ -219,11 +222,11 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
     // Get the worksheet ID
     publishProgress(PROGRESS_GET_WORKSHEET_ID);
-    if (!getWorksheetId()) {
+    if (!fetchWorksheetId()) {
       return retryUpload();
     }
     if (worksheetId == null) {
-      Log.d(TAG, "Unable to get the worksheet ID");
+      Log.d(TAG, "Unable to get a worksheet ID");
       return false;
     }
 
@@ -239,13 +242,14 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   }
 
   /**
-   * Gets the spreadsheet id.
-   * 
+   * Fetches the spreadsheet id. Sets the instance variable
+   * {@link SendDocsAsyncTask#spreadsheetId}.
+   *
    * @param title the spreadsheet title
    * @param waitFirst wait before checking
    * @return true if completes.
    */
-  private boolean getSpreadSheetId(String title, boolean waitFirst) {
+  private boolean fetchSpreadSheetId(String title, boolean waitFirst) {
     if (isCancelled()) {
       return false;
     }
@@ -254,7 +258,7 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
       try {
         Thread.sleep(5000);
       } catch (InterruptedException e) {
-        Log.d(TAG, e.getMessage());
+        Log.d(TAG, "Unable to wait", e);
         return false;
       }
     }
@@ -262,13 +266,13 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     try {
       spreadsheetId = SendDocsUtils.getSpreadsheetId(title, documentsClient, documentsAuthToken);
     } catch (ParseException e) {
-      Log.d(TAG, e.getMessage());
+      Log.d(TAG, "Unable to fetch spreadsheet ID", e);
       return false;
     } catch (HttpException e) {
-      Log.d(TAG, e.getMessage());
+      Log.d(TAG, "Unable to fetch spreadsheet ID", e);
       return false;
     } catch (IOException e) {
-      Log.d(TAG, e.getMessage());
+      Log.d(TAG, "Unable to fetch spreadsheet ID", e);
       return false;
     }
 
@@ -278,20 +282,20 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
       try {
         Thread.sleep(5000);
       } catch (InterruptedException e) {
-        Log.d(TAG, e.getMessage());
+        Log.d(TAG, "Unable to wait", e);
         return false;
       }
 
       try {
         spreadsheetId = SendDocsUtils.getSpreadsheetId(title, documentsClient, documentsAuthToken);
       } catch (ParseException e) {
-        Log.d(TAG, e.getMessage());
+        Log.d(TAG, "Unable to fetch spreadsheet ID", e);
         return false;
       } catch (HttpException e) {
-        Log.d(TAG, e.getMessage());
+        Log.d(TAG, "Unable to fetch spreadsheet ID", e);
         return false;
       } catch (IOException e) {
-        Log.d(TAG, e.getMessage());
+        Log.d(TAG, "Unable to fetch spreadsheet ID", e);
         return false;
       }
     }
@@ -299,8 +303,9 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   }
 
   /**
-   * Creates a spreadsheet.
-   * 
+   * Creates a spreadsheet. If successful, sets the instance variable
+   * {@link SendDocsAsyncTask#spreadsheetId}.
+   *
    * @param spreadsheetTitle the spreadsheet title
    * @return true if completes.
    */
@@ -311,17 +316,19 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     try {
       spreadsheetId = SendDocsUtils.createSpreadsheet(spreadsheetTitle, documentsAuthToken, context);
     } catch (IOException e) {
+      Log.d(TAG, "Unable to create spreadsheet", e);
       return false;
     }
     return true;
   }
 
   /**
-   * Gets the worksheet ID.
-   * 
+   * Fetches the worksheet ID. Sets the instance variable
+   * {@link SendDocsAsyncTask#worksheetId}.
+   *
    * @return true if completes.
    */
-  private boolean getWorksheetId() {
+  private boolean fetchWorksheetId() {
     if (isCancelled()) {
       return false;
     }
@@ -329,13 +336,13 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
       worksheetId = SendDocsUtils.getWorksheetId(
           spreadsheetId, spreadsheetsClient, spreadsheetsAuthToken);
     } catch (IOException e) {
-      Log.d(TAG, e.getMessage());
+      Log.d(TAG, "Unable to fetch worksheet ID", e);
       return false;
     } catch (AuthenticationException e) {
-      Log.d(TAG, e.getMessage());
+      Log.d(TAG, "Unable to fetch worksheet ID", e);
       return false;
     } catch (ParseException e) {
-      Log.d(TAG, e.getMessage());
+      Log.d(TAG, "Unable to fetch worksheet ID", e);
       return false;
     }
     return true;
@@ -354,7 +361,7 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     try {
       SendDocsUtils.addTrackInfo(track, spreadsheetId, worksheetId, spreadsheetsAuthToken, context);
     } catch (IOException e) {
-      Log.d(TAG, e.getMessage());
+      Log.d(TAG, "Unable to add track info", e);
       return false;
     }
     return true;

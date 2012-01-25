@@ -104,18 +104,25 @@ public class SendDocsUtils {
   public static String getSpreadsheetId(
       String title, DocumentsClient documentsClient, String authToken)
       throws IOException, ParseException, HttpException {
-    String uri = String.format(GET_SPREADSHEET_BY_TITLE_URI, URLEncoder.encode(title));
-    GDataParser gdataParser = documentsClient.getParserForFeed(Entry.class, uri, authToken);
-    gdataParser.init();
+    GDataParser gDataParser = null;
+    try {
+      String uri = String.format(GET_SPREADSHEET_BY_TITLE_URI, URLEncoder.encode(title));
+      gDataParser = documentsClient.getParserForFeed(Entry.class, uri, authToken);
+      gDataParser.init();
 
-    while (gdataParser.hasMoreData()) {
-      Entry entry = gdataParser.readNextEntry(null);
-      String entryTitle = entry.getTitle();
-      if (entryTitle.equals(title)) {
-        return getEntryId(entry);
+      while (gDataParser.hasMoreData()) {
+        Entry entry = gDataParser.readNextEntry(null);
+        String entryTitle = entry.getTitle();
+        if (entryTitle.equals(title)) {
+          return getEntryId(entry);
+        }
+      }
+      return null;
+    } finally {
+      if (gDataParser != null) {
+        gDataParser.close();
       }
     }
-    return null;
   }
 
   /**
@@ -166,6 +173,7 @@ public class SendDocsUtils {
       // The GData API sometimes throws an error, even though creation of
       // the document succeeded. In that case let's just return. The caller
       // then needs to check if the doc actually exists.
+      Log.d(TAG, "Unable to read result after creating a spreadsheet", e);
       return null;
     } finally {
       outputStream.close();
@@ -212,18 +220,25 @@ public class SendDocsUtils {
   public static String getWorksheetId(
       String spreadsheetId, SpreadsheetsClient spreadsheetClient, String authToken)
       throws IOException, AuthenticationException, ParseException {
-    String uri = String.format(GET_WORKSHEETS_URI, spreadsheetId);
-    GDataParser gDataParser = spreadsheetClient.getParserForWorksheetsFeed(uri, authToken);
-    gDataParser.init();
-    if (!gDataParser.hasMoreData()) {
-      Log.d(TAG, "No worksheet");
-      return null;
-    }
+    GDataParser gDataParser = null;
+    try {
+      String uri = String.format(GET_WORKSHEETS_URI, spreadsheetId);
+      gDataParser = spreadsheetClient.getParserForWorksheetsFeed(uri, authToken);
+      gDataParser.init();
+      if (!gDataParser.hasMoreData()) {
+        Log.d(TAG, "No worksheet");
+        return null;
+      }
 
-    // Get the first worksheet
-    WorksheetEntry worksheetEntry = (WorksheetEntry) gDataParser.readNextEntry(
-        new WorksheetEntry());
-    return getWorksheetEntryId(worksheetEntry);
+      // Get the first worksheet
+      WorksheetEntry worksheetEntry =
+          (WorksheetEntry) gDataParser.readNextEntry(new WorksheetEntry());
+      return getWorksheetEntryId(worksheetEntry);
+    } finally {
+      if (gDataParser != null) {
+        gDataParser.close();
+      }
+    }
   }
 
   /**

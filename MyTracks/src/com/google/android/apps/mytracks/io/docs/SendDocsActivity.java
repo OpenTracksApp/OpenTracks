@@ -55,8 +55,19 @@ public class SendDocsActivity extends Activity {
     } else {
       Intent intent = getIntent();
       Account account = intent.getParcelableExtra(ACCOUNT);
+      if (account == null) {
+        setResult(RESULT_OK, new Intent().putExtra(SUCCESS, false));
+        finish();
+        return;
+      }
+
       long trackId = intent.getLongExtra(TRACK_ID, -1L);
-      
+      if (trackId == -1L) {
+        setResult(RESULT_OK, new Intent().putExtra(SUCCESS, false));
+        finish();
+        return;
+      }
+
       asyncTask = new SendDocsAsyncTask(this, account, trackId);
       asyncTask.execute();
     }
