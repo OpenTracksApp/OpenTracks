@@ -88,7 +88,7 @@ public class SearchActivity extends ListActivity {
       return;
     }
 
-    String textQuery = intent.getStringExtra(SearchManager.QUERY).toLowerCase();
+    String textQuery = intent.getStringExtra(SearchManager.QUERY);
     Location currentLocation = locationManager.getLastKnownLocation("gps");
     long currentTrackId = intent.getLongExtra(EXTRA_CURRENT_TRACK_ID, -1);
     long currentTimestamp = System.currentTimeMillis();

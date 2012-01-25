@@ -70,13 +70,16 @@ public class SearchEngine {
   /** Maximum number of waypoints which will be retrieved and scored. */
   private static final int MAX_SCORED_WAYPOINTS = 100;
 
+  /** Oldest timestamp for which we rank based on time (2000-01-01 00:00:00.000) */
+  private static final long OLDEST_ALLOWED_TIMESTAMP = 946692000000L;
+
   /**
    * Description of a search query, along with all contextual data needed to execute it.
    */
   public static class SearchQuery {
     public SearchQuery(String textQuery, Location currentLocation, long currentTrackId,
         long currentTimestamp) {
-      this.textQuery = textQuery;
+      this.textQuery = textQuery.toLowerCase();
       this.currentLocation = currentLocation;
       this.currentTrackId = currentTrackId;
       this.currentTimestamp = currentTimestamp;
@@ -107,6 +110,14 @@ public class SearchEngine {
     public final Track track;
     public final Waypoint waypoint;
     public final double score;
+
+    @Override
+    public String toString() {
+      return "ScoredResult ["
+          + (track != null ? ("trackId=" + track.getId() + ", ") : "")
+          + (waypoint != null ? ("wptId=" + waypoint.getId() + ", ") : "")
+          + "score=" + score + "]";
+    }
   }
 
   /** Comparador for scored results. */
@@ -115,16 +126,23 @@ public class SearchEngine {
         @Override
         public int compare(ScoredResult r1, ScoredResult r2) {
           // Score ordering.
-          int scoreDiff = (int) (r2.score - r1.score);
+          int scoreDiff = Double.compare(r2.score, r1.score);
           if (scoreDiff != 0) {
             return scoreDiff;
           }
 
-          // Arbitrary ordering, by ID.
+          // Make tracks come before waypoints.
+          if (r1.waypoint != null && r2.track != null) {
+            return 1;
+          } else if (r1.track != null && r2.waypoint != null) {
+            return -1;
+          }
+
+          // Finally, use arbitrary ordering, by ID.
           long id1 = r1.track != null ? r1.track.getId() : r1.waypoint.getId();
           long id2 = r2.track != null ? r2.track.getId() : r2.waypoint.getId();
-          long diff = id2 - id1;
-          return Long.signum(diff);
+          long idDiff = id2 - id1;
+          return Long.signum(idDiff);
         }
       };
 
@@ -132,6 +150,10 @@ public class SearchEngine {
 
   public SearchEngine(Context ctx) {
     providerUtils = MyTracksProviderUtils.Factory.get(ctx);
+  }
+
+  public SearchEngine(MyTracksProviderUtils providerUtils) {
+    this.providerUtils = providerUtils;
   }
 
   /**
@@ -288,7 +310,7 @@ public class SearchEngine {
     score *= getTimeBoost(query, location.getTime());
 
     // Score waypoints in the currently-selected track higher (searching inside the current track).
-    if (waypoint.getTrackId() == query.currentTrackId) {
+    if (query.currentTrackId != -1 && waypoint.getTrackId() == query.currentTrackId) {
       score *= CURRENT_TRACK_WAYPOINT_PROMOTION;
     }
 
@@ -328,8 +350,13 @@ public class SearchEngine {
    * @return the total boost to be applied to the result
    */
   private double getTimeBoost(SearchQuery query, long timestamp) {
+    if (timestamp < OLDEST_ALLOWED_TIMESTAMP) {
+      // Safety: if timestamp is too old or invalid, don't rank based on time.
+      return 1.0;
+    }
+
     // Score recent tracks higher.
-    long timeAgoHours = (query.currentTimestamp - timestamp) / (60L * 60L);
+    long timeAgoHours = (query.currentTimestamp - timestamp) / (60L * 60L * 1000L);
     if (timeAgoHours > 0L) {
       return squash(timeAgoHours);
     } else {
