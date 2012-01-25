@@ -34,11 +34,7 @@ class MapsGDataConverter {
       metadata.setSearchable(false);
     }
     metadata.setTitle(entry.getTitle());
-
-    String desc = entry.getContent();
-    if (desc.length() > 12) {
-      metadata.setDescription(desc.substring(9, desc.length() - 3));
-    }
+    metadata.setDescription(entry.getSummary());
 
     String editUri = entry.getEditUri();
     if (editUri != null) {

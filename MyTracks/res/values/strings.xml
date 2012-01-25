@@ -833,7 +833,7 @@ limitations under the License.
   <string name="maps_list_loading"
     translation_description="When sending a track to an existing Google Map, the progress dialog
       message informing the user that his maps are being loaded.">
-    Loading maps...
+    Loading your Google Maps.
   </string>
   <string name="maps_list_no_maps"
     translation_description="When sending a track to an existing Google Map, the text on the

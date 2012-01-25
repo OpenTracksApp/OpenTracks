@@ -119,7 +119,7 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
    */
   public void setActivity(SendFusionTablesActivity activity) {
     this.activity = activity;
-    if (completed) {
+    if (completed && activity != null) {
       activity.onAsyncTaskCompleted(success, tableId);
     }
   }
@@ -173,10 +173,13 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
     try {
       authToken = AccountManager.get(context).blockingGetAuthToken(account, SERVICE_ID, false);
     } catch (OperationCanceledException e) {
+      Log.d(TAG, e.getMessage());
       return retryUpload();
     } catch (AuthenticatorException e) {
+      Log.d(TAG, e.getMessage());
       return retryUpload();
     } catch (IOException e) {
+      Log.d(TAG, e.getMessage());
       return retryUpload();
     }
 
@@ -454,6 +457,7 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
    * <ul>
    * <li>set the stop time</li>
    * <li>decimate locations precision</li>
+   * <li>make sure the segment has more than 1 point</li>
    * </ul>
    * The prepared track will be added to the splitTracks.
    *
@@ -472,7 +476,11 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
     // Decimate to 2 meter precision. Fusion Tables doesn't like too many
     // points.
     LocationUtils.decimate(segment, 2.0);
-    splitTracks.add(segment);
+    
+    // Only add the segment if it has more than 1 point.
+    if (segment.getLocations().size() > 1) {
+      splitTracks.add(segment);
+    }
   }
 
   /**

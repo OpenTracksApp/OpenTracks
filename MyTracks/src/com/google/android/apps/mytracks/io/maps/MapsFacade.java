@@ -8,7 +8,6 @@ import com.google.android.maps.GeoPoint;
 import com.google.android.maps.mytracks.R;
 import com.google.wireless.gdata.client.HttpException;
 import com.google.wireless.gdata.data.Entry;
-import com.google.wireless.gdata.parser.GDataParser;
 import com.google.wireless.gdata.parser.ParseException;
 
 import android.content.Context;
@@ -27,15 +26,6 @@ import org.xmlpull.v1.XmlPullParserException;
  * @author Rodrigo Damazio
  */
 public class MapsFacade {
-
-  /**
-   * Interface for receiving data back from getMapsList.
-   * All calls to the interface will happen before getMapsList returns.
-   */
-  public interface MapsListCallback {
-    void onReceivedMapListing(String mapId, String title, String description,
-        boolean isPublic);
-  }
 
   private static final String END_ICON_URL =
     "http://maps.google.com/mapfiles/ms/micons/red-dot.png";
@@ -63,35 +53,6 @@ public class MapsFacade {
 
   public static String buildMapUrl(String mapId) {
     return MapsClient.buildMapUrl(mapId);
-  }
-
-  /**
-   * Returns a list of all maps for the current user.
-   *
-   * @param callback callback to call for each map returned
-   * @return true on success, false otherwise
-   */
-  public boolean getMapsList(final MapsListCallback callback) {
-    return wrapper.runQuery(new MapsGDataWrapper.QueryFunction() {
-      @Override
-      public void query(MapsClient client) throws IOException, Exception {
-        GDataParser listParser = client.getParserForFeed(
-            MapFeatureEntry.class, MapsClient.getMapsFeed(), authToken);
-        listParser.init();
-        while (listParser.hasMoreData()) {
-          MapFeatureEntry entry =
-              (MapFeatureEntry) listParser.readNextEntry(null);
-          MapsMapMetadata metadata =
-              MapsGDataConverter.getMapMetadataForEntry(entry);
-          String mapId = MapsGDataConverter.getMapidForEntry(entry);
-
-          callback.onReceivedMapListing(
-              mapId, metadata.getTitle(), metadata.getDescription(), metadata.getSearchable());
-        }
-        listParser.close();
-        listParser = null;
-      }
-    });
   }
 
   /**

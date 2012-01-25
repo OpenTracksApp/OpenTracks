@@ -19,7 +19,6 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.MapsList;
 import com.google.android.apps.mytracks.ProgressIndicator;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
@@ -28,6 +27,7 @@ import com.google.android.apps.mytracks.io.AuthManager.AuthCallback;
 import com.google.android.apps.mytracks.io.AuthManagerFactory;
 import com.google.android.apps.mytracks.io.SendToDocs;
 import com.google.android.apps.mytracks.io.SendToMaps;
+import com.google.android.apps.mytracks.io.maps.ChooseMapActivity;
 import com.google.android.apps.mytracks.io.maps.MapsConstants;
 import com.google.android.apps.mytracks.io.maps.MapsFacade;
 import com.google.android.apps.mytracks.util.SystemUtils;
@@ -308,12 +308,9 @@ public class SendActivity extends Activity implements ProgressIndicator {
 
   private SendState pickMap() {
     if (!sendToMapsNewMap) {
-      // Ask the user to choose a map to upload into
-      Intent listIntent = new Intent(this, MapsList.class);
-      listIntent.putExtra(MapsList.EXTRA_ACCOUNT_NAME, account.name);
-      listIntent.putExtra(MapsList.EXTRA_ACCOUNT_TYPE, account.type);
-      startActivityForResult(listIntent, Constants.GET_MAP);
-      // The callback for GET_MAP calls authenticateToGoogleMaps
+      Intent intent = new Intent(this, ChooseMapActivity.class);
+      intent.putExtra(ChooseMapActivity.ACCOUNT, account);
+      startActivityForResult(intent, Constants.CHOOSE_MAP);
       return SendState.NOT_READY;
     } else {
       return SendState.SEND_TO_MAPS;
@@ -487,17 +484,17 @@ public class SendActivity extends Activity implements ProgressIndicator {
       final Intent results) {
     SendState nextState = null;
     switch (requestCode) {
-      case Constants.GET_MAP: {
-        // User picked a map to upload to
-        Log.d(TAG, "Get map result: " + resultCode);
-        if (resultCode == RESULT_OK) {
-          if (results.hasExtra("mapid")) {
-            sendToMapsMapId = results.getStringExtra("mapid");
-          }
-          nextState = SendState.SEND_TO_MAPS;
-        } else {
+      case Constants.CHOOSE_MAP: {
+        if (resultCode == RESULT_CANCELED) {
           nextState = SendState.FINISH;
+          break;
         }
+        sendToMapsMapId = results.getStringExtra(ChooseMapActivity.MAP_ID);
+        if (sendToMapsMapId == null) {
+          nextState = SendState.FINISH;
+          break;
+        }
+        nextState = SendState.SEND_TO_MAPS;
         break;
       }
       case Constants.CHOOSE_ACCOUNT: {

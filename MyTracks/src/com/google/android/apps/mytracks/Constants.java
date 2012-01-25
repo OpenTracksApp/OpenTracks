@@ -41,7 +41,7 @@ public abstract class Constants {
    * global order across all activities.
    */
   public static final int GET_LOGIN = 0;
-  public static final int GET_MAP = 1;
+  public static final int CHOOSE_MAP = 1;
   public static final int SHOW_TRACK = 2;
   public static final int AUTHENTICATE_TO_MAPS = 3;
   public static final int AUTHENTICATE_TO_DOCLIST = 4;

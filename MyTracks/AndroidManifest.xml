@@ -139,11 +139,6 @@ limitations under the License.
       </intent-filter>
     </activity>
 
-    <activity android:name="com.google.android.apps.mytracks.MapsList"
-              android:label="@string/maps_list_title"
-              android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|fontScale"
-              android:exported="false" />
-
     <!-- TODO: VIEW and PICK for track cursor dir -->
     <activity android:name="com.google.android.apps.mytracks.TrackList" />
 
@@ -246,11 +241,13 @@ limitations under the License.
               android:label="@string/welcome_title"
               android:exported="false" />
 
+    <activity android:name="com.google.android.apps.mytracks.io.maps.ChooseMapActivity"
+              android:label="@string/maps_list_title"/>
     <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.UploadServiceChooserActivity"/>
     <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.AccountChooserActivity"/>
     <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.SendFusionTablesActivity"/>
     <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.UploadResultActivity"/>
-        
+
     <service android:name="com.google.android.apps.mytracks.services.TrackRecordingService"
              android:label="@string/my_tracks_recording_service"
              android:icon="@drawable/arrow_320"
