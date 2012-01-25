@@ -95,7 +95,7 @@ limitations under the License.
   <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
   <uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="false"/>
 
-  <uses-sdk android:minSdkVersion="3"/>
+  <uses-sdk android:minSdkVersion="7"/>
   <supports-screens
           android:xlargeScreens="true"
           android:largeScreens="true"
@@ -155,10 +155,6 @@ limitations under the License.
                  android:value="com.google.android.apps.mytracks.SearchActivity" />
     </activity>
 
-    <activity android:name="com.google.android.apps.mytracks.MyMapsList"
-              android:label="@string/my_maps_list_title"
-              android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|fontScale"
-              android:exported="false" />
 
     <!-- TODO: Merge TrackList, WaypointsLIst and SearchActivity, then implement VIEW and PICK for track and waypoint cursor dir -->
     <activity android:name="com.google.android.apps.mytracks.TrackList">
@@ -167,6 +163,7 @@ limitations under the License.
                  android:value="com.google.android.apps.mytracks.SearchActivity" />
     </activity>
 
+    <!-- TODO: VIEW and PICK for waypoint cursor dir -->
     <activity android:name="com.google.android.apps.mytracks.WaypointsList">
       <!-- Enable searches via SearchActivity. -->
       <meta-data android:name="android.app.default_searchable"
@@ -284,6 +281,14 @@ limitations under the License.
       <meta-data android:name="android.app.searchable"
                  android:resource="@xml/search"/>
     </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.io.docs.SendDocsActivity"/>
+    <activity android:name="com.google.android.apps.mytracks.io.maps.ChooseMapActivity"
+                            android:label="@string/maps_list_title"/>
+    <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.AccountChooserActivity"/>
+    <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.SendFusionTablesActivity"/>
+    <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.UploadResultActivity"/>
+    <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.UploadServiceChooserActivity"/>
 
     <service android:name="com.google.android.apps.mytracks.services.TrackRecordingService"
              android:label="@string/my_tracks_recording_service"

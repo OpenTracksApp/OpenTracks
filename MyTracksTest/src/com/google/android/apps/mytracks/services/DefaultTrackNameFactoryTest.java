@@ -16,48 +16,55 @@
 package com.google.android.apps.mytracks.services;
 
 import com.google.android.apps.mytracks.util.StringUtils;
+import com.google.android.maps.mytracks.R;
 
-import android.content.Context;
 import android.test.AndroidTestCase;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Tests {@link DefaultTrackNameFactory}
- * 
+ *
  * @author Matthew Simmons
  */
 public class DefaultTrackNameFactoryTest extends AndroidTestCase {
-  /**
-   * A version of the factory which allows us to supply our own answer as to
-   * whether a timestamp-based track name should be used.
-   */
-  private static class MockDefaultTrackNameFactory
-      extends DefaultTrackNameFactory {
-    private final boolean useTimestamp;
 
-    MockDefaultTrackNameFactory(Context context, boolean useTimestamp) {
-      super(context);
-      this.useTimestamp = useTimestamp;
-    }
-    
-    @Override
-    protected boolean useTimestampTrackName() {
-      return useTimestamp;
-    }
-  }
-  
-  private static final long TIMESTAMP = 1288213406000L;
+  private static final long TRACK_ID = 1L;
+  private static final long START_TIME = 1288213406000L;
 
-  public void testTimestampTrackName() {
-    DefaultTrackNameFactory factory =
-        new MockDefaultTrackNameFactory(getContext(), true);
-    
-    assertEquals(StringUtils.formatDateTime(TIMESTAMP), factory.newTrackName(1, TIMESTAMP));
+  public void testDefaultTrackName_date_local() {
+    DefaultTrackNameFactory defaultTrackNameFactory = new DefaultTrackNameFactory(getContext()) {
+      @Override
+      String getTrackNameSetting() {
+        return getContext().getString(R.string.settings_recording_track_name_date_local_value);
+      }
+    };
+    assertEquals(StringUtils.formatDateTime(getContext(), START_TIME),
+        defaultTrackNameFactory.getDefaultTrackName(TRACK_ID, START_TIME));
   }
 
-  public void testIncrementingTrackName() {
-    DefaultTrackNameFactory factory =
-        new MockDefaultTrackNameFactory(getContext(), false);
+  public void testDefaultTrackName_date_iso_8601() {
+    DefaultTrackNameFactory defaultTrackNameFactory = new DefaultTrackNameFactory(getContext()) {
+      @Override
+      String getTrackNameSetting() {
+        return getContext().getString(R.string.settings_recording_track_name_date_iso_8601_value);
+      }
+    };
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+        DefaultTrackNameFactory.ISO_8601_FORMAT);
+    assertEquals(simpleDateFormat.format(new Date(START_TIME)),
+        defaultTrackNameFactory.getDefaultTrackName(TRACK_ID, START_TIME));
+  }
 
-    assertEquals("Track 1", factory.newTrackName(1, TIMESTAMP));
+  public void testDefaultTrackName_number() {
+    DefaultTrackNameFactory defaultTrackNameFactory = new DefaultTrackNameFactory(getContext()) {
+      @Override
+      String getTrackNameSetting() {
+        return getContext().getString(R.string.settings_recording_track_name_number_value);
+      }
+    };
+    assertEquals(
+        "Track " + TRACK_ID, defaultTrackNameFactory.getDefaultTrackName(TRACK_ID, START_TIME));
   }
 }

@@ -99,7 +99,7 @@ public class ExportAllTracks {
       new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-          new Thread(runner, "SendToMyMaps").start();
+          new Thread(runner, "ExportAllTracks").start();
         }
       };
 

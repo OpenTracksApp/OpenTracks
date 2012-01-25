@@ -805,7 +805,7 @@ public class ChartView extends View {
     String s =
         (mode == Mode.BY_DISTANCE)
             ? (shortFormat ? X_SHORT_FORMAT.format(x) : X_FORMAT.format(x))
-            : StringUtils.formatTime((long) x);
+            : StringUtils.formatElapsedTime((long) x);
     c.drawText(s,
                getX(x),
                effectiveHeight + UNIT_BORDER + topBorder,

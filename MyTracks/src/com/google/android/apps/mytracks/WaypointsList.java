@@ -84,14 +84,14 @@ public class WaypointsList extends ListActivity
           Waypoint waypoint = providerUtils.getWaypoint(info.id);
           if (waypoint != null) {
             int type = waypoint.getType();
-            menu.add(0, Constants.MENU_SHOW, 0,
-                R.string.marker_list_show_on_map);
-            menu.add(0, Constants.MENU_EDIT, 0,
-                R.string.marker_list_edit_marker);
-            menu.add(0, Constants.MENU_DELETE, 0,
-                R.string.marker_list_delete_marker).setEnabled(
-                    recordingTrackId < 0 || type == Waypoint.TYPE_WAYPOINT || type == Waypoint.TYPE_STATISTICS ||
-                    info.id != providerUtils.getLastWaypointId(recordingTrackId));
+            menu.add(Menu.NONE, Constants.MENU_SHOW, Menu.NONE, R.string.marker_list_show_on_map);
+            menu.add(Menu.NONE, Constants.MENU_EDIT, Menu.NONE, R.string.marker_list_edit_marker);
+            MenuItem deleteMenu = menu.add(
+                Menu.NONE, Constants.MENU_DELETE, Menu.NONE, R.string.marker_list_delete_marker);
+            deleteMenu.setEnabled(recordingTrackId < 0
+                || type == Waypoint.TYPE_WAYPOINT
+                || type == Waypoint.TYPE_STATISTICS
+                || info.id != providerUtils.getLastWaypointId(recordingTrackId));
           }
         }
       };
@@ -281,7 +281,7 @@ public class WaypointsList extends ListActivity
           if (time == 0) {
             textView.setVisibility(View.GONE);
           } else {
-            textView.setText(StringUtils.formatDateTime(time));
+            textView.setText(StringUtils.formatDateTime(WaypointsList.this, time));
             textView.setVisibility(View.VISIBLE);
           }
         } else if (columnIndex == typeIdx) {

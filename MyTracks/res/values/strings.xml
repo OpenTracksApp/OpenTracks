@@ -409,7 +409,7 @@ limitations under the License.
     My Tracks can share your track data:\n
     - As a GPX, KML, CSV, or TCX file\n
     - Using Google Maps, Google Fusion Tables, or Google Docs\n
-    - Via Twitter or Facebook\n
+    - Via Google+, Facebook, or Twitter\n
     \n
     Other features:\n
     - Record in Metric or Imperial units (configured from the Recording menu, under Settings)\n
@@ -741,14 +741,18 @@ limitations under the License.
     A marker was inserted.
   </string>
   <string name="marker_label_end"
-    translation_description="When inserting a marker to indicate the end of a track, the label at
-      the end of the marker name. E.g., the marker is named 'track_name (End)'.">
-    (End)
+    translation_description="When inserting a marker to indicate the end of a track, the marker's
+      name. E.g., 'track_name (End)'.
+      
+      %1$s track name. E.g., 'track_name'.">
+    %1$s (End)
   </string>
   <string name="marker_label_start"
-    translation_description="When inserting a marker to indicate the beginning of a track, the label
-      at the end of the marker name. E.g., the marker is named 'track_name (Start)'.">
-    (Start)
+    translation_description="When inserting a marker to indicate the start of a track, the marker's
+      name. E.g., 'track_name (Start)'.
+      
+      %1$s track name. E.g., 'track_name'.">
+     %1$s (Start)
   </string>
   <string name="marker_list_context_menu_title"
     translation_description="In the context menu for a marker, the title indicating that all the
@@ -820,6 +824,43 @@ limitations under the License.
     Waypoint
   </string>
 
+  <!-- Maps List -->
+  <string name="maps_list_error"
+    translation_description="When sending a track to an existing Google Map, the text on the
+      'Maps' list page informing the user that his maps cannot be loaded at this time.">
+    Your maps could not be loaded at this time.
+  </string>
+  <string name="maps_list_loading"
+    translation_description="When sending a track to an existing Google Map, the progress dialog
+      message informing the user that his maps are being loaded.">
+    Loading your Google Maps.
+  </string>
+  <string name="maps_list_no_maps"
+    translation_description="When sending a track to an existing Google Map, the text on the
+      'Maps' list page informing the user that he doesn't have any maps.">
+    You don\'t have any maps.
+  </string>
+  <string name="maps_list_pick_map"
+    translation_description="When sending a track to an existing Google Map, the text on the
+      'Maps' list page asking the user to pick one of his maps.">
+    Pick a map:
+  </string>
+  <string name="maps_list_public_label"
+    translation_description="When sending a track to an existing Google Map, in the 'Maps'
+      list page, the label next to the maps that are public, as opposed to being unlisted.">
+    Public
+  </string>
+  <string name="maps_list_title"
+    translation_description="When sending a track to an existing Google Map, the title of the
+      page listing the user's maps in Google Maps.">
+    Your Google Maps
+  </string>
+  <string name="maps_list_unlisted_label"
+    translation_description="When sending a track to an existing Google Map, in the 'Maps'
+      list page, the label next to the maps that are unlisted, as opposed to being public.">
+    Unlisted
+  </string>
+  
   <!-- Menu Items -->
   <string name="menu_aggregated_statistics"
     translation_description="In the menu, to go to the aggregated statistics page.
@@ -914,53 +955,6 @@ limitations under the License.
       Screenshot: my_location_no_location.png">
     GPS is not available. Current location cannot be determined. Enable more location sources (see
     \'Location &amp; security\' settings) &amp; make sure the sky is visible. Try again later.
-  </string>
-
-  <!-- Maps List -->
-  <string name="my_maps_list_error"
-    translation_description="When sending a track to an existing Google Map, the text on the
-      'Maps' list page informing the user that his maps cannot be loaded at this time.">
-    Your maps could not be loaded at this time.
-  </string>
-  <string name="my_maps_list_loading"
-    translation_description="When sending a track to an existing Google Map, the progress dialog
-      message informing the user that his maps are being loaded.">
-    Loading maps...
-  </string>
-  <string name="my_maps_list_no_maps"
-    translation_description="When sending a track to an existing Google Map, the text on the
-      'Maps' list page informing the user that he doesn't have any maps.
-
-      Screenshot: my_maps_list_no_maps.png">
-    You don\'t have any maps.
-  </string>
-  <string name="my_maps_list_pick_map"
-    translation_description="When sending a track to an existing Google Map, the text on the
-      'Maps' list page asking the user to pick one of his maps.
-
-      Screenshot: my_maps.png">
-    Pick a map:
-  </string>
-  <string name="my_maps_list_public_label"
-    translation_description="When sending a track to an existing Google Map, in the 'Maps'
-      list page, the label next to the maps that are public, as opposed to being unlisted.
-
-      Screenshot: my_maps.png">
-    Public
-  </string>
-  <string name="my_maps_list_title"
-    translation_description="When sending a track to an existing Google Map, the title of the
-      page listing the user's maps in Google Maps.
-
-      Screenshot: my_maps.png">
-    Your Google Maps
-  </string>
-  <string name="my_maps_list_unlisted_label"
-    translation_description="When sending a track to an existing Google Map, in the 'Maps'
-      list page, the label next to the maps that are unlisted, as opposed to being public.
-
-      Screenshot: my_maps.png">
-    Unlisted
   </string>
 
   <!-- My Tracks -->
@@ -1151,7 +1145,6 @@ limitations under the License.
     translation_description="When sending a track to Google Maps, the radio option to use an
       existing map as opposed to create a new map.
 
-      Character limit: ~21 (1 line)
       Screenshot: send_google_choose_service.png">
     Use existing map
   </string>
@@ -1162,7 +1155,7 @@ limitations under the License.
       Screenshot: send_google_choose_service.png">
     Google Fusion Tables
   </string>
-  <string name="send_google_my_maps"
+  <string name="send_google_maps"
     translation_description="When sending a track to Google, under the 'Send to...' dialog, the
       checkbox option to send to Google Maps.
 
@@ -1173,7 +1166,6 @@ limitations under the License.
     translation_description="When sending a track to Google Maps, the radio option to create a
       new map as opposed to use an existing map.
 
-      Character limit: ~21 (1 line)
       Screenshot: send_google_choose_service.png">
     Create new map
   </string>
@@ -1205,6 +1197,13 @@ limitations under the License.
     translation_description="When sending a track to Google Maps, the message on the progress
       dialog indicating My Tracks is preparing the track's data for upload.">
     Preparing track...
+  </string>
+  <string name="send_google_progress_title"
+    translation_description="When sending a track to a Google service, the title on the progress
+      dialog.
+
+      %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Docs'.">
+    Sending to %1$s. Please wait...
   </string>
   <string name="send_google_progress_reading_track"
     translation_description="When sending a track to Google, the message on the progress dialog
@@ -1260,11 +1259,12 @@ limitations under the License.
     Send to...
   </string>
   <string name="send_google_track_part_label"
-    translation_description="When sending a track to Google, the label to name segments when
-      splitting a large track.
+    translation_description="When sending a track to Google, the label to name segments of a large
+      track. E.g., 'track_name (Part 1)'
 
-      %1$d: part number. E.g., '1'.">
-    (Part %1$d)
+      %1$s: track name. E.g., 'track_name'
+      %2$d: part number. E.g., '1'.">
+    %1$s (Part %2$d)
   </string>
 
   <!-- Sensor State -->
@@ -1711,28 +1711,6 @@ limitations under the License.
       Screenshot: settings_recording_top.png">
     Time/distance after which a new marker will be inserted.
   </string>
-  <string name="settings_recording_name"
-    translation_description="In the 'Recording' settings, the checkbox on whether the track should
-      be named based on the track's start time or based on a number.
-
-      Character limit: ~23 (1 line)
-      Screenshot: settings_recording_bottom.png">
-    Use timestamp
-  </string>
-  <string name="settings_recording_name_summary_off"
-    translation_description="In the 'Recording' settings, the summary for the 'Use timestamp'
-      checkbox when it is unchecked explaining using a number as the default track name.
-
-      Screenshot: settings_recording_bottom_unchecked.png">
-    Use a number as the default track name.
-  </string>
-  <string name="settings_recording_name_summary_on"
-    translation_description="In the 'Recording' settings, the summary for the 'Use timestamp'
-      checkbox when it is checked explaining using the track's start time as the default track name.
-
-      Screenshot: settings_recording_bottom.png">
-    Use the track\'s start time as the default track name.
-  </string>
   <string name="settings_recording_track_distance"
     translation_description="In the 'Recording' settings, the dropdown option to configure the
       distance between two tracks.
@@ -1749,6 +1727,39 @@ limitations under the License.
       Screenshot: settings_recording_top.png">
     Maximum distance between two recordings of your position. If two positions are further than
     this, the track will be split.
+  </string>
+  <string name="settings_recording_track_name"
+    translation_description="In the 'Recording' settings, the title for the dropdown list to choose
+      the default track name.
+      
+      Character limit: ~23 (1 line)">
+    Track name
+  </string>
+  <string name="settings_recording_track_name_date_iso_8601_option"
+    translation_description="In the 'Recording' settings, the option in the 'Track name' dropdown 
+      list to use the track start time in ISO-8601 date format as the track name.
+      
+      Character limit: ~21 (1 line)">
+    Date (ISO 8601)
+  </string>
+  <string name="settings_recording_track_name_date_local_option"
+    translation_description="In the 'Recording' settings, the option in the 'Track name' dropdown
+      list to use the track start time in local date format as the track name.
+      
+      Character limit: ~21 (1 line)">
+    Date (local)
+  </string>
+  <string name="settings_recording_track_name_number_option"
+    translation_description="In the 'Recording' settings, the option in the 'Track name' dropdown
+      list to use a number as the track name.
+      
+      Character limit: ~21 (1 line)">
+    Number
+  </string>
+  <string name="settings_recording_track_name_summary"
+    translation_description="In the 'Recording' settings, the summary for the 'Track name' dropdown
+      list explaining that it chooses the default track name format.">
+    Default track name
   </string>
   <string name="settings_recording_voice"
     translation_description="In the 'Recording' settings, the dropdown option to configure the voice
@@ -2332,20 +2343,24 @@ limitations under the License.
       Screenshot: track_list_share_options.png">
     A %1$s file
   </string>
+  <string name="track_list_share_fusion_table"
+    translation_description="In the context menu for a track, under the 'Share with friends...'
+      option, the menu option to save a track to Google Fusion Tables and share the Fusion Table
+      with friends. 'Fusion Table' in this context means a Google Fusion Table.">
+    Fusion Table
+  </string>
+  <string name="track_list_share_map"
+    translation_description="In the context menu for a track, under the 'Share with friends...'
+      option, the menu option to save a track to Google Maps and share the Map with friends. 'Map'
+      in this context means a Google Map.">
+    Map
+  </string>
   <string name="track_list_share_track"
     translation_description="In the context menu for a track, the menu option to share the track
       with friends through other applications.
 
       Screenshot: track_list_context_menu.png">
     Share with friends...
-  </string>
-  <string name="track_list_share_url"
-    translation_description="In the context menu for a track, under the 'Share with friends...'
-      option, the menu option to save a track to Google Maps or Google Fusion Tables and share the
-      URL with friends.
-
-      Screenshot: track_list_share_options.png">
-    Map or Fusion Table URL
   </string>
   <string name="track_list_show_on_map"
     translation_description="In the context menu for a track, the menu option to show the track on
@@ -3216,7 +3231,7 @@ limitations under the License.
       Screenshot: welcome.png">
     How precise are the recorded tracks?
   </string>
-  <string name="welcome_my_maps_sharing_answer"
+  <string name="welcome_maps_sharing_answer"
     translation_description="In the 'Welcome' page, the help content answer on Google Maps
       visibility.
 
@@ -3225,7 +3240,7 @@ limitations under the License.
     -> Make new maps public. You can change the visibility of all your maps at My places in Google
     Maps.
   </string>
-  <string name="welcome_my_maps_sharing_question"
+  <string name="welcome_maps_sharing_question"
     translation_description="In the 'Welcome' page, the help content question on Google Maps
       visibility.
 

@@ -37,18 +37,24 @@ limitations under the License.
   <string name="my_tracks_analytics_id">UA-7222692-2</string> 
   <string name="my_tracks_privacy_url">m.google.com/privacy</string>
   <string name="my_tracks_recording_service_name">My Tracks Recording Service</string>
+  <string name="my_tracks_support_url">
+    groups.google.com/a/googleproductforums.com/forum/#!categories/maps/mytracks
+  </string>
   <string name="my_tracks_web_url">mytracks.appspot.com</string>
   <string name="permission_notification_value">
     com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS
   </string>
   <string name="send_google_docs_url">docs.google.com</string>
   <string name="send_google_fusion_tables_url">google.com/fusiontables</string>
-  <string name="send_google_my_maps_url">maps.google.com</string>
+  <string name="send_google_maps_url">maps.google.com</string>
   <string name="sensor_type_value_ant">ANT</string>    
   <string name="sensor_type_value_none">NONE</string>
   <string name="sensor_type_value_polar">POLAR</string>
   <string name="sensor_type_value_srm_ant_bridge">SRM_ANT_BRIDGE</string>
   <string name="sensor_type_value_zephyr">ZEPHYR</string>
+  <string name="settings_recording_track_name_date_iso_8601_value">DATE_ISO_8601</string>
+  <string name="settings_recording_track_name_date_local_value">DATE_LOCAL</string>
+  <string name="settings_recording_track_name_number_value">NUMBER</string>
   <string name="track_action_end">com.google.android.apps.mytracks.END_CURRENT_TRACK</string>
   <string name="track_action_save">android.intent.action.SAVE</string>
   <string name="track_action_start">com.google.android.apps.mytracks.START_NEW_TRACK</string>

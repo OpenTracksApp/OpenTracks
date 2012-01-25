@@ -25,7 +25,8 @@ import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
-import com.google.android.apps.mytracks.io.sendtogoogle.SendActivity;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendType;
+import com.google.android.apps.mytracks.io.sendtogoogle.UploadServiceChooserActivity;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ApiFeatures;
@@ -41,6 +42,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -421,57 +423,68 @@ public class MapActivity extends com.google.android.maps.MapActivity
   private final OnCreateContextMenuListener contextMenuListener =
       new OnCreateContextMenuListener() {
         @Override
-        public void onCreateContextMenu(ContextMenu menu, View v,
-            ContextMenuInfo menuInfo) {
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
           menu.setHeaderTitle(R.string.track_list_context_menu_title);
-          menu.add(0, Constants.MENU_EDIT, 0,
-              R.string.track_list_edit_track);
+          menu.add(Menu.NONE, Constants.MENU_EDIT, Menu.NONE, R.string.track_list_edit_track);
           if (!dataHub.isRecordingSelected()) {
             String saveFileFormat = getString(R.string.track_list_save_file);
             String shareFileFormat = getString(R.string.track_list_share_file);
             String fileTypes[] = getResources().getStringArray(R.array.file_types);
 
-            menu.add(0, Constants.MENU_SEND_TO_GOOGLE, 0,
+            menu.add(Menu.NONE, Constants.MENU_SEND_TO_GOOGLE, Menu.NONE,
                 R.string.track_list_send_google);
-            SubMenu share = menu.addSubMenu(0, Constants.MENU_SHARE, 0,
-                R.string.track_list_share_track);
-            share.add(0, Constants.MENU_SHARE_LINK, 0,
-                R.string.track_list_share_url);
+            SubMenu share = menu.addSubMenu(
+                Menu.NONE, Constants.MENU_SHARE, Menu.NONE, R.string.track_list_share_track);
             share.add(
-                0, Constants.MENU_SHARE_GPX_FILE, 0, String.format(shareFileFormat, fileTypes[0]));
-            share.add(
-                0, Constants.MENU_SHARE_KML_FILE, 0, String.format(shareFileFormat, fileTypes[1]));
-            share.add(
-                0, Constants.MENU_SHARE_CSV_FILE, 0, String.format(shareFileFormat, fileTypes[2]));
-            share.add(
-                0, Constants.MENU_SHARE_TCX_FILE, 0, String.format(shareFileFormat, fileTypes[3]));
-            SubMenu save = menu.addSubMenu(0,
-                Constants.MENU_WRITE_TO_SD_CARD, 0,
-                R.string.track_list_save_sd);
-            save.add(
-                0, Constants.MENU_SAVE_GPX_FILE, 0, String.format(saveFileFormat, fileTypes[0]));
-            save.add(
-                0, Constants.MENU_SAVE_KML_FILE, 0, String.format(saveFileFormat, fileTypes[1]));
-            save.add(
-                0, Constants.MENU_SAVE_CSV_FILE, 0, String.format(saveFileFormat, fileTypes[2]));
-            save.add(
-                0, Constants.MENU_SAVE_TCX_FILE, 0, String.format(saveFileFormat, fileTypes[3]));
-            menu.add(0, Constants.MENU_CLEAR_MAP, 0,
-                R.string.track_list_clear_map);
-            menu.add(0, Constants.MENU_DELETE, 0,
-                R.string.track_list_delete_track);
+                Menu.NONE, Constants.MENU_SHARE_MAP, Menu.NONE, R.string.track_list_share_map);
+            share.add(Menu.NONE, Constants.MENU_SHARE_FUSION_TABLE, Menu.NONE,
+                R.string.track_list_share_fusion_table);
+            share.add(Menu.NONE, Constants.MENU_SHARE_GPX_FILE, Menu.NONE,
+                String.format(shareFileFormat, fileTypes[0]));
+            share.add(Menu.NONE, Constants.MENU_SHARE_KML_FILE, Menu.NONE,
+                String.format(shareFileFormat, fileTypes[1]));
+            share.add(Menu.NONE, Constants.MENU_SHARE_CSV_FILE, Menu.NONE,
+                String.format(shareFileFormat, fileTypes[2]));
+            share.add(Menu.NONE, Constants.MENU_SHARE_TCX_FILE, Menu.NONE,
+                String.format(shareFileFormat, fileTypes[3]));
+            SubMenu save = menu.addSubMenu(
+                Menu.NONE, Constants.MENU_WRITE_TO_SD_CARD, Menu.NONE, R.string.track_list_save_sd);
+            save.add(Menu.NONE, Constants.MENU_SAVE_GPX_FILE, Menu.NONE,
+                String.format(saveFileFormat, fileTypes[0]));
+            save.add(Menu.NONE, Constants.MENU_SAVE_KML_FILE, Menu.NONE,
+                String.format(saveFileFormat, fileTypes[1]));
+            save.add(Menu.NONE, Constants.MENU_SAVE_CSV_FILE, Menu.NONE,
+                String.format(saveFileFormat, fileTypes[2]));
+            save.add(Menu.NONE, Constants.MENU_SAVE_TCX_FILE, Menu.NONE,
+                String.format(saveFileFormat, fileTypes[3]));
+            menu.add(Menu.NONE, Constants.MENU_CLEAR_MAP, Menu.NONE, R.string.track_list_clear_map);
+            menu.add(Menu.NONE, Constants.MENU_DELETE, Menu.NONE, R.string.track_list_delete_track);
           }
         }
       };
 
   @Override
   public boolean onMenuItemSelected(int featureId, MenuItem item) {
+    Intent intent;
+    long trackId = dataHub.getSelectedTrackId();
     switch (item.getItemId()) {
       case Constants.MENU_SEND_TO_GOOGLE:
-        SendActivity.sendToGoogle(this, dataHub.getSelectedTrackId(), false);
+        intent = new Intent(this, UploadServiceChooserActivity.class);
+        intent.putExtra(UploadServiceChooserActivity.TRACK_ID, trackId);
+        startActivity(intent);
         return true;
-      case Constants.MENU_SHARE_LINK:
-        SendActivity.sendToGoogle(this, dataHub.getSelectedTrackId(), true);
+      case Constants.MENU_SHARE_MAP:
+        intent = new Intent(this, UploadServiceChooserActivity.class);
+        intent.putExtra(UploadServiceChooserActivity.TRACK_ID, trackId);
+        intent.putExtra(UploadServiceChooserActivity.SEND_TYPE, (Parcelable) SendType.MAPS);
+        startActivity(intent);
+        return true;
+      case Constants.MENU_SHARE_FUSION_TABLE:
+        intent = new Intent(this, UploadServiceChooserActivity.class);
+        intent.putExtra(UploadServiceChooserActivity.TRACK_ID, trackId);
+        intent.putExtra(
+            UploadServiceChooserActivity.SEND_TYPE, (Parcelable) SendType.FUSION_TABLES);
+        startActivity(intent);
         return true;
       case Constants.MENU_SAVE_GPX_FILE:
       case Constants.MENU_SAVE_KML_FILE:
@@ -481,19 +494,18 @@ public class MapActivity extends com.google.android.maps.MapActivity
       case Constants.MENU_SHARE_KML_FILE:
       case Constants.MENU_SHARE_CSV_FILE:
       case Constants.MENU_SHARE_TCX_FILE:
-        SaveActivity.handleExportTrackAction(this, dataHub.getSelectedTrackId(),
-            Constants.getActionFromMenuId(item.getItemId()));
+        SaveActivity.handleExportTrackAction(
+            this, trackId, Constants.getActionFromMenuId(item.getItemId()));
         return true;
       case Constants.MENU_EDIT: {
-        Intent intent = new Intent(this, TrackDetail.class);
-        intent.putExtra(TrackDetail.TRACK_ID, dataHub.getSelectedTrackId());
+        intent = new Intent(this, TrackDetail.class);
+        intent.putExtra(TrackDetail.TRACK_ID, trackId);
         startActivity(intent);
         return true;
       }
       case Constants.MENU_DELETE: {
-        Uri uri = ContentUris.withAppendedId(
-            TracksColumns.CONTENT_URI, dataHub.getSelectedTrackId());
-        Intent intent = new Intent(Intent.ACTION_DELETE, uri);
+        Uri uri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId);
+        intent = new Intent(Intent.ACTION_DELETE, uri);
         startActivity(intent);
         return true;
       }
@@ -508,11 +520,11 @@ public class MapActivity extends com.google.android.maps.MapActivity
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     super.onCreateOptionsMenu(menu);
-    myLocation = menu.add(0, Constants.MENU_MY_LOCATION, 0,
-        R.string.menu_map_view_my_location);
+    myLocation = menu.add(
+        Menu.NONE, Constants.MENU_MY_LOCATION, Menu.NONE, R.string.menu_map_view_my_location);
     myLocation.setIcon(android.R.drawable.ic_menu_mylocation);
-    toggleLayers = menu.add(0, Constants.MENU_TOGGLE_LAYERS, 0,
-        R.string.menu_map_view_satellite_mode);
+    toggleLayers = menu.add(
+        Menu.NONE, Constants.MENU_TOGGLE_LAYERS, Menu.NONE, R.string.menu_map_view_satellite_mode);
     toggleLayers.setIcon(android.R.drawable.ic_menu_mapmode);
     return true;
   }

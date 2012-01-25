@@ -137,12 +137,12 @@ limitations under the License.
         android:entryValues="@array/recording_auto_resume_timeout_values"
         android:defaultValue="10" />
 
-    <CheckBoxPreference
-        android:key="@string/timestamp_track_name_key"
-        android:title="@string/settings_recording_name"
-        android:summaryOn="@string/settings_recording_name_summary_on"
-        android:summaryOff="@string/settings_recording_name_summary_off"
-        android:defaultValue="true" />
+    <ListPreference android:key="@string/track_name_key"
+        android:title="@string/settings_recording_track_name"
+        android:summary="@string/settings_recording_track_name_summary"
+        android:entries="@array/settings_recording_track_name_options"
+        android:entryValues="@array/settings_recording_track_name_values"
+        android:defaultValue="@string/settings_recording_track_name_date_local_value"/>
 
     <com.google.android.apps.mytracks.AutoCompleteTextPreference
         android:key="@string/default_activity_key"

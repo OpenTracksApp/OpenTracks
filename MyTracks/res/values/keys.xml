@@ -31,14 +31,14 @@ limitations under the License.
   <string name="min_recording_interval_key">minRecordingInterval</string>
   <string name="min_required_accuracy_key">minRequiredAccuracy</string>
   <string name="pick_existing_map_key">pickExistingMap</string>
+  <string name="preferred_account_key">preferredAccount</string>
   <string name="report_speed_key">reportSpeed</string>
   <string name="send_to_docs_key">sendToDocs</string>
   <string name="send_to_fusion_tables_key">sendToFusionTables</string>
-  <string name="send_to_my_maps_key">sendToMyMaps</string>
+  <string name="send_to_maps_key">sendToMaps</string>
   <string name="sensor_type_key">sensorType</string>
   <string name="share_url_only_key">shareUrlOnly</string>
   <string name="split_frequency_key">splitFrequency</string>
-  <string name="timestamp_track_name_key">timestampTrackName</string>
   <string name="track_color_mode_dynamic_speed_variation_key">trackColorModeDynamicVariation
           </string>  
   <string name="track_color_mode_fixed_speed_medium_display_key">trackColorModeFixedMediumDisplay
@@ -48,7 +48,8 @@ limitations under the License.
           </string>
   <string name="track_color_mode_fixed_speed_slow_key">trackColorModeFixedSlow</string>
   <string name="track_color_mode_key">trackColorMode</string>
-    
+  <string name="track_name_key">trackName</string>
+
   <!-- Preference keys which keep transient state (not user preferences). Sorted alphabetically.
        - DO NOT TRANSLATE -->
   <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>

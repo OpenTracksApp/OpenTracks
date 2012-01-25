@@ -31,9 +31,6 @@ import junit.framework.TestCase;
  * @author Rodrigo Damazio
  */
 public class FileUtilsTest extends TestCase {
-  private static final String ORIGINAL_NAME = "Swim\10ming-^across: the/ pacific (ocean).";
-  private static final String SANITIZED_NAME = "Swimming-across the pacific (ocean).";
-
   private FileUtils fileUtils;
   private Set<String> existingFiles;
 
@@ -65,31 +62,83 @@ public class FileUtilsTest extends TestCase {
     assertEquals(expectedName, dirName);
   }
 
-  public void testSanitizeName() {
-    assertEquals(SANITIZED_NAME, fileUtils.sanitizeName(ORIGINAL_NAME));
+  /**
+   * Tests sanitize filename.
+   */
+  public void testSanitizeFileName() {
+    String name = "Swim\10ming-^across:/the/ pacific (ocean).";
+    String expected = "Swim_ming-^across_the_ pacific (ocean)_";
+    assertEquals(expected, fileUtils.sanitizeFileName(name));
   }
 
+  /**
+   * Tests characters in other languages, like Chinese and Russian, are allowed.
+   */
+  public void testSanitizeFileName_i18n() {
+    String name = "您好-привет";
+    String expected = "您好-привет";
+    
+    assertEquals(expected, fileUtils.sanitizeFileName(name));
+  }
+  
+  /**
+   * Tests special FAT32 characters are allowed.
+   */
+  public void testSanitizeFileName_special_characters() {
+    String name = "$%'-_@~`!(){}^#&+,;=[] ";
+    String expected = "$%'-_@~`!(){}^#&+,;=[] ";
+    
+    assertEquals(expected, fileUtils.sanitizeFileName(name));
+  }
+
+  /**
+   * Testing collapsing multiple underscores characters.
+   */
+  public void testSanitizeFileName_collapse() {
+    String name = "hello//there";
+    String expected = "hello_there";
+    
+    assertEquals(expected, fileUtils.sanitizeFileName(name));
+  }
+  
+  public void testTruncateFileName() {
+    File directory = new File("/dir1/dir2/");
+    String suffix = ".gpx";
+    char[] name = new char[FileUtils.MAX_FAT32_PATH_LENGTH];
+    for (int i = 0; i < name.length; i++) {
+      name[i] = 'a';
+    }
+    String nameString = new String(name);
+    
+    String truncated = fileUtils.truncateFileName(directory, nameString, suffix);
+    for (int i = 0; i < truncated.length(); i++) {
+      assertEquals('a', truncated.charAt(i));
+    }
+    assertEquals(FileUtils.MAX_FAT32_PATH_LENGTH,
+        new File(directory, truncated + suffix).getPath().length());
+  }
+  
   public void testBuildUniqueFileName_someExist() {
     existingFiles = new HashSet<String>();
     existingFiles.add("Filename.ext");
-    existingFiles.add("Filename (1).ext");
-    existingFiles.add("Filename (2).ext");
-    existingFiles.add("Filename (3).ext");
-    existingFiles.add("Filename (4).ext");
+    existingFiles.add("Filename(1).ext");
+    existingFiles.add("Filename(2).ext");
+    existingFiles.add("Filename(3).ext");
+    existingFiles.add("Filename(4).ext");
 
-    String filename = fileUtils.buildUniqueFileName(null, "Filename", "ext");
-    assertEquals("Filename (5).ext", filename);
+    String filename = fileUtils.buildUniqueFileName(new File("/dir/"), "Filename", "ext");
+    assertEquals("Filename(5).ext", filename);
   }
 
   public void testBuildUniqueFileName_oneExists() {
     existingFiles.add("Filename.ext");
 
-    String filename = fileUtils.buildUniqueFileName(null, "Filename", "ext");
-    assertEquals("Filename (1).ext", filename);
+    String filename = fileUtils.buildUniqueFileName(new File("/dir/"), "Filename", "ext");
+    assertEquals("Filename(1).ext", filename);
   }
 
   public void testBuildUniqueFileName_noneExists() {
-    String filename = fileUtils.buildUniqueFileName(null, "Filename", "ext");
+    String filename = fileUtils.buildUniqueFileName(new File("/dir/"), "Filename", "ext");
     assertEquals("Filename.ext", filename);
   }
 }

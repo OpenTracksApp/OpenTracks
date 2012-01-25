@@ -17,14 +17,17 @@ package com.google.android.apps.mytracks.io.sendtogoogle;
 
 import com.google.android.maps.mytracks.R;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Enumerates the services to which we can upload track data.
  *
  * @author Matthew Simmons
  */
-public enum SendType {
-  MYMAPS(R.string.send_google_my_maps,
-      R.string.send_google_my_maps_url),
+public enum SendType implements Parcelable {
+  MAPS(R.string.send_google_maps,
+      R.string.send_google_maps_url),
   FUSION_TABLES(R.string.send_google_fusion_tables,
       R.string.send_google_fusion_tables_url),
   DOCS(R.string.send_google_docs,
@@ -47,4 +50,27 @@ public enum SendType {
   public int getServiceUrl() {
     return serviceUrl;
   }
+
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeInt(ordinal());
+  }
+  
+  public static final Creator<SendType> CREATOR = new Creator<SendType>() {
+
+    @Override
+    public SendType createFromParcel(Parcel source) {
+      return SendType.values()[source.readInt()];
+    }
+
+    @Override
+    public SendType[] newArray(int size) {
+      return new SendType[size];
+    }
+  };
 }
