@@ -196,7 +196,7 @@ public class AntDirectSensorManager extends AntSensorManager
     }
   }
 
-  private boolean setupChannel(AntSensorBase sensor, byte channel) {
+  protected boolean setupChannel(AntSensorBase sensor, byte channel) {
     Log.i(TAG, "setup channel=" + channel + " deviceType=" + sensor.getDeviceType());
 
     return setupAntSensorChannel(sensor.getNetworkNumber(),
