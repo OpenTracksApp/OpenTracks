@@ -20,6 +20,7 @@ import android.test.RenamingDelegatingContext;
 import android.test.mock.MockContentResolver;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.OutputStream;
 
@@ -59,6 +60,10 @@ public class TrackWriterTest extends AndroidTestCase {
 
       this.stream = stream;
       this.canWrite = canWrite;
+      
+      // The directory is set in the canWriteFile. However, this class
+      // overwrites canWriteFile, thus needs to set it.
+      setDirectory(new File("/"));
     }
 
     @Override
