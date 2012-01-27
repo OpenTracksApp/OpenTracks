@@ -19,7 +19,7 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.TracksColumns;
-import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.UriUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -110,7 +110,7 @@ public class DeleteTrack extends Activity
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     if (preferences.getLong(selectedKey, -1) == deleteTrackId) {
       Editor editor = preferences.edit().putLong(selectedKey, -1);
-      ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);
+      ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
     }
   }
 }

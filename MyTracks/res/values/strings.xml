@@ -1716,13 +1716,6 @@ limitations under the License.
       Screenshot: settings_recording_top.png">
     Voice
   </string>
-  <string name="settings_recording_voice_not_available"
-    translation_description="In the 'Recording' settings, the summary for the 'Voice'
-      explaining that this option is not available on your Android phone.
-
-      Screenshot: settings_recording_voice_not_available.png">
-    Voice announcement is not available on your Android phone.
-  </string>
   <string name="settings_recording_voice_summary"
     translation_description="In the 'Recording' settings, the summary for the 'Voice'
       dropdown option explaining that it configures the time or distance between two voice

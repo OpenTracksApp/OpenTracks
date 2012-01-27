@@ -18,7 +18,7 @@ package com.google.android.apps.mytracks.services.sensors;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Sensor;
-import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -31,9 +31,6 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.UUID;
 
 /**
  * This class does all the work for setting up and managing Bluetooth
@@ -44,9 +41,6 @@ import java.util.UUID;
  * @author Sandor Dornbush
  */
 public class BluetoothConnectionManager {
-  // Unique UUID for this application
-  private static final UUID SPP_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-
   private MessageParser parser;
 
   // Member fields
@@ -254,39 +248,11 @@ public class BluetoothConnectionManager {
       // Get a BluetoothSocket for a connection with the
       // given BluetoothDevice
       try {
-        tmp = getSocket();
+        tmp = ApiAdapterFactory.getApiAdapter().getBluetoothSocket(device);
       } catch (IOException e) {
         Log.e(Constants.TAG, "create() failed", e);
       }
       socket = tmp;
-    }
-
-    private BluetoothSocket getSocket() throws IOException {
-      if (ApiFeatures.getInstance().hasBluetoothDeviceCreateInsecureRfcommSocketToServiceRecord()) {
-        try {       
-          return device.createInsecureRfcommSocketToServiceRecord(SPP_UUID);
-        } catch (IOException e) {
-          Log.e(Constants.TAG, "Unable to get insecure connect.", e);
-        }
-      } else {
-        try {
-          Class<? extends BluetoothDevice> c = device.getClass();
-          Method insecure = c.getMethod("createInsecureRfcommSocket", Integer.class);
-          insecure.setAccessible(true);
-          return (BluetoothSocket) insecure.invoke(device, 1);
-        } catch (SecurityException e) {
-          Log.e(Constants.TAG, "Unable to get insecure connect.", e);
-        } catch (NoSuchMethodException e) {
-          Log.e(Constants.TAG, "Unable to get insecure connect.", e);
-        } catch (IllegalArgumentException e) {
-          Log.e(Constants.TAG, "Unable to get insecure connect.", e);
-        } catch (IllegalAccessException e) {
-          Log.e(Constants.TAG, "Unable to get insecure connect.", e);
-        } catch (InvocationTargetException e) {
-          Log.e(Constants.TAG, "Unable to get insecure connect.", e);
-        }
-      }
-      return device.createRfcommSocketToServiceRecord(SPP_UUID);
     }
 
     @Override

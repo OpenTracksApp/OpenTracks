@@ -16,7 +16,7 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.maps.mytracks.R;
 
 import android.app.AlertDialog;
@@ -66,7 +66,7 @@ public class DeleteAllTracks extends Handler {
             Editor editor = prefs.edit();
             // TODO: Go through data manager
             editor.putLong(context.getString(R.string.selected_track_key), -1);
-            ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);
+            ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
             if (done != null) {
               Handler h = new Handler();
               h.post(done);

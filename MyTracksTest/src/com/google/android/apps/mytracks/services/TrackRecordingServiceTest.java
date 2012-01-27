@@ -24,7 +24,6 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.maps.mytracks.R;
 
 import android.content.BroadcastReceiver;
@@ -57,8 +56,7 @@ import java.util.List;
  * is called, which prevents from testing multiple scenarios in a single
  * test (see runFunctionTest for more details).
  */
-public class TrackRecordingServiceTest
-    extends ServiceTestCase<TrackRecordingService> {
+public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingService> {
 
   private Context context;
   private MyTracksProviderUtils providerUtils;
@@ -74,7 +72,7 @@ public class TrackRecordingServiceTest
   private Intent serviceIntent;
 
   public TrackRecordingServiceTest() {
-    super(TrackRecordingService.class);
+    super(TestRecordingService.class);
   }
 
   /**
@@ -93,19 +91,6 @@ public class TrackRecordingServiceTest
     @Override
     public ContentResolver getContentResolver() {
       return contentResolver;
-    }
-  }
-
-  /**
-   * A mock class that forces API level < 5 to make sure we can workaround a bug
-   * in ServiceTestCase (throwing a NPE).
-   * See http://code.google.com/p/android/issues/detail?id=12122 for more
-   * details.
-   */
-  private static class MockApiFeatures extends ApiFeatures {
-    @Override
-    protected int getApiLevel() {
-      return 4;
     }
   }
 
@@ -137,8 +122,6 @@ public class TrackRecordingServiceTest
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-
-    ApiFeatures.injectInstance(new MockApiFeatures());
 
     MockContentResolver mockContentResolver = new MockContentResolver();
     RenamingDelegatingContext targetContext = new RenamingDelegatingContext(

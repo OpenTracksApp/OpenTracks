@@ -23,8 +23,7 @@ import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.services.ServiceUtils;
-import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
-import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerTask;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -105,9 +104,7 @@ public class StatsActivity extends Activity implements TrackDataListener {
     utils = new StatsUtilities(this);
 
     // The volume we want to control is the Text-To-Speech volume
-    int volumeStream =
-        new StatusAnnouncerFactory(ApiFeatures.getInstance()).getVolumeStream();
-    setVolumeControlStream(volumeStream);
+    setVolumeControlStream(StatusAnnouncerTask.getVolumeStream());
 
     // We don't need a window title bar:
     requestWindowFeature(Window.FEATURE_NO_TITLE);

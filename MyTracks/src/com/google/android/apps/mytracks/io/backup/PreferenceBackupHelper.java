@@ -16,7 +16,7 @@
 package com.google.android.apps.mytracks.io.backup;
 
 import com.google.android.apps.mytracks.content.ContentTypeIds;
-import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -106,7 +106,7 @@ class PreferenceBackupHelper {
       byte typeId = reader.readByte();
       readAndSetPreference(name, typeId, reader, editor);
     }
-    ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);
+    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
   }
 
   /**

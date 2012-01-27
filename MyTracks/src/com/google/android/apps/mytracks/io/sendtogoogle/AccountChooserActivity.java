@@ -16,7 +16,7 @@
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.maps.mytracks.R;
 
 import android.accounts.Account;
@@ -153,7 +153,7 @@ public class AccountChooserActivity extends Activity {
                   Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
               Editor editor = prefs.edit();
               editor.putString(getString(R.string.preferred_account_key), account.name);
-              ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);
+              ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
             }
             Intent intent = new Intent();
             intent.putExtra(ACCOUNT, account);

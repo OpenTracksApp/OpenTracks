@@ -16,7 +16,7 @@
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -218,7 +218,7 @@ public class UploadServiceChooserActivity extends Activity {
       editor.putBoolean(getString(R.string.send_to_fusion_tables_key), sendFusionTables());
       editor.putBoolean(getString(R.string.send_to_docs_key), sendDocs());
     }
-    ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);
+    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
   }
 
   /**

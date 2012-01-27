@@ -27,9 +27,8 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendType;
 import com.google.android.apps.mytracks.io.sendtogoogle.UploadServiceChooserActivity;
-import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
+import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerTask;
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.GeoRect;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.maps.GeoPoint;
@@ -134,9 +133,7 @@ public class MapActivity extends com.google.android.maps.MapActivity
     super.onCreate(bundle);
 
     // The volume we want to control is the Text-To-Speech volume
-    int volumeStream =
-        new StatusAnnouncerFactory(ApiFeatures.getInstance()).getVolumeStream();
-    setVolumeControlStream(volumeStream);
+    setVolumeControlStream(StatusAnnouncerTask.getVolumeStream());
 
     // We don't need a window title bar:
     requestWindowFeature(Window.FEATURE_NO_TITLE);

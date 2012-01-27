@@ -20,7 +20,6 @@ import com.google.android.apps.mytracks.Constants;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
-import android.os.Build;
 import android.util.Log;
 
 import java.util.List;
@@ -157,17 +156,11 @@ public abstract class BluetoothDeviceUtils {
    */
   public static BluetoothDeviceUtils getInstance() {
     if (instance == null) {
-      if (!isBluetoothMethodSupported()) {
-        Log.d(Constants.TAG, "Using dummy bluetooth utils");
+      try {
+        instance = new RealImpl();
+      } catch (IllegalStateException ise) {
+        Log.w(Constants.TAG, "Oops, I mean, using dummy bluetooth utils", ise);
         instance = new DummyImpl();
-      } else {
-        Log.d(Constants.TAG, "Using real bluetooth utils");
-        try {
-          instance = new RealImpl();
-        } catch (IllegalStateException ise) {
-          Log.w(Constants.TAG, "Oops, I mean, using dummy bluetooth utils", ise);
-          instance = new DummyImpl();
-        }
       }
     }
     return instance;
@@ -190,11 +183,4 @@ public abstract class BluetoothDeviceUtils {
    * @return the device's descriptor, or null if not found
    */
   public abstract BluetoothDevice findDeviceMatching(String targetDeviceAddress);
-
-  /**
-   * @return whether the bluetooth method is supported on this device
-   */
-  public static boolean isBluetoothMethodSupported() {
-    return Integer.parseInt(Build.VERSION.SDK) >= 5;
-  }
 }
