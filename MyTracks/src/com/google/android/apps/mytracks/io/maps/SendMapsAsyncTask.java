@@ -329,8 +329,7 @@ public class SendMapsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
       List<Location> locations = new ArrayList<Location>(MAX_POINTS_PER_UPLOAD);
       Location lastLocation = null;
 
-      // Limit the number of elevation readings. Ideally we would want around
-      // 250.
+      // Limit the number of elevation readings to 250.
       int elevationSamplingFrequency = Math.max(1, (int) (locationsCount / 250.0));
       double totalDistance = 0;
       DoubleBuffer elevationBuffer = new DoubleBuffer(Constants.ELEVATION_SMOOTHING_FACTOR);
