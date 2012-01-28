@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks.io.sendtogoogle;
+package com.google.android.apps.mytracks.io.maps;
 
 import com.google.android.maps.mytracks.R;
 
@@ -26,32 +26,23 @@ import android.content.Intent;
 import android.os.Bundle;
 
 /**
- * An activity to send a track to Google Fusion Tables.
- * <p>
- * The activity gets recreated when the screen rotates. To support the activity
- * displaying a progress dialog, we do the following:
- * <ul>
- * <li>use one instance of an AyncTask to send the track</li>
- * <li>save that instance as the last non configuration instance of the activity
- * </li>
- * <li>when a new activity is created, pass the activity to the AsyncTask so
- * that the AsyncTask can update the progress dialog of the activity</li>
- * </ul>
+ * An activity to send a track to Google Maps.
  *
- * @author jshih@google.com (Jimmy Shih)
+ * @author Jimmy Shih
  */
-public class SendFusionTablesActivity extends Activity {
+public class SendMapsActivity extends Activity {
 
   // parameters in the input intent
   public static final String ACCOUNT = "account";
   public static final String TRACK_ID = "trackId";
+  public static final String MAP_ID = "mapId";
 
   // parameters in the output intent
   public static final String SUCCESS = "success";
 
   private static final int PROGRESS_DIALOG = 1;
 
-  private SendFusionTablesAsyncTask asyncTask;
+  private SendMapsAsyncTask asyncTask;
   private ProgressDialog progressDialog;
 
   @Override
@@ -59,8 +50,8 @@ public class SendFusionTablesActivity extends Activity {
     super.onCreate(savedInstanceState);
 
     Object retained = getLastNonConfigurationInstance();
-    if (retained instanceof SendFusionTablesAsyncTask) {
-      asyncTask = (SendFusionTablesAsyncTask) retained;
+    if (retained instanceof SendMapsAsyncTask) {
+      asyncTask = (SendMapsAsyncTask) retained;
       asyncTask.setActivity(this);
     } else {
       Intent intent = getIntent();
@@ -76,8 +67,9 @@ public class SendFusionTablesActivity extends Activity {
         finish();
         return;
       }
+      String mapId = intent.getStringExtra(MAP_ID);
 
-      asyncTask = new SendFusionTablesAsyncTask(this, account, trackId);
+      asyncTask = new SendMapsAsyncTask(this, account, trackId, mapId);
       asyncTask.execute();
     }
   }
@@ -95,8 +87,8 @@ public class SendFusionTablesActivity extends Activity {
         progressDialog = new ProgressDialog(this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setIcon(android.R.drawable.ic_dialog_info);
-        progressDialog.setTitle(getString(
-            R.string.send_google_progress_title, getString(R.string.send_google_fusion_tables)));
+        progressDialog.setTitle(
+            getString(R.string.send_google_progress_title, getString(R.string.send_google_maps)));
         progressDialog.setMax(100);
         progressDialog.setProgress(0);
         progressDialog.setCancelable(true);

@@ -52,7 +52,7 @@ class MapsGDataConverter {
     MapFeatureEntry entry = new MapFeatureEntry();
     entry.setEditUri(metadata.getGDataEditUri());
     entry.setTitle(metadata.getTitle());
-    entry.setContent(metadata.getDescription());
+    entry.setSummary(metadata.getDescription());
     entry.setPrivacy(metadata.getSearchable() ? "public" : "unlisted");
     entry.setAuthor("android");
     entry.setEmail("nobody@google.com");

@@ -1,27 +1,35 @@
-// Copyright 2012 Google Inc. All Rights Reserved.
-
-package com.google.android.apps.mytracks.io.sendtogoogle;
+/*
+ * Copyright 2012 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+package com.google.android.apps.mytracks.io.maps;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.io.gdata.GDataClientFactory;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
-import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
+import com.google.android.common.gdata.AndroidXmlParserFactory;
 import com.google.android.maps.mytracks.R;
-import com.google.api.client.googleapis.GoogleHeaders;
-import com.google.api.client.googleapis.MethodOverride;
-import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpRequestFactory;
-import com.google.api.client.http.HttpResponse;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.InputStreamContent;
-import com.google.api.client.util.Strings;
+import com.google.wireless.gdata.client.GDataClient;
+import com.google.wireless.gdata.client.HttpException;
+import com.google.wireless.gdata.parser.ParseException;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -34,54 +42,49 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import org.xmlpull.v1.XmlPullParserException;
+
 /**
- * AsyncTask to send a track to Google Fusion Tables.
+ * AsyncTask to send a track to Google Maps.
+ * <p>
+ * IMPORTANT: While this code is Apache-licensed, please notice that usage of
+ * the Google Maps servers through this API is only allowed for the My Tracks
+ * application. Other applications looking to upload maps data should look into
+ * using the Google Fusion Tables API.
  *
- * @author jshih@google.com (Jimmy Shih)
+ * @author Jimmy Shih
  */
-public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean> {
+public class SendMapsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
+  private static final String START_ICON_URL =
+      "http://maps.google.com/mapfiles/ms/micons/green-dot.png";
+  private static final String END_ICON_URL =
+      "http://maps.google.com/mapfiles/ms/micons/red-dot.png";
+  private static final int MAX_POINTS_PER_UPLOAD = 500;
 
-  private static final String APP_NAME_PREFIX = "Google-MyTracks-";
-  private static final String SQL_KEY = "sql=";
-  private static final String CONTENT_TYPE = "application/x-www-form-urlencoded";
-  private static final String SERVICE_ID = "fusiontables";
-  private static final String FUSION_TABLES_BASE_URL =
-      "https://www.google.com/fusiontables/api/query";
-  private static final int MAX_POINTS_PER_UPLOAD = 2048;
-  private static final String GDATA_VERSION = "2";
-
-  private static final int PROGRESS_CREATE_TABLE = 0;
-  private static final int PROGRESS_UNLIST_TABLE = 5;
+  private static final int PROGRESS_FETCH_MAP_ID = 5;
   private static final int PROGRESS_UPLOAD_DATA_MIN = 10;
   private static final int PROGRESS_UPLOAD_DATA_MAX = 90;
   private static final int PROGRESS_UPLOAD_WAYPOINTS = 95;
   private static final int PROGRESS_COMPLETE = 100;
 
-  // See http://support.google.com/fusiontables/bin/answer.py?hl=en&answer=185991
-  private static final String MARKER_TYPE_START = "large_green";
-  private static final String MARKER_TYPE_END = "large_red";
-  private static final String MARKER_TYPE_WAYPOINT = "large_yellow";
+  private static final String TAG = SendMapsAsyncTask.class.getSimpleName();
 
-  private static final String TAG = SendFusionTablesAsyncTask.class.getSimpleName();
-  
-  private SendFusionTablesActivity activity;
-
-  private final Context context;
+  private SendMapsActivity activity;
   private final Account account;
   private final long trackId;
+  private final String chooseMapId;
+  private final Context context;
   private final MyTracksProviderUtils myTracksProviderUtils;
-  private final HttpRequestFactory httpRequestFactory;
+  private final GDataClient gDataClient;
+  private final MapsClient mapsClient;
 
   /**
-   * True if can retry sending to Google Fusion Tables.
+   * True if can retry sending to Google Maps.
    */
   private boolean canRetry;
 
@@ -94,22 +97,25 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
    * True if the result is success.
    */
   private boolean success;
-  
+
   // The following variables are for per upload states
+  private MapsGDataConverter mapsGDataConverter;
   private String authToken;
-  private String tableId;
+  private String mapId;
   int currentSegment;
 
-  public SendFusionTablesAsyncTask(
-      SendFusionTablesActivity activity, Account account, long trackId) {
+  public SendMapsAsyncTask(
+      SendMapsActivity activity, Account account, long trackId, String chooseMapId) {
     this.activity = activity;
     this.account = account;
     this.trackId = trackId;
+    this.chooseMapId = chooseMapId;
 
     context = activity.getApplicationContext();
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
-    HttpTransport transport = ApiFeatures.getInstance().getApiAdapter().getHttpTransport();
-    httpRequestFactory = transport.createRequestFactory(new MethodOverride());
+    gDataClient = GDataClientFactory.getGDataClient(context);
+    mapsClient = new MapsClient(
+        gDataClient, new XmlMapsGDataParserFactory(new AndroidXmlParserFactory()));
 
     canRetry = true;
     completed = false;
@@ -121,7 +127,7 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
    *
    * @param activity the activity.
    */
-  public void setActivity(SendFusionTablesActivity activity) {
+  public void setActivity(SendMapsActivity activity) {
     this.activity = activity;
     if (completed && activity != null) {
       activity.onAsyncTaskCompleted(success);
@@ -147,12 +153,13 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
 
   @Override
   protected void onPostExecute(Boolean result) {
+    closeClient();
     success = result;
     completed = true;
     if (success) {
       Track track = myTracksProviderUtils.getTrack(trackId);
       if (track != null) {
-        track.setTableId(tableId);
+        track.setMapId(mapId);
         myTracksProviderUtils.updateTrack(track);
       } else {
         Log.d(TAG, "No track");
@@ -163,19 +170,44 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
     }
   }
 
+  @Override
+  protected void onCancelled() {
+    closeClient();
+  }
+
   /**
-   * Uploads a track to Google Fusion Tables.
+   * Closes the gdata client.
+   */
+  private void closeClient() {
+    if (gDataClient != null) {
+      gDataClient.close();
+    }
+  }
+
+  /**
+   * Uploads a track to Google Maps.
    *
    * @return true if success.
    */
   private boolean doUpload() {
     // Reset the per upload states
+    mapsGDataConverter = null;
     authToken = null;
-    tableId = null;
+    mapId = null;
     currentSegment = 1;
 
+    // Create a maps gdata converter
     try {
-      authToken = AccountManager.get(context).blockingGetAuthToken(account, SERVICE_ID, false);
+      mapsGDataConverter = new MapsGDataConverter();
+    } catch (XmlPullParserException e) {
+      Log.d(TAG, "Unable to create a maps gdata converter", e);
+      return false;
+    }
+    
+    // Get auth token
+    try {
+      authToken = AccountManager.get(context).blockingGetAuthToken(
+          account, MapsConstants.SERVICE_NAME, false);
     } catch (OperationCanceledException e) {
       Log.d(TAG, "Unable to get auth token", e);
       return retryUpload();
@@ -187,34 +219,31 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
       return retryUpload();
     }
 
+    // Get the track
     Track track = myTracksProviderUtils.getTrack(trackId);
     if (track == null) {
       Log.d(TAG, "Track is null");
       return false;
     }
 
-    // Create a new table
-    publishProgress(PROGRESS_CREATE_TABLE);
-    if (!createNewTable(track)) {
-      // Retry upload in case the auth token is invalid
+    // Fetch the mapId, create a new map if necessary
+    publishProgress(PROGRESS_FETCH_MAP_ID);
+    if (!fetchSendMapId(track)) {
+      Log.d("TAG", "Unable to upload all track points");
       return retryUpload();
-    }
-
-    // Unlist table
-    publishProgress(PROGRESS_UNLIST_TABLE);
-    if (!unlistTable()) {
-      return false;
     }
 
     // Upload all the track points plus the start and end markers
     publishProgress(PROGRESS_UPLOAD_DATA_MIN);
     if (!uploadAllTrackPoints(track)) {
-      return false;
+      Log.d("TAG", "Unable to upload all track points");
+      return retryUpload();
     }
 
     // Upload all the waypoints
     publishProgress(PROGRESS_UPLOAD_WAYPOINTS);
     if (!uploadWaypoints()) {
+      Log.d("TAG", "Unable to upload waypoints");
       return false;
     }
 
@@ -224,15 +253,14 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
 
   /**
    * Retries upload. Invalidates the authToken. If can retry, invokes
-   * {@link SendFusionTablesAsyncTask#doUpload()}. Returns false if cannot
-   * retry.
+   * {@link SendMapsAsyncTask#doUpload()}. Returns false if cannot retry.
    */
   private boolean retryUpload() {
     if (isCancelled()) {
       return false;
     }
 
-    AccountManager.get(context).invalidateAuthToken(SERVICE_ID, authToken);
+    AccountManager.get(context).invalidateAuthToken(MapsConstants.SERVICE_NAME, authToken);
     if (canRetry) {
       canRetry = false;
       return doUpload();
@@ -241,25 +269,42 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
   }
 
   /**
-   * Creates a new table.
+   * Fetches the {@link SendMapsAsyncTask#mapId} instance variable for
+   * sending a track to Google Maps.
    *
-   * @param track the track
-   * @return true if success.
+   * @param track the Track
+   * @return true if able to fetch the mapId variable.
    */
-  private boolean createNewTable(Track track) {
-    String query = "CREATE TABLE '" + SendFusionTablesUtils.escapeSqlString(track.getName())
-        + "' (name:STRING,description:STRING,geometry:LOCATION,marker:STRING)";
-    return sendQuery(query, true);
-  }
-
-  /**
-   * Unlists a table.
-   *
-   * @return true if success.
-   */
-  private boolean unlistTable() {
-    String query = "UPDATE TABLE " + tableId + " SET VISIBILITY = UNLISTED";
-    return sendQuery(query, false);
+  private boolean fetchSendMapId(Track track) {
+    if (isCancelled()) {
+      return false;
+    }
+  
+    if (chooseMapId != null) {
+      mapId = chooseMapId;
+      return true;
+    } else {
+      SharedPreferences sharedPreferences = context.getSharedPreferences(
+          Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+      boolean mapPublic = sharedPreferences.getBoolean(
+          context.getString(R.string.default_map_public_key), true);
+      try {
+        String description = track.getCategory() + "\n" + track.getDescription() + "\n"
+            + StringUtils.getCreatedByMyTracks(context, false);
+        mapId = SendMapsUtils.createNewMap(
+            track.getName(), description, mapPublic, mapsClient, authToken);
+      } catch (ParseException e) {
+        Log.d(TAG, "Unable to create a new map", e);
+        return false;
+      } catch (HttpException e) {
+        Log.d(TAG, "Unable to create a new map", e);
+        return false;
+      } catch (IOException e) {
+        Log.d(TAG, "Unable to create a new map", e);
+        return false;
+      }
+      return mapId != null;
+    }
   }
 
   /**
@@ -284,8 +329,7 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
       List<Location> locations = new ArrayList<Location>(MAX_POINTS_PER_UPLOAD);
       Location lastLocation = null;
 
-      // Limit the number of elevation readings. Ideally we would want around
-      // 250.
+      // Limit the number of elevation readings to 250.
       int elevationSamplingFrequency = Math.max(1, (int) (locationsCount / 250.0));
       double totalDistance = 0;
       DoubleBuffer elevationBuffer = new DoubleBuffer(Constants.ELEVATION_SMOOTHING_FACTOR);
@@ -299,12 +343,12 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
         locations.add(location);
 
         int readCount = i + 1;
-        
+
         if (readCount == 1) {
           // Create a start marker
-          String name = context.getString(R.string.marker_label_start, track.getName());
-          if (!createNewPoint(name, "", location, MARKER_TYPE_START)) {
-            Log.d(TAG, "Unable to create the start marker");
+          if (!uploadMarker(context.getString(R.string.marker_label_start, track.getName()), "",
+              START_ICON_URL, location)) {
+            Log.d(TAG, "Unable to create a start marker");
             return false;
           }
         }
@@ -346,13 +390,12 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
         StringUtils stringUtils = new StringUtils(context);
         track.setDescription("<p>" + track.getDescription() + "</p><p>"
             + stringUtils.generateTrackDescription(track, distances, elevations) + "</p>");
-        String name = context.getString(R.string.marker_label_end, track.getName());
-        if (!createNewPoint(name, track.getDescription(), lastLocation, MARKER_TYPE_END)) {
-          Log.d(TAG, "Unable to create the end marker");
+        if (!uploadMarker(context.getString(R.string.marker_label_end, track.getName()),
+            track.getDescription(), END_ICON_URL, lastLocation)) {
+          Log.d(TAG, "Unable to create an end marker");
           return false;
         }
       }
-
       return true;
     } finally {
       if (locationsCursor != null) {
@@ -360,13 +403,14 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
       }
     }
   }
-
+  
   /**
    * Prepares and uploads a list of locations from a track.
    *
    * @param track the track
    * @param locations the locations from the track
    * @param lastBatch true if it is the last batch of locations
+   * @return true if success.
    */
   private boolean prepareAndUploadPoints(Track track, List<Location> locations, boolean lastBatch) {
     // Prepare locations
@@ -374,13 +418,13 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
 
     // Upload segments
     boolean onlyOneSegment = lastBatch && currentSegment == 1 && splitTracks.size() == 1;
-    for (Track splitTrack : splitTracks) {
+    for (Track segment : splitTracks) {
       if (!onlyOneSegment) {
-        splitTrack.setName(context.getString(
-            R.string.send_google_track_part_label, splitTrack.getName(), currentSegment));
+        segment.setName(context.getString(
+            R.string.send_google_track_part_label, segment.getName(), currentSegment));
       }
-      if (!createNewLineString(splitTrack)) {
-        Log.d(TAG, "Upload points failed");
+      if (!uploadSegment(segment.getName(), segment.getLocations())) {
+        Log.d(TAG, "Unable to upload segment");
         return false;
       }
       currentSegment++;
@@ -388,6 +432,69 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
     return true;
   }
 
+  /**
+   * Uploads a marker.
+   * 
+   * @param title marker title
+   * @param description marker description
+   * @param iconUrl marker marker icon
+   * @param location marker location
+   * @return true if success.
+   */
+  private boolean uploadMarker(
+      String title, String description, String iconUrl, Location location) {
+    if (isCancelled()) {
+      return false;
+    }
+    try {
+      if (!SendMapsUtils.uploadMarker(mapId, title, description, iconUrl, location, mapsClient,
+          authToken, mapsGDataConverter)) {
+        Log.d(TAG, "Unable to upload marker");
+        return false;
+      }
+    } catch (ParseException e) {
+      Log.d(TAG, "Unable to upload marker", e);
+      return false;
+    } catch (HttpException e) {
+      Log.d(TAG, "Unable to upload marker", e);
+      return false;
+    } catch (IOException e) {
+      Log.d(TAG, "Unable to upload marker", e);
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * Uploads a segment
+   * 
+   * @param title segment title
+   * @param locations segment locations
+   * @return true if success
+   */
+  private boolean uploadSegment(String title, ArrayList<Location> locations) {
+    if (isCancelled()) {
+      return false;
+    }
+    try {
+      if (!SendMapsUtils.uploadSegment(
+          mapId, title, locations, mapsClient, authToken, mapsGDataConverter)) {
+        Log.d(TAG, "Unable to upload track points");
+        return false;
+      }
+    } catch (ParseException e) {
+      Log.d(TAG, "Unable to upload track points", e);
+      return false;
+    } catch (HttpException e) {
+      Log.d(TAG, "Unable to upload track points", e);
+      return false;
+    } catch (IOException e) {
+      Log.d(TAG, "Unable to upload track points", e);
+      return false;
+    }
+    return true;
+  }
+  
   /**
    * Uploads all the waypoints.
    *
@@ -402,10 +509,24 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
         // This will skip the first waypoint (it carries the stats for the
         // track).
         while (cursor.moveToNext()) {
-          Waypoint wpt = myTracksProviderUtils.createWaypoint(cursor);
-          if (!createNewPoint(
-              wpt.getName(), wpt.getDescription(), wpt.getLocation(), MARKER_TYPE_WAYPOINT)) {
-            Log.d(TAG, "Upload waypoints failed");
+          if (isCancelled()) {
+            return false;
+          }
+          Waypoint waypoint = myTracksProviderUtils.createWaypoint(cursor);
+          try {
+            if (!SendMapsUtils.uploadWaypoint(
+                mapId, waypoint, mapsClient, authToken, mapsGDataConverter)) {
+              Log.d(TAG, "Unable to upload waypoint");
+              return false;
+            }
+          } catch (ParseException e) {
+            Log.d(TAG, "Unable to upload waypoint", e);
+            return false;
+          } catch (HttpException e) {
+            Log.d(TAG, "Unable to upload waypoint", e);
+            return false;
+          } catch (IOException e) {
+            Log.d(TAG, "Unable to upload waypoint", e);
             return false;
           }
         }
@@ -416,102 +537,6 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
         cursor.close();
       }
     }
-  }
-
-  /**
-   * Creates a new row in Google Fusion Tables representing a marker as a
-   * point.
-   *
-   * @param name the marker name
-   * @param description the marker description
-   * @param location the marker location
-   * @param type the marker type
-   * @return true if success.
-   */
-  private boolean createNewPoint(
-      String name, String description, Location location, String type) {
-    String query = "INSERT INTO " + tableId + " (name,description,geometry,marker) VALUES "
-        + SendFusionTablesUtils.formatSqlValues(
-            name, description, SendFusionTablesUtils.getKmlPoint(location), type);
-    return sendQuery(query, false);
-  }
-
-  /**
-   * Creates a new row in Google Fusion Tables representing the track as a
-   * line segment.
-   *
-   * @param track the track
-   * @return true if success.
-   */
-  private boolean createNewLineString(Track track) {
-    String query = "INSERT INTO " + tableId + " (name,description,geometry) VALUES "
-        + SendFusionTablesUtils.formatSqlValues(track.getName(), track.getDescription(),
-            SendFusionTablesUtils.getKmlLineString(track.getLocations()));
-    return sendQuery(query, false);
-  }
-
-  /**
-   * Sends a query to Google Fusion Tables.
-   *
-   * @param query the Fusion Tables SQL query
-   * @param setTableId true to set the table id
-   * @return true if success.
-   */
-  private boolean sendQuery(String query, boolean setTableId) {
-    Log.d(TAG, "SendQuery: " + query);
-
-    if (isCancelled()) {
-      return false;
-    }
-
-    GenericUrl url = new GenericUrl(FUSION_TABLES_BASE_URL);
-    String sql = SQL_KEY + URLEncoder.encode(query);
-    ByteArrayInputStream inputStream = new ByteArrayInputStream(Strings.toBytesUtf8(sql));
-    InputStreamContent inputStreamContent = new InputStreamContent(null, inputStream);
-    HttpRequest request;
-    try {
-      request = httpRequestFactory.buildPostRequest(url, inputStreamContent);
-    } catch (IOException e) {
-      Log.d(TAG, "Unable to build request", e);
-      return false;
-    }
-
-    GoogleHeaders headers = new GoogleHeaders();
-    headers.setApplicationName(APP_NAME_PREFIX + SystemUtils.getMyTracksVersion(context));
-    headers.gdataVersion = GDATA_VERSION;
-    headers.setGoogleLogin(authToken);
-    headers.setContentType(CONTENT_TYPE);
-    request.setHeaders(headers);
-
-    HttpResponse response;
-    try {
-      response = request.execute();
-    } catch (IOException e) {
-      Log.d(TAG, "Unable to execute request", e);
-      return false;
-    }
-    boolean isSuccess = response.isSuccessStatusCode();
-    if (isSuccess) {
-      InputStream content;
-      try {
-        content = response.getContent();
-      } catch (IOException e) {
-        Log.d(TAG, "Unable to get response", e);
-        return false;
-      }
-      if (setTableId) {
-        tableId = SendFusionTablesUtils.getTableId(content);
-        if (tableId == null) {
-          Log.d(TAG, "tableId is null");
-          return false;
-        }
-      }
-    } else {
-      Log.d(TAG,
-          "sendQuery failed: " + response.getStatusMessage() + ": " + response.getStatusCode());
-      return false;
-    }
-    return true;
   }
 
   /**
@@ -527,4 +552,3 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
     publishProgress((int) scaledPercentage);
   }
 }
-

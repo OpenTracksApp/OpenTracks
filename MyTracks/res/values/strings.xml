@@ -693,6 +693,43 @@ limitations under the License.
     My Tracks: Imported %1$d of %2$s from %3$s.
   </string>
 
+  <!-- Maps List -->
+  <string name="maps_list_error"
+    translation_description="When sending a track to an existing Google Map, the text on the
+      'Maps' list page informing the user that his maps cannot be loaded at this time.">
+    Your maps could not be loaded at this time.
+  </string>
+  <string name="maps_list_loading"
+    translation_description="When sending a track to an existing Google Map, the progress dialog
+      message informing the user that his maps are being loaded.">
+    Loading your Google Maps.
+  </string>
+  <string name="maps_list_no_maps"
+    translation_description="When sending a track to an existing Google Map, the text on the
+      'Maps' list page informing the user that he doesn't have any maps.">
+    You don\'t have any maps.
+  </string>
+  <string name="maps_list_pick_map"
+    translation_description="When sending a track to an existing Google Map, the text on the
+      'Maps' list page asking the user to pick one of his maps.">
+    Pick a map:
+  </string>
+  <string name="maps_list_public_label"
+    translation_description="When sending a track to an existing Google Map, in the 'Maps'
+      list page, the label next to the maps that are public, as opposed to being unlisted.">
+    Public
+  </string>
+  <string name="maps_list_title"
+    translation_description="When sending a track to an existing Google Map, the title of the
+      page listing the user's maps in Google Maps.">
+    Your Google Maps
+  </string>
+  <string name="maps_list_unlisted_label"
+    translation_description="When sending a track to an existing Google Map, in the 'Maps'
+      list page, the label next to the maps that are unlisted, as opposed to being public.">
+    Unlisted
+  </string>
+  
   <!-- Marker -->
   <string name="marker_detail_marker_description"
     translation_description="In the detail page for a waypoint marker, the text field for the marker
@@ -824,43 +861,6 @@ limitations under the License.
     Waypoint
   </string>
 
-  <!-- Maps List -->
-  <string name="maps_list_error"
-    translation_description="When sending a track to an existing Google Map, the text on the
-      'Maps' list page informing the user that his maps cannot be loaded at this time.">
-    Your maps could not be loaded at this time.
-  </string>
-  <string name="maps_list_loading"
-    translation_description="When sending a track to an existing Google Map, the progress dialog
-      message informing the user that his maps are being loaded.">
-    Loading your Google Maps.
-  </string>
-  <string name="maps_list_no_maps"
-    translation_description="When sending a track to an existing Google Map, the text on the
-      'Maps' list page informing the user that he doesn't have any maps.">
-    You don\'t have any maps.
-  </string>
-  <string name="maps_list_pick_map"
-    translation_description="When sending a track to an existing Google Map, the text on the
-      'Maps' list page asking the user to pick one of his maps.">
-    Pick a map:
-  </string>
-  <string name="maps_list_public_label"
-    translation_description="When sending a track to an existing Google Map, in the 'Maps'
-      list page, the label next to the maps that are public, as opposed to being unlisted.">
-    Public
-  </string>
-  <string name="maps_list_title"
-    translation_description="When sending a track to an existing Google Map, the title of the
-      page listing the user's maps in Google Maps.">
-    Your Google Maps
-  </string>
-  <string name="maps_list_unlisted_label"
-    translation_description="When sending a track to an existing Google Map, in the 'Maps'
-      list page, the label next to the maps that are unlisted, as opposed to being public.">
-    Unlisted
-  </string>
-  
   <!-- Menu Items -->
   <string name="menu_aggregated_statistics"
     translation_description="In the menu, to go to the aggregated statistics page.
@@ -1179,43 +1179,12 @@ limitations under the License.
       found.">
     No account found
   </string>
-  <string name="send_google_progress_authenticating"
-    translation_description="When sending a track to a Google service, the message on the progress
-      dialog indicating authenticating to the service.
-
-      %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Docs'.">
-    Authenticating to %1$s...
-  </string>
-  <string name="send_google_progress_creating"
-    translation_description="When sending a track to a Google service, the message on the progress
-      dialog indicating creating a new service item.
-
-      %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Docs'.">
-    Creating a new %1$s item...
-  </string>
-  <string name="send_google_progress_preparing_track"
-    translation_description="When sending a track to Google Maps, the message on the progress
-      dialog indicating My Tracks is preparing the track's data for upload.">
-    Preparing track...
-  </string>
   <string name="send_google_progress_title"
     translation_description="When sending a track to a Google service, the title on the progress
       dialog.
 
       %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Docs'.">
     Sending to %1$s. Please wait...
-  </string>
-  <string name="send_google_progress_reading_track"
-    translation_description="When sending a track to Google, the message on the progress dialog
-      indicating My Tracks is reading the track from its database.">
-    Reading track...
-  </string>
-  <string name="send_google_progress_sending"
-    translation_description="When sending a track to Google service, the message on the progress
-      dialog indicating My Tracks is sending the track data.
-
-      %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Docs'.">
-    Sending a track to %1$s...
   </string>
   <string name="send_google_recorded"
     translation_description="When sending a track to Google, in the track description, a tag
