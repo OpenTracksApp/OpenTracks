@@ -28,7 +28,7 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils.DoubleBuff
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.content.TrackDataListener.ProviderState;
 import com.google.android.apps.mytracks.content.TrackDataListeners.ListenerRegistration;
-import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -196,7 +196,7 @@ public class TrackDataHub {
   private DoubleBufferedLocationFactory locationFactory;
 
   private boolean started = false;
-  
+
   /**
    * Builds a new {@link TrackDataHub} instance.
    */
@@ -274,7 +274,7 @@ public class TrackDataHub {
       Log.w(TAG, "Not started, ignoring");
       return;
     }
-    
+
     // Unregister internal listeners even if there are external listeners registered.
     dataSourceManager.unregisterAllListeners();
     listenerHandlerThread.getLooper().quit();
@@ -399,7 +399,7 @@ public class TrackDataHub {
 
     // Save the selection to memory and flush.
     selectedTrackId = trackId;
-    ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(
+    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(
         preferences.edit().putLong(SELECTED_TRACK_KEY, trackId));
 
     // Force it to reload data from the beginning.

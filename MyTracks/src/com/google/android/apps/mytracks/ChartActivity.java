@@ -26,10 +26,9 @@ import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
+import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerTask;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
-import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
@@ -40,6 +39,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.location.Location;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -116,9 +116,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
     super.onCreate(savedInstanceState);
 
     // The volume we want to control is the Text-To-Speech volume
-    int volumeStream =
-        new StatusAnnouncerFactory(ApiFeatures.getInstance()).getVolumeStream();
-    setVolumeControlStream(volumeStream);
+    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
     requestWindowFeature(Window.FEATURE_NO_TITLE);
     setContentView(R.layout.mytracks_charts);

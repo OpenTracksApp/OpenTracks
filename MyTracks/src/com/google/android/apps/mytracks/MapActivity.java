@@ -27,9 +27,8 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendType;
 import com.google.android.apps.mytracks.io.sendtogoogle.UploadServiceChooserActivity;
-import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
+import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerTask;
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.apps.mytracks.util.GeoRect;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.maps.GeoPoint;
@@ -44,6 +43,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.Settings;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -85,6 +85,25 @@ public class MapActivity extends com.google.android.maps.MapActivity
    * visible area.
    */
   private boolean keepMyLocationVisible;
+
+  /**
+   * The ID of a track on which we want to show a waypoint.
+   * The waypoint will be shown as soon as the track is loaded.
+   */
+  private long showWaypointTrackId;
+
+  /**
+   * The ID of a waypoint which we want to show.
+   * The waypoint will be shown as soon as its track is loaded.
+   */
+  private long showWaypointId;
+
+  /**
+   * The track that's currently selected.
+   * This differs from {@link TrackDataHub#getSelectedTrackId} in that this one is only set after
+   * actual track data has been received.
+   */
+  private long selectedTrackId;
 
   /**
    * The current pointer location.
@@ -134,9 +153,7 @@ public class MapActivity extends com.google.android.maps.MapActivity
     super.onCreate(bundle);
 
     // The volume we want to control is the Text-To-Speech volume
-    int volumeStream =
-        new StatusAnnouncerFactory(ApiFeatures.getInstance()).getVolumeStream();
-    setVolumeControlStream(volumeStream);
+    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
     // We don't need a window title bar:
     requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -332,6 +349,47 @@ public class MapActivity extends com.google.android.maps.MapActivity
     }
   }
 
+  /**
+   * Zooms and pans the map so that the given waypoint is visible, when the given track is loaded.
+   * If the track is already loaded, it does that immediately.
+   *
+   * @param trackId the ID of the track on which to show the waypoint
+   * @param waypointId the ID of the waypoint to show
+   */
+  public void showWaypoint(long trackId, long waypointId) {
+    synchronized (this) {
+      if (trackId == selectedTrackId) {
+        showWaypoint(waypointId);
+        return;
+      }
+
+      showWaypointTrackId = trackId;
+      showWaypointId = waypointId;
+    }
+  }
+
+  /**
+   * Does the proper zooming/panning for a just-loaded track.
+   * This may be either zooming to a waypoint that has been previously selected, or
+   * zooming to the whole track.
+   *
+   * @param track the loaded track
+   */
+  private void zoomLoadedTrack(Track track) {
+    synchronized (this) {
+      if (track.getId() == showWaypointTrackId) {
+        // There's a waypoint to show in this track.
+        showWaypoint(showWaypointId);
+
+        showWaypointId = 0L;
+        showWaypointTrackId = 0L;
+      } else {
+        // Zoom out to show the whole track.
+        zoomMapToBoundaries(track);
+      }
+    }
+  }
+
   @Override
   public void onSelectedTrackChanged(final Track track, final boolean isRecording) {
     runOnUiThread(new Runnable() {
@@ -345,7 +403,12 @@ public class MapActivity extends com.google.android.maps.MapActivity
         if (trackSelected) {
           busyPane.setVisibility(View.VISIBLE);
 
-          zoomMapToBoundaries(track);
+          synchronized (this) {
+            // Need to get the track ID only at this point, to prevent a race condition
+            // among showWaypoint, zoomLoadedTrack and dataHub.loadTrack.
+            selectedTrackId = track.getId();
+            zoomLoadedTrack(track);
+          }
 
           mapOverlay.setShowEndMarker(!isRecording);
           busyPane.setVisibility(View.GONE);

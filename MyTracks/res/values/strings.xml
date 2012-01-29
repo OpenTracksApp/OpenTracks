@@ -935,6 +935,10 @@ limitations under the License.
       Screenshot: menu_record_track.png">
     Tracks
   </string>
+  <string name="menu_search"
+    translation_description="In the menu, to start a textual search for tracks or waypoints.">
+    Search
+  </string>
 
   <!-- My Location -->
   <string name="my_location_approximate_location"
@@ -1090,6 +1094,24 @@ limitations under the License.
 
       Screenshot: sd_card_success_write_file.png">
     Finished writing to the SD card.
+  </string>
+
+  <!-- Search interface -->
+  <string name="search_hint"
+    translation_description="The hint shown on the search box until the user types a search query.
+      See suggestion at http://developer.android.com/guide/topics/search/search-dialog.html about
+      keeping this consistent with other Android apps.">
+    Search My Tracks tracks and waypoints
+  </string>
+  <string name="search_global_description"
+    translation_description="Description of what is searched in My Tracks, to be displayed in the
+      global system search settings.">
+    My Tracks tracks and waypoints
+  </string>
+  <string name="search_voice_prompt"
+    translation_description="Prompt shown when the user activates voice search, asking him to
+      speak what will be searched for.">
+    Speak the name of a track or waypoint.
   </string>
 
   <!-- Send Google -->
@@ -1715,13 +1737,6 @@ limitations under the License.
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_top.png">
     Voice
-  </string>
-  <string name="settings_recording_voice_not_available"
-    translation_description="In the 'Recording' settings, the summary for the 'Voice'
-      explaining that this option is not available on your Android phone.
-
-      Screenshot: settings_recording_voice_not_available.png">
-    Voice announcement is not available on your Android phone.
   </string>
   <string name="settings_recording_voice_summary"
     translation_description="In the 'Recording' settings, the summary for the 'Voice'

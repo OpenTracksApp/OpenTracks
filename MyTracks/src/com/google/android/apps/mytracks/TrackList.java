@@ -286,6 +286,17 @@ public class TrackList extends ListActivity
     super.onDestroy();
   }
 
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.search_only, menu);
+    return true;
+  }
+
+  /* Callback from menu/search_only.xml */
+  public void onSearch(@SuppressWarnings("unused") MenuItem i) {
+    onSearchRequested();
+  }
+
   private void updateButtonsEnabled() {
     View deleteAll = findViewById(R.id.tracklist_btn_delete_all);
     View exportAll = findViewById(R.id.tracklist_btn_export_all);

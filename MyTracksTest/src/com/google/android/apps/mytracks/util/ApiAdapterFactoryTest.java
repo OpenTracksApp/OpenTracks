@@ -15,27 +15,15 @@
  */
 package com.google.android.apps.mytracks.util;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.Service;
+import junit.framework.TestCase;
 
 /**
- * API level 5 specific implementation of the {@link ApiLevelAdapter}.
+ * Tests {@link ApiAdapterFactory}.
  *
- * @author Bartlomiej Niechwiej
+ * @author Rodrigo Damazio
  */
-public class ApiLevel5Adapter extends ApiLevel3Adapter {
-
-  @Override
-  public void startForeground(Service service,
-      NotificationManager notificationManager, int id,
-      Notification notification) {
-    service.startForeground(id, notification);
-  }
-
-  @Override
-  public void stopForeground(Service service,
-      NotificationManager notificationManager, int id) {
-    service.stopForeground(id != -1);
+public class ApiAdapterFactoryTest extends TestCase {
+  public void testGetApiLevelAdapter() {
+    assertNotNull(ApiAdapterFactory.getApiAdapter());
   }
 }
