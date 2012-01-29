@@ -20,13 +20,13 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 import com.google.android.apps.mytracks.io.backup.BackupActivityHelper;
 import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
 import com.google.android.apps.mytracks.services.sensors.ant.AntUtils;
-import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerTask;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.BluetoothDeviceUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.app.AlertDialog;
+import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -44,6 +44,7 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -102,7 +103,7 @@ public class SettingsActivity extends PreferenceActivity {
     super.onCreate(icicle);
 
     // The volume we want to control is the Text-To-Speech volume
-    setVolumeControlStream(StatusAnnouncerTask.getVolumeStream());
+    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
     // Tell it where to read/write preferences
     PreferenceManager preferenceManager = getPreferenceManager();
@@ -566,7 +567,10 @@ public class SettingsActivity extends PreferenceActivity {
     List<String> entryValues = new ArrayList<String>();
 
     // The actual devices
-    BluetoothDeviceUtils.getInstance().populateDeviceLists(entries, entryValues);
+    BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    if (bluetoothAdapter != null) {
+      BluetoothDeviceUtils.populateDeviceLists(bluetoothAdapter, entries, entryValues);
+    }
 
     CharSequence[] entriesArray = entries.toArray(new CharSequence[entries.size()]);
     CharSequence[] entryValuesArray = entryValues.toArray(new CharSequence[entryValues.size()]);

@@ -39,6 +39,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.location.Location;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -115,7 +116,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
     super.onCreate(savedInstanceState);
 
     // The volume we want to control is the Text-To-Speech volume
-    setVolumeControlStream(StatusAnnouncerTask.getVolumeStream());
+    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
     requestWindowFeature(Window.FEATURE_NO_TITLE);
     setContentView(R.layout.mytracks_charts);

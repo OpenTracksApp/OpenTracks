@@ -17,6 +17,7 @@ package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
+import com.google.android.apps.mytracks.services.sensors.BluetoothConnectionManager;
 import com.google.android.apps.mytracks.services.tasks.PeriodicTask;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerTask;
 import com.google.api.client.http.HttpTransport;
@@ -96,6 +97,6 @@ public class Api7Adapter implements ApiAdapter {
     } catch (InvocationTargetException e) {
       Log.d(Constants.TAG, "Unable to create insecure connection", e);
     }
-    return bluetoothDevice.createRfcommSocketToServiceRecord(SPP_UUID);
+    return bluetoothDevice.createRfcommSocketToServiceRecord(BluetoothConnectionManager.SPP_UUID);
   }
 }

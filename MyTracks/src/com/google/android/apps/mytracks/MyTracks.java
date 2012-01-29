@@ -46,6 +46,7 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -156,7 +157,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     menuManager = new MenuManager(this);
     serviceConnection = new TrackRecordingServiceConnection(this, serviceBindCallback);
 
-    setVolumeControlStream(StatusAnnouncerTask.getVolumeStream());
+    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
     // We don't need a window title bar:
     requestWindowFeature(Window.FEATURE_NO_TITLE);

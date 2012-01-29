@@ -31,6 +31,7 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.UUID;
 
 /**
  * This class does all the work for setting up and managing Bluetooth
@@ -41,6 +42,10 @@ import java.io.OutputStream;
  * @author Sandor Dornbush
  */
 public class BluetoothConnectionManager {
+
+  // Unique Bluetooth UUID for My Tracks
+  public static final UUID SPP_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+
   private MessageParser parser;
 
   // Member fields

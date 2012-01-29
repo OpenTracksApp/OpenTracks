@@ -31,15 +31,18 @@ public class ApiAdapterFactory {
    */
   public static ApiAdapter getApiAdapter() {
     if (apiAdapter == null) {
-      int apiLevel = Integer.parseInt(Build.VERSION.SDK);
-      if (apiLevel >= 10) {
+      if (Build.VERSION.SDK_INT >= 10) {
         apiAdapter = new Api10Adapter();
-      } else if (apiLevel >= 9) {
+        return apiAdapter;
+      } else if (Build.VERSION.SDK_INT >= 9) {
         apiAdapter = new Api9Adapter();
-      } else if (apiLevel >= 8) {
+        return apiAdapter;
+      } else if (Build.VERSION.SDK_INT >= 8) {
         apiAdapter = new Api8Adapter();
+        return apiAdapter;
       } else {
         apiAdapter = new Api7Adapter();
+        return apiAdapter;
       }
     }
     return apiAdapter;

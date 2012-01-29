@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.services.sensors.BluetoothConnectionManager;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -23,21 +24,21 @@ import android.util.Log;
 
 import java.io.IOException;
 
-
 /**
  * API level 10 specific implementation of the {@link ApiAdapter}.
  *
  * @author Jimmy Shih
  */
 public class Api10Adapter extends Api9Adapter {
-  
+
   @Override
   public BluetoothSocket getBluetoothSocket(BluetoothDevice bluetoothDevice) throws IOException {
-    try {       
-      return bluetoothDevice.createInsecureRfcommSocketToServiceRecord(SPP_UUID);
+    try {
+      return bluetoothDevice.createInsecureRfcommSocketToServiceRecord(
+          BluetoothConnectionManager.SPP_UUID);
     } catch (IOException e) {
       Log.d(Constants.TAG, "Unable to create insecure connection", e);
     }
-    return bluetoothDevice.createRfcommSocketToServiceRecord(SPP_UUID);
+    return bluetoothDevice.createRfcommSocketToServiceRecord(BluetoothConnectionManager.SPP_UUID);
   };
 }
