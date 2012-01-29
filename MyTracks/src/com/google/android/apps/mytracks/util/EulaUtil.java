@@ -45,7 +45,7 @@ public class EulaUtil {
         EULA_PREFERENCE_FILE, Context.MODE_PRIVATE);
     Editor editor = preferences.edit();
     editor.putBoolean(EULA_PREFERENCE_KEY, true);
-    ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);
+    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
   }
 
   public static String getEulaMessage(Context context) {

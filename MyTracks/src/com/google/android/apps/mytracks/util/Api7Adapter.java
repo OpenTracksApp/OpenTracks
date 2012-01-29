@@ -15,50 +15,32 @@
  */
 package com.google.android.apps.mytracks.util;
 
-import static com.google.android.apps.mytracks.Constants.TAG;
-
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
+import com.google.android.apps.mytracks.services.sensors.BluetoothConnectionManager;
 import com.google.android.apps.mytracks.services.tasks.PeriodicTask;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerTask;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.apache.ApacheHttpTransport;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.Service;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Log;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * API level 3 specific implementation of the {@link ApiLevelAdapter}.
+ * API level 7 specific implementation of the {@link ApiAdapter}.
  *
  * @author Bartlomiej Niechwiej
  */
-public class ApiLevel3Adapter implements ApiLevelAdapter {
+public class Api7Adapter implements ApiAdapter {
 
-  @Override
-  public void startForeground(Service service,
-      NotificationManager notificationManager, int id,
-      Notification notification) {
-    setServiceForeground(service, true);
-
-    notificationManager.notify(id, notification);
-  }
-
-  @Override
-  public void stopForeground(Service service,
-      NotificationManager notificationManager, int id) {
-    setServiceForeground(service, false);
-    if (id != -1) {
-      notificationManager.cancel(id);
-    }
-  }
-  
   @Override
   public PeriodicTask getStatusAnnouncerTask(Context context) {
     return new StatusAnnouncerTask(context);
@@ -72,24 +54,6 @@ public class ApiLevel3Adapter implements ApiLevelAdapter {
         // Do nothing
       }
     };
-  }
-
-  private void setServiceForeground(Service service, boolean foreground) {
-    // setForeground has been completely removed in API level 11, so we use reflection.
-    try {
-      Method setForegroundMethod = Service.class.getMethod("setForeground", boolean.class);
-      setForegroundMethod.invoke(service, foreground);
-    } catch (SecurityException e) {
-      Log.e(TAG, "Unable to set service foreground state", e);
-    } catch (NoSuchMethodException e) {
-      Log.e(TAG, "Unable to set service foreground state", e);
-    } catch (IllegalArgumentException e) {
-      Log.e(TAG, "Unable to set service foreground state", e);
-    } catch (IllegalAccessException e) {
-      Log.e(TAG, "Unable to set service foreground state", e);
-    } catch (InvocationTargetException e) {
-      Log.e(TAG, "Unable to set service foreground state", e);
-    }
   }
 
   @Override
@@ -113,5 +77,26 @@ public class ApiLevel3Adapter implements ApiLevelAdapter {
   @Override
   public HttpTransport getHttpTransport() {
     return new ApacheHttpTransport();
+  }
+  
+  @Override
+  public BluetoothSocket getBluetoothSocket(BluetoothDevice bluetoothDevice) throws IOException {
+    try {
+      Class<? extends BluetoothDevice> c = bluetoothDevice.getClass();
+      Method insecure = c.getMethod("createInsecureRfcommSocket", Integer.class);
+      insecure.setAccessible(true);
+      return (BluetoothSocket) insecure.invoke(bluetoothDevice, 1);
+    } catch (SecurityException e) {
+      Log.d(Constants.TAG, "Unable to create insecure connection", e);
+    } catch (NoSuchMethodException e) {
+      Log.d(Constants.TAG, "Unable to create insecure connection", e);
+    } catch (IllegalArgumentException e) {
+      Log.d(Constants.TAG, "Unable to create insecure connection", e);
+    } catch (IllegalAccessException e) {
+      Log.d(Constants.TAG, "Unable to create insecure connection", e);
+    } catch (InvocationTargetException e) {
+      Log.d(Constants.TAG, "Unable to create insecure connection", e);
+    }
+    return bluetoothDevice.createRfcommSocketToServiceRecord(BluetoothConnectionManager.SPP_UUID);
   }
 }

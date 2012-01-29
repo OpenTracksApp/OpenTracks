@@ -28,8 +28,8 @@ import com.google.android.apps.mytracks.io.file.TempFileCleaner;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
-import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
-import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerTask;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.EulaUtil;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.apps.mytracks.util.UriUtils;
@@ -48,6 +48,7 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -141,9 +142,8 @@ public class MyTracks extends TabActivity implements OnTouchListener {
   protected void onCreate(Bundle savedInstanceState) {
     Log.d(TAG, "MyTracks.onCreate");
     super.onCreate(savedInstanceState);
-    ApiFeatures apiFeatures = ApiFeatures.getInstance();
     if (!SystemUtils.isRelease(this)) {
-      apiFeatures.getApiAdapter().enableStrictMode();
+      ApiAdapterFactory.getApiAdapter().enableStrictMode();
     }
 
     tracker = GoogleAnalyticsTracker.getInstance();
@@ -159,10 +159,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     menuManager = new MenuManager(this);
     serviceConnection = new TrackRecordingServiceConnection(this, serviceBindCallback);
 
-    // The volume we want to control is the Text-To-Speech volume
-    int volumeStream =
-        new StatusAnnouncerFactory(apiFeatures).getVolumeStream();
-    setVolumeControlStream(volumeStream);
+    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
     // We don't need a window title bar:
     requestWindowFeature(Window.FEATURE_NO_TITLE);

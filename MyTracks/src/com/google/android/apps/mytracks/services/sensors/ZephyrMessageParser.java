@@ -16,7 +16,7 @@
 package com.google.android.apps.mytracks.services.sensors;
 
 import com.google.android.apps.mytracks.content.Sensor;
-import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 
 import java.util.Arrays;
 
@@ -62,8 +62,7 @@ public class ZephyrMessageParser implements MessageParser {
     // 0x1A00316550003162 produces erroneous values for Cadence and needs
     // a workaround based on the stride counter.
     // Firmware values range from field 3 to 10 (inclusive) of the byte buffer.
-    byte[] hardwareFirmwareId = ApiFeatures.getInstance().getApiAdapter()
-        .copyByteArray(buffer, 3, 11);
+    byte[] hardwareFirmwareId = ApiAdapterFactory.getApiAdapter().copyByteArray(buffer, 3, 11);
     Sensor.SensorData.Builder cadence = Sensor.SensorData.newBuilder();
 
     if (Arrays.equals(hardwareFirmwareId, CADENCE_BUG_FW_ID)) {

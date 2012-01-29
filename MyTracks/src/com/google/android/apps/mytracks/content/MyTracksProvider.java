@@ -16,7 +16,6 @@
 package com.google.android.apps.mytracks.content;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.util.ApiFeatures;
 import com.google.android.maps.mytracks.R;
 
 import android.content.ContentProvider;
@@ -417,12 +416,9 @@ public class MyTracksProvider extends ContentProvider {
     } else {
       throw new IllegalArgumentException("Unknown URL " + url);
     }
-
-    if (ApiFeatures.getInstance().canReuseSQLiteQueryBuilder()) {
-      Log.i(Constants.TAG,
-          "Build query: " + qb.buildQuery(projection, selection, selectionArgs,
-          null, null, sortOrder, null));
-    }
+    Log.i(Constants.TAG, "Build query: "
+        + qb.buildQuery(projection, selection, selectionArgs, null, null, sortOrder, null));
+    
     Cursor c = qb.query(db, projection, selection, selectionArgs, null, null,
         sortOrder);
     c.setNotificationUri(getContext().getContentResolver(), url);

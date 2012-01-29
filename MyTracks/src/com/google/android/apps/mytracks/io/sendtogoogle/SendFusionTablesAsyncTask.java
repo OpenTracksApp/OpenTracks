@@ -7,7 +7,7 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
-import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
@@ -108,7 +108,7 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
 
     context = activity.getApplicationContext();
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
-    HttpTransport transport = ApiFeatures.getInstance().getApiAdapter().getHttpTransport();
+    HttpTransport transport = ApiAdapterFactory.getApiAdapter().getHttpTransport();
     httpRequestFactory = transport.createRequestFactory(new MethodOverride());
 
     canRetry = true;
