@@ -25,9 +25,8 @@ import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
-import com.google.android.apps.mytracks.io.sendtogoogle.SendType;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.io.sendtogoogle.UploadServiceChooserActivity;
-import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerTask;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.GeoRect;
 import com.google.android.apps.mytracks.util.LocationUtils;
@@ -41,7 +40,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -467,21 +465,18 @@ public class MapActivity extends com.google.android.maps.MapActivity
     long trackId = dataHub.getSelectedTrackId();
     switch (item.getItemId()) {
       case Constants.MENU_SEND_TO_GOOGLE:
-        intent = new Intent(this, UploadServiceChooserActivity.class);
-        intent.putExtra(UploadServiceChooserActivity.TRACK_ID, trackId);
+        intent = new Intent(this, UploadServiceChooserActivity.class)
+            .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, true, true, true));
         startActivity(intent);
         return true;
       case Constants.MENU_SHARE_MAP:
-        intent = new Intent(this, UploadServiceChooserActivity.class);
-        intent.putExtra(UploadServiceChooserActivity.TRACK_ID, trackId);
-        intent.putExtra(UploadServiceChooserActivity.SEND_TYPE, (Parcelable) SendType.MAPS);
+        intent = new Intent(this, UploadServiceChooserActivity.class)
+            .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, true, false, false));
         startActivity(intent);
         return true;
       case Constants.MENU_SHARE_FUSION_TABLE:
-        intent = new Intent(this, UploadServiceChooserActivity.class);
-        intent.putExtra(UploadServiceChooserActivity.TRACK_ID, trackId);
-        intent.putExtra(
-            UploadServiceChooserActivity.SEND_TYPE, (Parcelable) SendType.FUSION_TABLES);
+        intent = new Intent(this, UploadServiceChooserActivity.class)
+            .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, false, true, false));
         startActivity(intent);
         return true;
       case Constants.MENU_SAVE_GPX_FILE:

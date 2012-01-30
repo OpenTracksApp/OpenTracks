@@ -168,9 +168,8 @@ public class SearchActivity extends ListActivity {
   /**
    * Shows the given search results.
    * Must be run from the UI thread.
-   * @param data
    *
-   * @param scoredResults the results to show, properly ordered
+   * @param data the results to show, properly ordered
    */
   private void showSearchResults(List<? extends Map<String, ?>> data) {
     SimpleAdapter adapter = new SimpleAdapter(this, data,

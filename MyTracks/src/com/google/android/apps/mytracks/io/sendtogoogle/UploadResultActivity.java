@@ -16,6 +16,10 @@
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesUtils;
+import com.google.android.apps.mytracks.io.maps.SendMapsUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -38,54 +42,34 @@ import android.widget.TextView;
  */
 public class UploadResultActivity extends Activity {
 
-  public static final String HAS_MAPS_RESULT = "hasMapsResult";
-  public static final String HAS_FUSION_TABLES_RESULT = "hasFusionTablesResult";
-  public static final String HAS_DOCS_RESULT = "hasDocsResult";
-
-  public static final String MAPS_SUCCESS = "mapsSuccess";
-  public static final String FUSION_TABLES_SUCCESS = "fusionTablesSuccess";
-  public static final String DOCS_SUCCESS = "docsSuccess";
-
-  public static final String SHARE_REQUEST = "shareRequest";
-
-  public static final String MAPS_URL = "mapsUrl";
-  public static final String FUSION_TABLES_URL = "fusionTablesUrl";
-
   private static final String TEXT_PLAIN_TYPE = "text/plain";
   private static final int RESULT_DIALOG = 1;
 
-  private boolean hasMapsResult;
-  private boolean hasFusionTablesResult;
-  private boolean hasDocsResult;
-
-  private boolean mapsSuccess;
-  private boolean fusionTablesSuccess;
-  private boolean docsSuccess;
-
-  private boolean shareRequest;
+  private SendRequest sendRequest;
+  private Track track;
   private String shareUrl;
-
+  
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
-    Intent intent = getIntent();
-    hasMapsResult = intent.getBooleanExtra(HAS_MAPS_RESULT, false);
-    hasFusionTablesResult = intent.getBooleanExtra(HAS_FUSION_TABLES_RESULT, false);
-    hasDocsResult = intent.getBooleanExtra(HAS_DOCS_RESULT, false);
-    if (!hasMapsResult && !hasFusionTablesResult && !hasDocsResult) {
-      finish();
-      return;
+    sendRequest = getIntent().getParcelableExtra(SendRequest.SEND_REQUEST_KEY);
+    track = null;
+    shareUrl = null;
+    
+    if (sendRequest.isSendMaps() && sendRequest.isMapsSuccess()) {
+      shareUrl = SendMapsUtils.getMapUrl(getTrack());
     }
-    mapsSuccess = intent.getBooleanExtra(MAPS_SUCCESS, false);
-    fusionTablesSuccess = intent.getBooleanExtra(FUSION_TABLES_SUCCESS, false);
-    docsSuccess = intent.getBooleanExtra(DOCS_SUCCESS, false);
+    if (shareUrl == null && sendRequest.isSendFusionTables()
+        && sendRequest.isFusionTablesSuccess()) {
+      shareUrl = SendFusionTablesUtils.getMapUrl(getTrack());
+    }
+  }
 
-    shareRequest = intent.getBooleanExtra(SHARE_REQUEST, false);
-
-    String mapsUrl = intent.getStringExtra(MAPS_URL);
-    String fusionTablesUrl = intent.getStringExtra(FUSION_TABLES_URL);
-    shareUrl = mapsUrl != null ? mapsUrl : fusionTablesUrl;
+  private Track getTrack() {
+    if (track == null) {
+      track = MyTracksProviderUtils.Factory.get(this).getTrack(sendRequest.getTrackId());
+    }
+    return track;
   }
 
   @Override
@@ -118,28 +102,28 @@ public class UploadResultActivity extends Activity {
         TextView errorFooter = (TextView) view.findViewById(R.id.upload_result_error_footer);
 
         boolean hasError = false;
-        if (!hasMapsResult) {
+        if (!sendRequest.isSendMaps()) {
           mapsResult.setVisibility(View.GONE);
         } else {
-          if (!mapsSuccess) {
+          if (!sendRequest.isMapsSuccess()) {
             mapsResultIcon.setImageResource(R.drawable.failure);
             hasError = true;
           }
         }
 
-        if (!hasFusionTablesResult) {
+        if (!sendRequest.isSendFusionTables()) {
           fusionTablesResult.setVisibility(View.GONE);
         } else {
-          if (!fusionTablesSuccess) {
+          if (!sendRequest.isFusionTablesSuccess()) {
             fusionTablesResultIcon.setImageResource(R.drawable.failure);
             hasError = true;
           }
         }
 
-        if (!hasDocsResult) {
+        if (!sendRequest.isSendDocs()) {
           docsResult.setVisibility(View.GONE);
         } else {
-          if (!docsSuccess) {
+          if (!sendRequest.isDocsSuccess()) {
             docsResultIcon.setImageResource(R.drawable.failure);
             hasError = true;
           }
@@ -166,16 +150,16 @@ public class UploadResultActivity extends Activity {
             getString(R.string.generic_ok), new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int which) {
-                if (shareRequest && shareUrl != null) {
+                if (!sendRequest.isShowAll() && shareUrl != null) {
                   startShareUrlActivity(shareUrl);
                 }
                 finish();
               }
             });
 
-        // Add a Share URL button if not a shareRequest and shareUrl
+        // Add a Share URL button if showing all the options and a shareUrl
         // exists
-        if (!shareRequest && shareUrl != null) {
+        if (sendRequest.isShowAll() && shareUrl != null) {
           builder.setNegativeButton(getString(R.string.send_google_result_share_url),
               new DialogInterface.OnClickListener() {
                 @Override

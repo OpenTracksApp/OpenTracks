@@ -16,9 +16,9 @@
 package com.google.android.apps.mytracks.io.maps;
 
 import com.google.android.apps.mytracks.io.gdata.maps.MapsMapMetadata;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.maps.mytracks.R;
 
-import android.accounts.Account;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -45,15 +45,10 @@ import java.util.ArrayList;
  */
 public class ChooseMapActivity extends Activity {
 
-  // parameters in the input intent
-  public static final String ACCOUNT = "account";
-
-  // parameters in the output intent
-  public static final String MAP_ID = "mapId";
-
   private static final int PROGRESS_DIALOG = 1;
   private static final int ERROR_DIALOG = 2;
 
+  private SendRequest sendRequest;
   private ChooseMapAsyncTask asyncTask;
   private ProgressDialog progressDialog;
   private ArrayAdapter<ListItem> arrayAdapter;
@@ -61,6 +56,7 @@ public class ChooseMapActivity extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    sendRequest = getIntent().getParcelableExtra(SendRequest.SEND_REQUEST_KEY);
     setContentView(R.layout.choose_map);
 
     arrayAdapter = new ArrayAdapter<ListItem>(this, R.layout.choose_map_item, new ArrayList<
@@ -99,9 +95,7 @@ public class ChooseMapActivity extends Activity {
     list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        setResult(
-            RESULT_OK, new Intent().putExtra(MAP_ID, arrayAdapter.getItem(position).getMapId()));
-        finish();
+        startNextActivity(arrayAdapter.getItem(position).getMapId());
       }
     });
     list.setAdapter(arrayAdapter);
@@ -111,14 +105,7 @@ public class ChooseMapActivity extends Activity {
       asyncTask = (ChooseMapAsyncTask) retained;
       asyncTask.setActivity(this);
     } else {
-      Intent intent = getIntent();
-      Account account = intent.getParcelableExtra(ACCOUNT);
-      if (account == null) {
-        setResult(RESULT_OK, new Intent().putExtra(MAP_ID, (String) null));
-        finish();
-        return;
-      }
-      asyncTask = new ChooseMapAsyncTask(this, account);
+      asyncTask = new ChooseMapAsyncTask(this, sendRequest.getAccount());
       asyncTask.execute();
     }
   }
@@ -141,7 +128,6 @@ public class ChooseMapActivity extends Activity {
           @Override
           public void onCancel(DialogInterface dialog) {
             asyncTask.cancel(true);
-            setResult(RESULT_CANCELED);
             finish();
           }
         });
@@ -156,14 +142,12 @@ public class ChooseMapActivity extends Activity {
         builder.setPositiveButton(R.string.generic_ok, new OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int arg1) {
-            setResult(RESULT_OK, new Intent().putExtra(MAP_ID, (String) null));
             finish();
           }
         });
         builder.setOnCancelListener(new OnCancelListener() {
           @Override
           public void onCancel(DialogInterface dialog) {
-            setResult(RESULT_OK, new Intent().putExtra(MAP_ID, (String) null));
             finish();
           }
         });
@@ -206,6 +190,19 @@ public class ChooseMapActivity extends Activity {
    */
   public void showProgressDialog() {
     showDialog(PROGRESS_DIALOG);
+  }
+
+  /**
+   * Starts the next activity, {@link SendMapsActivity}.
+   * 
+   * @param mapId the chosen map id
+   */
+  private void startNextActivity(String mapId) {
+    sendRequest.setMapId(mapId);
+    Intent intent = new Intent(this, SendMapsActivity.class)
+        .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
+    startActivity(intent);
+    finish();
   }
 
   /**

@@ -208,7 +208,7 @@ public class SearchEngine {
    * Retrieves waypoints matching the given query from the database.
    *
    * @param query the query to retrieve for
-   * @param tracks list to fill with the resulting waypoints
+   * @param waypoints list to fill with the resulting waypoints
    */
   private void retrieveWaypoints(SearchQuery query, ArrayList<Waypoint> waypoints) {
     String queryLikeSelection2 = "%" + query.textQuery + "%";

@@ -235,14 +235,6 @@ limitations under the License.
                  android:value="com.google.android.apps.mytracks.SearchActivity" />
     </activity>
 
-    <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.SendActivity"
-              android:theme="@android:style/Theme.Translucent.NoTitleBar">
-      <intent-filter>
-        <action android:name="android.intent.action.SEND" />
-        <data android:mimeType="vnd.android.cursor.item/vnd.google.track" />
-      </intent-filter>
-    </activity>
-
     <activity android:name="com.google.android.apps.mytracks.io.file.SaveActivity"
               android:theme="@android:style/Theme.Translucent.NoTitleBar"
               android:noHistory="true">

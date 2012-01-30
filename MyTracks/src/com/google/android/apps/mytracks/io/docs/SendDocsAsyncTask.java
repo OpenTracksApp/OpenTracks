@@ -53,8 +53,8 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   private static final String TAG = SendDocsAsyncTask.class.getSimpleName();
 
   private SendDocsActivity activity;
-  private final Account account;
   private final long trackId;
+  private final Account account;
   private final Context context;
   private final MyTracksProviderUtils myTracksProviderUtils;
   private final GDataClient gDataClient;
@@ -82,10 +82,10 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   private String spreadsheetId;
   private String worksheetId;
 
-  public SendDocsAsyncTask(SendDocsActivity activity, Account account, long trackId) {
+  public SendDocsAsyncTask(SendDocsActivity activity, long trackId, Account account) {
     this.activity = activity;
-    this.account = account;
     this.trackId = trackId;
+    this.account = account;
 
     context = activity.getApplicationContext();
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);

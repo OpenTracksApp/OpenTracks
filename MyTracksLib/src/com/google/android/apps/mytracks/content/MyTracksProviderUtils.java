@@ -215,7 +215,7 @@ public interface MyTracksProviderUtils {
    * Caller owns the returned cursor and is responsible for closing it.
    *
    * @param selection a given selection
-   * @param selecttionArgs parameters for the given selection
+   * @param selectionArgs parameters for the given selection
    * @param order the order to return results in
    * @return a cursor of the selected tracks
    */

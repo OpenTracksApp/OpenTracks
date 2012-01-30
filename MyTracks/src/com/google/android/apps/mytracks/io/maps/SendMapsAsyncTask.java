@@ -79,8 +79,8 @@ public class SendMapsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   private static final String TAG = SendMapsAsyncTask.class.getSimpleName();
 
   private SendMapsActivity activity;
-  private final Account account;
   private final long trackId;
+  private final Account account;
   private final String chooseMapId;
   private final Context context;
   private final MyTracksProviderUtils myTracksProviderUtils;
@@ -109,10 +109,10 @@ public class SendMapsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   int currentSegment;
 
   public SendMapsAsyncTask(
-      SendMapsActivity activity, Account account, long trackId, String chooseMapId) {
+      SendMapsActivity activity, long trackId, Account account, String chooseMapId) {
     this.activity = activity;
-    this.account = account;
     this.trackId = trackId;
+    this.account = account;
     this.chooseMapId = chooseMapId;
 
     context = activity.getApplicationContext();

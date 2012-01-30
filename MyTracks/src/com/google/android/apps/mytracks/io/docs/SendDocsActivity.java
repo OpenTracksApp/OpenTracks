@@ -15,9 +15,10 @@
  */
 package com.google.android.apps.mytracks.io.docs;
 
+import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
+import com.google.android.apps.mytracks.io.sendtogoogle.UploadResultActivity;
 import com.google.android.maps.mytracks.R;
 
-import android.accounts.Account;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -32,43 +33,23 @@ import android.os.Bundle;
  */
 public class SendDocsActivity extends Activity {
 
-  // parameters in the input intent
-  public static final String ACCOUNT = "account";
-  public static final String TRACK_ID = "trackId";
-
-  // parameters in the output intent
-  public static final String SUCCESS = "success";
-
   private static final int PROGRESS_DIALOG = 1;
 
+  private SendRequest sendRequest;
   private SendDocsAsyncTask asyncTask;
   private ProgressDialog progressDialog;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
+    sendRequest = getIntent().getParcelableExtra(SendRequest.SEND_REQUEST_KEY);
+    
     Object retained = getLastNonConfigurationInstance();
     if (retained instanceof SendDocsAsyncTask) {
       asyncTask = (SendDocsAsyncTask) retained;
       asyncTask.setActivity(this);
     } else {
-      Intent intent = getIntent();
-      Account account = intent.getParcelableExtra(ACCOUNT);
-      if (account == null) {
-        setResult(RESULT_OK, new Intent().putExtra(SUCCESS, false));
-        finish();
-        return;
-      }
-
-      long trackId = intent.getLongExtra(TRACK_ID, -1L);
-      if (trackId == -1L) {
-        setResult(RESULT_OK, new Intent().putExtra(SUCCESS, false));
-        finish();
-        return;
-      }
-
-      asyncTask = new SendDocsAsyncTask(this, account, trackId);
+      asyncTask = new SendDocsAsyncTask(this, sendRequest.getTrackId(), sendRequest.getAccount());
       asyncTask.execute();
     }
   }
@@ -95,8 +76,7 @@ public class SendDocsActivity extends Activity {
           @Override
           public void onCancel(DialogInterface dialog) {
             asyncTask.cancel(true);
-            setResult(RESULT_CANCELED);
-            finish();
+            startNextActivity(false);
           }
         });
         return progressDialog;
@@ -111,9 +91,7 @@ public class SendDocsActivity extends Activity {
    * @param success true if success
    */
   public void onAsyncTaskCompleted(boolean success) {
-    Intent intent = new Intent().putExtra(SUCCESS, success);
-    setResult(RESULT_OK, intent);
-    finish();
+    startNextActivity(success);
   }
 
   /**
@@ -130,5 +108,18 @@ public class SendDocsActivity extends Activity {
     if (progressDialog != null) {
       progressDialog.setProgress(value);
     }
+  }
+  
+  /**
+   * Starts the next activity.
+   * 
+   * @param success true if sendDocs is success
+   */
+  private void startNextActivity(boolean success) {
+    sendRequest.setDocsSuccess(success);
+    Intent intent = new Intent(this, UploadResultActivity.class)
+        .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
+    startActivity(intent);
+    finish();
   }
 }

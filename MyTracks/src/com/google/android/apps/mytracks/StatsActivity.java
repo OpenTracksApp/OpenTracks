@@ -23,7 +23,6 @@ import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.services.ServiceUtils;
-import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerTask;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
