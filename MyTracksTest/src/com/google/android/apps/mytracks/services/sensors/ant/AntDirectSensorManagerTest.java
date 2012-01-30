@@ -31,8 +31,8 @@ public class AntDirectSensorManagerTest extends AndroidTestCase {
   private AntSensorBase heartRateSensor;
   private static final byte HEART_RATE_CHANNEL = 0;
 
-  private class Manager extends AntDirectSensorManager {
-    public Manager(Context context) {
+  private class MockAntDirectSensorManager extends AntDirectSensorManager {
+    public MockAntDirectSensorManager(Context context) {
       super(context);
     }
     @Override
@@ -44,14 +44,14 @@ public class AntDirectSensorManagerTest extends AndroidTestCase {
       return false;
     }
   }
-  private Manager manager;
+  private AntDirectSensorManager manager;
 
   public void setUp() {
     sharedPreferences = getContext().getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     // Let's use default values.
     sharedPreferences.edit().clear().apply();
-    manager = new Manager(getContext());
+    manager = new MockAntDirectSensorManager(getContext());
   }
 
   @SmallTest
@@ -59,7 +59,7 @@ public class AntDirectSensorManagerTest extends AndroidTestCase {
     manager.setupAntSensorChannels();
     assertNotNull(heartRateSensor);
 
-    heartRateSensor.setDeviceNumber((short)42);
+    heartRateSensor.setDeviceNumber((short) 42);
     byte[] buff = new byte[9];
     buff[0] = HEART_RATE_CHANNEL;
     buff[8] = (byte) 220;
@@ -98,7 +98,7 @@ public class AntDirectSensorManagerTest extends AndroidTestCase {
     manager.setupAntSensorChannels();
     assertNotNull(heartRateSensor);
     manager.setHeartRate(210);
-    heartRateSensor.setDeviceNumber((short)42);
+    heartRateSensor.setDeviceNumber((short) 42);
 
     assertEquals(Sensor.SensorState.CONNECTED, manager.getSensorState());
     byte[] buff = new byte[3];
@@ -108,7 +108,7 @@ public class AntDirectSensorManagerTest extends AndroidTestCase {
     manager.handleMessage(AntMesg.MESG_RESPONSE_EVENT_ID, buff);
     assertEquals(Sensor.SensorState.CONNECTED, manager.getSensorState());
 
-    heartRateSensor.setDeviceNumber((short)0);
+    heartRateSensor.setDeviceNumber((short) 0);
     manager.handleMessage(AntMesg.MESG_RESPONSE_EVENT_ID, buff);
     assertEquals(Sensor.SensorState.DISCONNECTED, manager.getSensorState());
   }

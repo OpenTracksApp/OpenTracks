@@ -81,7 +81,10 @@ public class SensorEventCounter {
    * @return the calculated value
    */
   public int getEventsPerMinute(int newCounter, int sensorTime) {
-    long now = System.currentTimeMillis();
+    return getEventsPerMinute(newCounter, sensorTime, System.currentTimeMillis());
+  }
+
+  protected int getEventsPerMinute(int newCounter, int sensorTime, long now) { 
     int counterChange = (newCounter - counter) & 0xFFFF;
 
     Log.d(TAG, "now=" + now + " counter=" + newCounter + " sensortime=" + sensorTime);

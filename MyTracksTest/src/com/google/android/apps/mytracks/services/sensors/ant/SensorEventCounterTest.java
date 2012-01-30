@@ -18,17 +18,18 @@ package com.google.android.apps.mytracks.services.sensors.ant;
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 
+/**
+ * @author Laszlo Molnar
+ */
 public class SensorEventCounterTest extends AndroidTestCase {
 
   @SmallTest
   public void testGetEventsPerMinute() throws InterruptedException {
     SensorEventCounter sec = new SensorEventCounter();
-    assertEquals(0, sec.getEventsPerMinute(0, 0));
-    assertEquals(0, sec.getEventsPerMinute(1, 1024));
-    assertEquals(60, sec.getEventsPerMinute(2, 1024 * 2));
-    assertEquals(60, sec.getEventsPerMinute(2, 1024 * 2));
-
-    Thread.sleep(2000);
-    assertTrue(60 > sec.getEventsPerMinute(2, 1024 * 2));
+    assertEquals(0, sec.getEventsPerMinute(0, 0, 0));
+    assertEquals(0, sec.getEventsPerMinute(1, 1024, 1000));
+    assertEquals(60, sec.getEventsPerMinute(2, 1024 * 2, 2000));
+    assertEquals(60, sec.getEventsPerMinute(2, 1024 * 2, 2500));
+    assertTrue(60 > sec.getEventsPerMinute(2, 1024 * 2, 4000));
   }
 }
