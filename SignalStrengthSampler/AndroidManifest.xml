@@ -52,7 +52,7 @@ limitations under the License.
   <uses-permission android:name="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
   <uses-feature android:name="android.hardware.telephony" android:required="true"/>
   <uses-feature android:name="android.hardware.telephony.gsm" android:required="false"/>
-  <uses-sdk android:minSdkVersion="3" />
+  <uses-sdk android:minSdkVersion="7" />
   <supports-screens android:xlargeScreens="true"
                     android:largeScreens="true"
                     android:normalScreens="true"

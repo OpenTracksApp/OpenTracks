@@ -16,7 +16,7 @@
 
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.maps.mytracks.R;
 
 import android.app.AlertDialog;
@@ -63,8 +63,7 @@ class CheckUnits {
             Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = useMetricPreferences.edit();
         String key = context.getString(R.string.metric_units_key);
-        ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(
-            editor.putBoolean(key, metric));
+        ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor.putBoolean(key, metric));
       }
     });
     builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -76,7 +75,7 @@ class CheckUnits {
   }
 
   private static void recordCheckPerformed(SharedPreferences preferences) {
-    ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(
+    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(
         preferences.edit().putBoolean(CHECK_UNITS_PREFERENCE_KEY, true));
   }
 

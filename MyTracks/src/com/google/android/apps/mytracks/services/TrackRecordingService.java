@@ -36,14 +36,12 @@ import com.google.android.apps.mytracks.services.tasks.SplitTask;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
-import com.google.android.apps.mytracks.util.ApiFeatures;
-import com.google.android.apps.mytracks.util.ApiLevelAdapter;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ContentValues;
@@ -80,7 +78,6 @@ public class TrackRecordingService extends Service {
 
   static final int MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS = 3;
 
-  private NotificationManager notificationManager;
   private LocationManager locationManager;
   private WakeLock wakeLock;
 
@@ -243,8 +240,6 @@ public class TrackRecordingService extends Service {
     super.onCreate();
     Log.d(TAG, "TrackRecordingService.onCreate");
     providerUtils = MyTracksProviderUtils.Factory.get(this);
-    notificationManager =
-        (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
     setUpTaskExecutors();
@@ -369,7 +364,6 @@ public class TrackRecordingService extends Service {
 
     // Make sure we have no indirect references to this service.
     locationManager = null;
-    notificationManager = null;
     providerUtils = null;
     binder.detachFromService();
     binder = null;
@@ -485,8 +479,6 @@ public class TrackRecordingService extends Service {
    * Shows the notification message and icon in the notification bar.
    */
   private void showNotification() {
-    final ApiLevelAdapter apiLevelAdapter =
-        ApiFeatures.getInstance().getApiAdapter();
     if (isRecording) {
       Notification notification = new Notification(
           R.drawable.arrow_320, null /* tickerText */,
@@ -497,16 +489,24 @@ public class TrackRecordingService extends Service {
       notification.setLatestEventInfo(this, getString(R.string.my_tracks_app_name),
           getString(R.string.track_record_notification), contentIntent);
       notification.flags += Notification.FLAG_NO_CLEAR;
-      apiLevelAdapter.startForeground(this, notificationManager, 1,
-          notification);
+      startForegroundService(notification);
     } else {
-      apiLevelAdapter.stopForeground(this, notificationManager, 1);
+      stopForegroundService();
     }
   }
 
+  @VisibleForTesting
+  protected void startForegroundService(Notification notification) {
+    startForeground(1, notification);
+  }
+  
+  @VisibleForTesting
+  protected void stopForegroundService() {
+    stopForeground(true);
+  }
+  
   private void setUpTaskExecutors() {
-    announcementExecutor = new PeriodicTaskExecutor(
-        this, new StatusAnnouncerFactory(ApiFeatures.getInstance()));
+    announcementExecutor = new PeriodicTaskExecutor(this, new StatusAnnouncerFactory());
     splitExecutor = new PeriodicTaskExecutor(this, new SplitTask.Factory());
   }
 

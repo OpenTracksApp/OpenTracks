@@ -1,12 +1,12 @@
 /*
  * Copyright 2010 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -26,7 +26,7 @@ import android.os.Parcelable;
  *
  * @author Rodrigo Damazio
  */
-public class TripStatistics implements Parcelable { 
+public class TripStatistics implements Parcelable {
 
   /**
    * The start time for the trip. This is system time which might not match gps
@@ -144,7 +144,7 @@ public class TripStatistics implements Parcelable {
 
   /**
    * Gets the time that this track started.
-   * 
+   *
    * @return The number of milliseconds since epoch to the time when this track
    *         started
    */
@@ -154,7 +154,7 @@ public class TripStatistics implements Parcelable {
 
   /**
    * Gets the time that this track stopped.
-   * 
+   *
    * @return The number of milliseconds since epoch to the time when this track
    *         stopped
    */
@@ -176,7 +176,7 @@ public class TripStatistics implements Parcelable {
 
   /**
    * Gets the total distance the user traveled.
-   * 
+   *
    * @return The total distance traveled in meters
    */
   public double getTotalDistance() {
@@ -197,7 +197,7 @@ public class TripStatistics implements Parcelable {
   /**
    * Gets the the average speed the user traveled when they were actively
    * moving.
-   * 
+   *
    * @return The average moving speed in m/s
    */
   public double getAverageMovingSpeed() {
@@ -206,7 +206,7 @@ public class TripStatistics implements Parcelable {
 
   /**
    * Gets the the maximum speed for this track.
-   * 
+   *
    * @return The maximum speed in m/s
    */
   public double getMaxSpeed() {
@@ -215,7 +215,7 @@ public class TripStatistics implements Parcelable {
 
   /**
    * Gets the moving time.
-   * 
+   *
    * @return The total number of milliseconds the user was moving
    */
   public long getMovingTime() {
@@ -225,7 +225,7 @@ public class TripStatistics implements Parcelable {
   /**
    * Gets the total elevation gain for this trip. This is calculated as the sum
    * of all positive differences in the smoothed elevation.
-   * 
+   *
    * @return The elevation gain in meters for this trip
    */
   public double getTotalElevationGain() {
@@ -233,39 +233,79 @@ public class TripStatistics implements Parcelable {
   }
 
   /**
-   * Returns the leftmost position (lowest longitude) of the track, in signed
-   * decimal degrees.
+   * Returns the leftmost position (lowest longitude) of the track, in signed degrees.
+   */
+  public double getLeftDegrees() {
+    return longitudeExtremities.getMin();
+  }
+
+  /**
+   * Returns the leftmost position (lowest longitude) of the track, in signed millions of degrees.
    */
   public int getLeft() {
     return (int) (longitudeExtremities.getMin() * 1E6);
   }
 
   /**
-   * Returns the rightmost position (highest longitude) of the track, in signed
-   * decimal degrees.
+   * Returns the rightmost position (highest longitude) of the track, in signed degrees.
+   */
+  public double getRightDegrees() {
+    return longitudeExtremities.getMax();
+  }
+
+  /**
+   * Returns the rightmost position (highest longitude) of the track, in signed millions of degrees.
    */
   public int getRight() {
     return (int) (longitudeExtremities.getMax() * 1E6);
   }
 
   /**
-   * Returns the bottommost position (lowest latitude) of the track, in meters.
+   * Returns the bottommost position (lowest latitude) of the track, in signed degrees.
+   */
+  public double getBottomDegrees() {
+    return latitudeExtremities.getMin();
+  }
+
+  /**
+   * Returns the bottommost position (lowest latitude) of the track, in signed millions of degrees.
    */
   public int getBottom() {
     return (int) (latitudeExtremities.getMin() * 1E6);
   }
 
   /**
-   * Returns the topmost position (highest latitude) of the track, in meters.
+   * Returns the topmost position (highest latitude) of the track, in signed degrees.
+   */
+  public double getTopDegrees() {
+    return latitudeExtremities.getMax();
+  }
+
+  /**
+   * Returns the topmost position (highest latitude) of the track, in signed millions of degrees.
    */
   public int getTop() {
     return (int) (latitudeExtremities.getMax() * 1E6);
   }
 
   /**
+   * Returns the mean position (center latitude) of the track, in signed degrees.
+   */
+  public double getMeanLatitude() {
+    return (getBottomDegrees() + getTopDegrees()) / 2.0;
+  }
+
+  /**
+   * Returns the mean position (center longitude) of the track, in signed degrees.
+   */
+  public double getMeanLongitude() {
+    return (getLeftDegrees() + getRightDegrees()) / 2.0;
+  }
+
+  /**
    * Gets the minimum elevation seen on this trip. This is calculated from the
    * smoothed elevation so this can actually be more than the current elevation.
-   * 
+   *
    * @return The smallest elevation reading for this trip in meters
    */
   public double getMinElevation() {
@@ -275,7 +315,7 @@ public class TripStatistics implements Parcelable {
   /**
    * Gets the maximum elevation seen on this trip. This is calculated from the
    * smoothed elevation so this can actually be less than the current elevation.
-   * 
+   *
    * @return The largest elevation reading for this trip in meters
    */
   public double getMaxElevation() {
@@ -284,7 +324,7 @@ public class TripStatistics implements Parcelable {
 
   /**
    * Gets the maximum grade for this trip.
-   * 
+   *
    * @return The maximum grade for this trip as a fraction
    */
   public double getMaxGrade() {
@@ -293,7 +333,7 @@ public class TripStatistics implements Parcelable {
 
   /**
    * Gets the minimum grade for this trip.
-   * 
+   *
    * @return The minimum grade for this trip as a fraction
    */
   public double getMinGrade() {
@@ -443,7 +483,7 @@ public class TripStatistics implements Parcelable {
   void addMovingTime(long time) {
     movingTime += time;
   }
-  
+
   /**
    * Accounts for a new latitude value for the bounding box.
    *
