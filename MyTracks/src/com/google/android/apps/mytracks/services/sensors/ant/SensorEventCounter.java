@@ -84,6 +84,7 @@ public class SensorEventCounter {
     return getEventsPerMinute(newCounter, sensorTime, System.currentTimeMillis());
   }
 
+  // VisibleForTesting
   protected int getEventsPerMinute(int newCounter, int sensorTime, long now) { 
     int counterChange = (newCounter - counter) & 0xFFFF;
 
