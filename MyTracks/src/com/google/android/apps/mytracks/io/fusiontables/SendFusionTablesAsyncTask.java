@@ -6,6 +6,7 @@ import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendAsyncTask;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
@@ -32,7 +33,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.ByteArrayInputStream;
@@ -46,9 +46,9 @@ import java.util.Vector;
 /**
  * AsyncTask to send a track to Google Fusion Tables.
  *
- * @author jshih@google.com (Jimmy Shih)
+ * @author Jimmy Shih
  */
-public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean> {
+public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
 
   private static final String APP_NAME_PREFIX = "Google-MyTracks-";
   private static final String SQL_KEY = "sql=";
@@ -73,29 +73,12 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
 
   private static final String TAG = SendFusionTablesAsyncTask.class.getSimpleName();
   
-  private SendFusionTablesActivity activity;
-
   private final Context context;
   private final long trackId;
   private final Account account;
   private final MyTracksProviderUtils myTracksProviderUtils;
   private final HttpRequestFactory httpRequestFactory;
 
-  /**
-   * True if can retry sending to Google Fusion Tables.
-   */
-  private boolean canRetry;
-
-  /**
-   * True if the AsyncTask has completed.
-   */
-  private boolean completed;
-
-  /**
-   * True if the result is success.
-   */
-  private boolean success;
-  
   // The following variables are for per upload states
   private String authToken;
   private String tableId;
@@ -103,7 +86,7 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
 
   public SendFusionTablesAsyncTask(
       SendFusionTablesActivity activity, long trackId, Account account) {
-    this.activity = activity;
+    super(activity);
     this.trackId = trackId;
     this.account = account;
 
@@ -111,65 +94,26 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
     HttpTransport transport = ApiAdapterFactory.getApiAdapter().getHttpTransport();
     httpRequestFactory = transport.createRequestFactory(new MethodOverride());
-
-    canRetry = true;
-    completed = false;
-    success = false;
   }
 
-  /**
-   * Sets the activity associated with this AyncTask.
-   *
-   * @param activity the activity.
-   */
-  public void setActivity(SendFusionTablesActivity activity) {
-    this.activity = activity;
-    if (completed && activity != null) {
-      activity.onAsyncTaskCompleted(success);
+  @Override
+  protected void closeConnection() {
+    // No action needed for Google Fusion Tables
+  }
+
+  @Override
+  protected void saveResult() {
+    Track track = myTracksProviderUtils.getTrack(trackId);
+    if (track != null) {
+      track.setTableId(tableId);
+      myTracksProviderUtils.updateTrack(track);
+    } else {
+      Log.d(TAG, "No track");
     }
   }
 
   @Override
-  protected void onPreExecute() {
-    activity.showProgressDialog();
-  }
-
-  @Override
-  protected Boolean doInBackground(Void... params) {
-    return doUpload();
-  }
-
-  @Override
-  protected void onProgressUpdate(Integer... values) {
-    if (activity != null) {
-      activity.setProgressDialogValue(values[0]);
-    }
-  }
-
-  @Override
-  protected void onPostExecute(Boolean result) {
-    success = result;
-    completed = true;
-    if (success) {
-      Track track = myTracksProviderUtils.getTrack(trackId);
-      if (track != null) {
-        track.setTableId(tableId);
-        myTracksProviderUtils.updateTrack(track);
-      } else {
-        Log.d(TAG, "No track");
-      }
-    }
-    if (activity != null) {
-      activity.onAsyncTaskCompleted(success);
-    }
-  }
-
-  /**
-   * Uploads a track to Google Fusion Tables.
-   *
-   * @return true if success.
-   */
-  private boolean doUpload() {
+  protected boolean performTask() {
     // Reset the per upload states
     authToken = null;
     tableId = null;
@@ -179,13 +123,13 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
       authToken = AccountManager.get(context).blockingGetAuthToken(account, SERVICE_ID, false);
     } catch (OperationCanceledException e) {
       Log.d(TAG, "Unable to get auth token", e);
-      return retryUpload();
+      return retryTask();
     } catch (AuthenticatorException e) {
       Log.d(TAG, "Unable to get auth token", e);
-      return retryUpload();
+      return retryTask();
     } catch (IOException e) {
       Log.d(TAG, "Unable to get auth token", e);
-      return retryUpload();
+      return retryTask();
     }
 
     Track track = myTracksProviderUtils.getTrack(trackId);
@@ -198,7 +142,7 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
     publishProgress(PROGRESS_CREATE_TABLE);
     if (!createNewTable(track)) {
       // Retry upload in case the auth token is invalid
-      return retryUpload();
+      return retryTask();
     }
 
     // Unlist table
@@ -223,22 +167,9 @@ public class SendFusionTablesAsyncTask extends AsyncTask<Void, Integer, Boolean>
     return true;
   }
 
-  /**
-   * Retries upload. Invalidates the authToken. If can retry, invokes
-   * {@link SendFusionTablesAsyncTask#doUpload()}. Returns false if cannot
-   * retry.
-   */
-  private boolean retryUpload() {
-    if (isCancelled()) {
-      return false;
-    }
-
+  @Override
+  protected void invalidateToken() {
     AccountManager.get(context).invalidateAuthToken(SERVICE_ID, authToken);
-    if (canRetry) {
-      canRetry = false;
-      return doUpload();
-    }
-    return false;
   }
 
   /**

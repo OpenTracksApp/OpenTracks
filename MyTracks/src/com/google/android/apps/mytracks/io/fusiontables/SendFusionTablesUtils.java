@@ -32,7 +32,7 @@ import java.util.Locale;
 /**
  * Utilities for sending a track to Google Fusion Tables.
  * 
- * @author jshih@google.com (Jimmy Shih)
+ * @author Jimmy Shih
  */
 public class SendFusionTablesUtils {
 

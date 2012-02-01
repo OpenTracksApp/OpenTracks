@@ -37,7 +37,7 @@ import java.util.ArrayList;
 /**
  * Utilities for sending a track to Google Maps.
  *
- * @author jshih@google.com (Jimmy Shih)
+ * @author Jimmy Shih
  */
 public class SendMapsUtils {
 

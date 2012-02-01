@@ -42,7 +42,7 @@ import java.util.ArrayList;
 /**
  * AsyncTask for {@link ChooseMapActivity} to get all the maps from Google Maps.
  *
- * @author jshih@google.com (Jimmy Shih)
+ * @author Jimmy Shih
  */
 public class ChooseMapAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   private static final String TAG = ChooseMapAsyncTask.class.getSimpleName();

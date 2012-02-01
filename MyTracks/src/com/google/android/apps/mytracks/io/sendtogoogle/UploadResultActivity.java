@@ -38,7 +38,7 @@ import android.widget.TextView;
 /**
  * A dialog to show the result of uploading to Google services.
  *
- * @author jshih@google.com (Jimmy Shih)
+ * @author Jimmy Shih
  */
 public class UploadResultActivity extends Activity {
 

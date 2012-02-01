@@ -41,7 +41,7 @@ import android.widget.TableRow;
 /**
  * A chooser to select the Google services to upload a track to.
  *
- * @author jshih@google.com (Jimmy Shih)
+ * @author Jimmy Shih
  */
 public class UploadServiceChooserActivity extends Activity {
 

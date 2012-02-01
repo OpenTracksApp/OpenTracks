@@ -26,7 +26,7 @@ import android.test.AndroidTestCase;
 /**
  * Tests {@link SendDocsUtils}.
  * 
- * @author jshih@google.com (Jimmy Shih)
+ * @author Jimmy Shih
  */
 public class SendDocsUtilsTest extends AndroidTestCase {
 

@@ -41,7 +41,7 @@ import java.util.ArrayList;
 /**
  * An activity to choose a Google Map.
  *
- * @author jshih@google.com (Jimmy Shih)
+ * @author Jimmy Shih
  */
 public class ChooseMapActivity extends Activity {
 
@@ -208,7 +208,7 @@ public class ChooseMapActivity extends Activity {
   /**
    * A class containing {@link ChooseMapActivity} list item.
    *
-   * @author jshih@google.com (Jimmy Shih)
+   * @author Jimmy Shih
    */
   private class ListItem {
     private String mapId;

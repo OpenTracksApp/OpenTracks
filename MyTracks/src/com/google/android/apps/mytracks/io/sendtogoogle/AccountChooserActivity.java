@@ -38,7 +38,7 @@ import android.os.Bundle;
 /**
  * A chooser to select an account.
  *
- * @author jshih@google.com (Jimmy Shih)
+ * @author Jimmy Shih
  */
 public class AccountChooserActivity extends Activity {
 

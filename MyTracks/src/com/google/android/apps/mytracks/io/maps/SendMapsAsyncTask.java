@@ -24,6 +24,7 @@ import com.google.android.apps.mytracks.io.gdata.maps.MapsClient;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsConstants;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsGDataConverter;
 import com.google.android.apps.mytracks.io.gdata.maps.XmlMapsGDataParserFactory;
+import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendAsyncTask;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.util.LocationUtils;
@@ -43,7 +44,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.IOException;
@@ -63,7 +63,7 @@ import org.xmlpull.v1.XmlPullParserException;
  *
  * @author Jimmy Shih
  */
-public class SendMapsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
+public class SendMapsAsyncTask extends AbstractSendAsyncTask {
   private static final String START_ICON_URL =
       "http://maps.google.com/mapfiles/ms/micons/green-dot.png";
   private static final String END_ICON_URL =
@@ -78,7 +78,6 @@ public class SendMapsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
   private static final String TAG = SendMapsAsyncTask.class.getSimpleName();
 
-  private SendMapsActivity activity;
   private final long trackId;
   private final Account account;
   private final String chooseMapId;
@@ -87,30 +86,15 @@ public class SendMapsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   private final GDataClient gDataClient;
   private final MapsClient mapsClient;
 
-  /**
-   * True if can retry sending to Google Maps.
-   */
-  private boolean canRetry;
-
-  /**
-   * True if the AsyncTask has completed.
-   */
-  private boolean completed;
-
-  /**
-   * True if the result is success.
-   */
-  private boolean success;
-
   // The following variables are for per upload states
   private MapsGDataConverter mapsGDataConverter;
   private String authToken;
   private String mapId;
   int currentSegment;
 
-  public SendMapsAsyncTask(
+  public SendMapsAsyncTask (
       SendMapsActivity activity, long trackId, Account account, String chooseMapId) {
-    this.activity = activity;
+    super(activity);
     this.trackId = trackId;
     this.account = account;
     this.chooseMapId = chooseMapId;
@@ -120,80 +104,28 @@ public class SendMapsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     gDataClient = GDataClientFactory.getGDataClient(context);
     mapsClient = new MapsClient(
         gDataClient, new XmlMapsGDataParserFactory(new AndroidXmlParserFactory()));
-
-    canRetry = true;
-    completed = false;
-    success = false;
-  }
-
-  /**
-   * Sets the activity associated with this AyncTask.
-   *
-   * @param activity the activity.
-   */
-  public void setActivity(SendMapsActivity activity) {
-    this.activity = activity;
-    if (completed && activity != null) {
-      activity.onAsyncTaskCompleted(success);
-    }
   }
 
   @Override
-  protected void onPreExecute() {
-    activity.showProgressDialog();
-  }
-
-  @Override
-  protected Boolean doInBackground(Void... params) {
-    return doUpload();
-  }
-
-  @Override
-  protected void onProgressUpdate(Integer... values) {
-    if (activity != null) {
-      activity.setProgressDialogValue(values[0]);
-    }
-  }
-
-  @Override
-  protected void onPostExecute(Boolean result) {
-    closeClient();
-    success = result;
-    completed = true;
-    if (success) {
-      Track track = myTracksProviderUtils.getTrack(trackId);
-      if (track != null) {
-        track.setMapId(mapId);
-        myTracksProviderUtils.updateTrack(track);
-      } else {
-        Log.d(TAG, "No track");
-      }
-    }
-    if (activity != null) {
-      activity.onAsyncTaskCompleted(success);
-    }
-  }
-
-  @Override
-  protected void onCancelled() {
-    closeClient();
-  }
-
-  /**
-   * Closes the gdata client.
-   */
-  private void closeClient() {
+  protected void closeConnection() {
     if (gDataClient != null) {
       gDataClient.close();
     }
   }
 
-  /**
-   * Uploads a track to Google Maps.
-   *
-   * @return true if success.
-   */
-  private boolean doUpload() {
+  @Override
+  protected void saveResult() {
+    Track track = myTracksProviderUtils.getTrack(trackId);
+    if (track != null) {
+      track.setMapId(mapId);
+      myTracksProviderUtils.updateTrack(track);
+    } else {
+      Log.d(TAG, "No track");
+    }
+  }
+  
+  @Override
+  protected boolean performTask() {
     // Reset the per upload states
     mapsGDataConverter = null;
     authToken = null;
@@ -214,13 +146,13 @@ public class SendMapsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
           account, MapsConstants.SERVICE_NAME, false);
     } catch (OperationCanceledException e) {
       Log.d(TAG, "Unable to get auth token", e);
-      return retryUpload();
+      return retryTask();
     } catch (AuthenticatorException e) {
       Log.d(TAG, "Unable to get auth token", e);
-      return retryUpload();
+      return retryTask();
     } catch (IOException e) {
       Log.d(TAG, "Unable to get auth token", e);
-      return retryUpload();
+      return retryTask();
     }
 
     // Get the track
@@ -234,14 +166,14 @@ public class SendMapsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     publishProgress(PROGRESS_FETCH_MAP_ID);
     if (!fetchSendMapId(track)) {
       Log.d("TAG", "Unable to upload all track points");
-      return retryUpload();
+      return retryTask();
     }
 
     // Upload all the track points plus the start and end markers
     publishProgress(PROGRESS_UPLOAD_DATA_MIN);
     if (!uploadAllTrackPoints(track)) {
       Log.d("TAG", "Unable to upload all track points");
-      return retryUpload();
+      return retryTask();
     }
 
     // Upload all the waypoints
@@ -255,21 +187,9 @@ public class SendMapsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     return true;
   }
 
-  /**
-   * Retries upload. Invalidates the authToken. If can retry, invokes
-   * {@link SendMapsAsyncTask#doUpload()}. Returns false if cannot retry.
-   */
-  private boolean retryUpload() {
-    if (isCancelled()) {
-      return false;
-    }
-
+  @Override
+  protected void invalidateToken() {
     AccountManager.get(context).invalidateAuthToken(MapsConstants.SERVICE_NAME, authToken);
-    if (canRetry) {
-      canRetry = false;
-      return doUpload();
-    }
-    return false;
   }
 
   /**

@@ -16,7 +16,6 @@
 package com.google.android.apps.mytracks.io.fusiontables;
 
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesUtils;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 
 import android.location.Location;
@@ -30,7 +29,7 @@ import junit.framework.TestCase;
 /**
  * Tests {@link SendFusionTablesUtils}.
  *
- * @author jshih@google.com (Jimmy Shih)
+ * @author Jimmy Shih
  */
 public class SendFusionTablesUtilsTest extends TestCase {
 

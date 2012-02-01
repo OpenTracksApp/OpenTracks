@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.io.gdata.GDataClientFactory;
 import com.google.android.apps.mytracks.io.gdata.docs.DocumentsClient;
 import com.google.android.apps.mytracks.io.gdata.docs.SpreadsheetsClient;
 import com.google.android.apps.mytracks.io.gdata.docs.XmlDocsGDataParserFactory;
+import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendAsyncTask;
 import com.google.android.common.gdata.AndroidXmlParserFactory;
 import com.google.android.maps.mytracks.R;
 import com.google.wireless.gdata.client.GDataClient;
@@ -33,7 +34,6 @@ import android.accounts.AccountManager;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.IOException;
@@ -41,9 +41,9 @@ import java.io.IOException;
 /**
  * AsyncTask to send a track to Google Docs.
  *
- * @author jshih@google.com (Jimmy Shih)
+ * @author Jimmy Shih
  */
-public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
+public class SendDocsAsyncTask extends AbstractSendAsyncTask {
   private static final int PROGRESS_GET_SPREADSHEET_ID = 0;
   private static final int PROGRESS_CREATE_SPREADSHEET = 25;
   private static final int PROGRESS_GET_WORKSHEET_ID = 50;
@@ -52,7 +52,6 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
   private static final String TAG = SendDocsAsyncTask.class.getSimpleName();
 
-  private SendDocsActivity activity;
   private final long trackId;
   private final Account account;
   private final Context context;
@@ -61,21 +60,6 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   private final DocumentsClient documentsClient;
   private final SpreadsheetsClient spreadsheetsClient;
   
-  /**
-   * True if can retry sending to Google Docs.
-   */
-  private boolean canRetry;
-
-  /**
-   * True if the AsyncTask has completed.
-   */
-  private boolean completed;
-
-  /**
-   * True if the result is success.
-   */
-  private boolean success;
-  
   // The following variables are for per upload states
   private String documentsAuthToken;
   private String spreadsheetsAuthToken;
@@ -83,7 +67,7 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   private String worksheetId;
 
   public SendDocsAsyncTask(SendDocsActivity activity, long trackId, Account account) {
-    this.activity = activity;
+    super(activity);
     this.trackId = trackId;
     this.account = account;
 
@@ -94,68 +78,22 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         gDataClient, new XmlDocsGDataParserFactory(new AndroidXmlParserFactory()));
     spreadsheetsClient = new SpreadsheetsClient(
         gDataClient, new XmlDocsGDataParserFactory(new AndroidXmlParserFactory()));
-      
-    canRetry = true;
-    completed = false;
-    success = false;
-  }
-
-  /**
-   * Sets the activity associated with this AyncTask.
-   *
-   * @param activity the activity.
-   */
-  public void setActivity(SendDocsActivity activity) {
-    this.activity = activity;
-    if (completed && activity != null) {
-      activity.onAsyncTaskCompleted(success);
-    }
   }
 
   @Override
-  protected void onPreExecute() {
-    activity.showProgressDialog();
-  }
-
-  @Override
-  protected Boolean doInBackground(Void... params) {
-    return doUpload();
-  }
-
-  @Override
-  protected void onProgressUpdate(Integer... values) {
-    if (activity != null) {
-      activity.setProgressDialogValue(values[0]);
-    }
-  }
-
-  @Override
-  protected void onPostExecute(Boolean result) {
-    closeClient();
-    success = result;
-    completed = true;
-    if (activity != null) {
-      activity.onAsyncTaskCompleted(success);
-    }
-  }
-
-  @Override
-  protected void onCancelled() {
-    closeClient();
-  }
-
-  private void closeClient() {
+  protected void closeConnection() {
     if (gDataClient != null) {
       gDataClient.close();
     } 
   }
 
-  /**
-   * Uploads a track to Google Docs.
-   *
-   * @return true if success.
-   */
-  private boolean doUpload() {
+  @Override
+  protected void saveResult() {
+    // No action for Google Docs
+  }
+
+  @Override
+  protected boolean performTask() {
     // Reset the per upload states
     documentsAuthToken = null;
     spreadsheetsAuthToken = null;
@@ -169,13 +107,13 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
           account, spreadsheetsClient.getServiceName(), false);
     } catch (OperationCanceledException e) {
       Log.d(TAG, "Unable to get auth token", e);
-      return retryUpload();
+      return retryTask();
     } catch (AuthenticatorException e) {
       Log.d(TAG, "Unable to get auth token", e);
-      return retryUpload();
+      return retryTask();
     } catch (IOException e) {
       Log.d(TAG, "Unable to get auth token", e);
-      return retryUpload();
+      return retryTask();
     }
 
     Track track = myTracksProviderUtils.getTrack(trackId);
@@ -192,7 +130,7 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     // Get the spreadsheet ID
     publishProgress(PROGRESS_GET_SPREADSHEET_ID);
     if (!fetchSpreadSheetId(title, false)) {
-      return retryUpload(); 
+      return retryTask(); 
     }
 
     // Create a new spreadsheet if necessary
@@ -223,7 +161,7 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     // Get the worksheet ID
     publishProgress(PROGRESS_GET_WORKSHEET_ID);
     if (!fetchWorksheetId()) {
-      return retryUpload();
+      return retryTask();
     }
     if (worksheetId == null) {
       Log.d(TAG, "Unable to get a worksheet ID");
@@ -239,6 +177,14 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
     publishProgress(PROGRESS_COMPLETE);
     return true;
+  }
+
+  @Override
+  protected void invalidateToken() {
+    AccountManager.get(context).invalidateAuthToken(
+        documentsClient.getServiceName(), documentsAuthToken);
+    AccountManager.get(context).invalidateAuthToken(
+        spreadsheetsClient.getServiceName(), spreadsheetsAuthToken);
   }
 
   /**
@@ -365,25 +311,5 @@ public class SendDocsAsyncTask extends AsyncTask<Void, Integer, Boolean> {
       return false;
     }
     return true;
-  }
-
-  /**
-   * Retries upload. Invalidates the authToken. If can retry, invokes
-   * {@link SendDocsAsyncTask#doUpload()}. Returns false if cannot retry.
-   */
-  private boolean retryUpload() {
-    if (isCancelled()) {
-      return false;
-    }
-
-    AccountManager.get(context).invalidateAuthToken(
-        documentsClient.getServiceName(), documentsAuthToken);
-    AccountManager.get(context).invalidateAuthToken(
-        spreadsheetsClient.getServiceName(), spreadsheetsAuthToken);
-    if (canRetry) {
-      canRetry = false;
-      return doUpload();
-    }
-    return false;
   }
 }
