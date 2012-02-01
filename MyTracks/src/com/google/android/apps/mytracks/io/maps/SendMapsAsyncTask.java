@@ -188,7 +188,7 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
   }
 
   @Override
-  protected void invalidToken() {
+  protected void invalidateToken() {
     AccountManager.get(context).invalidateAuthToken(MapsConstants.SERVICE_NAME, authToken);
   }
 

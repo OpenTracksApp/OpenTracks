@@ -180,7 +180,7 @@ public class SendDocsAsyncTask extends AbstractSendAsyncTask {
   }
 
   @Override
-  protected void invalidToken() {
+  protected void invalidateToken() {
     AccountManager.get(context).invalidateAuthToken(
         documentsClient.getServiceName(), documentsAuthToken);
     AccountManager.get(context).invalidateAuthToken(

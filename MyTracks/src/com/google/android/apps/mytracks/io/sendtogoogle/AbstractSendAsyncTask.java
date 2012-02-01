@@ -115,7 +115,7 @@ public abstract class AbstractSendAsyncTask extends AsyncTask<Void, Integer, Boo
       return false;
     }
 
-    invalidToken();
+    invalidateToken();
     if (canRetry) {
       canRetry = false;
       return performTask();
@@ -143,5 +143,5 @@ public abstract class AbstractSendAsyncTask extends AsyncTask<Void, Integer, Boo
   /**
    * Invalidates the auth token.
    */
-  protected abstract void invalidToken();
+  protected abstract void invalidateToken();
 }
