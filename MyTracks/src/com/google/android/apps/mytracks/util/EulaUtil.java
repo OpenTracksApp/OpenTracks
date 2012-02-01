@@ -21,6 +21,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import java.util.Calendar;
+
 /**
  * Utilities for EULA.
  */
@@ -53,7 +55,7 @@ public class EulaUtil {
         HOST_NAME, HOST_NAME, HOST_NAME, HOST_NAME);
     String item3 = String.format(context.getString(R.string.eula_message_item3), HOST_NAME);
     String footer = String.format(context.getString(R.string.eula_message_footer), HOST_NAME);
-
+    String copyright = "©" + Calendar.getInstance().get(Calendar.YEAR);
     return context.getString(R.string.eula_message_date)
         + "\n\n"
         + context.getString(R.string.eula_message_header)
@@ -70,6 +72,6 @@ public class EulaUtil {
         + "\n\n"
         + footer
         + "\n\n"
-        + context.getString(R.string.eula_message_copyright);
+        + copyright;
   }
 }
