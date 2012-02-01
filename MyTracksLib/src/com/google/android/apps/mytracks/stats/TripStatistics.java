@@ -32,13 +32,13 @@ public class TripStatistics implements Parcelable {
    * The start time for the trip. This is system time which might not match gps
    * time.
    */
-  private long startTime = -1;
+  private long startTime = -1L;
 
   /**
    * The stop time for the trip. This is the system time which might not match
    * gps time.
    */
-  private long stopTime = -1;
+  private long stopTime = -1L;
 
   /**
    * The total time that we believe the user was traveling in milliseconds.
@@ -191,7 +191,10 @@ public class TripStatistics implements Parcelable {
    * @return The average speed in m/s
    */
   public double getAverageSpeed() {
-    return totalDistance / ((double) totalTime / 1000);
+    if (totalTime == 0L) {
+      return 0.0;
+    }
+    return totalDistance / ((double) totalTime / 1000.0);
   }
 
   /**
@@ -201,7 +204,10 @@ public class TripStatistics implements Parcelable {
    * @return The average moving speed in m/s
    */
   public double getAverageMovingSpeed() {
-    return totalDistance / ((double) movingTime / 1000);
+    if (movingTime == 0L) {
+      return 0.0;
+    }
+    return totalDistance / ((double) movingTime / 1000.0);
   }
 
   /**

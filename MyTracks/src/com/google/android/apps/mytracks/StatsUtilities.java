@@ -213,7 +213,7 @@ public class StatsUtilities {
       double minElevation, double maxElevation, double elevationGain,
       double minGrade, double maxGrade) {
     setTime(R.id.moving_time_register, movingTime);
-    setDistance(R.id.total_distance_register, totalDistance / 1000);
+    setDistance(R.id.total_distance_register, totalDistance / 1000.0);
     setSpeed(R.id.average_speed_register, averageSpeed * 3.6);
     setSpeed(R.id.average_moving_speed_register, averageMovingSpeed * 3.6);
     setSpeed(R.id.max_speed_register, maxSpeed * 3.6);
@@ -226,7 +226,7 @@ public class StatsUtilities {
 
   public void setAllStats(TripStatistics stats) {
     setTime(R.id.moving_time_register, stats.getMovingTime());
-    setDistance(R.id.total_distance_register, stats.getTotalDistance() / 1000);
+    setDistance(R.id.total_distance_register, stats.getTotalDistance() / 1000.0);
     setSpeed(R.id.average_speed_register, stats.getAverageSpeed() * 3.6);
     setSpeed(R.id.average_moving_speed_register,
         stats.getAverageMovingSpeed() * 3.6);

@@ -333,8 +333,8 @@ public class TrackList extends ListActivity
           double length = cursor.getDouble(totalDistanceIdx);
           String lengthUnit = null;
           if (metricUnits) {
-            if (length > 1000) {
-              length /= 1000;
+            if (length > 1000.0) {
+              length /= 1000.0;
               lengthUnit = getString(R.string.unit_kilometer);
             } else {
               lengthUnit = getString(R.string.unit_meter);

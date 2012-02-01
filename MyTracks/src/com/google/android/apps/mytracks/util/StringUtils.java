@@ -226,7 +226,7 @@ public class StringUtils implements DescriptionGenerator {
     }
 
     TripStatistics trackStats = track.getStatistics();
-    final double distanceInKm = trackStats.getTotalDistance() / 1000;
+    final double distanceInKm = trackStats.getTotalDistance() / 1000.0;
     final double distanceInMiles = distanceInKm * UnitConversions.KM_TO_MI;
     final long minElevationInMeters = Math.round(trackStats.getMinElevation());
     final long minElevationInFeet =
@@ -391,7 +391,7 @@ public class StringUtils implements DescriptionGenerator {
   public String generateWaypointDescription(Waypoint waypoint) {
     TripStatistics stats = waypoint.getStatistics();
 
-    final double distanceInKm = stats.getTotalDistance() / 1000;
+    final double distanceInKm = stats.getTotalDistance() / 1000.0;
     final double distanceInMiles = distanceInKm * UnitConversions.KM_TO_MI;
     final double averageSpeedInKmh = stats.getAverageSpeed() * 3.6;
     final double averageSpeedInMph =
