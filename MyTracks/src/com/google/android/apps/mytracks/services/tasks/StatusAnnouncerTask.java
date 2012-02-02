@@ -159,7 +159,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
       reportSpeed = preferences.getBoolean(context.getString(R.string.report_speed_key), true);
     }
 
-    double d =  stats.getTotalDistance() / 1000; // d is in kilometers
+    double d =  stats.getTotalDistance() / 1000.0; // d is in kilometers
     double s =  stats.getAverageMovingSpeed() * 3.6; // s is in kilometers per hour
     
     if (d == 0) {
@@ -331,13 +331,6 @@ public class StatusAnnouncerTask implements PeriodicTask {
     }
   }
 
-  /**
-   * Returns the volume stream to use for controlling announcement volume.
-   */
-  public static int getVolumeStream() {
-    return TextToSpeech.Engine.DEFAULT_STREAM;
-  }
-  
   /**
    * Gets a string to announce the time.
    * 

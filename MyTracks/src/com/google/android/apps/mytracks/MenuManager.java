@@ -37,6 +37,8 @@ class MenuManager {
 
   public boolean onCreateOptionsMenu(Menu menu) {
     activity.getMenuInflater().inflate(R.menu.main, menu);
+
+    // TODO: Replace search button with search widget if API level >= 11
     return true;
   }
 
@@ -84,6 +86,10 @@ class MenuManager {
       }
       case R.id.menu_help: {
         return startActivity(WelcomeActivity.class);
+      }
+      case R.id.menu_search: {
+        // TODO: Pass the current track ID and current location to do some fancier ranking.
+        activity.onSearchRequested();
       }
     }
     return false;

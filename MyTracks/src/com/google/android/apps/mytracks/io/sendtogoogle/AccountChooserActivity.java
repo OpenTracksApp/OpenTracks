@@ -16,7 +16,11 @@
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.io.docs.SendDocsActivity;
+import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesActivity;
+import com.google.android.apps.mytracks.io.maps.ChooseMapActivity;
+import com.google.android.apps.mytracks.io.maps.SendMapsActivity;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.maps.mytracks.R;
 
 import android.accounts.Account;
@@ -32,46 +36,34 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 
 /**
- * A chooser to select an account. To be called with
- * {@link Activity#startActivityForResult(Intent, int)}. Returns
- * {@link Activity#RESULT_CANCELED} if the user cancels the activity. Otherwise,
- * returns {@link Activity#RESULT_OK} with an intent containing the selected
- * account. The selected account is stored as an {@link Account} in the
- * {@link AccountChooserActivity#ACCOUNT} item of the intent. The selected
- * account can be null.
+ * A chooser to select an account.
  *
- * @author jshih@google.com (Jimmy Shih)
+ * @author Jimmy Shih
  */
 public class AccountChooserActivity extends Activity {
-
-  /**
-   * Key for storing an {@link Account} in an {@link Intent}.
-   */
-  public static final String ACCOUNT = "account";
 
   private static final int NO_ACCOUNT_DIALOG = 1;
   private static final int CHOOSE_ACCOUNT_DIALOG = 2;
 
+  private SendRequest sendRequest;
   private Account[] accounts;
   private int selectedAccountIndex;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    sendRequest = getIntent().getParcelableExtra(SendRequest.SEND_REQUEST_KEY);
     accounts = AccountManager.get(this).getAccountsByType(Constants.ACCOUNT_TYPE);
 
     if (accounts.length == 1) {
-      Intent intent = new Intent();
-      intent.putExtra(ACCOUNT, accounts[0]);
-      setResult(RESULT_OK, intent);
-      finish();
+      startNextActivity(accounts[0]);
       return;
     }
 
     SharedPreferences prefs = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     String preferredAccount = prefs.getString(getString(R.string.preferred_account_key), "");
 
-    selectedAccountIndex = -1;
+    selectedAccountIndex = 0;
     for (int i = 0; i < accounts.length; i++) {
       if (accounts[i].name.equals(preferredAccount)) {
         selectedAccountIndex = i;
@@ -102,15 +94,11 @@ public class AccountChooserActivity extends Activity {
         builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
           @Override
           public void onCancel(DialogInterface dialog) {
-            setResult(RESULT_CANCELED);
             finish();
           }
         });
         builder.setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int which) {
-            Intent intent = new Intent();
-            intent.putExtra(ACCOUNT, (Account) null);
-            setResult(RESULT_OK, intent);
             finish();
           }
         });
@@ -134,36 +122,62 @@ public class AccountChooserActivity extends Activity {
         builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
           @Override
           public void onCancel(DialogInterface dialog) {
-            setResult(RESULT_CANCELED);
             finish();
           }
         });
         builder.setNegativeButton(R.string.generic_cancel, new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int which) {
-            setResult(RESULT_CANCELED);
             finish();
           }
         });
         builder.setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int which) {
-            Account account = null;
-            if (selectedAccountIndex != -1) {
-              account = accounts[selectedAccountIndex];
-              SharedPreferences prefs = getSharedPreferences(
-                  Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-              Editor editor = prefs.edit();
-              editor.putString(getString(R.string.preferred_account_key), account.name);
-              ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);
-            }
-            Intent intent = new Intent();
-            intent.putExtra(ACCOUNT, account);
-            setResult(RESULT_OK, intent);
-            finish();
+            Account account = accounts[selectedAccountIndex];
+            SharedPreferences prefs = getSharedPreferences(
+                Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+            Editor editor = prefs.edit();
+            editor.putString(getString(R.string.preferred_account_key), account.name);
+            ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
+            startNextActivity(account);
           }
         });
         return builder.create();
       default:
         return null;
     }
+  }
+
+  /**
+   * Starts the next activity. If
+   * <p>
+   * sendMaps and newMap -> {@link SendMapsActivity}
+   * <p>
+   * sendMaps and !newMap -> {@link ChooseMapActivity}
+   * <p>
+   * !sendMaps && sendFusionTables -> {@link SendFusionTablesActivity}
+   * <p>
+   * !sendMaps && !sendFusionTables && sendDocs -> {@link SendDocsActivity}
+   * <p>
+   * !sendMaps && !sendFusionTables && !sendDocs -> {@link UploadResultActivity}
+   *
+   * @param account the chosen account
+   */
+  private void startNextActivity(Account account) {
+    sendRequest.setAccount(account);
+    
+    Class<?> next;
+    if (sendRequest.isSendMaps()) {
+      next = sendRequest.isNewMap() ? SendMapsActivity.class : ChooseMapActivity.class;
+    } else if (sendRequest.isSendFusionTables()) {
+      next = SendFusionTablesActivity.class;
+    } else if (sendRequest.isSendDocs()) {
+      next = SendDocsActivity.class;
+    } else {
+      next = UploadResultActivity.class;
+    }
+    Intent intent = new Intent(this, next)
+        .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
+    startActivity(intent);
+    finish();
   }
 }

@@ -483,11 +483,6 @@ limitations under the License.
       http://m.google.com/toscountry.">
     By using Google\'s mobile products and services ("Services"), you:
   </string>
-  <string name="eula_message_copyright"
-    translation_description="The copyright in the Google mobile terms of service. See
-      http://m.google.com/toscountry.">
-    ©2011
-  </string>
   <string name="eula_message_date"
     translation_description="The date in the Google mobile terms of service. See
       http://m.google.com/toscountry.">
@@ -693,6 +688,43 @@ limitations under the License.
     My Tracks: Imported %1$d of %2$s from %3$s.
   </string>
 
+  <!-- Maps List -->
+  <string name="maps_list_error"
+    translation_description="When sending a track to an existing Google Map, the text on the
+      'Maps' list page informing the user that his maps cannot be loaded at this time.">
+    Your maps could not be loaded at this time.
+  </string>
+  <string name="maps_list_loading"
+    translation_description="When sending a track to an existing Google Map, the progress dialog
+      message informing the user that his maps are being loaded.">
+    Loading your Google Maps.
+  </string>
+  <string name="maps_list_no_maps"
+    translation_description="When sending a track to an existing Google Map, the text on the
+      'Maps' list page informing the user that he doesn't have any maps.">
+    You don\'t have any maps.
+  </string>
+  <string name="maps_list_pick_map"
+    translation_description="When sending a track to an existing Google Map, the text on the
+      'Maps' list page asking the user to pick one of his maps.">
+    Pick a map:
+  </string>
+  <string name="maps_list_public_label"
+    translation_description="When sending a track to an existing Google Map, in the 'Maps'
+      list page, the label next to the maps that are public, as opposed to being unlisted.">
+    Public
+  </string>
+  <string name="maps_list_title"
+    translation_description="When sending a track to an existing Google Map, the title of the
+      page listing the user's maps in Google Maps.">
+    Your Google Maps
+  </string>
+  <string name="maps_list_unlisted_label"
+    translation_description="When sending a track to an existing Google Map, in the 'Maps'
+      list page, the label next to the maps that are unlisted, as opposed to being public.">
+    Unlisted
+  </string>
+
   <!-- Marker -->
   <string name="marker_detail_marker_description"
     translation_description="In the detail page for a waypoint marker, the text field for the marker
@@ -741,14 +773,18 @@ limitations under the License.
     A marker was inserted.
   </string>
   <string name="marker_label_end"
-    translation_description="When inserting a marker to indicate the end of a track, the label at
-      the end of the marker name. E.g., the marker is named 'track_name (End)'.">
-    (End)
+    translation_description="When inserting a marker to indicate the end of a track, the marker's
+      name. E.g., 'track_name (End)'.
+
+      %1$s track name. E.g., 'track_name'.">
+    %1$s (End)
   </string>
   <string name="marker_label_start"
-    translation_description="When inserting a marker to indicate the beginning of a track, the label
-      at the end of the marker name. E.g., the marker is named 'track_name (Start)'.">
-    (Start)
+    translation_description="When inserting a marker to indicate the start of a track, the marker's
+      name. E.g., 'track_name (Start)'.
+
+      %1$s track name. E.g., 'track_name'.">
+     %1$s (Start)
   </string>
   <string name="marker_list_context_menu_title"
     translation_description="In the context menu for a marker, the title indicating that all the
@@ -820,43 +856,6 @@ limitations under the License.
     Waypoint
   </string>
 
-  <!-- Maps List -->
-  <string name="maps_list_error"
-    translation_description="When sending a track to an existing Google Map, the text on the
-      'Maps' list page informing the user that his maps cannot be loaded at this time.">
-    Your maps could not be loaded at this time.
-  </string>
-  <string name="maps_list_loading"
-    translation_description="When sending a track to an existing Google Map, the progress dialog
-      message informing the user that his maps are being loaded.">
-    Loading maps...
-  </string>
-  <string name="maps_list_no_maps"
-    translation_description="When sending a track to an existing Google Map, the text on the
-      'Maps' list page informing the user that he doesn't have any maps.">
-    You don\'t have any maps.
-  </string>
-  <string name="maps_list_pick_map"
-    translation_description="When sending a track to an existing Google Map, the text on the
-      'Maps' list page asking the user to pick one of his maps.">
-    Pick a map:
-  </string>
-  <string name="maps_list_public_label"
-    translation_description="When sending a track to an existing Google Map, in the 'Maps'
-      list page, the label next to the maps that are public, as opposed to being unlisted.">
-    Public
-  </string>
-  <string name="maps_list_title"
-    translation_description="When sending a track to an existing Google Map, the title of the
-      page listing the user's maps in Google Maps.">
-    Your Google Maps
-  </string>
-  <string name="maps_list_unlisted_label"
-    translation_description="When sending a track to an existing Google Map, in the 'Maps'
-      list page, the label next to the maps that are unlisted, as opposed to being public.">
-    Unlisted
-  </string>
-  
   <!-- Menu Items -->
   <string name="menu_aggregated_statistics"
     translation_description="In the menu, to go to the aggregated statistics page.
@@ -906,6 +905,10 @@ limitations under the License.
 
       Screenshot: menu_record_track.png">
     Record track
+  </string>
+  <string name="menu_search"
+    translation_description="In the menu, to start a textual search for tracks or waypoints.">
+    Search
   </string>
   <string name="menu_sensor_state"
     translation_description="In the menu, to go to the sensor state page.
@@ -1088,6 +1091,24 @@ limitations under the License.
     Finished writing to the SD card.
   </string>
 
+  <!-- Search interface -->
+  <string name="search_global_description"
+    translation_description="Description of what is searched in My Tracks, to be displayed in the
+      global system search settings.">
+    My Tracks tracks and waypoints
+  </string>
+  <string name="search_hint"
+    translation_description="The hint shown on the search box until the user types a search query.
+      See suggestion at http://developer.android.com/guide/topics/search/search-dialog.html about
+      keeping this consistent with other Android apps.">
+    Search My Tracks tracks and waypoints
+  </string>
+  <string name="search_voice_prompt"
+    translation_description="Prompt shown when the user activates voice search, asking him to speak
+      what will be searched for.">
+    Speak the name of a track or waypoint.
+  </string>
+
   <!-- Send Google -->
   <string name="send_google_by_my_tracks"
     translation_description="When sending a track to Google, a note indicating it is created by
@@ -1153,36 +1174,12 @@ limitations under the License.
       found.">
     No account found
   </string>
-  <string name="send_google_progress_authenticating"
-    translation_description="When sending a track to a Google service, the message on the progress
-      dialog indicating authenticating to the service.
+  <string name="send_google_progress_title"
+    translation_description="When sending a track to a Google service, the title on the progress
+      dialog.
 
       %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Docs'.">
-    Authenticating to %1$s...
-  </string>
-  <string name="send_google_progress_creating"
-    translation_description="When sending a track to a Google service, the message on the progress
-      dialog indicating creating a new service item.
-
-      %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Docs'.">
-    Creating a new %1$s item...
-  </string>
-  <string name="send_google_progress_preparing_track"
-    translation_description="When sending a track to Google Maps, the message on the progress
-      dialog indicating My Tracks is preparing the track's data for upload.">
-    Preparing track...
-  </string>
-  <string name="send_google_progress_reading_track"
-    translation_description="When sending a track to Google, the message on the progress dialog
-      indicating My Tracks is reading the track from its database.">
-    Reading track...
-  </string>
-  <string name="send_google_progress_sending"
-    translation_description="When sending a track to Google service, the message on the progress
-      dialog indicating My Tracks is sending the track data.
-
-      %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Docs'.">
-    Sending a track to %1$s...
+    Sending to %1$s. Please wait...
   </string>
   <string name="send_google_recorded"
     translation_description="When sending a track to Google, in the track description, a tag
@@ -1226,11 +1223,12 @@ limitations under the License.
     Send to...
   </string>
   <string name="send_google_track_part_label"
-    translation_description="When sending a track to Google, the label to name segments when
-      splitting a large track.
+    translation_description="When sending a track to Google, the label to name segments of a large
+      track. E.g., 'track_name (Part 1)'
 
-      %1$d: part number. E.g., '1'.">
-    (Part %1$d)
+      %1$s: track name. E.g., 'track_name'
+      %2$d: part number. E.g., '1'.">
+    %1$s (Part %2$d)
   </string>
 
   <!-- Sensor State -->
@@ -1697,28 +1695,28 @@ limitations under the License.
   <string name="settings_recording_track_name"
     translation_description="In the 'Recording' settings, the title for the dropdown list to choose
       the default track name.
-      
+
       Character limit: ~23 (1 line)">
     Track name
   </string>
   <string name="settings_recording_track_name_date_iso_8601_option"
-    translation_description="In the 'Recording' settings, the option in the 'Track name' dropdown 
+    translation_description="In the 'Recording' settings, the option in the 'Track name' dropdown
       list to use the track start time in ISO-8601 date format as the track name.
-      
+
       Character limit: ~21 (1 line)">
     Date (ISO 8601)
   </string>
   <string name="settings_recording_track_name_date_local_option"
     translation_description="In the 'Recording' settings, the option in the 'Track name' dropdown
       list to use the track start time in local date format as the track name.
-      
+
       Character limit: ~21 (1 line)">
     Date (local)
   </string>
   <string name="settings_recording_track_name_number_option"
     translation_description="In the 'Recording' settings, the option in the 'Track name' dropdown
       list to use a number as the track name.
-      
+
       Character limit: ~21 (1 line)">
     Number
   </string>
@@ -1734,13 +1732,6 @@ limitations under the License.
       Character limit: ~23 (1 line)
       Screenshot: settings_recording_top.png">
     Voice
-  </string>
-  <string name="settings_recording_voice_not_available"
-    translation_description="In the 'Recording' settings, the summary for the 'Voice'
-      explaining that this option is not available on your Android phone.
-
-      Screenshot: settings_recording_voice_not_available.png">
-    Voice announcement is not available on your Android phone.
   </string>
   <string name="settings_recording_voice_summary"
     translation_description="In the 'Recording' settings, the summary for the 'Voice'

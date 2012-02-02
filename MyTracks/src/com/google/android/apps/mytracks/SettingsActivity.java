@@ -20,13 +20,13 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 import com.google.android.apps.mytracks.io.backup.BackupActivityHelper;
 import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
 import com.google.android.apps.mytracks.services.sensors.ant.AntUtils;
-import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
-import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.BluetoothDeviceUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.app.AlertDialog;
+import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -44,6 +44,7 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -102,10 +103,7 @@ public class SettingsActivity extends PreferenceActivity {
     super.onCreate(icicle);
 
     // The volume we want to control is the Text-To-Speech volume
-    ApiFeatures apiFeatures = ApiFeatures.getInstance();
-    int volumeStream =
-        new StatusAnnouncerFactory(apiFeatures).getVolumeStream();
-    setVolumeControlStream(volumeStream);
+    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
     // Tell it where to read/write preferences
     PreferenceManager preferenceManager = getPreferenceManager();
@@ -113,23 +111,13 @@ public class SettingsActivity extends PreferenceActivity {
     preferenceManager.setSharedPreferencesMode(0);
 
     // Set up automatic preferences backup
-    backupListener = apiFeatures.getApiAdapter().getBackupPreferencesListener(this);
+    backupListener = ApiAdapterFactory.getApiAdapter().getBackupPreferencesListener(this);
     preferences = preferenceManager.getSharedPreferences();
     preferences.registerOnSharedPreferenceChangeListener(backupListener);
 
     // Load the preferences to be displayed
     addPreferencesFromResource(R.xml.preferences);
 
-    // Disable voice announcement if not available
-    if (!apiFeatures.hasTextToSpeech()) {
-      IntegerListPreference announcementFrequency =
-          (IntegerListPreference) findPreference(
-              getString(R.string.announcement_frequency_key));
-      announcementFrequency.setEnabled(false);
-      announcementFrequency.setValue(TASK_FREQUENCY_OFF);
-      announcementFrequency.setSummary(R.string.settings_recording_voice_not_available);
-    }
-    
     setRecordingIntervalOptions();
     setAutoResumeTimeoutOptions();
 
@@ -557,20 +545,17 @@ public class SettingsActivity extends PreferenceActivity {
    * Configures preference actions related to bluetooth.
    */
   private void configureBluetoothPreferences() {
-    if (BluetoothDeviceUtils.isBluetoothMethodSupported()) {
-      // Populate the list of bluetooth devices
-      populateBluetoothDeviceList();
-
-      // Make the pair devices preference go to the system preferences
-      findPreference(getString(R.string.bluetooth_pairing_key))
-          .setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference preference) {
-              Intent settingsIntent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
-              startActivity(settingsIntent);
-              return false;
-            }
-          });
-    }
+    // Populate the list of bluetooth devices
+    populateBluetoothDeviceList();
+    // Make the pair devices preference go to the system preferences
+    findPreference(getString(R.string.bluetooth_pairing_key)).setOnPreferenceClickListener(
+        new OnPreferenceClickListener() {
+          public boolean onPreferenceClick(Preference preference) {
+            Intent settingsIntent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
+            startActivity(settingsIntent);
+            return false;
+          }
+        });
   }
 
   /**
@@ -582,7 +567,10 @@ public class SettingsActivity extends PreferenceActivity {
     List<String> entryValues = new ArrayList<String>();
 
     // The actual devices
-    BluetoothDeviceUtils.getInstance().populateDeviceLists(entries, entryValues);
+    BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    if (bluetoothAdapter != null) {
+      BluetoothDeviceUtils.populateDeviceLists(bluetoothAdapter, entries, entryValues);
+    }
 
     CharSequence[] entriesArray = entries.toArray(new CharSequence[entries.size()]);
     CharSequence[] entryValuesArray = entryValues.toArray(new CharSequence[entryValues.size()]);
@@ -685,7 +673,7 @@ public class SettingsActivity extends PreferenceActivity {
     SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
     Editor editor = prefs.edit();
     editor.putString(getString(id), metricspeed);
-    ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);
+    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
   }
   
   /** 

@@ -22,7 +22,7 @@ import com.dsi.ant.AntMesg;
 import com.dsi.ant.exception.AntInterfaceException;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Sensor;
-import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -111,7 +111,7 @@ public class AntDirectSensorManager extends AntSensorManager
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     SharedPreferences.Editor editor = prefs.edit();
     editor.putInt(context.getString(sensorIdKeys[channel]), deviceNumber);
-    ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);
+    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
     return deviceNumber;
   }
 

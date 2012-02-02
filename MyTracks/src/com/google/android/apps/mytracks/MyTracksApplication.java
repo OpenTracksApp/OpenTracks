@@ -22,7 +22,7 @@ import android.app.Application;
 /**
  * MyTracksApplication for keeping global state.
  *
- * @author jshih@google.com (Jimmy Shih)
+ * @author Jimmy Shih
  */
 public class MyTracksApplication extends Application {
 

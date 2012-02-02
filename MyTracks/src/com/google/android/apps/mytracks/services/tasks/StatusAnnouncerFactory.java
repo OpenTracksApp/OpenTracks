@@ -15,10 +15,9 @@
  */
 package com.google.android.apps.mytracks.services.tasks;
 
-import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 
 import android.content.Context;
-import android.media.AudioManager;
 
 /**
  * Factory which wraps construction and setup of text-to-speech announcements in
@@ -28,30 +27,11 @@ import android.media.AudioManager;
  */
 public class StatusAnnouncerFactory implements PeriodicTaskFactory {
 
-  private final boolean hasTts;
-
-  public StatusAnnouncerFactory(ApiFeatures apiFeatures) {
-    this.hasTts = apiFeatures.hasTextToSpeech();
+  public StatusAnnouncerFactory() {
   }
 
   @Override
   public PeriodicTask create(Context context) {
-    if (hasTts) {
-      return ApiFeatures.getInstance().getApiAdapter().getStatusAnnouncerTask(context);
-    } else {
-      return null;
-    }
-  }
-
-  /**
-   * Returns the appropriate volume stream for controlling announcement
-   * volume.
-   */
-  public int getVolumeStream() {
-    if (hasTts) {
-      return StatusAnnouncerTask.getVolumeStream();
-    } else {
-      return AudioManager.USE_DEFAULT_STREAM_TYPE;
-    }
+    return ApiAdapterFactory.getApiAdapter().getStatusAnnouncerTask(context);
   }
 }

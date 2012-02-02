@@ -216,7 +216,7 @@ public class TrackWidgetProvider
 
     // TODO replace this with format strings and miles.
     // convert meters to kilometers
-    double displayDistance = stats.getTotalDistance() / 1000;
+    double displayDistance = stats.getTotalDistance() / 1000.0;
     if (!isMetric) {
       displayDistance *= UnitConversions.KM_TO_MI;
     }

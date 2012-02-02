@@ -126,7 +126,7 @@ public class PeriodicTaskExecutor {
       return;
     }
 
-    double distance = service.getTripStatistics().getTotalDistance() / 1000;
+    double distance = service.getTripStatistics().getTotalDistance() / 1000.0;
     if (!metricUnits) {
       distance *= UnitConversions.KM_TO_MI;
     }

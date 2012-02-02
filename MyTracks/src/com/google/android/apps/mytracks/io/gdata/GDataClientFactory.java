@@ -36,6 +36,7 @@ public class GDataClientFactory {
    * @return A GDataClient appropriate for this platform
    */
   public static GDataClient getGDataClient(Context context) {
+    // TODO This should be moved into ApiAdapter
     try {
       // Try to use the official unbundled gdata client implementation.
       // This should work on Froyo and beyond.

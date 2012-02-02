@@ -87,7 +87,7 @@ limitations under the License.
       android:text="@string/about_support"
       style="@style/AboutLabel"/>
     <TextView
-      android:text="@string/my_tracks_web_url"
+      android:text="@string/my_tracks_support_url"
       style="@style/AboutUrl"/>
 
     <!--  Privacy -->
