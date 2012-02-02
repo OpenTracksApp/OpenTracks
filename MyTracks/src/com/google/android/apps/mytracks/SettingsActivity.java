@@ -22,10 +22,11 @@ import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
 import com.google.android.apps.mytracks.services.sensors.ant.AntUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.BluetoothDeviceUtils;
+import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -60,6 +61,9 @@ import java.util.Set;
  * @author Rodrigo Damazio
  */
 public class SettingsActivity extends PreferenceActivity {
+
+  private static final int DIALOG_CONFIRM_RESET = 0;
+  private static final int DIALOG_CONFIRM_ACCESS = 1;
 
   // Value when the task frequency is off.
   private static final String TASK_FREQUENCY_OFF = "0";
@@ -146,31 +150,19 @@ public class SettingsActivity extends PreferenceActivity {
     resetPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
       @Override
       public boolean onPreferenceClick(Preference arg0) {
-        onResetPreferencesClick();
+        showDialog(DIALOG_CONFIRM_RESET);
         return true;
       }
     });
     
     // Add a confirmation dialog for the 'Allow access' preference.
-    final CheckBoxPreference allowAccessPreference = (CheckBoxPreference) findPreference(
+    CheckBoxPreference allowAccessPreference = (CheckBoxPreference) findPreference(
         getString(R.string.allow_access_key));
     allowAccessPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
       @Override
       public boolean onPreferenceChange(Preference preference, Object newValue) {
         if ((Boolean) newValue) {
-          AlertDialog dialog = new AlertDialog.Builder(SettingsActivity.this)
-              .setCancelable(true)
-              .setTitle(getString(R.string.settings_sharing_allow_access))
-              .setMessage(getString(R.string.settings_sharing_allow_access_confirm_message))
-              .setPositiveButton(android.R.string.ok, new OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int button) {
-                  allowAccessPreference.setChecked(true);
-                }
-              })
-              .setNegativeButton(android.R.string.cancel, null)
-              .create();
-          dialog.show();
+          showDialog(DIALOG_CONFIRM_ACCESS);
           return false;
         } else {
           return true;
@@ -178,7 +170,33 @@ public class SettingsActivity extends PreferenceActivity {
       }
     });
   }
-  
+
+  @Override
+  protected Dialog onCreateDialog(int id) {
+    switch (id) {
+      case DIALOG_CONFIRM_RESET:
+        return DialogUtils.createConfirmationDialog(
+            this, R.string.settings_reset_confirm_message, new OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int button) {
+                onResetPreferencesConfirmed();
+              }
+            });
+      case DIALOG_CONFIRM_ACCESS:
+        return DialogUtils.createConfirmationDialog(
+            this, R.string.settings_sharing_allow_access_confirm_message, new OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int button) {
+                CheckBoxPreference pref = (CheckBoxPreference) findPreference(
+                    getString(R.string.allow_access_key));
+                pref.setChecked(true);
+              }
+            });
+      default:
+        return null;
+    }
+  }
+
   /**
    * Sets the display options for the 'Time between points' option.
    */
@@ -578,24 +596,6 @@ public class SettingsActivity extends PreferenceActivity {
         (ListPreference) findPreference(getString(R.string.bluetooth_sensor_key));
     devicesPreference.setEntryValues(entryValuesArray);
     devicesPreference.setEntries(entriesArray);
-  }
-
-  /** Callback for when user asks to reset all settings. */
-  private void onResetPreferencesClick() {
-    AlertDialog dialog = new AlertDialog.Builder(this)
-        .setCancelable(true)
-        .setTitle(R.string.settings_reset)
-        .setMessage(R.string.settings_reset_dialog_message)
-        .setPositiveButton(android.R.string.ok,
-            new OnClickListener() {
-              @Override
-              public void onClick(DialogInterface dialogInterface, int button) {
-                onResetPreferencesConfirmed();
-              }
-            })
-        .setNegativeButton(android.R.string.cancel, null)
-        .create();
-    dialog.show();
   }
 
   /** Callback for when user confirms resetting all settings. */

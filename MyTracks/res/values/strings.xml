@@ -1748,14 +1748,11 @@ limitations under the License.
       Screenshot: settings.png">
     Reset
   </string>
-  <string name="settings_reset_dialog_message"
-    translation_description="In the 'Settings' page, after pressing the 'Reset' option,
-      the confirmation dialog asking the user to confirm reverting all settings to defaults. But
-      the saved tracks will be preserved.
-
-      Screenshot: settings_reset_dialog_message.png">
+  <string name="settings_reset_confirm_message"
+    translation_description="In the 'Settings' page, after pressing the 'Reset' option, the
+      confirmation dialog message informing the user that all settings will be reverted.">
     All your settings will be erased and reverted to the default values. Saved tracks will be
-    preserved. Are you sure?
+    preserved.
   </string>
   <string name="settings_reset_done"
     translation_description="In the 'Settings' page, after pressing the 'Reset' option,
@@ -1935,13 +1932,11 @@ limitations under the License.
   </string>
   <string name="settings_sharing_allow_access_confirm_message"
     translation_description="In the 'Sharing' settings, after checking the 'Allow access' checkbox,
-      the confirmation dialog asking the user if he wants to allow other apps, including apps
-      installed in the future, to control and access My Tracks data. In addition, no further
-      notification of third party app access will be shown.
-
-      Screenshot: settings_sharing_allow_access_confirm_message.png">
-    Are you sure you want to allow other apps, including future apps, to control and access My
-    Tracks data? There will be no further notification.
+      the confirmation dialog message informing the user that other apps, including apps
+      installed in the future, will be able to control and access My Tracks data. In addition, no
+      further notification of third party app access will be shown.">
+    Other apps, including future apps, will be able to control and access My Tracks data. There will
+    be no further notification.
   </string>
   <string name="settings_sharing_allow_access_summary_off"
     translation_description="In the 'Sharing' settings, the summary for the 'Allow access' checkbox
