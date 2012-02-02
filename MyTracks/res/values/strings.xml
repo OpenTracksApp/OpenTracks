@@ -1115,6 +1115,11 @@ limitations under the License.
       keeping this consistent with other Android apps.">
     Search My Tracks
   </string>
+  <string name="search_no_results"
+    translation_description="Message shown instead of a list of results to indicate there were no
+      search results.">
+    No tracks or waypoints matched your search.
+  </string>
   <string name="search_voice_prompt"
     translation_description="Prompt shown when the user activates voice search, asking him to speak
       what will be searched for.">

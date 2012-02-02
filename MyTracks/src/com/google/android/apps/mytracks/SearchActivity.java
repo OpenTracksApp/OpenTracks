@@ -83,6 +83,8 @@ public class SearchActivity extends ListActivity {
     locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
     preferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
+    setContentView(R.layout.search_list);
+
     handleIntent(getIntent());
   }
 
