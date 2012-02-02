@@ -97,8 +97,9 @@ public abstract class AntSensorManager extends SensorManager {
         if (DEBUGGING) {
           Log.d(TAG, "Received RX message " + messageToString(antMessage));
         }
-
-        handleMessage(antMessage);
+        if (getAntReceiver() != null) {
+          handleMessage(antMessage);
+        }
       }
     }
   };
