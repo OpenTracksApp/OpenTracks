@@ -17,23 +17,23 @@ public class SensorManagerFactoryTest extends AndroidTestCase {
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    
+
     sharedPreferences = getContext().getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     // Let's use default values.
     sharedPreferences.edit().clear().apply();
   }
-  
+
   @SmallTest
   public void testDefaultSettings() throws Exception {
     assertNull(SensorManagerFactory.getSensorManager(getContext()));
   }
-  
+
   @SmallTest
   public void testCreateZephyr() throws Exception {
     assertClassForName(ZephyrSensorManager.class, R.string.sensor_type_value_zephyr);
   }
-  
+
   @SmallTest
   public void testCreateAnt() throws Exception {
     assertClassForName(AntDirectSensorManager.class, R.string.sensor_type_value_ant);
@@ -52,5 +52,6 @@ public class SensorManagerFactoryTest extends AndroidTestCase {
     SensorManager sm = SensorManagerFactory.getSensorManager(getContext());
     assertNotNull(sm);
     assertTrue(c.isInstance(sm));
+    SensorManagerFactory.releaseSensorManager(sm);
   }
 }

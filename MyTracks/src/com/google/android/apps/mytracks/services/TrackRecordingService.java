@@ -296,7 +296,7 @@ public class TrackRecordingService extends Service {
     handleStartCommand(intent, startId);
     return START_STICKY;
   }
-  
+
   private void handleStartCommand(Intent intent, int startId) {
     Log.d(TAG, "TrackRecordingService.handleStartCommand: " + startId);
 
@@ -313,7 +313,7 @@ public class TrackRecordingService extends Service {
   private boolean isTrackInProgress() {
     return recordingTrackId != -1 || isRecording;
   }
-  
+
   private void resumeTrack(int startId) {
     Log.d(TAG, "TrackRecordingService: requested resume");
 
@@ -358,7 +358,7 @@ public class TrackRecordingService extends Service {
     unregisterLocationListener();
     shutdownTaskExecutors();
     if (sensorManager != null) {
-      sensorManager.shutdown();
+      SensorManagerFactory.releaseSensorManager(sensorManager);
       sensorManager = null;
     }
 
@@ -499,12 +499,12 @@ public class TrackRecordingService extends Service {
   protected void startForegroundService(Notification notification) {
     startForeground(1, notification);
   }
-  
+
   @VisibleForTesting
   protected void stopForegroundService() {
     stopForeground(true);
   }
-  
+
   private void setUpTaskExecutors() {
     announcementExecutor = new PeriodicTaskExecutor(this, new StatusAnnouncerFactory());
     splitExecutor = new PeriodicTaskExecutor(this, new SplitTask.Factory());
@@ -559,7 +559,7 @@ public class TrackRecordingService extends Service {
     Log.d(TAG,
         "Location listener now unregistered w/ TrackRecordingService.");
   }
-  
+
   private String getDefaultActivityType(Context context) {
     SharedPreferences prefs = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
@@ -601,10 +601,7 @@ public class TrackRecordingService extends Service {
     length = 0;
     showNotification();
     registerLocationListener();
-    sensorManager = SensorManagerFactory.getSensorManager(this);
-    if (sensorManager != null) {
-      sensorManager.onStartTrack();
-    }
+    sensorManager = SensorManagerFactory.getSensorManager(this);    
 
     // Reset the number of auto-resume retries.
     setAutoResumeTrackRetries(0);
@@ -1038,7 +1035,7 @@ public class TrackRecordingService extends Service {
     prefManager.setRecordingTrack(recordingTrackId = -1);
 
     if (sensorManager != null) {
-      sensorManager.shutdown();
+      SensorManagerFactory.releaseSensorManager(sensorManager);
       sensorManager = null;
     }
 
@@ -1056,7 +1053,7 @@ public class TrackRecordingService extends Service {
         .setAction(getString(actionResId))
         .putExtra(getString(R.string.track_id_broadcast_extra), trackId);
     sendBroadcast(broadcastIntent, getString(R.string.permission_notification_value));
-    
+
     SharedPreferences sharedPreferences = getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     if (sharedPreferences.getBoolean(getString(R.string.allow_access_key), false)) {
@@ -1202,17 +1199,17 @@ public class TrackRecordingService extends Service {
         throw new IllegalStateException("The service has been already detached!");
       }
     }
-    
+
     /**
      * Returns true if the RPC caller is from the same application or if the
      * "Allow access" setting indicates that another app can invoke this service's
-     * RPCs. 
+     * RPCs.
      */
     private boolean canAccess() {
-      
+
       // As a precondition for access, must check if the service is available.
       checkService();
-      
+
       if (Process.myPid() == Binder.getCallingPid()) {
         return true;
       } else {
@@ -1297,7 +1294,7 @@ public class TrackRecordingService extends Service {
     public int getSensorState() {
       if (!canAccess()) {
         return Sensor.SensorState.NONE.getNumber();
-      }      
+      }
       if (service.sensorManager == null) {
         Log.d(TAG, "No sensor manager for data.");
         return Sensor.SensorState.NONE.getNumber();
