@@ -1,0 +1,88 @@
+/*
+ * Copyright 2012 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+package com.google.android.apps.mytracks.io.fusiontables;
+
+import com.google.android.apps.mytracks.io.docs.SendDocsActivity;
+import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendActivity;
+import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendAsyncTask;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
+import com.google.android.apps.mytracks.io.sendtogoogle.UploadResultActivity;
+import com.google.android.maps.mytracks.R;
+
+import android.content.Intent;
+
+/**
+ * An activity to send a track to Google Fusion Tables.
+ *
+ * @author Jimmy Shih
+ */
+public class SendFusionTablesActivity extends AbstractSendActivity {
+
+  private static final String TAG = SendFusionTablesActivity.class.getSimpleName();
+  
+  @Override
+  protected String getTag() {
+    return TAG;
+  }
+
+  @Override
+  protected String getAuthTokenType() {
+    return SendFusionTablesUtils.SERVICE;
+  }
+
+  @Override
+  protected PermissionCallback getPermissionCallback() {
+    return new PermissionCallback() {
+      @Override
+      public void onSuccess() {
+        executeAsyncTask();
+      }
+      @Override
+      public void onFailure() {
+        startNextActivity(false, false);
+      }
+    };
+  }
+  
+  @Override
+  protected AbstractSendAsyncTask createAsyncTask() {
+    return new SendFusionTablesAsyncTask(this, sendRequest.getTrackId(), sendRequest.getAccount());
+  }
+
+  @Override
+  protected String getServiceName() {
+    return getString(R.string.send_google_fusion_tables);
+  }
+
+  @Override
+  protected void startNextActivity(boolean success, boolean isCancel) {
+    sendRequest.setFusionTablesSuccess(success);
+
+    Class<?> next;
+    if (isCancel) {
+      next = UploadResultActivity.class;
+    } else {
+      if (sendRequest.isSendDocs()) {
+        next = SendDocsActivity.class;
+      } else {
+        next = UploadResultActivity.class;
+      }
+    }
+    Intent intent = new Intent(this, next).putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
+    startActivity(intent);
+    finish();
+  }
+}
