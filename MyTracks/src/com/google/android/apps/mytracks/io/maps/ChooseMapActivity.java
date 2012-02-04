@@ -15,16 +15,10 @@
  */
 package com.google.android.apps.mytracks.io.maps;
 
-import com.google.android.apps.mytracks.io.gdata.maps.MapsConstants;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsMapMetadata;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.maps.mytracks.R;
 
-import android.accounts.AccountManager;
-import android.accounts.AccountManagerCallback;
-import android.accounts.AccountManagerFuture;
-import android.accounts.AuthenticatorException;
-import android.accounts.OperationCanceledException;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -35,7 +29,6 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -43,7 +36,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -55,7 +47,6 @@ public class ChooseMapActivity extends Activity {
 
   private static final int PROGRESS_DIALOG = 1;
   private static final int ERROR_DIALOG = 2;
-  private static final String TAG = ChooseMapActivity.class.getSimpleName();
   
   private SendRequest sendRequest;
   private ChooseMapAsyncTask asyncTask;
@@ -114,46 +105,13 @@ public class ChooseMapActivity extends Activity {
       asyncTask = (ChooseMapAsyncTask) retained;
       asyncTask.setActivity(this);
     } else {
-      promptPermission();
+      asyncTask = new ChooseMapAsyncTask(this, sendRequest.getAccount());
+      asyncTask.execute();
     }
-  }
-
-  /**
-   * Prompts the user for permission to access the Google Maps service.
-   */
-  private void promptPermission() {
-    AccountManager.get(this).getAuthToken(sendRequest.getAccount(), MapsConstants.SERVICE_NAME,
-        null, this, new AccountManagerCallback<Bundle>() {
-          @Override
-          public void run(AccountManagerFuture<Bundle> future) {
-            try {
-              if (future.getResult().getString(AccountManager.KEY_AUTHTOKEN) != null) {
-                asyncTask = new ChooseMapAsyncTask(
-                    ChooseMapActivity.this, sendRequest.getAccount());
-                asyncTask.execute();
-              } else {
-                Log.d(TAG, "auth token is null");
-                finish();
-              }
-            } catch (OperationCanceledException e) {
-              Log.d(TAG, "Unable to get auth token", e);
-              finish();
-            } catch (AuthenticatorException e) {
-              Log.d(TAG, "Unable to get auth token", e);
-              finish();
-            } catch (IOException e) {
-              Log.d(TAG, "Unable to get auth token", e);
-              finish();
-            }
-          }
-        }, null);
   }
 
   @Override
   public Object onRetainNonConfigurationInstance() {
-    if (asyncTask == null) {
-      return null;
-    }
     asyncTask.setActivity(null);
     return asyncTask;
   }

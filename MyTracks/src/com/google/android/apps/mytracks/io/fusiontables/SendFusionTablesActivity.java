@@ -31,32 +31,6 @@ import android.content.Intent;
  */
 public class SendFusionTablesActivity extends AbstractSendActivity {
 
-  private static final String TAG = SendFusionTablesActivity.class.getSimpleName();
-  
-  @Override
-  protected String getTag() {
-    return TAG;
-  }
-
-  @Override
-  protected String getAuthTokenType() {
-    return SendFusionTablesUtils.SERVICE;
-  }
-
-  @Override
-  protected PermissionCallback getPermissionCallback() {
-    return new PermissionCallback() {
-      @Override
-      public void onSuccess() {
-        executeAsyncTask();
-      }
-      @Override
-      public void onFailure() {
-        startNextActivity(false, false);
-      }
-    };
-  }
-  
   @Override
   protected AbstractSendAsyncTask createAsyncTask() {
     return new SendFusionTablesAsyncTask(this, sendRequest.getTrackId(), sendRequest.getAccount());

@@ -17,7 +17,6 @@ package com.google.android.apps.mytracks.io.maps;
 
 import com.google.android.apps.mytracks.io.docs.SendDocsActivity;
 import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesActivity;
-import com.google.android.apps.mytracks.io.gdata.maps.MapsConstants;
 import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendAsyncTask;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
@@ -33,31 +32,6 @@ import android.content.Intent;
  */
 public class SendMapsActivity extends AbstractSendActivity {
 
-  private static final String TAG = SendMapsActivity.class.getSimpleName();
-  
-  protected String getTag() {
-    return TAG;
-  }
-
-  @Override
-  protected String getAuthTokenType() {
-    return MapsConstants.SERVICE_NAME;
-  }
-
-  @Override
-  protected PermissionCallback getPermissionCallback() {
-    return new PermissionCallback() {
-      @Override
-      public void onSuccess() {
-        executeAsyncTask();
-      }
-      @Override
-      public void onFailure() {
-        startNextActivity(false, false);
-      }
-    };
-  }
-  
   @Override
   protected AbstractSendAsyncTask createAsyncTask() {
     return new SendMapsAsyncTask(

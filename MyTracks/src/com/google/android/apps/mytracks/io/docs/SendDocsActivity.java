@@ -15,8 +15,6 @@
  */
 package com.google.android.apps.mytracks.io.docs;
 
-import com.google.android.apps.mytracks.io.gdata.docs.DocumentsClient;
-import com.google.android.apps.mytracks.io.gdata.docs.SpreadsheetsClient;
 import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendAsyncTask;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
@@ -32,42 +30,6 @@ import android.content.Intent;
  */
 public class SendDocsActivity extends AbstractSendActivity {
 
-  private static final String TAG = SendDocsActivity.class.getSimpleName();
-
-  @Override
-  protected String getTag() {
-    return TAG;
-  }
-
-  @Override
-  protected String getAuthTokenType() {
-    return DocumentsClient.SERVICE;
-  }
-
-  @Override
-  protected PermissionCallback getPermissionCallback() {
-    return new PermissionCallback() {
-      @Override
-      public void onSuccess() {
-        // prompts for permission to access Google spreadsheet
-        promptPermission(SpreadsheetsClient.SERVICE, new PermissionCallback() {
-          @Override
-          public void onSuccess() {
-            executeAsyncTask();
-          }
-          @Override
-          public void onFailure() {
-            startNextActivity(false, false);
-          }
-        });
-      }
-      @Override
-      public void onFailure() {
-        startNextActivity(false, false);
-      }
-    };
-  }
-  
   @Override
   protected AbstractSendAsyncTask createAsyncTask() {
     return new SendDocsAsyncTask(this, sendRequest.getTrackId(), sendRequest.getAccount());

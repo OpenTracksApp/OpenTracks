@@ -18,19 +18,11 @@ package com.google.android.apps.mytracks.io.sendtogoogle;
 
 import com.google.android.maps.mytracks.R;
 
-import android.accounts.AccountManager;
-import android.accounts.AccountManagerCallback;
-import android.accounts.AccountManagerFuture;
-import android.accounts.AuthenticatorException;
-import android.accounts.OperationCanceledException;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
-
-import java.io.IOException;
 
 /**
  * The abstract class for activities sending a track to Google.
@@ -51,25 +43,6 @@ public abstract class AbstractSendActivity extends Activity {
 
   private static final int PROGRESS_DIALOG = 1;
 
-  /**
-   * A callback after prompting the user for permission to access a Google
-   * service.
-   *
-   * @author Jimmy Shih
-   */
-  public interface PermissionCallback {
-
-    /**
-     * Invoke when the permission is granted.
-     */
-    public void onSuccess();
-
-    /**
-     * Invoke when the permission is not granted.
-     */
-    public void onFailure();
-  }
-  
   protected SendRequest sendRequest;
   private AbstractSendAsyncTask asyncTask;
   private ProgressDialog progressDialog;
@@ -84,15 +57,13 @@ public abstract class AbstractSendActivity extends Activity {
       asyncTask = (AbstractSendAsyncTask) retained;
       asyncTask.setActivity(this);
     } else {
-      promptPermission(getAuthTokenType(), getPermissionCallback());
+      asyncTask = createAsyncTask();
+      asyncTask.execute();
     }
   }
 
   @Override
   public Object onRetainNonConfigurationInstance() {
-    if (asyncTask == null) {
-      return null;
-    }
     asyncTask.setActivity(null);
     return asyncTask;
   }
@@ -146,62 +117,6 @@ public abstract class AbstractSendActivity extends Activity {
     if (progressDialog != null) {
       progressDialog.setProgress(value);
     }
-  }
-
-  /**
-   * Gets the logging TAG.
-   */
-  protected abstract String getTag();
-
-  /**
-   * Gets the auth token type.
-   */
-  protected abstract String getAuthTokenType();
-  
-  /**
-   * Gets the callback for requesting permission to access a service.
-   */
-  protected abstract PermissionCallback getPermissionCallback();
-
-  /**
-   * Prompts the user for permission to access the service.
-   *
-   * @param authTokenType the auth token type
-   * @param callback the callback
-   */
-  protected void promptPermission(String authTokenType, final PermissionCallback callback) {
-    AccountManager.get(this).getAuthToken(
-        sendRequest.getAccount(), authTokenType, null, this, new AccountManagerCallback<Bundle>() {
-          @Override
-          public void run(AccountManagerFuture<Bundle> future) {
-            try {
-              if (future.getResult().getString(AccountManager.KEY_AUTHTOKEN) != null) {
-                callback.onSuccess();
-              } else {
-                Log.d(getTag(), "auth token is null");
-                callback.onFailure();
-              }
-            } catch (OperationCanceledException e) {
-              Log.d(getTag(), "Unable to get auth token", e);
-              callback.onFailure();
-            } catch (AuthenticatorException e) {
-              Log.d(getTag(), "Unable to get auth token", e);
-              callback.onFailure();
-            } catch (IOException e) {
-              Log.d(getTag(), "Unable to get auth token", e);
-              callback.onFailure();
-            }
-          }
-        }, null);
-  }
-
-  /**
-   * Executes the AsyncTask after obtaining user permission to access the
-   * service.
-   */
-  protected void executeAsyncTask() {
-    asyncTask = createAsyncTask();
-    asyncTask.execute();
   }
 
   /**
