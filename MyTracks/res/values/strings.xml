@@ -815,6 +815,10 @@ limitations under the License.
       Screenshot: marker_list_context_menu.png">
     Edit
   </string>
+  <string name="marker_list_icon_description"
+    translation_description="In the Markers page, the accessibility description for the marker icon.">
+    Marker
+  </string>
   <string name="marker_list_insert_statistics"
     translation_description="In the Markers page, the button on the bottom to insert a statistics
       marker.
@@ -1101,7 +1105,12 @@ limitations under the License.
     translation_description="The hint shown on the search box until the user types a search query.
       See suggestion at http://developer.android.com/guide/topics/search/search-dialog.html about
       keeping this consistent with other Android apps.">
-    Search My Tracks tracks and waypoints
+    Search My Tracks
+  </string>
+  <string name="search_no_results"
+    translation_description="Message shown instead of a list of results to indicate there were no
+      search results.">
+    No tracks or waypoints matched your search.
   </string>
   <string name="search_voice_prompt"
     translation_description="Prompt shown when the user activates voice search, asking him to speak
@@ -2325,6 +2334,17 @@ limitations under the License.
 
       Screenshot: track_list_show_on_map.png">
     Show on map
+  </string>
+  <string name="track_list_icon_description"
+    translation_description="In the 'Tracks' page, the accessibility description for the track icon.">
+    Track
+  </string>
+  <string name="track_list_track_name"
+    translation_description="In the 'Search Result' page, the text field indicating the track that a
+      waypoint belongs to.
+
+      %1$s: track name. E.g., 'Grand Canyon trail'">
+    In track \'%1$s\'.
   </string>
   <string name="track_name_format"
     translation_description="When creating a new track, the string format to name the track.

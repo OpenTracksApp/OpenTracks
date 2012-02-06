@@ -77,8 +77,41 @@ public class StringUtils implements DescriptionGenerator {
     return DateUtils.formatElapsedTime(time / 1000);
   }
 
+  /**
+   * Formats the elapsed time and total distance.
+   *
+   * @param context the current context
+   * @param totalDistance the total distance in meters
+   * @param totalTime the total time in milliseconds
+   * @param metric whether to use metric units
+   * @return the formatted string
+   */
+  public static String formatTimeDistance(Context context, double totalDistance, long totalTime, boolean metric) {
+    String distanceUnit;
+    if (metric) {
+      if (totalDistance > 2000.0) {
+        totalDistance /= 1000.0;
+        distanceUnit = context.getString(R.string.unit_kilometer);
+      } else {
+        distanceUnit = context.getString(R.string.unit_meter);
+      }
+    } else {
+      if (totalDistance > 2 * UnitConversions.MI_TO_M) {
+        totalDistance /= UnitConversions.MI_TO_M;
+        distanceUnit = context.getString(R.string.unit_mile);
+      } else {
+        totalDistance *= UnitConversions.M_TO_FT;
+        distanceUnit = context.getString(R.string.unit_feet);
+      }
+    }
+    return String.format("%s  %.2f %s",
+        formatElapsedTime(totalTime),
+        totalDistance,
+        distanceUnit);
+  }
+
   private static final NumberFormat SINGLE_DECIMAL_PLACE_FORMAT = NumberFormat.getNumberInstance();
-  
+
   static {
     SINGLE_DECIMAL_PLACE_FORMAT.setMaximumFractionDigits(1);
     SINGLE_DECIMAL_PLACE_FORMAT.setMinimumFractionDigits(1);
@@ -342,7 +375,7 @@ public class StringUtils implements DescriptionGenerator {
 
   /**
    * Returns the 'Created by My Tracks on Android' string.
-   * 
+   *
    * @param context the context
    * @param addLink true to add a link to the My Tracks web site
    */
@@ -355,7 +388,7 @@ public class StringUtils implements DescriptionGenerator {
       return String.format(format, "", "");
     }
   }
-  
+
   private String getSpeedString(double speed, int speedLabel, int paceLabel,
       boolean displaySpeed) {
     double speedInKph = speed * 3.6;

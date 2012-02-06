@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.content;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.LocationUtils;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
 
@@ -148,10 +147,6 @@ public class SearchEngine {
       };
 
   private final MyTracksProviderUtils providerUtils;
-
-  public SearchEngine(Context ctx) {
-    providerUtils = MyTracksProviderUtils.Factory.get(ctx);
-  }
 
   public SearchEngine(MyTracksProviderUtils providerUtils) {
     this.providerUtils = providerUtils;

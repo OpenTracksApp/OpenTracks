@@ -24,7 +24,6 @@ import com.google.android.apps.mytracks.io.sendtogoogle.UploadServiceChooserActi
 import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.app.ListActivity;
@@ -311,9 +310,9 @@ public class TrackList extends ListActivity
         new String[] { TracksColumns.NAME, TracksColumns.STARTTIME,
                        TracksColumns.TOTALDISTANCE, TracksColumns.DESCRIPTION,
                        TracksColumns.CATEGORY },
-        new int[] { R.id.trackdetails_item_name, R.id.trackdetails_item_time,
-            R.id.trackdetails_item_stats, R.id.trackdetails_item_description,
-            R.id.trackdetails_item_category });
+        new int[] { R.id.track_list_item_name, R.id.track_list_item_time,
+            R.id.track_list_item_stats, R.id.track_list_item_description,
+            R.id.track_list_item_category });
 
     final int startTimeIdx =
         tracksCursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
@@ -330,28 +329,10 @@ public class TrackList extends ListActivity
           long time = cursor.getLong(startTimeIdx);
           textView.setText(StringUtils.formatDateTime(TrackList.this, time));
         } else if (columnIndex == totalDistanceIdx) {
-          double length = cursor.getDouble(totalDistanceIdx);
-          String lengthUnit = null;
-          if (metricUnits) {
-            if (length > 1000.0) {
-              length /= 1000.0;
-              lengthUnit = getString(R.string.unit_kilometer);
-            } else {
-              lengthUnit = getString(R.string.unit_meter);
-            }
-          } else {
-            if (length > UnitConversions.MI_TO_M) {
-              length /= UnitConversions.MI_TO_M;
-              lengthUnit = getString(R.string.unit_mile);
-            } else {
-              length *= UnitConversions.M_TO_FT;
-              lengthUnit = getString(R.string.unit_feet);
-            }
-          }
-          textView.setText(String.format("%s  %.2f %s",
-              StringUtils.formatElapsedTime(cursor.getLong(totalTimeIdx)),
-              length,
-              lengthUnit));
+          double totalDistance = cursor.getDouble(totalDistanceIdx);
+          long totalTime = cursor.getLong(totalTimeIdx);
+          String totalDistanceStr = StringUtils.formatTimeDistance(TrackList.this, totalDistance, totalTime, metricUnits);
+          textView.setText(totalDistanceStr);
         } else {
           textView.setText(cursor.getString(columnIndex));
           if (textView.getText().length() < 1) {
@@ -362,6 +343,7 @@ public class TrackList extends ListActivity
         }
         return true;
       }
+
     });
     setListAdapter(adapter);
   }
