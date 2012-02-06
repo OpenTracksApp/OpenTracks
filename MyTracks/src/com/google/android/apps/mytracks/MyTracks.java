@@ -29,7 +29,7 @@ import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
-import com.google.android.apps.mytracks.util.EulaUtil;
+import com.google.android.apps.mytracks.util.EulaUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.apps.mytracks.util.UriUtils;
 import com.google.android.maps.mytracks.R;
@@ -196,7 +196,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     tabHost.addView(layout);
     layout.setOnTouchListener(this);
 
-    if (!EulaUtil.getEulaValue(this)) {
+    if (!EulaUtils.getEulaValue(this)) {
       showDialog(DIALOG_EULA_ID);
     }
   }
@@ -280,11 +280,11 @@ public class MyTracks extends TabActivity implements OnTouchListener {
       case DIALOG_EULA_ID:
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.eula_title);
-        builder.setMessage(EulaUtil.getEulaMessage(this));
+        builder.setMessage(EulaUtils.getEulaMessage(this));
         builder.setPositiveButton(R.string.eula_accept, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
-            EulaUtil.setEulaValue(MyTracks.this);
+            EulaUtils.setEulaValue(MyTracks.this);
             Intent startIntent = new Intent(MyTracks.this, WelcomeActivity.class);
             startActivityForResult(startIntent, Constants.WELCOME);
           }

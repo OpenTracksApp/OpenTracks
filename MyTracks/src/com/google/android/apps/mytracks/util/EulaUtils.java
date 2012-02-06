@@ -26,7 +26,7 @@ import java.util.Calendar;
 /**
  * Utilities for EULA.
  */
-public class EulaUtil {
+public class EulaUtils {
   private static final String EULA_PREFERENCE_FILE = "eula";
 
   // Accepting Google mobile terms of service
@@ -34,7 +34,7 @@ public class EulaUtil {
 
   private static final String HOST_NAME = "m.google.com";
 
-  private EulaUtil() {}
+  private EulaUtils() {}
 
   public static boolean getEulaValue(Context context) {
     SharedPreferences preferences = context.getSharedPreferences(
