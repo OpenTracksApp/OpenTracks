@@ -27,7 +27,6 @@ import android.content.DialogInterface.OnClickListener;
  * Utilities for creating dialogs.
  * 
  * @author Jimmy Shih
- *
  */
 public class DialogUtils {
 
@@ -43,12 +42,12 @@ public class DialogUtils {
   public static Dialog createConfirmationDialog(
       Context context, int messageId, OnClickListener onClickListener) {
     return new AlertDialog.Builder(context)
-        .setIcon(android.R.drawable.ic_dialog_alert)
-        .setTitle(R.string.generic_confirm_title)
-        .setMessage(messageId)
-        .setPositiveButton(android.R.string.ok, onClickListener)
-        .setNegativeButton(android.R.string.cancel, null)
         .setCancelable(true)
+        .setIcon(android.R.drawable.ic_dialog_alert)
+        .setMessage(messageId)
+        .setNegativeButton(android.R.string.cancel, null)
+        .setPositiveButton(android.R.string.ok, onClickListener)
+        .setTitle(R.string.generic_confirm_title)
         .create();
   }
 }
