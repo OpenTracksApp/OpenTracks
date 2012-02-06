@@ -41,7 +41,7 @@ import java.io.InputStream;
  */
 public class SpreadsheetsClient extends GDataServiceClient {
   /** The name of the service, dictated to be 'wise' by the protocol. */
-  private static final String SERVICE = "wise";
+  public static final String SERVICE = "wise";
 
   /** Standard base feed url for spreadsheets. */
   public static final String SPREADSHEETS_BASE_FEED_URL =

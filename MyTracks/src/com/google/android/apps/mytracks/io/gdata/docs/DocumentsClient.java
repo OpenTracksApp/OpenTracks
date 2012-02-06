@@ -25,7 +25,7 @@ import com.google.wireless.gdata.client.GDataServiceClient;
  */
 public class DocumentsClient extends GDataServiceClient {
   /** The name of the service, dictated to be 'wise' by the protocol. */
-  private static final String SERVICE = "writely";
+  public static final String SERVICE = "writely";
 
   /**
    * Creates a new DocumentsClient.

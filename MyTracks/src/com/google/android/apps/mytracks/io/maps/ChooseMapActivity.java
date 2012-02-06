@@ -47,7 +47,7 @@ public class ChooseMapActivity extends Activity {
 
   private static final int PROGRESS_DIALOG = 1;
   private static final int ERROR_DIALOG = 2;
-
+  
   private SendRequest sendRequest;
   private ChooseMapAsyncTask asyncTask;
   private ProgressDialog progressDialog;

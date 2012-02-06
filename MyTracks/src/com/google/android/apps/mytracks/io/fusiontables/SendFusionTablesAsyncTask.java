@@ -54,7 +54,6 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
   private static final String APP_NAME_PREFIX = "Google-MyTracks-";
   private static final String SQL_KEY = "sql=";
   private static final String CONTENT_TYPE = "application/x-www-form-urlencoded";
-  private static final String SERVICE_ID = "fusiontables";
   private static final String FUSION_TABLES_BASE_URL =
       "https://www.google.com/fusiontables/api/query";
   private static final int MAX_POINTS_PER_UPLOAD = 2048;
@@ -121,7 +120,8 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
     currentSegment = 1;
 
     try {
-      authToken = AccountManager.get(context).blockingGetAuthToken(account, SERVICE_ID, false);
+      authToken = AccountManager.get(context).blockingGetAuthToken(
+          account, SendFusionTablesUtils.SERVICE, false);
     } catch (OperationCanceledException e) {
       Log.d(TAG, "Unable to get auth token", e);
       return retryTask();
@@ -170,7 +170,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
 
   @Override
   protected void invalidateToken() {
-    AccountManager.get(context).invalidateAuthToken(SERVICE_ID, authToken);
+    AccountManager.get(context).invalidateAuthToken(SendFusionTablesUtils.SERVICE, authToken);
   }
 
   /**

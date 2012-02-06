@@ -36,6 +36,7 @@ import java.util.Locale;
  */
 public class SendFusionTablesUtils {
 
+  public static final String SERVICE = "fusiontables";
   private static final String UTF8 = "UTF8";
   private static final String TABLE_ID = "tableid";
   private static final String MAP_URL = "https://www.google.com/fusiontables/embedviz?"
