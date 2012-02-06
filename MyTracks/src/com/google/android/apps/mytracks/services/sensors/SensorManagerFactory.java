@@ -31,15 +31,28 @@ import android.util.Log;
  */
 public class SensorManagerFactory {
 
+  private String activeSensorType;
+  private SensorManager activeSensorManager;
+  private int refCount;
+
+  private static SensorManagerFactory instance = new SensorManagerFactory();
+
   private SensorManagerFactory() {
   }
 
   /**
-   * Get a new sensor manager.
+   * Get the factory instance. 
+   */
+  public static SensorManagerFactory getInstance() {
+    return instance;
+  }
+
+  /**
+   * Get and start a new sensor manager.
    * @param context Context to fetch system preferences.
    * @return The sensor manager that corresponds to the sensor type setting.
    */
-  public static SensorManager getSensorManager(Context context) {
+  public SensorManager getSensorManager(Context context) {
     SharedPreferences prefs = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     if (prefs == null) {
@@ -52,18 +65,54 @@ public class SensorManagerFactory {
     Log.i(Constants.TAG, "Creating sensor of type: " + sensor);
 
     if (sensor == null) {
+      reset();
       return null;
-    } else if (sensor.equals(context.getString(R.string.sensor_type_value_ant))) {
-      return new AntDirectSensorManager(context);
+    }
+    if (sensor.equals(activeSensorType)) {
+      Log.i(Constants.TAG, "Returning existing sensor manager.");
+      refCount++;
+      return activeSensorManager;
+    }
+    reset();
+
+    if (sensor.equals(context.getString(R.string.sensor_type_value_ant))) {
+      activeSensorManager = new AntDirectSensorManager(context);
     } else if (sensor.equals(context.getString(R.string.sensor_type_value_srm_ant_bridge))) {
-      return new AntSrmBridgeSensorManager(context);
+      activeSensorManager = new AntSrmBridgeSensorManager(context);
     } else if (sensor.equals(context.getString(R.string.sensor_type_value_zephyr))) {
-      return new ZephyrSensorManager(context);
+      activeSensorManager = new ZephyrSensorManager(context);
     } else if (sensor.equals(context.getString(R.string.sensor_type_value_polar))) {
-      return new PolarSensorManager(context);
+      activeSensorManager = new PolarSensorManager(context);
     } else  {
       Log.w(Constants.TAG, "Unable to find sensor type: " + sensor);
       return null;
     }
+    activeSensorType = sensor;
+    refCount = 1;
+    activeSensorManager.onStartTrack();
+    return activeSensorManager;
+  }
+
+  /**
+   * Finish using a sensor manager.
+   */
+  public void releaseSensorManager(SensorManager sensorManager) {
+    Log.i(Constants.TAG, "releaseSensorManager: " + activeSensorType + " " + refCount);
+    if (sensorManager != activeSensorManager) {
+      Log.e(Constants.TAG, "invalid parameter to releaseSensorManager");
+    }
+    if (--refCount > 0) {
+      return;
+    }
+    reset();
+  }
+
+  private void reset() {
+    activeSensorType = null;
+    if (activeSensorManager != null) {
+      activeSensorManager.shutdown();
+    }
+    activeSensorManager = null;
+    refCount = 0;
   }
 }
