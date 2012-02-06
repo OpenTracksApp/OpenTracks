@@ -60,6 +60,15 @@ import java.util.SortedSet;
  */
 public class SearchActivity extends ListActivity {
 
+  private static final String ICON_FIELD = "icon";
+  private static final String NAME_FIELD = "name";
+  private static final String DESCRIPTION_FIELD = "description";
+  private static final String CATEGORY_FIELD = "category";
+  private static final String TIME_FIELD = "time";
+  private static final String STATS_FIELD = "stats";
+  private static final String TRACK_ID_FIELD = "trackId";
+  private static final String WAYPOINT_ID_FIELD = "waypointId";
+
   private static final String EXTRA_CURRENT_TRACK_ID = "trackId";
 
   private static final boolean LOG_SCORES = true;
@@ -179,28 +188,29 @@ public class SearchActivity extends ListActivity {
     }
 
     // TODO: Yellow pushpin for statistics marker.
-    resultMap.put("icon", R.drawable.blue_pushpin);
-    resultMap.put("name", waypoint.getName());
-    resultMap.put("description", waypoint.getDescription());
-    resultMap.put("category", waypoint.getCategory());
-    resultMap.put("stats", StringUtils.formatDateTime(this, waypoint.getLocation().getTime()));
-    resultMap.put("trackId", waypoint.getTrackId());
-    resultMap.put("waypointId", waypoint.getId());
-    resultMap.put("time", getString(R.string.track_list_track_name, trackName));
+    resultMap.put(ICON_FIELD, R.drawable.blue_pushpin);
+    resultMap.put(NAME_FIELD, waypoint.getName());
+    resultMap.put(DESCRIPTION_FIELD, waypoint.getDescription());
+    resultMap.put(CATEGORY_FIELD, waypoint.getCategory());
+    // In the same place as we show time for tracks, show the track name for waypoints.
+    resultMap.put(TIME_FIELD, getString(R.string.track_list_track_name, trackName));
+    resultMap.put(STATS_FIELD, StringUtils.formatDateTime(this, waypoint.getLocation().getTime()));
+    resultMap.put(TRACK_ID_FIELD, waypoint.getTrackId());
+    resultMap.put(WAYPOINT_ID_FIELD, waypoint.getId());
   }
 
   private void prepareTrackForDisplay(Track track, Map<String, Object> resultMap) {
     TripStatistics stats = track.getStatistics();
 
-    resultMap.put("icon", R.drawable.track);
-    resultMap.put("name", track.getName());
-    resultMap.put("description", track.getDescription());
-    resultMap.put("category", track.getCategory());
-    resultMap.put("time", StringUtils.formatDateTime(this, stats.getStartTime()));
-    resultMap.put("trackId", track.getId());
-    resultMap.put("stats",
+    resultMap.put(ICON_FIELD, R.drawable.track);
+    resultMap.put(NAME_FIELD, track.getName());
+    resultMap.put(DESCRIPTION_FIELD, track.getDescription());
+    resultMap.put(CATEGORY_FIELD, track.getCategory());
+    resultMap.put(TIME_FIELD, StringUtils.formatDateTime(this, stats.getStartTime()));
+    resultMap.put(STATS_FIELD,
         StringUtils.formatTimeDistance(this, stats.getTotalDistance(), stats.getTotalTime(),
             metricUnits));
+    resultMap.put(TRACK_ID_FIELD, track.getId());
   }
 
   /**
@@ -214,12 +224,12 @@ public class SearchActivity extends ListActivity {
         // TODO: Custom view for search results.
         R.layout.mytracks_list_item,
         new String[] {
-          "icon",
-          "name",
-          "description",
-          "category",
-          "time",
-          "stats",
+          ICON_FIELD,
+          NAME_FIELD,
+          DESCRIPTION_FIELD,
+          CATEGORY_FIELD,
+          TIME_FIELD,
+          STATS_FIELD,
         },
         new int[] {
           R.id.track_list_item_icon,
@@ -243,12 +253,12 @@ public class SearchActivity extends ListActivity {
 
   private Intent createViewDataIntent(Map<String, Object> clickedData) {
     Intent intent = new Intent(Intent.ACTION_VIEW);
-    if (clickedData.containsKey("waypointId")) {
-      long waypointId = (Long) clickedData.get("waypointId");
+    if (clickedData.containsKey(WAYPOINT_ID_FIELD)) {
+      long waypointId = (Long) clickedData.get(WAYPOINT_ID_FIELD);
       Uri uri = ContentUris.withAppendedId(WaypointsColumns.CONTENT_URI, waypointId);
       intent.setDataAndType(uri, WaypointsColumns.CONTENT_ITEMTYPE);
     } else {
-      long trackId = (Long) clickedData.get("trackId");
+      long trackId = (Long) clickedData.get(TRACK_ID_FIELD);
       Uri uri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId);
       intent.setDataAndType(uri, TracksColumns.CONTENT_ITEMTYPE);
     }

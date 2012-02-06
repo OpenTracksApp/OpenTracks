@@ -89,14 +89,14 @@ public class StringUtils implements DescriptionGenerator {
   public static String formatTimeDistance(Context context, double totalDistance, long totalTime, boolean metric) {
     String distanceUnit;
     if (metric) {
-      if (totalDistance > 1000.0) {
+      if (totalDistance > 2000.0) {
         totalDistance /= 1000.0;
         distanceUnit = context.getString(R.string.unit_kilometer);
       } else {
         distanceUnit = context.getString(R.string.unit_meter);
       }
     } else {
-      if (totalDistance > UnitConversions.MI_TO_M) {
+      if (totalDistance > 2 * UnitConversions.MI_TO_M) {
         totalDistance /= UnitConversions.MI_TO_M;
         distanceUnit = context.getString(R.string.unit_mile);
       } else {

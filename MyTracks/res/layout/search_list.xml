@@ -20,15 +20,15 @@ limitations under the License.
   android:layout_width="fill_parent"
   android:layout_height="fill_parent">
   <ListView android:id="@android:id/list"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" />
-  <TextView android:id="@android:id/empty"
-    android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:layout_width="fill_parent" />
+  <TextView android:id="@android:id/empty"
+    android:gravity="center"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
     android:text="@string/search_no_results"
     android:textColor="@android:color/white"
     android:textSize="20dip"
     android:textStyle="bold"
-    android:gravity="center"
     android:visibility="gone" />
 </LinearLayout>

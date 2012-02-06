@@ -816,9 +816,7 @@ limitations under the License.
     Edit
   </string>
   <string name="marker_list_icon_description"
-    translation_description="In the Markers page, the accessibility description for the marker icon.
-
-      Screenshot: marker_list.png">
+    translation_description="In the Markers page, the accessibility description for the marker icon.">
     Marker
   </string>
   <string name="marker_list_insert_statistics"
@@ -841,12 +839,6 @@ limitations under the License.
 
       Screenshot: marker_list.png">
     Pick a marker. Press &amp; hold for more options.
-  </string>
-  <string name="marker_list_name"
-    translation_description="In the Markers page, the label for the marker's name.
-
-      Screenshot: marker_list.png">
-    Name
   </string>
   <string name="marker_list_show_on_map"
     translation_description="In the context menu for a marker, the menu option to show the marker
@@ -2344,16 +2336,14 @@ limitations under the License.
     Show on map
   </string>
   <string name="track_list_icon_description"
-    translation_description="In the 'Tracks' page, the accessibility description for the track icon.
-
-      Screenshot: track_list.png">
+    translation_description="In the 'Tracks' page, the accessibility description for the track icon.">
     Track
   </string>
   <string name="track_list_track_name"
     translation_description="In the 'Search Result' page, the text field indicating the track that a
       waypoint belongs to.
 
-      %1$d: track name. E.g., 'Grand Canyon trail'">
+      %1$s: track name. E.g., 'Grand Canyon trail'">
     In track \'%1$s\'.
   </string>
   <string name="track_name_format"
