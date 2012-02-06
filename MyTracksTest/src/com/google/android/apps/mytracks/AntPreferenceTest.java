@@ -47,7 +47,7 @@ public class AntPreferenceTest extends AndroidTestCase {
       }
     };
     assertEquals(
-        String.format(getContext().getString(R.string.settings_sensor_ant_paired), persistInt),
+        getContext().getString(R.string.settings_sensor_ant_paired, persistInt),
         antPreference.getSummary());
   }
 }

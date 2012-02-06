@@ -27,6 +27,7 @@ import com.google.android.apps.mytracks.io.gdata.maps.XmlMapsGDataParserFactory;
 import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendAsyncTask;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
+import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
@@ -253,9 +254,10 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
       List<Location> locations = new ArrayList<Location>(MAX_POINTS_PER_UPLOAD);
       Location lastLocation = null;
 
-      // Limit the number of elevation readings to 250.
+      // For chart server, limit the number of elevation readings to 250.
       int elevationSamplingFrequency = Math.max(1, (int) (locationsCount / 250.0));
-      double totalDistance = 0;
+      TripStatisticsBuilder tripStatisticsBuilder = new TripStatisticsBuilder(
+          track.getStatistics().getStartTime());
       DoubleBuffer elevationBuffer = new DoubleBuffer(Constants.ELEVATION_SMOOTHING_FACTOR);
       Vector<Double> distances = new Vector<Double>();
       Vector<Double> elevations = new Vector<Double>();
@@ -266,9 +268,7 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
         Location location = myTracksProviderUtils.createLocation(locationsCursor);
         locations.add(location);
 
-        int readCount = i + 1;
-
-        if (readCount == 1) {
+        if (i == 0) {
           // Create a start marker
           if (!uploadMarker(context.getString(R.string.marker_label_start, track.getName()), "",
               START_ICON_URL, location)) {
@@ -279,19 +279,19 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
 
         // Add to the distances and elevations vectors
         if (LocationUtils.isValidLocation(location)) {
+          tripStatisticsBuilder.addLocation(location, location.getTime());
           // All points go into the smoothing buffer
           elevationBuffer.setNext(metricUnits ? location.getAltitude()
               : location.getAltitude() * UnitConversions.M_TO_FT);
-          if (lastLocation != null) {
-            totalDistance += (double) lastLocation.distanceTo(location);
-          }
-          if (readCount % elevationSamplingFrequency == 0) {
-            distances.add(totalDistance);
+          if (i % elevationSamplingFrequency == 0) {
+            distances.add(tripStatisticsBuilder.getStatistics().getTotalDistance());
             elevations.add(elevationBuffer.getAverage());
           }
+          lastLocation = location;
         }
 
         // Upload periodically
+        int readCount = i + 1;
         if (readCount % MAX_POINTS_PER_UPLOAD == 0) {
           if (!prepareAndUploadPoints(track, locations, false)) {
             Log.d(TAG, "Unable to upload points");
@@ -300,7 +300,6 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
           updateProgress(readCount, locationsCount);
           locations.clear();
         }
-        lastLocation = location;
       }
 
       // Do a final upload with the remaining locations
@@ -311,6 +310,8 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
 
       // Create an end marker
       if (lastLocation != null) {
+        distances.add(tripStatisticsBuilder.getStatistics().getTotalDistance());
+        elevations.add(elevationBuffer.getAverage());
         StringUtils stringUtils = new StringUtils(context);
         track.setDescription("<p>" + track.getDescription() + "</p><p>"
             + stringUtils.generateTrackDescription(track, distances, elevations) + "</p>");
