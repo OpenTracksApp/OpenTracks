@@ -24,7 +24,7 @@ import android.test.suitebuilder.annotation.SmallTest;
 public class SensorEventCounterTest extends AndroidTestCase {
 
   @SmallTest
-  public void testGetEventsPerMinute() throws InterruptedException {
+  public void testGetEventsPerMinute() {
     SensorEventCounter sec = new SensorEventCounter();
     assertEquals(0, sec.getEventsPerMinute(0, 0, 0));
     assertEquals(0, sec.getEventsPerMinute(1, 1024, 1000));

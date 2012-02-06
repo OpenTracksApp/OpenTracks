@@ -25,7 +25,7 @@ import android.test.AndroidTestCase;
 
 /**
  * Tests for the {@link DynamicSpeedTrackPathDescriptor}.
- * 
+ *
  * @author Youtao Liu
  */
 public class FixedSpeedTrackPathDescriptorTest extends AndroidTestCase {
@@ -47,9 +47,8 @@ public class FixedSpeedTrackPathDescriptorTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the initialization of slowSpeed and normalSpeed in
-   * {@link DynamicSpeedTrackPathDescriptor#DynamicSpeedTrackPathDescriptor(Context)}
-   * .
+   * Tests the initialization of slowSpeed and normalSpeed in {@link
+   * DynamicSpeedTrackPathDescriptor#DynamicSpeedTrackPathDescriptor(Context)}.
    */
   public void testConstructor() {
     String[] slowSpeedsInShPre = { "0", "1", "99", "" };
@@ -71,8 +70,9 @@ public class FixedSpeedTrackPathDescriptorTest extends AndroidTestCase {
   }
 
   /**
-   * Tests {@link DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged()}
-   * when the key is null.
+   * Tests {@link
+   * DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged(SharedPreferences,
+   * String)} when the key is null.
    */
   public void testOnSharedPreferenceChanged_null_key() {
     FixedSpeedTrackPathDescriptor fixedSpeedTrackPathDescriptor = new FixedSpeedTrackPathDescriptor(
@@ -94,8 +94,9 @@ public class FixedSpeedTrackPathDescriptorTest extends AndroidTestCase {
   }
 
   /**
-   * Tests {@link DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged()}
-   * when the key is not null, and not slowSpeed and not normalSpeed.
+   * Tests {@link
+   * DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged(SharedPreferences,
+   * String)} when the key is not null, and not slowSpeed and not normalSpeed.
    */
   public void testOnSharedPreferenceChanged_other_key() {
     FixedSpeedTrackPathDescriptor fixedSpeedTrackPathDescriptor = new FixedSpeedTrackPathDescriptor(
@@ -116,8 +117,9 @@ public class FixedSpeedTrackPathDescriptorTest extends AndroidTestCase {
   }
 
   /**
-   * Tests {@link DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged()}
-   * when the key is slowSpeed.
+   * Tests {@link
+   * DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged(SharedPreferences,
+   * String)} when the key is slowSpeed.
    */
   public void testOnSharedPreferenceChanged_slowSpeedKey() {
     FixedSpeedTrackPathDescriptor fixedSpeedTrackPathDescriptor = new FixedSpeedTrackPathDescriptor(
@@ -139,8 +141,9 @@ public class FixedSpeedTrackPathDescriptorTest extends AndroidTestCase {
   }
 
   /**
-   * Tests {@link DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged()}
-   * when the key is normalSpeed.
+   * Tests {@link
+   * DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged(SharedPreferences,
+   * String)} when the key is normalSpeed.
    */
   public void testOnSharedPreferenceChanged_normalSpeedKey() {
     FixedSpeedTrackPathDescriptor fixedSpeedTrackPathDescriptor = new FixedSpeedTrackPathDescriptor(
@@ -162,9 +165,10 @@ public class FixedSpeedTrackPathDescriptorTest extends AndroidTestCase {
   }
 
   /**
-   * Tests {@link DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged()}
-   * when the values of slowSpeed and normalSpeed in SharedPreference is "". In
-   * such situation, the default value should get returned.
+   * Tests {@link
+   * DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged(SharedPreferences,
+   * String)} when the values of slowSpeed and normalSpeed in SharedPreference
+   * is "". In such situation, the default value should get returned.
    */
   public void testOnSharedPreferenceChanged_emptyValue() {
     FixedSpeedTrackPathDescriptor fixedSpeedTrackPathDescriptor = new FixedSpeedTrackPathDescriptor(
