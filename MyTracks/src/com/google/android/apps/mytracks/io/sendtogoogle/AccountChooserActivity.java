@@ -66,12 +66,12 @@ public class AccountChooserActivity extends Activity {
   private interface PermissionCallback {
    
     /**
-     * Invoke when success.
+     * To be invoked when the permission is granted.
      */
     public void onSuccess();
 
     /**
-     * Invoke when failed.
+     * To be invoked when the permission is not granted.
      */
     public void onFailure();
   }
