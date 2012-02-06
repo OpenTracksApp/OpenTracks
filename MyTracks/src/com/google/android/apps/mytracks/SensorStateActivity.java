@@ -167,7 +167,7 @@ public class SensorStateActivity extends Activity {
 
     // If no temp sensor manager is present, create one, and start it.
     if (tempSensorManager == null) {
-      tempSensorManager = SensorManagerFactory.getSensorManager(this);
+      tempSensorManager = SensorManagerFactory.getInstance().getSensorManager(this);
     }
 
     //  If a temp sensor manager is available, use states from temp sensor
@@ -224,7 +224,7 @@ public class SensorStateActivity extends Activity {
    */
   private void stopTempSensorManager() {
     if (tempSensorManager != null) {
-      SensorManagerFactory.releaseSensorManager(tempSensorManager);
+      SensorManagerFactory.getInstance().releaseSensorManager(tempSensorManager);
       tempSensorManager = null;
     }
   }

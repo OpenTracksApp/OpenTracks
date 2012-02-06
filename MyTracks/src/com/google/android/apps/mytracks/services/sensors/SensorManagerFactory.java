@@ -31,7 +31,20 @@ import android.util.Log;
  */
 public class SensorManagerFactory {
 
+  private String activeSensorType;
+  private SensorManager activeSensorManager;
+  private int refCount;
+
+  private static SensorManagerFactory instance = new SensorManagerFactory();
+
   private SensorManagerFactory() {
+  }
+
+  /**
+   * Get the factory instance. 
+   */
+  public static SensorManagerFactory getInstance() {
+    return instance;
   }
 
   /**
@@ -39,7 +52,7 @@ public class SensorManagerFactory {
    * @param context Context to fetch system preferences.
    * @return The sensor manager that corresponds to the sensor type setting.
    */
-  public static SensorManager getSensorManager(Context context) {
+  public SensorManager getSensorManager(Context context) {
     SharedPreferences prefs = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     if (prefs == null) {
@@ -71,7 +84,7 @@ public class SensorManagerFactory {
     } else if (sensor.equals(context.getString(R.string.sensor_type_value_polar))) {
       activeSensorManager = new PolarSensorManager(context);
     } else  {
-      Log.w(Constants.TAG, "Unable to find sensor type: " + sensor);      
+      Log.w(Constants.TAG, "Unable to find sensor type: " + sensor);
       return null;
     }
     activeSensorType = sensor;
@@ -83,8 +96,7 @@ public class SensorManagerFactory {
   /**
    * Finish using a sensor manager.
    */
-
-  public static void releaseSensorManager(SensorManager sensorManager) {
+  public void releaseSensorManager(SensorManager sensorManager) {
     Log.i(Constants.TAG, "releaseSensorManager: " + activeSensorType + " " + refCount);
     if (sensorManager != activeSensorManager) {
       Log.e(Constants.TAG, "invalid parameter to releaseSensorManager");
@@ -95,7 +107,7 @@ public class SensorManagerFactory {
     reset();
   }
 
-  private static void reset() {
+  private void reset() {
     activeSensorType = null;
     if (activeSensorManager != null) {
       activeSensorManager.shutdown();
@@ -103,8 +115,4 @@ public class SensorManagerFactory {
     activeSensorManager = null;
     refCount = 0;
   }
-
-  private static String activeSensorType = null;
-  private static SensorManager activeSensorManager = null;
-  private static int refCount = 0;
 }
