@@ -15,6 +15,7 @@
  */
 package com.google.android.apps.mytracks.io.docs;
 
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.gdata.GDataClientFactory;
@@ -181,10 +182,8 @@ public class SendDocsAsyncTask extends AbstractSendAsyncTask {
 
   @Override
   protected void invalidateToken() {
-    AccountManager.get(context).invalidateAuthToken(
-        documentsClient.getServiceName(), documentsAuthToken);
-    AccountManager.get(context).invalidateAuthToken(
-        spreadsheetsClient.getServiceName(), spreadsheetsAuthToken);
+    AccountManager.get(context).invalidateAuthToken(Constants.ACCOUNT_TYPE, documentsAuthToken);
+    AccountManager.get(context).invalidateAuthToken(Constants.ACCOUNT_TYPE, spreadsheetsAuthToken);
   }
 
   /**
