@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <!-- Display settings -->
+  <PreferenceScreen android:title="@string/settings_display">
+    <CheckBoxPreference
+        android:key="@string/metric_units_key"
+        android:title="@string/settings_display_metric"
+        android:summaryOn="@string/settings_display_metric_summary_on"
+        android:summaryOff="@string/settings_display_metric_summary_off"
+        android:defaultValue="true" />
+
+    <CheckBoxPreference
+        android:key="@string/report_speed_key"
+        android:title="@string/settings_display_speed"
+        android:summaryOn="@string/settings_display_speed_summary_on"
+        android:summaryOff="@string/settings_display_speed_summary_off"
+        android:defaultValue="true" />
+
+    <ListPreference android:key="@string/track_color_mode_key"
+        android:title="@string/settings_display_track_color"
+        android:summary="@string/settings_display_track_color_summary"
+        android:entries="@array/display_track_color_options"
+        android:entryValues="@array/display_track_color_values"
+        android:defaultValue="@string/display_track_color_value_none"/>
+
+    <PreferenceCategory android:title="@string/settings_display_track_color_fixed"
+        android:key="@string/track_color_mode_fixed_speed_options_key">
+        <EditTextPreference android:key="@string/track_color_mode_fixed_speed_slow_key"
+            android:title="@string/settings_display_track_color_fixed_slow"
+            android:summary="@string/settings_display_track_color_fixed_slow_summary"
+            android:defaultValue="@string/color_mode_fixed_slow_default"
+            android:inputType="number"
+            android:maxLength="3">
+        </EditTextPreference>
+
+        <EditTextPreference android:key="@string/track_color_mode_fixed_speed_slow_display_key"
+            android:title="@string/settings_display_track_color_fixed_slow"
+            android:summary="@string/settings_display_track_color_fixed_slow_summary"
+            android:defaultValue="@string/color_mode_fixed_slow_default"
+            android:inputType="number"
+            android:maxLength="3">
+        </EditTextPreference>
+
+        <EditTextPreference android:key="@string/track_color_mode_fixed_speed_medium_key"
+            android:title="@string/settings_display_track_color_fixed_medium"
+            android:summary="@string/settings_display_track_color_fixed_medium_summary"
+            android:defaultValue="@string/color_mode_fixed_medium_default"
+            android:inputType="number"
+            android:maxLength="3">
+        </EditTextPreference>
+
+        <EditTextPreference android:key="@string/track_color_mode_fixed_speed_medium_display_key"
+            android:title="@string/settings_display_track_color_fixed_medium"
+            android:summary="@string/settings_display_track_color_fixed_medium_summary"
+            android:defaultValue="@string/color_mode_fixed_medium_default"
+            android:inputType="number"
+            android:maxLength="3">
+        </EditTextPreference>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_display_track_color_dynamic">
+        <EditTextPreference android:key="@string/track_color_mode_dynamic_speed_variation_key"
+            android:title="@string/settings_display_track_color_dynamic_medium"
+            android:summary="@string/settings_display_track_color_dynamic_medium_summary"
+            android:defaultValue="@string/color_mode_dynamic_percentage_default"
+            android:inputType="number"
+            android:maxLength="2">
+        </EditTextPreference>
+    </PreferenceCategory>
+  </PreferenceScreen>
+
+  <!-- Recording settings -->
+  <PreferenceScreen android:title="@string/settings_recording">
+    <com.google.android.apps.mytracks.IntegerListPreference
+        android:key="@string/announcement_frequency_key"
+        android:title="@string/settings_recording_voice"
+        android:summary="@string/settings_recording_voice_summary"
+        android:entryValues="@array/recording_task_frequency_values"
+        android:defaultValue="0" />
+
+    <com.google.android.apps.mytracks.IntegerListPreference
+        android:key="@string/split_frequency_key"
+        android:title="@string/settings_recording_marker"
+        android:summary="@string/settings_recording_marker_summary"
+        android:entryValues="@array/recording_task_frequency_values"
+        android:defaultValue="0" />
+
+    <com.google.android.apps.mytracks.IntegerListPreference
+        android:key="@string/min_recording_interval_key"
+        android:title="@string/settings_recording_interval"
+        android:summary="@string/settings_recording_interval_summary"
+        android:entryValues="@array/recording_interval_values"
+        android:defaultValue="0" />
+
+    <com.google.android.apps.mytracks.IntegerListPreference
+        android:key="@string/min_recording_distance_key"
+        android:title="@string/settings_recording_distance"
+        android:summary="@string/settings_recording_distance_summary"
+        android:entryValues="@array/recording_distance_values"
+        android:defaultValue="5" />
+
+    <com.google.android.apps.mytracks.IntegerListPreference
+        android:key="@string/max_recording_distance_key"
+        android:title="@string/settings_recording_track_distance"
+        android:summary="@string/settings_recording_track_distance_summary"
+        android:entryValues="@array/recording_track_distance_values"
+        android:defaultValue="200" />
+
+    <com.google.android.apps.mytracks.IntegerListPreference
+        android:key="@string/min_required_accuracy_key"
+        android:title="@string/settings_recording_gps_accuracy"
+        android:summary="@string/settings_recording_gps_accuracy_summary"
+        android:entryValues="@array/recording_gps_accuracy_values"
+        android:defaultValue="200" />
+
+    <com.google.android.apps.mytracks.IntegerListPreference
+        android:key="@string/auto_resume_track_timeout_key"
+        android:title="@string/settings_recording_auto_resume"
+        android:summary="@string/settings_recording_auto_resume_summary"
+        android:entryValues="@array/recording_auto_resume_timeout_values"
+        android:defaultValue="10" />
+
+    <ListPreference android:key="@string/track_name_key"
+        android:title="@string/settings_recording_track_name"
+        android:summary="@string/settings_recording_track_name_summary"
+        android:entries="@array/settings_recording_track_name_options"
+        android:entryValues="@array/settings_recording_track_name_values"
+        android:defaultValue="@string/settings_recording_track_name_date_local_value"/>
+
+    <com.google.android.apps.mytracks.AutoCompleteTextPreference
+        android:key="@string/default_activity_key"
+        android:title="@string/settings_recording_default_activity"
+        android:summary="@string/settings_recording_default_activity_summary"
+        android:defaultValue="" />
+
+  </PreferenceScreen>
+
+  <!-- Sensors -->
+  <PreferenceScreen android:title="@string/settings_sensor"
+      android:key="@string/sensor_options_key">
+    <ListPreference android:key="@string/sensor_type_key"
+        android:title="@string/settings_sensor_type"
+        android:summary="@string/settings_sensor_type_summary"
+        android:entries="@array/sensor_type_options"
+        android:entryValues="@array/sensor_type_values"
+        android:defaultValue="@string/sensor_type_value_none"/>
+
+    <!-- Bluetooth -->
+    <PreferenceCategory android:title="@string/settings_sensor_bluetooth_options">
+      <ListPreference android:key="@string/bluetooth_sensor_key"
+                      android:title="@string/settings_sensor_bluetooth_sensor"
+                      android:summary="@string/settings_sensor_bluetooth_sensor_summary"
+                      android:defaultValue="" />
+
+      <Preference android:key="@string/bluetooth_pairing_key"
+                  android:title="@string/settings_sensor_bluetooth_pairing"
+                  android:summary="@string/settings_sensor_bluetooth_pairing_summary"
+                  android:persistent="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_sensor_ant_options"
+      android:key="@string/ant_options_key">
+	    <com.google.android.apps.mytracks.AntPreference
+	    	android:key="@string/ant_heart_rate_sensor_id_key"
+	        android:title="@string/settings_sensor_unpair_ant"/>
+	    <com.google.android.apps.mytracks.AntPreference
+	    	android:key="@string/ant_srm_bridge_sensor_id_key"
+	        android:title="@string/settings_sensor_unpair_srm"/>
+    </PreferenceCategory>
+  </PreferenceScreen>
+
+  <!-- Sharing settings -->
+  <PreferenceScreen android:title="@string/settings_sharing">
+    <CheckBoxPreference
+        android:key="@string/default_map_public_key"
+        android:title="@string/settings_sharing_map_public"
+        android:summaryOn="@string/settings_sharing_map_public_summary_on"
+        android:summaryOff="@string/settings_sharing_map_public_summary_off"
+        android:defaultValue="true" />
+
+    <CheckBoxPreference
+        android:key="@string/share_url_only_key"
+        android:title="@string/settings_sharing_url_only"
+        android:summaryOn="@string/settings_sharing_url_only_summary_on"
+        android:summaryOff="@string/settings_sharing_url_only_summary_off"
+        android:defaultValue="false" />
+
+    <CheckBoxPreference
+        android:key="@string/allow_access_key"
+        android:title="@string/settings_sharing_allow_access"
+        android:summaryOn="@string/settings_sharing_allow_access_summary_on"
+        android:summaryOff="@string/settings_sharing_allow_access_summary_off"
+        android:defaultValue="false" />
+  </PreferenceScreen>
+
+  <!-- Backup settings -->
+  <PreferenceScreen android:title="@string/settings_backup">
+    <PreferenceCategory android:title="@string/settings_backup_sd_card">
+      <Preference
+          android:key="@string/backup_to_sd_key"
+          android:title="@string/settings_backup_now"
+          android:summary="@string/settings_backup_now_summary"
+          android:persistent="false" />
+      <Preference
+          android:key="@string/restore_from_sd_key"
+          android:title="@string/settings_backup_restore"
+          android:summary="@string/settings_backup_restore_summary"
+          android:persistent="false" />
+    </PreferenceCategory>
+  </PreferenceScreen>
+
+  <!-- Reset to defaults -->
+  <Preference
+      android:title="@string/settings_reset"
+      android:key="@string/reset_key"
+      android:summary="@string/settings_reset_summary"
+      android:persistent="false" />
+</PreferenceScreen>
