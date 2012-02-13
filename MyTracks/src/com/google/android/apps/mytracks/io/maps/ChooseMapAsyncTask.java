@@ -15,6 +15,7 @@
  */
 package com.google.android.apps.mytracks.io.maps;
 
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.io.gdata.GDataClientFactory;
 import com.google.android.apps.mytracks.io.gdata.maps.MapFeatureEntry;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsClient;
@@ -198,7 +199,7 @@ public class ChooseMapAsyncTask extends AsyncTask<Void, Integer, Boolean> {
       return false;
     }
 
-    AccountManager.get(context).invalidateAuthToken(MapsConstants.SERVICE_NAME, authToken);
+    AccountManager.get(context).invalidateAuthToken(Constants.ACCOUNT_TYPE, authToken);
     if (canRetry) {
       canRetry = false;
       return getMaps();

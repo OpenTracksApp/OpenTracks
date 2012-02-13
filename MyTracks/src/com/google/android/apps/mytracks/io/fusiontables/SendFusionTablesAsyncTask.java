@@ -170,7 +170,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
 
   @Override
   protected void invalidateToken() {
-    AccountManager.get(context).invalidateAuthToken(SendFusionTablesUtils.SERVICE, authToken);
+    AccountManager.get(context).invalidateAuthToken(Constants.ACCOUNT_TYPE, authToken);
   }
 
   /**
