@@ -293,6 +293,7 @@ limitations under the License.
 
     <service android:name="com.google.android.apps.mytracks.services.ControlRecordingService"
              android:exported="false" />
+    <service android:name="com.google.android.apps.mytracks.services.RemoveTempFilesService"/>
 
     <receiver android:name="com.google.android.apps.mytracks.BootReceiver">
       <intent-filter>

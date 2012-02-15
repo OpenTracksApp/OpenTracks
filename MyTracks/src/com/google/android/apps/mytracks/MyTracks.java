@@ -24,7 +24,6 @@ import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
-import com.google.android.apps.mytracks.io.file.TempFileCleaner;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
@@ -256,14 +255,9 @@ public class MyTracks extends TabActivity implements OnTouchListener {
   @Override
   protected void onStop() {
     Log.d(TAG, "MyTracks.onStop");
-
     dataHub.stop();
-
     tracker.dispatch();
     tracker.stop();
-
-    // Clean up any temporary track files.
-    TempFileCleaner.clean();
     super.onStop();
   }
 
