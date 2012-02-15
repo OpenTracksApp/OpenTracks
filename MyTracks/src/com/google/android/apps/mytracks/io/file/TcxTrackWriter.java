@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
+import com.google.android.apps.mytracks.lib.R;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
 
@@ -46,6 +47,25 @@ import java.util.Locale;
  * @author Dominik Rttsches
  */
 public class TcxTrackWriter implements TrackFormatWriter {
+
+  // "Biking" related string IDs
+  private static final int TCX_SPORT_BIKING_IDS[] = {
+      R.string.activity_type_cycling,
+      R.string.activity_type_dirt_bike,
+      R.string.activity_type_mountain_biking,
+      R.string.activity_type_road_biking,
+      R.string.activity_type_track_cycling,
+  };
+
+  // "Running" related string IDs
+  private static final int TCX_SPORT_RUNNING_IDS[] = {
+      R.string.activity_type_running,
+      R.string.activity_type_speed_walking,
+      R.string.activity_type_street_running,
+      R.string.activity_type_track_running,
+      R.string.activity_type_trail_running,
+      R.string.activity_type_walking,
+  };
 
   // These are the only sports allowed by the TCX v2 specification for fields
   // of type Sport_t.
@@ -172,7 +192,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
           pw.print("</Value>");
           pw.println("</HeartRateBpm>");
         }
-        
+
         boolean cadenceAvailable = sensorData.hasCadence()
           && sensorData.getCadence().getState() == Sensor.SensorState.SENDING
           && sensorData.getCadence().hasValue();
@@ -191,7 +211,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
         boolean powerAvailable = sensorData.hasPower()
           && sensorData.getPower().getState() == Sensor.SensorState.SENDING
           && sensorData.getPower().hasValue();
-        
+
         if(powerAvailable || (!sportIsCycling && cadenceAvailable)) {
           pw.print("          <Extensions>");
           pw.print("<TPX xmlns=\"http://www.garmin.com/xmlschemas/ActivityExtension/v2\">");
@@ -203,7 +223,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
             pw.print(Math.min(254, sensorData.getCadence().getValue()));
             pw.print("</RunCadence>");
           }
-          
+
           if (powerAvailable) {
             pw.print("<Watts>");
             pw.print(sensorData.getPower().getValue());
@@ -237,7 +257,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
     // TCX schema.
     pw.println("<UnitId>0</UnitId>");
     pw.println("<ProductID>0</ProductID>");
-    
+
     writeVersion();
 
     pw.println("</Creator>");
@@ -275,25 +295,25 @@ public class TcxTrackWriter implements TrackFormatWriter {
   public void writeWaypoint(Waypoint waypoint) {
     // TODO Write out the waypoints somewhere.
   }
-  
+
   private void writeVersion() {
     if (pw == null) {
       return;
     }
-    
+
     // Splitting the myTracks version code into VersionMajor, VersionMinor and BuildMajor
-    // to fit the integer type requirement for these fields in the TCX spec. 
+    // to fit the integer type requirement for these fields in the TCX spec.
     // Putting a string like "x.x.x" into VersionMajor breaks XML validation.
     // We also set the BuildMinor version to 1 if this is a development build to
     // signify that this build is newer than the one associated with the
     // version code given in BuildMajor.
-    
+
     String[] myTracksVersionComponents = SystemUtils.getMyTracksVersion(context).split("\\.");
 
     pw.println("<Version>");
     pw.format("<VersionMajor>%d</VersionMajor>\n", Integer.valueOf(myTracksVersionComponents[0]));
     pw.format("<VersionMinor>%d</VersionMinor>\n", Integer.valueOf(myTracksVersionComponents[1]));
-    // TCX schema says these are optional but http://connect.garmin.com only accepts 
+    // TCX schema says these are optional but http://connect.garmin.com only accepts
     // the TCX file when they are present.
     pw.format("<BuildMajor>%d</BuildMajor>\n", Integer.valueOf(myTracksVersionComponents[2]));
     pw.format("<BuildMinor>%d</BuildMinor>\n", SystemUtils.isRelease(context) ? 0 : 1);
@@ -302,6 +322,20 @@ public class TcxTrackWriter implements TrackFormatWriter {
 
   private String categoryToTcxSport(String category) {
     category = category.trim();
+
+    // category is possibly localized here, so compare it to localized string resources
+    for (int i : TCX_SPORT_RUNNING_IDS) {
+      if (category.equalsIgnoreCase(context.getResources().getString(i))) {
+        return TCX_SPORT_RUNNING;
+      }
+    }
+    for (int i : TCX_SPORT_BIKING_IDS) {
+      if (category.equalsIgnoreCase(context.getResources().getString(i))) {
+        return TCX_SPORT_BIKING;
+      }
+    }
+
+    // for tracks without localized activity type
     if (category.equalsIgnoreCase(TCX_SPORT_RUNNING)) {
       return TCX_SPORT_RUNNING;
     } else if (category.equalsIgnoreCase(TCX_SPORT_BIKING)) {
