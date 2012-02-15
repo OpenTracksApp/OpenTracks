@@ -56,6 +56,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
       R.string.activity_type_road_biking,
       R.string.activity_type_track_cycling,
   };
+
   // "Running" related string IDs
   private static final int TCX_SPORT_RUNNING_IDS[] = {
       R.string.activity_type_running,
@@ -65,6 +66,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
       R.string.activity_type_trail_running,
       R.string.activity_type_walking,
   };
+
   // These are the only sports allowed by the TCX v2 specification for fields
   // of type Sport_t.
   private static final String TCX_SPORT_BIKING = "Biking";
@@ -321,7 +323,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
   private String categoryToTcxSport(String category) {
     category = category.trim();
 
-    // category is possibly localised here, so compare it to localised string resources
+    // category is possibly localized here, so compare it to localized string resources
     for (int i : TCX_SPORT_RUNNING_IDS) {
       if (category.equalsIgnoreCase(context.getResources().getString(i))) {
         return TCX_SPORT_RUNNING;
@@ -333,6 +335,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
       }
     }
 
+    // for tracks without localized activity type
     if (category.equalsIgnoreCase(TCX_SPORT_RUNNING)) {
       return TCX_SPORT_RUNNING;
     } else if (category.equalsIgnoreCase(TCX_SPORT_BIKING)) {
