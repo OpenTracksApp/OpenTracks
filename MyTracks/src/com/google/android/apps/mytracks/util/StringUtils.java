@@ -90,17 +90,17 @@ public class StringUtils implements DescriptionGenerator {
     String distanceUnit;
     if (metric) {
       if (totalDistance > 2000.0) {
-        totalDistance /= 1000.0;
+        totalDistance *= UnitConversionUtils.M_TO_KM;
         distanceUnit = context.getString(R.string.unit_kilometer);
       } else {
         distanceUnit = context.getString(R.string.unit_meter);
       }
     } else {
-      if (totalDistance > 2 * UnitConversions.MI_TO_M) {
-        totalDistance /= UnitConversions.MI_TO_M;
+      if (totalDistance * UnitConversionUtils.M_TO_MI > 2) {
+        totalDistance *= UnitConversionUtils.M_TO_MI;
         distanceUnit = context.getString(R.string.unit_mile);
       } else {
-        totalDistance *= UnitConversions.M_TO_FT;
+        totalDistance *= UnitConversionUtils.M_TO_FT;
         distanceUnit = context.getString(R.string.unit_feet);
       }
     }
@@ -259,18 +259,18 @@ public class StringUtils implements DescriptionGenerator {
     }
 
     TripStatistics trackStats = track.getStatistics();
-    final double distanceInKm = trackStats.getTotalDistance() / 1000.0;
-    final double distanceInMiles = distanceInKm * UnitConversions.KM_TO_MI;
+    final double distanceInKm = trackStats.getTotalDistance() * UnitConversionUtils.M_TO_KM;
+    final double distanceInMiles = distanceInKm * UnitConversionUtils.KM_TO_MI;
     final long minElevationInMeters = Math.round(trackStats.getMinElevation());
     final long minElevationInFeet =
-        Math.round(trackStats.getMinElevation() * UnitConversions.M_TO_FT);
+        Math.round(trackStats.getMinElevation() * UnitConversionUtils.M_TO_FT);
     final long maxElevationInMeters = Math.round(trackStats.getMaxElevation());
     final long maxElevationInFeet =
-        Math.round(trackStats.getMaxElevation() * UnitConversions.M_TO_FT);
+        Math.round(trackStats.getMaxElevation() * UnitConversionUtils.M_TO_FT);
     final long elevationGainInMeters =
         Math.round(trackStats.getTotalElevationGain());
     final long elevationGainInFeet = Math.round(
-        trackStats.getTotalElevationGain() * UnitConversions.M_TO_FT);
+        trackStats.getTotalElevationGain() * UnitConversionUtils.M_TO_FT);
 
     long minGrade = 0;
     long maxGrade = 0;
@@ -391,8 +391,8 @@ public class StringUtils implements DescriptionGenerator {
 
   private String getSpeedString(double speed, int speedLabel, int paceLabel,
       boolean displaySpeed) {
-    double speedInKph = speed * 3.6;
-    double speedInMph = speedInKph * UnitConversions.KMH_TO_MPH;
+    double speedInKph = speed * UnitConversionUtils.MS_TO_KMH;
+    double speedInMph = speedInKph * UnitConversionUtils.KM_TO_MI;
     if (displaySpeed) {
       return String.format("%s: %.2f %s (%.1f %s)<br>",
           context.getString(speedLabel),
@@ -424,26 +424,26 @@ public class StringUtils implements DescriptionGenerator {
   public String generateWaypointDescription(Waypoint waypoint) {
     TripStatistics stats = waypoint.getStatistics();
 
-    final double distanceInKm = stats.getTotalDistance() / 1000.0;
-    final double distanceInMiles = distanceInKm * UnitConversions.KM_TO_MI;
-    final double averageSpeedInKmh = stats.getAverageSpeed() * 3.6;
+    final double distanceInKm = stats.getTotalDistance() * UnitConversionUtils.M_TO_KM;
+    final double distanceInMiles = distanceInKm * UnitConversionUtils.KM_TO_MI;
+    final double averageSpeedInKmh = stats.getAverageSpeed() * UnitConversionUtils.MS_TO_KMH;
     final double averageSpeedInMph =
-        averageSpeedInKmh * UnitConversions.KMH_TO_MPH;
-    final double movingSpeedInKmh = stats.getAverageMovingSpeed() * 3.6;
+        averageSpeedInKmh * UnitConversionUtils.KM_TO_MI;
+    final double movingSpeedInKmh = stats.getAverageMovingSpeed() * UnitConversionUtils.MS_TO_KMH;
     final double movingSpeedInMph =
-        movingSpeedInKmh * UnitConversions.KMH_TO_MPH;
-    final double maxSpeedInKmh = stats.getMaxSpeed() * 3.6;
-    final double maxSpeedInMph = maxSpeedInKmh * UnitConversions.KMH_TO_MPH;
+        movingSpeedInKmh * UnitConversionUtils.KM_TO_MI;
+    final double maxSpeedInKmh = stats.getMaxSpeed() * UnitConversionUtils.MS_TO_KMH;
+    final double maxSpeedInMph = maxSpeedInKmh * UnitConversionUtils.KM_TO_MI;
     final long minElevationInMeters = Math.round(stats.getMinElevation());
     final long minElevationInFeet =
-        Math.round(stats.getMinElevation() * UnitConversions.M_TO_FT);
+        Math.round(stats.getMinElevation() * UnitConversionUtils.M_TO_FT);
     final long maxElevationInMeters = Math.round(stats.getMaxElevation());
     final long maxElevationInFeet =
-        Math.round(stats.getMaxElevation() * UnitConversions.M_TO_FT);
+        Math.round(stats.getMaxElevation() * UnitConversionUtils.M_TO_FT);
     final long elevationGainInMeters =
         Math.round(stats.getTotalElevationGain());
     final long elevationGainInFeet = Math.round(
-        stats.getTotalElevationGain() * UnitConversions.M_TO_FT);
+        stats.getTotalElevationGain() * UnitConversionUtils.M_TO_FT);
     long theMinGrade = 0;
     long theMaxGrade = 0;
     double maxGrade = stats.getMaxGrade();

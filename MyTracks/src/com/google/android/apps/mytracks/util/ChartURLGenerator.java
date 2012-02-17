@@ -86,13 +86,13 @@ public class ChartURLGenerator {
     TripStatistics stats = track.getStatistics();
     double effectiveMaxY = metricUnits
         ? stats.getMaxElevation()
-        : stats.getMaxElevation() * UnitConversions.M_TO_FT;
+        : stats.getMaxElevation() * UnitConversionUtils.M_TO_FT;
     effectiveMaxY = ((int) (effectiveMaxY / 100)) * 100 + 100;
     // Round it down.
     double effectiveMinY = 0;
     double minElevation = metricUnits
         ? stats.getMinElevation()
-        : stats.getMinElevation() * UnitConversions.M_TO_FT;
+        : stats.getMinElevation() * UnitConversionUtils.M_TO_FT;
 
     effectiveMinY = ((int) (minElevation / 100)) * 100;
     if (stats.getMinElevation() < 0) {
@@ -110,9 +110,9 @@ public class ChartURLGenerator {
 
     // Labels
     sb.append("&chxt=x,y");
-    double distKM = stats.getTotalDistance() / 1000.0;
+    double distKM = stats.getTotalDistance() * UnitConversionUtils.M_TO_KM;
     double distDisplay =
-        metricUnits ? distKM : (distKM * UnitConversions.KM_TO_MI);
+        metricUnits ? distKM : (distKM * UnitConversionUtils.KM_TO_MI);
     int xInterval = ((int) (distDisplay / 6));
     int yInterval = ((int) (ySpread / 600)) * 100;
     if (yInterval < 100) {

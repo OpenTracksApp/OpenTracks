@@ -29,7 +29,7 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.LocationUtils;
-import com.google.android.apps.mytracks.util.UnitConversions;
+import com.google.android.apps.mytracks.util.UnitConversionUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -290,13 +290,13 @@ public class ChartActivity extends Activity implements TrackDataListener {
     Mode mode = chartView.getMode();
     switch (mode) {
       case BY_DISTANCE:
-        timeOrDistance = profileLength / 1000.0;
+        timeOrDistance = profileLength * UnitConversionUtils.M_TO_KM;
         if (lastLocation != null) {
           double d = lastLocation.distanceTo(location);
           if (metricUnits) {
             profileLength += d;
           } else {
-            profileLength += d * UnitConversions.KM_TO_MI;
+            profileLength += d * UnitConversionUtils.KM_TO_MI;
           }
         }
         break;
@@ -313,7 +313,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
 
     elevationBuffer.setNext(metricUnits
         ? location.getAltitude()
-        : location.getAltitude() * UnitConversions.M_TO_FT);
+        : location.getAltitude() * UnitConversionUtils.M_TO_FT);
     elevation = elevationBuffer.getAverage();
 
     if (lastLocation == null) {
@@ -326,9 +326,9 @@ public class ChartActivity extends Activity implements TrackDataListener {
         && (location.getSpeed() <= trackMaxSpeed)) {
       speedBuffer.setNext(location.getSpeed());
     }
-    speed = speedBuffer.getAverage() * 3.6;
+    speed = speedBuffer.getAverage() * UnitConversionUtils.MS_TO_KMH;
     if (!metricUnits) {
-      speed *= UnitConversions.KM_TO_MI;
+      speed *= UnitConversionUtils.KM_TO_MI;
     }
     if (!reportSpeed) {
       if (speed != 0) {

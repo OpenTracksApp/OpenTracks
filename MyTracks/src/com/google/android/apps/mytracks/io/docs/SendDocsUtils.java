@@ -23,7 +23,7 @@ import com.google.android.apps.mytracks.io.gdata.docs.SpreadsheetsClient.Workshe
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ResourceUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.apps.mytracks.util.UnitConversions;
+import com.google.android.apps.mytracks.util.UnitConversionUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.wireless.gdata.client.HttpException;
@@ -349,9 +349,9 @@ public class SendDocsUtils {
    */
   @VisibleForTesting
   static final String getDistance(double distanceInMeter, boolean metricUnits) {
-    double distanceInKilometer = distanceInMeter / 1000.0;
+    double distanceInKilometer = distanceInMeter * UnitConversionUtils.M_TO_KM;
     double distance = metricUnits ? distanceInKilometer
-        : distanceInKilometer * UnitConversions.KM_TO_MI;
+        : distanceInKilometer * UnitConversionUtils.KM_TO_MI;
     return NUMBER_FORMAT.format(distance);
   }
 
@@ -363,9 +363,9 @@ public class SendDocsUtils {
    */
   @VisibleForTesting
   static final String getSpeed(double speedInMeterPerSecond, boolean metricUnits) {
-    double speedInKilometerPerHour = speedInMeterPerSecond * 3.6;
+    double speedInKilometerPerHour = speedInMeterPerSecond * UnitConversionUtils.MS_TO_KMH;
     double speed = metricUnits ? speedInKilometerPerHour
-        : speedInKilometerPerHour * UnitConversions.KMH_TO_MPH;
+        : speedInKilometerPerHour * UnitConversionUtils.KM_TO_MI;
     return NUMBER_FORMAT.format(speed);
   }
 
@@ -377,7 +377,7 @@ public class SendDocsUtils {
    */
   @VisibleForTesting
   static final String getElevation(double elevationInMeter, boolean metricUnits) {
-    double elevation = metricUnits ? elevationInMeter : elevationInMeter * UnitConversions.M_TO_FT;
+    double elevation = metricUnits ? elevationInMeter : elevationInMeter * UnitConversionUtils.M_TO_FT;
     return INTEGER_FORMAT.format(elevation);
   }
 

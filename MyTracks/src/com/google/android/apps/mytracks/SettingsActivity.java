@@ -23,7 +23,7 @@ import com.google.android.apps.mytracks.services.sensors.ant.AntUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.BluetoothDeviceUtils;
 import com.google.android.apps.mytracks.util.DialogUtils;
-import com.google.android.apps.mytracks.util.UnitConversions;
+import com.google.android.apps.mytracks.util.UnitConversionUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Dialog;
@@ -462,7 +462,7 @@ public class SettingsActivity extends PreferenceActivity {
     for (int i = 0; i < values.length; i++) {
       int value = Integer.parseInt(values[i]);
       if (!isMetric) {
-        value = (int) (value * UnitConversions.M_TO_FT);
+        value = (int) (value * UnitConversionUtils.M_TO_FT);
       }
       String format;
       if (values[i].equals(RECORDING_DISTANCE_RECOMMENDED)) {
@@ -495,14 +495,14 @@ public class SettingsActivity extends PreferenceActivity {
         format = getString(stringId);
         options[i] = String.format(format, value);
       } else {
-        value = (int) (value * UnitConversions.M_TO_FT);
+        value = (int) (value * UnitConversionUtils.M_TO_FT);
         if (value < 2000) {
           int stringId = values[i].equals(TRACK_DISTANCE_RECOMMENDED) 
               ? R.string.value_integer_feet_recommended : R.string.value_integer_feet;
           format = getString(stringId);
           options[i] = String.format(format, value);
         } else {
-          double mile = value / UnitConversions.MI_TO_FEET;
+          double mile = value * UnitConversionUtils.FT_TO_MI;
           format = getString(R.string.value_float_mile);
           options[i] = String.format(format, mile);
         }
@@ -534,7 +534,7 @@ public class SettingsActivity extends PreferenceActivity {
         }
         options[i] = String.format(format, value);
       } else {
-        value = (int) (value * UnitConversions.M_TO_FT);
+        value = (int) (value * UnitConversionUtils.M_TO_FT);
         if (value < 2000) {
           if (values[i].equals(GPS_ACCURACY_RECOMMENDED)) {
             format = getString(R.string.value_integer_feet_recommended);
@@ -545,7 +545,7 @@ public class SettingsActivity extends PreferenceActivity {
           }
           options[i] = String.format(format, value);
         } else {
-          double mile = value / UnitConversions.MI_TO_FEET;
+          double mile = value * UnitConversionUtils.FT_TO_MI;
           if (values[i].equals(GPS_ACCURACY_POOR)) {
             format = getString(R.string.value_float_mile_poor_gps);
           } else {
@@ -644,7 +644,7 @@ public class SettingsActivity extends PreferenceActivity {
     String metricspeed = prefs.getString(getString(id), null);
     int englishspeed;
     try {
-      englishspeed = (int) (Double.parseDouble(metricspeed) * UnitConversions.KMH_TO_MPH);
+      englishspeed = (int) (Double.parseDouble(metricspeed) * UnitConversionUtils.KM_TO_MI);
     } catch (NumberFormatException e) {
       englishspeed = 0;
     }
@@ -663,7 +663,7 @@ public class SettingsActivity extends PreferenceActivity {
       // Convert miles/h to km/h
       try {
         metricspeed = String.valueOf(
-            (int) (Double.parseDouble(newValue) * UnitConversions.MPH_TO_KMH) + 1);
+            (int) (Double.parseDouble(newValue) * UnitConversionUtils.MI_TO_KM));
       } catch (NumberFormatException e) {
         metricspeed = "0";
       }

@@ -23,6 +23,7 @@ import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.services.ServiceUtils;
+import com.google.android.apps.mytracks.util.UnitConversionUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -190,7 +191,7 @@ public class StatsActivity extends Activity implements TrackDataListener {
     utils.setAltitude(R.id.elevation_register, l.getAltitude());
     utils.setLatLong(R.id.latitude_register, l.getLatitude());
     utils.setLatLong(R.id.longitude_register, l.getLongitude());
-    utils.setSpeed(R.id.speed_register, l.getSpeed() * 3.6);
+    utils.setSpeed(R.id.speed_register, l.getSpeed() * UnitConversionUtils.MS_TO_KMH);
   }
 
   private void showUnknownLocation() {
