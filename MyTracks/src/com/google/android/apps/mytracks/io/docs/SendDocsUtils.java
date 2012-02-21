@@ -23,7 +23,7 @@ import com.google.android.apps.mytracks.io.gdata.docs.SpreadsheetsClient.Workshe
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ResourceUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.apps.mytracks.util.UnitConversionUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.wireless.gdata.client.HttpException;
@@ -349,9 +349,9 @@ public class SendDocsUtils {
    */
   @VisibleForTesting
   static final String getDistance(double distanceInMeter, boolean metricUnits) {
-    double distanceInKilometer = distanceInMeter * UnitConversionUtils.M_TO_KM;
+    double distanceInKilometer = distanceInMeter * UnitConversions.M_TO_KM;
     double distance = metricUnits ? distanceInKilometer
-        : distanceInKilometer * UnitConversionUtils.KM_TO_MI;
+        : distanceInKilometer * UnitConversions.KM_TO_MI;
     return NUMBER_FORMAT.format(distance);
   }
 
@@ -363,9 +363,9 @@ public class SendDocsUtils {
    */
   @VisibleForTesting
   static final String getSpeed(double speedInMeterPerSecond, boolean metricUnits) {
-    double speedInKilometerPerHour = speedInMeterPerSecond * UnitConversionUtils.MS_TO_KMH;
+    double speedInKilometerPerHour = speedInMeterPerSecond * UnitConversions.MS_TO_KMH;
     double speed = metricUnits ? speedInKilometerPerHour
-        : speedInKilometerPerHour * UnitConversionUtils.KM_TO_MI;
+        : speedInKilometerPerHour * UnitConversions.KM_TO_MI;
     return NUMBER_FORMAT.format(speed);
   }
 
@@ -377,7 +377,7 @@ public class SendDocsUtils {
    */
   @VisibleForTesting
   static final String getElevation(double elevationInMeter, boolean metricUnits) {
-    double elevation = metricUnits ? elevationInMeter : elevationInMeter * UnitConversionUtils.M_TO_FT;
+    double elevation = metricUnits ? elevationInMeter : elevationInMeter * UnitConversions.M_TO_FT;
     return INTEGER_FORMAT.format(elevation);
   }
 

@@ -22,7 +22,7 @@ import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.apps.mytracks.util.UnitConversionUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
@@ -159,16 +159,16 @@ public class StatusAnnouncerTask implements PeriodicTask {
       reportSpeed = preferences.getBoolean(context.getString(R.string.report_speed_key), true);
     }
 
-    double d =  stats.getTotalDistance() * UnitConversionUtils.M_TO_KM;
-    double s =  stats.getAverageMovingSpeed() * UnitConversionUtils.MS_TO_KMH;
+    double d =  stats.getTotalDistance() * UnitConversions.M_TO_KM;
+    double s =  stats.getAverageMovingSpeed() * UnitConversions.MS_TO_KMH;
     
     if (d == 0) {
       return context.getString(R.string.voice_total_distance_zero);
     }
 
     if (!metricUnits) {
-      d *= UnitConversionUtils.KM_TO_MI;
-      s *= UnitConversionUtils.KM_TO_MI;
+      d *= UnitConversions.KM_TO_MI;
+      s *= UnitConversions.KM_TO_MI;
     }
 
     if (!reportSpeed) {

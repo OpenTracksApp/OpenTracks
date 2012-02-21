@@ -18,7 +18,7 @@ package com.google.android.apps.mytracks.services.tasks;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.services.TrackRecordingService;
-import com.google.android.apps.mytracks.util.UnitConversionUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 
 import android.util.Log;
 
@@ -126,9 +126,9 @@ public class PeriodicTaskExecutor {
       return;
     }
 
-    double distance = service.getTripStatistics().getTotalDistance() * UnitConversionUtils.M_TO_KM;
+    double distance = service.getTripStatistics().getTotalDistance() * UnitConversions.M_TO_KM;
     if (!metricUnits) {
-      distance *= UnitConversionUtils.KM_TO_MI;
+      distance *= UnitConversions.KM_TO_MI;
     }
     // The index will be negative since the frequency is negative.
     int index = (int) (distance / taskFrequency);
@@ -145,9 +145,9 @@ public class PeriodicTaskExecutor {
       return;
     }
     // Convert the distance in meters to km or mi.
-    double distance = service.getTripStatistics().getTotalDistance() * UnitConversionUtils.M_TO_KM;
+    double distance = service.getTripStatistics().getTotalDistance() * UnitConversions.M_TO_KM;
     if (!metricUnits) {
-      distance *= UnitConversionUtils.KM_TO_MI;
+      distance *= UnitConversions.KM_TO_MI;
     }
 
     if (distance > nextTaskDistance) {

@@ -16,13 +16,13 @@
 package com.google.android.apps.mytracks.util;
 
 /**
- * Utilities for converting units.
+ * Unit conversion constants.
  *
  * @author Sandor Dornbush
  */
-public class UnitConversionUtils {
+public class UnitConversions {
 
-  private UnitConversionUtils() {}
+  private UnitConversions() {}
   
   // multiplication factor to convert kilometers to miles
   public static final double KM_TO_MI = 0.621371192;

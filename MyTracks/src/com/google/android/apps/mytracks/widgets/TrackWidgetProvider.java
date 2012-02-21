@@ -26,7 +26,7 @@ import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.services.ControlRecordingService;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.apps.mytracks.util.UnitConversionUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.app.PendingIntent;
@@ -216,9 +216,9 @@ public class TrackWidgetProvider
 
     // TODO replace this with format strings and miles.
     // convert meters to kilometers
-    double displayDistance = stats.getTotalDistance() * UnitConversionUtils.M_TO_KM;
+    double displayDistance = stats.getTotalDistance() * UnitConversions.M_TO_KM;
     if (!isMetric) {
-      displayDistance *= UnitConversionUtils.KM_TO_MI;
+      displayDistance *= UnitConversions.KM_TO_MI;
     }
     String distance =
         StringUtils.formatSingleDecimalPlace(displayDistance) + " " + this.distanceLabel;
@@ -228,9 +228,9 @@ public class TrackWidgetProvider
     String speed = unknown;
     if (!Double.isNaN(stats.getAverageMovingSpeed())) {
       // Convert m/s to km/h
-      double displaySpeed = stats.getAverageMovingSpeed() * UnitConversionUtils.MS_TO_KMH;
+      double displaySpeed = stats.getAverageMovingSpeed() * UnitConversions.MS_TO_KMH;
       if (!isMetric) {
-        displaySpeed *= UnitConversionUtils.KM_TO_MI;
+        displaySpeed *= UnitConversions.KM_TO_MI;
       }
       if (reportSpeed) {
         speed = StringUtils.formatSingleDecimalPlace(displaySpeed) + " " + this.speedLabel;

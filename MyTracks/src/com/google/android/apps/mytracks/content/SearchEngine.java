@@ -17,7 +17,7 @@ package com.google.android.apps.mytracks.content;
 
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.LocationUtils;
-import com.google.android.apps.mytracks.util.UnitConversionUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 
 import android.database.Cursor;
 import android.location.Location;
@@ -386,7 +386,7 @@ public class SearchEngine {
         distanceResults);
 
     // Score tracks close to the current location higher.
-    double distanceKm = distanceResults[0] * UnitConversionUtils.M_TO_KM;
+    double distanceKm = distanceResults[0] * UnitConversions.M_TO_KM;
     if (distanceKm > 0.0) {
       // Use the inverse of the amortized distance.
       return squash(distanceKm);

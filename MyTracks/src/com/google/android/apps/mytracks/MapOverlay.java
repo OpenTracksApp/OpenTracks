@@ -22,7 +22,7 @@ import com.google.android.apps.mytracks.maps.TrackPathPainter;
 import com.google.android.apps.mytracks.maps.TrackPathPainterFactory;
 import com.google.android.apps.mytracks.maps.TrackPathUtilities;
 import com.google.android.apps.mytracks.util.LocationUtils;
-import com.google.android.apps.mytracks.util.UnitConversionUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
@@ -104,7 +104,7 @@ public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListe
     public CachedLocation(Location location) {
       this.valid = LocationUtils.isValidLocation(location);
       this.geoPoint = valid ? LocationUtils.getGeoPoint(location) : null;
-      this.speed = (int) Math.floor(location.getSpeed() * UnitConversionUtils.MS_TO_KMH);
+      this.speed = (int) Math.floor(location.getSpeed() * UnitConversions.MS_TO_KMH);
     }
   };
 

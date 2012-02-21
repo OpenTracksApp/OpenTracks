@@ -49,12 +49,12 @@ public class LocationUtils {
       return c2.distanceTo(c0);
     }
 
-    final double s0lat = c0.getLatitude() * UnitConversionUtils.DEG_TO_RAD;
-    final double s0lng = c0.getLongitude() * UnitConversionUtils.DEG_TO_RAD;
-    final double s1lat = c1.getLatitude() * UnitConversionUtils.DEG_TO_RAD;
-    final double s1lng = c1.getLongitude() * UnitConversionUtils.DEG_TO_RAD;
-    final double s2lat = c2.getLatitude() * UnitConversionUtils.DEG_TO_RAD;
-    final double s2lng = c2.getLongitude() * UnitConversionUtils.DEG_TO_RAD;
+    final double s0lat = c0.getLatitude() * UnitConversions.DEG_TO_RAD;
+    final double s0lng = c0.getLongitude() * UnitConversions.DEG_TO_RAD;
+    final double s1lat = c1.getLatitude() * UnitConversions.DEG_TO_RAD;
+    final double s1lng = c1.getLongitude() * UnitConversions.DEG_TO_RAD;
+    final double s2lat = c2.getLatitude() * UnitConversions.DEG_TO_RAD;
+    final double s2lng = c2.getLongitude() * UnitConversions.DEG_TO_RAD;
 
     double s2s1lat = s2lat - s1lat;
     double s2s1lng = s2lng - s1lng;

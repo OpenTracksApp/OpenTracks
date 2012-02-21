@@ -30,7 +30,7 @@ import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.apps.mytracks.util.UnitConversionUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.common.gdata.AndroidXmlParserFactory;
 import com.google.android.maps.mytracks.R;
 import com.google.wireless.gdata.client.GDataClient;
@@ -282,7 +282,7 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
           tripStatisticsBuilder.addLocation(location, location.getTime());
           // All points go into the smoothing buffer
           elevationBuffer.setNext(metricUnits ? location.getAltitude()
-              : location.getAltitude() * UnitConversionUtils.M_TO_FT);
+              : location.getAltitude() * UnitConversions.M_TO_FT);
           if (i % elevationSamplingFrequency == 0) {
             distances.add(tripStatisticsBuilder.getStatistics().getTotalDistance());
             elevations.add(elevationBuffer.getAverage());

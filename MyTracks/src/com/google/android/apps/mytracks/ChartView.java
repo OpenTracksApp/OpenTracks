@@ -19,7 +19,7 @@ import com.google.android.apps.mytracks.ChartValueSeries.ZoomSettings;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.ExtremityMonitor;
 import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.apps.mytracks.util.UnitConversionUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -408,8 +408,8 @@ public class ChartView extends View {
 
   private int getWaypointX(Waypoint waypoint) {
     if (mode == Mode.BY_DISTANCE) {
-      double lenghtInKm = waypoint.getLength() * UnitConversionUtils.M_TO_KM;
-      return getX(metricUnits ? lenghtInKm : lenghtInKm * UnitConversionUtils.KM_TO_MI);
+      double lenghtInKm = waypoint.getLength() * UnitConversions.M_TO_KM;
+      return getX(metricUnits ? lenghtInKm : lenghtInKm * UnitConversions.KM_TO_MI);
     } else {
       return getX(waypoint.getDuration());
     }

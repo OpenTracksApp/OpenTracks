@@ -17,7 +17,7 @@ package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.apps.mytracks.util.UnitConversionUtils;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -106,12 +106,12 @@ public class StatsUtilities {
   }
 
   public void setAltitude(int id, double d) {
-    setText(id, (metricUnits ? d : (d * UnitConversionUtils.M_TO_FT)),
+    setText(id, (metricUnits ? d : (d * UnitConversions.M_TO_FT)),
         ALTITUDE_FORMAT);
   }
 
   public void setDistance(int id, double d) {
-    setText(id, (metricUnits ? d : (d * UnitConversionUtils.KM_TO_MI)),
+    setText(id, (metricUnits ? d : (d * UnitConversions.KM_TO_MI)),
         SPEED_FORMAT);
   }
 
@@ -120,7 +120,7 @@ public class StatsUtilities {
       setUnknown(id);
       return;
     }
-    double speed = metricUnits ? d : d * UnitConversionUtils.KM_TO_MI;
+    double speed = metricUnits ? d : d * UnitConversions.KM_TO_MI;
     if (reportSpeed) {
       setText(id, speed, SPEED_FORMAT);
     } else {
@@ -213,10 +213,10 @@ public class StatsUtilities {
       double minElevation, double maxElevation, double elevationGain,
       double minGrade, double maxGrade) {
     setTime(R.id.moving_time_register, movingTime);
-    setDistance(R.id.total_distance_register, totalDistance * UnitConversionUtils.M_TO_KM);
-    setSpeed(R.id.average_speed_register, averageSpeed * UnitConversionUtils.MS_TO_KMH);
-    setSpeed(R.id.average_moving_speed_register, averageMovingSpeed * UnitConversionUtils.MS_TO_KMH);
-    setSpeed(R.id.max_speed_register, maxSpeed * UnitConversionUtils.MS_TO_KMH);
+    setDistance(R.id.total_distance_register, totalDistance * UnitConversions.M_TO_KM);
+    setSpeed(R.id.average_speed_register, averageSpeed * UnitConversions.MS_TO_KMH);
+    setSpeed(R.id.average_moving_speed_register, averageMovingSpeed * UnitConversions.MS_TO_KMH);
+    setSpeed(R.id.max_speed_register, maxSpeed * UnitConversions.MS_TO_KMH);
     setAltitude(R.id.min_elevation_register, minElevation);
     setAltitude(R.id.max_elevation_register, maxElevation);
     setAltitude(R.id.elevation_gain_register, elevationGain);
@@ -226,11 +226,11 @@ public class StatsUtilities {
 
   public void setAllStats(TripStatistics stats) {
     setTime(R.id.moving_time_register, stats.getMovingTime());
-    setDistance(R.id.total_distance_register, stats.getTotalDistance() * UnitConversionUtils.M_TO_KM);
-    setSpeed(R.id.average_speed_register, stats.getAverageSpeed() * UnitConversionUtils.MS_TO_KMH);
+    setDistance(R.id.total_distance_register, stats.getTotalDistance() * UnitConversions.M_TO_KM);
+    setSpeed(R.id.average_speed_register, stats.getAverageSpeed() * UnitConversions.MS_TO_KMH);
     setSpeed(R.id.average_moving_speed_register,
-        stats.getAverageMovingSpeed() * UnitConversionUtils.MS_TO_KMH);
-    setSpeed(R.id.max_speed_register, stats.getMaxSpeed() * UnitConversionUtils.MS_TO_KMH);
+        stats.getAverageMovingSpeed() * UnitConversions.MS_TO_KMH);
+    setSpeed(R.id.max_speed_register, stats.getMaxSpeed() * UnitConversions.MS_TO_KMH);
     setAltitude(R.id.min_elevation_register, stats.getMinElevation());
     setAltitude(R.id.max_elevation_register, stats.getMaxElevation());
     setAltitude(R.id.elevation_gain_register, stats.getTotalElevationGain());
