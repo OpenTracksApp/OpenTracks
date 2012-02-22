@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.stats.ExtremityMonitor;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.content.Context;
 import android.content.Intent;
@@ -884,5 +885,15 @@ public class ChartView extends View {
    */
   public void setChartValueSeriesEnabled(int index, boolean enabled) {
     series[index].setEnabled(enabled);
+  }
+  
+  @VisibleForTesting
+  int getZoomLevel() {
+    return zoomLevel;
+  }
+  
+  @VisibleForTesting
+  int getMaxZoomLevel() {
+    return maxZoomLevel;
   }
 }
