@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
@@ -120,7 +121,8 @@ public class DynamicSpeedTrackPathDescriptor implements TrackPathDescriptor,
     }
     Track track = MyTracksProviderUtils.Factory.get(context).getTrack(currentTrackId);
     TripStatistics stats = track.getStatistics();
-    double newAverageMovingSpeed = (int) Math.floor(stats.getAverageMovingSpeed() * 3.6);
+    double newAverageMovingSpeed = (int) Math.floor(
+        stats.getAverageMovingSpeed() * UnitConversions.MS_TO_KMH);
 
     return isDifferenceSignificant(averageMovingSpeed, newAverageMovingSpeed);
   }

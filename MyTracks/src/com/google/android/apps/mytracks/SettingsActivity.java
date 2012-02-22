@@ -502,7 +502,7 @@ public class SettingsActivity extends PreferenceActivity {
           format = getString(stringId);
           options[i] = String.format(format, value);
         } else {
-          double mile = value / UnitConversions.MI_TO_FEET;
+          double mile = value * UnitConversions.FT_TO_MI;
           format = getString(R.string.value_float_mile);
           options[i] = String.format(format, mile);
         }
@@ -545,7 +545,7 @@ public class SettingsActivity extends PreferenceActivity {
           }
           options[i] = String.format(format, value);
         } else {
-          double mile = value / UnitConversions.MI_TO_FEET;
+          double mile = value * UnitConversions.FT_TO_MI;
           if (values[i].equals(GPS_ACCURACY_POOR)) {
             format = getString(R.string.value_float_mile_poor_gps);
           } else {
@@ -644,7 +644,7 @@ public class SettingsActivity extends PreferenceActivity {
     String metricspeed = prefs.getString(getString(id), null);
     int englishspeed;
     try {
-      englishspeed = (int) (Double.parseDouble(metricspeed) * UnitConversions.KMH_TO_MPH);
+      englishspeed = (int) (Double.parseDouble(metricspeed) * UnitConversions.KM_TO_MI);
     } catch (NumberFormatException e) {
       englishspeed = 0;
     }
@@ -663,7 +663,7 @@ public class SettingsActivity extends PreferenceActivity {
       // Convert miles/h to km/h
       try {
         metricspeed = String.valueOf(
-            (int) (Double.parseDouble(newValue) * UnitConversions.MPH_TO_KMH) + 1);
+            (int) (Double.parseDouble(newValue) * UnitConversions.MI_TO_KM));
       } catch (NumberFormatException e) {
         metricspeed = "0";
       }

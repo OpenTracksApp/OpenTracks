@@ -216,7 +216,7 @@ public class TrackWidgetProvider
 
     // TODO replace this with format strings and miles.
     // convert meters to kilometers
-    double displayDistance = stats.getTotalDistance() / 1000.0;
+    double displayDistance = stats.getTotalDistance() * UnitConversions.M_TO_KM;
     if (!isMetric) {
       displayDistance *= UnitConversions.KM_TO_MI;
     }
@@ -228,9 +228,9 @@ public class TrackWidgetProvider
     String speed = unknown;
     if (!Double.isNaN(stats.getAverageMovingSpeed())) {
       // Convert m/s to km/h
-      double displaySpeed = stats.getAverageMovingSpeed() * 3.6;
+      double displaySpeed = stats.getAverageMovingSpeed() * UnitConversions.MS_TO_KMH;
       if (!isMetric) {
-        displaySpeed *= UnitConversions.KMH_TO_MPH;
+        displaySpeed *= UnitConversions.KM_TO_MI;
       }
       if (reportSpeed) {
         speed = StringUtils.formatSingleDecimalPlace(displaySpeed) + " " + this.speedLabel;

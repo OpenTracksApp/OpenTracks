@@ -90,14 +90,14 @@ public class StringUtils implements DescriptionGenerator {
     String distanceUnit;
     if (metric) {
       if (totalDistance > 2000.0) {
-        totalDistance /= 1000.0;
+        totalDistance *= UnitConversions.M_TO_KM;
         distanceUnit = context.getString(R.string.unit_kilometer);
       } else {
         distanceUnit = context.getString(R.string.unit_meter);
       }
     } else {
-      if (totalDistance > 2 * UnitConversions.MI_TO_M) {
-        totalDistance /= UnitConversions.MI_TO_M;
+      if (totalDistance * UnitConversions.M_TO_MI > 2) {
+        totalDistance *= UnitConversions.M_TO_MI;
         distanceUnit = context.getString(R.string.unit_mile);
       } else {
         totalDistance *= UnitConversions.M_TO_FT;
@@ -259,7 +259,7 @@ public class StringUtils implements DescriptionGenerator {
     }
 
     TripStatistics trackStats = track.getStatistics();
-    final double distanceInKm = trackStats.getTotalDistance() / 1000.0;
+    final double distanceInKm = trackStats.getTotalDistance() * UnitConversions.M_TO_KM;
     final double distanceInMiles = distanceInKm * UnitConversions.KM_TO_MI;
     final long minElevationInMeters = Math.round(trackStats.getMinElevation());
     final long minElevationInFeet =
@@ -391,8 +391,8 @@ public class StringUtils implements DescriptionGenerator {
 
   private String getSpeedString(double speed, int speedLabel, int paceLabel,
       boolean displaySpeed) {
-    double speedInKph = speed * 3.6;
-    double speedInMph = speedInKph * UnitConversions.KMH_TO_MPH;
+    double speedInKph = speed * UnitConversions.MS_TO_KMH;
+    double speedInMph = speedInKph * UnitConversions.KM_TO_MI;
     if (displaySpeed) {
       return String.format("%s: %.2f %s (%.1f %s)<br>",
           context.getString(speedLabel),
@@ -424,16 +424,16 @@ public class StringUtils implements DescriptionGenerator {
   public String generateWaypointDescription(Waypoint waypoint) {
     TripStatistics stats = waypoint.getStatistics();
 
-    final double distanceInKm = stats.getTotalDistance() / 1000.0;
+    final double distanceInKm = stats.getTotalDistance() * UnitConversions.M_TO_KM;
     final double distanceInMiles = distanceInKm * UnitConversions.KM_TO_MI;
-    final double averageSpeedInKmh = stats.getAverageSpeed() * 3.6;
+    final double averageSpeedInKmh = stats.getAverageSpeed() * UnitConversions.MS_TO_KMH;
     final double averageSpeedInMph =
-        averageSpeedInKmh * UnitConversions.KMH_TO_MPH;
-    final double movingSpeedInKmh = stats.getAverageMovingSpeed() * 3.6;
+        averageSpeedInKmh * UnitConversions.KM_TO_MI;
+    final double movingSpeedInKmh = stats.getAverageMovingSpeed() * UnitConversions.MS_TO_KMH;
     final double movingSpeedInMph =
-        movingSpeedInKmh * UnitConversions.KMH_TO_MPH;
-    final double maxSpeedInKmh = stats.getMaxSpeed() * 3.6;
-    final double maxSpeedInMph = maxSpeedInKmh * UnitConversions.KMH_TO_MPH;
+        movingSpeedInKmh * UnitConversions.KM_TO_MI;
+    final double maxSpeedInKmh = stats.getMaxSpeed() * UnitConversions.MS_TO_KMH;
+    final double maxSpeedInMph = maxSpeedInKmh * UnitConversions.KM_TO_MI;
     final long minElevationInMeters = Math.round(stats.getMinElevation());
     final long minElevationInFeet =
         Math.round(stats.getMinElevation() * UnitConversions.M_TO_FT);

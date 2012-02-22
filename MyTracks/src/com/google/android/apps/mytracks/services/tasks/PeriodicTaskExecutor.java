@@ -126,7 +126,7 @@ public class PeriodicTaskExecutor {
       return;
     }
 
-    double distance = service.getTripStatistics().getTotalDistance() / 1000.0;
+    double distance = service.getTripStatistics().getTotalDistance() * UnitConversions.M_TO_KM;
     if (!metricUnits) {
       distance *= UnitConversions.KM_TO_MI;
     }
@@ -145,7 +145,7 @@ public class PeriodicTaskExecutor {
       return;
     }
     // Convert the distance in meters to km or mi.
-    double distance = service.getTripStatistics().getTotalDistance() / 1000.0;
+    double distance = service.getTripStatistics().getTotalDistance() * UnitConversions.M_TO_KM;
     if (!metricUnits) {
       distance *= UnitConversions.KM_TO_MI;
     }

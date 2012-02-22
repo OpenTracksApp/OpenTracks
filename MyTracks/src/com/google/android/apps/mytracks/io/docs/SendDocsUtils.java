@@ -349,7 +349,7 @@ public class SendDocsUtils {
    */
   @VisibleForTesting
   static final String getDistance(double distanceInMeter, boolean metricUnits) {
-    double distanceInKilometer = distanceInMeter / 1000.0;
+    double distanceInKilometer = distanceInMeter * UnitConversions.M_TO_KM;
     double distance = metricUnits ? distanceInKilometer
         : distanceInKilometer * UnitConversions.KM_TO_MI;
     return NUMBER_FORMAT.format(distance);
@@ -363,9 +363,9 @@ public class SendDocsUtils {
    */
   @VisibleForTesting
   static final String getSpeed(double speedInMeterPerSecond, boolean metricUnits) {
-    double speedInKilometerPerHour = speedInMeterPerSecond * 3.6;
+    double speedInKilometerPerHour = speedInMeterPerSecond * UnitConversions.MS_TO_KMH;
     double speed = metricUnits ? speedInKilometerPerHour
-        : speedInKilometerPerHour * UnitConversions.KMH_TO_MPH;
+        : speedInKilometerPerHour * UnitConversions.KM_TO_MI;
     return NUMBER_FORMAT.format(speed);
   }
 

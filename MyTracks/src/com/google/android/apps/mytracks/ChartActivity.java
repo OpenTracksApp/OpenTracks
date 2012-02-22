@@ -300,7 +300,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
             profileLength += d * UnitConversions.KM_TO_MI;
           }
         }
-        timeOrDistance = profileLength / 1000.0;
+        timeOrDistance = profileLength * UnitConversions.M_TO_KM;
         break;
       case BY_TIME:
         if (startTime == -1) {
@@ -328,7 +328,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
         && (location.getSpeed() <= trackMaxSpeed)) {
       speedBuffer.setNext(location.getSpeed());
     }
-    speed = speedBuffer.getAverage() * 3.6;
+    speed = speedBuffer.getAverage() * UnitConversions.MS_TO_KMH;
     if (!metricUnits) {
       speed *= UnitConversions.KM_TO_MI;
     }
