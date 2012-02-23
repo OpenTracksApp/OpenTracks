@@ -36,7 +36,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
- * Writer to write a track as KML.
+ * Write track as KML to a file.
  *
  * @author Leif Hendrik Wilden
  */

@@ -23,7 +23,7 @@ import android.location.Location;
 import java.io.OutputStream;
 
 /**
- * Interface for writing a track data to a specific file format.
+ * Interface for writing a track to file.
  *
  * The expected sequence of calls is:
  * <ol>
