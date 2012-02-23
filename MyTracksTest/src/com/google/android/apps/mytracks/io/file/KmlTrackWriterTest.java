@@ -1,4 +1,19 @@
-// Copyright 2010 Google Inc. All Rights Reserved.
+/*
+ * Copyright 2010 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+
 package com.google.android.apps.mytracks.io.file;
 
 import com.google.android.apps.mytracks.content.DescriptionGenerator;
@@ -14,7 +29,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
- * Tests for the KML track exporter.
+ * Tests for {@link KmlTrackWriter}.
  *
  * @author Rodrigo Damazio
  */
@@ -25,13 +40,10 @@ public class KmlTrackWriterTest extends TrackFormatWriterTest {
    * A fake version of {@link DescriptionGenerator} which returns a fixed track
    * description, thus not depending on the context.
    */
-  private class MockDescriptionGenerator implements DescriptionGenerator {
+  private class FakeDescriptionGenerator implements DescriptionGenerator {
     @Override
     public String generateTrackDescription(
-        Track trackToDescribe, Vector<Double> distances, Vector<Double> elevations) {
-      assertSame(KmlTrackWriterTest.super.track, trackToDescribe);
-      assertTrue(distances.isEmpty());
-      assertTrue(elevations.isEmpty());
+        Track aTrack, Vector<Double> distances, Vector<Double> elevations) {
       return FULL_TRACK_DESCRIPTION;
     }
 
@@ -42,7 +54,7 @@ public class KmlTrackWriterTest extends TrackFormatWriterTest {
   }
 
   public void testXmlOutput() throws Exception {
-    KmlTrackWriter writer = new KmlTrackWriter(new MockDescriptionGenerator());
+    KmlTrackWriter writer = new KmlTrackWriter(getContext(), new FakeDescriptionGenerator());
     String result = writeTrack(writer);
     Document doc = parseXmlDocument(result);
 
@@ -51,65 +63,58 @@ public class KmlTrackWriterTest extends TrackFormatWriterTest {
     assertEquals(TRACK_NAME, getChildTextValue(docTag, "name"));
     assertEquals(TRACK_DESCRIPTION, getChildTextValue(docTag, "description"));
 
-    // There are 5 placemarks - start, segments, end, waypoint 1, waypoint 2
+    // There are 5 placemarks - start, segments, end, waypoint1, waypoint2
     List<Element> placemarkTags = getChildElements(docTag, "Placemark", 5);
-    assertTagIsPlacemark(placemarkTags.get(0),
-        "(Start)", TRACK_DESCRIPTION, location1);
-    assertTagIsPlacemark(placemarkTags.get(2),
-        "(End)", FULL_TRACK_DESCRIPTION, location4);
-    assertTagIsPlacemark(placemarkTags.get(3),
-        WAYPOINT1_NAME, WAYPOINT1_DESCRIPTION, location2);
-    assertTagIsPlacemark(placemarkTags.get(4),
-        WAYPOINT2_NAME, WAYPOINT2_DESCRIPTION, location3);
+    assertTagIsPlacemark(
+        placemarkTags.get(0), TRACK_NAME + " (Start)", TRACK_DESCRIPTION, location1);
+    assertTagIsPlacemark(
+        placemarkTags.get(2), TRACK_NAME + " (End)", FULL_TRACK_DESCRIPTION, location4);
+    assertTagIsPlacemark(placemarkTags.get(3), WAYPOINT1_NAME, WAYPOINT1_DESCRIPTION, location2);
+    assertTagIsPlacemark(placemarkTags.get(4), WAYPOINT2_NAME, WAYPOINT2_DESCRIPTION, location3);
 
     Element trackPlacemarkTag = placemarkTags.get(1);
     assertEquals(TRACK_NAME, getChildTextValue(trackPlacemarkTag, "name"));
-    assertEquals(TRACK_DESCRIPTION,
-        getChildTextValue(trackPlacemarkTag, "description"));
-    Element geometryTag = getChildElement(trackPlacemarkTag, "MultiGeometry");
-    List<Element> segmentTags = getChildElements(geometryTag, "LineString", 2);
-    assertTagHasPoints(segmentTags.get(0), location1, location2);
-    assertTagHasPoints(segmentTags.get(1), location3, location4);
+    assertEquals(TRACK_DESCRIPTION, getChildTextValue(trackPlacemarkTag, "description"));
+    Element multiTrackTag = getChildElement(trackPlacemarkTag, "gx:MultiTrack");
+    List<Element> trackTags = getChildElements(multiTrackTag, "gx:Track", 2);
+    assertTagHasPoints(trackTags.get(0), location1, location2);
+    assertTagHasPoints(trackTags.get(1), location3, location4);
   }
 
   /**
-   * Asserts that the given XML tag is a placemark with the given properties.
+   * Asserts that the given tag is a placemark with the given properties.
    *
-   * @param tag the tag to analyze
-   * @param name the expected name for the placemark
-   * @param description the expected description for the placemark
-   * @param location the expected location of the placemark
+   * @param tag the tag
+   * @param name the expected placemark name
+   * @param description the expected placemark description
+   * @param location the expected placemark location
    */
-  private void assertTagIsPlacemark(Element tag, String name,
-      String description, Location location) {
+  private void assertTagIsPlacemark(
+      Element tag, String name, String description, Location location) {
     assertEquals(name, getChildTextValue(tag, "name"));
     assertEquals(description, getChildTextValue(tag, "description"));
     Element pointTag = getChildElement(tag, "Point");
-    String expectedCoords =
-        location.getLongitude() + "," + location.getLatitude();
-    String actualCoords = getChildTextValue(pointTag, "coordinates");
-    assertEquals(expectedCoords, actualCoords);
+    String expected = location.getLongitude() + "," + location.getLatitude() + ","
+        + location.getAltitude();
+    String actual = getChildTextValue(pointTag, "coordinates");
+    assertEquals(expected, actual);
   }
 
   /**
-   * Asserts that the given tag has a "coordinates" subtag with the given
-   * locations.
+   * Asserts that the given tag has a list of "gx:coord" subtags matching the
+   * expected locations.
    *
-   * @param tag the tag to analyze
-   * @param locs the locations to expect in the coordinates
+   * @param tag the parent tag
+   * @param locations list of expected locations
    */
-  private void assertTagHasPoints(Element tag, Location... locs) {
-    StringBuilder expectedBuilder = new StringBuilder();
-    for (Location loc : locs) {
-      expectedBuilder.append(loc.getLongitude());
-      expectedBuilder.append(',');
-      expectedBuilder.append(loc.getLatitude());
-      expectedBuilder.append(',');
-      expectedBuilder.append(loc.getAltitude());
-      expectedBuilder.append(' ');
+  private void assertTagHasPoints(Element tag, Location... locations) {
+    List<Element> coordTags = getChildElements(tag, "gx:coord", locations.length);
+    for (int i = 0; i < locations.length; i++) {
+      Location location = locations[i];
+      String expected = location.getLongitude() + " " + location.getLatitude() + " "
+          + location.getAltitude();
+      String actual = coordTags.get(i).getFirstChild().getTextContent();
+      assertEquals(expected, actual);
     }
-    String expectedCoordinates = expectedBuilder.toString().trim();
-    String actualCoordinates = getChildTextValue(tag, "coordinates").trim();
-    assertEquals(expectedCoordinates, actualCoordinates);
   }
 }

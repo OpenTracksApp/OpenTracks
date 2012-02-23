@@ -151,6 +151,16 @@ public class GpxTrackWriter implements TrackFormatWriter {
   }
 
   @Override
+  public void writeBeginWaypoints() {
+    // Do nothing
+  }
+
+  @Override
+  public void writeEndWaypoints() {
+    // Do nothing
+  }
+
+  @Override
   public void writeWaypoint(Waypoint waypoint) {
     if (pw != null) {
       Location l = waypoint.getLocation();

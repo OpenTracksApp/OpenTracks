@@ -269,12 +269,17 @@ class TrackWriterImpl implements TrackWriter {
     Cursor cursor = null;
     cursor = providerUtils.getWaypointsCursor(trackId, 0,
         Constants.MAX_LOADED_WAYPOINTS_POINTS);
+    boolean hasWaypoints = false;
     if (cursor != null) {
       try {
         if (cursor.moveToFirst()) {
           // Yes, this will skip the 1st way point and that is intentional
           // as the 1st points holds the stats for the current/last segment.
           while (cursor.moveToNext()) {
+            if (!hasWaypoints) {
+              writer.writeBeginWaypoints();
+              hasWaypoints = true;
+            }
             Waypoint wpt = providerUtils.createWaypoint(cursor);
             writer.writeWaypoint(wpt);
           }
@@ -282,6 +287,9 @@ class TrackWriterImpl implements TrackWriter {
       } finally {
         cursor.close();
       }
+    }
+    if (hasWaypoints) {
+      writer.writeEndWaypoints();
     }
   }
 

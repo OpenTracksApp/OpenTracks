@@ -103,6 +103,16 @@ public class CsvTrackWriter implements TrackFormatWriter {
   }
 
   @Override
+  public void writeBeginWaypoints() {
+    // Do nothing
+  }
+
+  @Override
+  public void writeEndWaypoints() {
+    // Do nothing
+  }
+
+  @Override
   public void writeWaypoint(Waypoint waypoint) {
     Location location = waypoint.getLocation();
     String timeStr = FileUtils.FILE_TIMESTAMP_FORMAT.format(new Date(location.getTime()));

@@ -292,6 +292,16 @@ public class TcxTrackWriter implements TrackFormatWriter {
   }
 
   @Override
+  public void writeBeginWaypoints() {
+    // Do nothing
+  }
+
+  @Override
+  public void writeEndWaypoints() {
+    // Do nothing
+  }
+
+  @Override
   public void writeWaypoint(Waypoint waypoint) {
     // TODO Write out the waypoints somewhere.
   }

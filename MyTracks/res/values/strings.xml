@@ -559,6 +559,22 @@ limitations under the License.
       %1$s time. E.g, '2/15/2012 1:40 PM'">
     Recorded: %1$s
   </string>
+  <string name="description_sensor_battery_level"
+    translation_description="Label for battery level with its unit percentage (%).">
+    Battery level (%)
+  </string>
+  <string name="description_sensor_cadence"
+    translation_description="Label for cadence with its unit revolutions per minute (rpm).">
+    Cadence (rpm)
+  </string>
+  <string name="description_sensor_heart_rate"
+    translation_description="Label for heart rate with its unit beats per minute (bpm).">
+    Heart rate (bpm)
+  </string>
+  <string name="description_sensor_power"
+    translation_description="Label for power with its unit watt (W).">
+    Power (W)
+  </string>
   <string name="description_total_distance"
     translation_description="Total distance description.
       
