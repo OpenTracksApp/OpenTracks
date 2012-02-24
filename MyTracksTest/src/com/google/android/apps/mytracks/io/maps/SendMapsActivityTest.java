@@ -41,31 +41,12 @@ public class SendMapsActivityTest extends AndroidTestCase {
 
   /**
    * Tests the method
-   * {@link SendMapsActivity#setSendResult(SendRequest, boolean)} then input
-   * value is true.
-   */
-  public void testSetSendResult_true() {
-    sendMapsActivity.setSendResult(sendRequest, true);
-    assertEquals(true, sendRequest.isMapsSuccess());
-  }
-
-  /**
-   * Tests the method
-   * {@link SendMapsActivity#setSendResult(SendRequest, boolean)} then input
-   * value is false.
-   */
-  public void testSetSendResult_false() {
-    sendMapsActivity.setSendResult(sendRequest, false);
-    assertEquals(false, sendRequest.isMapsSuccess());
-  }
-
-  /**
-   * Tests the method
    * {@link SendMapsActivity#getNextClass(SendRequest, boolean)}. Sets the flags
-   * to send fusion tables and cancel to false and false.
+   * of "sendFusionTables","sendDocs" and "cancel" to true, true and false.
    */
   public void testGetNextClass_notCancelSendFusionTables() {
     sendRequest.setSendFusionTables(true);
+    sendRequest.setSendDocs(true);
     Class<?> next = sendMapsActivity.getNextClass(sendRequest, false);
     assertEquals(SendFusionTablesActivity.class, next);
   }
@@ -73,8 +54,8 @@ public class SendMapsActivityTest extends AndroidTestCase {
   /**
    * Tests the method
    * {@link SendMapsActivity#getNextClass(SendRequest, boolean)}. Sets the flags
-   * to send docs, fusion tables and cancel to false, true and false.
-   */
+   * of "sendFusionTables","sendDocs" and "cancel" to false, true and false.
+  */
   public void testGetNextClass_notCancelSendDocs() {
     sendRequest.setSendFusionTables(false);
     sendRequest.setSendDocs(true);
@@ -85,7 +66,7 @@ public class SendMapsActivityTest extends AndroidTestCase {
   /**
    * Tests the method
    * {@link SendMapsActivity#getNextClass(SendRequest, boolean)}. Sets the flags
-   * to send docs, fusion tables and cancel to false, false and false.
+   * of "sendFusionTables","sendDocs" and "cancel" to false, false and false.
    */
   public void testGetNextClass_notCancelNotSend() {
     sendRequest.setSendFusionTables(false);
@@ -97,7 +78,7 @@ public class SendMapsActivityTest extends AndroidTestCase {
   /**
    * Tests the method
    * {@link SendMapsActivity#getNextClass(SendRequest, boolean)}. Sets the flags
-   * to send docs, fusion tables and cancel to true, true and true.
+   * of "sendFusionTables","sendDocs" and "cancel" to true, true and true.
    */
   public void testGetNextClass_cancelSendDocs() {
     sendRequest.setSendFusionTables(true);

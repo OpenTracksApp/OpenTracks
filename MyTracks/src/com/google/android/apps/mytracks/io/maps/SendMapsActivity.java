@@ -46,7 +46,8 @@ public class SendMapsActivity extends AbstractSendActivity {
 
   @Override
   protected void startNextActivity(boolean success, boolean isCancel) {
-    setSendResult(sendRequest, success);
+    sendRequest.setMapsSuccess(success);
+
     Class<?> next = getNextClass(sendRequest, isCancel);
     
     Intent intent = new Intent(this, next).putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
@@ -55,19 +56,13 @@ public class SendMapsActivity extends AbstractSendActivity {
   }
   
   @VisibleForTesting
-  void setSendResult(SendRequest sendRequest, boolean success) {
-    sendRequest.setMapsSuccess(success);
-  }
-  
-  @SuppressWarnings("hiding")
-  @VisibleForTesting
-  Class<?> getNextClass(SendRequest sendRequest, boolean isCancel) {
+  Class<?> getNextClass(SendRequest request, boolean isCancel) {
     if (isCancel) {
       return UploadResultActivity.class;
     } else {
-      if (sendRequest.isSendFusionTables()) {
+      if (request.isSendFusionTables()) {
         return SendFusionTablesActivity.class;
-      } else if (sendRequest.isSendDocs()) {
+      } else if (request.isSendDocs()) {
         return SendDocsActivity.class;
       } else {
         return UploadResultActivity.class;
