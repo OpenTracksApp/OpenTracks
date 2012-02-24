@@ -45,7 +45,6 @@ public abstract class TrackFormatWriterTest extends AndroidTestCase {
   protected static final String WAYPOINT2_NAME = "point]]>2";
   protected static final String WAYPOINT2_DESCRIPTION = "point 2]]>description";
   private static final int BUFFER_SIZE = 10240;
-  protected static final long TRACK_ID = 12345L;
   protected Track track;
   protected MyTracksLocation location1, location2, location3, location4;
   protected Waypoint wp1, wp2;
@@ -55,7 +54,6 @@ public abstract class TrackFormatWriterTest extends AndroidTestCase {
     super.setUp();
 
     track = new Track();
-    track.setId(TRACK_ID);
     track.setName(TRACK_NAME);
     track.setDescription(TRACK_DESCRIPTION);
 

@@ -13,7 +13,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 package com.google.android.apps.mytracks.io.file;
 
 import com.google.android.apps.mytracks.content.DescriptionGenerator;
@@ -34,6 +33,7 @@ import org.w3c.dom.Element;
  * @author Rodrigo Damazio
  */
 public class KmlTrackWriterTest extends TrackFormatWriterTest {
+
   private static final String FULL_TRACK_DESCRIPTION = "full track description";
 
   /**

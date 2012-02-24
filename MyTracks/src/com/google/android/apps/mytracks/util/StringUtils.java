@@ -144,15 +144,6 @@ public class StringUtils {
     BASE_XML_DATE_FORMAT.setTimeZone(new SimpleTimeZone(0, "UTC"));
   }
 
-  /**
-   * Formats the time to the XML date time format.
-   * 
-   * @param time time in milliseconds
-   */
-  public static final String formatXmlDateTime(long time) {
-    return BASE_XML_DATE_FORMAT.format(new Date(time));
-  }
-
   private static final Pattern XML_DATE_EXTRAS_PATTERN =
       Pattern.compile("^(\\.\\d+)?(?:Z|([+-])(\\d{2}):(\\d{2}))?$");
 

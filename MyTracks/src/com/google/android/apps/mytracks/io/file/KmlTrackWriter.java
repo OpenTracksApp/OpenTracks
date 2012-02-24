@@ -24,6 +24,7 @@ import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
+import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
@@ -65,7 +66,7 @@ public class KmlTrackWriter implements TrackFormatWriter {
   private boolean hasCadence;
   private boolean hasHeartRate;
   private boolean hasBatteryLevel;
-  
+
   public KmlTrackWriter(Context context) {
     this(context, new DescriptionGeneratorImpl(context));
   }
@@ -231,7 +232,8 @@ public class KmlTrackWriter implements TrackFormatWriter {
   @Override
   public void writeLocation(Location location) {
     if (printWriter != null) {
-      printWriter.println("<when>" + StringUtils.formatXmlDateTime(location.getTime()) + "</when>");
+      printWriter.println(
+          "<when>" + FileUtils.FILE_TIMESTAMP_FORMAT.format(location.getTime()) + "</when>");
       printWriter.println(
           "<gx:coord>" + location.getLongitude() + " " + location.getLatitude() + " "
               + location.getAltitude() + "</gx:coord>");
@@ -347,7 +349,7 @@ public class KmlTrackWriter implements TrackFormatWriter {
 
   /**
    * Writes a sensor style.
-   * 
+   *
    * @param name the name of the sesnor
    * @param displayName the sensor display name
    */

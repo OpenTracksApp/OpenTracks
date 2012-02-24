@@ -38,7 +38,7 @@ public class TrackWriterFactory {
     GPX {
       @Override
       TrackFormatWriter newFormatWriter(Context context) {
-        return new GpxTrackWriter();
+        return new GpxTrackWriter(context);
       }
     },
     KML {
