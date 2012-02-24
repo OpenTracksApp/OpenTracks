@@ -36,6 +36,7 @@ import java.util.Locale;
  * @author Sandor Dornbush
  */
 public class GpxTrackWriter implements TrackFormatWriter {
+
   private static final NumberFormat ELEVATION_FORMAT = NumberFormat.getInstance(Locale.US);
   private static final NumberFormat COORDINATE_FORMAT = NumberFormat.getInstance(Locale.US);
   static {
