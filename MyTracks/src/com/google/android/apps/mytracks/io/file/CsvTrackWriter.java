@@ -33,7 +33,19 @@ import java.io.PrintWriter;
 import java.text.NumberFormat;
 
 /**
- * Write track as CSV to a file.
+ * Write track as CSV to a file. See RFC 4180 for info on CSV. Output three
+ * tables.<br>
+ * The first table contains the track info. Its columns are:<br>
+ * "Track name","Activity type","Track description" <br>
+ * <br>
+ * The second table contains the markers. Its columns are:<br>
+ * "Marker name","Marker type","Marker description","Latitude (deg)","Longitude
+ * (deg)","Altitude (m)","Bearing (deg)","Accuracy (m)","Speed (m/s)","Time"<br>
+ * <br>
+ * The thrid table contains the points. Its columns are:<br>
+ * "Segment","Point","Latitude (deg)","Longitude (deg)","Altitude (m)","Bearing
+ * (deg)","Accuracy (m)","Speed (m/s)","Time","Power (W)","Cadence (rpm)","Heart
+ * rate (bpm)","Battery level (%)"<br>
  *
  * @author Rodrigo Damazio
  */
