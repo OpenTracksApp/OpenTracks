@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.google.android.maps.mytracks"
+          android:installLocation="auto"
+          android:versionCode="38"
+          android:versionName="1.1.15">
+
+  <!-- Permissions to initialize service -->
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+  <!-- Permissions for recording tracks and showing maps -->
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.WAKE_LOCK" />
+  <uses-permission android:name="android.permission.BLUETOOTH" />
+  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+  <uses-permission android:name="com.dsi.ant.permission.ANT" />
+  <uses-permission android:name="com.dsi.ant.permission.ANT_ADMIN" />
+
+  <!-- Permissions for uploading tracks -->
+  <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+  <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+  <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+  <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH" />
+  <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.fusiontables" />
+  <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.local" />
+  <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.wise" />
+  <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.writely" />
+  <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+
+  <!-- Permissions for misc services -->
+  <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+  <!-- Exported permissions (for other apps to use our features) -->
+  <!-- Permission to get track start/end broadcasts -->
+  <permission android:name="com.google.android.apps.mytracks.TRACK_NOTIFICATIONS"
+              android:permissionGroup="android.permission-group.LOCATION"
+              android:label="@string/permission_notification_label"
+              android:description="@string/permission_notification_description"
+              android:protectionLevel="dangerous" />
+  <!-- Permission to read raw track data (points, etc.) -->
+  <permission android:name="com.google.android.apps.mytracks.READ_TRACK_DATA"
+              android:permissionGroup="android.permission-group.LOCATION"
+              android:label="@string/permission_read_label"
+              android:description="@string/permission_read_description"
+              android:protectionLevel="dangerous" />
+  <!-- Permission to write track data, either raw or by making service calls -->
+  <permission android:name="com.google.android.apps.mytracks.WRITE_TRACK_DATA"
+              android:permissionGroup="android.permission-group.LOCATION"
+              android:label="@string/permission_write_label"
+              android:description="@string/permission_write_description"
+              android:protectionLevel="dangerous" />
+
+  <!-- Permission to get MyTracks broadcasts. For internal MyTracks communication. -->
+  <permission android:name="com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS"
+              android:permissionGroup="android.permission-group.LOCATION"
+              android:label="@string/permission_notification_label"
+              android:description="@string/permission_notification_label"
+              android:protectionLevel="signature" />
+
+  <!-- We read and write raw track data, obviously. -->
+  <uses-permission android:name="com.google.android.apps.mytracks.READ_TRACK_DATA" />
+  <uses-permission android:name="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
+  <uses-permission android:name="com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS" />
+
+  <!-- Features required -->
+  <uses-feature android:name="android.hardware.location" android:required="true"/>
+  <uses-feature android:name="android.hardware.location.gps" android:required="true"/>
+
+  <!-- Features optional -->
+  <uses-feature android:name="android.hardware.bluetooth" android:required="false"/>
+  <uses-feature android:name="android.hardware.faketouch" android:required="false"/>
+  <uses-feature android:name="android.hardware.location.network" android:required="false"/>
+  <uses-feature android:name="android.hardware.sensor.compass" android:required="false"/>
+  <uses-feature android:name="android.hardware.telephony" android:required="false"/>
+  <uses-feature android:name="android.hardware.telephony.gsm" android:required="false"/>
+  <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
+  <uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="false"/>
+
+  <uses-sdk android:minSdkVersion="7"/>
+  <supports-screens
+          android:xlargeScreens="true"
+          android:largeScreens="true"
+          android:normalScreens="true"
+          android:smallScreens="true"
+          android:anyDensity="true" />
+
+  <application android:icon="@drawable/arrow_icon"
+               android:label="@string/my_tracks_app_name"
+               android:name="com.google.android.apps.mytracks.MyTracksApplication"
+               android:backupAgent="com.google.android.apps.mytracks.io.backup.MyTracksBackupAgent">
+    <uses-library android:name="com.google.android.maps" />
+
+    <meta-data android:name="com.google.android.backup.api_key"
+               android:value="AEdPqrEAAAAIi-_QiwoRSc9_bAC9cmuNXTQyU8ajJmGtKdhskQ" />
+
+    <!-- Main track data provider -->
+    <provider android:name="com.google.android.apps.mytracks.content.MyTracksProvider"
+              android:authorities="com.google.android.maps.mytracks"
+              android:exported="true"
+              android:readPermission="com.google.android.apps.mytracks.READ_TRACK_DATA"
+              android:writePermission="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
+
+    <!-- Provider for search suggestions -->
+    <provider android:name="com.google.android.apps.mytracks.content.SearchEngineProvider"
+              android:authorities="com.google.android.maps.mytracks.search"
+              android:exported="false" />
+
+    <!-- Main activity -->
+    <activity android:name="com.google.android.apps.mytracks.MyTracks"
+              android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|fontScale">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:mimeType="vnd.android.cursor.item/vnd.google.track" />
+        <data android:mimeType="vnd.android.cursor.item/vnd.google.waypoint" />
+      </intent-filter>
+
+      <!-- Enable searches via SearchActivity. -->
+      <meta-data android:name="android.app.default_searchable"
+                 android:value="com.google.android.apps.mytracks.SearchActivity" />
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.MapActivity"
+              android:exported="false">
+      <intent-filter>
+        <category android:name="android.intent.category.TAB" />
+      </intent-filter>
+
+      <!-- Enable searches via SearchActivity. -->
+      <meta-data android:name="android.app.default_searchable"
+                 android:value="com.google.android.apps.mytracks.SearchActivity" />
+    </activity>
+
+
+    <!-- TODO: Merge TrackList, WaypointsLIst and SearchActivity, then implement VIEW and PICK for track and waypoint cursor dir -->
+    <activity android:name="com.google.android.apps.mytracks.TrackList">
+      <!-- Enable searches via SearchActivity. -->
+      <meta-data android:name="android.app.default_searchable"
+                 android:value="com.google.android.apps.mytracks.SearchActivity" />
+    </activity>
+
+    <!-- TODO: VIEW and PICK for waypoint cursor dir -->
+    <activity android:name="com.google.android.apps.mytracks.WaypointsList">
+      <!-- Enable searches via SearchActivity. -->
+      <meta-data android:name="android.app.default_searchable"
+                 android:value="com.google.android.apps.mytracks.SearchActivity" />
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.TrackDetail"
+              android:label="@string/track_detail_title">
+      <intent-filter>
+        <action android:name="android.intent.action.EDIT" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:mimeType="vnd.android.cursor.item/vnd.google.track" />
+      </intent-filter>
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.DeleteTrack"
+              android:theme="@android:style/Theme.Translucent.NoTitleBar"
+              android:noHistory="true">
+      <intent-filter>
+        <action android:name="android.intent.action.DELETE" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <data android:mimeType="vnd.android.cursor.item/vnd.google.track" />
+      </intent-filter>
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.WaypointDetails"
+              android:label="@string/marker_detail_title">
+      <intent-filter>
+        <action android:name="android.intent.action.EDIT" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:mimeType="vnd.android.cursor.item/vnd.google.waypoint" />
+      </intent-filter>
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.SettingsActivity"
+              android:label="@string/settings_title" >
+      <intent-filter>
+        <category android:name="android.intent.category.PREFERENCE" />
+      </intent-filter>
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.AggregatedStatsActivity"
+              android:label="@string/menu_aggregated_statistics" />
+
+    <activity android:name="com.google.android.apps.mytracks.StatsActivity"
+              android:exported="false">
+      <intent-filter>
+        <category android:name="android.intent.category.TAB" />
+      </intent-filter>
+
+      <!-- Enable searches via SearchActivity. -->
+      <meta-data android:name="android.app.default_searchable"
+                 android:value="com.google.android.apps.mytracks.SearchActivity" />
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.SensorStateActivity"
+              android:label="@string/menu_sensor_state" />
+
+    <activity android:name="com.google.android.apps.mytracks.ChartActivity"
+              android:exported="false">
+      <intent-filter>
+        <category android:name="android.intent.category.TAB" />
+      </intent-filter>
+
+      <!-- Enable searches via SearchActivity. -->
+      <meta-data android:name="android.app.default_searchable"
+                 android:value="com.google.android.apps.mytracks.SearchActivity" />
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.io.file.SaveActivity"
+              android:theme="@android:style/Theme.Translucent.NoTitleBar"
+              android:noHistory="true">
+      <intent-filter>
+        <action android:name="android.intent.action.SAVE" />
+        <data android:mimeType="vnd.android.cursor.item/vnd.google.track" />
+      </intent-filter>
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.io.file.ImportActivity"
+              android:label="@string/my_tracks_importer"
+              android:theme="@android:style/Theme.Translucent.NoTitleBar"
+              android:noHistory="true">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <action android:name="android.intent.action.ATTACH_DATA" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="file" />
+        <data android:mimeType="application/gpx+xml" />
+        <data android:mimeType="application/gpx" />
+        <data android:mimeType="application/vnd.google-earth.gpx" />
+        <data android:mimeType="application/vnd.google-earth.gpx+xml" />
+      </intent-filter>
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.WelcomeActivity"
+              android:label="@string/welcome_title"
+              android:exported="false" />
+
+    <activity android:name="com.google.android.apps.mytracks.SearchActivity"
+              android:launchMode="singleTop">
+      <intent-filter>
+        <action android:name="android.intent.action.SEARCH" />
+      </intent-filter>
+      <meta-data android:name="android.app.searchable"
+                 android:resource="@xml/search"/>
+    </activity>
+
+    <activity android:name="com.google.android.apps.mytracks.io.docs.SendDocsActivity"/>
+    <activity android:name="com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesActivity"/>
+    <activity android:name="com.google.android.apps.mytracks.io.maps.ChooseMapActivity"
+                            android:label="@string/maps_list_title"/>
+    <activity android:name="com.google.android.apps.mytracks.io.maps.SendMapsActivity"/>
+    <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.AccountChooserActivity"/>
+    <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.UploadResultActivity"/>
+    <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.UploadServiceChooserActivity"/>
+
+    <service android:name="com.google.android.apps.mytracks.services.TrackRecordingService"
+             android:label="@string/my_tracks_recording_service"
+             android:icon="@drawable/arrow_320"
+             android:enabled="true"
+             android:exported="true"
+             android:permission="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
+
+    <service android:name="com.google.android.apps.mytracks.services.ControlRecordingService"
+             android:exported="false" />
+    <service android:name="com.google.android.apps.mytracks.services.RemoveTempFilesService"/>
+
+    <receiver android:name="com.google.android.apps.mytracks.BootReceiver">
+      <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED" />
+      </intent-filter>
+    </receiver>
+
+    <receiver android:name="com.google.android.apps.mytracks.widgets.TrackWidgetProvider">
+      <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+        <action android:name="com.google.android.apps.mytracks.TRACK_STARTED" />
+        <action android:name="com.google.android.apps.mytracks.TRACK_STOPPED" />
+      </intent-filter>
+      <meta-data android:name="android.appwidget.provider"
+                 android:resource="@xml/track_widget_info" />
+    </receiver>
+  </application>
+</manifest>
