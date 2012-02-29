@@ -1,4 +1,18 @@
-// Copyright 2010 Google Inc. All Rights Reserved.
+/*
+ * Copyright 2010 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.google.android.apps.mytracks.io.file;
 
 import com.google.android.apps.mytracks.content.MyTracksLocation;
@@ -11,7 +25,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
- * Tests for the GPX track exporter.
+ * Tests for {@link TcxTrackWriter}.
  *
  * @author Sandor Dornbush
  */
@@ -37,42 +51,47 @@ public class TcxTrackWriterTest extends TrackFormatWriterTest {
   }
 
   /**
-   * Asserts that the given tags describe the given points, in the same order.
+   * Asserts that the given tags describe the given locations in the same order.
+   *
+   * @param tags list of tags
+   * @param locations list of locations
    */
-  private void assertTagsMatchPoints(List<Element> tags, MyTracksLocation... locs) {
-    assertEquals(locs.length, tags.size());
-    for (int i = 0; i < locs.length; i++) {
-      Element tag = tags.get(i);
-      MyTracksLocation loc = locs[i];
-
-      assertTagMatchesLocation(tag, loc);
+  private void assertTagsMatchPoints(List<Element> tags, MyTracksLocation... locations) {
+    assertEquals(locations.length, tags.size());
+    for (int i = 0; i < locations.length; i++) {
+      assertTagMatchesLocation(tags.get(i), locations[i]);
     }
   }
 
   /**
    * Asserts that the given tag describes the given location.
+   *
+   * @param tag the tag
+   * @param location the location
    */
-  private void assertTagMatchesLocation(Element tag, MyTracksLocation loc) {
-    Element posTag = getChildElement(tag, "Position");
-    assertEquals(Double.toString(loc.getLatitude()),
-        getChildTextValue(posTag, "LatitudeDegrees"));
-    assertEquals(Double.toString(loc.getLongitude()),
-        getChildTextValue(posTag, "LongitudeDegrees"));
+  private void assertTagMatchesLocation(Element tag, MyTracksLocation location) {
+    assertEquals(
+        FileUtils.FILE_TIMESTAMP_FORMAT.format(location.getTime()), getChildTextValue(tag, "Time"));
 
-    assertEquals(FileUtils.FILE_TIMESTAMP_FORMAT.format(loc.getTime()),
-        getChildTextValue(tag, "Time"));
-    assertEquals(Double.toString(loc.getAltitude()),
-        getChildTextValue(tag, "AltitudeMeters"));
-    assertTrue(loc.getSensorDataSet() != null);
-    Sensor.SensorDataSet sds = loc.getSensorDataSet();
+    Element positionTag = getChildElement(tag, "Position");
+    assertEquals(
+        Double.toString(location.getLatitude()), getChildTextValue(positionTag, "LatitudeDegrees"));
+    assertEquals(Double.toString(location.getLongitude()),
+        getChildTextValue(positionTag, "LongitudeDegrees"));
 
-    List<Element> bpm = getChildElements(tag, "HeartRateBpm", 1);
+    assertEquals(Double.toString(location.getAltitude()), getChildTextValue(tag, "AltitudeMeters"));
+    assertTrue(location.getSensorDataSet() != null);
+    Sensor.SensorDataSet sds = location.getSensorDataSet();
+
+    List<Element> heartRate = getChildElements(tag, "HeartRateBpm", 1);
     assertEquals(Integer.toString(sds.getHeartRate().getValue()),
-        getChildTextValue(bpm.get(0), "Value"));
+        getChildTextValue(heartRate.get(0), "Value"));
 
-    List<Element> ext = getChildElements(tag, "Extensions", 1);
-    List<Element> tpx = getChildElements(ext.get(0), "TPX", 1);
-    assertEquals(Integer.toString(sds.getPower().getValue()),
-        getChildTextValue(tpx.get(0), "Watts"));
+    List<Element> extensions = getChildElements(tag, "Extensions", 1);
+    List<Element> tpx = getChildElements(extensions.get(0), "TPX", 1);
+    assertEquals(
+        Integer.toString(sds.getCadence().getValue()), getChildTextValue(tpx.get(0), "RunCadence"));
+    assertEquals(
+        Integer.toString(sds.getPower().getValue()), getChildTextValue(tpx.get(0), "Watts"));
   }
 }
