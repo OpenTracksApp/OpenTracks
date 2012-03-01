@@ -22,6 +22,7 @@ import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendAsyncTask;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.io.sendtogoogle.UploadResultActivity;
 import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.content.Intent;
 
@@ -47,20 +48,25 @@ public class SendMapsActivity extends AbstractSendActivity {
   protected void startNextActivity(boolean success, boolean isCancel) {
     sendRequest.setMapsSuccess(success);
 
-    Class<?> next;
-    if (isCancel) {
-      next = UploadResultActivity.class;
-    } else {
-      if (sendRequest.isSendFusionTables()) {
-        next = SendFusionTablesActivity.class;
-      } else if (sendRequest.isSendDocs()) {
-        next = SendDocsActivity.class;
-      } else {
-        next = UploadResultActivity.class;
-      }
-    }
+    Class<?> next = getNextClass(sendRequest, isCancel);
+    
     Intent intent = new Intent(this, next).putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
     startActivity(intent);
     finish();
+  }
+  
+  @VisibleForTesting
+  Class<?> getNextClass(SendRequest request, boolean isCancel) {
+    if (isCancel) {
+      return UploadResultActivity.class;
+    } else {
+      if (request.isSendFusionTables()) {
+        return SendFusionTablesActivity.class;
+      } else if (request.isSendDocs()) {
+        return SendDocsActivity.class;
+      } else {
+        return UploadResultActivity.class;
+      }
+    }
   }
 }
