@@ -20,6 +20,7 @@ import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -48,6 +49,7 @@ public class UploadServiceChooserActivity extends Activity {
   private static final int SERVICE_PICKER_DIALOG = 1;
 
   private SendRequest sendRequest;
+  private Dialog dialog;
 
   private TableRow mapsTableRow;
   private TableRow fusionTablesTableRow;
@@ -80,7 +82,7 @@ public class UploadServiceChooserActivity extends Activity {
   protected Dialog onCreateDialog(int id) {
     switch (id) {
       case SERVICE_PICKER_DIALOG:
-        final Dialog dialog = new Dialog(this);
+        dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.upload_service_chooser);
         dialog.setCancelable(true);
@@ -146,7 +148,8 @@ public class UploadServiceChooserActivity extends Activity {
   /**
    * Initializes the UI state based on the shared preferences.
    */
-  private void initState() {
+  @VisibleForTesting
+  void initState() {
     SharedPreferences prefs = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     boolean pickExistingMap = prefs.getBoolean(getString(R.string.pick_existing_map_key), false);
 
@@ -188,7 +191,8 @@ public class UploadServiceChooserActivity extends Activity {
   /**
    * Saves the UI state to the shared preferences.
    */
-  private void saveState() {
+  @VisibleForTesting
+  void saveState() {
     SharedPreferences prefs = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     Editor editor = prefs.edit();
     editor.putBoolean(
@@ -225,7 +229,8 @@ public class UploadServiceChooserActivity extends Activity {
   /**
    * Starts the next activity, {@link AccountChooserActivity}.
    */
-  private void startNextActivity() {
+  @VisibleForTesting
+  protected void startNextActivity() {
     sendStats();
     sendRequest.setSendMaps(sendMaps());
     sendRequest.setSendFusionTables(sendFusionTables());
@@ -255,5 +260,15 @@ public class UploadServiceChooserActivity extends Activity {
     }
     tracker.dispatch();
     tracker.stop();
+  }
+  
+  @VisibleForTesting
+  Dialog getDialog() {
+    return dialog;
+  }
+  
+  @VisibleForTesting
+  SendRequest getSendRequest() {
+    return sendRequest;
   }
 }
