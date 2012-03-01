@@ -17,7 +17,7 @@ package com.google.android.apps.mytracks.io.file;
 
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.Sensor;
-import com.google.android.apps.mytracks.util.FileUtils;
+import com.google.android.apps.mytracks.util.StringUtils;
 
 import java.util.List;
 
@@ -70,8 +70,7 @@ public class TcxTrackWriterTest extends TrackFormatWriterTest {
    * @param location the location
    */
   private void assertTagMatchesLocation(Element tag, MyTracksLocation location) {
-    assertEquals(
-        FileUtils.FILE_TIMESTAMP_FORMAT.format(location.getTime()), getChildTextValue(tag, "Time"));
+    assertEquals(StringUtils.formatDateTimeIso8601(location.getTime()), getChildTextValue(tag, "Time"));
 
     Element positionTag = getChildElement(tag, "Position");
     assertEquals(

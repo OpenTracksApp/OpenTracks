@@ -22,7 +22,6 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.lib.R;
-import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
 
@@ -31,7 +30,6 @@ import android.location.Location;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -133,7 +131,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
     if (printWriter != null) {
       printWriter.println("<Author xsi:type=\"Application_t\">");
       printWriter.println("<Name>" 
-          + StringUtils.stringAsCData(context.getString(R.string.send_google_by_my_tracks, "", "")) 
+          + StringUtils.formatCData(context.getString(R.string.send_google_by_my_tracks, "", "")) 
           + "</Name>");
       // <Build>, <LangID>, and <PartNumber> are required by type=Application_t.
       printWriter.println("<Build>");
@@ -149,8 +147,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
   @Override
   public void writeBeginTrack(Location firstPoint) {
     if (printWriter != null) {
-      String startTime = FileUtils.FILE_TIMESTAMP_FORMAT.format(
-          track.getStatistics().getStartTime());
+      String startTime = StringUtils.formatDateTimeIso8601(track.getStatistics().getStartTime());
       long totalTimeInSeconds = track.getStatistics().getTotalTime() / 1000;
 
       printWriter.println("<Activities>");
@@ -173,7 +170,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
       printWriter.println("</Lap>");
       printWriter.println("<Creator xsi:type=\"Device_t\">");
       printWriter.println("<Name>" 
-          + StringUtils.stringAsCData(context.getString(R.string.send_google_by_my_tracks, "", "")) 
+          + StringUtils.formatCData(context.getString(R.string.send_google_by_my_tracks, "", "")) 
           + "</Name>");
       // <UnitId>, <ProductID>, and <Version> are required for type=Device_t.
       printWriter.println("<UnitId>0</UnitId>");
@@ -203,8 +200,7 @@ public class TcxTrackWriter implements TrackFormatWriter {
   public void writeLocation(Location location) {
     if (printWriter != null) {
       printWriter.println("<Trackpoint>");
-      printWriter.println("<Time>" 
-          + FileUtils.FILE_TIMESTAMP_FORMAT.format(new Date(location.getTime())) + "</Time>");
+      printWriter.println("<Time>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</Time>");
       printWriter.println("<Position>");
       printWriter.println("<LatitudeDegrees>" + location.getLatitude() + "</LatitudeDegrees>");
       printWriter.println("<LongitudeDegrees>" + location.getLongitude() + "</LongitudeDegrees>");
