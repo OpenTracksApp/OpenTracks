@@ -43,13 +43,13 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
   private View zoomOut;
   private int currentZoomLevel;
 
-  private static final String LOCATION_PROVIDER = "gps";
-  private static final double INITIAL_LONGTITUDE = 22;
-  private static final double INITIAL_LATITUDE = 22;
-  private static final double INITIAL_ALTITUDE = 22;
-  private static final float INITIAL_ACCURACY = 5;
-  private static final float INITIAL_SPEED = 10;
-  private static final float INITIAL_BEARING = 3.0f;
+  private final String LOCATION_PROVIDER = "gps";
+  private final double INITIAL_LONGTITUDE = 22;
+  private final double INITIAL_LATITUDE = 22;
+  private final double INITIAL_ALTITUDE = 22;
+  private final float INITIAL_ACCURACY = 5;
+  private final float INITIAL_SPEED = 10;
+  private final float INITIAL_BEARING = 3.0f;
   // 10 is same with the default value in ChartView
   private final int MAX_ZOOM_LEVEL = 10;
   private final int MIN_ZOOM_LEVEL = 1;
@@ -113,7 +113,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
 
   /**
    * There are two parts in this test. Tests
-   * {@link ChartActivity#OnCreateDialog()} which includes the logic to create
+   * {@link ChartActivity#onCreateDialog(int)} which includes the logic to create
    * {@link ChartSettingsDialog}.
    */
   public void testCreateSettingDialog() {
@@ -134,7 +134,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
 
   /**
    * Tests the logic to get the incorrect values of sensor in {@link
-   * ChartActivity#fillDataPoint(Location location, double result[])}.
+   * ChartActivity#fillDataPoint(Location, double[])}.
    */
   public void testFillDataPoint_sensorIncorrect() {
     MyTracksLocation myTracksLocation = getMyTracksLocation();
@@ -166,7 +166,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
 
   /**
    * Tests the logic to get the correct values of sensor in {@link
-   * ChartActivity#fillDataPoint(Location location, double result[])}.
+   * ChartActivity#fillDataPoint(Location, double[])}.
    */
   public void testFillDataPoint_sensorCorrect() {
     MyTracksLocation myTracksLocation = getMyTracksLocation();
@@ -197,7 +197,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
 
   /**
    * Tests the logic to get the value of metric Distance in
-   * {@link #fillDataPoint}.
+   * {@link ChartActivity#fillDataPoint(Location, double[])}.
    */
   public void testFillDataPoint_distanceMetric() {
     // By distance.
@@ -214,7 +214,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
 
     // The third location is a new location, and use metric.
     MyTracksLocation myTracksLocation3 = getMyTracksLocation();
-    myTracksLocation3.setLatitude(INITIAL_LONGTITUDE + 1 );
+    myTracksLocation3.setLatitude(23);
     point = fillDataPointTestHelper(myTracksLocation3, false);
     // Computes the distance between Latitude 22 and 23.
     float[] results = new float[4];
@@ -225,7 +225,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
 
     // The fourth location is a new location, and use metric.
     MyTracksLocation myTracksLocation4 = getMyTracksLocation();
-    myTracksLocation4.setLatitude(INITIAL_LONGTITUDE + 2 );
+    myTracksLocation4.setLatitude(24);
     point = fillDataPointTestHelper(myTracksLocation4, false);
     // Computes the distance between Latitude 23 and 24.
 
@@ -237,7 +237,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
 
   /**
    * Tests the logic to get the value of imperial Distance in
-   * {@link #fillDataPoint}.
+   * {@link ChartActivity#fillDataPoint(Location, double[])}.
    */
   public void testFillDataPoint_distanceImperial() {
     // Setups to use imperial.
@@ -250,7 +250,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
 
     // The second location is a new location, and use imperial.
     MyTracksLocation myTracksLocation2 = getMyTracksLocation();
-    myTracksLocation2.setLatitude(INITIAL_LONGTITUDE + 1 );
+    myTracksLocation2.setLatitude(23);
     point = fillDataPointTestHelper(myTracksLocation2, false);
     /*
      * Computes the distance between Latitude 22 and 23. And for we set using
@@ -264,7 +264,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
 
     // The third location is a new location, and use imperial.
     MyTracksLocation myTracksLocation3 = getMyTracksLocation();
-    myTracksLocation3.setLatitude(INITIAL_LONGTITUDE + 2 );
+    myTracksLocation3.setLatitude(24);
     point = fillDataPointTestHelper(myTracksLocation3, false);
     /*
      * Computes the distance between Latitude 23 and 24. And for we set using
@@ -278,7 +278,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
   }
 
   /**
-   * Tests the logic to get the values of time in {@link #fillDataPoint}.
+   * Tests the logic to get the values of time in {@link ChartActivity#fillDataPoint(Location, double[])}.
    */
   public void testFillDataPoint_time() {
     // By time
@@ -390,7 +390,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
    * 
    * @return a simulated location.
    */
-  public static MyTracksLocation getMyTracksLocation() {
+  private MyTracksLocation getMyTracksLocation() {
     // Initial Location
     Location loc = new Location(LOCATION_PROVIDER);
     loc.setLongitude(INITIAL_LONGTITUDE);

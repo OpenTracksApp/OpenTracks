@@ -245,7 +245,7 @@ public class SendRequestTest extends AndroidTestCase {
   }
 
   /**
-   * Tests {@link SendRequest#writeToParcel(Parcel in)} when all input values
+   * Tests {@link SendRequest#writeToParcel(Parcel, int)} when all input values
    * are true or affirmative.
    */
   public void testWriteToParcel_allTrue() {
@@ -283,7 +283,7 @@ public class SendRequestTest extends AndroidTestCase {
   }
 
   /**
-   * Tests {@link SendRequest#writeToParcel(Parcel in)} when all input values
+   * Tests {@link SendRequest#writeToParcel(Parcel, int)} when all input values
    * are false or negative.
    */
   public void testWriteToParcel_allFalse() {
