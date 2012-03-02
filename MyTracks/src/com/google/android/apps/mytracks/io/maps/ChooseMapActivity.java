@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.io.maps;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsMapMetadata;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -46,12 +47,14 @@ import java.util.ArrayList;
 public class ChooseMapActivity extends Activity {
 
   private static final int PROGRESS_DIALOG = 1;
-  private static final int ERROR_DIALOG = 2;
-  
+  @VisibleForTesting
+  static final int ERROR_DIALOG = 2;
+
   private SendRequest sendRequest;
   private ChooseMapAsyncTask asyncTask;
   private ProgressDialog progressDialog;
-  private ArrayAdapter<ListItem> arrayAdapter;
+  @VisibleForTesting
+  ArrayAdapter<ListItem> arrayAdapter;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -166,7 +169,7 @@ public class ChooseMapActivity extends Activity {
    */
   public void onAsyncTaskCompleted(
       boolean success, ArrayList<String> mapIds, ArrayList<MapsMapMetadata> mapData) {
-    removeDialog(PROGRESS_DIALOG);
+    removeProgressDialog();
     if (success) {
       arrayAdapter.clear();
       // To prevent displaying the emptyView message momentarily before the
@@ -181,7 +184,7 @@ public class ChooseMapActivity extends Activity {
         }
       }
     } else {
-      showDialog(ERROR_DIALOG);
+      showErrorDialog();
     }
   }
 
@@ -190,6 +193,22 @@ public class ChooseMapActivity extends Activity {
    */
   public void showProgressDialog() {
     showDialog(PROGRESS_DIALOG);
+  }
+  
+  /**
+   * Shows the error dialog.
+   */
+  @VisibleForTesting
+  void showErrorDialog() {
+    showDialog(ERROR_DIALOG);
+  }
+  
+  /**
+   * Remove the progress dialog.
+   */
+  @VisibleForTesting
+  void removeProgressDialog() {
+    removeDialog(PROGRESS_DIALOG);
   }
 
   /**
@@ -210,7 +229,8 @@ public class ChooseMapActivity extends Activity {
    *
    * @author Jimmy Shih
    */
-  private class ListItem {
+  @VisibleForTesting
+  class ListItem {
     private String mapId;
     private MapsMapMetadata mapData;
 
