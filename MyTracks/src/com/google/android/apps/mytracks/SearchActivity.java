@@ -207,9 +207,8 @@ public class SearchActivity extends ListActivity {
     resultMap.put(DESCRIPTION_FIELD, track.getDescription());
     resultMap.put(CATEGORY_FIELD, track.getCategory());
     resultMap.put(TIME_FIELD, StringUtils.formatDateTime(this, stats.getStartTime()));
-    resultMap.put(STATS_FIELD,
-        StringUtils.formatTimeDistance(this, stats.getTotalDistance(), stats.getTotalTime(),
-            metricUnits));
+    resultMap.put(STATS_FIELD, StringUtils.formatTimeDistance(
+        this, stats.getTotalTime(), stats.getTotalDistance(), metricUnits));
     resultMap.put(TRACK_ID_FIELD, track.getId());
   }
 

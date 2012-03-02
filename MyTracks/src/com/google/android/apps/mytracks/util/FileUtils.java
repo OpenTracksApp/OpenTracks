@@ -21,8 +21,6 @@ import com.google.common.annotations.VisibleForTesting;
 import android.os.Environment;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.TimeZone;
 
 /**
  * Utilities for dealing with files.
@@ -37,16 +35,6 @@ public class FileUtils {
    */
   @VisibleForTesting
   static final int MAX_FAT32_PATH_LENGTH = 260;
-  
-  /**
-   * Timestamp format in UTC time zone.
-   */
-  public static final SimpleDateFormat FILE_TIMESTAMP_FORMAT =
-      new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-  static {
-    FILE_TIMESTAMP_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
-  }
   
   /**
    * Builds a path inside the My Tracks directory in the SD card.

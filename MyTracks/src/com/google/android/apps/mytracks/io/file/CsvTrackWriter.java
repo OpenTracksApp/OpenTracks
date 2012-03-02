@@ -22,7 +22,7 @@ import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
-import com.google.android.apps.mytracks.util.FileUtils;
+import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -130,7 +130,7 @@ public class CsvTrackWriter implements TrackFormatWriter {
         Double.toString(location.getBearing()),
         SHORT_FORMAT.format(location.getAccuracy()),
         SHORT_FORMAT.format(location.getSpeed()),
-        FileUtils.FILE_TIMESTAMP_FORMAT.format(location.getTime()));
+        StringUtils.formatDateTimeIso8601(location.getTime()));
   }
 
   @Override
@@ -211,7 +211,7 @@ public class CsvTrackWriter implements TrackFormatWriter {
         Double.toString(location.getBearing()),
         SHORT_FORMAT.format(location.getAccuracy()),
         SHORT_FORMAT.format(location.getSpeed()),
-        FileUtils.FILE_TIMESTAMP_FORMAT.format(location.getTime()),
+        StringUtils.formatDateTimeIso8601(location.getTime()),
         power,
         cadence,
         heartRate,

@@ -2596,13 +2596,53 @@ limitations under the License.
       Screenshot: value_auto_resume.png">
     Always
   </string>
-  <string name="value_float_mile"
-    translation_description="In a setting picker, the string format to display a float value in
-      miles (mi).
+  <string name="value_float_feet"
+    translation_description="Display a float value in feet (ft).
 
-      %1$.1f: a float number. E.g., '2.2'
-      Screenshot: value_gps_accuracy_mile_poor_gps.png">
-    %1$.1f mi
+      %1$.2f: a float number. E.g., '2.22'">
+    %1$.2f ft
+  </string>
+  <string name="value_float_kilometer"
+    translation_description="Display a float value in kilometers (km).
+
+      %1$.2f: a float number. E.g., '2.22'">
+    %1$.2f km
+  </string>
+    <string name="value_float_kilometer_hour"
+    translation_description="Display a float value in kilometers per hour (km/h).
+
+      %1$.2f: a float number. E.g., '2.22'">
+    %1$.2f km/h
+  </string>
+  <string name="value_float_meter"
+    translation_description="Display a float value in meters (m).
+
+      %1$.2f: a float number. E.g., '2.22'">
+    %1$.2f m
+  </string>
+  <string name="value_float_mile"
+    translation_description="Display a float value in miles (mi).
+
+      %1$.2f: a float number. E.g., '2.22'">
+    %1$.2f mi
+  </string>
+  <string name="value_float_mile_hour"
+    translation_description="Display a float value in miles per hour (mi/h).
+
+      %1$.2f: a float number. E.g., '2.22'">
+    %1$.2f mi/h
+  </string>
+  <string name="value_float_minute_kilometer"
+    translation_description="Display a float value in minutes per kilometer (min/km).
+
+      %1$.2f: a float number. E.g., '2.22'">
+    %1$.2f min/km
+  </string>
+  <string name="value_float_minute_mile"
+    translation_description="Display a float value in minutes per mile (min/mi).
+
+      %1$.2f: a float number. E.g., '2.22'">
+    %1$.2f min/mi
   </string>
   <string name="value_float_mile_poor_gps"
     translation_description="In a setting picker, the string format to display a float value in
