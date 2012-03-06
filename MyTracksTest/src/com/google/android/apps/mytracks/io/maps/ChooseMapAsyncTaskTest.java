@@ -16,7 +16,6 @@
 package com.google.android.apps.mytracks.io.maps;
 
 import com.google.android.testing.mocking.AndroidMock;
-import com.google.android.testing.mocking.UsesMocks;
 
 import android.accounts.Account;
 import android.test.AndroidTestCase;
@@ -30,8 +29,8 @@ public class ChooseMapAsyncTaskTest extends AndroidTestCase {
 
   private ChooseMapActivity chooseMapActivityMock;
   private Account account;
-  private final String accountName = "AccountName";
-  private final String accountType = "AccountType";
+  private final String ACCOUNT_NAME = "AccountName";
+  private final String ACCOUNT_TYPE = "AccountType";
   private boolean getMapsStatus = false;
 
   public class ChooseMapAsyncTaskTMock extends ChooseMapAsyncTask {
@@ -49,16 +48,6 @@ public class ChooseMapAsyncTaskTest extends AndroidTestCase {
     boolean getMaps() {
       return getMapsStatus;
     }
-
-  }
-
-  @Override
-  @UsesMocks({ ChooseMapActivity.class })
-  protected void setUp() throws Exception {
-    super.setUp();
-    chooseMapActivityMock = AndroidMock.createMock(ChooseMapActivity.class);
-    account = new Account(accountName, accountType);
-    AndroidMock.expect(chooseMapActivityMock.getApplicationContext()).andReturn(getContext());
   }
 
   /**
@@ -66,6 +55,7 @@ public class ChooseMapAsyncTaskTest extends AndroidTestCase {
    * when the task is completed.
    */
   public void testSetActivity_completed() {
+    createMockObjects();
     chooseMapActivityMock.onAsyncTaskCompleted(false, null, null);
     AndroidMock.replay(chooseMapActivityMock);
     ChooseMapAsyncTask chooseMapAsyncTask = new ChooseMapAsyncTask(chooseMapActivityMock, account);
@@ -79,6 +69,7 @@ public class ChooseMapAsyncTaskTest extends AndroidTestCase {
    * when the task is not completed.
    */
   public void testSetActivity_notCompleted() {
+    createMockObjects();
     AndroidMock.replay(chooseMapActivityMock);
     ChooseMapAsyncTask chooseMapAsyncTask = new ChooseMapAsyncTask(chooseMapActivityMock, account);
     chooseMapAsyncTask.setCompleted(false);
@@ -91,6 +82,7 @@ public class ChooseMapAsyncTaskTest extends AndroidTestCase {
    * when the activity is null.
    */
   public void testSetActivity_nullActivity() {
+    createMockObjects();
     AndroidMock.replay(chooseMapActivityMock);
     ChooseMapAsyncTask chooseMapAsyncTask = new ChooseMapAsyncTask(chooseMapActivityMock, account);
     chooseMapAsyncTask.setCompleted(true);
@@ -102,6 +94,7 @@ public class ChooseMapAsyncTaskTest extends AndroidTestCase {
    * result is true.
    */
   public void testOnPostExecute_trueResult() {
+    createMockObjects();
     chooseMapActivityMock.onAsyncTaskCompleted(true, null, null);
     AndroidMock.replay(chooseMapActivityMock);
     ChooseMapAsyncTask chooseMapAsyncTask = new ChooseMapAsyncTask(chooseMapActivityMock, account);
@@ -114,6 +107,7 @@ public class ChooseMapAsyncTaskTest extends AndroidTestCase {
    * result is false.
    */
   public void testOnPostExecute_falseResult() {
+    createMockObjects();
     chooseMapActivityMock.onAsyncTaskCompleted(false, null, null);
     AndroidMock.replay(chooseMapActivityMock);
     ChooseMapAsyncTask chooseMapAsyncTask = new ChooseMapAsyncTask(chooseMapActivityMock, account);
@@ -125,6 +119,7 @@ public class ChooseMapAsyncTaskTest extends AndroidTestCase {
    * Tests the method {@link ChooseMapAsyncTas#retryUpload()}.
    */
   public void testRetryUpload() throws Exception {
+    createMockObjects();
     AndroidMock.replay(chooseMapActivityMock);
     ChooseMapAsyncTaskTMock chooseMapAsyncTaskTMock = new ChooseMapAsyncTaskTMock(
         chooseMapActivityMock, account);
@@ -144,6 +139,16 @@ public class ChooseMapAsyncTaskTest extends AndroidTestCase {
     getMapsStatus = true;
     assertFalse(chooseMapAsyncTaskTMock.retryUpload());
     AndroidMock.verify(chooseMapActivityMock);
+  }
+  
+  /**
+   * Initials chooseMapActivityMock and account for test.
+   */
+  private void createMockObjects() {
+    chooseMapActivityMock = AndroidMock.createMock(ChooseMapActivity.class);
+    account = new Account(ACCOUNT_NAME, ACCOUNT_TYPE);
+    // This is used in the constructor of ChooseMapAsyncTask.
+    AndroidMock.expect(chooseMapActivityMock.getApplicationContext()).andReturn(getContext());
   }
 
 }
