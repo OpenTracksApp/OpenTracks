@@ -43,16 +43,16 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
   private View zoomOut;
   private int currentZoomLevel;
 
-  private final String LOCATION_PROVIDER = "gps";
-  private final double INITIAL_LONGTITUDE = 22;
-  private final double INITIAL_LATITUDE = 22;
-  private final double INITIAL_ALTITUDE = 22;
-  private final float INITIAL_ACCURACY = 5;
-  private final float INITIAL_SPEED = 10;
-  private final float INITIAL_BEARING = 3.0f;
+  private static final String LOCATION_PROVIDER = "gps";
+  private static final double INITIAL_LONGTITUDE = 22;
+  private static final double INITIAL_LATITUDE = 22;
+  private static final double INITIAL_ALTITUDE = 22;
+  private static final float INITIAL_ACCURACY = 5;
+  private static final float INITIAL_SPEED = 10;
+  private static final float INITIAL_BEARING = 3.0f;
   // 10 is same with the default value in ChartView
-  private final int MAX_ZOOM_LEVEL = 10;
-  private final int MIN_ZOOM_LEVEL = 1;
+  private static final int MAX_ZOOM_LEVEL = 10;
+  private static final int MIN_ZOOM_LEVEL = 1;
   // The ratio from meter/second to kilometer/hour, the conversion is 60 * 60 /
   // 1000 = 3.6.
   private final double METER_PER_SECOND_TO_KILOMETER_PER_HOUR = 3.6;
