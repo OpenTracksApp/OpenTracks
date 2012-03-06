@@ -33,9 +33,9 @@ public class ChooseMapAsyncTaskTest extends AndroidTestCase {
   private final String ACCOUNT_TYPE = "AccountType";
   private boolean getMapsStatus = false;
 
-  public class ChooseMapAsyncTaskTMock extends ChooseMapAsyncTask {
+  public class ChooseMapAsyncTaskMock extends ChooseMapAsyncTask {
 
-    public ChooseMapAsyncTaskTMock(ChooseMapActivity activity, Account account) {
+    public ChooseMapAsyncTaskMock(ChooseMapActivity activity, Account account) {
       super(activity, account);
     }
 
@@ -121,7 +121,7 @@ public class ChooseMapAsyncTaskTest extends AndroidTestCase {
   public void testRetryUpload() throws Exception {
     createMockObjects();
     AndroidMock.replay(chooseMapActivityMock);
-    ChooseMapAsyncTaskTMock chooseMapAsyncTaskTMock = new ChooseMapAsyncTaskTMock(
+    ChooseMapAsyncTaskMock chooseMapAsyncTaskTMock = new ChooseMapAsyncTaskMock(
         chooseMapActivityMock, account);
     chooseMapAsyncTaskTMock.setCanRetry(true);
     getMapsStatus = false;
