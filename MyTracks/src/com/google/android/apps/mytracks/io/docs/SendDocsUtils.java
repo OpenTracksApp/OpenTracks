@@ -335,7 +335,7 @@ public class SendDocsUtils {
         .append("<gsx:")
         .append(name)
         .append(">")
-        .append(StringUtils.stringAsCData(value))
+        .append(StringUtils.formatCData(value))
         .append("</gsx:")
         .append(name)
         .append(">");

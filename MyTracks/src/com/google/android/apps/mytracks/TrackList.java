@@ -349,7 +349,8 @@ public class TrackList extends ListActivity
         } else if (columnIndex == totalDistanceIdx) {
           double totalDistance = cursor.getDouble(totalDistanceIdx);
           long totalTime = cursor.getLong(totalTimeIdx);
-          String totalDistanceStr = StringUtils.formatTimeDistance(TrackList.this, totalDistance, totalTime, metricUnits);
+          String totalDistanceStr = StringUtils.formatTimeDistance(
+              TrackList.this, totalTime, totalDistance, metricUnits);
           textView.setText(totalDistanceStr);
         } else {
           textView.setText(cursor.getString(columnIndex));
