@@ -24,7 +24,6 @@ import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
-import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
@@ -42,6 +41,11 @@ import java.util.ArrayList;
  * @author Leif Hendrik Wilden
  */
 public class KmlTrackWriter implements TrackFormatWriter {
+
+  /**
+   * ID of the KML feature to play a tour.
+   */
+  public static final String TOUR_FEATURE_ID = "tour";
 
   private static final String WAYPOINT_STYLE = "waypoint";
   private static final String STATISTICS_STYLE = "statistics";
@@ -107,9 +111,9 @@ public class KmlTrackWriter implements TrackFormatWriter {
       printWriter.println("<open>1</open>");
       printWriter.println("<visibility>1</visibility>");
       printWriter.println(
-          "<description>" + StringUtils.stringAsCData(track.getDescription()) + "</description>");
-      printWriter.println("<name>" + StringUtils.stringAsCData(track.getName()) + "</name>");
-      printWriter.println("<atom:author><atom:name>" + StringUtils.stringAsCData(
+          "<description>" + StringUtils.formatCData(track.getDescription()) + "</description>");
+      printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
+      printWriter.println("<atom:author><atom:name>" + StringUtils.formatCData(
           context.getString(R.string.send_google_by_my_tracks, "", ""))
           + "</atom:name></atom:author>");
       writeTrackStyle();
@@ -142,7 +146,7 @@ public class KmlTrackWriter implements TrackFormatWriter {
   public void writeBeginWaypoints() {
     if (printWriter != null) {
       printWriter.println(
-          "<Folder><name>" + StringUtils.stringAsCData(context.getString(R.string.menu_markers))
+          "<Folder><name>" + StringUtils.formatCData(context.getString(R.string.menu_markers))
               + "</name>");
     }
   }
@@ -169,10 +173,10 @@ public class KmlTrackWriter implements TrackFormatWriter {
     if (printWriter != null) {
       String name = context.getString(R.string.marker_label_start, track.getName());
       writePlacemark(name, track.getDescription(), START_STYLE, firstLocation);
-      printWriter.println("<Placemark>");
+      printWriter.println("<Placemark id=\"" + TOUR_FEATURE_ID + "\">");
       printWriter.println(
-          "<description>" + StringUtils.stringAsCData(track.getDescription()) + "</description>");
-      printWriter.println("<name>" + StringUtils.stringAsCData(track.getName()) + "</name>");
+          "<description>" + StringUtils.formatCData(track.getDescription()) + "</description>");
+      printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
       printWriter.println("<styleUrl>#" + TRACK_STYLE + "</styleUrl>");
       printWriter.println("<gx:MultiTrack>");
       printWriter.println("<altitudeMode>absolute</altitudeMode>");
@@ -232,8 +236,7 @@ public class KmlTrackWriter implements TrackFormatWriter {
   @Override
   public void writeLocation(Location location) {
     if (printWriter != null) {
-      printWriter.println(
-          "<when>" + FileUtils.FILE_TIMESTAMP_FORMAT.format(location.getTime()) + "</when>");
+      printWriter.println("<when>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</when>");
       printWriter.println(
           "<gx:coord>" + location.getLongitude() + " " + location.getLatitude() + " "
               + location.getAltitude() + "</gx:coord>");
@@ -309,8 +312,8 @@ public class KmlTrackWriter implements TrackFormatWriter {
     if (location != null) {
       printWriter.println("<Placemark>");
       printWriter.println(
-          "<description>" + StringUtils.stringAsCData(description) + "</description>");
-      printWriter.println("<name>" + StringUtils.stringAsCData(name) + "</name>");
+          "<description>" + StringUtils.formatCData(description) + "</description>");
+      printWriter.println("<name>" + StringUtils.formatCData(name) + "</name>");
       printWriter.println("<styleUrl>#" + styleName + "</styleUrl>");
       printWriter.println("<Point>");
       printWriter.println(
@@ -356,7 +359,7 @@ public class KmlTrackWriter implements TrackFormatWriter {
   private void writeSensorStyle(String name, String displayName) {
     printWriter.println("<gx:SimpleArrayField name=\"" + name + "\" type=\"int\">");
     printWriter.println(
-        "<displayName>" + StringUtils.stringAsCData(displayName) + "</displayName>");
+        "<displayName>" + StringUtils.formatCData(displayName) + "</displayName>");
     printWriter.println("</gx:SimpleArrayField>");
   }
 }

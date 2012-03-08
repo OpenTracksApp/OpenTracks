@@ -26,7 +26,6 @@ import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.services.ControlRecordingService;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.app.PendingIntent;
@@ -68,9 +67,6 @@ public class TrackWidgetProvider
   private MyTracksProviderUtils providerUtils;
   private Context context;
   private String unknown;
-  private String distanceLabel;
-  private String speedLabel;
-  private String paceLabel;
   private TrackObserver trackObserver;
   private boolean isMetric;
   private boolean reportSpeed;
@@ -213,32 +209,10 @@ public class TrackWidgetProvider
     }
 
     TripStatistics stats = track.getStatistics();
-
-    // TODO replace this with format strings and miles.
-    // convert meters to kilometers
-    double displayDistance = stats.getTotalDistance() * UnitConversions.M_TO_KM;
-    if (!isMetric) {
-      displayDistance *= UnitConversions.KM_TO_MI;
-    }
-    String distance =
-        StringUtils.formatSingleDecimalPlace(displayDistance) + " " + this.distanceLabel;
-
-    // convert ms to minutes
+    String distance = StringUtils.formatDistance(context, stats.getTotalDistance(), isMetric);
     String time = StringUtils.formatElapsedTime(stats.getMovingTime());
-    String speed = unknown;
-    if (!Double.isNaN(stats.getAverageMovingSpeed())) {
-      // Convert m/s to km/h
-      double displaySpeed = stats.getAverageMovingSpeed() * UnitConversions.MS_TO_KMH;
-      if (!isMetric) {
-        displaySpeed *= UnitConversions.KM_TO_MI;
-      }
-      if (reportSpeed) {
-        speed = StringUtils.formatSingleDecimalPlace(displaySpeed) + " " + this.speedLabel;
-      } else {
-        long displayPace = (long) (3600000.0 / displaySpeed);
-        speed = StringUtils.formatElapsedTime(displayPace) + " " + paceLabel;
-      }
-    }
+    String speed = StringUtils.formatSpeed(
+        context, stats.getAverageMovingSpeed(), isMetric, reportSpeed);
 
     views.setTextViewText(R.id.appwidget_distance_text, distance);
     views.setTextViewText(R.id.appwidget_time_text, time);
@@ -250,11 +224,6 @@ public class TrackWidgetProvider
     String metricUnitsKey = context.getString(R.string.metric_units_key);
     if (key == null || key.equals(metricUnitsKey)) {
       isMetric = prefs.getBoolean(metricUnitsKey, true);
-      distanceLabel = context.getString(isMetric ? R.string.unit_kilometer : R.string.unit_mile);
-      speedLabel = context.getString(
-          isMetric ? R.string.unit_kilometer_per_hour : R.string.unit_mile_per_hour);
-      paceLabel = context.getString(
-          isMetric ? R.string.unit_minute_per_kilometer : R.string.unit_minute_per_mile);
     }
 
     String reportSpeedKey = context.getString(R.string.report_speed_key);

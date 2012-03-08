@@ -15,10 +15,9 @@
  */
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
-import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
-import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
@@ -38,6 +37,8 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RadioButton;
 import android.widget.TableRow;
+
+import java.util.ArrayList;
 
 /**
  * A chooser to select the Google services to upload a track to.
@@ -246,20 +247,17 @@ public class UploadServiceChooserActivity extends Activity {
    * Sends stats to Google Analytics.
    */
   private void sendStats() {
-    GoogleAnalyticsTracker tracker = GoogleAnalyticsTracker.getInstance();
-    tracker.start(getString(R.string.my_tracks_analytics_id), getApplicationContext());
-    tracker.setProductVersion("android-mytracks", SystemUtils.getMyTracksVersion(this));
+    ArrayList<String> pages = new ArrayList<String>();
     if (sendRequest.isSendMaps()) {
-      tracker.trackPageView("/send/maps");
+      pages.add("/send/maps");
     }
     if (sendRequest.isSendFusionTables()) {
-      tracker.trackPageView("/send/fusion_tables");
+      pages.add("/send/fusion_tables");
     }
     if (sendRequest.isSendDocs()) {
-      tracker.trackPageView("/send/docs");
+      pages.add("/send/docs");
     }
-    tracker.dispatch();
-    tracker.stop();
+    AnalyticsUtils.sendPageViews(this, pages.toArray(new String[pages.size()]));
   }
   
   @VisibleForTesting
