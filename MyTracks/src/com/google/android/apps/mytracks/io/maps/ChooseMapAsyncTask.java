@@ -75,19 +75,32 @@ public class ChooseMapAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   private ArrayList<String> mapIds;
   private ArrayList<MapsMapMetadata> mapData;
 
-  public ChooseMapAsyncTask(ChooseMapActivity activity, Account account) {
-    this.activity = activity;
-    this.account = account;
+	public ChooseMapAsyncTask(ChooseMapActivity activity, Account account) {
+		this(activity, account, activity.getApplicationContext(),
+				GDataClientFactory.getGDataClient(activity
+						.getApplicationContext()), new MapsClient(
+						GDataClientFactory.getGDataClient(activity
+								.getApplicationContext()),
+						new XmlMapsGDataParserFactory(
+								new AndroidXmlParserFactory())));
+	}
 
-    context = activity.getApplicationContext();
-    gDataClient = GDataClientFactory.getGDataClient(context);
-    mapsClient = new MapsClient(
-        gDataClient, new XmlMapsGDataParserFactory(new AndroidXmlParserFactory()));
+	/**
+	 * Creates this constructor for test.
+	 */
+	public ChooseMapAsyncTask(ChooseMapActivity activity, Account account,
+			Context context, GDataClient gDataClient, MapsClient mapsClient) {
+		this.activity = activity;
+		this.account = account;
 
-    canRetry = true;
-    completed = false;
-    success = false;
-  }
+		this.context = context;
+		this.gDataClient = gDataClient;
+		this.mapsClient = mapsClient;
+
+		canRetry = true;
+		completed = false;
+		success = false;
+	}
 
   /**
    * Sets the activity associated with this AyncTask.

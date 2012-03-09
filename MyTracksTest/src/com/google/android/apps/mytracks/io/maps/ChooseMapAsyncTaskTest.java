@@ -15,10 +15,17 @@
  */
 package com.google.android.apps.mytracks.io.maps;
 
+import com.google.android.apps.mytracks.io.gdata.maps.MapsClient;
+import com.google.android.apps.mytracks.io.gdata.maps.XmlMapsGDataParserFactory;
+import com.google.android.common.gdata.AndroidXmlParserFactory;
 import com.google.android.testing.mocking.AndroidMock;
+import com.google.android.testing.mocking.UsesMocks;
+import com.google.wireless.gdata.client.GDataClient;
 
 import android.accounts.Account;
 import android.test.AndroidTestCase;
+
+import java.util.ArrayList;
 
 /**
  * Tests {@link ChooseMapAsyncTask}.
@@ -29,8 +36,8 @@ public class ChooseMapAsyncTaskTest extends AndroidTestCase {
 
   private ChooseMapActivity chooseMapActivityMock;
   private Account account;
-  private final String ACCOUNT_NAME = "AccountName";
-  private final String ACCOUNT_TYPE = "AccountType";
+  private static final String ACCOUNT_NAME = "AccountName";
+  private static final String ACCOUNT_TYPE = "AccountType";
   private boolean getMapsStatus = false;
 
   public class ChooseMapAsyncTaskMock extends ChooseMapAsyncTask {
@@ -51,11 +58,31 @@ public class ChooseMapAsyncTaskTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the method {@link ChooseMapAsyncTask#setActivity(ChooseMapActivity)}
-   * when the task is completed.
+   * Tests {@link ChooseMapAsyncTask#execute(Void...)} and makes sure
+   * {@link ChooseMapActivity#showProgressDialog()} will be run.
+   */
+  @UsesMocks({ ChooseMapActivity.class, GDataClient.class, MapsClient.class })
+  public void testExecute() {
+    chooseMapActivityMock = AndroidMock.createMock(ChooseMapActivity.class);
+    chooseMapActivityMock.showProgressDialog();
+    GDataClient gDataClient = AndroidMock.createMock(GDataClient.class);
+    MapsClient mapsClient = AndroidMock.createMock(MapsClient.class, gDataClient,
+        new XmlMapsGDataParserFactory(new AndroidXmlParserFactory()));
+    AndroidMock.replay(chooseMapActivityMock, gDataClient, mapsClient);
+    ChooseMapAsyncTask asyncTask = new ChooseMapAsyncTask(chooseMapActivityMock, account,
+        getContext(), gDataClient, mapsClient);
+    asyncTask.execute();
+    AndroidMock.verify(chooseMapActivityMock);
+  }
+
+  /**
+   * Tests {@link ChooseMapAsyncTask#setActivity(ChooseMapActivity)} when the
+   * task is completed. Makes sure it calls
+   * {@link ChooseMapActivity#onAsyncTaskCompleted(boolean, ArrayList, ArrayList)}
+   * .
    */
   public void testSetActivity_completed() {
-    createMockObjects();
+    setup();
     chooseMapActivityMock.onAsyncTaskCompleted(false, null, null);
     AndroidMock.replay(chooseMapActivityMock);
     ChooseMapAsyncTask chooseMapAsyncTask = new ChooseMapAsyncTask(chooseMapActivityMock, account);
@@ -65,11 +92,13 @@ public class ChooseMapAsyncTaskTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the method {@link ChooseMapAsyncTask#setActivity(ChooseMapActivity)}
-   * when the task is not completed.
+   * Test {@link ChooseMapAsyncTask#setActivity(ChooseMapActivity)} when the
+   * task is not completed. Makes sure
+   * {@link ChooseMapActivity#onAsyncTaskCompleted(boolean, ArrayList, ArrayList)}
+   * is not invoked.
    */
   public void testSetActivity_notCompleted() {
-    createMockObjects();
+    setup();
     AndroidMock.replay(chooseMapActivityMock);
     ChooseMapAsyncTask chooseMapAsyncTask = new ChooseMapAsyncTask(chooseMapActivityMock, account);
     chooseMapAsyncTask.setCompleted(false);
@@ -78,23 +107,28 @@ public class ChooseMapAsyncTaskTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the method {@link ChooseMapAsyncTask#setActivity(ChooseMapActivity)}
-   * when the activity is null.
+   * Tests {@link ChooseMapAsyncTask#setActivity(ChooseMapActivity)} when the
+   * activity is null. Makes sure
+   * {@link ChooseMapActivity#onAsyncTaskCompleted(boolean, ArrayList, ArrayList)}
+   * is not invoked.
    */
   public void testSetActivity_nullActivity() {
-    createMockObjects();
+    setup();
     AndroidMock.replay(chooseMapActivityMock);
     ChooseMapAsyncTask chooseMapAsyncTask = new ChooseMapAsyncTask(chooseMapActivityMock, account);
     chooseMapAsyncTask.setCompleted(true);
     chooseMapAsyncTask.setActivity(null);
+    AndroidMock.verify(chooseMapActivityMock);
   }
 
   /**
    * Tests the method {@link ChooseMapAsyncTask#onPostExecute(Boolean)} when the
-   * result is true.
+   * result is true. Makes sure
+   * {@link ChooseMapActivity#onAsyncTaskCompleted(boolean, ArrayList, ArrayList)}
+   * is invoked.
    */
   public void testOnPostExecute_trueResult() {
-    createMockObjects();
+    setup();
     chooseMapActivityMock.onAsyncTaskCompleted(true, null, null);
     AndroidMock.replay(chooseMapActivityMock);
     ChooseMapAsyncTask chooseMapAsyncTask = new ChooseMapAsyncTask(chooseMapActivityMock, account);
@@ -104,10 +138,12 @@ public class ChooseMapAsyncTaskTest extends AndroidTestCase {
 
   /**
    * Tests the method {@link ChooseMapAsyncTask#onPostExecute(Boolean)} when the
-   * result is false.
+   * result is false. Makes sure
+   * {@link ChooseMapActivity#onAsyncTaskCompleted(boolean, ArrayList, ArrayList)}
+   * is invoked.
    */
   public void testOnPostExecute_falseResult() {
-    createMockObjects();
+    setup();
     chooseMapActivityMock.onAsyncTaskCompleted(false, null, null);
     AndroidMock.replay(chooseMapActivityMock);
     ChooseMapAsyncTask chooseMapAsyncTask = new ChooseMapAsyncTask(chooseMapActivityMock, account);
@@ -116,10 +152,26 @@ public class ChooseMapAsyncTaskTest extends AndroidTestCase {
   }
 
   /**
-   * Tests the method {@link ChooseMapAsyncTas#retryUpload()}.
+   * Tests the method {@link ChooseMapAsyncTask#retryUpload()}. Make sure can
+   * not retry again after have retried once and failed.
    */
   public void testRetryUpload() throws Exception {
-    createMockObjects();
+    setup();
+    AndroidMock.replay(chooseMapActivityMock);
+    ChooseMapAsyncTaskMock chooseMapAsyncTaskTMock = new ChooseMapAsyncTaskMock(
+        chooseMapActivityMock, account);
+    chooseMapAsyncTaskTMock.setCanRetry(false);
+    getMapsStatus = true;
+    assertFalse(chooseMapAsyncTaskTMock.retryUpload());
+    AndroidMock.verify(chooseMapActivityMock);
+  }
+
+  /**
+   * Tests the method {@link ChooseMapAsyncTask#retryUpload()}. Make sure can
+   * retry after get maps failed and never retry before.
+   */
+  public void testRetryUpload_retryOnce() throws Exception {
+    setup();
     AndroidMock.replay(chooseMapActivityMock);
     ChooseMapAsyncTaskMock chooseMapAsyncTaskTMock = new ChooseMapAsyncTaskMock(
         chooseMapActivityMock, account);
@@ -128,25 +180,40 @@ public class ChooseMapAsyncTaskTest extends AndroidTestCase {
     assertFalse(chooseMapAsyncTaskTMock.retryUpload());
     // Can only retry once.
     assertFalse(chooseMapAsyncTaskTMock.getCanRetry());
+    AndroidMock.verify(chooseMapActivityMock);
+  }
 
+  /**
+   * Tests the method {@link ChooseMapAsyncTask#retryUpload()}. Make sure will
+   * not retry after get maps successfully.
+   */
+  public void testRetryUpload_successGetMaps() throws Exception {
+    setup();
+    AndroidMock.replay(chooseMapActivityMock);
+    ChooseMapAsyncTaskMock chooseMapAsyncTaskTMock = new ChooseMapAsyncTaskMock(
+        chooseMapActivityMock, account);
     chooseMapAsyncTaskTMock.setCanRetry(true);
     getMapsStatus = true;
     assertTrue(chooseMapAsyncTaskTMock.retryUpload());
     // Can only retry once.
     assertFalse(chooseMapAsyncTaskTMock.getCanRetry());
-
-    chooseMapAsyncTaskTMock.setCanRetry(false);
-    getMapsStatus = true;
-    assertFalse(chooseMapAsyncTaskTMock.retryUpload());
     AndroidMock.verify(chooseMapActivityMock);
   }
-  
+
   /**
-   * Initials chooseMapActivityMock and account for test.
+   * Initials setup for test.
    */
-  private void createMockObjects() {
-    chooseMapActivityMock = AndroidMock.createMock(ChooseMapActivity.class);
+  void setup() {
+    setupChooseMapActivityMock();
     account = new Account(ACCOUNT_NAME, ACCOUNT_TYPE);
+  }
+
+  /**
+   * Create a mock object of ChooseMapActivity.
+   */
+  @UsesMocks(ChooseMapActivity.class)
+  private void setupChooseMapActivityMock() {
+    chooseMapActivityMock = AndroidMock.createMock(ChooseMapActivity.class);
     // This is used in the constructor of ChooseMapAsyncTask.
     AndroidMock.expect(chooseMapActivityMock.getApplicationContext()).andReturn(getContext());
   }
