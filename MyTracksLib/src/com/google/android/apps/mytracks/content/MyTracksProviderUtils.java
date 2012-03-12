@@ -1,12 +1,12 @@
 /*
  * Copyright 2010 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -154,7 +154,7 @@ public interface MyTracksProviderUtils {
   /**
    * Creates a cursor over the locations in the track points provider which
    * iterates over a given range of unique ids.
-   * Caller gets to own the returned cursor. Don't forget to close it.
+   * Caller owns the returned cursor and is responsible for closing it.
    *
    * @param trackId the id of the track for which to get the points
    * @param minTrackPointId the minimum id for the track points
@@ -168,7 +168,7 @@ public interface MyTracksProviderUtils {
 
   /**
    * Creates a cursor over the waypoints of a track.
-   * Caller gets to own the returned cursor. Don't forget to close it.
+   * Caller owns the returned cursor and is responsible for closing it.
    *
    * @param trackId the id of the track for which to get the points
    * @param minWaypointId the minimum id for the track points
@@ -177,6 +177,18 @@ public interface MyTracksProviderUtils {
    */
   Cursor getWaypointsCursor(long trackId, long minWaypointId,
       int maxWaypoints);
+
+  /**
+   * Creates a cursor over waypoints with the given selection.
+   * Caller owns the returned cursor and is responsible for closing it.
+   *
+   * @param selection a given selection
+   * @param selectionArgs arguments for the given selection
+   * @param order the order in which to return results
+   * @param maxWaypoints the maximum number of waypoints to return
+   * @return a cursor of the selected waypoints
+   */
+  Cursor getWaypointsCursor(String selection, String[] selectionArgs, String order, int maxWaypoints);
 
   /**
    * Finds a track by given unique track id.
@@ -188,24 +200,26 @@ public interface MyTracksProviderUtils {
    * @return a Track object, or null if not found
    */
   Track getTrack(long id);
-  
+
   /**
    * Retrieves all tracks without track points. If no tracks exist, an empty
    * list will be returned.  Use {@link #getLocationIterator(long, long, boolean, LocationFactory)}
    * to load the track points.
-   * 
+   *
    * @return a list of all the recorded tracks
    */
   List<Track> getAllTracks();
 
   /**
    * Creates a cursor over the tracks provider with a given selection.
-   * Caller gets to own the returned cursor. Don't forget to close it.
+   * Caller owns the returned cursor and is responsible for closing it.
    *
    * @param selection a given selection
+   * @param selectionArgs parameters for the given selection
+   * @param order the order to return results in
    * @return a cursor of the selected tracks
    */
-  Cursor getTracksCursor(String selection);
+  Cursor getTracksCursor(String selection, String[] selectionArgs, String order);
 
   /**
    * Inserts a track in the tracks provider.
@@ -288,7 +302,7 @@ public interface MyTracksProviderUtils {
 
   /**
    * Fill a location object with values from a given cursor.
-   * 
+   *
    * @param cursor a cursor pointing at a db or provider with locations
    * @param location a location object to be overwritten
    */
@@ -308,7 +322,7 @@ public interface MyTracksProviderUtils {
   interface LocationIterator extends Iterator<Location> {
     /**
      * Returns ID of the most recently retrieved track point through a call to {@link #next()}.
-     * 
+     *
      * @return the ID of the most recent track point ID.
      */
     long getLocationId();
@@ -328,12 +342,12 @@ public interface MyTracksProviderUtils {
      * Creates a new {@link Location} object to be populated from the underlying database record.
      * It's up to the implementing class to decide whether to create a new instance or reuse
      * existing to optimize for speed.
-     * 
+     *
      * @return a {@link Location} to be populated from the database.
      */
     Location createLocation();
   }
-  
+
   /**
    * The default {@class Location}s factory, which creates a new location of 'gps' type.
    */
@@ -361,20 +375,20 @@ public interface MyTracksProviderUtils {
       return locs[lastLoc];
     }
   }
-  
+
   /**
    * Creates a new read-only iterator over all track points for the given track.  It provides
    * a lightweight way of iterating over long tracks without failing due to the underlying cursor
    * limitations. Since it's a read-only iterator, {@link Iterator#remove()} always throws
    * {@class UnsupportedOperationException}.
-   * 
+   *
    * Each call to {@link LocationIterator#next()} may advance to the next DB record, and if so,
    * the iterator calls {@link LocationFactory#createLocation()} and populates it with information
    * retrieved from the record.
-   * 
+   *
    * When done with iteration, you must call {@link LocationIterator#close()} to make sure that all
    * resources are properly deallocated.
-   * 
+   *
    * Example use:
    * <code>
    *   ...
@@ -389,14 +403,14 @@ public interface MyTracksProviderUtils {
    *   }
    *   ...
    * </code>
-   * 
+   *
    * @param trackId the ID of a track to retrieve locations for.
    * @param startTrackPointId the ID of the first track point to load, or -1 to start from
    *        the first point.
    * @param descending if true the results will be returned in descending ID
    *        order (latest location first).
    * @param locationFactory the factory for creating new locations.
-   * 
+   *
    * @return the read-only iterator over the given track's points.
    */
   LocationIterator getLocationIterator(long trackId, long startTrackPointId, boolean descending,

@@ -35,52 +35,40 @@ public abstract class Constants {
 
   /*
    * onActivityResult request codes:
-   *
-   * TODO: These should be moved to the
-   * activities that call startActivityForResult. Thus do not need to keep a
-   * global order across all activities.
    */
-  public static final int GET_LOGIN = 0;
-  public static final int GET_MAP = 1;
-  public static final int SHOW_TRACK = 2;
-  public static final int AUTHENTICATE_TO_MAPS = 3;
-  public static final int AUTHENTICATE_TO_FUSION_TABLES = 4;
-  public static final int AUTHENTICATE_TO_DOCLIST = 5;
-  public static final int AUTHENTICATE_TO_TRIX = 6;
-  public static final int SHARE_GPX_FILE = 7;
-  public static final int SHARE_KML_FILE = 8;
-  public static final int SHARE_CSV_FILE = 9;
-  public static final int SHARE_TCX_FILE = 10;
-  public static final int SAVE_GPX_FILE = 11;
-  public static final int SAVE_KML_FILE = 12;
-  public static final int SAVE_CSV_FILE = 13;
-  public static final int SAVE_TCX_FILE = 14;
-  public static final int SHOW_WAYPOINT = 15;
-  public static final int WELCOME = 16;
-  public static final int CHOOSE_ACCOUNT = 17;
+  public static final int SHOW_TRACK = 0;
+  public static final int SHARE_GPX_FILE = 1;
+  public static final int SHARE_KML_FILE = 2;
+  public static final int SHARE_CSV_FILE = 3;
+  public static final int SHARE_TCX_FILE = 4;
+  public static final int SAVE_GPX_FILE = 5;
+  public static final int SAVE_KML_FILE = 6;
+  public static final int SAVE_CSV_FILE = 7;
+  public static final int SAVE_TCX_FILE = 8;
+  public static final int SHOW_WAYPOINT = 9;
+  public static final int WELCOME = 10;
 
   /*
-   * Context menu ids:
+   * Context menu ids. Sorted alphabetically.
    */
-
-  public static final int MENU_EDIT = 100;
+  public static final int MENU_CLEAR_MAP = 100;
   public static final int MENU_DELETE = 101;
-  public static final int MENU_SEND_TO_GOOGLE = 102;
-  public static final int MENU_SHARE = 103;
-  public static final int MENU_SHOW = 104;
-  public static final int MENU_SHARE_MAP = 200;
-  public static final int MENU_SHARE_FUSION_TABLE = 201;
-  public static final int MENU_SHARE_GPX_FILE = 202;
-  public static final int MENU_SHARE_KML_FILE = 203;
-  public static final int MENU_SHARE_CSV_FILE = 204;
-  public static final int MENU_SHARE_TCX_FILE = 205;
-  public static final int MENU_WRITE_TO_SD_CARD = 206;
-  public static final int MENU_SAVE_GPX_FILE = 207;
-  public static final int MENU_SAVE_KML_FILE = 208;
-  public static final int MENU_SAVE_CSV_FILE = 209;
-  public static final int MENU_SAVE_TCX_FILE = 210;
-  public static final int MENU_CLEAR_MAP = 211;
-
+  public static final int MENU_EDIT = 102;
+  public static final int MENU_PLAY = 103;
+  public static final int MENU_SAVE_CSV_FILE = 104;
+  public static final int MENU_SAVE_GPX_FILE = 105;
+  public static final int MENU_SAVE_KML_FILE = 106;
+  public static final int MENU_SAVE_TCX_FILE = 107;
+  public static final int MENU_SEND_TO_GOOGLE = 108;
+  public static final int MENU_SHARE = 109;
+  public static final int MENU_SHARE_CSV_FILE = 110;
+  public static final int MENU_SHARE_FUSION_TABLE = 111;
+  public static final int MENU_SHARE_GPX_FILE = 112;
+  public static final int MENU_SHARE_KML_FILE = 113;
+  public static final int MENU_SHARE_MAP = 114;
+  public static final int MENU_SHARE_TCX_FILE = 115;
+  public static final int MENU_SHOW = 116;
+  public static final int MENU_WRITE_TO_SD_CARD = 117;
   /*
    * Main screen tab tags:
    */

@@ -110,7 +110,7 @@ public class ChartURLGenerator {
 
     // Labels
     sb.append("&chxt=x,y");
-    double distKM = stats.getTotalDistance() / 1000.0;
+    double distKM = stats.getTotalDistance() * UnitConversions.M_TO_KM;
     double distDisplay =
         metricUnits ? distKM : (distKM * UnitConversions.KM_TO_MI);
     int xInterval = ((int) (distDisplay / 6));

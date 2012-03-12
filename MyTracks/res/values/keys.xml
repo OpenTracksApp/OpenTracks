@@ -18,6 +18,8 @@ limitations under the License.
   <!-- Keys for application preferences. Sorted alphabetically. - DO NOT TRANSLATE -->
   <string name="allow_access_key">allowAccess</string>
   <string name="announcement_frequency_key">announcementFrequency</string>
+  <string name="ant_cadence_sensor_id_key">antCadenceSensorId</string>
+  <string name="ant_cadence_speed_sensor_id_key">antCadenceSpeedSensorId</string>
   <string name="ant_heart_rate_sensor_id_key">antHeartRateSensorId</string>
   <string name="ant_srm_bridge_sensor_id_key">antSRMBridgeSensorId</string>
   <string name="auto_resume_track_timeout_key">autoResumeTrackTimeout</string>
@@ -40,7 +42,7 @@ limitations under the License.
   <string name="share_url_only_key">shareUrlOnly</string>
   <string name="split_frequency_key">splitFrequency</string>
   <string name="track_color_mode_dynamic_speed_variation_key">trackColorModeDynamicVariation
-          </string>  
+          </string>
   <string name="track_color_mode_fixed_speed_medium_display_key">trackColorModeFixedMediumDisplay
           </string>
   <string name="track_color_mode_fixed_speed_medium_key">trackColorModeFixedMedium</string>

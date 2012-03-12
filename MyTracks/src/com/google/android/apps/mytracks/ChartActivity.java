@@ -26,13 +26,13 @@ import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
-import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -40,6 +40,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.location.Location;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,13 +114,10 @@ public class ChartActivity extends Activity implements TrackDataListener {
     super.onCreate(savedInstanceState);
 
     // The volume we want to control is the Text-To-Speech volume
-    ApiFeatures apiFeatures = ApiFeatures.getInstance();
-    int volumeStream =
-        new StatusAnnouncerFactory(apiFeatures).getVolumeStream();
-    setVolumeControlStream(volumeStream);
+     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
     // Show the action bar (or nothing at all).
-    apiFeatures.getApiAdapter().showActionBar(this);
+     ApiAdapterFactory.getApiAdapter().showActionBar(this);
 
     setContentView(R.layout.mytracks_charts);
     ViewGroup layout = (ViewGroup) findViewById(R.id.elevation_chart);
@@ -242,7 +240,8 @@ public class ChartActivity extends Activity implements TrackDataListener {
    * @param location the location to get data for (this method takes ownership of that location)
    * @param result the resulting point to fill out
    */
-  private void fillDataPoint(Location location, double result[]) {
+  @VisibleForTesting
+  void fillDataPoint(Location location, double result[]) {
     double timeOrDistance = Double.NaN,
            elevation = Double.NaN,
            speed = Double.NaN,
@@ -274,7 +273,6 @@ public class ChartActivity extends Activity implements TrackDataListener {
     Mode mode = chartView.getMode();
     switch (mode) {
       case BY_DISTANCE:
-        timeOrDistance = profileLength / 1000.0;
         if (lastLocation != null) {
           double d = lastLocation.distanceTo(location);
           if (metricUnits) {
@@ -283,6 +281,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
             profileLength += d * UnitConversions.KM_TO_MI;
           }
         }
+        timeOrDistance = profileLength * UnitConversions.M_TO_KM;
         break;
       case BY_TIME:
         if (startTime == -1) {
@@ -310,7 +309,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
         && (location.getSpeed() <= trackMaxSpeed)) {
       speedBuffer.setNext(location.getSpeed());
     }
-    speed = speedBuffer.getAverage() * 3.6;
+    speed = speedBuffer.getAverage() * UnitConversions.MS_TO_KMH;
     if (!metricUnits) {
       speed *= UnitConversions.KM_TO_MI;
     }
@@ -461,5 +460,15 @@ public class ChartActivity extends Activity implements TrackDataListener {
       }
     });
     return true;
+  }
+  
+  @VisibleForTesting
+  ChartView getChartView() {
+    return chartView;
+  }
+
+  @VisibleForTesting
+  void setTrackMaxSpeed(double maxSpeed) {
+    trackMaxSpeed = maxSpeed;
   }
 }

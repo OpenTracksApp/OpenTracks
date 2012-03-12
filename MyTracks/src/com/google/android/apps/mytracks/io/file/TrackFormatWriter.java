@@ -23,12 +23,15 @@ import android.location.Location;
 import java.io.OutputStream;
 
 /**
- * Interface for writing data to a specific track file format.
+ * Interface for writing a track to file.
  *
  * The expected sequence of calls is:
  * <ol>
  *   <li>{@link #prepare}
  *   <li>{@link #writeHeader}
+ *   <li>{@link #writeBeginWaypoints}
+ *   <li>For each waypoint: {@link #writeWaypoint}
+ *   <li>{@link #writeEndWaypoints}
  *   <li>{@link #writeBeginTrack}
  *   <li>For each segment:
  *   <ol>
@@ -37,8 +40,8 @@ import java.io.OutputStream;
  *     <li>{@link #writeCloseSegment}
  *   </ol>
  *   <li>{@link #writeEndTrack}
- *   <li>For each waypoint: {@link #writeWaypoint}
  *   <li>{@link #writeFooter}
+ *   <li>{@link #close}
  * </ol>
  *
  * @author Rodrigo Damazio
@@ -46,68 +49,78 @@ import java.io.OutputStream;
 public interface TrackFormatWriter {
 
   /**
-   * Sets up the writer to write the given track to the given output.
-   *
-   * @param track the track to write
-   * @param out the stream to write the track contents to
+   * Gets the file extension (i.e. gpx, kml, ...)
    */
-  void prepare(Track track, OutputStream out);
+  public String getExtension();
 
   /**
-   * @return The file extension (i.e. gpx, kml, ...)
+   * Sets up the writer to write the given track.
+   *
+   * @param track the track to write
+   * @param outputStream the output stream to write the track to
    */
-  String getExtension();
+  public void prepare(Track track, OutputStream outputStream);
+
+  /**
+   * Closes the underlying file handler.
+   */
+  public void close();
 
   /**
    * Writes the header.
-   * This is chance for classes to write out opening information.
    */
-  void writeHeader();
+  public void writeHeader();
 
   /**
    * Writes the footer.
-   * This is chance for classes to write out closing information.
    */
-  void writeFooter();
+  public void writeFooter();
 
   /**
-   * Write the given location object.
+   * Writes the beginning of the waypoints.
+   */
+  public void writeBeginWaypoints();
+  
+  /**
+   * Writes the end of the waypoints.
+   */
+  public void writeEndWaypoints();
+  
+  /**
+   * Writes a waypoint.
    *
-   * TODO Add some flexible handling of other sensor data.
+   * @param waypoint the waypoint
+   */
+  public void writeWaypoint(Waypoint waypoint);
+
+  /**
+   * Writes the beginning of the track.
+   * 
+   * @param firstLocation the first location
+   */
+  public void writeBeginTrack(Location firstLocation);
+
+  /**
+   * Writes the end of the track.
+   * 
+   * @param lastLocation the last location
+   */
+  public void writeEndTrack(Location lastLocation);
+
+  /**
+   * Writes the statements necessary to open a new segment.
+   */
+  public void writeOpenSegment();
+
+  /**
+   * Writes the statements necessary to close a segment.
+   */
+  public void writeCloseSegment();
+
+  /**
+   * Writes a location.
    *
-   * @param location the location to write
+   * @param location the location
    */
-  void writeLocation(Location location) throws InterruptedException;
-
-  /**
-   * Write a way point.
-   *
-   * @param waypoint
-   */
-  void writeWaypoint(Waypoint waypoint);
-
-  /**
-   * Write the beginning of a track.
-   */
-  void writeBeginTrack(Location firstPoint);
-
-  /**
-   * Write the end of a track.
-   */
-  void writeEndTrack(Location lastPoint);
-
-  /**
-   * Write the statements necessary to open a new segment.
-   */
-  void writeOpenSegment();
-
-  /**
-   * Write the statements necessary to close a segment.
-   */
-  void writeCloseSegment();
-
-  /**
-   * Close the underlying file handle.
-   */
-  void close();
+  public void writeLocation(Location location);
 }

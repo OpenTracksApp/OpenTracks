@@ -25,25 +25,26 @@ import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
-import com.google.android.apps.mytracks.io.sendtogoogle.SendType;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.io.sendtogoogle.UploadServiceChooserActivity;
-import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.GeoRect;
 import com.google.android.apps.mytracks.util.LocationUtils;
+import com.google.android.apps.mytracks.util.PlayTrackUtils;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.mytracks.R;
 
+import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.provider.Settings;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -71,6 +72,8 @@ public class MapActivity extends com.google.android.maps.MapActivity
     implements View.OnTouchListener, View.OnClickListener,
         TrackDataListener {
 
+  private static final int DIALOG_INSTALL_EARTH = 0;
+
   // Saved instance state keys:
   // ---------------------------
 
@@ -90,6 +93,25 @@ public class MapActivity extends com.google.android.maps.MapActivity
    * Only relevant when {@link #keepMyLocationVisible} is true.
    */
   private boolean myLocationWasZoomedIn;
+
+  /**
+   * The ID of a track on which we want to show a waypoint.
+   * The waypoint will be shown as soon as the track is loaded.
+   */
+  private long showWaypointTrackId;
+
+  /**
+   * The ID of a waypoint which we want to show.
+   * The waypoint will be shown as soon as its track is loaded.
+   */
+  private long showWaypointId;
+
+  /**
+   * The track that's currently selected.
+   * This differs from {@link TrackDataHub#getSelectedTrackId} in that this one is only set after
+   * actual track data has been received.
+   */
+  private long selectedTrackId;
 
   /**
    * The current pointer location.
@@ -136,13 +158,10 @@ public class MapActivity extends com.google.android.maps.MapActivity
     super.onCreate(bundle);
 
     // The volume we want to control is the Text-To-Speech volume
-    ApiFeatures apiFeatures = ApiFeatures.getInstance();
-    int volumeStream =
-        new StatusAnnouncerFactory(apiFeatures).getVolumeStream();
-    setVolumeControlStream(volumeStream);
+    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
     // Show the action bar (or nothing at all).
-    apiFeatures.getApiAdapter().showActionBar(this);
+    ApiAdapterFactory.getApiAdapter().showActionBar(this);
 
     // Inflate the layout:
     setContentView(R.layout.mytracks_layout);
@@ -217,6 +236,16 @@ public class MapActivity extends com.google.android.maps.MapActivity
     dataHub = null;
 
     super.onPause();
+  }
+
+  @Override
+  protected Dialog onCreateDialog(int id) {
+    switch (id) {
+      case DIALOG_INSTALL_EARTH:
+        return PlayTrackUtils.createInstallEarthDialog(this);
+      default:
+        return null;
+    }
   }
 
   // Utility functions:
@@ -352,6 +381,47 @@ public class MapActivity extends com.google.android.maps.MapActivity
     }
   }
 
+  /**
+   * Zooms and pans the map so that the given waypoint is visible, when the given track is loaded.
+   * If the track is already loaded, it does that immediately.
+   *
+   * @param trackId the ID of the track on which to show the waypoint
+   * @param waypointId the ID of the waypoint to show
+   */
+  public void showWaypoint(long trackId, long waypointId) {
+    synchronized (this) {
+      if (trackId == selectedTrackId) {
+        showWaypoint(waypointId);
+        return;
+      }
+
+      showWaypointTrackId = trackId;
+      showWaypointId = waypointId;
+    }
+  }
+
+  /**
+   * Does the proper zooming/panning for a just-loaded track.
+   * This may be either zooming to a waypoint that has been previously selected, or
+   * zooming to the whole track.
+   *
+   * @param track the loaded track
+   */
+  private void zoomLoadedTrack(Track track) {
+    synchronized (this) {
+      if (track.getId() == showWaypointTrackId) {
+        // There's a waypoint to show in this track.
+        showWaypoint(showWaypointId);
+
+        showWaypointId = 0L;
+        showWaypointTrackId = 0L;
+      } else {
+        // Zoom out to show the whole track.
+        zoomMapToBoundaries(track);
+      }
+    }
+  }
+
   @Override
   public void onSelectedTrackChanged(final Track track, final boolean isRecording) {
     runOnUiThread(new Runnable() {
@@ -365,7 +435,12 @@ public class MapActivity extends com.google.android.maps.MapActivity
         if (trackSelected) {
           busyPane.setVisibility(View.VISIBLE);
 
-          zoomMapToBoundaries(track);
+          synchronized (this) {
+            // Need to get the track ID only at this point, to prevent a race condition
+            // among showWaypoint, zoomLoadedTrack and dataHub.loadTrack.
+            selectedTrackId = track.getId();
+            zoomLoadedTrack(track);
+          }
 
           mapOverlay.setShowEndMarker(!isRecording);
           busyPane.setVisibility(View.GONE);
@@ -386,6 +461,7 @@ public class MapActivity extends com.google.android.maps.MapActivity
             String shareFileFormat = getString(R.string.track_list_share_file);
             String fileTypes[] = getResources().getStringArray(R.array.file_types);
 
+            menu.add(Menu.NONE, Constants.MENU_PLAY, Menu.NONE, R.string.track_list_play);
             menu.add(Menu.NONE, Constants.MENU_SEND_TO_GOOGLE, Menu.NONE,
                 R.string.track_list_send_google);
             SubMenu share = menu.addSubMenu(
@@ -423,49 +499,51 @@ public class MapActivity extends com.google.android.maps.MapActivity
     Intent intent;
     long trackId = dataHub.getSelectedTrackId();
     switch (item.getItemId()) {
+      case Constants.MENU_EDIT: 
+        intent = new Intent(this, TrackDetail.class).putExtra(TrackDetail.TRACK_ID, trackId);
+        startActivity(intent);
+        return true;
+      case Constants.MENU_PLAY:
+        if (PlayTrackUtils.isEarthInstalled(this)) {
+          PlayTrackUtils.playTrack(this, trackId);
+          return true;
+        } else {
+          showDialog(DIALOG_INSTALL_EARTH);
+          return true;
+        }
       case Constants.MENU_SEND_TO_GOOGLE:
-        intent = new Intent(this, UploadServiceChooserActivity.class);
-        intent.putExtra(UploadServiceChooserActivity.TRACK_ID, trackId);
+        intent = new Intent(this, UploadServiceChooserActivity.class)
+            .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, true, true, true));
         startActivity(intent);
         return true;
       case Constants.MENU_SHARE_MAP:
-        intent = new Intent(this, UploadServiceChooserActivity.class);
-        intent.putExtra(UploadServiceChooserActivity.TRACK_ID, trackId);
-        intent.putExtra(UploadServiceChooserActivity.SEND_TYPE, (Parcelable) SendType.MAPS);
+        intent = new Intent(this, UploadServiceChooserActivity.class)
+            .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, true, false, false));
         startActivity(intent);
         return true;
       case Constants.MENU_SHARE_FUSION_TABLE:
-        intent = new Intent(this, UploadServiceChooserActivity.class);
-        intent.putExtra(UploadServiceChooserActivity.TRACK_ID, trackId);
-        intent.putExtra(
-            UploadServiceChooserActivity.SEND_TYPE, (Parcelable) SendType.FUSION_TABLES);
+        intent = new Intent(this, UploadServiceChooserActivity.class)
+            .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, false, true, false));
         startActivity(intent);
         return true;
-      case Constants.MENU_SAVE_GPX_FILE:
-      case Constants.MENU_SAVE_KML_FILE:
-      case Constants.MENU_SAVE_CSV_FILE:
-      case Constants.MENU_SAVE_TCX_FILE:
       case Constants.MENU_SHARE_GPX_FILE:
       case Constants.MENU_SHARE_KML_FILE:
       case Constants.MENU_SHARE_CSV_FILE:
       case Constants.MENU_SHARE_TCX_FILE:
+      case Constants.MENU_SAVE_GPX_FILE:
+      case Constants.MENU_SAVE_KML_FILE:
+      case Constants.MENU_SAVE_CSV_FILE:
+      case Constants.MENU_SAVE_TCX_FILE:
         SaveActivity.handleExportTrackAction(
             this, trackId, Constants.getActionFromMenuId(item.getItemId()));
         return true;
-      case Constants.MENU_EDIT: {
-        intent = new Intent(this, TrackDetail.class);
-        intent.putExtra(TrackDetail.TRACK_ID, trackId);
-        startActivity(intent);
+      case Constants.MENU_CLEAR_MAP:
+        dataHub.unloadCurrentTrack();
         return true;
-      }
-      case Constants.MENU_DELETE: {
+      case Constants.MENU_DELETE:
         Uri uri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId);
         intent = new Intent(Intent.ACTION_DELETE, uri);
         startActivity(intent);
-        return true;
-      }
-      case Constants.MENU_CLEAR_MAP:
-        dataHub.unloadCurrentTrack();
         return true;
       default:
         return super.onMenuItemSelected(featureId, item);

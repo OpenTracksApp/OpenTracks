@@ -32,7 +32,8 @@ limitations under the License.
       android:layout_height="wrap_content"
       android:layout_marginLeft="6dip"
       android:layout_marginTop="6dip"
-      android:src="@drawable/ylw_pushpin"/>
+      android:src="@drawable/ylw_pushpin"
+      android:contentDescription="@string/marker_list_icon_description"/>
 
     <LinearLayout
       android:orientation="vertical"
@@ -45,7 +46,6 @@ limitations under the License.
         android:layout_marginLeft="6dip"
         android:layout_marginTop="6dip"
         android:singleLine = "true"
-        android:text="Name"
         android:textAppearance="?android:attr/textAppearanceLarge"/>
 
       <TextView android:id="@+id/waypointslist_item_time"
@@ -54,7 +54,6 @@ limitations under the License.
         android:layout_marginLeft = "6dip"
         android:singleLine = "true"
         android:textColor = "#fff"
-        android:text="date and time"
         android:textAppearance="?android:attr/textAppearanceSmall"/>
 
       <TextView android:id="@+id/waypointslist_item_category"
@@ -63,7 +62,6 @@ limitations under the License.
         android:layout_marginLeft = "6dip"
         android:singleLine = "true"
         android:textColor="#0f0"
-        android:text="category"
         android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>
   </LinearLayout>

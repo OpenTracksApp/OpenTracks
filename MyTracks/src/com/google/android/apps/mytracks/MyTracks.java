@@ -20,19 +20,18 @@ import static com.google.android.apps.mytracks.Constants.MAP_TAB_TAG;
 import static com.google.android.apps.mytracks.Constants.STATS_TAB_TAG;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
-import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TracksColumns;
+import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
-import com.google.android.apps.mytracks.io.file.TempFileCleaner;
+import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
-import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
-import com.google.android.apps.mytracks.util.ApiFeatures;
-import com.google.android.apps.mytracks.util.ApiLevelAdapter;
-import com.google.android.apps.mytracks.util.EulaUtil;
+import com.google.android.apps.mytracks.util.AnalyticsUtils;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.EulaUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.apps.mytracks.util.UriUtils;
 import com.google.android.maps.mytracks.R;
@@ -50,6 +49,7 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -94,11 +94,6 @@ public class MyTracks extends TabActivity implements OnTouchListener {
    */
   private MyTracksProviderUtils providerUtils;
 
-  /**
-   * Google Analytics tracker
-   */
-  private GoogleAnalyticsTracker tracker;
-
   /*
    * Tabs/View navigation:
    */
@@ -142,18 +137,11 @@ public class MyTracks extends TabActivity implements OnTouchListener {
   protected void onCreate(Bundle savedInstanceState) {
     Log.d(TAG, "MyTracks.onCreate");
     super.onCreate(savedInstanceState);
-    ApiFeatures apiFeatures = ApiFeatures.getInstance();
-    ApiLevelAdapter apiAdapter = apiFeatures.getApiAdapter();
     if (!SystemUtils.isRelease(this)) {
-      apiAdapter.enableStrictMode();
+      ApiAdapterFactory.getApiAdapter().enableStrictMode();
     }
 
-    tracker = GoogleAnalyticsTracker.getInstance();
-    // Start the tracker in manual dispatch mode...
-    tracker.start(getString(R.string.my_tracks_analytics_id), getApplicationContext());
-    tracker.setProductVersion("android-mytracks", SystemUtils.getMyTracksVersion(this));
-    tracker.trackPageView("/appstart");
-    tracker.dispatch();
+    AnalyticsUtils.sendPageViews(this, "/appstart");
 
     providerUtils = MyTracksProviderUtils.Factory.get(this);
     preferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
@@ -161,13 +149,13 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     menuManager = new MenuManager(this);
     serviceConnection = new TrackRecordingServiceConnection(this, serviceBindCallback);
 
-    // The volume we want to control is the Text-To-Speech volume
-    int volumeStream =
-        new StatusAnnouncerFactory(apiFeatures).getVolumeStream();
-    setVolumeControlStream(volumeStream);
-
+    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
+    
     // Show the action bar (or nothing at all).
-    apiAdapter.showActionBar(this);
+    ApiAdapterFactory.getApiAdapter().showActionBar(this);
+
+    // If the user just starts typing (on a device with a keyboard), we start a search.
+    setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
     final Resources res = getResources();
     final TabHost tabHost = getTabHost();
@@ -199,7 +187,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     tabHost.addView(layout);
     layout.setOnTouchListener(this);
 
-    if (!EulaUtil.getEulaValue(this)) {
+    if (!EulaUtils.getEulaValue(this)) {
       showDialog(DIALOG_EULA_ID);
     }
   }
@@ -222,6 +210,19 @@ public class MyTracks extends TabActivity implements OnTouchListener {
         && TracksColumns.CONTENT_ITEMTYPE.equals(intent.getType())
         && UriUtils.matchesContentUri(data, TracksColumns.CONTENT_URI)) {
       long trackId = ContentUris.parseId(data);
+      dataHub.loadTrack(trackId);
+    } else if (Intent.ACTION_VIEW.equals(action)
+        && WaypointsColumns.CONTENT_ITEMTYPE.equals(intent.getType())
+        && UriUtils.matchesContentUri(data, WaypointsColumns.CONTENT_URI)) {
+      // TODO(rdamazio): Waypoint URIs should be base/trackid/waypointid
+      long waypointId = ContentUris.parseId(data);
+      Waypoint waypoint = providerUtils.getWaypoint(waypointId);
+      long trackId = waypoint.getTrackId();
+
+      // Request that the waypoint is shown (now or when the right track is loaded).
+      showWaypoint(trackId, waypointId);
+
+      // Load the right track, if not loaded already.
       dataHub.loadTrack(trackId);
     }
   }
@@ -246,14 +247,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
   @Override
   protected void onStop() {
     Log.d(TAG, "MyTracks.onStop");
-
     dataHub.stop();
-
-    tracker.dispatch();
-    tracker.stop();
-
-    // Clean up any temporary track files.
-    TempFileCleaner.clean();
     super.onStop();
   }
 
@@ -270,11 +264,11 @@ public class MyTracks extends TabActivity implements OnTouchListener {
       case DIALOG_EULA_ID:
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.eula_title);
-        builder.setMessage(EulaUtil.getEulaMessage(this));
+        builder.setMessage(EulaUtils.getEulaMessage(this));
         builder.setPositiveButton(R.string.eula_accept, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
-            EulaUtil.setEulaValue(MyTracks.this);
+            EulaUtils.setEulaValue(MyTracks.this);
             Intent startIntent = new Intent(MyTracks.this, WelcomeActivity.class);
             startActivityForResult(startIntent, Constants.WELCOME);
           }
@@ -393,6 +387,17 @@ public class MyTracks extends TabActivity implements OnTouchListener {
       default: {
         Log.w(TAG, "Warning unhandled request code: " + requestCode);
       }
+    }
+  }
+
+  private void showWaypoint(long trackId, long waypointId) {
+    MapActivity map =
+        (MapActivity) getLocalActivityManager().getActivity("tab1");
+    if (map != null) {
+      getTabHost().setCurrentTab(0);
+      map.showWaypoint(trackId, waypointId);
+    } else {
+      Log.e(TAG, "Couldnt' get map tab");
     }
   }
 

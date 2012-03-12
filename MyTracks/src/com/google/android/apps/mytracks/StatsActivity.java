@@ -23,8 +23,8 @@ import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.services.ServiceUtils;
-import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
-import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -32,6 +32,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.ScrollView;
@@ -104,13 +105,10 @@ public class StatsActivity extends Activity implements TrackDataListener {
     utils = new StatsUtilities(this);
 
     // The volume we want to control is the Text-To-Speech volume
-    ApiFeatures apiFeatures = ApiFeatures.getInstance();
-    int volumeStream =
-        new StatusAnnouncerFactory(apiFeatures).getVolumeStream();
-    setVolumeControlStream(volumeStream);
+    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
-    // Show the action bar (or nothing at all).
-    apiFeatures.getApiAdapter().showActionBar(this);
+     // Show the action bar (or nothing at all).
+    ApiAdapterFactory.getApiAdapter().showActionBar(this);
 
     setContentView(R.layout.stats);
 
@@ -193,7 +191,7 @@ public class StatsActivity extends Activity implements TrackDataListener {
     utils.setAltitude(R.id.elevation_register, l.getAltitude());
     utils.setLatLong(R.id.latitude_register, l.getLatitude());
     utils.setLatLong(R.id.longitude_register, l.getLongitude());
-    utils.setSpeed(R.id.speed_register, l.getSpeed() * 3.6);
+    utils.setSpeed(R.id.speed_register, l.getSpeed() * UnitConversions.MS_TO_KMH);
   }
 
   private void showUnknownLocation() {

@@ -23,7 +23,7 @@ limitations under the License.
      See http://developer.android.com/guide/developing/eclipse-adt.html#libraryProject
      for details on what should go here vs in the application project.
   -->
-  <uses-sdk android:minSdkVersion="3" />
+  <uses-sdk android:minSdkVersion="7" />
   <application android:icon="@drawable/arrow_icon"
                android:label="@string/lib_name">
   </application>

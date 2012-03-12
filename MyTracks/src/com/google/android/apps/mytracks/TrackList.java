@@ -19,14 +19,15 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
-import com.google.android.apps.mytracks.io.sendtogoogle.SendType;
+import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.io.sendtogoogle.UploadServiceChooserActivity;
 import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
+import com.google.android.apps.mytracks.util.PlayTrackUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.ContentUris;
 import android.content.Context;
@@ -36,7 +37,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -62,6 +62,8 @@ public class TrackList extends ListActivity
     implements SharedPreferences.OnSharedPreferenceChangeListener,
         View.OnClickListener {
 
+  private static final int DIALOG_INSTALL_EARTH = 0;
+  
   private int contextPosition = -1;
   private long trackId = -1;
   private ListView listView = null;
@@ -89,6 +91,7 @@ public class TrackList extends ListActivity
             String shareFileFormat = getString(R.string.track_list_share_file);
             String fileTypes[] = getResources().getStringArray(R.array.file_types);
 
+            menu.add(Menu.NONE, Constants.MENU_PLAY, Menu.NONE, R.string.track_list_play);
             menu.add(Menu.NONE, Constants.MENU_SEND_TO_GOOGLE, Menu.NONE,
                 R.string.track_list_send_google);
             SubMenu share = menu.addSubMenu(
@@ -166,50 +169,50 @@ public class TrackList extends ListActivity
         return true;
       }
       case Constants.MENU_EDIT: {
-        intent = new Intent(this, TrackDetail.class);
-        intent.putExtra(TrackDetail.TRACK_ID, trackId);
+        intent = new Intent(this, TrackDetail.class).putExtra(TrackDetail.TRACK_ID, trackId);
         startActivity(intent);
         return true;
       }
-      case Constants.MENU_SHARE:
-      case Constants.MENU_WRITE_TO_SD_CARD:
-        return false;
+      case Constants.MENU_PLAY:
+        if (PlayTrackUtils.isEarthInstalled(this)) {
+          PlayTrackUtils.playTrack(this, trackId);
+          return true;
+        } else {
+          showDialog(DIALOG_INSTALL_EARTH);
+          return true;
+        }
       case Constants.MENU_SEND_TO_GOOGLE:
-        intent = new Intent(this, UploadServiceChooserActivity.class);
-        intent.putExtra(UploadServiceChooserActivity.TRACK_ID, trackId);
+        intent = new Intent(this, UploadServiceChooserActivity.class)
+            .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, true, true, true));
         startActivity(intent);
         return true;
       case Constants.MENU_SHARE_MAP:
-        intent = new Intent(this, UploadServiceChooserActivity.class);
-        intent.putExtra(UploadServiceChooserActivity.TRACK_ID, trackId);
-        intent.putExtra(UploadServiceChooserActivity.SEND_TYPE, (Parcelable) SendType.MAPS);
+        intent = new Intent(this, UploadServiceChooserActivity.class)
+            .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, true, false, false));
         startActivity(intent);
         return true;
       case Constants.MENU_SHARE_FUSION_TABLE:
-        intent = new Intent(this, UploadServiceChooserActivity.class);
-        intent.putExtra(UploadServiceChooserActivity.TRACK_ID, trackId);
-        intent.putExtra(
-            UploadServiceChooserActivity.SEND_TYPE, (Parcelable) SendType.FUSION_TABLES);
+        intent = new Intent(this, UploadServiceChooserActivity.class)
+            .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, false, true, false));
         startActivity(intent);
         return true;
-      case Constants.MENU_SAVE_GPX_FILE:
-      case Constants.MENU_SAVE_KML_FILE:
-      case Constants.MENU_SAVE_CSV_FILE:
-      case Constants.MENU_SAVE_TCX_FILE:
       case Constants.MENU_SHARE_GPX_FILE:
       case Constants.MENU_SHARE_KML_FILE:
       case Constants.MENU_SHARE_CSV_FILE:
       case Constants.MENU_SHARE_TCX_FILE:
-        SaveActivity.handleExportTrackAction(this, trackId,
-            Constants.getActionFromMenuId(item.getItemId()));
+      case Constants.MENU_SAVE_GPX_FILE:
+      case Constants.MENU_SAVE_KML_FILE:
+      case Constants.MENU_SAVE_CSV_FILE:
+      case Constants.MENU_SAVE_TCX_FILE:
+        SaveActivity.handleExportTrackAction(
+            this, trackId, Constants.getActionFromMenuId(item.getItemId()));
         return true;
-      case Constants.MENU_DELETE: {
-        intent = new Intent(Intent.ACTION_DELETE);
+      case Constants.MENU_DELETE:
         Uri uri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId);
-        intent.setDataAndType(uri, TracksColumns.CONTENT_ITEMTYPE);
+        intent = new Intent(Intent.ACTION_DELETE)
+            .setDataAndType(uri, TracksColumns.CONTENT_ITEMTYPE);
         startActivity(intent);
         return true;
-      }
       default:
         Log.w(TAG, "Unknown menu item: " + item.getItemId() + "(" + item.getTitle() + ")");
         return super.onMenuItemSelected(featureId, item);
@@ -286,6 +289,27 @@ public class TrackList extends ListActivity
     super.onDestroy();
   }
 
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.search_only, menu);
+    return true;
+  }
+
+  @Override
+  protected Dialog onCreateDialog(int id) {
+    switch (id) {
+      case DIALOG_INSTALL_EARTH:
+        return PlayTrackUtils.createInstallEarthDialog(this);
+      default:
+        return null;
+    }
+  }
+
+  /* Callback from menu/search_only.xml */
+  public void onSearch(@SuppressWarnings("unused") MenuItem i) {
+    onSearchRequested();
+  }
+
   private void updateButtonsEnabled() {
     View deleteAll = findViewById(R.id.tracklist_btn_delete_all);
     View exportAll = findViewById(R.id.tracklist_btn_export_all);
@@ -304,9 +328,9 @@ public class TrackList extends ListActivity
         new String[] { TracksColumns.NAME, TracksColumns.STARTTIME,
                        TracksColumns.TOTALDISTANCE, TracksColumns.DESCRIPTION,
                        TracksColumns.CATEGORY },
-        new int[] { R.id.trackdetails_item_name, R.id.trackdetails_item_time,
-            R.id.trackdetails_item_stats, R.id.trackdetails_item_description,
-            R.id.trackdetails_item_category });
+        new int[] { R.id.track_list_item_name, R.id.track_list_item_time,
+            R.id.track_list_item_stats, R.id.track_list_item_description,
+            R.id.track_list_item_category });
 
     final int startTimeIdx =
         tracksCursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
@@ -323,28 +347,11 @@ public class TrackList extends ListActivity
           long time = cursor.getLong(startTimeIdx);
           textView.setText(StringUtils.formatDateTime(TrackList.this, time));
         } else if (columnIndex == totalDistanceIdx) {
-          double length = cursor.getDouble(totalDistanceIdx);
-          String lengthUnit = null;
-          if (metricUnits) {
-            if (length > 1000) {
-              length /= 1000;
-              lengthUnit = getString(R.string.unit_kilometer);
-            } else {
-              lengthUnit = getString(R.string.unit_meter);
-            }
-          } else {
-            if (length > UnitConversions.MI_TO_M) {
-              length /= UnitConversions.MI_TO_M;
-              lengthUnit = getString(R.string.unit_mile);
-            } else {
-              length *= UnitConversions.M_TO_FT;
-              lengthUnit = getString(R.string.unit_feet);
-            }
-          }
-          textView.setText(String.format("%s  %.2f %s",
-              StringUtils.formatElapsedTime(cursor.getLong(totalTimeIdx)),
-              length,
-              lengthUnit));
+          double totalDistance = cursor.getDouble(totalDistanceIdx);
+          long totalTime = cursor.getLong(totalTimeIdx);
+          String totalDistanceStr = StringUtils.formatTimeDistance(
+              TrackList.this, totalTime, totalDistance, metricUnits);
+          textView.setText(totalDistanceStr);
         } else {
           textView.setText(cursor.getString(columnIndex));
           if (textView.getText().length() < 1) {
@@ -355,6 +362,7 @@ public class TrackList extends ListActivity
         }
         return true;
       }
+
     });
     setListAdapter(adapter);
   }

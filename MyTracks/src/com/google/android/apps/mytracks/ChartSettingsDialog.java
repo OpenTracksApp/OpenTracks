@@ -17,6 +17,7 @@ package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.ChartView.Mode;
 import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -117,5 +118,10 @@ public class ChartSettingsDialog extends Dialog {
 
   public void setOnClickListener(OnClickListener clickListener) {
     this.clickListener = clickListener;
+  }
+  
+  @VisibleForTesting
+  CheckBox[] getSeries() {
+    return series;
   }
 }

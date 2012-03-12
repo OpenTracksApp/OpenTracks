@@ -38,7 +38,7 @@ public class TrackWriterFactory {
     GPX {
       @Override
       TrackFormatWriter newFormatWriter(Context context) {
-        return new GpxTrackWriter();
+        return new GpxTrackWriter(context);
       }
     },
     KML {
@@ -50,7 +50,7 @@ public class TrackWriterFactory {
     CSV {
       @Override
       public TrackFormatWriter newFormatWriter(Context context) {
-        return new CsvTrackWriter();
+        return new CsvTrackWriter(context);
       }
     },
     TCX {

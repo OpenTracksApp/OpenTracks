@@ -37,7 +37,7 @@ import android.util.Log;
  * application delegates starting and stopping a recording to
  * {@link TrackRecordingService} using RPC calls.
  *
- * @author jshih@google.com (Jimmy Shih)
+ * @author Jimmy Shih
  */
 public class ControlRecordingService extends IntentService implements ServiceConnection {
 

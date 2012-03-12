@@ -22,6 +22,7 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.util.FileUtils;
+import com.google.android.apps.mytracks.util.PlayTrackUtils;
 import com.google.android.apps.mytracks.util.UriUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -46,8 +47,10 @@ import java.io.File;
  * @author Rodrigo Damazio
  */
 public class SaveActivity extends Activity {
-  public static final String EXTRA_SHARE_FILE = "share_file";
   public static final String EXTRA_FILE_FORMAT = "file_format";
+  public static final String EXTRA_SHARE_FILE = "share_file";
+  public static final String EXTRA_PLAY_FILE = "play_file";
+
   private static final int RESULT_DIALOG = 1;
   /* VisibleForTesting */
   static final int PROGRESS_DIALOG = 2;
@@ -56,6 +59,7 @@ public class SaveActivity extends Activity {
   private long trackId;
   private TrackWriter writer;
   private boolean shareFile;
+  private boolean playFile;
   private TrackFileFormat format;
   private WriteProgressController controller;
 
@@ -87,7 +91,8 @@ public class SaveActivity extends Activity {
     int formatIdx = intent.getIntExtra(EXTRA_FILE_FORMAT, -1);
     format = TrackFileFormat.values()[formatIdx];
     shareFile = intent.getBooleanExtra(EXTRA_SHARE_FILE, false);
-
+    playFile = intent.getBooleanExtra(EXTRA_PLAY_FILE, false);
+    
     writer = TrackWriterFactory.newWriter(this, providerUtils, trackId, format);
     if (writer == null) {
       Log.e(TAG, "Unable to build writer");
@@ -95,7 +100,7 @@ public class SaveActivity extends Activity {
       return;
     }
 
-    if (shareFile) {
+    if (shareFile || playFile) {
       // If the file is for sending, save it to a temporary location instead.
       FileUtils fileUtils = new FileUtils();
       String extension = format.getExtension();
@@ -118,6 +123,8 @@ public class SaveActivity extends Activity {
   private void onWriteComplete() {
     if (shareFile) {
       shareWrittenFile();
+    } if (playFile) {
+      playWrittenFile();
     } else {
       showResultDialog();
     }
@@ -142,6 +149,22 @@ public class SaveActivity extends Activity {
     shareIntent.putExtra(getString(R.string.track_id_broadcast_extra), trackId);
     startActivity(Intent.createChooser(shareIntent,
         getResources().getText(R.string.share_track_picker_title).toString()));
+  }
+
+  private void playWrittenFile() {
+    if (!writer.wasSuccess()) {
+      showResultDialog();
+      return;
+    }
+
+    Uri uri = Uri.fromFile(new File(writer.getAbsolutePath()));
+    Intent intent = new Intent()
+        .setClassName(PlayTrackUtils.GOOGLE_EARTH_PACKAGE, PlayTrackUtils.GOOGLE_EARTH_CLASS)
+        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        .setDataAndType(uri, PlayTrackUtils.KML_MIME_TYPE)
+        .putExtra(PlayTrackUtils.TOUR_FEATURE_ID, KmlTrackWriter.TOUR_FEATURE_ID);
+    startActivity(intent);
   }
 
   private void showResultDialog() {

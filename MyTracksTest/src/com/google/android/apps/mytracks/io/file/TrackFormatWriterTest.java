@@ -39,13 +39,15 @@ public abstract class TrackFormatWriterTest extends AndroidTestCase {
   // All the user-provided strings have "]]>" to ensure that proper escaping is
   // being done.
   protected static final String TRACK_NAME = "Home]]>";
+  protected static final String TRACK_CATEGORY = "Hiking";
   protected static final String TRACK_DESCRIPTION = "The long ]]> journey home";
   protected static final String WAYPOINT1_NAME = "point]]>1";
+  protected static final String WAYPOINT1_CATEGORY = "Statistics";
   protected static final String WAYPOINT1_DESCRIPTION = "point 1]]>description";
   protected static final String WAYPOINT2_NAME = "point]]>2";
+  protected static final String WAYPOINT2_CATEGORY = "Waypoint";
   protected static final String WAYPOINT2_DESCRIPTION = "point 2]]>description";
   private static final int BUFFER_SIZE = 10240;
-  protected static final long TRACK_ID = 12345L;
   protected Track track;
   protected MyTracksLocation location1, location2, location3, location4;
   protected Waypoint wp1, wp2;
@@ -55,8 +57,8 @@ public abstract class TrackFormatWriterTest extends AndroidTestCase {
     super.setUp();
 
     track = new Track();
-    track.setId(TRACK_ID);
     track.setName(TRACK_NAME);
+    track.setCategory(TRACK_CATEGORY);
     track.setDescription(TRACK_DESCRIPTION);
 
     location1 = new MyTracksLocation("mock");
@@ -69,33 +71,40 @@ public abstract class TrackFormatWriterTest extends AndroidTestCase {
     wp2 = new Waypoint();
     wp1.setLocation(location2);
     wp1.setName(WAYPOINT1_NAME);
+    wp1.setCategory(WAYPOINT1_CATEGORY);
     wp1.setDescription(WAYPOINT1_DESCRIPTION);
     wp2.setLocation(location3);
     wp2.setName(WAYPOINT2_NAME);
+    wp2.setCategory(WAYPOINT2_CATEGORY);
     wp2.setDescription(WAYPOINT2_DESCRIPTION);
   }
 
   /**
-   * Populates the given locations with coordinates and time.
+   * Populates a list of locations with values.
+   *
+   * @param locations a list of locations
    */
-  protected void populateLocations(MyTracksLocation... locs) {
-    for (int i = 0; i < locs.length; i++) {
-      MyTracksLocation loc = locs[i];
-      loc.setAltitude(i * 5000000);
-      loc.setLatitude(i);
-      loc.setLongitude(-i);
-      loc.setTime(10000000 + i * 1000);
-      Sensor.SensorData.Builder hr = Sensor.SensorData.newBuilder()
-        .setValue(100 + i)
-        .setState(Sensor.SensorState.SENDING);
-      Sensor.SensorData.Builder power = Sensor.SensorData.newBuilder()
-        .setValue(400 + i)
-        .setState(Sensor.SensorState.SENDING);
-      Sensor.SensorDataSet sds =
-        Sensor.SensorDataSet.newBuilder().setHeartRate(hr.build())
-        .setPower(power)
-        .build();
-      loc.setSensorData(sds);
+  private void populateLocations(MyTracksLocation... locations) {
+    for (int i = 0; i < locations.length; i++) {
+      MyTracksLocation location = locations[i];
+      location.setLatitude(i);
+      location.setLongitude(-i);
+      location.setAltitude(i * 10);
+      location.setBearing(i * 100);
+      location.setAccuracy(i * 1000);
+      location.setSpeed(i * 10000);
+      location.setTime(i * 100000);
+      Sensor.SensorData.Builder power = Sensor.SensorData.newBuilder().setValue(100 + i)
+          .setState(Sensor.SensorState.SENDING);
+      Sensor.SensorData.Builder cadence = Sensor.SensorData.newBuilder().setValue(200 + i)
+          .setState(Sensor.SensorState.SENDING);
+      Sensor.SensorData.Builder heartRate = Sensor.SensorData.newBuilder().setValue(300 + i)
+          .setState(Sensor.SensorState.SENDING);
+      Sensor.SensorData.Builder batteryLevel = Sensor.SensorData.newBuilder().setValue(400 + i)
+          .setState(Sensor.SensorState.SENDING);
+      Sensor.SensorDataSet sensorDataSet = Sensor.SensorDataSet.newBuilder().setPower(power)
+          .setCadence(cadence).setHeartRate(heartRate).setBatteryLevel(batteryLevel).build();
+      location.setSensorData(sensorDataSet);
     }
   }
 
@@ -110,6 +119,10 @@ public abstract class TrackFormatWriterTest extends AndroidTestCase {
     OutputStream output = new ByteArrayOutputStream(BUFFER_SIZE);
     writer.prepare(track, output);
     writer.writeHeader();
+    writer.writeBeginWaypoints();
+    writer.writeWaypoint(wp1);
+    writer.writeWaypoint(wp2);
+    writer.writeEndWaypoints();
     writer.writeBeginTrack(location1);
     writer.writeOpenSegment();
     writer.writeLocation(location1);
@@ -120,8 +133,6 @@ public abstract class TrackFormatWriterTest extends AndroidTestCase {
     writer.writeLocation(location4);
     writer.writeCloseSegment();
     writer.writeEndTrack(location4);
-    writer.writeWaypoint(wp1);
-    writer.writeWaypoint(wp2);
     writer.writeFooter();
     writer.close();
     return output.toString();

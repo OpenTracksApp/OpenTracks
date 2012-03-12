@@ -16,7 +16,7 @@
 package com.google.android.apps.mytracks.content;
 
 import static com.google.android.apps.mytracks.lib.MyTracksLibConstants.TAG;
-import com.google.android.apps.mytracks.content.Sensor;
+
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.protobuf.InvalidProtocolBufferException;
 
@@ -875,22 +875,34 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     }
 
     String selection;
+    String[] selectionArgs;
     if (minWaypointId > 0) {
-      selection = String.format("%s=%d AND %s>=%d",
-          WaypointsColumns.TRACKID, trackId,
-          WaypointsColumns._ID, minWaypointId);
+      selection = String.format("%s = ? AND %s >= ?",
+          WaypointsColumns.TRACKID,
+          WaypointsColumns._ID);
+      selectionArgs = new String[] {
+          Long.toString(trackId),
+          Long.toString(minWaypointId)
+      };
     } else {
-      selection = String.format("%s=%d",
-          WaypointsColumns.TRACKID, trackId);
+      selection = String.format("%s=?", WaypointsColumns.TRACKID);
+      selectionArgs = new String[] { Long.toString(trackId) };
     }
 
-    String sortOrder = "_id ASC";
+    return getWaypointsCursor(selection, selectionArgs, null, maxWaypoints);
+  }
+
+  @Override
+  public Cursor getWaypointsCursor(String selection, String[] selectionArgs, String order, int maxWaypoints) {
+    if (order == null) {
+      order = "_id ASC";
+    }
     if (maxWaypoints > 0) {
-      sortOrder += " LIMIT " + maxWaypoints;
+      order += " LIMIT " + maxWaypoints;
     }
 
     return contentResolver.query(
-        WaypointsColumns.CONTENT_URI, null, selection, null, sortOrder);
+        WaypointsColumns.CONTENT_URI, null, selection, selectionArgs, order);
   }
 
   @Override
@@ -905,7 +917,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
 
   @Override
   public List<Track> getAllTracks() {
-    Cursor cursor = getTracksCursor(null);
+    Cursor cursor = getTracksCursor(null, null, TracksColumns._ID);
     ArrayList<Track> tracks = new ArrayList<Track>();
     if (cursor != null) {
       tracks.ensureCapacity(cursor.getCount());
@@ -923,10 +935,9 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   @Override
-  public Cursor getTracksCursor(String selection) {
-    Cursor cursor = contentResolver.query(
-        TracksColumns.CONTENT_URI, null, selection, null, "_id");
-    return cursor;
+  public Cursor getTracksCursor(String selection, String[] selectionArgs, String order) {
+    return contentResolver.query(
+        TracksColumns.CONTENT_URI, null, selection, selectionArgs, order);
   }
 
   @Override

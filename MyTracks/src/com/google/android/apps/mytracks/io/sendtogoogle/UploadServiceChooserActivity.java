@@ -16,8 +16,10 @@
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.AnalyticsUtils;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -36,27 +38,19 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RadioButton;
 import android.widget.TableRow;
 
+import java.util.ArrayList;
+
 /**
  * A chooser to select the Google services to upload a track to.
  *
- * @author jshih@google.com (Jimmy Shih)
+ * @author Jimmy Shih
  */
 public class UploadServiceChooserActivity extends Activity {
 
-  /**
-   * The track id.
-   */
-  public static final String TRACK_ID = "trackId";
-  
-  /**
-   * The send type. Null to send to all Google services.
-   */
-  public static final String SEND_TYPE = "sendType";
-
   private static final int SERVICE_PICKER_DIALOG = 1;
 
-  private long trackId;
-  private SendType sendType;
+  private SendRequest sendRequest;
+  private Dialog dialog;
 
   private TableRow mapsTableRow;
   private TableRow fusionTablesTableRow;
@@ -76,10 +70,7 @@ public class UploadServiceChooserActivity extends Activity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
-    Intent intent = getIntent();
-    trackId = intent.getLongExtra(TRACK_ID, -1L);
-    sendType = intent.getParcelableExtra(SEND_TYPE);
+    sendRequest = getIntent().getParcelableExtra(SendRequest.SEND_REQUEST_KEY);
   }
 
   @Override
@@ -92,7 +83,7 @@ public class UploadServiceChooserActivity extends Activity {
   protected Dialog onCreateDialog(int id) {
     switch (id) {
       case SERVICE_PICKER_DIALOG:
-        final Dialog dialog = new Dialog(this);
+        dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.upload_service_chooser);
         dialog.setCancelable(true);
@@ -136,23 +127,15 @@ public class UploadServiceChooserActivity extends Activity {
         send.setOnClickListener(new View.OnClickListener() {
           public void onClick(View v) {
             saveState();
-            Intent intent = new Intent(UploadServiceChooserActivity.this, SendActivity.class);
-            intent.putExtra(SendActivity.TRACK_ID, trackId);
-            intent.putExtra(SendActivity.SHARE_URL, sendType != null);
-            intent.putExtra(SendActivity.SEND_MAPS, sendMaps());
-            intent.putExtra(SendActivity.SEND_FUSION_TABLES, sendFusionTables());
-            intent.putExtra(SendActivity.SEND_DOCS, sendDocs());
-            intent.putExtra(SendActivity.CREATE_MAP, !existingMapRadioButton.isChecked());
-            startActivity(intent);
-            finish();
+            startNextActivity();
           }
         });
 
         // Setup initial state
         initState();
 
-        // Update state based on sendType
-        updateStateBySendType();
+        // Update state based on sendRequest
+        updateStateBySendRequest();
 
         // Update state based on current user selection
         updateStateBySelection();
@@ -166,7 +149,8 @@ public class UploadServiceChooserActivity extends Activity {
   /**
    * Initializes the UI state based on the shared preferences.
    */
-  private void initState() {
+  @VisibleForTesting
+  void initState() {
     SharedPreferences prefs = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     boolean pickExistingMap = prefs.getBoolean(getString(R.string.pick_existing_map_key), false);
 
@@ -180,21 +164,21 @@ public class UploadServiceChooserActivity extends Activity {
   }
 
   /**
-   * Updates the UI state based on the sendType.
+   * Updates the UI state based on sendRequest.
    */
-  private void updateStateBySendType() {
-    if (sendType == SendType.MAPS) {
-      mapsCheckBox.setChecked(true);
-    } else if (sendType == SendType.FUSION_TABLES) {
-      fusionTablesCheckBox.setChecked(true);
-    } else if (sendType == SendType.DOCS) {
-      docsCheckBox.setChecked(true);
-    } else {
-      // sendType == null
+  private void updateStateBySendRequest() {
+    if (!sendRequest.isShowAll()) {
+      if (sendRequest.isShowMaps()) {
+        mapsCheckBox.setChecked(true);
+      } else if (sendRequest.isShowFusionTables()) {
+        fusionTablesCheckBox.setChecked(true);
+      } else if (sendRequest.isShowDocs()) {
+        docsCheckBox.setChecked(true);
+      }
     }
-    mapsTableRow.setVisibility(showMaps() ? View.VISIBLE : View.GONE);
-    fusionTablesTableRow.setVisibility(showFusionTables() ? View.VISIBLE : View.GONE);
-    docsTableRow.setVisibility(showDocs() ? View.VISIBLE : View.GONE);
+    mapsTableRow.setVisibility(sendRequest.isShowMaps() ? View.VISIBLE : View.GONE);
+    fusionTablesTableRow.setVisibility(sendRequest.isShowFusionTables() ? View.VISIBLE : View.GONE);
+    docsTableRow.setVisibility(sendRequest.isShowDocs() ? View.VISIBLE : View.GONE);
   }
 
   /**
@@ -208,58 +192,81 @@ public class UploadServiceChooserActivity extends Activity {
   /**
    * Saves the UI state to the shared preferences.
    */
-  private void saveState() {
+  @VisibleForTesting
+  void saveState() {
     SharedPreferences prefs = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     Editor editor = prefs.edit();
     editor.putBoolean(
         getString(R.string.pick_existing_map_key), existingMapRadioButton.isChecked());
-    if (sendType == null) {
+    if (sendRequest.isShowAll()) {
       editor.putBoolean(getString(R.string.send_to_maps_key), sendMaps());
       editor.putBoolean(getString(R.string.send_to_fusion_tables_key), sendFusionTables());
       editor.putBoolean(getString(R.string.send_to_docs_key), sendDocs());
     }
-    ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);
-  }
-
-  /**
-   * Returns true to show the Google Maps option.
-   */
-  private boolean showMaps() {
-    return sendType == null || sendType == SendType.MAPS;
-  }
-
-  /**
-   * Returns true to show the Google Fusion Tables option.
-   */
-  private boolean showFusionTables() {
-    return sendType == null || sendType == SendType.FUSION_TABLES;
-  }
-
-  /**
-   * Returns true to show the Google Docs option.
-   */
-  private boolean showDocs() {
-    return sendType == null || sendType == SendType.DOCS;
+    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
   }
 
   /**
    * Returns true to send to Google Maps.
    */
   private boolean sendMaps() {
-    return showMaps() && mapsCheckBox.isChecked();
+    return sendRequest.isShowMaps() && mapsCheckBox.isChecked();
   }
 
   /**
    * Returns true to send to Google Fusion Tables.
    */
   private boolean sendFusionTables() {
-    return showFusionTables() && fusionTablesCheckBox.isChecked();
+    return sendRequest.isShowFusionTables() && fusionTablesCheckBox.isChecked();
   }
 
   /**
    * Returns true to send to Google Docs.
    */
   private boolean sendDocs() {
-    return showDocs() && docsCheckBox.isChecked();
+    return sendRequest.isShowDocs() && docsCheckBox.isChecked();
+  }
+
+  /**
+   * Starts the next activity, {@link AccountChooserActivity}.
+   */
+  @VisibleForTesting
+  protected void startNextActivity() {
+    sendStats();
+    sendRequest.setSendMaps(sendMaps());
+    sendRequest.setSendFusionTables(sendFusionTables());
+    sendRequest.setSendDocs(sendDocs());
+    sendRequest.setNewMap(!existingMapRadioButton.isChecked());
+    Intent intent = new Intent(this, AccountChooserActivity.class)
+        .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
+    startActivity(intent);
+    finish();
+  }
+  
+  /**
+   * Sends stats to Google Analytics.
+   */
+  private void sendStats() {
+    ArrayList<String> pages = new ArrayList<String>();
+    if (sendRequest.isSendMaps()) {
+      pages.add("/send/maps");
+    }
+    if (sendRequest.isSendFusionTables()) {
+      pages.add("/send/fusion_tables");
+    }
+    if (sendRequest.isSendDocs()) {
+      pages.add("/send/docs");
+    }
+    AnalyticsUtils.sendPageViews(this, pages.toArray(new String[pages.size()]));
+  }
+  
+  @VisibleForTesting
+  Dialog getDialog() {
+    return dialog;
+  }
+  
+  @VisibleForTesting
+  SendRequest getSendRequest() {
+    return sendRequest;
   }
 }

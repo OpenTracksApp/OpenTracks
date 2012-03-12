@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.stats.ExtremityMonitor;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.content.Context;
 import android.content.Intent;
@@ -407,11 +408,12 @@ public class ChartView extends View {
   }
 
   private int getWaypointX(Waypoint waypoint) {
-    return (mode == Mode.BY_DISTANCE)
-        ? getX(metricUnits
-               ? waypoint.getLength() / 1000.0
-               : waypoint.getLength() * UnitConversions.KM_TO_MI / 1000.0)
-        : getX(waypoint.getDuration());
+    if (mode == Mode.BY_DISTANCE) {
+      double lenghtInKm = waypoint.getLength() * UnitConversions.M_TO_KM;
+      return getX(metricUnits ? lenghtInKm : lenghtInKm * UnitConversions.KM_TO_MI);
+    } else {
+      return getX(waypoint.getDuration());
+    }
   }
 
   /**
@@ -883,5 +885,15 @@ public class ChartView extends View {
    */
   public void setChartValueSeriesEnabled(int index, boolean enabled) {
     series[index].setEnabled(enabled);
+  }
+  
+  @VisibleForTesting
+  int getZoomLevel() {
+    return zoomLevel;
+  }
+  
+  @VisibleForTesting
+  int getMaxZoomLevel() {
+    return maxZoomLevel;
   }
 }

@@ -17,6 +17,7 @@ package com.google.android.apps.mytracks;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
 
+import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
@@ -199,6 +200,17 @@ public class WaypointsList extends ListActivity
   }
 
   @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.search_only, menu);
+    return true;
+  }
+
+  /* Callback from menu/search_only.xml */
+  public void onSearch(@SuppressWarnings("unused") MenuItem i) {
+    onSearchRequested();
+  }
+
+  @Override
   public void onClick(View v) {
     WaypointCreationRequest request;
     switch (v.getId()) {
@@ -266,10 +278,10 @@ public class WaypointsList extends ListActivity
         if (columnIndex == timeIdx) {
           long time = cursor.getLong(timeIdx);
           TextView textView = (TextView) view;
-          
+
           if (time == 0) {
             textView.setVisibility(View.GONE);
-          } else {         
+          } else {
             textView.setText(StringUtils.formatDateTime(WaypointsList.this, time));
             textView.setVisibility(View.VISIBLE);
           }
@@ -308,7 +320,7 @@ public class WaypointsList extends ListActivity
           public void onClick(DialogInterface dialogInterface, int i) {
             dialogInterface.dismiss();
             providerUtils.deleteWaypoint(waypointId,
-                new StringUtils(WaypointsList.this));
+                new DescriptionGeneratorImpl(WaypointsList.this));
           }
         });
     builder.setNegativeButton(getString(R.string.generic_no),

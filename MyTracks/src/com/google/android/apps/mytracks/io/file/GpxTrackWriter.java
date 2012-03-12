@@ -18,53 +18,43 @@ package com.google.android.apps.mytracks.io.file;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
-import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
+import com.google.android.maps.mytracks.R;
 
+import android.content.Context;
 import android.location.Location;
-import android.os.Build;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.nio.charset.Charset;
 import java.text.NumberFormat;
-import java.util.Date;
 import java.util.Locale;
 
 /**
- * Log of one track.
+ * Write track as GPX to a file.
  *
  * @author Sandor Dornbush
  */
 public class GpxTrackWriter implements TrackFormatWriter {
-  private final NumberFormat elevationFormatter;
-  private final NumberFormat coordinateFormatter;
-  private PrintWriter pw = null;
-  private Track track;
 
-  public GpxTrackWriter() {
+  private static final NumberFormat ELEVATION_FORMAT = NumberFormat.getInstance(Locale.US);
+  private static final NumberFormat COORDINATE_FORMAT = NumberFormat.getInstance(Locale.US);
+  static {
     // GPX readers expect to see fractional numbers with US-style punctuation.
     // That is, they want periods for decimal points, rather than commas.
-    elevationFormatter = NumberFormat.getInstance(Locale.US);
-    elevationFormatter.setMaximumFractionDigits(1);
-    elevationFormatter.setGroupingUsed(false);
+    ELEVATION_FORMAT.setMaximumFractionDigits(1);
+    ELEVATION_FORMAT.setGroupingUsed(false);
 
-    coordinateFormatter = NumberFormat.getInstance(Locale.US);
-    coordinateFormatter.setMaximumFractionDigits(5);
-    coordinateFormatter.setMaximumIntegerDigits(3);
-    coordinateFormatter.setGroupingUsed(false);
+    COORDINATE_FORMAT.setMaximumFractionDigits(5);
+    COORDINATE_FORMAT.setMaximumIntegerDigits(3);
+    COORDINATE_FORMAT.setGroupingUsed(false);
   }
 
-  private String formatLocation(Location l) {
-    return "lat=\"" + coordinateFormatter.format(l.getLatitude())
-      + "\" lon=\"" + coordinateFormatter.format(l.getLongitude()) + "\"";
-  }
+  private final Context context;
+  private Track track;
+  private PrintWriter printWriter;
 
-  @SuppressWarnings("hiding")
-  @Override
-  public void prepare(Track track, OutputStream out) {
-    this.track = track;
-    this.pw = new PrintWriter(out);
+  public GpxTrackWriter(Context context) {
+    this.context = context;
   }
 
   @Override
@@ -73,97 +63,119 @@ public class GpxTrackWriter implements TrackFormatWriter {
   }
 
   @Override
+  public void prepare(Track aTrack, OutputStream outputStream) {
+    this.track = aTrack;
+    this.printWriter = new PrintWriter(outputStream);
+  }
+
+  @Override
+  public void close() {
+    if (printWriter != null) {
+      printWriter.close();
+      printWriter = null;
+    }
+  }
+
+  @Override
   public void writeHeader() {
-    if (pw != null) {
-      pw.format("<?xml version=\"1.0\" encoding=\"%s\" standalone=\"yes\"?>\n",
-          Charset.defaultCharset().name());
-      pw.println("<?xml-stylesheet type=\"text/xsl\" href=\"details.xsl\"?>");
-      pw.println("<gpx");
-      pw.println(" version=\"1.1\"");
-      pw.format(" creator=\"My Tracks running on %s\"\n", Build.MODEL);
-      pw.println(" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
-      pw.println(" xmlns=\"http://www.topografix.com/GPX/1/1\"");
-      pw.print(" xmlns:topografix=\"http://www.topografix.com/GPX/Private/"
-          + "TopoGrafix/0/1\"");
-      pw.print(" xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 ");
-      pw.print("http://www.topografix.com/GPX/1/1/gpx.xsd ");
-      pw.print("http://www.topografix.com/GPX/Private/TopoGrafix/0/1 ");
-      pw.println("http://www.topografix.com/GPX/Private/TopoGrafix/0/1/"
-          + "topografix.xsd\">");
-      // TODO: Author etc.
+    if (printWriter != null) {
+      printWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+      printWriter.println("<gpx");
+      printWriter.println("version=\"1.1\"");
+      printWriter.println(
+          "creator=\"" + context.getString(R.string.send_google_by_my_tracks, "", "") + "\"");
+      printWriter.println("xmlns=\"http://www.topografix.com/GPX/1/1\"");
+      printWriter.println(
+          "xmlns:topografix=\"http://www.topografix.com/GPX/Private/TopoGrafix/0/1\"");
+      printWriter.println("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
+      printWriter.println("xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1"
+          + " http://www.topografix.com/GPX/1/1/gpx.xsd"
+          + " http://www.topografix.com/GPX/Private/TopoGrafix/0/1"
+          + " http://www.topografix.com/GPX/Private/TopoGrafix/0/1/topografix.xsd\">");
+      printWriter.println("<metadata>");
+      printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
+      printWriter.println("<desc>" + StringUtils.formatCData(track.getDescription()) + "</desc>");
+      printWriter.println("</metadata>");
     }
   }
 
   @Override
   public void writeFooter() {
-    if (pw != null) {
-      pw.println("</gpx>");
+    if (printWriter != null) {
+      printWriter.println("</gpx>");
     }
   }
 
   @Override
-  public void writeBeginTrack(Location firstPoint) {
-    if (pw != null) {
-      pw.println("<trk>");
-      pw.println("<name>" + StringUtils.stringAsCData(track.getName())
-          + "</name>");
-      pw.println("<desc>" + StringUtils.stringAsCData(track.getDescription())
-          + "</desc>");
-      pw.println("<number>" + track.getId() + "</number>");
-      pw.println("<extensions><topografix:color>c0c0c0</topografix:color></extensions>");
+  public void writeBeginTrack(Location firstLocation) {
+    if (printWriter != null) {
+      printWriter.println("<trk>");
+      printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
+      printWriter.println("<desc>" + StringUtils.formatCData(track.getDescription()) + "</desc>");
+      printWriter.println("<extensions><topografix:color>c0c0c0</topografix:color></extensions>");
     }
   }
 
   @Override
-  public void writeEndTrack(Location lastPoint) {
-    if (pw != null) {
-      pw.println("</trk>");
+  public void writeEndTrack(Location lastLocation) {
+    if (printWriter != null) {
+      printWriter.println("</trk>");
     }
   }
 
   @Override
   public void writeOpenSegment() {
-    pw.println("<trkseg>");
+    printWriter.println("<trkseg>");
   }
 
   @Override
   public void writeCloseSegment() {
-    pw.println("</trkseg>");
+    printWriter.println("</trkseg>");
   }
 
   @Override
-  public void writeLocation(Location l) {
-    if (pw != null) {
-      pw.println("<trkpt " + formatLocation(l) + ">");
-      Date d = new Date(l.getTime());
-      pw.println("<ele>" + elevationFormatter.format(l.getAltitude()) + "</ele>");
-      pw.println("<time>" + FileUtils.FILE_TIMESTAMP_FORMAT.format(d) + "</time>");
-      pw.println("</trkpt>");
+  public void writeLocation(Location location) {
+    if (printWriter != null) {
+      printWriter.println("<trkpt " + formatLocation(location) + ">");
+      printWriter.println("<ele>" + ELEVATION_FORMAT.format(location.getAltitude()) + "</ele>");
+      printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</time>");
+      printWriter.println("</trkpt>");
     }
   }
 
   @Override
-  public void close() {
-    if (pw != null) {
-      pw.close();
-      pw = null;
-    }
+  public void writeBeginWaypoints() {
+    // Do nothing
+  }
+
+  @Override
+  public void writeEndWaypoints() {
+    // Do nothing
   }
 
   @Override
   public void writeWaypoint(Waypoint waypoint) {
-    if (pw != null) {
-      Location l = waypoint.getLocation();
-      if (l != null) {
-        pw.println("<wpt " + formatLocation(l) + ">");
-        pw.println("<ele>" + elevationFormatter.format(l.getAltitude()) + "</ele>");
-        pw.println("<time>" + FileUtils.FILE_TIMESTAMP_FORMAT.format(l.getTime()) + "</time>");
-        pw.println("<name>" + StringUtils.stringAsCData(waypoint.getName())
-            + "</name>");
-        pw.println("<desc>"
-            + StringUtils.stringAsCData(waypoint.getDescription()) + "</desc>");
-        pw.println("</wpt>");
+    if (printWriter != null) {
+      Location location = waypoint.getLocation();
+      if (location != null) {
+        printWriter.println("<wpt " + formatLocation(location) + ">");
+        printWriter.println("<ele>" + ELEVATION_FORMAT.format(location.getAltitude()) + "</ele>");
+        printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</time>");
+        printWriter.println("<name>" + StringUtils.formatCData(waypoint.getName()) + "</name>");
+        printWriter.println(
+            "<desc>" + StringUtils.formatCData(waypoint.getDescription()) + "</desc>");
+        printWriter.println("</wpt>");
       }
     }
+  }
+
+  /**
+   * Formats a location with latitude and longitude coordinates.
+   *
+   * @param location the location
+   */
+  private String formatLocation(Location location) {
+    return "lat=\"" + COORDINATE_FORMAT.format(location.getLatitude()) + "\" lon=\""
+        + COORDINATE_FORMAT.format(location.getLongitude()) + "\"";
   }
 }

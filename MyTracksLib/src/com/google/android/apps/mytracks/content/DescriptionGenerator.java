@@ -18,24 +18,27 @@ package com.google.android.apps.mytracks.content;
 import java.util.Vector;
 
 /**
- * An interface for an object that can generate descriptions of waypoints.
- * 
+ * An interface for an object that can generate descriptions of track and
+ * waypoint.
+ *
  * @author Sandor Dornbush
  */
 public interface DescriptionGenerator {
-  
+
   /**
-   * Generate a description of the waypoint.
-   */
-  public String generateWaypointDescription(Waypoint waypoint);
-  
-  /**
-   * Generates a description for a track (with information about the
-   * statistics).
+   * Generates a track description.
    *
    * @param track the track
-   * @return a track description
+   * @param distances a vector of distances to generate the elevation chart
+   * @param elevations a vector of elevations to generate the elevation chart
    */
-  public String generateTrackDescription(Track track, Vector<Double> distances,
-      Vector<Double> elevations);
+  public String generateTrackDescription(
+      Track track, Vector<Double> distances, Vector<Double> elevations);
+
+  /**
+   * Generate a waypoint description.
+   *
+   * @param waypoint the waypoint
+   */
+  public String generateWaypointDescription(Waypoint waypoint);
 }

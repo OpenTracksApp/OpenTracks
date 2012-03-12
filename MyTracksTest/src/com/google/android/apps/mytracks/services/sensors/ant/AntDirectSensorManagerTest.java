@@ -28,6 +28,22 @@ import android.test.suitebuilder.annotation.SmallTest;
 public class AntDirectSensorManagerTest extends AndroidTestCase {
 
   private SharedPreferences sharedPreferences;
+  private AntSensorBase heartRateSensor;
+  private static final byte HEART_RATE_CHANNEL = 0;
+
+  private class MockAntDirectSensorManager extends AntDirectSensorManager {
+    public MockAntDirectSensorManager(Context context) {
+      super(context);
+    }
+    @Override
+    protected boolean setupChannel(AntSensorBase sensor, byte channel) {
+      if (channel == HEART_RATE_CHANNEL) {
+        heartRateSensor = sensor;
+        return true;
+      }
+      return false;
+    }
+  }
   private AntDirectSensorManager manager;
 
   public void setUp() {
@@ -35,19 +51,19 @@ public class AntDirectSensorManagerTest extends AndroidTestCase {
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     // Let's use default values.
     sharedPreferences.edit().clear().apply();
-    manager = new AntDirectSensorManager(getContext());
+    manager = new MockAntDirectSensorManager(getContext());
   }
 
-  @SuppressWarnings("deprecation")
   @SmallTest
   public void testBroadcastData() {
-    manager.setDeviceNumberHRM((short) 42);
-    byte[] buff = new byte[11];
-    buff[0] = 9;
-    buff[1] = AntMesg.MESG_BROADCAST_DATA_ID;
-    buff[2] = 0;  // HRM CHANNEL
-    buff[10] = (byte) 220;
-    manager.handleMessage(buff);
+    manager.setupAntSensorChannels();
+    assertNotNull(heartRateSensor);
+
+    heartRateSensor.setDeviceNumber((short) 42);
+    byte[] buff = new byte[9];
+    buff[0] = HEART_RATE_CHANNEL;
+    buff[8] = (byte) 220;
+    manager.handleMessage(AntMesg.MESG_BROADCAST_DATA_ID, buff);
 
     Sensor.SensorDataSet sds = manager.getSensorDataSet();
     assertNotNull(sds);
@@ -58,38 +74,43 @@ public class AntDirectSensorManagerTest extends AndroidTestCase {
 
     assertFalse(sds.hasCadence());
     assertFalse(sds.hasPower());
+    assertEquals(Sensor.SensorState.CONNECTED, manager.getSensorState());
   }
 
-  @SuppressWarnings("deprecation")
   @SmallTest
   public void testChannelId() {
-    byte[] buff = new byte[11];
-    buff[0] = 9;
-    buff[1] = AntMesg.MESG_CHANNEL_ID_ID;
-    buff[3] = 42;
-    manager.handleMessage(buff);
+    manager.setupAntSensorChannels();
+    assertNotNull(heartRateSensor);
 
-    assertEquals(42, manager.getDeviceNumberHRM());
-    assertEquals(42,
+    byte[] buff = new byte[9];
+    buff[1] = 43;
+    manager.handleMessage(AntMesg.MESG_CHANNEL_ID_ID, buff);
+
+    assertEquals(43, heartRateSensor.getDeviceNumber());
+    assertEquals(43,
         sharedPreferences.getInt(
             getContext().getString(R.string.ant_heart_rate_sensor_id_key), -1));
     assertNull(manager.getSensorDataSet());
   }
 
-  @SuppressWarnings("deprecation")
   @SmallTest
   public void testResponseEvent() {
-    assertEquals(Sensor.SensorState.NONE, manager.getSensorState());
-    byte[] buff = new byte[5];
-    buff[0] = 3;  // length
-    buff[1] = AntMesg.MESG_RESPONSE_EVENT_ID;
-    buff[2] = 0;  // channel
-    buff[3] = AntMesg.MESG_UNASSIGN_CHANNEL_ID;
-    buff[4] = 0;  // code
-    manager.handleMessage(buff);
+    manager.setupAntSensorChannels();
+    assertNotNull(heartRateSensor);
+    manager.setHeartRate(210);
+    heartRateSensor.setDeviceNumber((short) 42);
 
+    assertEquals(Sensor.SensorState.CONNECTED, manager.getSensorState());
+    byte[] buff = new byte[3];
+    buff[0] = HEART_RATE_CHANNEL;
+    buff[1] = AntMesg.MESG_UNASSIGN_CHANNEL_ID;
+    buff[2] = 0;  // code
+    manager.handleMessage(AntMesg.MESG_RESPONSE_EVENT_ID, buff);
+    assertEquals(Sensor.SensorState.CONNECTED, manager.getSensorState());
+
+    heartRateSensor.setDeviceNumber((short) 0);
+    manager.handleMessage(AntMesg.MESG_RESPONSE_EVENT_ID, buff);
     assertEquals(Sensor.SensorState.DISCONNECTED, manager.getSensorState());
-    assertNull(manager.getSensorDataSet());
   }
 
   // TODO: Test timeout too.

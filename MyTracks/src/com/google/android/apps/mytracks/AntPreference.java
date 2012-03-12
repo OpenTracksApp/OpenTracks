@@ -29,6 +29,8 @@ import android.util.AttributeSet;
  * @author Sandor Dornbush
  */
 public class AntPreference extends Preference {
+  
+  private final static int DEFAULT_PERSISTEDINT = 0;
 
   public AntPreference(Context context) {
     super(context);
@@ -41,7 +43,7 @@ public class AntPreference extends Preference {
   }
 
   private void init() {
-    int sensorId = getPersistedInt(0);
+    int sensorId = getPersistedInt(AntPreference.DEFAULT_PERSISTEDINT);
     if (sensorId == 0) {
       setSummary(R.string.settings_sensor_ant_not_paired);
     } else {

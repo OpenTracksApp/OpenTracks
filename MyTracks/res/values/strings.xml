@@ -465,6 +465,166 @@ limitations under the License.
     Y axis
   </string>
 
+  <!-- Description -->
+  <string name="description_activity_type"
+    translation_description="Activity type description.
+    
+      %1$s activity type. E.g., 'hiking'">
+    Activity type: %1$s
+  </string>
+  <string name="description_average_moving_pace"
+    translation_description="Average moving pace description.
+
+      %1$.2f pace in minutes per kilometer
+      %2$.1f pace in minutes per mile">
+    Average moving pace: %1$.2f min/km (%2$.1f min/mi)
+  </string>
+  <string name="description_average_moving_speed"
+    translation_description="Average moving speed description.
+
+      %1$.2f speed in kilometers per hour
+      %2$.1f speed in miles per hour">    
+    Average moving speed: %1$.2f km/h (%2$.1f mi/h)
+  </string>
+  <string name="description_average_pace"
+    translation_description="Average pace description.
+
+      %1$.2f pace in minutes per kilometer
+      %2$.1f pace in minutes per mile">
+    Average pace: %1$.2f min/km (%2$.1f min/mi)
+  </string>
+  <string name="description_average_speed"
+    translation_description="Average speed description.
+
+      %1$.2f speed in kilometers per hour
+      %2$.1f speed in miles per hour">
+    Average speed: %1$.2f km/h (%2$.1f mi/h)
+  </string>
+  <string name="description_elevation_gain"
+    translation_description="Elevation gain description.
+    
+      %1$d elevation in meters
+      %2$d elevation in feet">
+    Elevation gain: %1$d m (%2$d ft)
+  </string>
+  <string name="description_location_accuracy"
+    translation_description="Label for location accuracy in meters.">
+    Accuracy (m)
+  </string>
+  <string name="description_location_altitude"
+    translation_description="Label for location altitude in degrees.">
+    Altitude (m)
+  </string>
+  <string name="description_location_bearing"
+    translation_description="Label for location bearing in degrees.">
+    Bearing (deg)
+  </string>
+  <string name="description_location_latitude"
+    translation_description="Label for location latitude in degrees.">
+    Latitude (deg)
+  </string>
+  <string name="description_location_longitude"
+    translation_description="Label for location longitude in degrees.">
+    Longitude (deg)
+  </string>
+  <string name="description_location_speed"
+    translation_description="Label for location speed in meters per second.">
+    Speed (m/s)
+  </string>
+  <string name="description_location_time"
+    translation_description="Label for location time.">
+    Time
+  </string>
+  <string name="description_max_elevation"
+    translation_description="Max elevation description.
+    
+      %1$d elevation in meters
+      %2$d elevation in feet">
+    Max elevation: %1$d m (%2$d ft)
+  </string>
+  <string name="description_max_grade"
+    translation_description="Max grade description.
+    
+      %1$d grade in percentage">
+    Max grade: %1$d %%
+  </string>
+  <string name="description_max_speed"
+    translation_description="Max speed description.
+
+      %1$.2f speed in kilometers per hour
+      %2$.1f speed in miles per hour">
+    Max speed: %1$.2f km/h (%2$.1f mi/h)
+  </string>
+  <string name="description_min_elevation"
+    translation_description="Min elevation description.
+    
+      %1$d elevation in meters
+      %2$d elevation in feet">
+    Min elevation: %1$d m (%2$d ft)
+  </string>
+  <string name="description_min_grade"
+    translation_description="Min grade description.
+    
+      %1$d grade in percentage">
+    Min grade: %1$d %%
+  </string>
+  <string name="description_min_pace"
+    translation_description="Min pace description.
+
+      %1$.2f pace in minutes per kilometer
+      %2$.1f pace in minutes per mile">
+    Min pace: %1$.2f min/km (%2$.1f min/mi)
+  </string>
+  <string name="description_moving_time"
+    translation_description="Moving time description.
+    
+      %1$s time. E.g., '1:08:59'">
+    Moving time: %1$s
+  </string>
+  <string name="description_recorded_time"
+    translation_description="Recorded time description.
+      
+      %1$s time. E.g, '2/15/2012 1:40 PM'">
+    Recorded: %1$s
+  </string>
+  <string name="description_sensor_battery_level"
+    translation_description="Label for battery level with its unit percentage (%).">
+    Battery level (%)
+  </string>
+  <string name="description_sensor_cadence"
+    translation_description="Label for cadence with its unit revolutions per minute (rpm).">
+    Cadence (rpm)
+  </string>
+  <string name="description_sensor_heart_rate"
+    translation_description="Label for heart rate with its unit beats per minute (bpm).">
+    Heart rate (bpm)
+  </string>
+  <string name="description_sensor_power"
+    translation_description="Label for power with its unit watt (W).">
+    Power (W)
+  </string>
+  <string name="description_track_point"
+    translation_description="Label for a track point">
+    Point
+  </string>
+  <string name="description_track_segment"
+    translation_description="Label for a track segment">
+    Segment
+  </string>
+  <string name="description_total_distance"
+    translation_description="Total distance description.
+      
+      %1$.2f distance in kilometers
+      %2$.1f distance in miles">
+    Total distance: %1$.2f km (%2$.1f mi)
+  </string>
+  <string name="description_total_time"
+    translation_description="Total time description.
+  
+      %1$s time. E.g., '1:08:59'">
+    Total time: %1$s
+  </string>
+
   <!-- EULA -->
   <string name="eula_accept"
     translation_description="In the 'Terms of service' dialog, the button to accept.
@@ -482,11 +642,6 @@ limitations under the License.
     translation_description="The body in the Google mobile terms of service. See
       http://m.google.com/toscountry.">
     By using Google\'s mobile products and services ("Services"), you:
-  </string>
-  <string name="eula_message_copyright"
-    translation_description="The copyright in the Google mobile terms of service. See
-      http://m.google.com/toscountry.">
-    ©2011
   </string>
   <string name="eula_message_date"
     translation_description="The date in the Google mobile terms of service. See
@@ -693,6 +848,43 @@ limitations under the License.
     My Tracks: Imported %1$d of %2$s from %3$s.
   </string>
 
+  <!-- Maps List -->
+  <string name="maps_list_error"
+    translation_description="When sending a track to an existing Google Map, the text on the
+      'Maps' list page informing the user that his maps cannot be loaded at this time.">
+    Your maps could not be loaded at this time.
+  </string>
+  <string name="maps_list_loading"
+    translation_description="When sending a track to an existing Google Map, the progress dialog
+      message informing the user that his maps are being loaded.">
+    Loading your Google Maps.
+  </string>
+  <string name="maps_list_no_maps"
+    translation_description="When sending a track to an existing Google Map, the text on the
+      'Maps' list page informing the user that he doesn't have any maps.">
+    You don\'t have any maps.
+  </string>
+  <string name="maps_list_pick_map"
+    translation_description="When sending a track to an existing Google Map, the text on the
+      'Maps' list page asking the user to pick one of his maps.">
+    Pick a map:
+  </string>
+  <string name="maps_list_public_label"
+    translation_description="When sending a track to an existing Google Map, in the 'Maps'
+      list page, the label next to the maps that are public, as opposed to being unlisted.">
+    Public
+  </string>
+  <string name="maps_list_title"
+    translation_description="When sending a track to an existing Google Map, the title of the
+      page listing the user's maps in Google Maps.">
+    Your Google Maps
+  </string>
+  <string name="maps_list_unlisted_label"
+    translation_description="When sending a track to an existing Google Map, in the 'Maps'
+      list page, the label next to the maps that are unlisted, as opposed to being public.">
+    Unlisted
+  </string>
+
   <!-- Marker -->
   <string name="marker_detail_marker_description"
     translation_description="In the detail page for a waypoint marker, the text field for the marker
@@ -741,14 +933,18 @@ limitations under the License.
     A marker was inserted.
   </string>
   <string name="marker_label_end"
-    translation_description="When inserting a marker to indicate the end of a track, the label at
-      the end of the marker name. E.g., the marker is named 'track_name (End)'.">
-    (End)
+    translation_description="When inserting a marker to indicate the end of a track, the marker's
+      name. E.g., 'track_name (End)'.
+
+      %1$s track name. E.g., 'track_name'.">
+    %1$s (End)
   </string>
   <string name="marker_label_start"
-    translation_description="When inserting a marker to indicate the beginning of a track, the label
-      at the end of the marker name. E.g., the marker is named 'track_name (Start)'.">
-    (Start)
+    translation_description="When inserting a marker to indicate the start of a track, the marker's
+      name. E.g., 'track_name (Start)'.
+
+      %1$s track name. E.g., 'track_name'.">
+     %1$s (Start)
   </string>
   <string name="marker_list_context_menu_title"
     translation_description="In the context menu for a marker, the title indicating that all the
@@ -778,6 +974,10 @@ limitations under the License.
 
       Screenshot: marker_list_context_menu.png">
     Edit
+  </string>
+  <string name="marker_list_icon_description"
+    translation_description="In the Markers page, the accessibility description for the marker icon.">
+    Marker
   </string>
   <string name="marker_list_insert_statistics"
     translation_description="In the Markers page, the button on the bottom to insert a statistics
@@ -820,43 +1020,6 @@ limitations under the License.
     Waypoint
   </string>
 
-  <!-- Maps List -->
-  <string name="maps_list_error"
-    translation_description="When sending a track to an existing Google Map, the text on the
-      'Maps' list page informing the user that his maps cannot be loaded at this time.">
-    Your maps could not be loaded at this time.
-  </string>
-  <string name="maps_list_loading"
-    translation_description="When sending a track to an existing Google Map, the progress dialog
-      message informing the user that his maps are being loaded.">
-    Loading maps...
-  </string>
-  <string name="maps_list_no_maps"
-    translation_description="When sending a track to an existing Google Map, the text on the
-      'Maps' list page informing the user that he doesn't have any maps.">
-    You don\'t have any maps.
-  </string>
-  <string name="maps_list_pick_map"
-    translation_description="When sending a track to an existing Google Map, the text on the
-      'Maps' list page asking the user to pick one of his maps.">
-    Pick a map:
-  </string>
-  <string name="maps_list_public_label"
-    translation_description="When sending a track to an existing Google Map, in the 'Maps'
-      list page, the label next to the maps that are public, as opposed to being unlisted.">
-    Public
-  </string>
-  <string name="maps_list_title"
-    translation_description="When sending a track to an existing Google Map, the title of the
-      page listing the user's maps in Google Maps.">
-    Your Google Maps
-  </string>
-  <string name="maps_list_unlisted_label"
-    translation_description="When sending a track to an existing Google Map, in the 'Maps'
-      list page, the label next to the maps that are unlisted, as opposed to being public.">
-    Unlisted
-  </string>
-  
   <!-- Menu Items -->
   <string name="menu_aggregated_statistics"
     translation_description="In the menu, to go to the aggregated statistics page.
@@ -906,6 +1069,10 @@ limitations under the License.
 
       Screenshot: menu_record_track.png">
     Record track
+  </string>
+  <string name="menu_search"
+    translation_description="In the menu, to start a textual search for tracks or waypoints.">
+    Search
   </string>
   <string name="menu_sensor_state"
     translation_description="In the menu, to go to the sensor state page.
@@ -1088,6 +1255,29 @@ limitations under the License.
     Finished writing to the SD card.
   </string>
 
+  <!-- Search interface -->
+  <string name="search_global_description"
+    translation_description="Description of what is searched in My Tracks, to be displayed in the
+      global system search settings.">
+    Tracks and waypoints
+  </string>
+  <string name="search_hint"
+    translation_description="The hint shown on the search box until the user types a search query.
+      See suggestion at http://developer.android.com/guide/topics/search/search-dialog.html about
+      keeping this consistent with other Android apps.">
+    Search My Tracks
+  </string>
+  <string name="search_no_results"
+    translation_description="Message shown instead of a list of results to indicate there were no
+      search results.">
+    No tracks or waypoints matched your search.
+  </string>
+  <string name="search_voice_prompt"
+    translation_description="Prompt shown when the user activates voice search, asking him to speak
+      what will be searched for.">
+    Speak the name of a track or waypoint.
+  </string>
+
   <!-- Send Google -->
   <string name="send_google_by_my_tracks"
     translation_description="When sending a track to Google, a note indicating it is created by
@@ -1153,41 +1343,12 @@ limitations under the License.
       found.">
     No account found
   </string>
-  <string name="send_google_progress_authenticating"
-    translation_description="When sending a track to a Google service, the message on the progress
-      dialog indicating authenticating to the service.
+  <string name="send_google_progress_title"
+    translation_description="When sending a track to a Google service, the title on the progress
+      dialog.
 
       %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Docs'.">
-    Authenticating to %1$s...
-  </string>
-  <string name="send_google_progress_creating"
-    translation_description="When sending a track to a Google service, the message on the progress
-      dialog indicating creating a new service item.
-
-      %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Docs'.">
-    Creating a new %1$s item...
-  </string>
-  <string name="send_google_progress_preparing_track"
-    translation_description="When sending a track to Google Maps, the message on the progress
-      dialog indicating My Tracks is preparing the track's data for upload.">
-    Preparing track...
-  </string>
-  <string name="send_google_progress_reading_track"
-    translation_description="When sending a track to Google, the message on the progress dialog
-      indicating My Tracks is reading the track from its database.">
-    Reading track...
-  </string>
-  <string name="send_google_progress_sending"
-    translation_description="When sending a track to Google service, the message on the progress
-      dialog indicating My Tracks is sending the track data.
-
-      %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Docs'.">
-    Sending a track to %1$s...
-  </string>
-  <string name="send_google_recorded"
-    translation_description="When sending a track to Google, in the track description, a tag
-      for the track recorded date. E.g., 'Recorded: Tue Sep 06 15:08:30 PDT 2011'.">
-    Recorded
+    Sending to %1$s. Please wait...
   </string>
   <string name="send_google_result_header"
     translation_description="When sending a track to Google, the header on the top of the result
@@ -1226,11 +1387,12 @@ limitations under the License.
     Send to...
   </string>
   <string name="send_google_track_part_label"
-    translation_description="When sending a track to Google, the label to name segments when
-      splitting a large track.
+    translation_description="When sending a track to Google, the label to name segments of a large
+      track. E.g., 'track_name (Part 1)'
 
-      %1$d: part number. E.g., '1'.">
-    (Part %1$d)
+      %1$s: track name. E.g., 'track_name'
+      %2$d: part number. E.g., '1'.">
+    %1$s (Part %2$d)
   </string>
 
   <!-- Sensor State -->
@@ -1697,28 +1859,28 @@ limitations under the License.
   <string name="settings_recording_track_name"
     translation_description="In the 'Recording' settings, the title for the dropdown list to choose
       the default track name.
-      
+
       Character limit: ~23 (1 line)">
     Track name
   </string>
   <string name="settings_recording_track_name_date_iso_8601_option"
-    translation_description="In the 'Recording' settings, the option in the 'Track name' dropdown 
+    translation_description="In the 'Recording' settings, the option in the 'Track name' dropdown
       list to use the track start time in ISO-8601 date format as the track name.
-      
+
       Character limit: ~21 (1 line)">
     Date (ISO 8601)
   </string>
   <string name="settings_recording_track_name_date_local_option"
     translation_description="In the 'Recording' settings, the option in the 'Track name' dropdown
       list to use the track start time in local date format as the track name.
-      
+
       Character limit: ~21 (1 line)">
     Date (local)
   </string>
   <string name="settings_recording_track_name_number_option"
     translation_description="In the 'Recording' settings, the option in the 'Track name' dropdown
       list to use a number as the track name.
-      
+
       Character limit: ~21 (1 line)">
     Number
   </string>
@@ -1735,13 +1897,6 @@ limitations under the License.
       Screenshot: settings_recording_top.png">
     Voice
   </string>
-  <string name="settings_recording_voice_not_available"
-    translation_description="In the 'Recording' settings, the summary for the 'Voice'
-      explaining that this option is not available on your Android phone.
-
-      Screenshot: settings_recording_voice_not_available.png">
-    Voice announcement is not available on your Android phone.
-  </string>
   <string name="settings_recording_voice_summary"
     translation_description="In the 'Recording' settings, the summary for the 'Voice'
       dropdown option explaining that it configures the time or distance between two voice
@@ -1757,14 +1912,11 @@ limitations under the License.
       Screenshot: settings.png">
     Reset
   </string>
-  <string name="settings_reset_dialog_message"
-    translation_description="In the 'Settings' page, after pressing the 'Reset' option,
-      the confirmation dialog asking the user to confirm reverting all settings to defaults. But
-      the saved tracks will be preserved.
-
-      Screenshot: settings_reset_dialog_message.png">
+  <string name="settings_reset_confirm_message"
+    translation_description="In the 'Settings' page, after pressing the 'Reset' option, the
+      confirmation dialog message informing the user that all settings will be reverted.">
     All your settings will be erased and reverted to the default values. Saved tracks will be
-    preserved. Are you sure?
+    preserved.
   </string>
   <string name="settings_reset_done"
     translation_description="In the 'Settings' page, after pressing the 'Reset' option,
@@ -1944,13 +2096,11 @@ limitations under the License.
   </string>
   <string name="settings_sharing_allow_access_confirm_message"
     translation_description="In the 'Sharing' settings, after checking the 'Allow access' checkbox,
-      the confirmation dialog asking the user if he wants to allow other apps, including apps
-      installed in the future, to control and access My Tracks data. In addition, no further
-      notification of third party app access will be shown.
-
-      Screenshot: settings_sharing_allow_access_confirm_message.png">
-    Are you sure you want to allow other apps, including future apps, to control and access My
-    Tracks data? There will be no further notification.
+      the confirmation dialog message informing the user that other apps, including apps
+      installed in the future, will be able to control and access My Tracks data. In addition, no
+      further notification of third party app access will be shown.">
+    Other apps, including future apps, will be able to control and access My Tracks data. There will
+    be no further notification.
   </string>
   <string name="settings_sharing_allow_access_summary_off"
     translation_description="In the 'Sharing' settings, the summary for the 'Allow access' checkbox
@@ -2279,6 +2429,16 @@ limitations under the License.
       Screenshot: track_list.png">
     Pick a track. Press &amp; hold for more options.
   </string>
+  <string name="track_list_play"
+    translation_description="In the context menu for a track, the menu option to play the track.">
+    Play
+  </string>
+  <string name="track_list_play_install_earth_message"
+    translation_description="After pressing the menu option to play a track, the message informing
+      the user that he needs Google Earth to play the track and asking him if he wants to install
+      Google Earth from the Android Market.">
+    You need Google Earth to play the track. Do you want to install from the Market?
+  </string>
   <string name="track_list_save_file"
     translation_description="In the context menu for a track, under the 'Save to SD card...'
       option, the menu option to save the track as a certain file format.
@@ -2334,6 +2494,17 @@ limitations under the License.
 
       Screenshot: track_list_show_on_map.png">
     Show on map
+  </string>
+  <string name="track_list_icon_description"
+    translation_description="In the 'Tracks' page, the accessibility description for the track icon.">
+    Track
+  </string>
+  <string name="track_list_track_name"
+    translation_description="In the 'Search Result' page, the text field indicating the track that a
+      waypoint belongs to.
+
+      %1$s: track name. E.g., 'Grand Canyon trail'">
+    In track \'%1$s\'.
   </string>
   <string name="track_name_format"
     translation_description="When creating a new track, the string format to name the track.
@@ -2425,13 +2596,53 @@ limitations under the License.
       Screenshot: value_auto_resume.png">
     Always
   </string>
-  <string name="value_float_mile"
-    translation_description="In a setting picker, the string format to display a float value in
-      miles (mi).
+  <string name="value_float_feet"
+    translation_description="Display a float value in feet (ft).
 
-      %1$.1f: a float number. E.g., '2.2'
-      Screenshot: value_gps_accuracy_mile_poor_gps.png">
-    %1$.1f mi
+      %1$.2f: a float number. E.g., '2.22'">
+    %1$.2f ft
+  </string>
+  <string name="value_float_kilometer"
+    translation_description="Display a float value in kilometers (km).
+
+      %1$.2f: a float number. E.g., '2.22'">
+    %1$.2f km
+  </string>
+    <string name="value_float_kilometer_hour"
+    translation_description="Display a float value in kilometers per hour (km/h).
+
+      %1$.2f: a float number. E.g., '2.22'">
+    %1$.2f km/h
+  </string>
+  <string name="value_float_meter"
+    translation_description="Display a float value in meters (m).
+
+      %1$.2f: a float number. E.g., '2.22'">
+    %1$.2f m
+  </string>
+  <string name="value_float_mile"
+    translation_description="Display a float value in miles (mi).
+
+      %1$.2f: a float number. E.g., '2.22'">
+    %1$.2f mi
+  </string>
+  <string name="value_float_mile_hour"
+    translation_description="Display a float value in miles per hour (mi/h).
+
+      %1$.2f: a float number. E.g., '2.22'">
+    %1$.2f mi/h
+  </string>
+  <string name="value_float_minute_kilometer"
+    translation_description="Display a float value in minutes per kilometer (min/km).
+
+      %1$.2f: a float number. E.g., '2.22'">
+    %1$.2f min/km
+  </string>
+  <string name="value_float_minute_mile"
+    translation_description="Display a float value in minutes per mile (min/mi).
+
+      %1$.2f: a float number. E.g., '2.22'">
+    %1$.2f min/mi
   </string>
   <string name="value_float_mile_poor_gps"
     translation_description="In a setting picker, the string format to display a float value in

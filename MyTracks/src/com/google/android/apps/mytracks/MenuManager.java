@@ -33,7 +33,9 @@ import android.view.MenuItem;
 class MenuManager {
 
   private final MyTracks activity;
-
+  private MenuItem recordTrack;
+  private MenuItem stopRecording;
+  
   public MenuManager(MyTracks activity) {
     this.activity = activity;
   }
@@ -46,6 +48,8 @@ class MenuManager {
    */
   public boolean onCreateOptionsMenu(Menu menu) {
     activity.getMenuInflater().inflate(R.menu.main, menu);
+
+    // TODO: Replace search button with search widget if API level >= 11
     return true;
   }
 
@@ -64,13 +68,11 @@ class MenuManager {
       boolean isSatelliteMode, String currentTabTag) {
     menu.findItem(R.id.menu_markers)
         .setEnabled(hasRecorded && hasSelectedTrack);
-    menu.findItem(R.id.menu_record_track)
-        .setEnabled(!isRecording)
-        .setVisible(!isRecording);
-    menu.findItem(R.id.menu_stop_recording)
-        .setEnabled(isRecording)
-        .setVisible(isRecording);
-
+    
+    recordTrack = menu.findItem(R.id.menu_record_track);
+    stopRecording = menu.findItem(R.id.menu_stop_recording);
+    updateActionItems(isRecording);
+    
     menu.findItem(R.id.menu_chart_settings)
         .setVisible(CHART_TAB_TAG.equals(currentTabTag));
 
@@ -85,6 +87,16 @@ class MenuManager {
   }
 
   /**
+   * Updates the action items.
+   * 
+   * @param isRecording true if recording a track
+   */
+  private void updateActionItems(boolean isRecording) {
+    recordTrack.setEnabled(!isRecording).setVisible(!isRecording);
+    stopRecording.setEnabled(isRecording).setVisible(isRecording);
+  }
+
+  /**
    * Called when an option from the menu is selected.
    *
    * @param item the selected item
@@ -94,10 +106,12 @@ class MenuManager {
     switch (item.getItemId()) {
       case R.id.menu_record_track: {
         activity.startRecording();
+        updateActionItems(true);
         return true;
       }
       case R.id.menu_stop_recording: {
         activity.stopRecording();
+        updateActionItems(false);
         return true;
       }
       case R.id.menu_tracks: {
@@ -122,6 +136,10 @@ class MenuManager {
       }
       case R.id.menu_help: {
         return startActivity(WelcomeActivity.class);
+      }
+      case R.id.menu_search: {
+        // TODO: Pass the current track ID and current location to do some fancier ranking.
+        activity.onSearchRequested();
       }
       case R.id.menu_chart_settings: {
         activity.showChartSettings();

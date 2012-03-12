@@ -20,6 +20,8 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.MyTracks;
+import com.google.android.apps.mytracks.content.DescriptionGenerator;
+import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Sensor;
@@ -36,14 +38,11 @@ import com.google.android.apps.mytracks.services.tasks.SplitTask;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
-import com.google.android.apps.mytracks.util.ApiFeatures;
-import com.google.android.apps.mytracks.util.ApiLevelAdapter;
 import com.google.android.apps.mytracks.util.LocationUtils;
-import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ContentValues;
@@ -80,7 +79,6 @@ public class TrackRecordingService extends Service {
 
   static final int MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS = 3;
 
-  private NotificationManager notificationManager;
   private LocationManager locationManager;
   private WakeLock wakeLock;
 
@@ -243,8 +241,6 @@ public class TrackRecordingService extends Service {
     super.onCreate();
     Log.d(TAG, "TrackRecordingService.onCreate");
     providerUtils = MyTracksProviderUtils.Factory.get(this);
-    notificationManager =
-        (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
     setUpTaskExecutors();
@@ -301,7 +297,7 @@ public class TrackRecordingService extends Service {
     handleStartCommand(intent, startId);
     return START_STICKY;
   }
-  
+
   private void handleStartCommand(Intent intent, int startId) {
     Log.d(TAG, "TrackRecordingService.handleStartCommand: " + startId);
 
@@ -318,7 +314,7 @@ public class TrackRecordingService extends Service {
   private boolean isTrackInProgress() {
     return recordingTrackId != -1 || isRecording;
   }
-  
+
   private void resumeTrack(int startId) {
     Log.d(TAG, "TrackRecordingService: requested resume");
 
@@ -363,13 +359,12 @@ public class TrackRecordingService extends Service {
     unregisterLocationListener();
     shutdownTaskExecutors();
     if (sensorManager != null) {
-      sensorManager.shutdown();
+      SensorManagerFactory.getInstance().releaseSensorManager(sensorManager);
       sensorManager = null;
     }
 
     // Make sure we have no indirect references to this service.
     locationManager = null;
-    notificationManager = null;
     providerUtils = null;
     binder.detachFromService();
     binder = null;
@@ -485,8 +480,6 @@ public class TrackRecordingService extends Service {
    * Shows the notification message and icon in the notification bar.
    */
   private void showNotification() {
-    final ApiLevelAdapter apiLevelAdapter =
-        ApiFeatures.getInstance().getApiAdapter();
     if (isRecording) {
       Notification notification = new Notification(
           R.drawable.arrow_320, null /* tickerText */,
@@ -497,16 +490,24 @@ public class TrackRecordingService extends Service {
       notification.setLatestEventInfo(this, getString(R.string.my_tracks_app_name),
           getString(R.string.track_record_notification), contentIntent);
       notification.flags += Notification.FLAG_NO_CLEAR;
-      apiLevelAdapter.startForeground(this, notificationManager, 1,
-          notification);
+      startForegroundService(notification);
     } else {
-      apiLevelAdapter.stopForeground(this, notificationManager, 1);
+      stopForegroundService();
     }
   }
 
+  @VisibleForTesting
+  protected void startForegroundService(Notification notification) {
+    startForeground(1, notification);
+  }
+
+  @VisibleForTesting
+  protected void stopForegroundService() {
+    stopForeground(true);
+  }
+
   private void setUpTaskExecutors() {
-    announcementExecutor = new PeriodicTaskExecutor(
-        this, new StatusAnnouncerFactory(ApiFeatures.getInstance()));
+    announcementExecutor = new PeriodicTaskExecutor(this, new StatusAnnouncerFactory());
     splitExecutor = new PeriodicTaskExecutor(this, new SplitTask.Factory());
   }
 
@@ -559,7 +560,7 @@ public class TrackRecordingService extends Service {
     Log.d(TAG,
         "Location listener now unregistered w/ TrackRecordingService.");
   }
-  
+
   private String getDefaultActivityType(Context context) {
     SharedPreferences prefs = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
@@ -601,10 +602,7 @@ public class TrackRecordingService extends Service {
     length = 0;
     showNotification();
     registerLocationListener();
-    sensorManager = SensorManagerFactory.getSensorManager(this);
-    if (sensorManager != null) {
-      sensorManager.onStartTrack();
-    }
+    sensorManager = SensorManagerFactory.getInstance().getSensorManager(this);
 
     // Reset the number of auto-resume retries.
     setAutoResumeTrackRetries(0);
@@ -985,7 +983,7 @@ public class TrackRecordingService extends Service {
    * @param waypoint The waypoint which will be populated with stats data.
    */
   private void buildStatisticsMarker(Waypoint waypoint) {
-    StringUtils utils = new StringUtils(TrackRecordingService.this);
+    DescriptionGenerator descriptionGenerator = new DescriptionGeneratorImpl(this);
 
     // Set stop and total time in the stats data
     final long time = System.currentTimeMillis();
@@ -999,7 +997,7 @@ public class TrackRecordingService extends Service {
     waypoint.setType(Waypoint.TYPE_STATISTICS);
     waypoint.setName(getString(R.string.marker_type_statistics));
     waypoint.setStatistics(waypointStatsBuilder.getStatistics());
-    waypoint.setDescription(utils.generateWaypointDescription(waypoint));
+    waypoint.setDescription(descriptionGenerator.generateWaypointDescription(waypoint));
     waypoint.setIcon(getString(R.string.marker_statistics_icon_url));
 
     waypoint.setStartId(providerUtils.getLastLocationId(recordingTrackId));
@@ -1038,7 +1036,7 @@ public class TrackRecordingService extends Service {
     prefManager.setRecordingTrack(recordingTrackId = -1);
 
     if (sensorManager != null) {
-      sensorManager.shutdown();
+      SensorManagerFactory.getInstance().releaseSensorManager(sensorManager);
       sensorManager = null;
     }
 
@@ -1056,7 +1054,7 @@ public class TrackRecordingService extends Service {
         .setAction(getString(actionResId))
         .putExtra(getString(R.string.track_id_broadcast_extra), trackId);
     sendBroadcast(broadcastIntent, getString(R.string.permission_notification_value));
-    
+
     SharedPreferences sharedPreferences = getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     if (sharedPreferences.getBoolean(getString(R.string.allow_access_key), false)) {
@@ -1202,17 +1200,17 @@ public class TrackRecordingService extends Service {
         throw new IllegalStateException("The service has been already detached!");
       }
     }
-    
+
     /**
      * Returns true if the RPC caller is from the same application or if the
      * "Allow access" setting indicates that another app can invoke this service's
-     * RPCs. 
+     * RPCs.
      */
     private boolean canAccess() {
-      
+
       // As a precondition for access, must check if the service is available.
       checkService();
-      
+
       if (Process.myPid() == Binder.getCallingPid()) {
         return true;
       } else {
@@ -1297,7 +1295,7 @@ public class TrackRecordingService extends Service {
     public int getSensorState() {
       if (!canAccess()) {
         return Sensor.SensorState.NONE.getNumber();
-      }      
+      }
       if (service.sensorManager == null) {
         Log.d(TAG, "No sensor manager for data.");
         return Sensor.SensorState.NONE.getNumber();

@@ -16,17 +16,24 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.TrackDataHub;
+import com.google.android.apps.mytracks.services.RemoveTempFilesService;
 
 import android.app.Application;
+import android.content.Intent;
 
 /**
  * MyTracksApplication for keeping global state.
  *
- * @author jshih@google.com (Jimmy Shih)
+ * @author Jimmy Shih
  */
 public class MyTracksApplication extends Application {
 
   private TrackDataHub trackDataHub;
+
+  @Override
+  public void onCreate() {
+    startService(new Intent(this, RemoveTempFilesService.class));
+  }
 
   /**
    * Gets the application's TrackDataHub.

@@ -20,13 +20,14 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 import com.google.android.apps.mytracks.io.backup.BackupActivityHelper;
 import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
 import com.google.android.apps.mytracks.services.sensors.ant.AntUtils;
-import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
-import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.BluetoothDeviceUtils;
+import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
-import android.app.AlertDialog;
+import android.app.Dialog;
+import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -44,6 +45,7 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -59,6 +61,9 @@ import java.util.Set;
  * @author Rodrigo Damazio
  */
 public class SettingsActivity extends PreferenceActivity {
+
+  private static final int DIALOG_CONFIRM_RESET = 0;
+  private static final int DIALOG_CONFIRM_ACCESS = 1;
 
   // Value when the task frequency is off.
   private static final String TASK_FREQUENCY_OFF = "0";
@@ -102,10 +107,7 @@ public class SettingsActivity extends PreferenceActivity {
     super.onCreate(icicle);
 
     // The volume we want to control is the Text-To-Speech volume
-    ApiFeatures apiFeatures = ApiFeatures.getInstance();
-    int volumeStream =
-        new StatusAnnouncerFactory(apiFeatures).getVolumeStream();
-    setVolumeControlStream(volumeStream);
+    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
     // Tell it where to read/write preferences
     PreferenceManager preferenceManager = getPreferenceManager();
@@ -113,23 +115,13 @@ public class SettingsActivity extends PreferenceActivity {
     preferenceManager.setSharedPreferencesMode(0);
 
     // Set up automatic preferences backup
-    backupListener = apiFeatures.getApiAdapter().getBackupPreferencesListener(this);
+    backupListener = ApiAdapterFactory.getApiAdapter().getBackupPreferencesListener(this);
     preferences = preferenceManager.getSharedPreferences();
     preferences.registerOnSharedPreferenceChangeListener(backupListener);
 
     // Load the preferences to be displayed
     addPreferencesFromResource(R.xml.preferences);
 
-    // Disable voice announcement if not available
-    if (!apiFeatures.hasTextToSpeech()) {
-      IntegerListPreference announcementFrequency =
-          (IntegerListPreference) findPreference(
-              getString(R.string.announcement_frequency_key));
-      announcementFrequency.setEnabled(false);
-      announcementFrequency.setValue(TASK_FREQUENCY_OFF);
-      announcementFrequency.setSummary(R.string.settings_recording_voice_not_available);
-    }
-    
     setRecordingIntervalOptions();
     setAutoResumeTimeoutOptions();
 
@@ -158,31 +150,19 @@ public class SettingsActivity extends PreferenceActivity {
     resetPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
       @Override
       public boolean onPreferenceClick(Preference arg0) {
-        onResetPreferencesClick();
+        showDialog(DIALOG_CONFIRM_RESET);
         return true;
       }
     });
     
     // Add a confirmation dialog for the 'Allow access' preference.
-    final CheckBoxPreference allowAccessPreference = (CheckBoxPreference) findPreference(
+    CheckBoxPreference allowAccessPreference = (CheckBoxPreference) findPreference(
         getString(R.string.allow_access_key));
     allowAccessPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
       @Override
       public boolean onPreferenceChange(Preference preference, Object newValue) {
         if ((Boolean) newValue) {
-          AlertDialog dialog = new AlertDialog.Builder(SettingsActivity.this)
-              .setCancelable(true)
-              .setTitle(getString(R.string.settings_sharing_allow_access))
-              .setMessage(getString(R.string.settings_sharing_allow_access_confirm_message))
-              .setPositiveButton(android.R.string.ok, new OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int button) {
-                  allowAccessPreference.setChecked(true);
-                }
-              })
-              .setNegativeButton(android.R.string.cancel, null)
-              .create();
-          dialog.show();
+          showDialog(DIALOG_CONFIRM_ACCESS);
           return false;
         } else {
           return true;
@@ -190,7 +170,33 @@ public class SettingsActivity extends PreferenceActivity {
       }
     });
   }
-  
+
+  @Override
+  protected Dialog onCreateDialog(int id) {
+    switch (id) {
+      case DIALOG_CONFIRM_RESET:
+        return DialogUtils.createConfirmationDialog(
+            this, R.string.settings_reset_confirm_message, new OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int button) {
+                onResetPreferencesConfirmed();
+              }
+            });
+      case DIALOG_CONFIRM_ACCESS:
+        return DialogUtils.createConfirmationDialog(
+            this, R.string.settings_sharing_allow_access_confirm_message, new OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int button) {
+                CheckBoxPreference pref = (CheckBoxPreference) findPreference(
+                    getString(R.string.allow_access_key));
+                pref.setChecked(true);
+              }
+            });
+      default:
+        return null;
+    }
+  }
+
   /**
    * Sets the display options for the 'Time between points' option.
    */
@@ -496,7 +502,7 @@ public class SettingsActivity extends PreferenceActivity {
           format = getString(stringId);
           options[i] = String.format(format, value);
         } else {
-          double mile = value / UnitConversions.MI_TO_FEET;
+          double mile = value * UnitConversions.FT_TO_MI;
           format = getString(R.string.value_float_mile);
           options[i] = String.format(format, mile);
         }
@@ -539,7 +545,7 @@ public class SettingsActivity extends PreferenceActivity {
           }
           options[i] = String.format(format, value);
         } else {
-          double mile = value / UnitConversions.MI_TO_FEET;
+          double mile = value * UnitConversions.FT_TO_MI;
           if (values[i].equals(GPS_ACCURACY_POOR)) {
             format = getString(R.string.value_float_mile_poor_gps);
           } else {
@@ -557,20 +563,17 @@ public class SettingsActivity extends PreferenceActivity {
    * Configures preference actions related to bluetooth.
    */
   private void configureBluetoothPreferences() {
-    if (BluetoothDeviceUtils.isBluetoothMethodSupported()) {
-      // Populate the list of bluetooth devices
-      populateBluetoothDeviceList();
-
-      // Make the pair devices preference go to the system preferences
-      findPreference(getString(R.string.bluetooth_pairing_key))
-          .setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference preference) {
-              Intent settingsIntent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
-              startActivity(settingsIntent);
-              return false;
-            }
-          });
-    }
+    // Populate the list of bluetooth devices
+    populateBluetoothDeviceList();
+    // Make the pair devices preference go to the system preferences
+    findPreference(getString(R.string.bluetooth_pairing_key)).setOnPreferenceClickListener(
+        new OnPreferenceClickListener() {
+          public boolean onPreferenceClick(Preference preference) {
+            Intent settingsIntent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
+            startActivity(settingsIntent);
+            return false;
+          }
+        });
   }
 
   /**
@@ -582,7 +585,10 @@ public class SettingsActivity extends PreferenceActivity {
     List<String> entryValues = new ArrayList<String>();
 
     // The actual devices
-    BluetoothDeviceUtils.getInstance().populateDeviceLists(entries, entryValues);
+    BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    if (bluetoothAdapter != null) {
+      BluetoothDeviceUtils.populateDeviceLists(bluetoothAdapter, entries, entryValues);
+    }
 
     CharSequence[] entriesArray = entries.toArray(new CharSequence[entries.size()]);
     CharSequence[] entryValuesArray = entryValues.toArray(new CharSequence[entryValues.size()]);
@@ -590,24 +596,6 @@ public class SettingsActivity extends PreferenceActivity {
         (ListPreference) findPreference(getString(R.string.bluetooth_sensor_key));
     devicesPreference.setEntryValues(entryValuesArray);
     devicesPreference.setEntries(entriesArray);
-  }
-
-  /** Callback for when user asks to reset all settings. */
-  private void onResetPreferencesClick() {
-    AlertDialog dialog = new AlertDialog.Builder(this)
-        .setCancelable(true)
-        .setTitle(R.string.settings_reset)
-        .setMessage(R.string.settings_reset_dialog_message)
-        .setPositiveButton(android.R.string.ok,
-            new OnClickListener() {
-              @Override
-              public void onClick(DialogInterface dialogInterface, int button) {
-                onResetPreferencesConfirmed();
-              }
-            })
-        .setNegativeButton(android.R.string.cancel, null)
-        .create();
-    dialog.show();
   }
 
   /** Callback for when user confirms resetting all settings. */
@@ -656,7 +644,7 @@ public class SettingsActivity extends PreferenceActivity {
     String metricspeed = prefs.getString(getString(id), null);
     int englishspeed;
     try {
-      englishspeed = (int) (Double.parseDouble(metricspeed) * UnitConversions.KMH_TO_MPH);
+      englishspeed = (int) (Double.parseDouble(metricspeed) * UnitConversions.KM_TO_MI);
     } catch (NumberFormatException e) {
       englishspeed = 0;
     }
@@ -675,7 +663,7 @@ public class SettingsActivity extends PreferenceActivity {
       // Convert miles/h to km/h
       try {
         metricspeed = String.valueOf(
-            (int) (Double.parseDouble(newValue) * UnitConversions.MPH_TO_KMH) + 1);
+            (int) (Double.parseDouble(newValue) * UnitConversions.MI_TO_KM));
       } catch (NumberFormatException e) {
         metricspeed = "0";
       }
@@ -685,7 +673,7 @@ public class SettingsActivity extends PreferenceActivity {
     SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
     Editor editor = prefs.edit();
     editor.putString(getString(id), metricspeed);
-    ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);
+    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
   }
   
   /** 

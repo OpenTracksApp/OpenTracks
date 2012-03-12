@@ -16,11 +16,23 @@
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.io.docs.SendDocsActivity;
+import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesActivity;
+import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesUtils;
+import com.google.android.apps.mytracks.io.gdata.docs.DocumentsClient;
+import com.google.android.apps.mytracks.io.gdata.docs.SpreadsheetsClient;
+import com.google.android.apps.mytracks.io.gdata.maps.MapsConstants;
+import com.google.android.apps.mytracks.io.maps.ChooseMapActivity;
+import com.google.android.apps.mytracks.io.maps.SendMapsActivity;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.maps.mytracks.R;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.accounts.AccountManagerCallback;
+import android.accounts.AccountManagerFuture;
+import android.accounts.AuthenticatorException;
+import android.accounts.OperationCanceledException;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -30,48 +42,60 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.util.Log;
+
+import java.io.IOException;
 
 /**
- * A chooser to select an account. To be called with
- * {@link Activity#startActivityForResult(Intent, int)}. Returns
- * {@link Activity#RESULT_CANCELED} if the user cancels the activity. Otherwise,
- * returns {@link Activity#RESULT_OK} with an intent containing the selected
- * account. The selected account is stored as an {@link Account} in the
- * {@link AccountChooserActivity#ACCOUNT} item of the intent. The selected
- * account can be null.
+ * A chooser to select an account.
  *
- * @author jshih@google.com (Jimmy Shih)
+ * @author Jimmy Shih
  */
 public class AccountChooserActivity extends Activity {
 
-  /**
-   * Key for storing an {@link Account} in an {@link Intent}.
-   */
-  public static final String ACCOUNT = "account";
-
+  private static final String TAG = AccountChooserActivity.class.getSimpleName();
+  
   private static final int NO_ACCOUNT_DIALOG = 1;
   private static final int CHOOSE_ACCOUNT_DIALOG = 2;
 
+  /**
+   * A callback after getting the permission to access a Google service.
+   *
+   * @author Jimmy Shih
+   */
+  private interface PermissionCallback {
+   
+    /**
+     * To be invoked when the permission is granted.
+     */
+    public void onSuccess();
+
+    /**
+     * To be invoked when the permission is not granted.
+     */
+    public void onFailure();
+  }
+
+  private SendRequest sendRequest;
   private Account[] accounts;
   private int selectedAccountIndex;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    sendRequest = getIntent().getParcelableExtra(SendRequest.SEND_REQUEST_KEY);
     accounts = AccountManager.get(this).getAccountsByType(Constants.ACCOUNT_TYPE);
 
     if (accounts.length == 1) {
-      Intent intent = new Intent();
-      intent.putExtra(ACCOUNT, accounts[0]);
-      setResult(RESULT_OK, intent);
-      finish();
+      sendRequest.setAccount(accounts[0]);
+      getPermission(MapsConstants.SERVICE_NAME, sendRequest.isSendMaps(), mapsCallback);
       return;
     }
 
     SharedPreferences prefs = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     String preferredAccount = prefs.getString(getString(R.string.preferred_account_key), "");
 
-    selectedAccountIndex = -1;
+    selectedAccountIndex = 0;
     for (int i = 0; i < accounts.length; i++) {
       if (accounts[i].name.equals(preferredAccount)) {
         selectedAccountIndex = i;
@@ -85,7 +109,7 @@ public class AccountChooserActivity extends Activity {
     super.onResume();
     if (accounts.length == 0) {
       showDialog(NO_ACCOUNT_DIALOG);
-    } else {
+    } else if (accounts.length > 1 ) {
       showDialog(CHOOSE_ACCOUNT_DIALOG);
     }
   }
@@ -102,15 +126,11 @@ public class AccountChooserActivity extends Activity {
         builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
           @Override
           public void onCancel(DialogInterface dialog) {
-            setResult(RESULT_CANCELED);
             finish();
           }
         });
         builder.setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int which) {
-            Intent intent = new Intent();
-            intent.putExtra(ACCOUNT, (Account) null);
-            setResult(RESULT_OK, intent);
             finish();
           }
         });
@@ -134,36 +154,144 @@ public class AccountChooserActivity extends Activity {
         builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
           @Override
           public void onCancel(DialogInterface dialog) {
-            setResult(RESULT_CANCELED);
             finish();
           }
         });
         builder.setNegativeButton(R.string.generic_cancel, new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int which) {
-            setResult(RESULT_CANCELED);
             finish();
           }
         });
         builder.setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int which) {
-            Account account = null;
-            if (selectedAccountIndex != -1) {
-              account = accounts[selectedAccountIndex];
-              SharedPreferences prefs = getSharedPreferences(
-                  Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-              Editor editor = prefs.edit();
-              editor.putString(getString(R.string.preferred_account_key), account.name);
-              ApiFeatures.getInstance().getApiAdapter().applyPreferenceChanges(editor);
-            }
-            Intent intent = new Intent();
-            intent.putExtra(ACCOUNT, account);
-            setResult(RESULT_OK, intent);
-            finish();
+            Account account = accounts[selectedAccountIndex];
+            SharedPreferences prefs = getSharedPreferences(
+                Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+            Editor editor = prefs.edit();
+            editor.putString(getString(R.string.preferred_account_key), account.name);
+            ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
+
+            sendRequest.setAccount(account);
+            getPermission(MapsConstants.SERVICE_NAME, sendRequest.isSendMaps(), mapsCallback);
           }
         });
         return builder.create();
       default:
         return null;
     }
+  }
+  
+  private PermissionCallback spreadsheetsCallback = new PermissionCallback() {
+    @Override
+    public void onSuccess() {
+      startNextActivity();
+    }  
+    @Override
+    public void onFailure() {
+      finish();
+    }
+  };
+  
+  private PermissionCallback docsCallback = new PermissionCallback() {
+    @Override
+    public void onSuccess() {
+      getPermission(SpreadsheetsClient.SERVICE, sendRequest.isSendDocs(), spreadsheetsCallback);
+    }  
+    @Override
+    public void onFailure() {
+      finish();
+    }
+  };
+  
+  private PermissionCallback fusionTablesCallback = new PermissionCallback() {
+    @Override
+    public void onSuccess() {
+      getPermission(DocumentsClient.SERVICE, sendRequest.isSendDocs(), docsCallback);
+    }  
+    @Override
+    public void onFailure() {
+      finish();
+    }
+  };
+  
+  private PermissionCallback mapsCallback = new PermissionCallback() {
+    @Override
+    public void onSuccess() {
+      getPermission(
+          SendFusionTablesUtils.SERVICE, sendRequest.isSendFusionTables(), fusionTablesCallback);
+    }
+    @Override
+    public void onFailure() {
+      finish();
+    }
+  };
+  
+  /**
+   * Gets the user permission to access a service.
+   * 
+   * @param authTokenType the auth token type of the service
+   * @param needPermission true if need the permission
+   * @param callback callback after getting the permission
+   */
+  private void getPermission(
+      String authTokenType, boolean needPermission, final PermissionCallback callback) {
+    if (needPermission) {
+      AccountManager.get(this).getAuthToken(sendRequest.getAccount(), authTokenType, null, this,
+          new AccountManagerCallback<Bundle>() {
+            @Override
+            public void run(AccountManagerFuture<Bundle> future) {
+              try {
+                if (future.getResult().getString(AccountManager.KEY_AUTHTOKEN) != null) {
+                  callback.onSuccess();
+                } else {
+                  Log.d(TAG, "auth token is null");
+                  callback.onFailure();
+                }
+              } catch (OperationCanceledException e) {
+                Log.d(TAG, "Unable to get auth token", e);
+                callback.onFailure();
+              } catch (AuthenticatorException e) {
+                Log.d(TAG, "Unable to get auth token", e);
+                callback.onFailure();
+              } catch (IOException e) {
+                Log.d(TAG, "Unable to get auth token", e);
+                callback.onFailure();
+              }
+            }
+          }, null);
+    } else {
+      callback.onSuccess();
+    }
+  }
+
+  /**
+   * Starts the next activity. If
+   * <p>
+   * sendMaps and newMap -> {@link SendMapsActivity}
+   * <p>
+   * sendMaps and !newMap -> {@link ChooseMapActivity}
+   * <p>
+   * !sendMaps && sendFusionTables -> {@link SendFusionTablesActivity}
+   * <p>
+   * !sendMaps && !sendFusionTables && sendDocs -> {@link SendDocsActivity}
+   * <p>
+   * !sendMaps && !sendFusionTables && !sendDocs -> {@link UploadResultActivity}
+   *
+   */
+  private void startNextActivity() {
+    Class<?> next;
+    if (sendRequest.isSendMaps()) {
+      next = sendRequest.isNewMap() ? SendMapsActivity.class : ChooseMapActivity.class;
+    } else if (sendRequest.isSendFusionTables()) {
+      next = SendFusionTablesActivity.class;
+    } else if (sendRequest.isSendDocs()) {
+      next = SendDocsActivity.class;
+    } else {
+      next = UploadResultActivity.class;
+    }
+    Intent intent = new Intent(this, next)
+        .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
+    startActivity(intent);
+    finish();
   }
 }

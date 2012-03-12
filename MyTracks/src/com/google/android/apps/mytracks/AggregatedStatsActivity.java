@@ -3,7 +3,7 @@ package com.google.android.apps.mytracks;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.ApiFeatures;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -61,7 +61,7 @@ public class AggregatedStatsActivity extends Activity implements
     this.tracksProvider = MyTracksProviderUtils.Factory.get(this);
 
     // Show the action bar (or nothing at all).
-    ApiFeatures.getInstance().getApiAdapter().showActionBar(this);
+    ApiAdapterFactory.getApiAdapter().showActionBar(this);
 
     setContentView(R.layout.stats);
 

@@ -15,18 +15,25 @@
  */
 package com.google.android.apps.mytracks.io.file;
 
+import com.google.android.apps.mytracks.content.DescriptionGenerator;
+import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
+import com.google.android.apps.mytracks.content.MyTracksLocation;
+import com.google.android.apps.mytracks.content.Sensor;
+import com.google.android.apps.mytracks.content.Sensor.SensorData;
+import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.util.StringUtils;
+import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.content.Context;
 import android.location.Location;
-import android.os.Build;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * Write track as KML to a file.
@@ -35,28 +42,43 @@ import java.util.Vector;
  */
 public class KmlTrackWriter implements TrackFormatWriter {
 
-  private final Vector<Double> distances = new Vector<Double>();
-  private final Vector<Double> elevations = new Vector<Double>();
-  private final StringUtils stringUtils;
-  private PrintWriter pw = null;
+  /**
+   * ID of the KML feature to play a tour.
+   */
+  public static final String TOUR_FEATURE_ID = "tour";
+
+  private static final String WAYPOINT_STYLE = "waypoint";
+  private static final String STATISTICS_STYLE = "statistics";
+  private static final String START_STYLE = "start";
+  private static final String END_STYLE = "end";
+  private static final String TRACK_STYLE = "track";
+  private static final String SCHEMA_ID = "schema";
+  private static final String CADENCE = "cadence";
+  private static final String HEART_RATE = "heart_rate";
+  private static final String POWER = "power";
+  private static final String BATTER_LEVEL = "battery_level";
+
+  private final Context context;
+  private final DescriptionGenerator descriptionGenerator;
   private Track track;
+  private PrintWriter printWriter;
+  private ArrayList<Integer> powerList = new ArrayList<Integer>();
+  private ArrayList<Integer> cadenceList = new ArrayList<Integer>();
+  private ArrayList<Integer> heartRateList = new ArrayList<Integer>();
+  private ArrayList<Integer> batteryLevelList = new ArrayList<Integer>();
+  private boolean hasPower;
+  private boolean hasCadence;
+  private boolean hasHeartRate;
+  private boolean hasBatteryLevel;
 
   public KmlTrackWriter(Context context) {
-    stringUtils = new StringUtils(context);
+    this(context, new DescriptionGeneratorImpl(context));
   }
 
-  /**
-   * Testing constructor.
-   */
-  KmlTrackWriter(StringUtils stringUtils) {
-    this.stringUtils = stringUtils;
-  }
-
-  @SuppressWarnings("hiding")
-  @Override
-  public void prepare(Track track, OutputStream out) {
-    this.track = track;
-    this.pw = new PrintWriter(out);
+  @VisibleForTesting
+  KmlTrackWriter(Context context, DescriptionGenerator descriptionGenerator) {
+    this.context = context;
+    this.descriptionGenerator = descriptionGenerator;
   }
 
   @Override
@@ -65,171 +87,279 @@ public class KmlTrackWriter implements TrackFormatWriter {
   }
 
   @Override
-  public void writeHeader() {
-    if (pw != null) {
-      pw.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-      pw.print("<kml");
-      pw.print(" xmlns=\"http://earth.google.com/kml/2.0\"");
-      pw.println(" xmlns:atom=\"http://www.w3.org/2005/Atom\">");
-      pw.println("<Document>");
-      pw.format("<atom:author><atom:name>My Tracks running on %s"
-          + "</atom:name></atom:author>\n", Build.MODEL);
+  public void prepare(Track aTrack, OutputStream outputStream) {
+    this.track = aTrack;
+    this.printWriter = new PrintWriter(outputStream);
+  }
 
-      pw.println("<name>" + StringUtils.stringAsCData(track.getName())
-          + "</name>");
-      pw.println("<description>"
-          + StringUtils.stringAsCData(track.getDescription())
-          + "</description>");
-      writeStyles();
+  @Override
+  public void close() {
+    if (printWriter != null) {
+      printWriter.close();
+      printWriter = null;
+    }
+  }
+
+  @Override
+  public void writeHeader() {
+    if (printWriter != null) {
+      printWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+      printWriter.println("<kml xmlns=\"http://www.opengis.net/kml/2.2\"");
+      printWriter.println("xmlns:atom=\"http://www.w3.org/2005/Atom\"");
+      printWriter.println("xmlns:gx=\"http://www.google.com/kml/ext/2.2\">");
+      printWriter.println("<Document>");
+      printWriter.println("<open>1</open>");
+      printWriter.println("<visibility>1</visibility>");
+      printWriter.println(
+          "<description>" + StringUtils.formatCData(track.getDescription()) + "</description>");
+      printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
+      printWriter.println("<atom:author><atom:name>" + StringUtils.formatCData(
+          context.getString(R.string.send_google_by_my_tracks, "", ""))
+          + "</atom:name></atom:author>");
+      writeTrackStyle();
+      writePlacemarkerStyle(
+          START_STYLE, "http://maps.google.com/mapfiles/kml/paddle/grn-circle.png", 32, 1);
+      writePlacemarkerStyle(
+          END_STYLE, "http://maps.google.com/mapfiles/kml/paddle/red-circle.png", 32, 1);
+      writePlacemarkerStyle(
+          STATISTICS_STYLE, "http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png", 20, 2);
+      writePlacemarkerStyle(
+          WAYPOINT_STYLE, "http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png", 20, 2);
+      printWriter.println("<Schema id=\"" + SCHEMA_ID + "\">");
+      writeSensorStyle(POWER, context.getString(R.string.description_sensor_power));
+      writeSensorStyle(CADENCE, context.getString(R.string.description_sensor_cadence));
+      writeSensorStyle(HEART_RATE, context.getString(R.string.description_sensor_heart_rate));
+      writeSensorStyle(BATTER_LEVEL, context.getString(R.string.description_sensor_battery_level));
+      printWriter.println("</Schema>");
     }
   }
 
   @Override
   public void writeFooter() {
-    if (pw != null) {
-      pw.println("</Document>");
-      pw.println("</kml>");
+    if (printWriter != null) {
+      printWriter.println("</Document>");
+      printWriter.println("</kml>");
     }
   }
 
   @Override
-  public void writeBeginTrack(Location firstPoint) {
-    if (pw != null) {
-      writePlacemark("(Start)", track.getDescription(), "#sh_green-circle",
-          firstPoint);
-      pw.println("<Placemark>");
-      pw.println("<name>" + StringUtils.stringAsCData(track.getName())
-          + "</name>");
-      pw.println("<description>"
-          + StringUtils.stringAsCData(track.getDescription())
-          + "</description>");
-      pw.println("<styleUrl>#track</styleUrl>");
-      pw.println("<MultiGeometry>");
+  public void writeBeginWaypoints() {
+    if (printWriter != null) {
+      printWriter.println(
+          "<Folder><name>" + StringUtils.formatCData(context.getString(R.string.menu_markers))
+              + "</name>");
     }
   }
 
   @Override
-  public void writeEndTrack(Location lastPoint) {
-    if (pw != null) {
-      pw.println("</MultiGeometry>");
-      pw.println("</Placemark>");
-      String description = stringUtils.generateTrackDescription(
-          track, distances, elevations);
-      writePlacemark("(End)", description, "#sh_red-circle", lastPoint);
+  public void writeEndWaypoints() {
+    if (printWriter != null) {
+      printWriter.println("</Folder>");
+    }
+  }
+
+  @Override
+  public void writeWaypoint(Waypoint waypoint) {
+    if (printWriter != null) {
+      String styleName = waypoint.getType() == Waypoint.TYPE_STATISTICS ? STATISTICS_STYLE
+          : WAYPOINT_STYLE;
+      writePlacemark(
+          waypoint.getName(), waypoint.getDescription(), styleName, waypoint.getLocation());
+    }
+  }
+
+  @Override
+  public void writeBeginTrack(Location firstLocation) {
+    if (printWriter != null) {
+      String name = context.getString(R.string.marker_label_start, track.getName());
+      writePlacemark(name, track.getDescription(), START_STYLE, firstLocation);
+      printWriter.println("<Placemark id=\"" + TOUR_FEATURE_ID + "\">");
+      printWriter.println(
+          "<description>" + StringUtils.formatCData(track.getDescription()) + "</description>");
+      printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
+      printWriter.println("<styleUrl>#" + TRACK_STYLE + "</styleUrl>");
+      printWriter.println("<gx:MultiTrack>");
+      printWriter.println("<altitudeMode>absolute</altitudeMode>");
+      printWriter.println("<gx:interpolate>1</gx:interpolate>");
+    }
+  }
+
+  @Override
+  public void writeEndTrack(Location lastLocation) {
+    if (printWriter != null) {
+      printWriter.println("</gx:MultiTrack>");
+      printWriter.println("</Placemark>");
+      String name = context.getString(R.string.marker_label_end, track.getName());
+      String description = descriptionGenerator.generateTrackDescription(track, null, null);
+      writePlacemark(name, description, END_STYLE, lastLocation);
     }
   }
 
   @Override
   public void writeOpenSegment() {
-    if (pw != null) {
-      pw.print("<LineString><coordinates>");
+    if (printWriter != null) {
+      printWriter.println("<gx:Track>");
+      hasPower = false;
+      hasCadence = false;
+      hasHeartRate = false;
+      hasBatteryLevel = false;
+      powerList.clear();
+      cadenceList.clear();
+      heartRateList.clear();
+      batteryLevelList.clear();
     }
   }
 
   @Override
   public void writeCloseSegment() {
-    if (pw != null) {
-      pw.println("</coordinates></LineString>");
+    if (printWriter != null) {
+      printWriter.println("<ExtendedData>");
+      printWriter.println("<SchemaData schemaUrl=\"#" + SCHEMA_ID + "\">");
+      if (hasPower) {
+        writeSensorData(powerList, POWER);
+      }
+      if (hasCadence) {
+        writeSensorData(cadenceList, CADENCE);
+      }
+      if (hasHeartRate) {
+        writeSensorData(heartRateList, HEART_RATE);
+      }
+      if (hasBatteryLevel) {
+        writeSensorData(batteryLevelList, BATTER_LEVEL);
+      }
+      printWriter.println("</SchemaData>");
+      printWriter.println("</ExtendedData>");
+      printWriter.println("</gx:Track>");
     }
   }
 
   @Override
-  public void writeLocation(Location l) {
-    if (pw != null) {
-      pw.print(l.getLongitude() +  "," + l.getLatitude() + ","
-          + l.getAltitude() + " ");
+  public void writeLocation(Location location) {
+    if (printWriter != null) {
+      printWriter.println("<when>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</when>");
+      printWriter.println(
+          "<gx:coord>" + location.getLongitude() + " " + location.getLatitude() + " "
+              + location.getAltitude() + "</gx:coord>");
+      if (location instanceof MyTracksLocation) {
+        SensorDataSet sensorDataSet = ((MyTracksLocation) location).getSensorDataSet();
+        int power = -1;
+        int cadence = -1;
+        int heartRate = -1;
+        int batteryLevel = -1;
+
+        if (sensorDataSet != null) {
+          if (sensorDataSet.hasPower()) {
+            SensorData sensorData = sensorDataSet.getPower();
+            if (sensorData.hasValue() && sensorData.getState() == Sensor.SensorState.SENDING) {
+              hasPower = true;
+              power = sensorData.getValue();
+            }
+          }
+          if (sensorDataSet.hasCadence()) {
+            SensorData sensorData = sensorDataSet.getCadence();
+            if (sensorData.hasValue() && sensorData.getState() == Sensor.SensorState.SENDING) {
+              hasCadence = true;
+              cadence = sensorData.getValue();
+            }
+          }
+          if (sensorDataSet.hasHeartRate()) {
+            SensorData sensorData = sensorDataSet.getHeartRate();
+            if (sensorData.hasValue() && sensorData.getState() == Sensor.SensorState.SENDING) {
+              hasHeartRate = true;
+              heartRate = sensorData.getValue();
+            }
+          }
+          if (sensorDataSet.hasBatteryLevel()) {
+            SensorData sensorData = sensorDataSet.getBatteryLevel();
+            if (sensorData.hasValue() && sensorData.getState() == Sensor.SensorState.SENDING) {
+              hasBatteryLevel = true;
+              batteryLevel = sensorData.getValue();
+            }
+          }
+        }
+        powerList.add(power);
+        cadenceList.add(cadence);
+        heartRateList.add(heartRate);
+        batteryLevelList.add(batteryLevel);
+      }
     }
   }
 
-  private String getPinStyle(Waypoint waypoint) {
-    if (waypoint.getType() == Waypoint.TYPE_STATISTICS) {
-      return "#sh_ylw-pushpin";
+  /**
+   * Writes the sensor data.
+   *
+   * @param list a list of sensor data
+   * @param name the name of the sensor data
+   */
+  private void writeSensorData(ArrayList<Integer> list, String name) {
+    printWriter.println("<gx:SimpleArrayData name=\"" + name + "\">");
+    for (int i = 0; i < list.size(); i++) {
+      printWriter.println("<gx:value>" + list.get(i) + "</gx:value>");
     }
-    // Try to find the icon color.
-    // The string should be of the form:
-    // "http://maps.google.com/mapfiles/ms/micons/XXX.png"
-    int slash = waypoint.getIcon().lastIndexOf('/');
-    int png = waypoint.getIcon().lastIndexOf('.');
-    if ((slash != -1) && (slash < png)) {
-      String color = waypoint.getIcon().substring(slash + 1, png);
-      return "#sh_" + color + "-pushpin";
-    }
-    return "#sh_blue-pushpin";
+    printWriter.println("</gx:SimpleArrayData>");
   }
 
-  @Override
-  public void writeWaypoint(Waypoint waypoint) {
-    if (pw != null) {
-      writePlacemark(
-          waypoint.getName(),
-          waypoint.getDescription(),
-          getPinStyle(waypoint),
-          waypoint.getLocation());
-    }
-  }
-
-  @Override
-  public void close() {
-    if (pw != null) {
-      pw.close();
-      pw = null;
-    }
-  }
-
-  private void writeStyles() {
-    pw.println("<Style id=\"track\"><LineStyle><color>7f0000ff</color>"
-        + "<width>4</width></LineStyle></Style>");
-
-    pw.print("<Style id=\"sh_green-circle\"><IconStyle><scale>1.3</scale>");
-    pw.print("<Icon><href>http://maps.google.com/mapfiles/kml/paddle/"
-        + "grn-circle.png</href></Icon>");
-    pw.println("<hotSpot x=\"32\" y=\"1\" xunits=\"pixels\" yunits=\"pixels\"/>"
-        + "</IconStyle></Style>");
-
-    pw.print("<Style id=\"sh_red-circle\"><IconStyle><scale>1.3</scale>");
-    pw.print("<Icon><href>http://maps.google.com/mapfiles/kml/paddle/"
-        + "red-circle.png</href></Icon>");
-    pw.println("<hotSpot x=\"32\" y=\"1\" xunits=\"pixels\" yunits=\"pixels\"/>"
-        + "</IconStyle></Style>");
-
-    pw.print("<Style id=\"sh_ylw-pushpin\"><IconStyle><scale>1.3</scale>");
-    pw.print("<Icon><href>http://maps.google.com/mapfiles/kml/pushpin/"
-        + "ylw-pushpin.png</href></Icon>");
-    pw.println("<hotSpot x=\"20\" y=\"2\" xunits=\"pixels\" yunits=\"pixels\"/>"
-        + "</IconStyle></Style>");
-
-    pw.print("<Style id=\"sh_blue-pushpin\"><IconStyle><scale>1.3</scale>");
-    pw.print("<Icon><href>http://maps.google.com/mapfiles/kml/pushpin/"
-        + "blue-pushpin.png</href></Icon>");
-    pw.println("<hotSpot x=\"20\" y=\"2\" xunits=\"pixels\" yunits=\"pixels\"/>"
-        + "</IconStyle></Style>");
-
-    pw.print("<Style id=\"sh_green-pushpin\"><IconStyle><scale>1.3</scale>");
-    pw.print("<Icon><href>http://maps.google.com/mapfiles/kml/pushpin/"
-        + "grn-pushpin.png</href></Icon>");
-    pw.println("<hotSpot x=\"20\" y=\"2\" xunits=\"pixels\" yunits=\"pixels\"/>"
-        + "</IconStyle></Style>");
-
-    pw.print("<Style id=\"sh_red-pushpin\"><IconStyle><scale>1.3</scale>");
-    pw.print("<Icon><href>http://maps.google.com/mapfiles/kml/pushpin/"
-        + "red-pushpin.png</href></Icon>");
-    pw.println("<hotSpot x=\"20\" y=\"2\" xunits=\"pixels\" yunits=\"pixels\"/>"
-        + "</IconStyle></Style>");
-  }
-
-  private void writePlacemark(String name, String description, String style,
-      Location location) {
+  /**
+   * Writes a placemark.
+   *
+   * @param name the name of the placemark
+   * @param description the description
+   * @param styleName the style name
+   * @param location the location
+   */
+  private void writePlacemark(
+      String name, String description, String styleName, Location location) {
     if (location != null) {
-      pw.println("<Placemark>");
-      pw.println("  <name>" + StringUtils.stringAsCData(name) + "</name>");
-      pw.println("  <description>" + StringUtils.stringAsCData(description)
-          + "</description>");
-      pw.println("  <styleUrl>" + style + "</styleUrl>");
-      pw.println("  <Point>");
-      pw.println("    <coordinates>" + location.getLongitude() + ","
-          + location.getLatitude() + "</coordinates>");
-      pw.println("  </Point>");
-      pw.println("</Placemark>");
+      printWriter.println("<Placemark>");
+      printWriter.println(
+          "<description>" + StringUtils.formatCData(description) + "</description>");
+      printWriter.println("<name>" + StringUtils.formatCData(name) + "</name>");
+      printWriter.println("<styleUrl>#" + styleName + "</styleUrl>");
+      printWriter.println("<Point>");
+      printWriter.println(
+          "<coordinates>" + location.getLongitude() + "," + location.getLatitude() + ","
+              + location.getAltitude() + "</coordinates>");
+      printWriter.println("</Point>");
+      printWriter.println("</Placemark>");
     }
+  }
+
+  /**
+   * Writes the track style.
+   */
+  private void writeTrackStyle() {
+    printWriter.println("<Style id=\"" + TRACK_STYLE + "\"><LineStyle>");
+    printWriter.println("<color>7f0000ff</color><width>4</width>");
+    printWriter.println("</LineStyle></Style>");
+  }
+
+  /**
+   * Writes a placemarker style.
+   *
+   * @param name the name of the style
+   * @param url the url of the style icon
+   * @param x the x position of the hotspot
+   * @param y the y position of the hotspot
+   */
+  private void writePlacemarkerStyle(String name, String url, int x, int y) {
+    printWriter.println("<Style id=\"" + name + "\"><IconStyle>");
+    printWriter.println("<scale>1.3</scale>");
+    printWriter.println("<Icon><href>" + url + "</href></Icon>");
+    printWriter.println(
+        "<hotSpot x=\"" + x + "\" y=\"" + y + "\" xunits=\"pixels\" yunits=\"pixels\"/>");
+    printWriter.println("</IconStyle></Style>");
+  }
+
+  /**
+   * Writes a sensor style.
+   *
+   * @param name the name of the sesnor
+   * @param displayName the sensor display name
+   */
+  private void writeSensorStyle(String name, String displayName) {
+    printWriter.println("<gx:SimpleArrayField name=\"" + name + "\" type=\"int\">");
+    printWriter.println(
+        "<displayName>" + StringUtils.formatCData(displayName) + "</displayName>");
+    printWriter.println("</gx:SimpleArrayField>");
   }
 }
