@@ -51,7 +51,7 @@ public class UploadServiceChooserActivityTest extends
 
   /**
    * Tests the logic to control display all send options. This test cover code
-   * in method {@link UploadServiceChooserActivity#onCreateDialog()},
+   * in method {@link UploadServiceChooserActivity#onCreateDialog(int)},
    * {@link UploadServiceChooserActivity#updateStateBySendRequest()} and
    * {@link UploadServiceChooserActivity#updateStateBySelection()}.
    */
@@ -91,7 +91,7 @@ public class UploadServiceChooserActivityTest extends
 
   /**
    * Tests the logic to check the send to Google Maps option. This test cover
-   * code in method {@link UploadServiceChooserActivity#onCreateDialog()},
+   * code in method {@link UploadServiceChooserActivity#onCreateDialog(int)},
    * {@link UploadServiceChooserActivity#updateStateBySendRequest()} and
    * {@link UploadServiceChooserActivity#updateStateBySelection()}.
    */
@@ -120,7 +120,7 @@ public class UploadServiceChooserActivityTest extends
 
   /**
    * Tests the logic to control display none. This test cover code in method
-   * {@link UploadServiceChooserActivity#onCreateDialog()},
+   * {@link UploadServiceChooserActivity#onCreateDialog(int)},
    * {@link UploadServiceChooserActivity#updateStateBySendRequest()} and
    * {@link UploadServiceChooserActivity#updateStateBySelection()}.
    */
@@ -135,7 +135,7 @@ public class UploadServiceChooserActivityTest extends
 
   /**
    * Tests the logic to initial state of check box to unchecked. This test cover
-   * code in method {@link UploadServiceChooserActivity#onCreateDialog()},
+   * code in method {@link UploadServiceChooserActivity#onCreateDialog(int)},
    * {@link UploadServiceChooserActivity#initState()}.
    */
   public void testOnCreateDialog_initStateUnchecked() {
@@ -162,7 +162,7 @@ public class UploadServiceChooserActivityTest extends
 
   /**
    * Tests the logic to initial state of check box to checked. This test cover
-   * code in method {@link UploadServiceChooserActivity#onCreateDialog()},
+   * code in method {@link UploadServiceChooserActivity#onCreateDialog(int)},
    * {@link UploadServiceChooserActivity#initState()}.
    */
   public void testOnCreateDialog_initStateChecked() {

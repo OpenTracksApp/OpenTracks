@@ -43,16 +43,16 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
   private View zoomOut;
   private int currentZoomLevel;
 
-  private final String LOCATION_PROVIDER = "gps";
-  private final double INITIAL_LONGTITUDE = 22;
-  private final double INITIAL_LATITUDE = 22;
-  private final double INITIAL_ALTITUDE = 22;
-  private final float INITIAL_ACCURACY = 5;
-  private final float INITIAL_SPEED = 10;
-  private final float INITIAL_BEARING = 3.0f;
+  private static final String LOCATION_PROVIDER = "gps";
+  private static final double INITIAL_LONGTITUDE = 22;
+  private static final double INITIAL_LATITUDE = 22;
+  private static final double INITIAL_ALTITUDE = 22;
+  private static final float INITIAL_ACCURACY = 5;
+  private static final float INITIAL_SPEED = 10;
+  private static final float INITIAL_BEARING = 3.0f;
   // 10 is same with the default value in ChartView
-  private final int MAX_ZOOM_LEVEL = 10;
-  private final int MIN_ZOOM_LEVEL = 1;
+  private static final int MAX_ZOOM_LEVEL = 10;
+  private static final int MIN_ZOOM_LEVEL = 1;
   // The ratio from meter/second to kilometer/hour, the conversion is 60 * 60 /
   // 1000 = 3.6.
   private final double METER_PER_SECOND_TO_KILOMETER_PER_HOUR = 3.6;
@@ -113,7 +113,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
 
   /**
    * There are two parts in this test. Tests
-   * {@link ChartActivity#OnCreateDialog()} which includes the logic to create
+   * {@link ChartActivity#onCreateDialog(int)} which includes the logic to create
    * {@link ChartSettingsDialog}.
    */
   public void testCreateSettingDialog() {
@@ -134,7 +134,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
 
   /**
    * Tests the logic to get the incorrect values of sensor in {@link
-   * ChartActivity#fillDataPoint(Location location, double result[])}.
+   * ChartActivity#fillDataPoint(Location, double[])}.
    */
   public void testFillDataPoint_sensorIncorrect() {
     MyTracksLocation myTracksLocation = getMyTracksLocation();
@@ -166,7 +166,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
 
   /**
    * Tests the logic to get the correct values of sensor in {@link
-   * ChartActivity#fillDataPoint(Location location, double result[])}.
+   * ChartActivity#fillDataPoint(Location, double[])}.
    */
   public void testFillDataPoint_sensorCorrect() {
     MyTracksLocation myTracksLocation = getMyTracksLocation();
@@ -197,7 +197,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
 
   /**
    * Tests the logic to get the value of metric Distance in
-   * {@link #fillDataPoint}.
+   * {@link ChartActivity#fillDataPoint(Location, double[])}.
    */
   public void testFillDataPoint_distanceMetric() {
     // By distance.
@@ -237,7 +237,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
 
   /**
    * Tests the logic to get the value of imperial Distance in
-   * {@link #fillDataPoint}.
+   * {@link ChartActivity#fillDataPoint(Location, double[])}.
    */
   public void testFillDataPoint_distanceImperial() {
     // Setups to use imperial.
@@ -274,11 +274,11 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
     Location.distanceBetween(myTracksLocation2.getLatitude(), myTracksLocation2.getLongitude(),
         myTracksLocation3.getLatitude(), myTracksLocation3.getLongitude(), results);
     double distance2 = results[0] * UnitConversions.KM_TO_MI;
-    assertEquals((distance1 + distance2) / KILOMETER_TO_METER, point[0]);
+    assertEquals(distance1 / KILOMETER_TO_METER + distance2 / KILOMETER_TO_METER , point[0]);
   }
 
   /**
-   * Tests the logic to get the values of time in {@link #fillDataPoint}.
+   * Tests the logic to get the values of time in {@link ChartActivity#fillDataPoint(Location, double[])}.
    */
   public void testFillDataPoint_time() {
     // By time

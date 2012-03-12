@@ -76,8 +76,6 @@ public class ChooseMapActivityTest extends AndroidTestCase {
    * Tests the method
    * {@link ChooseMapActivity#onAsyncTaskCompleted(boolean, ArrayList, ArrayList)}
    * . An alert dialog should be shown when there is no map.
-   * 
-   * @throws InterruptedException
    */
   public void testOnAsyncTaskCompleted_fail() {
     ChooseMapActivityMock chooseMapActivityMock = new ChooseMapActivityMock();

@@ -454,7 +454,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
    * @param total the number of total locations
    */
   private void updateProgress(int uploaded, int total) {
-    double totalPercentage = uploaded / total;
+    double totalPercentage = (double) uploaded / total;
     double scaledPercentage = totalPercentage
         * (PROGRESS_UPLOAD_DATA_MAX - PROGRESS_UPLOAD_DATA_MIN) + PROGRESS_UPLOAD_DATA_MIN;
     publishProgress((int) scaledPercentage);
