@@ -14,65 +14,79 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-  <item android:id="@+id/menu_record_track"
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+  <item
     android:icon="@drawable/ic_menu_recordtrack"
-    android:title="@string/menu_record_track"
-    android:showAsAction="always"/>
+    android:id="@+id/menu_record_track"
+    android:showAsAction="always"
+    android:title="@string/menu_record_track"/>
 
-  <item android:id="@+id/menu_stop_recording"
+  <item
     android:icon="@drawable/ic_menu_stoprecording"
-    android:title="@string/menu_stop_recording"
-    android:showAsAction="always"/>
+    android:id="@+id/menu_stop_recording"
+    android:showAsAction="always"
+    android:title="@string/menu_stop_recording"/>
 
-  <item android:id="@+id/menu_tracks"
+  <item
     android:icon="@drawable/ic_menu_tracklist"
-    android:title="@string/menu_tracks"
-    android:showAsAction="ifRoom"/>
+    android:id="@+id/menu_tracks"
+    android:showAsAction="ifRoom"
+    android:title="@string/menu_tracks"/>
 
-  <item android:id="@+id/menu_markers"
+  <item
     android:icon="@drawable/ic_menu_waypoints"
-    android:title="@string/menu_markers"
-    android:showAsAction="ifRoom"/>
+    android:id="@+id/menu_markers"
+    android:showAsAction="ifRoom"
+    android:title="@string/menu_markers"/>
 
-  <item android:id="@+id/menu_chart_settings"
+  <item
     android:icon="@drawable/chart_settings"
+    android:id="@+id/menu_chart_settings"
+    android:showAsAction="ifRoom"
     android:title="@string/menu_chart_view_chart_settings"
-    android:showAsAction="ifRoom"
     android:visible="false"/>
 
-  <item android:id="@+id/menu_my_location"
+  <item
     android:icon="@android:drawable/ic_menu_mylocation"
+    android:id="@+id/menu_my_location"
+    android:showAsAction="ifRoom"
     android:title="@string/menu_map_view_my_location"
-    android:showAsAction="ifRoom"
     android:visible="false"/>
 
-  <item android:id="@+id/menu_satellite_mode"
+  <item
     android:icon="@android:drawable/ic_menu_mapmode"
-    android:title="@string/menu_map_view_satellite_mode"
+    android:id="@+id/menu_satellite_mode"
     android:showAsAction="ifRoom"
+    android:title="@string/menu_map_view_satellite_mode"
     android:visible="false"/>
 
-  <item android:id="@+id/menu_search"
+  <item
     android:icon="@android:drawable/ic_menu_search"
+    android:id="@+id/menu_search"
     android:title="@string/menu_search"/>
 
-  <item android:id="@+id/menu_sensor_state"
+  <item
     android:icon="@drawable/ic_menu_sensorstatus"
+    android:id="@+id/menu_sensor_state"
     android:orderInCategory="1000"
     android:title="@string/menu_sensor_state"/>
 
-  <item android:id="@+id/menu_settings"
+  <item
     android:icon="@android:drawable/ic_menu_preferences"
+    android:id="@+id/menu_settings"
     android:orderInCategory="1001"
     android:title="@string/menu_settings"/>
 
-  <item android:id="@+id/menu_aggregated_statistics"
+  <item
+    android:id="@+id/menu_aggregated_statistics"
     android:orderInCategory="1002"
     android:title="@string/menu_aggregated_statistics"/>
 
-  <item android:id="@+id/menu_help"
+  <item
     android:icon="@android:drawable/ic_menu_info_details"
+    android:id="@+id/menu_help"
     android:orderInCategory="1003"
     android:title="@string/menu_help"/>
+
 </menu>
