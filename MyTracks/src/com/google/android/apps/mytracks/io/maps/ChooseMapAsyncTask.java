@@ -75,15 +75,12 @@ public class ChooseMapAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   private ArrayList<String> mapIds;
   private ArrayList<MapsMapMetadata> mapData;
 
-	public ChooseMapAsyncTask(ChooseMapActivity activity, Account account) {
-		this(activity, account, activity.getApplicationContext(),
-				GDataClientFactory.getGDataClient(activity
-						.getApplicationContext()), new MapsClient(
-						GDataClientFactory.getGDataClient(activity
-								.getApplicationContext()),
-						new XmlMapsGDataParserFactory(
-								new AndroidXmlParserFactory())));
-	}
+  public ChooseMapAsyncTask(ChooseMapActivity activity, Account account) {
+    this(activity, account, activity.getApplicationContext(), GDataClientFactory
+        .getGDataClient(activity.getApplicationContext()), new MapsClient(
+        GDataClientFactory.getGDataClient(activity.getApplicationContext()),
+        new XmlMapsGDataParserFactory(new AndroidXmlParserFactory())));
+  }
 
 	/**
 	 * Creates this constructor for test.
@@ -242,7 +239,7 @@ public class ChooseMapAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   
   /**
    * Sets the status of canRetry.
-   * @param completed status of canRetry
+   * @param canRetry status of canRetry
    */
   @VisibleForTesting
   void setCanRetry(boolean canRetry) {

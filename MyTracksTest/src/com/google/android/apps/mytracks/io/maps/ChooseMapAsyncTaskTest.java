@@ -15,12 +15,8 @@
  */
 package com.google.android.apps.mytracks.io.maps;
 
-import com.google.android.apps.mytracks.io.gdata.maps.MapsClient;
-import com.google.android.apps.mytracks.io.gdata.maps.XmlMapsGDataParserFactory;
-import com.google.android.common.gdata.AndroidXmlParserFactory;
 import com.google.android.testing.mocking.AndroidMock;
 import com.google.android.testing.mocking.UsesMocks;
-import com.google.wireless.gdata.client.GDataClient;
 
 import android.accounts.Account;
 import android.test.AndroidTestCase;
@@ -55,24 +51,6 @@ public class ChooseMapAsyncTaskTest extends AndroidTestCase {
     boolean getMaps() {
       return getMapsStatus;
     }
-  }
-
-  /**
-   * Tests {@link ChooseMapAsyncTask#execute(Void...)} and makes sure
-   * {@link ChooseMapActivity#showProgressDialog()} will be run.
-   */
-  @UsesMocks({ ChooseMapActivity.class, GDataClient.class, MapsClient.class })
-  public void testExecute() {
-    chooseMapActivityMock = AndroidMock.createMock(ChooseMapActivity.class);
-    chooseMapActivityMock.showProgressDialog();
-    GDataClient gDataClient = AndroidMock.createMock(GDataClient.class);
-    MapsClient mapsClient = AndroidMock.createMock(MapsClient.class, gDataClient,
-        new XmlMapsGDataParserFactory(new AndroidXmlParserFactory()));
-    AndroidMock.replay(chooseMapActivityMock, gDataClient, mapsClient);
-    ChooseMapAsyncTask asyncTask = new ChooseMapAsyncTask(chooseMapActivityMock, account,
-        getContext(), gDataClient, mapsClient);
-    asyncTask.execute();
-    AndroidMock.verify(chooseMapActivityMock);
   }
 
   /**
@@ -215,7 +193,7 @@ public class ChooseMapAsyncTaskTest extends AndroidTestCase {
   private void setupChooseMapActivityMock() {
     chooseMapActivityMock = AndroidMock.createMock(ChooseMapActivity.class);
     // This is used in the constructor of ChooseMapAsyncTask.
-    AndroidMock.expect(chooseMapActivityMock.getApplicationContext()).andReturn(getContext());
+    AndroidMock.expect(chooseMapActivityMock.getApplicationContext()).andReturn(getContext()).anyTimes();
   }
 
 }
