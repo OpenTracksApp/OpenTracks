@@ -159,9 +159,11 @@ public class SaveActivity extends Activity {
 
     Uri uri = Uri.fromFile(new File(writer.getAbsolutePath()));
     Intent intent = new Intent()
+        .setClassName(PlayTrackUtils.GOOGLE_EARTH_PACKAGE, PlayTrackUtils.GOOGLE_EARTH_CLASS)
         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        .setDataAndType(uri, PlayTrackUtils.KML_MIME_TYPE);
+        .setDataAndType(uri, PlayTrackUtils.KML_MIME_TYPE)
+        .putExtra(PlayTrackUtils.TOUR_FEATURE_ID, KmlTrackWriter.TOUR_FEATURE_ID);
     startActivity(intent);
   }
 

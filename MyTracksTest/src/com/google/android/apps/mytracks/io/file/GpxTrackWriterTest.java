@@ -38,23 +38,23 @@ public class GpxTrackWriterTest extends TrackFormatWriterTest {
     assertEquals(TRACK_DESCRIPTION, getChildTextValue(trackTag, "desc"));
     List<Element> segmentTags = getChildElements(trackTag, "trkseg", 2);
     List<Element> segPointTags = getChildElements(segmentTags.get(0), "trkpt", 2);
-    assertTagMatchesLocation(segPointTags.get(0), "0", "0", "1970-01-01T02:46:40Z", "0");
-    assertTagMatchesLocation(segPointTags.get(1), "1", "-1", "1970-01-01T02:46:41Z", "5000000");
+    assertTagMatchesLocation(segPointTags.get(0), "0", "0", "1970-01-01T00:00:00Z", "0");
+    assertTagMatchesLocation(segPointTags.get(1), "1", "-1", "1970-01-01T00:01:40Z", "10");
 
     segPointTags = getChildElements(segmentTags.get(1), "trkpt", 2);
-    assertTagMatchesLocation(segPointTags.get(0), "2", "-2", "1970-01-01T02:46:42Z", "10000000");
-    assertTagMatchesLocation(segPointTags.get(1), "3", "-3", "1970-01-01T02:46:43Z", "15000000");
+    assertTagMatchesLocation(segPointTags.get(0), "2", "-2", "1970-01-01T00:03:20Z", "20");
+    assertTagMatchesLocation(segPointTags.get(1), "3", "-3", "1970-01-01T00:05:00Z", "30");
 
     List<Element> waypointTags = getChildElements(gpxTag, "wpt", 2);
     Element wptTag = waypointTags.get(0);
     assertEquals(WAYPOINT1_NAME, getChildTextValue(wptTag, "name"));
     assertEquals(WAYPOINT1_DESCRIPTION, getChildTextValue(wptTag, "desc"));
-    assertTagMatchesLocation(wptTag, "1", "-1", "1970-01-01T02:46:41Z", "5000000");
+    assertTagMatchesLocation(wptTag, "1", "-1", "1970-01-01T00:01:40Z", "10");
 
     wptTag = waypointTags.get(1);
     assertEquals(WAYPOINT2_NAME, getChildTextValue(wptTag, "name"));
     assertEquals(WAYPOINT2_DESCRIPTION, getChildTextValue(wptTag, "desc"));
-    assertTagMatchesLocation(wptTag, "2", "-2", "1970-01-01T02:46:42Z", "10000000");
+    assertTagMatchesLocation(wptTag, "2", "-2", "1970-01-01T00:03:20Z", "20");
   }
 
   /**

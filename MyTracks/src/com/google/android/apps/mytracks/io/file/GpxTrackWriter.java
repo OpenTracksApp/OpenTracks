@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.io.file;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
-import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -94,8 +93,8 @@ public class GpxTrackWriter implements TrackFormatWriter {
           + " http://www.topografix.com/GPX/Private/TopoGrafix/0/1"
           + " http://www.topografix.com/GPX/Private/TopoGrafix/0/1/topografix.xsd\">");
       printWriter.println("<metadata>");
-      printWriter.println("<name>" + StringUtils.stringAsCData(track.getName()) + "</name>");
-      printWriter.println("<desc>" + StringUtils.stringAsCData(track.getDescription()) + "</desc>");
+      printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
+      printWriter.println("<desc>" + StringUtils.formatCData(track.getDescription()) + "</desc>");
       printWriter.println("</metadata>");
     }
   }
@@ -111,8 +110,8 @@ public class GpxTrackWriter implements TrackFormatWriter {
   public void writeBeginTrack(Location firstLocation) {
     if (printWriter != null) {
       printWriter.println("<trk>");
-      printWriter.println("<name>" + StringUtils.stringAsCData(track.getName()) + "</name>");
-      printWriter.println("<desc>" + StringUtils.stringAsCData(track.getDescription()) + "</desc>");
+      printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
+      printWriter.println("<desc>" + StringUtils.formatCData(track.getDescription()) + "</desc>");
       printWriter.println("<extensions><topografix:color>c0c0c0</topografix:color></extensions>");
     }
   }
@@ -139,8 +138,7 @@ public class GpxTrackWriter implements TrackFormatWriter {
     if (printWriter != null) {
       printWriter.println("<trkpt " + formatLocation(location) + ">");
       printWriter.println("<ele>" + ELEVATION_FORMAT.format(location.getAltitude()) + "</ele>");
-      printWriter.println(
-          "<time>" + FileUtils.FILE_TIMESTAMP_FORMAT.format(location.getTime()) + "</time>");
+      printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</time>");
       printWriter.println("</trkpt>");
     }
   }
@@ -162,11 +160,10 @@ public class GpxTrackWriter implements TrackFormatWriter {
       if (location != null) {
         printWriter.println("<wpt " + formatLocation(location) + ">");
         printWriter.println("<ele>" + ELEVATION_FORMAT.format(location.getAltitude()) + "</ele>");
+        printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</time>");
+        printWriter.println("<name>" + StringUtils.formatCData(waypoint.getName()) + "</name>");
         printWriter.println(
-            "<time>" + FileUtils.FILE_TIMESTAMP_FORMAT.format(location.getTime()) + "</time>");
-        printWriter.println("<name>" + StringUtils.stringAsCData(waypoint.getName()) + "</name>");
-        printWriter.println(
-            "<desc>" + StringUtils.stringAsCData(waypoint.getDescription()) + "</desc>");
+            "<desc>" + StringUtils.formatCData(waypoint.getDescription()) + "</desc>");
         printWriter.println("</wpt>");
       }
     }

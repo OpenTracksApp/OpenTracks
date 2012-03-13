@@ -17,7 +17,6 @@ package com.google.android.apps.mytracks;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
 
-import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TracksColumns;
@@ -27,6 +26,7 @@ import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
+import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.EulaUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
@@ -92,11 +92,6 @@ public class MyTracks extends TabActivity implements OnTouchListener {
    */
   private MyTracksProviderUtils providerUtils;
 
-  /**
-   * Google Analytics tracker
-   */
-  private GoogleAnalyticsTracker tracker;
-
   /*
    * Tabs/View navigation:
    */
@@ -144,12 +139,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
       ApiAdapterFactory.getApiAdapter().enableStrictMode();
     }
 
-    tracker = GoogleAnalyticsTracker.getInstance();
-    // Start the tracker in manual dispatch mode...
-    tracker.start(getString(R.string.my_tracks_analytics_id), getApplicationContext());
-    tracker.setProductVersion("android-mytracks", SystemUtils.getMyTracksVersion(this));
-    tracker.trackPageView("/appstart");
-    tracker.dispatch();
+    AnalyticsUtils.sendPageViews(this, "/appstart");
 
     providerUtils = MyTracksProviderUtils.Factory.get(this);
     preferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
@@ -256,8 +246,6 @@ public class MyTracks extends TabActivity implements OnTouchListener {
   protected void onStop() {
     Log.d(TAG, "MyTracks.onStop");
     dataHub.stop();
-    tracker.dispatch();
-    tracker.stop();
     super.onStop();
   }
 

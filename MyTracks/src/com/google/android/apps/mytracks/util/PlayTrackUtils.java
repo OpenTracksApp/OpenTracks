@@ -45,14 +45,17 @@ public class PlayTrackUtils {
    * KML mime type.
    */
   public static final String KML_MIME_TYPE = "application/vnd.google-earth.kml+xml";
-
-  private static final String GOOGLE_EARTH_PACKAGE = "com.google.earth";
+  public static final String TOUR_FEATURE_ID = "com.google.earth.EXTRA.tour_feature_id";
+  
+  public static final String GOOGLE_EARTH_PACKAGE = "com.google.earth";
+  public static final String GOOGLE_EARTH_CLASS = "com.google.earth.EarthActivity";
   private static final String EARTN_MARKET_URI = "market://details?id=" + GOOGLE_EARTH_PACKAGE;
 
   private PlayTrackUtils() {}
 
   /**
-   * Returns true if Google Earth is installed.
+   * Returns true if a Google Earth app that can handle KML mine type is
+   * installed.
    *
    * @param context the context
    */
@@ -75,6 +78,8 @@ public class PlayTrackUtils {
    * @param trackId the track id
    */
   public static void playTrack(Context context, long trackId) {
+    AnalyticsUtils.sendPageViews(context, "/action/play");
+
     Uri uri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId);
     Intent intent = new Intent(context, SaveActivity.class)
         .putExtra(SaveActivity.EXTRA_FILE_FORMAT, TrackFileFormat.KML.ordinal())

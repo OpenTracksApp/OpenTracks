@@ -50,7 +50,7 @@ public class TrackWriterFactory {
     CSV {
       @Override
       public TrackFormatWriter newFormatWriter(Context context) {
-        return new CsvTrackWriter();
+        return new CsvTrackWriter(context);
       }
     },
     TCX {

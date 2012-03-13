@@ -15,31 +15,37 @@
  */
 package com.google.android.apps.mytracks.io.file;
 
+import com.google.android.apps.mytracks.content.MyTracksLocation;
+import com.google.android.apps.mytracks.content.Sensor;
+import com.google.android.apps.mytracks.content.Sensor.SensorData;
+import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
-import com.google.android.apps.mytracks.util.FileUtils;
+import com.google.android.apps.mytracks.util.StringUtils;
+import com.google.android.maps.mytracks.R;
 
+import android.content.Context;
 import android.location.Location;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
-import java.util.Date;
 
 /**
- * Exports a track as a CSV file, according to RFC 4180.
- *
- * The first field is a type:
- * TRACK - track description
- * P - point
- * WAYPOINT - waypoint
- *
- * For each type, the fields are:
- *
- * TRACK,,,,,,,,name,description,
- * P,time,lat,lon,alt,bearing,accurancy,speed,,,segmentIdx
- * WAYPOINT,time,lat,lon,alt,bearing,accuracy,speed,name,description,
+ * Write track as CSV to a file. See RFC 4180 for info on CSV. Output three
+ * tables.<br>
+ * The first table contains the track info. Its columns are:<br>
+ * "Track name","Activity type","Track description" <br>
+ * <br>
+ * The second table contains the markers. Its columns are:<br>
+ * "Marker name","Marker type","Marker description","Latitude (deg)","Longitude
+ * (deg)","Altitude (m)","Bearing (deg)","Accuracy (m)","Speed (m/s)","Time"<br>
+ * <br>
+ * The thrid table contains the points. Its columns are:<br>
+ * "Segment","Point","Latitude (deg)","Longitude (deg)","Altitude (m)","Bearing
+ * (deg)","Accuracy (m)","Speed (m/s)","Time","Power (W)","Cadence (rpm)","Heart
+ * rate (bpm)","Battery level (%)"<br>
  *
  * @author Rodrigo Damazio
  */
@@ -51,121 +57,41 @@ public class CsvTrackWriter implements TrackFormatWriter {
     SHORT_FORMAT.setMaximumFractionDigits(4);
   }
 
-  private int segmentIdx = 0;
-  private int numFields = -1;
-  private PrintWriter pw;
+  private final Context context;
+  private PrintWriter printWriter;
   private Track track;
+  private int segmentIndex;
+  private int pointIndex;
+
+  public CsvTrackWriter(Context context) {
+    this.context = context;
+  }
 
   @Override
   public String getExtension() {
     return TrackFileFormat.CSV.getExtension();
   }
 
-  @SuppressWarnings("hiding")
   @Override
-  public void prepare(Track track, OutputStream out) {
-    this.track = track;
-    this.pw = new PrintWriter(out);
+  public void prepare(Track aTrack, OutputStream out) {
+    track = aTrack;
+    printWriter = new PrintWriter(out);
+    segmentIndex = 0;
+    pointIndex = 0;
+  }
+
+  @Override
+  public void close() {
+    printWriter.close();
   }
 
   @Override
   public void writeHeader() {
-    writeCommaSeparatedLine("TYPE", "TIME", "LAT", "LON", "ALT", "BEARING",
-        "ACCURACY", "SPEED", "NAME", "DESCRIPTION", "SEGMENT");
-  }
-
-  @Override
-  public void writeBeginTrack(Location firstPoint) {
-    writeCommaSeparatedLine("TRACK",
-        null, null, null, null, null, null, null,
-        track.getName(), track.getDescription(),
-        null);
-  }
-
-  @Override
-  public void writeOpenSegment() {
-    // Do nothing
-  }
-
-  @Override
-  public void writeLocation(Location location) {
-    String timeStr = FileUtils.FILE_TIMESTAMP_FORMAT.format(new Date(location.getTime()));
-    writeCommaSeparatedLine("P",
-        timeStr,
-        Double.toString(location.getLatitude()),
-        Double.toString(location.getLongitude()),
-        Double.toString(location.getAltitude()),
-        Double.toString(location.getBearing()),
-        SHORT_FORMAT.format(location.getAccuracy()),
-        SHORT_FORMAT.format(location.getSpeed()),
-        null, null,
-        Integer.toString(segmentIdx));
-  }
-
-  @Override
-  public void writeBeginWaypoints() {
-    // Do nothing
-  }
-
-  @Override
-  public void writeEndWaypoints() {
-    // Do nothing
-  }
-
-  @Override
-  public void writeWaypoint(Waypoint waypoint) {
-    Location location = waypoint.getLocation();
-    String timeStr = FileUtils.FILE_TIMESTAMP_FORMAT.format(new Date(location.getTime()));
-    writeCommaSeparatedLine("WAYPOINT",
-        timeStr,
-        Double.toString(location.getLatitude()),
-        Double.toString(location.getLongitude()),
-        Double.toString(location.getAltitude()),
-        Double.toString(location.getBearing()),
-        SHORT_FORMAT.format(location.getAccuracy()),
-        SHORT_FORMAT.format(location.getSpeed()),
-        waypoint.getName(),
-        waypoint.getDescription(),
-        null);
-  }
-
-  /**
-   * Writes a single line of a comma-separated-value file.
-   *
-   * @param strs the values to be written as comma-separated
-   */
-  private void writeCommaSeparatedLine(String... strs) {
-    if (numFields == -1) {
-      numFields = strs.length;
-    } else if (strs.length != numFields) {
-      throw new IllegalArgumentException(
-          "CSV lines with different number of fields");
-    }
-
-    boolean isFirst = true;
-    for (String str : strs) {
-      if (!isFirst) {
-        pw.print(',');
-      }
-      isFirst = false;
-
-      if (str != null) {
-        pw.print('"');
-        pw.print(str.replaceAll("\"", "\"\""));
-        pw.print('"');
-      }
-    }
-    pw.println();
-  }
-
-  @Override
-  public void writeCloseSegment() {
-    segmentIdx++;
-  }
-
-  @Override
-  public void writeEndTrack(Location lastPoint) {
-    // Do nothing
+    writeCommaSeparatedLine(context.getString(R.string.track_detail_track_name),
+        context.getString(R.string.track_detail_activity_type_hint),
+        context.getString(R.string.track_detail_track_description));
+    writeCommaSeparatedLine(track.getName(), track.getCategory(), track.getDescription());
+    writeCommaSeparatedLine();
   }
 
   @Override
@@ -174,7 +100,144 @@ public class CsvTrackWriter implements TrackFormatWriter {
   }
 
   @Override
-  public void close() {
-    pw.close();
+  public void writeBeginWaypoints() {
+    writeCommaSeparatedLine(context.getString(R.string.marker_detail_marker_name),
+        context.getString(R.string.marker_detail_marker_type_hint),
+        context.getString(R.string.marker_detail_marker_description),
+        context.getString(R.string.description_location_latitude),
+        context.getString(R.string.description_location_longitude),
+        context.getString(R.string.description_location_altitude),
+        context.getString(R.string.description_location_bearing),
+        context.getString(R.string.description_location_accuracy),
+        context.getString(R.string.description_location_speed),
+        context.getString(R.string.description_location_time));
+  }
+
+  @Override
+  public void writeEndWaypoints() {
+    writeCommaSeparatedLine();
+  }
+
+  @Override
+  public void writeWaypoint(Waypoint waypoint) {
+    Location location = waypoint.getLocation();
+    writeCommaSeparatedLine(waypoint.getName(),
+        waypoint.getCategory(),
+        waypoint.getDescription(),
+        Double.toString(location.getLatitude()),
+        Double.toString(location.getLongitude()),
+        Double.toString(location.getAltitude()),
+        Double.toString(location.getBearing()),
+        SHORT_FORMAT.format(location.getAccuracy()),
+        SHORT_FORMAT.format(location.getSpeed()),
+        StringUtils.formatDateTimeIso8601(location.getTime()));
+  }
+
+  @Override
+  public void writeBeginTrack(Location firstPoint) {
+    writeCommaSeparatedLine(context.getString(R.string.description_track_segment),
+        context.getString(R.string.description_track_point),
+        context.getString(R.string.description_location_latitude),
+        context.getString(R.string.description_location_longitude),
+        context.getString(R.string.description_location_altitude),
+        context.getString(R.string.description_location_bearing),
+        context.getString(R.string.description_location_accuracy),
+        context.getString(R.string.description_location_speed),
+        context.getString(R.string.description_location_time),
+        context.getString(R.string.description_sensor_power),
+        context.getString(R.string.description_sensor_cadence),
+        context.getString(R.string.description_sensor_heart_rate),
+        context.getString(R.string.description_sensor_battery_level));
+  }
+
+  @Override
+  public void writeEndTrack(Location lastPoint) {
+    // Do nothing
+  }
+
+  @Override
+  public void writeOpenSegment() {
+    segmentIndex++;
+    pointIndex = 0;
+  }
+
+  @Override
+  public void writeCloseSegment() {
+    // Do nothing
+  }
+
+  @Override
+  public void writeLocation(Location location) {
+    String power = null;
+    String cadence = null;
+    String heartRate = null;
+    String batteryLevel = null;
+    if (location instanceof MyTracksLocation) {
+      SensorDataSet sensorDataSet = ((MyTracksLocation) location).getSensorDataSet();
+
+      if (sensorDataSet != null) {
+        if (sensorDataSet.hasPower()) {
+          SensorData sensorData = sensorDataSet.getPower();
+          if (sensorData.hasValue() && sensorData.getState() == Sensor.SensorState.SENDING) {
+            power = Double.toString(sensorData.getValue());
+          }
+        }
+        if (sensorDataSet.hasCadence()) {
+          SensorData sensorData = sensorDataSet.getCadence();
+          if (sensorData.hasValue() && sensorData.getState() == Sensor.SensorState.SENDING) {
+            cadence = Double.toString(sensorData.getValue());
+          }
+        }
+        if (sensorDataSet.hasHeartRate()) {
+          SensorData sensorData = sensorDataSet.getHeartRate();
+          if (sensorData.hasValue() && sensorData.getState() == Sensor.SensorState.SENDING) {
+            heartRate = Double.toString(sensorData.getValue());
+          }
+        }
+        if (sensorDataSet.hasBatteryLevel()) {
+          SensorData sensorData = sensorDataSet.getBatteryLevel();
+          if (sensorData.hasValue() && sensorData.getState() == Sensor.SensorState.SENDING) {
+            batteryLevel = Double.toString(sensorData.getValue());
+          }
+        }
+      }
+    }
+    pointIndex++;
+    writeCommaSeparatedLine(Integer.toString(segmentIndex),
+        Integer.toString(pointIndex),
+        Double.toString(location.getLatitude()),
+        Double.toString(location.getLongitude()),
+        Double.toString(location.getAltitude()),
+        Double.toString(location.getBearing()),
+        SHORT_FORMAT.format(location.getAccuracy()),
+        SHORT_FORMAT.format(location.getSpeed()),
+        StringUtils.formatDateTimeIso8601(location.getTime()),
+        power,
+        cadence,
+        heartRate,
+        batteryLevel);
+  }
+
+  /**
+   * Writes a single line of a CSV file.
+   *
+   * @param values the values to be written as CSV
+   */
+  private void writeCommaSeparatedLine(String... values) {
+    StringBuilder builder = new StringBuilder();
+    boolean isFirst = true;
+    for (String value : values) {
+      if (!isFirst) {
+        builder.append(',');
+      }
+      isFirst = false;
+
+      if (value != null) {
+        builder.append('"');
+        builder.append(value.replaceAll("\"", "\"\""));
+        builder.append('"');
+      }
+    }
+    printWriter.println(builder.toString());
   }
 }

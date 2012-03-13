@@ -450,7 +450,7 @@ public class GpxImporter extends DefaultHandler {
     // Parse the time
     long time;
     try {
-      time = StringUtils.parseXmlDateTime(content.trim());
+      time = StringUtils.getTime(content.trim());
     } catch (IllegalArgumentException e) {
       String msg = createErrorMessage("Unable to parse time: " + content);
       throw new SAXException(msg, e);

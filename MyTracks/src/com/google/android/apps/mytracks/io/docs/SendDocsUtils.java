@@ -300,8 +300,8 @@ public class SendDocsUtils {
     appendTag(builder, "name", track.getName());
     appendTag(builder, "description", track.getDescription());
     appendTag(builder, "date", StringUtils.formatDateTime(context, stats.getStartTime()));
-    appendTag(builder, "totaltime", StringUtils.formatElapsedTime(stats.getTotalTime()));
-    appendTag(builder, "movingtime", StringUtils.formatElapsedTime(stats.getMovingTime()));
+    appendTag(builder, "totaltime", StringUtils.formatElapsedTimeWithHour(stats.getTotalTime()));
+    appendTag(builder, "movingtime", StringUtils.formatElapsedTimeWithHour(stats.getMovingTime()));
     appendTag(builder, "distance", getDistance(stats.getTotalDistance(), metricUnits));
     appendTag(builder, "distanceunit", distanceUnit);
     appendTag(builder, "averagespeed", getSpeed(stats.getAverageSpeed(), metricUnits));
@@ -335,7 +335,7 @@ public class SendDocsUtils {
         .append("<gsx:")
         .append(name)
         .append(">")
-        .append(StringUtils.stringAsCData(value))
+        .append(StringUtils.formatCData(value))
         .append("</gsx:")
         .append(name)
         .append(">");

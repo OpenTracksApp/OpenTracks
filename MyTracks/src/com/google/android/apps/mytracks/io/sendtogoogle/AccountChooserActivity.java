@@ -109,7 +109,7 @@ public class AccountChooserActivity extends Activity {
     super.onResume();
     if (accounts.length == 0) {
       showDialog(NO_ACCOUNT_DIALOG);
-    } else {
+    } else if (accounts.length > 1 ) {
       showDialog(CHOOSE_ACCOUNT_DIALOG);
     }
   }

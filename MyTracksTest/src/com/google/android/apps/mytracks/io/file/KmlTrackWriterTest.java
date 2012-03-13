@@ -63,14 +63,19 @@ public class KmlTrackWriterTest extends TrackFormatWriterTest {
     assertEquals(TRACK_NAME, getChildTextValue(docTag, "name"));
     assertEquals(TRACK_DESCRIPTION, getChildTextValue(docTag, "description"));
 
-    // There are 5 placemarks - start, segments, end, waypoint1, waypoint2
-    List<Element> placemarkTags = getChildElements(docTag, "Placemark", 5);
+    // There are 3 placemarks - start, track, and end
+    List<Element> placemarkTags = getChildElements(docTag, "Placemark", 3);
     assertTagIsPlacemark(
         placemarkTags.get(0), TRACK_NAME + " (Start)", TRACK_DESCRIPTION, location1);
     assertTagIsPlacemark(
         placemarkTags.get(2), TRACK_NAME + " (End)", FULL_TRACK_DESCRIPTION, location4);
-    assertTagIsPlacemark(placemarkTags.get(3), WAYPOINT1_NAME, WAYPOINT1_DESCRIPTION, location2);
-    assertTagIsPlacemark(placemarkTags.get(4), WAYPOINT2_NAME, WAYPOINT2_DESCRIPTION, location3);
+
+    List<Element> folderTag = getChildElements(docTag, "Folder", 1);
+    List<Element> folderPlacemarkTags = getChildElements(folderTag.get(0), "Placemark", 2);
+    assertTagIsPlacemark(
+        folderPlacemarkTags.get(0), WAYPOINT1_NAME, WAYPOINT1_DESCRIPTION, location2);
+    assertTagIsPlacemark(
+        folderPlacemarkTags.get(1), WAYPOINT2_NAME, WAYPOINT2_DESCRIPTION, location3);
 
     Element trackPlacemarkTag = placemarkTags.get(1);
     assertEquals(TRACK_NAME, getChildTextValue(trackPlacemarkTag, "name"));
