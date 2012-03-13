@@ -107,7 +107,8 @@ limitations under the License.
   <application android:icon="@drawable/arrow_icon"
                android:label="@string/my_tracks_app_name"
                android:name="com.google.android.apps.mytracks.MyTracksApplication"
-               android:backupAgent="com.google.android.apps.mytracks.io.backup.MyTracksBackupAgent">
+               android:backupAgent="com.google.android.apps.mytracks.io.backup.MyTracksBackupAgent"
+               android:theme="@style/ThemeSelector" >
     <uses-library android:name="com.google.android.maps" />
 
     <meta-data android:name="com.google.android.backup.api_key"

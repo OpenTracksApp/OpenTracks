@@ -20,12 +20,10 @@ import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
-import com.jayway.android.robotium.solo.Solo;
 
 import android.app.Instrumentation;
 import android.location.Location;
 import android.test.ActivityInstrumentationTestCase2;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ZoomControls;
 
@@ -38,7 +36,6 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
 
   private Instrumentation instrumentation;
   private ChartActivity chartActivity;
-  private Solo solo;
   private View zoomIn;
   private View zoomOut;
   private int currentZoomLevel;
@@ -102,27 +99,6 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
     instrumentation.waitForIdleSync();
     assertEquals(true, zoomIn.isEnabled());
     assertEquals(false, zoomOut.isEnabled());
-  }
-
-  /**
-   * There are two parts in this test. Tests
-   * {@link ChartActivity#onCreateDialog(int)} which includes the logic to create
-   * {@link ChartSettingsDialog}.
-   */
-  public void testCreateSettingDialog() {
-    solo = new Solo(instrumentation, chartActivity);
-    // Part1, tests {@link ChartActivity#onCreateOptionsMenu()}. Check if
-    // optional menu is created.
-    assertNull(chartActivity.getChartSettingsMenuItem());
-    sendKeys(KeyEvent.KEYCODE_MENU);
-    assertNotNull(chartActivity.getChartSettingsMenuItem());
-
-    // Part2, tests {@link ChartActivity#onOptionsItemSelected()}. Clicks on the
-    // "Chart settings", and then verify that the dialog contains the
-    // "By distance" text.
-    solo.clickOnText(chartActivity.getString(R.string.menu_chart_view_chart_settings));
-    instrumentation.waitForIdleSync();
-    assertTrue(solo.searchText(chartActivity.getString(R.string.chart_settings_by_distance)));
   }
 
   /**

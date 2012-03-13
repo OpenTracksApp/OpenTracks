@@ -17,19 +17,41 @@ limitations under the License.
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
   <item android:id="@+id/menu_record_track"
     android:icon="@drawable/ic_menu_recordtrack"
-    android:title="@string/menu_record_track"/>
+    android:title="@string/menu_record_track"
+    android:showAsAction="always"/>
 
   <item android:id="@+id/menu_stop_recording"
     android:icon="@drawable/ic_menu_stoprecording"
-    android:title="@string/menu_stop_recording"/>
+    android:title="@string/menu_stop_recording"
+    android:showAsAction="always"/>
 
   <item android:id="@+id/menu_tracks"
     android:icon="@drawable/ic_menu_tracklist"
-    android:title="@string/menu_tracks"/>
+    android:title="@string/menu_tracks"
+    android:showAsAction="ifRoom"/>
 
   <item android:id="@+id/menu_markers"
     android:icon="@drawable/ic_menu_waypoints"
-    android:title="@string/menu_markers"/>
+    android:title="@string/menu_markers"
+    android:showAsAction="ifRoom"/>
+
+  <item android:id="@+id/menu_chart_settings"
+    android:icon="@drawable/chart_settings"
+    android:title="@string/menu_chart_view_chart_settings"
+    android:showAsAction="ifRoom"
+    android:visible="false"/>
+
+  <item android:id="@+id/menu_my_location"
+    android:icon="@android:drawable/ic_menu_mylocation"
+    android:title="@string/menu_map_view_my_location"
+    android:showAsAction="ifRoom"
+    android:visible="false"/>
+
+  <item android:id="@+id/menu_satellite_mode"
+    android:icon="@android:drawable/ic_menu_mapmode"
+    android:title="@string/menu_map_view_satellite_mode"
+    android:showAsAction="ifRoom"
+    android:visible="false"/>
 
   <item android:id="@+id/menu_search"
     android:icon="@android:drawable/ic_menu_search"
