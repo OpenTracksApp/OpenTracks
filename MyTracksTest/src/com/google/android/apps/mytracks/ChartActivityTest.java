@@ -43,16 +43,9 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
   private View zoomOut;
   private int currentZoomLevel;
 
-  private static final String LOCATION_PROVIDER = "gps";
-  private static final double INITIAL_LONGTITUDE = 22;
-  private static final double INITIAL_LATITUDE = 22;
-  private static final double INITIAL_ALTITUDE = 22;
-  private static final float INITIAL_ACCURACY = 5;
-  private static final float INITIAL_SPEED = 10;
-  private static final float INITIAL_BEARING = 3.0f;
   // 10 is same with the default value in ChartView
-  private static final int MAX_ZOOM_LEVEL = 10;
-  private static final int MIN_ZOOM_LEVEL = 1;
+  private final int MAX_ZOOM_LEVEL = 10;
+  private final int MIN_ZOOM_LEVEL = 1;
   // The ratio from meter/second to kilometer/hour, the conversion is 60 * 60 /
   // 1000 = 3.6.
   private final double METER_PER_SECOND_TO_KILOMETER_PER_HOUR = 3.6;
@@ -137,7 +130,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
    * ChartActivity#fillDataPoint(Location, double[])}.
    */
   public void testFillDataPoint_sensorIncorrect() {
-    MyTracksLocation myTracksLocation = getMyTracksLocation();
+    MyTracksLocation myTracksLocation = TrackStubUtils.createMyTracksLocation();
     // No input.
     double[] point = fillDataPointTestHelper(myTracksLocation, false);
     assertEquals(Double.NaN, point[3]);
@@ -169,7 +162,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
    * ChartActivity#fillDataPoint(Location, double[])}.
    */
   public void testFillDataPoint_sensorCorrect() {
-    MyTracksLocation myTracksLocation = getMyTracksLocation();
+    MyTracksLocation myTracksLocation = TrackStubUtils.createMyTracksLocation();
     // No input.
     double[] point = fillDataPointTestHelper(myTracksLocation, false);
     assertEquals(Double.NaN, point[3]);
@@ -203,17 +196,17 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
     // By distance.
     chartActivity.getChartView().setMode(ChartView.Mode.BY_DISTANCE);
     // Resets last location and writes first location.
-    MyTracksLocation myTracksLocation1 = getMyTracksLocation();
+    MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
     double[] point = fillDataPointTestHelper(myTracksLocation1, true);
     assertEquals(0.0, point[0]);
 
     // The second is a same location, just different time.
-    MyTracksLocation myTracksLocation2 = getMyTracksLocation();
+    MyTracksLocation myTracksLocation2 = TrackStubUtils.createMyTracksLocation();
     point = fillDataPointTestHelper(myTracksLocation2, false);
     assertEquals(0.0, point[0]);
 
     // The third location is a new location, and use metric.
-    MyTracksLocation myTracksLocation3 = getMyTracksLocation();
+    MyTracksLocation myTracksLocation3 = TrackStubUtils.createMyTracksLocation();
     myTracksLocation3.setLatitude(23);
     point = fillDataPointTestHelper(myTracksLocation3, false);
     // Computes the distance between Latitude 22 and 23.
@@ -224,7 +217,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
     assertEquals(distance1 / KILOMETER_TO_METER, point[0]);
 
     // The fourth location is a new location, and use metric.
-    MyTracksLocation myTracksLocation4 = getMyTracksLocation();
+    MyTracksLocation myTracksLocation4 = TrackStubUtils.createMyTracksLocation();
     myTracksLocation4.setLatitude(24);
     point = fillDataPointTestHelper(myTracksLocation4, false);
     // Computes the distance between Latitude 23 and 24.
@@ -244,12 +237,12 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
     chartActivity.onUnitsChanged(false);
 
     // The first is a same location, just different time.
-    MyTracksLocation myTracksLocation1 = getMyTracksLocation();
+    MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
     double[] point = fillDataPointTestHelper(myTracksLocation1, true);
     assertEquals(0.0, point[0]);
 
     // The second location is a new location, and use imperial.
-    MyTracksLocation myTracksLocation2 = getMyTracksLocation();
+    MyTracksLocation myTracksLocation2 = TrackStubUtils.createMyTracksLocation();
     myTracksLocation2.setLatitude(23);
     point = fillDataPointTestHelper(myTracksLocation2, false);
     /*
@@ -263,7 +256,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
     assertEquals(distance1 / KILOMETER_TO_METER, point[0]);
 
     // The third location is a new location, and use imperial.
-    MyTracksLocation myTracksLocation3 = getMyTracksLocation();
+    MyTracksLocation myTracksLocation3 = TrackStubUtils.createMyTracksLocation();
     myTracksLocation3.setLatitude(24);
     point = fillDataPointTestHelper(myTracksLocation3, false);
     /*
@@ -283,11 +276,11 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
   public void testFillDataPoint_time() {
     // By time
     chartActivity.getChartView().setMode(ChartView.Mode.BY_TIME);
-    MyTracksLocation myTracksLocation1 = getMyTracksLocation();
+    MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
     double[] point = fillDataPointTestHelper(myTracksLocation1, true);
     assertEquals(0.0, point[0]);
     long timeSpan = 222;
-    MyTracksLocation myTracksLocation2 = getMyTracksLocation();
+    MyTracksLocation myTracksLocation2 = TrackStubUtils.createMyTracksLocation();
     myTracksLocation2.setTime(myTracksLocation1.getTime() + timeSpan);
     point = fillDataPointTestHelper(myTracksLocation2, false);
     assertEquals((double) timeSpan, point[0]);
@@ -295,29 +288,29 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
 
   /**
    * Tests the logic to get the value of elevation in
-   * {@link ChartActivity#fillDataPoint} by one and two points.
+   * {@link ChartActivity#fillDataPoint(Location, double[])} by one and two points.
    */
   public void testFillDataPoint_elevation() {
-    MyTracksLocation myTracksLocation1 = getMyTracksLocation();
+    MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
     /*
      * At first, clear old points of elevation, so give true to the second
      * parameter. Then only one value INITIALLONGTITUDE in buffer.
      */
     double[] point = fillDataPointTestHelper(myTracksLocation1, true);
-    assertEquals(INITIAL_ALTITUDE, point[1]);
+    assertEquals(TrackStubUtils.INITIAL_ALTITUDE, point[1]);
     /*
      * Send another value to buffer, now there are two values, INITIALALTITUDE
      * and INITIALALTITUDE * 2.
      */
-    MyTracksLocation myTracksLocation2 = getMyTracksLocation();
-    myTracksLocation2.setAltitude(INITIAL_ALTITUDE * 2);
+    MyTracksLocation myTracksLocation2 = TrackStubUtils.createMyTracksLocation();
+    myTracksLocation2.setAltitude(TrackStubUtils.INITIAL_ALTITUDE * 2);
     point = fillDataPointTestHelper(myTracksLocation2, false);
-    assertEquals((INITIAL_ALTITUDE + INITIAL_ALTITUDE * 2) / 2.0, point[1]);
+    assertEquals((TrackStubUtils.INITIAL_ALTITUDE + TrackStubUtils.INITIAL_ALTITUDE * 2) / 2.0, point[1]);
   }
 
   /**
    * Tests the logic to get the value of speed in
-   * {@link ChartActivity#fillDataPoint}. In this test, firstly remove all
+   * {@link ChartActivity#fillDataPoint(Location, double[])}. In this test, firstly remove all
    * points in memory, and then fill in two points one by one. The speed values
    * of these points are 129, 130.
    */
@@ -328,7 +321,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
      * At first, clear old points of speed, so give true to the second
      * parameter. It will not be filled in to the speed buffer.
      */
-    MyTracksLocation myTracksLocation1 = getMyTracksLocation();
+    MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
     myTracksLocation1.setSpeed(129);
     double[] point = fillDataPointTestHelper(myTracksLocation1, true);
     assertEquals(0.0, point[2]);
@@ -337,7 +330,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
      * Tests the logic when both metricUnits and reportSpeed are true.This
      * location will be filled into speed buffer.
      */
-    MyTracksLocation myTracksLocation2 = getMyTracksLocation();
+    MyTracksLocation myTracksLocation2 = TrackStubUtils.createMyTracksLocation();
     // Add a time span here to make sure the second point is valid, the value
     // 222 here is doesn't matter.
     myTracksLocation2.setTime(myTracksLocation1.getTime() + 222);
@@ -352,7 +345,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
   public void testFillDataPoint_speedImperial() {
     // Setups to use imperial.
     chartActivity.onUnitsChanged(false);
-    MyTracksLocation myTracksLocation = getMyTracksLocation();
+    MyTracksLocation myTracksLocation = TrackStubUtils.createMyTracksLocation();
     myTracksLocation.setSpeed(132);
     double[] point = fillDataPointTestHelper(myTracksLocation, true);
     assertEquals(132.0 * METER_PER_SECOND_TO_KILOMETER_PER_HOUR * UnitConversions.KM_TO_MI,
@@ -365,7 +358,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
   public void testFillDataPoint_pace_nonZeroSpeed() {
     // Setups reportSpeed to false.
     chartActivity.onReportSpeedChanged(false);
-    MyTracksLocation myTracksLocation = getMyTracksLocation();
+    MyTracksLocation myTracksLocation = TrackStubUtils.createMyTracksLocation();
     myTracksLocation.setSpeed(134);
     double[] point = fillDataPointTestHelper(myTracksLocation, true);
     assertEquals(HOURS_PER_UNIT / (134.0 * METER_PER_SECOND_TO_KILOMETER_PER_HOUR), point[2]);
@@ -379,31 +372,10 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
   public void testFillDataPoint_pace_zeroSpeed() {
     // Setups reportSpeed to false.
     chartActivity.onReportSpeedChanged(false);
-    MyTracksLocation myTracksLocation = getMyTracksLocation();
+    MyTracksLocation myTracksLocation = TrackStubUtils.createMyTracksLocation();
     myTracksLocation.setSpeed(0);
     double[] point = fillDataPointTestHelper(myTracksLocation, true);
     assertEquals(Double.NaN, point[2]);
-  }
-
-  /**
-   * Simulates a MyTracksLocation for test.
-   * 
-   * @return a simulated location.
-   */
-  private MyTracksLocation getMyTracksLocation() {
-    // Initial Location
-    Location loc = new Location(LOCATION_PROVIDER);
-    loc.setLongitude(INITIAL_LONGTITUDE);
-    loc.setLatitude(INITIAL_LATITUDE);
-    loc.setAltitude(INITIAL_ALTITUDE);
-    loc.setAccuracy(INITIAL_ACCURACY);
-    loc.setSpeed(INITIAL_SPEED);
-    loc.setTime(System.currentTimeMillis());
-    loc.setBearing(INITIAL_BEARING);
-    SensorDataSet sd = SensorDataSet.newBuilder().build();
-    MyTracksLocation myTracksLocation = new MyTracksLocation(loc, sd);
-
-    return myTracksLocation;
   }
 
   /**
