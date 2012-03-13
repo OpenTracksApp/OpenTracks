@@ -44,7 +44,6 @@ import java.lang.reflect.Method;
 public class Api7Adapter implements ApiAdapter {
 
   @Override
-
   public PeriodicTask getStatusAnnouncerTask(Context context) {
     return new StatusAnnouncerTask(context);
   }

@@ -114,10 +114,10 @@ public class ChartActivity extends Activity implements TrackDataListener {
     super.onCreate(savedInstanceState);
 
     // The volume we want to control is the Text-To-Speech volume
-     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
+    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
     // Show the action bar (or nothing at all).
-     ApiAdapterFactory.getApiAdapter().showActionBar(this);
+    ApiAdapterFactory.getApiAdapter().showActionBar(this);
 
     setContentView(R.layout.mytracks_charts);
     ViewGroup layout = (ViewGroup) findViewById(R.id.elevation_chart);

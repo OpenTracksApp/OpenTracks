@@ -87,8 +87,13 @@ class MenuManager {
   }
 
   /**
-   * Updates the action items.
-   * 
+   * Updates the action items.<br>
+   * TODO: also update the action items when
+   * <ul>
+   * <li>start/stop a recording from the home screen widget.<il>
+   * <li>receive a direct service call to start/stop a recording.<il>
+   * </ul>
+   *
    * @param isRecording true if recording a track
    */
   private void updateActionItems(boolean isRecording) {
