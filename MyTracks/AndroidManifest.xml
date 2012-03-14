@@ -25,7 +25,9 @@ limitations under the License.
     android:icon="@drawable/arrow_icon"
     android:label="@string/my_tracks_app_name"
     android:name="com.google.android.apps.mytracks.MyTracksApplication"
-    android:theme="@style/ThemeSelector" >
+    android:theme="@style/ThemeSelector"
+    android:uiOptions="splitActionBarWhenNarrow" >
+
     <activity
       android:label="@string/menu_aggregated_statistics"
       android:name="com.google.android.apps.mytracks.AggregatedStatsActivity" />
@@ -351,6 +353,8 @@ limitations under the License.
   <uses-permission android:name="com.google.android.apps.mytracks.READ_TRACK_DATA" />
   <uses-permission android:name="com.google.android.apps.mytracks.WRITE_TRACK_DATA" />
 
-  <uses-sdk android:minSdkVersion="7" />
+  <uses-sdk
+    android:minSdkVersion="7"
+    android:targetSdkVersion="15" />
 
 </manifest>

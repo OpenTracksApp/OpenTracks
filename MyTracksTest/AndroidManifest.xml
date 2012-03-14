@@ -30,6 +30,8 @@ limitations under the License.
     android:name="android.test.InstrumentationTestRunner"
     android:targetPackage="com.google.android.maps.mytracks" />
 
-  <uses-sdk android:minSdkVersion="7" />
+  <uses-sdk
+    android:minSdkVersion="7"
+    android:targetSdkVersion="15" />
 
 </manifest>

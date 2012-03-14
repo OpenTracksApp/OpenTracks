@@ -29,6 +29,8 @@ limitations under the License.
     android:label="@string/lib_name" >
   </application>
 
-  <uses-sdk android:minSdkVersion="7" />
+  <uses-sdk
+    android:minSdkVersion="7"
+    android:targetSdkVersion="15" />
 
 </manifest>
