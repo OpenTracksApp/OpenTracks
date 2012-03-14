@@ -64,7 +64,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
   }
 
   /**
-   * Tests {@link ChartActivity#zoomIn()} and {@link ChartActivity#zoomOut()}.
+   * Tests zooming in and zooming out.
    */
   public void testZoomInAndZoomOut() {
     currentZoomLevel = chartActivity.getChartView().getZoomLevel();
@@ -382,7 +382,7 @@ public class ChartActivityTest extends ActivityInstrumentationTestCase2<ChartAct
    * Helper method to test fillDataPoint.
    * 
    * @param location location to fill
-   * @param operation a flag to do some operations
+   * @param isNeedClear true to clear the track points
    * @return data of this location
    */
   private double[] fillDataPointTestHelper(Location location, boolean isNeedClear) {

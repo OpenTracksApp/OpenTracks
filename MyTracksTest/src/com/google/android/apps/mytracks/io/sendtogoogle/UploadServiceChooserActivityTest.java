@@ -50,10 +50,7 @@ public class UploadServiceChooserActivityTest extends
   }
 
   /**
-   * Tests the logic to control display all send options. This test cover code
-   * in method {@link UploadServiceChooserActivity#onCreateDialog(int)},
-   * {@link UploadServiceChooserActivity#updateStateBySendRequest()} and
-   * {@link UploadServiceChooserActivity#updateStateBySelection()}.
+   * Tests the logic to display all options.
    */
   public void testOnCreateDialog_displayAll() {
     // Initials activity to display all send items.
@@ -90,10 +87,7 @@ public class UploadServiceChooserActivityTest extends
   }
 
   /**
-   * Tests the logic to check the send to Google Maps option. This test cover
-   * code in method {@link UploadServiceChooserActivity#onCreateDialog(int)},
-   * {@link UploadServiceChooserActivity#updateStateBySendRequest()} and
-   * {@link UploadServiceChooserActivity#updateStateBySelection()}.
+   * Tests the logic to display only the "Send to Google Maps" option.
    */
   public void testOnCreateDialog_displayOne() {
     // Initials activity to display all send items.
@@ -119,10 +113,7 @@ public class UploadServiceChooserActivityTest extends
   }
 
   /**
-   * Tests the logic to control display none. This test cover code in method
-   * {@link UploadServiceChooserActivity#onCreateDialog(int)},
-   * {@link UploadServiceChooserActivity#updateStateBySendRequest()} and
-   * {@link UploadServiceChooserActivity#updateStateBySelection()}.
+   * Tests the logic to display no option.
    */
   public void testOnCreateDialog_displayNone() {
     initialActivity(false, false, false);
@@ -193,11 +184,8 @@ public class UploadServiceChooserActivityTest extends
 
   /**
    * Tests the logic of saveState when click send button. This test cover code
-   * in method {@link UploadServiceChooserActivity#saveState()},
-   * {@link UploadServiceChooserActivity#initState()} ,
-   * {@link UploadServiceChooserActivity#sendMaps()},
-   * {@link UploadServiceChooserActivity#sendFusionTables()}, and
-   * {@link UploadServiceChooserActivity#sendDocs()}.
+   * in method {@link UploadServiceChooserActivity#initState()} and
+   * {@link UploadServiceChooserActivity#saveState()},
    */
   public void testOnCreateDialog_saveState() {
     initialActivity(true, true, true);
@@ -228,12 +216,8 @@ public class UploadServiceChooserActivityTest extends
 
   /**
    * Tests the logic of startNextActivity when click send button. This test
-   * cover code in method
-   * {@link UploadServiceChooserActivity#startNextActivity()} ,
-   * {@link UploadServiceChooserActivity#initState()} ,
-   * {@link UploadServiceChooserActivity#sendMaps()},
-   * {@link UploadServiceChooserActivity#sendFusionTables()}, and
-   * {@link UploadServiceChooserActivity#sendDocs()}.
+   * cover code in method {@link UploadServiceChooserActivity#initState()} and
+   * {@link UploadServiceChooserActivity#startNextActivity()}.
    */
   public void testOnCreateDialog_startNextActivity() {
     initialActivity(true, true, true);

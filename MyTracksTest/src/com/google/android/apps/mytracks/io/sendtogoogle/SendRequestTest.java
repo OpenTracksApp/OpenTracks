@@ -171,7 +171,7 @@ public class SendRequestTest extends AndroidTestCase {
   }
 
   /**
-   * Tests {@link SendRequest#SendRequest(Parcel in)} when all values are true.
+   * Tests SendRequest.CREATOR.createFromParcel when all values are true.
    */
   public void testCreateFromParcel_true() {
     Parcel sourceParcel = Parcel.obtain();
@@ -208,7 +208,7 @@ public class SendRequestTest extends AndroidTestCase {
   }
 
   /**
-   * Tests {@link SendRequest#SendRequest(Parcel in)} when all values are false.
+   * Tests SendRequest.CREATOR.createFromParcel when all values are false.
    */
   public void testCreateFromParcel_false() {
     Parcel sourceParcel = Parcel.obtain();
