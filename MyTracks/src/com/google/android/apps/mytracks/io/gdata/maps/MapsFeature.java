@@ -14,8 +14,6 @@ import java.util.Vector;
  */
 public class MapsFeature {
 
-  private static final long serialVersionUID = 8439035544430497236L;
-
   /** A marker feature displays an icon at a single point on the map. */
   public static final int MARKER = 0;
 

@@ -79,10 +79,8 @@ public class AntInterface {
     private static boolean mAntSupported = false;
 
     /**
-     * An interface for notifying AntInterface IPC clients when they have
-     * been connected to the ANT service.
-     *
-     * @see ServiceEvent
+     * An interface for notifying AntInterface IPC clients when they have been
+     * connected to the ANT service.
      */
     public interface ServiceListener
     {
@@ -1046,8 +1044,6 @@ public class AntInterface {
      *
      * @param channelNumber Which channel to transmit on.
      * @param txBuffer The data to send.
-     * @param initialPacket Which packet in the burst sequence does the data begin in, 1 is the first.
-     * @param containsEndOfBurst Is this the last of the data to be sent in burst.
      * @return The number of bytes still to be sent (approximately).  0 if success.
      * @throws AntInterfaceException
      * @throws AntServiceNotConnectedException
@@ -1213,7 +1209,7 @@ public class AntInterface {
      * Claims the interface if it is available.  If not the user will be prompted (on the notification bar) if a force claim should be done.
      * If the ANT Interface is claimed, an AntInterfaceIntent.ANT_INTERFACE_CLAIMED_ACTION intent will be sent, with the current applications pid.
      *
-     * @param String appName The name if this application, to show to the user.
+     * @param appName The name if this application, to show to the user.
      * @returns false if a claim interface request notification already exists.
      * @throws IllegalArgumentException
      * @throws AntInterfaceException

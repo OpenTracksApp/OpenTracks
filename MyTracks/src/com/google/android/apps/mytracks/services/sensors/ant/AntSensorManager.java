@@ -49,7 +49,7 @@ import android.util.Log;
  * Initialization begins in {@link #setupChannel}, which is invoked by the
  * {@link SensorManager} when track recording begins.  {@link #setupChannel}
  * asks the ANT Radio Service (via {@link AntInterface}) to start, using a
- * {@link AntInterface.ServiceListener} to indicate when the service has
+ * AntInterface.ServiceListener to indicate when the service has
  * connected.  {@link #serviceConnected} claims and enables the Radio Service,
  * and then resets it to a known state for our use.  Completion of reset is
  * indicated by receipt of a startup message (see {@link AntStartupMessage}).
