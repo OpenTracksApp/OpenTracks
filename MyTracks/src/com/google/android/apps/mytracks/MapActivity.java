@@ -22,13 +22,14 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener;
-import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.io.sendtogoogle.UploadServiceChooserActivity;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.GeoRect;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PlayTrackUtils;
@@ -38,10 +39,12 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Dialog;
-import android.content.ContentUris;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.Settings;
@@ -74,7 +77,8 @@ public class MapActivity extends com.google.android.maps.MapActivity
     implements View.OnTouchListener, View.OnClickListener,
         TrackDataListener {
 
-  private static final int DIALOG_INSTALL_EARTH = 0;
+  private static final int DIALOG_INSTALL_EARTH_ID = 0;
+  private static final int DIALOG_DELETE_CURRENT_ID = 1;
 
   // Saved instance state keys:
   // ---------------------------
@@ -240,8 +244,26 @@ public class MapActivity extends com.google.android.maps.MapActivity
   @Override
   protected Dialog onCreateDialog(int id) {
     switch (id) {
-      case DIALOG_INSTALL_EARTH:
+      case DIALOG_INSTALL_EARTH_ID:
         return PlayTrackUtils.createInstallEarthDialog(this);
+      case DIALOG_DELETE_CURRENT_ID:
+        return DialogUtils.createConfirmationDialog(this,
+            R.string.track_list_delete_track_confirm_message,
+            new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int which) {
+                long trackId = dataHub.getSelectedTrackId();
+                MyTracksProviderUtils.Factory.get(MapActivity.this).deleteTrack(trackId);
+                // If the deleted track was selected, unselect it.
+                String selectedTrackKey = getString(R.string.selected_track_key);
+                SharedPreferences sharedPreferences = getSharedPreferences(
+                    Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+                if (sharedPreferences.getLong(selectedTrackKey, -1L) == trackId) {
+                  Editor editor = sharedPreferences.edit().putLong(selectedTrackKey, -1L);
+                  ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
+                }
+              }
+            });
       default:
         return null;
     }
@@ -490,7 +512,7 @@ public class MapActivity extends com.google.android.maps.MapActivity
           PlayTrackUtils.playTrack(this, trackId);
           return true;
         } else {
-          showDialog(DIALOG_INSTALL_EARTH);
+          showDialog(DIALOG_INSTALL_EARTH_ID);
           return true;
         }
       case Constants.MENU_SEND_TO_GOOGLE:
@@ -564,9 +586,7 @@ public class MapActivity extends com.google.android.maps.MapActivity
         dataHub.unloadCurrentTrack();
         return true;
       case Constants.MENU_DELETE:
-        Uri uri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId);
-        intent = new Intent(Intent.ACTION_DELETE, uri);
-        startActivity(intent);
+        showDialog(DIALOG_DELETE_CURRENT_ID);
         return true;
       default:
         return super.onMenuItemSelected(featureId, item);
