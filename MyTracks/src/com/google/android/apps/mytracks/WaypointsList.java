@@ -24,10 +24,11 @@ import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
+import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -57,9 +58,10 @@ import android.widget.Toast;
  *
  * @author Leif Hendrik Wilden
  */
-public class WaypointsList extends ListActivity
-    implements View.OnClickListener {
+public class WaypointsList extends ListActivity implements View.OnClickListener {
 
+  private static final int DIALOG_DELETE_CURRENT_ID = 0;
+  
   private int contextPosition = -1;
   private long trackId = -1;
   private long selectedWaypointId = -1;
@@ -119,7 +121,7 @@ public class WaypointsList extends ListActivity
           return true;
         }
         case Constants.MENU_DELETE: {
-          deleteWaypoint(selectedWaypointId);
+          showDialog(DIALOG_DELETE_CURRENT_ID);          
         }
       }
     }
@@ -199,6 +201,24 @@ public class WaypointsList extends ListActivity
     super.onDestroy();
   }
 
+  @Override
+  protected Dialog onCreateDialog(int id) {
+    switch (id) {
+      case DIALOG_DELETE_CURRENT_ID:
+        return DialogUtils.createConfirmationDialog(this,
+            R.string.marker_list_delete_marker_confirm_message,
+            new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int which) {
+                providerUtils.deleteWaypoint(
+                    selectedWaypointId, new DescriptionGeneratorImpl(WaypointsList.this));
+              }
+            });
+      default:
+        return null;
+    }
+  }
+  
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.search_only, menu);
@@ -302,35 +322,5 @@ public class WaypointsList extends ListActivity
       }
     });
     setListAdapter(adapter);
-  }
-
-  /**
-   * Deletes the way point with the given id.
-   * Prompts the user if he want to really delete it.
-   */
-  public void deleteWaypoint(final long waypointId) {
-    AlertDialog dialog = null;
-    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    builder.setMessage(getString(R.string.marker_list_delete_marker_confirm_message));
-    builder.setTitle(getString(R.string.generic_confirm_title));
-    builder.setIcon(android.R.drawable.ic_dialog_alert);
-    builder.setPositiveButton(getString(R.string.generic_yes),
-        new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick(DialogInterface dialogInterface, int i) {
-            dialogInterface.dismiss();
-            providerUtils.deleteWaypoint(waypointId,
-                new DescriptionGeneratorImpl(WaypointsList.this));
-          }
-        });
-    builder.setNegativeButton(getString(R.string.generic_no),
-        new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick(DialogInterface dialogInterface, int i) {
-            dialogInterface.dismiss();
-          }
-        });
-    dialog = builder.create();
-    dialog.show();
   }
 }

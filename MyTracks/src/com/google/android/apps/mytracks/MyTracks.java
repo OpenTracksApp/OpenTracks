@@ -68,7 +68,10 @@ import android.widget.Toast;
 @SuppressWarnings("deprecation")
 public class MyTracks extends TabActivity implements OnTouchListener {
   private static final int DIALOG_EULA_ID = 0;
-
+  private static final int DIALOG_CHECK_UNITS_ID = 1;
+  private static final String CHECK_UNITS_PREFERENCE_FILE = "checkunits";
+  private static final String CHECK_UNITS_PREFERENCE_KEY = "checkunits.checked";
+  
   private TrackDataHub dataHub;
 
   /**
@@ -260,31 +263,59 @@ public class MyTracks extends TabActivity implements OnTouchListener {
   protected Dialog onCreateDialog(int id) {
     switch (id) {
       case DIALOG_EULA_ID:
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.eula_title);
-        builder.setMessage(EulaUtils.getEulaMessage(this));
-        builder.setPositiveButton(R.string.eula_accept, new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick(DialogInterface dialog, int which) {
-            EulaUtils.setEulaValue(MyTracks.this);
-            Intent startIntent = new Intent(MyTracks.this, WelcomeActivity.class);
-            startActivityForResult(startIntent, Constants.WELCOME);
-          }
-        });
-        builder.setNegativeButton(R.string.eula_decline, new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick(DialogInterface dialog, int which) {
-            finish();
-          }
-        });
-        builder.setCancelable(true);
-        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-          @Override
-          public void onCancel(DialogInterface dialog) {
-            finish();
-          }
-        });
-        return builder.create();
+        return new AlertDialog.Builder(this)
+            .setCancelable(true)
+            .setMessage(EulaUtils.getEulaMessage(this))
+            .setNegativeButton(R.string.eula_decline, new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int which) {
+                finish();
+              }
+            })
+            .setOnCancelListener(new DialogInterface.OnCancelListener() {
+              @Override
+              public void onCancel(DialogInterface dialog) {
+                finish();
+              }
+            })
+            .setPositiveButton(R.string.eula_accept, new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int which) {
+                EulaUtils.setEulaValue(MyTracks.this);
+                Intent startIntent = new Intent(MyTracks.this, WelcomeActivity.class);
+                startActivityForResult(startIntent, Constants.WELCOME);
+              }
+            })
+            .setTitle(R.string.eula_title)
+            .create();
+      case DIALOG_CHECK_UNITS_ID:
+        return new AlertDialog.Builder(this)
+            .setCancelable(true)
+            .setOnCancelListener(new DialogInterface.OnCancelListener() {
+              public void onCancel(DialogInterface dialog) {
+                SharedPreferences sharedPreferences = getSharedPreferences(
+                    CHECK_UNITS_PREFERENCE_FILE, Context.MODE_PRIVATE);
+                ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(
+                    sharedPreferences.edit().putBoolean(CHECK_UNITS_PREFERENCE_KEY, true));
+              }
+            })
+            .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+              public void onClick(DialogInterface dialog, int which) {
+                SharedPreferences sharedPreferences = getSharedPreferences(
+                    CHECK_UNITS_PREFERENCE_FILE, Context.MODE_PRIVATE);
+                ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(
+                    sharedPreferences.edit().putBoolean(CHECK_UNITS_PREFERENCE_KEY, true));
+
+                int position = ((AlertDialog) dialog).getListView().getSelectedItemPosition();
+                SharedPreferences.Editor editor = preferences.edit();
+                ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(
+                    editor.putBoolean(getString(R.string.metric_units_key), position == 0));
+              }
+            })
+            .setSingleChoiceItems(new CharSequence[] { getString(R.string.preferred_units_metric),
+                getString(R.string.preferred_units_imperial) }, 0, null)
+            .setTitle(R.string.preferred_units_title)
+            .create();
       default:
         return null;
     }
@@ -368,7 +399,11 @@ public class MyTracks extends TabActivity implements OnTouchListener {
         break;
       }
       case Constants.WELCOME: {
-        CheckUnits.check(this);
+        SharedPreferences sharedPreferences = getSharedPreferences(
+            CHECK_UNITS_PREFERENCE_FILE, Context.MODE_PRIVATE);
+        if (!sharedPreferences.getBoolean(CHECK_UNITS_PREFERENCE_KEY, false)) {
+          showDialog(DIALOG_CHECK_UNITS_ID);
+        }
         break;
       }
 
