@@ -51,8 +51,8 @@ public class SaveActivity extends Activity {
 
   private static final String TAG = SaveActivity.class.getSimpleName();
 
-  private static final int DIALOG_PROGRESS_ID = 1;
-  private static final int DIALOG_RESULT_ID = 2;
+  private static final int DIALOG_PROGRESS_ID = 0;
+  private static final int DIALOG_RESULT_ID = 1;
 
   private long trackId;
   private TrackFileFormat trackFileFormat;
