@@ -90,14 +90,11 @@ public class ExportAllActivity extends Activity {
    * Invokes when the associated AsyncTask completes.
    *
    * @param success true if the AsyncTask is successful
+   * @param messageId message id to display to user
    */
-  public void onAsyncTaskCompleted(boolean success) {
+  public void onAsyncTaskCompleted(boolean success, int messageId) {
     removeDialog(DIALOG_PROGRESS_ID);
-    if (success) {
-      Toast.makeText(this, R.string.export_success, Toast.LENGTH_SHORT).show();
-    } else {
-      Toast.makeText(this, R.string.export_error, Toast.LENGTH_LONG).show();
-    }
+    Toast.makeText(this, messageId, success ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG).show();
     finish();
   }
 

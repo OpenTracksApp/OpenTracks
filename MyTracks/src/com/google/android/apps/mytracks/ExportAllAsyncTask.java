@@ -50,6 +50,9 @@ public class ExportAllAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   // true if the AsyncTask has completed
   private boolean completed;
 
+  // message id to return to the activity
+  private int messageId;
+  
   /**
    * Creates an AsyncTask.
    *
@@ -74,6 +77,7 @@ public class ExportAllAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     }
     success = false;
     completed = false;
+    messageId = R.string.export_error;
   }
 
   /**
@@ -84,7 +88,7 @@ public class ExportAllAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   public void setActivity(ExportAllActivity exportAllActivity) {
     this.exportAllActivity = exportAllActivity;
     if (completed && exportAllActivity != null) {
-      exportAllActivity.onAsyncTaskCompleted(success);
+      exportAllActivity.onAsyncTaskCompleted(success, messageId);
     }
   }
 
@@ -101,6 +105,7 @@ public class ExportAllAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     try {
       cursor = myTracksProviderUtils.getTracksCursor(null, null, TracksColumns._ID);
       if (cursor == null) {
+        messageId = R.string.export_success;
         return true;
       }
       int count = cursor.getCount();
@@ -119,14 +124,20 @@ public class ExportAllAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         trackWriter.writeTrack();
 
         if (!trackWriter.wasSuccess()) {
+          messageId = trackWriter.getErrorMessage();
           return false;
         }
         publishProgress(i + 1, count);
       }
+      messageId = R.string.export_success;
       return true;
     } finally {
       if (cursor != null) {
         cursor.close();
+      }
+      // Release the wake lock if obtained
+      if (wakeLock != null && wakeLock.isHeld()) {
+        wakeLock.release();
       }
     }
   }
@@ -140,14 +151,10 @@ public class ExportAllAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
   @Override
   protected void onPostExecute(Boolean result) {
-    // Release the wake lock if obtained
-    if (wakeLock != null && wakeLock.isHeld()) {
-      wakeLock.release();
-    }
     success = result;
     completed = true;
     if (exportAllActivity != null) {
-      exportAllActivity.onAsyncTaskCompleted(success);
+      exportAllActivity.onAsyncTaskCompleted(success, messageId);
     }
   }
 
