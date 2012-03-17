@@ -268,18 +268,17 @@ public class TrackList extends ListActivity
   @Override
   public void onClick(View v) {
     switch (v.getId()) {
-      case R.id.tracklist_btn_delete_all: {
+      case R.id.tracklist_btn_delete_all:
         showDialog(DIALOG_DELETE_ALL_ID);
         break;
-      }
-      case R.id.tracklist_btn_export_all: {
+      case R.id.tracklist_btn_export_all:
         showDialog(DIALOG_EXPORT_ALL_ID);
         break;
-      }
-      case R.id.tracklist_btn_import_all: {
-        new ImportAllTracks(this);
-        break;
-      }
+      case R.id.tracklist_btn_import_all:
+        Intent intent = new Intent(this, ImportActivity.class)
+            .putExtra(ImportActivity.EXTRA_IMPORT_ALL, true);
+        startActivity(intent);
+        break;          
     }
   }
 

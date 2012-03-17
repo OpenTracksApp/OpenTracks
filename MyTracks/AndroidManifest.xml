@@ -235,7 +235,7 @@ limitations under the License.
       </intent-filter>
     </activity>
 
-    <activity android:name="com.google.android.apps.mytracks.io.file.ImportActivity"
+    <activity android:name="com.google.android.apps.mytracks.ImportActivity"
               android:label="@string/my_tracks_importer"
               android:theme="@android:style/Theme.Translucent.NoTitleBar"
               android:noHistory="true">
