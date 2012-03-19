@@ -49,14 +49,6 @@ public abstract class Constants {
   public static final int WELCOME = 10;
 
   /*
-   * Menu ids:
-   */
-
-  public static final int MENU_MY_LOCATION = 1;
-  public static final int MENU_TOGGLE_LAYERS = 2;
-  public static final int MENU_CHART_SETTINGS = 3;
-
-  /*
    * Context menu ids. Sorted alphabetically.
    */
   public static final int MENU_CLEAR_MAP = 100;
@@ -77,6 +69,13 @@ public abstract class Constants {
   public static final int MENU_SHARE_TCX_FILE = 115;
   public static final int MENU_SHOW = 116;
   public static final int MENU_WRITE_TO_SD_CARD = 117;
+  /*
+   * Main screen tab tags:
+   */
+
+  public static final String MAP_TAB_TAG = "map";
+  public static final String STATS_TAB_TAG = "stats";
+  public static final String CHART_TAB_TAG = "chart";
 
   /**
    * The number of distance readings to smooth to get a stable signal.

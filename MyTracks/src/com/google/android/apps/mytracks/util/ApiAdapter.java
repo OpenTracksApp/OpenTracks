@@ -19,6 +19,7 @@ import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
 import com.google.android.apps.mytracks.services.tasks.PeriodicTask;
 import com.google.api.client.http.HttpTransport;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
@@ -98,4 +99,15 @@ public interface ApiAdapter {
    * @param bluetoothDevice
    */
   public BluetoothSocket getBluetoothSocket(BluetoothDevice bluetoothDevice) throws IOException;
+  
+ /**
+   * Shows the action bar, if the current system supports it.
+   * If it's not supported, the title bar will be kept hidden.
+   *
+   * Due to changes in API level 11.
+   *
+   * @param activity the current activity
+   */
+  public void showActionBar(Activity activity);
+
 }

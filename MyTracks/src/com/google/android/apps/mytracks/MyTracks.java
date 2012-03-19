@@ -15,6 +15,9 @@
  */
 package com.google.android.apps.mytracks;
 
+import static com.google.android.apps.mytracks.Constants.CHART_TAB_TAG;
+import static com.google.android.apps.mytracks.Constants.MAP_TAB_TAG;
+import static com.google.android.apps.mytracks.Constants.STATS_TAB_TAG;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
@@ -54,7 +57,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
-import android.view.Window;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.Toast;
@@ -148,23 +150,23 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     serviceConnection = new TrackRecordingServiceConnection(this, serviceBindCallback);
 
     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
-
-    // We don't need a window title bar:
-    requestWindowFeature(Window.FEATURE_NO_TITLE);
+    
+    // Show the action bar (or nothing at all).
+    ApiAdapterFactory.getApiAdapter().showActionBar(this);
 
     // If the user just starts typing (on a device with a keyboard), we start a search.
     setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
     final Resources res = getResources();
     final TabHost tabHost = getTabHost();
-    tabHost.addTab(tabHost.newTabSpec("tab1")
+    tabHost.addTab(tabHost.newTabSpec(MAP_TAB_TAG)
         .setIndicator("Map", res.getDrawable(
             android.R.drawable.ic_menu_mapmode))
         .setContent(new Intent(this, MapActivity.class)));
-    tabHost.addTab(tabHost.newTabSpec("tab2")
+    tabHost.addTab(tabHost.newTabSpec(STATS_TAB_TAG)
         .setIndicator("Stats", res.getDrawable(R.drawable.menu_stats))
         .setContent(new Intent(this, StatsActivity.class)));
-    tabHost.addTab(tabHost.newTabSpec("tab3")
+    tabHost.addTab(tabHost.newTabSpec(CHART_TAB_TAG)
         .setIndicator("Chart", res.getDrawable(R.drawable.menu_elevation))
         .setContent(new Intent(this, ChartActivity.class)));
 
@@ -298,9 +300,15 @@ public class MyTracks extends TabActivity implements OnTouchListener {
 
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
+    MapActivity map = getMapTab();
+    boolean isSatelliteView = map != null ? map.isSatelliteView() : false;
+
     menuManager.onPrepareOptionsMenu(menu, providerUtils.getLastTrack() != null,
         ServiceUtils.isRecording(this, serviceConnection.getServiceIfBound(), preferences),
-        dataHub.isATrackSelected());
+        dataHub.isATrackSelected(),
+        isSatelliteView,
+        getTabHost().getCurrentTabTag());
+
     return super.onPrepareOptionsMenu(menu);
   }
 
@@ -362,7 +370,11 @@ public class MyTracks extends TabActivity implements OnTouchListener {
         if (results != null) {
           final long waypointId = results.getLongExtra(WaypointDetails.WAYPOINT_ID_EXTRA, -1);
           if (waypointId >= 0) {
-            showWaypoint(trackId, waypointId);
+            MapActivity map = getMapTab();
+            if (map != null) {
+              getTabHost().setCurrentTab(0);
+              map.showWaypoint(waypointId);
+            }
           }
         }
         break;
@@ -485,5 +497,49 @@ public class MyTracks extends TabActivity implements OnTouchListener {
 
   long getSelectedTrackId() {
     return dataHub.getSelectedTrackId();
+  }
+
+  /**
+   * Asks the chart tab to show its settings.
+   */
+  public void showChartSettings() {
+    ChartActivity chart = getChartTab();
+    if (chart != null) {
+      chart.showDialog(ChartActivity.CHART_SETTINGS_DIALOG);
+    }
+  }
+
+  /**
+   * Asks the map tab to show the map in satellite mode.
+   */
+  public void toggleSatelliteView() {
+    MapActivity mapTab = getMapTab();
+    if (mapTab != null) {
+      mapTab.setSatelliteView(!mapTab.isSatelliteView());
+    }
+  }
+
+  /**
+   * Asks the map tab to jump to the current location.
+   */
+  public void showMyLocation() {
+    MapActivity mapTab = getMapTab();
+    if (mapTab != null) {
+      mapTab.showMyLocation();
+    }
+  }
+
+  /**
+   * Returns the map tab instance if available, or null otherwise.
+   */
+  private MapActivity getMapTab() {
+    return (MapActivity) getLocalActivityManager().getActivity(MAP_TAB_TAG);
+  }
+
+  /**
+   * Returns the chart tab instance if available, or null otherwise.
+   */
+  private ChartActivity getChartTab() {
+    return (ChartActivity) getLocalActivityManager().getActivity(CHART_TAB_TAG);
   }
 }

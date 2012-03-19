@@ -57,7 +57,6 @@ limitations under the License.
             android:text="@string/send_google_maps"
             style="?android:attr/textAppearanceMedium"/>
           <TextView
-            android:id="@+id/upload_result_list_item_url"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:text="@string/send_google_maps_url"
@@ -87,7 +86,6 @@ limitations under the License.
             android:text="@string/send_google_fusion_tables"
             style="?android:attr/textAppearanceMedium"/>
           <TextView
-            android:id="@+id/upload_result_list_item_url"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:text="@string/send_google_fusion_tables_url"
@@ -117,7 +115,6 @@ limitations under the License.
             android:text="@string/send_google_docs"
             style="?android:attr/textAppearanceMedium"/>
           <TextView
-            android:id="@+id/upload_result_list_item_url"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:text="@string/send_google_docs_url"
