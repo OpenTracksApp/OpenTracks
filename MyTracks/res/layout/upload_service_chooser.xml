@@ -39,6 +39,7 @@ limitations under the License.
       <!-- Google Maps -->
       <TableRow android:id="@+id/send_google_maps_row">
         <ImageView
+          android:contentDescription="@string/send_google_maps"
           android:src="@drawable/maps_icon"
           style="@style/SendGoogleImageView"/>
         <CheckBox
@@ -66,6 +67,7 @@ limitations under the License.
       <!-- Google Fusion Tables -->
       <TableRow android:id="@+id/send_google_fusion_tables_row">
         <ImageView
+          android:contentDescription="@string/send_google_fusion_tables"
           android:src="@drawable/googledocs_icon"
           style="@style/SendGoogleImageView"/>
         <CheckBox
@@ -77,6 +79,7 @@ limitations under the License.
       <!-- Google Docs -->
       <TableRow android:id="@+id/send_google_docs_row">
         <ImageView
+          android:contentDescription="@string/send_google_docs"
           android:src="@drawable/googledocs_icon"
           style="@style/SendGoogleImageView"/>
         <CheckBox

@@ -21,7 +21,7 @@ limitations under the License.
   android:background="#c000">
   <ScrollView
     android:id="@+id/scrolly"
-    android:layout_height="0dip"
+    android:layout_height="0dp"
     android:layout_weight="1"
     android:layout_width="fill_parent"
     android:scrollbarStyle="insideInset">
@@ -38,12 +38,13 @@ limitations under the License.
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageView android:id="@+id/waypointdetails_icon"
+          android:contentDescription="@string/marker_icon_description"
           android:src="@drawable/ylw_pushpin"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center"
-          android:paddingLeft="4dip"
-          android:paddingRight="2dip"/>
+          android:paddingLeft="4dp"
+          android:paddingRight="2dp"/>
         <EditText android:id="@+id/waypointdetails_name"
          android:layout_width="fill_parent"
          android:layout_height="wrap_content"
@@ -57,7 +58,7 @@ limitations under the License.
       <LinearLayout android:id="@+id/waypointdetails_description_layout"
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="0dip"
+        android:layout_height="0dp"
         android:visibility="visible"
         android:layout_weight="1">
         <TextView android:id="@+id/waypointdetails_category_label"
@@ -75,7 +76,7 @@ limitations under the License.
           android:layout_height="wrap_content"/>
         <EditText android:id="@+id/waypointdetails_description"
           android:layout_width="fill_parent"
-          android:layout_height="0dip"
+          android:layout_height="0dp"
           android:singleLine="false"
           android:autoText="true"
           android:capitalize="sentences"
@@ -90,13 +91,13 @@ limitations under the License.
 
       <TableLayout android:id="@+id/waypoint_stats"
         android:visibility="gone"
-        android:padding="2dip"
+        android:padding="2dp"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:stretchColumns="1,4">
         <!-- Total distance and max speed -->
         <TableRow
-          android:padding="1dip">
+          android:padding="1dp">
           <TextView
             android:id="@+id/total_distance_label"
             android:layout_column="1"
@@ -114,8 +115,8 @@ limitations under the License.
             android:gravity="right"
             android:id="@+id/total_distance_register"
             android:layout_column="1"
-            android:layout_marginBottom="-9dip"
-            android:layout_marginTop="-9dip"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
             android:text="@string/value_unknown"
             android:textColor="@color/stat_label_text"
             android:textSize="40sp" />
@@ -123,8 +124,8 @@ limitations under the License.
             android:gravity="left"
             android:id="@+id/total_distance_unit_label"
             android:layout_column="2"
-            android:layout_marginBottom="-9dip"
-            android:layout_marginTop="-9dip"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
             android:text="@string/unit_mile"
             android:textColor="@color/stat_label_text" />
           <!-- TODO 4/08/2009
@@ -135,16 +136,16 @@ limitations under the License.
           <TextView
             android:background="@color/black"
             android:layout_column="3"
-            android:layout_marginBottom="-9dip"
-            android:layout_marginTop="-9dip"
-            android:layout_width="5dip"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:layout_width="5dp"
             android:textSize="40sp" />
           <TextView
             android:gravity="right"
             android:id="@+id/max_speed_register"
             android:layout_column="4"
-            android:layout_marginBottom="-9dip"
-            android:layout_marginTop="-9dip"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
             android:text="@string/value_unknown"
             android:textColor="@color/stat_label_text"
             android:textSize="40sp" />
@@ -158,20 +159,20 @@ limitations under the License.
               android:id="@+id/max_speed_unit_label_top"
               android:gravity="bottom"
               android:layout_height="wrap_content"
-              android:layout_marginBottom="-1dip"
-              android:layout_marginTop="-1dip"
+              android:layout_marginBottom="-1dp"
+              android:layout_marginTop="-1dp"
               android:layout_width="wrap_content"
               android:textColor="@color/stat_label_text" />
             <TextView
               android:background="@color/black"
-              android:layout_height="3dip"
+              android:layout_height="3dp"
               android:layout_width="fill_parent" />
             <TextView
               android:id="@+id/max_speed_unit_label_bottom"
               android:gravity="bottom"
               android:layout_height="wrap_content"
-              android:layout_marginBottom="-1dip"
-              android:layout_marginTop="-1dip"
+              android:layout_marginBottom="-1dp"
+              android:layout_marginTop="-1dp"
               android:layout_width="wrap_content"
               android:textColor="@color/stat_label_text" />
           </LinearLayout>
@@ -197,8 +198,8 @@ limitations under the License.
             android:id="@+id/total_time_register"
             android:layout_column="1"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="-9dip"
-            android:layout_marginTop="-9dip"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
             android:layout_span="2"
             android:layout_width="fill_parent"
             android:text="@string/value_unknown"
@@ -207,16 +208,16 @@ limitations under the License.
           <TextView
             android:background="@color/black"
             android:layout_column="3"
-            android:layout_marginBottom="-9dip"
-            android:layout_marginTop="-9dip"
-            android:layout_width="5dip"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:layout_width="5dp"
             android:textSize="40sp" />
           <TextView
             android:gravity="right"
             android:id="@+id/average_speed_register"
             android:layout_column="4"
-            android:layout_marginBottom="-9dip"
-            android:layout_marginTop="-9dip"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
             android:text="@string/value_unknown"
             android:textColor="@color/stat_label_text"
             android:textSize="40sp" />
@@ -230,20 +231,20 @@ limitations under the License.
               android:id="@+id/average_speed_unit_label_top"
               android:gravity="bottom"
               android:layout_height="wrap_content"
-              android:layout_marginBottom="-1dip"
-              android:layout_marginTop="-1dip"
+              android:layout_marginBottom="-1dp"
+              android:layout_marginTop="-1dp"
               android:layout_width="wrap_content"
               android:textColor="@color/stat_label_text" />
             <TextView
               android:background="@color/black"
-              android:layout_height="3dip"
+              android:layout_height="3dp"
               android:layout_width="fill_parent" />
             <TextView
               android:id="@+id/average_speed_unit_label_bottom"
               android:gravity="bottom"
               android:layout_height="wrap_content"
-              android:layout_marginBottom="-1dip"
-              android:layout_marginTop="-1dip"
+              android:layout_marginBottom="-1dp"
+              android:layout_marginTop="-1dp"
               android:layout_width="wrap_content"
               android:textColor="@color/stat_label_text" />
           </LinearLayout>
@@ -269,8 +270,8 @@ limitations under the License.
             android:id="@+id/moving_time_register"
             android:layout_column="1"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="-9dip"
-            android:layout_marginTop="-9dip"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
             android:layout_width="fill_parent"
             android:layout_span="2"
             android:text="@string/value_unknown"
@@ -279,16 +280,16 @@ limitations under the License.
           <TextView
             android:background="@color/black"
             android:layout_column="3"
-            android:layout_marginBottom="-9dip"
-            android:layout_marginTop="-9dip"
-            android:layout_width="5dip"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:layout_width="5dp"
             android:textSize="40sp" />
           <TextView
             android:gravity="right"
             android:id="@+id/average_moving_speed_register"
             android:layout_column="4"
-            android:layout_marginBottom="-9dip"
-            android:layout_marginTop="-9dip"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
             android:text="@string/value_unknown"
             android:textColor="@color/stat_label_text"
             android:textSize="40sp" />
@@ -302,20 +303,20 @@ limitations under the License.
               android:id="@+id/average_moving_speed_unit_label_top"
               android:gravity="bottom"
               android:layout_height="wrap_content"
-              android:layout_marginBottom="-1dip"
-              android:layout_marginTop="-1dip"
+              android:layout_marginBottom="-1dp"
+              android:layout_marginTop="-1dp"
               android:layout_width="wrap_content"
               android:textColor="@color/stat_label_text" />
             <TextView
               android:background="@color/black"
-              android:layout_height="3dip"
+              android:layout_height="3dp"
               android:layout_width="fill_parent" />
             <TextView
               android:id="@+id/average_moving_speed_unit_label_bottom"
               android:gravity="bottom"
               android:layout_height="wrap_content"
-              android:layout_marginBottom="-1dip"
-              android:layout_marginTop="-1dip"
+              android:layout_marginBottom="-1dp"
+              android:layout_marginTop="-1dp"
               android:layout_width="wrap_content"
               android:textColor="@color/stat_label_text" />
           </LinearLayout>
@@ -340,8 +341,8 @@ limitations under the License.
             android:gravity="right"
             android:id="@+id/elevation_register"
             android:layout_column="1"
-            android:layout_marginBottom="-9dip"
-            android:layout_marginTop="-9dip"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
             android:text="@string/value_unknown"
             android:textColor="@color/stat_label_text"
             android:textSize="40sp" />
@@ -349,23 +350,23 @@ limitations under the License.
             android:gravity="left"
             android:id="@+id/elevation_unit_label"
             android:layout_column="2"
-            android:layout_marginBottom="-9dip"
-            android:layout_marginTop="-9dip"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
             android:text="@string/unit_feet"
             android:textColor="@color/stat_label_text"/>
           <TextView
             android:background="@color/black"
             android:layout_column="3"
-            android:layout_marginBottom="-9dip"
-            android:layout_marginTop="-9dip"
-            android:layout_width="5dip"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:layout_width="5dp"
             android:textSize="40sp" />
           <TextView
             android:gravity="right"
             android:id="@+id/elevation_gain_register"
             android:layout_column="4"
-            android:layout_marginBottom="-9dip"
-            android:layout_marginTop="-9dip"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
             android:text="@string/value_unknown"
             android:textColor="@color/stat_label_text"
             android:textSize="40sp" />
@@ -373,8 +374,8 @@ limitations under the License.
             android:gravity="left"
             android:id="@+id/elevation_gain_unit_label"
             android:layout_column="5"
-            android:layout_marginBottom="-9dip"
-            android:layout_marginTop="-9dip"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
             android:text="@string/unit_feet"
             android:textColor="@color/stat_label_text" />
         </TableRow>
@@ -398,8 +399,8 @@ limitations under the License.
             android:gravity="right"
             android:id="@+id/min_elevation_register"
             android:layout_column="1"
-            android:layout_marginBottom="-9dip"
-            android:layout_marginTop="-9dip"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
             android:text="@string/value_unknown"
             android:textColor="@color/stat_label_text"
             android:textSize="40sp" />
@@ -407,23 +408,23 @@ limitations under the License.
             android:gravity="left"
             android:id="@+id/min_elevation_unit_label"
             android:layout_column="2"
-            android:layout_marginBottom="-9dip"
-            android:layout_marginTop="-9dip"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
             android:text="@string/unit_feet"
             android:textColor="@color/stat_label_text" />
           <TextView
             android:background="@color/black"
             android:layout_column="3"
-            android:layout_marginBottom="-9dip"
-            android:layout_marginTop="-9dip"
-            android:layout_width="5dip"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:layout_width="5dp"
             android:textSize="40sp" />
           <TextView
             android:gravity="right"
             android:id="@+id/max_elevation_register"
             android:layout_column="4"
-            android:layout_marginBottom="-9dip"
-            android:layout_marginTop="-9dip"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
             android:text="@string/value_unknown"
             android:textColor="@color/stat_label_text"
             android:textSize="40sp" />
@@ -431,8 +432,8 @@ limitations under the License.
             android:id="@+id/max_elevation_unit_label"
             android:gravity="left"
             android:layout_column="5"
-            android:layout_marginBottom="-9dip"
-            android:layout_marginTop="-9dip"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
             android:text="@string/unit_feet"
             android:textColor="@color/stat_label_text" />
         </TableRow>
@@ -457,8 +458,8 @@ limitations under the License.
             android:id="@+id/min_grade_register"
             android:layout_column="1"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="-9dip"
-            android:layout_marginTop="-9dip"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
             android:layout_width="fill_parent"
             android:layout_span="2"
             android:text="@string/value_unknown"
@@ -467,17 +468,17 @@ limitations under the License.
           <TextView
             android:background="@color/black"
             android:layout_column="3"
-            android:layout_marginBottom="-9dip"
-            android:layout_marginTop="-9dip"
-            android:layout_width="5dip"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:layout_width="5dp"
             android:textSize="40sp" />
           <TextView
             android:gravity="right"
             android:id="@+id/max_grade_register"
             android:layout_column="4"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="-9dip"
-            android:layout_marginTop="-9dip"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
             android:layout_width="fill_parent"
             android:layout_span="2"
             android:text="@string/value_unknown"

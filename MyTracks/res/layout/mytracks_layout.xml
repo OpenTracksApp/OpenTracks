@@ -33,32 +33,30 @@ limitations under the License.
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/list_bar"
-    android:layout_weight="0"
-    android:padding="3dip"
+    android:padding="3dp"
     android:visibility="gone">
     <TextView android:id="@+id/messagetext"
-      android:layout_width="fill_parent"
+      android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:textSize="16dip"
+      android:textSize="16dp"
       android:textColor="#fff"
       android:text="@string/gps_wait_for_fix"
-      android:layout_weight="0"/>
+      android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout android:id="@+id/busypane"
       android:orientation="vertical"
       android:layout_width="fill_parent"
       android:layout_height="fill_parent"
-      android:layout_weight="0"
-      android:padding="3dip"
+      android:padding="3dp"
       android:visibility="gone">
       <ProgressBar
         android:layout_weight="1"
-        android:layout_height="0dip"
+        android:layout_height="0dp"
         android:layout_width="wrap_content"
-        android:maxWidth="80dip"
-        android:maxHeight="80dip"
-        android:minWidth="80dip"
-        android:minHeight="80dip"
+        android:maxWidth="80dp"
+        android:maxHeight="80dp"
+        android:minWidth="80dp"
+        android:minHeight="80dp"
         android:layout_gravity="center"/>
     </LinearLayout>
     <LinearLayout
@@ -67,7 +65,7 @@ limitations under the License.
       android:layout_height="wrap_content"
       android:layout_alignParentBottom="true"
       android:layout_gravity="center"
-      android:paddingTop="10dip">
+      android:paddingTop="10dp">
       <LinearLayout
         android:layout_width = "wrap_content"
         android:layout_height= "wrap_content"

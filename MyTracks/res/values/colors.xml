@@ -17,11 +17,7 @@ limitations under the License.
 <resources>
   <color name="black">#FF000000</color>
   <color name="blue">#FF0000FF</color>
-  <color name="darkgray">#FF444444</color>
-  <color name="gold">#FFffd700</color>
   <color name="gray">#FFAAAAAA</color>
-  <color name="lightblue">#FF00FFFF</color>
-  <color name="opaque_shadow">#70000000</color>
   <color name="red">#FFFF0000</color>
   <color name="stat_label_background">#FFF0F0F0</color>
   <color name="stat_label_text">#FF0F0F0F</color>

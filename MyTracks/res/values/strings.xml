@@ -921,6 +921,10 @@ limitations under the License.
       Screenshot: marker_detail.png">
     Marker details
   </string>
+  <string name="marker_icon_description"
+    translation_description="The accessibility description for the marker icon.">
+    Marker
+  </string>
   <string name="marker_insert_error"
     translation_description="When inserting a marker, message when not able to insert due to no GPS
       location and asking the user to try again.">
@@ -974,10 +978,6 @@ limitations under the License.
 
       Screenshot: marker_list_context_menu.png">
     Edit
-  </string>
-  <string name="marker_list_icon_description"
-    translation_description="In the Markers page, the accessibility description for the marker icon.">
-    Marker
   </string>
   <string name="marker_list_insert_statistics"
     translation_description="In the Markers page, the button on the bottom to insert a statistics
@@ -2352,6 +2352,10 @@ limitations under the License.
       Screenshot: track_detail.png">
     Track name
   </string>
+  <string name="track_icon_description"
+    translation_description="The accessibility description for the track icon.">
+    Track
+  </string>
   <string name="track_list_clear_map"
     translation_description="In the context menu for a track, the menu option to clear the map of
       any track.
@@ -2494,10 +2498,6 @@ limitations under the License.
 
       Screenshot: track_list_show_on_map.png">
     Show on map
-  </string>
-  <string name="track_list_icon_description"
-    translation_description="In the 'Tracks' page, the accessibility description for the track icon.">
-    Track
   </string>
   <string name="track_list_track_name"
     translation_description="In the 'Search Result' page, the text field indicating the track that a
