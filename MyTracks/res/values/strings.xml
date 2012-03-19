@@ -1537,8 +1537,7 @@ limitations under the License.
       and it will overwrite all the current tracks and settings.
 
       Screenshot: settings_backup_restore_confirm_message.png">
-    Restoring a backup from the SD card will overwrite all your current tracks and settings. Are you
-    sure?
+    Restoring a backup from the SD card will overwrite all your current tracks and settings.
   </string>
   <string name="settings_backup_restore_no_backup"
     translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
