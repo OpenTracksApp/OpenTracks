@@ -158,19 +158,7 @@ limitations under the License.
       <meta-data
         android:name="android.app.default_searchable"
         android:value="com.google.android.apps.mytracks.SearchActivity" />
-    </activity>
-    <activity
-      android:name="com.google.android.apps.mytracks.DeleteTrack"
-      android:noHistory="true"
-      android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-      <intent-filter>
-        <action android:name="android.intent.action.DELETE" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-
-        <data android:mimeType="vnd.android.cursor.item/vnd.google.track" />
-      </intent-filter>
-    </activity>
+    </activity>  
     <activity android:name="com.google.android.apps.mytracks.ExportAllActivity"/>
     <activity
       android:exported="false"
