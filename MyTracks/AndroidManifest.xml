@@ -161,6 +161,26 @@ limitations under the License.
     </activity>  
     <activity android:name="com.google.android.apps.mytracks.ExportAllActivity"/>
     <activity
+      android:label="@string/my_tracks_importer"
+      android:name="com.google.android.apps.mytracks.ImportActivity"
+      android:noHistory="true"
+      android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+      <intent-filter>
+
+        <action android:name="android.intent.action.ATTACH_DATA" />
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.BROWSABLE" />
+        <category android:name="android.intent.category.DEFAULT" />
+
+        <data android:mimeType="application/gpx" />
+        <data android:mimeType="application/gpx+xml" />
+        <data android:mimeType="application/vnd.google-earth.gpx" />
+        <data android:mimeType="application/vnd.google-earth.gpx+xml" />
+        <data android:scheme="file" />
+      </intent-filter>
+    </activity>
+    <activity
       android:exported="false"
       android:name="com.google.android.apps.mytracks.MapActivity" >
       <intent-filter>
@@ -264,25 +284,6 @@ limitations under the License.
       android:label="@string/welcome_title"
       android:name="com.google.android.apps.mytracks.WelcomeActivity" />
     <activity android:name="com.google.android.apps.mytracks.io.docs.SendDocsActivity" />
-    <activity
-      android:label="@string/my_tracks_importer"
-      android:name="com.google.android.apps.mytracks.io.file.ImportActivity"
-      android:noHistory="true"
-      android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-      <intent-filter>
-        <action android:name="android.intent.action.ATTACH_DATA" />
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.BROWSABLE" />
-        <category android:name="android.intent.category.DEFAULT" />
-
-        <data android:mimeType="application/gpx" />
-        <data android:mimeType="application/gpx+xml" />
-        <data android:mimeType="application/vnd.google-earth.gpx" />
-        <data android:mimeType="application/vnd.google-earth.gpx+xml" />
-        <data android:scheme="file" />
-      </intent-filter>
-    </activity>
     <activity
       android:name="com.google.android.apps.mytracks.io.file.SaveActivity"
       android:noHistory="true"
