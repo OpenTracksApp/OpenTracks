@@ -3,6 +3,7 @@ package com.google.android.apps.mytracks;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -12,7 +13,6 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Window;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -60,8 +60,9 @@ public class AggregatedStatsActivity extends Activity implements
 
     this.tracksProvider = MyTracksProviderUtils.Factory.get(this);
 
-    // We don't need a window title bar:
-    requestWindowFeature(Window.FEATURE_NO_TITLE);
+    // Show the action bar (or nothing at all).
+    ApiAdapterFactory.getApiAdapter().showActionBar(this);
+
     setContentView(R.layout.stats);
 
     ScrollView sv = ((ScrollView) findViewById(R.id.scrolly));

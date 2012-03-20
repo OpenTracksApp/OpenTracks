@@ -28,6 +28,7 @@ import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
@@ -41,12 +42,9 @@ import android.location.Location;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.ZoomControls;
 
@@ -61,7 +59,8 @@ import java.util.EnumSet;
  */
 public class ChartActivity extends Activity implements TrackDataListener {
 
-  private static final int CHART_SETTINGS_DIALOG = 1;
+  public static final int CHART_SETTINGS_DIALOG = 1;
+
   private final DoubleBuffer elevationBuffer =
       new DoubleBuffer(Constants.ELEVATION_SMOOTHING_FACTOR);
   private final DoubleBuffer speedBuffer =
@@ -84,7 +83,6 @@ public class ChartActivity extends Activity implements TrackDataListener {
    * UI elements:
    */
   private ChartView chartView;
-  private MenuItem chartSettingsMenuItem;
   private LinearLayout busyPane;
   private ZoomControls zoomControls;
 
@@ -118,7 +116,9 @@ public class ChartActivity extends Activity implements TrackDataListener {
     // The volume we want to control is the Text-To-Speech volume
     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
-    requestWindowFeature(Window.FEATURE_NO_TITLE);
+    // Show the action bar (or nothing at all).
+    ApiAdapterFactory.getApiAdapter().showActionBar(this);
+
     setContentView(R.layout.mytracks_charts);
     ViewGroup layout = (ViewGroup) findViewById(R.id.elevation_chart);
     chartView = new ChartView(this);
@@ -181,25 +181,6 @@ public class ChartActivity extends Activity implements TrackDataListener {
       chartView.setMode(newMode);
       dataHub.reloadDataForListener(this);
     }
-  }
-
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    super.onCreateOptionsMenu(menu);
-    chartSettingsMenuItem = menu.add(Menu.NONE, Constants.MENU_CHART_SETTINGS, Menu.NONE,
-        R.string.menu_chart_view_chart_settings);
-    chartSettingsMenuItem.setIcon(R.drawable.chart_settings);
-    return true;
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case Constants.MENU_CHART_SETTINGS:
-        showDialog(CHART_SETTINGS_DIALOG);
-        return true;
-    }
-    return super.onOptionsItemSelected(item);
   }
 
   @Override
@@ -486,11 +467,6 @@ public class ChartActivity extends Activity implements TrackDataListener {
     return chartView;
   }
 
-  @VisibleForTesting
-  MenuItem getChartSettingsMenuItem() {
-    return chartSettingsMenuItem;
-  }
-  
   @VisibleForTesting
   void setTrackMaxSpeed(double maxSpeed) {
     trackMaxSpeed = maxSpeed;

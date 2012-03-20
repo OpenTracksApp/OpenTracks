@@ -29,6 +29,7 @@ import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileForm
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.io.sendtogoogle.UploadServiceChooserActivity;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.GeoRect;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PlayTrackUtils;
@@ -55,7 +56,6 @@ import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.View.OnCreateContextMenuListener;
-import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -89,6 +89,12 @@ public class MapActivity extends com.google.android.maps.MapActivity
    * visible area.
    */
   private boolean keepMyLocationVisible;
+
+  /**
+   * True if we've already zoomed into the current location.
+   * Only relevant when {@link #keepMyLocationVisible} is true.
+   */
+  private boolean myLocationWasZoomedIn;
 
   /**
    * The ID of a track on which we want to show a waypoint.
@@ -126,9 +132,6 @@ public class MapActivity extends com.google.android.maps.MapActivity
   private LinearLayout busyPane;
   private ImageButton optionsBtn;
 
-  private MenuItem myLocation;
-  private MenuItem toggleLayers;
-
   /**
    * We are not displaying driving directions. Just an arbitrary track that is
    * not associated to any licensed mapping data. Therefore it should be okay to
@@ -159,8 +162,8 @@ public class MapActivity extends com.google.android.maps.MapActivity
     // The volume we want to control is the Text-To-Speech volume
     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
-    // We don't need a window title bar:
-    requestWindowFeature(Window.FEATURE_NO_TITLE);
+    // Show the action bar (or nothing at all).
+    ApiAdapterFactory.getApiAdapter().showActionBar(this);
 
     // Inflate the layout:
     setContentView(R.layout.mytracks_layout);
@@ -289,6 +292,18 @@ public class MapActivity extends com.google.android.maps.MapActivity
   }
 
   /**
+   * Centers (and keeps centered) the map on the current location.
+   */
+  public void showMyLocation() {
+    dataHub.forceUpdateLocation();
+    keepMyLocationVisible = true;
+    myLocationWasZoomedIn = false;
+    if (currentLocation != null) {
+      showCurrentLocation();
+    }
+  }
+
+  /**
    * Moves the location pointer to the current location and center the map if
    * the current location is outside the visible area.
    */
@@ -304,6 +319,11 @@ public class MapActivity extends com.google.android.maps.MapActivity
       GeoPoint geoPoint = LocationUtils.getGeoPoint(currentLocation);
       MapController controller = mapView.getController();
       controller.animateTo(geoPoint);
+      if (!myLocationWasZoomedIn && mapView.getZoomLevel() < 18) {
+        // Only zoom in the first time we show the location.
+        myLocationWasZoomedIn = true;
+        controller.setZoom(18);
+      }
     }
   }
 
@@ -561,45 +581,18 @@ public class MapActivity extends com.google.android.maps.MapActivity
     startActivity(intent);
   }
 
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    super.onCreateOptionsMenu(menu);
-    myLocation = menu.add(
-        Menu.NONE, Constants.MENU_MY_LOCATION, Menu.NONE, R.string.menu_map_view_my_location);
-    myLocation.setIcon(android.R.drawable.ic_menu_mylocation);
-    toggleLayers = menu.add(
-        Menu.NONE, Constants.MENU_TOGGLE_LAYERS, Menu.NONE, R.string.menu_map_view_satellite_mode);
-    toggleLayers.setIcon(android.R.drawable.ic_menu_mapmode);
-    return true;
+  /**
+   * Returns whether the map is currently in satellite view mode.
+   */
+  public boolean isSatelliteView() {
+    return mapView.isSatellite();
   }
 
-  @Override
-  public boolean onPrepareOptionsMenu(Menu menu) {
-    toggleLayers.setTitle(mapView.isSatellite() ?
-        R.string.menu_map_view_map_mode : R.string.menu_map_view_satellite_mode);
-    return super.onPrepareOptionsMenu(menu);
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case Constants.MENU_MY_LOCATION: {
-        dataHub.forceUpdateLocation();
-        keepMyLocationVisible = true;
-        if (mapView.getZoomLevel() < 18) {
-          mapView.getController().setZoom(18);
-        }
-        if (currentLocation != null) {
-          showCurrentLocation();
-        }
-        return true;
-      }
-      case Constants.MENU_TOGGLE_LAYERS: {
-        mapView.setSatellite(!mapView.isSatellite());
-        return true;
-      }
-    }
-    return super.onOptionsItemSelected(item);
+  /**
+   * Changes whether the map should be in satellite view mode.
+   */
+  public void setSatelliteView(boolean sat) {
+    mapView.setSatellite(sat);
   }
 
   @Override
