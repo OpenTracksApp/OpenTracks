@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2008 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<ScrollView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_height="wrap_content"
+  android:layout_width="fill_parent">
+  <LinearLayout
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <!-- Title -->
+    <LinearLayout
+      android:layout_height="wrap_content"
+      android:layout_width="fill_parent"
+      android:orientation="horizontal">
+      <ImageView
+        android:contentDescription="@string/my_tracks_app_name"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:src="@drawable/arrow_icon"/>
+      <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:orientation="vertical">
+        <TextView
+          android:layout_height="wrap_content"
+          android:layout_width="fill_parent"
+          android:text="@string/my_tracks_app_name"
+          android:textSize="30sp"/>
+        <TextView
+          android:layout_height="wrap_content"
+          android:layout_width="fill_parent"
+          android:text="@string/about_copyright_notice"
+          android:textSize="16sp"/>
+      </LinearLayout>
+    </LinearLayout>
+
+    <!-- Team -->
+    <TextView
+      android:text="@string/about_team"
+      style="@style/AboutLabel"/>
+    <TextView
+      android:text="@string/about_bart"
+      style="@style/AboutItem"/>
+    <TextView
+      android:text="@string/about_dylan"
+      style="@style/AboutItem"/>
+    <TextView
+      android:text="@string/about_jimmy"
+      style="@style/AboutItem"/>
+    <TextView
+      android:text="@string/about_leif"
+      style="@style/AboutItem"/>
+    <TextView
+      android:text="@string/about_rodrigo"
+      style="@style/AboutItem"/>
+    <TextView
+      android:text="@string/about_sandor"
+      style="@style/AboutItem"/>
+  
+    <!-- Version -->
+    <TextView
+      android:text="@string/about_version"
+      style="@style/AboutLabel"/>
+    <TextView
+      android:id="@+id/about_version"
+      style="@style/AboutItem"/>
+
+    <!-- Support -->
+    <TextView
+      android:text="@string/about_support"
+      style="@style/AboutLabel"/>
+    <TextView
+      android:text="@string/my_tracks_support_url"
+      style="@style/AboutUrl"/>
+
+    <!--  Privacy -->
+    <TextView
+      android:text="@string/about_privacy"
+      style="@style/AboutLabel"/>
+    <TextView
+      android:text="@string/my_tracks_privacy_url"
+      style="@style/AboutUrl"/>
+  </LinearLayout>
+</ScrollView>
