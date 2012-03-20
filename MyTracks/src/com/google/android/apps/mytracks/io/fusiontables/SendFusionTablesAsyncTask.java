@@ -425,18 +425,26 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
     }
     boolean isSuccess = response.isSuccessStatusCode();
     if (isSuccess) {
-      InputStream content;
+      InputStream content = null;
       try {
         content = response.getContent();
+        if (setTableId) {
+          tableId = SendFusionTablesUtils.getTableId(content);
+          if (tableId == null) {
+            Log.d(TAG, "tableId is null");
+            return false;
+          }
+        }
       } catch (IOException e) {
         Log.d(TAG, "Unable to get response", e);
         return false;
-      }
-      if (setTableId) {
-        tableId = SendFusionTablesUtils.getTableId(content);
-        if (tableId == null) {
-          Log.d(TAG, "tableId is null");
-          return false;
+      } finally {
+        if (content != null) {
+          try {
+            content.close();
+          } catch (IOException e) {
+            Log.d(TAG, "Unable to close content", e);
+          }
         }
       }
     } else {

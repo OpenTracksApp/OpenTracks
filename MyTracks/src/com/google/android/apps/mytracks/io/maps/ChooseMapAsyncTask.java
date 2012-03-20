@@ -118,30 +118,21 @@ public class ChooseMapAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
   @Override
   protected Boolean doInBackground(Void... params) {
-    return getMaps();
-  }
-
-  @Override
-  protected void onCancelled() {
-    closeClient();
+    try {
+      return getMaps();
+    } finally {
+      if (gDataClient != null) {
+        gDataClient.close();
+      } 
+    }
   }
 
   @Override
   protected void onPostExecute(Boolean result) {
-    closeClient();
     success = result;
     completed = true;
     if (activity != null) {
       activity.onAsyncTaskCompleted(success, mapIds, mapData);
-    }
-  }
-
-  /**
-   * Closes the gdata client.
-   */
-  private void closeClient() {
-    if (gDataClient != null) {
-      gDataClient.close();
     }
   }
 

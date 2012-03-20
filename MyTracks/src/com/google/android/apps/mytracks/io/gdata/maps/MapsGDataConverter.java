@@ -169,7 +169,6 @@ public class MapsGDataConverter {
       xmlSerializer.endTag(null, "Placemark");
       xmlSerializer.flush();
       entry.setContent(writer.toString());
-      Log.d("My Google Maps", "Generated kml:\n" + entry.getContent());
       Log.d("My Google Maps", "Edit URI: " + entry.getEditUri());
     } catch (IOException e) {
       e.printStackTrace();
