@@ -41,7 +41,7 @@ limitations under the License.
       android:layout_width="fill_parent"
       android:orientation="vertical"
       android:padding="10dp">
-      <!--  X axis -->
+      <!-- X axis -->
       <TextView
         android:drawableLeft="@drawable/x_axis"
         android:drawablePadding="10dp"
