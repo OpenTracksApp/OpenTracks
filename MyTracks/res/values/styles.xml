@@ -74,25 +74,11 @@ limitations under the License.
     <item name="android:visibility">gone</item>
   </style>
 
-  <!-- Chart settings axis image -->
-  <style name="ChartSettingsAxisImage">
-    <item name="android:layout_height">fill_parent</item>
-    <item name="android:layout_width">wrap_content</item>
-  </style>
-
-  <!-- Chart settings axis layout -->
-  <style name="ChartSettingsAxisLayout">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">fill_parent</item>
-    <item name="android:orientation">horizontal</item>
-  </style>
-
   <!-- Chart settings axis text -->
   <style name="ChartSettingsAxisText">
     <item name="android:gravity">bottom</item>
     <item name="android:layout_height">fill_parent</item>
     <item name="android:layout_width">wrap_content</item>
-    <item name="android:paddingLeft">10dp</item>
     <item name="android:textSize">20sp</item>
   </style>
 
@@ -152,15 +138,15 @@ limitations under the License.
   <!-- The style for a view which divides the numerator and denominator of the units on the statistics activity. -->
   <style name="StatsDivider" parent="@android:Widget.TextView">
     <item name="android:background">@color/black</item>
-    <item name="android:layout_height">3dip</item>
+    <item name="android:layout_height">3dp</item>
     <item name="android:layout_width">fill_parent</item>
   </style>
 
   <!-- The style for a text view for displaying a value on the statistics activity. -->
   <style name="StatsRegister" parent="@android:Widget.TextView">
     <item name="android:gravity">right</item>
-    <item name="android:layout_marginBottom">-9dip</item>
-    <item name="android:layout_marginTop">-9dip</item>
+    <item name="android:layout_marginBottom">-9dp</item>
+    <item name="android:layout_marginTop">-9dp</item>
     <item name="android:text">@string/value_unknown</item>
     <item name="android:textColor">@color/stat_label_text</item>
     <item name="android:textSize">40sp</item>
@@ -168,16 +154,16 @@ limitations under the License.
 
   <!-- The style for a text view for displaying a large value on the statistics activity. -->
   <style name="StatsRegister.Big">
-    <item name="android:layout_marginBottom">-13dip</item>
-    <item name="android:layout_marginTop">-13dip</item>
+    <item name="android:layout_marginBottom">-13dp</item>
+    <item name="android:layout_marginTop">-13dp</item>
     <item name="android:textSize">50sp</item>
   </style>
 
   <!-- The style for a text view for displaying a small value on the statistics activity. -->
   <style name="StatsRegister.Small">
     <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_marginBottom">-5dip</item>
-    <item name="android:layout_marginTop">-5dip</item>
+    <item name="android:layout_marginBottom">-5dp</item>
+    <item name="android:layout_marginTop">-5dp</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:textSize">25sp</item>
   </style>
@@ -185,9 +171,9 @@ limitations under the License.
   <!-- The style for a view which divides two columns in the statistics activity. -->
   <style name="StatsSpacer" parent="@android:Widget.TextView">
     <item name="android:background">@color/black</item>
-    <item name="android:layout_marginBottom">-9dip</item>
-    <item name="android:layout_marginTop">-9dip</item>
-    <item name="android:layout_width">5dip</item>
+    <item name="android:layout_marginBottom">-9dp</item>
+    <item name="android:layout_marginTop">-9dp</item>
+    <item name="android:layout_width">5dp</item>
     <item name="android:textSize">40sp</item>
   </style>
 
@@ -195,8 +181,8 @@ limitations under the License.
   <style name="StatsUnit" parent="@android:Widget.TextView">
     <item name="android:gravity">bottom</item>
     <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_marginBottom">-2dip</item>
-    <item name="android:layout_marginTop">-2dip</item>
+    <item name="android:layout_marginBottom">-2dp</item>
+    <item name="android:layout_marginTop">-2dp</item>
     <item name="android:layout_width">wrap_content</item>
     <item name="android:textColor">@color/stat_label_text</item>
   </style>
@@ -204,8 +190,8 @@ limitations under the License.
   <!-- The style for the unit on the statistics activity where there is only one string. -->
   <style name="StatsUnitSolo" parent="@android:Widget.TextView">
     <item name="android:gravity">right</item>
-    <item name="android:layout_marginBottom">-9dip</item>
-    <item name="android:layout_marginTop">-9dip</item>
+    <item name="android:layout_marginBottom">-9dp</item>
+    <item name="android:layout_marginTop">-9dp</item>
     <item name="android:textColor">@color/stat_label_text</item>
   </style>
 

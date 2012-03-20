@@ -43,6 +43,7 @@ limitations under the License.
         android:orientation="horizontal"
         >
         <ImageView
+          android:contentDescription="@string/track_icon_description"
           android:layout_gravity="center"
           android:layout_height="wrap_content"
           android:layout_width="wrap_content"
