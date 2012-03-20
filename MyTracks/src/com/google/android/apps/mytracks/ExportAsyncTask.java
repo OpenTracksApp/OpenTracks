@@ -35,9 +35,9 @@ import android.os.PowerManager.WakeLock;
  *
  * @author Jimmy Shih
  */
-public class ExportAllAsyncTask extends AsyncTask<Void, Integer, Boolean> {
+public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
-  private ExportAllActivity exportAllActivity;
+  private ExportActivity exportActivity;
   private final TrackFileFormat trackFileFormat;
   private final Context context;
   private final MyTracksProviderUtils myTracksProviderUtils;
@@ -56,24 +56,23 @@ public class ExportAllAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   /**
    * Creates an AsyncTask.
    *
-   * @param exportAllActivity the activity currently associated with this
-   *          AsyncTask
+   * @param exportActivity the activity currently associated with this AsyncTask
    * @param trackFileFormat the track file format
    */
-  public ExportAllAsyncTask(ExportAllActivity exportAllActivity, TrackFileFormat trackFileFormat) {
-    this.exportAllActivity = exportAllActivity;
+  public ExportAsyncTask(ExportActivity exportActivity, TrackFileFormat trackFileFormat) {
+    this.exportActivity = exportActivity;
     this.trackFileFormat = trackFileFormat;
-    context = exportAllActivity.getApplicationContext();
-    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(exportAllActivity);
+    context = exportActivity.getApplicationContext();
+    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(exportActivity);
 
-    SharedPreferences sharedPreferences = exportAllActivity.getSharedPreferences(
+    SharedPreferences sharedPreferences = exportActivity.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     long recordingTrackId = sharedPreferences.getLong(
-        exportAllActivity.getString(R.string.recording_track_key), -1L);
+        exportActivity.getString(R.string.recording_track_key), -1L);
 
     // Get the wake lock if not recording
     if (recordingTrackId == -1L) {
-      wakeLock = SystemUtils.acquireWakeLock(exportAllActivity, wakeLock);
+      wakeLock = SystemUtils.acquireWakeLock(exportActivity, wakeLock);
     }
     success = false;
     completed = false;
@@ -81,21 +80,21 @@ public class ExportAllAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   }
 
   /**
-   * Sets the current {@link ExportAllActivity} associated with this AyncTask.
+   * Sets the current {@link ExportActivity} associated with this AyncTask.
    *
-   * @param exportAllActivity the current {@link ExportAllActivity}, can be null
+   * @param exportActivity the current {@link ExportActivity}, can be null
    */
-  public void setActivity(ExportAllActivity exportAllActivity) {
-    this.exportAllActivity = exportAllActivity;
-    if (completed && exportAllActivity != null) {
-      exportAllActivity.onAsyncTaskCompleted(success, messageId);
+  public void setActivity(ExportActivity exportActivity) {
+    this.exportActivity = exportActivity;
+    if (completed && exportActivity != null) {
+      exportActivity.onAsyncTaskCompleted(success, messageId);
     }
   }
 
   @Override
   protected void onPreExecute() {
-    if (exportAllActivity != null) {
-      exportAllActivity.showProgressDialog();
+    if (exportActivity != null) {
+      exportActivity.showProgressDialog();
     }
   }
 
@@ -144,8 +143,8 @@ public class ExportAllAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
   @Override
   protected void onProgressUpdate(Integer... values) {
-    if (exportAllActivity != null) {
-      exportAllActivity.setProgressDialogValue(values[0], values[1]);
+    if (exportActivity != null) {
+      exportActivity.setProgressDialogValue(values[0], values[1]);
     }
   }
 
@@ -153,8 +152,8 @@ public class ExportAllAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   protected void onPostExecute(Boolean result) {
     success = result;
     completed = true;
-    if (exportAllActivity != null) {
-      exportAllActivity.onAsyncTaskCompleted(success, messageId);
+    if (exportActivity != null) {
+      exportActivity.onAsyncTaskCompleted(success, messageId);
     }
   }
 
