@@ -57,7 +57,6 @@ class TrackWriterImpl implements TrackWriter {
   private int errorMessage = -1;
   private File directory = null;
   private File file = null;
-  private OnCompletionListener onCompletionListener;
   private OnWriteListener onWriteListener;
   private Thread writeThread;
 
@@ -68,11 +67,6 @@ class TrackWriterImpl implements TrackWriter {
     this.track = track;
     this.writer = writer;
     this.fileUtils = new FileUtils();
-  }
-
-  @Override
-  public void setOnCompletionListener(OnCompletionListener onCompletionListener) {
-    this.onCompletionListener = onCompletionListener;
   }
 
   @Override
@@ -90,8 +84,7 @@ class TrackWriterImpl implements TrackWriter {
     return file.getAbsolutePath();
   }
 
-  @Override
-  public void writeTrackAsync() {
+  private void writeTrackAsync() {
     writeThread = new Thread() {
       @Override
       public void run() {
@@ -131,7 +124,6 @@ class TrackWriterImpl implements TrackWriter {
         }
       }
     }
-    finished();
   }
 
   public void stopWriteTrack() {
@@ -162,18 +154,6 @@ class TrackWriterImpl implements TrackWriter {
    * Helper methods:
    * ===============
    */
-
-  private void finished() {
-    if (onCompletionListener != null) {
-      runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-          onCompletionListener.onComplete();
-        }
-      });
-      return;
-    }
-  }
 
   /**
    * Runs the given runnable in the UI thread.

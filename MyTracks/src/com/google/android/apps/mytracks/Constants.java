@@ -37,16 +37,8 @@ public abstract class Constants {
    * onActivityResult request codes:
    */
   public static final int SHOW_TRACK = 0;
-  public static final int SHARE_GPX_FILE = 1;
-  public static final int SHARE_KML_FILE = 2;
-  public static final int SHARE_CSV_FILE = 3;
-  public static final int SHARE_TCX_FILE = 4;
-  public static final int SAVE_GPX_FILE = 5;
-  public static final int SAVE_KML_FILE = 6;
-  public static final int SAVE_CSV_FILE = 7;
-  public static final int SAVE_TCX_FILE = 8;
-  public static final int SHOW_WAYPOINT = 9;
-  public static final int WELCOME = 10;
+  public static final int SHOW_WAYPOINT = 1;
+  public static final int WELCOME = 2;
 
   /*
    * Context menu ids. Sorted alphabetically.
@@ -167,29 +159,6 @@ public abstract class Constants {
    */
   public static final String RESUME_TRACK_EXTRA_NAME =
       "com.google.android.apps.mytracks.RESUME_TRACK";
-
-  public static int getActionFromMenuId(int menuId) {
-    switch (menuId) {
-      case Constants.MENU_SHARE_KML_FILE:
-        return Constants.SHARE_KML_FILE;
-      case Constants.MENU_SHARE_GPX_FILE:
-        return Constants.SHARE_GPX_FILE;
-      case Constants.MENU_SHARE_CSV_FILE:
-        return Constants.SHARE_CSV_FILE;
-      case Constants.MENU_SHARE_TCX_FILE:
-        return Constants.SHARE_TCX_FILE;
-      case Constants.MENU_SAVE_GPX_FILE:
-        return Constants.SAVE_GPX_FILE;
-      case Constants.MENU_SAVE_KML_FILE:
-        return Constants.SAVE_KML_FILE;
-      case Constants.MENU_SAVE_CSV_FILE:
-        return Constants.SAVE_CSV_FILE;
-      case Constants.MENU_SAVE_TCX_FILE:
-        return Constants.SAVE_TCX_FILE;
-      default:
-        return -1;
-    }
-  }
 
   public static final String MAPSHOP_BASE_URL =
     "https://maps.google.com/maps/ms";

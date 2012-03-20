@@ -16,14 +16,12 @@
 
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
 import com.google.android.maps.mytracks.R;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -31,6 +29,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.os.Parcelable;
 
 import java.util.List;
 
@@ -80,12 +79,10 @@ public class PlayTrackUtils {
   public static void playTrack(Context context, long trackId) {
     AnalyticsUtils.sendPageViews(context, "/action/play");
 
-    Uri uri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId);
     Intent intent = new Intent(context, SaveActivity.class)
-        .putExtra(SaveActivity.EXTRA_FILE_FORMAT, TrackFileFormat.KML.ordinal())
-        .putExtra(SaveActivity.EXTRA_PLAY_FILE, true)
-        .setAction(context.getString(R.string.track_action_save))
-        .setDataAndType(uri, TracksColumns.CONTENT_ITEMTYPE);
+        .putExtra(SaveActivity.EXTRA_TRACK_ID, trackId)
+        .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.KML)
+        .putExtra(SaveActivity.EXTRA_PLAY_TRACK, true);
     context.startActivity(intent);
   }
 

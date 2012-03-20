@@ -169,13 +169,7 @@ public class TrackWriterTest extends AndroidTestCase {
     writer = new WriteTracksTrackWriter(getContext(), providerUtils, track,
         formatWriter, true);
 
-    // Expect the completion listener to be run
-    TrackWriter.OnCompletionListener completionListener
-        = mocksControl.createMock(TrackWriter.OnCompletionListener.class);
-    completionListener.onComplete();
-
     mocksControl.replay();
-    writer.setOnCompletionListener(completionListener);
     writer.writeTrack();
 
     assertEquals(1, writeDocumentCalls);
@@ -187,13 +181,7 @@ public class TrackWriterTest extends AndroidTestCase {
     writer = new WriteTracksTrackWriter(getContext(), providerUtils, track,
         formatWriter, false);
 
-    // Expect the completion listener to be run
-    TrackWriter.OnCompletionListener completionListener
-        = mocksControl.createMock(TrackWriter.OnCompletionListener.class);
-    completionListener.onComplete();
-
     mocksControl.replay();
-    writer.setOnCompletionListener(completionListener);
     writer.writeTrack();
 
     assertEquals(0, writeDocumentCalls);
