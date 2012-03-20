@@ -28,10 +28,12 @@ import com.google.android.apps.mytracks.util.PlayTrackUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -64,7 +66,8 @@ public class TrackList extends ListActivity
     implements SharedPreferences.OnSharedPreferenceChangeListener,
         View.OnClickListener {
 
-  private static final int DIALOG_INSTALL_EARTH = 0;
+  private static final int DIALOG_INSTALL_EARTH_ID = 0;
+  private static final int DIALOG_EXPORT_ALL_ID = 1;
   
   private int contextPosition = -1;
   private long trackId = -1;
@@ -180,7 +183,7 @@ public class TrackList extends ListActivity
           PlayTrackUtils.playTrack(this, trackId);
           return true;
         } else {
-          showDialog(DIALOG_INSTALL_EARTH);
+          showDialog(DIALOG_INSTALL_EARTH_ID);
           return true;
         }
       case Constants.MENU_SEND_TO_GOOGLE:
@@ -257,7 +260,7 @@ public class TrackList extends ListActivity
         break;
       }
       case R.id.tracklist_btn_export_all: {
-        new ExportAllTracks(this);
+        showDialog(DIALOG_EXPORT_ALL_ID);
         break;
       }
       case R.id.tracklist_btn_import_all: {
@@ -327,8 +330,30 @@ public class TrackList extends ListActivity
   @Override
   protected Dialog onCreateDialog(int id) {
     switch (id) {
-      case DIALOG_INSTALL_EARTH:
+      case DIALOG_INSTALL_EARTH_ID:
         return PlayTrackUtils.createInstallEarthDialog(this);
+      case DIALOG_EXPORT_ALL_ID:
+        String exportFileFormat = getString(R.string.track_list_export_file);
+        String fileTypes[] = getResources().getStringArray(R.array.file_types);
+        String[] choices = new String[fileTypes.length];
+        for (int i = 0; i < fileTypes.length; i++) {
+          choices[i] = String.format(exportFileFormat, fileTypes[i]);
+        }
+        return new AlertDialog.Builder(this)
+            .setNegativeButton(R.string.generic_cancel, null)
+            .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int which) {
+                int index = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                Intent intent = new Intent(TrackList.this, ExportAllActivity.class);
+                intent.putExtra(ExportAllActivity.EXTRA_TRACK_FILE_FORMAT,
+                    (Parcelable) TrackFileFormat.values()[index]);
+                TrackList.this.startActivity(intent);
+              }
+            })
+            .setSingleChoiceItems(choices, 0, null)
+            .setTitle(R.string.track_list_export_all)
+            .create();
       default:
         return null;
     }

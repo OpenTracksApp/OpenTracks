@@ -171,6 +171,7 @@ limitations under the License.
         <data android:mimeType="vnd.android.cursor.item/vnd.google.track" />
       </intent-filter>
     </activity>
+    <activity android:name="com.google.android.apps.mytracks.ExportAllActivity"/>
     <activity
       android:exported="false"
       android:name="com.google.android.apps.mytracks.MapActivity" >
@@ -312,7 +313,7 @@ limitations under the License.
     <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.AccountChooserActivity" />
     <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.UploadResultActivity" />
     <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.UploadServiceChooserActivity" />
-
+    
     <service
       android:exported="false"
       android:name="com.google.android.apps.mytracks.services.ControlRecordingService" />
