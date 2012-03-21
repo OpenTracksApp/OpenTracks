@@ -14,127 +14,141 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_height="wrap_content"
-  android:layout_width="fill_parent"
-  android:orientation="vertical">
-  <ScrollView
-    android:layout_height="0dp"
-    android:layout_margin="5dp"
-    android:layout_weight="1"
-    android:layout_width="fill_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_height="fill_parent"
+  android:layout_margin="8dp"
+  android:layout_width="fill_parent" >
+
+  <LinearLayout
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:orientation="vertical" >
+
+    <!-- Google Maps result -->
+
     <LinearLayout
+      android:id="@+id/upload_result_maps_result"
       android:layout_height="wrap_content"
-      android:layout_width="fill_parent"
-      android:orientation="vertical">
+      android:layout_width="wrap_content"
+      android:orientation="horizontal" >
 
-      <!-- Header -->
-      <TextView
-        android:layout_width="fill_parent"
+      <ImageView
+        android:contentDescription="@string/generic_success_title"
+        android:id="@+id/upload_result_maps_result_icon"
+        android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
-        android:text="@string/send_google_result_header"
-        style="?android:attr/textAppearanceLarge"/>
+        android:layout_width="wrap_content"
+        android:src="@drawable/success" />
 
-      <!-- Google Maps result -->
       <LinearLayout
-        android:id="@+id/upload_result_maps_result"
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:orientation="horizontal">
-        <ImageView
-          android:id="@+id/upload_result_maps_result_icon"
-          android:layout_gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="8dp" >
+
+        <TextView
           android:layout_height="wrap_content"
           android:layout_width="wrap_content"
-          android:src="@drawable/success"/>
-        <LinearLayout
-          android:layout_height="wrap_content"
-          android:layout_width="fill_parent"
-          android:orientation="vertical">
-          <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:text="@string/send_google_maps"
-            style="?android:attr/textAppearanceMedium"/>
-          <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:text="@string/send_google_maps_url"
-            style="?android:attr/textAppearanceSmall"/>
-        </LinearLayout>
-      </LinearLayout>
+          style="@android:style/TextAppearance.DeviceDefault.Medium"
+          android:text="@string/send_google_maps" />
 
-      <!-- Google Fusion Tables result -->
-      <LinearLayout
-        android:id="@+id/upload_result_fusion_tables_result"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:orientation="horizontal">
-        <ImageView
-          android:id="@+id/upload_result_fusion_tables_result_icon"
-          android:layout_gravity="center_vertical"
+        <TextView
           android:layout_height="wrap_content"
           android:layout_width="wrap_content"
-          android:src="@drawable/success"/>
-        <LinearLayout
-          android:layout_height="wrap_content"
-          android:layout_width="fill_parent"
-          android:orientation="vertical">
-          <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:text="@string/send_google_fusion_tables"
-            style="?android:attr/textAppearanceMedium"/>
-          <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:text="@string/send_google_fusion_tables_url"
-            style="?android:attr/textAppearanceSmall"/>
-        </LinearLayout>
+          style="@android:style/TextAppearance.DeviceDefault.Small"
+          android:text="@string/send_google_maps_url" />
       </LinearLayout>
-
-      <!-- Google Docs result -->
-      <LinearLayout
-        android:id="@+id/upload_result_docs_result"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:orientation="horizontal">
-        <ImageView
-          android:id="@+id/upload_result_docs_result_icon"
-          android:layout_gravity="center_vertical"
-          android:layout_height="wrap_content"
-          android:layout_width="wrap_content"
-          android:src="@drawable/success"/>
-        <LinearLayout
-          android:layout_height="wrap_content"
-          android:layout_width="fill_parent"
-          android:orientation="vertical">
-          <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:text="@string/send_google_docs"
-            style="?android:attr/textAppearanceMedium"/>
-          <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:text="@string/send_google_docs_url"
-            style="?android:attr/textAppearanceSmall"/>
-        </LinearLayout>
-      </LinearLayout>
-
-      <!-- Footer -->
-      <TextView
-        android:id="@+id/upload_result_success_footer"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:text="@string/send_google_success_footer"
-        style="?android:attr/textAppearanceSmall"/>
-      <TextView
-        android:id="@+id/upload_result_error_footer"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:text="@string/send_google_error"
-        style="?android:attr/textAppearanceLarge"/>
     </LinearLayout>
-  </ScrollView>
-</LinearLayout>
+
+    <!-- Google Fusion Tables result -->
+
+    <LinearLayout
+      android:id="@+id/upload_result_fusion_tables_result"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      android:orientation="horizontal" >
+
+      <ImageView
+        android:contentDescription="@string/generic_success_title"
+        android:id="@+id/upload_result_fusion_tables_result_icon"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:src="@drawable/success" />
+
+      <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="8dp" >
+
+        <TextView
+          android:layout_height="wrap_content"
+          android:layout_width="wrap_content"
+          style="@android:style/TextAppearance.DeviceDefault.Medium"
+          android:text="@string/send_google_fusion_tables" />
+
+        <TextView
+          android:layout_height="wrap_content"
+          android:layout_width="wrap_content"
+          style="@android:style/TextAppearance.DeviceDefault.Small"
+          android:text="@string/send_google_fusion_tables_url" />
+      </LinearLayout>
+    </LinearLayout>
+
+    <!-- Google Docs result -->
+
+    <LinearLayout
+      android:id="@+id/upload_result_docs_result"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      android:orientation="horizontal" >
+
+      <ImageView
+        android:contentDescription="@string/generic_success_title"
+        android:id="@+id/upload_result_docs_result_icon"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:src="@drawable/success" />
+
+      <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="8dp" >
+
+        <TextView
+          android:layout_height="wrap_content"
+          android:layout_width="wrap_content"
+          style="@android:style/TextAppearance.DeviceDefault.Medium"
+          android:text="@string/send_google_docs" />
+
+        <TextView
+          android:layout_height="wrap_content"
+          android:layout_width="wrap_content"
+          style="@android:style/TextAppearance.DeviceDefault.Small"
+          android:text="@string/send_google_docs_url" />
+      </LinearLayout>
+    </LinearLayout>
+
+    <!-- Footer -->
+
+    <TextView
+      android:id="@+id/upload_result_success_footer"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      android:padding="8dp"
+      style="@android:style/TextAppearance.DeviceDefault.Small"
+      android:text="@string/send_google_success_footer" />
+
+    <TextView
+      android:id="@+id/upload_result_error_footer"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      android:padding="8dp"
+      style="@android:style/TextAppearance.DeviceDefault.Medium"
+      android:text="@string/send_google_error" />
+  </LinearLayout>
+
+</ScrollView>
