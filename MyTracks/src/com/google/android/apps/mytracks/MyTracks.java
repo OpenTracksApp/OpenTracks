@@ -540,7 +540,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
   public void showChartSettings() {
     ChartActivity chart = getChartTab();
     if (chart != null) {
-      chart.showDialog(ChartActivity.CHART_SETTINGS_DIALOG);
+      chart.showChartSettingsDialog();
     }
   }
 
