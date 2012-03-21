@@ -206,7 +206,7 @@ public class WaypointsList extends ListActivity implements View.OnClickListener 
     switch (id) {
       case DIALOG_DELETE_CURRENT_ID:
         return DialogUtils.createConfirmationDialog(this,
-            R.string.marker_list_delete_marker_confirm_message,
+            getString(R.string.marker_list_delete_marker_confirm_message),
             new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int which) {

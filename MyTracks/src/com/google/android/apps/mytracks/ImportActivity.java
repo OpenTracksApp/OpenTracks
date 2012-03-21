@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.TracksColumns;
+import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.UriUtils;
 import com.google.android.maps.mytracks.R;
@@ -110,19 +111,14 @@ public class ImportActivity extends Activity {
   protected Dialog onCreateDialog(int id) {
     switch (id) {
       case DIALOG_PROGRESS_ID:
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setCancelable(true);
-        progressDialog.setIcon(android.R.drawable.ic_dialog_info);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-          @Override
-          public void onCancel(DialogInterface dialog) {
-            importAsyncTask.cancel(true);
-            finish();
-          }
-        });
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDialog.setTitle(R.string.track_list_import_all);
+        progressDialog = DialogUtils.createHorizontalProgressDialog(this,
+            getString(R.string.import_progress_message), new DialogInterface.OnCancelListener() {
+              @Override
+              public void onCancel(DialogInterface dialog) {
+                importAsyncTask.cancel(true);
+                finish();
+              }
+            });
         return progressDialog;
       case DIALOG_RESULT_ID:
         String message;

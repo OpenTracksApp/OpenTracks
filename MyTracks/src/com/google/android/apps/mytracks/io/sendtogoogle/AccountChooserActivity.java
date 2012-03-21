@@ -55,8 +55,8 @@ public class AccountChooserActivity extends Activity {
 
   private static final String TAG = AccountChooserActivity.class.getSimpleName();
   
-  private static final int NO_ACCOUNT_DIALOG = 1;
-  private static final int CHOOSE_ACCOUNT_DIALOG = 2;
+  private static final int DIALOG_NO_ACCOUNT_ID = 0;
+  private static final int DIALOG_CHOOSER_ID = 1;
 
   /**
    * A callback after getting the permission to access a Google service.
@@ -108,74 +108,72 @@ public class AccountChooserActivity extends Activity {
   protected void onResume() {
     super.onResume();
     if (accounts.length == 0) {
-      showDialog(NO_ACCOUNT_DIALOG);
+      showDialog(DIALOG_NO_ACCOUNT_ID);
     } else if (accounts.length > 1 ) {
-      showDialog(CHOOSE_ACCOUNT_DIALOG);
+      showDialog(DIALOG_CHOOSER_ID);
     }
   }
 
   @Override
   protected Dialog onCreateDialog(int id) {
-    AlertDialog.Builder builder;
     switch (id) {
-      case NO_ACCOUNT_DIALOG:
-        builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.send_google_no_account_title);
-        builder.setMessage(R.string.send_google_no_account_message);
-        builder.setCancelable(true);
-        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-          @Override
-          public void onCancel(DialogInterface dialog) {
-            finish();
-          }
-        });
-        builder.setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog, int which) {
-            finish();
-          }
-        });
-        return builder.create();
-      case CHOOSE_ACCOUNT_DIALOG:
-        builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.send_google_choose_account_title);
-        
+      case DIALOG_NO_ACCOUNT_ID:
+        return new AlertDialog.Builder(this)
+            .setCancelable(true)
+            .setMessage(R.string.send_google_no_account_message)
+            .setOnCancelListener(new DialogInterface.OnCancelListener() {
+              @Override
+              public void onCancel(DialogInterface dialog) {
+                finish();
+              }
+            })
+            .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+              public void onClick(DialogInterface dialog, int which) {
+                finish();
+              }
+            })
+            .setTitle(R.string.send_google_no_account_title)
+            .create();
+      case DIALOG_CHOOSER_ID:
         String[] choices = new String[accounts.length];
         for (int i = 0; i < accounts.length; i++) {
           choices[i] = accounts[i].name;
         }
-        builder.setSingleChoiceItems(choices, selectedAccountIndex, new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick(DialogInterface dialog, int which) {
-            selectedAccountIndex = which;
-          }
-        });
-        
-        builder.setCancelable(true);
-        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-          @Override
-          public void onCancel(DialogInterface dialog) {
-            finish();
-          }
-        });
-        builder.setNegativeButton(R.string.generic_cancel, new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog, int which) {
-            finish();
-          }
-        });
-        builder.setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog, int which) {
-            Account account = accounts[selectedAccountIndex];
-            SharedPreferences prefs = getSharedPreferences(
-                Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-            Editor editor = prefs.edit();
-            editor.putString(getString(R.string.preferred_account_key), account.name);
-            ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
+        return new AlertDialog.Builder(this)
+            .setCancelable(true)
+            .setNegativeButton(R.string.generic_cancel, new DialogInterface.OnClickListener() {
+              public void onClick(DialogInterface dialog, int which) {
+                finish();
+              }
+            })
+            .setOnCancelListener(new DialogInterface.OnCancelListener() {
+              @Override
+              public void onCancel(DialogInterface dialog) {
+                finish();
+              }
+            })
+            .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+              public void onClick(DialogInterface dialog, int which) {
+                Account account = accounts[selectedAccountIndex];
+                SharedPreferences sharedPreferences = getSharedPreferences(
+                    Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+                Editor editor = sharedPreferences.edit();
+                editor.putString(getString(R.string.preferred_account_key), account.name);
+                ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
 
-            sendRequest.setAccount(account);
-            getPermission(MapsConstants.SERVICE_NAME, sendRequest.isSendMaps(), mapsCallback);
-          }
-        });
-        return builder.create();
+                sendRequest.setAccount(account);
+                getPermission(MapsConstants.SERVICE_NAME, sendRequest.isSendMaps(), mapsCallback);
+              }
+            })
+            .setSingleChoiceItems(
+                choices, selectedAccountIndex, new DialogInterface.OnClickListener() {
+                  @Override
+                  public void onClick(DialogInterface dialog, int which) {
+                    selectedAccountIndex = which;
+                  }
+                })
+            .setTitle(R.string.send_google_choose_account_title)
+            .create();
       default:
         return null;
     }

@@ -17,13 +17,13 @@ package com.google.android.apps.mytracks.io.maps;
 
 import com.google.android.apps.mytracks.io.gdata.maps.MapsMapMetadata;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
+import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
@@ -46,13 +46,11 @@ import java.util.ArrayList;
  */
 public class ChooseMapActivity extends Activity {
 
-  private static final int PROGRESS_DIALOG = 1;
-  @VisibleForTesting
-  static final int ERROR_DIALOG = 2;
+  private static final int DIALOG_PROGRESS_ID = 0;
+  private static final int DIALOG_ERROR_ID = 1;
 
   private SendRequest sendRequest;
   private ChooseMapAsyncTask asyncTask;
-  private ProgressDialog progressDialog;
   @VisibleForTesting
   ArrayAdapter<ListItem> arrayAdapter;
 
@@ -122,39 +120,34 @@ public class ChooseMapActivity extends Activity {
   @Override
   protected Dialog onCreateDialog(int id) {
     switch (id) {
-      case PROGRESS_DIALOG:
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage(getString(R.string.maps_list_loading));
-        progressDialog.setCancelable(true);
-        progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-          @Override
-          public void onCancel(DialogInterface dialog) {
-            asyncTask.cancel(true);
-            finish();
-          }
-        });
-        progressDialog.setIcon(android.R.drawable.ic_dialog_info);
-        progressDialog.setTitle(R.string.generic_progress_title);
-        return progressDialog;
-      case ERROR_DIALOG:
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setIcon(android.R.drawable.ic_dialog_alert);
-        builder.setTitle(R.string.generic_error_title);
-        builder.setMessage(R.string.maps_list_error);
-        builder.setPositiveButton(R.string.generic_ok, new OnClickListener() {
-          @Override
-          public void onClick(DialogInterface dialog, int arg1) {
-            finish();
-          }
-        });
-        builder.setOnCancelListener(new OnCancelListener() {
-          @Override
-          public void onCancel(DialogInterface dialog) {
-            finish();
-          }
-        });
-        return builder.create();
+      case DIALOG_PROGRESS_ID:
+        return DialogUtils.createSpinnerProgressDialog(
+            this, getString(R.string.maps_list_progress_message), new DialogInterface.OnCancelListener() {
+              @Override
+              public void onCancel(DialogInterface dialog) {
+                asyncTask.cancel(true);
+                finish();
+              }
+            });
+      case DIALOG_ERROR_ID:
+        return new AlertDialog.Builder(this)
+            .setCancelable(true)
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setMessage(R.string.maps_list_error)
+            .setOnCancelListener(new OnCancelListener() {
+              @Override
+              public void onCancel(DialogInterface dialog) {
+                finish();
+              }
+            })
+            .setPositiveButton(R.string.generic_ok, new OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int arg1) {
+                finish();
+              }
+            })
+            .setTitle(R.string.generic_error_title)
+            .create();
       default:
         return null;
     }
@@ -192,7 +185,7 @@ public class ChooseMapActivity extends Activity {
    * Shows the progress dialog.
    */
   public void showProgressDialog() {
-    showDialog(PROGRESS_DIALOG);
+    showDialog(DIALOG_PROGRESS_ID);
   }
   
   /**
@@ -200,7 +193,7 @@ public class ChooseMapActivity extends Activity {
    */
   @VisibleForTesting
   void showErrorDialog() {
-    showDialog(ERROR_DIALOG);
+    showDialog(DIALOG_ERROR_ID);
   }
   
   /**
@@ -208,7 +201,7 @@ public class ChooseMapActivity extends Activity {
    */
   @VisibleForTesting
   void removeProgressDialog() {
-    removeDialog(PROGRESS_DIALOG);
+    removeDialog(DIALOG_PROGRESS_ID);
   }
 
   /**

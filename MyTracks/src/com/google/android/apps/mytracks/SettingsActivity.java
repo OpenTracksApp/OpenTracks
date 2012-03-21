@@ -178,15 +178,16 @@ public class SettingsActivity extends PreferenceActivity {
     switch (id) {
       case DIALOG_CONFIRM_RESET_ID:
         return DialogUtils.createConfirmationDialog(
-            this, R.string.settings_reset_confirm_message, new OnClickListener() {
+            this, getString(R.string.settings_reset_confirm_message), new OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int button) {
                 onResetPreferencesConfirmed();
               }
             });
       case DIALOG_CONFIRM_ACCESS_ID:
-        return DialogUtils.createConfirmationDialog(
-            this, R.string.settings_sharing_allow_access_confirm_message, new OnClickListener() {
+        return DialogUtils.createConfirmationDialog(this,
+            getString(R.string.settings_sharing_allow_access_confirm_message),
+            new OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int button) {
                 CheckBoxPreference pref = (CheckBoxPreference) findPreference(
@@ -196,7 +197,7 @@ public class SettingsActivity extends PreferenceActivity {
             });
       case DIALOG_CONFIRM_RESTORE_ID:
         return DialogUtils.createConfirmationDialog(
-            this, R.string.settings_backup_restore_confirm_message, new OnClickListener() {
+            this, getString(R.string.settings_backup_restore_confirm_message), new OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int which) {
                 startActivity(new Intent(SettingsActivity.this, RestoreChooserActivity.class));

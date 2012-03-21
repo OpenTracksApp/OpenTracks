@@ -250,7 +250,7 @@ public class MapActivity extends com.google.android.maps.MapActivity
         return PlayTrackUtils.createInstallEarthDialog(this);
       case DIALOG_DELETE_CURRENT_ID:
         return DialogUtils.createConfirmationDialog(this,
-            R.string.track_list_delete_track_confirm_message,
+            getString(R.string.track_list_delete_track_confirm_message),
             new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int which) {

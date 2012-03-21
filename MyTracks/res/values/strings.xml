@@ -664,11 +664,13 @@ limitations under the License.
       indicating error.">
     Unable to export.
   </string>
+  <string name="export_progress_message"
+    translation_description="When exporting all the tracks to the SD card, the progress message.">
+    Exporting all tracks...
+  </string>
   <string name="export_success"
     translation_description="When exporting all the tracks to the SD card, a toast message
-      indicating success.
-
-      Screenshot: export_success">
+      indicating success.">
     Export finished.
   </string>
 
@@ -786,6 +788,10 @@ limitations under the License.
     No GPX file found in %1$s. The SD card may be unreadable or the directory may not contain any
     GPX file.
   </string>
+  <string name="import_progress_message"
+    translation_description="When importing all the tracks from the SD card, the progress message.">
+    Importing all tracks...
+  </string>
   <string name="import_success"
     translation_description="After importing all the tracks from the SD card, the alert message
       indicating success.
@@ -803,11 +809,6 @@ limitations under the License.
       'Maps' list page informing the user that his maps cannot be loaded at this time.">
     Your maps could not be loaded at this time.
   </string>
-  <string name="maps_list_loading"
-    translation_description="When sending a track to an existing Google Map, the progress dialog
-      message informing the user that his maps are being loaded.">
-    Loading your Google Maps.
-  </string>
   <string name="maps_list_no_maps"
     translation_description="When sending a track to an existing Google Map, the text on the
       'Maps' list page informing the user that he doesn't have any maps.">
@@ -817,6 +818,11 @@ limitations under the License.
     translation_description="When sending a track to an existing Google Map, the text on the
       'Maps' list page asking the user to pick one of his maps.">
     Pick a map:
+  </string>
+  <string name="maps_list_progress_message"
+    translation_description="When sending a track to an existing Google Map, the progress message
+      informing the user that his maps are being loaded.">
+    Loading your Google Maps...
   </string>
   <string name="maps_list_public_label"
     translation_description="When sending a track to an existing Google Map, in the 'Maps'
@@ -1182,12 +1188,9 @@ limitations under the License.
       file.">
     Unable to write to a file.
   </string>
-  <string name="sd_card_progress_write_file"
-    translation_description="When writing to the SD card, the progress dialog message indicating
-      that it may take a while.
-
-      Screenshot: sd_card_progress_write_file.png">
-    Exporting a track to the SD card. This may take a while.
+  <string name="sd_card_progress_message"
+    translation_description="When saving a track to the SD card, the progress message.">
+    Saving to the SD card...
   </string>
   <string name="sd_card_success_read_file"
     translation_description="When reading from the SD card, the success message when finish reading
@@ -1297,12 +1300,11 @@ limitations under the License.
       not selected any Google service and no data is sent.">
     You did not select any service. No data is sent.
   </string>
-  <string name="send_google_progress_title"
-    translation_description="When sending a track to a Google service, the title on the progress
-      dialog.
+  <string name="send_google_progress_message"
+    translation_description="When sending a track to a Google service, the progress message.
 
       %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Docs'.">
-    Sending to %1$s. Please wait...
+    Sending to %1$s...
   </string>
   <string name="send_google_result_share_url"
     translation_description="When sending a track to Google, in the result dialog, the button on
@@ -1456,11 +1458,8 @@ limitations under the License.
   </string>
   <string name="settings_backup_now_progress_message"
     translation_description="In the 'Backup' settings, after pressing the 'Backup now' option, the
-      progress dialog telling the user that it is writing all tracks and settings and that it may
-      take a while.
-
-      Screenshot: settings_backup_now_progress_message.png">
-    Writing all tracks and settings to the SD card. This may take a while...
+      progress message telling the user that it is writing all tracks and settings to the SD card.">
+    Writing all tracks and settings...
   </string>
   <string name="settings_backup_now_summary"
     translation_description="In the 'Backup' settings, under the 'SD card' section, the
@@ -1495,11 +1494,9 @@ limitations under the License.
   </string>
   <string name="settings_backup_restore_progress_message"
     translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the
-      message on the progress dialog indicating that My Tracks is reading all tracks and settings
-      from the backup on the SD card and that it may take a while.
-
-      Screenshot: settings_backup_restore_progress.png">
-    Reading all tracks and settings from the SD card. This may take a while...
+      progress message informing that My Tracks is reading all tracks and settings from the backup
+      on the SD card.">
+    Reading all tracks and settings...
   </string>
   <string name="settings_backup_restore_select_title"
     translation_description="In the 'Backup' settings, after pressing the 'Restore now' option, the

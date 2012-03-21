@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
+import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -67,19 +68,14 @@ public class ExportActivity extends Activity {
   protected Dialog onCreateDialog(int id) {
     switch (id) {
       case DIALOG_PROGRESS_ID:
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setCancelable(true);
-        progressDialog.setIcon(android.R.drawable.ic_dialog_info);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-          @Override
-          public void onCancel(DialogInterface dialog) {
-            exportAsyncTask.cancel(true);
-            finish();
-          }
-        });
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDialog.setTitle(R.string.track_list_export_all);
+        progressDialog = DialogUtils.createHorizontalProgressDialog(this,
+            getString(R.string.export_progress_message), new DialogInterface.OnCancelListener() {
+              @Override
+              public void onCancel(DialogInterface dialog) {
+                exportAsyncTask.cancel(true);
+                finish();
+              }
+            });
         return progressDialog;
       default:
         return null;

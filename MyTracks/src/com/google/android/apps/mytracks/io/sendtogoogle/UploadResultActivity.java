@@ -43,7 +43,7 @@ import android.widget.TextView;
 public class UploadResultActivity extends Activity {
 
   private static final String TEXT_PLAIN_TYPE = "text/plain";
-  private static final int RESULT_DIALOG = 1;
+  private static final int DIALOG_RESULT_ID = 0;
 
   private SendRequest sendRequest;
   private Track track;
@@ -75,13 +75,13 @@ public class UploadResultActivity extends Activity {
   @Override
   protected void onResume() {
     super.onResume();
-    showDialog(RESULT_DIALOG);
+    showDialog(DIALOG_RESULT_ID);
   }
 
   @Override
   protected Dialog onCreateDialog(int id) {
     switch (id) {
-      case RESULT_DIALOG:
+      case DIALOG_RESULT_ID:
         View view = getLayoutInflater().inflate(R.layout.upload_result, null);
 
         LinearLayout mapsResult = (LinearLayout) view.findViewById(R.id.upload_result_maps_result);
