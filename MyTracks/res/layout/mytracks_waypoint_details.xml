@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:background="#c000">
+  <ScrollView
+    android:id="@+id/scrolly"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:layout_width="fill_parent"
+    android:scrollbarStyle="insideInset">
+
+    <LinearLayout
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+      <TextView android:text="@string/marker_detail_marker_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+      <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView android:id="@+id/waypointdetails_icon"
+          android:contentDescription="@string/marker_icon_description"
+          android:src="@drawable/ylw_pushpin"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:paddingLeft="4dp"
+          android:paddingRight="2dp"/>
+        <EditText android:id="@+id/waypointdetails_name"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:singleLine="true"
+         android:autoText="true"
+         android:capitalize="words"
+         android:selectAllOnFocus="true"
+         android:hint="@string/marker_detail_marker_name"
+         android:imeOptions="actionNext"/>
+      </LinearLayout>
+      <LinearLayout android:id="@+id/waypointdetails_description_layout"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        android:layout_weight="1">
+        <TextView android:id="@+id/waypointdetails_category_label"
+          android:text="@string/marker_detail_marker_type"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"/>
+        <AutoCompleteTextView android:id="@+id/waypointdetails_category"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:singleLine="true"
+          android:hint="@string/marker_detail_marker_type_hint"
+          android:imeOptions="actionNext"/>
+        <TextView android:text="@string/marker_detail_marker_description"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"/>
+        <EditText android:id="@+id/waypointdetails_description"
+          android:layout_width="fill_parent"
+          android:layout_height="0dp"
+          android:singleLine="false"
+          android:autoText="true"
+          android:capitalize="sentences"
+          android:selectAllOnFocus="true"
+          android:minLines="5"
+          android:maxLines="50"
+          android:gravity="top"
+          android:layout_weight="1"
+          android:hint="@string/marker_detail_marker_description"
+          android:imeOptions="actionDone"/>
+      </LinearLayout>
+
+      <TableLayout android:id="@+id/waypoint_stats"
+        android:visibility="gone"
+        android:padding="2dp"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:stretchColumns="1,4">
+        <!-- Total distance and max speed -->
+        <TableRow
+          android:padding="1dp">
+          <TextView
+            android:id="@+id/total_distance_label"
+            android:layout_column="1"
+            android:layout_span="3"
+            android:text="@string/stat_total_distance" />
+          <TextView
+            android:id="@+id/max_speed_label"
+            android:layout_column="4"
+            android:layout_span="2"
+            android:text="@string/stat_max_speed" />
+        </TableRow>
+        <TableRow
+          android:background="@color/stat_label_background">
+          <TextView
+            android:gravity="right"
+            android:id="@+id/total_distance_register"
+            android:layout_column="1"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:text="@string/value_unknown"
+            android:textColor="@color/stat_label_text"
+            android:textSize="40sp" />
+          <TextView
+            android:gravity="left"
+            android:id="@+id/total_distance_unit_label"
+            android:layout_column="2"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:text="@string/unit_mile"
+            android:textColor="@color/stat_label_text" />
+          <!-- TODO 4/08/2009
+          The following is a bad hack to get a spacer the same size as the
+          text.  Ideally this should just be a View, however I don't know how to
+          set the view height properly.  fill_parent on this element causes as
+          NullPointerException. This same filler is repeated on each line.-->
+          <TextView
+            android:background="@color/black"
+            android:layout_column="3"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:layout_width="5dp"
+            android:textSize="40sp" />
+          <TextView
+            android:gravity="right"
+            android:id="@+id/max_speed_register"
+            android:layout_column="4"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:text="@string/value_unknown"
+            android:textColor="@color/stat_label_text"
+            android:textSize="40sp" />
+          <LinearLayout
+            android:gravity="bottom"
+            android:layout_column="5"
+            android:layout_width="wrap_content"
+            android:lines="1"
+            android:orientation="vertical">
+            <TextView
+              android:id="@+id/max_speed_unit_label_top"
+              android:gravity="bottom"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="-1dp"
+              android:layout_marginTop="-1dp"
+              android:layout_width="wrap_content"
+              android:textColor="@color/stat_label_text" />
+            <TextView
+              android:background="@color/black"
+              android:layout_height="3dp"
+              android:layout_width="fill_parent" />
+            <TextView
+              android:id="@+id/max_speed_unit_label_bottom"
+              android:gravity="bottom"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="-1dp"
+              android:layout_marginTop="-1dp"
+              android:layout_width="wrap_content"
+              android:textColor="@color/stat_label_text" />
+          </LinearLayout>
+        </TableRow>
+
+        <!-- Total time and average speed -->
+        <TableRow>
+          <TextView
+            android:id="@+id/track_time_label"
+            android:layout_column="1"
+            android:layout_span="3"
+            android:text="@string/stat_total_time" />
+          <TextView
+            android:id="@+id/average_speed_label"
+            android:layout_column="4"
+            android:layout_span="2"
+            android:text="@string/stat_average_speed" />
+        </TableRow>
+        <TableRow
+          android:background="@color/stat_label_background">
+          <TextView
+            android:gravity="right"
+            android:id="@+id/total_time_register"
+            android:layout_column="1"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:layout_span="2"
+            android:layout_width="fill_parent"
+            android:text="@string/value_unknown"
+            android:textColor="@color/stat_label_text"
+            android:textSize="40sp" />
+          <TextView
+            android:background="@color/black"
+            android:layout_column="3"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:layout_width="5dp"
+            android:textSize="40sp" />
+          <TextView
+            android:gravity="right"
+            android:id="@+id/average_speed_register"
+            android:layout_column="4"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:text="@string/value_unknown"
+            android:textColor="@color/stat_label_text"
+            android:textSize="40sp" />
+          <LinearLayout
+            android:gravity="bottom"
+            android:layout_column="5"
+            android:layout_width="wrap_content"
+            android:lines="1"
+            android:orientation="vertical">
+            <TextView
+              android:id="@+id/average_speed_unit_label_top"
+              android:gravity="bottom"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="-1dp"
+              android:layout_marginTop="-1dp"
+              android:layout_width="wrap_content"
+              android:textColor="@color/stat_label_text" />
+            <TextView
+              android:background="@color/black"
+              android:layout_height="3dp"
+              android:layout_width="fill_parent" />
+            <TextView
+              android:id="@+id/average_speed_unit_label_bottom"
+              android:gravity="bottom"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="-1dp"
+              android:layout_marginTop="-1dp"
+              android:layout_width="wrap_content"
+              android:textColor="@color/stat_label_text" />
+          </LinearLayout>
+        </TableRow>
+
+        <!-- Moving time and average moving speed -->
+        <TableRow>
+          <TextView
+            android:id="@+id/moving_time_label"
+            android:layout_column="1"
+            android:layout_span="3"
+            android:text="@string/stat_moving_time" />
+          <TextView
+            android:id="@+id/average_moving_speed_label"
+            android:layout_column="4"
+            android:layout_span="2"
+            android:text="@string/stat_average_moving_speed" />
+        </TableRow>
+        <TableRow
+          android:background="@color/stat_label_background">
+          <TextView
+            android:gravity="right"
+            android:id="@+id/moving_time_register"
+            android:layout_column="1"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:layout_width="fill_parent"
+            android:layout_span="2"
+            android:text="@string/value_unknown"
+            android:textColor="@color/stat_label_text"
+            android:textSize="40sp" />
+          <TextView
+            android:background="@color/black"
+            android:layout_column="3"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:layout_width="5dp"
+            android:textSize="40sp" />
+          <TextView
+            android:gravity="right"
+            android:id="@+id/average_moving_speed_register"
+            android:layout_column="4"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:text="@string/value_unknown"
+            android:textColor="@color/stat_label_text"
+            android:textSize="40sp" />
+          <LinearLayout
+            android:gravity="bottom"
+            android:layout_column="5"
+            android:layout_width="wrap_content"
+            android:lines="1"
+            android:orientation="vertical">
+            <TextView
+              android:id="@+id/average_moving_speed_unit_label_top"
+              android:gravity="bottom"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="-1dp"
+              android:layout_marginTop="-1dp"
+              android:layout_width="wrap_content"
+              android:textColor="@color/stat_label_text" />
+            <TextView
+              android:background="@color/black"
+              android:layout_height="3dp"
+              android:layout_width="fill_parent" />
+            <TextView
+              android:id="@+id/average_moving_speed_unit_label_bottom"
+              android:gravity="bottom"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="-1dp"
+              android:layout_marginTop="-1dp"
+              android:layout_width="wrap_content"
+              android:textColor="@color/stat_label_text" />
+          </LinearLayout>
+        </TableRow>
+
+        <!-- Elevation and elevation gain -->
+        <TableRow>
+          <TextView
+            android:id="@+id/elevation_label"
+            android:layout_column="1"
+            android:layout_span="3"
+            android:text="@string/stat_elevation" />
+          <TextView
+            android:id="@+id/elevation_gain_label"
+            android:layout_column="4"
+            android:layout_span="2"
+            android:text="@string/stat_elevation_gain" />
+        </TableRow>
+        <TableRow
+          android:background="@color/stat_label_background">
+          <TextView
+            android:gravity="right"
+            android:id="@+id/elevation_register"
+            android:layout_column="1"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:text="@string/value_unknown"
+            android:textColor="@color/stat_label_text"
+            android:textSize="40sp" />
+          <TextView
+            android:gravity="left"
+            android:id="@+id/elevation_unit_label"
+            android:layout_column="2"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:text="@string/unit_feet"
+            android:textColor="@color/stat_label_text"/>
+          <TextView
+            android:background="@color/black"
+            android:layout_column="3"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:layout_width="5dp"
+            android:textSize="40sp" />
+          <TextView
+            android:gravity="right"
+            android:id="@+id/elevation_gain_register"
+            android:layout_column="4"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:text="@string/value_unknown"
+            android:textColor="@color/stat_label_text"
+            android:textSize="40sp" />
+          <TextView
+            android:gravity="left"
+            android:id="@+id/elevation_gain_unit_label"
+            android:layout_column="5"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:text="@string/unit_feet"
+            android:textColor="@color/stat_label_text" />
+        </TableRow>
+
+        <!-- Min and max elevation -->
+        <TableRow>
+          <TextView
+            android:id="@+id/min_elevation_label"
+            android:layout_column="1"
+            android:layout_span="3"
+            android:text="@string/stat_min_elevation" />
+          <TextView
+            android:id="@+id/max_elevation_label"
+            android:layout_column="4"
+            android:layout_span="3"
+            android:text="@string/stat_max_elevation" />
+        </TableRow>
+        <TableRow
+          android:background="@color/stat_label_background">
+          <TextView
+            android:gravity="right"
+            android:id="@+id/min_elevation_register"
+            android:layout_column="1"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:text="@string/value_unknown"
+            android:textColor="@color/stat_label_text"
+            android:textSize="40sp" />
+          <TextView
+            android:gravity="left"
+            android:id="@+id/min_elevation_unit_label"
+            android:layout_column="2"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:text="@string/unit_feet"
+            android:textColor="@color/stat_label_text" />
+          <TextView
+            android:background="@color/black"
+            android:layout_column="3"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:layout_width="5dp"
+            android:textSize="40sp" />
+          <TextView
+            android:gravity="right"
+            android:id="@+id/max_elevation_register"
+            android:layout_column="4"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:text="@string/value_unknown"
+            android:textColor="@color/stat_label_text"
+            android:textSize="40sp" />
+          <TextView
+            android:id="@+id/max_elevation_unit_label"
+            android:gravity="left"
+            android:layout_column="5"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:text="@string/unit_feet"
+            android:textColor="@color/stat_label_text" />
+        </TableRow>
+
+        <!-- Min and max grade -->
+        <TableRow>
+          <TextView
+            android:id="@+id/min_grade_label"
+            android:layout_column="1"
+            android:layout_span="3"
+            android:text="@string/stat_min_grade" />
+          <TextView
+            android:id="@+id/max_grade_label"
+            android:layout_column="4"
+            android:layout_span="2"
+            android:text="@string/stat_max_grade" />
+        </TableRow>
+        <TableRow
+          android:background="@color/stat_label_background">
+          <TextView
+            android:gravity="right"
+            android:id="@+id/min_grade_register"
+            android:layout_column="1"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:layout_width="fill_parent"
+            android:layout_span="2"
+            android:text="@string/value_unknown"
+            android:textColor="@color/stat_label_text"
+            android:textSize="40sp" />
+          <TextView
+            android:background="@color/black"
+            android:layout_column="3"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:layout_width="5dp"
+            android:textSize="40sp" />
+          <TextView
+            android:gravity="right"
+            android:id="@+id/max_grade_register"
+            android:layout_column="4"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-9dp"
+            android:layout_marginTop="-9dp"
+            android:layout_width="fill_parent"
+            android:layout_span="2"
+            android:text="@string/value_unknown"
+            android:textColor="@color/stat_label_text"
+            android:textSize="40sp" />
+        </TableRow>
+      </TableLayout>
+    </LinearLayout>
+  </ScrollView>
+  <LinearLayout style="@style/ButtonLayout">
+    <LinearLayout style="@style/ButtonSpacer"/>
+    <Button android:id="@+id/waypointdetails_save"
+      android:layout_gravity="left"
+      android:text="@string/generic_save"
+      style="@style/Button"/>
+    <Button android:id="@+id/waypointdetails_cancel"
+      android:layout_gravity="right"
+      android:text="@string/generic_cancel"
+      style="@style/Button"/>
+    <LinearLayout style="@style/ButtonSpacer"/>
+  </LinearLayout>
+</LinearLayout>
