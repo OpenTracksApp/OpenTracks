@@ -324,6 +324,17 @@ public class TrackList extends ListActivity
     getMenuInflater().inflate(R.menu.search_only, menu);
     return true;
   }
+  
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.menu_search:
+        onSearchRequested();
+        return true;
+      default:
+        return super.onOptionsItemSelected(item);
+    }
+  }
 
   @Override
   protected Dialog onCreateDialog(int id) {
@@ -387,11 +398,6 @@ public class TrackList extends ListActivity
       default:
         return null;
     }
-  }
-
-  /* Callback from menu/search_only.xml */
-  public void onSearch(@SuppressWarnings("unused") MenuItem i) {
-    onSearchRequested();
   }
 
   private void updateButtonsEnabled() {

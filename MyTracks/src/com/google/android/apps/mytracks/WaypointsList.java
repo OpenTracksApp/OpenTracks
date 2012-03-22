@@ -224,10 +224,16 @@ public class WaypointsList extends ListActivity implements View.OnClickListener 
     getMenuInflater().inflate(R.menu.search_only, menu);
     return true;
   }
-
-  /* Callback from menu/search_only.xml */
-  public void onSearch(@SuppressWarnings("unused") MenuItem i) {
-    onSearchRequested();
+  
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.menu_search:
+        onSearchRequested();
+        return true;
+      default:
+        return super.onOptionsItemSelected(item);
+    }
   }
 
   @Override
