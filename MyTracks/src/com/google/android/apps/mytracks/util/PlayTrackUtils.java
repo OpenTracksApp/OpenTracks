@@ -24,7 +24,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -96,7 +95,7 @@ public class PlayTrackUtils {
         .setCancelable(true)
         .setMessage(R.string.track_list_play_install_earth_message)
         .setNegativeButton(android.R.string.cancel, null)
-        .setPositiveButton(android.R.string.ok, new OnClickListener() {
+        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
             Intent intent = new Intent();

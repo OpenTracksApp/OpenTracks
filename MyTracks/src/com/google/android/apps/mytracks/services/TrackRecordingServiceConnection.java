@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.services;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.util.SystemUtils;
+import com.google.android.maps.mytracks.BuildConfig;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -157,7 +158,7 @@ public class TrackRecordingServiceConnection {
 
     Log.i(TAG, "Binding to the service");
     Intent intent = new Intent(context, TrackRecordingService.class);
-    int flags = SystemUtils.isRelease(context) ? 0 : Context.BIND_DEBUG_UNBIND;
+    int flags = BuildConfig.DEBUG ? Context.BIND_DEBUG_UNBIND : 0;
     context.bindService(intent, serviceConnection, flags);
   }
 

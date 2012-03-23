@@ -61,7 +61,6 @@ public class WelcomeActivity extends Activity {
         View view = getLayoutInflater().inflate(R.layout.about, null);
         TextView aboutVersion = (TextView) view.findViewById(R.id.about_version);
         aboutVersion.setText(SystemUtils.getMyTracksVersion(this));
-
         return new AlertDialog.Builder(this)
             .setCancelable(true)
             .setNegativeButton(R.string.about_license, new DialogInterface.OnClickListener() {

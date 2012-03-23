@@ -203,31 +203,34 @@ public class WaypointsList extends ListActivity implements View.OnClickListener 
 
   @Override
   protected Dialog onCreateDialog(int id) {
-    switch (id) {
-      case DIALOG_DELETE_CURRENT_ID:
-        return DialogUtils.createConfirmationDialog(this,
-            getString(R.string.marker_list_delete_marker_confirm_message),
-            new DialogInterface.OnClickListener() {
-              @Override
-              public void onClick(DialogInterface dialog, int which) {
-                providerUtils.deleteWaypoint(
-                    selectedWaypointId, new DescriptionGeneratorImpl(WaypointsList.this));
-              }
-            });
-      default:
-        return null;
+    if (id != DIALOG_DELETE_CURRENT_ID) {
+      return null;
     }
+    return DialogUtils.createConfirmationDialog(this,
+        R.string.marker_list_delete_marker_confirm_message, new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            providerUtils.deleteWaypoint(
+                selectedWaypointId, new DescriptionGeneratorImpl(WaypointsList.this));
+          }
+        });
   }
-  
+
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.search_only, menu);
     return true;
   }
-
-  /* Callback from menu/search_only.xml */
-  public void onSearch(@SuppressWarnings("unused") MenuItem i) {
-    onSearchRequested();
+  
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.menu_search:
+        onSearchRequested();
+        return true;
+      default:
+        return super.onOptionsItemSelected(item);
+    }
   }
 
   @Override

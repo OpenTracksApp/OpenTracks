@@ -324,6 +324,17 @@ public class TrackList extends ListActivity
     getMenuInflater().inflate(R.menu.search_only, menu);
     return true;
   }
+  
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.menu_search:
+        onSearchRequested();
+        return true;
+      default:
+        return super.onOptionsItemSelected(item);
+    }
+  }
 
   @Override
   protected Dialog onCreateDialog(int id) {
@@ -354,8 +365,7 @@ public class TrackList extends ListActivity
             .create();
       case DIALOG_DELETE_ALL_ID:
         return DialogUtils.createConfirmationDialog(this,
-            getString(R.string.track_list_delete_all_confirm_message),
-            new DialogInterface.OnClickListener() {
+            R.string.track_list_delete_all_confirm_message, new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int which) {
                 MyTracksProviderUtils.Factory.get(TrackList.this).deleteAllTracks();
@@ -369,7 +379,7 @@ public class TrackList extends ListActivity
             });
       case DIALOG_DELETE_CURRENT_ID:
         return DialogUtils.createConfirmationDialog(this,
-            getString(R.string.track_list_delete_track_confirm_message),
+            R.string.track_list_delete_track_confirm_message,
             new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int which) {
@@ -387,11 +397,6 @@ public class TrackList extends ListActivity
       default:
         return null;
     }
-  }
-
-  /* Callback from menu/search_only.xml */
-  public void onSearch(@SuppressWarnings("unused") MenuItem i) {
-    onSearchRequested();
   }
 
   private void updateButtonsEnabled() {

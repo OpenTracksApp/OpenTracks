@@ -35,6 +35,7 @@ public class EulaUtils {
   // Accepting Google mobile terms of service
   private static final String EULA_PREFERENCE_KEY = "eula.google_mobile_tos_accepted";
 
+  // Google's mobile page
   private static final String HOST_NAME = "m.google.com";
 
   private EulaUtils() {}
@@ -56,7 +57,7 @@ public class EulaUtils {
   public static String getEulaMessage(Context context) {
     return context.getString(R.string.eula_date) 
         + "\n\n"
-        + context.getString(R.string.eula_body, HOST_NAME, HOST_NAME, HOST_NAME, HOST_NAME) 
+        + context.getString(R.string.eula_body, HOST_NAME) 
         + "\n\n" 
         + context.getString(R.string.eula_footer, HOST_NAME) 
         + "\n\n" 

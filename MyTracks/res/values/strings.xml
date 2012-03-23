@@ -643,15 +643,12 @@ limitations under the License.
   <string name="eula_body"
     translation_description="The body in the 'Terms of Service. See http://m.google.com/toscountry.
 
-      %1$s: host name, 'm.google.com'
-      %2$s: host name, 'm.google.com'
-      %3$s: host name, 'm.google.com'
-      %4$s: host name, 'm.google.com'">
+      %1$s: host name, 'm.google.com'">
     By using Google\'s mobile products and services ("Services"), you agree to be bound by a) the
     YouTube Terms of Use (%1$s/tos_youtube) for YouTube-related Services, b) the Google Maps Terms
-    and Conditions (%2$s/tos_maps) for mapping, local and location-based Services, c) the Google
-    Books Terms of Service (%3$s/tos_books) for Books-related Services, and e) the Google Terms of
-    Service (%4$s/utos) for all other Services, as updated from time to time.  
+    and Conditions (%1$s/tos_maps) for mapping, local and location-based Services, c) the Google
+    Books Terms of Service (%1$s/tos_books) for Books-related Services, and e) the Google Terms of
+    Service (%1$s/utos) for all other Services, as updated from time to time.  
   </string>
   <string name="eula_title"
     translation_description="The title for the 'Terms of Service' dialog.">
@@ -1290,7 +1287,7 @@ limitations under the License.
   <string name="send_google_no_service_selected"
     translation_description="When sending a track to Google, a message indicating that the user has
       not selected any Google service and no data is sent.">
-    You did not select any service. No data is sent.
+    You did not select any service. The track was not sent.
   </string>
   <string name="send_google_progress_message"
     translation_description="When sending a track to a Google service, the progress message.

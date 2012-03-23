@@ -16,7 +16,6 @@
 
 package com.google.android.apps.mytracks.io.backup;
 
-import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.os.AsyncTask;
@@ -57,7 +56,7 @@ public class RestoreAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   public RestoreAsyncTask(RestoreActivity restoreActivity, Date date) {
     this.restoreActivity = restoreActivity;
     this.date = date;
-    this.externalFileBackup = new ExternalFileBackup(restoreActivity, new FileUtils());
+    this.externalFileBackup = new ExternalFileBackup(restoreActivity);
     success = false;
     completed = false;
     messageId = R.string.sd_card_error_read_file;
