@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+  <style name="ThemeSelector" parent="android:Theme" />
+
+  <!--  About page label -->
+  <style name="AboutLabel">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:paddingBottom">2dp</item>
+    <item name="android:textSize">20sp</item>
+  </style>
+
+  <!-- About page item -->
+  <style name="AboutItem">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:paddingBottom">2dp</item>
+    <item name="android:paddingLeft">20dp</item>
+    <item name="android:textSize">18sp</item>
+  </style>
+
+  <!--  About page url -->
+  <style name="AboutUrl">
+    <item name="android:autoLink">web</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:paddingBottom">2dp</item>
+    <item name="android:paddingLeft">20dp</item>
+    <item name="android:textSize">18sp</item>
+  </style>
+
+  <!-- Button -->
+  <style name="Button">
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:layout_weight">1</item>
+    <item name="android:layout_width">0dp</item>
+    <item name="android:maxLines">2</item>
+    <item name="android:textSize">14sp</item>
+  </style>
+
+  <!-- Button layout -->
+  <style name="ButtonLayout">
+    <item name="android:background">@drawable/list_bar</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:measureWithLargestChild">true</item>
+    <item name="android:orientation">horizontal</item>
+    <item name="android:paddingLeft">2dp</item>
+    <item name="android:paddingRight">2dp</item>
+    <item name="android:paddingTop">4dp</item>
+  </style>
+
+  <!-- Button spacer -->
+  <style name="ButtonSpacer">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_weight">0.25</item>
+    <item name="android:layout_width">0dp</item>
+    <item name="android:orientation">horizontal</item>
+    <item name="android:visibility">gone</item>
+  </style>
+
+  <!-- Chart settings axis text -->
+  <style name="ChartSettingsAxisText">
+    <item name="android:gravity">bottom</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textSize">20sp</item>
+  </style>
+
+  <!-- Chart settings checkbox -->
+  <style name="ChartSettingsCheckbox">
+    <item name="android:checked">true</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+  </style>
+
+  <!-- Chart settings radio button -->
+  <style name="ChartSettingsRadioButton">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+  </style>
+
+  <!-- Send Google CheckBox -->
+  <style name="SendGoogleCheckBox">
+    <item name="android:checked">true</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:layout_marginLeft">10dp</item>
+    <item name="android:layout_width">0dp</item>
+    <item name="android:textSize">18sp</item>
+  </style>
+
+  <!-- Send Google ImageView -->
+  <style name="SendGoogleImageView">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+  </style>
+
+  <!-- Send Google RadioButton -->
+  <style name="SendGoogleRadioButton">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textSize">18sp</item>
+  </style>
+
+  <style name="SensorStateLabel">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:paddingLeft">4dp</item>
+    <item name="android:paddingRight">4dp</item>
+  </style>
+
+  <style name="SensorStateValue">
+    <item name="android:background">@color/stat_label_background</item>
+    <item name="android:gravity">right</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:paddingLeft">4dp</item>
+    <item name="android:paddingRight">4dp</item>
+    <item name="android:textColor">@color/stat_label_text</item>
+    <item name="android:textSize">40sp</item>
+  </style>
+
+  <!-- The style for a view which divides the numerator and denominator of the units on the statistics activity. -->
+  <style name="StatsDivider" parent="@android:Widget.TextView">
+    <item name="android:background">@color/black</item>
+    <item name="android:layout_height">3dp</item>
+    <item name="android:layout_width">fill_parent</item>
+  </style>
+
+  <!-- The style for a text view for displaying a value on the statistics activity. -->
+  <style name="StatsRegister" parent="@android:Widget.TextView">
+    <item name="android:gravity">right</item>
+    <item name="android:layout_marginBottom">-9dp</item>
+    <item name="android:layout_marginTop">-9dp</item>
+    <item name="android:text">@string/value_unknown</item>
+    <item name="android:textColor">@color/stat_label_text</item>
+    <item name="android:textSize">40sp</item>
+  </style>
+
+  <!-- The style for a text view for displaying a large value on the statistics activity. -->
+  <style name="StatsRegister.Big">
+    <item name="android:layout_marginBottom">-13dp</item>
+    <item name="android:layout_marginTop">-13dp</item>
+    <item name="android:textSize">50sp</item>
+  </style>
+
+  <!-- The style for a text view for displaying a small value on the statistics activity. -->
+  <style name="StatsRegister.Small">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginBottom">-5dp</item>
+    <item name="android:layout_marginTop">-5dp</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:textSize">25sp</item>
+  </style>
+
+  <!-- The style for a view which divides two columns in the statistics activity. -->
+  <style name="StatsSpacer" parent="@android:Widget.TextView">
+    <item name="android:background">@color/black</item>
+    <item name="android:layout_marginBottom">-9dp</item>
+    <item name="android:layout_marginTop">-9dp</item>
+    <item name="android:layout_width">5dp</item>
+    <item name="android:textSize">40sp</item>
+  </style>
+
+  <!-- The style for the unit on the statistics activity. -->
+  <style name="StatsUnit" parent="@android:Widget.TextView">
+    <item name="android:gravity">bottom</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginBottom">-2dp</item>
+    <item name="android:layout_marginTop">-2dp</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textColor">@color/stat_label_text</item>
+  </style>
+
+  <!-- The style for the unit on the statistics activity where there is only one string. -->
+  <style name="StatsUnitSolo" parent="@android:Widget.TextView">
+    <item name="android:gravity">right</item>
+    <item name="android:layout_marginBottom">-9dp</item>
+    <item name="android:layout_marginTop">-9dp</item>
+    <item name="android:textColor">@color/stat_label_text</item>
+  </style>
+
+  <!-- Welcome page TextView -->
+  <style name="WelcomeTextView">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:paddingLeft">10sp</item>
+    <item name="android:paddingRight">10sp</item>
+    <item name="android:textColor">@color/black</item>
+    <item name="android:textSize">16sp</item>
+  </style>
+
+  <!-- Welcome page TextView question -->
+  <style name="WelcomeTextView.Question">
+    <item name="android:paddingTop">10sp</item>
+    <item name="android:textStyle">bold</item>
+  </style>
+
+  <!-- Widget TextView -->
+  <style name="WidgetTextView">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textColor">@color/appwidget_text</item>
+    <item name="android:textSize">14sp</item>
+  </style>
+
+  <!-- Widget TextView value  -->
+  <style name="WidgetTextView.Value">
+    <item name="android:width">160px</item>
+  </style>
+</resources>

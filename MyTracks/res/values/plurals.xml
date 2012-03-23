@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2011 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<resources>
+  <plurals name="importGpxFiles">
+    <item quantity="zero">@string/import_gpx_files_zero</item>
+    <item quantity="one">@string/import_gpx_files_one</item>
+    <item quantity="two">@string/import_gpx_files_two</item>
+    <item quantity="few">@string/import_gpx_files_few</item>
+    <item quantity="many">@string/import_gpx_files_many</item>
+    <item quantity="other">@string/import_gpx_files_other</item>
+  </plurals>
+  <plurals name="voiceHours">
+    <item quantity="zero">@string/voice_hours_zero</item>
+    <item quantity="one">@string/voice_hours_one</item>
+    <item quantity="two">@string/voice_hours_two</item>
+    <item quantity="few">@string/voice_hours_few</item>
+    <item quantity="many">@string/voice_hours_many</item>
+    <item quantity="other">@string/voice_hours_other</item>
+  </plurals>
+  <plurals name="voiceMinutes">
+    <item quantity="zero">@string/voice_minutes_zero</item>
+    <item quantity="one">@string/voice_minutes_one</item>
+    <item quantity="two">@string/voice_minutes_two</item>
+    <item quantity="few">@string/voice_minutes_few</item>
+    <item quantity="many">@string/voice_minutes_many</item>
+    <item quantity="other">@string/voice_minutes_other</item>
+  </plurals>
+  <plurals name="voiceSeconds">
+    <item quantity="zero">@string/voice_seconds_zero</item>
+    <item quantity="one">@string/voice_seconds_one</item>
+    <item quantity="two">@string/voice_seconds_two</item>
+    <item quantity="few">@string/voice_seconds_few</item>
+    <item quantity="many">@string/voice_seconds_many</item>
+    <item quantity="other">@string/voice_seconds_other</item>
+  </plurals>
+  <plurals name="voiceSpeedKilometersPerHour">
+    <item quantity="zero">@string/voice_speed_kilometers_per_hour_zero</item>
+    <item quantity="one">@string/voice_speed_kilometers_per_hour_one</item>
+    <item quantity="two">@string/voice_speed_kilometers_per_hour_two</item>
+    <item quantity="few">@string/voice_speed_kilometers_per_hour_few</item>
+    <item quantity="many">@string/voice_speed_kilometers_per_hour_many</item>
+    <item quantity="other">@string/voice_speed_kilometers_per_hour_other</item>
+  </plurals>
+  <plurals name="voiceSpeedMilesPerHour">
+    <item quantity="zero">@string/voice_speed_miles_per_hour_zero</item>
+    <item quantity="one">@string/voice_speed_miles_per_hour_one</item>
+    <item quantity="two">@string/voice_speed_miles_per_hour_two</item>
+    <item quantity="few">@string/voice_speed_miles_per_hour_few</item>
+    <item quantity="many">@string/voice_speed_miles_per_hour_many</item>
+    <item quantity="other">@string/voice_speed_miles_per_hour_other</item>
+  </plurals>
+  <plurals name="voiceTotalDistanceKilometers">
+    <item quantity="zero">@string/voice_total_distance_kilometers_zero</item>
+    <item quantity="one">@string/voice_total_distance_kilometers_one</item>
+    <item quantity="two">@string/voice_total_distance_kilometers_two</item>
+    <item quantity="few">@string/voice_total_distance_kilometers_few</item>
+    <item quantity="many">@string/voice_total_distance_kilometers_many</item>
+    <item quantity="other">@string/voice_total_distance_kilometers_other</item>
+  </plurals>
+  <plurals name="voiceTotalDistanceMiles">
+    <item quantity="zero">@string/voice_total_distance_miles_zero</item>
+    <item quantity="one">@string/voice_total_distance_miles_one</item>
+    <item quantity="two">@string/voice_total_distance_miles_two</item>
+    <item quantity="few">@string/voice_total_distance_miles_few</item>
+    <item quantity="many">@string/voice_total_distance_miles_many</item>
+    <item quantity="other">@string/voice_total_distance_miles_other</item>
+  </plurals>
+</resources>

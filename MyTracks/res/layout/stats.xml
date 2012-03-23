@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/stats_root"
+  android:layout_height="wrap_content"
+  android:orientation="horizontal"
+  android:layout_width="fill_parent">
+
+  <ScrollView
+    android:id="@+id/scrolly"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent">
+
+    <TableLayout
+      android:id="@+id/stats_table"
+      android:layout_height="wrap_content"
+      android:stretchColumns="1,4"
+      android:layout_width="fill_parent">
+
+      <!--  Layout the speed large on it's own line. -->
+      <TableRow>
+        <TextView
+          android:id="@+id/speed_label"
+          android:layout_span="5"
+          android:text="@string/stat_speed" />
+      </TableRow>
+      <TableRow
+        android:background="@color/stat_label_background">
+        <TextView
+          style="@style/StatsRegister.Big"
+          android:id="@+id/speed_register"
+          android:layout_column="1"
+          android:layout_span="4"/>
+        <LinearLayout
+          android:gravity="bottom"
+          android:layout_column="5"
+          android:layout_width="wrap_content"
+          android:lines="1"
+          android:orientation="vertical">
+          <TextView
+            android:layout_height="fill_parent"
+            android:layout_width="fill_parent" />
+          <TextView
+            android:id="@+id/speed_unit_label_top"
+	          style="@style/StatsUnit" />
+          <TextView
+	          style="@style/StatsDivider" />
+          <TextView
+            android:id="@+id/speed_unit_label_bottom"
+	          style="@style/StatsUnit" />
+        </LinearLayout>
+      </TableRow>
+
+      <!-- Total distance and max speed -->
+      <TableRow
+        android:padding="1dp">
+        <TextView
+          android:id="@+id/total_distance_label"
+          android:layout_column="1"
+          android:layout_span="3"
+          android:text="@string/stat_total_distance" />
+        <TextView
+          android:id="@+id/max_speed_label"
+          android:layout_column="4"
+          android:layout_span="2"
+          android:text="@string/stat_max_speed" />
+      </TableRow>
+      <TableRow
+        android:background="@color/stat_label_background">
+        <TextView
+          style="@style/StatsRegister"
+          android:id="@+id/total_distance_register"
+          android:layout_column="1" />
+        <TextView
+          android:id="@+id/total_distance_unit_label"
+          android:layout_column="2"
+	        style="@style/StatsUnitSolo" />
+        <!-- TODO 4/08/2009
+        The following is a bad hack to get a spacer the same size as the
+        text.  Ideally this should just be a View, however I don't know how to
+        set the view height properly.  fill_parent on this element causes as
+        NullPointerException. This same filler is repeated on each line.-->
+        <TextView
+          style="@style/StatsSpacer"
+          android:layout_column="3"/>
+        <TextView
+          android:id="@+id/max_speed_register"
+          style="@style/StatsRegister"
+          android:layout_column="4" />
+        <LinearLayout
+          android:gravity="bottom"
+          android:layout_column="5"
+          android:layout_width="wrap_content"
+          android:lines="1"
+          android:orientation="vertical">
+          <TextView
+            android:id="@+id/max_speed_unit_label_top"
+            style="@style/StatsUnit" />
+          <TextView
+	          style="@style/StatsDivider" />
+          <TextView
+            android:id="@+id/max_speed_unit_label_bottom"
+            style="@style/StatsUnit" />
+        </LinearLayout>
+      </TableRow>
+
+      <!-- Total time and average speed -->
+      <TableRow>
+        <TextView
+          android:id="@+id/track_time_label"
+          android:layout_column="1"
+          android:layout_span="3"
+          android:text="@string/stat_total_time" />
+        <TextView
+          android:id="@+id/average_speed_label"
+          android:layout_column="4"
+          android:layout_span="2"
+          android:text="@string/stat_average_speed" />
+      </TableRow>
+      <TableRow
+        android:background="@color/stat_label_background">
+        <TextView
+          android:id="@+id/total_time_register"
+          android:layout_column="1"
+          android:layout_height="wrap_content"
+          android:layout_span="2"
+          android:layout_width="fill_parent"
+          style="@style/StatsRegister" />
+        <TextView
+          style="@style/StatsSpacer"
+          android:layout_column="3"/>
+        <TextView
+          android:id="@+id/average_speed_register"
+          android:layout_column="4"
+          style="@style/StatsRegister" />
+        <LinearLayout
+          android:gravity="bottom"
+          android:layout_column="5"
+          android:layout_width="wrap_content"
+          android:lines="1"
+          android:orientation="vertical">
+          <TextView
+            android:id="@+id/average_speed_unit_label_top"
+            style="@style/StatsUnit" />
+          <TextView
+	          style="@style/StatsDivider" />
+          <TextView
+            android:id="@+id/average_speed_unit_label_bottom"
+            style="@style/StatsUnit" />
+        </LinearLayout>
+      </TableRow>
+
+      <!-- Moving time and average moving speed -->
+      <TableRow>
+        <TextView
+          android:id="@+id/moving_time_label"
+          android:layout_column="1"
+          android:layout_span="3"
+          android:text="@string/stat_moving_time" />
+        <TextView
+          android:id="@+id/average_moving_speed_label"
+          android:layout_column="4"
+          android:layout_span="2"
+          android:text="@string/stat_average_moving_speed" />
+      </TableRow>
+      <TableRow
+        android:background="@color/stat_label_background">
+        <TextView
+          android:id="@+id/moving_time_register"
+          android:layout_column="1"
+          android:layout_height="wrap_content"
+          android:layout_span="2"
+          android:layout_width="fill_parent"
+          style="@style/StatsRegister" />
+        <TextView
+          style="@style/StatsSpacer"
+          android:layout_column="3"/>
+        <TextView
+          android:id="@+id/average_moving_speed_register"
+          style="@style/StatsRegister" />
+        <LinearLayout
+          android:gravity="bottom"
+          android:layout_column="5"
+          android:layout_width="wrap_content"
+          android:lines="1"
+          android:orientation="vertical">
+          <TextView
+            android:id="@+id/average_moving_speed_unit_label_top"
+            style="@style/StatsUnit" />
+          <TextView
+	          style="@style/StatsDivider" />
+            android:layout_height="3dp"
+            android:layout_width="fill_parent" />
+          <TextView
+            android:id="@+id/average_moving_speed_unit_label_bottom"
+            style="@style/StatsUnit" />
+        </LinearLayout>
+      </TableRow>
+
+      <!-- Elevation and elevation gain -->
+      <TableRow>
+        <TextView
+          android:id="@+id/elevation_label"
+          android:layout_column="1"
+          android:layout_span="3"
+          android:text="@string/stat_elevation" />
+        <TextView
+          android:id="@+id/elevation_gain_label"
+          android:layout_column="4"
+          android:layout_span="2"
+          android:text="@string/stat_elevation_gain" />
+      </TableRow>
+      <TableRow
+        android:background="@color/stat_label_background">
+        <TextView
+          android:id="@+id/elevation_register"
+          android:layout_column="1"
+          style="@style/StatsRegister" />
+        <TextView
+          android:id="@+id/elevation_unit_label"
+          android:layout_column="2"
+          style="@style/StatsUnitSolo" />
+        <TextView
+          style="@style/StatsSpacer"
+          android:layout_column="3"/>
+        <TextView
+          android:id="@+id/elevation_gain_register"
+          android:layout_column="4"
+          style="@style/StatsRegister" />
+        <TextView
+          android:id="@+id/elevation_gain_unit_label"
+          android:layout_column="5"
+          style="@style/StatsUnitSolo" />
+      </TableRow>
+
+      <!-- Min and max elevation -->
+      <TableRow>
+        <TextView
+          android:id="@+id/min_elevation_label"
+          android:layout_column="1"
+          android:layout_span="3"
+          android:text="@string/stat_min_elevation" />
+        <TextView
+          android:id="@+id/max_elevation_label"
+          android:layout_column="4"
+          android:layout_span="3"
+          android:text="@string/stat_max_elevation" />
+      </TableRow>
+      <TableRow
+        android:background="@color/stat_label_background">
+        <TextView
+          android:id="@+id/min_elevation_register"
+          android:layout_column="1"
+          style="@style/StatsRegister" />
+        <TextView
+          android:id="@+id/min_elevation_unit_label"
+          android:layout_column="2"
+          style="@style/StatsUnitSolo" />
+        <TextView
+          style="@style/StatsSpacer"
+          android:layout_column="3"/>
+        <TextView
+          android:id="@+id/max_elevation_register"
+          android:layout_column="4"
+          style="@style/StatsRegister" />
+        <TextView
+          android:id="@+id/max_elevation_unit_label"
+          android:layout_column="5"
+          style="@style/StatsUnitSolo" />
+      </TableRow>
+
+      <!-- Min and max grade -->
+      <TableRow>
+        <TextView
+          android:id="@+id/min_grade_label"
+          android:layout_column="1"
+          android:layout_span="3"
+          android:text="@string/stat_min_grade" />
+        <TextView
+          android:id="@+id/max_grade_label"
+          android:layout_column="4"
+          android:layout_span="2"
+          android:text="@string/stat_max_grade" />
+      </TableRow>
+      <TableRow
+        android:background="@color/stat_label_background">
+        <TextView
+          android:id="@+id/min_grade_register"
+          android:layout_column="1"
+          android:layout_span="2"
+          style="@style/StatsRegister" />
+        <TextView
+          style="@style/StatsSpacer"
+          android:layout_column="3"/>
+        <TextView
+          android:id="@+id/max_grade_register"
+          android:layout_column="4"
+          android:layout_span="2"
+          style="@style/StatsRegister" />
+      </TableRow>
+
+      <!-- Latitude and Longitude -->
+      <TableRow>
+        <TextView
+          android:layout_column="1"
+          android:layout_span="3"
+          android:text="@string/stat_latitude" />
+        <TextView
+          android:layout_column="4"
+          android:layout_span="2"
+          android:text="@string/stat_longitude" />
+      </TableRow>
+      <TableRow
+        android:background="@color/stat_label_background">
+        <TextView
+          android:id="@+id/latitude_register"
+          android:layout_column="1"
+          android:layout_span="2"
+          style="@style/StatsRegister.Small" />
+        <TextView
+          style="@style/StatsSpacer"
+          android:layout_column="3"
+          android:textSize="25sp" />
+        <TextView
+          android:id="@+id/longitude_register"
+          android:layout_column="4"
+          android:layout_span="2"
+          style="@style/StatsRegister.Small" />
+      </TableRow>
+
+    </TableLayout>
+  </ScrollView>
+  <LinearLayout android:id="@+id/stats_busypane"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="3dp"
+    android:visibility="gone">
+    <ProgressBar
+      android:layout_weight="1"
+      android:layout_height="0dp"
+      android:layout_width="wrap_content"
+      android:maxWidth="80dp"
+      android:maxHeight="80dp"
+      android:minWidth="80dp"
+      android:minHeight="80dp"
+      android:layout_gravity="center"/>
+  </LinearLayout>
+</RelativeLayout>
