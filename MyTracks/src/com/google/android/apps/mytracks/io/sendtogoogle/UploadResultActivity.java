@@ -80,100 +80,94 @@ public class UploadResultActivity extends Activity {
 
   @Override
   protected Dialog onCreateDialog(int id) {
-    switch (id) {
-      case DIALOG_RESULT_ID:
-        View view = getLayoutInflater().inflate(R.layout.upload_result, null);
+    if (id != DIALOG_RESULT_ID) {
+      return null;
+    }    
+    View view = getLayoutInflater().inflate(R.layout.upload_result, null);
 
-        LinearLayout mapsResult = (LinearLayout) view.findViewById(R.id.upload_result_maps_result);
-        LinearLayout fusionTablesResult = (LinearLayout) view.findViewById(
-            R.id.upload_result_fusion_tables_result);
-        LinearLayout docsResult = (LinearLayout) view.findViewById(R.id.upload_result_docs_result);
+    LinearLayout mapsResult = (LinearLayout) view.findViewById(R.id.upload_result_maps_result);
+    LinearLayout fusionTablesResult = (LinearLayout) view.findViewById(
+        R.id.upload_result_fusion_tables_result);
+    LinearLayout docsResult = (LinearLayout) view.findViewById(R.id.upload_result_docs_result);
 
-        ImageView mapsResultIcon = (ImageView) view.findViewById(
-            R.id.upload_result_maps_result_icon);
-        ImageView fusionTablesResultIcon = (ImageView) view.findViewById(
-            R.id.upload_result_fusion_tables_result_icon);
-        ImageView docsResultIcon = (ImageView) view.findViewById(
-            R.id.upload_result_docs_result_icon);
+    ImageView mapsResultIcon = (ImageView) view.findViewById(R.id.upload_result_maps_result_icon);
+    ImageView fusionTablesResultIcon = (ImageView) view.findViewById(
+        R.id.upload_result_fusion_tables_result_icon);
+    ImageView docsResultIcon = (ImageView) view.findViewById(R.id.upload_result_docs_result_icon);
 
-        TextView successFooter = (TextView) view.findViewById(R.id.upload_result_success_footer);
-        TextView errorFooter = (TextView) view.findViewById(R.id.upload_result_error_footer);
+    TextView successFooter = (TextView) view.findViewById(R.id.upload_result_success_footer);
+    TextView errorFooter = (TextView) view.findViewById(R.id.upload_result_error_footer);
 
-        boolean hasError = false;
-        if (!sendRequest.isSendMaps()) {
-          mapsResult.setVisibility(View.GONE);
-        } else {
-          if (!sendRequest.isMapsSuccess()) {
-            mapsResultIcon.setImageResource(R.drawable.failure);
-            mapsResultIcon.setContentDescription(getString(R.string.generic_error_title));
-            hasError = true;
-          }
-        }
-
-        if (!sendRequest.isSendFusionTables()) {
-          fusionTablesResult.setVisibility(View.GONE);
-        } else {
-          if (!sendRequest.isFusionTablesSuccess()) {
-            fusionTablesResultIcon.setImageResource(R.drawable.failure);
-            fusionTablesResultIcon.setContentDescription(getString(R.string.generic_error_title));
-            hasError = true;
-          }
-        }
-
-        if (!sendRequest.isSendDocs()) {
-          docsResult.setVisibility(View.GONE);
-        } else {
-          if (!sendRequest.isDocsSuccess()) {
-            docsResultIcon.setImageResource(R.drawable.failure);
-            docsResultIcon.setContentDescription(getString(R.string.generic_error_title));
-            hasError = true;
-          }
-        }
-
-        if (hasError) {
-          successFooter.setVisibility(View.GONE);
-        } else {
-          errorFooter.setVisibility(View.GONE);
-        }
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this)
-            .setCancelable(true)
-            .setIcon(hasError ? android.R.drawable.ic_dialog_alert
-                : android.R.drawable.ic_dialog_info)
-            .setOnCancelListener(new DialogInterface.OnCancelListener() {
-              @Override
-              public void onCancel(DialogInterface dialog) {
-                finish();
-              }
-            })
-            .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
-              @Override
-              public void onClick(DialogInterface dialog, int which) {
-                if (!sendRequest.isShowAll() && shareUrl != null) {
-                  startShareUrlActivity(shareUrl);
-                }
-                finish();
-              }
-            })
-            .setTitle(hasError ? R.string.generic_error_title : R.string.generic_success_title)
-            .setView(view);
-
-        // Add a Share URL button if showing all the options and a shareUrl
-        // exists
-        if (sendRequest.isShowAll() && shareUrl != null) {
-          builder.setNegativeButton(getString(R.string.send_google_result_share_url),
-              new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                  startShareUrlActivity(shareUrl);
-                  finish();
-                }
-              });
-        }
-        return builder.create();
-      default:
-        return null;
+    boolean hasError = false;
+    if (!sendRequest.isSendMaps()) {
+      mapsResult.setVisibility(View.GONE);
+    } else {
+      if (!sendRequest.isMapsSuccess()) {
+        mapsResultIcon.setImageResource(R.drawable.failure);
+        mapsResultIcon.setContentDescription(getString(R.string.generic_error_title));
+        hasError = true;
+      }
     }
+
+    if (!sendRequest.isSendFusionTables()) {
+      fusionTablesResult.setVisibility(View.GONE);
+    } else {
+      if (!sendRequest.isFusionTablesSuccess()) {
+        fusionTablesResultIcon.setImageResource(R.drawable.failure);
+        fusionTablesResultIcon.setContentDescription(getString(R.string.generic_error_title));
+        hasError = true;
+      }
+    }
+
+    if (!sendRequest.isSendDocs()) {
+      docsResult.setVisibility(View.GONE);
+    } else {
+      if (!sendRequest.isDocsSuccess()) {
+        docsResultIcon.setImageResource(R.drawable.failure);
+        docsResultIcon.setContentDescription(getString(R.string.generic_error_title));
+        hasError = true;
+      }
+    }
+
+    if (hasError) {
+      successFooter.setVisibility(View.GONE);
+    } else {
+      errorFooter.setVisibility(View.GONE);
+    }
+
+    AlertDialog.Builder builder = new AlertDialog.Builder(this)
+        .setCancelable(true)
+        .setIcon(hasError ? android.R.drawable.ic_dialog_alert : android.R.drawable.ic_dialog_info)
+        .setOnCancelListener(new DialogInterface.OnCancelListener() {
+          @Override
+          public void onCancel(DialogInterface dialog) {
+            finish();
+          }
+        })
+        .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            if (!sendRequest.isShowAll() && shareUrl != null) {
+              startShareUrlActivity(shareUrl);
+            }
+            finish();
+          }
+        })
+        .setTitle(hasError ? R.string.generic_error_title : R.string.generic_success_title)
+        .setView(view);
+
+    // Add a Share URL button if showing all the options and a shareUrl exists
+    if (sendRequest.isShowAll() && shareUrl != null) {
+      builder.setNegativeButton(
+          getString(R.string.send_google_result_share_url), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              startShareUrlActivity(shareUrl);
+              finish();
+            }
+          });
+    }
+    return builder.create();
   }
 
   /**

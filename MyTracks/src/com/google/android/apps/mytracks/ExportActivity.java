@@ -66,20 +66,18 @@ public class ExportActivity extends Activity {
 
   @Override
   protected Dialog onCreateDialog(int id) {
-    switch (id) {
-      case DIALOG_PROGRESS_ID:
-        progressDialog = DialogUtils.createHorizontalProgressDialog(this,
-            getString(R.string.export_progress_message), new DialogInterface.OnCancelListener() {
-              @Override
-              public void onCancel(DialogInterface dialog) {
-                exportAsyncTask.cancel(true);
-                finish();
-              }
-            });
-        return progressDialog;
-      default:
-        return null;
+    if (id != DIALOG_PROGRESS_ID) {
+      return null;
     }
+    progressDialog = DialogUtils.createHorizontalProgressDialog(
+        this, R.string.export_progress_message, new DialogInterface.OnCancelListener() {
+          @Override
+          public void onCancel(DialogInterface dialog) {
+            exportAsyncTask.cancel(true);
+            finish();
+          }
+        });
+    return progressDialog;
   }
 
   /**

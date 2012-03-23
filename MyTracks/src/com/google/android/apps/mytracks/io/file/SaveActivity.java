@@ -28,8 +28,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -121,9 +119,8 @@ public class SaveActivity extends Activity {
   protected Dialog onCreateDialog(int id) {
     switch (id) {
       case DIALOG_PROGRESS_ID:
-        progressDialog = DialogUtils.createHorizontalProgressDialog(this,
-            getString(R.string.sd_card_progress_message),
-            new DialogInterface.OnCancelListener() {
+        progressDialog = DialogUtils.createHorizontalProgressDialog(
+            this, R.string.sd_card_progress_message, new DialogInterface.OnCancelListener() {
               @Override
               public void onCancel(DialogInterface dialog) {
                 saveAsyncTask.cancel(true);
@@ -137,14 +134,14 @@ public class SaveActivity extends Activity {
             .setIcon(success 
                 ? android.R.drawable.ic_dialog_info : android.R.drawable.ic_dialog_alert)
             .setMessage(messageId)
-            .setOnCancelListener(new OnCancelListener() {
+            .setOnCancelListener(new DialogInterface.OnCancelListener() {
               @Override
               public void onCancel(DialogInterface dialog) {
                 dialog.dismiss();
                 onPostResultDialog();
               }
             })
-            .setPositiveButton(R.string.generic_ok, new OnClickListener() {
+            .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int arg1) {
                 dialog.dismiss();

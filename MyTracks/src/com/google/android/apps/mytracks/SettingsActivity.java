@@ -30,7 +30,6 @@ import com.google.android.maps.mytracks.R;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -178,7 +177,7 @@ public class SettingsActivity extends PreferenceActivity {
     switch (id) {
       case DIALOG_CONFIRM_RESET_ID:
         return DialogUtils.createConfirmationDialog(
-            this, getString(R.string.settings_reset_confirm_message), new OnClickListener() {
+            this, R.string.settings_reset_confirm_message, new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int button) {
                 onResetPreferencesConfirmed();
@@ -186,8 +185,8 @@ public class SettingsActivity extends PreferenceActivity {
             });
       case DIALOG_CONFIRM_ACCESS_ID:
         return DialogUtils.createConfirmationDialog(this,
-            getString(R.string.settings_sharing_allow_access_confirm_message),
-            new OnClickListener() {
+            R.string.settings_sharing_allow_access_confirm_message,
+            new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int button) {
                 CheckBoxPreference pref = (CheckBoxPreference) findPreference(
@@ -196,8 +195,9 @@ public class SettingsActivity extends PreferenceActivity {
               }
             });
       case DIALOG_CONFIRM_RESTORE_ID:
-        return DialogUtils.createConfirmationDialog(
-            this, getString(R.string.settings_backup_restore_confirm_message), new OnClickListener() {
+        return DialogUtils.createConfirmationDialog(this,
+            R.string.settings_backup_restore_confirm_message,
+            new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int which) {
                 startActivity(new Intent(SettingsActivity.this, RestoreChooserActivity.class));
