@@ -284,8 +284,8 @@ public class MyTracks extends TabActivity implements OnTouchListener {
               @Override
               public void onClick(DialogInterface dialog, int which) {
                 EulaUtils.setEulaValue(MyTracks.this);
-                Intent startIntent = new Intent(MyTracks.this, WelcomeActivity.class);
-                startActivityForResult(startIntent, Constants.WELCOME);
+                startActivityForResult(
+                    new Intent(MyTracks.this, WelcomeActivity.class), Constants.WELCOME);
               }
             })
             .setTitle(R.string.eula_title)

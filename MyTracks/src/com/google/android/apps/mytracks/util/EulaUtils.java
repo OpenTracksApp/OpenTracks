@@ -25,53 +25,42 @@ import java.util.Calendar;
 
 /**
  * Utilities for EULA.
+ *
+ * @author Jimmy Shih
  */
 public class EulaUtils {
+
   private static final String EULA_PREFERENCE_FILE = "eula";
 
   // Accepting Google mobile terms of service
   private static final String EULA_PREFERENCE_KEY = "eula.google_mobile_tos_accepted";
 
+  // Google's mobile page
   private static final String HOST_NAME = "m.google.com";
 
   private EulaUtils() {}
 
   public static boolean getEulaValue(Context context) {
-    SharedPreferences preferences = context.getSharedPreferences(
+    SharedPreferences sharedPreferences = context.getSharedPreferences(
         EULA_PREFERENCE_FILE, Context.MODE_PRIVATE);
-    return preferences.getBoolean(EULA_PREFERENCE_KEY, false);
+    return sharedPreferences.getBoolean(EULA_PREFERENCE_KEY, false);
   }
 
   public static void setEulaValue(Context context) {
-    SharedPreferences preferences = context.getSharedPreferences(
+    SharedPreferences sharedPreferences = context.getSharedPreferences(
         EULA_PREFERENCE_FILE, Context.MODE_PRIVATE);
-    Editor editor = preferences.edit();
+    Editor editor = sharedPreferences.edit();
     editor.putBoolean(EULA_PREFERENCE_KEY, true);
     ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
   }
 
   public static String getEulaMessage(Context context) {
-    String item1 = String.format(context.getString(R.string.eula_message_item1), HOST_NAME,
-        HOST_NAME, HOST_NAME, HOST_NAME, HOST_NAME);
-    String item3 = String.format(context.getString(R.string.eula_message_item3), HOST_NAME);
-    String footer = String.format(context.getString(R.string.eula_message_footer), HOST_NAME);
-    String copyright = "©" + Calendar.getInstance().get(Calendar.YEAR);
-    return context.getString(R.string.eula_message_date)
+    return context.getString(R.string.eula_date) 
         + "\n\n"
-        + context.getString(R.string.eula_message_header)
-        + "\n\n"
-        + context.getString(R.string.eula_message_body)
-        + "\n\n"
-        + "1. " + item1
-        + "\n\n"
-        + "2. " + context.getString(R.string.eula_message_item2)
-        + "\n\n"
-        + "3. " + item3
-        + "\n\n"
-        + "4. " + context.getString(R.string.eula_message_item4)
-        + "\n\n"
-        + footer
-        + "\n\n"
-        + copyright;
+        + context.getString(R.string.eula_body, HOST_NAME) 
+        + "\n\n" 
+        + context.getString(R.string.eula_footer, HOST_NAME) 
+        + "\n\n" 
+        + "©" + Calendar.getInstance().get(Calendar.YEAR);
   }
 }

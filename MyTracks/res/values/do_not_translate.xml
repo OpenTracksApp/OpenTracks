@@ -16,12 +16,6 @@ limitations under the License.
 -->
 <resources>
   <!-- DO NOT TRANSLATE ANY STRINGS IN THIS FILE. -->
-  <string name="about_bart">Bart Niechwiej</string>
-  <string name="about_dylan">Dylan Casey</string>
-  <string name="about_jimmy">Jimmy Shih</string>
-  <string name="about_leif">Leif Wilden</string>
-  <string name="about_rodrigo">Rodrigo Damazio</string>
-  <string name="about_sandor">Sandor Dornbush</string>
   <string name="color_mode_dynamic_percentage_default">25</string>
   <string name="color_mode_fixed_medium_default">15</string>
   <string name="color_mode_fixed_slow_default">9</string>

@@ -17,33 +17,6 @@ limitations under the License.
 <resources>
   <style name="ThemeSelector" parent="android:Theme" />
 
-  <!--  About page label -->
-  <style name="AboutLabel">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">fill_parent</item>
-    <item name="android:paddingBottom">2dp</item>
-    <item name="android:textSize">20sp</item>
-  </style>
-
-  <!-- About page item -->
-  <style name="AboutItem">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">fill_parent</item>
-    <item name="android:paddingBottom">2dp</item>
-    <item name="android:paddingLeft">20dp</item>
-    <item name="android:textSize">18sp</item>
-  </style>
-
-  <!--  About page url -->
-  <style name="AboutUrl">
-    <item name="android:autoLink">web</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">fill_parent</item>
-    <item name="android:paddingBottom">2dp</item>
-    <item name="android:paddingLeft">20dp</item>
-    <item name="android:textSize">18sp</item>
-  </style>
-
   <!-- Button -->
   <style name="Button">
     <item name="android:layout_height">fill_parent</item>

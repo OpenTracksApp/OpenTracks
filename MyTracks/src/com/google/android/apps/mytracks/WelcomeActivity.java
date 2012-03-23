@@ -24,7 +24,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
@@ -57,31 +56,31 @@ public class WelcomeActivity extends Activity {
 
   @Override
   protected Dialog onCreateDialog(int id) {
-    AlertDialog.Builder builder;
     switch (id) {
       case DIALOG_ABOUT_ID:
-        LayoutInflater layoutInflator = LayoutInflater.from(this);
-        View view = layoutInflator.inflate(R.layout.about, null);
-        TextView aboutVersionTextView = (TextView) view.findViewById(R.id.about_version);
-        aboutVersionTextView.setText(SystemUtils.getMyTracksVersion(this));
-        
-        builder = new AlertDialog.Builder(this);
-        builder.setView(view);
-        builder.setPositiveButton(R.string.generic_ok, null);
-        builder.setNegativeButton(R.string.about_license, new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick(DialogInterface dialog, int which) {
-            showDialog(DIALOG_EULA_ID);
-          }
-        });
-        return builder.create();
+        View view = getLayoutInflater().inflate(R.layout.about, null);
+        TextView aboutVersion = (TextView) view.findViewById(R.id.about_version);
+        aboutVersion.setText(SystemUtils.getMyTracksVersion(this));
+
+        return new AlertDialog.Builder(this)
+            .setCancelable(true)
+            .setNegativeButton(R.string.about_license, new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int which) {
+                showDialog(DIALOG_EULA_ID);
+              }
+            })
+            .setPositiveButton(R.string.generic_ok, null)
+            .setTitle(R.string.my_tracks_app_name)
+            .setView(view)
+            .create();
       case DIALOG_EULA_ID:
-        builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.eula_title);
-        builder.setMessage(EulaUtils.getEulaMessage(this));
-        builder.setPositiveButton(R.string.generic_ok, null);
-        builder.setCancelable(true);
-        return builder.create();     
+        return new AlertDialog.Builder(this)
+            .setCancelable(true)
+            .setMessage(EulaUtils.getEulaMessage(this))
+            .setPositiveButton(R.string.generic_ok, null)
+            .setTitle(R.string.eula_title)
+            .create();
       default:
         return null;
     }
