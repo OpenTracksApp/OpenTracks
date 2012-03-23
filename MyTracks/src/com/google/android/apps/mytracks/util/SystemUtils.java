@@ -1,12 +1,12 @@
 /*
  * Copyright 2011 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -22,7 +22,6 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.pm.Signature;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
@@ -33,26 +32,6 @@ import android.util.Log;
  * @author Rodrigo Damazio
  */
 public class SystemUtils {
-
-  private static final int RELEASE_SIGNATURE_HASHCODE = -1855564782;
-
-  /**
-   * Returns whether or not this is a release build.
-   */
-  public static boolean isRelease(Context context) {
-    try {
-      Signature [] sigs = context.getPackageManager().getPackageInfo(
-          context.getPackageName(), PackageManager.GET_SIGNATURES).signatures;
-      for (Signature sig : sigs) {
-        if (sig.hashCode() == RELEASE_SIGNATURE_HASHCODE) {
-          return true;
-        }
-      }
-    } catch (NameNotFoundException e) {
-      Log.e(Constants.TAG, "Unable to get signatures", e);
-    }
-    return false;
-  }
 
   /**
    * Get the My Tracks version from the manifest.

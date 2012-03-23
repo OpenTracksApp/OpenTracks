@@ -354,8 +354,8 @@ public class TrackList extends ListActivity
               @Override
               public void onClick(DialogInterface dialog, int which) {
                 int index = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                Intent intent = new Intent(TrackList.this, ExportAllActivity.class);
-                intent.putExtra(ExportAllActivity.EXTRA_TRACK_FILE_FORMAT,
+                Intent intent = new Intent(TrackList.this, ExportActivity.class).putExtra(
+                    ExportActivity.EXTRA_TRACK_FILE_FORMAT,
                     (Parcelable) TrackFileFormat.values()[index]);
                 TrackList.this.startActivity(intent);
               }

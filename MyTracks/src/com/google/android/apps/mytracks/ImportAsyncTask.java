@@ -121,8 +121,7 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   @Override
   protected Boolean doInBackground(Void... params) {
     try {
-      FileUtils fileUtils = new FileUtils();
-      if (!fileUtils.isSdCardAvailable()) {
+      if (!FileUtils.isSdCardAvailable()) {
         return false;
       }
 

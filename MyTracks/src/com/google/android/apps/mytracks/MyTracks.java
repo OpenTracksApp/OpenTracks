@@ -32,8 +32,8 @@ import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.EulaUtils;
-import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.apps.mytracks.util.UriUtils;
+import com.google.android.maps.mytracks.BuildConfig;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -73,7 +73,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
   private static final int DIALOG_CHECK_UNITS_ID = 1;
   private static final String CHECK_UNITS_PREFERENCE_FILE = "checkunits";
   private static final String CHECK_UNITS_PREFERENCE_KEY = "checkunits.checked";
-  
+
   private TrackDataHub dataHub;
 
   /**
@@ -140,7 +140,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
   protected void onCreate(Bundle savedInstanceState) {
     Log.d(TAG, "MyTracks.onCreate");
     super.onCreate(savedInstanceState);
-    if (!SystemUtils.isRelease(this)) {
+    if (BuildConfig.DEBUG) {
       ApiAdapterFactory.getApiAdapter().enableStrictMode();
     }
 
@@ -153,7 +153,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     serviceConnection = new TrackRecordingServiceConnection(this, serviceBindCallback);
 
     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
-    
+
     // Show the action bar (or nothing at all).
     ApiAdapterFactory.getApiAdapter().showActionBar(this);
 
@@ -167,7 +167,7 @@ public class MyTracks extends TabActivity implements OnTouchListener {
             android.R.drawable.ic_menu_mapmode))
         .setContent(new Intent(this, MapActivity.class)));
     tabHost.addTab(tabHost.newTabSpec(STATS_TAB_TAG)
-        .setIndicator("Stats", res.getDrawable(R.drawable.menu_stats))
+        .setIndicator("Stats", res.getDrawable(R.drawable.ic_menu_statistics))
         .setContent(new Intent(this, StatsActivity.class)));
     tabHost.addTab(tabHost.newTabSpec(CHART_TAB_TAG)
         .setIndicator("Chart", res.getDrawable(R.drawable.menu_elevation))

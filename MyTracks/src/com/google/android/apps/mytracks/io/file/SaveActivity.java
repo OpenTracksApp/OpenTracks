@@ -101,7 +101,7 @@ public class SaveActivity extends Activity {
       }
       if (shareTrack || playTrack) {
         // Save to the temp directory
-        String dirName = new FileUtils().buildExternalDirectoryPath(
+        String dirName = FileUtils.buildExternalDirectoryPath(
             trackFileFormat.getExtension(), "tmp");
         trackWriter.setDirectory(new File(dirName));
       }

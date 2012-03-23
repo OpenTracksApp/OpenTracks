@@ -23,7 +23,7 @@ import com.dsi.ant.exception.AntInterfaceException;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
-import com.google.android.apps.mytracks.util.SystemUtils;
+import com.google.android.maps.mytracks.BuildConfig;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -32,7 +32,7 @@ import android.util.Log;
 
 /**
  * A sensor manager to the PC7 SRM ANT+ bridge.
- * 
+ *
  * @author Sandor Dornbush
  * @author Umran Abdulla
  */
@@ -54,15 +54,15 @@ public class AntSrmBridgeSensorManager extends AntSensorManager {
   private static final int INDEX_MESSAGE_SPEED = 5;
   private static final int INDEX_MESSAGE_CADENCE = 7;
   private static final int INDEX_MESSAGE_BPM = 8;
-  
+
   private static final int MSG_INITIAL = 5;
   private static final int MSG_DATA = 6;
-  
+
   private short deviceNumber;
 
   public AntSrmBridgeSensorManager(Context context) {
     super(context);
-    
+
     Log.i(TAG, "new ANT SRM Bridge Sensor Manager created");
 
     deviceNumber = WILDCARD;
@@ -77,15 +77,15 @@ public class AntSrmBridgeSensorManager extends AntSensorManager {
     }
     Log.i(TAG, "Will pair with device: " + deviceNumber);
   }
-  
-  
+
+
   @Override
   protected boolean handleMessage(byte messageId, byte[] messageData) {
     if (super.handleMessage(messageId, messageData)) {
       return true;
     }
-    
-    if (!SystemUtils.isRelease(context)) {
+
+    if (BuildConfig.DEBUG) {
       Log.d(TAG, "Received ANT msg: " + AntUtils.antMessageToString(messageId) + "(" + messageId + ")");
     }
 
@@ -100,7 +100,7 @@ public class AntSrmBridgeSensorManager extends AntSensorManager {
 
     return true;
   }
-  
+
   /**
    * Decode an ant device message.
    * @param messageData The byte array received from the device.
@@ -132,10 +132,10 @@ public class AntSrmBridgeSensorManager extends AntSensorManager {
     }
 
     setSensorState(Sensor.SensorState.CONNECTED);
-    
+
     int messageType = antMessage[INDEX_MESSAGE_TYPE] & 0xFF;
     Log.d(TAG, "Received message-type=" + messageType);
-    
+
     switch (messageType) {
       case MSG_INITIAL:
           break;
@@ -149,7 +149,7 @@ public class AntSrmBridgeSensorManager extends AntSensorManager {
   {
       int messageId = msg[INDEX_MESSAGE_ID] & 0xFF;
       Log.d(TAG, "Received message-id=" + messageId);
-      
+
       int powerVal = (((msg[INDEX_MESSAGE_POWER] & 0xFF) << 8) |
           (msg[INDEX_MESSAGE_POWER+1] & 0xFF));
       @SuppressWarnings("unused")
@@ -158,12 +158,12 @@ public class AntSrmBridgeSensorManager extends AntSensorManager {
       int cadenceVal = (msg[INDEX_MESSAGE_CADENCE] & 0xFF);
       int bpmVal = (msg[INDEX_MESSAGE_BPM] & 0xFF);
       long time = System.currentTimeMillis();
-      
-      Sensor.SensorData.Builder power = 
+
+      Sensor.SensorData.Builder power =
         Sensor.SensorData.newBuilder()
             .setValue(powerVal)
             .setState(Sensor.SensorState.SENDING);
-    
+
       /*
        * Although speed is available from the SRM Bridge, MyTracks doesn't use the value, and
        * computes speed from the GPS location data.
@@ -171,12 +171,12 @@ public class AntSrmBridgeSensorManager extends AntSensorManager {
 //    Sensor.SensorData.Builder speed = Sensor.SensorData.newBuilder().setValue(speedVal).setState(
 //        Sensor.SensorState.SENDING);
 
-      Sensor.SensorData.Builder cadence = 
+      Sensor.SensorData.Builder cadence =
         Sensor.SensorData.newBuilder()
             .setValue(cadenceVal)
             .setState(Sensor.SensorState.SENDING);
 
-      Sensor.SensorData.Builder bpm = 
+      Sensor.SensorData.Builder bpm =
         Sensor.SensorData.newBuilder()
             .setValue(bpmVal)
             .setState(Sensor.SensorState.SENDING);
@@ -189,7 +189,7 @@ public class AntSrmBridgeSensorManager extends AntSensorManager {
             .setHeartRate(bpm)
             .build();
   }
-  
+
   void handleChannelId(byte[] rawMessage) {
     AntChannelIdMessage message = new AntChannelIdMessage(rawMessage);
     deviceNumber = message.getDeviceNumber();
@@ -203,12 +203,12 @@ public class AntSrmBridgeSensorManager extends AntSensorManager {
   }
 
   private void handleMessageResponse(byte[] rawMessage) {
-    AntChannelResponseMessage message = 
+    AntChannelResponseMessage message =
         new AntChannelResponseMessage(rawMessage);
-    if (!SystemUtils.isRelease(context)) {
+    if (BuildConfig.DEBUG) {
       Log.d(TAG, "Received ANT Response: " + AntUtils.antMessageToString(message.getMessageId()) +
           "(" + message.getMessageId() + ")" +
-          ", Code: " + AntUtils.antEventToStr(message.getMessageCode()) + 
+          ", Code: " + AntUtils.antEventToStr(message.getMessageCode()) +
           "(" + message.getMessageCode() + ")");
     }
     switch (message.getMessageId()) {

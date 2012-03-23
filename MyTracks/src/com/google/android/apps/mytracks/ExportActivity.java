@@ -31,13 +31,13 @@ import android.widget.Toast;
  *
  * @author Sandor Dornbush
  */
-public class ExportAllActivity extends Activity {
+public class ExportActivity extends Activity {
 
   public static final String EXTRA_TRACK_FILE_FORMAT = "track_file_format";
 
   private static final int DIALOG_PROGRESS_ID = 0;
 
-  private ExportAllAsyncTask exportAllAsyncTask;
+  private ExportAsyncTask exportAsyncTask;
   private ProgressDialog progressDialog;
 
   @Override
@@ -45,22 +45,22 @@ public class ExportAllActivity extends Activity {
     super.onCreate(savedInstanceState);
 
     Object retained = getLastNonConfigurationInstance();
-    if (retained instanceof ExportAllAsyncTask) {
-      exportAllAsyncTask = (ExportAllAsyncTask) retained;
-      exportAllAsyncTask.setActivity(this);
+    if (retained instanceof ExportAsyncTask) {
+      exportAsyncTask = (ExportAsyncTask) retained;
+      exportAsyncTask.setActivity(this);
     } else {
       Intent intent = getIntent();
       TrackFileFormat trackFileFormat = intent.getParcelableExtra(EXTRA_TRACK_FILE_FORMAT);
       
-      exportAllAsyncTask = new ExportAllAsyncTask(this, trackFileFormat);
-      exportAllAsyncTask.execute();
+      exportAsyncTask = new ExportAsyncTask(this, trackFileFormat);
+      exportAsyncTask.execute();
     }
   }
 
   @Override
   public Object onRetainNonConfigurationInstance() {
-    exportAllAsyncTask.setActivity(null);
-    return exportAllAsyncTask;
+    exportAsyncTask.setActivity(null);
+    return exportAsyncTask;
   }
 
   @Override
@@ -74,7 +74,7 @@ public class ExportAllActivity extends Activity {
         progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
           @Override
           public void onCancel(DialogInterface dialog) {
-            exportAllAsyncTask.cancel(true);
+            exportAsyncTask.cancel(true);
             finish();
           }
         });

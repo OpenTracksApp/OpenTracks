@@ -55,11 +55,10 @@ public class RestoreChooserActivity extends Activity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    FileUtils fileUtils = new FileUtils();
-    ExternalFileBackup externalFileBackup = new ExternalFileBackup(this, fileUtils);
+    ExternalFileBackup externalFileBackup = new ExternalFileBackup(this);
 
     // Get the list of existing backups
-    if (!fileUtils.isSdCardAvailable()) {
+    if (!FileUtils.isSdCardAvailable()) {
       Toast.makeText(this, R.string.sd_card_error_no_storage, Toast.LENGTH_LONG).show();
       finish();
       return;
