@@ -29,20 +29,46 @@ import java.io.File;
  */
 public class FileUtils {
 
+  private FileUtils() {}
+
   /**
    * The maximum FAT32 path length. See the FAT32 spec at
    * http://msdn.microsoft.com/en-us/windows/hardware/gg463080
    */
   @VisibleForTesting
   static final int MAX_FAT32_PATH_LENGTH = 260;
-  
+
+  /**
+   * Returns whether the SD card is available.
+   */
+  public static boolean isSdCardAvailable() {
+    return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+  }
+
+  /**
+   * Ensures the given directory exists by creating it and its parents if
+   * necessary.
+   *
+   * @return whether the directory exists (either already existed or was
+   *         successfully created)
+   */
+  public static boolean ensureDirectoryExists(File dir) {
+    if (dir.exists() && dir.isDirectory()) {
+      return true;
+    }
+    if (dir.mkdirs()) {
+      return true;
+    }
+    return false;
+  }
+
   /**
    * Builds a path inside the My Tracks directory in the SD card.
    *
    * @param components the path components inside the mytracks directory
    * @return the full path to the destination
    */
-  public String buildExternalDirectoryPath(String... components) {
+  public static String buildExternalDirectoryPath(String... components) {
     StringBuilder dirNameBuilder = new StringBuilder();
     dirNameBuilder.append(Environment.getExternalStorageDirectory());
     dirNameBuilder.append(File.separatorChar);
@@ -55,33 +81,6 @@ public class FileUtils {
   }
 
   /**
-   * Returns whether the SD card is available.
-   */
-  public boolean isSdCardAvailable() {
-    return Environment.MEDIA_MOUNTED.equals(
-        Environment.getExternalStorageState());
-  }
-
-  /**
-   * Ensures the given directory exists by creating it and its parents if
-   * necessary.
-   * 
-   * @return whether the directory exists (either already existed or was
-   *         successfully created)
-   */
-  public boolean ensureDirectoryExists(File dir) {
-    if (dir.exists() && dir.isDirectory()) {
-      return true;
-    }
-
-    if (dir.mkdirs()) {
-      return true;
-    }
-
-    return false;
-  }
-
-  /**
    * Builds a filename with the given base name (prefix) and the given
    * extension, possibly adding a suffix to ensure the file doesn't exist.
    *
@@ -90,8 +89,8 @@ public class FileUtils {
    * @param extension the file's extension
    * @return the complete file name, without the directory
    */
-  public synchronized String buildUniqueFileName(File directory,
-      String fileBaseName, String extension) {
+  public static synchronized String buildUniqueFileName(
+      File directory, String fileBaseName, String extension) {
     return buildUniqueFileName(directory, fileBaseName, extension, 0);
   }
 
@@ -105,7 +104,8 @@ public class FileUtils {
    * @param suffix the first numeric suffix to try to use, or 0 for none
    * @return the complete filename, without the directory
    */
-  private String buildUniqueFileName(File directory, String base, String extension, int suffix) {
+  private static String buildUniqueFileName(
+      File directory, String base, String extension, int suffix) {
     String suffixName = "";
     if (suffix > 0) {
       suffixName += "(" + Integer.toString(suffix) + ")";
@@ -115,8 +115,8 @@ public class FileUtils {
     String baseName = sanitizeFileName(base);
     baseName = truncateFileName(directory, baseName, suffixName);
     String fullName = baseName + suffixName;
-    
-    if (!fileExists(directory, fullName)) {
+
+    if (!new File(directory, fullName).exists()) {
       return fullName;
     }
     return buildUniqueFileName(directory, base, extension, suffix + 1);
@@ -131,7 +131,7 @@ public class FileUtils {
    * @param name name
    */
   @VisibleForTesting
-  String sanitizeFileName(String name) {
+  static String sanitizeFileName(String name) {
     StringBuffer buffer = new StringBuffer(name.length());
     for (int i = 0; i < name.length(); i++) {
       int codePoint = name.codePointAt(i);
@@ -145,13 +145,13 @@ public class FileUtils {
     String result = buffer.toString();
     return result.replaceAll("_+", "_");
   }
-  
+
   /**
    * Returns true if it is a special FAT32 character.
-   * 
+   *
    * @param character the character
    */
-  private boolean isSpecialFat32(char character) {
+  private static boolean isSpecialFat32(char character) {
     switch (character) {
       case '$':
       case '%':
@@ -191,8 +191,8 @@ public class FileUtils {
    * @param suffix suffix
    */
   @VisibleForTesting
-  String truncateFileName(File directory, String name, String suffix) {
-    // 1 at the end accounts for the FAT32 filename trailing NUL character 
+  static String truncateFileName(File directory, String name, String suffix) {
+    // 1 at the end accounts for the FAT32 filename trailing NUL character
     int requiredLength = directory.getPath().length() + suffix.length() + 1;
     if (name.length() + requiredLength > MAX_FAT32_PATH_LENGTH) {
       int limit = MAX_FAT32_PATH_LENGTH - requiredLength;
@@ -200,14 +200,5 @@ public class FileUtils {
     } else {
       return name;
     }
-  }
-
-  /**
-   * Checks whether a file with the given name exists in the given directory.
-   * This is isolated so it can be overridden in tests.
-   */
-  protected boolean fileExists(File directory, String fullName) {
-    File file = new File(directory, fullName);
-    return file.exists();
   }
 }
