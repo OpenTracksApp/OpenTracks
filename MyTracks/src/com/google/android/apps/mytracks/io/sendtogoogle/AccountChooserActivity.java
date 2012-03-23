@@ -135,16 +135,16 @@ public class AccountChooserActivity extends Activity {
             .setTitle(R.string.send_google_no_account_title)
             .create();
       case DIALOG_CHOOSER_ID:
-        return createDialogChooser();
+        return createChooserDialog();
       default:
         return null;
     }
   }
 
   /**
-   * Creates a dialog chooser.
+   * Creates a chooser dialog.
    */
-  private Dialog createDialogChooser() {
+  private Dialog createChooserDialog() {
     String[] choices = new String[accounts.length];
     for (int i = 0; i < accounts.length; i++) {
       choices[i] = accounts[i].name;

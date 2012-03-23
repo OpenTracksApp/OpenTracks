@@ -159,7 +159,7 @@ public class UploadResultActivity extends Activity {
     // Add a Share URL button if showing all the options and a shareUrl exists
     if (sendRequest.isShowAll() && shareUrl != null) {
       builder.setNegativeButton(
-          getString(R.string.send_google_result_share_url), new DialogInterface.OnClickListener() {
+          R.string.send_google_result_share_url, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
               startShareUrlActivity(shareUrl);

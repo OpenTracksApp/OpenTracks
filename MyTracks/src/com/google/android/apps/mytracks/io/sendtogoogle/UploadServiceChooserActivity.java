@@ -129,7 +129,6 @@ public class UploadServiceChooserActivity extends Activity {
           }
         })
         .setPositiveButton(R.string.send_google_send_now, new DialogInterface.OnClickListener() {
-
           @Override
           public void onClick(DialogInterface dialog, int which) {
             saveState();
