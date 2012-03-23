@@ -82,9 +82,7 @@ public class UploadResultActivity extends Activity {
   protected Dialog onCreateDialog(int id) {
     switch (id) {
       case RESULT_DIALOG:
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.upload_result, null);
-        builder.setView(view);
 
         LinearLayout mapsResult = (LinearLayout) view.findViewById(R.id.upload_result_maps_result);
         LinearLayout fusionTablesResult = (LinearLayout) view.findViewById(
@@ -107,6 +105,7 @@ public class UploadResultActivity extends Activity {
         } else {
           if (!sendRequest.isMapsSuccess()) {
             mapsResultIcon.setImageResource(R.drawable.failure);
+            mapsResultIcon.setContentDescription(getString(R.string.generic_error_title));
             hasError = true;
           }
         }
@@ -116,6 +115,7 @@ public class UploadResultActivity extends Activity {
         } else {
           if (!sendRequest.isFusionTablesSuccess()) {
             fusionTablesResultIcon.setImageResource(R.drawable.failure);
+            fusionTablesResultIcon.setContentDescription(getString(R.string.generic_error_title));
             hasError = true;
           }
         }
@@ -125,29 +125,28 @@ public class UploadResultActivity extends Activity {
         } else {
           if (!sendRequest.isDocsSuccess()) {
             docsResultIcon.setImageResource(R.drawable.failure);
+            docsResultIcon.setContentDescription(getString(R.string.generic_error_title));
             hasError = true;
           }
         }
 
         if (hasError) {
-          builder.setTitle(R.string.generic_error_title);
-          builder.setIcon(android.R.drawable.ic_dialog_alert);
           successFooter.setVisibility(View.GONE);
         } else {
-          builder.setTitle(R.string.generic_success_title);
-          builder.setIcon(android.R.drawable.ic_dialog_info);
           errorFooter.setVisibility(View.GONE);
         }
 
-        builder.setCancelable(true);
-        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-          @Override
-          public void onCancel(DialogInterface dialog) {
-            finish();
-          }
-        });
-        builder.setPositiveButton(
-            getString(R.string.generic_ok), new DialogInterface.OnClickListener() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+            .setCancelable(true)
+            .setIcon(hasError ? android.R.drawable.ic_dialog_alert
+                : android.R.drawable.ic_dialog_info)
+            .setOnCancelListener(new DialogInterface.OnCancelListener() {
+              @Override
+              public void onCancel(DialogInterface dialog) {
+                finish();
+              }
+            })
+            .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int which) {
                 if (!sendRequest.isShowAll() && shareUrl != null) {
@@ -155,7 +154,9 @@ public class UploadResultActivity extends Activity {
                 }
                 finish();
               }
-            });
+            })
+            .setTitle(hasError ? R.string.generic_error_title : R.string.generic_success_title)
+            .setView(view);
 
         // Add a Share URL button if showing all the options and a shareUrl
         // exists

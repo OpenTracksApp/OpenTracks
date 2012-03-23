@@ -1301,13 +1301,6 @@ limitations under the License.
       %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Docs'.">
     Sending to %1$s. Please wait...
   </string>
-  <string name="send_google_result_header"
-    translation_description="When sending a track to Google, the header on the top of the result
-      page.
-
-      Screenshot: send_google_success.png">
-    Upload status:
-  </string>
   <string name="send_google_result_share_url"
     translation_description="When sending a track to Google, in the result dialog, the button on
       the bottom to share with friends the URL of the uploaded track.
