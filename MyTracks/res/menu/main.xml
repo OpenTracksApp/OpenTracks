@@ -41,7 +41,7 @@ limitations under the License.
     android:title="@string/menu_markers"/>
 
   <item
-    android:icon="@drawable/chart_settings"
+    android:icon="@drawable/ic_menu_chartsettings"
     android:id="@+id/menu_chart_settings"
     android:showAsAction="ifRoom"
     android:title="@string/menu_chart_view_chart_settings"

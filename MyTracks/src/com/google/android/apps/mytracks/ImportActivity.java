@@ -72,7 +72,7 @@ public class ImportActivity extends Activity {
     Intent intent = getIntent();
     importAll = intent.getBooleanExtra(EXTRA_IMPORT_ALL, false);
     if (importAll) {
-      path = new FileUtils().buildExternalDirectoryPath("gpx");
+      path = FileUtils.buildExternalDirectoryPath("gpx");
     } else {
       String action = intent.getAction();
       if (!(Intent.ACTION_ATTACH_DATA.equals(action) || Intent.ACTION_VIEW.equals(action))) {
