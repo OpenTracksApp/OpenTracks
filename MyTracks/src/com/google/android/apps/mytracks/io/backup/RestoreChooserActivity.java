@@ -24,8 +24,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -90,32 +88,30 @@ public class RestoreChooserActivity extends Activity {
 
   @Override
   protected Dialog onCreateDialog(int id) {
-    switch (id) {
-      case DIALOG_CHOOSER_ID:
-        String items[] = new String[backupDates.length];
-        for (int i = 0; i < backupDates.length; i++) {
-          items[i] = StringUtils.formatDateTime(this, backupDates[i].getTime());
-        }
-        return new AlertDialog.Builder(this)
-            .setCancelable(true)
-            .setItems(items, new OnClickListener() {
-              @Override
-              public void onClick(DialogInterface dialog, int which) {
-                startActivity(new Intent(RestoreChooserActivity.this, RestoreActivity.class)
-                    .putExtra(RestoreActivity.EXTRA_DATE, backupDates[which].getTime()));
-                finish();
-              }
-            })
-            .setOnCancelListener(new OnCancelListener() {
-              @Override
-              public void onCancel(DialogInterface dialog) {
-                finish();
-              }
-            })
-            .setTitle(R.string.settings_backup_restore_select_title)
-            .create();
-      default:
-        return null;
+    if (id != DIALOG_CHOOSER_ID) {
+      return null;
     }
+    String items[] = new String[backupDates.length];
+    for (int i = 0; i < backupDates.length; i++) {
+      items[i] = StringUtils.formatDateTime(this, backupDates[i].getTime());
+    }
+    return new AlertDialog.Builder(this)
+        .setCancelable(true)
+        .setItems(items, new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            startActivity(new Intent(RestoreChooserActivity.this, RestoreActivity.class).putExtra(
+                RestoreActivity.EXTRA_DATE, backupDates[which].getTime()));
+            finish();
+          }
+        })
+        .setOnCancelListener(new DialogInterface.OnCancelListener() {
+          @Override
+          public void onCancel(DialogInterface dialog) {
+            finish();
+          }
+        })
+        .setTitle(R.string.settings_backup_restore_select_title)
+        .create();
   }
 }

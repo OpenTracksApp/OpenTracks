@@ -210,8 +210,8 @@ public class ChartActivity extends Activity implements TrackDataListener {
     for (int i = 0; i < ChartView.NUM_SERIES; i++) {
       checkBoxes[i].setChecked(chartView.isChartValueSeriesEnabled(i));
     }
-    checkBoxes[ChartView.SPEED_SERIES].setText(reportSpeed ? R.string.stat_speed
-        : R.string.stat_pace);
+    checkBoxes[ChartView.SPEED_SERIES].setText(reportSpeed 
+        ? R.string.stat_speed : R.string.stat_pace);
 
     return new AlertDialog.Builder(this)
         .setCancelable(true)

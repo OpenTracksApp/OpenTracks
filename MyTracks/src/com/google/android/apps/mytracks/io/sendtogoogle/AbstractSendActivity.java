@@ -16,6 +16,7 @@
 
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
+import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -41,7 +42,7 @@ import android.os.Bundle;
  */
 public abstract class AbstractSendActivity extends Activity {
 
-  private static final int PROGRESS_DIALOG = 1;
+  private static final int DIALOG_PROGRESS_ID = 0;
 
   protected SendRequest sendRequest;
   private AbstractSendAsyncTask asyncTask;
@@ -70,26 +71,18 @@ public abstract class AbstractSendActivity extends Activity {
 
   @Override
   protected Dialog onCreateDialog(int id) {
-    switch (id) {
-      case PROGRESS_DIALOG:
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDialog.setIcon(android.R.drawable.ic_dialog_info);
-        progressDialog.setTitle(getString(R.string.send_google_progress_title, getServiceName()));
-        progressDialog.setMax(100);
-        progressDialog.setProgress(0);
-        progressDialog.setCancelable(true);
-        progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+    if (id != DIALOG_PROGRESS_ID) {
+      return null;
+    }
+    progressDialog = DialogUtils.createHorizontalProgressDialog(
+        this, R.string.send_google_progress_message, new DialogInterface.OnCancelListener() {
           @Override
           public void onCancel(DialogInterface dialog) {
             asyncTask.cancel(true);
             startNextActivity(false, true);
           }
-        });
-        return progressDialog;
-      default:
-        return null;
-    }
+        }, getServiceName());
+    return progressDialog;
   }
 
   /**
@@ -105,7 +98,7 @@ public abstract class AbstractSendActivity extends Activity {
    * Shows the progress dialog.
    */
   public void showProgressDialog() {
-    showDialog(PROGRESS_DIALOG);
+    showDialog(DIALOG_PROGRESS_ID);
   }
 
   /**
@@ -115,7 +108,9 @@ public abstract class AbstractSendActivity extends Activity {
    */
   public void setProgressDialogValue(int value) {
     if (progressDialog != null) {
+      progressDialog.setIndeterminate(false);
       progressDialog.setProgress(value);
+      progressDialog.setMax(100);
     }
   }
 

@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.io.file;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
+import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.PlayTrackUtils;
 import com.google.android.maps.mytracks.R;
@@ -27,8 +28,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -120,20 +119,14 @@ public class SaveActivity extends Activity {
   protected Dialog onCreateDialog(int id) {
     switch (id) {
       case DIALOG_PROGRESS_ID:
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setCancelable(true);
-        progressDialog.setIcon(android.R.drawable.ic_dialog_info);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage(getString(R.string.sd_card_progress_write_file));
-        progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-          @Override
-          public void onCancel(DialogInterface dialog) {
-            saveAsyncTask.cancel(true);
-            finish();
-          }
-        });
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDialog.setTitle(R.string.generic_progress_title);
+        progressDialog = DialogUtils.createHorizontalProgressDialog(
+            this, R.string.sd_card_progress_message, new DialogInterface.OnCancelListener() {
+              @Override
+              public void onCancel(DialogInterface dialog) {
+                saveAsyncTask.cancel(true);
+                finish();
+              }
+            });
         return progressDialog;
       case DIALOG_RESULT_ID:
         return new AlertDialog.Builder(this)
@@ -141,14 +134,14 @@ public class SaveActivity extends Activity {
             .setIcon(success 
                 ? android.R.drawable.ic_dialog_info : android.R.drawable.ic_dialog_alert)
             .setMessage(messageId)
-            .setOnCancelListener(new OnCancelListener() {
+            .setOnCancelListener(new DialogInterface.OnCancelListener() {
               @Override
               public void onCancel(DialogInterface dialog) {
                 dialog.dismiss();
                 onPostResultDialog();
               }
             })
-            .setPositiveButton(R.string.generic_ok, new OnClickListener() {
+            .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int arg1) {
                 dialog.dismiss();

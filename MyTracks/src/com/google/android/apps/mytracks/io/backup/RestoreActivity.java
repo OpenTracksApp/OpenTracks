@@ -17,11 +17,11 @@
 package com.google.android.apps.mytracks.io.backup;
 
 import com.google.android.apps.mytracks.MyTracks;
+import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,7 +43,6 @@ public class RestoreActivity extends Activity {
   private static final int DIALOG_PROGRESS_ID = 0;
   
   private RestoreAsyncTask restoreAsyncTask;
-  private ProgressDialog progressDialog;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -72,25 +71,16 @@ public class RestoreActivity extends Activity {
 
   @Override
   protected Dialog onCreateDialog(int id) {
-    switch (id) {
-      case DIALOG_PROGRESS_ID:
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setCancelable(true);
-        progressDialog.setIcon(android.R.drawable.ic_dialog_info);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage(getString(R.string.settings_backup_restore_progress_message));
-        progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+    if (id != DIALOG_PROGRESS_ID) {
+      return null;
+    }
+    return DialogUtils.createSpinnerProgressDialog(this,
+        R.string.settings_backup_restore_progress_message, new DialogInterface.OnCancelListener() {
           @Override
           public void onCancel(DialogInterface dialog) {
             finish();
           }
         });
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDialog.setTitle(R.string.generic_progress_title);
-        return progressDialog;             
-      default:
-        return null;
-    }
   }
 
   /**
