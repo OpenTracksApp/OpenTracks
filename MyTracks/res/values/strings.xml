@@ -966,80 +966,55 @@ limitations under the License.
 
   <!-- Menu Items -->
   <string name="menu_aggregated_statistics"
-    translation_description="In the menu, to go to the aggregated statistics page.
-
-      Screenshot: menu_record_track_more.png">
+    translation_description="In the menu, to go to the aggregated statistics page.">
     Aggregated statistics
   </string>
-  <string name="menu_chart_view_chart_settings"
-    translation_description="In the menu for the chart view, to change the chart settings.
-
-      Screenshot: menu_chart_settings.png">
+  <string name="menu_chart_settings"
+    translation_description="In the menu, to change the chart settings.">
     Chart settings
   </string>
   <string name="menu_help"
-    translation_description="In the menu, to go to the help page.
-
-      Screenshot: menu_record_track_more.png">
+    translation_description="In the menu, to go to the help page.">
     Help
   </string>
-  <string name="menu_map_view_map_mode"
-    translation_description="In the menu for the map view, to switch the display to the map mode.
-
-      Screenshot: menu_map_mode.png">
+  <string name="menu_map_mode"
+    translation_description="In the menu, to switch the display to the map mode.">
     Map mode
   </string>
-  <string name="menu_map_view_my_location"
-    translation_description="In the menu for the map view, to display user's current location.
-
-      Screenshot: menu_record_track.png">
-    My location
-  </string>
-  <string name="menu_map_view_satellite_mode"
-    translation_description="In the menu for the map view, to switch the display to the satellite
-      mode.
-
-      Screenshot: menu_record_track.png">
-    Satellite mode
-  </string>
   <string name="menu_markers"
-    translation_description="In the menu, to show a list of markers for the current track.
-
-      Screenshot: menu_record_track.png">
+    translation_description="In the menu, to show a list of markers for the current track.">
     Markers
   </string>
+  <string name="menu_my_location"
+    translation_description="In the menu, to display the user's current location.">
+    My location
+  </string>
   <string name="menu_record_track"
-    translation_description="In the menu, to start recording a track.
-
-      Screenshot: menu_record_track.png">
+    translation_description="In the menu, to start recording a track.">
     Record track
+  </string>
+  <string name="menu_satellite_mode"
+    translation_description="In the menu, to switch the display to the satellite mode.">
+    Satellite mode
   </string>
   <string name="menu_search"
     translation_description="In the menu, to start a textual search for tracks or waypoints.">
     Search
   </string>
   <string name="menu_sensor_state"
-    translation_description="In the menu, to go to the sensor state page.
-
-      Screenshot: menu_record_track_more.png">
+    translation_description="In the menu, to go to the sensor state page.">
     Sensor state
   </string>
   <string name="menu_settings"
-    translation_description="In the menu, to go to the settings page.
-
-      Screenshot: menu_record_track_more.png">
+    translation_description="In the menu, to go to the settings page.">
     Settings
   </string>
   <string name="menu_stop_recording"
-    translation_description="In the menu, to stop recording a track.
-
-      Screenshot: menu_stop_recording.png">
+    translation_description="In the menu, to stop recording a track.">
     Stop recording
   </string>
   <string name="menu_tracks"
-    translation_description="In the menu, to show a list of all the tracks.
-
-      Screenshot: menu_record_track.png">
+    translation_description="In the menu, to show a list of all the tracks.">
     Tracks
   </string>
 

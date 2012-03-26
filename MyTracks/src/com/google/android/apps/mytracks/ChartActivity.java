@@ -228,7 +228,7 @@ public class ChartActivity extends Activity implements TrackDataListener {
             chartView.postInvalidate();
           }
         })
-        .setTitle(R.string.menu_chart_view_chart_settings)
+        .setTitle(R.string.menu_chart_settings)
         .setView(view)
         .create();
   }
