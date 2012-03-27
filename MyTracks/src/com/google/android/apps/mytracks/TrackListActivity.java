@@ -27,7 +27,6 @@ import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -38,6 +37,12 @@ import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.support.v4.widget.ResourceCursorAdapter;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -46,24 +51,31 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 /**
  * An activity displaying a list of tracks.
- * 
+ *
  * @author Leif Hendrik Wilden
  */
-public class TrackListActivity extends Activity {
+public class TrackListActivity extends FragmentActivity {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
-  private static final int DIALOG_EXPORT_ALL_ID = 0;
-  private static final int DIALOG_DELETE_ALL_ID = 1;
+  private static final String EXPORT_ALL_DIALOG_TAG = "exportAllDialog";
+  private static final String DELETE_ALL_DIALOG_TAG = "deleteAllDialog";
+  private static final String[] PROJECTION = new String[] {
+      TracksColumns._ID,
+      TracksColumns.NAME,
+      TracksColumns.CATEGORY,
+      TracksColumns.TOTALTIME,
+      TracksColumns.TOTALDISTANCE,
+      TracksColumns.STARTTIME,
+      TracksColumns.DESCRIPTION };
 
   // Callback when the trackRecordingServiceConnection binding changes
   private final Runnable bindChangedCallback = new Runnable() {
-      @Override
+    @Override
     public void run() {
       synchronized (trackRecordingServiceConnection) {
         if (startNewRecording) {
@@ -122,10 +134,6 @@ public class TrackListActivity extends Activity {
     metricUnits = sharedPreferences.getBoolean(getString(R.string.metric_units_key), true);
     recordingTrackId = sharedPreferences.getLong(getString(R.string.recording_track_key), -1L);
 
-    MyTracksProviderUtils myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
-    Cursor trackCursor = myTracksProviderUtils.getTracksCursor(
-        null, null, TracksColumns._ID + " DESC");
-    startManagingCursor(trackCursor);
     listView = (ListView) findViewById(R.id.track_list);
     listView.setOnItemClickListener(new OnItemClickListener() {
       @Override
@@ -134,7 +142,7 @@ public class TrackListActivity extends Activity {
         finish();
       }
     });
-    adapter = new ResourceCursorAdapter(this, R.layout.track_list_item, trackCursor, true) {
+    adapter = new ResourceCursorAdapter(this, R.layout.track_list_item, null, 0) {
       @Override
       public void bindView(View view, Context context, Cursor cursor) {
         int idIndex = cursor.getColumnIndex(TracksColumns._ID);
@@ -146,7 +154,7 @@ public class TrackListActivity extends Activity {
         int descriptionIndex = cursor.getColumnIndex(TracksColumns.DESCRIPTION);
 
         boolean isRecording = cursor.getLong(idIndex) == recordingTrackId;
-        
+
         TextView name = (TextView) view.findViewById(R.id.track_list_item_name);
         name.setText(cursor.getString(nameIndex));
         name.setCompoundDrawablesWithIntrinsicBounds(
@@ -163,7 +171,7 @@ public class TrackListActivity extends Activity {
         distance.setText(StringUtils.formatDistance(
             TrackListActivity.this, cursor.getDouble(distanceIndex), metricUnits));
         distance.setVisibility(isRecording ? View.GONE : View.VISIBLE);
-        
+
         TextView start = (TextView) view.findViewById(R.id.track_list_item_start);
         start.setText(
             StringUtils.formatDateTime(TrackListActivity.this, cursor.getLong(startIndex)));
@@ -175,6 +183,28 @@ public class TrackListActivity extends Activity {
       }
     };
     listView.setAdapter(adapter);
+
+    getSupportLoaderManager().initLoader(0, null, new LoaderCallbacks<Cursor>() {
+      @Override
+      public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
+        return new CursorLoader(TrackListActivity.this,
+            TracksColumns.CONTENT_URI,
+            PROJECTION,
+            null,
+            null,
+            TracksColumns._ID + " DESC");
+      }
+
+      @Override
+      public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        adapter.swapCursor(cursor);
+      }
+
+      @Override
+      public void onLoaderReset(Loader<Cursor> loader) {
+        adapter.swapCursor(null);
+      }
+    });
   }
 
   @Override
@@ -192,15 +222,15 @@ public class TrackListActivity extends Activity {
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.track_list, menu);
-    
+
     recordTrack = menu.findItem(R.id.menu_record_track);
     stopRecording = menu.findItem(R.id.menu_stop_recording);
     search = menu.findItem(R.id.menu_search);
     importAll = menu.findItem(R.id.menu_import_all);
     exportAll = menu.findItem(R.id.menu_export_all);
     deleteAll = menu.findItem(R.id.menu_delete_all);
-    
-    ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, search);   
+
+    ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, search);
     updateMenu();
     return true;
   }
@@ -216,7 +246,7 @@ public class TrackListActivity extends Activity {
 
   /**
    * Updates the menu items.
-   * 
+   *
    * @param isRecording true if recording
    */
   private void updateMenuItems(boolean isRecording) {
@@ -263,14 +293,14 @@ public class TrackListActivity extends Activity {
       case R.id.menu_search:
         return ApiAdapterFactory.getApiAdapter().handleSearchMenuSelection(this);
       case R.id.menu_import_all:
-        startActivity(new Intent(this, ImportActivity.class)
-            .putExtra(ImportActivity.EXTRA_IMPORT_ALL, true));
+        startActivity(
+            new Intent(this, ImportActivity.class).putExtra(ImportActivity.EXTRA_IMPORT_ALL, true));
         return true;
       case R.id.menu_export_all:
-        showDialog(DIALOG_EXPORT_ALL_ID);
+        new ExportAllDialogFragment().show(getSupportFragmentManager(), EXPORT_ALL_DIALOG_TAG);
         return true;
       case R.id.menu_delete_all:
-        showDialog(DIALOG_DELETE_ALL_ID);
+        new DeleteAllDialogFragment().show(getSupportFragmentManager(), DELETE_ALL_DIALOG_TAG);
         return true;
       case R.id.menu_aggregated_statistics:
         startActivity(new Intent(this, AggregatedStatsActivity.class));
@@ -331,58 +361,63 @@ public class TrackListActivity extends Activity {
     }
   }
 
-  @Override
-  protected Dialog onCreateDialog(int id) {
-    switch (id) {
-      case DIALOG_EXPORT_ALL_ID:
-        return createExportAllDialog();
-      case DIALOG_DELETE_ALL_ID:
-        return DialogUtils.createConfirmationDialog(this,
-            R.string.track_list_delete_all_confirm_message, new DialogInterface.OnClickListener() {
-                @Override
-              public void onClick(DialogInterface dialog, int which) {
-                MyTracksProviderUtils.Factory.get(TrackListActivity.this).deleteAllTracks();
-                /*
-                 * TODO Verify that selected_track_key is still needed with the
-                 * ICS navigation design
-                 */
-                Editor editor = sharedPreferences.edit();
-                // TODO: Go through data manager
-                editor.putLong(getString(R.string.selected_track_key), -1L);
-                ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
-              }
-            });
-      default:
-        return null;
+  /**
+   * Export All DialogFragment.
+   */
+  private static class ExportAllDialogFragment extends DialogFragment {
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+      String exportFileFormat = getString(R.string.track_list_export_file);
+      String fileTypes[] = getResources().getStringArray(R.array.file_types);
+      String[] choices = new String[fileTypes.length];
+      for (int i = 0; i < fileTypes.length; i++) {
+        choices[i] = String.format(exportFileFormat, fileTypes[i]);
+      }
+      return new AlertDialog.Builder(getActivity()).setNegativeButton(R.string.generic_cancel, null)
+          .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              int index = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+              Intent intent = new Intent(getActivity(), ExportActivity.class).putExtra(
+                  ExportActivity.EXTRA_TRACK_FILE_FORMAT,
+                  (Parcelable) TrackFileFormat.values()[index]);
+              getActivity().startActivity(intent);
+            }
+          })
+          .setSingleChoiceItems(choices, 0, null)
+          .setTitle(R.string.menu_export_all)
+          .create();
     }
-  }
+  };
 
   /**
-   * Creates an export all dialog.
+   * Delete All DialogFragment.
    */
-  private AlertDialog createExportAllDialog() {
-    String exportFileFormat = getString(R.string.track_list_export_file);
-    String fileTypes[] = getResources().getStringArray(R.array.file_types);
-    String[] choices = new String[fileTypes.length];
-    for (int i = 0; i < fileTypes.length; i++) {
-      choices[i] = String.format(exportFileFormat, fileTypes[i]);
+  private static class DeleteAllDialogFragment extends DialogFragment {
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+      return DialogUtils.createConfirmationDialog(getActivity(),
+          R.string.track_list_delete_all_confirm_message, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              MyTracksProviderUtils.Factory.get(getActivity()).deleteAllTracks();
+              /*
+               * TODO Verify that selected_track_key is still needed with the
+               * ICS navigation design
+               */
+              SharedPreferences sharedPreferences = getActivity()
+                  .getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+              Editor editor = sharedPreferences.edit();
+              // TODO: Go through data manager
+              editor.putLong(getString(R.string.selected_track_key), -1L);
+              ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
+            }
+          });
     }
-    return new AlertDialog.Builder(this).setNegativeButton(R.string.generic_cancel, null)
-        .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick(DialogInterface dialog, int which) {
-            int index = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-            Intent intent = new Intent(TrackListActivity.this, ExportActivity.class).putExtra(
-                ExportActivity.EXTRA_TRACK_FILE_FORMAT,
-                (Parcelable) TrackFileFormat.values()[index]);
-            TrackListActivity.this.startActivity(intent);
-          }
-        })
-        .setSingleChoiceItems(choices, 0, null)
-        .setTitle(R.string.track_list_export_all)
-        .create();
-  }
- 
+  };
+
   @Override
   public boolean onKeyUp(int keyCode, KeyEvent event) {
     if (keyCode == KeyEvent.KEYCODE_SEARCH) {
