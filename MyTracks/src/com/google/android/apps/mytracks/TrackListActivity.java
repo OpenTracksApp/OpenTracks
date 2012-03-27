@@ -39,6 +39,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -87,6 +88,7 @@ public class TrackListActivity extends Activity {
 
   private MenuItem recordTrack;
   private MenuItem stopRecording;
+  private MenuItem search;
   private MenuItem importAll;
   private MenuItem exportAll;
   private MenuItem deleteAll;
@@ -190,18 +192,17 @@ public class TrackListActivity extends Activity {
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.track_list, menu);
-    return true;
-  }
-
-  @Override
-  public boolean onPrepareOptionsMenu(Menu menu) {
+    
     recordTrack = menu.findItem(R.id.menu_record_track);
     stopRecording = menu.findItem(R.id.menu_stop_recording);
+    search = menu.findItem(R.id.menu_search);
     importAll = menu.findItem(R.id.menu_import_all);
     exportAll = menu.findItem(R.id.menu_export_all);
     deleteAll = menu.findItem(R.id.menu_delete_all);
+    
+    ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, search);   
     updateMenu();
-    return super.onPrepareOptionsMenu(menu);
+    return true;
   }
 
   /**
@@ -260,8 +261,7 @@ public class TrackListActivity extends Activity {
         trackRecordingServiceConnection.stop();
         return true;
       case R.id.menu_search:
-        onSearchRequested();
-        return true;
+        return ApiAdapterFactory.getApiAdapter().handleSearchMenuSelection(this);
       case R.id.menu_import_all:
         startActivity(new Intent(this, ImportActivity.class)
             .putExtra(ImportActivity.EXTRA_IMPORT_ALL, true));
@@ -381,5 +381,15 @@ public class TrackListActivity extends Activity {
         .setSingleChoiceItems(choices, 0, null)
         .setTitle(R.string.track_list_export_all)
         .create();
+  }
+ 
+  @Override
+  public boolean onKeyUp(int keyCode, KeyEvent event) {
+    if (keyCode == KeyEvent.KEYCODE_SEARCH) {
+      if (ApiAdapterFactory.getApiAdapter().handleSearchKey(search)) {
+        return true;
+      }
+    }
+    return super.onKeyUp(keyCode, event);
   }
 }

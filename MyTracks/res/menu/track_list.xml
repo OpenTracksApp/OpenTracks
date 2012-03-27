@@ -26,9 +26,10 @@ limitations under the License.
     android:showAsAction="always"
     android:title="@string/menu_stop_recording"/>
   <item
+    android:actionViewClass="android.widget.SearchView"
     android:icon="@drawable/menu_search"
     android:id="@+id/menu_search"
-    android:showAsAction="always"
+    android:showAsAction="always|collapseActionView"
     android:title="@string/menu_search"/>
   <item
     android:id="@+id/menu_import_all"

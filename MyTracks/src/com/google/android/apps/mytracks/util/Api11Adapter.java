@@ -16,18 +16,37 @@
 
 package com.google.android.apps.mytracks.util;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
+import android.view.MenuItem;
 import android.view.Window;
+import android.widget.SearchView;
 
 /**
  * API level 11 specific implementation of the {@link ApiAdapter}.
  *
  * @author Jimmy Shih
  */
-public class Api11Adapter extends Api9Adapter {
+@TargetApi(11)
+public class Api11Adapter extends Api10Adapter {
 
   @Override
   public void showActionBar(Activity activity) {
     activity.requestWindowFeature(Window.FEATURE_ACTION_BAR);
   }
+  
+  @Override
+  public void configureSearchWidget(Activity activity, MenuItem menuItem) {
+    SearchManager searchManager = (SearchManager) activity.getSystemService(Context.SEARCH_SERVICE);
+    SearchView searchView = (SearchView) menuItem.getActionView();
+    searchView.setSearchableInfo(searchManager.getSearchableInfo(activity.getComponentName()));
+  }
+
+  @Override
+  public boolean handleSearchMenuSelection(Activity activity) {
+    // Returns false to allow the platform to expand the search widget.
+    return false;
+  }  
 }
