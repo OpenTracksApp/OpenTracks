@@ -523,7 +523,8 @@ public class MapActivity extends com.google.android.maps.MapActivity
     long trackId = dataHub.getSelectedTrackId();
     switch (item.getItemId()) {
       case Constants.MENU_EDIT: 
-        intent = new Intent(this, TrackDetail.class).putExtra(TrackDetail.TRACK_ID, trackId);
+        intent = new Intent(this, TrackEditActivity.class)
+            .putExtra(TrackEditActivity.TRACK_ID, trackId);
         startActivity(intent);
         return true;
       case Constants.MENU_PLAY:

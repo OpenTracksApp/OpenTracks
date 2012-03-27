@@ -245,8 +245,8 @@ limitations under the License.
         android:value="com.google.android.apps.mytracks.SearchActivity" />
     </activity>
     <activity
-      android:label="@string/track_detail_title"
-      android:name="com.google.android.apps.mytracks.TrackDetail" >
+      android:label="@string/track_edit_title"
+      android:name="com.google.android.apps.mytracks.TrackEditActivity" >
       <intent-filter>
         <action android:name="android.intent.action.EDIT" />
 

@@ -523,9 +523,9 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     serviceConnection.stop();
 
     if (currentTrackId > 0) {
-      Intent intent = new Intent(MyTracks.this, TrackDetail.class);
-      intent.putExtra(TrackDetail.TRACK_ID, currentTrackId);
-      intent.putExtra(TrackDetail.SHOW_CANCEL, false);
+      Intent intent = new Intent(MyTracks.this, TrackEditActivity.class)
+          .putExtra(TrackEditActivity.SHOW_CANCEL, false)
+          .putExtra(TrackEditActivity.TRACK_ID, currentTrackId);
       startActivity(intent);
     }
   }

@@ -348,9 +348,9 @@ public class TrackListActivity extends FragmentActivity {
       try {
         service.endCurrentTrack();
         if (recordingTrackId != -1L) {
-          Intent intent = new Intent(this, TrackDetail.class)
-              .putExtra(TrackDetail.SHOW_CANCEL, false)
-              .putExtra(TrackDetail.TRACK_ID, recordingTrackId);
+          Intent intent = new Intent(this, TrackEditActivity.class)
+              .putExtra(TrackEditActivity.SHOW_CANCEL, false)
+              .putExtra(TrackEditActivity.TRACK_ID, recordingTrackId);
           startActivity(intent);
         }
         recordingTrackId = -1L;
