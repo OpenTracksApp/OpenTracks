@@ -59,10 +59,7 @@ public class TrackDetailActivityTest extends ActivityInstrumentationTestCase2<Tr
 
     // Check if not recording.
     assertFalse(isRecording());
-    assertEquals(-1, getRecordingTrackId());
-    long selectedTrackId = getSharedPreferences().getLong(
-        getActivity().getString(R.string.selected_track_key), -1);
-    assertEquals(selectedTrackId, getActivity().getSelectedTrackId());
+    assertEquals(-1, getRecordingTrackId());    
   }
 
   public void testInitialization_viewActionWithNoData() {
@@ -75,10 +72,7 @@ public class TrackDetailActivityTest extends ActivityInstrumentationTestCase2<Tr
 
     // Check if not recording.
     assertFalse(isRecording());
-    assertEquals(-1, getRecordingTrackId());
-    long selectedTrackId = getSharedPreferences().getLong(
-        getActivity().getString(R.string.selected_track_key), -1);
-    assertEquals(selectedTrackId, getActivity().getSelectedTrackId());
+    assertEquals(-1, getRecordingTrackId());    
   }
 
   public void testInitialization_viewActionWithValidData() throws Exception {
@@ -97,10 +91,7 @@ public class TrackDetailActivityTest extends ActivityInstrumentationTestCase2<Tr
     // Check if not recording.
     assertFalse(isRecording());
     assertEquals(-1, getRecordingTrackId());
-    long selectedTrackId = getSharedPreferences().getLong(
-        getActivity().getString(R.string.selected_track_key), -1);
-    assertEquals(selectedTrackId, getActivity().getSelectedTrackId());
-
+    
     // TODO: Finish this test.
   }
 
@@ -117,10 +108,7 @@ public class TrackDetailActivityTest extends ActivityInstrumentationTestCase2<Tr
     // Check if not recording.
     assertFalse(isRecording());
     assertEquals(-1, getRecordingTrackId());
-    long selectedTrackId = getSharedPreferences().getLong(
-        getActivity().getString(R.string.selected_track_key), -1);
-    assertEquals(selectedTrackId, getActivity().getSelectedTrackId());
-
+    
     // TODO: Finish this test.
   }
 
@@ -133,10 +121,7 @@ public class TrackDetailActivityTest extends ActivityInstrumentationTestCase2<Tr
 
     assertFalse(isRecording());
     assertEquals(-1, getRecordingTrackId());
-    long selectedTrackId = getSharedPreferences().getLong(
-        getActivity().getString(R.string.selected_track_key), -1);
-    assertEquals(selectedTrackId, getActivity().getSelectedTrackId());
-
+    
     // Start a new track.
     getActivity().startRecording();
     serviceConnection.bindIfRunning();
@@ -147,10 +132,9 @@ public class TrackDetailActivityTest extends ActivityInstrumentationTestCase2<Tr
     waitForIdle();
     assertEquals(recordingTrackId, getSharedPreferences().getLong(
         getActivity().getString(R.string.recording_track_key), -1));
-    selectedTrackId = getSharedPreferences().getLong(
+    long selectedTrackId = getSharedPreferences().getLong(
         getActivity().getString(R.string.selected_track_key), -1);
     assertEquals(recordingTrackId, selectedTrackId);
-    assertEquals(selectedTrackId, getActivity().getSelectedTrackId());
 
     // Watch for MyTracksDetails activity.
     ActivityMonitor monitor = getInstrumentation().addMonitor(
@@ -182,8 +166,6 @@ public class TrackDetailActivityTest extends ActivityInstrumentationTestCase2<Tr
     assertEquals(recordingTrackId, getRecordingTrackId());
     assertEquals(recordingTrackId, getSharedPreferences().getLong(
         getActivity().getString(R.string.recording_track_key), -1));
-    // Make sure this is the same track as the last recording track ID.
-    assertEquals(selectedTrackId, getActivity().getSelectedTrackId());
   }
 
   private void assertInitialized() {

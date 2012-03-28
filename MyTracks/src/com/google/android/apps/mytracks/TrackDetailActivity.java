@@ -29,6 +29,7 @@ import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.app.TabActivity;
 import android.content.Context;
@@ -64,9 +65,11 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
   private MyTracksProviderUtils myTracksProviderUtils;
   private SharedPreferences sharedPreferences;
   private TrackDataHub trackDataHub;
-  private MenuManager menuManager;
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private NavControls navControls;
+  
+  private MenuItem recordTrack;
+  private MenuItem stopRecording;
   
   /**
    * True if a new track should be created after the track recording service
@@ -106,7 +109,6 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     trackDataHub = ((MyTracksApplication) getApplication()).getTrackDataHub();
-    menuManager = new MenuManager(this);
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, serviceBindCallback);
 
     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
@@ -196,29 +198,117 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    super.onCreateOptionsMenu(menu);
-    return menuManager.onCreateOptionsMenu(menu);
+    getMenuInflater().inflate(R.menu.track_detail, menu);
+    recordTrack = menu.findItem(R.id.menu_record_track);
+    stopRecording = menu.findItem(R.id.menu_stop_recording);
+    return true;
   }
 
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
-    MapActivity map = getMapTab();
-    boolean isSatelliteView = map != null ? map.isSatelliteView() : false;
+    updateMenuItems(ServiceUtils.isRecording(
+        this, trackRecordingServiceConnection.getServiceIfBound(), sharedPreferences));
 
-    menuManager.onPrepareOptionsMenu(menu, myTracksProviderUtils.getLastTrack() != null,
-        ServiceUtils.isRecording(this, trackRecordingServiceConnection.getServiceIfBound(), sharedPreferences),
-        trackDataHub.isATrackSelected(),
-        isSatelliteView,
-        getTabHost().getCurrentTabTag());
+    String currentTabTag = getTabHost().getCurrentTabTag();
+    menu.findItem(R.id.menu_chart_settings).setVisible(CHART_TAB_TAG.equals(currentTabTag));
+    menu.findItem(R.id.menu_my_location).setVisible(MAP_TAB_TAG.equals(currentTabTag));
+    
+    // Set map or satellite mode
+    MapActivity mapActivity = (MapActivity) getLocalActivityManager().getActivity(MAP_TAB_TAG);
+    boolean isSatelliteMode = mapActivity != null ? mapActivity.isSatelliteView() : false;
+    menu.findItem(R.id.menu_satellite_mode)
+        .setVisible(MAP_TAB_TAG.equals(currentTabTag))
+        .setTitle(isSatelliteMode ? R.string.menu_map_mode : R.string.menu_satellite_mode);
 
     return super.onPrepareOptionsMenu(menu);
   }
 
+  /**
+   * Updates menu item
+   * 
+   * @param isRecording true if recording
+   */
+  private void updateMenuItems(boolean isRecording) {
+    if (recordTrack != null) {
+      recordTrack.setVisible(!isRecording);
+    }
+    if (stopRecording != null) {
+      stopRecording.setVisible(isRecording);
+    }
+  }
+
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    return menuManager.onOptionsItemSelected(item)
-        ? true
-        : super.onOptionsItemSelected(item);
+    MapActivity mapActivity;
+    switch (item.getItemId()) {
+      case R.id.menu_record_track:
+        updateMenuItems(true);
+        startRecording();
+        return true;
+      case R.id.menu_stop_recording:
+        updateMenuItems(false);
+        stopRecording();
+        return true;
+      case R.id.menu_markers:
+        Intent intent = new Intent(this, WaypointsList.class)
+            .putExtra("trackid", trackDataHub.getSelectedTrackId());
+        startActivityForResult(intent, Constants.SHOW_WAYPOINT);
+        return true;
+      case R.id.menu_sensor_state:
+        startActivity(new Intent(this, SensorStateActivity.class));
+        return true;
+      case R.id.menu_settings:
+        startActivity(new Intent(this, SettingsActivity.class));
+        return true;
+      case R.id.menu_aggregated_statistics:
+        startActivity(new Intent(this, AggregatedStatsActivity.class));
+        return true;
+      case R.id.menu_help:
+        startActivity(new Intent(this, WelcomeActivity.class));
+        return true;
+      case R.id.menu_search:
+        onSearchRequested();
+        return true;
+      case R.id.menu_chart_settings:
+        ChartActivity chartActivity = (ChartActivity) getLocalActivityManager()
+            .getActivity(CHART_TAB_TAG);
+        if (chartActivity != null) {
+          chartActivity.showChartSettingsDialog();
+        }
+        return true;
+      case R.id.menu_my_location:
+        mapActivity = (MapActivity) getLocalActivityManager().getActivity(MAP_TAB_TAG);
+        if (mapActivity != null) {
+          mapActivity.showMyLocation();
+        }
+        return true;
+      case R.id.menu_satellite_mode:
+        mapActivity = (MapActivity) getLocalActivityManager().getActivity(MAP_TAB_TAG);
+        if (mapActivity != null) {
+          mapActivity.setSatelliteView(!mapActivity.isSatelliteView());
+        }
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, final Intent results) {
+    if (requestCode != Constants.SHOW_WAYPOINT) {
+      Log.d(TAG, "Warning unhandled request code: " + requestCode);
+      return;
+    }
+    if (results != null) {
+      long waypointId = results.getLongExtra(WaypointDetails.WAYPOINT_ID_EXTRA, -1L);
+      if (waypointId != -1L) {
+        MapActivity mapActivity = (MapActivity) getLocalActivityManager().getActivity(MAP_TAB_TAG);
+        if (mapActivity != null) {
+          getTabHost().setCurrentTab(0);
+          mapActivity.showWaypoint(waypointId);
+        }
+      }
+    }
   }
 
   @Override
@@ -240,21 +330,11 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
   }
 
   @Override
-  public void onActivityResult(int requestCode, int resultCode, final Intent results) {
-    if (requestCode != Constants.SHOW_WAYPOINT) {
-      Log.d(TAG, "Warning unhandled request code: " + requestCode);
-      return;
+  public boolean onTouch(View v, MotionEvent event) {
+    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+      navControls.show();
     }
-    if (results != null) {
-      long waypointId = results.getLongExtra(WaypointDetails.WAYPOINT_ID_EXTRA, -1L);
-      if (waypointId != -1L) {
-        MapActivity map = getMapTab();
-        if (map != null) {
-          getTabHost().setCurrentTab(0);
-          map.showWaypoint(waypointId);
-        }
-      }
-    }
+    return false;
   }
 
   private void showWaypoint(long trackId, long waypointId) {
@@ -266,14 +346,6 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
     } else {
       Log.e(TAG, "Couldnt' get map tab");
     }
-  }
-
-  @Override
-  public boolean onTouch(View v, MotionEvent event) {
-    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-      navControls.show();
-    }
-    return false;
   }
 
   /**
@@ -320,6 +392,7 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
    * Starts the track recording service (if not already running) and binds to
    * it. Starts recording a new track.
    */
+  @VisibleForTesting
   void startRecording() {
     synchronized (trackRecordingServiceConnection) {
       startNewTrackRequested = true;
@@ -337,11 +410,10 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
    * Stops the track recording service and unbinds from it. Will display a toast
    * "Stopped recording" and pop up the Track Details activity.
    */
+  @VisibleForTesting
   void stopRecording() {
     // Save the track id as the shared preference will overwrite the recording track id.
-    SharedPreferences sharedPreferences = getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    long currentTrackId = sharedPreferences.getLong(getString(R.string.recording_track_key), -1);
+    long currentTrackId = sharedPreferences.getLong(getString(R.string.recording_track_key), -1L);
 
     ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
     if (trackRecordingService != null) {
@@ -360,53 +432,5 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
           .putExtra(TrackEditActivity.TRACK_ID, currentTrackId);
       startActivity(intent);
     }
-  }
-
-  long getSelectedTrackId() {
-    return trackDataHub.getSelectedTrackId();
-  }
-
-  /**
-   * Asks the chart tab to show its settings.
-   */
-  public void showChartSettings() {
-    ChartActivity chart = getChartTab();
-    if (chart != null) {
-      chart.showChartSettingsDialog();
-    }
-  }
-
-  /**
-   * Asks the map tab to show the map in satellite mode.
-   */
-  public void toggleSatelliteView() {
-    MapActivity mapTab = getMapTab();
-    if (mapTab != null) {
-      mapTab.setSatelliteView(!mapTab.isSatelliteView());
-    }
-  }
-
-  /**
-   * Asks the map tab to jump to the current location.
-   */
-  public void showMyLocation() {
-    MapActivity mapTab = getMapTab();
-    if (mapTab != null) {
-      mapTab.showMyLocation();
-    }
-  }
-
-  /**
-   * Returns the map tab instance if available, or null otherwise.
-   */
-  private MapActivity getMapTab() {
-    return (MapActivity) getLocalActivityManager().getActivity(MAP_TAB_TAG);
-  }
-
-  /**
-   * Returns the chart tab instance if available, or null otherwise.
-   */
-  private ChartActivity getChartTab() {
-    return (ChartActivity) getLocalActivityManager().getActivity(CHART_TAB_TAG);
   }
 }

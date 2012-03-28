@@ -35,7 +35,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -447,17 +446,7 @@ public class TrackListActivity extends FragmentActivity {
           R.string.track_list_delete_all_confirm_message, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-              MyTracksProviderUtils.Factory.get(getActivity()).deleteAllTracks();
-              /*
-               * TODO Verify that selected_track_key is still needed with the
-               * ICS navigation design
-               */
-              SharedPreferences sharedPreferences = getActivity()
-                  .getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-              Editor editor = sharedPreferences.edit();
-              // TODO: Go through data manager
-              editor.putLong(getString(R.string.selected_track_key), -1L);
-              ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
+              MyTracksProviderUtils.Factory.get(getActivity()).deleteAllTracks();              
             }
           });
     }
