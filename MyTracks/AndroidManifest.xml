@@ -192,7 +192,7 @@ limitations under the License.
     </activity>
     <activity
       android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|fontScale"
-      android:name="com.google.android.apps.mytracks.MyTracks" >
+      android:name="com.google.android.apps.mytracks.TrackDetailActivity" >
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 

@@ -34,16 +34,16 @@ import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * A unit test for {@link MyTracks} activity.
+ * A unit test for {@link TrackDetailActivity}.
  *
  * @author Bartlomiej Niechwiej
  */
-public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
+public class TrackDetailActivityTest extends ActivityInstrumentationTestCase2<TrackDetailActivity>{
   private SharedPreferences sharedPreferences;
   private TrackRecordingServiceConnection serviceConnection;
 
-  public MyTracksTest() {
-    super(MyTracks.class);
+  public TrackDetailActivityTest() {
+    super(TrackDetailActivity.class);
   }
 
   @Override
