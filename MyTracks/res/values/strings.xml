@@ -1025,10 +1025,6 @@ limitations under the License.
     translation_description="In the menu, to stop recording a track.">
     Stop recording
   </string>
-  <string name="menu_tracks"
-    translation_description="In the menu, to show a list of all the tracks.">
-    Tracks
-  </string>
 
   <!-- My Location -->
   <string name="my_location_approximate_location"

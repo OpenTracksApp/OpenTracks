@@ -23,7 +23,9 @@ import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.CheckUnitsUtils;
 import com.google.android.apps.mytracks.util.DialogUtils;
+import com.google.android.apps.mytracks.util.EulaUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -37,8 +39,10 @@ import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -62,8 +66,13 @@ import android.widget.Toast;
 public class TrackListActivity extends FragmentActivity {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
-  private static final String EXPORT_ALL_DIALOG_TAG = "exportAllDialog";
+  private static final String CHECK_UNITS_DIALOG_TAG = "checkUnitsDialog";
   private static final String DELETE_ALL_DIALOG_TAG = "deleteAllDialog";
+  private static final String EULA_DIALOG_TAG = "eulaDialog";  
+  private static final String EXPORT_ALL_DIALOG_TAG = "exportAllDialog";
+  
+  private static final int WELCOME_ACTIVITY_REQUEST_CODE = 0;
+  
   private static final String[] PROJECTION = new String[] {
       TracksColumns._ID,
       TracksColumns.NAME,
@@ -108,8 +117,10 @@ public class TrackListActivity extends FragmentActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
+    setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
     setContentView(R.layout.track_list);
-
+    
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(
         this, bindChangedCallback);
 
@@ -138,8 +149,9 @@ public class TrackListActivity extends FragmentActivity {
     listView.setOnItemClickListener(new OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        setResult(Constants.SHOW_TRACK, new Intent().putExtra("trackid", id));
-        finish();
+        Intent intent = new Intent(TrackListActivity.this, TrackDetailActivity.class)
+            .putExtra(TrackDetailActivity.TRACK_ID, id);
+        startActivity(intent);
       }
     });
     adapter = new ResourceCursorAdapter(this, R.layout.track_list_item, null, 0) {
@@ -205,13 +217,27 @@ public class TrackListActivity extends FragmentActivity {
         adapter.swapCursor(null);
       }
     });
+    
+    if (!EulaUtils.getEulaValue(this)) {
+      new EulaDialogFragment().show(getSupportFragmentManager(), EULA_DIALOG_TAG);
+    }
   }
 
   @Override
   protected void onStart() {
     super.onStart();
+    if (ServiceUtils.isRecording(
+        this, trackRecordingServiceConnection.getServiceIfBound(), sharedPreferences)) {
+      trackRecordingServiceConnection.startAndBind();
+    }
+  }
+    
+  @Override
+  protected void onResume() {
+    super.onResume();
     trackRecordingServiceConnection.bindIfRunning();
   }
+  
 
   @Override
   protected void onDestroy() {
@@ -219,6 +245,23 @@ public class TrackListActivity extends FragmentActivity {
     trackRecordingServiceConnection.unbind();
   }
 
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, final Intent results) {
+    if (requestCode == WELCOME_ACTIVITY_REQUEST_CODE) {
+      if (!CheckUnitsUtils.getCheckUnitsValue(this)) {
+        /*
+         * See bug http://code.google.com/p/android/issues/detail?id=23761.
+         * Instead of
+         * new CheckUnitsDialogFragment().show(getSupportFragmentManager(), CHECK_UNITS_DIALOG_TAG)
+         * Need to use commitAllowingStateLoss with the support package.
+         */
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(new CheckUnitsDialogFragment(), CHECK_UNITS_DIALOG_TAG);
+        fragmentTransaction.commitAllowingStateLoss();
+      }
+    }
+  }
+  
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.track_list, menu);
@@ -362,6 +405,101 @@ public class TrackListActivity extends FragmentActivity {
   }
 
   /**
+   * Check Units DialogFragment.
+   */
+  private static class CheckUnitsDialogFragment extends DialogFragment {
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+      return new AlertDialog.Builder(getActivity()).setCancelable(true)
+          .setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialog) {
+              CheckUnitsUtils.setCheckUnitsValue(getActivity());
+            }
+          })
+          .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+              CheckUnitsUtils.setCheckUnitsValue(getActivity());
+
+              int position = ((AlertDialog) dialog).getListView().getSelectedItemPosition();
+              SharedPreferences sharedPreferences = getActivity()
+                  .getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+              ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(sharedPreferences.edit()
+                  .putBoolean(getString(R.string.metric_units_key), position == 0));
+            }
+          })
+          .setSingleChoiceItems(new CharSequence[] { getString(R.string.preferred_units_metric),
+              getString(R.string.preferred_units_imperial) }, 0, null)
+          .setTitle(R.string.preferred_units_title)
+          .create();
+    }
+  }
+
+  /**
+   * Delete All DialogFragment.
+   */
+  private static class DeleteAllDialogFragment extends DialogFragment {
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+      return DialogUtils.createConfirmationDialog(getActivity(),
+          R.string.track_list_delete_all_confirm_message, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              MyTracksProviderUtils.Factory.get(getActivity()).deleteAllTracks();
+              /*
+               * TODO Verify that selected_track_key is still needed with the
+               * ICS navigation design
+               */
+              SharedPreferences sharedPreferences = getActivity()
+                  .getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+              Editor editor = sharedPreferences.edit();
+              // TODO: Go through data manager
+              editor.putLong(getString(R.string.selected_track_key), -1L);
+              ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
+            }
+          });
+    }
+  };
+
+  /**
+   * Eula DialogFragment.
+   */
+  private static class EulaDialogFragment extends DialogFragment {
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+      return new AlertDialog.Builder(getActivity())
+          .setCancelable(true)
+          .setMessage(
+              EulaUtils.getEulaMessage(getActivity()))
+          .setNegativeButton(R.string.eula_decline, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              getActivity().finish();
+            }
+          })
+          .setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+              getActivity().finish();
+            }
+          })
+          .setPositiveButton(R.string.eula_accept, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              EulaUtils.setEulaValue(getActivity());
+              getActivity().startActivityForResult(
+                  new Intent(getActivity(), WelcomeActivity.class), WELCOME_ACTIVITY_REQUEST_CODE);
+            }
+          })
+          .setTitle(R.string.eula_title)
+          .create();
+    }
+  }
+
+  /**
    * Export All DialogFragment.
    */
   private static class ExportAllDialogFragment extends DialogFragment {
@@ -388,33 +526,6 @@ public class TrackListActivity extends FragmentActivity {
           .setSingleChoiceItems(choices, 0, null)
           .setTitle(R.string.menu_export_all)
           .create();
-    }
-  };
-
-  /**
-   * Delete All DialogFragment.
-   */
-  private static class DeleteAllDialogFragment extends DialogFragment {
-
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-      return DialogUtils.createConfirmationDialog(getActivity(),
-          R.string.track_list_delete_all_confirm_message, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-              MyTracksProviderUtils.Factory.get(getActivity()).deleteAllTracks();
-              /*
-               * TODO Verify that selected_track_key is still needed with the
-               * ICS navigation design
-               */
-              SharedPreferences sharedPreferences = getActivity()
-                  .getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-              Editor editor = sharedPreferences.edit();
-              // TODO: Go through data manager
-              editor.putLong(getString(R.string.selected_track_key), -1L);
-              ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
-            }
-          });
     }
   };
 

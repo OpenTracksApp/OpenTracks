@@ -117,11 +117,6 @@ class MenuManager {
         updateActionItems(false);
         return true;
       }
-      case R.id.menu_tracks: {
-	    activity.startActivityForResult(new Intent(activity, TrackListActivity.class),
-	    		Constants.SHOW_TRACK);
-        return true;
-      }
       case R.id.menu_markers: {
         Intent startIntent = new Intent(activity, WaypointsList.class);
         startIntent.putExtra("trackid", activity.getSelectedTrackId());

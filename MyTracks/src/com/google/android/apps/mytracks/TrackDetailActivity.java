@@ -22,31 +22,19 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.TrackDataHub;
-import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
-import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
-import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
-import com.google.android.apps.mytracks.util.EulaUtils;
-import com.google.android.apps.mytracks.util.UriUtils;
-import com.google.android.maps.mytracks.BuildConfig;
 import com.google.android.maps.mytracks.R;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.TabActivity;
-import android.content.ContentUris;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.speech.tts.TextToSpeech;
@@ -62,46 +50,29 @@ import android.widget.TabHost;
 import android.widget.Toast;
 
 /**
- * The super activity that embeds our sub activities.
+ * An activity to show the track detail.
  *
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
 @SuppressWarnings("deprecation")
 public class TrackDetailActivity extends TabActivity implements OnTouchListener {
-  private static final int DIALOG_EULA_ID = 0;
-  private static final int DIALOG_CHECK_UNITS_ID = 1;
-  private static final String CHECK_UNITS_PREFERENCE_FILE = "checkunits";
-  private static final String CHECK_UNITS_PREFERENCE_KEY = "checkunits.checked";
-
-  private TrackDataHub dataHub;
-
-  /**
-   * Menu manager.
-   */
+  
+  public static final String TRACK_ID = "track_id";
+  public static final String WAYPOINT_ID = "waypoint_id";
+  
+  private MyTracksProviderUtils myTracksProviderUtils;
+  private SharedPreferences sharedPreferences;
+  private TrackDataHub trackDataHub;
   private MenuManager menuManager;
-
-  /**
-   * Preferences.
-   */
-  private SharedPreferences preferences;
-
+  private TrackRecordingServiceConnection trackRecordingServiceConnection;
+  private NavControls navControls;
+  
   /**
    * True if a new track should be created after the track recording service
    * binds.
    */
   private boolean startNewTrackRequested = false;
-
-  /**
-   * Utilities to deal with the database.
-   */
-  private MyTracksProviderUtils providerUtils;
-
-  /*
-   * Tabs/View navigation:
-   */
-
-  private NavControls navControls;
 
   private final Runnable changeTab = new Runnable() {
     public void run() {
@@ -109,15 +80,14 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
     }
   };
 
-  /*
-   * Recording service interaction:
+  /**
+   * Callback when {@linkk TrackRecordingServiceConnection} binding changes.
    */
-
   private final Runnable serviceBindCallback = new Runnable() {
     @Override
     public void run() {
-      synchronized (serviceConnection) {
-        ITrackRecordingService service = serviceConnection.getServiceIfBound();
+      synchronized (trackRecordingServiceConnection) {
+        ITrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
         if (startNewTrackRequested && service != null) {
           Log.i(TAG, "Starting recording");
           startNewTrackRequested = false;
@@ -129,36 +99,20 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
     }
   };
 
-  private TrackRecordingServiceConnection serviceConnection;
-
-  /*
-   * Application lifetime events:
-   * ============================
-   */
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    Log.d(TAG, "MyTracks.onCreate");
     super.onCreate(savedInstanceState);
-    if (BuildConfig.DEBUG) {
-      ApiAdapterFactory.getApiAdapter().enableStrictMode();
-    }
 
-    AnalyticsUtils.sendPageViews(this, "/appstart");
-
-    providerUtils = MyTracksProviderUtils.Factory.get(this);
-    preferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    dataHub = ((MyTracksApplication) getApplication()).getTrackDataHub();
+    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
+    sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    trackDataHub = ((MyTracksApplication) getApplication()).getTrackDataHub();
     menuManager = new MenuManager(this);
-    serviceConnection = new TrackRecordingServiceConnection(this, serviceBindCallback);
+    trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, serviceBindCallback);
 
     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
     // Show the action bar (or nothing at all).
     ApiAdapterFactory.getApiAdapter().showActionBar(this);
-
-    // If the user just starts typing (on a device with a keyboard), we start a search.
-    setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
     final Resources res = getResources();
     final TabHost tabHost = getTabHost();
@@ -189,138 +143,55 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
     navControls.show();
     tabHost.addView(layout);
     layout.setOnTouchListener(this);
-
-    if (!EulaUtils.getEulaValue(this)) {
-      showDialog(DIALOG_EULA_ID);
-    }
   }
 
   @Override
   protected void onStart() {
-    Log.d(TAG, "MyTracks.onStart");
     super.onStart();
-    dataHub.start();
+    trackDataHub.start();
 
     // Ensure that service is running and bound if we're supposed to be recording
-    if (ServiceUtils.isRecording(this, null, preferences)) {
-      serviceConnection.startAndBind();
+    if (ServiceUtils.isRecording(
+        this, trackRecordingServiceConnection.getServiceIfBound(), sharedPreferences)) {
+      trackRecordingServiceConnection.startAndBind();
     }
 
     Intent intent = getIntent();
-    String action = intent.getAction();
-    Uri data = intent.getData();
-    if ((Intent.ACTION_VIEW.equals(action) || Intent.ACTION_EDIT.equals(action))
-        && TracksColumns.CONTENT_ITEMTYPE.equals(intent.getType())
-        && UriUtils.matchesContentUri(data, TracksColumns.CONTENT_URI)) {
-      long trackId = ContentUris.parseId(data);
-      dataHub.loadTrack(trackId);
-    } else if (Intent.ACTION_VIEW.equals(action)
-        && WaypointsColumns.CONTENT_ITEMTYPE.equals(intent.getType())
-        && UriUtils.matchesContentUri(data, WaypointsColumns.CONTENT_URI)) {
-      // TODO(rdamazio): Waypoint URIs should be base/trackid/waypointid
-      long waypointId = ContentUris.parseId(data);
-      Waypoint waypoint = providerUtils.getWaypoint(waypointId);
-      long trackId = waypoint.getTrackId();
-
+    long trackId = intent.getLongExtra(TRACK_ID, -1L);
+    if (trackId != -1L) {
+      trackDataHub.loadTrack(trackId);
+      return;
+    }
+    
+    long waypointId = intent.getLongExtra(WAYPOINT_ID, -1L);
+    if (waypointId != -1L) {
+      Waypoint waypoint = myTracksProviderUtils.getWaypoint(waypointId);
+      trackId = waypoint.getTrackId();
+      
       // Request that the waypoint is shown (now or when the right track is loaded).
       showWaypoint(trackId, waypointId);
-
+  
       // Load the right track, if not loaded already.
-      dataHub.loadTrack(trackId);
+      trackDataHub.loadTrack(trackId);
     }
   }
 
   @Override
   protected void onResume() {
-    // Called when the current activity is being displayed or re-displayed
-    // to the user.
-    Log.d(TAG, "MyTracks.onResume");
-    serviceConnection.bindIfRunning();
     super.onResume();
-  }
-
-  @Override
-  protected void onPause() {
-    // Called when activity is going into the background, but has not (yet) been
-    // killed. Shouldn't block longer than approx. 2 seconds.
-    Log.d(TAG, "MyTracks.onPause");
-    super.onPause();
+    trackRecordingServiceConnection.bindIfRunning();
   }
 
   @Override
   protected void onStop() {
-    Log.d(TAG, "MyTracks.onStop");
-    dataHub.stop();
     super.onStop();
+    trackDataHub.stop();
   }
 
   @Override
   protected void onDestroy() {
-    Log.d(TAG, "MyTracks.onDestroy");
-    serviceConnection.unbind();
     super.onDestroy();
-  }
-
-  @Override
-  protected Dialog onCreateDialog(int id) {
-    switch (id) {
-      case DIALOG_EULA_ID:
-        return new AlertDialog.Builder(this)
-            .setCancelable(true)
-            .setMessage(EulaUtils.getEulaMessage(this))
-            .setNegativeButton(R.string.eula_decline, new DialogInterface.OnClickListener() {
-              @Override
-              public void onClick(DialogInterface dialog, int which) {
-                finish();
-              }
-            })
-            .setOnCancelListener(new DialogInterface.OnCancelListener() {
-              @Override
-              public void onCancel(DialogInterface dialog) {
-                finish();
-              }
-            })
-            .setPositiveButton(R.string.eula_accept, new DialogInterface.OnClickListener() {
-              @Override
-              public void onClick(DialogInterface dialog, int which) {
-                EulaUtils.setEulaValue(TrackDetailActivity.this);
-                startActivityForResult(
-                    new Intent(TrackDetailActivity.this, WelcomeActivity.class), Constants.WELCOME);
-              }
-            })
-            .setTitle(R.string.eula_title)
-            .create();
-      case DIALOG_CHECK_UNITS_ID:
-        return new AlertDialog.Builder(this)
-            .setCancelable(true)
-            .setOnCancelListener(new DialogInterface.OnCancelListener() {
-              public void onCancel(DialogInterface dialog) {
-                SharedPreferences sharedPreferences = getSharedPreferences(
-                    CHECK_UNITS_PREFERENCE_FILE, Context.MODE_PRIVATE);
-                ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(
-                    sharedPreferences.edit().putBoolean(CHECK_UNITS_PREFERENCE_KEY, true));
-              }
-            })
-            .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
-              public void onClick(DialogInterface dialog, int which) {
-                SharedPreferences sharedPreferences = getSharedPreferences(
-                    CHECK_UNITS_PREFERENCE_FILE, Context.MODE_PRIVATE);
-                ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(
-                    sharedPreferences.edit().putBoolean(CHECK_UNITS_PREFERENCE_KEY, true));
-
-                int position = ((AlertDialog) dialog).getListView().getSelectedItemPosition();
-                SharedPreferences.Editor editor = preferences.edit();
-                ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(
-                    editor.putBoolean(getString(R.string.metric_units_key), position == 0));
-              }
-            })
-            .setSingleChoiceItems(new CharSequence[] { getString(R.string.preferred_units_metric),
-                getString(R.string.preferred_units_imperial) }, 0, null)
-            .setTitle(R.string.preferred_units_title)
-            .create();
-      default:
-        return null;
-    }
+    trackRecordingServiceConnection.unbind();
   }
 
   @Override
@@ -334,9 +205,9 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
     MapActivity map = getMapTab();
     boolean isSatelliteView = map != null ? map.isSatelliteView() : false;
 
-    menuManager.onPrepareOptionsMenu(menu, providerUtils.getLastTrack() != null,
-        ServiceUtils.isRecording(this, serviceConnection.getServiceIfBound(), preferences),
-        dataHub.isATrackSelected(),
+    menuManager.onPrepareOptionsMenu(menu, myTracksProviderUtils.getLastTrack() != null,
+        ServiceUtils.isRecording(this, trackRecordingServiceConnection.getServiceIfBound(), sharedPreferences),
+        trackDataHub.isATrackSelected(),
         isSatelliteView,
         getTabHost().getCurrentTabTag());
 
@@ -350,15 +221,10 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
         : super.onOptionsItemSelected(item);
   }
 
-  /*
-   * Key events:
-   * ===========
-   */
-
   @Override
   public boolean onTrackballEvent(MotionEvent event) {
     if (event.getAction() == MotionEvent.ACTION_DOWN) {
-      if (ServiceUtils.isRecording(this, serviceConnection.getServiceIfBound(), preferences)) {
+      if (ServiceUtils.isRecording(this, trackRecordingServiceConnection.getServiceIfBound(), sharedPreferences)) {
         try {
           insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
         } catch (RemoteException e) {
@@ -374,53 +240,19 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
   }
 
   @Override
-  public void onActivityResult(int requestCode, int resultCode,
-      final Intent results) {
-    Log.d(TAG, "MyTracks.onActivityResult");
-    long trackId = dataHub.getSelectedTrackId();
-    if (results != null) {
-      trackId = results.getLongExtra("trackid", trackId);
+  public void onActivityResult(int requestCode, int resultCode, final Intent results) {
+    if (requestCode != Constants.SHOW_WAYPOINT) {
+      Log.d(TAG, "Warning unhandled request code: " + requestCode);
+      return;
     }
-
-    switch (requestCode) {
-      case Constants.SHOW_TRACK: {
-        if (results != null) {
-          if (trackId >= 0) {
-            dataHub.loadTrack(trackId);
-
-            // The track list passed the requested action as result code. Hand
-            // it off to the onActivityResult for further processing:
-            if (resultCode != Constants.SHOW_TRACK) {
-              onActivityResult(resultCode, Activity.RESULT_OK, results);
-            }
-          }
+    if (results != null) {
+      long waypointId = results.getLongExtra(WaypointDetails.WAYPOINT_ID_EXTRA, -1L);
+      if (waypointId != -1L) {
+        MapActivity map = getMapTab();
+        if (map != null) {
+          getTabHost().setCurrentTab(0);
+          map.showWaypoint(waypointId);
         }
-        break;
-      }
-      case Constants.SHOW_WAYPOINT: {
-        if (results != null) {
-          final long waypointId = results.getLongExtra(WaypointDetails.WAYPOINT_ID_EXTRA, -1);
-          if (waypointId >= 0) {
-            MapActivity map = getMapTab();
-            if (map != null) {
-              getTabHost().setCurrentTab(0);
-              map.showWaypoint(waypointId);
-            }
-          }
-        }
-        break;
-      }
-      case Constants.WELCOME: {
-        SharedPreferences sharedPreferences = getSharedPreferences(
-            CHECK_UNITS_PREFERENCE_FILE, Context.MODE_PRIVATE);
-        if (!sharedPreferences.getBoolean(CHECK_UNITS_PREFERENCE_KEY, false)) {
-          showDialog(DIALOG_CHECK_UNITS_ID);
-        }
-        break;
-      }
-
-      default: {
-        Log.w(TAG, "Warning unhandled request code: " + requestCode);
       }
     }
   }
@@ -453,7 +285,7 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
    * @throws RemoteException If the call on the service failed.
    */
   private long insertWaypoint(WaypointCreationRequest request) throws RemoteException {
-    ITrackRecordingService trackRecordingService = serviceConnection.getServiceIfBound();
+    ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
     if (trackRecordingService == null) {
       throw new IllegalStateException("The recording service is not bound.");
     }
@@ -474,7 +306,7 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
     try {
       long recordingTrackId = trackRecordingService.startNewTrack();
       // Select the recording track.
-      dataHub.loadTrack(recordingTrackId);
+      trackDataHub.loadTrack(recordingTrackId);
       Toast.makeText(this, getString(R.string.track_record_success), Toast.LENGTH_SHORT).show();
       // TODO: We catch Exception, because after eliminating the service process
       // all exceptions it may throw are no longer wrapped in a RemoteException.
@@ -489,9 +321,9 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
    * it. Starts recording a new track.
    */
   void startRecording() {
-    synchronized (serviceConnection) {
+    synchronized (trackRecordingServiceConnection) {
       startNewTrackRequested = true;
-      serviceConnection.startAndBind();
+      trackRecordingServiceConnection.startAndBind();
 
       // Binding was already requested before, it either already happened
       // (in which case running the callback manually triggers the actual recording start)
@@ -511,7 +343,7 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     long currentTrackId = sharedPreferences.getLong(getString(R.string.recording_track_key), -1);
 
-    ITrackRecordingService trackRecordingService = serviceConnection.getServiceIfBound();
+    ITrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
     if (trackRecordingService != null) {
       try {
         trackRecordingService.endCurrentTrack();
@@ -520,7 +352,7 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
       }
     }
 
-    serviceConnection.stop();
+    trackRecordingServiceConnection.stop();
 
     if (currentTrackId > 0) {
       Intent intent = new Intent(this, TrackEditActivity.class)
@@ -531,7 +363,7 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
   }
 
   long getSelectedTrackId() {
-    return dataHub.getSelectedTrackId();
+    return trackDataHub.getSelectedTrackId();
   }
 
   /**
