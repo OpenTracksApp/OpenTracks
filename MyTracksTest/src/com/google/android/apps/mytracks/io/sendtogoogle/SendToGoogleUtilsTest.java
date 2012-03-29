@@ -37,6 +37,7 @@ public class SendToGoogleUtilsTest extends TestCase {
   private final static String TRACK_CATEGORY = "trackCategory";
   private final static String TRACK_NAME = "trackName";
   private final static double DIFFERENCE = 0.02;
+  private final static double INVALID_LATITUDE = 91;
 
   /**
    * Tests the method
@@ -95,13 +96,14 @@ public class SendToGoogleUtilsTest extends TestCase {
     List<Location> locationsArray = new ArrayList<Location>();
     // Adds 100 location to List.
     for (int i = 0; i < 100; i++) {
-      // Use this variable to make all points in the track can be kept after the
+      // Use this variable as a flag to make all points in the track can be kept
+      // after run the LocationUtils#decimate(Track, double) with
       // Ramer–Douglas–Peucker algorithm.
-      int positiveOrNegative = (i % 2) - 1;
+      int positiveOrNegative = (i % 2) == 0 ? -1 : 0;
       // Inserts 9 points which have wrong latitude, so would have 10 segments.
       if (i % 10 == 0 && i > 0) {
         MyTracksLocation location = TrackStubUtils.createMyTracksLocation();
-        location.setLatitude(91);
+        location.setLatitude(INVALID_LATITUDE);
         locationsArray.add(location);
       } else {
         locationsArray.add(TrackStubUtils.createMyTracksLocation(TrackStubUtils.INITIAL_LATITUDE
@@ -130,10 +132,4 @@ public class SendToGoogleUtilsTest extends TestCase {
           oneLocation.getLongitude());
     }
   }
-
-  @Override
-  protected void tearDown() throws Exception {
-    super.tearDown();
-  }
-
 }
