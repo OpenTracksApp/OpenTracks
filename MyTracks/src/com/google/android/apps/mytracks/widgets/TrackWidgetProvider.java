@@ -145,7 +145,8 @@ public class TrackWidgetProvider
     RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.track_widget);
 
     // Make all of the stats open the mytracks activity.
-    Intent intent = new Intent(context, TrackDetailActivity.class);
+    Intent intent = new Intent(context, TrackDetailActivity.class)
+        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
     if (track != null) {
       intent.putExtra(TrackDetailActivity.TRACK_ID, track.getId());
     }

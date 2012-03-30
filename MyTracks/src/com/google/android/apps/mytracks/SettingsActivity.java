@@ -628,7 +628,7 @@ public class SettingsActivity extends PreferenceActivity {
 
             // Restart the settings activity so all changes are loaded.
             Intent intent = getIntent();
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
           }
         });

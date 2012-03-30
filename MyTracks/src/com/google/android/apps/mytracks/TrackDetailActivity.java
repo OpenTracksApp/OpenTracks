@@ -21,7 +21,6 @@ import static com.google.android.apps.mytracks.Constants.STATS_TAB_TAG;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.TrackDataHub;
-import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
@@ -78,7 +77,8 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
   private TrackDataHub trackDataHub;
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private NavControls navControls;
-
+  private long trackId;
+  
   private MenuItem stopRecording;
   private MenuItem insertMarker;
   private MenuItem play;
@@ -106,10 +106,7 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
         return;
       }
       if (key.equals(getString(R.string.recording_track_key))) {
-        if (isRecording()) {
-          trackRecordingServiceConnection.startAndBind();
-        }
-        updateMenu();
+        updateMenu();      
       }
     }
   };
@@ -118,15 +115,13 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
+    ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
+    
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     trackDataHub = ((MyTracksApplication) getApplication()).getTrackDataHub();
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
-
-    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
-
-    // Show the action bar (or nothing at all).
-    ApiAdapterFactory.getApiAdapter().showActionBar(this);
 
     final Resources res = getResources();
     final TabHost tabHost = getTabHost();
@@ -152,43 +147,33 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
     navControls.show();
     tabHost.addView(layout);
     layout.setOnTouchListener(this);
+    
+    // Get the trackid
+    Intent intent = getIntent();
+    trackId = intent.getLongExtra(TRACK_ID, -1L);
+    if (trackId == -1L) {
+      startTrackListActivity();
+      finish();
+    }
+    trackDataHub.loadTrack(trackId);
+    
+    // Get the waypointId
+    long waypointId = intent.getLongExtra(WAYPOINT_ID, -1L);
+    if (waypointId != -1L) {
+      MapActivity mapActivity = getMapActivity();
+      if (mapActivity != null) {
+        getTabHost().setCurrentTab(0);
+        mapActivity.showWaypoint(trackId, waypointId);
+      } else {
+        Log.e(TAG, "MapActivity is null");
+      }
+    }
   }
 
   @Override
   protected void onStart() {
     super.onStart();
     trackDataHub.start();
-
-    if (isRecording()) {
-      trackRecordingServiceConnection.startAndBind();
-    }
-
-    Intent intent = getIntent();
-    long trackId = intent.getLongExtra(TRACK_ID, -1L);
-    if (trackId != -1L) {
-      trackDataHub.loadTrack(trackId);
-      return;
-    }
-
-    long waypointId = intent.getLongExtra(WAYPOINT_ID, -1L);
-    if (waypointId != -1L) {
-      Waypoint waypoint = MyTracksProviderUtils.Factory.get(this).getWaypoint(waypointId);
-      if (waypoint != null) {
-        trackId = waypoint.getTrackId();
-        trackDataHub.loadTrack(trackId);
-        MapActivity mapActivity = getMapActivity();
-        if (mapActivity != null) {
-          getTabHost().setCurrentTab(0);
-          mapActivity.showWaypoint(trackId, waypointId);
-        } else {
-          Log.e(TAG, "MapActivity is null");
-        }
-        return;
-      }
-    }
-
-    // No track id or waypoint id, return to the track list activity.
-    startTrackListActivity();
   }
 
   @Override
@@ -219,7 +204,6 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
             R.string.track_detail_delete_confirm_message, new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int which) {
-                long trackId = trackDataHub.getSelectedTrackId();
                 MyTracksProviderUtils.Factory.get(TrackDetailActivity.this).deleteTrack(trackId);
                 startTrackListActivity();
               }
@@ -275,8 +259,10 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
   public boolean onOptionsItemSelected(MenuItem item) {
     MapActivity mapActivity;
     Intent intent;
-    long trackId = trackDataHub.getSelectedTrackId();
     switch (item.getItemId()) {
+      case android.R.id.home:
+        startTrackListActivity();
+        return true;
       case R.id.menu_stop_recording:
         updateMenuItems(false);
         stopRecording();
@@ -302,16 +288,16 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
         startActivity(intent);
         return true;
       case R.id.menu_share_gpx:
-        startSaveActivity(trackId, TrackFileFormat.GPX, true);
+        startSaveActivity(TrackFileFormat.GPX, true);
         return true;
       case R.id.menu_share_kml:
-        startSaveActivity(trackId, TrackFileFormat.KML, true);
+        startSaveActivity(TrackFileFormat.KML, true);
         return true;
       case R.id.menu_share_csv:
-        startSaveActivity(trackId, TrackFileFormat.CSV, true);
+        startSaveActivity(TrackFileFormat.CSV, true);
         return true;
       case R.id.menu_share_tcx:
-        startSaveActivity(trackId, TrackFileFormat.TCX, true);
+        startSaveActivity(TrackFileFormat.TCX, true);
         return true;
       case R.id.menu_markers:
         intent = new Intent(this, WaypointsList.class)
@@ -324,16 +310,16 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
         startActivity(intent);
         return true;
       case R.id.menu_save_gpx:
-        startSaveActivity(trackId, TrackFileFormat.GPX, false);
+        startSaveActivity(TrackFileFormat.GPX, false);
         return true;
       case R.id.menu_save_kml:
-        startSaveActivity(trackId, TrackFileFormat.KML, false);
+        startSaveActivity(TrackFileFormat.KML, false);
         return true;
       case R.id.menu_save_csv:
-        startSaveActivity(trackId, TrackFileFormat.CSV, false);
+        startSaveActivity(TrackFileFormat.CSV, false);
         return true;
       case R.id.menu_save_tcx:
-        startSaveActivity(trackId, TrackFileFormat.TCX, false);
+        startSaveActivity(TrackFileFormat.TCX, false);
         return true;
       case R.id.menu_edit:
         startActivity(new Intent(this, TrackEditActivity.class)
@@ -434,7 +420,8 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
    * Updates the menu.
    */
   private void updateMenu() {
-    updateMenuItems(isRecording());
+    updateMenuItems(
+        trackId == sharedPreferences.getLong(getString(R.string.recording_track_key), -1L));
   }
 
   /**
@@ -470,25 +457,20 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
   }
 
   /**
-   * Starts the {@link TrackListActivity} and ends this activity.
+   * Starts the {@link TrackListActivity}.
    */
   private void startTrackListActivity() {
-    Intent intent = new Intent(this, TrackListActivity.class)
-        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    startActivity(intent);
-    finish();
+    startActivity(new Intent(this, TrackListActivity.class)
+        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
   }
 
   /**
    * Starts the {@link SaveActivity} to save a track.
    *
-   * @param trackId the track id
    * @param trackFileFormat the track file format
    * @param shareTrack true to share the track after saving
    */
-  private void startSaveActivity(
-      long trackId, TrackFileFormat trackFileFormat, boolean shareTrack) {
+  private void startSaveActivity(TrackFileFormat trackFileFormat, boolean shareTrack) {
     Intent intent = new Intent(this, SaveActivity.class)
         .putExtra(SaveActivity.EXTRA_TRACK_ID, trackId)
         .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat)

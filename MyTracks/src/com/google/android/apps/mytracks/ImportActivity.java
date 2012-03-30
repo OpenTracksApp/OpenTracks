@@ -141,8 +141,7 @@ public class ImportActivity extends Activity {
               public void onClick(DialogInterface dialog, int which) {
                 if (!importAll && trackId != -1L) {
                   Intent intent = new Intent(ImportActivity.this, TrackDetailActivity.class)
-                      .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                      .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                      .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
                       .putExtra(TrackDetailActivity.TRACK_ID, trackId);
                   startActivity(intent);
                 }

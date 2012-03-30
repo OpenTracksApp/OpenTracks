@@ -101,15 +101,15 @@ public interface ApiAdapter {
    */
   public BluetoothSocket getBluetoothSocket(BluetoothDevice bluetoothDevice) throws IOException;
   
- /**
-   * Shows the action bar, if the current system supports it.
-   * If it's not supported, the title bar will be kept hidden.
-   *
+  /**
+   * Configures the action bar with the Home button as an Up button. If the
+   * system doesn't support action bar, hide the title bar.
+   * <p>
    * Due to changes in API level 11.
    *
    * @param activity the current activity
    */
-  public void showActionBar(Activity activity);
+  public void configureActionBarHomeAsUp(Activity activity);
 
   /**
    * Configures the search widget.
