@@ -99,16 +99,19 @@ public class SendToGoogleUtilsTest extends TestCase {
       // Use this variable as a flag to make all points in the track can be kept
       // after run the LocationUtils#decimate(Track, double) with
       // Ramer–Douglas–Peucker algorithm.
-      int positiveOrNegative = (i % 2) == 0 ? -1 : 0;
+      double latitude = TrackStubUtils.INITIAL_LATITUDE;
+      if (i % 2 == 0) {
+        latitude -= DIFFERENCE * (i % 10);
+      }
       // Inserts 9 points which have wrong latitude, so would have 10 segments.
       if (i % 10 == 0 && i > 0) {
         MyTracksLocation location = TrackStubUtils.createMyTracksLocation();
         location.setLatitude(INVALID_LATITUDE);
         locationsArray.add(location);
       } else {
-        locationsArray.add(TrackStubUtils.createMyTracksLocation(TrackStubUtils.INITIAL_LATITUDE
-            + DIFFERENCE * (i % 10) * positiveOrNegative, TrackStubUtils.INITIAL_LONGITUDE
-            + DIFFERENCE * (i % 10), TrackStubUtils.INITIAL_ALTITUDE + DIFFERENCE * (i % 10)));
+        locationsArray.add(TrackStubUtils.createMyTracksLocation(latitude,
+            TrackStubUtils.INITIAL_LONGITUDE + DIFFERENCE * (i % 10),
+            TrackStubUtils.INITIAL_ALTITUDE + DIFFERENCE * (i % 10)));
       }
     }
     ArrayList<Track> result = SendToGoogleUtils.prepareLocations(trackStub, locationsArray);
