@@ -16,42 +16,73 @@ limitations under the License.
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
   <item
-    android:icon="@drawable/menu_record_track"
-    android:id="@+id/menu_record_track"
-    android:showAsAction="always"
-    android:title="@string/menu_record_track"/>
-  <item
     android:icon="@drawable/menu_stop_recording"
     android:id="@+id/menu_stop_recording"
     android:showAsAction="always"
     android:title="@string/menu_stop_recording"/>
   <item
+    android:icon="@drawable/menu_insert_marker"
+    android:id="@+id/menu_insert_marker"
+    android:showAsAction="always"
+    android:title="@string/menu_insert_marker"/>
+  <item
+    android:icon="@drawable/menu_play"
+    android:id="@+id/menu_play"
+    android:showAsAction="always"
+    android:title="@string/menu_play"/>
+  <item
+    android:icon="@drawable/menu_share"
+    android:id="@+id/menu_share"
+    android:showAsAction="always"
+    android:title="@string/menu_share">
+    <menu>
+      <item
+        android:id="@+id/menu_share_map"
+        android:title="@string/menu_share_map"/>
+      <item
+        android:id="@+id/menu_share_fusion_table"
+        android:title="@string/menu_share_fusion_table"/>
+      <item android:id="@+id/menu_share_gpx"/>
+      <item android:id="@+id/menu_share_kml"/>
+      <item android:id="@+id/menu_share_csv"/>
+      <item android:id="@+id/menu_share_tcx"/>
+    </menu>
+  </item>
+  <item
     android:icon="@drawable/ic_menu_waypoints"
     android:id="@+id/menu_markers"
-    android:showAsAction="ifRoom"
     android:title="@string/menu_markers"/>
   <item
-    android:icon="@drawable/ic_menu_chartsettings"
-    android:id="@+id/menu_chart_settings"
-    android:showAsAction="ifRoom"
-    android:title="@string/menu_chart_settings"
-    android:visible="false"/>
+    android:id="@+id/menu_send_google"
+    android:title="@string/menu_send_google"/>
+  <item
+    android:id="@+id/menu_save"
+    android:title="@string/menu_save">
+    <menu>
+      <item android:id="@+id/menu_save_gpx"/>
+      <item android:id="@+id/menu_save_kml"/>
+      <item android:id="@+id/menu_save_csv"/>
+      <item android:id="@+id/menu_save_tcx"/>
+    </menu>
+  </item>
+  <item
+    android:id="@+id/menu_edit"
+    android:title="@string/menu_edit"/>
+  <item
+    android:id="@+id/menu_delete"
+    android:title="@string/menu_delete"/>
   <item
     android:icon="@android:drawable/ic_menu_mylocation"
     android:id="@+id/menu_my_location"
-    android:showAsAction="ifRoom"
-    android:title="@string/menu_my_location"
-    android:visible="false"/>
+    android:title="@string/menu_my_location"/>
   <item
     android:icon="@android:drawable/ic_menu_mapmode"
     android:id="@+id/menu_satellite_mode"
-    android:showAsAction="ifRoom"
-    android:title="@string/menu_satellite_mode"
-    android:visible="false"/>
+    android:title="@string/menu_satellite_mode"/>
   <item
-    android:icon="@drawable/menu_search"
-    android:id="@+id/menu_search"
-    android:title="@string/menu_search"/>
+    android:icon="@drawable/ic_menu_chartsettings"
+    android:id="@+id/menu_chart_settings"
+    android:title="@string/menu_chart_settings"/>
   <item
     android:icon="@drawable/ic_menu_sensorstatus"
     android:id="@+id/menu_sensor_state"
@@ -60,9 +91,6 @@ limitations under the License.
     android:icon="@drawable/menu_settings"
     android:id="@+id/menu_settings"
     android:title="@string/menu_settings"/>
-  <item
-    android:id="@+id/menu_aggregated_statistics"
-    android:title="@string/menu_aggregated_statistics"/>
   <item
     android:icon="@drawable/menu_help"
     android:id="@+id/menu_help"

@@ -19,15 +19,12 @@ import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.maps.mytracks.R;
 
-import android.app.Activity;
-import android.app.Instrumentation.ActivityMonitor;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.Button;
 
 import java.io.File;
 import java.util.concurrent.TimeoutException;
@@ -110,62 +107,6 @@ public class TrackDetailActivityTest extends ActivityInstrumentationTestCase2<Tr
     assertEquals(-1, getRecordingTrackId());
     
     // TODO: Finish this test.
-  }
-
-  public void testRecording_startAndStop() throws Exception {
-    assertInitialized();
-
-    // Check if not recording.
-    clearSelectedAndRecordingTracks();
-    waitForIdle();
-
-    assertFalse(isRecording());
-    assertEquals(-1, getRecordingTrackId());
-    
-    // Start a new track.
-    getActivity().startRecording();
-    serviceConnection.bindIfRunning();
-    long recordingTrackId = awaitRecordingStatus(5000, true);
-    assertTrue(recordingTrackId >= 0);
-
-    // Wait until we are done and make sure that selectedTrack = recordingTrack.
-    waitForIdle();
-    assertEquals(recordingTrackId, getSharedPreferences().getLong(
-        getActivity().getString(R.string.recording_track_key), -1));
-    long selectedTrackId = getSharedPreferences().getLong(
-        getActivity().getString(R.string.selected_track_key), -1);
-    assertEquals(recordingTrackId, selectedTrackId);
-
-    // Watch for MyTracksDetails activity.
-    ActivityMonitor monitor = getInstrumentation().addMonitor(
-        TrackEditActivity.class.getName(), null, false);
-
-    // Now, stop the track and make sure that it is still selected, but
-    // no longer recording.
-    getActivity().stopRecording();
-
-    // Check if we got back MyTracksDetails activity.
-    Activity activity = getInstrumentation().waitForMonitor(monitor);
-    assertTrue(activity instanceof TrackEditActivity);
-
-    // TODO: Update track name and other properties and test if they were
-    // properly saved.
-
-    // Simulate a click on Save button.
-    final Button save = (Button) activity.findViewById(R.id.track_edit_save);
-    getActivity().runOnUiThread(new Runnable() {
-      @Override
-      public void run() {
-        save.performClick();
-      }
-    });  
-
-    // Check the remaining properties.
-    recordingTrackId = awaitRecordingStatus(5000, false);
-    assertEquals(-1, recordingTrackId);
-    assertEquals(recordingTrackId, getRecordingTrackId());
-    assertEquals(recordingTrackId, getSharedPreferences().getLong(
-        getActivity().getString(R.string.recording_track_key), -1));
   }
 
   private void assertInitialized() {

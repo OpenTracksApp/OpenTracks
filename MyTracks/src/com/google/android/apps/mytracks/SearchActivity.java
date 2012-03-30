@@ -189,7 +189,7 @@ public class SearchActivity extends ListActivity {
     resultMap.put(DESCRIPTION_FIELD, waypoint.getDescription());
     resultMap.put(CATEGORY_FIELD, waypoint.getCategory());
     // In the same place as we show time for tracks, show the track name for waypoints.
-    resultMap.put(TIME_FIELD, getString(R.string.track_list_track_name, trackName));
+    resultMap.put(TIME_FIELD, getString(R.string.search_track_location, trackName));
     resultMap.put(STATS_FIELD, StringUtils.formatDateTime(this, waypoint.getLocation().getTime()));
     resultMap.put(TRACK_ID_FIELD, waypoint.getTrackId());
     resultMap.put(WAYPOINT_ID_FIELD, waypoint.getId());

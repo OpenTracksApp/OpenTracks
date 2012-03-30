@@ -23,42 +23,23 @@ import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.io.file.SaveActivity;
-import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
-import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
-import com.google.android.apps.mytracks.io.sendtogoogle.UploadServiceChooserActivity;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
-import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.GeoRect;
 import com.google.android.apps.mytracks.util.LocationUtils;
-import com.google.android.apps.mytracks.util.PlayTrackUtils;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.mytracks.R;
 
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.SubMenu;
 import android.view.View;
-import android.view.View.OnCreateContextMenuListener;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -75,9 +56,6 @@ import java.util.EnumSet;
 public class MapActivity extends com.google.android.maps.MapActivity
     implements View.OnTouchListener, View.OnClickListener,
         TrackDataListener {
-
-  private static final int DIALOG_INSTALL_EARTH_ID = 0;
-  private static final int DIALOG_DELETE_CURRENT_ID = 1;
 
   // Saved instance state keys:
   // ---------------------------
@@ -133,7 +111,6 @@ public class MapActivity extends com.google.android.maps.MapActivity
   private LinearLayout messagePane;
   private TextView messageText;
   private LinearLayout busyPane;
-  private ImageButton optionsBtn;
 
   /**
    * We are not displaying driving directions. Just an arbitrary track that is
@@ -185,10 +162,6 @@ public class MapActivity extends com.google.android.maps.MapActivity
     messagePane = (LinearLayout) findViewById(R.id.messagepane);
     messageText = (TextView) findViewById(R.id.messagetext);
     busyPane = (LinearLayout) findViewById(R.id.busypane);
-    optionsBtn = (ImageButton) findViewById(R.id.showOptions);
-
-    optionsBtn.setOnCreateContextMenuListener(contextMenuListener);
-    optionsBtn.setOnClickListener(this);
   }
 
   @Override
@@ -241,45 +214,6 @@ public class MapActivity extends com.google.android.maps.MapActivity
     dataHub = null;
 
     super.onPause();
-  }
-
-  @Override
-  protected Dialog onCreateDialog(int id) {
-    switch (id) {
-      case DIALOG_INSTALL_EARTH_ID:
-        return PlayTrackUtils.createInstallEarthDialog(this);
-      case DIALOG_DELETE_CURRENT_ID:
-        return DialogUtils.createConfirmationDialog(this,
-            R.string.track_list_delete_track_confirm_message,
-            new DialogInterface.OnClickListener() {
-              @Override
-              public void onClick(DialogInterface dialog, int which) {
-                long trackId = dataHub.getSelectedTrackId();
-                MyTracksProviderUtils.Factory.get(MapActivity.this).deleteTrack(trackId);
-                // If the deleted track was selected, unselect it.
-                String selectedTrackKey = getString(R.string.selected_track_key);
-                SharedPreferences sharedPreferences = getSharedPreferences(
-                    Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-                if (sharedPreferences.getLong(selectedTrackKey, -1L) == trackId) {
-                  Editor editor = sharedPreferences.edit().putLong(selectedTrackKey, -1L);
-                  ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
-                }
-              }
-            });
-      default:
-        return null;
-    }
-  }
-
-  // Utility functions:
-  // -------------------
-
-  /**
-   * Shows the options button if a track is selected, or hide it if not.
-   */
-  private void updateOptionsButton(boolean trackSelected) {
-    optionsBtn.setVisibility(
-        trackSelected ? View.VISIBLE : View.INVISIBLE);
   }
 
   /**
@@ -451,8 +385,6 @@ public class MapActivity extends com.google.android.maps.MapActivity
       @Override
       public void run() {
         boolean trackSelected = track != null;
-        updateOptionsButton(trackSelected);
-
         mapOverlay.setTrackDrawingEnabled(trackSelected);
 
         if (trackSelected) {
@@ -473,134 +405,6 @@ public class MapActivity extends com.google.android.maps.MapActivity
     });
   }
 
-  private final OnCreateContextMenuListener contextMenuListener =
-      new OnCreateContextMenuListener() {
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-          menu.setHeaderTitle(R.string.track_list_context_menu_title);
-          menu.add(Menu.NONE, Constants.MENU_EDIT, Menu.NONE, R.string.track_list_edit_track);
-          if (!dataHub.isRecordingSelected()) {
-            String saveFileFormat = getString(R.string.track_list_save_file);
-            String shareFileFormat = getString(R.string.track_list_share_file);
-            String fileTypes[] = getResources().getStringArray(R.array.file_types);
-
-            menu.add(Menu.NONE, Constants.MENU_PLAY, Menu.NONE, R.string.track_list_play);
-            menu.add(Menu.NONE, Constants.MENU_SEND_TO_GOOGLE, Menu.NONE,
-                R.string.track_list_send_google);
-            SubMenu share = menu.addSubMenu(
-                Menu.NONE, Constants.MENU_SHARE, Menu.NONE, R.string.track_list_share_track);
-            share.add(
-                Menu.NONE, Constants.MENU_SHARE_MAP, Menu.NONE, R.string.track_list_share_map);
-            share.add(Menu.NONE, Constants.MENU_SHARE_FUSION_TABLE, Menu.NONE,
-                R.string.track_list_share_fusion_table);
-            share.add(Menu.NONE, Constants.MENU_SHARE_GPX_FILE, Menu.NONE,
-                String.format(shareFileFormat, fileTypes[0]));
-            share.add(Menu.NONE, Constants.MENU_SHARE_KML_FILE, Menu.NONE,
-                String.format(shareFileFormat, fileTypes[1]));
-            share.add(Menu.NONE, Constants.MENU_SHARE_CSV_FILE, Menu.NONE,
-                String.format(shareFileFormat, fileTypes[2]));
-            share.add(Menu.NONE, Constants.MENU_SHARE_TCX_FILE, Menu.NONE,
-                String.format(shareFileFormat, fileTypes[3]));
-            SubMenu save = menu.addSubMenu(
-                Menu.NONE, Constants.MENU_WRITE_TO_SD_CARD, Menu.NONE, R.string.track_list_save_sd);
-            save.add(Menu.NONE, Constants.MENU_SAVE_GPX_FILE, Menu.NONE,
-                String.format(saveFileFormat, fileTypes[0]));
-            save.add(Menu.NONE, Constants.MENU_SAVE_KML_FILE, Menu.NONE,
-                String.format(saveFileFormat, fileTypes[1]));
-            save.add(Menu.NONE, Constants.MENU_SAVE_CSV_FILE, Menu.NONE,
-                String.format(saveFileFormat, fileTypes[2]));
-            save.add(Menu.NONE, Constants.MENU_SAVE_TCX_FILE, Menu.NONE,
-                String.format(saveFileFormat, fileTypes[3]));
-            menu.add(Menu.NONE, Constants.MENU_CLEAR_MAP, Menu.NONE, R.string.track_list_clear_map);
-            menu.add(Menu.NONE, Constants.MENU_DELETE, Menu.NONE, R.string.track_list_delete_track);
-          }
-        }
-      };
-
-  @Override
-  public boolean onMenuItemSelected(int featureId, MenuItem item) {
-    Intent intent;
-    long trackId = dataHub.getSelectedTrackId();
-    switch (item.getItemId()) {
-      case Constants.MENU_EDIT: 
-        intent = new Intent(this, TrackEditActivity.class)
-            .putExtra(TrackEditActivity.TRACK_ID, trackId);
-        startActivity(intent);
-        return true;
-      case Constants.MENU_PLAY:
-        if (PlayTrackUtils.isEarthInstalled(this)) {
-          PlayTrackUtils.playTrack(this, trackId);
-          return true;
-        } else {
-          showDialog(DIALOG_INSTALL_EARTH_ID);
-          return true;
-        }
-      case Constants.MENU_SEND_TO_GOOGLE:
-        intent = new Intent(this, UploadServiceChooserActivity.class)
-            .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, true, true, true));
-        startActivity(intent);
-        return true;
-      case Constants.MENU_SHARE_MAP:
-        intent = new Intent(this, UploadServiceChooserActivity.class)
-            .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, true, false, false));
-        startActivity(intent);
-        return true;
-      case Constants.MENU_SHARE_FUSION_TABLE:
-        intent = new Intent(this, UploadServiceChooserActivity.class)
-            .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, false, true, false));
-        startActivity(intent);
-        return true;
-      case Constants.MENU_SHARE_GPX_FILE:
-        startSaveActivity(trackId, TrackFileFormat.GPX, true);
-        return true;
-      case Constants.MENU_SHARE_KML_FILE:
-        startSaveActivity(trackId, TrackFileFormat.KML, true);
-      return true;
-      case Constants.MENU_SHARE_CSV_FILE:
-        startSaveActivity(trackId, TrackFileFormat.CSV, true);
-        return true;
-      case Constants.MENU_SHARE_TCX_FILE:
-        startSaveActivity(trackId, TrackFileFormat.TCX, true);
-        return true;
-      case Constants.MENU_SAVE_GPX_FILE:
-        startSaveActivity(trackId, TrackFileFormat.GPX, false);
-        return true;
-      case Constants.MENU_SAVE_KML_FILE:
-        startSaveActivity(trackId, TrackFileFormat.KML, false);
-        return true;
-      case Constants.MENU_SAVE_CSV_FILE:
-        startSaveActivity(trackId, TrackFileFormat.CSV, false);
-        return true;        
-      case Constants.MENU_SAVE_TCX_FILE:
-        startSaveActivity(trackId, TrackFileFormat.TCX, false);
-        return true;        
-      case Constants.MENU_CLEAR_MAP:
-        dataHub.unloadCurrentTrack();
-        return true;
-      case Constants.MENU_DELETE:
-        showDialog(DIALOG_DELETE_CURRENT_ID);
-        return true;
-      default:
-        return super.onMenuItemSelected(featureId, item);
-    }
-  }
-
-  /**
-   * Starts the {@link SaveActivity} to save a track.
-   * 
-   * @param trackId the track id
-   * @param trackFileFormat the track file format
-   * @param shareTrack true to share the track after saving
-   */
-  private void startSaveActivity(
-      long trackId, TrackFileFormat trackFileFormat, boolean shareTrack) {
-    Intent intent = new Intent(this, SaveActivity.class)
-        .putExtra(SaveActivity.EXTRA_TRACK_ID, trackId)
-        .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat)
-        .putExtra(SaveActivity.EXTRA_SHARE_TRACK, shareTrack);
-    startActivity(intent);
-  }
-
   /**
    * Returns whether the map is currently in satellite view mode.
    */
@@ -619,8 +423,6 @@ public class MapActivity extends com.google.android.maps.MapActivity
   public void onClick(View v) {
     if (v == messagePane) {
       startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-    } else if (v == optionsBtn) {
-      optionsBtn.performLongClick();
     }
   }
 

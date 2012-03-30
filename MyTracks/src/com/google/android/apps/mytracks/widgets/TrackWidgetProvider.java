@@ -146,6 +146,9 @@ public class TrackWidgetProvider
 
     // Make all of the stats open the mytracks activity.
     Intent intent = new Intent(context, TrackDetailActivity.class);
+    if (track != null) {
+      intent.putExtra(TrackDetailActivity.TRACK_ID, track.getId());
+    }
     PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
     views.setOnClickPendingIntent(R.id.appwidget_track_statistics, pendingIntent);
 
