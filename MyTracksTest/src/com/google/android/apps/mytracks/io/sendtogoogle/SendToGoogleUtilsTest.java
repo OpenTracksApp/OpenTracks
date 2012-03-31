@@ -125,12 +125,14 @@ public class SendToGoogleUtilsTest extends TestCase {
     }
     // Checks all locations in the first segment.
     for (int j = 0; j < 9; j++) {
-      int positiveOrNegative = (j % 2) - 1;
+      double latitude = TrackStubUtils.INITIAL_LATITUDE;
+      if (j % 2 == 0) {
+        latitude -= DIFFERENCE * (j % 10);
+      }
       Location oneLocation = result.get(0).getLocations().get(j);
       assertEquals(TrackStubUtils.createMyTracksLocation().getAltitude() + DIFFERENCE * (j % 10),
           oneLocation.getAltitude());
-      assertEquals(TrackStubUtils.createMyTracksLocation().getLatitude() + DIFFERENCE * (j % 10)
-          * positiveOrNegative, oneLocation.getLatitude());
+      assertEquals(latitude, oneLocation.getLatitude());
       assertEquals(TrackStubUtils.createMyTracksLocation().getLongitude() + DIFFERENCE * (j % 10),
           oneLocation.getLongitude());
     }
