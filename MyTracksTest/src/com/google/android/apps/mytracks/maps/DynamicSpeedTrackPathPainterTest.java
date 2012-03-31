@@ -16,7 +16,6 @@
 package com.google.android.apps.mytracks.maps;
 
 import com.google.android.apps.mytracks.ColoredPath;
-import com.google.android.apps.mytracks.MapOverlay;
 import com.google.android.apps.mytracks.MapOverlay.CachedLocation;
 import com.google.android.apps.mytracks.TrackStubUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
@@ -26,7 +25,6 @@ import com.google.android.testing.mocking.UsesMocks;
 
 import android.location.Location;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,7 +35,6 @@ import java.util.List;
 public class DynamicSpeedTrackPathPainterTest extends TrackPathPainterTestCase {
   private DynamicSpeedTrackPathPainter dynamicSpeedTrackPathPainter;
   private TrackPathDescriptor trackPathDescriptor;
-  private static final int INVALID_LATITUDE = 100;
   private static final int NUMBER_OF_LOCATIONS = 100;
   private static final int SLOW_SPEED = 30;
   private static final int NORMAL_SPEED = 50;
@@ -99,8 +96,7 @@ public class DynamicSpeedTrackPathPainterTest extends TrackPathPainterTestCase {
     // Gets the fast speed for location.
     int fastSpeed = (int) (NORMAL_SPEED * 3 / UnitConversions.MS_TO_KMH);
 
-    // Get a number of startLocationIdx. And makes sure is less than
-    // numberOfFirstThreeSegments.
+    // Get a number of startLocationIdx. And makes sure is less than numberOfFirstThreeSegments.
     int startLocationIdx = NUMBER_OF_LOCATIONS / 8;
     int numberOfFirstThreeSegments = NUMBER_OF_LOCATIONS / 4;
     int numberOfLastSegment = NUMBER_OF_LOCATIONS - numberOfFirstThreeSegments * 3;
@@ -151,28 +147,5 @@ public class DynamicSpeedTrackPathPainterTest extends TrackPathPainterTestCase {
         trackPathDescriptor);
   }
 
-  /**
-   * Creates a list of CachedLocations.
-   * 
-   * @param number the number of locations
-   * @param isValid flag whether creates valid locations
-   * @param speed the speed of locations, and will be default value if less than
-   *          zero
-   * @return the simulated locations
-   */
-  private List<CachedLocation> createCachedLocations(int number, boolean isValid, float speed) {
-    List<CachedLocation> points = new ArrayList<MapOverlay.CachedLocation>();
-    double latitude = TrackStubUtils.INITIAL_LATITUDE;
-    if (!isValid) latitude = INVALID_LATITUDE;
-    for (int i = 0; i < number; ++i) {
-      Location location = TrackStubUtils.createMyTracksLocation(latitude,
-          TrackStubUtils.INITIAL_LONGITUDE, TrackStubUtils.INITIAL_ALTITUDE);
-      if (speed > 0) {
-        location.setSpeed(speed);
-      }
-      CachedLocation cachedLocation = new CachedLocation(location);
-      points.add(cachedLocation);
-    }
-    return points;
-  }
+  
 }

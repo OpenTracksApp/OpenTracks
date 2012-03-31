@@ -19,6 +19,7 @@ import com.google.android.apps.mytracks.MapOverlay.CachedLocation;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.Projection;
 import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -51,16 +52,31 @@ public class SingleColorTrackPathPainter implements TrackPathPainter {
   @Override
   public void updatePath(Projection projection, Rect viewRect, int startLocationIdx,
       Boolean alwaysVisible, List<CachedLocation> points) {
-    // Whether to start a new segment on new valid and visible point.
+    Path newPath = new Path();
+    newPath.incReserve(points.size());
+    updatePath(projection, viewRect, startLocationIdx, alwaysVisible, points, newPath);
+    
+  }
+  
+  /**
+   * Updates path. 
+   * 
+   * @param projection
+   * @param viewRect
+   * @param startLocationIdx
+   * @param alwaysVisible
+   * @param points
+   * @param newPath
+   */
+  @VisibleForTesting
+  void updatePath(Projection projection, Rect viewRect, int startLocationIdx,
+      Boolean alwaysVisible, List<CachedLocation> points, Path newPath) { 
+ // Whether to start a new segment on new valid and visible point.
     boolean newSegment = startLocationIdx <= 0 || !points.get(startLocationIdx - 1).valid; 
     boolean lastVisible = !newSegment;
     final Point pt = new Point();
     // Loop over track points.
-    int numPoints = points.size();
-    path = newPath();
-    path.incReserve(numPoints);
-    
-    for (int i = startLocationIdx; i < numPoints ; ++i) {
+    for (int i = startLocationIdx; i < points.size() ; ++i) {
       CachedLocation loc = points.get(i);
       
       // Check if valid, if not then indicate a new segment.
@@ -82,12 +98,14 @@ public class SingleColorTrackPathPainter implements TrackPathPainter {
       // Either move to beginning of a new segment or continue the old one.
       projection.toPixels(geoPoint, pt);
       if (newSegment) {
-        path.moveTo(pt.x, pt.y);
+        newPath.moveTo(pt.x, pt.y);
         newSegment = false;
       } else {
-        path.lineTo(pt.x, pt.y);
+        newPath.lineTo(pt.x, pt.y);
       }
     }
+    
+    path = newPath;
   }
   
   @Override

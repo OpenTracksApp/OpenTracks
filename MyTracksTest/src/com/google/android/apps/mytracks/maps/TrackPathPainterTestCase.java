@@ -15,11 +15,18 @@
  */
 package com.google.android.apps.mytracks.maps;
 
+import com.google.android.apps.mytracks.MapOverlay;
+import com.google.android.apps.mytracks.MapOverlay.CachedLocation;
 import com.google.android.apps.mytracks.MockMyTracksOverlay;
+import com.google.android.apps.mytracks.TrackStubUtils;
 import com.google.android.maps.MapView;
 
 import android.graphics.Canvas;
+import android.location.Location;
 import android.test.AndroidTestCase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Tests for the MyTracks track path descriptors and painters.
@@ -30,6 +37,8 @@ public class TrackPathPainterTestCase extends AndroidTestCase {
   protected Canvas canvas;
   protected MockMyTracksOverlay myTracksOverlay;
   protected MapView mockView;
+  
+  final int INVALID_LATITUDE = 100;
 
   @Override
   protected void setUp() throws Exception {
@@ -39,5 +48,31 @@ public class TrackPathPainterTestCase extends AndroidTestCase {
     // Enable drawing.
     myTracksOverlay.setTrackDrawingEnabled(true);
     mockView = null;
+  }
+  
+  /**
+   * Creates a list of CachedLocations.
+   * 
+   * @param number the number of locations
+   * @param isValid flag whether creates valid locations
+   * @param speed the speed of locations, and will give a default valid value if less than
+   *          zero
+   * @return the simulated locations
+   * @author Youtao Liu.
+   */
+  List<CachedLocation> createCachedLocations(int number, boolean isValid, float speed) {
+    List<CachedLocation> points = new ArrayList<MapOverlay.CachedLocation>();
+    double latitude = TrackStubUtils.INITIAL_LATITUDE;
+    if (!isValid) latitude = INVALID_LATITUDE;
+    for (int i = 0; i < number; ++i) {
+      Location location = TrackStubUtils.createMyTracksLocation(latitude,
+          TrackStubUtils.INITIAL_LONGITUDE, TrackStubUtils.INITIAL_ALTITUDE);
+      if (speed > 0) {
+        location.setSpeed(speed);
+      }
+      CachedLocation cachedLocation = new CachedLocation(location);
+      points.add(cachedLocation);
+    }
+    return points;
   }
 }
