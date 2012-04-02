@@ -204,8 +204,6 @@ limitations under the License.
             style="@style/StatsUnit" />
           <TextView
 	          style="@style/StatsDivider" />
-            android:layout_height="3dp"
-            android:layout_width="fill_parent" />
           <TextView
             android:id="@+id/average_moving_speed_unit_label_bottom"
             style="@style/StatsUnit" />

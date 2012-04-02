@@ -53,7 +53,7 @@ public class BackupAsyncTask extends AsyncTask<Void, Integer, Boolean> {
    */
   public BackupAsyncTask(BackupActivity backupActivity) {
     this.backupActivity = backupActivity;
-    this.externalFileBackup = new ExternalFileBackup(backupActivity, new FileUtils());
+    this.externalFileBackup = new ExternalFileBackup(backupActivity);
     success = false;
     completed = false;
     messageId = R.string.sd_card_error_write_file;
@@ -80,9 +80,7 @@ public class BackupAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
   @Override
   protected Boolean doInBackground(Void... params) {
-    FileUtils fileUtils = new FileUtils();
-
-    if (!fileUtils.isSdCardAvailable()) {
+    if (!FileUtils.isSdCardAvailable()) {
       messageId = R.string.sd_card_error_no_storage;
       return false;
     }

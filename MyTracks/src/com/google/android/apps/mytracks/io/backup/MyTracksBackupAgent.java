@@ -17,6 +17,7 @@ package com.google.android.apps.mytracks.io.backup;
 
 import com.google.android.apps.mytracks.Constants;
 
+import android.annotation.TargetApi;
 import android.app.backup.BackupAgent;
 import android.app.backup.BackupDataInput;
 import android.app.backup.BackupDataOutput;
@@ -34,6 +35,7 @@ import java.io.IOException;
  * 
  * @author Rodrigo Damazio
  */
+@TargetApi(8)
 public class MyTracksBackupAgent extends BackupAgent {
   private static final String PREFERENCES_ENTITY = "prefs";
 

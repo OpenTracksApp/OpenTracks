@@ -187,53 +187,50 @@ public class ChartActivity extends Activity implements TrackDataListener {
 
   @Override
   protected Dialog onCreateDialog(int id) {
-    switch (id) {
-      case DIALOG_CHART_SETTINGS_ID:
-        View view = getLayoutInflater().inflate(R.layout.chart_settings, null);
-        final RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.chart_settings_x);
-        radioGroup.check(chartView.getMode() == Mode.BY_DISTANCE 
-            ? R.id.chart_settings_by_distance : R.id.chart_settings_by_time);
-
-        final CheckBox[] checkBoxes = new CheckBox[ChartView.NUM_SERIES];
-        checkBoxes[ChartView.ELEVATION_SERIES] = (CheckBox) view.findViewById(
-            R.id.chart_settings_elevation);
-        checkBoxes[ChartView.SPEED_SERIES] = (CheckBox) view.findViewById(
-            R.id.chart_settings_speed);
-        checkBoxes[ChartView.POWER_SERIES] = (CheckBox) view.findViewById(
-            R.id.chart_settings_power);
-        checkBoxes[ChartView.CADENCE_SERIES] = (CheckBox) view.findViewById(
-            R.id.chart_settings_cadence);
-        checkBoxes[ChartView.HEART_RATE_SERIES] = (CheckBox) view.findViewById(
-            R.id.chart_settings_heart_rate);
-
-        // set checkboxes values
-        for (int i = 0; i < ChartView.NUM_SERIES; i++) {
-          checkBoxes[i].setChecked(chartView.isChartValueSeriesEnabled(i));
-        }
-        checkBoxes[ChartView.SPEED_SERIES]
-            .setText(reportSpeed ? R.string.stat_speed : R.string.stat_pace);
-        
-        return new AlertDialog.Builder(this)
-            .setCancelable(true)
-            .setNegativeButton(R.string.generic_cancel, null)
-            .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
-              @Override
-              public void onClick(DialogInterface dialog, int which) {
-                setMode(radioGroup.getCheckedRadioButtonId() == R.id.chart_settings_by_distance
-                    ? Mode.BY_DISTANCE
-                    : Mode.BY_TIME);
-                for (int i = 0; i < ChartView.NUM_SERIES; i++) {
-                  chartView.setChartValueSeriesEnabled(i, checkBoxes[i].isChecked());
-                }
-                chartView.postInvalidate();
-              }
-            })
-            .setTitle(R.string.menu_chart_view_chart_settings)
-            .setView(view)
-            .create();
-      default:
-        return null;
+    if (id != DIALOG_CHART_SETTINGS_ID) {
+      return null;
     }
+
+    View view = getLayoutInflater().inflate(R.layout.chart_settings, null);
+    final RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.chart_settings_x);
+    radioGroup.check(chartView.getMode() == Mode.BY_DISTANCE 
+        ? R.id.chart_settings_by_distance : R.id.chart_settings_by_time);
+
+    final CheckBox[] checkBoxes = new CheckBox[ChartView.NUM_SERIES];
+    checkBoxes[ChartView.ELEVATION_SERIES] = (CheckBox) view.findViewById(
+        R.id.chart_settings_elevation);
+    checkBoxes[ChartView.SPEED_SERIES] = (CheckBox) view.findViewById(R.id.chart_settings_speed);
+    checkBoxes[ChartView.POWER_SERIES] = (CheckBox) view.findViewById(R.id.chart_settings_power);
+    checkBoxes[ChartView.CADENCE_SERIES] = (CheckBox) view.findViewById(
+        R.id.chart_settings_cadence);
+    checkBoxes[ChartView.HEART_RATE_SERIES] = (CheckBox) view.findViewById(
+        R.id.chart_settings_heart_rate);
+
+    // set checkboxes values
+    for (int i = 0; i < ChartView.NUM_SERIES; i++) {
+      checkBoxes[i].setChecked(chartView.isChartValueSeriesEnabled(i));
+    }
+    checkBoxes[ChartView.SPEED_SERIES].setText(reportSpeed 
+        ? R.string.stat_speed : R.string.stat_pace);
+
+    return new AlertDialog.Builder(this)
+        .setCancelable(true)
+        .setNegativeButton(R.string.generic_cancel, null)
+        .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            setMode(radioGroup.getCheckedRadioButtonId() == R.id.chart_settings_by_distance
+                ? Mode.BY_DISTANCE
+                : Mode.BY_TIME);
+            for (int i = 0; i < ChartView.NUM_SERIES; i++) {
+              chartView.setChartValueSeriesEnabled(i, checkBoxes[i].isChecked());
+            }
+            chartView.postInvalidate();
+          }
+        })
+        .setTitle(R.string.menu_chart_settings)
+        .setView(view)
+        .create();
   }
 
   /**

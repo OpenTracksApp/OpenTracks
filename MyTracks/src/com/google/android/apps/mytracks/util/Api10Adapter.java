@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.util;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.services.sensors.BluetoothConnectionManager;
 
+import android.annotation.TargetApi;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
@@ -29,6 +30,7 @@ import java.io.IOException;
  *
  * @author Jimmy Shih
  */
+@TargetApi(10)
 public class Api10Adapter extends Api9Adapter {
 
   @Override

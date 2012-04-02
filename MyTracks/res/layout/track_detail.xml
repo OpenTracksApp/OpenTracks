@@ -52,8 +52,7 @@ limitations under the License.
           android:src="@drawable/track"
           />
         <EditText
-          android:autoText="true"
-          android:capitalize="words"
+          android:inputType="textAutoCorrect|textCapWords"
           android:hint="@string/track_detail_track_name"
           android:id="@+id/track_detail_track_name"
           android:imeOptions="actionNext"
@@ -81,8 +80,7 @@ limitations under the License.
         android:text="@string/track_detail_track_description"
         />
       <EditText
-        android:autoText="true"
-        android:capitalize="sentences"
+        android:inputType="textAutoCorrect|textCapSentences"
         android:hint="@string/track_detail_track_description"
         android:id="@+id/track_detail_track_description"
         android:imeOptions="actionDone"

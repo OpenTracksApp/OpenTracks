@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.services.tasks;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.media.AudioManager;
 import android.speech.tts.TextToSpeech;
@@ -28,12 +29,14 @@ import java.util.HashMap;
 
 
 /**
- * This class will periodically announce the user's trip statistics for Froyo and future handsets.
- * This class will request and release audio focus.
+ * This class will periodically announce the user's trip statistics. This class
+ * will request and release audio focus. <br>
+ * For API Level 8 or higher.
  *
  * @author Sandor Dornbush
  */
-public class FroyoStatusAnnouncerTask extends StatusAnnouncerTask {
+@TargetApi(8)
+public class Api8StatusAnnouncerTask extends StatusAnnouncerTask {
   private final static HashMap<String, String> SPEECH_PARAMS = new HashMap<String, String>();
   static {
     SPEECH_PARAMS.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "not_used");
@@ -51,7 +54,7 @@ public class FroyoStatusAnnouncerTask extends StatusAnnouncerTask {
         }
       };
 
-  public FroyoStatusAnnouncerTask(Context context) {
+  public Api8StatusAnnouncerTask(Context context) {
     super(context);
 
     audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);

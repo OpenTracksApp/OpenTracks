@@ -15,21 +15,24 @@
  */
 package com.google.android.apps.mytracks.io.backup;
 
+import android.annotation.TargetApi;
 import android.app.backup.BackupManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
  * Implementation of {@link BackupPreferencesListener} that calls the
- * {@link BackupManager}.
+ * {@link BackupManager}. <br>
+ * For API Level 8 or higher.
  *
  * @author Jimmy Shih
  */
-public class BackupPreferencesListenerImpl implements BackupPreferencesListener {
+@TargetApi(8)
+public class Api8BackupPreferencesListener implements BackupPreferencesListener {
 
   private final BackupManager backupManager;
 
-  public BackupPreferencesListenerImpl(Context context) {
+  public Api8BackupPreferencesListener(Context context) {
     this.backupManager = new BackupManager(context);
   }
 

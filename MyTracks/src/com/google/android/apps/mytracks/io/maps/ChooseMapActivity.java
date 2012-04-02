@@ -25,8 +25,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -122,7 +120,7 @@ public class ChooseMapActivity extends Activity {
     switch (id) {
       case DIALOG_PROGRESS_ID:
         return DialogUtils.createSpinnerProgressDialog(
-            this, getString(R.string.maps_list_progress_message), new DialogInterface.OnCancelListener() {
+            this, R.string.maps_list_progress_message, new DialogInterface.OnCancelListener() {
               @Override
               public void onCancel(DialogInterface dialog) {
                 asyncTask.cancel(true);
@@ -134,13 +132,13 @@ public class ChooseMapActivity extends Activity {
             .setCancelable(true)
             .setIcon(android.R.drawable.ic_dialog_alert)
             .setMessage(R.string.maps_list_error)
-            .setOnCancelListener(new OnCancelListener() {
+            .setOnCancelListener(new DialogInterface.OnCancelListener() {
               @Override
               public void onCancel(DialogInterface dialog) {
                 finish();
               }
             })
-            .setPositiveButton(R.string.generic_ok, new OnClickListener() {
+            .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int arg1) {
                 finish();

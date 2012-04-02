@@ -65,11 +65,9 @@ class ExternalFileBackup {
   private static final int COMPRESSION_LEVEL = 8;
 
   private final Context context;
-  private final FileUtils fileUtils;
 
-  public ExternalFileBackup(Context context, FileUtils fileUtils) {
+  public ExternalFileBackup(Context context) {
     this.context = context;
-    this.fileUtils = fileUtils;
   }
 
   /**
@@ -87,12 +85,12 @@ class ExternalFileBackup {
    * @param create whether to try creating the directory if it doesn't exist
    */
   private File getBackupsDirectory(boolean create) {
-    String dirName = fileUtils.buildExternalDirectoryPath(BACKUPS_SUBDIR);
+    String dirName = FileUtils.buildExternalDirectoryPath(BACKUPS_SUBDIR);
     final File dir = new File(dirName);
     Log.d(Constants.TAG, "Dir: " + dir.getAbsolutePath());
     if (create) {
       // Try to create - if that fails, return null
-      return fileUtils.ensureDirectoryExists(dir) ? dir : null;
+      return FileUtils.ensureDirectoryExists(dir) ? dir : null;
     } else {
       // Return it if it already exists, otherwise return null
       return dir.isDirectory() ? dir : null;

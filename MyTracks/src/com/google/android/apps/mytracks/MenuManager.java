@@ -81,9 +81,7 @@ class MenuManager {
         .setVisible(isMapTab);
     menu.findItem(R.id.menu_satellite_mode)
         .setVisible(isMapTab)
-        .setTitle(isSatelliteMode
-            ? R.string.menu_map_view_map_mode
-            : R.string.menu_map_view_satellite_mode);
+        .setTitle(isSatelliteMode ? R.string.menu_map_mode : R.string.menu_satellite_mode);
   }
 
   /**

@@ -135,48 +135,55 @@ public class AccountChooserActivity extends Activity {
             .setTitle(R.string.send_google_no_account_title)
             .create();
       case DIALOG_CHOOSER_ID:
-        String[] choices = new String[accounts.length];
-        for (int i = 0; i < accounts.length; i++) {
-          choices[i] = accounts[i].name;
-        }
-        return new AlertDialog.Builder(this)
-            .setCancelable(true)
-            .setNegativeButton(R.string.generic_cancel, new DialogInterface.OnClickListener() {
-              public void onClick(DialogInterface dialog, int which) {
-                finish();
-              }
-            })
-            .setOnCancelListener(new DialogInterface.OnCancelListener() {
-              @Override
-              public void onCancel(DialogInterface dialog) {
-                finish();
-              }
-            })
-            .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
-              public void onClick(DialogInterface dialog, int which) {
-                Account account = accounts[selectedAccountIndex];
-                SharedPreferences sharedPreferences = getSharedPreferences(
-                    Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-                Editor editor = sharedPreferences.edit();
-                editor.putString(getString(R.string.preferred_account_key), account.name);
-                ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
-
-                sendRequest.setAccount(account);
-                getPermission(MapsConstants.SERVICE_NAME, sendRequest.isSendMaps(), mapsCallback);
-              }
-            })
-            .setSingleChoiceItems(
-                choices, selectedAccountIndex, new DialogInterface.OnClickListener() {
-                  @Override
-                  public void onClick(DialogInterface dialog, int which) {
-                    selectedAccountIndex = which;
-                  }
-                })
-            .setTitle(R.string.send_google_choose_account_title)
-            .create();
+        return createChooserDialog();
       default:
         return null;
     }
+  }
+
+  /**
+   * Creates a chooser dialog.
+   */
+  private Dialog createChooserDialog() {
+    String[] choices = new String[accounts.length];
+    for (int i = 0; i < accounts.length; i++) {
+      choices[i] = accounts[i].name;
+    }
+    return new AlertDialog.Builder(this)
+        .setCancelable(true)
+        .setNegativeButton(R.string.generic_cancel, new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int which) {
+            finish();
+          }
+        })
+        .setOnCancelListener(new DialogInterface.OnCancelListener() {
+          @Override
+          public void onCancel(DialogInterface dialog) {
+            finish();
+          }
+        })
+        .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int which) {
+            Account account = accounts[selectedAccountIndex];
+            SharedPreferences sharedPreferences = getSharedPreferences(
+                Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+            Editor editor = sharedPreferences.edit();
+            editor.putString(getString(R.string.preferred_account_key), account.name);
+            ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
+
+            sendRequest.setAccount(account);
+            getPermission(MapsConstants.SERVICE_NAME, sendRequest.isSendMaps(), mapsCallback);
+          }
+        })
+        .setSingleChoiceItems(
+            choices, selectedAccountIndex, new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int which) {
+                selectedAccountIndex = which;
+              }
+            })
+        .setTitle(R.string.send_google_choose_account_title)
+        .create();
   }
   
   private PermissionCallback spreadsheetsCallback = new PermissionCallback() {

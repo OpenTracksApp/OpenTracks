@@ -18,20 +18,16 @@ limitations under the License.
   android:layout_height="fill_parent"
   android:layout_margin="8dp"
   android:layout_width="fill_parent" >
-
   <LinearLayout
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
     android:orientation="vertical" >
-
     <!-- Google Maps result -->
-
     <LinearLayout
       android:id="@+id/upload_result_maps_result"
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"
       android:orientation="horizontal" >
-
       <ImageView
         android:contentDescription="@string/generic_success_title"
         android:id="@+id/upload_result_maps_result_icon"
@@ -39,35 +35,29 @@ limitations under the License.
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:src="@drawable/success" />
-
       <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="8dp" >
-
         <TextView
           android:layout_height="wrap_content"
           android:layout_width="wrap_content"
-          style="@android:style/TextAppearance.DeviceDefault.Medium"
-          android:text="@string/send_google_maps" />
-
+          android:text="@string/send_google_maps"
+          style="@android:style/TextAppearance.DeviceDefault.Medium" />
         <TextView
           android:layout_height="wrap_content"
           android:layout_width="wrap_content"
-          style="@android:style/TextAppearance.DeviceDefault.Small"
-          android:text="@string/send_google_maps_url" />
+          android:text="@string/send_google_maps_url"
+          style="@android:style/TextAppearance.DeviceDefault.Small" />
       </LinearLayout>
     </LinearLayout>
-
     <!-- Google Fusion Tables result -->
-
     <LinearLayout
       android:id="@+id/upload_result_fusion_tables_result"
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"
       android:orientation="horizontal" >
-
       <ImageView
         android:contentDescription="@string/generic_success_title"
         android:id="@+id/upload_result_fusion_tables_result_icon"
@@ -75,35 +65,29 @@ limitations under the License.
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:src="@drawable/success" />
-
       <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="8dp" >
-
         <TextView
           android:layout_height="wrap_content"
           android:layout_width="wrap_content"
-          style="@android:style/TextAppearance.DeviceDefault.Medium"
-          android:text="@string/send_google_fusion_tables" />
-
+          android:text="@string/send_google_fusion_tables"
+          style="@android:style/TextAppearance.DeviceDefault.Medium" />
         <TextView
           android:layout_height="wrap_content"
           android:layout_width="wrap_content"
-          style="@android:style/TextAppearance.DeviceDefault.Small"
-          android:text="@string/send_google_fusion_tables_url" />
+          android:text="@string/send_google_fusion_tables_url"
+          style="@android:style/TextAppearance.DeviceDefault.Small" />
       </LinearLayout>
     </LinearLayout>
-
     <!-- Google Docs result -->
-
     <LinearLayout
       android:id="@+id/upload_result_docs_result"
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"
       android:orientation="horizontal" >
-
       <ImageView
         android:contentDescription="@string/generic_success_title"
         android:id="@+id/upload_result_docs_result_icon"
@@ -111,44 +95,37 @@ limitations under the License.
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:src="@drawable/success" />
-
       <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="8dp" >
-
         <TextView
           android:layout_height="wrap_content"
           android:layout_width="wrap_content"
-          style="@android:style/TextAppearance.DeviceDefault.Medium"
-          android:text="@string/send_google_docs" />
-
+          android:text="@string/send_google_docs"
+          style="@android:style/TextAppearance.DeviceDefault.Medium" />
         <TextView
           android:layout_height="wrap_content"
           android:layout_width="wrap_content"
-          style="@android:style/TextAppearance.DeviceDefault.Small"
-          android:text="@string/send_google_docs_url" />
+          android:text="@string/send_google_docs_url"
+          style="@android:style/TextAppearance.DeviceDefault.Small" />
       </LinearLayout>
     </LinearLayout>
-
     <!-- Footer -->
-
     <TextView
       android:id="@+id/upload_result_success_footer"
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"
       android:padding="8dp"
-      style="@android:style/TextAppearance.DeviceDefault.Small"
-      android:text="@string/send_google_success_footer" />
-
+      android:text="@string/send_google_success_footer"
+      style="@android:style/TextAppearance.DeviceDefault.Small" />
     <TextView
       android:id="@+id/upload_result_error_footer"
       android:layout_height="wrap_content"
       android:layout_width="wrap_content"
       android:padding="8dp"
-      style="@android:style/TextAppearance.DeviceDefault.Medium"
-      android:text="@string/send_google_error" />
+      android:text="@string/send_google_error"
+      style="@android:style/TextAppearance.DeviceDefault.Medium" />
   </LinearLayout>
-
 </ScrollView>

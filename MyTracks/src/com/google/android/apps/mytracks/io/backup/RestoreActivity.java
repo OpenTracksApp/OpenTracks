@@ -71,19 +71,16 @@ public class RestoreActivity extends Activity {
 
   @Override
   protected Dialog onCreateDialog(int id) {
-    switch (id) {
-      case DIALOG_PROGRESS_ID:
-        return DialogUtils.createSpinnerProgressDialog(this,
-            getString(R.string.settings_backup_restore_progress_message),
-            new DialogInterface.OnCancelListener() {
-              @Override
-              public void onCancel(DialogInterface dialog) {
-                finish();
-              }
-            });
-      default:
-        return null;
+    if (id != DIALOG_PROGRESS_ID) {
+      return null;
     }
+    return DialogUtils.createSpinnerProgressDialog(this,
+        R.string.settings_backup_restore_progress_message, new DialogInterface.OnCancelListener() {
+          @Override
+          public void onCancel(DialogInterface dialog) {
+            finish();
+          }
+        });
   }
 
   /**

@@ -54,7 +54,7 @@ limitations under the License.
           style="@style/WidgetTextView"
           android:text="@string/stat_total_distance" />
       </LinearLayout>
-      <ImageView
+      <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:background="@color/appwidget_hr" />
@@ -70,7 +70,7 @@ limitations under the License.
           style="@style/WidgetTextView"
           android:text="@string/stat_moving_time" />
       </LinearLayout>
-      <ImageView
+      <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:background="@color/appwidget_hr" />

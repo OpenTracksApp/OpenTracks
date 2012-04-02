@@ -461,7 +461,7 @@ limitations under the License.
   <!-- Description -->
   <string name="description_activity_type"
     translation_description="Activity type description.
-    
+
       %1$s activity type. E.g., 'hiking'">
     Activity type: %1$s
   </string>
@@ -476,7 +476,7 @@ limitations under the License.
     translation_description="Average moving speed description.
 
       %1$.2f speed in kilometers per hour
-      %2$.1f speed in miles per hour">    
+      %2$.1f speed in miles per hour">
     Average moving speed: %1$.2f km/h (%2$.1f mi/h)
   </string>
   <string name="description_average_pace"
@@ -495,7 +495,7 @@ limitations under the License.
   </string>
   <string name="description_elevation_gain"
     translation_description="Elevation gain description.
-    
+
       %1$d elevation in meters
       %2$d elevation in feet">
     Elevation gain: %1$d m (%2$d ft)
@@ -530,14 +530,14 @@ limitations under the License.
   </string>
   <string name="description_max_elevation"
     translation_description="Max elevation description.
-    
+
       %1$d elevation in meters
       %2$d elevation in feet">
     Max elevation: %1$d m (%2$d ft)
   </string>
   <string name="description_max_grade"
     translation_description="Max grade description.
-    
+
       %1$d grade in percentage">
     Max grade: %1$d %%
   </string>
@@ -550,14 +550,14 @@ limitations under the License.
   </string>
   <string name="description_min_elevation"
     translation_description="Min elevation description.
-    
+
       %1$d elevation in meters
       %2$d elevation in feet">
     Min elevation: %1$d m (%2$d ft)
   </string>
   <string name="description_min_grade"
     translation_description="Min grade description.
-    
+
       %1$d grade in percentage">
     Min grade: %1$d %%
   </string>
@@ -570,13 +570,13 @@ limitations under the License.
   </string>
   <string name="description_moving_time"
     translation_description="Moving time description.
-    
+
       %1$s time. E.g., '1:08:59'">
     Moving time: %1$s
   </string>
   <string name="description_recorded_time"
     translation_description="Recorded time description.
-      
+
       %1$s time. E.g, '2/15/2012 1:40 PM'">
     Recorded: %1$s
   </string>
@@ -606,14 +606,14 @@ limitations under the License.
   </string>
   <string name="description_total_distance"
     translation_description="Total distance description.
-      
+
       %1$.2f distance in kilometers
       %2$.1f distance in miles">
     Total distance: %1$.2f km (%2$.1f mi)
   </string>
   <string name="description_total_time"
     translation_description="Total time description.
-  
+
       %1$s time. E.g., '1:08:59'">
     Total time: %1$s
   </string>
@@ -643,15 +643,12 @@ limitations under the License.
   <string name="eula_body"
     translation_description="The body in the 'Terms of Service. See http://m.google.com/toscountry.
 
-      %1$s: host name, 'm.google.com'
-      %2$s: host name, 'm.google.com'
-      %3$s: host name, 'm.google.com'
-      %4$s: host name, 'm.google.com'">
+      %1$s: host name, 'm.google.com'">
     By using Google\'s mobile products and services ("Services"), you agree to be bound by a) the
     YouTube Terms of Use (%1$s/tos_youtube) for YouTube-related Services, b) the Google Maps Terms
-    and Conditions (%2$s/tos_maps) for mapping, local and location-based Services, c) the Google
-    Books Terms of Service (%3$s/tos_books) for Books-related Services, and e) the Google Terms of
-    Service (%4$s/utos) for all other Services, as updated from time to time.  
+    and Conditions (%1$s/tos_maps) for mapping, local and location-based Services, c) the Google
+    Books Terms of Service (%1$s/tos_books) for Books-related Services, and e) the Google Terms of
+    Service (%1$s/utos) for all other Services, as updated from time to time.
   </string>
   <string name="eula_title"
     translation_description="The title for the 'Terms of Service' dialog.">
@@ -689,10 +686,6 @@ limitations under the License.
     translation_description="The title on an alert dialog indicating error.">
     Error
   </string>
-  <string name="generic_no"
-    translation_description="The text on a button to say no.">
-    No
-  </string>
   <string name="generic_ok"
     translation_description="The text on a button to say ok.">
     OK
@@ -712,10 +705,6 @@ limitations under the License.
 
       Screenshot: sd_card_success_write_file.png">
     Success
-  </string>
-  <string name="generic_yes"
-    translation_description="The text on a button to say yes.">
-    Yes
   </string>
 
   <!-- GPS -->
@@ -977,80 +966,55 @@ limitations under the License.
 
   <!-- Menu Items -->
   <string name="menu_aggregated_statistics"
-    translation_description="In the menu, to go to the aggregated statistics page.
-
-      Screenshot: menu_record_track_more.png">
+    translation_description="In the menu, to go to the aggregated statistics page.">
     Aggregated statistics
   </string>
-  <string name="menu_chart_view_chart_settings"
-    translation_description="In the menu for the chart view, to change the chart settings.
-
-      Screenshot: menu_chart_settings.png">
+  <string name="menu_chart_settings"
+    translation_description="In the menu, to change the chart settings.">
     Chart settings
   </string>
   <string name="menu_help"
-    translation_description="In the menu, to go to the help page.
-
-      Screenshot: menu_record_track_more.png">
+    translation_description="In the menu, to go to the help page.">
     Help
   </string>
-  <string name="menu_map_view_map_mode"
-    translation_description="In the menu for the map view, to switch the display to the map mode.
-
-      Screenshot: menu_map_mode.png">
+  <string name="menu_map_mode"
+    translation_description="In the menu, to switch the display to the map mode.">
     Map mode
   </string>
-  <string name="menu_map_view_my_location"
-    translation_description="In the menu for the map view, to display user's current location.
-
-      Screenshot: menu_record_track.png">
-    My location
-  </string>
-  <string name="menu_map_view_satellite_mode"
-    translation_description="In the menu for the map view, to switch the display to the satellite
-      mode.
-
-      Screenshot: menu_record_track.png">
-    Satellite mode
-  </string>
   <string name="menu_markers"
-    translation_description="In the menu, to show a list of markers for the current track.
-
-      Screenshot: menu_record_track.png">
+    translation_description="In the menu, to show a list of markers for the current track.">
     Markers
   </string>
+  <string name="menu_my_location"
+    translation_description="In the menu, to display the user's current location.">
+    My location
+  </string>
   <string name="menu_record_track"
-    translation_description="In the menu, to start recording a track.
-
-      Screenshot: menu_record_track.png">
+    translation_description="In the menu, to start recording a track.">
     Record track
+  </string>
+  <string name="menu_satellite_mode"
+    translation_description="In the menu, to switch the display to the satellite mode.">
+    Satellite mode
   </string>
   <string name="menu_search"
     translation_description="In the menu, to start a textual search for tracks or waypoints.">
     Search
   </string>
   <string name="menu_sensor_state"
-    translation_description="In the menu, to go to the sensor state page.
-
-      Screenshot: menu_record_track_more.png">
+    translation_description="In the menu, to go to the sensor state page.">
     Sensor state
   </string>
   <string name="menu_settings"
-    translation_description="In the menu, to go to the settings page.
-
-      Screenshot: menu_record_track_more.png">
+    translation_description="In the menu, to go to the settings page.">
     Settings
   </string>
   <string name="menu_stop_recording"
-    translation_description="In the menu, to stop recording a track.
-
-      Screenshot: menu_stop_recording.png">
+    translation_description="In the menu, to stop recording a track.">
     Stop recording
   </string>
   <string name="menu_tracks"
-    translation_description="In the menu, to show a list of all the tracks.
-
-      Screenshot: menu_record_track.png">
+    translation_description="In the menu, to show a list of all the tracks.">
     Tracks
   </string>
 
@@ -1298,7 +1262,7 @@ limitations under the License.
   <string name="send_google_no_service_selected"
     translation_description="When sending a track to Google, a message indicating that the user has
       not selected any Google service and no data is sent.">
-    You did not select any service. No data is sent.
+    You did not select any service. The track was not sent.
   </string>
   <string name="send_google_progress_message"
     translation_description="When sending a track to a Google service, the progress message.
@@ -2510,14 +2474,6 @@ limitations under the License.
   <string name="unit_minute"
     translation_description="Abbreviation for minutes. E.g, '2 min'.">
     min
-  </string>
-  <string name="unit_minute_per_kilometer"
-    translation_description="Abbreviation for minutes per kilometer. E.g, '5 min/km'.">
-    min/km
-  </string>
-  <string name="unit_minute_per_mile"
-    translation_description="Abbreviation for minutes per mile. E.g, '5 min/mi'.">
-    min/mi
   </string>
 
   <!-- Value -->

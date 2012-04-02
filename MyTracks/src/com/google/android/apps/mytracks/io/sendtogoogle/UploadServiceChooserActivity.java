@@ -78,77 +78,73 @@ public class UploadServiceChooserActivity extends Activity {
 
   @Override
   protected Dialog onCreateDialog(int id) {
-    switch (id) {
-      case DIALOG_CHOOSER_ID:
-        View view = getLayoutInflater().inflate(R.layout.upload_service_chooser, null);
-
-        mapsTableRow = (TableRow) view.findViewById(R.id.send_google_maps_row);
-        fusionTablesTableRow = (TableRow) view.findViewById(R.id.send_google_fusion_tables_row);
-        docsTableRow = (TableRow) view.findViewById(R.id.send_google_docs_row);
-
-        mapsCheckBox = (CheckBox) view.findViewById(R.id.send_google_maps);
-        fusionTablesCheckBox = (CheckBox) view.findViewById(R.id.send_google_fusion_tables);
-        docsCheckBox = (CheckBox) view.findViewById(R.id.send_google_docs);
-
-        mapsOptionTableRow = (TableRow) view.findViewById(R.id.send_google_maps_option_row);
-        newMapRadioButton = (RadioButton) view.findViewById(R.id.send_google_new_map);
-        existingMapRadioButton = (RadioButton) view.findViewById(R.id.send_google_existing_map);
-
-        // Setup checkboxes
-        OnCheckedChangeListener checkBoxListener = new OnCheckedChangeListener() {
-          public void onCheckedChanged(CompoundButton button, boolean checked) {
-            updateStateBySelection();
-          }
-        };
-        mapsCheckBox.setOnCheckedChangeListener(checkBoxListener);
-        fusionTablesCheckBox.setOnCheckedChangeListener(checkBoxListener);
-        docsCheckBox.setOnCheckedChangeListener(checkBoxListener);
-
-        // Setup initial state
-        initState();
-
-        // Update state based on sendRequest
-        updateStateBySendRequest();
-
-        // Update state based on current selection
-        updateStateBySelection();
-
-        alertDialog = new AlertDialog.Builder(this)
-            .setCancelable(true)
-            .setNegativeButton(R.string.generic_cancel, new DialogInterface.OnClickListener() {
-                @Override
-              public void onClick(DialogInterface dialog, int which) {
-                finish();
-              }
-            })
-            .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                @Override
-              public void onCancel(DialogInterface d) {
-                finish();
-              }
-            })
-            .setPositiveButton(
-                R.string.send_google_send_now, new DialogInterface.OnClickListener() {
-
-                    @Override
-                  public void onClick(DialogInterface dialog, int which) {
-                    saveState();
-                    if (sendMaps() || sendFusionTables() || sendDocs()) {
-                      startNextActivity();
-                    } else {
-                      Toast.makeText(UploadServiceChooserActivity.this,
-                          R.string.send_google_no_service_selected, Toast.LENGTH_LONG).show();
-                      finish();
-                    }
-                  }
-                })
-            .setTitle(R.string.send_google_title)
-            .setView(view)
-            .create();
-        return alertDialog;
-      default:
-        return null;
+    if (id != DIALOG_CHOOSER_ID) {
+      return null;
     }
+    View view = getLayoutInflater().inflate(R.layout.upload_service_chooser, null);
+
+    mapsTableRow = (TableRow) view.findViewById(R.id.send_google_maps_row);
+    fusionTablesTableRow = (TableRow) view.findViewById(R.id.send_google_fusion_tables_row);
+    docsTableRow = (TableRow) view.findViewById(R.id.send_google_docs_row);
+
+    mapsCheckBox = (CheckBox) view.findViewById(R.id.send_google_maps);
+    fusionTablesCheckBox = (CheckBox) view.findViewById(R.id.send_google_fusion_tables);
+    docsCheckBox = (CheckBox) view.findViewById(R.id.send_google_docs);
+
+    mapsOptionTableRow = (TableRow) view.findViewById(R.id.send_google_maps_option_row);
+    newMapRadioButton = (RadioButton) view.findViewById(R.id.send_google_new_map);
+    existingMapRadioButton = (RadioButton) view.findViewById(R.id.send_google_existing_map);
+
+    // Setup checkboxes
+    OnCheckedChangeListener checkBoxListener = new OnCheckedChangeListener() {
+      public void onCheckedChanged(CompoundButton button, boolean checked) {
+        updateStateBySelection();
+      }
+    };
+    mapsCheckBox.setOnCheckedChangeListener(checkBoxListener);
+    fusionTablesCheckBox.setOnCheckedChangeListener(checkBoxListener);
+    docsCheckBox.setOnCheckedChangeListener(checkBoxListener);
+
+    // Setup initial state
+    initState();
+
+    // Update state based on sendRequest
+    updateStateBySendRequest();
+
+    // Update state based on current selection
+    updateStateBySelection();
+
+    alertDialog = new AlertDialog.Builder(this)
+        .setCancelable(true)
+        .setNegativeButton(R.string.generic_cancel, new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            finish();
+          }
+        })
+        .setOnCancelListener(new DialogInterface.OnCancelListener() {
+          @Override
+          public void onCancel(DialogInterface d) {
+            finish();
+          }
+        })
+        .setPositiveButton(R.string.send_google_send_now, new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            saveState();
+            if (sendMaps() || sendFusionTables() || sendDocs()) {
+              startNextActivity();
+            } else {
+              Toast.makeText(UploadServiceChooserActivity.this,
+                  R.string.send_google_no_service_selected, Toast.LENGTH_LONG).show();
+              finish();
+            }
+          }
+        })
+        .setTitle(R.string.send_google_title)
+        .setView(view)
+        .create();
+    return alertDialog;
   }
 
   /**

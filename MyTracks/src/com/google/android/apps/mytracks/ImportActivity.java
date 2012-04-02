@@ -73,7 +73,7 @@ public class ImportActivity extends Activity {
     Intent intent = getIntent();
     importAll = intent.getBooleanExtra(EXTRA_IMPORT_ALL, false);
     if (importAll) {
-      path = new FileUtils().buildExternalDirectoryPath("gpx");
+      path = FileUtils.buildExternalDirectoryPath("gpx");
     } else {
       String action = intent.getAction();
       if (!(Intent.ACTION_ATTACH_DATA.equals(action) || Intent.ACTION_VIEW.equals(action))) {
@@ -111,8 +111,8 @@ public class ImportActivity extends Activity {
   protected Dialog onCreateDialog(int id) {
     switch (id) {
       case DIALOG_PROGRESS_ID:
-        progressDialog = DialogUtils.createHorizontalProgressDialog(this,
-            getString(R.string.import_progress_message), new DialogInterface.OnCancelListener() {
+        progressDialog = DialogUtils.createHorizontalProgressDialog(
+            this, R.string.import_progress_message, new DialogInterface.OnCancelListener() {
               @Override
               public void onCancel(DialogInterface dialog) {
                 importAsyncTask.cancel(true);
