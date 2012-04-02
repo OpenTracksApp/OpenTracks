@@ -118,7 +118,7 @@ class MenuManager {
         return true;
       }
       case R.id.menu_tracks: {
-	    activity.startActivityForResult(new Intent(activity, TrackList.class),
+	    activity.startActivityForResult(new Intent(activity, TrackListActivity.class),
 	    		Constants.SHOW_TRACK);
         return true;
       }

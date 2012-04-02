@@ -256,7 +256,7 @@ limitations under the License.
         <data android:mimeType="vnd.android.cursor.item/vnd.google.track" />
       </intent-filter>
     </activity>
-    <activity android:name="com.google.android.apps.mytracks.TrackList" >
+    <activity android:name="com.google.android.apps.mytracks.TrackListActivity" >
       <meta-data
         android:name="android.app.default_searchable"
         android:value="com.google.android.apps.mytracks.SearchActivity" />

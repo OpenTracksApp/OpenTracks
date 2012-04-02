@@ -973,9 +973,21 @@ limitations under the License.
     translation_description="In the menu, to change the chart settings.">
     Chart settings
   </string>
+  <string name="menu_delete_all"
+    translation_description="In the menu, to delete all the tracks.">
+    Delete all
+  </string>
+  <string name="menu_export_all"
+    translation_description="In the menu, to export all the tracks to the SD card.">
+    Export all
+  </string>
   <string name="menu_help"
     translation_description="In the menu, to go to the help page.">
     Help
+  </string>
+  <string name="menu_import_all"
+    translation_description="In the menu, to import all the tracks from the SD card.">
+    Import all
   </string>
   <string name="menu_map_mode"
     translation_description="In the menu, to switch the display to the map mode.">
@@ -2277,12 +2289,6 @@ limitations under the License.
       Screenshot: track_list_context_menu.png">
     This track
   </string>
-  <string name="track_list_delete_all"
-    translation_description="In the 'Tracks' page, the button on the bottom to delete all tracks.
-
-      Screenshot: track_list.png">
-    Delete all
-  </string>
   <string name="track_list_delete_all_confirm_message"
     translation_description="In the 'Tracks' page, when pressing the 'Delete all' button, the
       confirmation dialog message informing the user that all tracks and markers will be permanently
@@ -2313,12 +2319,6 @@ limitations under the License.
       Screenshot: track_list_context_menu.png">
     Edit
   </string>
-  <string name="track_list_export_all"
-    translation_description="In the 'Tracks' page, the button on the bottom to export all tracks.
-
-      Screenshot: track_list.png">
-    Export all
-  </string>
   <string name="track_list_export_file"
     translation_description="In the 'Tracks' page, after pressing the 'Export all' button, the menu
       option to export all the tracks as a certain file format
@@ -2326,19 +2326,6 @@ limitations under the License.
       %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.
       Screenshot: track_list_export_file.png">
     Export as %1$s
-  </string>
-  <string name="track_list_import_all"
-    translation_description="In the 'Tracks' page, the button on the bottom to import all tracks.
-
-      Screenshot: track_list.png">
-    Import all
-  </string>
-  <string name="track_list_pick_one"
-    translation_description="In the 'Tracks' page, the instruction at the top of the page informing
-      the user he can press and hold a track for more options.
-
-      Screenshot: track_list.png">
-    Pick a track. Press &amp; hold for more options.
   </string>
   <string name="track_list_play"
     translation_description="In the context menu for a track, the menu option to play the track.">
