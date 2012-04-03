@@ -507,6 +507,13 @@ limitations under the License.
       %2$d elevation in feet">
     Elevation gain: %1$d m (%2$d ft)
   </string>
+  <string name="description_fastest_pace"
+    translation_description="Fastest pace description.
+
+      %1$.2f pace in minutes per kilometer
+      %2$.1f pace in minutes per mile">
+    Fastest pace: %1$.2f min/km (%2$.1f min/mi)
+  </string>
   <string name="description_location_accuracy"
     translation_description="Label for location accuracy in meters.">
     Accuracy (m)
@@ -547,13 +554,6 @@ limitations under the License.
     
       %1$d grade in percentage">
     Max grade: %1$d %%
-  </string>
-  <string name="description_max_pace"
-    translation_description="Max pace description.
-
-      %1$.2f pace in minutes per kilometer
-      %2$.1f pace in minutes per mile">
-    Max pace: %1$.2f min/km (%2$.1f min/mi)
   </string>
   <string name="description_max_speed"
     translation_description="Max speed description.
@@ -2239,6 +2239,10 @@ limitations under the License.
       Screenshot: stat_speed.png">
     Elevation gain
   </string>
+  <string name="stat_fastest_pace"
+    translation_description="In the 'Statistics' page, the fastest pace.">
+    Fastest pace
+  </string>
   <string name="stat_latitude"
     translation_description="In the 'Statistics' page, the latitude.
 
@@ -2262,10 +2266,6 @@ limitations under the License.
 
       Screenshot: stat_speed.png">
     Max grade
-  </string>
-  <string name="stat_max_pace"
-    translation_description="In the 'Statistics' page, the maximum pace.">
-    Max pace
   </string>
   <string name="stat_max_speed"
     translation_description="In the 'Statistics' page, the maximum speed.

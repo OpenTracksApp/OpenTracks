@@ -116,8 +116,8 @@ public class DescriptionGeneratorImpl implements DescriptionGenerator {
     // Average moving pace
     writePace(averageMovingSpeed, builder, R.string.description_average_moving_pace, lineBreak);
 
-    // Max pace
-    writePace(maxSpeed, builder, R.string.description_max_pace, lineBreak);
+    // Fastest pace
+    writePace(maxSpeed, builder, R.string.description_fastest_pace, lineBreak);
 
     // Max elevation
     writeElevation(stats.getMaxElevation(), builder, R.string.description_max_elevation, lineBreak);

@@ -262,6 +262,6 @@ public class StatsUtilities {
                   R.string.stat_average_moving_pace);
     setSpeedLabel(R.id.max_speed_label,
                   R.string.stat_max_speed,
-                  R.string.stat_max_pace);
+                  R.string.stat_fastest_pace);
   }
 }
