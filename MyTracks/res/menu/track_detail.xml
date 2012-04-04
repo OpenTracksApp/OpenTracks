@@ -26,11 +26,6 @@ limitations under the License.
     android:showAsAction="always"
     android:title="@string/menu_stop_recording"/>
   <item
-    android:icon="@drawable/ic_menu_tracklist"
-    android:id="@+id/menu_tracks"
-    android:showAsAction="ifRoom"
-    android:title="@string/menu_tracks"/>
-  <item
     android:icon="@drawable/ic_menu_waypoints"
     android:id="@+id/menu_markers"
     android:showAsAction="ifRoom"

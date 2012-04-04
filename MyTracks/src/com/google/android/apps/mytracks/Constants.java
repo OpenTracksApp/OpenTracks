@@ -36,9 +36,7 @@ public abstract class Constants {
   /*
    * onActivityResult request codes:
    */
-  public static final int SHOW_TRACK = 0;
-  public static final int SHOW_WAYPOINT = 1;
-  public static final int WELCOME = 2;
+  public static final int SHOW_WAYPOINT = 0;
 
   /*
    * Context menu ids. Sorted alphabetically.
