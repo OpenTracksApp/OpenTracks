@@ -34,16 +34,16 @@ import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * A unit test for {@link MyTracks} activity.
+ * A unit test for {@link TrackDetailActivity}.
  *
  * @author Bartlomiej Niechwiej
  */
-public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
+public class TrackDetailActivityTest extends ActivityInstrumentationTestCase2<TrackDetailActivity>{
   private SharedPreferences sharedPreferences;
   private TrackRecordingServiceConnection serviceConnection;
 
-  public MyTracksTest() {
-    super(MyTracks.class);
+  public TrackDetailActivityTest() {
+    super(TrackDetailActivity.class);
   }
 
   @Override
@@ -154,7 +154,7 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
 
     // Watch for MyTracksDetails activity.
     ActivityMonitor monitor = getInstrumentation().addMonitor(
-        TrackDetail.class.getName(), null, false);
+        TrackEditActivity.class.getName(), null, false);
 
     // Now, stop the track and make sure that it is still selected, but
     // no longer recording.
@@ -162,13 +162,13 @@ public class MyTracksTest extends ActivityInstrumentationTestCase2<MyTracks>{
 
     // Check if we got back MyTracksDetails activity.
     Activity activity = getInstrumentation().waitForMonitor(monitor);
-    assertTrue(activity instanceof TrackDetail);
+    assertTrue(activity instanceof TrackEditActivity);
 
     // TODO: Update track name and other properties and test if they were
     // properly saved.
 
     // Simulate a click on Save button.
-    final Button save = (Button) activity.findViewById(R.id.track_detail_save);
+    final Button save = (Button) activity.findViewById(R.id.track_edit_save);
     getActivity().runOnUiThread(new Runnable() {
       @Override
       public void run() {

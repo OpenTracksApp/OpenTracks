@@ -32,11 +32,11 @@ import android.view.MenuItem;
  */
 class MenuManager {
 
-  private final MyTracks activity;
+  private final TrackDetailActivity activity;
   private MenuItem recordTrack;
   private MenuItem stopRecording;
   
-  public MenuManager(MyTracks activity) {
+  public MenuManager(TrackDetailActivity activity) {
     this.activity = activity;
   }
 
@@ -47,7 +47,7 @@ class MenuManager {
    * @return true on success, false otherwise
    */
   public boolean onCreateOptionsMenu(Menu menu) {
-    activity.getMenuInflater().inflate(R.menu.main, menu);
+    activity.getMenuInflater().inflate(R.menu.track_detail, menu);
 
     // TODO: Replace search button with search widget if API level >= 11
     return true;

@@ -2237,40 +2237,33 @@ limitations under the License.
     Total time
   </string>
 
-  <!-- Track -->
-  <string name="track_detail_activity_type"
-    translation_description="In the detail page for a track, the text field for the activity type,
-      including for examples.
-
-      Screenshot: track_detail.png">
+  <!-- Track Edit -->
+  <string name="track_edit_activity_type"
+    translation_description="In the page to edit a track, the title for the text field to edit the
+      activity type, including some examples of activity types.">
     Activity type (e.g. hiking, cycling, running...)
   </string>
-  <string name="track_detail_activity_type_hint"
-    translation_description="In the detail page for a track, the hint in the 'Activity type' text
-      field when it is empty.
-
-      Screenshot: track_detail.png">
+  <string name="track_edit_activity_type_hint"
+    translation_description="In the page to edit a track, the hint in the 'Activity type' text field
+      when it is empty.">
     Activity type
   </string>
-  <string name="track_detail_title"
-    translation_description="In the detail page for a track, the title of the page.
-
-      Screenshot: track_detail.png">
-    Track details
+  <string name="track_edit_title"
+    translation_description="The title of the page to edit a track.">
+    Edit track
   </string>
-  <string name="track_detail_track_description"
-    translation_description="In the detail page for a track, the text field for the track
-      description.
-
-      Screenshot: track_detail.png">
+  <string name="track_edit_track_description"
+    translation_description="In the page to edit a track, the title for the text field to edit the
+      track description.">
     Track description
   </string>
-  <string name="track_detail_track_name"
-    translation_description="In the detail page for a track, the text field for the track name.
-
-      Screenshot: track_detail.png">
+  <string name="track_edit_track_name"
+    translation_description="In the page to edit a track, the title for the text field to edit the
+      track name.">
     Track name
   </string>
+
+  <!-- Track -->
   <string name="track_icon_description"
     translation_description="The accessibility description for the track icon.">
     Track

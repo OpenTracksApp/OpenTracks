@@ -68,7 +68,7 @@ import android.widget.Toast;
  * @author Rodrigo Damazio
  */
 @SuppressWarnings("deprecation")
-public class MyTracks extends TabActivity implements OnTouchListener {
+public class TrackDetailActivity extends TabActivity implements OnTouchListener {
   private static final int DIALOG_EULA_ID = 0;
   private static final int DIALOG_CHECK_UNITS_ID = 1;
   private static final String CHECK_UNITS_PREFERENCE_FILE = "checkunits";
@@ -283,9 +283,9 @@ public class MyTracks extends TabActivity implements OnTouchListener {
             .setPositiveButton(R.string.eula_accept, new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int which) {
-                EulaUtils.setEulaValue(MyTracks.this);
+                EulaUtils.setEulaValue(TrackDetailActivity.this);
                 startActivityForResult(
-                    new Intent(MyTracks.this, WelcomeActivity.class), Constants.WELCOME);
+                    new Intent(TrackDetailActivity.this, WelcomeActivity.class), Constants.WELCOME);
               }
             })
             .setTitle(R.string.eula_title)
@@ -523,9 +523,9 @@ public class MyTracks extends TabActivity implements OnTouchListener {
     serviceConnection.stop();
 
     if (currentTrackId > 0) {
-      Intent intent = new Intent(MyTracks.this, TrackDetail.class);
-      intent.putExtra(TrackDetail.TRACK_ID, currentTrackId);
-      intent.putExtra(TrackDetail.SHOW_CANCEL, false);
+      Intent intent = new Intent(this, TrackEditActivity.class)
+          .putExtra(TrackEditActivity.SHOW_CANCEL, false)
+          .putExtra(TrackEditActivity.TRACK_ID, currentTrackId);
       startActivity(intent);
     }
   }
