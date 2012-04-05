@@ -156,26 +156,13 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
     tabHost.addView(layout);
     layout.setOnTouchListener(this);
     
-    // Get the trackid
-    Intent intent = getIntent();
-    trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1L);
-    if (trackId == -1L) {
-      startTrackListActivity();
-      finish();
-    }
-    trackDataHub.loadTrack(trackId);
-    
-    // Get the waypointId
-    long waypointId = intent.getLongExtra(EXTRA_WAYPOINT_ID, -1L);
-    if (waypointId != -1L) {
-      MapActivity mapActivity = getMapActivity();
-      if (mapActivity != null) {
-        getTabHost().setCurrentTab(0);
-        mapActivity.showWaypoint(trackId, waypointId);
-      } else {
-        Log.e(TAG, "MapActivity is null");
-      }
-    }
+    handleIntent(getIntent());
+  }
+
+  @Override
+  protected void onNewIntent(Intent intent) {
+    super.onNewIntent(intent);
+    handleIntent(intent);
   }
 
   @Override
@@ -446,6 +433,31 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
       navControls.show();
     }
     return false;
+  }
+
+  /**
+   * Handles the data in the intent.
+   */
+  private void handleIntent(Intent intent) {
+    // Get the trackid
+    trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1L);
+    if (trackId == -1L) {
+      startTrackListActivity();
+      finish();
+    }
+    trackDataHub.loadTrack(trackId);
+    
+    // Get the waypointId
+    long waypointId = intent.getLongExtra(EXTRA_WAYPOINT_ID, -1L);
+    if (waypointId != -1L) {
+      MapActivity mapActivity = getMapActivity();
+      if (mapActivity != null) {
+        getTabHost().setCurrentTab(0);
+        mapActivity.showWaypoint(trackId, waypointId);
+      } else {
+        Log.e(TAG, "MapActivity is null");
+      }
+    }
   }
 
   /**
