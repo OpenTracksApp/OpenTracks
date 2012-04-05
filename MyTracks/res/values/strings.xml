@@ -986,7 +986,8 @@ limitations under the License.
     Edit
   </string>  
   <string name="menu_export_all"
-    translation_description="In the menu, to export all the tracks to the SD card.">
+    translation_description="In the menu, to export all the tracks to the SD card.  This menu item
+      has a submenu.">
     Export all...
   </string>
   <string name="menu_export_all_format"
@@ -1033,7 +1034,8 @@ limitations under the License.
     Satellite mode
   </string>
   <string name="menu_save"
-    translation_description="In the menu, to save a track to the SD card.">
+    translation_description="In the menu, to save a track to the SD card. This menu item has a
+      submenu.">
     Save to SD card...
   </string>
   <string name="menu_save_format"
