@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Google Inc.
+ * Copyright 2012 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks.maps;
 
 import com.google.android.apps.mytracks.MapOverlay.CachedLocation;
+import com.google.android.apps.mytracks.TrackStubUtils;
 import com.google.android.testing.mocking.AndroidMock;
 import com.google.android.testing.mocking.UsesMocks;
 
@@ -29,9 +30,23 @@ import java.util.List;
  * @author Youtao Liu
  */
 public class SingleColorTrackPathPainterTest extends TrackPathPainterTestCase {
+
   private SingleColorTrackPathPainter singleColorTrackPathPainter;
   private Path pathMock;
   private static final int NUMBER_OF_LOCATIONS = 100;
+
+  /**
+   * Initials a mocked TrackPathDescriptor object and
+   * singleColorTrackPathPainter.
+   */
+  @Override
+  @UsesMocks(Path.class)
+  protected void setUp() throws Exception {
+    super.setUp();
+
+    pathMock = AndroidMock.createStrictMock(Path.class);
+    singleColorTrackPathPainter = new SingleColorTrackPathPainter(getContext());
+  }
 
   /**
    * Tests the
@@ -39,10 +54,10 @@ public class SingleColorTrackPathPainterTest extends TrackPathPainterTestCase {
    * method when all locations are valid.
    */
   public void testUpdatePath_AllValidLocation() {
-    initialTrackPathDescriptorMock();
-    List<CachedLocation> points = createCachedLocations(NUMBER_OF_LOCATIONS, true, -1);
-    // Gets a random number from 1 to numberOfLocations.
-    int startLocationIdx = (int) (1 + (NUMBER_OF_LOCATIONS - 1) * Math.random());
+    List<CachedLocation> points = createCachedLocations(NUMBER_OF_LOCATIONS,
+        TrackStubUtils.INITIAL_LATITUDE, -1);
+    // Gets a number as the start index of points.
+    int startLocationIdx = NUMBER_OF_LOCATIONS / 2;
 
     for (int i = 0; i < NUMBER_OF_LOCATIONS - startLocationIdx; i++) {
       pathMock.lineTo(0, 0);
@@ -60,8 +75,7 @@ public class SingleColorTrackPathPainterTest extends TrackPathPainterTestCase {
    * method when all locations are invalid.
    */
   public void testUpdatePath_AllInvalidLocation() {
-    initialTrackPathDescriptorMock();
-    List<CachedLocation> points = createCachedLocations(NUMBER_OF_LOCATIONS, false, -1);
+    List<CachedLocation> points = createCachedLocations(NUMBER_OF_LOCATIONS, INVALID_LATITUDE, -1);
     // Gets a random number from 1 to numberOfLocations.
     int startLocationIdx = (int) (1 + (NUMBER_OF_LOCATIONS - 1) * Math.random());
     AndroidMock.replay(pathMock);
@@ -73,18 +87,18 @@ public class SingleColorTrackPathPainterTest extends TrackPathPainterTestCase {
   /**
    * Tests the
    * {@link SingleColorTrackPathPainter#updatePath(com.google.android.maps.Projection, android.graphics.Rect, int, Boolean, List, Path)}
-   * method when there are three segment.
+   * method when there are three segments.
    */
   public void testUpdatePath_ThreeSegments() {
-    initialTrackPathDescriptorMock();
     // First segment.
-    List<CachedLocation> points = createCachedLocations(NUMBER_OF_LOCATIONS, true, -1);
-    points.addAll(createCachedLocations(1, false, -1));
+    List<CachedLocation> points = createCachedLocations(NUMBER_OF_LOCATIONS,
+        TrackStubUtils.INITIAL_LATITUDE, -1);
+    points.addAll(createCachedLocations(1, INVALID_LATITUDE, -1));
     // Second segment.
-    points.addAll(createCachedLocations(NUMBER_OF_LOCATIONS, true, -1));
-    points.addAll(createCachedLocations(1, false, -1));
+    points.addAll(createCachedLocations(NUMBER_OF_LOCATIONS, TrackStubUtils.INITIAL_LATITUDE, -1));
+    points.addAll(createCachedLocations(1, INVALID_LATITUDE, -1));
     // Third segment.
-    points.addAll(createCachedLocations(NUMBER_OF_LOCATIONS, true, -1));
+    points.addAll(createCachedLocations(NUMBER_OF_LOCATIONS, TrackStubUtils.INITIAL_LATITUDE, -1));
     // Gets a random number from 1 to numberOfLocations.
     int startLocationIdx = (int) (1 + (NUMBER_OF_LOCATIONS - 1) * Math.random());
     for (int i = 0; i < NUMBER_OF_LOCATIONS - startLocationIdx; i++) {
@@ -104,14 +118,4 @@ public class SingleColorTrackPathPainterTest extends TrackPathPainterTestCase {
         myTracksOverlay.getMapViewRect(mockView), startLocationIdx, true, points, pathMock);
     AndroidMock.verify(pathMock);
   }
-
-  /**
-   * Initials a mocked TrackPathDescriptor object.
-   */
-  @UsesMocks(Path.class)
-  private void initialTrackPathDescriptorMock() {
-    pathMock = AndroidMock.createStrictMock(Path.class);
-    singleColorTrackPathPainter = new SingleColorTrackPathPainter(getContext());
-  }
-
 }

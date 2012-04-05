@@ -34,10 +34,11 @@ import java.util.List;
  * @author Vangelis S.
  */
 public class TrackPathPainterTestCase extends AndroidTestCase {
+  
   protected Canvas canvas;
   protected MockMyTracksOverlay myTracksOverlay;
   protected MapView mockView;
-  
+
   final int INVALID_LATITUDE = 100;
 
   @Override
@@ -49,21 +50,18 @@ public class TrackPathPainterTestCase extends AndroidTestCase {
     myTracksOverlay.setTrackDrawingEnabled(true);
     mockView = null;
   }
-  
+
   /**
    * Creates a list of CachedLocations.
    * 
    * @param number the number of locations
-   * @param isValid flag whether creates valid locations
-   * @param speed the speed of locations, and will give a default valid value if less than
-   *          zero
+   * @param latitude the latitude value of locations.
+   * @param speed the speed of locations, and will give a default valid value if
+   *          less than zero
    * @return the simulated locations
-   * @author Youtao Liu.
    */
-  List<CachedLocation> createCachedLocations(int number, boolean isValid, float speed) {
+  List<CachedLocation> createCachedLocations(int number, double latitude, float speed) {
     List<CachedLocation> points = new ArrayList<MapOverlay.CachedLocation>();
-    double latitude = TrackStubUtils.INITIAL_LATITUDE;
-    if (!isValid) latitude = INVALID_LATITUDE;
     for (int i = 0; i < number; ++i) {
       Location location = TrackStubUtils.createMyTracksLocation(latitude,
           TrackStubUtils.INITIAL_LONGITUDE, TrackStubUtils.INITIAL_ALTITUDE);

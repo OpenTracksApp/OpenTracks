@@ -30,16 +30,15 @@ import android.graphics.Rect;
 
 import java.util.List;
 
-
 /**
  * A path painter that not variates the path colors.
- *
- *  @author Vangelis S.
+ * 
+ * @author Vangelis S.
  */
 public class SingleColorTrackPathPainter implements TrackPathPainter {
   private final Paint selectedTrackPaint;
   private Path path;
-  
+
   public SingleColorTrackPathPainter(Context context) {
     selectedTrackPaint = TrackPathUtilities.getPaint(R.color.red, context);
   }
@@ -48,53 +47,53 @@ public class SingleColorTrackPathPainter implements TrackPathPainter {
   public void drawTrack(Canvas canvas) {
     canvas.drawPath(path, selectedTrackPaint);
   }
-  
+
   @Override
   public void updatePath(Projection projection, Rect viewRect, int startLocationIdx,
       Boolean alwaysVisible, List<CachedLocation> points) {
     Path newPath = new Path();
     newPath.incReserve(points.size());
-    updatePath(projection, viewRect, startLocationIdx, alwaysVisible, points, newPath);
-    
+    path = updatePath(projection, viewRect, startLocationIdx, alwaysVisible, points, newPath);
+
   }
-  
+
   /**
-   * Updates path. 
+   * Updates the path.
    * 
-   * @param projection
-   * @param viewRect
-   * @param startLocationIdx
-   * @param alwaysVisible
-   * @param points
-   * @param newPath
+   * @param projection The Canvas to draw upon.
+   * @param viewRect The Path to be drawn.
+   * @param startLocationIdx The start point from where update the path.
+   * @param alwaysVisible Flag for always visible.
+   * @param points The list of points used to update the path.
+   * @param newPath The path to be created.
    */
   @VisibleForTesting
-  void updatePath(Projection projection, Rect viewRect, int startLocationIdx,
-      Boolean alwaysVisible, List<CachedLocation> points, Path newPath) { 
- // Whether to start a new segment on new valid and visible point.
-    boolean newSegment = startLocationIdx <= 0 || !points.get(startLocationIdx - 1).valid; 
+  Path updatePath(Projection projection, Rect viewRect, int startLocationIdx,
+      Boolean alwaysVisible, List<CachedLocation> points, Path newPath) {
+    // Whether to start a new segment on new valid and visible point.
+    boolean newSegment = startLocationIdx <= 0 || !points.get(startLocationIdx - 1).valid;
     boolean lastVisible = !newSegment;
     final Point pt = new Point();
     // Loop over track points.
-    for (int i = startLocationIdx; i < points.size() ; ++i) {
+    for (int i = startLocationIdx; i < points.size(); ++i) {
       CachedLocation loc = points.get(i);
-      
+
       // Check if valid, if not then indicate a new segment.
       if (!loc.valid) {
         newSegment = true;
         continue;
       }
-      
+
       final GeoPoint geoPoint = loc.geoPoint;
       // Check if this breaks the existing segment.
-      boolean visible = alwaysVisible 
+      boolean visible = alwaysVisible
           || viewRect.contains(geoPoint.getLongitudeE6(), geoPoint.getLatitudeE6());
       if (!visible && !lastVisible) {
         // This is a point outside view not connected to a visible one.
         newSegment = true;
       }
       lastVisible = visible;
-      
+
       // Either move to beginning of a new segment or continue the old one.
       projection.toPixels(geoPoint, pt);
       if (newSegment) {
@@ -104,10 +103,9 @@ public class SingleColorTrackPathPainter implements TrackPathPainter {
         newPath.lineTo(pt.x, pt.y);
       }
     }
-    
-    path = newPath;
+    return newPath;
   }
-  
+
   @Override
   public void clear() {
     path = null;
@@ -117,12 +115,12 @@ public class SingleColorTrackPathPainter implements TrackPathPainter {
   public boolean needsRedraw() {
     return false;
   }
-  
+
   @Override
   public Path getLastPath() {
     return path;
   }
-  
+
   // Visible for testing
   public Path newPath() {
     return new Path();
