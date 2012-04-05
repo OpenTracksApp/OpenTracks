@@ -125,7 +125,15 @@ limitations under the License.
     <item name="android:textColor">@color/stat_label_text</item>
   </style>
 
-  <!-- Welcome page TextView -->
+  <!-- The TextView showing the stats in the track list item -->
+  <style name="TrackListItemStatsTextView" parents="@android:style/TextAppearance.DeviceDefault.Small">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:singleLine">true</item>
+    <item name="android:textColor">@color/green</item>
+  </style>
+
+<!-- Welcome page TextView -->
   <style name="WelcomeTextView">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">fill_parent</item>
