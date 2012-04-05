@@ -17,6 +17,9 @@ package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.services.RemoveTempFilesService;
+import com.google.android.apps.mytracks.util.AnalyticsUtils;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.maps.mytracks.BuildConfig;
 
 import android.app.Application;
 import android.content.Intent;
@@ -32,6 +35,10 @@ public class MyTracksApplication extends Application {
 
   @Override
   public void onCreate() {
+    if (BuildConfig.DEBUG) {
+      ApiAdapterFactory.getApiAdapter().enableStrictMode();
+    }
+    AnalyticsUtils.sendPageViews(this, "/appstart");
     startService(new Intent(this, RemoveTempFilesService.class));
   }
 

@@ -35,7 +35,7 @@ limitations under the License.
       <TextView
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:text="@string/track_detail_track_name"
+        android:text="@string/track_edit_track_name"
         />
       <LinearLayout
         android:layout_height="wrap_content"
@@ -53,8 +53,8 @@ limitations under the License.
           />
         <EditText
           android:inputType="textAutoCorrect|textCapWords"
-          android:hint="@string/track_detail_track_name"
-          android:id="@+id/track_detail_track_name"
+          android:hint="@string/track_edit_track_name"
+          android:id="@+id/track_edit_track_name"
           android:imeOptions="actionNext"
           android:layout_height="wrap_content"
           android:layout_width="fill_parent"
@@ -65,24 +65,24 @@ limitations under the License.
       <TextView
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:text="@string/track_detail_activity_type"
+        android:text="@string/track_edit_activity_type"
         />
       <AutoCompleteTextView
-        android:id="@+id/track_detail_activity_type"
+        android:id="@+id/track_edit_activity_type"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:singleLine="true"
-        android:hint="@string/track_detail_activity_type_hint"
+        android:hint="@string/track_edit_activity_type_hint"
         android:imeOptions="actionNext"/>
       <TextView
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:text="@string/track_detail_track_description"
+        android:text="@string/track_edit_track_description"
         />
       <EditText
         android:inputType="textAutoCorrect|textCapSentences"
-        android:hint="@string/track_detail_track_description"
-        android:id="@+id/track_detail_track_description"
+        android:hint="@string/track_edit_track_description"
+        android:id="@+id/track_edit_track_description"
         android:imeOptions="actionDone"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
@@ -95,13 +95,13 @@ limitations under the License.
   <LinearLayout style="@style/ButtonLayout">
     <LinearLayout style="@style/ButtonSpacer"/>
     <Button
-      android:id="@+id/track_detail_save"
+      android:id="@+id/track_edit_save"
       android:layout_gravity="left"
       android:text="@string/generic_save"
       style="@style/Button"
       />
     <Button
-      android:id="@+id/track_detail_cancel"
+      android:id="@+id/track_edit_cancel"
       android:layout_gravity="right"
       android:text="@string/generic_cancel"
       style="@style/Button"

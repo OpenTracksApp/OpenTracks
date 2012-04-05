@@ -46,27 +46,15 @@ limitations under the License.
     android:orientation="horizontal" >
     <TextView
       android:id="@+id/track_list_item_time"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      android:singleLine="true"
-      android:textColor="@color/green"
-      style="@android:style/TextAppearance.DeviceDefault.Small" />
+      style="@style/TrackListItemStatsTextView" />
     <TextView
       android:id="@+id/track_list_item_distance"
-      android:layout_height="wrap_content"
       android:layout_marginLeft="8dp"
-      android:layout_width="wrap_content"
-      android:singleLine="true"
-      android:textColor="@color/green"
-      style="@android:style/TextAppearance.DeviceDefault.Small" />
+      style="@style/TrackListItemStatsTextView" />
     <TextView
       android:id="@+id/track_list_item_start"
-      android:layout_height="wrap_content"
       android:layout_marginLeft="8dp"
-      android:layout_width="wrap_content"
-      android:singleLine="true"
-      android:textColor="@color/green"
-      style="@android:style/TextAppearance.DeviceDefault.Small" />
+      style="@style/TrackListItemStatsTextView" />
   </LinearLayout>
   <TextView
     android:id="@+id/track_list_item_description"

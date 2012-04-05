@@ -23,22 +23,18 @@ import com.google.android.apps.mytracks.content.SearchEngine.ScoredResult;
 import com.google.android.apps.mytracks.content.SearchEngine.SearchQuery;
 import com.google.android.apps.mytracks.content.SearchEngineProvider;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.ListActivity;
 import android.app.SearchManager;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
 import android.util.Log;
@@ -193,7 +189,7 @@ public class SearchActivity extends ListActivity {
     resultMap.put(DESCRIPTION_FIELD, waypoint.getDescription());
     resultMap.put(CATEGORY_FIELD, waypoint.getCategory());
     // In the same place as we show time for tracks, show the track name for waypoints.
-    resultMap.put(TIME_FIELD, getString(R.string.track_list_track_name, trackName));
+    resultMap.put(TIME_FIELD, getString(R.string.search_track_location, trackName));
     resultMap.put(STATS_FIELD, StringUtils.formatDateTime(this, waypoint.getLocation().getTime()));
     resultMap.put(TRACK_ID_FIELD, waypoint.getTrackId());
     resultMap.put(WAYPOINT_ID_FIELD, waypoint.getId());
@@ -251,15 +247,12 @@ public class SearchActivity extends ListActivity {
   }
 
   private Intent createViewDataIntent(Map<String, Object> clickedData) {
-    Intent intent = new Intent(Intent.ACTION_VIEW);
+    Intent intent = new Intent(this, TrackDetailActivity.class)
+        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     if (clickedData.containsKey(WAYPOINT_ID_FIELD)) {
-      long waypointId = (Long) clickedData.get(WAYPOINT_ID_FIELD);
-      Uri uri = ContentUris.withAppendedId(WaypointsColumns.CONTENT_URI, waypointId);
-      intent.setDataAndType(uri, WaypointsColumns.CONTENT_ITEMTYPE);
+      intent.putExtra(TrackDetailActivity.WAYPOINT_ID, (Long) clickedData.get(WAYPOINT_ID_FIELD));
     } else {
-      long trackId = (Long) clickedData.get(TRACK_ID_FIELD);
-      Uri uri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId);
-      intent.setDataAndType(uri, TracksColumns.CONTENT_ITEMTYPE);
+      intent.putExtra(TrackDetailActivity.TRACK_ID, (Long) clickedData.get(TRACK_ID_FIELD));
     }
     return intent;
   }
