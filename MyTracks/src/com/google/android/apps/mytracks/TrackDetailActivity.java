@@ -102,10 +102,8 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
     new OnSharedPreferenceChangeListener() {
     @Override
     public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-      if (key == null) {
-        return;
-      }
-      if (key.equals(getString(R.string.recording_track_key))) {
+      // Note that key can be null
+      if (getString(R.string.recording_track_key).equals(key)) {
         if (isRecording()) {
           trackRecordingServiceConnection.startAndBind();
         }
@@ -219,8 +217,7 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
             R.string.track_detail_delete_confirm_message, new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int which) {
-                long trackId = trackDataHub.getSelectedTrackId();
-                MyTracksProviderUtils.Factory.get(TrackDetailActivity.this).deleteTrack(trackId);
+                deleteCurrentTrack();
                 startTrackListActivity();
               }
             });
@@ -282,7 +279,7 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
         stopRecording();
         return true;
       case R.id.menu_insert_marker:
-        // TODO:
+        // TODO: Add insert marker when updating WaypointList to ICS
         return true;
       case R.id.menu_play:
         if (PlayTrackUtils.isEarthInstalled(this)) {
@@ -438,7 +435,7 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
   }
 
   /**
-   * s Updates the menu items.
+   * Updates the menu items.
    *
    * @param isRecording true if recording
    */
@@ -467,6 +464,14 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
     if (deleteMenuItem != null) {
       deleteMenuItem.setVisible(!isRecording);
     }
+  }
+
+  /**
+   * Deletes the current track.
+   */
+  private void deleteCurrentTrack() {
+    long trackId = trackDataHub.getSelectedTrackId();
+    MyTracksProviderUtils.Factory.get(TrackDetailActivity.this).deleteTrack(trackId);
   }
 
   /**

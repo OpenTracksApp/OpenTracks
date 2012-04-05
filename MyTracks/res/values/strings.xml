@@ -2311,8 +2311,8 @@ limitations under the License.
   <string name="track_detail_install_earth_message"
     translation_description="When playing a track, the message informing the user that he needs
       Google Earth to play the track and asking him if he wants to install Google Earth from the
-      Android Market.">
-    You need Google Earth to play the track. Do you want to install from the Market?
+      Play Store.">
+    You need Google Earth to play the track. Do you want to install from the Play Store?
   </string>
   <string name="track_icon_description"
     translation_description="The accessibility description for the track icon.">

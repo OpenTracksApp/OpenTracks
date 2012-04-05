@@ -86,24 +86,25 @@ public class TrackListActivity extends FragmentActivity {
   private final Runnable bindChangedCallback = new Runnable() {
     @Override
     public void run() {
-      if (startNewRecording) {
-        ITrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
-        if (service != null) {
-          try {
-            recordingTrackId = service.startNewTrack();
-            startNewRecording = false;
-            Toast.makeText(
-                TrackListActivity.this, R.string.track_list_record_success, Toast.LENGTH_SHORT)
-                .show();
-            Log.d(TAG, "Started a new recording");
-          } catch (Exception e) {
-            Toast.makeText(
-                TrackListActivity.this, R.string.track_list_record_error, Toast.LENGTH_LONG).show();
-            Log.d(TAG, "Unable to start a new recording.", e);
-          }
-        } else {
-          Log.d(TAG, "service not available to start a new recording");
-        }
+      if (!startNewRecording) {
+        return;
+      }
+
+      ITrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
+      if (service == null) {
+        Log.d(TAG, "service not available to start a new recording");
+        return;
+      }
+      try {
+        recordingTrackId = service.startNewTrack();
+        startNewRecording = false;
+        Toast.makeText(
+            TrackListActivity.this, R.string.track_list_record_success, Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Started a new recording");
+      } catch (Exception e) {
+        Toast.makeText(TrackListActivity.this, R.string.track_list_record_error, Toast.LENGTH_LONG)
+            .show();
+        Log.e(TAG, "Unable to start a new recording.", e);
       }
     }
   };
@@ -116,13 +117,11 @@ public class TrackListActivity extends FragmentActivity {
     new OnSharedPreferenceChangeListener() {
     @Override
     public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-      if (key == null) {
-        return;
-      }
-      if (key.equals(getString(R.string.metric_units_key))) {
+      // Note that key can be null
+      if (getString(R.string.metric_units_key).equals(key)) {
         metricUnits = preferences.getBoolean(getString(R.string.metric_units_key), true);
       }
-      if (key.equals(getString(R.string.recording_track_key))) {
+      if (getString(R.string.recording_track_key).equals(key)) {
         recordingTrackId = sharedPreferences.getLong(getString(R.string.recording_track_key), -1L);
         if (isRecording()) {
           trackRecordingServiceConnection.startAndBind();
