@@ -16,12 +16,6 @@ limitations under the License.
 -->
 <resources>
   <!-- DO NOT TRANSLATE ANY STRINGS IN THIS FILE. -->
-  <string name="about_bart">Bart Niechwiej</string>
-  <string name="about_dylan">Dylan Casey</string>
-  <string name="about_jimmy">Jimmy Shih</string>
-  <string name="about_leif">Leif Wilden</string>
-  <string name="about_rodrigo">Rodrigo Damazio</string>
-  <string name="about_sandor">Sandor Dornbush</string>
   <string name="color_mode_dynamic_percentage_default">25</string>
   <string name="color_mode_fixed_medium_default">15</string>
   <string name="color_mode_fixed_slow_default">9</string>
@@ -35,7 +29,7 @@ limitations under the License.
     http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png
   </string>
   <string name="my_tracks_analytics_id">UA-7222692-2</string> 
-  <string name="my_tracks_privacy_url">m.google.com/privacy</string>
+  <string name="my_tracks_privacy_url">www.google.com/policies/privacy/</string>
   <string name="my_tracks_recording_service_name">My Tracks Recording Service</string>
   <string name="my_tracks_support_url">
     groups.google.com/a/googleproductforums.com/forum/#!categories/maps/mytracks

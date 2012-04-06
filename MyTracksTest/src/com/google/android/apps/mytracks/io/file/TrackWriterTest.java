@@ -11,7 +11,6 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceTest.MockContext;
 import com.google.android.apps.mytracks.testing.TestingProviderUtilsFactory;
-import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
 import android.location.Location;
@@ -25,7 +24,6 @@ import java.io.FileNotFoundException;
 import java.io.OutputStream;
 
 import org.easymock.EasyMock;
-import org.easymock.IAnswer;
 import org.easymock.IArgumentMatcher;
 import org.easymock.IMocksControl;
 
@@ -171,13 +169,7 @@ public class TrackWriterTest extends AndroidTestCase {
     writer = new WriteTracksTrackWriter(getContext(), providerUtils, track,
         formatWriter, true);
 
-    // Expect the completion listener to be run
-    TrackWriter.OnCompletionListener completionListener
-        = mocksControl.createMock(TrackWriter.OnCompletionListener.class);
-    completionListener.onComplete();
-
     mocksControl.replay();
-    writer.setOnCompletionListener(completionListener);
     writer.writeTrack();
 
     assertEquals(1, writeDocumentCalls);
@@ -185,54 +177,11 @@ public class TrackWriterTest extends AndroidTestCase {
     mocksControl.verify();
   }
 
-  public void testWriteTrack_cancelled() throws Exception {
-    final ByteArrayOutputStream stream = new ByteArrayOutputStream();
-    writer = new OpenFileTrackWriter(
-        getContext(), providerUtils, track, formatWriter, stream, true);
-
-    formatWriter.prepare(track, stream);
-
-    final Location[] locs = {
-        new Location("fake0"),
-        new Location("fake1"),
-    };
-    fillLocations(locs);
-    assertEquals(locs.length, providerUtils.bulkInsertTrackPoints(locs, locs.length, TRACK_ID));
-
-    formatWriter.writeHeader();
-    formatWriter.writeBeginTrack(locEq(locs[0]));
-    formatWriter.writeOpenSegment();
-
-    formatWriter.writeLocation(locEq(locs[0]));
-    //EasyMock.expectLastCall().andThrow(new InterruptedException());
-    EasyMock.expectLastCall().andAnswer(new IAnswer<Object>() {
-      @Override
-      public Object answer() throws Throwable {
-        throw new InterruptedException();
-      }
-    });
-
-    mocksControl.replay();
-
-    writer.writeTrack();
-
-    mocksControl.verify();
-
-    assertFalse(writer.wasSuccess());
-    assertEquals(R.string.sd_card_canceled, writer.getErrorMessage());
-  }
-
   public void testWriteTrack_openFails() {
     writer = new WriteTracksTrackWriter(getContext(), providerUtils, track,
         formatWriter, false);
 
-    // Expect the completion listener to be run
-    TrackWriter.OnCompletionListener completionListener
-        = mocksControl.createMock(TrackWriter.OnCompletionListener.class);
-    completionListener.onComplete();
-
     mocksControl.replay();
-    writer.setOnCompletionListener(completionListener);
     writer.writeTrack();
 
     assertEquals(0, writeDocumentCalls);
@@ -316,8 +265,10 @@ public class TrackWriterTest extends AndroidTestCase {
     formatWriter.writeHeader();
 
     // Expect reading/writing of the waypoints (except the first)
+    formatWriter.writeBeginWaypoints();
     formatWriter.writeWaypoint(wptEq(wps[1]));
     formatWriter.writeWaypoint(wptEq(wps[2]));
+    formatWriter.writeEndWaypoints();
 
     // Begin the track
     formatWriter.writeBeginTrack(locEq(locs[0]));

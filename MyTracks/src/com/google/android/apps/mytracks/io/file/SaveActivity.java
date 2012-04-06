@@ -13,27 +13,21 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.io.file;
 
-import static com.google.android.apps.mytracks.Constants.TAG;
-
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
+import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.PlayTrackUtils;
-import com.google.android.apps.mytracks.util.UriUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ContentUris;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,219 +36,184 @@ import android.util.Log;
 import java.io.File;
 
 /**
- * Activity for saving a track to a file (and optionally sending that file).
+ * Activity for saving a track to the SD card, and optionally share or play the
+ * track.
  *
  * @author Rodrigo Damazio
  */
 public class SaveActivity extends Activity {
-  public static final String EXTRA_FILE_FORMAT = "file_format";
-  public static final String EXTRA_SHARE_FILE = "share_file";
-  public static final String EXTRA_PLAY_FILE = "play_file";
 
-  private static final int RESULT_DIALOG = 1;
-  /* VisibleForTesting */
-  static final int PROGRESS_DIALOG = 2;
+  public static final String EXTRA_TRACK_ID = "track_id";
+  public static final String EXTRA_TRACK_FILE_FORMAT = "track_file_format";
+  public static final String EXTRA_SHARE_TRACK = "share_track";
+  public static final String EXTRA_PLAY_TRACK = "play_track";
 
-  private MyTracksProviderUtils providerUtils;
+  private static final String TAG = SaveActivity.class.getSimpleName();
+
+  private static final int DIALOG_PROGRESS_ID = 0;
+  private static final int DIALOG_RESULT_ID = 1;
+
   private long trackId;
-  private TrackWriter writer;
-  private boolean shareFile;
-  private boolean playFile;
-  private TrackFileFormat format;
-  private WriteProgressController controller;
+  private TrackFileFormat trackFileFormat;
+  private boolean shareTrack;
+  private boolean playTrack;
+
+  private SaveAsyncTask saveAsyncTask;
+  private ProgressDialog progressDialog;
+
+  // result from the AsyncTask
+  private boolean success;
+  
+  // message id from the AsyncTask
+  private int messageId;
+  
+  // path of the saved file
+  private String filePath;
 
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    providerUtils = MyTracksProviderUtils.Factory.get(this);
+    Intent intent = getIntent();
+    trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1L);
+    if (trackId < 0) {
+      Log.d(TAG, "Invalid track id");
+      finish();
+      return;
+    }
+
+    trackFileFormat = intent.getParcelableExtra(EXTRA_TRACK_FILE_FORMAT);
+    shareTrack = intent.getBooleanExtra(EXTRA_SHARE_TRACK, false);
+    playTrack = intent.getBooleanExtra(EXTRA_PLAY_TRACK, false);
+
+    Object retained = getLastNonConfigurationInstance();
+    if (retained instanceof SaveAsyncTask) {
+      saveAsyncTask = (SaveAsyncTask) retained;
+      saveAsyncTask.setActivity(this);
+    } else {
+      TrackWriter trackWriter = TrackWriterFactory.newWriter(
+          this, MyTracksProviderUtils.Factory.get(this), trackId, trackFileFormat);
+      if (trackWriter == null) {
+        Log.e(TAG, "Track writer is null");
+        finish();
+        return;
+      }
+      if (shareTrack || playTrack) {
+        // Save to the temp directory
+        String dirName = FileUtils.buildExternalDirectoryPath(
+            trackFileFormat.getExtension(), "tmp");
+        trackWriter.setDirectory(new File(dirName));
+      }
+      saveAsyncTask = new SaveAsyncTask(this, trackWriter);
+      saveAsyncTask.execute();
+    }
   }
 
   @Override
-  protected void onStart() {
-    super.onStart();
-
-    Intent intent = getIntent();
-    String action = intent.getAction();
-    String type = intent.getType();
-    Uri data = intent.getData();
-    if (!getString(R.string.track_action_save).equals(action)
-        || !TracksColumns.CONTENT_ITEMTYPE.equals(type)
-        || !UriUtils.matchesContentUri(data, TracksColumns.CONTENT_URI)) {
-      Log.e(TAG, "Got bad save intent: " + intent);
-      finish();
-      return;
-    }
-
-    trackId = ContentUris.parseId(data);
-
-    int formatIdx = intent.getIntExtra(EXTRA_FILE_FORMAT, -1);
-    format = TrackFileFormat.values()[formatIdx];
-    shareFile = intent.getBooleanExtra(EXTRA_SHARE_FILE, false);
-    playFile = intent.getBooleanExtra(EXTRA_PLAY_FILE, false);
-    
-    writer = TrackWriterFactory.newWriter(this, providerUtils, trackId, format);
-    if (writer == null) {
-      Log.e(TAG, "Unable to build writer");
-      finish();
-      return;
-    }
-
-    if (shareFile || playFile) {
-      // If the file is for sending, save it to a temporary location instead.
-      FileUtils fileUtils = new FileUtils();
-      String extension = format.getExtension();
-      String dirName = fileUtils.buildExternalDirectoryPath(extension, "tmp");
-
-      File dir = new File(dirName);
-      writer.setDirectory(dir);
-    }
-
-    controller = new WriteProgressController(this, writer, PROGRESS_DIALOG);
-    controller.setOnCompletionListener(new WriteProgressController.OnCompletionListener() {
-      @Override
-      public void onComplete() {
-        onWriteComplete();
-      }
-    });
-    controller.startWrite();
-  }
-
-  private void onWriteComplete() {
-    if (shareFile) {
-      shareWrittenFile();
-    } if (playFile) {
-      playWrittenFile();
-    } else {
-      showResultDialog();
-    }
-  }
-
-  private void shareWrittenFile() {
-    if (!writer.wasSuccess()) {
-      showResultDialog();
-      return;
-    }
-
-    // Share the file.
-    Intent shareIntent = new Intent(Intent.ACTION_SEND);
-    shareIntent.putExtra(Intent.EXTRA_SUBJECT,
-        getResources().getText(R.string.share_track_subject).toString());
-    shareIntent.putExtra(Intent.EXTRA_TEXT,
-        getResources().getText(R.string.share_track_file_body_format)
-        .toString());
-    shareIntent.setType(format.getMimeType());
-    Uri u = Uri.fromFile(new File(writer.getAbsolutePath()));
-    shareIntent.putExtra(Intent.EXTRA_STREAM, u);
-    shareIntent.putExtra(getString(R.string.track_id_broadcast_extra), trackId);
-    startActivity(Intent.createChooser(shareIntent,
-        getResources().getText(R.string.share_track_picker_title).toString()));
-  }
-
-  private void playWrittenFile() {
-    if (!writer.wasSuccess()) {
-      showResultDialog();
-      return;
-    }
-
-    Uri uri = Uri.fromFile(new File(writer.getAbsolutePath()));
-    Intent intent = new Intent()
-        .setClassName(PlayTrackUtils.GOOGLE_EARTH_PACKAGE, PlayTrackUtils.GOOGLE_EARTH_CLASS)
-        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        .setDataAndType(uri, PlayTrackUtils.KML_MIME_TYPE)
-        .putExtra(PlayTrackUtils.TOUR_FEATURE_ID, KmlTrackWriter.TOUR_FEATURE_ID);
-    startActivity(intent);
-  }
-
-  private void showResultDialog() {
-    removeDialog(RESULT_DIALOG);
-    showDialog(RESULT_DIALOG);
+  public Object onRetainNonConfigurationInstance() {
+    saveAsyncTask.setActivity(null);
+    return saveAsyncTask;
   }
 
   @Override
   protected Dialog onCreateDialog(int id) {
     switch (id) {
-      case RESULT_DIALOG:
-        return createResultDialog();
-      case PROGRESS_DIALOG:
-        if (controller != null) {
-          return controller.createProgressDialog();
-        }
-        //$FALL-THROUGH$
+      case DIALOG_PROGRESS_ID:
+        progressDialog = DialogUtils.createHorizontalProgressDialog(
+            this, R.string.sd_card_progress_message, new DialogInterface.OnCancelListener() {
+              @Override
+              public void onCancel(DialogInterface dialog) {
+                saveAsyncTask.cancel(true);
+                finish();
+              }
+            });
+        return progressDialog;
+      case DIALOG_RESULT_ID:
+        return new AlertDialog.Builder(this)
+            .setCancelable(true)
+            .setIcon(success 
+                ? android.R.drawable.ic_dialog_info : android.R.drawable.ic_dialog_alert)
+            .setMessage(messageId)
+            .setOnCancelListener(new DialogInterface.OnCancelListener() {
+              @Override
+              public void onCancel(DialogInterface dialog) {
+                dialog.dismiss();
+                onPostResultDialog();
+              }
+            })
+            .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int arg1) {
+                dialog.dismiss();
+                onPostResultDialog();
+              }
+            })
+            .setTitle(success ? R.string.generic_success_title : R.string.generic_error_title)
+            .create();
       default:
-        return super.onCreateDialog(id);
+        return null;
     }
   }
 
-  private Dialog createResultDialog() {
-    boolean success = writer.wasSuccess();
-
-    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    builder.setMessage(writer.getErrorMessage());
-    builder.setPositiveButton(R.string.generic_ok, new OnClickListener() {
-      @Override
-      public void onClick(DialogInterface dialog, int arg1) {
-        dialog.dismiss();
-        finish();
-      }
-    });
-    builder.setOnCancelListener(new OnCancelListener() {
-      @Override
-      public void onCancel(DialogInterface dialog) {
-        dialog.dismiss();
-        finish();
-      }
-    });
-    builder.setIcon(success ? android.R.drawable.ic_dialog_info :
-        android.R.drawable.ic_dialog_alert);
-    builder.setTitle(success ? R.string.generic_success_title : R.string.generic_error_title);
-    return builder.create();
+  /**
+   * Invokes when the associated AsyncTask completes.
+   *
+   * @param isSuccess true if the AsyncTask is successful
+   * @param aMessageId the id of the AsyncTask message
+   * @param aPath the path of the saved file
+   */
+  public void onAsyncTaskCompleted(boolean isSuccess, int aMessageId, String aPath) {
+    this.success = isSuccess;
+    this.messageId = aMessageId;
+    this.filePath = aPath;
+    removeDialog(DIALOG_PROGRESS_ID);
+    showDialog(DIALOG_RESULT_ID);
   }
 
-  public static void handleExportTrackAction(Context ctx, long trackId, int actionCode) {
-    if (trackId < 0) {
-      return;
+  /**
+   * Shows the progress dialog.
+   */
+  public void showProgressDialog() {
+    showDialog(DIALOG_PROGRESS_ID);
+  }
+
+  /**
+   * Sets the progress dialog value.
+   *
+   * @param number the number of points saved
+   * @param max the maximum number of points
+   */
+  public void setProgressDialogValue(int number, int max) {
+    if (progressDialog != null) {
+      progressDialog.setIndeterminate(false);
+      progressDialog.setMax(max);
+      progressDialog.setProgress(Math.min(number, max));
     }
+  }
 
-    TrackFileFormat exportFormat = null;
-    switch (actionCode) {
-      case Constants.SAVE_GPX_FILE:
-      case Constants.SHARE_GPX_FILE:
-        exportFormat = TrackFileFormat.GPX;
-        break;
-      case Constants.SAVE_KML_FILE:
-      case Constants.SHARE_KML_FILE:
-        exportFormat = TrackFileFormat.KML;
-        break;
-      case Constants.SAVE_CSV_FILE:
-      case Constants.SHARE_CSV_FILE:
-        exportFormat = TrackFileFormat.CSV;
-        break;
-      case Constants.SAVE_TCX_FILE:
-      case Constants.SHARE_TCX_FILE:
-        exportFormat = TrackFileFormat.TCX;
-        break;
-      default:
-        throw new IllegalArgumentException("Warning unhandled action code: " + actionCode);
+  /**
+   * To be invoked after showing the result dialog.
+   */
+  private void onPostResultDialog() {
+    if (success) {
+      if (shareTrack) {
+        Intent intent = new Intent(Intent.ACTION_SEND)
+            .putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(filePath)))
+            .putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_track_subject))
+            .putExtra(Intent.EXTRA_TEXT, getString(R.string.share_track_file_body_format))
+            .putExtra(getString(R.string.track_id_broadcast_extra), trackId)
+            .setType(trackFileFormat.getMimeType());
+        startActivity(Intent.createChooser(intent, getString(R.string.share_track_picker_title)));
+      } else if (playTrack) {
+        Intent intent = new Intent()
+            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            .putExtra(PlayTrackUtils.TOUR_FEATURE_ID, KmlTrackWriter.TOUR_FEATURE_ID)
+            .setClassName(PlayTrackUtils.GOOGLE_EARTH_PACKAGE, PlayTrackUtils.GOOGLE_EARTH_CLASS)
+            .setDataAndType(Uri.fromFile(new File(filePath)), PlayTrackUtils.KML_MIME_TYPE);
+        startActivity(intent);
+      }
     }
-
-    boolean shareFile = false;
-    switch (actionCode) {
-      case Constants.SHARE_GPX_FILE:
-      case Constants.SHARE_KML_FILE:
-      case Constants.SHARE_CSV_FILE:
-      case Constants.SHARE_TCX_FILE:
-        shareFile = true;
-    }
-
-    Uri uri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId);
-
-    Intent intent = new Intent(ctx, SaveActivity.class);
-    intent.setAction(ctx.getString(R.string.track_action_save));
-    intent.setDataAndType(uri, TracksColumns.CONTENT_ITEMTYPE);
-    intent.putExtra(EXTRA_FILE_FORMAT, exportFormat.ordinal());
-    intent.putExtra(EXTRA_SHARE_FILE, shareFile);
-    ctx.startActivity(intent);
+    finish();
   }
 }

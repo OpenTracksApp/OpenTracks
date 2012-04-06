@@ -24,7 +24,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
 
@@ -50,10 +49,7 @@ public class UploadServiceChooserActivityTest extends
   }
 
   /**
-   * Tests the logic to control display all send options. This test cover code
-   * in method {@link UploadServiceChooserActivity#onCreateDialog(int)},
-   * {@link UploadServiceChooserActivity#updateStateBySendRequest()} and
-   * {@link UploadServiceChooserActivity#updateStateBySelection()}.
+   * Tests the logic to display all options.
    */
   public void testOnCreateDialog_displayAll() {
     // Initials activity to display all send items.
@@ -62,7 +58,6 @@ public class UploadServiceChooserActivityTest extends
     assertTrue(getMapsCheckBox().isShown());
     assertTrue(getFusionTablesCheckBox().isShown());
     assertTrue(getDocsCheckBox().isShown());
-    assertTrue(getCancelButton().isEnabled());
 
     // Clicks to disable all send items.
     uploadServiceChooserActivity.runOnUiThread(new Runnable() {
@@ -82,25 +77,19 @@ public class UploadServiceChooserActivityTest extends
     assertTrue(getMapsCheckBox().isShown());
     assertTrue(getFusionTablesCheckBox().isShown());
     assertTrue(getDocsCheckBox().isShown());
-    assertTrue(getCancelButton().isEnabled());
 
     assertFalse(getNewMapRadioButton().isShown());
     assertFalse(getExistingMapRadioButton().isShown());
-    assertFalse(getSendButton().isEnabled());
   }
 
   /**
-   * Tests the logic to check the send to Google Maps option. This test cover
-   * code in method {@link UploadServiceChooserActivity#onCreateDialog(int)},
-   * {@link UploadServiceChooserActivity#updateStateBySendRequest()} and
-   * {@link UploadServiceChooserActivity#updateStateBySelection()}.
+   * Tests the logic to display only the "Send to Google Maps" option.
    */
   public void testOnCreateDialog_displayOne() {
     // Initials activity to display all send items.
     initialActivity(true, false, false);
     instrumentation.waitForIdleSync();
     assertTrue(getMapsCheckBox().isShown());
-    assertTrue(getCancelButton().isEnabled());
 
     // Clicks to enable this items.
     uploadServiceChooserActivity.runOnUiThread(new Runnable() {
@@ -114,23 +103,16 @@ public class UploadServiceChooserActivityTest extends
     assertTrue(getMapsCheckBox().isShown());
     assertTrue(getNewMapRadioButton().isShown());
     assertTrue(getExistingMapRadioButton().isShown());
-    assertTrue(getSendButton().isEnabled());
-    assertTrue(getCancelButton().isEnabled());
   }
 
   /**
-   * Tests the logic to control display none. This test cover code in method
-   * {@link UploadServiceChooserActivity#onCreateDialog(int)},
-   * {@link UploadServiceChooserActivity#updateStateBySendRequest()} and
-   * {@link UploadServiceChooserActivity#updateStateBySelection()}.
+   * Tests the logic to display no option.
    */
   public void testOnCreateDialog_displayNone() {
     initialActivity(false, false, false);
     assertFalse(getMapsCheckBox().isShown());
     assertFalse(getFusionTablesCheckBox().isShown());
     assertFalse(getDocsCheckBox().isShown());
-    assertFalse(getSendButton().isEnabled());
-    assertTrue(getCancelButton().isEnabled());
   }
 
   /**
@@ -193,11 +175,8 @@ public class UploadServiceChooserActivityTest extends
 
   /**
    * Tests the logic of saveState when click send button. This test cover code
-   * in method {@link UploadServiceChooserActivity#saveState()},
-   * {@link UploadServiceChooserActivity#initState()} ,
-   * {@link UploadServiceChooserActivity#sendMaps()},
-   * {@link UploadServiceChooserActivity#sendFusionTables()}, and
-   * {@link UploadServiceChooserActivity#sendDocs()}.
+   * in method {@link UploadServiceChooserActivity#initState()} and
+   * {@link UploadServiceChooserActivity#saveState()},
    */
   public void testOnCreateDialog_saveState() {
     initialActivity(true, true, true);
@@ -228,12 +207,8 @@ public class UploadServiceChooserActivityTest extends
 
   /**
    * Tests the logic of startNextActivity when click send button. This test
-   * cover code in method
-   * {@link UploadServiceChooserActivity#startNextActivity()} ,
-   * {@link UploadServiceChooserActivity#initState()} ,
-   * {@link UploadServiceChooserActivity#sendMaps()},
-   * {@link UploadServiceChooserActivity#sendFusionTables()}, and
-   * {@link UploadServiceChooserActivity#sendDocs()}.
+   * cover code in method {@link UploadServiceChooserActivity#initState()} and
+   * {@link UploadServiceChooserActivity#startNextActivity()}.
    */
   public void testOnCreateDialog_startNextActivity() {
     initialActivity(true, true, true);
@@ -275,35 +250,26 @@ public class UploadServiceChooserActivityTest extends
     uploadServiceChooserActivity = this.getActivity();
   }
 
-  private Button getSendButton() {
-    return (Button) uploadServiceChooserActivity.getDialog()
-        .findViewById(R.id.send_google_send_now);
-  }
-
-  Button getCancelButton() {
-    return (Button) uploadServiceChooserActivity.getDialog().findViewById(R.id.send_google_cancel);
-  }
-
   private CheckBox getMapsCheckBox() {
-    return (CheckBox) uploadServiceChooserActivity.getDialog().findViewById(R.id.send_google_maps);
+    return (CheckBox) uploadServiceChooserActivity.getAlertDialog().findViewById(R.id.send_google_maps);
   }
 
   private CheckBox getFusionTablesCheckBox() {
-    return (CheckBox) uploadServiceChooserActivity.getDialog().findViewById(
+    return (CheckBox) uploadServiceChooserActivity.getAlertDialog().findViewById(
         R.id.send_google_fusion_tables);
   }
 
   private CheckBox getDocsCheckBox() {
-    return (CheckBox) uploadServiceChooserActivity.getDialog().findViewById(R.id.send_google_docs);
+    return (CheckBox) uploadServiceChooserActivity.getAlertDialog().findViewById(R.id.send_google_docs);
   }
 
   private RadioButton getNewMapRadioButton() {
-    return (RadioButton) uploadServiceChooserActivity.getDialog().findViewById(
+    return (RadioButton) uploadServiceChooserActivity.getAlertDialog().findViewById(
         R.id.send_google_new_map);
   }
 
   private RadioButton getExistingMapRadioButton() {
-    return (RadioButton) uploadServiceChooserActivity.getDialog().findViewById(
+    return (RadioButton) uploadServiceChooserActivity.getAlertDialog().findViewById(
         R.id.send_google_existing_map);
   }
 }

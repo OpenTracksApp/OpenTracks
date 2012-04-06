@@ -76,7 +76,14 @@ public abstract class AbstractSendAsyncTask extends AsyncTask<Void, Integer, Boo
 
   @Override
   protected Boolean doInBackground(Void... params) {
-    return performTask();
+    try {
+      return performTask();
+    } finally {
+      closeConnection();
+      if (success) {
+        saveResult();
+      }
+    }
   }
 
   @Override
@@ -89,19 +96,10 @@ public abstract class AbstractSendAsyncTask extends AsyncTask<Void, Integer, Boo
   @Override
   protected void onPostExecute(Boolean result) {
     success = result;
-    if (success) {
-      saveResult();
-    }
     completed = true;
-    closeConnection();
     if (activity != null) {
       activity.onAsyncTaskCompleted(success);
     }
-  }
-
-  @Override
-  protected void onCancelled() {
-    closeConnection();
   }
 
   /**

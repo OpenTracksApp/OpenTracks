@@ -19,10 +19,12 @@ import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
 import com.google.android.apps.mytracks.services.tasks.PeriodicTask;
 import com.google.api.client.http.HttpTransport;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.view.MenuItem;
 
 import java.io.IOException;
 
@@ -98,4 +100,42 @@ public interface ApiAdapter {
    * @param bluetoothDevice
    */
   public BluetoothSocket getBluetoothSocket(BluetoothDevice bluetoothDevice) throws IOException;
+  
+ /**
+   * Shows the action bar, if the current system supports it.
+   * If it's not supported, the title bar will be kept hidden.
+   *
+   * Due to changes in API level 11.
+   *
+   * @param activity the current activity
+   */
+  public void showActionBar(Activity activity);
+
+  /**
+   * Configures the search widget.
+   * 
+   * Due to changes in API level 11.
+   * 
+   * @param activity the activity
+   * @param menuItem the search menu item
+   */
+  public void configureSearchWidget(Activity activity, MenuItem menuItem);
+ 
+  /**
+   * Handles the search menu selection. Returns true if handled.
+   * 
+   * Due to changes in API level 11.
+   * 
+   * @param activity the activity
+   */
+  public boolean handleSearchMenuSelection(Activity activity);
+  
+  /**
+   * Handles the search key press. Returns true if handled.
+   * 
+   * Due to changes in API level 14.
+   * 
+   * @param menu the search menu
+   */
+  public boolean handleSearchKey(MenuItem menu);  
 }

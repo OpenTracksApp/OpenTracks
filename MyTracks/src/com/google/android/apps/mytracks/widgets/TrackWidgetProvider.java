@@ -19,7 +19,7 @@ package com.google.android.apps.mytracks.widgets;
 import static com.google.android.apps.mytracks.Constants.SETTINGS_NAME;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
-import com.google.android.apps.mytracks.MyTracks;
+import com.google.android.apps.mytracks.TrackDetailActivity;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
@@ -145,7 +145,10 @@ public class TrackWidgetProvider
     RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.track_widget);
 
     // Make all of the stats open the mytracks activity.
-    Intent intent = new Intent(context, MyTracks.class);
+    Intent intent = new Intent(context, TrackDetailActivity.class);
+    if (track != null) {
+      intent.putExtra(TrackDetailActivity.TRACK_ID, track.getId());
+    }
     PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
     views.setOnClickPendingIntent(R.id.appwidget_track_statistics, pendingIntent);
 

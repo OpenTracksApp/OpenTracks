@@ -19,6 +19,7 @@ import com.google.android.apps.mytracks.Constants;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 
+import android.annotation.TargetApi;
 import android.content.SharedPreferences.Editor;
 import android.os.StrictMode;
 import android.util.Log;
@@ -30,6 +31,7 @@ import java.util.Arrays;
  *
  * @author Rodrigo Damazio
  */
+@TargetApi(9)
 public class Api9Adapter extends Api8Adapter {
   
   @Override

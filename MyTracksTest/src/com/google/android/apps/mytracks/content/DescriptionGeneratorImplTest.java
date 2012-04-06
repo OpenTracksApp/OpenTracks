@@ -17,7 +17,6 @@
 package com.google.android.apps.mytracks.content;
 
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.test.AndroidTestCase;
@@ -138,10 +137,7 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
    */
   public void testWriteSpeed() {
     StringBuilder builder = new StringBuilder();
-    Pair<Double, Double> speed = descriptionGenerator.writeSpeed(
-        1.1, builder, R.string.description_average_speed, "\n");
-    assertEquals(3.96, speed.first);
-    assertEquals(3.96 * UnitConversions.KM_TO_MI, speed.second);
+    descriptionGenerator.writeSpeed(1.1, builder, R.string.description_average_speed, "\n");
     assertEquals("Average speed: 3.96 km/h (2.5 mi/h)\n", builder.toString());
   }
 

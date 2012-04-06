@@ -27,10 +27,6 @@ import java.io.File;
  * @author Rodrigo Damazio
  */
 public interface TrackWriter {
-  /** This listener is used to signal completion of track write */
-  public interface OnCompletionListener {
-    public void onComplete();
-  }
 
   /** This listener is used to signal track writes. */
   public interface OnWriteListener {
@@ -42,11 +38,6 @@ public interface TrackWriter {
      */
     public void onWrite(int number, int max);
   }
-
-  /**
-   * Sets listener to be invoked when the writer has finished.
-   */
-  void setOnCompletionListener(OnCompletionListener onCompletionListener);
 
   /**
    * Sets a listener to be invoked for each location writer.
@@ -62,12 +53,6 @@ public interface TrackWriter {
    * Returns the absolute path to the file which was created.
    */
   String getAbsolutePath();
-
-  /**
-   * Writes the given track id to the SD card.
-   * This is non-blocking.
-   */
-  void writeTrackAsync();
 
   /**
    * Writes the given track id to the SD card.

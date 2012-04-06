@@ -19,20 +19,13 @@ import java.io.File;
 
 /**
  * A simple, fake {@link TrackWriter} subclass with all methods mocked out.
- * Tests are expected to override {@link #writeTrack} and/or
- * {@link #writeTrackAsync}, at the very least.
+ * Tests are expected to override {@link #writeTrack}.
  *
  * @author Matthew Simmons
  *
  */
 public class MockTrackWriter implements TrackWriter {
-  public OnCompletionListener onCompletionListener;
   public OnWriteListener onWriteListener;
-
-  @Override
-  public void setOnCompletionListener(OnCompletionListener onCompletionListener) {
-    this.onCompletionListener = onCompletionListener;
-  }
 
   @Override
   public void setOnWriteListener(OnWriteListener onWriteListener) {
@@ -46,11 +39,6 @@ public class MockTrackWriter implements TrackWriter {
 
   @Override
   public String getAbsolutePath() {
-    throw new UnsupportedOperationException("not implemented");
-  }
-
-  @Override
-  public void writeTrackAsync() {
     throw new UnsupportedOperationException("not implemented");
   }
 

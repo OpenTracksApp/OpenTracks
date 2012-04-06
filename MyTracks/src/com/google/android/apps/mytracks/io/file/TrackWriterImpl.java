@@ -52,12 +52,10 @@ class TrackWriterImpl implements TrackWriter {
   private final MyTracksProviderUtils providerUtils;
   private final Track track;
   private final TrackFormatWriter writer;
-  private final FileUtils fileUtils;
   private boolean success = false;
   private int errorMessage = -1;
   private File directory = null;
   private File file = null;
-  private OnCompletionListener onCompletionListener;
   private OnWriteListener onWriteListener;
   private Thread writeThread;
 
@@ -67,12 +65,6 @@ class TrackWriterImpl implements TrackWriter {
     this.providerUtils = providerUtils;
     this.track = track;
     this.writer = writer;
-    this.fileUtils = new FileUtils();
-  }
-
-  @Override
-  public void setOnCompletionListener(OnCompletionListener onCompletionListener) {
-    this.onCompletionListener = onCompletionListener;
   }
 
   @Override
@@ -90,8 +82,7 @@ class TrackWriterImpl implements TrackWriter {
     return file.getAbsolutePath();
   }
 
-  @Override
-  public void writeTrackAsync() {
+  private void writeTrackAsync() {
     writeThread = new Thread() {
       @Override
       public void run() {
@@ -131,7 +122,6 @@ class TrackWriterImpl implements TrackWriter {
         }
       }
     }
-    finished();
   }
 
   public void stopWriteTrack() {
@@ -163,18 +153,6 @@ class TrackWriterImpl implements TrackWriter {
    * ===============
    */
 
-  private void finished() {
-    if (onCompletionListener != null) {
-      runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-          onCompletionListener.onComplete();
-        }
-      });
-      return;
-    }
-  }
-
   /**
    * Runs the given runnable in the UI thread.
    */
@@ -195,7 +173,7 @@ class TrackWriterImpl implements TrackWriter {
     }
 
     // Make sure the file doesn't exist yet (possibly by changing the filename)
-    String fileName = fileUtils.buildUniqueFileName(
+    String fileName = FileUtils.buildUniqueFileName(
         directory, track.getName(), writer.getExtension());
     if (fileName == null) {
       Log.e(Constants.TAG,
@@ -220,16 +198,16 @@ class TrackWriterImpl implements TrackWriter {
   protected boolean canWriteFile() {
     if (directory == null) {
       String dirName =
-          fileUtils.buildExternalDirectoryPath(writer.getExtension());
+          FileUtils.buildExternalDirectoryPath(writer.getExtension());
       directory = newFile(dirName);
     }
 
-    if (!fileUtils.isSdCardAvailable()) {
+    if (!FileUtils.isSdCardAvailable()) {
       Log.i(Constants.TAG, "Could not find SD card.");
       errorMessage = R.string.sd_card_error_no_storage;
       return false;
     }
-    if (!fileUtils.ensureDirectoryExists(directory)) {
+    if (!FileUtils.ensureDirectoryExists(directory)) {
       Log.i(Constants.TAG, "Could not create export directory.");
       errorMessage = R.string.sd_card_error_create_dir;
       return false;

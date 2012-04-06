@@ -23,12 +23,15 @@ import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerTask;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.apache.ApacheHttpTransport;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.Window;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -50,7 +53,7 @@ public class Api7Adapter implements ApiAdapter {
   public BackupPreferencesListener getBackupPreferencesListener(Context context) {
     return new BackupPreferencesListener() {
       @Override
-      public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {        
+      public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         // Do nothing
       }
     };
@@ -65,7 +68,7 @@ public class Api7Adapter implements ApiAdapter {
   public void enableStrictMode() {
     // Not supported
   }
-  
+
   @Override
   public byte[] copyByteArray(byte[] input, int start, int end) {
     int length = end - start;
@@ -73,7 +76,7 @@ public class Api7Adapter implements ApiAdapter {
     System.arraycopy(input, start, output, 0, length);
     return output;
   }
-  
+
   @Override
   public HttpTransport getHttpTransport() {
     return new ApacheHttpTransport();
@@ -98,5 +101,29 @@ public class Api7Adapter implements ApiAdapter {
       Log.d(Constants.TAG, "Unable to create insecure connection", e);
     }
     return bluetoothDevice.createRfcommSocketToServiceRecord(BluetoothConnectionManager.SPP_UUID);
+  }
+
+  @Override
+  public void showActionBar(Activity activity) {
+    // Action bar not available, just hide the title and let actions be shown
+    // via the regular menu.
+    activity.requestWindowFeature(Window.FEATURE_NO_TITLE);
+  }
+  
+  @Override
+  public void configureSearchWidget(Activity activity, MenuItem menuItem) {
+    // Do nothing   
+  }
+  
+  @Override
+  public boolean handleSearchMenuSelection(Activity activity) {
+    activity.onSearchRequested();
+    return true;
+  }
+  
+  @Override
+  public boolean handleSearchKey(MenuItem menuItem) {
+    // Return false and allow the framework to handle the search key.
+    return false;
   }
 }

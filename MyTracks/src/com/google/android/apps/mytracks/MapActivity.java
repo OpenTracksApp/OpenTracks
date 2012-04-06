@@ -22,39 +22,24 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener;
-import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
-import com.google.android.apps.mytracks.io.file.SaveActivity;
-import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
-import com.google.android.apps.mytracks.io.sendtogoogle.UploadServiceChooserActivity;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.GeoRect;
 import com.google.android.apps.mytracks.util.LocationUtils;
-import com.google.android.apps.mytracks.util.PlayTrackUtils;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.mytracks.R;
 
-import android.app.Dialog;
-import android.content.ContentUris;
 import android.content.Intent;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.SubMenu;
 import android.view.View;
-import android.view.View.OnCreateContextMenuListener;
-import android.view.Window;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -72,8 +57,6 @@ public class MapActivity extends com.google.android.maps.MapActivity
     implements View.OnTouchListener, View.OnClickListener,
         TrackDataListener {
 
-  private static final int DIALOG_INSTALL_EARTH = 0;
-
   // Saved instance state keys:
   // ---------------------------
 
@@ -87,6 +70,12 @@ public class MapActivity extends com.google.android.maps.MapActivity
    * visible area.
    */
   private boolean keepMyLocationVisible;
+
+  /**
+   * True if we've already zoomed into the current location.
+   * Only relevant when {@link #keepMyLocationVisible} is true.
+   */
+  private boolean myLocationWasZoomedIn;
 
   /**
    * The ID of a track on which we want to show a waypoint.
@@ -122,10 +111,6 @@ public class MapActivity extends com.google.android.maps.MapActivity
   private LinearLayout messagePane;
   private TextView messageText;
   private LinearLayout busyPane;
-  private ImageButton optionsBtn;
-
-  private MenuItem myLocation;
-  private MenuItem toggleLayers;
 
   /**
    * We are not displaying driving directions. Just an arbitrary track that is
@@ -157,8 +142,8 @@ public class MapActivity extends com.google.android.maps.MapActivity
     // The volume we want to control is the Text-To-Speech volume
     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
-    // We don't need a window title bar:
-    requestWindowFeature(Window.FEATURE_NO_TITLE);
+    // Show the action bar (or nothing at all).
+    ApiAdapterFactory.getApiAdapter().showActionBar(this);
 
     // Inflate the layout:
     setContentView(R.layout.mytracks_layout);
@@ -177,10 +162,6 @@ public class MapActivity extends com.google.android.maps.MapActivity
     messagePane = (LinearLayout) findViewById(R.id.messagepane);
     messageText = (TextView) findViewById(R.id.messagetext);
     busyPane = (LinearLayout) findViewById(R.id.busypane);
-    optionsBtn = (ImageButton) findViewById(R.id.showOptions);
-
-    optionsBtn.setOnCreateContextMenuListener(contextMenuListener);
-    optionsBtn.setOnClickListener(this);
   }
 
   @Override
@@ -235,27 +216,6 @@ public class MapActivity extends com.google.android.maps.MapActivity
     super.onPause();
   }
 
-  @Override
-  protected Dialog onCreateDialog(int id) {
-    switch (id) {
-      case DIALOG_INSTALL_EARTH:
-        return PlayTrackUtils.createInstallEarthDialog(this);
-      default:
-        return null;
-    }
-  }
-
-  // Utility functions:
-  // -------------------
-
-  /**
-   * Shows the options button if a track is selected, or hide it if not.
-   */
-  private void updateOptionsButton(boolean trackSelected) {
-    optionsBtn.setVisibility(
-        trackSelected ? View.VISIBLE : View.INVISIBLE);
-  }
-
   /**
    * Tests if a location is visible.
    *
@@ -287,6 +247,18 @@ public class MapActivity extends com.google.android.maps.MapActivity
   }
 
   /**
+   * Centers (and keeps centered) the map on the current location.
+   */
+  public void showMyLocation() {
+    dataHub.forceUpdateLocation();
+    keepMyLocationVisible = true;
+    myLocationWasZoomedIn = false;
+    if (currentLocation != null) {
+      showCurrentLocation();
+    }
+  }
+
+  /**
    * Moves the location pointer to the current location and center the map if
    * the current location is outside the visible area.
    */
@@ -302,6 +274,11 @@ public class MapActivity extends com.google.android.maps.MapActivity
       GeoPoint geoPoint = LocationUtils.getGeoPoint(currentLocation);
       MapController controller = mapView.getController();
       controller.animateTo(geoPoint);
+      if (!myLocationWasZoomedIn && mapView.getZoomLevel() < 18) {
+        // Only zoom in the first time we show the location.
+        myLocationWasZoomedIn = true;
+        controller.setZoom(18);
+      }
     }
   }
 
@@ -408,8 +385,6 @@ public class MapActivity extends com.google.android.maps.MapActivity
       @Override
       public void run() {
         boolean trackSelected = track != null;
-        updateOptionsButton(trackSelected);
-
         mapOverlay.setTrackDrawingEnabled(trackSelected);
 
         if (trackSelected) {
@@ -430,153 +405,24 @@ public class MapActivity extends com.google.android.maps.MapActivity
     });
   }
 
-  private final OnCreateContextMenuListener contextMenuListener =
-      new OnCreateContextMenuListener() {
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-          menu.setHeaderTitle(R.string.track_list_context_menu_title);
-          menu.add(Menu.NONE, Constants.MENU_EDIT, Menu.NONE, R.string.track_list_edit_track);
-          if (!dataHub.isRecordingSelected()) {
-            String saveFileFormat = getString(R.string.track_list_save_file);
-            String shareFileFormat = getString(R.string.track_list_share_file);
-            String fileTypes[] = getResources().getStringArray(R.array.file_types);
-
-            menu.add(Menu.NONE, Constants.MENU_PLAY, Menu.NONE, R.string.track_list_play);
-            menu.add(Menu.NONE, Constants.MENU_SEND_TO_GOOGLE, Menu.NONE,
-                R.string.track_list_send_google);
-            SubMenu share = menu.addSubMenu(
-                Menu.NONE, Constants.MENU_SHARE, Menu.NONE, R.string.track_list_share_track);
-            share.add(
-                Menu.NONE, Constants.MENU_SHARE_MAP, Menu.NONE, R.string.track_list_share_map);
-            share.add(Menu.NONE, Constants.MENU_SHARE_FUSION_TABLE, Menu.NONE,
-                R.string.track_list_share_fusion_table);
-            share.add(Menu.NONE, Constants.MENU_SHARE_GPX_FILE, Menu.NONE,
-                String.format(shareFileFormat, fileTypes[0]));
-            share.add(Menu.NONE, Constants.MENU_SHARE_KML_FILE, Menu.NONE,
-                String.format(shareFileFormat, fileTypes[1]));
-            share.add(Menu.NONE, Constants.MENU_SHARE_CSV_FILE, Menu.NONE,
-                String.format(shareFileFormat, fileTypes[2]));
-            share.add(Menu.NONE, Constants.MENU_SHARE_TCX_FILE, Menu.NONE,
-                String.format(shareFileFormat, fileTypes[3]));
-            SubMenu save = menu.addSubMenu(
-                Menu.NONE, Constants.MENU_WRITE_TO_SD_CARD, Menu.NONE, R.string.track_list_save_sd);
-            save.add(Menu.NONE, Constants.MENU_SAVE_GPX_FILE, Menu.NONE,
-                String.format(saveFileFormat, fileTypes[0]));
-            save.add(Menu.NONE, Constants.MENU_SAVE_KML_FILE, Menu.NONE,
-                String.format(saveFileFormat, fileTypes[1]));
-            save.add(Menu.NONE, Constants.MENU_SAVE_CSV_FILE, Menu.NONE,
-                String.format(saveFileFormat, fileTypes[2]));
-            save.add(Menu.NONE, Constants.MENU_SAVE_TCX_FILE, Menu.NONE,
-                String.format(saveFileFormat, fileTypes[3]));
-            menu.add(Menu.NONE, Constants.MENU_CLEAR_MAP, Menu.NONE, R.string.track_list_clear_map);
-            menu.add(Menu.NONE, Constants.MENU_DELETE, Menu.NONE, R.string.track_list_delete_track);
-          }
-        }
-      };
-
-  @Override
-  public boolean onMenuItemSelected(int featureId, MenuItem item) {
-    Intent intent;
-    long trackId = dataHub.getSelectedTrackId();
-    switch (item.getItemId()) {
-      case Constants.MENU_EDIT: 
-        intent = new Intent(this, TrackDetail.class).putExtra(TrackDetail.TRACK_ID, trackId);
-        startActivity(intent);
-        return true;
-      case Constants.MENU_PLAY:
-        if (PlayTrackUtils.isEarthInstalled(this)) {
-          PlayTrackUtils.playTrack(this, trackId);
-          return true;
-        } else {
-          showDialog(DIALOG_INSTALL_EARTH);
-          return true;
-        }
-      case Constants.MENU_SEND_TO_GOOGLE:
-        intent = new Intent(this, UploadServiceChooserActivity.class)
-            .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, true, true, true));
-        startActivity(intent);
-        return true;
-      case Constants.MENU_SHARE_MAP:
-        intent = new Intent(this, UploadServiceChooserActivity.class)
-            .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, true, false, false));
-        startActivity(intent);
-        return true;
-      case Constants.MENU_SHARE_FUSION_TABLE:
-        intent = new Intent(this, UploadServiceChooserActivity.class)
-            .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, false, true, false));
-        startActivity(intent);
-        return true;
-      case Constants.MENU_SHARE_GPX_FILE:
-      case Constants.MENU_SHARE_KML_FILE:
-      case Constants.MENU_SHARE_CSV_FILE:
-      case Constants.MENU_SHARE_TCX_FILE:
-      case Constants.MENU_SAVE_GPX_FILE:
-      case Constants.MENU_SAVE_KML_FILE:
-      case Constants.MENU_SAVE_CSV_FILE:
-      case Constants.MENU_SAVE_TCX_FILE:
-        SaveActivity.handleExportTrackAction(
-            this, trackId, Constants.getActionFromMenuId(item.getItemId()));
-        return true;
-      case Constants.MENU_CLEAR_MAP:
-        dataHub.unloadCurrentTrack();
-        return true;
-      case Constants.MENU_DELETE:
-        Uri uri = ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId);
-        intent = new Intent(Intent.ACTION_DELETE, uri);
-        startActivity(intent);
-        return true;
-      default:
-        return super.onMenuItemSelected(featureId, item);
-    }
+  /**
+   * Returns whether the map is currently in satellite view mode.
+   */
+  public boolean isSatelliteView() {
+    return mapView.isSatellite();
   }
 
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    super.onCreateOptionsMenu(menu);
-    myLocation = menu.add(
-        Menu.NONE, Constants.MENU_MY_LOCATION, Menu.NONE, R.string.menu_map_view_my_location);
-    myLocation.setIcon(android.R.drawable.ic_menu_mylocation);
-    toggleLayers = menu.add(
-        Menu.NONE, Constants.MENU_TOGGLE_LAYERS, Menu.NONE, R.string.menu_map_view_satellite_mode);
-    toggleLayers.setIcon(android.R.drawable.ic_menu_mapmode);
-    return true;
-  }
-
-  @Override
-  public boolean onPrepareOptionsMenu(Menu menu) {
-    toggleLayers.setTitle(mapView.isSatellite() ?
-        R.string.menu_map_view_map_mode : R.string.menu_map_view_satellite_mode);
-    return super.onPrepareOptionsMenu(menu);
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case Constants.MENU_MY_LOCATION: {
-        dataHub.forceUpdateLocation();
-        keepMyLocationVisible = true;
-        if (mapView.getZoomLevel() < 18) {
-          mapView.getController().setZoom(18);
-        }
-        if (currentLocation != null) {
-          showCurrentLocation();
-        }
-        return true;
-      }
-      case Constants.MENU_TOGGLE_LAYERS: {
-        mapView.setSatellite(!mapView.isSatellite());
-        return true;
-      }
-    }
-    return super.onOptionsItemSelected(item);
+  /**
+   * Changes whether the map should be in satellite view mode.
+   */
+  public void setSatelliteView(boolean sat) {
+    mapView.setSatellite(sat);
   }
 
   @Override
   public void onClick(View v) {
     if (v == messagePane) {
       startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-    } else if (v == optionsBtn) {
-      optionsBtn.performLongClick();
     }
   }
 

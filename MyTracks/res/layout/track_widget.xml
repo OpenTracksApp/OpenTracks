@@ -19,10 +19,10 @@ limitations under the License.
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
-  android:paddingLeft="10px"
-  android:paddingRight="10px"
-  android:paddingTop="5px"
-  android:paddingBottom="5px">
+  android:paddingLeft="10dp"
+  android:paddingRight="10dp"
+  android:paddingTop="5dp"
+  android:paddingBottom="5dp">
   <LinearLayout
     android:layout_height="fill_parent"
     android:layout_width="fill_parent"
@@ -32,17 +32,17 @@ limitations under the License.
       android:layout_height="fill_parent"
       android:layout_width="wrap_content"
       android:background="@android:color/transparent"
-      android:paddingLeft="10px"
-      android:paddingRight="10px"
+      android:paddingLeft="10dp"
+      android:paddingRight="10dp"
       android:src="@drawable/appwidget_button_disabled" />
     <LinearLayout
       android:id="@+id/appwidget_track_statistics"
       android:layout_height="fill_parent"
-      android:layout_width="fill_parent"
+      android:layout_width="0dp"
       android:layout_weight="1"
       android:clickable="true"
       android:orientation="vertical"
-      android:paddingLeft="15px">
+      android:paddingLeft="15dp">
       <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
@@ -54,15 +54,15 @@ limitations under the License.
           style="@style/WidgetTextView"
           android:text="@string/stat_total_distance" />
       </LinearLayout>
-      <ImageView
+      <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="1px"
+        android:layout_height="1dp"
         android:background="@color/appwidget_hr" />
       <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:orientation="horizontal"
-        android:paddingBottom="2px">
+        android:paddingBottom="2dp">
         <TextView
           style="@style/WidgetTextView.Value"
           android:id="@+id/appwidget_time_text" />
@@ -70,9 +70,9 @@ limitations under the License.
           style="@style/WidgetTextView"
           android:text="@string/stat_moving_time" />
       </LinearLayout>
-      <ImageView
+      <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="1px"
+        android:layout_height="1dp"
         android:background="@color/appwidget_hr" />
       <LinearLayout
         android:layout_height="wrap_content"

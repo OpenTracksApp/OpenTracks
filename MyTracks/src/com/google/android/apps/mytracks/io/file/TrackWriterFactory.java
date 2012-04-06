@@ -22,6 +22,8 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 /**
@@ -34,7 +36,7 @@ public class TrackWriterFactory {
   /**
    * Definition of all possible track formats.
    */
-  public enum TrackFileFormat {
+  public enum TrackFileFormat implements Parcelable {
     GPX {
       @Override
       TrackFormatWriter newFormatWriter(Context context) {
@@ -57,6 +59,28 @@ public class TrackWriterFactory {
       @Override
       public TrackFormatWriter newFormatWriter(Context context) {
         return new TcxTrackWriter(context);
+      }
+    };
+
+    @Override
+    public int describeContents() {
+      return 0;
+    }
+
+    @Override
+    public void writeToParcel(final Parcel dest, final int flags) {
+      dest.writeInt(ordinal());
+    }
+
+    public static final Creator<TrackFileFormat> CREATOR = new Creator<TrackFileFormat>() {
+      @Override
+      public TrackFileFormat createFromParcel(final Parcel source) {
+        return TrackFileFormat.values()[source.readInt()];
+      }
+
+      @Override
+      public TrackFileFormat[] newArray(final int size) {
+        return new TrackFileFormat[size];
       }
     };
 

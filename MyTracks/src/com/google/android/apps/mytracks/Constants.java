@@ -36,47 +36,22 @@ public abstract class Constants {
   /*
    * onActivityResult request codes:
    */
-  public static final int SHOW_TRACK = 0;
-  public static final int SHARE_GPX_FILE = 1;
-  public static final int SHARE_KML_FILE = 2;
-  public static final int SHARE_CSV_FILE = 3;
-  public static final int SHARE_TCX_FILE = 4;
-  public static final int SAVE_GPX_FILE = 5;
-  public static final int SAVE_KML_FILE = 6;
-  public static final int SAVE_CSV_FILE = 7;
-  public static final int SAVE_TCX_FILE = 8;
-  public static final int SHOW_WAYPOINT = 9;
-  public static final int WELCOME = 10;
-
-  /*
-   * Menu ids:
-   */
-
-  public static final int MENU_MY_LOCATION = 1;
-  public static final int MENU_TOGGLE_LAYERS = 2;
-  public static final int MENU_CHART_SETTINGS = 3;
+  public static final int SHOW_WAYPOINT = 0;
 
   /*
    * Context menu ids. Sorted alphabetically.
    */
-  public static final int MENU_CLEAR_MAP = 100;
-  public static final int MENU_DELETE = 101;
-  public static final int MENU_EDIT = 102;
-  public static final int MENU_PLAY = 103;
-  public static final int MENU_SAVE_CSV_FILE = 104;
-  public static final int MENU_SAVE_GPX_FILE = 105;
-  public static final int MENU_SAVE_KML_FILE = 106;
-  public static final int MENU_SAVE_TCX_FILE = 107;
-  public static final int MENU_SEND_TO_GOOGLE = 108;
-  public static final int MENU_SHARE = 109;
-  public static final int MENU_SHARE_CSV_FILE = 110;
-  public static final int MENU_SHARE_FUSION_TABLE = 111;
-  public static final int MENU_SHARE_GPX_FILE = 112;
-  public static final int MENU_SHARE_KML_FILE = 113;
-  public static final int MENU_SHARE_MAP = 114;
-  public static final int MENU_SHARE_TCX_FILE = 115;
-  public static final int MENU_SHOW = 116;
-  public static final int MENU_WRITE_TO_SD_CARD = 117;
+  public static final int MENU_DELETE = 100;
+  public static final int MENU_EDIT = 101;
+  public static final int MENU_SHOW = 102;
+
+  /*
+   * Main screen tab tags:
+   */
+
+  public static final String MAP_TAB_TAG = "map";
+  public static final String STATS_TAB_TAG = "stats";
+  public static final String CHART_TAB_TAG = "chart";
 
   /**
    * The number of distance readings to smooth to get a stable signal.
@@ -168,29 +143,6 @@ public abstract class Constants {
    */
   public static final String RESUME_TRACK_EXTRA_NAME =
       "com.google.android.apps.mytracks.RESUME_TRACK";
-
-  public static int getActionFromMenuId(int menuId) {
-    switch (menuId) {
-      case Constants.MENU_SHARE_KML_FILE:
-        return Constants.SHARE_KML_FILE;
-      case Constants.MENU_SHARE_GPX_FILE:
-        return Constants.SHARE_GPX_FILE;
-      case Constants.MENU_SHARE_CSV_FILE:
-        return Constants.SHARE_CSV_FILE;
-      case Constants.MENU_SHARE_TCX_FILE:
-        return Constants.SHARE_TCX_FILE;
-      case Constants.MENU_SAVE_GPX_FILE:
-        return Constants.SAVE_GPX_FILE;
-      case Constants.MENU_SAVE_KML_FILE:
-        return Constants.SAVE_KML_FILE;
-      case Constants.MENU_SAVE_CSV_FILE:
-        return Constants.SAVE_CSV_FILE;
-      case Constants.MENU_SAVE_TCX_FILE:
-        return Constants.SAVE_TCX_FILE;
-      default:
-        return -1;
-    }
-  }
 
   public static final String MAPSHOP_BASE_URL =
     "https://maps.google.com/maps/ms";

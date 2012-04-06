@@ -23,15 +23,13 @@ limitations under the License.
   <LinearLayout android:id="@+id/elevation_chart"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_weight="1">
+    android:layout_height="fill_parent">
   </LinearLayout>
   <RelativeLayout android:id="@+id/elevation_zoom_layout"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:padding="10dip"
-    android:layout_weight="0">
+    android:padding="10dp">
     <ZoomControls android:id="@+id/elevation_zoom"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -44,17 +42,16 @@ limitations under the License.
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_weight="0"
-    android:padding="3dip"
+    android:padding="3dp"
     android:visibility="gone">
     <ProgressBar
       android:layout_weight="1"
-      android:layout_height="0dip"
+      android:layout_height="0dp"
       android:layout_width="wrap_content"
-      android:maxWidth="80dip"
-      android:maxHeight="80dip"
-      android:minWidth="80dip"
-      android:minHeight="80dip"
+      android:maxWidth="80dp"
+      android:maxHeight="80dp"
+      android:minWidth="80dp"
+      android:minHeight="80dp"
       android:layout_gravity="center"/>
   </LinearLayout>
 </RelativeLayout>

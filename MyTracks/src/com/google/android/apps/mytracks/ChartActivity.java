@@ -28,26 +28,26 @@ import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.location.Location;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.view.Window;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.ZoomControls;
 
 import java.util.ArrayList;
@@ -61,7 +61,8 @@ import java.util.EnumSet;
  */
 public class ChartActivity extends Activity implements TrackDataListener {
 
-  private static final int CHART_SETTINGS_DIALOG = 1;
+  private static final int DIALOG_CHART_SETTINGS_ID = 0;
+
   private final DoubleBuffer elevationBuffer =
       new DoubleBuffer(Constants.ELEVATION_SMOOTHING_FACTOR);
   private final DoubleBuffer speedBuffer =
@@ -84,7 +85,6 @@ public class ChartActivity extends Activity implements TrackDataListener {
    * UI elements:
    */
   private ChartView chartView;
-  private MenuItem chartSettingsMenuItem;
   private LinearLayout busyPane;
   private ZoomControls zoomControls;
 
@@ -118,7 +118,9 @@ public class ChartActivity extends Activity implements TrackDataListener {
     // The volume we want to control is the Text-To-Speech volume
     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
 
-    requestWindowFeature(Window.FEATURE_NO_TITLE);
+    // Show the action bar (or nothing at all).
+    ApiAdapterFactory.getApiAdapter().showActionBar(this);
+
     setContentView(R.layout.mytracks_charts);
     ViewGroup layout = (ViewGroup) findViewById(R.id.elevation_chart);
     chartView = new ChartView(this);
@@ -184,63 +186,58 @@ public class ChartActivity extends Activity implements TrackDataListener {
   }
 
   @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    super.onCreateOptionsMenu(menu);
-    chartSettingsMenuItem = menu.add(Menu.NONE, Constants.MENU_CHART_SETTINGS, Menu.NONE,
-        R.string.menu_chart_view_chart_settings);
-    chartSettingsMenuItem.setIcon(R.drawable.chart_settings);
-    return true;
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case Constants.MENU_CHART_SETTINGS:
-        showDialog(CHART_SETTINGS_DIALOG);
-        return true;
-    }
-    return super.onOptionsItemSelected(item);
-  }
-
-  @Override
   protected Dialog onCreateDialog(int id) {
-    if (id == CHART_SETTINGS_DIALOG) {
-      final ChartSettingsDialog settingsDialog = new ChartSettingsDialog(this);
-      settingsDialog.setOnClickListener(new OnClickListener() {
-        @Override
-        public void onClick(DialogInterface arg0, int which) {
-          if (which != DialogInterface.BUTTON_POSITIVE) {
-            return;
-          }
-
-          for (int i = 0; i < ChartView.NUM_SERIES; i++) {
-            chartView.setChartValueSeriesEnabled(i, settingsDialog.isSeriesEnabled(i));
-          }
-          setMode(settingsDialog.getMode());
-          chartView.postInvalidate();
-        }
-      });
-      return settingsDialog;
+    if (id != DIALOG_CHART_SETTINGS_ID) {
+      return null;
     }
 
-    return super.onCreateDialog(id);
-  }
+    View view = getLayoutInflater().inflate(R.layout.chart_settings, null);
+    final RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.chart_settings_x);
+    radioGroup.check(chartView.getMode() == Mode.BY_DISTANCE 
+        ? R.id.chart_settings_by_distance : R.id.chart_settings_by_time);
 
-  @Override
-  protected void onPrepareDialog(int id, Dialog dialog) {
-    super.onPrepareDialog(id, dialog);
+    final CheckBox[] checkBoxes = new CheckBox[ChartView.NUM_SERIES];
+    checkBoxes[ChartView.ELEVATION_SERIES] = (CheckBox) view.findViewById(
+        R.id.chart_settings_elevation);
+    checkBoxes[ChartView.SPEED_SERIES] = (CheckBox) view.findViewById(R.id.chart_settings_speed);
+    checkBoxes[ChartView.POWER_SERIES] = (CheckBox) view.findViewById(R.id.chart_settings_power);
+    checkBoxes[ChartView.CADENCE_SERIES] = (CheckBox) view.findViewById(
+        R.id.chart_settings_cadence);
+    checkBoxes[ChartView.HEART_RATE_SERIES] = (CheckBox) view.findViewById(
+        R.id.chart_settings_heart_rate);
 
-    if (id == CHART_SETTINGS_DIALOG) {
-      prepareSettingsDialog((ChartSettingsDialog) dialog);
-    }
-  }
-
-  private void prepareSettingsDialog(ChartSettingsDialog settingsDialog) {
-    settingsDialog.setMode(chartView.getMode());
-    settingsDialog.setDisplaySpeed(reportSpeed);
+    // set checkboxes values
     for (int i = 0; i < ChartView.NUM_SERIES; i++) {
-      settingsDialog.setSeriesEnabled(i, chartView.isChartValueSeriesEnabled(i));
+      checkBoxes[i].setChecked(chartView.isChartValueSeriesEnabled(i));
     }
+    checkBoxes[ChartView.SPEED_SERIES].setText(reportSpeed 
+        ? R.string.stat_speed : R.string.stat_pace);
+
+    return new AlertDialog.Builder(this)
+        .setCancelable(true)
+        .setNegativeButton(R.string.generic_cancel, null)
+        .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            setMode(radioGroup.getCheckedRadioButtonId() == R.id.chart_settings_by_distance
+                ? Mode.BY_DISTANCE
+                : Mode.BY_TIME);
+            for (int i = 0; i < ChartView.NUM_SERIES; i++) {
+              chartView.setChartValueSeriesEnabled(i, checkBoxes[i].isChecked());
+            }
+            chartView.postInvalidate();
+          }
+        })
+        .setTitle(R.string.menu_chart_settings)
+        .setView(view)
+        .create();
+  }
+
+  /**
+   * Shows the chart settings dialog
+   */
+  public void showChartSettingsDialog() {
+    showDialog(DIALOG_CHART_SETTINGS_ID);
   }
 
   /**
@@ -486,11 +483,6 @@ public class ChartActivity extends Activity implements TrackDataListener {
     return chartView;
   }
 
-  @VisibleForTesting
-  MenuItem getChartSettingsMenuItem() {
-    return chartSettingsMenuItem;
-  }
-  
   @VisibleForTesting
   void setTrackMaxSpeed(double maxSpeed) {
     trackMaxSpeed = maxSpeed;

@@ -34,6 +34,7 @@ import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.common.gdata.AndroidXmlParserFactory;
 import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.wireless.gdata.client.GDataClient;
 import com.google.wireless.gdata.client.HttpException;
 import com.google.wireless.gdata.parser.ParseException;
@@ -73,8 +74,10 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
   private static final int MAX_POINTS_PER_UPLOAD = 500;
 
   private static final int PROGRESS_FETCH_MAP_ID = 5;
-  private static final int PROGRESS_UPLOAD_DATA_MIN = 10;
-  private static final int PROGRESS_UPLOAD_DATA_MAX = 90;
+  @VisibleForTesting
+  static final int PROGRESS_UPLOAD_DATA_MIN = 10;
+  @VisibleForTesting
+  static final int PROGRESS_UPLOAD_DATA_MAX = 90;
   private static final int PROGRESS_UPLOAD_WAYPOINTS = 95;
   private static final int PROGRESS_COMPLETE = 100;
 
@@ -83,8 +86,8 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
   private final long trackId;
   private final Account account;
   private final String chooseMapId;
-  private final Context context;
   private final MyTracksProviderUtils myTracksProviderUtils;
+  private final Context context;
   private final GDataClient gDataClient;
   private final MapsClient mapsClient;
 
@@ -94,15 +97,25 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
   private String mapId;
   int currentSegment;
 
+  public SendMapsAsyncTask(SendMapsActivity activity, long trackId, Account account,
+      String chooseMapId) {
+    this(activity, trackId, account, chooseMapId, MyTracksProviderUtils.Factory.get(activity
+        .getApplicationContext()));
+  }
+  
+  /**
+   * This constructor is created for test.
+   */
+  @VisibleForTesting
   public SendMapsAsyncTask (
-      SendMapsActivity activity, long trackId, Account account, String chooseMapId) {
+      SendMapsActivity activity, long trackId, Account account, String chooseMapId, MyTracksProviderUtils myTracksProviderUtils) {
     super(activity);
     this.trackId = trackId;
     this.account = account;
     this.chooseMapId = chooseMapId;
-
+    this.myTracksProviderUtils = myTracksProviderUtils;
     context = activity.getApplicationContext();
-    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(context);
+    
     gDataClient = GDataClientFactory.getGDataClient(context);
     mapsClient = new MapsClient(
         gDataClient, new XmlMapsGDataParserFactory(new AndroidXmlParserFactory()));
@@ -201,7 +214,8 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
    * @param track the Track
    * @return true if able to fetch the mapId variable.
    */
-  private boolean fetchSendMapId(Track track) {
+  @VisibleForTesting
+  boolean fetchSendMapId(Track track) {
     if (isCancelled()) {
       return false;
     }
@@ -239,7 +253,8 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
    * @param track the track
    * @return true if success.
    */
-  private boolean uploadAllTrackPoints(Track track) {
+  @VisibleForTesting
+  boolean uploadAllTrackPoints(Track track) {
     Cursor locationsCursor = null;
     try {
       SharedPreferences prefs = context.getSharedPreferences(
@@ -313,9 +328,8 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
       if (lastLocation != null) {
         distances.add(tripStatisticsBuilder.getStatistics().getTotalDistance());
         elevations.add(elevationBuffer.getAverage());
-        DescriptionGenerator descriptionGenerator = new DescriptionGeneratorImpl(context);
-        track.setDescription("<p>" + track.getDescription() + "</p><p>"
-            + descriptionGenerator.generateTrackDescription(track, distances, elevations) + "</p>");
+        
+        track.setDescription(getTrackDescription(track, distances, elevations));
         if (!uploadMarker(context.getString(R.string.marker_label_end, track.getName()),
             track.getDescription(), END_ICON_URL, lastLocation)) {
           Log.d(TAG, "Unable to create an end marker");
@@ -331,6 +345,21 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
   }
   
   /**
+   * Gets the description of a track.
+   * 
+   * @param track the track
+   * @param distances distance vectors
+   * @param elevations elevation vectors
+   * @return the description of a track.
+   */
+  @VisibleForTesting
+  String getTrackDescription(Track track, Vector<Double> distances, Vector<Double> elevations) {
+    DescriptionGenerator descriptionGenerator = new DescriptionGeneratorImpl(context);
+    return "<p>" + track.getDescription() + "</p><p>"
+        + descriptionGenerator.generateTrackDescription(track, distances, elevations) + "</p>";
+  }
+  
+  /**
    * Prepares and uploads a list of locations from a track.
    *
    * @param track the track
@@ -338,7 +367,8 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
    * @param lastBatch true if it is the last batch of locations
    * @return true if success.
    */
-  private boolean prepareAndUploadPoints(Track track, List<Location> locations, boolean lastBatch) {
+  @VisibleForTesting
+  boolean prepareAndUploadPoints(Track track, List<Location> locations, boolean lastBatch) {
     // Prepare locations
     ArrayList<Track> splitTracks = SendToGoogleUtils.prepareLocations(track, locations);
 
@@ -367,7 +397,8 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
    * @param location marker location
    * @return true if success.
    */
-  private boolean uploadMarker(
+  @VisibleForTesting
+  boolean uploadMarker(
       String title, String description, String iconUrl, Location location) {
     if (isCancelled()) {
       return false;
@@ -426,7 +457,8 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
    *
    * @return true if success.
    */
-  private boolean uploadWaypoints() {
+  @VisibleForTesting
+  boolean uploadWaypoints() {
     Cursor cursor = null;
     try {
       cursor = myTracksProviderUtils.getWaypointsCursor(
@@ -471,10 +503,43 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
    * @param uploaded the number of uploaded locations
    * @param total the number of total locations
    */
-  private void updateProgress(int uploaded, int total) {
+  @VisibleForTesting
+  void updateProgress(int uploaded, int total) {
+    publishProgress(getPercentage(uploaded, total));
+  }
+  
+  
+  /**
+   * Count the percentage of the number of locations uploaded.
+   *
+   * @param uploaded the number of uploaded locations
+   * @param total the number of total locations
+   */
+  @VisibleForTesting
+  static int getPercentage(int uploaded, int total) {
     double totalPercentage = (double) uploaded / total;
-    double scaledPercentage =  totalPercentage
+    double scaledPercentage = totalPercentage
         * (PROGRESS_UPLOAD_DATA_MAX - PROGRESS_UPLOAD_DATA_MIN) + PROGRESS_UPLOAD_DATA_MIN;
-    publishProgress((int) scaledPercentage);
+    return (int) scaledPercentage;
+  }
+  
+  /**
+   * Gets the mapID.
+   * 
+   * @return mapId
+   */
+  @VisibleForTesting
+  String getMapId() {
+    return mapId;
+  }
+   
+  /**
+   * Sets the value of mapsGDataConverter.
+   * 
+   * @param mapsGDataConverter new value of mapsGDataConverter
+   */
+  @VisibleForTesting
+  void setMapsGDataConverter(MapsGDataConverter mapsGDataConverter) {
+    this.mapsGDataConverter = mapsGDataConverter;
   }
 }

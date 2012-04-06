@@ -17,8 +17,9 @@ package com.google.android.apps.mytracks;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
 
-import com.google.android.apps.mytracks.io.backup.BackupActivityHelper;
+import com.google.android.apps.mytracks.io.backup.BackupActivity;
 import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
+import com.google.android.apps.mytracks.io.backup.RestoreChooserActivity;
 import com.google.android.apps.mytracks.services.sensors.ant.AntUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.BluetoothDeviceUtils;
@@ -29,7 +30,6 @@ import com.google.android.maps.mytracks.R;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -62,8 +62,9 @@ import java.util.Set;
  */
 public class SettingsActivity extends PreferenceActivity {
 
-  private static final int DIALOG_CONFIRM_RESET = 0;
-  private static final int DIALOG_CONFIRM_ACCESS = 1;
+  private static final int DIALOG_CONFIRM_RESET_ID = 0;
+  private static final int DIALOG_CONFIRM_ACCESS_ID = 1;
+  private static final int DIALOG_CONFIRM_RESTORE_ID = 2;
 
   // Value when the task frequency is off.
   private static final String TASK_FREQUENCY_OFF = "0";
@@ -150,7 +151,7 @@ public class SettingsActivity extends PreferenceActivity {
     resetPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
       @Override
       public boolean onPreferenceClick(Preference arg0) {
-        showDialog(DIALOG_CONFIRM_RESET);
+        showDialog(DIALOG_CONFIRM_RESET_ID);
         return true;
       }
     });
@@ -162,7 +163,7 @@ public class SettingsActivity extends PreferenceActivity {
       @Override
       public boolean onPreferenceChange(Preference preference, Object newValue) {
         if ((Boolean) newValue) {
-          showDialog(DIALOG_CONFIRM_ACCESS);
+          showDialog(DIALOG_CONFIRM_ACCESS_ID);
           return false;
         } else {
           return true;
@@ -174,22 +175,32 @@ public class SettingsActivity extends PreferenceActivity {
   @Override
   protected Dialog onCreateDialog(int id) {
     switch (id) {
-      case DIALOG_CONFIRM_RESET:
+      case DIALOG_CONFIRM_RESET_ID:
         return DialogUtils.createConfirmationDialog(
-            this, R.string.settings_reset_confirm_message, new OnClickListener() {
+            this, R.string.settings_reset_confirm_message, new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int button) {
                 onResetPreferencesConfirmed();
               }
             });
-      case DIALOG_CONFIRM_ACCESS:
-        return DialogUtils.createConfirmationDialog(
-            this, R.string.settings_sharing_allow_access_confirm_message, new OnClickListener() {
+      case DIALOG_CONFIRM_ACCESS_ID:
+        return DialogUtils.createConfirmationDialog(this,
+            R.string.settings_sharing_allow_access_confirm_message,
+            new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int button) {
                 CheckBoxPreference pref = (CheckBoxPreference) findPreference(
                     getString(R.string.allow_access_key));
                 pref.setChecked(true);
+              }
+            });
+      case DIALOG_CONFIRM_RESTORE_ID:
+        return DialogUtils.createConfirmationDialog(this,
+            R.string.settings_backup_restore_confirm_message,
+            new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(SettingsActivity.this, RestoreChooserActivity.class));
               }
             });
       default:
@@ -354,9 +365,7 @@ public class SettingsActivity extends PreferenceActivity {
         new OnPreferenceClickListener() {
           @Override
           public boolean onPreferenceClick(Preference preference) {
-            BackupActivityHelper backupHelper =
-                new BackupActivityHelper(SettingsActivity.this);
-            backupHelper.writeBackup();
+            startActivity(new Intent(SettingsActivity.this, BackupActivity.class));
             return true;
           }
         });
@@ -364,9 +373,7 @@ public class SettingsActivity extends PreferenceActivity {
         new OnPreferenceClickListener() {
           @Override
           public boolean onPreferenceClick(Preference preference) {
-            BackupActivityHelper backupHelper =
-                new BackupActivityHelper(SettingsActivity.this);
-            backupHelper.restoreBackup();
+            showDialog(DIALOG_CONFIRM_RESTORE_ID);
             return true;
           }
         });
