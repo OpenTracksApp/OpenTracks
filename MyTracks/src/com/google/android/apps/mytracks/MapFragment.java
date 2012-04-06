@@ -414,8 +414,10 @@ public class MapFragment extends Fragment
    * Updates the trackDataHub. Needs to be synchronized because trackDataHub can be
    * accessed by multiple threads. 
    */
-  private synchronized void updateTrackDataHub() { 
-    trackDataHub.forceUpdateLocation();
+  private synchronized void updateTrackDataHub() {
+    if (trackDataHub != null) {
+      trackDataHub.forceUpdateLocation();
+    }
   }
   
   /**
