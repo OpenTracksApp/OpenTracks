@@ -36,31 +36,15 @@ public abstract class Constants {
   /*
    * onActivityResult request codes:
    */
-  public static final int SHOW_TRACK = 0;
-  public static final int SHOW_WAYPOINT = 1;
-  public static final int WELCOME = 2;
+  public static final int SHOW_WAYPOINT = 0;
 
   /*
    * Context menu ids. Sorted alphabetically.
    */
-  public static final int MENU_CLEAR_MAP = 100;
-  public static final int MENU_DELETE = 101;
-  public static final int MENU_EDIT = 102;
-  public static final int MENU_PLAY = 103;
-  public static final int MENU_SAVE_CSV_FILE = 104;
-  public static final int MENU_SAVE_GPX_FILE = 105;
-  public static final int MENU_SAVE_KML_FILE = 106;
-  public static final int MENU_SAVE_TCX_FILE = 107;
-  public static final int MENU_SEND_TO_GOOGLE = 108;
-  public static final int MENU_SHARE = 109;
-  public static final int MENU_SHARE_CSV_FILE = 110;
-  public static final int MENU_SHARE_FUSION_TABLE = 111;
-  public static final int MENU_SHARE_GPX_FILE = 112;
-  public static final int MENU_SHARE_KML_FILE = 113;
-  public static final int MENU_SHARE_MAP = 114;
-  public static final int MENU_SHARE_TCX_FILE = 115;
-  public static final int MENU_SHOW = 116;
-  public static final int MENU_WRITE_TO_SD_CARD = 117;
+  public static final int MENU_DELETE = 100;
+  public static final int MENU_EDIT = 101;
+  public static final int MENU_SHOW = 102;
+
   /*
    * Main screen tab tags:
    */

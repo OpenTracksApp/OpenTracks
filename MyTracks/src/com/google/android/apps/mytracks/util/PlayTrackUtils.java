@@ -93,7 +93,7 @@ public class PlayTrackUtils {
   public static Dialog createInstallEarthDialog(final Context context) {
     return new AlertDialog.Builder(context)
         .setCancelable(true)
-        .setMessage(R.string.track_list_play_install_earth_message)
+        .setMessage(R.string.track_detail_install_earth_message)
         .setNegativeButton(android.R.string.cancel, null)
         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
           @Override

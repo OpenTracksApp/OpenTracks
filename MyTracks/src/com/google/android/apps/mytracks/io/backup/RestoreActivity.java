@@ -16,7 +16,7 @@
 
 package com.google.android.apps.mytracks.io.backup;
 
-import com.google.android.apps.mytracks.MyTracks;
+import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -92,7 +92,8 @@ public class RestoreActivity extends Activity {
   public void onAsyncTaskCompleted(boolean success, int messageId) {
     removeDialog(DIALOG_PROGRESS_ID);
     Toast.makeText(this, messageId, success ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG).show();
-    startActivity(new Intent(this, MyTracks.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+    startActivity(
+        new Intent(this, TrackListActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
     finish();
   }
 
