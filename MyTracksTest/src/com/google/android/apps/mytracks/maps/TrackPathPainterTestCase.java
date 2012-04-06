@@ -56,7 +56,7 @@ public class TrackPathPainterTestCase extends AndroidTestCase {
    * 
    * @param number the number of locations
    * @param latitude the latitude value of locations.
-   * @param speed the speed of locations, and will give a default valid value if
+   * @param speed the speed(meter per second) of locations, and will give a default valid value if
    *          less than zero
    * @return the simulated locations
    */

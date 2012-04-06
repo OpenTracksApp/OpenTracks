@@ -59,7 +59,7 @@ public class SingleColorTrackPathPainterTest extends TrackPathPainterTestCase {
     // Gets a number as the start index of points.
     int startLocationIdx = NUMBER_OF_LOCATIONS / 2;
 
-    for (int i = 0; i < NUMBER_OF_LOCATIONS - startLocationIdx; i++) {
+    for (int i = startLocationIdx; i < NUMBER_OF_LOCATIONS; i++) {
       pathMock.lineTo(0, 0);
     }
 
@@ -77,7 +77,7 @@ public class SingleColorTrackPathPainterTest extends TrackPathPainterTestCase {
   public void testUpdatePath_AllInvalidLocation() {
     List<CachedLocation> points = createCachedLocations(NUMBER_OF_LOCATIONS, INVALID_LATITUDE, -1);
     // Gets a random number from 1 to numberOfLocations.
-    int startLocationIdx = (int) (1 + (NUMBER_OF_LOCATIONS - 1) * Math.random());
+    int startLocationIdx = NUMBER_OF_LOCATIONS / 2;
     AndroidMock.replay(pathMock);
     singleColorTrackPathPainter.updatePath(myTracksOverlay.getMapProjection(mockView),
         myTracksOverlay.getMapViewRect(mockView), startLocationIdx, true, points, pathMock);
@@ -100,7 +100,7 @@ public class SingleColorTrackPathPainterTest extends TrackPathPainterTestCase {
     // Third segment.
     points.addAll(createCachedLocations(NUMBER_OF_LOCATIONS, TrackStubUtils.INITIAL_LATITUDE, -1));
     // Gets a random number from 1 to numberOfLocations.
-    int startLocationIdx = (int) (1 + (NUMBER_OF_LOCATIONS - 1) * Math.random());
+    int startLocationIdx = NUMBER_OF_LOCATIONS / 2;
     for (int i = 0; i < NUMBER_OF_LOCATIONS - startLocationIdx; i++) {
       pathMock.lineTo(0, 0);
     }

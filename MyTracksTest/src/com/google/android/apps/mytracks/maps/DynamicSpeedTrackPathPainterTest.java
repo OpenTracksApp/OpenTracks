@@ -34,13 +34,12 @@ public class DynamicSpeedTrackPathPainterTest extends TrackPathPainterTestCase {
 
   private DynamicSpeedTrackPathPainter dynamicSpeedTrackPathPainter;
   private TrackPathDescriptor trackPathDescriptor;
-  // This number must bigger than 10 to meets the requirement of test.
+  // This number must bigger than 10 to meet the requirement of test.
   private static final int NUMBER_OF_LOCATIONS = 100;
-  private static final int NUMBER_OF_SEGMENTS = 4;
   private static final int LOCATIONS_PER_SEGMENT = 25;
-  // The maximum speed which is considered slow.
+  // The maximum speed(KM/H) which is considered slow.
   private static final int SLOW_SPEED = 30;
-  // The maximum speed which is considered normal.
+  // The maximum speed(KM/H) which is considered normal.
   private static final int NORMAL_SPEED = 50;
 
   @Override
@@ -94,18 +93,21 @@ public class DynamicSpeedTrackPathPainterTest extends TrackPathPainterTestCase {
    */
   public void testUpdatePath_CheckColoredPath() {
     // Gets the slow speed. Divide SLOW_SPEED by 2 to make it smaller than
-    // SLOW_SPEED.
+    // SLOW_SPEED. Speed in MyTracksLocation use MS, but speed in CachedLocation
+    // use KMH.
     int slowSpeed = (int) (SLOW_SPEED / (2 * UnitConversions.MS_TO_KMH));
     // Gets the normal speed. Makes it smaller than SLOW_SPEED and bigger than
-    // NORMAL_SPEED.
+    // NORMAL_SPEED. Speed in MyTracksLocation use MS, but speed in
+    // CachedLocation use KMH.
     int normalSpeed = (int) ((SLOW_SPEED + NORMAL_SPEED) / (2 * UnitConversions.MS_TO_KMH));
     // Gets the fast speed. Multiply it by 2 to make it bigger than
-    // NORMAL_SPEED.
+    // NORMAL_SPEED. Speed in MyTracksLocation use MS, but speed in
+    // CachedLocation use KMH.
     int fastSpeed = (int) (NORMAL_SPEED * 2 / UnitConversions.MS_TO_KMH);
 
     // Get a number of startLocationIdx. And divide NUMBER_OF_LOCATIONS by 8 to
     // make sure it is less than numberOfFirstThreeSegments.
-    int startLocationIdx = NUMBER_OF_LOCATIONS / NUMBER_OF_SEGMENTS / 2;
+    int startLocationIdx = LOCATIONS_PER_SEGMENT / 2;
 
     List<CachedLocation> points = createCachedLocations(LOCATIONS_PER_SEGMENT,
         TrackStubUtils.INITIAL_LATITUDE, slowSpeed);

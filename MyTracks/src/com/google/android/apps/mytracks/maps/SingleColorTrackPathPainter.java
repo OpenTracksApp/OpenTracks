@@ -51,9 +51,9 @@ public class SingleColorTrackPathPainter implements TrackPathPainter {
   @Override
   public void updatePath(Projection projection, Rect viewRect, int startLocationIdx,
       Boolean alwaysVisible, List<CachedLocation> points) {
-    Path newPath = new Path();
-    newPath.incReserve(points.size());
-    path = updatePath(projection, viewRect, startLocationIdx, alwaysVisible, points, newPath);
+    path = new Path();
+    path.incReserve(points.size());
+    updatePath(projection, viewRect, startLocationIdx, alwaysVisible, points, path);
 
   }
 
@@ -68,7 +68,7 @@ public class SingleColorTrackPathPainter implements TrackPathPainter {
    * @param newPath The path to be created.
    */
   @VisibleForTesting
-  Path updatePath(Projection projection, Rect viewRect, int startLocationIdx,
+  void updatePath(Projection projection, Rect viewRect, int startLocationIdx,
       Boolean alwaysVisible, List<CachedLocation> points, Path newPath) {
     // Whether to start a new segment on new valid and visible point.
     boolean newSegment = startLocationIdx <= 0 || !points.get(startLocationIdx - 1).valid;
@@ -103,7 +103,6 @@ public class SingleColorTrackPathPainter implements TrackPathPainter {
         newPath.lineTo(pt.x, pt.y);
       }
     }
-    return newPath;
   }
 
   @Override
