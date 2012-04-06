@@ -19,7 +19,7 @@ import static com.google.android.apps.mytracks.Constants.RESUME_TRACK_EXTRA_NAME
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.MyTracks;
+import com.google.android.apps.mytracks.TrackDetailActivity;
 import com.google.android.apps.mytracks.content.DescriptionGenerator;
 import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
@@ -484,9 +484,10 @@ public class TrackRecordingService extends Service {
       Notification notification = new Notification(
           R.drawable.arrow_320, null /* tickerText */,
           System.currentTimeMillis());
+      Intent intent = new Intent(this, TrackDetailActivity.class)
+          .putExtra(TrackDetailActivity.TRACK_ID, recordingTrackId);
       PendingIntent contentIntent = PendingIntent.getActivity(
-          this, 0 /* requestCode */, new Intent(this, MyTracks.class),
-          0 /* flags */);
+          this, 0 /* requestCode */, intent, 0 /* flags */);
       notification.setLatestEventInfo(this, getString(R.string.my_tracks_app_name),
           getString(R.string.track_record_notification), contentIntent);
       notification.flags += Notification.FLAG_NO_CLEAR;

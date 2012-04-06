@@ -35,12 +35,12 @@ import android.widget.EditText;
  *
  * @author Leif Hendrik Wilden
  */
-public class TrackDetail extends Activity implements OnClickListener {
+public class TrackEditActivity extends Activity implements OnClickListener {
 
   public static final String TRACK_ID = "trackId";
   public static final String SHOW_CANCEL = "showCancel";
 
-  private static final String TAG = TrackDetail.class.getSimpleName();
+  private static final String TAG = TrackEditActivity.class.getSimpleName();
 
   private Long trackId;
   private MyTracksProviderUtils myTracksProviderUtils;
@@ -53,7 +53,7 @@ public class TrackDetail extends Activity implements OnClickListener {
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
-    setContentView(R.layout.track_detail);
+    setContentView(R.layout.track_edit);
 
     trackId = getIntent().getLongExtra(TRACK_ID, -1);
     if (trackId < 0) {
@@ -71,22 +71,22 @@ public class TrackDetail extends Activity implements OnClickListener {
       return;
     }
 
-    trackName = (EditText) findViewById(R.id.track_detail_track_name);
+    trackName = (EditText) findViewById(R.id.track_edit_track_name);
     trackName.setText(track.getName());
 
-    activityType = (AutoCompleteTextView) findViewById(R.id.track_detail_activity_type);
+    activityType = (AutoCompleteTextView) findViewById(R.id.track_edit_activity_type);
     activityType.setText(track.getCategory());
 
     ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
         this, R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
     activityType.setAdapter(adapter);
-    trackDescription = (EditText) findViewById(R.id.track_detail_track_description);
+    trackDescription = (EditText) findViewById(R.id.track_edit_track_description);
     trackDescription.setText(track.getDescription());
 
-    Button save = (Button) findViewById(R.id.track_detail_save);
+    Button save = (Button) findViewById(R.id.track_edit_save);
     save.setOnClickListener(this);
 
-    Button cancel = (Button) findViewById(R.id.track_detail_cancel);
+    Button cancel = (Button) findViewById(R.id.track_edit_cancel);
     if (getIntent().getBooleanExtra(SHOW_CANCEL, true)) {
       cancel.setOnClickListener(this);
       cancel.setVisibility(View.VISIBLE);
@@ -98,11 +98,11 @@ public class TrackDetail extends Activity implements OnClickListener {
   @Override
   public void onClick(View view) {
     switch (view.getId()) {
-      case R.id.track_detail_save:
+      case R.id.track_edit_save:
         save();
         finish();
         break;
-      case R.id.track_detail_cancel:
+      case R.id.track_edit_cancel:
         finish();
         break;
       default:   

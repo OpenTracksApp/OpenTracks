@@ -59,23 +59,4 @@ limitations under the License.
         android:minHeight="80dp"
         android:layout_gravity="center"/>
     </LinearLayout>
-    <LinearLayout
-      android:orientation="horizontal"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:layout_alignParentBottom="true"
-      android:layout_gravity="center"
-      android:paddingTop="10dp">
-      <LinearLayout
-        android:layout_width = "wrap_content"
-        android:layout_height= "wrap_content"
-        android:layout_weight="1"/>
-      <ImageButton
-        android:id="@+id/showOptions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:visibility="visible"
-        android:src="@android:drawable/ic_menu_more"/>
-    </LinearLayout>
 </RelativeLayout>

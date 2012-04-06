@@ -16,7 +16,6 @@
 
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.UriUtils;
@@ -26,7 +25,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.ContentUris;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -129,7 +127,7 @@ public class ImportActivity extends Activity {
               .getQuantityString(R.plurals.importGpxFiles, totalCount, totalCount);
           message = getString(R.string.import_success, successCount, totalFiles, path);
         }
-        return new AlertDialog.Builder(this).setCancelable(true)
+        return new AlertDialog.Builder(this)
             .setCancelable(true)
             .setMessage(message)
             .setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -142,12 +140,10 @@ public class ImportActivity extends Activity {
               @Override
               public void onClick(DialogInterface dialog, int which) {
                 if (!importAll && trackId != -1L) {
-                  Intent intent = new Intent(Intent.ACTION_VIEW);
-                  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                  intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                  intent.setDataAndType(
-                      ContentUris.withAppendedId(TracksColumns.CONTENT_URI, trackId),
-                      TracksColumns.CONTENT_ITEMTYPE);
+                  Intent intent = new Intent(ImportActivity.this, TrackDetailActivity.class)
+                      .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                      .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                      .putExtra(TrackDetailActivity.TRACK_ID, trackId);
                   startActivity(intent);
                 }
                 finish();
