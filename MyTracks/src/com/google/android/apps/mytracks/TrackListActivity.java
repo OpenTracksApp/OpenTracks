@@ -16,23 +16,21 @@
 
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.TracksColumns;
+import com.google.android.apps.mytracks.fragments.CheckUnitsDialogFragment;
+import com.google.android.apps.mytracks.fragments.DeleteAllDialogFragment;
+import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.CheckUnitsUtils;
-import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.EulaUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -40,7 +38,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.speech.tts.TextToSpeech;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -71,7 +68,7 @@ public class TrackListActivity extends FragmentActivity {
   private static final String DELETE_ALL_DIALOG_TAG = "deleteAllDialog";
   private static final String EULA_DIALOG_TAG = "eulaDialog";
 
-  private static final int WELCOME_ACTIVITY_REQUEST_CODE = 0;
+  public static final int WELCOME_ACTIVITY_REQUEST_CODE = 0;
 
   private static final String[] PROJECTION = new String[] {
       TracksColumns._ID,
@@ -436,89 +433,5 @@ public class TrackListActivity extends FragmentActivity {
       }
     }
     return super.onKeyUp(keyCode, event);
-  }
-
-  /**
-   * Check Units DialogFragment.
-   */
-  public static class CheckUnitsDialogFragment extends DialogFragment {
-
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-      return new AlertDialog.Builder(getActivity()).setCancelable(true)
-          .setOnCancelListener(new DialogInterface.OnCancelListener() {
-            public void onCancel(DialogInterface dialog) {
-              CheckUnitsUtils.setCheckUnitsValue(getActivity());
-            }
-          })
-          .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-              CheckUnitsUtils.setCheckUnitsValue(getActivity());
-
-              int position = ((AlertDialog) dialog).getListView().getSelectedItemPosition();
-              SharedPreferences sharedPreferences = getActivity()
-                  .getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-              ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(sharedPreferences.edit()
-                  .putBoolean(getString(R.string.metric_units_key), position == 0));
-            }
-          })
-          .setSingleChoiceItems(new CharSequence[] { getString(R.string.preferred_units_metric),
-              getString(R.string.preferred_units_imperial) }, 0, null)
-          .setTitle(R.string.preferred_units_title)
-          .create();
-    }
-  }
-
-  /**
-   * Delete All DialogFragment.
-   */
-  public static class DeleteAllDialogFragment extends DialogFragment {
-
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-      return DialogUtils.createConfirmationDialog(getActivity(),
-          R.string.track_list_delete_all_confirm_message, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-              MyTracksProviderUtils.Factory.get(getActivity()).deleteAllTracks();
-            }
-          });
-    }
-  };
-
-  /**
-   * Eula DialogFragment.
-   */
-  public static class EulaDialogFragment extends DialogFragment {
-
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-      return new AlertDialog.Builder(getActivity())
-          .setCancelable(true)
-          .setMessage(EulaUtils.getEulaMessage(getActivity()))
-          .setNegativeButton(R.string.eula_decline, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-              getActivity().finish();
-            }
-          })
-          .setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-              getActivity().finish();
-            }
-          })
-          .setPositiveButton(R.string.eula_accept, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-              EulaUtils.setEulaValue(getActivity());
-              getActivity().startActivityForResult(
-                  new Intent(getActivity(), WelcomeActivity.class), WELCOME_ACTIVITY_REQUEST_CODE);
-            }
-          })
-          .setTitle(R.string.eula_title)
-          .create();
-    }
   }
 }
