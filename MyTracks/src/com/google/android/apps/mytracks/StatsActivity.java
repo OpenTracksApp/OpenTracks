@@ -23,7 +23,6 @@ import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.services.ServiceUtils;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
@@ -106,9 +105,6 @@ public class StatsActivity extends Activity implements TrackDataListener {
 
     // The volume we want to control is the Text-To-Speech volume
     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
-
-     // Show the action bar (or nothing at all).
-    ApiAdapterFactory.getApiAdapter().showActionBar(this);
 
     setContentView(R.layout.stats);
 

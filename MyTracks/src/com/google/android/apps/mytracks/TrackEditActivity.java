@@ -37,8 +37,8 @@ import android.widget.EditText;
  */
 public class TrackEditActivity extends Activity implements OnClickListener {
 
-  public static final String TRACK_ID = "trackId";
-  public static final String SHOW_CANCEL = "showCancel";
+  public static final String EXTRA_TRACK_ID = "track_id";
+  public static final String EXTRA_SHOW_CANCEL = "show_cancel";
 
   private static final String TAG = TrackEditActivity.class.getSimpleName();
 
@@ -55,7 +55,7 @@ public class TrackEditActivity extends Activity implements OnClickListener {
     super.onCreate(bundle);
     setContentView(R.layout.track_edit);
 
-    trackId = getIntent().getLongExtra(TRACK_ID, -1);
+    trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1);
     if (trackId < 0) {
       Log.e(TAG, "invalid trackId.");
       finish();
@@ -87,7 +87,7 @@ public class TrackEditActivity extends Activity implements OnClickListener {
     save.setOnClickListener(this);
 
     Button cancel = (Button) findViewById(R.id.track_edit_cancel);
-    if (getIntent().getBooleanExtra(SHOW_CANCEL, true)) {
+    if (getIntent().getBooleanExtra(EXTRA_SHOW_CANCEL, true)) {
       cancel.setOnClickListener(this);
       cancel.setVisibility(View.VISIBLE);
     } else {

@@ -28,7 +28,6 @@ import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
@@ -117,9 +116,6 @@ public class ChartActivity extends Activity implements TrackDataListener {
 
     // The volume we want to control is the Text-To-Speech volume
     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
-
-    // Show the action bar (or nothing at all).
-    ApiAdapterFactory.getApiAdapter().showActionBar(this);
 
     setContentView(R.layout.mytracks_charts);
     ViewGroup layout = (ViewGroup) findViewById(R.id.elevation_chart);
