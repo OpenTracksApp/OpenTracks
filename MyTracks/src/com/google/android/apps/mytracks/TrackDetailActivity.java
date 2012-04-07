@@ -137,16 +137,16 @@ public class TrackDetailActivity extends FragmentActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
-    ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);   
+    ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
     setContentView(R.layout.track_detail);
-    
+
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     trackDataHub = ((MyTracksApplication) getApplication()).getTrackDataHub();
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
 
     mapViewContainer = getLayoutInflater().inflate(R.layout.mytracks_layout, null);
-    
+
     tabHost = (TabHost) findViewById(android.R.id.tabhost);
     tabHost.setup();
     tabManager = new TabManager(this, tabHost, R.id.realtabcontent);
@@ -166,34 +166,15 @@ public class TrackDetailActivity extends FragmentActivity {
     if (savedInstanceState != null) {
       tabHost.setCurrentTabByTag(savedInstanceState.getString(CURRENT_TAG_KEY));
     }
-    
-    // Get the trackid
-    Intent intent = getIntent();
-    trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1L);
-    if (trackId == -1L) {
-      startTrackListActivity();
-      finish();
-    }
-    trackDataHub.loadTrack(trackId);
-    
-    // Get the waypointId
-    long waypointId = intent.getLongExtra(EXTRA_WAYPOINT_ID, -1L);
-    if (waypointId != -1L) {
-      MapFragment mapFragmet = (MapFragment) getSupportFragmentManager().findFragmentByTag(MAP_TAB_TAG);
-      if (mapFragmet != null) {
-        tabHost.setCurrentTab(0);
-        mapFragmet.showWaypoint(trackId, waypointId);
-      } else {
-        Log.e(TAG, "MapFragment is null");
-      }
-    }
-  }
 
-  @Override
-  protected void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-    outState.putString(CURRENT_TAG_KEY, tabHost.getCurrentTabTag());
+    handleIntent(getIntent());
   }
+ 
+  @Override
+  public void onNewIntent(Intent intent) {
+    super.onNewIntent(intent);
+    handleIntent(intent);
+  }  
   
   @Override
   protected void onStart() {
@@ -205,6 +186,12 @@ public class TrackDetailActivity extends FragmentActivity {
   protected void onResume() {
     super.onResume();
     trackRecordingServiceConnection.bindIfRunning();
+  }
+
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    outState.putString(CURRENT_TAG_KEY, tabHost.getCurrentTabTag());
   }
 
   @Override
@@ -506,6 +493,31 @@ public class TrackDetailActivity extends FragmentActivity {
   public View getMapViewContainer() {
     return mapViewContainer;
   }
+
+  /**
+   * Handles the data in the intent.
+   */
+  private void handleIntent(Intent intent) {
+    // Get the trackid
+    trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1L);
+    if (trackId == -1L) {
+      startTrackListActivity();
+      finish();
+    }
+    trackDataHub.loadTrack(trackId);
+    
+    // Get the waypointId
+    long waypointId = intent.getLongExtra(EXTRA_WAYPOINT_ID, -1L);
+    if (waypointId != -1L) {
+      MapFragment mapFragmet = (MapFragment) getSupportFragmentManager().findFragmentByTag(MAP_TAB_TAG);
+      if (mapFragmet != null) {
+        tabHost.setCurrentTab(0);
+        mapFragmet.showWaypoint(trackId, waypointId);
+      } else {
+         Log.e(TAG, "MapFragment is null");
+      }
+    }
+  }   
 
   /**
    * Updates the menu.
