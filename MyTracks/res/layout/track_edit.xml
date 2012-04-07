@@ -92,20 +92,14 @@ limitations under the License.
         />
     </LinearLayout>
   </ScrollView>
-  <LinearLayout style="@style/ButtonLayout">
-    <LinearLayout style="@style/ButtonSpacer"/>
+  <LinearLayout style="@style/BottomBar" >
     <Button
       android:id="@+id/track_edit_save"
-      android:layout_gravity="left"
       android:text="@string/generic_save"
-      style="@style/Button"
-      />
+      style="@style/BottomButton" />
     <Button
       android:id="@+id/track_edit_cancel"
-      android:layout_gravity="right"
       android:text="@string/generic_cancel"
-      style="@style/Button"
-      />
-    <LinearLayout style="@style/ButtonSpacer"/>
+      style="@style/BottomButton" />
   </LinearLayout>
 </LinearLayout>

@@ -33,12 +33,17 @@ import android.widget.SearchView;
 public class Api11Adapter extends Api10Adapter {
 
   @Override
+  public void hideTitle(Activity activity) {
+    // Do nothing
+  }
+
+  @Override
   public void configureActionBarHomeAsUp(Activity activity) {
     ActionBar actionBar = activity.getActionBar();
     actionBar.setHomeButtonEnabled(true);
     actionBar.setDisplayHomeAsUpEnabled(true);
   }
-  
+
   @Override
   public void configureSearchWidget(Activity activity, MenuItem menuItem) {
     SearchManager searchManager = (SearchManager) activity.getSystemService(Context.SEARCH_SERVICE);

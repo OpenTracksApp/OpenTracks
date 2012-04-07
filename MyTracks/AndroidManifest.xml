@@ -149,6 +149,9 @@ limitations under the License.
       android:name="com.google.android.apps.mytracks.AggregatedStatsActivity" />
     <activity android:name="com.google.android.apps.mytracks.ExportActivity"/>
     <activity
+      android:label="@string/menu_help"
+      android:name="com.google.android.apps.mytracks.HelpActivity" />
+    <activity
       android:label="@string/my_tracks_importer"
       android:name="com.google.android.apps.mytracks.ImportActivity"
       android:noHistory="true"
@@ -229,10 +232,6 @@ limitations under the License.
         android:name="android.app.default_searchable"
         android:value="com.google.android.apps.mytracks.SearchActivity" />
     </activity>
-    <activity
-      android:exported="false"
-      android:label="@string/welcome_title"
-      android:name="com.google.android.apps.mytracks.WelcomeActivity" />
     <activity android:name="com.google.android.apps.mytracks.io.backup.BackupActivity"/>
     <activity android:name="com.google.android.apps.mytracks.io.backup.RestoreActivity"/>
     <activity android:name="com.google.android.apps.mytracks.io.backup.RestoreChooserActivity"/>

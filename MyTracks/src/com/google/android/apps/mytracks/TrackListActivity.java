@@ -17,7 +17,6 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.TracksColumns;
-import com.google.android.apps.mytracks.fragments.CheckUnitsDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteAllDialogFragment;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
@@ -25,7 +24,6 @@ import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
-import com.google.android.apps.mytracks.util.CheckUnitsUtils;
 import com.google.android.apps.mytracks.util.EulaUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
@@ -39,9 +37,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -65,11 +61,6 @@ import android.widget.Toast;
 public class TrackListActivity extends FragmentActivity {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
-  private static final String CHECK_UNITS_DIALOG_TAG = "checkUnitsDialog";
-  private static final String DELETE_ALL_DIALOG_TAG = "deleteAllDialog";
-  private static final String EULA_DIALOG_TAG = "eulaDialog";
-
-  public static final int WELCOME_ACTIVITY_REQUEST_CODE = 0;
 
   private static final String[] PROJECTION = new String[] {
       TracksColumns._ID,
@@ -237,9 +228,11 @@ public class TrackListActivity extends FragmentActivity {
     });
 
     if (!EulaUtils.getEulaValue(this)) {
-      Fragment fragment = getSupportFragmentManager().findFragmentByTag(EULA_DIALOG_TAG);
+      Fragment fragment = getSupportFragmentManager()
+          .findFragmentByTag(EulaDialogFragment.EULA_DIALOG_TAG);
       if (fragment == null) {
-        new EulaDialogFragment().show(getSupportFragmentManager(), EULA_DIALOG_TAG);
+        EulaDialogFragment.newInstance(false).show(
+            getSupportFragmentManager(), EulaDialogFragment.EULA_DIALOG_TAG);
       }
     }
   }
@@ -254,24 +247,6 @@ public class TrackListActivity extends FragmentActivity {
   protected void onDestroy() {
     super.onDestroy();
     trackRecordingServiceConnection.unbind();
-  }
-
-  @Override
-  public void onActivityResult(int requestCode, int resultCode, final Intent results) {
-    if (requestCode == WELCOME_ACTIVITY_REQUEST_CODE) {
-      if (!CheckUnitsUtils.getCheckUnitsValue(this)) {
-        /*
-         * See bug http://code.google.com/p/android/issues/detail?id=23761.
-         * Cannot use
-         * CheckUnitsDialogFragment().show(getSupportFragmentManager(),
-         * CHECK_UNITS_DIALOG_TAG). Need to use commitAllowingStateLoss with the
-         * support package.
-         */
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(new CheckUnitsDialogFragment(), CHECK_UNITS_DIALOG_TAG);
-        fragmentTransaction.commitAllowingStateLoss();
-      }
-    }
   }
 
   @Override
@@ -364,7 +339,8 @@ public class TrackListActivity extends FragmentActivity {
             ExportActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.TCX));
         return true;
       case R.id.track_list_delete_all:
-        new DeleteAllDialogFragment().show(getSupportFragmentManager(), DELETE_ALL_DIALOG_TAG);
+        new DeleteAllDialogFragment().show(
+            getSupportFragmentManager(), DeleteAllDialogFragment.DELETE_ALL_DIALOG_TAG);
         return true;
       case R.id.track_list_aggregated_statistics:
         startActivity(new Intent(this, AggregatedStatsActivity.class));
@@ -373,7 +349,7 @@ public class TrackListActivity extends FragmentActivity {
         startActivity(new Intent(this, SettingsActivity.class));
         return true;
       case R.id.track_list_help:
-        startActivity(new Intent(this, WelcomeActivity.class));
+        startActivity(new Intent(this, HelpActivity.class));
         return true;
       default:
         return super.onOptionsItemSelected(item);

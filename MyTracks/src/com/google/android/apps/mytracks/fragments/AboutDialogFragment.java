@@ -16,32 +16,43 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.util.DialogUtils;
+import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.view.View;
+import android.widget.TextView;
 
 /**
- * A DialogFragment to delete all tracks.
+ * A DialogFragment to show information about My Tracks.
  * 
  * @author Jimmy Shih
  */
-public class DeleteAllDialogFragment extends DialogFragment {
+public class AboutDialogFragment extends DialogFragment {
 
-  public static final String DELETE_ALL_DIALOG_TAG = "deleteAllDialog";
-  
+  public static final String ABOUT_DIALOG_TAG = "aboutDialog";
+
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    return DialogUtils.createConfirmationDialog(getActivity(),
-        R.string.track_list_delete_all_confirm_message, new DialogInterface.OnClickListener() {
+    View view = getActivity().getLayoutInflater().inflate(R.layout.about, null);
+    TextView aboutVersion = (TextView) view.findViewById(R.id.about_version);
+    aboutVersion.setText(SystemUtils.getMyTracksVersion(getActivity()));
+    return new AlertDialog.Builder(getActivity())
+        .setCancelable(true)
+        .setNegativeButton(R.string.about_license, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
-            MyTracksProviderUtils.Factory.get(getActivity()).deleteAllTracks();
+            EulaDialogFragment.newInstance(true).show(
+                getActivity().getSupportFragmentManager(), EulaDialogFragment.EULA_DIALOG_TAG);
           }
-        });
+        })
+        .setPositiveButton(R.string.generic_ok, null)
+        .setTitle(R.string.help_about)
+        .setView(view)
+        .create();
   }
 }
