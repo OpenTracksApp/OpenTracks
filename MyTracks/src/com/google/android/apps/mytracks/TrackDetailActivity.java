@@ -87,14 +87,14 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
   private NavControls navControls;
   private long trackId;
   
-  private MenuItem stopRecording;
-  private MenuItem insertMarker;
-  private MenuItem play;
-  private MenuItem share;
-  private MenuItem sendGoogle;
-  private MenuItem save;
-  private MenuItem edit;
-  private MenuItem delete;
+  private MenuItem stopRecordingMenuItem;
+  private MenuItem insertMarkerMenuItem;
+  private MenuItem playMenuItem;
+  private MenuItem shareMenuItem;
+  private MenuItem sendGoogleMenuItem;
+  private MenuItem saveMenuItem;
+  private MenuItem editMenuItem;
+  private MenuItem deleteMenuItem;
 
   private final Runnable changeTab = new Runnable() {
     public void run() {
@@ -110,10 +110,8 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
     new OnSharedPreferenceChangeListener() {
     @Override
     public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-      if (key == null) {
-        return;
-      }
-      if (key.equals(getString(R.string.recording_track_key))) {
+      // Note that key can be null
+      if (getString(R.string.recording_track_key).equals(key)) {
         updateMenu();      
       }
     }
@@ -210,7 +208,7 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
             R.string.track_detail_delete_confirm_message, new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int which) {
-                MyTracksProviderUtils.Factory.get(TrackDetailActivity.this).deleteTrack(trackId);
+                deleteCurrentTrack();
                 startTrackListActivity();
               }
             });
@@ -241,14 +239,14 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
     menu.findItem(R.id.track_detail_share_tcx)
         .setTitle(getString(R.string.menu_share_file, fileTypes[3]));
 
-    stopRecording = menu.findItem(R.id.track_detail_stop_recording);
-    insertMarker = menu.findItem(R.id.track_detail_insert_marker);
-    play = menu.findItem(R.id.track_detail_play);
-    share = menu.findItem(R.id.track_detail_share);
-    sendGoogle = menu.findItem(R.id.track_detail_send_google);
-    save = menu.findItem(R.id.track_detail_save);
-    edit = menu.findItem(R.id.track_detail_edit);
-    delete = menu.findItem(R.id.track_detail_delete);
+    stopRecordingMenuItem = menu.findItem(R.id.track_detail_stop_recording);
+    insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
+    playMenuItem = menu.findItem(R.id.track_detail_play);
+    shareMenuItem = menu.findItem(R.id.track_detail_share);
+    sendGoogleMenuItem = menu.findItem(R.id.track_detail_send_google);
+    saveMenuItem = menu.findItem(R.id.track_detail_save);
+    editMenuItem = menu.findItem(R.id.track_detail_edit);
+    deleteMenuItem = menu.findItem(R.id.track_detail_delete);
 
     updateMenu();
     return true;
@@ -282,7 +280,7 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
         stopRecording();
         return true;
       case R.id.track_detail_insert_marker:
-        // TODO:
+        // TODO: Add insert marker when updating WaypointList to ICS
         return true;
       case R.id.track_detail_play:
         if (isEarthInstalled()) {
@@ -469,35 +467,43 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
   }
 
   /**
-   * s Updates the menu items.
+   * Updates the menu items.
    *
    * @param isRecording true if recording
    */
   private void updateMenuItems(boolean isRecording) {
-    if (stopRecording != null) {
-      stopRecording.setVisible(isRecording);
+    if (stopRecordingMenuItem != null) {
+      stopRecordingMenuItem.setVisible(isRecording);
     }
-    if (insertMarker != null) {
-      insertMarker.setVisible(isRecording);
+    if (insertMarkerMenuItem != null) {
+      insertMarkerMenuItem.setVisible(isRecording);
     }
-    if (play != null) {
-      play.setVisible(!isRecording);
+    if (playMenuItem != null) {
+      playMenuItem.setVisible(!isRecording);
     }
-    if (share != null) {
-      share.setVisible(!isRecording);
+    if (shareMenuItem != null) {
+      shareMenuItem.setVisible(!isRecording);
     }
-    if (sendGoogle != null) {
-      sendGoogle.setVisible(!isRecording);
+    if (sendGoogleMenuItem != null) {
+      sendGoogleMenuItem.setVisible(!isRecording);
     }
-    if (save != null) {
-      save.setVisible(!isRecording);
+    if (saveMenuItem != null) {
+      saveMenuItem.setVisible(!isRecording);
     }
-    if (edit != null) {
-      edit.setVisible(!isRecording);
+    if (editMenuItem != null) {
+      editMenuItem.setVisible(!isRecording);
     }
-    if (delete != null) {
-      delete.setVisible(!isRecording);
+    if (deleteMenuItem != null) {
+      deleteMenuItem.setVisible(!isRecording);
     }
+  }
+
+  /**
+   * Deletes the current track.
+   */
+  private void deleteCurrentTrack() {
+    long trackId = trackDataHub.getSelectedTrackId();
+    MyTracksProviderUtils.Factory.get(TrackDetailActivity.this).deleteTrack(trackId);
   }
 
   /**
