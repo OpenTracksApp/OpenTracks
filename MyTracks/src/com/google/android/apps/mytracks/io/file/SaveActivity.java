@@ -206,8 +206,7 @@ public class SaveActivity extends Activity {
         startActivity(Intent.createChooser(intent, getString(R.string.share_track_picker_title)));
       } else if (playTrack) {
         Intent intent = new Intent()
-            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
             .putExtra(PlayTrackUtils.TOUR_FEATURE_ID, KmlTrackWriter.TOUR_FEATURE_ID)
             .setClassName(PlayTrackUtils.GOOGLE_EARTH_PACKAGE, PlayTrackUtils.GOOGLE_EARTH_CLASS)
             .setDataAndType(Uri.fromFile(new File(filePath)), PlayTrackUtils.KML_MIME_TYPE);

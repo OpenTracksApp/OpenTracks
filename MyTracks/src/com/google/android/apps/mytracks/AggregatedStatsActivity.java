@@ -8,11 +8,13 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -60,8 +62,7 @@ public class AggregatedStatsActivity extends Activity implements
 
     this.tracksProvider = MyTracksProviderUtils.Factory.get(this);
 
-    // Show the action bar (or nothing at all).
-    ApiAdapterFactory.getApiAdapter().showActionBar(this);
+    ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
 
     setContentView(R.layout.stats);
 
@@ -85,6 +86,16 @@ public class AggregatedStatsActivity extends Activity implements
       ((TextView) findViewById(R.id.speed_register)).setTextSize(80.0f);
     }
     loadAggregatedStats();
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() != android.R.id.home) {
+      return false;
+    }
+    startActivity(new Intent(this, TrackListActivity.class)
+        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+    return true;
   }
 
   /**

@@ -17,11 +17,11 @@
 package com.google.android.apps.mytracks.util;
 
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.view.MenuItem;
-import android.view.Window;
 import android.widget.SearchView;
 
 /**
@@ -33,8 +33,10 @@ import android.widget.SearchView;
 public class Api11Adapter extends Api10Adapter {
 
   @Override
-  public void showActionBar(Activity activity) {
-    activity.requestWindowFeature(Window.FEATURE_ACTION_BAR);
+  public void configureActionBarHomeAsUp(Activity activity) {
+    ActionBar actionBar = activity.getActionBar();
+    actionBar.setHomeButtonEnabled(true);
+    actionBar.setDisplayHomeAsUpEnabled(true);
   }
   
   @Override

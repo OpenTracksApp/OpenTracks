@@ -92,9 +92,8 @@ public class RestoreActivity extends Activity {
   public void onAsyncTaskCompleted(boolean success, int messageId) {
     removeDialog(DIALOG_PROGRESS_ID);
     Toast.makeText(this, messageId, success ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG).show();
-    startActivity(
-        new Intent(this, TrackListActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-    finish();
+    startActivity(new Intent(this, TrackListActivity.class)
+        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
   }
 
   /**

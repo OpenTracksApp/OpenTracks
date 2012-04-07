@@ -104,7 +104,7 @@ public class Api7Adapter implements ApiAdapter {
   }
 
   @Override
-  public void showActionBar(Activity activity) {
+  public void configureActionBarHomeAsUp(Activity activity) {
     // Action bar not available, just hide the title and let actions be shown
     // via the regular menu.
     activity.requestWindowFeature(Window.FEATURE_NO_TITLE);
