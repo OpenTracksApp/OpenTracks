@@ -17,6 +17,8 @@
 package com.google.android.apps.mytracks.util;
 
 import android.annotation.TargetApi;
+import android.app.ActionBar;
+import android.app.Activity;
 import android.view.MenuItem;
 
 /**
@@ -27,6 +29,13 @@ import android.view.MenuItem;
 @TargetApi(14)
 public class Api14Adapter extends Api11Adapter {
 
+  @Override
+  public void configureActionBarHomeAsUp(Activity activity) {
+    ActionBar actionBar = activity.getActionBar();
+    actionBar.setHomeButtonEnabled(true);
+    actionBar.setDisplayHomeAsUpEnabled(true);
+  }
+  
   @Override
   public boolean handleSearchKey(MenuItem menuItem) {
     menuItem.expandActionView();
