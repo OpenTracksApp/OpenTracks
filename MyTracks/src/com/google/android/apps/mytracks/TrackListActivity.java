@@ -41,6 +41,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -169,6 +170,7 @@ public class TrackListActivity extends FragmentActivity {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(TrackListActivity.this, TrackDetailActivity.class)
+            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
             .putExtra(TrackDetailActivity.TRACK_ID, id);
         startActivity(intent);
       }
@@ -238,15 +240,10 @@ public class TrackListActivity extends FragmentActivity {
     });
 
     if (!EulaUtils.getEulaValue(this)) {
-      new EulaDialogFragment().show(getSupportFragmentManager(), EULA_DIALOG_TAG);
-    }
-  }
-
-  @Override
-  protected void onStart() {
-    super.onStart();
-    if (isRecording()) {
-      trackRecordingServiceConnection.startAndBind();
+      Fragment fragment = getSupportFragmentManager().findFragmentByTag(EULA_DIALOG_TAG);
+      if (fragment == null) {
+        new EulaDialogFragment().show(getSupportFragmentManager(), EULA_DIALOG_TAG);
+      }
     }
   }
 

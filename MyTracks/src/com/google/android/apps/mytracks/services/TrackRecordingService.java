@@ -485,6 +485,7 @@ public class TrackRecordingService extends Service {
           R.drawable.arrow_320, null /* tickerText */,
           System.currentTimeMillis());
       Intent intent = new Intent(this, TrackDetailActivity.class)
+          .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
           .putExtra(TrackDetailActivity.TRACK_ID, recordingTrackId);
       PendingIntent contentIntent = PendingIntent.getActivity(
           this, 0 /* requestCode */, intent, 0 /* flags */);

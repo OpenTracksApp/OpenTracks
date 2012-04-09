@@ -248,11 +248,10 @@ public class SearchActivity extends ListActivity {
 
   private Intent createViewDataIntent(Map<String, Object> clickedData) {
     Intent intent = new Intent(this, TrackDetailActivity.class)
-        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+        .putExtra(TrackDetailActivity.TRACK_ID, (Long) clickedData.get(TRACK_ID_FIELD));
     if (clickedData.containsKey(WAYPOINT_ID_FIELD)) {
       intent.putExtra(TrackDetailActivity.WAYPOINT_ID, (Long) clickedData.get(WAYPOINT_ID_FIELD));
-    } else {
-      intent.putExtra(TrackDetailActivity.TRACK_ID, (Long) clickedData.get(TRACK_ID_FIELD));
     }
     return intent;
   }
