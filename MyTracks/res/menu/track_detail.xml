@@ -66,9 +66,11 @@ limitations under the License.
     </menu>
   </item>
   <item
+    android:icon="@drawable/menu_edit"
     android:id="@+id/track_detail_edit"
     android:title="@string/menu_edit"/>
   <item
+    android:icon="@drawable/menu_delete"
     android:id="@+id/track_detail_delete"
     android:title="@string/menu_delete"/>
   <item
