@@ -65,7 +65,7 @@ public class SearchActivity extends ListActivity {
   private static final String TRACK_ID_FIELD = "trackId";
   private static final String WAYPOINT_ID_FIELD = "waypointId";
 
-  private static final String EXTRA_CURRENT_TRACK_ID = "trackId";
+  public static final String EXTRA_TRACK_ID = "track_id";
 
   private static final boolean LOG_SCORES = true;
 
@@ -116,7 +116,7 @@ public class SearchActivity extends ListActivity {
 
     String textQuery = intent.getStringExtra(SearchManager.QUERY);
     Location currentLocation = locationManager.getLastKnownLocation("gps");
-    long currentTrackId = intent.getLongExtra(EXTRA_CURRENT_TRACK_ID, -1);
+    long currentTrackId = intent.getLongExtra(EXTRA_TRACK_ID, -1L);
     long currentTimestamp = System.currentTimeMillis();
 
     final SearchQuery query =
@@ -249,9 +249,9 @@ public class SearchActivity extends ListActivity {
   private Intent createViewDataIntent(Map<String, Object> clickedData) {
     Intent intent = new Intent(this, TrackDetailActivity.class)
         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-        .putExtra(TrackDetailActivity.TRACK_ID, (Long) clickedData.get(TRACK_ID_FIELD));
+        .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, (Long) clickedData.get(TRACK_ID_FIELD));
     if (clickedData.containsKey(WAYPOINT_ID_FIELD)) {
-      intent.putExtra(TrackDetailActivity.WAYPOINT_ID, (Long) clickedData.get(WAYPOINT_ID_FIELD));
+      intent.putExtra(TrackDetailActivity.EXTRA_WAYPOINT_ID, (Long) clickedData.get(WAYPOINT_ID_FIELD));
     }
     return intent;
   }

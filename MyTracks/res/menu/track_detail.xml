@@ -17,82 +17,82 @@ limitations under the License.
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
   <item
     android:icon="@drawable/menu_stop_recording"
-    android:id="@+id/menu_stop_recording"
+    android:id="@+id/track_detail_stop_recording"
     android:showAsAction="always"
     android:title="@string/menu_stop_recording"/>
   <item
     android:icon="@drawable/menu_insert_marker"
-    android:id="@+id/menu_insert_marker"
+    android:id="@+id/track_detail_insert_marker"
     android:showAsAction="always"
     android:title="@string/menu_insert_marker"/>
   <item
     android:icon="@drawable/menu_play"
-    android:id="@+id/menu_play"
+    android:id="@+id/track_detail_play"
     android:showAsAction="always"
     android:title="@string/menu_play"/>
   <item
     android:icon="@drawable/menu_share"
-    android:id="@+id/menu_share"
+    android:id="@+id/track_detail_share"
     android:showAsAction="always"
     android:title="@string/menu_share">
     <menu>
       <item
-        android:id="@+id/menu_share_map"
+        android:id="@+id/track_detail_share_map"
         android:title="@string/menu_share_map"/>
       <item
-        android:id="@+id/menu_share_fusion_table"
+        android:id="@+id/track_detail_share_fusion_table"
         android:title="@string/menu_share_fusion_table"/>
-      <item android:id="@+id/menu_share_gpx"/>
-      <item android:id="@+id/menu_share_kml"/>
-      <item android:id="@+id/menu_share_csv"/>
-      <item android:id="@+id/menu_share_tcx"/>
+      <item android:id="@+id/track_detail_share_gpx"/>
+      <item android:id="@+id/track_detail_share_kml"/>
+      <item android:id="@+id/track_detail_share_csv"/>
+      <item android:id="@+id/track_detail_share_tcx"/>
     </menu>
   </item>
   <item
     android:icon="@drawable/ic_menu_waypoints"
-    android:id="@+id/menu_markers"
+    android:id="@+id/track_detail_markers"
     android:title="@string/menu_markers"/>
   <item
-    android:id="@+id/menu_send_google"
+    android:id="@+id/track_detail_send_google"
     android:title="@string/menu_send_google"/>
   <item
-    android:id="@+id/menu_save"
+    android:id="@+id/track_detail_save"
     android:title="@string/menu_save">
     <menu>
-      <item android:id="@+id/menu_save_gpx"/>
-      <item android:id="@+id/menu_save_kml"/>
-      <item android:id="@+id/menu_save_csv"/>
-      <item android:id="@+id/menu_save_tcx"/>
+      <item android:id="@+id/track_detail_save_gpx"/>
+      <item android:id="@+id/track_detail_save_kml"/>
+      <item android:id="@+id/track_detail_save_csv"/>
+      <item android:id="@+id/track_detail_save_tcx"/>
     </menu>
   </item>
   <item
-    android:id="@+id/menu_edit"
+    android:id="@+id/track_detail_edit"
     android:title="@string/menu_edit"/>
   <item
-    android:id="@+id/menu_delete"
+    android:id="@+id/track_detail_delete"
     android:title="@string/menu_delete"/>
   <item
     android:icon="@android:drawable/ic_menu_mylocation"
-    android:id="@+id/menu_my_location"
+    android:id="@+id/track_detail_my_location"
     android:title="@string/menu_my_location"/>
   <item
     android:icon="@android:drawable/ic_menu_mapmode"
-    android:id="@+id/menu_satellite_mode"
+    android:id="@+id/track_detail_satellite_mode"
     android:title="@string/menu_satellite_mode"/>
   <item
     android:icon="@drawable/ic_menu_chartsettings"
-    android:id="@+id/menu_chart_settings"
+    android:id="@+id/track_detail_chart_settings"
     android:title="@string/menu_chart_settings"/>
   <item
     android:icon="@drawable/ic_menu_sensorstatus"
-    android:id="@+id/menu_sensor_state"
+    android:id="@+id/track_detail_sensor_state"
     android:title="@string/menu_sensor_state"/>
   <item
     android:icon="@drawable/menu_settings"
-    android:id="@+id/menu_settings"
+    android:id="@+id/track_detail_settings"
     android:title="@string/menu_settings"/>
   <item
     android:icon="@drawable/menu_help"
-    android:id="@+id/menu_help"
+    android:id="@+id/track_detail_help"
     android:title="@string/menu_help"/>
 </menu>

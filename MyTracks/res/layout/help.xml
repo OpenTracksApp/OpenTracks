@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright 2010 Google Inc.
+Copyright 2012 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,14 +14,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-
-  <item android:state_window_focused="false"
-        android:drawable="@drawable/left_arrow_chart" />
-
-  <item android:state_pressed="true"
-        android:drawable="@drawable/left_arrow_chart_press" />
-
-  <item android:drawable="@drawable/left_arrow_chart" />
-
-</selector>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_height="fill_parent"
+  android:layout_width="fill_parent"
+  android:orientation="vertical" >
+  <ScrollView
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:layout_width="fill_parent" >
+    <include layout="@layout/welcome" />
+  </ScrollView>
+  <LinearLayout style="@style/BottomButtonBar" >
+    <include layout="@layout/help_buttons" />
+  </LinearLayout>
+</LinearLayout>

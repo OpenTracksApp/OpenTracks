@@ -17,38 +17,45 @@ limitations under the License.
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
   <item
     android:icon="@drawable/menu_record_track"
-    android:id="@+id/menu_record_track"
+    android:id="@+id/track_list_record_track"
     android:showAsAction="always"
     android:title="@string/menu_record_track"/>
   <item
     android:icon="@drawable/menu_stop_recording"
-    android:id="@+id/menu_stop_recording"
+    android:id="@+id/track_list_stop_recording"
     android:showAsAction="always"
     android:title="@string/menu_stop_recording"/>
   <item
     android:actionViewClass="android.widget.SearchView"
     android:icon="@drawable/menu_search"
-    android:id="@+id/menu_search"
+    android:id="@+id/track_list_search"
     android:showAsAction="always|collapseActionView"
     android:title="@string/menu_search"/>
   <item
-    android:id="@+id/menu_import_all"
+    android:id="@+id/track_list_import_all"
     android:title="@string/menu_import_all"/>
   <item
-    android:id="@+id/menu_export_all"
-    android:title="@string/menu_export_all"/>
+    android:id="@+id/track_list_export_all"
+    android:title="@string/menu_export_all">
+    <menu>
+      <item android:id="@+id/track_list_export_gpx"/>
+      <item android:id="@+id/track_list_export_kml"/>
+      <item android:id="@+id/track_list_export_csv"/>
+      <item android:id="@+id/track_list_export_tcx"/>
+    </menu>
+  </item>
   <item
-    android:id="@+id/menu_delete_all"
+    android:id="@+id/track_list_delete_all"
     android:title="@string/menu_delete_all"/>
   <item
-    android:id="@+id/menu_aggregated_statistics"
+    android:id="@+id/track_list_aggregated_statistics"
     android:title="@string/menu_aggregated_statistics"/>
   <item
     android:icon="@drawable/menu_settings"
-    android:id="@+id/menu_settings"
+    android:id="@+id/track_list_settings"
     android:title="@string/menu_settings"/>
   <item
     android:icon="@drawable/menu_help"
-    android:id="@+id/menu_help"
+    android:id="@+id/track_list_help"
     android:title="@string/menu_help"/>
 </menu>

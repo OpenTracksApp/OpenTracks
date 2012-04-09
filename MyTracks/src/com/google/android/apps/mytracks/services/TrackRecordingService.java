@@ -486,7 +486,7 @@ public class TrackRecordingService extends Service {
           System.currentTimeMillis());
       Intent intent = new Intent(this, TrackDetailActivity.class)
           .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-          .putExtra(TrackDetailActivity.TRACK_ID, recordingTrackId);
+          .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, recordingTrackId);
       PendingIntent contentIntent = PendingIntent.getActivity(
           this, 0 /* requestCode */, intent, 0 /* flags */);
       notification.setLatestEventInfo(this, getString(R.string.my_tracks_app_name),

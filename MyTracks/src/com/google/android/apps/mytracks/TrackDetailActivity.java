@@ -29,33 +29,38 @@ import com.google.android.apps.mytracks.io.sendtogoogle.UploadServiceChooserActi
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
+import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.DialogUtils;
-import com.google.android.apps.mytracks.util.PlayTrackUtils;
 import com.google.android.maps.mytracks.R;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.TabActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.content.res.Resources;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.RemoteException;
 import android.speech.tts.TextToSpeech;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.RelativeLayout;
+import android.widget.CheckBox;
+import android.widget.RadioGroup;
 import android.widget.TabHost;
+import android.widget.TabHost.TabSpec;
 import android.widget.Toast;
+
+import java.util.List;
 
 /**
  * An activity to show the track detail.
@@ -63,20 +68,24 @@ import android.widget.Toast;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-@SuppressWarnings("deprecation")
-public class TrackDetailActivity extends TabActivity implements OnTouchListener {
+public class TrackDetailActivity extends FragmentActivity {
 
-  public static final String TRACK_ID = "track_id";
-  public static final String WAYPOINT_ID = "waypoint_id";
+  public static final String EXTRA_TRACK_ID = "track_id";
+  public static final String EXTRA_WAYPOINT_ID = "waypoint_id";
 
   private static final String TAG = TrackDetailActivity.class.getSimpleName();
+  private static final String MARKET_URL_PREFIX = "market://details?id=";
+  private static final String CURRENT_TAG_KEY = "tab";
+  
   private static final int DIALOG_INSTALL_EARTH_ID = 0;
   private static final int DIALOG_DELETE_CURRENT_ID = 1;
-
+  private static final int DIALOG_CHART_SETTINGS_ID = 2;
+  
   private SharedPreferences sharedPreferences;
   private TrackDataHub trackDataHub;
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
-  private NavControls navControls;
+  private TabHost tabHost;
+  private TabManager tabManager;
   private long trackId;
   
   private MenuItem stopRecordingMenuItem;
@@ -88,12 +97,8 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
   private MenuItem editMenuItem;
   private MenuItem deleteMenuItem;
 
-  private final Runnable changeTab = new Runnable() {
-    public void run() {
-      getTabHost().setCurrentTab(navControls.getCurrentIcons());
-    }
-  };
-
+  private View mapViewContainer;
+  
   /*
    * Note that sharedPreferenceChangeListener cannot be an anonymous inner
    * class. Anonymous inner class will get garbage collected.
@@ -109,65 +114,67 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
     }
   };
 
+  /**
+   * We are not displaying driving directions. Just an arbitrary track that is
+   * not associated to any licensed mapping data. Therefore it should be okay to
+   * return false here and still comply with the terms of service.
+   */
+  @Override
+  protected boolean isRouteDisplayed() {
+    return false;
+  }
+
+  /**
+   * We are displaying a location. This needs to return true in order to comply
+   * with the terms of service.
+   */
+  @Override
+  protected boolean isLocationDisplayed() {
+    return true;
+  }
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
+    ApiAdapterFactory.getApiAdapter().hideTitle(this);
     ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
+    setContentView(R.layout.track_detail);
     
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     trackDataHub = ((MyTracksApplication) getApplication()).getTrackDataHub();
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
 
-    final Resources res = getResources();
-    final TabHost tabHost = getTabHost();
-    tabHost.addTab(tabHost.newTabSpec(MAP_TAB_TAG)
-        .setIndicator("Map", res.getDrawable(android.R.drawable.ic_menu_mapmode))
-        .setContent(new Intent(this, MapActivity.class)));
-    tabHost.addTab(tabHost.newTabSpec(STATS_TAB_TAG)
-        .setIndicator("Stats", res.getDrawable(R.drawable.ic_menu_statistics))
-        .setContent(new Intent(this, StatsActivity.class)));
-    tabHost.addTab(tabHost.newTabSpec(CHART_TAB_TAG)
-        .setIndicator("Chart", res.getDrawable(R.drawable.menu_elevation))
-        .setContent(new Intent(this, ChartActivity.class)));
-
-    // Hide the tab widget itself. We'll use overlayed prev/next buttons to
-    // switch between the tabs:
-    tabHost.getTabWidget().setVisibility(View.GONE);
-
-    RelativeLayout layout = new RelativeLayout(this);
-    LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
-    layout.setLayoutParams(params);
-    navControls = new NavControls(this, layout, getResources().obtainTypedArray(R.array.left_icons),
-        getResources().obtainTypedArray(R.array.right_icons), changeTab);
-    navControls.show();
-    tabHost.addView(layout);
-    layout.setOnTouchListener(this);
-    
-    // Get the trackid
-    Intent intent = getIntent();
-    trackId = intent.getLongExtra(TRACK_ID, -1L);
-    if (trackId == -1L) {
-      startTrackListActivity();
-      finish();
+    mapViewContainer = getLayoutInflater().inflate(R.layout.mytracks_layout, null);
+    tabHost = (TabHost) findViewById(android.R.id.tabhost);
+    tabHost.setup();
+    tabManager = new TabManager(this, tabHost, R.id.realtabcontent);
+    TabSpec mapTabSpec = tabHost.newTabSpec(MAP_TAB_TAG).setIndicator(
+        getString(R.string.track_detail_map_tab),
+        getResources().getDrawable(android.R.drawable.ic_menu_mapmode));
+    tabManager.addTab(mapTabSpec, MapFragment.class, null);
+    TabSpec chartTabSpec = tabHost.newTabSpec(CHART_TAB_TAG).setIndicator(
+        getString(R.string.track_detail_chart_tab),
+        getResources().getDrawable(R.drawable.menu_elevation));
+    tabManager.addTab(chartTabSpec, ChartFragment.class, null);
+    TabSpec statsTabSpec = tabHost.newTabSpec(STATS_TAB_TAG).setIndicator(
+        getString(R.string.track_detail_stats_tab),
+        getResources().getDrawable(R.drawable.ic_menu_statistics));
+    tabManager.addTab(statsTabSpec, StatsFragment.class, null);
+    if (savedInstanceState != null) {
+      tabHost.setCurrentTabByTag(savedInstanceState.getString(CURRENT_TAG_KEY));
     }
-    trackDataHub.loadTrack(trackId);
-    
-    // Get the waypointId
-    long waypointId = intent.getLongExtra(WAYPOINT_ID, -1L);
-    if (waypointId != -1L) {
-      MapActivity mapActivity = getMapActivity();
-      if (mapActivity != null) {
-        getTabHost().setCurrentTab(0);
-        mapActivity.showWaypoint(trackId, waypointId);
-      } else {
-        Log.e(TAG, "MapActivity is null");
-      }
-    }
+
+    handleIntent(getIntent());
   }
-
+ 
+  @Override
+  public void onNewIntent(Intent intent) {
+    super.onNewIntent(intent);
+    handleIntent(intent);
+  } 
+  
   @Override
   protected void onStart() {
     super.onStart();
@@ -178,6 +185,12 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
   protected void onResume() {
     super.onResume();
     trackRecordingServiceConnection.bindIfRunning();
+  }
+
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    outState.putString(CURRENT_TAG_KEY, tabHost.getCurrentTabTag());
   }
 
   @Override
@@ -196,7 +209,18 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
   protected Dialog onCreateDialog(int id) {
     switch (id) {
       case DIALOG_INSTALL_EARTH_ID:
-        return PlayTrackUtils.createInstallEarthDialog(this);
+        return new AlertDialog.Builder(this).setCancelable(true)
+            .setMessage(R.string.track_detail_install_earth_message)
+            .setNegativeButton(android.R.string.cancel, null)
+            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent()
+                    .setData(Uri.parse(MARKET_URL_PREFIX + SaveActivity.GOOGLE_EARTH_PACKAGE));
+                startActivity(intent);
+              }
+            })
+            .create();
       case DIALOG_DELETE_CURRENT_ID:
         return DialogUtils.createConfirmationDialog(this,
             R.string.track_detail_delete_confirm_message, new DialogInterface.OnClickListener() {
@@ -206,33 +230,85 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
                 startTrackListActivity();
               }
             });
+      case DIALOG_CHART_SETTINGS_ID:
+        return createChartSettingsDialog();
       default:
         return null;
     }
   }
 
+  private Dialog createChartSettingsDialog() {
+    final ChartFragment chartFragment = (ChartFragment) getSupportFragmentManager()
+        .findFragmentByTag(CHART_TAB_TAG);
+    View view = getLayoutInflater().inflate(R.layout.chart_settings, null);
+    final RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.chart_settings_x);
+    radioGroup
+        .check(chartFragment.getMode() == ChartView.Mode.BY_DISTANCE ? R.id.chart_settings_by_distance
+            : R.id.chart_settings_by_time);
+
+    final CheckBox[] checkBoxes = new CheckBox[ChartView.NUM_SERIES];
+    checkBoxes[ChartView.ELEVATION_SERIES] = (CheckBox) view
+        .findViewById(R.id.chart_settings_elevation);
+    checkBoxes[ChartView.SPEED_SERIES] = (CheckBox) view.findViewById(R.id.chart_settings_speed);
+    checkBoxes[ChartView.POWER_SERIES] = (CheckBox) view.findViewById(R.id.chart_settings_power);
+    checkBoxes[ChartView.CADENCE_SERIES] = (CheckBox) view
+        .findViewById(R.id.chart_settings_cadence);
+    checkBoxes[ChartView.HEART_RATE_SERIES] = (CheckBox) view
+        .findViewById(R.id.chart_settings_heart_rate);
+
+    // set checkboxes values
+    for (int i = 0; i < ChartView.NUM_SERIES; i++) {
+      checkBoxes[i].setChecked(chartFragment.isChartValueSeriesEnabled(i));
+    }
+    checkBoxes[ChartView.SPEED_SERIES].setText(chartFragment.isReportSpeed() ? R.string.stat_speed
+        : R.string.stat_pace);
+
+    return new AlertDialog.Builder(this).setCancelable(true)
+        .setNegativeButton(R.string.generic_cancel, null)
+        .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            chartFragment
+                .setMode(radioGroup.getCheckedRadioButtonId() == R.id.chart_settings_by_distance ? ChartView.Mode.BY_DISTANCE
+                    : ChartView.Mode.BY_TIME);
+            for (int i = 0; i < ChartView.NUM_SERIES; i++) {
+              chartFragment.setChartValueSeriesEnabled(i, checkBoxes[i].isChecked());
+            }
+            chartFragment.update();
+          }
+        }).setTitle(R.string.menu_chart_settings).setView(view).create();
+  }
+  
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.track_detail, menu);
     String fileTypes[] = getResources().getStringArray(R.array.file_types);
-    menu.findItem(R.id.menu_save_gpx).setTitle(getString(R.string.menu_save_format, fileTypes[0]));
-    menu.findItem(R.id.menu_save_kml).setTitle(getString(R.string.menu_save_format, fileTypes[1]));
-    menu.findItem(R.id.menu_save_csv).setTitle(getString(R.string.menu_save_format, fileTypes[2]));
-    menu.findItem(R.id.menu_save_tcx).setTitle(getString(R.string.menu_save_format, fileTypes[3]));
+    menu.findItem(R.id.track_detail_save_gpx)
+        .setTitle(getString(R.string.menu_save_format, fileTypes[0]));
+    menu.findItem(R.id.track_detail_save_kml)
+        .setTitle(getString(R.string.menu_save_format, fileTypes[1]));
+    menu.findItem(R.id.track_detail_save_csv)
+        .setTitle(getString(R.string.menu_save_format, fileTypes[2]));
+    menu.findItem(R.id.track_detail_save_tcx)
+        .setTitle(getString(R.string.menu_save_format, fileTypes[3]));
 
-    menu.findItem(R.id.menu_share_gpx).setTitle(getString(R.string.menu_share_file, fileTypes[0]));
-    menu.findItem(R.id.menu_share_kml).setTitle(getString(R.string.menu_share_file, fileTypes[1]));
-    menu.findItem(R.id.menu_share_csv).setTitle(getString(R.string.menu_share_file, fileTypes[2]));
-    menu.findItem(R.id.menu_share_tcx).setTitle(getString(R.string.menu_share_file, fileTypes[3]));
+    menu.findItem(R.id.track_detail_share_gpx)
+        .setTitle(getString(R.string.menu_share_file, fileTypes[0]));
+    menu.findItem(R.id.track_detail_share_kml)
+        .setTitle(getString(R.string.menu_share_file, fileTypes[1]));
+    menu.findItem(R.id.track_detail_share_csv)
+        .setTitle(getString(R.string.menu_share_file, fileTypes[2]));
+    menu.findItem(R.id.track_detail_share_tcx)
+        .setTitle(getString(R.string.menu_share_file, fileTypes[3]));
 
-    stopRecordingMenuItem = menu.findItem(R.id.menu_stop_recording);
-    insertMarkerMenuItem = menu.findItem(R.id.menu_insert_marker);
-    playMenuItem = menu.findItem(R.id.menu_play);
-    shareMenuItem = menu.findItem(R.id.menu_share);
-    sendGoogleMenuItem = menu.findItem(R.id.menu_send_google);
-    saveMenuItem = menu.findItem(R.id.menu_save);
-    editMenuItem = menu.findItem(R.id.menu_edit);
-    deleteMenuItem = menu.findItem(R.id.menu_delete);
+    stopRecordingMenuItem = menu.findItem(R.id.track_detail_stop_recording);
+    insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
+    playMenuItem = menu.findItem(R.id.track_detail_play);
+    shareMenuItem = menu.findItem(R.id.track_detail_share);
+    sendGoogleMenuItem = menu.findItem(R.id.track_detail_send_google);
+    saveMenuItem = menu.findItem(R.id.track_detail_save);
+    editMenuItem = menu.findItem(R.id.track_detail_edit);
+    deleteMenuItem = menu.findItem(R.id.track_detail_delete);
 
     updateMenu();
     return true;
@@ -240,14 +316,15 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
 
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
-    String currentTabTag = getTabHost().getCurrentTabTag();
-    menu.findItem(R.id.menu_chart_settings).setVisible(CHART_TAB_TAG.equals(currentTabTag));
-    menu.findItem(R.id.menu_my_location).setVisible(MAP_TAB_TAG.equals(currentTabTag));
+    String currentTabTag = tabHost.getCurrentTabTag();
+    menu.findItem(R.id.track_detail_chart_settings).setVisible(CHART_TAB_TAG.equals(currentTabTag));
+    menu.findItem(R.id.track_detail_my_location).setVisible(MAP_TAB_TAG.equals(currentTabTag));
 
     // Set map or satellite mode
-    MapActivity mapActivity = getMapActivity();
-    boolean isSatelliteMode = mapActivity != null ? mapActivity.isSatelliteView() : false;
-    menu.findItem(R.id.menu_satellite_mode).setVisible(MAP_TAB_TAG.equals(currentTabTag))
+    MapFragment mapFragment = (MapFragment) getSupportFragmentManager()
+        .findFragmentByTag(MAP_TAB_TAG);
+    boolean isSatelliteMode = mapFragment != null ? mapFragment.isSatelliteView() : false;
+    menu.findItem(R.id.track_detail_satellite_mode).setVisible(MAP_TAB_TAG.equals(currentTabTag))
         .setTitle(isSatelliteMode ? R.string.menu_map_mode : R.string.menu_satellite_mode);
 
     return super.onPrepareOptionsMenu(menu);
@@ -255,103 +332,105 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    MapActivity mapActivity;
+    MapFragment mapFragment;
     Intent intent;
     switch (item.getItemId()) {
       case android.R.id.home:
         startTrackListActivity();
         return true;
-      case R.id.menu_stop_recording:
+      case R.id.track_detail_stop_recording:
         updateMenuItems(false);
         stopRecording();
         return true;
-      case R.id.menu_insert_marker:
+      case R.id.track_detail_insert_marker:
         // TODO: Add insert marker when updating WaypointList to ICS
         return true;
-      case R.id.menu_play:
-        if (PlayTrackUtils.isEarthInstalled(this)) {
-          PlayTrackUtils.playTrack(this, trackId);
+      case R.id.track_detail_play:
+        if (isEarthInstalled()) {
+          AnalyticsUtils.sendPageViews(this, "/action/play");
+          intent = new Intent(this, SaveActivity.class)
+              .putExtra(SaveActivity.EXTRA_TRACK_ID, trackId)
+              .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.KML)
+              .putExtra(SaveActivity.EXTRA_PLAY_TRACK, true);
+          startActivity(intent);
         } else {
           showDialog(DIALOG_INSTALL_EARTH_ID);
         }
         return true;
-      case R.id.menu_share_map:
+      case R.id.track_detail_share_map:
         intent = new Intent(this, UploadServiceChooserActivity.class)
             .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, true, false, false));
         startActivity(intent);
         return true;
-      case R.id.menu_share_fusion_table:
+      case R.id.track_detail_share_fusion_table:
         intent = new Intent(this, UploadServiceChooserActivity.class)
             .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, false, true, false));
         startActivity(intent);
         return true;
-      case R.id.menu_share_gpx:
+      case R.id.track_detail_share_gpx:
         startSaveActivity(TrackFileFormat.GPX, true);
         return true;
-      case R.id.menu_share_kml:
+      case R.id.track_detail_share_kml:
         startSaveActivity(TrackFileFormat.KML, true);
         return true;
-      case R.id.menu_share_csv:
+      case R.id.track_detail_share_csv:
         startSaveActivity(TrackFileFormat.CSV, true);
         return true;
-      case R.id.menu_share_tcx:
+      case R.id.track_detail_share_tcx:
         startSaveActivity(TrackFileFormat.TCX, true);
         return true;
-      case R.id.menu_markers:
+      case R.id.track_detail_markers:
         intent = new Intent(this, WaypointsList.class)
             .putExtra("trackid", trackDataHub.getSelectedTrackId());
         startActivityForResult(intent, Constants.SHOW_WAYPOINT);
         return true;
-      case R.id.menu_send_google:
+      case R.id.track_detail_send_google:
         intent = new Intent(this, UploadServiceChooserActivity.class)
             .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, true, true, true));
         startActivity(intent);
         return true;
-      case R.id.menu_save_gpx:
+      case R.id.track_detail_save_gpx:
         startSaveActivity(TrackFileFormat.GPX, false);
         return true;
-      case R.id.menu_save_kml:
+      case R.id.track_detail_save_kml:
         startSaveActivity(TrackFileFormat.KML, false);
         return true;
-      case R.id.menu_save_csv:
+      case R.id.track_detail_save_csv:
         startSaveActivity(TrackFileFormat.CSV, false);
         return true;
-      case R.id.menu_save_tcx:
+      case R.id.track_detail_save_tcx:
         startSaveActivity(TrackFileFormat.TCX, false);
         return true;
-      case R.id.menu_edit:
+      case R.id.track_detail_edit:
         startActivity(new Intent(this, TrackEditActivity.class)
-            .putExtra(TrackEditActivity.TRACK_ID, trackId));
+            .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId));
         return true;
-      case R.id.menu_delete:
+      case R.id.track_detail_delete:
         showDialog(DIALOG_DELETE_CURRENT_ID);
         return true;
-      case R.id.menu_my_location:
-        mapActivity = getMapActivity();
-        if (mapActivity != null) {
-          mapActivity.showMyLocation();
+      case R.id.track_detail_my_location:
+        mapFragment = (MapFragment) getSupportFragmentManager().findFragmentByTag(MAP_TAB_TAG);
+        if (mapFragment != null) {
+          mapFragment.showMyLocation();
         }
         return true;
-      case R.id.menu_satellite_mode:
-        mapActivity = getMapActivity();
-        if (mapActivity != null) {
-          mapActivity.setSatelliteView(!mapActivity.isSatelliteView());
+      case R.id.track_detail_satellite_mode:
+        mapFragment = (MapFragment) getSupportFragmentManager().findFragmentByTag(MAP_TAB_TAG);
+        if (mapFragment != null) {
+          mapFragment.setSatelliteView(!mapFragment.isSatelliteView());
         }
         return true;
-      case R.id.menu_chart_settings:
-        ChartActivity chartActivity = getChartActivity();
-        if (chartActivity != null) {
-          chartActivity.showChartSettingsDialog();
-        }
+      case R.id.track_detail_chart_settings:
+        showDialog(DIALOG_CHART_SETTINGS_ID);
         return true;
-      case R.id.menu_sensor_state:
+      case R.id.track_detail_sensor_state:
         startActivity(new Intent(this, SensorStateActivity.class));
         return true;
-      case R.id.menu_settings:
+      case R.id.track_detail_settings:
         startActivity(new Intent(this, SettingsActivity.class));
         return true;
-      case R.id.menu_help:
-        startActivity(new Intent(this, WelcomeActivity.class));
+      case R.id.track_detail_help:
+        startActivity(new Intent(this, HelpActivity.class));
         return true;
       default:
         return false;
@@ -367,10 +446,11 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
     if (results != null) {
       long waypointId = results.getLongExtra(WaypointDetails.WAYPOINT_ID_EXTRA, -1L);
       if (waypointId != -1L) {
-        MapActivity mapActivity = (MapActivity) getLocalActivityManager().getActivity(MAP_TAB_TAG);
-        if (mapActivity != null) {
-          getTabHost().setCurrentTab(0);
-          mapActivity.showWaypoint(waypointId);
+        MapFragment mapFragment = (MapFragment) getSupportFragmentManager()
+            .findFragmentByTag(MAP_TAB_TAG);
+        if (mapFragment != null) {
+          tabHost.setCurrentTab(0);
+          mapFragment.showWaypoint(waypointId);
         }
       }
     }
@@ -406,12 +486,37 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
     return super.onTrackballEvent(event);
   }
 
-  @Override
-  public boolean onTouch(View v, MotionEvent event) {
-    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-      navControls.show();
+  /**
+   * @return the mapViewContainer
+   */
+  public View getMapViewContainer() {
+    return mapViewContainer;
+  }
+
+  /**
+   * Handles the data in the intent.
+   */
+  private void handleIntent(Intent intent) {
+    // Get the trackid
+    trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1L);
+    if (trackId == -1L) {
+      startTrackListActivity();
+      finish();
     }
-    return false;
+    trackDataHub.loadTrack(trackId);
+
+    // Get the waypointId
+    long waypointId = intent.getLongExtra(EXTRA_WAYPOINT_ID, -1L);
+    if (waypointId != -1L) {
+      MapFragment mapFragmet = (MapFragment) getSupportFragmentManager()
+          .findFragmentByTag(MAP_TAB_TAG);
+      if (mapFragmet != null) {
+        tabHost.setCurrentTab(0);
+        mapFragmet.showWaypoint(trackId, waypointId);
+      } else {
+        Log.e(TAG, "MapFragment is null");
+      }
+    }
   }
 
   /**
@@ -458,7 +563,6 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
    * Deletes the current track.
    */
   private void deleteCurrentTrack() {
-    long trackId = trackDataHub.getSelectedTrackId();
     MyTracksProviderUtils.Factory.get(TrackDetailActivity.this).deleteTrack(trackId);
   }
 
@@ -511,23 +615,24 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
     long recordingTrackId = sharedPreferences.getLong(getString(R.string.recording_track_key), -1L);
     if (recordingTrackId != -1L) {
       Intent intent = new Intent(this, TrackEditActivity.class)
-          .putExtra(TrackEditActivity.SHOW_CANCEL, false)
-          .putExtra(TrackEditActivity.TRACK_ID, recordingTrackId);
+          .putExtra(TrackEditActivity.EXTRA_SHOW_CANCEL, false)
+          .putExtra(TrackEditActivity.EXTRA_TRACK_ID, recordingTrackId);
       startActivity(intent);
     }
   }
 
   /**
-   * Gets the map activity, can be null.
+   * Returns true if Google Earth app is installed.
    */
-  private MapActivity getMapActivity() {
-    return (MapActivity) getLocalActivityManager().getActivity(MAP_TAB_TAG);
-  }
-
-  /**
-   * Gets the chart activity, can be null.
-   */
-  private ChartActivity getChartActivity() {
-    return (ChartActivity) getLocalActivityManager().getActivity(CHART_TAB_TAG);
+  private boolean isEarthInstalled() {
+    List<ResolveInfo> infos = getPackageManager().queryIntentActivities(
+        new Intent().setType(SaveActivity.KML_MIME_TYPE), PackageManager.MATCH_DEFAULT_ONLY);
+    for (ResolveInfo info : infos) {
+      if (info.activityInfo != null && info.activityInfo.packageName != null
+          && info.activityInfo.packageName.equals(SaveActivity.GOOGLE_EARTH_PACKAGE)) {
+        return true;
+      }
+    }
+    return false;
   }
 }

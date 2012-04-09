@@ -17,34 +17,17 @@ limitations under the License.
 <resources>
   <style name="ThemeSelector" parent="android:Theme" />
 
-  <!-- Button -->
-  <style name="Button">
-    <item name="android:layout_height">fill_parent</item>
-    <item name="android:layout_weight">1</item>
-    <item name="android:layout_width">0dp</item>
-    <item name="android:maxLines">2</item>
-    <item name="android:textSize">14sp</item>
-  </style>
-
-  <!-- Button layout -->
-  <style name="ButtonLayout">
-    <item name="android:background">@drawable/list_bar</item>
+  <!-- The style for the bottom button bar -->
+  <style name="BottomButtonBar" parent="@android:style/DeviceDefault.ButtonBar">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">fill_parent</item>
-    <item name="android:measureWithLargestChild">true</item>
     <item name="android:orientation">horizontal</item>
-    <item name="android:paddingLeft">2dp</item>
-    <item name="android:paddingRight">2dp</item>
-    <item name="android:paddingTop">4dp</item>
   </style>
-
-  <!-- Button spacer -->
-  <style name="ButtonSpacer">
+  <!-- The style for the bottom button -->
+  <style name="BottomButton" parent="@android:style/Widget.DeviceDefault.Button.Borderless">
     <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_weight">0.25</item>
+    <item name="android:layout_weight">1</item>
     <item name="android:layout_width">0dp</item>
-    <item name="android:orientation">horizontal</item>
-    <item name="android:visibility">gone</item>
   </style>
 
   <style name="SensorStateLabel">
@@ -125,28 +108,38 @@ limitations under the License.
     <item name="android:textColor">@color/stat_label_text</item>
   </style>
 
-  <!-- The TextView showing the stats in the track list item -->
-  <style name="TrackListItemStatsTextView" parents="@android:style/TextAppearance.DeviceDefault.Small">
+  <!-- The style for the label in track_edit.xml -->
+  <style name="TrackEditLabelTextView" parent="@android:style/TextAppearance.DeviceDefault.Medium">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+  </style>
+  <!-- The style for the value in track_edit.xml -->
+  <style name="TrackEditValueEditText" parent="@android:style/TextAppearance.DeviceDefault.Medium">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:selectAllOnFocus">true</item>
+  </style>
+
+  <!-- The style for the stats in track_list_item.xml -->
+  <style name="TrackListItemStatsTextView" parent="@android:style/TextAppearance.DeviceDefault.Small">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
     <item name="android:singleLine">true</item>
     <item name="android:textColor">@color/green</item>
   </style>
-
-<!-- Welcome page TextView -->
-  <style name="WelcomeTextView">
+  
+  <!-- The style for the answer in welcome.xml -->
+  <style name="WelcomeAnswerTextView" parent="@android:style/TextAppearance.DeviceDefault.Small">
     <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">fill_parent</item>
-    <item name="android:paddingLeft">10sp</item>
-    <item name="android:paddingRight">10sp</item>
-    <item name="android:textColor">@color/black</item>
-    <item name="android:textSize">16sp</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:paddingBottom">8dp</item>
   </style>
-
-  <!-- Welcome page TextView question -->
-  <style name="WelcomeTextView.Question">
-    <item name="android:paddingTop">10sp</item>
+  <!-- The style for the question in welcome.xml -->
+  <style name="WelcomeQuestionTextView" parent="@android:style/TextAppearance.DeviceDefault.Medium">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
     <item name="android:textStyle">bold</item>
+    <item name="android:paddingTop">8dp</item>
   </style>
 
   <!-- Widget TextView -->

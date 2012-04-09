@@ -142,7 +142,7 @@ public class ImportActivity extends Activity {
                 if (!importAll && trackId != -1L) {
                   Intent intent = new Intent(ImportActivity.this, TrackDetailActivity.class)
                       .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-                      .putExtra(TrackDetailActivity.TRACK_ID, trackId);
+                      .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
                   startActivity(intent);
                 }
                 finish();

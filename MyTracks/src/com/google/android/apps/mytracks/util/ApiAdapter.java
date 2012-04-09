@@ -100,14 +100,26 @@ public interface ApiAdapter {
    * @param bluetoothDevice
    */
   public BluetoothSocket getBluetoothSocket(BluetoothDevice bluetoothDevice) throws IOException;
-  
+
+  /**
+   * Hides the title. If the platform supports the action bar, do nothing.
+   * Ideally, with the action bar, we would like to collapse the navigation tabs
+   * into the action bar. However, collapsing is not supported by the
+   * compatibility library.
+   * <p>
+   * Due to changes in API level 11.
+   * 
+   * @param activity the activity
+   */
+  public void hideTitle(Activity activity);
+
   /**
    * Configures the action bar with the Home button as an Up button. If the
-   * system doesn't support action bar, hide the title bar.
+   * platform doesn't support the action bar, do nothing.
    * <p>
    * Due to changes in API level 11.
    *
-   * @param activity the current activity
+   * @param activity the activity
    */
   public void configureActionBarHomeAsUp(Activity activity);
 
