@@ -36,7 +36,6 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.TabActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -44,21 +43,21 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.RemoteException;
 import android.speech.tts.TextToSpeech;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.RelativeLayout;
+import android.widget.CheckBox;
+import android.widget.RadioGroup;
 import android.widget.TabHost;
+import android.widget.TabHost.TabSpec;
 import android.widget.Toast;
 
 import java.util.List;
@@ -69,21 +68,23 @@ import java.util.List;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-@SuppressWarnings("deprecation")
-public class TrackDetailActivity extends TabActivity implements OnTouchListener {
+public class TrackDetailActivity extends FragmentActivity {
 
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_WAYPOINT_ID = "waypoint_id";
 
   private static final String TAG = TrackDetailActivity.class.getSimpleName();
+  private static final String CURRENT_TAG_KEY = "tab";
   
   private static final int DIALOG_INSTALL_EARTH_ID = 0;
   private static final int DIALOG_DELETE_CURRENT_ID = 1;
-
+  private static final int DIALOG_CHART_SETTINGS_ID = 2;
+  
   private SharedPreferences sharedPreferences;
   private TrackDataHub trackDataHub;
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
-  private NavControls navControls;
+  private TabHost tabHost;
+  private TabManager tabManager;
   private long trackId;
   
   private MenuItem stopRecordingMenuItem;
@@ -95,12 +96,8 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
   private MenuItem editMenuItem;
   private MenuItem deleteMenuItem;
 
-  private final Runnable changeTab = new Runnable() {
-    public void run() {
-      getTabHost().setCurrentTab(navControls.getCurrentIcons());
-    }
-  };
-
+  private View mapViewContainer;
+  
   /*
    * Note that sharedPreferenceChangeListener cannot be an anonymous inner
    * class. Anonymous inner class will get garbage collected.
@@ -116,52 +113,68 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
     }
   };
 
+  /**
+   * We are not displaying driving directions. Just an arbitrary track that is
+   * not associated to any licensed mapping data. Therefore it should be okay to
+   * return false here and still comply with the terms of service.
+   */
+  @Override
+  protected boolean isRouteDisplayed() {
+    return false;
+  }
+
+  /**
+   * We are displaying a location. This needs to return true in order to comply
+   * with the terms of service.
+   */
+  @Override
+  protected boolean isLocationDisplayed() {
+    return true;
+  }
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
     ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
-    
+    setContentView(R.layout.track_detail);
+
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     trackDataHub = ((MyTracksApplication) getApplication()).getTrackDataHub();
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
 
-    final Resources res = getResources();
-    final TabHost tabHost = getTabHost();
-    tabHost.addTab(tabHost.newTabSpec(MAP_TAB_TAG)
-        .setIndicator("Map", res.getDrawable(android.R.drawable.ic_menu_mapmode))
-        .setContent(new Intent(this, MapActivity.class)));
-    tabHost.addTab(tabHost.newTabSpec(STATS_TAB_TAG)
-        .setIndicator("Stats", res.getDrawable(R.drawable.ic_menu_statistics))
-        .setContent(new Intent(this, StatsActivity.class)));
-    tabHost.addTab(tabHost.newTabSpec(CHART_TAB_TAG)
-        .setIndicator("Chart", res.getDrawable(R.drawable.menu_elevation))
-        .setContent(new Intent(this, ChartActivity.class)));
+    mapViewContainer = getLayoutInflater().inflate(R.layout.mytracks_layout, null);
 
-    // Hide the tab widget itself. We'll use overlayed prev/next buttons to
-    // switch between the tabs:
-    tabHost.getTabWidget().setVisibility(View.GONE);
+    tabHost = (TabHost) findViewById(android.R.id.tabhost);
+    tabHost.setup();
+    tabManager = new TabManager(this, tabHost, R.id.realtabcontent);
+    TabSpec mapTabSpec = tabHost.newTabSpec(MAP_TAB_TAG).setIndicator(
+        getString(R.string.track_detail_map_tab),
+        getResources().getDrawable(android.R.drawable.ic_menu_mapmode));
+    tabManager.addTab(mapTabSpec, MapFragment.class, null);
+    TabSpec chartTabSpec = tabHost.newTabSpec(CHART_TAB_TAG).setIndicator(
+        getString(R.string.track_detail_chart_tab),
+        getResources().getDrawable(R.drawable.menu_elevation));
+    tabManager.addTab(chartTabSpec, ChartFragment.class, null);
+    TabSpec statsTabSpec = tabHost.newTabSpec(STATS_TAB_TAG).setIndicator(
+        getString(R.string.track_detail_stats_tab),
+        getResources().getDrawable(R.drawable.ic_menu_statistics));
+    tabManager.addTab(statsTabSpec, StatsFragment.class, null);
 
-    RelativeLayout layout = new RelativeLayout(this);
-    LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
-    layout.setLayoutParams(params);
-    navControls = new NavControls(this, layout, getResources().obtainTypedArray(R.array.left_icons),
-        getResources().obtainTypedArray(R.array.right_icons), changeTab);
-    navControls.show();
-    tabHost.addView(layout);
-    layout.setOnTouchListener(this);
-    
+    if (savedInstanceState != null) {
+      tabHost.setCurrentTabByTag(savedInstanceState.getString(CURRENT_TAG_KEY));
+    }
+
     handleIntent(getIntent());
   }
-
+ 
   @Override
-  protected void onNewIntent(Intent intent) {
+  public void onNewIntent(Intent intent) {
     super.onNewIntent(intent);
     handleIntent(intent);
-  }
-
+  }  
+  
   @Override
   protected void onStart() {
     super.onStart();
@@ -172,6 +185,12 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
   protected void onResume() {
     super.onResume();
     trackRecordingServiceConnection.bindIfRunning();
+  }
+
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    outState.putString(CURRENT_TAG_KEY, tabHost.getCurrentTabTag());
   }
 
   @Override
@@ -211,11 +230,55 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
                 startTrackListActivity();
               }
             });
+      case DIALOG_CHART_SETTINGS_ID:
+        return createChartSettingsDialog();
       default:
         return null;
     }
   }
 
+  private Dialog createChartSettingsDialog() {
+    final ChartFragment chartFragment = (ChartFragment) getSupportFragmentManager()
+        .findFragmentByTag(CHART_TAB_TAG);
+    View view = getLayoutInflater().inflate(R.layout.chart_settings, null);
+    final RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.chart_settings_x);
+    radioGroup
+        .check(chartFragment.getMode() == ChartView.Mode.BY_DISTANCE ? R.id.chart_settings_by_distance
+            : R.id.chart_settings_by_time);
+
+    final CheckBox[] checkBoxes = new CheckBox[ChartView.NUM_SERIES];
+    checkBoxes[ChartView.ELEVATION_SERIES] = (CheckBox) view
+        .findViewById(R.id.chart_settings_elevation);
+    checkBoxes[ChartView.SPEED_SERIES] = (CheckBox) view.findViewById(R.id.chart_settings_speed);
+    checkBoxes[ChartView.POWER_SERIES] = (CheckBox) view.findViewById(R.id.chart_settings_power);
+    checkBoxes[ChartView.CADENCE_SERIES] = (CheckBox) view
+        .findViewById(R.id.chart_settings_cadence);
+    checkBoxes[ChartView.HEART_RATE_SERIES] = (CheckBox) view
+        .findViewById(R.id.chart_settings_heart_rate);
+
+    // set checkboxes values
+    for (int i = 0; i < ChartView.NUM_SERIES; i++) {
+      checkBoxes[i].setChecked(chartFragment.isChartValueSeriesEnabled(i));
+    }
+    checkBoxes[ChartView.SPEED_SERIES].setText(chartFragment.isReportSpeed() ? R.string.stat_speed
+        : R.string.stat_pace);
+
+    return new AlertDialog.Builder(this).setCancelable(true)
+        .setNegativeButton(R.string.generic_cancel, null)
+        .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            chartFragment
+                .setMode(radioGroup.getCheckedRadioButtonId() == R.id.chart_settings_by_distance ? ChartView.Mode.BY_DISTANCE
+                    : ChartView.Mode.BY_TIME);
+            for (int i = 0; i < ChartView.NUM_SERIES; i++) {
+              chartFragment.setChartValueSeriesEnabled(i, checkBoxes[i].isChecked());
+            }
+            chartFragment.update();
+          }
+        }).setTitle(R.string.menu_chart_settings).setView(view).create();
+  }
+  
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.track_detail, menu);
@@ -253,13 +316,14 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
 
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
-    String currentTabTag = getTabHost().getCurrentTabTag();
+    String currentTabTag = tabHost.getCurrentTabTag();
     menu.findItem(R.id.track_detail_chart_settings).setVisible(CHART_TAB_TAG.equals(currentTabTag));
     menu.findItem(R.id.track_detail_my_location).setVisible(MAP_TAB_TAG.equals(currentTabTag));
 
     // Set map or satellite mode
-    MapActivity mapActivity = getMapActivity();
-    boolean isSatelliteMode = mapActivity != null ? mapActivity.isSatelliteView() : false;
+    MapFragment mapFragment = (MapFragment) getSupportFragmentManager()
+        .findFragmentByTag(MAP_TAB_TAG);
+    boolean isSatelliteMode = mapFragment != null ? mapFragment.isSatelliteView() : false;
     menu.findItem(R.id.track_detail_satellite_mode).setVisible(MAP_TAB_TAG.equals(currentTabTag))
         .setTitle(isSatelliteMode ? R.string.menu_map_mode : R.string.menu_satellite_mode);
 
@@ -268,7 +332,7 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    MapActivity mapActivity;
+    MapFragment mapFragment;
     Intent intent;
     switch (item.getItemId()) {
       case android.R.id.home:
@@ -345,22 +409,19 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
         showDialog(DIALOG_DELETE_CURRENT_ID);
         return true;
       case R.id.track_detail_my_location:
-        mapActivity = getMapActivity();
-        if (mapActivity != null) {
-          mapActivity.showMyLocation();
+        mapFragment = (MapFragment) getSupportFragmentManager().findFragmentByTag(MAP_TAB_TAG);
+        if (mapFragment != null) {
+          mapFragment.showMyLocation();
         }
         return true;
       case R.id.track_detail_satellite_mode:
-        mapActivity = getMapActivity();
-        if (mapActivity != null) {
-          mapActivity.setSatelliteView(!mapActivity.isSatelliteView());
+        mapFragment = (MapFragment) getSupportFragmentManager().findFragmentByTag(MAP_TAB_TAG);
+        if (mapFragment != null) {
+          mapFragment.setSatelliteView(!mapFragment.isSatelliteView());
         }
         return true;
       case R.id.track_detail_chart_settings:
-        ChartActivity chartActivity = getChartActivity();
-        if (chartActivity != null) {
-          chartActivity.showChartSettingsDialog();
-        }
+        showDialog(DIALOG_CHART_SETTINGS_ID);
         return true;
       case R.id.track_detail_sensor_state:
         startActivity(new Intent(this, SensorStateActivity.class));
@@ -385,10 +446,11 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
     if (results != null) {
       long waypointId = results.getLongExtra(WaypointDetails.WAYPOINT_ID_EXTRA, -1L);
       if (waypointId != -1L) {
-        MapActivity mapActivity = (MapActivity) getLocalActivityManager().getActivity(MAP_TAB_TAG);
-        if (mapActivity != null) {
-          getTabHost().setCurrentTab(0);
-          mapActivity.showWaypoint(waypointId);
+        MapFragment mapFragment = (MapFragment) getSupportFragmentManager()
+            .findFragmentByTag(MAP_TAB_TAG);
+        if (mapFragment != null) {
+          tabHost.setCurrentTab(0);
+          mapFragment.showWaypoint(waypointId);
         }
       }
     }
@@ -424,12 +486,11 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
     return super.onTrackballEvent(event);
   }
 
-  @Override
-  public boolean onTouch(View v, MotionEvent event) {
-    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-      navControls.show();
-    }
-    return false;
+  /**
+   * @return the mapViewContainer
+   */
+  public View getMapViewContainer() {
+    return mapViewContainer;
   }
 
   /**
@@ -447,15 +508,15 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
     // Get the waypointId
     long waypointId = intent.getLongExtra(EXTRA_WAYPOINT_ID, -1L);
     if (waypointId != -1L) {
-      MapActivity mapActivity = getMapActivity();
-      if (mapActivity != null) {
-        getTabHost().setCurrentTab(0);
-        mapActivity.showWaypoint(trackId, waypointId);
+      MapFragment mapFragmet = (MapFragment) getSupportFragmentManager().findFragmentByTag(MAP_TAB_TAG);
+      if (mapFragmet != null) {
+        tabHost.setCurrentTab(0);
+        mapFragmet.showWaypoint(trackId, waypointId);
       } else {
-        Log.e(TAG, "MapActivity is null");
+         Log.e(TAG, "MapFragment is null");
       }
     }
-  }
+  }   
 
   /**
    * Updates the menu.
@@ -501,7 +562,6 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
    * Deletes the current track.
    */
   private void deleteCurrentTrack() {
-    long trackId = trackDataHub.getSelectedTrackId();
     MyTracksProviderUtils.Factory.get(TrackDetailActivity.this).deleteTrack(trackId);
   }
 
@@ -574,19 +634,5 @@ public class TrackDetailActivity extends TabActivity implements OnTouchListener 
       }
     }
     return false;
-  }
-  
-  /**
-   * Gets the map activity, can be null.
-   */
-  private MapActivity getMapActivity() {
-    return (MapActivity) getLocalActivityManager().getActivity(MAP_TAB_TAG);
-  }
-
-  /**
-   * Gets the chart activity, can be null.
-   */
-  private ChartActivity getChartActivity() {
-    return (ChartActivity) getLocalActivityManager().getActivity(CHART_TAB_TAG);
   }
 }
