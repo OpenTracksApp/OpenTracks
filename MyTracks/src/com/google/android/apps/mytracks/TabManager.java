@@ -23,6 +23,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.TabHost;
+import android.widget.TabHost.TabContentFactory;
+import android.widget.TabHost.TabSpec;
 
 import java.util.HashMap;
 
@@ -35,96 +37,114 @@ import java.util.HashMap;
  * TabManager supplies its own dummy view to show as the tab content. It listens
  * to changes in tabs, and takes care of switch to the correct fragment shown in
  * a separate content area whenever the selected tab changes.
- * 
- * Copied from the Fragment Tabs example in the API 4+ Support Demos. 
- * 
+ * <p>
+ * Copied from the Fragment Tabs example in the API 4+ Support Demos.
+ *
  * @author Jimmy Shih
  */
 public class TabManager implements TabHost.OnTabChangeListener {
-  private final FragmentActivity mActivity;
-  private final TabHost mTabHost;
-  private final int mContainerId;
-  private final HashMap<String, TabInfo> mTabs = new HashMap<String, TabInfo>();
-  TabInfo mLastTab;
 
-  static final class TabInfo {
+  private final FragmentActivity fragmentActivity;
+  private final TabHost tabHost;
+  private final int containerId;
+  private final HashMap<String, TabInfo> tabs = new HashMap<String, TabInfo>();
+  private TabInfo lastTabInfo;
+
+  /**
+   * An object to hold a tab's info.
+   *
+   * @author Jimmy Shih
+   */
+  private static final class TabInfo {
+
     private final String tag;
     private final Class<?> clss;
-    private final Bundle args;
+    private final Bundle bundle;
     private Fragment fragment;
 
-    TabInfo(String _tag, Class<?> _class, Bundle _args) {
-      tag = _tag;
-      clss = _class;
-      args = _args;
+    public TabInfo(String tag, Class<?> clss, Bundle bundle) {
+      this.tag = tag;
+      this.clss = clss;
+      this.bundle = bundle;
     }
   }
 
-  static class DummyTabFactory implements TabHost.TabContentFactory {
-    private final Context mContext;
+  /**
+   * A dummy {@link TabContentFactory} that creates an empty view to satisfy the
+   * {@link TabHost} API.
+   *
+   * @author Jimmy Shih
+   */
+  private static class DummyTabContentFactory implements TabContentFactory {
 
-    public DummyTabFactory(Context context) {
-      mContext = context;
+    private final Context context;
+
+    public DummyTabContentFactory(Context context) {
+      this.context = context;
     }
 
     @Override
     public View createTabContent(String tag) {
-      View v = new View(mContext);
-      v.setMinimumWidth(0);
-      v.setMinimumHeight(0);
-      return v;
+      View view = new View(context);
+      view.setMinimumWidth(0);
+      view.setMinimumHeight(0);
+      return view;
     }
   }
 
-  public TabManager(FragmentActivity activity, TabHost tabHost, int containerId) {
-    mActivity = activity;
-    mTabHost = tabHost;
-    mContainerId = containerId;
-    mTabHost.setOnTabChangedListener(this);
+  public TabManager(FragmentActivity fragmentActivity, TabHost tabHost, int containerId) {
+    this.fragmentActivity = fragmentActivity;
+    this.tabHost = tabHost;
+    this.containerId = containerId;
+    tabHost.setOnTabChangedListener(this);
   }
 
-  public void addTab(TabHost.TabSpec tabSpec, Class<?> clss, Bundle args) {
-    tabSpec.setContent(new DummyTabFactory(mActivity));
+  public void addTab(TabSpec tabSpec, Class<?> clss, Bundle bundle) {
+    tabSpec.setContent(new DummyTabContentFactory(fragmentActivity));
+
     String tag = tabSpec.getTag();
+    TabInfo tabInfo = new TabInfo(tag, clss, bundle);
 
-    TabInfo info = new TabInfo(tag, clss, args);
-
-    // Check to see if we already have a fragment for this tab, probably
-    // from a previously saved state. If so, deactivate it, because our
-    // initial state is that a tab isn't shown.
-    info.fragment = mActivity.getSupportFragmentManager().findFragmentByTag(tag);
-    if (info.fragment != null && !info.fragment.isDetached()) {
-      FragmentTransaction ft = mActivity.getSupportFragmentManager().beginTransaction();
-      ft.detach(info.fragment);
-      ft.commit();
+    /*
+     * Check to see if we already have a fragment for this tab, probably from a
+     * previously saved state. If so, deactivate it, because our initial state
+     * is that a tab isn't shown.
+     */
+    tabInfo.fragment = fragmentActivity.getSupportFragmentManager().findFragmentByTag(tag);
+    if (tabInfo.fragment != null && !tabInfo.fragment.isDetached()) {
+      FragmentTransaction fragmentTransaction = fragmentActivity.getSupportFragmentManager()
+          .beginTransaction();
+      fragmentTransaction.detach(tabInfo.fragment);
+      fragmentTransaction.commit();
     }
-
-    mTabs.put(tag, info);
-    mTabHost.addTab(tabSpec);
+    tabs.put(tag, tabInfo);
+    tabHost.addTab(tabSpec);
   }
 
   @Override
   public void onTabChanged(String tabId) {
-    TabInfo newTab = mTabs.get(tabId);
-    if (mLastTab != newTab) {
-      FragmentTransaction ft = mActivity.getSupportFragmentManager().beginTransaction();
-      if (mLastTab != null) {
-        if (mLastTab.fragment != null) {
-          ft.detach(mLastTab.fragment);
+    TabInfo newTabInfo = tabs.get(tabId);
+    if (lastTabInfo != newTabInfo) {
+      FragmentTransaction fragmentTransaction = fragmentActivity.getSupportFragmentManager()
+          .beginTransaction();
+      if (lastTabInfo != null) {
+        if (lastTabInfo.fragment != null) {
+          fragmentTransaction.detach(lastTabInfo.fragment);
         }
       }
-      if (newTab != null) {
-        if (newTab.fragment == null) {
-          newTab.fragment = Fragment.instantiate(mActivity, newTab.clss.getName(), newTab.args);
-          ft.add(mContainerId, newTab.fragment, newTab.tag);
+      if (newTabInfo != null) {
+        if (newTabInfo.fragment == null) {
+          newTabInfo.fragment = Fragment.instantiate(
+              fragmentActivity, newTabInfo.clss.getName(), newTabInfo.bundle);
+          fragmentTransaction.add(containerId, newTabInfo.fragment, newTabInfo.tag);
         } else {
-          ft.attach(newTab.fragment);
+          fragmentTransaction.attach(newTabInfo.fragment);
         }
       }
 
-      mLastTab = newTab;
-      ft.commit();
-      mActivity.getSupportFragmentManager().executePendingTransactions();
+      lastTabInfo = newTabInfo;
+      fragmentTransaction.commit();
+      fragmentActivity.getSupportFragmentManager().executePendingTransactions();
     }
   }
 }
