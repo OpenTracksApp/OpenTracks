@@ -74,7 +74,6 @@ public class TrackDetailActivity extends FragmentActivity {
   public static final String EXTRA_WAYPOINT_ID = "waypoint_id";
 
   private static final String TAG = TrackDetailActivity.class.getSimpleName();
-  private static final String MARKET_URL_PREFIX = "market://details?id=";
   private static final String CURRENT_TAG_KEY = "tab";
   
   private static final int DIALOG_INSTALL_EARTH_ID = 0;
@@ -216,7 +215,7 @@ public class TrackDetailActivity extends FragmentActivity {
               @Override
               public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent()
-                    .setData(Uri.parse(MARKET_URL_PREFIX + SaveActivity.GOOGLE_EARTH_PACKAGE));
+                    .setData(Uri.parse(SaveActivity.GOOGLE_EARTH_MARKET_URL));
                 startActivity(intent);
               }
             })
@@ -626,7 +625,8 @@ public class TrackDetailActivity extends FragmentActivity {
    */
   private boolean isEarthInstalled() {
     List<ResolveInfo> infos = getPackageManager().queryIntentActivities(
-        new Intent().setType(SaveActivity.KML_MIME_TYPE), PackageManager.MATCH_DEFAULT_ONLY);
+        new Intent().setType(SaveActivity.GOOGLE_EARTH_KML_MIME_TYPE),
+        PackageManager.MATCH_DEFAULT_ONLY);
     for (ResolveInfo info : infos) {
       if (info.activityInfo != null && info.activityInfo.packageName != null
           && info.activityInfo.packageName.equals(SaveActivity.GOOGLE_EARTH_PACKAGE)) {
