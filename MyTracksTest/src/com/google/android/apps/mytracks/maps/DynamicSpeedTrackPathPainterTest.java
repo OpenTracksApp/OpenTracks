@@ -18,7 +18,6 @@ package com.google.android.apps.mytracks.maps;
 import com.google.android.apps.mytracks.ColoredPath;
 import com.google.android.apps.mytracks.MapOverlay.CachedLocation;
 import com.google.android.apps.mytracks.TrackStubUtils;
-import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 import com.google.android.testing.mocking.AndroidMock;
 import com.google.android.testing.mocking.UsesMocks;
@@ -38,9 +37,14 @@ public class DynamicSpeedTrackPathPainterTest extends TrackPathPainterTestCase {
   private static final int NUMBER_OF_LOCATIONS = 100;
   private static final int LOCATIONS_PER_SEGMENT = 25;
   // The maximum speed(KM/H) which is considered slow.
-  private static final int SLOW_SPEED = 30;
+  private static final int SLOW_SPEED_KMH = 30;
   // The maximum speed(KM/H) which is considered normal.
-  private static final int NORMAL_SPEED = 50;
+  private static final int NORMAL_SPEED_KMH = 50;
+
+  // Convert from kilometers per hour to meters per second
+  private static final double KMH_TO_MS = 1 / 3.6;
+  private static final int SLOW_SPEED_MS = (int) (SLOW_SPEED_KMH * KMH_TO_MS);
+  private static final int NORMAL_SPEED_MS = (int) (NORMAL_SPEED_KMH * KMH_TO_MS);
 
   @Override
   protected void setUp() throws Exception {
@@ -95,15 +99,15 @@ public class DynamicSpeedTrackPathPainterTest extends TrackPathPainterTestCase {
     // Gets the slow speed. Divide SLOW_SPEED by 2 to make it smaller than
     // SLOW_SPEED. Speed in MyTracksLocation use MS, but speed in CachedLocation
     // use KMH.
-    int slowSpeed = (int) (SLOW_SPEED / (2 * UnitConversions.MS_TO_KMH));
+    int slowSpeed = SLOW_SPEED_MS / 2;
     // Gets the normal speed. Makes it smaller than SLOW_SPEED and bigger than
     // NORMAL_SPEED. Speed in MyTracksLocation use MS, but speed in
     // CachedLocation use KMH.
-    int normalSpeed = (int) ((SLOW_SPEED + NORMAL_SPEED) / (2 * UnitConversions.MS_TO_KMH));
+    int normalSpeed = (SLOW_SPEED_MS + NORMAL_SPEED_MS) / 2;
     // Gets the fast speed. Multiply it by 2 to make it bigger than
     // NORMAL_SPEED. Speed in MyTracksLocation use MS, but speed in
     // CachedLocation use KMH.
-    int fastSpeed = (int) (NORMAL_SPEED * 2 / UnitConversions.MS_TO_KMH);
+    int fastSpeed = NORMAL_SPEED_MS * 2;
 
     // Get a number of startLocationIdx. And divide NUMBER_OF_LOCATIONS by 8 to
     // make sure it is less than numberOfFirstThreeSegments.
@@ -153,8 +157,8 @@ public class DynamicSpeedTrackPathPainterTest extends TrackPathPainterTestCase {
   @UsesMocks(TrackPathDescriptor.class)
   private void initialTrackPathDescriptorMock() {
     trackPathDescriptor = AndroidMock.createMock(TrackPathDescriptor.class);
-    AndroidMock.expect(trackPathDescriptor.getSlowSpeed()).andReturn(SLOW_SPEED);
-    AndroidMock.expect(trackPathDescriptor.getNormalSpeed()).andReturn(NORMAL_SPEED);
+    AndroidMock.expect(trackPathDescriptor.getSlowSpeed()).andReturn(SLOW_SPEED_KMH);
+    AndroidMock.expect(trackPathDescriptor.getNormalSpeed()).andReturn(NORMAL_SPEED_KMH);
     AndroidMock.replay(trackPathDescriptor);
   }
 

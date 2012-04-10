@@ -54,6 +54,7 @@ public class SingleColorTrackPathPainterTest extends TrackPathPainterTestCase {
    * method when all locations are valid.
    */
   public void testUpdatePath_AllValidLocation() {
+    pathMock.incReserve(NUMBER_OF_LOCATIONS);
     List<CachedLocation> points = createCachedLocations(NUMBER_OF_LOCATIONS,
         TrackStubUtils.INITIAL_LATITUDE, -1);
     // Gets a number as the start index of points.
@@ -75,6 +76,7 @@ public class SingleColorTrackPathPainterTest extends TrackPathPainterTestCase {
    * method when all locations are invalid.
    */
   public void testUpdatePath_AllInvalidLocation() {
+    pathMock.incReserve(NUMBER_OF_LOCATIONS);
     List<CachedLocation> points = createCachedLocations(NUMBER_OF_LOCATIONS, INVALID_LATITUDE, -1);
     // Gets a random number from 1 to numberOfLocations.
     int startLocationIdx = NUMBER_OF_LOCATIONS / 2;
@@ -101,6 +103,7 @@ public class SingleColorTrackPathPainterTest extends TrackPathPainterTestCase {
     points.addAll(createCachedLocations(NUMBER_OF_LOCATIONS, TrackStubUtils.INITIAL_LATITUDE, -1));
     // Gets a random number from 1 to numberOfLocations.
     int startLocationIdx = NUMBER_OF_LOCATIONS / 2;
+    pathMock.incReserve(NUMBER_OF_LOCATIONS *3 + 1 +1);
     for (int i = 0; i < NUMBER_OF_LOCATIONS - startLocationIdx; i++) {
       pathMock.lineTo(0, 0);
     }

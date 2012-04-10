@@ -52,7 +52,6 @@ public class SingleColorTrackPathPainter implements TrackPathPainter {
   public void updatePath(Projection projection, Rect viewRect, int startLocationIdx,
       Boolean alwaysVisible, List<CachedLocation> points) {
     path = new Path();
-    path.incReserve(points.size());
     updatePath(projection, viewRect, startLocationIdx, alwaysVisible, points, path);
 
   }
@@ -65,11 +64,12 @@ public class SingleColorTrackPathPainter implements TrackPathPainter {
    * @param startLocationIdx The start point from where update the path.
    * @param alwaysVisible Flag for always visible.
    * @param points The list of points used to update the path.
-   * @param newPath The path to be created.
+   * @param pathToUpdate The path to be created.
    */
   @VisibleForTesting
   void updatePath(Projection projection, Rect viewRect, int startLocationIdx,
-      Boolean alwaysVisible, List<CachedLocation> points, Path newPath) {
+      Boolean alwaysVisible, List<CachedLocation> points, Path pathToUpdate) {
+    pathToUpdate.incReserve(points.size());
     // Whether to start a new segment on new valid and visible point.
     boolean newSegment = startLocationIdx <= 0 || !points.get(startLocationIdx - 1).valid;
     boolean lastVisible = !newSegment;
@@ -97,10 +97,10 @@ public class SingleColorTrackPathPainter implements TrackPathPainter {
       // Either move to beginning of a new segment or continue the old one.
       projection.toPixels(geoPoint, pt);
       if (newSegment) {
-        newPath.moveTo(pt.x, pt.y);
+        pathToUpdate.moveTo(pt.x, pt.y);
         newSegment = false;
       } else {
-        newPath.lineTo(pt.x, pt.y);
+        pathToUpdate.lineTo(pt.x, pt.y);
       }
     }
   }
