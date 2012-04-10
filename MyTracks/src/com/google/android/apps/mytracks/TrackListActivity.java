@@ -87,6 +87,7 @@ public class TrackListActivity extends FragmentActivity {
       try {
         recordingTrackId = service.startNewTrack();
         startNewRecording = false;
+        startTrackDetailActivity(recordingTrackId);
         Toast.makeText(
             TrackListActivity.this, R.string.track_list_record_success, Toast.LENGTH_SHORT).show();
         Log.d(TAG, "Started a new recording");
@@ -157,10 +158,7 @@ public class TrackListActivity extends FragmentActivity {
     listView.setOnItemClickListener(new OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(TrackListActivity.this, TrackDetailActivity.class)
-            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-            .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, id);
-        startActivity(intent);
+        startTrackDetailActivity(id);
       }
     });
     adapter = new ResourceCursorAdapter(this, R.layout.track_list_item, null, 0) {
@@ -354,6 +352,18 @@ public class TrackListActivity extends FragmentActivity {
       default:
         return super.onOptionsItemSelected(item);
     }
+  }
+
+  /**
+   * Starts {@link TrackDetailActivity}.
+   * 
+   * @param trackId the track id.
+   */
+  private void startTrackDetailActivity(long trackId) {
+    Intent intent = new Intent(TrackListActivity.this, TrackDetailActivity.class)
+        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+        .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
+    startActivity(intent);
   }
 
   /**
