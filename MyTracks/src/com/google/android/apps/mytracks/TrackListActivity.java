@@ -17,7 +17,7 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.TracksColumns;
-import com.google.android.apps.mytracks.fragments.DeleteAllDialogFragment;
+import com.google.android.apps.mytracks.fragments.DeleteAllTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
@@ -339,8 +339,8 @@ public class TrackListActivity extends FragmentActivity {
             ExportActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.TCX));
         return true;
       case R.id.track_list_delete_all:
-        new DeleteAllDialogFragment().show(
-            getSupportFragmentManager(), DeleteAllDialogFragment.DELETE_ALL_DIALOG_TAG);
+        new DeleteAllTrackDialogFragment().show(
+            getSupportFragmentManager(), DeleteAllTrackDialogFragment.DELETE_ALL_TRACK_DIALOG_TAG);
         return true;
       case R.id.track_list_aggregated_statistics:
         startActivity(new Intent(this, AggregatedStatsActivity.class));

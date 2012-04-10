@@ -14,8 +14,11 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks;
+package com.google.android.apps.mytracks.fragments;
 
+import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.MyTracksApplication;
+import com.google.android.apps.mytracks.StatsUtilities;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
