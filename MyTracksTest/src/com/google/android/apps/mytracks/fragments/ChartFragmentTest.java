@@ -14,8 +14,10 @@
  * the License.
  */
 
-package com.google.android.apps.mytracks;
+package com.google.android.apps.mytracks.fragments;
 
+import com.google.android.apps.mytracks.ChartView;
+import com.google.android.apps.mytracks.TrackStubUtils;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
