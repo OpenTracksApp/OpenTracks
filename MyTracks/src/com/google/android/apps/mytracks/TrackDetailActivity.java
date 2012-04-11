@@ -136,6 +136,7 @@ public class TrackDetailActivity extends FragmentActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
+    ApiAdapterFactory.getApiAdapter().hideTitle(this);
     ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
     setContentView(R.layout.track_detail);
     
@@ -428,7 +429,7 @@ public class TrackDetailActivity extends FragmentActivity {
         startActivity(new Intent(this, SettingsActivity.class));
         return true;
       case R.id.track_detail_help:
-        startActivity(new Intent(this, WelcomeActivity.class));
+        startActivity(new Intent(this, HelpActivity.class));
         return true;
       default:
         return false;

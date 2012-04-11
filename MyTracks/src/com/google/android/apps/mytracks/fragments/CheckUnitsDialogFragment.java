@@ -30,20 +30,27 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 /**
- * Check Units DialogFragment.
+ * A DialogFragment to check preferred units.
+ * 
+ * @author Jimmy Shih
  */
 public class CheckUnitsDialogFragment extends DialogFragment {
 
+  public static final String CHECK_UNITS_DIALOG_TAG = "checkUnitsDialog";
+  
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-    return new AlertDialog.Builder(getActivity()).setCancelable(true)
+    return new AlertDialog.Builder(getActivity())
+        .setCancelable(true)
         .setOnCancelListener(new DialogInterface.OnCancelListener() {
+          @Override
           public void onCancel(DialogInterface dialog) {
             CheckUnitsUtils.setCheckUnitsValue(getActivity());
           }
         })
         .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+          @Override
           public void onClick(DialogInterface dialog, int which) {
             CheckUnitsUtils.setCheckUnitsValue(getActivity());
 

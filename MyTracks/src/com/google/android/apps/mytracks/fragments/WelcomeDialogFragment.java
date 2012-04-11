@@ -16,32 +16,48 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.maps.mytracks.R;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.view.View;
 
 /**
- * A DialogFragment to delete all tracks.
+ * A DialogFrament to show the welcome info.
  * 
  * @author Jimmy Shih
  */
-public class DeleteAllDialogFragment extends DialogFragment {
+public class WelcomeDialogFragment extends DialogFragment {
 
-  public static final String DELETE_ALL_DIALOG_TAG = "deleteAllDialog";
-  
+  public static final String WELCOME_DIALOG_TAG = "welcomeDialog";
+
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    return DialogUtils.createConfirmationDialog(getActivity(),
-        R.string.track_list_delete_all_confirm_message, new DialogInterface.OnClickListener() {
+    View view = getActivity().getLayoutInflater().inflate(R.layout.welcome, null);
+    return new AlertDialog.Builder(getActivity())
+        .setCancelable(true)
+        .setOnCancelListener(new DialogInterface.OnCancelListener() {
+          @Override
+          public void onCancel(DialogInterface dialog) {
+            checkUnits();
+          }
+        })
+        .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
-            MyTracksProviderUtils.Factory.get(getActivity()).deleteAllTracks();
+            checkUnits();
           }
-        });
+        })
+        .setTitle(R.string.welcome_title)
+        .setView(view)
+        .create();
+  }
+
+  private void checkUnits() {
+    new CheckUnitsDialogFragment().show(
+        getActivity().getSupportFragmentManager(), CheckUnitsDialogFragment.CHECK_UNITS_DIALOG_TAG);
   }
 }

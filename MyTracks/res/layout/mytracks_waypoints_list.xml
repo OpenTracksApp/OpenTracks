@@ -35,21 +35,18 @@ limitations under the License.
       android:text="@string/marker_list_pick_one"
       android:layout_weight="1"/>
   </LinearLayout>
-
   <ListView android:id="@android:id/list"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_weight="1"/>
-  <LinearLayout style="@style/ButtonLayout">
-    <LinearLayout style="@style/ButtonSpacer"/>
-    <Button android:id="@+id/waypointslist_btn_insert_statistics"
-      android:layout_gravity="left"
+  <LinearLayout style="@style/BottomBar" >
+    <Button
+      android:id="@+id/waypointslist_btn_insert_statistics"
       android:text="@string/marker_list_insert_statistics"
-      style="@style/Button"/>
-    <Button android:id="@+id/waypointslist_btn_insert_waypoint"
-      android:layout_gravity="right"
+      style="@style/BottomButton" />
+    <Button
+      android:id="@+id/waypointslist_btn_insert_waypoint"
       android:text="@string/marker_list_insert_waypoint"
-      style="@style/Button"/>
-    <LinearLayout style="@style/ButtonSpacer"/>
+      style="@style/BottomButton" />
   </LinearLayout>
 </LinearLayout>
