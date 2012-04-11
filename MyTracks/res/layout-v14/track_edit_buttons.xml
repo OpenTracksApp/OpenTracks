@@ -14,17 +14,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_height="fill_parent"
-  android:layout_width="fill_parent"
-  android:orientation="vertical" >
-  <ScrollView
-    android:layout_height="0dp"
-    android:layout_weight="1"
-    android:layout_width="fill_parent" >
-    <include layout="@layout/welcome" />
-  </ScrollView>
-  <LinearLayout style="@style/BottomButtonBar" >
-    <include layout="@layout/help_buttons" />
-  </LinearLayout>
-</LinearLayout>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+  <Button
+    android:id="@+id/track_edit_cancel"
+    android:text="@string/generic_cancel"
+    style="@style/BottomButton" />
+  <Button
+    android:id="@+id/track_edit_save"
+    android:text="@string/generic_save"
+    style="@style/BottomButton" />
+</merge>

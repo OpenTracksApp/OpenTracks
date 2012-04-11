@@ -486,7 +486,7 @@ limitations under the License.
       </TableLayout>
     </LinearLayout>
   </ScrollView>
-  <LinearLayout style="@style/BottomBar" >
+  <LinearLayout style="@style/BottomButtonBar" >
     <Button
       android:id="@+id/waypointdetails_save"
       android:text="@string/generic_save"

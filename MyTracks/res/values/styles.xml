@@ -17,14 +17,13 @@ limitations under the License.
 <resources>
   <style name="ThemeSelector" parent="android:Theme" />
 
-  <!-- Bottom Bar -->
-  <style name="BottomBar" parent="@android:style/DeviceDefault.ButtonBar">
+  <!-- The style for the bottom button bar -->
+  <style name="BottomButtonBar" parent="@android:style/DeviceDefault.ButtonBar">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:orientation">horizontal</item>
   </style>
-
-  <!-- Bottom Button -->
+  <!-- The style for the bottom button -->
   <style name="BottomButton" parent="@android:style/Widget.DeviceDefault.Button.Borderless">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_weight">1</item>
@@ -109,7 +108,19 @@ limitations under the License.
     <item name="android:textColor">@color/stat_label_text</item>
   </style>
 
-  <!-- The TextView showing the stats in the track list item -->
+  <!-- The style for the label in track_edit.xml -->
+  <style name="TrackEditLabelTextView" parent="@android:style/TextAppearance.DeviceDefault.Medium">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+  </style>
+  <!-- The style for the value in track_edit.xml -->
+  <style name="TrackEditValueEditText" parent="@android:style/TextAppearance.DeviceDefault.Medium">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:selectAllOnFocus">true</item>
+  </style>
+
+  <!-- The style for the stats in track_list_item.xml -->
   <style name="TrackListItemStatsTextView" parent="@android:style/TextAppearance.DeviceDefault.Small">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
@@ -117,14 +128,13 @@ limitations under the License.
     <item name="android:textColor">@color/green</item>
   </style>
   
-  <!-- The welcome activity answer TextView -->
+  <!-- The style for the answer in welcome.xml -->
   <style name="WelcomeAnswerTextView" parent="@android:style/TextAppearance.DeviceDefault.Small">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
     <item name="android:paddingBottom">8dp</item>
   </style>
-  
-  <!-- The welcome activity question TextView -->
+  <!-- The style for the question in welcome.xml -->
   <style name="WelcomeQuestionTextView" parent="@android:style/TextAppearance.DeviceDefault.Medium">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>

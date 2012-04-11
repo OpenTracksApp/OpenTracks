@@ -13,15 +13,19 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -32,7 +36,7 @@ import android.widget.EditText;
 /**
  * An activity that let's the user see and edit the user editable track meta
  * data such as track name, activity type, and track description.
- *
+ * 
  * @author Leif Hendrik Wilden
  */
 public class TrackEditActivity extends Activity implements OnClickListener {
@@ -46,33 +50,34 @@ public class TrackEditActivity extends Activity implements OnClickListener {
   private MyTracksProviderUtils myTracksProviderUtils;
   private Track track;
 
-  private EditText trackName;
+  private EditText name;
   private AutoCompleteTextView activityType;
-  private EditText trackDescription;
+  private EditText description;
 
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
+    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
+    ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
     setContentView(R.layout.track_edit);
 
-    trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1);
-    if (trackId < 0) {
-      Log.e(TAG, "invalid trackId.");
+    trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
+    if (trackId == -1L) {
+      Log.e(TAG, "invalid trackId");
       finish();
       return;
     }
 
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
-
     track = myTracksProviderUtils.getTrack(trackId);
     if (track == null) {
-      Log.e(TAG, "no track.");
+      Log.e(TAG, "no track");
       finish();
       return;
     }
 
-    trackName = (EditText) findViewById(R.id.track_edit_track_name);
-    trackName.setText(track.getName());
+    name = (EditText) findViewById(R.id.track_edit_name);
+    name.setText(track.getName());
 
     activityType = (AutoCompleteTextView) findViewById(R.id.track_edit_activity_type);
     activityType.setText(track.getCategory());
@@ -80,40 +85,40 @@ public class TrackEditActivity extends Activity implements OnClickListener {
     ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
         this, R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
     activityType.setAdapter(adapter);
-    trackDescription = (EditText) findViewById(R.id.track_edit_track_description);
-    trackDescription.setText(track.getDescription());
+    description = (EditText) findViewById(R.id.track_edit_description);
+    description.setText(track.getDescription());
 
     Button save = (Button) findViewById(R.id.track_edit_save);
     save.setOnClickListener(this);
 
     Button cancel = (Button) findViewById(R.id.track_edit_cancel);
     if (getIntent().getBooleanExtra(EXTRA_SHOW_CANCEL, true)) {
+      setTitle(R.string.menu_edit);
       cancel.setOnClickListener(this);
       cancel.setVisibility(View.VISIBLE);
     } else {
-      cancel.setVisibility(View.INVISIBLE);
+      setTitle(R.string.track_edit_new_track_title);
+      cancel.setVisibility(View.GONE);
     }
   }
 
   @Override
-  public void onClick(View view) {
-    switch (view.getId()) {
-      case R.id.track_edit_save:
-        save();
-        finish();
-        break;
-      case R.id.track_edit_cancel:
-        finish();
-        break;
-      default:   
-        finish();
+  public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() != android.R.id.home) {
+      return false;
     }
+    finish();
+    return true;
   }
 
-  private void save() {
-    track.setName(trackName.getText().toString());
-    track.setCategory(activityType.getText().toString());
-    track.setDescription(trackDescription.getText().toString());
-    myTracksProviderUtils.updateTrack(track);
+  @Override
+  public void onClick(View view) {
+    if (view.getId() == R.id.track_edit_save) {
+      track.setName(name.getText().toString());
+      track.setCategory(activityType.getText().toString());
+      track.setDescription(description.getText().toString());
+      myTracksProviderUtils.updateTrack(track);
+    }
+    finish();
   }
 }

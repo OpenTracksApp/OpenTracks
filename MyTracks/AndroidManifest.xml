@@ -193,18 +193,7 @@ limitations under the License.
       </intent-filter>
     </activity>
     <activity android:name="com.google.android.apps.mytracks.TrackDetailActivity" />
-    <activity
-      android:label="@string/track_edit_title"
-      android:name="com.google.android.apps.mytracks.TrackEditActivity" >
-      <intent-filter>
-        <action android:name="android.intent.action.EDIT" />
-
-        <category android:name="android.intent.category.BROWSABLE" />
-        <category android:name="android.intent.category.DEFAULT" />
-
-        <data android:mimeType="vnd.android.cursor.item/vnd.google.track" />
-      </intent-filter>
-    </activity>
+    <activity android:name="com.google.android.apps.mytracks.TrackEditActivity" />
     <activity android:name="com.google.android.apps.mytracks.TrackListActivity" >
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

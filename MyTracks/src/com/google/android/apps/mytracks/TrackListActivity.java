@@ -387,14 +387,20 @@ public class TrackListActivity extends FragmentActivity {
     ITrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
     if (service != null) {
       try {
+        /*
+         * Remembers the recordingTrackId before endCurrentTrack sets the shared
+         * preferences, R.string.recording_track_key, to -1L, and the
+         * sharedPreferenceChangedListener sets the recordingTrackId variable to
+         * -1L.
+         */
+        long trackId = recordingTrackId;
         service.endCurrentTrack();
-        if (recordingTrackId != -1L) {
+        if (trackId != -1L) {
           Intent intent = new Intent(this, TrackEditActivity.class)
               .putExtra(TrackEditActivity.EXTRA_SHOW_CANCEL, false)
-              .putExtra(TrackEditActivity.EXTRA_TRACK_ID, recordingTrackId);
+              .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId);
           startActivity(intent);
         }
-        recordingTrackId = -1L;
       } catch (Exception e) {
         Log.d(TAG, "Unable to stop recording.", e);
       }

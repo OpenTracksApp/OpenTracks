@@ -14,92 +14,55 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_height="fill_parent"
   android:layout_width="fill_parent"
-  android:orientation="vertical"
-  >
+  android:orientation="vertical" >
   <ScrollView
-    android:background="@color/black"
     android:layout_height="0dp"
     android:layout_weight="1"
-    android:layout_width="fill_parent"
-    >
-    <LinearLayout 
+    android:layout_width="fill_parent" >
+    <LinearLayout
       android:layout_height="wrap_content"
       android:layout_width="fill_parent"
       android:orientation="vertical"
-      android:padding="4dp"
-      >
+      android:padding="8dp" >
       <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:text="@string/track_edit_track_name"
-        />
-      <LinearLayout
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:orientation="horizontal"
-        >
-        <ImageView
-          android:contentDescription="@string/track_icon_description"
-          android:layout_gravity="center"
-          android:layout_height="wrap_content"
-          android:layout_width="wrap_content"
-          android:paddingLeft="4dp"
-          android:paddingRight="4dp"
-          android:src="@drawable/track"
-          />
-        <EditText
-          android:inputType="textAutoCorrect|textCapWords"
-          android:hint="@string/track_edit_track_name"
-          android:id="@+id/track_edit_track_name"
-          android:imeOptions="actionNext"
-          android:layout_height="wrap_content"
-          android:layout_width="fill_parent"
-          android:selectAllOnFocus="true"
-          android:singleLine="true"
-          />
-      </LinearLayout>
-      <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:text="@string/track_edit_activity_type"
-        />
-      <AutoCompleteTextView
-        android:id="@+id/track_edit_activity_type"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:hint="@string/track_edit_activity_type_hint"
-        android:imeOptions="actionNext"/>
-      <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:text="@string/track_edit_track_description"
-        />
+        android:text="@string/track_edit_name"
+        style="@style/TrackEditLabelTextView" />
       <EditText
-        android:inputType="textAutoCorrect|textCapSentences"
-        android:hint="@string/track_edit_track_description"
-        android:id="@+id/track_edit_track_description"
+        android:drawableLeft="@drawable/track"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:hint="@string/track_edit_name"
+        android:id="@+id/track_edit_name"
+        android:imeOptions="actionNext"
+        android:inputType="textAutoCorrect|textCapWords"
+        android:singleLine="true"
+        style="@style/TrackEditValueEditText" />
+      <TextView
+        android:text="@string/track_edit_activity_type"
+        style="@style/TrackEditLabelTextView" />
+      <AutoCompleteTextView
+        android:hint="@string/track_edit_activity_type_hint"
+        android:id="@+id/track_edit_activity_type"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
+        style="@style/TrackEditValueEditText" />
+      <TextView
+        android:text="@string/track_edit_description"
+        style="@style/TrackEditLabelTextView" />
+      <EditText
+        android:hint="@string/track_edit_description"
+        android:id="@+id/track_edit_description"
         android:imeOptions="actionDone"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
+        android:inputType="textAutoCorrect|textCapSentences"
         android:maxLines="50"
-        android:selectAllOnFocus="true"
         android:singleLine="false"
-        />
+        style="@style/TrackEditValueEditText" />
     </LinearLayout>
   </ScrollView>
-  <LinearLayout style="@style/BottomBar" >
-    <Button
-      android:id="@+id/track_edit_save"
-      android:text="@string/generic_save"
-      style="@style/BottomButton" />
-    <Button
-      android:id="@+id/track_edit_cancel"
-      android:text="@string/generic_cancel"
-      style="@style/BottomButton" />
+  <LinearLayout style="@style/BottomButtonBar" >
+    <include layout="@layout/track_edit_buttons" />
   </LinearLayout>
 </LinearLayout>
