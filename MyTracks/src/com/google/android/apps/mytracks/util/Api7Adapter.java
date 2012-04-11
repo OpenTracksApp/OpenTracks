@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.ContextualActionModeCallback;
 import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
 import com.google.android.apps.mytracks.services.sensors.BluetoothConnectionManager;
 import com.google.android.apps.mytracks.services.tasks.PeriodicTask;
@@ -32,6 +33,7 @@ import android.content.SharedPreferences.Editor;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.ListView;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -113,6 +115,12 @@ public class Api7Adapter implements ApiAdapter {
     // Do nothing
   }
 
+  @Override
+  public void configureContextualMenu(Activity activity, ListView listView, int menuId,
+      ContextualActionModeCallback contextualActionModeCallback) {
+    activity.registerForContextMenu(listView);
+  }
+  
   @Override
   public void configureSearchWidget(Activity activity, MenuItem menuItem) {
     // Do nothing
