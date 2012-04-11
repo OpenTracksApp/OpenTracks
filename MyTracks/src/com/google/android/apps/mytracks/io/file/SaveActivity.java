@@ -47,12 +47,15 @@ public class SaveActivity extends Activity {
   public static final String EXTRA_SHARE_TRACK = "share_track";
   public static final String EXTRA_PLAY_TRACK = "play_track";
 
-  public static final String KML_MIME_TYPE = "application/vnd.google-earth.kml+xml";
+  public static final String GOOGLE_EARTH_KML_MIME_TYPE = "application/vnd.google-earth.kml+xml";
   public static final String GOOGLE_EARTH_PACKAGE = "com.google.earth";
-  
-  private static final String TAG = SaveActivity.class.getSimpleName();
-  private static final String TOUR_FEATURE_ID = "com.google.earth.EXTRA.tour_feature_id";
+  public static final String GOOGLE_EARTH_MARKET_URL = "market://details?id="
+      + GOOGLE_EARTH_PACKAGE;
+  private static final String
+      GOOGLE_EARTH_TOUR_FEATURE_ID = "com.google.earth.EXTRA.tour_feature_id";
   private static final String GOOGLE_EARTH_CLASS = "com.google.earth.EarthActivity";
+
+  private static final String TAG = SaveActivity.class.getSimpleName();
   
   private static final int DIALOG_PROGRESS_ID = 0;
   private static final int DIALOG_RESULT_ID = 1;
@@ -211,9 +214,9 @@ public class SaveActivity extends Activity {
       } else if (playTrack) {
         Intent intent = new Intent()
             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-            .putExtra(TOUR_FEATURE_ID, KmlTrackWriter.TOUR_FEATURE_ID)
+            .putExtra(GOOGLE_EARTH_TOUR_FEATURE_ID, KmlTrackWriter.TOUR_FEATURE_ID)
             .setClassName(GOOGLE_EARTH_PACKAGE, GOOGLE_EARTH_CLASS)
-            .setDataAndType(Uri.fromFile(new File(filePath)), KML_MIME_TYPE);
+            .setDataAndType(Uri.fromFile(new File(filePath)), GOOGLE_EARTH_KML_MIME_TYPE);
         startActivity(intent);
       }
     }
