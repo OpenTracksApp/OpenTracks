@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.content;
 
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.test.AndroidTestCase;
@@ -29,6 +30,7 @@ import android.util.Pair;
  */
 public class DescriptionGeneratorImplTest extends AndroidTestCase {
 
+  private static final long START_TIME = 1288721514000L;
   private DescriptionGeneratorImpl descriptionGenerator;
 
   @Override
@@ -52,7 +54,7 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
     stats.setTotalElevationGain(6000);
     stats.setMaxGrade(0.42);
     stats.setMinGrade(0.11);
-    stats.setStartTime(1288721514000L);
+    stats.setStartTime(START_TIME);
     track.setStatistics(stats);
     track.setCategory("hiking");
     String expected = "Created by" 
@@ -71,7 +73,7 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
       + "Elevation gain: 6000 m (19685 ft)<br>"
       + "Max grade: 42 %<br>"
       + "Min grade: 11 %<br>"
-      + "Recorded: 11/2/2010 11:11 AM<br>"
+      + "Recorded: " + StringUtils.formatDateTime(getContext(), START_TIME) + "<br>"
       + "Activity type: hiking<br>";
     assertEquals(expected, descriptionGenerator.generateTrackDescription(track, null, null));
   }
@@ -91,7 +93,7 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
     stats.setTotalElevationGain(6000);
     stats.setMaxGrade(0.42);
     stats.setMinGrade(0.11);
-    stats.setStartTime(1288721514000L);
+    stats.setStartTime(START_TIME);
     waypoint.setStatistics(stats);
     String expected = "Total distance: 20.00 km (12.4 mi)\n"
       + "Total time: 10:00\n"
@@ -107,7 +109,7 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
       + "Elevation gain: 6000 m (19685 ft)\n"
       + "Max grade: 42 %\n"
       + "Min grade: 11 %\n"
-      + "Recorded: 11/2/2010 11:11 AM\n";
+      + "Recorded: " + StringUtils.formatDateTime(getContext(), START_TIME) + "\n";
     assertEquals(expected, descriptionGenerator.generateWaypointDescription(waypoint));
   }
 

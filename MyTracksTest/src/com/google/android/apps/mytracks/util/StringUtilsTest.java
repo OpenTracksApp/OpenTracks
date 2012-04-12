@@ -13,9 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.util;
 
 import android.test.AndroidTestCase;
+import android.text.format.DateFormat;
 
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
@@ -31,22 +33,19 @@ public class StringUtilsTest extends AndroidTestCase {
    * Tests {@link StringUtils#formatDateTime(android.content.Context, long)}.
    */
   public void testFormatTime() {
-    // Unix time 0 in UTC is "4:00 PM" in Pacific Standard time zone.
-    // This test can break if run on a different time zone or with a different
-    // time format preference.
-    assertEquals("4:00 PM", StringUtils.formatTime(getContext(), 0L));
+    assertEquals(DateFormat.getTimeFormat(getContext()).format(0L),
+        StringUtils.formatTime(getContext(), 0L));
   }
 
   /**
    * Tests {@link StringUtils#formatDateTime(android.content.Context, long)}.
    */
   public void testFormatDateTime() {
-    // Unix time 0 in UTC is "12/31/1969 4:00 PM" in Pacific Standard time zone.
-    // This test can break if run on a different time zone or with a different
-    // date/time format preference.
-    assertEquals("12/31/1969 4:00 PM", StringUtils.formatDateTime(getContext(), 0L));
+    String expected = DateFormat.getDateFormat(getContext()).format(0L) + " "
+        + DateFormat.getTimeFormat(getContext()).format(0L);
+    assertEquals(expected, StringUtils.formatDateTime(getContext(), 0L));
   }
-  
+
   /**
    * Tests {@link StringUtils#formatDateTimeIso8601(long)}.
    */
