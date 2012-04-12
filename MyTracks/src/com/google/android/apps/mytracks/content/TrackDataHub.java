@@ -28,8 +28,8 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils.DoubleBuff
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.content.TrackDataListener.ProviderState;
 import com.google.android.apps.mytracks.content.TrackDataListeners.ListenerRegistration;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.LocationUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -59,8 +59,6 @@ import java.util.Set;
 public class TrackDataHub {
 
   // Preference keys
-  private final String SELECTED_TRACK_KEY;
-  private final String RECORDING_TRACK_KEY;
   private final String MIN_REQUIRED_ACCURACY_KEY;
   private final String METRIC_UNITS_KEY;
   private final String SPEED_REPORTING_KEY;
@@ -223,8 +221,6 @@ public class TrackDataHub {
     this.targetNumPoints = targetNumPoints;
     this.locationFactory = new DoubleBufferedLocationFactory();
 
-    SELECTED_TRACK_KEY = context.getString(R.string.selected_track_key);
-    RECORDING_TRACK_KEY = context.getString(R.string.recording_track_key);
     MIN_REQUIRED_ACCURACY_KEY = context.getString(R.string.min_required_accuracy_key);
     METRIC_UNITS_KEY = context.getString(R.string.metric_units_key);
     SPEED_REPORTING_KEY = context.getString(R.string.report_speed_key);
@@ -302,7 +298,7 @@ public class TrackDataHub {
   }
 
   private void loadSharedPreferences() {
-    selectedTrackId = preferences.getLong(SELECTED_TRACK_KEY, -1);
+    selectedTrackId = PreferencesUtils.getSelectedTrackId(context);
     useMetricUnits = preferences.getBoolean(METRIC_UNITS_KEY, true);
     reportSpeed = preferences.getBoolean(SPEED_REPORTING_KEY, true);
     minRequiredAccuracy = preferences.getInt(MIN_REQUIRED_ACCURACY_KEY,
@@ -380,8 +376,8 @@ public class TrackDataHub {
     if (!isStarted()) {
       loadSharedPreferences();
     }
-    long recordingTrackId = preferences.getLong(RECORDING_TRACK_KEY, -1);
-    return recordingTrackId > 0 && recordingTrackId == selectedTrackId;
+    long recordingTrackId = PreferencesUtils.getRecordingTrackId(context);
+    return recordingTrackId != -1L && recordingTrackId == selectedTrackId;
   }
 
   /**
@@ -399,8 +395,7 @@ public class TrackDataHub {
 
     // Save the selection to memory and flush.
     selectedTrackId = trackId;
-    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(
-        preferences.edit().putLong(SELECTED_TRACK_KEY, trackId));
+    PreferencesUtils.setSelectedTrackId(context, selectedTrackId);
 
     // Force it to reload data from the beginning.
     Log.d(TAG, "Loading track");
@@ -627,9 +622,8 @@ public class TrackDataHub {
     } else if (SPEED_REPORTING_KEY.equals(key)) {
       reportSpeed = preferences.getBoolean(SPEED_REPORTING_KEY, true);
       notifySpeedReportingChanged();
-    } else if (SELECTED_TRACK_KEY.equals(key)) {
-      long trackId = preferences.getLong(SELECTED_TRACK_KEY, -1);
-      loadTrack(trackId);
+    } else if (PreferencesUtils.getSelectedTrackIdKey(context).equals(key)) {
+      loadTrack(PreferencesUtils.getSelectedTrackId(context));
     }
   }
 

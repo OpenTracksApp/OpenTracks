@@ -24,6 +24,7 @@ import com.google.android.apps.mytracks.services.sensors.ant.AntUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.BluetoothDeviceUtils;
 import com.google.android.apps.mytracks.util.DialogUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
@@ -345,8 +346,7 @@ public class SettingsActivity extends PreferenceActivity {
 
     // If recording, disable backup/restore/reset
     // (we don't want to get to inconsistent states)
-    boolean recording =
-        preferences.getLong(getString(R.string.recording_track_key), -1) != -1;
+    boolean recording = PreferencesUtils.getRecordingTrackId(this) != -1;
     backupNowPreference.setEnabled(!recording);
     restoreNowPreference.setEnabled(!recording);
     resetPreference.setEnabled(!recording);

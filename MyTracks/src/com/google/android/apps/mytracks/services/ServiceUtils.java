@@ -17,14 +17,12 @@ package com.google.android.apps.mytracks.services;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
 
-import com.google.android.apps.mytracks.Constants;
-import com.google.android.maps.mytracks.R;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -38,16 +36,16 @@ import java.util.List;
 public class ServiceUtils {
 
   /**
-   * Checks whether we're currently recording.
-   * The checking is done by calling the service, if provided, or alternatively by reading
-   * recording state saved to preferences.
-   *
-   * @param ctx the current context
+   * Checks whether we're currently recording. The checking is done by calling
+   * the service, if provided, or alternatively by reading recording state saved
+   * to preferences.
+   * 
+   * @param context the current context
    * @param service the service, or null if not bound to it
-   * @param preferences the preferences, or null if not available
-   * @return true if the service is recording (or supposed to be recording), false otherwise
+   * @return true if the service is recording (or supposed to be recording),
+   *         false otherwise
    */
-  public static boolean isRecording(Context ctx, ITrackRecordingService service, SharedPreferences preferences) {
+  public static boolean isRecording(Context context, ITrackRecordingService service) {
     if (service != null) {
       try {
         return service.isRecording();
@@ -57,11 +55,7 @@ public class ServiceUtils {
         Log.e(TAG, "Failed to check if service is recording", e);
       }
     }
-
-    if (preferences == null) {
-      preferences = ctx.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    }
-    return preferences.getLong(ctx.getString(R.string.recording_track_key), -1) > 0;
+    return PreferencesUtils.getRecordingTrackId(context) != -1L;
   }
 
   /**

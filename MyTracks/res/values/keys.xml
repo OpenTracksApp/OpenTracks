@@ -55,8 +55,8 @@ limitations under the License.
   <!-- Preference keys which keep transient state (not user preferences). Sorted alphabetically.
        - DO NOT TRANSLATE -->
   <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>
-  <string name="recording_track_key">recordingTrack</string>
-  <string name="selected_track_key">selectedTrack</string>
+  <string name="recording_track_id_key">recordingTrackId</string>
+  <string name="selected_track_id_key">selectedTrackId</string>
 
   <!-- Keys for non-persisted preferences. Sorted alphabetically. - DO NOT TRANSLATE -->
   <string name="ant_options_key">antOptions</string>

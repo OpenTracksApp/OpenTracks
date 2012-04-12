@@ -37,6 +37,7 @@ import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -102,7 +103,7 @@ public class TrackDetailActivity extends FragmentActivity {
     @Override
     public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
       // Note that key can be null
-      if (getString(R.string.recording_track_key).equals(key)) {
+      if (PreferencesUtils.getRecordingTrackIdKey(TrackDetailActivity.this).equals(key)) {
         updateMenu();      
       }
     }
@@ -446,8 +447,7 @@ public class TrackDetailActivity extends FragmentActivity {
    * Updates the menu.
    */
   private void updateMenu() {
-    updateMenuItems(
-        trackId == sharedPreferences.getLong(getString(R.string.recording_track_key), -1L));
+    updateMenuItems(trackId == PreferencesUtils.getRecordingTrackId(this));
   }
 
   /**
@@ -508,8 +508,7 @@ public class TrackDetailActivity extends FragmentActivity {
    * Returns true if recording.
    */
   private boolean isRecording() {
-    return ServiceUtils.isRecording(
-        this, trackRecordingServiceConnection.getServiceIfBound(), sharedPreferences);
+    return ServiceUtils.isRecording(this, trackRecordingServiceConnection.getServiceIfBound());
   }
 
   /**
@@ -528,7 +527,7 @@ public class TrackDetailActivity extends FragmentActivity {
     }
     trackRecordingServiceConnection.stop();
 
-    long recordingTrackId = sharedPreferences.getLong(getString(R.string.recording_track_key), -1L);
+    long recordingTrackId = PreferencesUtils.getRecordingTrackId(this);
     if (recordingTrackId != -1L) {
       Intent intent = new Intent(this, TrackEditActivity.class)
           .putExtra(TrackEditActivity.EXTRA_SHOW_CANCEL, false)

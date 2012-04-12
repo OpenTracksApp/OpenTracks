@@ -21,11 +21,11 @@ import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.io.file.TrackWriter;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.PowerManager.WakeLock;
@@ -65,13 +65,8 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     context = exportActivity.getApplicationContext();
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(exportActivity);
 
-    SharedPreferences sharedPreferences = exportActivity.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    long recordingTrackId = sharedPreferences.getLong(
-        exportActivity.getString(R.string.recording_track_key), -1L);
-
     // Get the wake lock if not recording
-    if (recordingTrackId == -1L) {
+    if (PreferencesUtils.getRecordingTrackId(exportActivity) == -1L) {
       wakeLock = SystemUtils.acquireWakeLock(exportActivity, wakeLock);
     }
     success = false;

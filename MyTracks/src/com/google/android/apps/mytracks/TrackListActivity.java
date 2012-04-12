@@ -26,6 +26,7 @@ import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.EulaUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -115,8 +116,8 @@ public class TrackListActivity extends FragmentActivity {
       if (getString(R.string.metric_units_key).equals(key)) {
         metricUnits = preferences.getBoolean(getString(R.string.metric_units_key), true);
       }
-      if (getString(R.string.recording_track_key).equals(key)) {
-        recordingTrackId = sharedPreferences.getLong(getString(R.string.recording_track_key), -1L);
+      if (PreferencesUtils.getRecordingTrackIdKey(TrackListActivity.this).equals(key)) {
+        recordingTrackId = PreferencesUtils.getRecordingTrackId(TrackListActivity.this);
         if (isRecording()) {
           trackRecordingServiceConnection.startAndBind();
         }
@@ -136,7 +137,6 @@ public class TrackListActivity extends FragmentActivity {
   };
   
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
-  private SharedPreferences sharedPreferences;
   private boolean metricUnits;
   private long recordingTrackId;
   private ListView listView;
@@ -162,10 +162,11 @@ public class TrackListActivity extends FragmentActivity {
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(
         this, bindChangedCallback);
 
-    sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    SharedPreferences sharedPreferences = getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     metricUnits = sharedPreferences.getBoolean(getString(R.string.metric_units_key), true);
-    recordingTrackId = sharedPreferences.getLong(getString(R.string.recording_track_key), -1L);
+    recordingTrackId = PreferencesUtils.getRecordingTrackId(this);
 
     listView = (ListView) findViewById(R.id.track_list);
     listView.setOnItemClickListener(new OnItemClickListener() {
@@ -421,8 +422,7 @@ public class TrackListActivity extends FragmentActivity {
    * Returns true if recording.
    */
   private boolean isRecording() {
-    return ServiceUtils.isRecording(
-        this, trackRecordingServiceConnection.getServiceIfBound(), sharedPreferences);
+    return ServiceUtils.isRecording(this, trackRecordingServiceConnection.getServiceIfBound());
   }
 
   /**

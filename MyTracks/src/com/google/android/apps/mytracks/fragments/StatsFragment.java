@@ -16,7 +16,6 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.MyTracksApplication;
 import com.google.android.apps.mytracks.StatsUtilities;
 import com.google.android.apps.mytracks.content.Track;
@@ -28,8 +27,6 @@ import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -51,7 +48,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
   private static final String TAG = StatsFragment.class.getSimpleName();
 
-  private SharedPreferences sharedPreferences;
   private StatsUtilities statsUtilities;
   private TrackDataHub trackDataHub;
   private UiUpdateThread uiUpdateThread;
@@ -76,7 +72,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     @Override
     public void run() {
       Log.d(TAG, "UI update thread started");
-      while (ServiceUtils.isRecording(getActivity(), null, sharedPreferences)) {
+      while (ServiceUtils.isRecording(getActivity(), null)) {
         getActivity().runOnUiThread(updateTotalTime);
         try {
           Thread.sleep(1000L);
@@ -92,8 +88,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    sharedPreferences = getActivity()
-        .getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     statsUtilities = new StatsUtilities(getActivity());
   }
 

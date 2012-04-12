@@ -25,15 +25,14 @@ import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.DialogUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Dialog;
 import android.app.ListActivity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -156,19 +155,11 @@ public class WaypointsList extends ListActivity implements View.OnClickListener 
     insertStatisticsButton =
         (Button) findViewById(R.id.waypointslist_btn_insert_statistics);
     insertStatisticsButton.setOnClickListener(this);
-    SharedPreferences preferences = getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
 
-    // TODO: Get rid of selected and recording track IDs
-    long selectedTrackId = -1;
-    if (preferences != null) {
-      recordingTrackId =
-          preferences.getLong(getString(R.string.recording_track_key), -1);
-      selectedTrackId =
-          preferences.getLong(getString(R.string.selected_track_key), -1);
-    }
-    boolean selectedRecording = selectedTrackId > 0
-        && selectedTrackId == recordingTrackId;
+    recordingTrackId = PreferencesUtils.getRecordingTrackId(this);
+
+    long selectedTrackId = PreferencesUtils.getSelectedTrackId(this);
+    boolean selectedRecording = selectedTrackId != -1L && selectedTrackId == recordingTrackId;
     insertWaypointButton.setEnabled(selectedRecording);
     insertStatisticsButton.setEnabled(selectedRecording);
 

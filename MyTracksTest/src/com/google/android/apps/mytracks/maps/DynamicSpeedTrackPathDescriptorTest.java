@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks.maps;
 
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -144,9 +145,7 @@ public class DynamicSpeedTrackPathDescriptorTest extends AndroidTestCase {
    * id.
    */
   public void testNeedsRedraw_WrongTrackId() {
-    long trackId = -1;
-    sharedPreferencesEditor.putLong(context.getString(R.string.selected_track_key), trackId);
-    sharedPreferencesEditor.commit();
+    PreferencesUtils.setSelectedTrackId(context, -1L);
     DynamicSpeedTrackPathDescriptor dynamicSpeedTrackPathDescriptor = new DynamicSpeedTrackPathDescriptor(
         context);
     assertEquals(false, dynamicSpeedTrackPathDescriptor.needsRedraw());

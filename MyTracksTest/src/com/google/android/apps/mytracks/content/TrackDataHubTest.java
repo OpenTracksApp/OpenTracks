@@ -29,6 +29,7 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIt
 import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener.ProviderState;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceTest.MockContext;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.android.testing.mocking.AndroidMock;
 
@@ -112,6 +113,8 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     listener1 = AndroidMock.createStrictMock("listener1", TrackDataListener.class);
     listener2 = AndroidMock.createStrictMock("listener2", TrackDataListener.class);
+    PreferencesUtils.setRecordingTrackId(context, TRACK_ID);
+    PreferencesUtils.setSelectedTrackId(context, TRACK_ID);
   }
 
   @Override
@@ -138,8 +141,6 @@ public class TrackDataHubTest extends AndroidTestCase {
   public void testTrackListen() {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
     Track track = new Track();
-    prefs.edit().putLong("recordingTrack", TRACK_ID)
-                .putLong("selectedTrack", TRACK_ID).apply();
     expect(providerUtils.getTrack(TRACK_ID)).andStubReturn(track);
     expectStart();
     dataSources.registerContentObserver(
@@ -297,8 +298,6 @@ public class TrackDataHubTest extends AndroidTestCase {
 
   public void testWaypointListen() {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
-    prefs.edit().putLong("recordingTrack", TRACK_ID)
-                .putLong("selectedTrack", TRACK_ID).apply();
 
     Waypoint wpt1 = new Waypoint(),
              wpt2 = new Waypoint(),
@@ -411,8 +410,6 @@ public class TrackDataHubTest extends AndroidTestCase {
 
   public void testPointsListen() {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
-    prefs.edit().putLong("recordingTrack", TRACK_ID)
-                .putLong("selectedTrack", TRACK_ID).apply();
 
     expectStart();
     dataSources.registerContentObserver(
@@ -498,8 +495,6 @@ public class TrackDataHubTest extends AndroidTestCase {
 
   public void testPointsListen_reRegister() {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
-    prefs.edit().putLong("recordingTrack", TRACK_ID)
-                .putLong("selectedTrack", TRACK_ID).apply();
 
     expectStart();
     dataSources.registerContentObserver(
@@ -570,8 +565,6 @@ public class TrackDataHubTest extends AndroidTestCase {
 
   public void testPointsListen_reRegisterTrackChanged() {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
-    prefs.edit().putLong("recordingTrack", TRACK_ID)
-                .putLong("selectedTrack", TRACK_ID).apply();
 
     expectStart();
     dataSources.registerContentObserver(
@@ -628,8 +621,6 @@ public class TrackDataHubTest extends AndroidTestCase {
 
   public void testPointsListen_largeTrackSampling() {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
-    prefs.edit().putLong("recordingTrack", TRACK_ID)
-                .putLong("selectedTrack", TRACK_ID).apply();
 
     expectStart();
     dataSources.registerContentObserver(
@@ -661,8 +652,6 @@ public class TrackDataHubTest extends AndroidTestCase {
 
   public void testPointsListen_resampling() {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
-    prefs.edit().putLong("recordingTrack", TRACK_ID)
-                .putLong("selectedTrack", TRACK_ID).apply();
 
     expectStart();
     dataSources.registerContentObserver(

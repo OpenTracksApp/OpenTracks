@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
@@ -112,14 +113,12 @@ public class DynamicSpeedTrackPathDescriptor implements TrackPathDescriptor,
 
   @Override
   public boolean needsRedraw() {
-    SharedPreferences prefs = context.getSharedPreferences(Constants.SETTINGS_NAME,
-        Context.MODE_PRIVATE);
-    long currentTrackId = prefs.getLong(context.getString(R.string.selected_track_key), -1);
-    if (currentTrackId == -1) {
+    long selectedTrackId = PreferencesUtils.getSelectedTrackId(context);
+    if (selectedTrackId == -1L) {
       // Could not find track.
       return false;
     }
-    Track track = MyTracksProviderUtils.Factory.get(context).getTrack(currentTrackId);
+    Track track = MyTracksProviderUtils.Factory.get(context).getTrack(selectedTrackId);
     TripStatistics stats = track.getStatistics();
     double newAverageMovingSpeed = (int) Math.floor(
         stats.getAverageMovingSpeed() * UnitConversions.MS_TO_KMH);

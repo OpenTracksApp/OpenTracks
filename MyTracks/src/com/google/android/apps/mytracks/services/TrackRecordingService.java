@@ -39,6 +39,7 @@ import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.LocationUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
@@ -263,12 +264,13 @@ public class TrackRecordingService extends Service {
       restoreStats(recordingTrack);
       isRecording = true;
     } else {
-      if (recordingTrackId != -1) {
+      if (recordingTrackId != -1L) {
         // Make sure we have consistent state in shared preferences.
         Log.w(TAG, "TrackRecordingService.onCreate: "
             + "Resetting an orphaned recording track = " + recordingTrackId);
       }
-      prefManager.setRecordingTrack(recordingTrackId = -1);
+      recordingTrackId = -1L;
+      PreferencesUtils.setRecordingTrackId(this, recordingTrackId);
     }
     showNotification();
   }
@@ -324,7 +326,8 @@ public class TrackRecordingService extends Service {
           "TrackRecordingService: Not resuming, because the previous track ("
           + recordingTrack + ") doesn't exist or is too old");
       isRecording = false;
-      prefManager.setRecordingTrack(recordingTrackId = -1);
+      recordingTrackId = -1L;
+      PreferencesUtils.setRecordingTrackId(this, recordingTrackId);
       stopSelfResult(startId);
       return;
     }
@@ -609,7 +612,7 @@ public class TrackRecordingService extends Service {
     // Reset the number of auto-resume retries.
     setAutoResumeTrackRetries(0);
     // Persist the current recording track.
-    prefManager.setRecordingTrack(recordingTrackId);
+    PreferencesUtils.setRecordingTrackId(this, recordingTrackId);
 
     // Notify the world that we're now recording.
     sendTrackBroadcast(
@@ -1035,7 +1038,8 @@ public class TrackRecordingService extends Service {
     }
     showNotification();
     long recordedTrackId = recordingTrackId;
-    prefManager.setRecordingTrack(recordingTrackId = -1);
+    recordingTrackId = -1L;
+    PreferencesUtils.setRecordingTrackId(this, recordingTrackId);
 
     if (sensorManager != null) {
       SensorManagerFactory.getInstance().releaseSensorManager(sensorManager);

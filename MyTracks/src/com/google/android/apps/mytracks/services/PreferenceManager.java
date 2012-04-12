@@ -17,6 +17,7 @@ package com.google.android.apps.mytracks.services;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -41,8 +42,6 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
   private final String minRecordingDistanceKey;
   private final String minRecordingIntervalKey;
   private final String minRequiredAccuracyKey;
-  private final String recordingTrackKey;
-  private final String selectedTrackKey;
   private final String splitFrequencyKey;
 
   public PreferenceManager(TrackRecordingService service) {
@@ -72,10 +71,6 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
         service.getString(R.string.min_recording_interval_key);
     minRequiredAccuracyKey =
         service.getString(R.string.min_required_accuracy_key);
-    recordingTrackKey =
-        service.getString(R.string.recording_track_key);
-    selectedTrackKey =
-        service.getString(R.string.selected_track_key);
     splitFrequencyKey =
         service.getString(R.string.split_frequency_key);
 
@@ -152,12 +147,12 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
           autoResumeTrackTimeoutKey,
           Constants.DEFAULT_AUTO_RESUME_TRACK_TIMEOUT));
     }
-    if (key == null || key.equals(recordingTrackKey)) {
-      long recordingTrackId = sharedPreferences.getLong(recordingTrackKey, -1);
+    if (key == null || key.equals(PreferencesUtils.getRecordingTrackIdKey(service))) {
+      long recordingTrackId = PreferencesUtils.getRecordingTrackId(service);
       // Only read the id if it is valid.
       // Setting it to -1 should only happen in
       // TrackRecordingService.endCurrentTrack()
-      if (recordingTrackId > 0) {
+      if (recordingTrackId != -1L) {
         service.setRecordingTrackId(recordingTrackId);
       }
     }
@@ -175,18 +170,6 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
     Editor editor = sharedPreferences.edit();
     editor.putInt(autoResumeTrackCurrentRetryKey, retryAttempts);
     ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
-  }
-
-  public void setRecordingTrack(long id) {
-    Editor editor = sharedPreferences.edit();
-    editor.putLong(recordingTrackKey, id);
-    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);    
-  }
-
-  public void setSelectedTrack(long id) {
-    Editor editor = sharedPreferences.edit();
-    editor.putLong(selectedTrackKey, id);
-    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);    
   }
 
   public void shutdown() {

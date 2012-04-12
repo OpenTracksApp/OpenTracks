@@ -25,6 +25,7 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.services.ControlRecordingService;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -235,9 +236,8 @@ public class TrackWidgetProvider
       reportSpeed = prefs.getBoolean(reportSpeedKey, true);
     }
 
-    String selectedTrackKey = context.getString(R.string.selected_track_key);
-    if (key == null || key.equals(selectedTrackKey)) {
-      selectedTrackId = prefs.getLong(selectedTrackKey, -1);
+    if (key == null || key.equals(PreferencesUtils.getSelectedTrackIdKey(context))) {
+      selectedTrackId = PreferencesUtils.getSelectedTrackId(context);
       Log.d(TAG, "TrackWidgetProvider setting selecting track from preference: " + selectedTrackId);
     }
   }

@@ -19,11 +19,9 @@ package com.google.android.apps.mytracks;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.io.file.GpxImporter;
 import com.google.android.apps.mytracks.util.FileUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
-import com.google.android.maps.mytracks.R;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
@@ -82,13 +80,9 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     this.path = path;
 
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(importActivity);
-    SharedPreferences sharedPreferences = importActivity.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    long recordingTrackId = sharedPreferences.getLong(
-        importActivity.getString(R.string.recording_track_key), -1L);
 
     // Get the wake lock if not recording
-    if (recordingTrackId == -1L) {
+    if (PreferencesUtils.getRecordingTrackId(importActivity) == -1L) {
       wakeLock = SystemUtils.acquireWakeLock(importActivity, wakeLock);
     }
 
