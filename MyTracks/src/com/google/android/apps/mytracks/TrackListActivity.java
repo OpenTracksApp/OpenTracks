@@ -54,6 +54,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -169,7 +170,17 @@ public class TrackListActivity extends FragmentActivity {
     metricUnits = sharedPreferences.getBoolean(getString(R.string.metric_units_key), true);
     recordingTrackId = PreferencesUtils.getRecordingTrackId(this);
 
+    ImageButton recordImageButton = (ImageButton) findViewById(R.id.track_list_record_button);
+    recordImageButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        updateMenuItems(true);
+        startRecording();
+      }
+    });
+
     listView = (ListView) findViewById(R.id.track_list);
+    listView.setEmptyView(findViewById(R.id.track_list_empty));  
     listView.setOnItemClickListener(new OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

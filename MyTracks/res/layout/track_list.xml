@@ -14,12 +14,35 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_height="fill_parent"
-  android:layout_width="fill_parent"
-  android:orientation="vertical" >
+  android:layout_width="fill_parent" >
   <ListView
     android:id="@+id/track_list"
     android:layout_height="fill_parent"
     android:layout_width="fill_parent" />
-</LinearLayout>
+  <LinearLayout
+    android:gravity="center"
+    android:id="@+id/track_list_empty"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    android:orientation="vertical"
+    android:padding="8dp" >
+    <TextView
+      android:gravity="center"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      android:paddingBottom="8dp"
+      android:text="@string/track_list_empty_message"
+      style="@android:style/TextAppearance.DeviceDefault.Large" >
+    </TextView>
+    <ImageButton
+      android:contentDescription="@string/menu_record_track"
+      android:id="@+id/track_list_record_button"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      android:padding="16dp"
+      android:src="@drawable/menu_record_track"
+      style="@android:style/Widget.DeviceDefault.ImageButton" />
+  </LinearLayout>
+</FrameLayout>
