@@ -34,10 +34,15 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.database.Cursor;
 import android.location.Location;
+import android.net.Uri;
+import android.os.Bundle;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.test.RenamingDelegatingContext;
 import android.test.ServiceTestCase;
+import android.test.mock.MockContentProvider;
 import android.test.mock.MockContentResolver;
 import android.test.suitebuilder.annotation.MediumTest;
 import android.test.suitebuilder.annotation.SmallTest;
@@ -123,13 +128,33 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
   protected void setUp() throws Exception {
     super.setUp();
 
+    /*
+     * Create a mock context that uses a mock content resolver and a renaming
+     * delegating context.
+     */
     MockContentResolver mockContentResolver = new MockContentResolver();
-    RenamingDelegatingContext targetContext = new RenamingDelegatingContext(
+    RenamingDelegatingContext renamingDelegatingContext = new RenamingDelegatingContext(
         getContext(), getContext(), "test.");
-    context = new MockContext(mockContentResolver, targetContext);
-    MyTracksProvider provider = new MyTracksProvider();
-    provider.attachInfo(context, null);
-    mockContentResolver.addProvider(MyTracksProviderUtils.AUTHORITY, provider);
+    context = new MockContext(mockContentResolver, renamingDelegatingContext);
+
+    // Set up the mock content resolver
+    MyTracksProvider myTracksProvider = new MyTracksProvider();
+    myTracksProvider.attachInfo(context, null);
+    mockContentResolver.addProvider(MyTracksProviderUtils.AUTHORITY, myTracksProvider);
+    MockContentProvider settingsProvider = new MockContentProvider(context) {
+        @Override
+      public Bundle call(String method, String arg, Bundle extras) {
+        return null;
+      }
+        @Override
+      public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
+          String sortOrder) {
+        return null;
+      }
+    };
+    mockContentResolver.addProvider(Settings.AUTHORITY, settingsProvider);
+
+    // Set the context
     setContext(context);
 
     providerUtils = MyTracksProviderUtils.Factory.get(context);
