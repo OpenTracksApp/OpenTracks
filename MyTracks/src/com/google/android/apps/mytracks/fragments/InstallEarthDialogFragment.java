@@ -16,32 +16,38 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
-import com.google.android.apps.mytracks.util.DialogUtils;
+import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.maps.mytracks.R;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 /**
- * A DialogFragment to delete all tracks.
- * 
+ * A DialogFragment to install Google Earth.
+ *
  * @author Jimmy Shih
  */
-public class DeleteAllDialogFragment extends DialogFragment {
+public class InstallEarthDialogFragment extends DialogFragment {
 
-  public static final String DELETE_ALL_DIALOG_TAG = "deleteAllDialog";
-  
+  public static final String INSTALL_EARTH_DIALOG_TAG = "installEarthDialog";
+
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    return DialogUtils.createConfirmationDialog(getActivity(),
-        R.string.track_list_delete_all_confirm_message, new DialogInterface.OnClickListener() {
+    return new AlertDialog.Builder(getActivity())
+        .setCancelable(true)
+        .setMessage(R.string.track_detail_install_earth_message)
+        .setNegativeButton(android.R.string.cancel, null)
+        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
-            MyTracksProviderUtils.Factory.get(getActivity()).deleteAllTracks();
+            startActivity(new Intent().setData(Uri.parse(SaveActivity.GOOGLE_EARTH_MARKET_URL)));
           }
-        });
+        })
+        .create();
   }
 }

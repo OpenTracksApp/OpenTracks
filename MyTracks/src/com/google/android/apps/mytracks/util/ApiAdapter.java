@@ -15,6 +15,7 @@
  */
 package com.google.android.apps.mytracks.util;
 
+import com.google.android.apps.mytracks.ContextualActionModeCallback;
 import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
 import com.google.android.apps.mytracks.services.tasks.PeriodicTask;
 import com.google.api.client.http.HttpTransport;
@@ -25,6 +26,7 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import java.io.IOException;
 
@@ -122,6 +124,20 @@ public interface ApiAdapter {
    * @param activity the activity
    */
   public void configureActionBarHomeAsUp(Activity activity);
+
+  /**
+   * Configures the list view context menu.
+   * <p>
+   * Due to changes in API level 11.
+   *
+   * @param activity the activity
+   * @param listView the list view
+   * @param menuId the menu resource id
+   * @param contextualActionModeCallback the callback when an item is selected
+   *          in the contextual action mode
+   */
+  public void configureListViewContextualMenu(Activity activity, ListView listView, int menuId,
+      ContextualActionModeCallback contextualActionModeCallback);
 
   /**
    * Configures the search widget.

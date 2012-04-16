@@ -13,15 +13,21 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks;
 
 import static com.google.android.apps.mytracks.Constants.CHART_TAB_TAG;
 import static com.google.android.apps.mytracks.Constants.MAP_TAB_TAG;
 import static com.google.android.apps.mytracks.Constants.STATS_TAB_TAG;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
+import com.google.android.apps.mytracks.fragments.ChartFragment;
+import com.google.android.apps.mytracks.fragments.ChartSettingsDialogFragment;
+import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
+import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
+import com.google.android.apps.mytracks.fragments.MapFragment;
+import com.google.android.apps.mytracks.fragments.StatsFragment;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
@@ -31,19 +37,14 @@ import com.google.android.apps.mytracks.services.ServiceUtils;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
-import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.RemoteException;
@@ -54,8 +55,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.RadioGroup;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.Toast;
@@ -75,11 +74,7 @@ public class TrackDetailActivity extends FragmentActivity {
 
   private static final String TAG = TrackDetailActivity.class.getSimpleName();
   private static final String CURRENT_TAG_KEY = "tab";
-  
-  private static final int DIALOG_INSTALL_EARTH_ID = 0;
-  private static final int DIALOG_DELETE_CURRENT_ID = 1;
-  private static final int DIALOG_CHART_SETTINGS_ID = 2;
-  
+ 
   private SharedPreferences sharedPreferences;
   private TrackDataHub trackDataHub;
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
@@ -203,81 +198,7 @@ public class TrackDetailActivity extends FragmentActivity {
     super.onDestroy();
     trackRecordingServiceConnection.unbind();
   }
-
-  @Override
-  protected Dialog onCreateDialog(int id) {
-    switch (id) {
-      case DIALOG_INSTALL_EARTH_ID:
-        return new AlertDialog.Builder(this).setCancelable(true)
-            .setMessage(R.string.track_detail_install_earth_message)
-            .setNegativeButton(android.R.string.cancel, null)
-            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-              @Override
-              public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent()
-                    .setData(Uri.parse(SaveActivity.GOOGLE_EARTH_MARKET_URL));
-                startActivity(intent);
-              }
-            })
-            .create();
-      case DIALOG_DELETE_CURRENT_ID:
-        return DialogUtils.createConfirmationDialog(this,
-            R.string.track_detail_delete_confirm_message, new DialogInterface.OnClickListener() {
-              @Override
-              public void onClick(DialogInterface dialog, int which) {
-                deleteCurrentTrack();
-                startTrackListActivity();
-              }
-            });
-      case DIALOG_CHART_SETTINGS_ID:
-        return createChartSettingsDialog();
-      default:
-        return null;
-    }
-  }
-
-  private Dialog createChartSettingsDialog() {
-    final ChartFragment chartFragment = (ChartFragment) getSupportFragmentManager()
-        .findFragmentByTag(CHART_TAB_TAG);
-    View view = getLayoutInflater().inflate(R.layout.chart_settings, null);
-    final RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.chart_settings_x);
-    radioGroup
-        .check(chartFragment.getMode() == ChartView.Mode.BY_DISTANCE ? R.id.chart_settings_by_distance
-            : R.id.chart_settings_by_time);
-
-    final CheckBox[] checkBoxes = new CheckBox[ChartView.NUM_SERIES];
-    checkBoxes[ChartView.ELEVATION_SERIES] = (CheckBox) view
-        .findViewById(R.id.chart_settings_elevation);
-    checkBoxes[ChartView.SPEED_SERIES] = (CheckBox) view.findViewById(R.id.chart_settings_speed);
-    checkBoxes[ChartView.POWER_SERIES] = (CheckBox) view.findViewById(R.id.chart_settings_power);
-    checkBoxes[ChartView.CADENCE_SERIES] = (CheckBox) view
-        .findViewById(R.id.chart_settings_cadence);
-    checkBoxes[ChartView.HEART_RATE_SERIES] = (CheckBox) view
-        .findViewById(R.id.chart_settings_heart_rate);
-
-    // set checkboxes values
-    for (int i = 0; i < ChartView.NUM_SERIES; i++) {
-      checkBoxes[i].setChecked(chartFragment.isChartValueSeriesEnabled(i));
-    }
-    checkBoxes[ChartView.SPEED_SERIES].setText(chartFragment.isReportSpeed() ? R.string.stat_speed
-        : R.string.stat_pace);
-
-    return new AlertDialog.Builder(this).setCancelable(true)
-        .setNegativeButton(R.string.generic_cancel, null)
-        .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick(DialogInterface dialog, int which) {
-            chartFragment
-                .setMode(radioGroup.getCheckedRadioButtonId() == R.id.chart_settings_by_distance ? ChartView.Mode.BY_DISTANCE
-                    : ChartView.Mode.BY_TIME);
-            for (int i = 0; i < ChartView.NUM_SERIES; i++) {
-              chartFragment.setChartValueSeriesEnabled(i, checkBoxes[i].isChecked());
-            }
-            chartFragment.update();
-          }
-        }).setTitle(R.string.menu_chart_settings).setView(view).create();
-  }
-  
+ 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.track_detail, menu);
@@ -353,7 +274,8 @@ public class TrackDetailActivity extends FragmentActivity {
               .putExtra(SaveActivity.EXTRA_PLAY_TRACK, true);
           startActivity(intent);
         } else {
-          showDialog(DIALOG_INSTALL_EARTH_ID);
+          new InstallEarthDialogFragment().show(
+              getSupportFragmentManager(), InstallEarthDialogFragment.INSTALL_EARTH_DIALOG_TAG);
         }
         return true;
       case R.id.track_detail_share_map:
@@ -405,7 +327,8 @@ public class TrackDetailActivity extends FragmentActivity {
             .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId));
         return true;
       case R.id.track_detail_delete:
-        showDialog(DIALOG_DELETE_CURRENT_ID);
+        DeleteOneTrackDialogFragment.newInstance(trackId).show(
+            getSupportFragmentManager(), DeleteOneTrackDialogFragment.DELETE_ONE_TRACK_DIALOG_TAG);
         return true;
       case R.id.track_detail_my_location:
         mapFragment = (MapFragment) getSupportFragmentManager().findFragmentByTag(MAP_TAB_TAG);
@@ -420,7 +343,8 @@ public class TrackDetailActivity extends FragmentActivity {
         }
         return true;
       case R.id.track_detail_chart_settings:
-        showDialog(DIALOG_CHART_SETTINGS_ID);
+        new ChartSettingsDialogFragment().show(
+            getSupportFragmentManager(), ChartSettingsDialogFragment.CHART_SETTINGS_DIALOG_TAG);
         return true;
       case R.id.track_detail_sensor_state:
         startActivity(new Intent(this, SensorStateActivity.class));
@@ -556,13 +480,6 @@ public class TrackDetailActivity extends FragmentActivity {
     if (deleteMenuItem != null) {
       deleteMenuItem.setVisible(!isRecording);
     }
-  }
-
-  /**
-   * Deletes the current track.
-   */
-  private void deleteCurrentTrack() {
-    MyTracksProviderUtils.Factory.get(TrackDetailActivity.this).deleteTrack(trackId);
   }
 
   /**

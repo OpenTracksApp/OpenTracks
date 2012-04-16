@@ -16,12 +16,19 @@
 
 package com.google.android.apps.mytracks.util;
 
+import com.google.android.apps.mytracks.ContextualActionModeCallback;
+
 import android.annotation.TargetApi;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
+import android.view.ActionMode;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ListView;
 import android.widget.SearchView;
 
 /**
@@ -42,6 +49,45 @@ public class Api11Adapter extends Api10Adapter {
     activity.getActionBar().setDisplayHomeAsUpEnabled(true);
   }
 
+  @Override
+  public void configureListViewContextualMenu(final Activity activity, ListView listView, final int menuId,
+      final ContextualActionModeCallback contextualActionModeCallback) {
+    listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+      ActionMode actionMode;
+
+      @Override
+      public boolean onItemLongClick(
+          AdapterView<?> parent, View view, int position, final long id) {
+        if (actionMode != null) { return false; }
+        actionMode = activity.startActionMode(new ActionMode.Callback() {
+          @Override
+          public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            mode.getMenuInflater().inflate(menuId, menu);
+            return true;
+          }
+
+          @Override
+          public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            // Return false to indicate no change.
+            return false;
+          }
+
+          @Override
+          public void onDestroyActionMode(ActionMode mode) {
+            actionMode = null;
+          }
+
+          @Override
+          public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            return contextualActionModeCallback.onClick(item.getItemId(), id);
+          }
+        });
+        view.setSelected(true);
+        return true;
+      }
+    });
+  };
+  
   @Override
   public void configureSearchWidget(Activity activity, MenuItem menuItem) {
     SearchManager searchManager = (SearchManager) activity.getSystemService(Context.SEARCH_SERVICE);
