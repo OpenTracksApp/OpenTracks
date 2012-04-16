@@ -216,7 +216,7 @@ public class TrackListActivity extends FragmentActivity {
       }
     };
     listView.setAdapter(adapter);
-    ApiAdapterFactory.getApiAdapter().configureContextualMenu(
+    ApiAdapterFactory.getApiAdapter().configureListViewContextualMenu(
         this, listView, R.menu.track_list_context_menu, contextualActionModeCallback);
    
     getSupportLoaderManager().initLoader(0, null, new LoaderCallbacks<Cursor>() {

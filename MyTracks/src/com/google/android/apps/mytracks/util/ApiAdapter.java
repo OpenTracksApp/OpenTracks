@@ -126,7 +126,7 @@ public interface ApiAdapter {
   public void configureActionBarHomeAsUp(Activity activity);
 
   /**
-   * Configures the context menu.
+   * Configures the list view context menu.
    * <p>
    * Due to changes in API level 11.
    *
@@ -136,7 +136,7 @@ public interface ApiAdapter {
    * @param contextualActionModeCallback the callback when an item is selected
    *          in the contextual action mode
    */
-  public void configureContextualMenu(Activity activity, ListView listView, int menuId,
+  public void configureListViewContextualMenu(Activity activity, ListView listView, int menuId,
       ContextualActionModeCallback contextualActionModeCallback);
 
   /**
