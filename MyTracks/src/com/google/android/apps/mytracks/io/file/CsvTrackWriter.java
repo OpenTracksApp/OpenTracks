@@ -87,9 +87,9 @@ public class CsvTrackWriter implements TrackFormatWriter {
 
   @Override
   public void writeHeader() {
-    writeCommaSeparatedLine(context.getString(R.string.track_detail_track_name),
-        context.getString(R.string.track_detail_activity_type_hint),
-        context.getString(R.string.track_detail_track_description));
+    writeCommaSeparatedLine(context.getString(R.string.track_edit_name),
+        context.getString(R.string.track_edit_activity_type_hint),
+        context.getString(R.string.track_edit_description));
     writeCommaSeparatedLine(track.getName(), track.getCategory(), track.getDescription());
     writeCommaSeparatedLine();
   }

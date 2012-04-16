@@ -29,7 +29,7 @@ public class CsvTrackWriterTest extends TrackFormatWriterTest {
 
   public void testCsvOutput() throws Exception {
     String expectedTrackHeader = getExpectedLine(
-        "Track name", "Activity type", "Track description");
+        "Name", "Activity type", "Description");
     String expectedTrack = getExpectedLine(TRACK_NAME, TRACK_CATEGORY, TRACK_DESCRIPTION);
     String expectedMarkerHeader = getExpectedLine("Marker name", "Marker type",
         "Marker description", "Latitude (deg)", "Longitude (deg)", "Altitude (m)", "Bearing (deg)",

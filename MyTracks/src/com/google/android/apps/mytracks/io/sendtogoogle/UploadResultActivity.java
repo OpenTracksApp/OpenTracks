@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesUtils;
 import com.google.android.apps.mytracks.io.maps.SendMapsUtils;
 import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -48,6 +49,7 @@ public class UploadResultActivity extends Activity {
   private SendRequest sendRequest;
   private Track track;
   private String shareUrl;
+  private Dialog dialog;
   
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -167,7 +169,8 @@ public class UploadResultActivity extends Activity {
             }
           });
     }
-    return builder.create();
+    dialog = builder.create();
+    return dialog;
   }
 
   /**
@@ -185,5 +188,10 @@ public class UploadResultActivity extends Activity {
     intent.putExtra(Intent.EXTRA_TEXT,
         shareUrlOnly ? url : getString(R.string.share_track_url_body_format, url));
     startActivity(Intent.createChooser(intent, getString(R.string.share_track_picker_title)));
+  }
+  
+  @VisibleForTesting
+  Dialog getDialog() {
+    return dialog;
   }
 }

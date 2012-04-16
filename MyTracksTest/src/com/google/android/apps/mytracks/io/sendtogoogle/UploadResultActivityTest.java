@@ -13,38 +13,26 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
 import com.google.android.maps.mytracks.R;
-import com.jayway.android.robotium.solo.Solo;
 
-import android.app.Instrumentation;
+import android.app.Dialog;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
-import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.HashSet;
 
 /**
  * Tests the {@link UploadResultActivity}.
  * 
  * @author Youtao Liu
  */
-public class UploadResultActivityTest extends
-    ActivityInstrumentationTestCase2<UploadResultActivity> {
+public class UploadResultActivityTest
+    extends ActivityInstrumentationTestCase2<UploadResultActivity> {
 
-  private Instrumentation instrumentation;
   private UploadResultActivity uploadResultActivity;
-  private Solo solo;
-
-  @Override
-  protected void setUp() throws Exception {
-    super.setUp();
-    instrumentation = getInstrumentation();
-    solo = new Solo(instrumentation);
-  }
 
   /**
    * This method is necessary for ActivityInstrumentationTestCase2.
@@ -58,27 +46,9 @@ public class UploadResultActivityTest extends
    */
   public void testAllSuccess() {
     initialActivity(true, true, true, true, true, true);
-
-    HashSet<String> stringHashSet = new HashSet<String>();
-    ArrayList<View> view = solo.getViews();
-    for (View oneView : view) {
-      if (oneView instanceof TextView && oneView.isShown()) {
-        stringHashSet.add((String) ((TextView) oneView).getText());
-      }
-    }
-
-    assertTrue(stringHashSet.contains(uploadResultActivity
-        .getString(R.string.generic_success_title)));
-    assertTrue(stringHashSet.contains(uploadResultActivity.getString(R.string.send_google_maps)));
-    assertTrue(stringHashSet.contains(uploadResultActivity
-        .getString(R.string.send_google_fusion_tables)));
-    assertTrue(stringHashSet.contains(uploadResultActivity.getString(R.string.send_google_docs)));
-    assertTrue(stringHashSet.contains(uploadResultActivity
-        .getString(R.string.send_google_success_footer)));
-
-    assertFalse(stringHashSet
-        .contains(uploadResultActivity.getString(R.string.generic_error_title)));
-    assertFalse(stringHashSet.contains(uploadResultActivity.getString(R.string.send_google_error)));
+    Dialog dialog = uploadResultActivity.getDialog();
+    TextView textView = (TextView) dialog.findViewById(R.id.upload_result_success_footer);
+    assertTrue(textView.isShown());
   }
 
   /**
@@ -87,26 +57,9 @@ public class UploadResultActivityTest extends
   public void testAllFailed() {
     // Send all kinds but all failed.
     initialActivity(true, true, true, false, false, false);
-    HashSet<String> stringHashSet = new HashSet<String>();
-    ArrayList<View> view = solo.getViews();
-    for (View oneView : view) {
-      if (oneView instanceof TextView && oneView.isShown()) {
-        stringHashSet.add((String) ((TextView) oneView).getText());
-      }
-    }
-
-    assertTrue(stringHashSet.contains((Object) uploadResultActivity
-        .getString(R.string.generic_error_title)));
-    assertTrue(stringHashSet.contains(uploadResultActivity.getString(R.string.send_google_maps)));
-    assertTrue(stringHashSet.contains(uploadResultActivity
-        .getString(R.string.send_google_fusion_tables)));
-    assertTrue(stringHashSet.contains(uploadResultActivity.getString(R.string.send_google_docs)));
-    assertTrue(stringHashSet.contains(uploadResultActivity.getString(R.string.send_google_error)));
-
-    assertFalse(stringHashSet.contains(uploadResultActivity
-        .getString(R.string.generic_success_title)));
-    assertFalse(stringHashSet.contains(uploadResultActivity
-        .getString(R.string.send_google_success_footer)));
+    Dialog dialog = uploadResultActivity.getDialog();
+    TextView textView = (TextView) dialog.findViewById(R.id.upload_result_error_footer);
+    assertTrue(textView.isShown());
   }
 
   /**
@@ -119,26 +72,16 @@ public class UploadResultActivityTest extends
    */
   public void testPartialSuccess() {
     initialActivity(true, false, true, true, false, false);
-
-    HashSet<String> stringHashSet = new HashSet<String>();
-    ArrayList<View> view = solo.getViews();
-    for (View oneView : view) {
-      if (oneView instanceof TextView && oneView.isShown()) {
-        stringHashSet.add((String) ((TextView) oneView).getText());
-      }
-    }
-
-    assertTrue(stringHashSet.contains(uploadResultActivity.getString(R.string.generic_error_title)));
-    assertTrue(stringHashSet.contains(uploadResultActivity.getString(R.string.send_google_maps)));
-    assertTrue(stringHashSet.contains(uploadResultActivity.getString(R.string.send_google_docs)));
-    assertTrue(stringHashSet.contains(uploadResultActivity.getString(R.string.send_google_error)));
-
-    assertFalse(stringHashSet.contains(uploadResultActivity
-        .getString(R.string.send_google_fusion_tables)));
-    assertFalse(stringHashSet.contains(uploadResultActivity
-        .getString(R.string.generic_success_title)));
-    assertFalse(stringHashSet.contains(uploadResultActivity
-        .getString(R.string.send_google_success_footer)));
+    Dialog dialog = uploadResultActivity.getDialog();
+    TextView textView = (TextView) dialog.findViewById(R.id.upload_result_error_footer);
+    assertTrue(textView.isShown());
+    LinearLayout mapsResult = (LinearLayout) dialog.findViewById(R.id.upload_result_maps_result);
+    assertTrue(mapsResult.isShown());
+    LinearLayout fusionTablesResult = (LinearLayout) dialog.findViewById(
+        R.id.upload_result_fusion_tables_result);
+    assertFalse(fusionTablesResult.isShown());
+    LinearLayout docsResult = (LinearLayout) dialog.findViewById(R.id.upload_result_docs_result);
+    assertTrue(docsResult.isShown());
   }
 
   /**
@@ -165,5 +108,4 @@ public class UploadResultActivityTest extends
     setActivityIntent(intent);
     uploadResultActivity = this.getActivity();
   }
-
 }
