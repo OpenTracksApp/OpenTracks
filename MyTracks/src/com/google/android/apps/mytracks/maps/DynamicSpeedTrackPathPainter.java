@@ -20,6 +20,7 @@ import com.google.android.apps.mytracks.MapOverlay.CachedLocation;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.Projection;
 import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -137,5 +138,15 @@ public class  DynamicSpeedTrackPathPainter implements TrackPathPainter {
       path.addPath(coloredPaths.get(i).getPath());
     }
     return path;
+  }
+  
+  /**
+   * Returns coloredPaths.
+   * 
+   * @return coloredPaths
+   */
+  @VisibleForTesting
+  List<ColoredPath> getColoredPaths() {
+    return coloredPaths;
   }
 }
