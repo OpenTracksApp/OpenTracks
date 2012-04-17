@@ -167,7 +167,7 @@ public class MarkerListActivity extends FragmentActivity {
       }
     };
     listView.setAdapter(resourceCursorAdapter);
-    ApiAdapterFactory.getApiAdapter().configureContextualMenu(
+    ApiAdapterFactory.getApiAdapter().configureListViewContextualMenu(
         this, listView, R.menu.marker_list_context_menu, R.id.marker_list_item_name,
         contextualActionModeCallback);
 
