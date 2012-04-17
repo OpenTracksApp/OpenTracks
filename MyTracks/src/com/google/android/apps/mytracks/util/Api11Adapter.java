@@ -51,7 +51,7 @@ public class Api11Adapter extends Api10Adapter {
   }
 
   @Override
-  public void configureContextualMenu(final Activity activity, ListView listView, final int menuId,
+  public void configureListViewContextualMenu(final Activity activity, ListView listView, final int menuId,
       final int actionModeTitleId,
       final ContextualActionModeCallback contextualActionModeCallback) {
     listView.setOnItemLongClickListener(new OnItemLongClickListener() {
