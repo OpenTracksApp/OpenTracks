@@ -2224,7 +2224,7 @@ limitations under the License.
   <string name="track_list_empty_message"
     translation_description="When the track list is empty, the message informing the user to click
       on the record button to start a new recording">
-    You don\'t have any recorded tracks. Click on the record button to start a new recording.
+    Click on the record button to start recording your next adventure.
   </string>
   <string name="track_list_record_error"
     translation_description="When starting a new track recording, the error message informing the
