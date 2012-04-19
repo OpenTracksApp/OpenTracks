@@ -21,8 +21,7 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
-import com.google.android.apps.mytracks.util.StringUtils;
-import com.google.android.apps.mytracks.util.UnitConversions;
+import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -93,43 +92,44 @@ public class MarkerDetailActivity extends FragmentActivity {
       boolean metricUnits = preferences.getBoolean(getString(R.string.metric_units_key), true);
       boolean reportSpeed = preferences.getBoolean(getString(R.string.report_speed_key), true);
 
-      TextView maxSpeedLabel = (TextView) findViewById(R.id.marker_detail_max_speed_label);
-      maxSpeedLabel.setText(reportSpeed ? R.string.stat_max_speed : R.string.stat_fastest_pace);
-      TextView averageSpeedLabel = (TextView) findViewById(R.id.marker_detail_average_speed_label);
-      averageSpeedLabel.setText(reportSpeed ? R.string.stat_average_speed
-          : R.string.stat_average_pace);
-      TextView averageMovingSpeedLabel = (TextView) findViewById(
-          R.id.marker_detail_average_moving_speed_label);
-      averageMovingSpeedLabel.setText(reportSpeed ? R.string.stat_average_moving_speed
-          : R.string.stat_average_moving_pace);
+      StatsUtils.setSpeedLabel(this, R.id.marker_detail_max_speed_label, R.string.stat_max_speed,
+          R.string.stat_fastest_pace, reportSpeed);
+      StatsUtils.setSpeedLabel(this, R.id.marker_detail_average_speed_label,
+          R.string.stat_average_speed, R.string.stat_average_pace, reportSpeed);
+      StatsUtils.setSpeedLabel(this, R.id.marker_detail_average_moving_speed_label,
+          R.string.stat_average_moving_speed, R.string.stat_average_moving_pace, reportSpeed);
 
       TripStatistics tripStatistics = waypoint.getStatistics();
 
-      setDistance(
-          R.id.marker_detail_total_distance_value, tripStatistics.getTotalDistance(), metricUnits);
-      setSpeed(R.id.marker_detail_max_speed_value, tripStatistics.getMaxSpeed(), reportSpeed,
-          metricUnits);
+      StatsUtils.setDistanceValue(this, R.id.marker_detail_total_distance_value,
+          tripStatistics.getTotalDistance(), metricUnits);
+      StatsUtils.setSpeedValue(this, R.id.marker_detail_max_speed_value,
+          tripStatistics.getMaxSpeed(), reportSpeed, metricUnits);
 
-      setTime(R.id.marker_detail_total_time_value, tripStatistics.getTotalTime());
-      setSpeed(R.id.marker_detail_average_speed_value, tripStatistics.getAverageSpeed(),
-          reportSpeed, metricUnits);
+      StatsUtils.setTimeValue(
+          this, R.id.marker_detail_total_time_value, tripStatistics.getTotalTime());
+      StatsUtils.setSpeedValue(this, R.id.marker_detail_average_speed_value,
+          tripStatistics.getAverageSpeed(), reportSpeed, metricUnits);
 
-      setTime(R.id.marker_detail_moving_time_value, tripStatistics.getMovingTime());
-      setSpeed(R.id.marker_detail_average_moving_speed_value,
+      StatsUtils.setTimeValue(
+          this, R.id.marker_detail_moving_time_value, tripStatistics.getMovingTime());
+      StatsUtils.setSpeedValue(this, R.id.marker_detail_average_moving_speed_value,
           tripStatistics.getAverageMovingSpeed(), reportSpeed, metricUnits);
 
-      setAltitude(
-          R.id.marker_detail_elevation_value, waypoint.getLocation().getAltitude(), metricUnits);
-      setAltitude(R.id.marker_detail_elevation_gain_value, tripStatistics.getTotalElevationGain(),
-          metricUnits);
+      StatsUtils.setAltitudeValue(this, R.id.marker_detail_elevation_value,
+          waypoint.getLocation().getAltitude(), metricUnits);
+      StatsUtils.setAltitudeValue(this, R.id.marker_detail_elevation_gain_value,
+          tripStatistics.getTotalElevationGain(), metricUnits);
 
-      setAltitude(
-          R.id.marker_detail_min_elevation_value, tripStatistics.getMinElevation(), metricUnits);
-      setAltitude(
-          R.id.marker_detail_max_elevation_value, tripStatistics.getMaxElevation(), metricUnits);
+      StatsUtils.setAltitudeValue(this, R.id.marker_detail_min_elevation_value,
+          tripStatistics.getMinElevation(), metricUnits);
+      StatsUtils.setAltitudeValue(this, R.id.marker_detail_max_elevation_value,
+          tripStatistics.getMaxElevation(), metricUnits);
 
-      setGrade(R.id.marker_detail_min_grade_value, tripStatistics.getMinGrade());
-      setGrade(R.id.marker_detail_max_grade_value, tripStatistics.getMaxGrade());
+      StatsUtils.setGradeValue(
+          this, R.id.marker_detail_min_grade_value, tripStatistics.getMinGrade());
+      StatsUtils.setGradeValue(
+          this, R.id.marker_detail_max_grade_value, tripStatistics.getMaxGrade());
     }
   }
 
@@ -162,109 +162,5 @@ public class MarkerDetailActivity extends FragmentActivity {
       default:
         return super.onOptionsItemSelected(item);
     }
-  }
-
-  /**
-   * Sets distance.
-   * 
-   * @param id resource id
-   * @param distance distance in meters
-   * @param metricUnits true to display in metric units
-   */
-  private void setDistance(int id, double distance, boolean metricUnits) {
-    TextView textView = (TextView) findViewById(id);
-    distance *= UnitConversions.M_TO_KM;
-    String value;
-    if (metricUnits) {
-      value = getString(R.string.value_float_kilometer, distance);
-    } else {
-      distance *= UnitConversions.KM_TO_MI;
-      value = getString(R.string.value_float_mile, distance);
-    }
-    textView.setText(value);
-  }
-
-  /**
-   * Sets time.
-   * 
-   * @param id resource id
-   * @param time time
-   */
-  private void setTime(int id, long time) {
-    TextView textView = (TextView) findViewById(id);
-    textView.setText(StringUtils.formatElapsedTime(time));
-  }
-
-  /**
-   * Sets speed.
-   * 
-   * @param id resource id
-   * @param speed speed in meters per second
-   * @param reportSpeed true to report speed
-   * @param metricUnits true to display in metric units
-   */
-  private void setSpeed(int id, double speed, boolean reportSpeed, boolean metricUnits) {
-    TextView textView = (TextView) findViewById(id);
-    speed *= UnitConversions.MS_TO_KMH;
-    String value;
-    if (metricUnits) {
-      if (reportSpeed) {
-        value = getString(R.string.value_float_kilometer_hour, speed);
-      } else {
-        double pace = speed == 0 ? 0.0 : 60.0 / speed; // convert from hours to
-                                                       // minutes
-        value = getString(R.string.value_float_minute_kilometer, pace);
-      }
-    } else {
-      speed *= UnitConversions.KM_TO_MI;
-      if (reportSpeed) {
-        value = getString(R.string.value_float_mile_hour, speed);
-      } else {
-        double pace = speed == 0 ? 0.0 : 60.0 / speed; // convert from hours to
-                                                       // minutes
-        value = getString(R.string.value_float_minute_mile, pace);
-      }
-    }
-    textView.setText(value);
-  }
-
-  /**
-   * Sets the altitude.
-   * 
-   * @param id resource id
-   * @param altitude altitude in meters
-   * @param metricUnits true to display in metric units
-   */
-  private void setAltitude(int id, double altitude, boolean metricUnits) {
-    TextView textView = (TextView) findViewById(id);
-    String value;
-    if (Double.isNaN(altitude) || Double.isInfinite(altitude)) {
-      value = getString(R.string.value_unknown);
-    } else {
-      if (metricUnits) {
-        value = getString(R.string.value_float_meter, altitude);
-      } else {
-        altitude *= UnitConversions.M_TO_FT;
-        value = getString(R.string.value_float_feet, altitude);
-      }
-    }
-    textView.setText(value);
-  }
-
-  /**
-   * Sets the grade.
-   * 
-   * @param id resource id
-   * @param grade grade in fraction between 0 and 1
-   */
-  private void setGrade(int id, double grade) {
-    TextView textView = (TextView) findViewById(id);
-    String value;
-    if (Double.isNaN(grade) || Double.isInfinite(grade)) {
-      value = getString(R.string.value_unknown);
-    } else {
-      value = getString(R.string.value_integer_percent, Math.round(grade * 100));
-    }
-    textView.setText(value);
   }
 }

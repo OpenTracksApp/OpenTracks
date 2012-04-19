@@ -20,7 +20,6 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest.WaypointType;
-import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
@@ -28,7 +27,6 @@ import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtil
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.speech.tts.TextToSpeech;
@@ -218,14 +216,11 @@ public class MarkerEditActivity extends Activity {
    * Saves a marker.
    */
   private void saveMarker() {
-    ContentValues values = new ContentValues();
-    values.put(WaypointsColumns.NAME, name.getText().toString());
-    if (waypoint != null && waypoint.getType() == Waypoint.TYPE_WAYPOINT) {
-      values.put(WaypointsColumns.CATEGORY, markerType.getText().toString());
-      values.put(WaypointsColumns.DESCRIPTION, description.getText().toString());     
+    waypoint.setName(name.getText().toString());
+    if (waypoint.getType() == Waypoint.TYPE_WAYPOINT) {
+      waypoint.setCategory(markerType.getText().toString());
+      waypoint.setDescription(description.getText().toString());
     }
-    getContentResolver().update(WaypointsColumns.CONTENT_URI, values, "_id=?",
-        new String[] { String.valueOf(markerId) });
-
+    MyTracksProviderUtils.Factory.get(this).updateWaypoint(waypoint);
   }
 }
