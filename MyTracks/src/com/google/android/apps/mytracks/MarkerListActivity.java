@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.ListItemUtil;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
@@ -124,9 +125,9 @@ public class MarkerListActivity extends FragmentActivity {
     listView.setOnItemClickListener(new OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        startActivity(new Intent(MarkerListActivity.this, MarkerDetailActivity.class).addFlags(
-            Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-            .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, id));
+        Intent intent = IntentUtils.newIntent(MarkerListActivity.this, MarkerDetailActivity.class)
+            .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, id);
+        startActivity(intent);
       }
     });
     resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.list_item, null, 0) {
@@ -201,8 +202,8 @@ public class MarkerListActivity extends FragmentActivity {
         finish();
         return true;
       case R.id.marker_list_insert_marker:
-        startActivity(new Intent(this, MarkerEditActivity.class).addFlags(
-            Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+        Intent intent = IntentUtils.newIntent(this, MarkerEditActivity.class);
+        startActivity(intent);
         return true;
       case R.id.marker_list_search:
         return ApiAdapterFactory.getApiAdapter().handleSearchMenuSelection(this);
@@ -234,19 +235,21 @@ public class MarkerListActivity extends FragmentActivity {
    * @return true if handled.
    */
   private boolean handleContextItem(int itemId, long markerId) {
+    Intent intent;
     switch (itemId) {
       case R.id.list_context_menu_show_on_map:
-        startActivity(new Intent(this, TrackDetailActivity.class).addFlags(
-            Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-            .putExtra(TrackDetailActivity.EXTRA_MARKER_ID, markerId));
+        intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
+            .putExtra(TrackDetailActivity.EXTRA_MARKER_ID, markerId);
+        startActivity(intent);
         return true;
       case R.id.list_context_menu_edit:
-        startActivity(new Intent(this, MarkerEditActivity.class).addFlags(
-            Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-            .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerId));
+        intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
+            .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerId);
+        startActivity(intent);
         return true;
       case R.id.list_context_menu_delete:
-        DeleteOneMarkerDialogFragment.newInstance(markerId).show(getSupportFragmentManager(),
+        DeleteOneMarkerDialogFragment.newInstance(markerId, trackId).show(
+            getSupportFragmentManager(),
             DeleteOneMarkerDialogFragment.DELETE_ONE_MARKER_DIALOG_TAG);
         return true;
       default:

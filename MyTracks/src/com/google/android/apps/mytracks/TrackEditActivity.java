@@ -42,7 +42,7 @@ import android.widget.EditText;
 public class TrackEditActivity extends Activity implements OnClickListener {
 
   public static final String EXTRA_TRACK_ID = "track_id";
-  public static final String EXTRA_SHOW_CANCEL = "show_cancel";
+  public static final String EXTRA_NEW_TRACK = "new_track";
 
   private static final String TAG = TrackEditActivity.class.getSimpleName();
 
@@ -92,13 +92,13 @@ public class TrackEditActivity extends Activity implements OnClickListener {
     save.setOnClickListener(this);
 
     Button cancel = (Button) findViewById(R.id.track_edit_cancel);
-    if (getIntent().getBooleanExtra(EXTRA_SHOW_CANCEL, true)) {
+    if (getIntent().getBooleanExtra(EXTRA_NEW_TRACK, false)) {
+      setTitle(R.string.track_edit_new_track_title);
+      cancel.setVisibility(View.GONE);
+    } else {
       setTitle(R.string.menu_edit);
       cancel.setOnClickListener(this);
       cancel.setVisibility(View.VISIBLE);
-    } else {
-      setTitle(R.string.track_edit_new_track_title);
-      cancel.setVisibility(View.GONE);
     }
   }
 

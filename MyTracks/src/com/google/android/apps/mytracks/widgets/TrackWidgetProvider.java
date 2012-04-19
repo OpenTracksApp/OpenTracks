@@ -20,11 +20,13 @@ import static com.google.android.apps.mytracks.Constants.SETTINGS_NAME;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.TrackDetailActivity;
+import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.services.ControlRecordingService;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
@@ -146,10 +148,12 @@ public class TrackWidgetProvider
     RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.track_widget);
 
     // Make all of the stats open the mytracks activity.
-    Intent intent = new Intent(context, TrackDetailActivity.class)
-        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+    Intent intent;
     if (track != null) {
-      intent.putExtra(TrackDetailActivity.EXTRA_TRACK_ID, track.getId());
+      intent = IntentUtils.newIntent(context, TrackDetailActivity.class)
+          .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, track.getId());
+    } else {
+      intent = IntentUtils.newIntent(context, TrackListActivity.class);
     }
     PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
     views.setOnClickPendingIntent(R.id.appwidget_track_statistics, pendingIntent);
@@ -190,8 +194,8 @@ public class TrackWidgetProvider
    * @param icon The resource id of the icon to show for the button
    */
   private void setButtonIntent(RemoteViews views, int action, int icon) {
-    Intent intent = new Intent(context, ControlRecordingService.class);
-    intent.setAction(context.getString(action));
+    Intent intent = new Intent(context, ControlRecordingService.class)
+        .setAction(context.getString(action));
     PendingIntent pendingIntent = PendingIntent.getService(context, 0,
         intent, PendingIntent.FLAG_UPDATE_CURRENT);
     views.setOnClickPendingIntent(R.id.appwidget_button, pendingIntent);

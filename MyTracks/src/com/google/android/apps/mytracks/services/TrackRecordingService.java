@@ -38,6 +38,7 @@ import com.google.android.apps.mytracks.services.tasks.SplitTask;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
@@ -487,11 +488,9 @@ public class TrackRecordingService extends Service {
       Notification notification = new Notification(
           R.drawable.arrow_320, null /* tickerText */,
           System.currentTimeMillis());
-      Intent intent = new Intent(this, TrackDetailActivity.class)
-          .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+      Intent intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
           .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, recordingTrackId);
-      PendingIntent contentIntent = PendingIntent.getActivity(
-          this, 0 /* requestCode */, intent, 0 /* flags */);
+      PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
       notification.setLatestEventInfo(this, getString(R.string.my_tracks_app_name),
           getString(R.string.track_record_notification), contentIntent);
       notification.flags += Notification.FLAG_NO_CLEAR;

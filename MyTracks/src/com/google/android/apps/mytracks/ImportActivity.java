@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.FileUtils;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.UriUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -140,8 +141,8 @@ public class ImportActivity extends Activity {
               @Override
               public void onClick(DialogInterface dialog, int which) {
                 if (!importAll && trackId != -1L) {
-                  Intent intent = new Intent(ImportActivity.this, TrackDetailActivity.class)
-                      .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+                  Intent intent = IntentUtils.newIntent(
+                      ImportActivity.this, TrackDetailActivity.class)
                       .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
                   startActivity(intent);
                 }

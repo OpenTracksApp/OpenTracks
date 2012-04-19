@@ -239,7 +239,8 @@ public class MapFragment extends Fragment
   @Override
   public void onClick(View v) {
     if (v == messagePane) {
-      startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+      Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+      startActivity(intent);
     }
   }
 

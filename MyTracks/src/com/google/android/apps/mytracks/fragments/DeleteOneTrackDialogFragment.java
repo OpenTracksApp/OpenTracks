@@ -19,6 +19,7 @@ package com.google.android.apps.mytracks.fragments;
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.util.DialogUtils;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Dialog;
@@ -54,8 +55,8 @@ public class DeleteOneTrackDialogFragment extends DialogFragment {
           public void onClick(DialogInterface dialog, int which) {
             MyTracksProviderUtils.Factory.get(getActivity())
                 .deleteTrack(getArguments().getLong(KEY_TRACK_ID));
-            startActivity(new Intent(getActivity(), TrackListActivity.class).addFlags(
-                Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+            Intent intent = IntentUtils.newIntent(getActivity(), TrackListActivity.class); 
+            startActivity(intent);
           }
         });
   }

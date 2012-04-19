@@ -24,6 +24,7 @@ import com.google.android.apps.mytracks.services.sensors.ant.AntUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.BluetoothDeviceUtils;
 import com.google.android.apps.mytracks.util.DialogUtils;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
@@ -201,7 +202,9 @@ public class SettingsActivity extends PreferenceActivity {
             new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int which) {
-                startActivity(new Intent(SettingsActivity.this, RestoreChooserActivity.class));
+                Intent intent = IntentUtils.newIntent(
+                    SettingsActivity.this, RestoreChooserActivity.class);
+                startActivity(intent);
               }
             });
       default:
@@ -361,22 +364,21 @@ public class SettingsActivity extends PreferenceActivity {
                   : R.string.settings_reset_summary);
 
     // Add actions to the backup preferences
-    backupNowPreference.setOnPreferenceClickListener(
-        new OnPreferenceClickListener() {
-          @Override
-          public boolean onPreferenceClick(Preference preference) {
-            startActivity(new Intent(SettingsActivity.this, BackupActivity.class));
-            return true;
-          }
-        });
-    restoreNowPreference.setOnPreferenceClickListener(
-        new OnPreferenceClickListener() {
-          @Override
-          public boolean onPreferenceClick(Preference preference) {
-            showDialog(DIALOG_CONFIRM_RESTORE_ID);
-            return true;
-          }
-        });
+    backupNowPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+      @Override
+      public boolean onPreferenceClick(Preference preference) {
+        Intent intent = IntentUtils.newIntent(SettingsActivity.this, BackupActivity.class);
+        startActivity(intent);
+        return true;
+      }
+    });
+    restoreNowPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+      @Override
+      public boolean onPreferenceClick(Preference preference) {
+        showDialog(DIALOG_CONFIRM_RESTORE_ID);
+        return true;
+      }
+    });
   }
 
   @Override
@@ -627,8 +629,8 @@ public class SettingsActivity extends PreferenceActivity {
                 Toast.LENGTH_SHORT).show();
 
             // Restart the settings activity so all changes are loaded.
-            Intent intent = getIntent();
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            Intent intent = getIntent()
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
           }
         });
