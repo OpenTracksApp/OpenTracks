@@ -1,0 +1,7 @@
+#Tue Oct 25 14:08:44 PDT 2011
+eclipse.preferences.version=1
+org.eclipse.jdt.apt.aptEnabled=true
+org.eclipse.jdt.apt.genSrcDir=.apt_generated
+org.eclipse.jdt.apt.processorOptions/bin_dir=%PROJECT.DIR%/bin/classes
+org.eclipse.jdt.apt.processorOptions/logfile=%PROJECT.DIR%/AnnotationProcessor.log
+org.eclipse.jdt.apt.reconcileEnabled=false
