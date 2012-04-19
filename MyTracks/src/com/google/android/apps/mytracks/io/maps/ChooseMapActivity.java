@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.io.maps;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsMapMetadata;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.util.DialogUtils;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
@@ -209,7 +210,7 @@ public class ChooseMapActivity extends Activity {
    */
   private void startNextActivity(String mapId) {
     sendRequest.setMapId(mapId);
-    Intent intent = new Intent(this, SendMapsActivity.class)
+    Intent intent = IntentUtils.newIntent(this, SendMapsActivity.class)
         .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
     startActivity(intent);
     finish();

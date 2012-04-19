@@ -4,6 +4,7 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -93,8 +94,8 @@ public class AggregatedStatsActivity extends Activity implements
     if (item.getItemId() != android.R.id.home) {
       return false;
     }
-    startActivity(new Intent(this, TrackListActivity.class)
-        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+    Intent intent = IntentUtils.newIntent(this, TrackListActivity.class);
+    startActivity(intent);
     return true;
   }
 

@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks;
 import com.google.android.apps.mytracks.ChartValueSeries.ZoomSettings;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.ExtremityMonitor;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
@@ -485,8 +486,7 @@ public class ChartView extends View {
             }
           }
           if (nearestWaypoint != null && dmin < 100) {
-            Intent intent = new Intent(getContext(), MarkerDetailActivity.class)
-                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+            Intent intent = IntentUtils.newIntent(getContext(), MarkerDetailActivity.class)
                 .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, nearestWaypoint.getId());
             getContext().startActivity(intent);
             return true;

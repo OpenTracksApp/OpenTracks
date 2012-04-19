@@ -45,7 +45,8 @@ public class InstallEarthDialogFragment extends DialogFragment {
         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
-            startActivity(new Intent().setData(Uri.parse(SaveActivity.GOOGLE_EARTH_MARKET_URL)));
+            Intent intent = new Intent().setData(Uri.parse(SaveActivity.GOOGLE_EARTH_MARKET_URL));
+            startActivity(intent);
           }
         })
         .create();
