@@ -63,7 +63,7 @@ public class ChartSettingsDialogFragment extends DialogFragment {
       checkBoxes[i].setChecked(chartFragment.isChartValueSeriesEnabled(i));
     }
     checkBoxes[ChartView.SPEED_SERIES].setText(chartFragment.isReportSpeed()
-        ? R.string.stat_speed : R.string.stat_pace);
+        ? R.string.stats_speed : R.string.stats_pace);
 
     return new AlertDialog.Builder(getActivity())
         .setCancelable(true)

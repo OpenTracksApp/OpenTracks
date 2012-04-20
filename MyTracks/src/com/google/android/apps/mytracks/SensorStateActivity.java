@@ -45,8 +45,6 @@ public class SensorStateActivity extends Activity {
 
   private static final long REFRESH_PERIOD_MS = 250;
 
-  private final StatsUtilities utils;
-
   /**
    * This timer periodically invokes the refresh timer task.
    */
@@ -90,11 +88,6 @@ public class SensorStateActivity extends Activity {
    * is destroyed at the pause event.
    */
   private boolean isVisible = false;
-
-  public SensorStateActivity() {
-    utils = new StatsUtilities(this);
-    Log.w(TAG, "SensorStateActivity()");
-  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -239,18 +232,18 @@ public class SensorStateActivity extends Activity {
   }
 
   private void updateSensorData(Sensor.SensorDataSet sds) {
-    if (sds == null) {
-      utils.setUnknown(R.id.sensor_state_last_sensor_time);
-      utils.setUnknown(R.id.sensor_state_power);
-      utils.setUnknown(R.id.sensor_state_cadence);
-      utils.setUnknown(R.id.sensor_state_battery);
-    } else {
-      ((TextView) findViewById(R.id.sensor_state_last_sensor_time)).setText(getLastSensorTime(sds));
-      ((TextView) findViewById(R.id.sensor_state_power)).setText(getPower(sds));
-      ((TextView) findViewById(R.id.sensor_state_cadence)).setText(getCadence(sds));
-      ((TextView) findViewById(R.id.sensor_state_heart_rate)).setText(getHeartRate(sds));
-      ((TextView) findViewById(R.id.sensor_state_battery)).setText(getBattery(sds));
-    }
+    String lastSensorTime = sds == null ? getString(R.string.value_unknown)
+        : getLastSensorTime(sds);
+    String power = sds == null ? getString(R.string.value_unknown) : getPower(sds);
+    String cadence = sds == null ? getString(R.string.value_unknown) : getCadence(sds);
+    String heartRate = sds == null ? getString(R.string.value_unknown) : getHeartRate(sds);
+    String battery = sds == null ? getString(R.string.value_unknown) : getBattery(sds);
+    
+    ((TextView) findViewById(R.id.sensor_state_last_sensor_time)).setText(lastSensorTime);
+    ((TextView) findViewById(R.id.sensor_state_power)).setText(power);
+    ((TextView) findViewById(R.id.sensor_state_cadence)).setText(cadence);
+    ((TextView) findViewById(R.id.sensor_state_heart_rate)).setText(heartRate);
+    ((TextView) findViewById(R.id.sensor_state_battery)).setText(battery);
   }
 
   /**
@@ -325,8 +318,7 @@ public class SensorStateActivity extends Activity {
     String value;
     if (sds.hasBatteryLevel() && sds.getBatteryLevel().hasValue()
         && sds.getBatteryLevel().getState() == Sensor.SensorState.SENDING) {
-      String format = getString(R.string.value_integer_percent);
-      value = String.format(format, sds.getBatteryLevel().getValue());
+      value = getString(R.string.value_integer_percent, sds.getBatteryLevel().getValue());
     } else {
       value = SensorUtils.getStateAsString(
           sds.hasBatteryLevel() ? sds.getBatteryLevel().getState() : Sensor.SensorState.NONE, this);

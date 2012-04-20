@@ -215,7 +215,7 @@ public class ChartView extends View {
                              R.color.elevation_border,
                              new ZoomSettings(MAX_INTERVALS,
                                  new int[] {5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000}),
-                             R.string.stat_elevation);
+                             R.string.stats_elevation);
 
     series[SPEED_SERIES] =
         new ChartValueSeries(context,
@@ -223,7 +223,7 @@ public class ChartView extends View {
                              R.color.speed_border,
                              new ZoomSettings(MAX_INTERVALS, 0, Integer.MIN_VALUE,
                                  new int[] {1, 5, 10, 20, 50}),
-                             R.string.stat_speed);
+                             R.string.stats_speed);
     series[POWER_SERIES] =
         new ChartValueSeries(context,
                              R.color.power_fill,
@@ -270,8 +270,8 @@ public class ChartView extends View {
 
   public void setReportSpeed(boolean reportSpeed, Context c) {
     series[SPEED_SERIES].setTitle(c.getString(reportSpeed
-                                              ? R.string.stat_speed
-                                              : R.string.stat_pace));
+                                              ? R.string.stats_speed
+                                              : R.string.stats_pace));
   }
 
   private void addDataPointInternal(double[] theData) {
