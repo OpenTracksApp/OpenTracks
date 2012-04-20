@@ -17,11 +17,8 @@ limitations under the License.
 <resources>
   <color name="black">#FF000000</color>
   <color name="blue">#FF0000FF</color>
-  <color name="green">#FF00FF00</color>
   <color name="gray">#FFAAAAAA</color>
   <color name="red">#FFFF0000</color>
-  <color name="stat_label_background">#FFF0F0F0</color>
-  <color name="stat_label_text">#FF0F0F0F</color>
   <color name="white">#FFFFFFFF</color>
 
   <!-- Chart colors by series. -->

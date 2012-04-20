@@ -494,7 +494,7 @@ limitations under the License.
     Accuracy (m)
   </string>
   <string name="description_location_altitude"
-    translation_description="Label for location altitude in degrees.">
+    translation_description="Label for location altitude in meters.">
     Altitude (m)
   </string>
   <string name="description_location_bearing"
@@ -2067,81 +2067,81 @@ limitations under the License.
     I think you might be interested in this track:\n\n%1$s
   </string>
 
-  <!-- Stat Page -->
-  <string name="stat_average_moving_pace"
-    translation_description="In the 'Statistics' page, the average moving pace.">
+  <!-- Stats Page -->
+  <string name="stats_average_moving_pace"
+    translation_description="In the 'Stats' page, the average moving pace.">
     Average moving pace
   </string>
-  <string name="stat_average_moving_speed"
-    translation_description="In the 'Statistics' page, the average moving speed.">
+  <string name="stats_average_moving_speed"
+    translation_description="In the 'Stats' page, the average moving speed.">
     Average moving speed
   </string>
-  <string name="stat_average_pace"
-    translation_description="In the 'Statistics' page, the average pace.">
+  <string name="stats_average_pace"
+    translation_description="In the 'Stats' page, the average pace.">
     Average pace
   </string>
-  <string name="stat_average_speed"
-    translation_description="In the 'Statistics' page, the average speed.">
+  <string name="stats_average_speed"
+    translation_description="In the 'Stats' page, the average speed.">
     Average speed
   </string>
-  <string name="stat_elevation"
-    translation_description="In the 'Statistics' page, the elevation.">
+  <string name="stats_elevation"
+    translation_description="In the 'Stats' page, the elevation.">
     Elevation
   </string>
-  <string name="stat_elevation_gain"
-    translation_description="In the 'Statistics' page, the elevation gain.">
+  <string name="stats_elevation_gain"
+    translation_description="In the 'Stats' page, the elevation gain.">
     Elevation gain
   </string>
-  <string name="stat_fastest_pace"
-    translation_description="In the 'Statistics' page, the fastest pace.">
+  <string name="stats_fastest_pace"
+    translation_description="In the 'Stats' page, the fastest pace.">
     Fastest pace
   </string>
-  <string name="stat_latitude"
-    translation_description="In the 'Statistics' page, the latitude.">
+  <string name="stats_latitude"
+    translation_description="In the 'Stats' page, the latitude.">
     Latitude
   </string>
-  <string name="stat_longitude"
-    translation_description="In the 'Statistics' page, the longitude.">
+  <string name="stats_longitude"
+    translation_description="In the 'Stats' page, the longitude.">
     Longitude
   </string>
-  <string name="stat_max_elevation"
-    translation_description="In the 'Statistics' page, the maximum elevation.">
+  <string name="stats_max_elevation"
+    translation_description="In the 'Stats' page, the maximum elevation.">
     Max elevation
   </string>
-  <string name="stat_max_grade"
-    translation_description="In the 'Statistics' page, the maximum grade.">
+  <string name="stats_max_grade"
+    translation_description="In the 'Stats' page, the maximum grade.">
     Max grade
   </string>
-  <string name="stat_max_speed"
-    translation_description="In the 'Statistics' page, the maximum speed.">
+  <string name="stats_max_speed"
+    translation_description="In the 'Stats' page, the maximum speed.">
     Max speed
   </string>
-  <string name="stat_min_elevation"
-    translation_description="In the 'Statistics' page, the minimum elevation.">
+  <string name="stats_min_elevation"
+    translation_description="In the 'Stats' page, the minimum elevation.">
     Min elevation
   </string>
-  <string name="stat_min_grade"
-    translation_description="In the 'Statistics' page, the minimum grade.">
+  <string name="stats_min_grade"
+    translation_description="In the 'Stats' page, the minimum grade.">
     Min grade
   </string>
-  <string name="stat_moving_time"
-    translation_description="In the 'Statistics' page, the moving time.">
+  <string name="stats_moving_time"
+    translation_description="In the 'Stats' page, the moving time.">
     Moving time
   </string>
-  <string name="stat_pace"
-    translation_description="In the 'Statistics' page, the pace like hours per mile.">
+  <string name="stats_pace"
+    translation_description="In the 'Stats' page, the pace like hours per mile.">
     Pace
   </string>
-  <string name="stat_speed"
-    translation_description="In the 'Statistics' page, the speed like miles per hour.">
+  <string name="stats_speed"
+    translation_description="In the 'Stats' page, the speed like miles per hour.">
     Speed
   </string>
-  <string name="stat_total_distance"
-    translation_description="In the 'Statistics' page, the total distance.">
+  <string name="stats_total_distance"
+    translation_description="In the 'Stats' page, the total distance.">
     Total distance
   </string>
-  <string name="stat_total_time"
-    translation_description="In the 'Statistics' page, the total time.">
+  <string name="stats_total_time"
+    translation_description="In the 'Stats' page, the total time.">
     Total time
   </string>
 
@@ -2417,7 +2417,14 @@ limitations under the License.
       recommended value.">
     Smallest (recommended)
   </string>
-
+  <string name="value_coordinate_degree"
+    translation_description="To display a latitude or longitude coordinate in degree. E.g.,
+      2.2 \u00B0. \u00B0 is the unicode value for the degree symbol.
+          
+    %1$s: a string value of the coordinate. E.g., '2.2'">
+    %1$s \u00B0
+  </string>
+  
   <!-- Voice -->
   <string name="voice_hours_few"
     translation_description="For voice announcement, to say 'few' hours.

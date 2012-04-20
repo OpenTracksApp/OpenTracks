@@ -39,14 +39,14 @@ limitations under the License.
     <TextView
       android:id="@+id/list_item_total_time"
       android:layout_marginRight="8dp"
-      style="@style/ListItemStat" />
+      style="@style/ListItemStats" />
     <TextView
       android:id="@+id/list_item_total_distance"
       android:layout_marginRight="8dp"
-      style="@style/ListItemStat" />
+      style="@style/ListItemStats" />
     <TextView
       android:id="@+id/list_item_start_time"
-      style="@style/ListItemStat" />
+      style="@style/ListItemStats" />
   </LinearLayout>
   <TextView
     android:id="@+id/list_item_description"
