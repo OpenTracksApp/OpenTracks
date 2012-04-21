@@ -929,11 +929,6 @@ limitations under the License.
       'Maps' list page informing the user that he doesn't have any maps.">
     You don\'t have any maps.
   </string>
-  <string name="maps_list_pick_map"
-    translation_description="When sending a track to an existing Google Map, the text on the
-      'Maps' list page asking the user to pick one of his maps.">
-    Pick a map:
-  </string>
   <string name="maps_list_progress_message"
     translation_description="When sending a track to an existing Google Map, the progress message
       informing the user that his maps are being loaded.">
@@ -946,8 +941,8 @@ limitations under the License.
   </string>
   <string name="maps_list_title"
     translation_description="When sending a track to an existing Google Map, the title of the
-      page listing the user's maps in Google Maps.">
-    Your Google Maps
+      page asking the user to pick a map.">
+    Pick a Map
   </string>
   <string name="maps_list_unlisted_label"
     translation_description="When sending a track to an existing Google Map, in the 'Maps'

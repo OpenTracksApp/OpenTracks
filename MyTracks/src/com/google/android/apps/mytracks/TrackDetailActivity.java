@@ -144,7 +144,7 @@ public class TrackDetailActivity extends FragmentActivity {
     trackDataHub = ((MyTracksApplication) getApplication()).getTrackDataHub();
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
 
-    mapViewContainer = getLayoutInflater().inflate(R.layout.mytracks_layout, null);
+    mapViewContainer = getLayoutInflater().inflate(R.layout.map, null);
     tabHost = (TabHost) findViewById(android.R.id.tabhost);
     tabHost.setup();
     tabManager = new TabManager(this, tabHost, R.id.realtabcontent);

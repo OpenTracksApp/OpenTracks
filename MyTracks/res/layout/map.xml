@@ -14,30 +14,24 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_height="fill_parent"
   android:layout_width="fill_parent" >
-  <ListView
-    android:id="@+id/track_list"
+  <!-- apiKey corresponds to certificate md5: 81:DF:A2:63:53:C7:6B:1E:6C:24:62:D4:91:1C:36:3A -->
+  <com.google.android.maps.MapView
+    android:apiKey="0TXoRmxTinrZKQ9JSazj-9A34XX6_lXsRvTpXWA"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:id="@+id/map_view"
     android:layout_height="fill_parent"
     android:layout_width="fill_parent" />
-  <LinearLayout
-    android:gravity="center"
-    android:id="@+id/track_list_empty"
-    android:layout_height="fill_parent"
+  <TextView
+    android:background="@android:color/darker_gray"
+    android:id="@+id/map_message"
+    android:layout_alignParentTop="true"
     android:layout_width="fill_parent"
-    android:orientation="vertical" >
-    <TextView
-      android:text="@string/track_list_empty_message"
-      style="@style/ListEmptyTextView" >
-    </TextView>
-    <ImageButton
-      android:contentDescription="@string/menu_record_track"
-      android:id="@+id/track_list_record_button"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      android:padding="16dp"
-      android:src="@drawable/menu_record_track"
-      style="@android:style/Widget.DeviceDefault.ImageButton" />
-  </LinearLayout>
-</merge>
+    android:padding="8dp"
+    android:visibility="gone"
+    style="@style/TextMedium" />
+</RelativeLayout>

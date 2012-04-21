@@ -23,42 +23,42 @@ limitations under the License.
     android:padding="8dp" >
     <TextView
       android:text="@string/menu_sensor_state"
-      style="@style/SensorStateLabel" />
+      style="@style/TextMedium" />
     <TextView
       android:id="@+id/sensor_state"
       style="@style/SensorStateValue" />
     <!-- Last sensor time -->
     <TextView
       android:text="@string/sensor_state_last_sensor_time"
-      style="@style/SensorStateLabel" />
+      style="@style/TextMedium" />
     <TextView
       android:id="@+id/sensor_state_last_sensor_time"
       style="@style/SensorStateValue" />
     <!-- Power -->
     <TextView
       android:text="@string/sensor_state_power"
-      style="@style/SensorStateLabel" />
+      style="@style/TextMedium" />
     <TextView
       android:id="@+id/sensor_state_power"
       style="@style/SensorStateValue" />
     <!-- Cadence -->
     <TextView
       android:text="@string/sensor_state_cadence"
-      style="@style/SensorStateLabel" />
+      style="@style/TextMedium" />
     <TextView
       android:id="@+id/sensor_state_cadence"
       style="@style/SensorStateValue" />
     <!-- Heart rate -->
     <TextView
       android:text="@string/sensor_state_heart_rate"
-      style="@style/SensorStateLabel" />
+      style="@style/TextMedium" />
     <TextView
       android:id="@+id/sensor_state_heart_rate"
       style="@style/SensorStateValue" />
     <!-- Battery level -->
     <TextView
       android:text="@string/sensor_state_battery"
-      style="@style/SensorStateLabel" />
+      style="@style/TextMedium" />
     <TextView
       android:id="@+id/sensor_state_battery"
       style="@style/SensorStateValue" />

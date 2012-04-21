@@ -15,6 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
+  <!-- The style for the about value -->
+  <style name="AboutValue" parent="@style/TextMedium">
+    <item name="android:paddingLeft">48dp</item>
+  </style>
   <!-- The style for the bottom button -->
   <style name="BottomButton" parent="@android:style/Widget.DeviceDefault.Button.Borderless">
     <item name="android:layout_height">wrap_content</item>
@@ -28,90 +32,36 @@ limitations under the License.
     <item name="android:orientation">horizontal</item>
   </style>
   <!-- The style for the edit category -->
-  <style name="EditCategory" parent="@android:style/TextAppearance.DeviceDefault.Medium">
-    <item name="android:layout_height">wrap_content</item>
+  <style name="EditCategory" parent="@style/TextMedium">
     <item name="android:layout_width">fill_parent</item>
     <item name="android:selectAllOnFocus">true</item>
     <item name="android:singleLine">true</item>
   </style>
   <!-- The style for the edit description -->
-  <style name="EditDescription" parent="@android:style/TextAppearance.DeviceDefault.Medium">
+  <style name="EditDescription" parent="@style/TextMedium">
     <item name="android:inputType">textAutoCorrect|textCapSentences</item>
-    <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:maxLines">50</item>
     <item name="android:selectAllOnFocus">true</item>
     <item name="android:singleLine">false</item>
   </style>
-  <!-- The style for the edit label -->
-  <style name="EditLabel" parent="@android:style/TextAppearance.DeviceDefault.Medium">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
-  </style>
   <!-- The style for the edit name -->
-  <style name="EditName" parent="@android:style/TextAppearance.DeviceDefault.Medium">
-    <item name="android:drawablePadding">8dp</item>
-    <item name="android:gravity">center_vertical</item>
+  <style name="EditName" parent="@style/TextMedium.WithIcon">
     <item name="android:inputType">textAutoCorrect|textCapWords</item>
-    <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:selectAllOnFocus">true</item>
     <item name="android:singleLine">true</item>
   </style>
   <!-- The style for the list empty text view -->
-  <style name="ListEmptyTextView" parent="@android:style/TextAppearance.DeviceDefault.Large">
+  <style name="ListEmptyTextView" parent="@style/TextLarge">
     <item name="android:gravity">center</item>
     <item name="android:layout_gravity">center</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
     <item name="android:padding">8dp</item>
   </style>
-  <!-- The style for the list item category -->
-  <style name="ListItemCategory" parent="@android:style/TextAppearance.DeviceDefault.Small">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_marginLeft">8dp</item>
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:singleLine">true</item>
-  </style>
-  <!-- The style for the list item description -->
-  <style name="ListItemDescription" parent="@android:style/TextAppearance.DeviceDefault.Small">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">fill_parent</item>
-    <item name="android:singleLine">false</item>
-    <item name="android:textColor">@android:color/secondary_text_dark</item>
-  </style>
-  <!-- The style for the list item name -->
-  <style name="ListItemName" parent="@android:style/TextAppearance.DeviceDefault.Large">
-    <item name="android:gravity">center_vertical</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:drawablePadding">8dp</item>
-    <item name="android:singleLine">true</item>
-  </style>
   <!-- style for the list item stats -->
-  <style name="ListItemStats" parent="@android:style/TextAppearance.DeviceDefault.Small">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
+  <style name="ListItemStats" parent="@style/TextSmall">
     <item name="android:singleLine">true</item>
     <item name="android:textColor">@android:color/secondary_text_dark</item>
-  </style>
-  <!-- The style for the marker detail label -->
-  <style name="MarkerDetailLabel" parent="@android:style/TextAppearance.DeviceDefault.Large">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
-  </style>
-  <!-- The style for the sensor state label -->
-  <style name="SensorStateLabel" parent="@android:style/TextAppearance.DeviceDefault.Medium">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
-  </style>
-  <!-- The style for the sensor state value -->
-  <style name="SensorStateValue" parent="@android:style/TextAppearance.DeviceDefault.Large">
-    <item name="android:background">@android:color/background_light</item>
-    <item name="android:gravity">right</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">fill_parent</item>
-    <item name="android:textColor">@android:color/primary_text_light</item>
   </style>
   <!-- The style for the scroll view -->
   <style name="ScrollView">
@@ -119,9 +69,20 @@ limitations under the License.
     <item name="android:layout_width">fill_parent</item>
     <item name="android:scrollbarStyle">outsideInset</item>
   </style>
+  <!-- The style for the scroll view with bottom buttons -->
+  <style name="ScrollView.WithBottomButtons">
+    <item name="android:layout_height">0dp</item>
+    <item name="android:layout_weight">1</item>
+  </style>
+  <!-- The style for the sensor state value -->
+  <style name="SensorStateValue" parent="@style/TextLarge">
+    <item name="android:background">@android:color/background_light</item>
+    <item name="android:gravity">right</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:textColor">@android:color/primary_text_light</item>
+  </style>
   <!-- The style for the stats label -->
-  <style name="StatsLabel" parent="@android:style/TextAppearance.DeviceDefault.Medium">
-    <item name="android:layout_height">wrap_content</item>
+  <style name="StatsLabel" parent="@style/TextMedium">
     <item name="android:layout_weight">1</item>
     <item name="android:layout_width">0dp</item>
   </style>
@@ -131,37 +92,62 @@ limitations under the License.
     <item name="android:layout_width">8dp</item>
   </style>
   <!-- The style for the stats value -->
-  <style name="StatsValue" parent="@android:style/TextAppearance.DeviceDefault.Large">
+  <style name="StatsValue" parent="@style/TextLarge">
     <item name="android:background">@android:color/background_light</item>
     <item name="android:gravity">right</item>
-    <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_weight">1</item>
     <item name="android:layout_width">0dp</item>
     <item name="android:textColor">@android:color/primary_text_light</item>
   </style>
-  <style name="ThemeSelector" parent="android:Theme" />
-  <!-- The style for the welcome page answer -->
-  <style name="WelcomeAnswerTextView" parent="@android:style/TextAppearance.DeviceDefault.Small">
+  <!-- The style for large size text -->
+  <style name="TextLarge" parent="@android:style/TextAppearance.DeviceDefault.Large">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
+  </style>
+  <!-- The style for large size text with an icon on the left -->
+  <style name="TextLarge.WithIcon">
+    <item name="android:drawablePadding">8dp</item>
+    <item name="android:gravity">center_vertical</item>
+  </style>
+  <!-- The style for medium size text -->
+  <style name="TextMedium" parent="@android:style/TextAppearance.DeviceDefault.Medium">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+  </style>
+  <!-- The style for medium size text with an icon on the left -->
+  <style name="TextMedium.WithIcon">
+    <item name="android:drawablePadding">8dp</item>
+    <item name="android:gravity">center_vertical</item>
+  </style>
+  <!-- The style for large size text -->
+  <style name="TextSmall" parent="@android:style/TextAppearance.DeviceDefault.Small">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+  </style>
+  <!-- Theme selector -->
+  <style name="ThemeSelector" parent="android:Theme" />
+  <!-- The style for the track widget value -->
+  <style name="TrackWidgetValue" parent="@style/TextSmall">
+    <item name="android:width">100dp</item>
+  </style>
+  <!-- The style for upload service chooser check box -->
+  <style name="UploadServiceChooserCheckBox" parent="@style/TextMedium">
+    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:layout_marginLeft">8dp</item>
+    <item name="android:layout_width">0dp</item>
+  </style>
+  <!-- The style for upload service chooser image view -->
+  <style name="UploadServiceChooserImageView">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+  </style>
+  <!-- The style for the welcome page answer -->
+  <style name="WelcomeAnswerTextView" parent="@style/TextSmall">
     <item name="android:paddingBottom">8dp</item>
   </style>
   <!-- The style for welcome page question -->
-  <style name="WelcomeQuestionTextView" parent="@android:style/TextAppearance.DeviceDefault.Medium">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
+  <style name="WelcomeQuestionTextView" parent="@style/TextMedium">
     <item name="android:paddingTop">8dp</item>
     <item name="android:textStyle">bold</item>
-  </style>
-  <!-- The style for the widget label -->
-  <style name="WidgetTextView">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:textColor">@color/appwidget_text</item>
-    <item name="android:textSize">14sp</item>
-  </style>
-  <!-- The style for the widget value -->
-  <style name="WidgetTextView.Value">
-    <item name="android:width">160px</item>
   </style>
 </resources>

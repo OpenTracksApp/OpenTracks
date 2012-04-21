@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-  style="@style/ScrollView">
+  style="@style/ScrollView" >
   <LinearLayout
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
@@ -23,7 +23,7 @@ limitations under the License.
     android:padding="8dp" >
     <TextView
       android:id="@+id/marker_detail_name"
-      style="@style/MarkerDetailLabel" />
+      style="@style/TextLarge" />
     <LinearLayout
       android:id="@+id/marker_detail_waypoint_section"
       android:layout_height="wrap_content"
@@ -31,10 +31,10 @@ limitations under the License.
       android:orientation="vertical" >
       <TextView
         android:id="@+id/marker_detail_marker_type"
-        style="@style/MarkerDetailLabel" />
+        style="@style/TextLarge" />
       <TextView
         android:id="@+id/marker_detail_description"
-        style="@style/MarkerDetailLabel" />
+        style="@style/TextLarge" />
     </LinearLayout>
     <TableLayout
       android:id="@+id/marker_detail_statistics_section"
@@ -42,7 +42,7 @@ limitations under the License.
       android:layout_width="fill_parent"
       android:shrinkColumns="0,2"
       android:stretchColumns="0,2" >
-      <include layout="@layout/stats_core" />      
+      <include layout="@layout/stats_core" />
     </TableLayout>
   </LinearLayout>
 </ScrollView>

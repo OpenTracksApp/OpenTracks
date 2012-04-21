@@ -15,23 +15,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:gravity="center_vertical"
-  android:layout_height="wrap_content"
+  android:layout_height="fill_parent"
   android:layout_width="fill_parent"
-  android:minHeight="?android:attr/listPreferredItemHeight"
-  android:orientation="vertical"
-  android:padding="8dp" >
-  <TextView
-    android:id="@+id/choose_map_item_title"
-    android:singleLine="true"
-    style="@style/TextLarge" />
-  <TextView
-    android:id="@+id/choose_map_item_description"
-    android:singleLine="false"
-    android:textColor="@android:color/secondary_text_dark"
-    style="@style/TextSmall" />
-  <TextView
-    android:id="@+id/choose_map_item_search_status"
-    android:singleLine="true"
-    style="@style/TextSmall" />
+  android:orientation="vertical" >
+  <LinearLayout
+    android:id="@+id/chart_view_layout"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:layout_width="fill_parent"
+    android:orientation="vertical" >
+  </LinearLayout>
+  <ZoomControls
+    android:background="@android:color/white"
+    android:gravity="right"
+    android:id="@+id/chart_zoom_controls"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:paddingRight="8dp" />
 </LinearLayout>

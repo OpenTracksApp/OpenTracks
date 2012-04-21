@@ -42,7 +42,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.LinearLayout;
 import android.widget.ZoomControls;
 
 import java.util.ArrayList;
@@ -77,7 +76,6 @@ public class ChartFragment extends Fragment implements TrackDataListener {
 
   // UI elements
   private ChartView chartView;
-  private LinearLayout busyPane;
   private ZoomControls zoomControls;
 
   /**
@@ -91,7 +89,6 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         return;
       }
 
-      busyPane.setVisibility(View.GONE);
       zoomControls.setIsZoomInEnabled(chartView.canZoomIn());
       zoomControls.setIsZoomOutEnabled(chartView.canZoomOut());
       chartView.setShowPointer(isRecording());
@@ -113,9 +110,8 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   @Override
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.mytracks_charts, container, false);
-    busyPane = (LinearLayout) view.findViewById(R.id.elevation_busypane);
-    zoomControls = (ZoomControls) view.findViewById(R.id.elevation_zoom);
+    View view = inflater.inflate(R.layout.chart, container, false);
+    zoomControls = (ZoomControls) view.findViewById(R.id.chart_zoom_controls);
     zoomControls.setOnZoomInClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -134,7 +130,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   @Override
   public void onStart() {
     super.onStart();
-    ViewGroup layout = (ViewGroup) getActivity().findViewById(R.id.elevation_chart);
+    ViewGroup layout = (ViewGroup) getActivity().findViewById(R.id.chart_view_layout);
     LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,
         LayoutParams.MATCH_PARENT);
     layout.addView(chartView, layoutParams);
@@ -156,7 +152,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   @Override
   public void onStop() {
     super.onStop();
-    ViewGroup layout = (ViewGroup) getActivity().findViewById(R.id.elevation_chart);
+    ViewGroup layout = (ViewGroup) getActivity().findViewById(R.id.chart_view_layout);
     layout.removeView(chartView);
   }
  
@@ -229,12 +225,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
 
   @Override
   public void onSelectedTrackChanged(Track track, boolean isRecording) {
-    getActivity().runOnUiThread(new Runnable() {
-      @Override
-      public void run() {
-        busyPane.setVisibility(View.VISIBLE);
-      }
-    });
+    // We don't care.
   }
 
   @Override

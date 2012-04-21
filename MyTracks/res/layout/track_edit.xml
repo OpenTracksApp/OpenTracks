@@ -18,10 +18,7 @@ limitations under the License.
   android:layout_height="fill_parent"
   android:layout_width="fill_parent"
   android:orientation="vertical" >
-  <ScrollView
-    android:layout_height="0dp"
-    android:layout_weight="1"
-    android:layout_width="fill_parent" >
+  <ScrollView style="@style/ScrollView.WithBottomButtons" >
     <LinearLayout
       android:layout_height="wrap_content"
       android:layout_width="fill_parent"
@@ -29,7 +26,7 @@ limitations under the License.
       android:padding="8dp" >
       <TextView
         android:text="@string/generic_name"
-        style="@style/EditLabel" />
+        style="@style/TextMedium" />
       <EditText
         android:drawableLeft="@drawable/track"
         android:hint="@string/generic_name"
@@ -38,7 +35,7 @@ limitations under the License.
         style="@style/EditName" />
       <TextView
         android:text="@string/track_edit_activity_type"
-        style="@style/EditLabel" />
+        style="@style/TextMedium" />
       <AutoCompleteTextView
         android:hint="@string/track_edit_activity_type_hint"
         android:id="@+id/track_edit_activity_type"
@@ -46,7 +43,7 @@ limitations under the License.
         style="@style/EditCategory" />
       <TextView
         android:text="@string/generic_description"
-        style="@style/EditLabel" />
+        style="@style/TextMedium" />
       <EditText
         android:hint="@string/generic_description"
         android:id="@+id/track_edit_description"
