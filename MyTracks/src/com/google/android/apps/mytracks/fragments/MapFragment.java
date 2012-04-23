@@ -57,6 +57,8 @@ import java.util.EnumSet;
 public class MapFragment extends Fragment
     implements View.OnTouchListener, View.OnClickListener, TrackDataListener {
 
+  public static final String MAP_FRAGMENT_TAG = "mapFragment";
+  
   private static final String KEY_CURRENT_LOCATION = "currentLocation";
   private static final String KEY_KEEP_MY_LOCATION_VISIBLE = "keepMyLocationVisible";
 

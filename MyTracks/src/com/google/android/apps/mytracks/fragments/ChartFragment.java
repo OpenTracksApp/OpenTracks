@@ -55,6 +55,8 @@ import java.util.EnumSet;
  */
 public class ChartFragment extends Fragment implements TrackDataListener {
 
+  public static final String CHART_FRAGMENT_TAG = "chartFragment";
+  
   // Android reports 128 when the speed is invalid
   private static final int INVALID_SPEED = 128;
   private final DoubleBuffer elevationBuffer = new DoubleBuffer(

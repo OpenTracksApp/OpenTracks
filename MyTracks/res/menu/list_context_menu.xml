@@ -18,16 +18,16 @@ limitations under the License.
   <item
     android:icon="@drawable/menu_show_on_map"
     android:id="@+id/list_context_menu_show_on_map"
-    android:showAsAction="always"
+    android:showAsAction="ifRoom"
     android:title="@string/menu_show_on_map"/>
   <item
     android:icon="@drawable/menu_edit"
     android:id="@+id/list_context_menu_edit"
-    android:showAsAction="always"
+    android:showAsAction="ifRoom"
     android:title="@string/menu_edit"/>
   <item
     android:icon="@drawable/menu_delete"
     android:id="@+id/list_context_menu_delete"
-    android:showAsAction="always"
+    android:showAsAction="ifRoom"
     android:title="@string/menu_delete"/>
 </menu>

@@ -16,10 +16,6 @@
 
 package com.google.android.apps.mytracks;
 
-import static com.google.android.apps.mytracks.Constants.CHART_TAB_TAG;
-import static com.google.android.apps.mytracks.Constants.MAP_TAB_TAG;
-import static com.google.android.apps.mytracks.Constants.STATS_TAB_TAG;
-
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.Waypoint;
@@ -148,17 +144,16 @@ public class TrackDetailActivity extends FragmentActivity {
     tabHost = (TabHost) findViewById(android.R.id.tabhost);
     tabHost.setup();
     tabManager = new TabManager(this, tabHost, R.id.realtabcontent);
-    TabSpec mapTabSpec = tabHost.newTabSpec(MAP_TAB_TAG).setIndicator(
-        getString(R.string.track_detail_map_tab),
-        getResources().getDrawable(android.R.drawable.ic_menu_mapmode));
+    TabSpec mapTabSpec = tabHost.newTabSpec(MapFragment.MAP_FRAGMENT_TAG).setIndicator(
+        getString(R.string.track_detail_map_tab), getResources().getDrawable(R.drawable.tab_map));
     tabManager.addTab(mapTabSpec, MapFragment.class, null);
-    TabSpec chartTabSpec = tabHost.newTabSpec(CHART_TAB_TAG).setIndicator(
+    TabSpec chartTabSpec = tabHost.newTabSpec(ChartFragment.CHART_FRAGMENT_TAG).setIndicator(
         getString(R.string.track_detail_chart_tab),
-        getResources().getDrawable(R.drawable.menu_elevation));
+        getResources().getDrawable(R.drawable.tab_chart));
     tabManager.addTab(chartTabSpec, ChartFragment.class, null);
-    TabSpec statsTabSpec = tabHost.newTabSpec(STATS_TAB_TAG).setIndicator(
+    TabSpec statsTabSpec = tabHost.newTabSpec(StatsFragment.STATS_FRAGMENT_TAG).setIndicator(
         getString(R.string.track_detail_stats_tab),
-        getResources().getDrawable(R.drawable.ic_menu_statistics));
+        getResources().getDrawable(R.drawable.tab_stats));
     tabManager.addTab(statsTabSpec, StatsFragment.class, null);
     if (savedInstanceState != null) {
       tabHost.setCurrentTabByTag(savedInstanceState.getString(CURRENT_TAG_KEY));
@@ -242,14 +237,17 @@ public class TrackDetailActivity extends FragmentActivity {
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
     String currentTabTag = tabHost.getCurrentTabTag();
-    menu.findItem(R.id.track_detail_chart_settings).setVisible(CHART_TAB_TAG.equals(currentTabTag));
-    menu.findItem(R.id.track_detail_my_location).setVisible(MAP_TAB_TAG.equals(currentTabTag));
+    menu.findItem(R.id.track_detail_chart_settings).setVisible(
+        ChartFragment.CHART_FRAGMENT_TAG.equals(currentTabTag));
+    menu.findItem(R.id.track_detail_my_location)
+        .setVisible(MapFragment.MAP_FRAGMENT_TAG.equals(currentTabTag));
 
     // Set map or satellite mode
     MapFragment mapFragment = (MapFragment) getSupportFragmentManager()
-        .findFragmentByTag(MAP_TAB_TAG);
+        .findFragmentByTag(MapFragment.MAP_FRAGMENT_TAG);
     boolean isSatelliteMode = mapFragment != null ? mapFragment.isSatelliteView() : false;
-    menu.findItem(R.id.track_detail_satellite_mode).setVisible(MAP_TAB_TAG.equals(currentTabTag))
+    menu.findItem(R.id.track_detail_satellite_mode)
+        .setVisible(MapFragment.MAP_FRAGMENT_TAG.equals(currentTabTag))
         .setTitle(isSatelliteMode ? R.string.menu_map_mode : R.string.menu_satellite_mode);
 
     return super.onPrepareOptionsMenu(menu);
@@ -339,13 +337,15 @@ public class TrackDetailActivity extends FragmentActivity {
             getSupportFragmentManager(), DeleteOneTrackDialogFragment.DELETE_ONE_TRACK_DIALOG_TAG);
         return true;
       case R.id.track_detail_my_location:
-        mapFragment = (MapFragment) getSupportFragmentManager().findFragmentByTag(MAP_TAB_TAG);
+        mapFragment = (MapFragment) getSupportFragmentManager()
+            .findFragmentByTag(MapFragment.MAP_FRAGMENT_TAG);
         if (mapFragment != null) {
           mapFragment.showMyLocation();
         }
         return true;
       case R.id.track_detail_satellite_mode:
-        mapFragment = (MapFragment) getSupportFragmentManager().findFragmentByTag(MAP_TAB_TAG);
+        mapFragment = (MapFragment) getSupportFragmentManager()
+            .findFragmentByTag(MapFragment.MAP_FRAGMENT_TAG);
         if (mapFragment != null) {
           mapFragment.setSatelliteView(!mapFragment.isSatelliteView());
         }
@@ -433,9 +433,9 @@ public class TrackDetailActivity extends FragmentActivity {
 
     if (markerId != -1L) {
       MapFragment mapFragmet = (MapFragment) getSupportFragmentManager()
-          .findFragmentByTag(MAP_TAB_TAG);
+          .findFragmentByTag(MapFragment.MAP_FRAGMENT_TAG);
       if (mapFragmet != null) {
-        tabHost.setCurrentTabByTag(MAP_TAB_TAG);
+        tabHost.setCurrentTabByTag(MapFragment.MAP_FRAGMENT_TAG);
         mapFragmet.showMarker(trackId, markerId);
       } else {
         Log.e(TAG, "MapFragment is null");
