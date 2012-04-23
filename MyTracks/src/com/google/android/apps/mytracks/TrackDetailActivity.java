@@ -48,8 +48,6 @@ import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.RemoteException;
-import android.speech.tts.TextToSpeech;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -67,7 +65,7 @@ import java.util.List;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public class TrackDetailActivity extends FragmentActivity {
+public class TrackDetailActivity extends AbstractMyTracksActivity {
 
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_MARKER_ID = "marker_id";
@@ -130,9 +128,7 @@ public class TrackDetailActivity extends FragmentActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
     ApiAdapterFactory.getApiAdapter().hideTitle(this);
-    ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
     setContentView(R.layout.track_detail);
     
     sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
@@ -254,14 +250,16 @@ public class TrackDetailActivity extends FragmentActivity {
   }
 
   @Override
+  protected void onHomeSelected() {
+    Intent intent = IntentUtils.newIntent(this, TrackListActivity.class);
+    startActivity(intent);
+  }
+  
+  @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     MapFragment mapFragment;
     Intent intent;
     switch (item.getItemId()) {
-      case android.R.id.home:
-        intent = IntentUtils.newIntent(this, TrackListActivity.class);
-        startActivity(intent);
-        return true;
       case R.id.track_detail_stop_recording:
         updateMenuItems(false);
         TrackRecordingServiceConnectionUtils.stop(this, trackRecordingServiceConnection);

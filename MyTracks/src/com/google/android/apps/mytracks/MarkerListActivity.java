@@ -33,8 +33,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -56,7 +54,7 @@ import android.widget.ListView;
  *
  * @author Leif Hendrik Wilden
  */
-public class MarkerListActivity extends FragmentActivity {
+public class MarkerListActivity extends AbstractMyTracksActivity {
  
   public static final String EXTRA_TRACK_ID = "track_id";
 
@@ -111,9 +109,7 @@ public class MarkerListActivity extends FragmentActivity {
       return;
     }
     
-    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
     setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
-    ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
     setContentView(R.layout.marker_list);
 
     SharedPreferences sharedPreferences = getSharedPreferences(
@@ -198,9 +194,6 @@ public class MarkerListActivity extends FragmentActivity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
-      case android.R.id.home:
-        finish();
-        return true;
       case R.id.marker_list_insert_marker:
         Intent intent = IntentUtils.newIntent(this, MarkerEditActivity.class);
         startActivity(intent);

@@ -27,7 +27,6 @@ import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
@@ -41,7 +40,7 @@ import java.util.TimerTask;
  *
  * @author Sandor Dornbush
  */
-public class SensorStateActivity extends Activity {
+public class SensorStateActivity extends AbstractMyTracksActivity {
 
   private static final long REFRESH_PERIOD_MS = 250;
 

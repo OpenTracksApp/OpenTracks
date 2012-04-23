@@ -19,18 +19,12 @@ package com.google.android.apps.mytracks;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
-import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
-import android.view.MenuItem;
 
 import java.util.List;
 
@@ -39,13 +33,11 @@ import java.util.List;
  *
  * @author Fergus Nelson
  */
-public class AggregatedStatsActivity extends Activity {
+public class AggregatedStatsActivity extends AbstractMyTracksActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
-    ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
     setContentView(R.layout.aggregated_stats);
 
     SharedPreferences preferences = getSharedPreferences(
@@ -56,16 +48,6 @@ public class AggregatedStatsActivity extends Activity {
     StatsUtils.setSpeedLabels(this, reportSpeed, false);
     StatsUtils.setTripStatisticsValues(this, getTripStatistics(), metricUnits, reportSpeed);
     StatsUtils.setLocationElevationValue(this, Double.NaN, metricUnits);    
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() != android.R.id.home) {
-      return false;
-    }
-    Intent intent = IntentUtils.newIntent(this, TrackListActivity.class);
-    startActivity(intent);
-    return true;
   }
 
   /**
