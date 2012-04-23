@@ -27,11 +27,14 @@ limitations under the License.
     android:layout_height="fill_parent"
     android:layout_width="fill_parent" />
   <TextView
-    android:background="@android:color/darker_gray"
+    android:background="@color/background_warning"
+    android:drawableLeft="@android:drawable/ic_dialog_alert"
+    android:gravity="center"
     android:id="@+id/map_message"
     android:layout_alignParentTop="true"
     android:layout_width="fill_parent"
     android:padding="8dp"
+    android:textColor="@android:color/primary_text_dark"
     android:visibility="gone"
-    style="@style/TextMedium" />
+    style="@style/TextMedium.WithIcon" />
 </RelativeLayout>

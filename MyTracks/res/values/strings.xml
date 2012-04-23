@@ -695,8 +695,8 @@ limitations under the License.
   <string name="gps_need_to_enable"
     translation_description="In the main view, the message on the top asking the user to enable
       GPS.">
-    Please tap here to go to \'Location &amp; security\' settings &amp; check
-    \'Use GPS satellites\'. Press the back button to return.
+    Tap here to go to \'Location services\' settings &amp; check \'GPS satellites\'. Press the back
+    button to return.
   </string>
   <string name="gps_not_found"
     translation_description="On application start, message when there is no GPS on the device.">

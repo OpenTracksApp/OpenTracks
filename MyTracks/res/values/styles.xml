@@ -79,6 +79,7 @@ limitations under the License.
     <item name="android:background">@android:color/background_light</item>
     <item name="android:gravity">right</item>
     <item name="android:layout_width">fill_parent</item>
+    <item name="android:paddingRight">8dp</item>
     <item name="android:textColor">@android:color/primary_text_light</item>
   </style>
   <!-- The style for the stats label -->
@@ -97,12 +98,14 @@ limitations under the License.
     <item name="android:gravity">right</item>
     <item name="android:layout_weight">1</item>
     <item name="android:layout_width">0dp</item>
+    <item name="android:paddingRight">8dp</item>
     <item name="android:textColor">@android:color/primary_text_light</item>
   </style>
   <!-- The style for large size text -->
-  <style name="TextLarge" parent="@android:style/TextAppearance.DeviceDefault.Large">
+  <style name="TextLarge">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
+    <item name="android:textSize">22sp</item>
   </style>
   <!-- The style for large size text with an icon on the left -->
   <style name="TextLarge.WithIcon">
@@ -110,9 +113,10 @@ limitations under the License.
     <item name="android:gravity">center_vertical</item>
   </style>
   <!-- The style for medium size text -->
-  <style name="TextMedium" parent="@android:style/TextAppearance.DeviceDefault.Medium">
+  <style name="TextMedium">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
+    <item name="android:textSize">18sp</item>
   </style>
   <!-- The style for medium size text with an icon on the left -->
   <style name="TextMedium.WithIcon">
@@ -120,9 +124,11 @@ limitations under the License.
     <item name="android:gravity">center_vertical</item>
   </style>
   <!-- The style for large size text -->
-  <style name="TextSmall" parent="@android:style/TextAppearance.DeviceDefault.Small">
+  <style name="TextSmall">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
+    <item name="android:textColor">?android:textColorSecondary</item>
+    <item name="android:textSize">14sp</item>
   </style>
   <!-- Theme selector -->
   <style name="ThemeSelector" parent="android:Theme" />

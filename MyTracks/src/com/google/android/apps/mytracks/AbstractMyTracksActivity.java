@@ -40,7 +40,7 @@ public class AbstractMyTracksActivity extends FragmentActivity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() != android.R.id.home) {
-      return false;
+      return super.onOptionsItemSelected(item);
     }
     onHomeSelected();
     return true;

@@ -178,7 +178,9 @@ limitations under the License.
       android:label="@string/settings_title"
       android:name="com.google.android.apps.mytracks.SettingsActivity" />
     <activity android:name="com.google.android.apps.mytracks.TrackDetailActivity" />
-    <activity android:name="com.google.android.apps.mytracks.TrackEditActivity" />
+    <activity
+      android:name="com.google.android.apps.mytracks.TrackEditActivity"
+      android:windowSoftInputMode="stateHidden" />
     <activity android:name="com.google.android.apps.mytracks.TrackListActivity" >
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

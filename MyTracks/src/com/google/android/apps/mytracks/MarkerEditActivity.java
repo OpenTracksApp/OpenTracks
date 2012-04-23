@@ -79,6 +79,8 @@ public class MarkerEditActivity extends AbstractMyTracksActivity {
         boolean statistics = checkedId == R.id.marker_edit_type_statistics;
         name.setText(
             statistics ? R.string.marker_edit_type_statistics : R.string.marker_edit_type_waypoint);
+        // Call selectAll so that all EditText have selectAllOnFocus style.
+        name.selectAll();
         updateUiByMarkerType(statistics);
       }
     });
