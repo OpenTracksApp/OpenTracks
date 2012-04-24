@@ -851,12 +851,15 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     }
 
     String selection;
+    String[] selectionArgs;
     if (minTrackPointId >= 0) {
-      selection = String.format("%s=%d AND %s%s%d",
-          TrackPointsColumns.TRACKID, trackId, TrackPointsColumns._ID,
-          descending ? "<=" : ">=", minTrackPointId);
+      String comparison = descending ? "<=" : ">=";
+      selection = TrackPointsColumns.TRACKID + "=? AND " + TrackPointsColumns._ID + comparison
+          + "?";
+      selectionArgs = new String[] { String.valueOf(trackId), String.valueOf(minTrackPointId) };
     } else {
-      selection = String.format("%s=%d", TrackPointsColumns.TRACKID, trackId);
+      selection = TrackPointsColumns.TRACKID + "=?";
+      selectionArgs = new String[] { String.valueOf(trackId) };
     }
 
     String sortOrder = "_id " + (descending ? "DESC" : "ASC");
@@ -864,7 +867,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       sortOrder += " LIMIT " + maxLocations;
     }
 
-    return contentResolver.query(TrackPointsColumns.CONTENT_URI, null, selection, null, sortOrder);
+    return contentResolver.query(TrackPointsColumns.CONTENT_URI, null, selection, selectionArgs, sortOrder);
   }
 
   @Override
