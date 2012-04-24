@@ -88,9 +88,13 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity {
       boolean metricUnits = preferences.getBoolean(getString(R.string.metric_units_key), true);
       boolean reportSpeed = preferences.getBoolean(getString(R.string.report_speed_key), true);
 
-      StatsUtils.setSpeedLabels(this, reportSpeed, false);
-      StatsUtils.setTripStatisticsValues(this, waypoint.getStatistics(), metricUnits, reportSpeed);
-      StatsUtils.setLocationElevationValue(this, waypoint.getLocation().getAltitude(), metricUnits);
+      StatsUtils.setStats(this,
+          waypoint.getStatistics(),
+          null,
+          waypoint.getLocation().getAltitude(),
+          metricUnits,
+          reportSpeed,
+          false);
     }
   }
 

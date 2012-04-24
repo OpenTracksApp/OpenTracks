@@ -283,8 +283,12 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   }
   
   private void updateUi() {
-    StatsUtils.setSpeedLabels(getActivity(), reportSpeed, true);
-    StatsUtils.setTripStatisticsValues(getActivity(), lastTripStatistics, metricUnits, reportSpeed);
-    StatsUtils.setLocationValues(getActivity(), lastLocation, metricUnits, reportSpeed);
+    StatsUtils.setStats(getActivity(),
+        lastTripStatistics,
+        lastLocation,
+        Double.NaN,
+        metricUnits,
+        reportSpeed,
+        true);
   }
 }
