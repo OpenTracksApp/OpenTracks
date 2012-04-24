@@ -22,7 +22,7 @@ limitations under the License.
   <color name="white">#FFFFFFFF</color>
 
   <!-- holo_orange_dark -->
-  <color name="background_warning">#FFFF8800</color>
+  <color name="warning_background">#FFFF8800</color>
   
   <!-- Chart colors by series. -->
   <!-- Green and a transparent green -->
