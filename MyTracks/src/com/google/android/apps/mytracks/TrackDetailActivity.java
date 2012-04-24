@@ -237,14 +237,20 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
         ChartFragment.CHART_FRAGMENT_TAG.equals(currentTabTag));
     menu.findItem(R.id.track_detail_my_location)
         .setVisible(MapFragment.MAP_FRAGMENT_TAG.equals(currentTabTag));
-
-    // Set map or satellite mode
-    MapFragment mapFragment = (MapFragment) getSupportFragmentManager()
-        .findFragmentByTag(MapFragment.MAP_FRAGMENT_TAG);
-    boolean isSatelliteMode = mapFragment != null ? mapFragment.isSatelliteView() : false;
-    menu.findItem(R.id.track_detail_satellite_mode)
-        .setVisible(MapFragment.MAP_FRAGMENT_TAG.equals(currentTabTag))
-        .setTitle(isSatelliteMode ? R.string.menu_map_mode : R.string.menu_satellite_mode);
+    MenuItem satelliteMode = menu.findItem(R.id.track_detail_satellite_mode)
+        .setVisible(MapFragment.MAP_FRAGMENT_TAG.equals(currentTabTag));
+    
+    if (satelliteMode.isVisible()) {
+      MapFragment mapFragment = (MapFragment) getSupportFragmentManager()
+          .findFragmentByTag(MapFragment.MAP_FRAGMENT_TAG);
+      /*
+       * The current tag is mapFragment, thus safe to call its methods like
+       * isSatelliteView.
+       */
+      boolean isSatelliteMode = mapFragment != null ? mapFragment.isSatelliteView() : false;
+      menu.findItem(R.id.track_detail_satellite_mode).setTitle(
+          isSatelliteMode ? R.string.menu_map_mode : R.string.menu_satellite_mode);
+    }
 
     return super.onPrepareOptionsMenu(menu);
   }

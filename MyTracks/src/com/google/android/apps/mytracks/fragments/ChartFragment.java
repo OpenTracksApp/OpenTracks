@@ -133,8 +133,9 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   public void onStart() {
     super.onStart();
     ViewGroup layout = (ViewGroup) getActivity().findViewById(R.id.chart_view_layout);
-    LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,
-        LayoutParams.MATCH_PARENT);
+    @SuppressWarnings("deprecation")
+    LayoutParams layoutParams = new LayoutParams(
+        LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
     layout.addView(chartView, layoutParams);
   }
   

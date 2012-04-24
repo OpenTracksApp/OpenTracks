@@ -24,6 +24,7 @@ import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileForm
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.CheckUnitsUtils;
 import com.google.android.apps.mytracks.util.EulaUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.ListItemUtil;
@@ -262,8 +263,21 @@ public class TrackListActivity extends FragmentActivity {
             getSupportFragmentManager(), EulaDialogFragment.EULA_DIALOG_TAG);
       }
     }
+    if (CheckUnitsUtils.getCheckUnitsValue(this)) {
+      enableEmptyView();
+    }
   }
 
+  /**
+   * Enables the content of the empty view.
+   */
+  public void enableEmptyView() {
+    View emptyMessage = findViewById(R.id.track_list_empty_message);
+    emptyMessage.setVisibility(View.VISIBLE);
+    View recordButton = findViewById(R.id.track_list_record_button);
+    recordButton.setVisibility(View.VISIBLE);
+  }
+  
   @Override
   protected void onResume() {
     super.onResume();

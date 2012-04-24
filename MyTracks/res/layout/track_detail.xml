@@ -16,17 +16,17 @@ limitations under the License.
 -->
 <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
   android:id="@android:id/tabhost"
-  android:layout_height="match_parent"
-  android:layout_width="match_parent" >
+  android:layout_height="fill_parent"
+  android:layout_width="fill_parent" >
   <LinearLayout
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
     android:orientation="vertical" >
     <TabWidget
       android:id="@android:id/tabs"
       android:layout_height="wrap_content"
       android:layout_weight="0"
-      android:layout_width="match_parent"
+      android:layout_width="fill_parent"
       android:orientation="horizontal" />
     <FrameLayout
       android:id="@android:id/tabcontent"
@@ -37,6 +37,6 @@ limitations under the License.
       android:id="@+id/realtabcontent"
       android:layout_height="0dp"
       android:layout_weight="1"
-      android:layout_width="match_parent" />
+      android:layout_width="fill_parent" />
   </LinearLayout>
 </TabHost>

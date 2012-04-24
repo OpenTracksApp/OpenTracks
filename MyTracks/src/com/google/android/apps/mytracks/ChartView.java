@@ -76,7 +76,7 @@ public class ChartView extends View {
   /**
    * Unscaled top border of the chart.
    */
-  private static final int TOP_BORDER = 15;
+  private static final int TOP_BORDER = 16;
 
   /**
    * Device scaled top border of the chart.
@@ -86,7 +86,7 @@ public class ChartView extends View {
   /**
    * Unscaled bottom border of the chart.
    */
-  private static final float BOTTOM_BORDER = 40;
+  private static final float BOTTOM_BORDER = 8;
 
   /**
    * Device scaled bottom border of the chart.
@@ -510,9 +510,15 @@ public class ChartView extends View {
   }
 
   @Override
+  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    updateEffectiveDimensionsIfChanged(
+        View.MeasureSpec.getSize(widthMeasureSpec), View.MeasureSpec.getSize(heightMeasureSpec));
+    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+  }
+  
+  @Override
   protected void onDraw(Canvas c) {
     synchronized (data) {
-      updateEffectiveDimensionsIfChanged(c);
 
       // Keep original state.
       c.save();
@@ -742,13 +748,16 @@ public class ChartView extends View {
 
   /**
    * Updates the effective dimensions where the graph will be drawn, only if the
-   * dimensions of the given canvas have changed since the last call.
+   * dimensions have changed since the last call.
+   *
+   * @param newWidth the new width
+   * @param newHeight the new height
    */
-  private void updateEffectiveDimensionsIfChanged(Canvas c) {
-    if (w != c.getWidth() || h != c.getHeight()) {
+  private void updateEffectiveDimensionsIfChanged(int newWidth, int newHeight) {
+    if (w != newWidth || h != newHeight) {
       // Dimensions have changed (for example due to orientation change).
-      w = c.getWidth();
-      h = c.getHeight();
+      w = newWidth;
+      h = newHeight;
       updateEffectiveDimensions();
       setUpPath();
     }

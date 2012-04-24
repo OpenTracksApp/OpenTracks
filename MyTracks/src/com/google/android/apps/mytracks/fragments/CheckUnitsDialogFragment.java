@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.fragments;
 
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.CheckUnitsUtils;
 import com.google.android.maps.mytracks.R;
@@ -31,13 +32,13 @@ import android.support.v4.app.DialogFragment;
 
 /**
  * A DialogFragment to check preferred units.
- * 
+ *
  * @author Jimmy Shih
  */
 public class CheckUnitsDialogFragment extends DialogFragment {
 
   public static final String CHECK_UNITS_DIALOG_TAG = "checkUnitsDialog";
-  
+
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -46,24 +47,32 @@ public class CheckUnitsDialogFragment extends DialogFragment {
         .setOnCancelListener(new DialogInterface.OnCancelListener() {
           @Override
           public void onCancel(DialogInterface dialog) {
-            CheckUnitsUtils.setCheckUnitsValue(getActivity());
+            handleButtonClicked();
           }
         })
         .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
-            CheckUnitsUtils.setCheckUnitsValue(getActivity());
-
             int position = ((AlertDialog) dialog).getListView().getSelectedItemPosition();
             SharedPreferences sharedPreferences = getActivity()
                 .getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
             ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(sharedPreferences.edit()
                 .putBoolean(getString(R.string.metric_units_key), position == 0));
+            handleButtonClicked();
           }
         })
         .setSingleChoiceItems(new CharSequence[] { getString(R.string.preferred_units_metric),
             getString(R.string.preferred_units_imperial) }, 0, null)
         .setTitle(R.string.preferred_units_title)
         .create();
+  }
+
+  /**
+   * Handles a button click.
+   */
+  private void handleButtonClicked() {
+    CheckUnitsUtils.setCheckUnitsValue(getActivity());
+    TrackListActivity trackListActivity = (TrackListActivity) getActivity();
+    trackListActivity.enableEmptyView();
   }
 }
