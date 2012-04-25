@@ -37,11 +37,11 @@ limitations under the License.
     android:title="@string/menu_share">
     <menu>
       <item
-        android:id="@+id/track_detail_share_map"
-        android:title="@string/menu_share_map"/>
+        android:id="@+id/track_detail_share_map_url"
+        android:title="@string/menu_share_map_url"/>
       <item
-        android:id="@+id/track_detail_share_fusion_table"
-        android:title="@string/menu_share_fusion_table"/>
+        android:id="@+id/track_detail_share_fusion_table_url"
+        android:title="@string/menu_share_fusion_table_url"/>
       <item android:id="@+id/track_detail_share_gpx"/>
       <item android:id="@+id/track_detail_share_kml"/>
       <item android:id="@+id/track_detail_share_csv"/>

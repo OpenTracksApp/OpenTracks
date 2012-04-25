@@ -287,12 +287,12 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
               getSupportFragmentManager(), InstallEarthDialogFragment.INSTALL_EARTH_DIALOG_TAG);
         }
         return true;
-      case R.id.track_detail_share_map:
+      case R.id.track_detail_share_map_url:
         intent = IntentUtils.newIntent(this, UploadServiceChooserActivity.class)
             .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, true, false, false));
         startActivity(intent);
         return true;
-      case R.id.track_detail_share_fusion_table:
+      case R.id.track_detail_share_fusion_table_url:
         intent = IntentUtils.newIntent(this, UploadServiceChooserActivity.class)
             .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, false, true, false));
         startActivity(intent);

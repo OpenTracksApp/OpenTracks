@@ -1128,6 +1128,28 @@ limitations under the License.
     translation_description="In the menu, to go to the settings page.">
     Settings
   </string>
+  <string name="menu_share"
+    translation_description="In the menu, to share a track.">
+    Share
+  </string>
+  <string name="menu_share_file"
+    translation_description="Under the 'Share' menu option, the option to share a track as a
+      certain file format.
+
+      %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
+    %1$s file
+  </string>
+  <string name="menu_share_fusion_table_url"
+    translation_description="Under the 'Share' menu option, the option to save a track to Google
+      Fusion Tables and share the Fusion Table URL with friends. 'Fusion Table URL' in this context
+      means a Google Fusion Table URL.">
+    Fusion Table URL
+  </string>
+  <string name="menu_share_map_url"
+    translation_description="Under the 'Share' menu option, the option to save a track to Google
+      Maps and share the Map URL with friends. 'Map URL' in this context means a Google Map URL.">
+    Map URL
+  </string>
   <string name="menu_show_on_map"
     translation_description="In the menu, to show a marker on map.">
     Show on map
@@ -1135,30 +1157,6 @@ limitations under the License.
   <string name="menu_stop_recording"
     translation_description="In the menu, to stop recording a track.">
     Stop recording
-  </string>
-  <string name="menu_share"
-    translation_description="In the menu, to share a track with friends through other
-      applications.">
-    Share with friends...
-  </string>
-  <string name="menu_share_file"
-    translation_description="Under the 'Share with friends...' menu option, the option to share a
-      track as a certain file format.
-
-      %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
-    A %1$s file
-  </string>
-  <string name="menu_share_fusion_table"
-    translation_description="Under the 'Share with friends...' menu option, the option to save a
-      track to Google Fusion Tables and share the Fusion Table url with friends. 'Fusion Table' in
-      this context means a Google Fusion Table.">
-    Fusion Table
-  </string>
-  <string name="menu_share_map"
-    translation_description="Under the 'Share with friends...' menu option, the option to save a
-      track to Google Maps and share the Map url with friends. 'Map' in this context means a Google
-      Map.">
-    Map
   </string>
 
   <!-- My Location -->
