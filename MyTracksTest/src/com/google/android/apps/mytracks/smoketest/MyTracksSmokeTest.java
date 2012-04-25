@@ -53,9 +53,10 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
   private Solo solo;
-  private boolean checkFirstOpenFlag = false;
-  // Check whether the version of Android is ICS.
-  private boolean ICSFlag = false;
+  private boolean isFirstLaunch = false;
+  // Check whether the UI has an action bar which is related with the version of
+  // Android OS.
+  private boolean hasActionBar = false;
   private String trackName;
 
   public MyTracksSmokeTest() {
@@ -70,12 +71,12 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
     solo = new Solo(instrumentation, activityMyTracks);
     // Checks if open MyTracks first time after install. If so, there would be a
     // welcome view with accept buttons. And makes sure only check once.
-    if (checkFirstOpenFlag == false) {
+    if (!isFirstLaunch) {
       if ((getButtonOnScreen(activityMyTracks.getString(R.string.eula_accept)) != null)) {
         verifyFirstLaunch();
       }
-      setVersionOfOS();
-      checkFirstOpenFlag = true;
+      setHasActionBar();
+      isFirstLaunch = true;
     }
 
     // Makes every track name is unique to make sure every check can be trusted.
@@ -89,6 +90,9 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
    */
   public void testSwitchViewsAndMenusOfView() {
     createSimpleTrack(3);
+    
+    solo.goBack();
+    solo.clickOnText(trackName);
 
     solo.clickOnText(activityMyTracks.getString(R.string.track_detail_chart_tab));
     sendKeys(KeyEvent.KEYCODE_MENU);
@@ -126,8 +130,7 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
       }
     }
     instrumentation.waitForIdleSync();
-    solo.clickOnText(activityMyTracks
-        .getString(R.string.send_google_send_now));
+    solo.clickOnText(activityMyTracks.getString(R.string.send_google_send_now));
     assertTrue(solo.waitForText(activityMyTracks
         .getString(R.string.send_google_no_service_selected)));
     // Stop here for do not really send.
@@ -138,7 +141,7 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
    */
   public void testSaveToSDCard_GPX() {
     createSimpleTrack(0);
-    saveTrackToSDCard(GPX);
+    saveTrackToSdCard(GPX);
   }
 
   /**
@@ -146,7 +149,7 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
    */
   public void testSaveToSDCard_KML() {
     createSimpleTrack(0);
-    saveTrackToSDCard(KML);
+    saveTrackToSdCard(KML);
   }
 
   /**
@@ -154,7 +157,7 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
    */
   public void testSaveToSDCard_CSV() {
     createSimpleTrack(0);
-    saveTrackToSDCard(CSV);
+    saveTrackToSdCard(CSV);
   }
 
   /**
@@ -162,7 +165,7 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
    */
   public void testSaveToSDCard_TCX() {
     createSimpleTrack(0);
-    saveTrackToSDCard(TCX);
+    saveTrackToSdCard(TCX);
   }
 
   /**
@@ -249,6 +252,11 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
    * Creates one track with a two locations, a way point and a statistics point.
    */
   public void testCreateTrackWithMarkers() {
+    solo.sendKey(KeyEvent.KEYCODE_MENU);
+    findMenuItem(activityMyTracks.getString(R.string.menu_delete_all), true);
+    solo.clickOnButton(activityMyTracks.getString(R.string.generic_ok));
+    instrumentation.waitForIdleSync();
+    
     startRecording();
     instrumentation.waitForIdleSync();
     SmokeTestUtils.sendGps(2);
@@ -378,41 +386,27 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
     }
 
     // Switches to satellite mode if it's map mode now..
-    if (isMapMode) {
-      solo.clickOnText(activityMyTracks.getString(R.string.menu_satellite_mode));
-    } else {
-      solo.clickOnText(activityMyTracks.getString(R.string.menu_map_mode));
-    }
+    solo.clickOnText(activityMyTracks.getString(isMapMode ? R.string.menu_satellite_mode
+        : R.string.menu_map_mode));
 
     isMapMode = !isMapMode;
     ArrayList<View> allViews = solo.getViews();
     for (View view : allViews) {
       if (view instanceof MapView) {
-        if (isMapMode) {
-          assertFalse(((MapView) view).isSatellite());
-        } else {
-          assertTrue(((MapView) view).isSatellite());
-        }
+        assertFalse(isMapMode ? ((MapView) view).isSatellite() : !(((MapView) view).isSatellite()));
       }
     }
     instrumentation.waitForIdleSync();
     // Switches back.
     sendKeys(KeyEvent.KEYCODE_MENU);
     instrumentation.waitForIdleSync();
-    if (isMapMode) {
-      solo.clickOnText(activityMyTracks.getString(R.string.menu_satellite_mode));
-    } else {
-      solo.clickOnText(activityMyTracks.getString(R.string.menu_map_mode));
-    }
+    solo.clickOnText(activityMyTracks.getString(isMapMode ? R.string.menu_satellite_mode
+        : R.string.menu_map_mode));
     isMapMode = !isMapMode;
     allViews = solo.getViews();
     for (View view : allViews) {
       if (view instanceof MapView) {
-        if (isMapMode) {
-          assertFalse(((MapView) view).isSatellite());
-        } else {
-          assertTrue(((MapView) view).isSatellite());
-        }
+        assertFalse(isMapMode ? ((MapView) view).isSatellite() : !(((MapView) view).isSatellite()));
       }
     }
 
@@ -449,23 +443,6 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
     solo.clickOnText(activityMyTracks.getString(R.string.generic_ok));
 
     stopRecording(true);
-  }
-
-  /**
-   * Tests the long distance and more than 100000 points.
-   */
-  public void testBigTrack() {
-    /*
-     * System.out.println(activityMyTracks.getString(R.string.
-     * announcement_frequency_key)); sendKeys(KeyEvent.KEYCODE_MENU);
-     * solo.clickOnText(activityMyTracks.getString(R.string.menu_record_track));
-     * SmokeTestUtils.PAUSE = 0; SmokeTestUtils.sendGps(120000);
-     * createWaypointAndStatistics(); SmokeTestUtils.sendGps(2);
-     * sendKeys(KeyEvent.KEYCODE_MENU);
-     * solo.clickOnText(activityMyTracks.getString
-     * (R.string.menu_stop_recording)); solo.enterText(0, trackName);
-     * solo.clickOnButton(activityMyTracks.getString(R.string.generic_save));
-     */
   }
 
   /**
@@ -512,7 +489,7 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
   /**
    * Creates a simple track which can be used by subsequent test.
    * 
-   * @param numberOfGpsData number of simulated Gps data.
+   * @param numberOfGpsData number of simulated Gps data
    */
   private void createSimpleTrack(int numberOfGpsData) {
     startRecording();
@@ -524,13 +501,11 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
    * Starts recoding track.
    */
   private void startRecording() {
-    if (ICSFlag) {
+    if (hasActionBar) {
       Button startButton = getButtonOnScreen(activityMyTracks.getString(R.string.menu_record_track));
       // In case a track is recording.
       if (startButton == null) {
-        Button stopButton = getButtonOnScreen(activityMyTracks
-            .getString(R.string.menu_stop_recording));
-        solo.clickOnView(stopButton);
+        stopRecording(true);
         startButton = getButtonOnScreen(activityMyTracks.getString(R.string.menu_record_track));
       }
       solo.clickOnView(startButton);
@@ -542,7 +517,7 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
           solo.goBack();
         } else {
           // In case a track is recording.
-          solo.clickOnText(activityMyTracks.getString(R.string.menu_stop_recording));
+          stopRecording(true);
           sendKeys(KeyEvent.KEYCODE_MENU);
         }
       }
@@ -552,13 +527,13 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
   }
 
   /**
-   * Stop recoding track.
+   * Stops recoding track.
    * 
-   * @param isSave ture means should save this track.
+   * @param isSave ture means should save this track
    */
   private void stopRecording(boolean isSave) {
     instrumentation.waitForIdleSync();
-    if (ICSFlag) {
+    if (hasActionBar) {
       solo.clickOnView(getButtonOnScreen(activityMyTracks.getString(R.string.menu_stop_recording)));
     } else {
       sendKeys(KeyEvent.KEYCODE_MENU);
@@ -566,6 +541,7 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
     }
     if (isSave) {
       instrumentation.waitForIdleSync();
+      solo.enterText(0, trackName);
       solo.clickLongOnText(activityMyTracks.getString(R.string.generic_save));
     }
   }
@@ -596,19 +572,18 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
     FileFilter filter = new FileFilter() {
       @Override
       public boolean accept(File pathname) {
-        if (pathname.getName().indexOf("." + trackKind) > 0) { return true; }
-        return false;
+        return pathname.getName().indexOf("." + trackKind) > 0;
       }
     };
     return (new File(filePath)).listFiles(filter);
   }
 
   /**
-   * Save a track to a kind of file in SD card.
+   * Saves a track to a kind of file in SD card.
    * 
    * @param trackKind the kind of track
    */
-  private void saveTrackToSDCard(String trackKind) {
+  private void saveTrackToSdCard(String trackKind) {
     deleteExportedFiles(trackKind);
     instrumentation.waitForIdleSync();
     sendKeys(KeyEvent.KEYCODE_MENU);
@@ -622,32 +597,34 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
   /**
    * Checks if a button is existed in the screen.
    * 
-   * @param buttonName the name string of the button.
-   * @return the button to search, and null means can not find the button.
+   * @param buttonName the name string of the button
+   * @return the button to search, and null means can not find the button
    */
   private Button getButtonOnScreen(String buttonName) {
     ArrayList<Button> currentButtons = solo.getCurrentButtons();
-    Button resultButton = null;
     for (Button button : currentButtons) {
-      if (((String) button.getText()).equalsIgnoreCase(buttonName)) { return button; }
+      if (((String) button.getText()).equalsIgnoreCase(buttonName)) { 
+        return button; 
+      }
     }
-    return resultButton;
+    return null;
   }
 
   /**
-   * Check whether the version of Android is ICS.
+   * Checks whether an action bar is shown.
    */
-  private void setVersionOfOS() {
-    // If can find record button without pressing Menu, it should be ICS.
+  private void setHasActionBar() {
+    // If can find record button without pressing Menu, it should be an action
+    // bar.
     Button startButton = getButtonOnScreen(activityMyTracks.getString(R.string.menu_record_track));
     Button stopButton = getButtonOnScreen(activityMyTracks.getString(R.string.menu_stop_recording));
     if (startButton != null || stopButton != null) {
-      ICSFlag = true;
+      hasActionBar = true;
     } else {
       sendKeys(KeyEvent.KEYCODE_MENU);
       if (solo.searchText(activityMyTracks.getString(R.string.menu_record_track))
           || solo.searchText(activityMyTracks.getString(R.string.menu_stop_recording))) {
-        ICSFlag = false;
+        hasActionBar = false;
       } else {
         fail();
       }
@@ -656,7 +633,7 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
   }
 
   /**
-   * Find an item in the menu.
+   * Finds an item in the menu with the option to click the item.
    * 
    * @param menuName the name of item
    * @param click true means need click this menu
@@ -669,8 +646,6 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
     } else if (solo.searchText(MENU_MORE)) {
       solo.clickOnText(MENU_MORE);
       findResult = solo.searchText(menuName);
-    } else {
-      findResult = false;
     }
     if (findResult && click) {
       solo.clickOnText(menuName);

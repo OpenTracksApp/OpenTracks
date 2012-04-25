@@ -37,33 +37,38 @@ public class SmokeTestUtils {
   private static final float DELTA_LADITUDE = 0.0005f;
 
   private SmokeTestUtils() {}
-  
+
   /**
    * Sends Gps data to emulator.
    * 
    * @param number send times
    */
   public static void sendGps(int number) {
-    if (number < 1) 
-      return;
+    if (number < 1) return;
+    PrintStream out = null;
     try {
       Socket socket = new Socket(ANDROID_LOCAL_IP, ANDROID_LOCAL_PORT);
-      PrintStream out = new PrintStream(socket.getOutputStream());
+      out = new PrintStream(socket.getOutputStream());
       float longitude = START_LONGITUDE;
       float latitude = START_LATITUDE;
       for (int i = 0; i < number; i++) {
         Thread.sleep(PAUSE);
         out.println("geo fix " + latitude + " " + longitude);
-        System.out.println("Number" +i + ":geo fix " + latitude + " " + longitude);
         longitude += DELTA_LONGITUDE;
         latitude += DELTA_LADITUDE;
       }
+      out.close();
+      socket.close();
     } catch (UnknownHostException e) {
       System.exit(-1);
     } catch (IOException e) {
       System.exit(-1);
     } catch (InterruptedException e) {
       System.exit(-1);
+    } finally {
+      if (out != null) {
+        out.close();
+      }
     }
   }
 }
