@@ -1,12 +1,12 @@
 /*
  * Copyright 2012 Google Inc.
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -14,6 +14,9 @@
  * the License.
  */
 package com.google.android.apps.mytracks.smoketest;
+
+import android.app.Activity;
+import android.content.res.Configuration;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -29,6 +32,9 @@ public class SmokeTestUtils {
   private static final String ANDROID_LOCAL_IP = "10.0.2.2";
   // usually 5554.
   private static final int ANDROID_LOCAL_PORT = 5554;
+
+  private static final int ORIENTATION_PORTRAIT = 1;
+  private static final int ORIENTATION_LANDSCAPE = 0;
   // Pause 200ms between each send.
   static int PAUSE = 200;
   private static final float START_LONGITUDE = 51;
@@ -36,7 +42,8 @@ public class SmokeTestUtils {
   private static final float DELTA_LONGITUDE = 0.0005f;
   private static final float DELTA_LADITUDE = 0.0005f;
 
-  private SmokeTestUtils() {}
+  private SmokeTestUtils() {
+  }
 
   /**
    * Sends Gps data to emulator.
@@ -44,10 +51,13 @@ public class SmokeTestUtils {
    * @param number send times
    */
   public static void sendGps(int number) {
-    if (number < 1) return;
+    if (number < 1) {
+      return;
+    }
     PrintStream out = null;
+    Socket socket = null;
     try {
-      Socket socket = new Socket(ANDROID_LOCAL_IP, ANDROID_LOCAL_PORT);
+      socket = new Socket(ANDROID_LOCAL_IP, ANDROID_LOCAL_PORT);
       out = new PrintStream(socket.getOutputStream());
       float longitude = START_LONGITUDE;
       float latitude = START_LATITUDE;
@@ -57,8 +67,6 @@ public class SmokeTestUtils {
         longitude += DELTA_LONGITUDE;
         latitude += DELTA_LADITUDE;
       }
-      out.close();
-      socket.close();
     } catch (UnknownHostException e) {
       System.exit(-1);
     } catch (IOException e) {
@@ -70,5 +78,20 @@ public class SmokeTestUtils {
         out.close();
       }
     }
+  }
+
+  /**
+   * Rotates the given activity.
+   * 
+   * @param activity a given activity.
+   * @return current orientation of the activity.
+   */
+  public static int rotateActivity(Activity activity) {
+    if (activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+      activity.setRequestedOrientation(ORIENTATION_LANDSCAPE);
+    } else {
+      activity.setRequestedOrientation(ORIENTATION_PORTRAIT);
+    }
+    return activity.getRequestedOrientation();
   }
 }
