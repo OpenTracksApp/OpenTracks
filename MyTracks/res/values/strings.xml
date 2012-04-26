@@ -1226,17 +1226,17 @@ limitations under the License.
   <string name="preferred_units_imperial"
     translation_description="In the dialog asking the user to choose a preferred units, the option
       to choose the imperial units.">
-    Imperial
+    Imperial (mi, ft)
   </string>
   <string name="preferred_units_metric"
     translation_description="In the dialog asking the user to choose a preferred units, the option
       to choose the metric units.">
-    Metric
+    Metric (km, m)
   </string>
   <string name="preferred_units_title"
     translation_description="The title of the dialog asking the user to choose a preferred units,
       metric or imperial.">
-    Preferred units
+    Preferred Units
   </string>
 
   <!-- SD Card -->
@@ -2924,6 +2924,14 @@ limitations under the License.
   </string>
 
   <!-- Welcome -->
+  <string name="welcome_message"
+    translation_description="The message of the welcome dialog.">
+    Use My Tracks while you run, bike, hike, or do anything outdoor to record your path. While
+    recording, you can visualize your track and watch live statistics. You can also add
+    markers, have markers inserted periodically, or hear automatic voice announcements of
+    your progress. For recorded tracks, you can play them on Google Earth, share with friends, or
+    upload to Google Maps, Google Fusion Tables, or Google Docs.    
+  </string>
   <string name="welcome_title"
     translation_description="The title of the welcome dialog.">
     Welcome to My Tracks

@@ -17,14 +17,15 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.TracksColumns;
+import com.google.android.apps.mytracks.fragments.CheckUnitsDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteAllTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
+import com.google.android.apps.mytracks.fragments.WelcomeDialogFragment;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
-import com.google.android.apps.mytracks.util.CheckUnitsUtils;
 import com.google.android.apps.mytracks.util.EulaUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.ListItemUtil;
@@ -118,8 +119,8 @@ public class TrackListActivity extends FragmentActivity {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
           // Note that key can be null
-          if (getString(R.string.metric_units_key).equals(key)) {
-            metricUnits = preferences.getBoolean(getString(R.string.metric_units_key), true);
+          if (PreferencesUtils.getMetricUnitsKey(TrackListActivity.this).equals(key)) {
+            metricUnits = PreferencesUtils.isMetricUnits(TrackListActivity.this);
           }
           if (PreferencesUtils.getRecordingTrackIdKey(TrackListActivity.this).equals(key)) {
             recordingTrackId = PreferencesUtils.getRecordingTrackId(TrackListActivity.this);
@@ -171,7 +172,7 @@ public class TrackListActivity extends FragmentActivity {
     SharedPreferences sharedPreferences = getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-    metricUnits = sharedPreferences.getBoolean(getString(R.string.metric_units_key), true);
+    metricUnits = PreferencesUtils.isMetricUnits(this);
     recordingTrackId = PreferencesUtils.getRecordingTrackId(this);
 
     ImageButton recordImageButton = (ImageButton) findViewById(R.id.track_list_record_button);
@@ -255,29 +256,49 @@ public class TrackListActivity extends FragmentActivity {
       }
     });
 
+    showStartupDialogs();
+  }
+
+  /**
+   * Shows start up dialogs.
+   */
+  public void showStartupDialogs() {
     if (!EulaUtils.getEulaValue(this)) {
       Fragment fragment = getSupportFragmentManager()
           .findFragmentByTag(EulaDialogFragment.EULA_DIALOG_TAG);
       if (fragment == null) {
-        EulaDialogFragment.newInstance(false).show(
-            getSupportFragmentManager(), EulaDialogFragment.EULA_DIALOG_TAG);
+        EulaDialogFragment.newInstance(false)
+            .show(getSupportFragmentManager(), EulaDialogFragment.EULA_DIALOG_TAG);
       }
-    }
-    if (CheckUnitsUtils.getCheckUnitsValue(this)) {
+    } else if (PreferencesUtils.isShowWelcomeDialog(this)) {
+      Fragment fragment = getSupportFragmentManager()
+          .findFragmentByTag(WelcomeDialogFragment.WELCOME_DIALOG_TAG);
+      if (fragment == null) {
+        new WelcomeDialogFragment().show(
+            getSupportFragmentManager(), WelcomeDialogFragment.WELCOME_DIALOG_TAG);
+      }
+    } else if (PreferencesUtils.isShowCheckUnitsDialog(this)) {
+      Fragment fragment = getSupportFragmentManager()
+          .findFragmentByTag(CheckUnitsDialogFragment.CHECK_UNITS_DIALOG_TAG);
+      if (fragment == null) {
+        new CheckUnitsDialogFragment().show(
+            getSupportFragmentManager(), CheckUnitsDialogFragment.CHECK_UNITS_DIALOG_TAG);
+      }
+    } else {
       enableEmptyView();
     }
   }
-
+  
   /**
    * Enables the content of the empty view.
    */
-  public void enableEmptyView() {
+  private void enableEmptyView() {
     View emptyMessage = findViewById(R.id.track_list_empty_message);
     emptyMessage.setVisibility(View.VISIBLE);
     View recordButton = findViewById(R.id.track_list_record_button);
     recordButton.setVisibility(View.VISIBLE);
   }
-  
+
   @Override
   protected void onResume() {
     super.onResume();

@@ -131,8 +131,7 @@ public class SettingsActivity extends PreferenceActivity {
     // Hook up switching of displayed list entries between metric and imperial
     // units
     CheckBoxPreference metricUnitsPreference =
-        (CheckBoxPreference) findPreference(
-            getString(R.string.metric_units_key));
+        (CheckBoxPreference) findPreference(PreferencesUtils.getMetricUnitsKey(this));
     metricUnitsPreference.setOnPreferenceChangeListener(
         new OnPreferenceChangeListener() {
           @Override
@@ -643,9 +642,7 @@ public class SettingsActivity extends PreferenceActivity {
    * If the units are not metric convert the value before displaying.  
    */
   private void viewTrackColorModeSettings(EditTextPreference preference, int id) {
-    CheckBoxPreference metricUnitsPreference = (CheckBoxPreference) findPreference(
-        getString(R.string.metric_units_key));
-    if(metricUnitsPreference.isChecked()) {
+    if (PreferencesUtils.isMetricUnits(this)) {
       return;
     }
     // Convert miles/h to km/h
@@ -665,10 +662,10 @@ public class SettingsActivity extends PreferenceActivity {
    * If the units are not metric convert the value before saving.  
    */
   private void validateTrackColorModeSettings(String newValue, int id) {
-    CheckBoxPreference metricUnitsPreference = (CheckBoxPreference) findPreference(
-        getString(R.string.metric_units_key));
     String metricspeed;
-    if(!metricUnitsPreference.isChecked()) {
+    if (PreferencesUtils.isMetricUnits(this)) {
+      metricspeed = newValue;
+    } else {
       // Convert miles/h to km/h
       try {
         metricspeed = String.valueOf(
@@ -676,8 +673,6 @@ public class SettingsActivity extends PreferenceActivity {
       } catch (NumberFormatException e) {
         metricspeed = "0";
       }
-    } else {
-      metricspeed = newValue;
     }
     SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
     Editor editor = prefs.edit();

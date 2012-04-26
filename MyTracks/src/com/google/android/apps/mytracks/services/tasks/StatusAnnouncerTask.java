@@ -21,13 +21,13 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.telephony.PhoneStateListener;
@@ -150,15 +150,8 @@ public class StatusAnnouncerTask implements PeriodicTask {
    */
   // @VisibleForTesting
   protected String getAnnouncement(TripStatistics stats) {
-    boolean metricUnits = true;
-    boolean reportSpeed = true;
-    SharedPreferences preferences = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    if (preferences != null) {
-      metricUnits = preferences.getBoolean(context.getString(R.string.metric_units_key), true);
-      reportSpeed = preferences.getBoolean(context.getString(R.string.report_speed_key), true);
-    }
-
+    boolean metricUnits = PreferencesUtils.isMetricUnits(context);
+    boolean reportSpeed = PreferencesUtils.isReportSpeed(context);   
     double d =  stats.getTotalDistance() * UnitConversions.M_TO_KM;
     double s =  stats.getAverageMovingSpeed() * UnitConversions.MS_TO_KMH;
     

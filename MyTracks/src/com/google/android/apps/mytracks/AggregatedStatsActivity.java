@@ -19,11 +19,10 @@ package com.google.android.apps.mytracks;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import java.util.List;
@@ -40,10 +39,8 @@ public class AggregatedStatsActivity extends AbstractMyTracksActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.aggregated_stats);
 
-    SharedPreferences preferences = getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    boolean metricUnits = preferences.getBoolean(getString(R.string.metric_units_key), true);
-    boolean reportSpeed = preferences.getBoolean(getString(R.string.report_speed_key), true);
+    boolean metricUnits = PreferencesUtils.isMetricUnits(this);
+    boolean reportSpeed = PreferencesUtils.isReportSpeed(this);
 
     StatsUtils.setStats(this,
         getTripStatistics(),

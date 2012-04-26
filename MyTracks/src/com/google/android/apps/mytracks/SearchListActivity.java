@@ -105,7 +105,6 @@ public class SearchListActivity extends AbstractMyTracksActivity {
   private SearchEngine searchEngine;
   private SearchRecentSuggestions searchRecentSuggestions;
   private LocationManager locationManager;
-  private SharedPreferences sharedPreferences;
   private long recordingTrackId;
   private boolean metricUnits;
   private ArrayAdapter<Map<String, Object>> arrayAdapter;
@@ -124,7 +123,8 @@ public class SearchListActivity extends AbstractMyTracksActivity {
     searchEngine = new SearchEngine(myTracksProviderUtils);
     searchRecentSuggestions = SearchEngineProvider.newHelper(this);
     locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-    sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    SharedPreferences sharedPreferences = getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     recordingTrackId = PreferencesUtils.getRecordingTrackId(this);
 
@@ -185,7 +185,7 @@ public class SearchListActivity extends AbstractMyTracksActivity {
   @Override
   protected void onResume() {
     super.onResume();
-    metricUnits = sharedPreferences.getBoolean(getString(R.string.metric_units_key), true);
+    metricUnits = PreferencesUtils.isMetricUnits(this);
   }
 
   @Override

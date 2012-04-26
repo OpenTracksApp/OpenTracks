@@ -16,6 +16,7 @@
 
 package com.google.android.apps.mytracks.fragments;
 
+import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.util.EulaUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -50,10 +51,16 @@ public class EulaDialogFragment extends DialogFragment {
   }
 
   @Override
+  public void onCancel(DialogInterface arg0) {
+    if (!getArguments().getBoolean(KEY_HAS_ACCEPTED)) {
+      exitApp();
+    }
+  }
+  
+  @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     boolean hasAccepted = getArguments().getBoolean(KEY_HAS_ACCEPTED);
     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-        .setCancelable(true)
         .setMessage(EulaUtils.getEulaMessage(getActivity()))
         .setTitle(R.string.eula_title);
 
@@ -63,24 +70,25 @@ public class EulaDialogFragment extends DialogFragment {
       builder.setNegativeButton(R.string.eula_decline, new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-          getActivity().finish();
-        }
-      })
-      .setOnCancelListener(new DialogInterface.OnCancelListener() {
-        @Override
-        public void onCancel(DialogInterface dialog) {
-          getActivity().finish();
+          exitApp();
         }
       })
       .setPositiveButton(R.string.eula_accept, new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
           EulaUtils.setEulaValue(getActivity());
-          new WelcomeDialogFragment().show(
-              getActivity().getSupportFragmentManager(), WelcomeDialogFragment.WELCOME_DIALOG_TAG);
+          TrackListActivity trackListActivity = (TrackListActivity) getActivity();
+          trackListActivity.showStartupDialogs();
         }
       });
     }
     return builder.create();
+  }
+  
+  /**
+   * Exits the application.
+   */
+  private void exitApp() {
+    getActivity().finish();
   }
 }

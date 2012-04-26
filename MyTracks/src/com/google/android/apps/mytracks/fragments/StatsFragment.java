@@ -16,7 +16,6 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.MyTracksApplication;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
@@ -28,8 +27,6 @@ import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -101,10 +98,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   @Override
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-    SharedPreferences preferences = getActivity().getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    metricUnits = preferences.getBoolean(getString(R.string.metric_units_key), true); 
-    reportSpeed = preferences.getBoolean(getString(R.string.report_speed_key), true);
+    metricUnits = PreferencesUtils.isMetricUnits(getActivity()); 
+    reportSpeed = PreferencesUtils.isReportSpeed(getActivity());
     updateUi();
   }
 

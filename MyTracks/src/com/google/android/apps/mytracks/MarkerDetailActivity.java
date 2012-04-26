@@ -20,12 +20,11 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
 import com.google.android.apps.mytracks.util.IntentUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -83,11 +82,9 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity {
       waypointSection.setVisibility(View.GONE);
       statisticsSection.setVisibility(View.VISIBLE);
 
-      SharedPreferences preferences = getSharedPreferences(
-          Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-      boolean metricUnits = preferences.getBoolean(getString(R.string.metric_units_key), true);
-      boolean reportSpeed = preferences.getBoolean(getString(R.string.report_speed_key), true);
-
+      boolean metricUnits = PreferencesUtils.isMetricUnits(this);
+      boolean reportSpeed = PreferencesUtils.isReportSpeed(this);
+      
       StatsUtils.setStats(this,
           waypoint.getStatistics(),
           null,

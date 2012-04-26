@@ -38,7 +38,6 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
   private final String autoResumeTrackCurrentRetryKey;
   private final String autoResumeTrackTimeoutKey;
   private final String maxRecordingDistanceKey;
-  private final String metricUnitsKey;
   private final String minRecordingDistanceKey;
   private final String minRecordingIntervalKey;
   private final String minRequiredAccuracyKey;
@@ -63,8 +62,6 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
         service.getString(R.string.auto_resume_track_timeout_key);
     maxRecordingDistanceKey =
         service.getString(R.string.max_recording_distance_key);
-    metricUnitsKey =
-        service.getString(R.string.metric_units_key);
     minRecordingDistanceKey =
         service.getString(R.string.min_recording_distance_key);
     minRecordingIntervalKey =
@@ -160,9 +157,8 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
       service.setSplitFrequency(
           sharedPreferences.getInt(splitFrequencyKey, 0));
     }
-    if (key == null || key.equals(metricUnitsKey)) {
-      service.setMetricUnits(
-          sharedPreferences.getBoolean(metricUnitsKey, true));
+    if (key == null || key.equals(PreferencesUtils.getMetricUnitsKey(service))) {
+      service.setMetricUnits(PreferencesUtils.isMetricUnits(service));
     }
   }
 

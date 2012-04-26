@@ -30,7 +30,6 @@ import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener.ProviderState;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceTest.MockContext;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
-import com.google.android.maps.mytracks.R;
 import com.google.android.testing.mocking.AndroidMock;
 
 import android.content.Context;
@@ -798,12 +797,12 @@ public class TrackDataHubTest extends AndroidTestCase {
   }
 
   public void testDisplayPreferencesListen() throws Exception {
-    String metricUnitsKey = context.getString(R.string.metric_units_key);
-    String speedKey = context.getString(R.string.report_speed_key);
-
+    String metricUnitsKey = PreferencesUtils.getMetricUnitsKey(context);
+    String reportSpeedKey = PreferencesUtils.getReportSpeedKey(context);
+    
     prefs.edit()
         .putBoolean(metricUnitsKey, true)
-        .putBoolean(speedKey, true)
+        .putBoolean(reportSpeedKey, true)
         .apply();
 
     Capture<OnSharedPreferenceChangeListener> listenerCapture =
@@ -829,10 +828,10 @@ public class TrackDataHubTest extends AndroidTestCase {
     replay();
 
     prefs.edit()
-        .putBoolean(speedKey, false)
+        .putBoolean(reportSpeedKey, false)
         .apply();
     OnSharedPreferenceChangeListener listener = listenerCapture.getValue();
-    listener.onSharedPreferenceChanged(prefs, speedKey);
+    listener.onSharedPreferenceChanged(prefs, reportSpeedKey);
 
     AndroidMock.verify(dataSources, providerUtils, listener1, listener2);
     AndroidMock.reset(dataSources, providerUtils, listener1, listener2);
