@@ -172,6 +172,15 @@ limitations under the License.
       </intent-filter>
     </activity>
     <activity
+      android:name="com.google.android.apps.mytracks.MarkerEditActivity"
+      android:windowSoftInputMode="stateHidden" />
+    <activity android:name="com.google.android.apps.mytracks.MarkerDetailActivity" />
+    <activity android:name="com.google.android.apps.mytracks.MarkerListActivity" >
+      <meta-data
+        android:name="android.app.default_searchable"
+        android:value="com.google.android.apps.mytracks.SearchActivity" />
+    </activity>
+    <activity
       android:launchMode="singleTop"
       android:name="com.google.android.apps.mytracks.SearchActivity" >
       <intent-filter>
@@ -200,23 +209,6 @@ limitations under the License.
 
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
-      <meta-data
-        android:name="android.app.default_searchable"
-        android:value="com.google.android.apps.mytracks.SearchActivity" />
-    </activity>
-    <activity
-      android:label="@string/marker_detail_title"
-      android:name="com.google.android.apps.mytracks.WaypointDetails" >
-      <intent-filter>
-        <action android:name="android.intent.action.EDIT" />
-
-        <category android:name="android.intent.category.BROWSABLE" />
-        <category android:name="android.intent.category.DEFAULT" />
-
-        <data android:mimeType="vnd.android.cursor.item/vnd.google.waypoint" />
-      </intent-filter>
-    </activity>
-    <activity android:name="com.google.android.apps.mytracks.WaypointsList" >
       <meta-data
         android:name="android.app.default_searchable"
         android:value="com.google.android.apps.mytracks.SearchActivity" />

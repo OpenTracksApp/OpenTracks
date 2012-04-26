@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright 2012 Google Inc.
+Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -26,29 +26,16 @@ limitations under the License.
     android:layout_width="fill_parent"
     android:orientation="horizontal" >
     <TextView
-      android:id="@+id/track_list_item_name"
+      android:id="@+id/marker_list_item_name"
       style="@style/ListItemName" />
     <TextView
-      android:id="@+id/track_list_item_category"
+      android:id="@+id/marker_list_item_category"
       style="@style/ListItemCategory" />
   </LinearLayout>
-  <LinearLayout
-    android:layout_height="wrap_content"
-    android:layout_width="fill_parent"
-    android:orientation="horizontal" >
-    <TextView
-      android:id="@+id/track_list_item_time"
-      style="@style/ListItemStat" />
-    <TextView
-      android:id="@+id/track_list_item_distance"
-      android:layout_marginLeft="8dp"
-      style="@style/ListItemStat" />
-    <TextView
-      android:id="@+id/track_list_item_start"
-      android:layout_marginLeft="8dp"
-      style="@style/ListItemStat" />
-  </LinearLayout>
   <TextView
-    android:id="@+id/track_list_item_description"
+    android:id="@+id/marker_list_item_time"
+    style="@style/ListItemStat" />
+  <TextView
+    android:id="@+id/marker_list_item_description"
     style="@style/ListItemDescription" />
 </LinearLayout>

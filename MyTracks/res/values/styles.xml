@@ -28,8 +28,92 @@ limitations under the License.
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_weight">1</item>
     <item name="android:layout_width">0dp</item>
+  </style>  
+  <!-- The style for the edit category -->
+  <style name="EditCategory" parent="@android:style/TextAppearance.DeviceDefault.Medium">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:selectAllOnFocus">true</item>
+    <item name="android:singleLine">true</item>
   </style>
-
+  <!-- The style for the edit description -->
+  <style name="EditDescription" parent="@android:style/TextAppearance.DeviceDefault.Medium">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:selectAllOnFocus">true</item>
+    <item name="android:singleLine">false</item>
+    <item name="android:maxLines">50</item>
+    <item name="android:inputType">textAutoCorrect|textCapSentences</item>
+  </style>
+  <!-- The style for the edit label -->
+  <style name="EditLabel" parent="@android:style/TextAppearance.DeviceDefault.Medium">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+  </style>
+  <!-- The style for the edit name -->
+  <style name="EditName" parent="@android:style/TextAppearance.DeviceDefault.Medium">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:selectAllOnFocus">true</item>
+    <item name="android:singleLine">true</item>
+    <item name="android:inputType">textAutoCorrect|textCapWords</item>
+    <item name="android:drawablePadding">8dp</item>
+    <item name="android:gravity">center_vertical</item>
+  </style>  
+  <!-- The style for the list item category -->
+  <style name="ListItemCategory" parent="@android:style/TextAppearance.DeviceDefault.Small">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:singleLine">true</item>
+    <item name="android:layout_marginLeft">8dp</item>    
+  </style>
+  <!-- The style for the list item description -->
+  <style name="ListItemDescription" parent="@android:style/TextAppearance.DeviceDefault.Small">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:singleLine">false</item>    
+  </style>
+  <!-- The style for the list item name -->
+  <style name="ListItemName" parent="@android:style/TextAppearance.DeviceDefault.Large">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:singleLine">true</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:paddingLeft">9dp</item>
+  </style>
+  <!-- style for the list item stat -->
+  <style name="ListItemStat" parent="@android:style/TextAppearance.DeviceDefault.Small">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:singleLine">true</item>
+    <item name="android:textColor">@color/green</item>
+  </style>
+  <!-- The style for the marker detail label -->
+  <style name="MarkerDetailLabel" parent="@android:style/TextAppearance.DeviceDefault.Large">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+  </style>
+  <!-- The style for the marker detail statistics label -->
+  <style name="MarkerDetailStatisticsLabel" parent="@android:style/TextAppearance.DeviceDefault.Medium">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">0dp</item>
+    <item name="android:layout_weight">1</item>
+  </style>
+  <!--  The style for the marker detail statistics spacer -->
+  <style name="MarkerDetailStatisticsSpacer">
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:layout_width">8dp</item>    
+  </style>  
+  <!-- The style for the marker detail statistics value -->
+  <style name="MarkerDetailStatisticsValue" parent="@android:style/TextAppearance.DeviceDefault.Large">
+    <item name="android:gravity">right</item>
+    <item name="android:textColor">@color/stat_label_text</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">0dp</item>
+    <item name="android:layout_weight">1</item>
+    <item name="android:background">@android:color/background_light</item>
+  </style>
+            
   <style name="SensorStateLabel">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">fill_parent</item>
@@ -107,34 +191,14 @@ limitations under the License.
     <item name="android:layout_marginTop">-9dp</item>
     <item name="android:textColor">@color/stat_label_text</item>
   </style>
-
-  <!-- The style for the label in track_edit.xml -->
-  <style name="TrackEditLabelTextView" parent="@android:style/TextAppearance.DeviceDefault.Medium">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
-  </style>
-  <!-- The style for the value in track_edit.xml -->
-  <style name="TrackEditValueEditText" parent="@android:style/TextAppearance.DeviceDefault.Medium">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">fill_parent</item>
-    <item name="android:selectAllOnFocus">true</item>
-  </style>
-
-  <!-- The style for the stats in track_list_item.xml -->
-  <style name="TrackListItemStatsTextView" parent="@android:style/TextAppearance.DeviceDefault.Small">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:singleLine">true</item>
-    <item name="android:textColor">@color/green</item>
-  </style>
-  
-  <!-- The style for the answer in welcome.xml -->
+ 
+  <!-- The style for the welcome page answer -->
   <style name="WelcomeAnswerTextView" parent="@android:style/TextAppearance.DeviceDefault.Small">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
     <item name="android:paddingBottom">8dp</item>
   </style>
-  <!-- The style for the question in welcome.xml -->
+  <!-- The style for welcome page question -->
   <style name="WelcomeQuestionTextView" parent="@android:style/TextAppearance.DeviceDefault.Medium">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>

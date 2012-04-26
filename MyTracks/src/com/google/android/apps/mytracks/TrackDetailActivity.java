@@ -20,7 +20,9 @@ import static com.google.android.apps.mytracks.Constants.CHART_TAB_TAG;
 import static com.google.android.apps.mytracks.Constants.MAP_TAB_TAG;
 import static com.google.android.apps.mytracks.Constants.STATS_TAB_TAG;
 
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.TrackDataHub;
+import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.fragments.ChartFragment;
 import com.google.android.apps.mytracks.fragments.ChartSettingsDialogFragment;
@@ -71,7 +73,7 @@ import java.util.List;
 public class TrackDetailActivity extends FragmentActivity {
 
   public static final String EXTRA_TRACK_ID = "track_id";
-  public static final String EXTRA_WAYPOINT_ID = "waypoint_id";
+  public static final String EXTRA_MARKER_ID = "marker_id";
 
   private static final String TAG = TrackDetailActivity.class.getSimpleName();
   private static final String CURRENT_TAG_KEY = "tab";
@@ -264,7 +266,8 @@ public class TrackDetailActivity extends FragmentActivity {
         TrackRecordingServiceConnectionUtils.stop(this, trackRecordingServiceConnection);
         return true;
       case R.id.track_detail_insert_marker:
-        // TODO: Add insert marker when updating WaypointList to ICS
+        startActivity(new Intent(this, MarkerEditActivity.class)
+            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
         return true;
       case R.id.track_detail_play:
         if (isEarthInstalled()) {
@@ -302,9 +305,10 @@ public class TrackDetailActivity extends FragmentActivity {
         startSaveActivity(TrackFileFormat.TCX, true);
         return true;
       case R.id.track_detail_markers:
-        intent = new Intent(this, WaypointsList.class)
-            .putExtra("trackid", trackDataHub.getSelectedTrackId());
-        startActivityForResult(intent, Constants.SHOW_WAYPOINT);
+        intent = new Intent(this, MarkerListActivity.class)
+            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+            .putExtra(MarkerListActivity.EXTRA_TRACK_ID, trackId);
+        startActivity(intent);
         return true;
       case R.id.track_detail_send_google:
         intent = new Intent(this, UploadServiceChooserActivity.class)
@@ -362,25 +366,6 @@ public class TrackDetailActivity extends FragmentActivity {
   }
 
   @Override
-  public void onActivityResult(int requestCode, int resultCode, final Intent results) {
-    if (requestCode != Constants.SHOW_WAYPOINT) {
-      Log.d(TAG, "Invalid request code: " + requestCode);
-      return;
-    }
-    if (results != null) {
-      long waypointId = results.getLongExtra(WaypointDetails.WAYPOINT_ID_EXTRA, -1L);
-      if (waypointId != -1L) {
-        MapFragment mapFragment = (MapFragment) getSupportFragmentManager()
-            .findFragmentByTag(MAP_TAB_TAG);
-        if (mapFragment != null) {
-          tabHost.setCurrentTab(0);
-          mapFragment.showWaypoint(waypointId);
-        }
-      }
-    }
-  }
-
-  @Override
   public boolean onTrackballEvent(MotionEvent event) {
     if (event.getAction() == MotionEvent.ACTION_DOWN) {
       if (TrackRecordingServiceConnectionUtils.isRecording(this, trackRecordingServiceConnection)) {
@@ -401,9 +386,8 @@ public class TrackDetailActivity extends FragmentActivity {
           Log.e(TAG, "Unable to insert waypoint", e);
         }
         Toast.makeText(this,
-            success ? R.string.marker_insert_success : R.string.marker_insert_error,
-            success ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG)
-            .show();
+            success ? R.string.marker_edit_add_success : R.string.marker_edit_add_error,
+            success ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG).show();
         return true;
       }
     }
@@ -421,22 +405,30 @@ public class TrackDetailActivity extends FragmentActivity {
    * Handles the data in the intent.
    */
   private void handleIntent(Intent intent) {
-    // Get the trackid
-    trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1L);
+    trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1L);   
+    long markerId = intent.getLongExtra(EXTRA_MARKER_ID, -1L);
+    if (markerId != -1L) {
+      Waypoint waypoint = MyTracksProviderUtils.Factory.get(this).getWaypoint(markerId);
+      if (waypoint == null) {
+        startTrackListActivity();
+        finish();
+        return;
+      }
+      trackId = waypoint.getTrackId();
+    }
     if (trackId == -1L) {
       startTrackListActivity();
       finish();
+      return;
     }
     trackDataHub.loadTrack(trackId);
 
-    // Get the waypointId
-    long waypointId = intent.getLongExtra(EXTRA_WAYPOINT_ID, -1L);
-    if (waypointId != -1L) {
+    if (markerId != -1L) {
       MapFragment mapFragmet = (MapFragment) getSupportFragmentManager()
           .findFragmentByTag(MAP_TAB_TAG);
       if (mapFragmet != null) {
-        tabHost.setCurrentTab(0);
-        mapFragmet.showWaypoint(trackId, waypointId);
+        tabHost.setCurrentTabByTag(MAP_TAB_TAG);
+        mapFragmet.showMarker(trackId, markerId);
       } else {
         Log.e(TAG, "MapFragment is null");
       }

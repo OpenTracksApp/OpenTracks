@@ -32,6 +32,7 @@ public class WaypointCreationRequest implements Parcelable {
   
   private WaypointType type;
   private String name;
+  private String category;
   private String description;
   private String iconUrl;
 
@@ -44,10 +45,11 @@ public class WaypointCreationRequest implements Parcelable {
     this.type = type;
   }
 
-  public WaypointCreationRequest(WaypointType type, String name,
+  public WaypointCreationRequest(WaypointType type, String name, String category,
       String description, String iconUrl) {
     this.type = type;
     this.name = name;
+    this.category = category;
     this.description = description;
     this.iconUrl = iconUrl;
   }
@@ -61,9 +63,10 @@ public class WaypointCreationRequest implements Parcelable {
         throw new IllegalArgumentException("Could not find waypoint type: " + i);
       }
       WaypointCreationRequest request = new WaypointCreationRequest(WaypointType.values()[i]);
+      request.name = source.readString();
+      request.category = source.readString();
       request.description = source.readString();
       request.iconUrl = source.readString();
-      request.name = source.readString();
       return request;
     }
 
@@ -82,9 +85,10 @@ public class WaypointCreationRequest implements Parcelable {
   @Override
   public void writeToParcel(Parcel parcel, int arg1) {
     parcel.writeInt(type.ordinal());
+    parcel.writeString(name);
+    parcel.writeString(category);
     parcel.writeString(description);
     parcel.writeString(iconUrl);
-    parcel.writeString(name);
   }
   
   public WaypointType getType() {
@@ -95,6 +99,10 @@ public class WaypointCreationRequest implements Parcelable {
     return name;
   }
 
+  public String getCategory() {
+    return category;
+  }
+  
   public String getDescription() {
     return description;
   }

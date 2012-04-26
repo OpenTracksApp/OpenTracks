@@ -28,38 +28,30 @@ limitations under the License.
       android:orientation="vertical"
       android:padding="8dp" >
       <TextView
-        android:text="@string/track_edit_name"
-        style="@style/TrackEditLabelTextView" />
+        android:text="@string/generic_name"
+        style="@style/EditLabel" />
       <EditText
         android:drawableLeft="@drawable/track"
-        android:drawablePadding="8dp"
-        android:gravity="center_vertical"
-        android:hint="@string/track_edit_name"
+        android:hint="@string/generic_name"
         android:id="@+id/track_edit_name"
         android:imeOptions="actionNext"
-        android:inputType="textAutoCorrect|textCapWords"
-        android:singleLine="true"
-        style="@style/TrackEditValueEditText" />
+        style="@style/EditName" />
       <TextView
         android:text="@string/track_edit_activity_type"
-        style="@style/TrackEditLabelTextView" />
+        style="@style/EditLabel" />
       <AutoCompleteTextView
         android:hint="@string/track_edit_activity_type_hint"
         android:id="@+id/track_edit_activity_type"
         android:imeOptions="actionNext"
-        android:singleLine="true"
-        style="@style/TrackEditValueEditText" />
+        style="@style/EditCategory" />
       <TextView
-        android:text="@string/track_edit_description"
-        style="@style/TrackEditLabelTextView" />
+        android:text="@string/generic_description"
+        style="@style/EditLabel" />
       <EditText
-        android:hint="@string/track_edit_description"
+        android:hint="@string/generic_description"
         android:id="@+id/track_edit_description"
         android:imeOptions="actionDone"
-        android:inputType="textAutoCorrect|textCapSentences"
-        android:maxLines="50"
-        android:singleLine="false"
-        style="@style/TrackEditValueEditText" />
+        style="@style/EditDescription" />
     </LinearLayout>
   </ScrollView>
   <LinearLayout style="@style/BottomButtonBar" >

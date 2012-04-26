@@ -34,18 +34,6 @@ public abstract class Constants {
   public static final String SDCARD_TOP_DIR = "MyTracks";
 
   /*
-   * onActivityResult request codes:
-   */
-  public static final int SHOW_WAYPOINT = 0;
-
-  /*
-   * Context menu ids. Sorted alphabetically.
-   */
-  public static final int MENU_DELETE = 100;
-  public static final int MENU_EDIT = 101;
-  public static final int MENU_SHOW = 102;
-
-  /*
    * Main screen tab tags:
    */
 

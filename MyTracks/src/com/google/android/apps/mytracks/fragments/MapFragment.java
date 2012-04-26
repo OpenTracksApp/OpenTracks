@@ -70,11 +70,11 @@ public class MapFragment extends Fragment
   // True to zoom to my location. Only apply when keepMyLocationVisible is true.
   private boolean zoomToMyLocation;
 
-  // The track id of the waypoint to show.
-  private long waypointTrackId;
+  // The track id of the marker to show.
+  private long markerTrackId;
 
-  // The waypoint id to show
-  private long waypointId;
+  // The marker id to show
+  private long markerId;
 
   // The current selected track id. Set in onSelectedTrackChanged.
   private long currentSelectedTrackId;
@@ -166,11 +166,11 @@ public class MapFragment extends Fragment
   }
 
   /**
-   * Shows the waypoint.
+   * Shows the marker.
    * 
-   * @param id the waypoint id
+   * @param id the marker id
    */
-  public void showWaypoint(long id) {
+  private void showMarker(long id) {
     MyTracksProviderUtils MyTracksProviderUtils = Factory.get(getActivity());
     Waypoint waypoint = MyTracksProviderUtils.getWaypoint(id);
     if (waypoint != null && waypoint.getLocation() != null) {
@@ -184,25 +184,25 @@ public class MapFragment extends Fragment
   }
 
   /**
-   * Shows the waypoint.
+   * Shows the marker.
    *
    * @param trackId the track id
-   * @param id the waypoint id
+   * @param id the marker id
    */
-  public void showWaypoint(long trackId, long id) {
+  public void showMarker(long trackId, long id) {
     /*
-     * Synchronize to prevent race condition in changing waypointTrackId and
-     * waypointId variables.
+     * Synchronize to prevent race condition in changing markerTrackId and
+     * markerId variables.
      */
     synchronized (this) {
       if (trackId == currentSelectedTrackId) {
-        showWaypoint(id);
-        waypointTrackId = -1L;
-        waypointId = -1L;
+        showMarker(id);
+        markerTrackId = -1L;
+        markerId = -1L;
         return;
       }
-      waypointTrackId = trackId;
-      waypointId = id;
+      markerTrackId = trackId;
+      markerId = id;
     }
   }
 
@@ -314,8 +314,8 @@ public class MapFragment extends Fragment
   
           synchronized (this) {
             /*
-             * Synchronize to prevent race condition in changing waypointTrackId
-             * and waypointId variables.
+             * Synchronize to prevent race condition in changing markerTrackId
+             * and markerId variables.
              */
             currentSelectedTrackId = track.getId();
             updateMap(track);
@@ -424,17 +424,17 @@ public class MapFragment extends Fragment
   }
   
   /**
-   * Updates the map by either zooming to the requested waypoint or showing the track.
+   * Updates the map by either zooming to the requested marker or showing the track.
    *
    * @param track the track
    */
   private void updateMap(Track track) {
-    if (track.getId() == waypointTrackId) {
-      // Show the waypoint
-      showWaypoint(waypointId);
+    if (track.getId() == markerTrackId) {
+      // Show the marker
+      showMarker(markerId);
 
-      waypointTrackId = -1L;
-      waypointId = -1L;
+      markerTrackId = -1L;
+      markerId = -1L;
     } else {
       // Show the track
       showTrack(track);

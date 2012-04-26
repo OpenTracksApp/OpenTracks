@@ -662,9 +662,17 @@ limitations under the License.
     translation_description="The title on a confirmation dialog asking the user if he is sure?">
     Are you sure?
   </string>
+  <string name="generic_description"
+    translation_description="The text label for entering a description.">
+    Description
+  </string>
   <string name="generic_error_title"
     translation_description="The title on an alert dialog indicating error.">
     Error
+  </string>
+  <string name="generic_name"
+    translation_description="The text label for entering a name.">
+    Name
   </string>
   <string name="generic_ok"
     translation_description="The text on a button to say ok.">
@@ -682,7 +690,7 @@ limitations under the License.
     translation_description="The title on an alert dialog indicating success.">
     Success
   </string>
-
+  
   <!-- GPS -->
   <string name="gps_need_to_enable"
     translation_description="In the main view, the message on the top asking the user to enable
@@ -948,44 +956,67 @@ limitations under the License.
   </string>
 
   <!-- Marker -->
-  <string name="marker_detail_marker_description"
-    translation_description="In the detail page for a waypoint marker, the text field for the marker
-      description.">
-    Marker description
+  <string name="marker_delete_one_marker_confirm_message"
+    translation_description="When deleting a marker, the confirmation dialog message informing the
+      user that the marker will be permanently deleted from the phone.">
+    The marker will be permanently deleted from the phone.
   </string>
-  <string name="marker_detail_marker_name"
-    translation_description="In the detail page for a waypoint or statistics marker, text field for
-      the marker name.">
-    Marker name
-  </string>
+  <string name="marker_detail_description"
+    translation_description="In the marker detail page, the label for the description.
+
+      %1$s marker description. E.g., 'At the top'.">
+    Description: %1$s
+  </string>  
   <string name="marker_detail_marker_type"
-    translation_description="In the detail page for a waypoint marker, the text field for the
-      marker type, including examples.">
-    Marker type (e.g. building, pothole, sight...)
+    translation_description="In the marker detail page, the label for the marker type.
+
+      %1$s marker type. E.g., 'building'.">
+    Marker type: %1$s
+  </string>  
+  <string name="marker_detail_name"
+    translation_description="In the marker detail page, the label for the marker name.
+
+      %1$s marker name. E.g., 'Waypoint1'.">
+    Name: %1$s
+  </string>  
+  <string name="marker_edit_add"
+    translation_description="The label on the button to add a marker.">
+    Add
   </string>
-  <string name="marker_detail_marker_type_hint"
-    translation_description="In the detail page for a waypoint marker, the hint in the 'Marker type'
-      text field when it is empty.">
-    Marker type
+  <string name="marker_edit_add_error"
+    translation_description="When adding a marker, the message indicating error.">
+    Unable to insert a marker. Try again.
   </string>
-  <string name="marker_detail_title"
-    translation_description="In the detail page for a waypoint or statistics marker, the title of
-      the page.">
-    Marker details
-  </string>
-  <string name="marker_icon_description"
-    translation_description="The accessibility description for the marker icon.">
-    Marker
-  </string>
-  <string name="marker_insert_error"
-    translation_description="When inserting a marker, message when not able to insert due to no GPS
-      location and asking the user to try again.">
-    Unable to insert a marker. No GPS location. Try again.
-  </string>
-  <string name="marker_insert_success"
-    translation_description="When inserting a new marker, a message indicating success.">
+  <string name="marker_edit_add_success"
+    translation_description="When adding a marker, the message indicating success.">
     A marker was inserted.
   </string>
+  <string name="marker_edit_add_title"
+    translation_description="The title of the page to add a new marker.">
+    New Marker
+  </string>
+  <string name="marker_edit_marker_type"
+    translation_description="The label for the text field to edit the marker type, including some
+      exmaples.">
+    Marker type (e.g. building, pothole...)
+  </string>
+  <string name="marker_edit_marker_type_hint"
+    translation_description="The hint in the 'Marker type' text field when it is empty.">
+    Marker type
+  </string>
+  <string name="marker_edit_type"
+    translation_description="When adding a marker, the label to select a type, statistics or
+      waypoint.">
+    Type
+  </string>
+  <string name="marker_edit_type_statistics"
+    translation_description="The label to add a statistics marker.">
+    Statistics
+  </string>
+  <string name="marker_edit_type_waypoint"
+    translation_description="The label to add a waypoint marker.">
+    Waypoint
+  </string>    
   <string name="marker_label_end"
     translation_description="When inserting a marker to indicate the end of a track, the marker's
       name. E.g., 'track_name (End)'.
@@ -1000,54 +1031,9 @@ limitations under the License.
       %1$s track name. E.g., 'track_name'.">
      %1$s (Start)
   </string>
-  <string name="marker_list_context_menu_title"
-    translation_description="In the context menu for a marker, the title indicating that all the
-      menu options below are for this marker.">
-    This marker
-  </string>
-  <string name="marker_list_delete_marker"
-    translation_description="In the context menu for a marker, the menu option to delete the
-      marker.">
-    Delete
-  </string>
-  <string name="marker_list_delete_marker_confirm_message"
-    translation_description="In the context menu for a marker, when pressing the 'Delete' option,
-      the confirmation dialog message informing the user that the marker will be permanently
-      deleted from the phone.">
-    The marker will be permanently deleted from the phone.
-  </string>
-  <string name="marker_list_edit_marker"
-    translation_description="In the context menu for a marker, the menu option to edit the marker's
-      metadata (e.g., name, type, etc.).">
-    Edit
-  </string>
-  <string name="marker_list_insert_statistics"
-    translation_description="In the Markers page, the button on the bottom to insert a statistics
-      marker.">
-    Insert statistics
-  </string>
-  <string name="marker_list_insert_waypoint"
-    translation_description="In the Markers page, the button on the bottom to insert a waypoint
-      marker.">
-    Insert waypoint
-  </string>
-  <string name="marker_list_pick_one"
-    translation_description="In the Markers page, the instruction at the top of the page informing
-      the user he can press and hold a marker for more options.">
-    Pick a marker. Press &amp; hold for more options.
-  </string>
-  <string name="marker_list_show_on_map"
-    translation_description="In the context menu for a marker, the menu option to show the marker
-      on the map.">
-    Show on map
-  </string>
-  <string name="marker_type_statistics"
-    translation_description="When inserting a statistics marker, the default name of the marker.">
-    Statistics
-  </string>
-  <string name="marker_type_waypoint"
-    translation_description="When inserting a waypoint marker, the default name of the marker.">
-    Waypoint
+  <string name="marker_list_empty_message"
+    translation_description="The message when the marker list is empty.">
+    You don\'t have any markers.
   </string>
 
   <!-- Menu Items -->
@@ -1147,6 +1133,10 @@ limitations under the License.
     translation_description="In the menu, to go to the settings page.">
     Settings
   </string>
+  <string name="menu_show_on_map"
+    translation_description="In the menu, to show a marker on map.">
+    Show on map
+  </string>  
   <string name="menu_stop_recording"
     translation_description="In the menu, to stop recording a track.">
     Stop recording
@@ -1427,14 +1417,6 @@ limitations under the License.
     translation_description="In the 'Sensor state' page, the label for the battery level on the bike
       sensor. E.g, 'Battery level: 50 %'.">
     Battery level
-  </string>
-  <string name="sensor_state_battery_value"
-    translation_description="In the 'Sensor state' page, the value for the 'Battery level'. E.g,
-      'Battery level: 50 %'.
-
-      %1$d: a number. E.g., '50'.
-      %%: escape sequence for the '%' character.">
-    %1$d %%
   </string>
   <string name="sensor_state_cadence"
     translation_description="In the 'Sensor state' page, the label for the cadence on the bike
@@ -2202,16 +2184,6 @@ limitations under the License.
       when it is empty.">
     Activity type
   </string>
-  <string name="track_edit_description"
-    translation_description="In the page to edit a track, the label for the text field to edit the
-      track description.">
-    Description
-  </string>
-  <string name="track_edit_name"
-    translation_description="In the page to edit a track, the label for the text field to edit the
-      track name.">
-    Name
-  </string>
   <string name="track_edit_new_track_title"
     translation_description="The title of the track edit page when saving a new track.">
     New Track
@@ -2420,6 +2392,12 @@ limitations under the License.
       %1$d: an integer value. E.g., '2'">
     %1$d min
   </string>
+  <string name="value_integer_percent"
+     translation_description="To display a value in percent like 2 %.
+     
+     %1$d: an integer value. E.g., '2'">
+    %1$d %%    
+  </string> 
   <string name="value_integer_second"
     translation_description="In a setting picker, the string format to display an integer value in
       seconds (s).

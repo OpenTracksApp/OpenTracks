@@ -14,10 +14,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-  <item
-    android:icon="@drawable/menu_search"
-    android:id="@+id/menu_search"
-    android:showAsAction="always"
-    android:title="@string/menu_search"/>
-</menu>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+  <Button
+    android:id="@+id/marker_edit_done"
+    style="@style/BottomButton" />
+  <Button
+    android:id="@+id/marker_edit_cancel"
+    android:text="@string/generic_cancel"
+    style="@style/BottomButton" />
+</merge>

@@ -16,6 +16,7 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
@@ -29,6 +30,8 @@ import java.text.NumberFormat;
 /**
  * Various utility functions for views that display statistics information.
  *
+ * @deprecated use {@link StatsUtils}.
+ * 
  * @author Sandor Dornbush
  */
 public class StatsUtilities {

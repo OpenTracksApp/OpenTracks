@@ -16,7 +16,8 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.TrackListActivity;
+import com.google.android.apps.mytracks.MarkerListActivity;
+import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.maps.mytracks.R;
@@ -28,33 +29,33 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 /**
- * A DialogFragment to delete one track.
+ * A DialogFragment to delete one marker.
  *
  * @author Jimmy Shih
  */
-public class DeleteOneTrackDialogFragment extends DialogFragment {
+public class DeleteOneMarkerDialogFragment extends DialogFragment {
 
-  public static final String DELETE_ONE_TRACK_DIALOG_TAG = "deleteOneTrackDialog";
-  private static final String KEY_TRACK_ID = "trackId";
+  public static final String DELETE_ONE_MARKER_DIALOG_TAG = "deleteOneMarkerDialog";
+  private static final String KEY_MARKER_ID = "markerId";
 
-  public static DeleteOneTrackDialogFragment newInstance(long trackId) {
+  public static DeleteOneMarkerDialogFragment newInstance(long markerId) {
     Bundle bundle = new Bundle();
-    bundle.putLong(KEY_TRACK_ID, trackId);
+    bundle.putLong(KEY_MARKER_ID, markerId);
 
-    DeleteOneTrackDialogFragment deleteOneTrackDialogFragment = new DeleteOneTrackDialogFragment();
-    deleteOneTrackDialogFragment.setArguments(bundle);
-    return deleteOneTrackDialogFragment;
+    DeleteOneMarkerDialogFragment deleteOneMarkerDialogFragment = new DeleteOneMarkerDialogFragment();
+    deleteOneMarkerDialogFragment.setArguments(bundle);
+    return deleteOneMarkerDialogFragment;
   }
 
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     return DialogUtils.createConfirmationDialog(getActivity(),
-        R.string.track_detail_delete_confirm_message, new DialogInterface.OnClickListener() {
+        R.string.marker_delete_one_marker_confirm_message, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
-            MyTracksProviderUtils.Factory.get(getActivity())
-                .deleteTrack(getArguments().getLong(KEY_TRACK_ID));
-            startActivity(new Intent(getActivity(), TrackListActivity.class).addFlags(
+            MyTracksProviderUtils.Factory.get(getActivity()).deleteWaypoint(
+                getArguments().getLong(KEY_MARKER_ID), new DescriptionGeneratorImpl(getActivity()));
+            startActivity(new Intent(getActivity(), MarkerListActivity.class).addFlags(
                 Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
           }
         });

@@ -485,9 +485,9 @@ public class ChartView extends View {
             }
           }
           if (nearestWaypoint != null && dmin < 100) {
-            Intent intent =
-                new Intent(getContext(), WaypointDetails.class);
-            intent.putExtra(WaypointDetails.WAYPOINT_ID_EXTRA, nearestWaypoint.getId());
+            Intent intent = new Intent(getContext(), MarkerDetailActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+                .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, nearestWaypoint.getId());
             getContext().startActivity(intent);
             return true;
           }

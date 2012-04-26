@@ -57,6 +57,7 @@ public class RestoreActivity extends Activity {
       if (date == -1L) {
         Log.d(TAG, "Invalid date");
         finish();
+        return;
       }
       restoreAsyncTask = new RestoreAsyncTask(this, new Date(date));
       restoreAsyncTask.execute();

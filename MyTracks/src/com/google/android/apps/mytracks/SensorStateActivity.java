@@ -325,7 +325,7 @@ public class SensorStateActivity extends Activity {
     String value;
     if (sds.hasBatteryLevel() && sds.getBatteryLevel().hasValue()
         && sds.getBatteryLevel().getState() == Sensor.SensorState.SENDING) {
-      String format = getString(R.string.sensor_state_battery_value);
+      String format = getString(R.string.value_integer_percent);
       value = String.format(format, sds.getBatteryLevel().getValue());
     } else {
       value = SensorUtils.getStateAsString(

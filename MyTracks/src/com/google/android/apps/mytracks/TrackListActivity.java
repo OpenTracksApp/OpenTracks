@@ -125,7 +125,7 @@ public class TrackListActivity extends FragmentActivity {
             }
             updateMenu();
           }
-          adapter.notifyDataSetChanged();
+          resourceCursorAdapter.notifyDataSetChanged();
         }
       };
 
@@ -142,17 +142,17 @@ public class TrackListActivity extends FragmentActivity {
   private boolean metricUnits;
   private long recordingTrackId;
   private ListView listView;
-  private ResourceCursorAdapter adapter;
+  private ResourceCursorAdapter resourceCursorAdapter;
 
   // True to start a new recording.
   private boolean startNewRecording = false;
 
-  private MenuItem recordTrack;
-  private MenuItem stopRecording;
-  private MenuItem search;
-  private MenuItem importAll;
-  private MenuItem exportAll;
-  private MenuItem deleteAll;
+  private MenuItem recordTrackMenuItem;
+  private MenuItem stopRecordingMenuItem;
+  private MenuItem searchMenuItem;
+  private MenuItem importAllMenuItem;
+  private MenuItem exportAllMenuItem;
+  private MenuItem deleteAllMenuItem;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -187,7 +187,7 @@ public class TrackListActivity extends FragmentActivity {
         startTrackDetailActivity(id);
       }
     });
-    adapter = new ResourceCursorAdapter(this, R.layout.track_list_item, null, 0) {
+    resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.track_list_item, null, 0) {
       @Override
       public void bindView(View view, Context context, Cursor cursor) {
         int idIndex = cursor.getColumnIndex(TracksColumns._ID);
@@ -227,7 +227,7 @@ public class TrackListActivity extends FragmentActivity {
         description.setVisibility(description.getText().length() == 0 ? View.GONE : View.VISIBLE);
       }
     };
-    listView.setAdapter(adapter);
+    listView.setAdapter(resourceCursorAdapter);
     ApiAdapterFactory.getApiAdapter().configureListViewContextualMenu(
         this, listView, R.menu.track_list_context_menu, R.id.track_list_item_name,
         contextualActionModeCallback);
@@ -245,12 +245,12 @@ public class TrackListActivity extends FragmentActivity {
 
       @Override
       public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        adapter.swapCursor(cursor);
+        resourceCursorAdapter.swapCursor(cursor);
       }
 
       @Override
       public void onLoaderReset(Loader<Cursor> loader) {
-        adapter.swapCursor(null);
+        resourceCursorAdapter.swapCursor(null);
       }
     });
 
@@ -289,14 +289,14 @@ public class TrackListActivity extends FragmentActivity {
     menu.findItem(R.id.track_list_export_tcx)
         .setTitle(getString(R.string.menu_export_all_format, fileTypes[3]));
     
-    recordTrack = menu.findItem(R.id.track_list_record_track);
-    stopRecording = menu.findItem(R.id.track_list_stop_recording);
-    search = menu.findItem(R.id.track_list_search);
-    importAll = menu.findItem(R.id.track_list_import_all);
-    exportAll = menu.findItem(R.id.track_list_export_all);
-    deleteAll = menu.findItem(R.id.track_list_delete_all);
+    recordTrackMenuItem = menu.findItem(R.id.track_list_record_track);
+    stopRecordingMenuItem = menu.findItem(R.id.track_list_stop_recording);
+    searchMenuItem = menu.findItem(R.id.track_list_search);
+    importAllMenuItem = menu.findItem(R.id.track_list_import_all);
+    exportAllMenuItem = menu.findItem(R.id.track_list_export_all);
+    deleteAllMenuItem = menu.findItem(R.id.track_list_delete_all);
 
-    ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, search);
+    ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem);
     updateMenu();
     return true;
   }
@@ -315,20 +315,20 @@ public class TrackListActivity extends FragmentActivity {
    * @param isRecording true if recording
    */
   private void updateMenuItems(boolean isRecording) {
-    if (recordTrack != null) {
-      recordTrack.setVisible(!isRecording);
+    if (recordTrackMenuItem != null) {
+      recordTrackMenuItem.setVisible(!isRecording);
     }
-    if (stopRecording != null) {
-      stopRecording.setVisible(isRecording);
+    if (stopRecordingMenuItem != null) {
+      stopRecordingMenuItem.setVisible(isRecording);
     }
-    if (importAll != null) {
-      importAll.setVisible(!isRecording);
+    if (importAllMenuItem != null) {
+      importAllMenuItem.setVisible(!isRecording);
     }
-    if (exportAll != null) {
-      exportAll.setVisible(!isRecording);
+    if (exportAllMenuItem != null) {
+      exportAllMenuItem.setVisible(!isRecording);
     }
-    if (deleteAll != null) {
-      deleteAll.setVisible(!isRecording);
+    if (deleteAllMenuItem != null) {
+      deleteAllMenuItem.setVisible(!isRecording);
     }
   }
 
@@ -450,7 +450,7 @@ public class TrackListActivity extends FragmentActivity {
   @Override
   public boolean onKeyUp(int keyCode, KeyEvent event) {
     if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-      if (ApiAdapterFactory.getApiAdapter().handleSearchKey(search)) {
+      if (ApiAdapterFactory.getApiAdapter().handleSearchKey(searchMenuItem)) {
         return true;
       }
     }

@@ -444,8 +444,9 @@ public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListe
 
     if (waypoint != null &&
         dmin < 15000000 / Math.pow(2, mapView.getZoomLevel())) {
-      Intent intent = new Intent(context, WaypointDetails.class);
-      intent.putExtra(WaypointDetails.WAYPOINT_ID_EXTRA, waypoint.getId());
+      Intent intent = new Intent(context, MarkerDetailActivity.class)
+          .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+          .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, waypoint.getId());
       context.startActivity(intent);
       return true;
     }
