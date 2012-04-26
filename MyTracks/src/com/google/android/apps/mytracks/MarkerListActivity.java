@@ -137,7 +137,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
 
         boolean statistics = cursor.getInt(typeIndex) == Waypoint.TYPE_STATISTICS;
         String name = cursor.getString(nameIndex);
-        int iconId = statistics ? R.drawable.ylw_pushpin : R.drawable.blue_pushpin;
+        int iconId = statistics ? R.drawable.yellow_pushpin : R.drawable.blue_pushpin;
         String category = statistics ? null : cursor.getString(categoryIndex);
         long time = cursor.getLong(timeIndex);
         String startTime = time == 0 

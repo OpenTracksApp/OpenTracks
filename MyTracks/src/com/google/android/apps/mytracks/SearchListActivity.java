@@ -378,7 +378,7 @@ public class SearchListActivity extends AbstractMyTracksActivity {
 
     boolean statistics = waypoint.getType() == Waypoint.TYPE_STATISTICS;
     resultMap.put(NAME_FIELD, waypoint.getName());
-    resultMap.put(ICON_FIELD, statistics ? R.drawable.ylw_pushpin : R.drawable.blue_pushpin);
+    resultMap.put(ICON_FIELD, statistics ? R.drawable.yellow_pushpin : R.drawable.blue_pushpin);
     resultMap.put(CATEGORY_FIELD, statistics ? null : waypoint.getCategory());
 
     long time = waypoint.getLocation().getTime();

@@ -146,7 +146,7 @@ public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListe
       arrow.setBounds(0, 0, arrowWidth, arrowHeight);
     }
 
-    statsMarker = resources.getDrawable(R.drawable.ylw_pushpin);
+    statsMarker = resources.getDrawable(R.drawable.yellow_pushpin);
     markerWidth = statsMarker.getIntrinsicWidth();
     markerHeight = statsMarker.getIntrinsicHeight();
     statsMarker.setBounds(0, 0, markerWidth, markerHeight);

@@ -178,11 +178,11 @@ public class TrackWidgetProvider
     if (TRACK_STARTED_ACTION.equals(action)) {
       // If a new track is started by this appwidget or elsewhere,
       // toggle the button to active and have it disable the track if pressed.
-      setButtonIntent(views, R.string.track_action_end, R.drawable.appwidget_button_enabled);
+      setButtonIntent(views, R.string.track_action_end, R.drawable.app_widget_button_enabled);
     } else {
       // If a track is stopped by this appwidget or elsewhere,
       // toggle the button to inactive and have it start a new track if pressed.
-      setButtonIntent(views, R.string.track_action_start, R.drawable.appwidget_button_disabled);
+      setButtonIntent(views, R.string.track_action_start, R.drawable.app_widget_button_disabled);
     }
   }
 

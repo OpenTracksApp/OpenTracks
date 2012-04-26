@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:background="@drawable/appwidget_background"
+  android:background="@drawable/app_widget_background"
   android:layout_height="fill_parent"
   android:layout_width="fill_parent"
   android:paddingBottom="5dp"
@@ -30,7 +30,7 @@ limitations under the License.
     android:layout_width="wrap_content"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    android:src="@drawable/appwidget_button_disabled" />
+    android:src="@drawable/app_widget_button_disabled" />
   <LinearLayout
     android:clickable="true"
     android:id="@+id/appwidget_track_statistics"

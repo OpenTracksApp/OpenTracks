@@ -486,7 +486,7 @@ public class TrackRecordingService extends Service {
   private void showNotification() {
     if (isRecording) {
       Notification notification = new Notification(
-          R.drawable.arrow_320, null /* tickerText */,
+          R.drawable.my_tracks_notification_icon, null /* tickerText */,
           System.currentTimeMillis());
       Intent intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
           .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, recordingTrackId);

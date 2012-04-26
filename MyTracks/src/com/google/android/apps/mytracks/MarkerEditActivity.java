@@ -151,7 +151,7 @@ public class MarkerEditActivity extends AbstractMyTracksActivity {
    */
   private void updateUiByMarkerType(boolean statistics) {
     name.setCompoundDrawablesWithIntrinsicBounds(
-        statistics ? R.drawable.ylw_pushpin : R.drawable.blue_pushpin, 0, 0, 0);
+        statistics ? R.drawable.yellow_pushpin : R.drawable.blue_pushpin, 0, 0, 0);
     name.setImeOptions(statistics ? EditorInfo.IME_ACTION_DONE : EditorInfo.IME_ACTION_NEXT);
     waypointSection.setVisibility(statistics ? View.GONE : View.VISIBLE);
   }

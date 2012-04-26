@@ -24,7 +24,7 @@ limitations under the License.
     <TableRow android:id="@+id/send_google_maps_row" >
       <ImageView
         android:contentDescription="@string/send_google_maps"
-        android:src="@drawable/maps_icon"
+        android:src="@drawable/google_maps_icon"
         style="@style/UploadServiceChooserImageView" />
       <CheckBox
         android:id="@+id/send_google_maps"
@@ -50,7 +50,7 @@ limitations under the License.
     <TableRow android:id="@+id/send_google_fusion_tables_row" >
       <ImageView
         android:contentDescription="@string/send_google_fusion_tables"
-        android:src="@drawable/googledocs_icon"
+        android:src="@drawable/google_fusion_tables_icon"
         style="@style/UploadServiceChooserImageView" />
       <CheckBox
         android:id="@+id/send_google_fusion_tables"
@@ -60,7 +60,7 @@ limitations under the License.
     <TableRow android:id="@+id/send_google_docs_row" >
       <ImageView
         android:contentDescription="@string/send_google_docs"
-        android:src="@drawable/googledocs_icon"
+        android:src="@drawable/google_docs_icon"
         style="@style/UploadServiceChooserImageView" />
       <CheckBox
         android:id="@+id/send_google_docs"

@@ -191,7 +191,7 @@ public class ChartView extends View {
     pointer.setBounds(0, 0,
         pointer.getIntrinsicWidth(), pointer.getIntrinsicHeight());
 
-    statsMarker = getResources().getDrawable(R.drawable.ylw_pushpin);
+    statsMarker = getResources().getDrawable(R.drawable.yellow_pushpin);
     markerWidth = statsMarker.getIntrinsicWidth();
     markerHeight = statsMarker.getIntrinsicHeight();
     statsMarker.setBounds(0, 0, markerWidth, markerHeight);
