@@ -101,7 +101,6 @@ public class TrackListActivity extends FragmentActivity {
         startActivity(intent);
         Toast.makeText(
             TrackListActivity.this, R.string.track_list_record_success, Toast.LENGTH_SHORT).show();
-        Log.d(TAG, "Started a new recording");
       } catch (Exception e) {
         Toast.makeText(TrackListActivity.this, R.string.track_list_record_error, Toast.LENGTH_LONG)
             .show();
@@ -118,9 +117,11 @@ public class TrackListActivity extends FragmentActivity {
       sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
+          boolean updateList = false;
           // Note that key can be null
           if (PreferencesUtils.getMetricUnitsKey(TrackListActivity.this).equals(key)) {
             metricUnits = PreferencesUtils.isMetricUnits(TrackListActivity.this);
+            updateList = true;
           }
           if (PreferencesUtils.getRecordingTrackIdKey(TrackListActivity.this).equals(key)) {
             recordingTrackId = PreferencesUtils.getRecordingTrackId(TrackListActivity.this);
@@ -129,8 +130,11 @@ public class TrackListActivity extends FragmentActivity {
               trackRecordingServiceConnection.startAndBind();
             }
             updateMenu();
+            updateList = true;
           }
-          resourceCursorAdapter.notifyDataSetChanged();
+          if (updateList) {
+            resourceCursorAdapter.notifyDataSetChanged();
+          }
         }
       };
 
