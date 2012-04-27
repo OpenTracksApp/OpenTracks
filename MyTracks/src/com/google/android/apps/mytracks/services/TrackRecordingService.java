@@ -486,11 +486,11 @@ public class TrackRecordingService extends Service {
   private void showNotification() {
     if (isRecording) {
       Notification notification = new Notification(
-          R.drawable.my_tracks_notification_icon, null /* tickerText */,
-          System.currentTimeMillis());
+          R.drawable.my_tracks_notification_icon, null, System.currentTimeMillis());
       Intent intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
           .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, recordingTrackId);
-      PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
+      PendingIntent contentIntent = PendingIntent.getActivity(
+          this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
       notification.setLatestEventInfo(this, getString(R.string.my_tracks_app_name),
           getString(R.string.track_record_notification), contentIntent);
       notification.flags += Notification.FLAG_NO_CLEAR;

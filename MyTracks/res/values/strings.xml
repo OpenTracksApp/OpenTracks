@@ -637,22 +637,6 @@ limitations under the License.
     Terms of Service
   </string>
 
-  <!-- Export -->
-  <string name="export_error"
-    translation_description="When exporting all the tracks to the SD card, a toast message
-      indicating error.">
-    Unable to export.
-  </string>
-  <string name="export_progress_message"
-    translation_description="When exporting all the tracks to the SD card, the progress message.">
-    Exporting all tracks...
-  </string>
-  <string name="export_success"
-    translation_description="When exporting all the tracks to the SD card, a toast message
-      indicating success.">
-    Export finished.
-  </string>
-
   <!-- Generic Strings -->
   <string name="generic_add"
     translation_description="The text on a button to say add.">
@@ -1066,25 +1050,13 @@ limitations under the License.
     translation_description="In the menu, to edit a track or a marker.">
     Edit
   </string>
-  <string name="menu_export_all"
-    translation_description="In the menu, to export all the tracks to the SD card.  This menu item
-      has a submenu.">
-    Export all...
-  </string>
-  <string name="menu_export_all_format"
-    translation_description="Under the 'Export all' menu option, the option to export all tracks as
-      a certain file format.
-
-      %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
-    Export as %1$s
-  </string>
   <string name="menu_help"
     translation_description="In the menu, to go to the help page.">
     Help
   </string>
-  <string name="menu_import_all"
-    translation_description="In the menu, to import all the tracks from the SD card.">
-    Import all
+  <string name="menu_import"
+    translation_description="In the menu, to import tracks from the SD card.">
+    Import from SD card
   </string>
   <string name="menu_insert_marker"
     translation_description="In the menu, to insert a marker.">
@@ -1119,12 +1091,17 @@ limitations under the License.
       submenu.">
     Save to SD card...
   </string>
+  <string name="menu_save_all"
+    translation_description="In the menu, to save all the tracks to the SD card. This menu item has
+      a submenu.">
+    Save all to SD card...
+  </string>
   <string name="menu_save_format"
-    translation_description="Under the 'Save to SD card...' menu option, the option to save a track
+    translation_description="Under the save to SD card menu option, the option to save a track
       as a certain file format.
 
       %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
-    As a %1$s file
+    Save as %1$s
   </string>
   <string name="menu_search"
     translation_description="In the menu, to start a textual search for tracks or waypoints.">
@@ -1191,11 +1168,6 @@ limitations under the License.
     translation_description="The My Tracks application name.">
       My Tracks
   </string>
-  <string name="my_tracks_importer"
-    translation_description="When opening a GPX file from a file manager, the name of the My Tracks
-      application that can import the file to My Tracks.">
-      My Tracks Importer
-  </string>
   <string name="my_tracks_recording_service"
     translation_description="When viewing the 'Running services' on Android, the name of the My
       Tracks service that is recording a track in the background.
@@ -1253,6 +1225,22 @@ limitations under the License.
     Preferred Units
   </string>
 
+  <!-- Save All -->
+  <string name="save_all_error"
+    translation_description="When saving all the tracks to the SD card, a toast message indicating
+      error.">
+    Unable to save.
+  </string>
+  <string name="save_all_progress_message"
+    translation_description="When saving all the tracks to the SD card, the progress message.">
+    Saving all tracks...
+  </string>
+  <string name="save_all_success"
+    translation_description="When saving all the tracks to the SD card, a toast message indicating
+      success.">
+    Save finished.
+  </string>
+  
   <!-- SD Card -->
   <string name="sd_card_canceled"
     translation_description="When exporting a track to the SD card, a message indicating that the

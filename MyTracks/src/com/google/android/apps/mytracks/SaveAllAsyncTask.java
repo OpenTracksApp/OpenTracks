@@ -31,13 +31,13 @@ import android.os.AsyncTask;
 import android.os.PowerManager.WakeLock;
 
 /**
- * AsyncTask to export all the tracks to the SD card.
+ * AsyncTask to save all the tracks to the SD card.
  *
  * @author Jimmy Shih
  */
-public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
+public class SaveAllAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
-  private ExportActivity exportActivity;
+  private SaveAllActivity saveAllActivity;
   private final TrackFileFormat trackFileFormat;
   private final Context context;
   private final MyTracksProviderUtils myTracksProviderUtils;
@@ -56,40 +56,40 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   /**
    * Creates an AsyncTask.
    *
-   * @param exportActivity the activity currently associated with this AsyncTask
+   * @param saveAllActivity the activity currently associated with this AsyncTask
    * @param trackFileFormat the track file format
    */
-  public ExportAsyncTask(ExportActivity exportActivity, TrackFileFormat trackFileFormat) {
-    this.exportActivity = exportActivity;
+  public SaveAllAsyncTask(SaveAllActivity saveAllActivity, TrackFileFormat trackFileFormat) {
+    this.saveAllActivity = saveAllActivity;
     this.trackFileFormat = trackFileFormat;
-    context = exportActivity.getApplicationContext();
-    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(exportActivity);
+    context = saveAllActivity.getApplicationContext();
+    myTracksProviderUtils = MyTracksProviderUtils.Factory.get(saveAllActivity);
 
     // Get the wake lock if not recording
-    if (PreferencesUtils.getRecordingTrackId(exportActivity) == -1L) {
-      wakeLock = SystemUtils.acquireWakeLock(exportActivity, wakeLock);
+    if (PreferencesUtils.getRecordingTrackId(saveAllActivity) == -1L) {
+      wakeLock = SystemUtils.acquireWakeLock(saveAllActivity, wakeLock);
     }
     success = false;
     completed = false;
-    messageId = R.string.export_error;
+    messageId = R.string.save_all_error;
   }
 
   /**
-   * Sets the current {@link ExportActivity} associated with this AyncTask.
+   * Sets the current {@link SaveAllActivity} associated with this AyncTask.
    *
-   * @param exportActivity the current {@link ExportActivity}, can be null
+   * @param saveAllActivity the current {@link SaveAllActivity}, can be null
    */
-  public void setActivity(ExportActivity exportActivity) {
-    this.exportActivity = exportActivity;
-    if (completed && exportActivity != null) {
-      exportActivity.onAsyncTaskCompleted(success, messageId);
+  public void setActivity(SaveAllActivity saveAllActivity) {
+    this.saveAllActivity = saveAllActivity;
+    if (completed && saveAllActivity != null) {
+      saveAllActivity.onAsyncTaskCompleted(success, messageId);
     }
   }
 
   @Override
   protected void onPreExecute() {
-    if (exportActivity != null) {
-      exportActivity.showProgressDialog();
+    if (saveAllActivity != null) {
+      saveAllActivity.showProgressDialog();
     }
   }
 
@@ -99,7 +99,7 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     try {
       cursor = myTracksProviderUtils.getTracksCursor(null, null, TracksColumns._ID);
       if (cursor == null) {
-        messageId = R.string.export_success;
+        messageId = R.string.save_all_success;
         return true;
       }
       int count = cursor.getCount();
@@ -123,7 +123,7 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         }
         publishProgress(i + 1, count);
       }
-      messageId = R.string.export_success;
+      messageId = R.string.save_all_success;
       return true;
     } finally {
       if (cursor != null) {
@@ -138,8 +138,8 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
   @Override
   protected void onProgressUpdate(Integer... values) {
-    if (exportActivity != null) {
-      exportActivity.setProgressDialogValue(values[0], values[1]);
+    if (saveAllActivity != null) {
+      saveAllActivity.setProgressDialogValue(values[0], values[1]);
     }
   }
 
@@ -147,8 +147,8 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
   protected void onPostExecute(Boolean result) {
     success = result;
     completed = true;
-    if (exportActivity != null) {
-      exportActivity.onAsyncTaskCompleted(success, messageId);
+    if (saveAllActivity != null) {
+      saveAllActivity.onAsyncTaskCompleted(success, messageId);
     }
   }
 
