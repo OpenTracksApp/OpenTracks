@@ -197,7 +197,7 @@ public class PreferencesUtils {
    * @param keyId the key id
    * @param defaultValue the default value
    */
-  private static boolean getBoolean(Context context, int keyId, boolean defaultValue) {
+  public static boolean getBoolean(Context context, int keyId, boolean defaultValue) {
     SharedPreferences sharedPreferences = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     return sharedPreferences.getBoolean(getKey(context, keyId), defaultValue);
@@ -210,7 +210,7 @@ public class PreferencesUtils {
    * @param keyId the key id
    * @param value the value
    */
-  private static void setBoolean(Context context, int keyId, boolean value) {
+  public static void setBoolean(Context context, int keyId, boolean value) {
     SharedPreferences sharedPreferences = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     Editor editor = sharedPreferences.edit();

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright 2010 Google Inc.
+Copyright 2012 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,34 +16,31 @@ limitations under the License.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
   style="@style/ScrollView" >
-  <LinearLayout
+  <RelativeLayout
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
-    android:orientation="vertical"
     android:padding="8dp" >
-    <TextView
-      android:id="@+id/marker_detail_name"
-      style="@style/TextLarge" />
-    <LinearLayout
-      android:id="@+id/marker_detail_waypoint_section"
+    <RadioGroup
+      android:id="@+id/marker_add_type"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentTop="true"
       android:layout_height="wrap_content"
-      android:layout_width="fill_parent"
-      android:orientation="vertical" >
-      <TextView
-        android:id="@+id/marker_detail_waypoint_marker_type"
-        style="@style/TextLarge" />
-      <TextView
-        android:id="@+id/marker_detail_waypoint_description"
-        style="@style/TextLarge" />
-    </LinearLayout>
-    <TableLayout
-      android:id="@+id/marker_detail_statistics_section"
+      android:layout_width="wrap_content" >
+      <RadioButton
+        android:id="@+id/marker_add_statistics"
+        android:text="@string/marker_statistics"
+        style="@style/TextMedium" />
+      <RadioButton
+        android:id="@+id/marker_add_waypoint"
+        android:text="@string/marker_waypoint"
+        style="@style/TextMedium" />
+    </RadioGroup>
+    <Button
+      android:id="@+id/marker_add_more_options"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentRight="true"
       android:layout_height="wrap_content"
-      android:layout_width="fill_parent"
-      android:paddingTop="8dp"
-      android:shrinkColumns="0,2"
-      android:stretchColumns="0,2" >
-      <include layout="@layout/stats_core" />
-    </TableLayout>
-  </LinearLayout>
+      android:layout_width="wrap_content"
+      android:text="@string/generic_more_options" />
+  </RelativeLayout>
 </ScrollView>

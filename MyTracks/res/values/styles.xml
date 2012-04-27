@@ -45,6 +45,12 @@ limitations under the License.
     <item name="android:selectAllOnFocus">true</item>
     <item name="android:singleLine">false</item>
   </style>
+  <!-- The style for the edit label -->
+  <style name="EditLabel" parent="@style/TextMedium" />
+  <!-- The style for the edit lable with padding top -->
+  <style name="EditLabel.WithPaddingTop">
+    <item name="android:paddingTop">16dp</item>
+  </style>
   <!-- The style for the edit name -->
   <style name="EditName" parent="@style/TextMedium.WithIcon">
     <item name="android:inputType">textAutoCorrect|textCapWords</item>

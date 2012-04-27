@@ -28,7 +28,7 @@ import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.IntentUtils;
-import com.google.android.apps.mytracks.util.ListItemUtil;
+import com.google.android.apps.mytracks.util.ListItemUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
@@ -165,7 +165,7 @@ public class SearchListActivity extends AbstractMyTracksActivity {
         String totalDistance = (String) resultMap.get(TOTAL_DISTANCE_FIELD);
         String startTime = (String) resultMap.get(START_TIME_FIELD);
         String description = (String) resultMap.get(DESCRIPTION_FIELD);
-        ListItemUtil.setListItem(view,
+        ListItemUtils.setListItem(view,
             name,
             iconId,
             category,

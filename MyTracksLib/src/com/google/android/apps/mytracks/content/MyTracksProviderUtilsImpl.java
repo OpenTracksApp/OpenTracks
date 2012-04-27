@@ -795,6 +795,37 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   @Override
+  public int getNextMarkerNumber(long trackId, boolean statistics) {
+    if (trackId == -1L) {
+      return -1;
+    }
+    String[] projection = { "_id" };
+    String selection = WaypointsColumns.TRACKID + "=?  AND " + WaypointsColumns.TYPE + "=?";
+    String[] selectionArgs = new String[] { String.valueOf(trackId),
+        String.valueOf(statistics ? Waypoint.TYPE_STATISTICS : Waypoint.TYPE_WAYPOINT) };
+    Cursor cursor = null;
+    try {
+      cursor = contentResolver.query(
+          WaypointsColumns.CONTENT_URI, projection, selection, selectionArgs, null);
+      if (cursor != null) {
+        int count = cursor.getCount();
+        /*
+         * For statistics markers, the first marker is for the track statistics,
+         * thus just return the count as the next user visible number.
+         */
+        return statistics ? count : count + 1;
+      }
+    } catch (RuntimeException e) {
+      Log.w(TAG, "Caught unexpected exception.", e);
+    } finally {
+      if (cursor != null) {
+        cursor.close();
+      }
+    }
+    return -1;
+  }
+ 
+  @Override
   public Track getLastTrack() {
     Cursor cursor = null;
     try {

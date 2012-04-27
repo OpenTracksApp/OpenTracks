@@ -29,7 +29,7 @@ import android.test.AndroidTestCase;
 public class WaypointCreationRequestTest extends AndroidTestCase {
 
   public void testTypeParceling() {
-    WaypointCreationRequest original = WaypointCreationRequest.DEFAULT_MARKER;
+    WaypointCreationRequest original = WaypointCreationRequest.DEFAULT_WAYPOINT;
     Parcel p = Parcel.obtain();
     original.writeToParcel(p, 0);
     p.setDataPosition(0);
@@ -42,7 +42,7 @@ public class WaypointCreationRequestTest extends AndroidTestCase {
 
   public void testAllAttributesParceling() {
     WaypointCreationRequest original =
-      new WaypointCreationRequest(WaypointType.MARKER, "name", "category", "description", "img.png");
+      new WaypointCreationRequest(WaypointType.WAYPOINT, "name", "category", "description", "img.png");
     Parcel p = Parcel.obtain();
     original.writeToParcel(p, 0);
     p.setDataPosition(0);

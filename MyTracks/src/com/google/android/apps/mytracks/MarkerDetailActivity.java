@@ -73,11 +73,12 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity {
       waypointSection.setVisibility(View.VISIBLE);
       statisticsSection.setVisibility(View.GONE);
 
-      TextView markerType = (TextView) findViewById(R.id.marker_detail_marker_type);
-      markerType.setText(getString(R.string.marker_detail_marker_type, waypoint.getCategory()));
-      TextView description = (TextView) findViewById(R.id.marker_detail_description);
-      description.setText(getString(R.string.marker_detail_description, waypoint.getDescription()));
-
+      TextView markerType = (TextView) findViewById(R.id.marker_detail_waypoint_marker_type);
+      markerType.setText(getString(
+          R.string.marker_detail_waypoint_marker_type, waypoint.getCategory()));
+      TextView description = (TextView) findViewById(R.id.marker_detail_waypoint_description);
+      description.setText(getString(
+          R.string.marker_detail_waypoint_description, waypoint.getDescription()));
     } else {
       waypointSection.setVisibility(View.GONE);
       statisticsSection.setVisibility(View.VISIBLE);

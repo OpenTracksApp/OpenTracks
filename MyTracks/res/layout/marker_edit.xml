@@ -30,48 +30,62 @@ limitations under the License.
         android:layout_width="fill_parent"
         android:orientation="vertical" >
         <TextView
-          android:text="@string/marker_edit_type"
-          style="@style/TextMedium" />
+          android:text="@string/marker_type"
+          style="@style/EditLabel" />
         <RadioGroup
           android:id="@+id/marker_edit_type"
           android:layout_height="wrap_content"
           android:layout_width="wrap_content" >
           <RadioButton
-            android:id="@+id/marker_edit_type_statistics"
-            android:text="@string/marker_edit_type_statistics"
+            android:id="@+id/marker_edit_statistics"
+            android:text="@string/marker_statistics"
             style="@style/TextMedium" />
           <RadioButton
-            android:id="@+id/marker_edit_type_waypoint"
-            android:text="@string/marker_edit_type_waypoint"
+            android:id="@+id/marker_edit_waypoint"
+            android:text="@string/marker_waypoint"
             style="@style/TextMedium" />
         </RadioGroup>
       </LinearLayout>
       <TextView
         android:text="@string/generic_name"
-        style="@style/TextMedium" />
-      <EditText
-        android:hint="@string/generic_name"
-        android:id="@+id/marker_edit_name"
-        style="@style/EditName" />
+        style="@style/EditLabel" />
+      <LinearLayout
+        android:id="@+id/marker_edit_statistics_section"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:orientation="vertical" >
+        <EditText
+          android:drawableLeft="@drawable/yellow_pushpin"
+          android:hint="@string/generic_name"
+          android:id="@+id/marker_edit_statistics_name"
+          android:imeOptions="actionDone"
+          style="@style/EditName" />
+      </LinearLayout>
       <LinearLayout
         android:id="@+id/marker_edit_waypoint_section"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:orientation="vertical" >
+        <EditText
+          android:drawableLeft="@drawable/blue_pushpin"
+          android:hint="@string/generic_name"
+          android:id="@+id/marker_edit_waypoint_name"
+          android:imeOptions="actionNext"
+          style="@style/EditName" />
         <TextView
-          android:text="@string/marker_edit_marker_type"
-          style="@style/TextMedium" />
+          android:text="@string/marker_edit_waypoint_marker_type"
+          style="@style/EditLabel.WithPaddingTop" />
         <AutoCompleteTextView
-          android:hint="@string/marker_edit_marker_type_hint"
-          android:id="@+id/marker_edit_marker_type"
+          android:hint="@string/marker_edit_waypoint_marker_type_hint"
+          android:id="@+id/marker_edit_waypoint_marker_type"
           android:imeOptions="actionNext"
           style="@style/EditCategory" />
         <TextView
           android:text="@string/generic_description"
-          style="@style/TextMedium" />
+          style="@style/EditLabel.WithPaddingTop" />
         <EditText
           android:hint="@string/generic_description"
-          android:id="@+id/marker_edit_description"
+          android:id="@+id/marker_edit_waypoint_description"
           android:imeOptions="actionDone"
           style="@style/EditDescription" />
       </LinearLayout>

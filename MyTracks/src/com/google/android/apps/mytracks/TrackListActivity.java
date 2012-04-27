@@ -28,7 +28,7 @@ import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.EulaUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
-import com.google.android.apps.mytracks.util.ListItemUtil;
+import com.google.android.apps.mytracks.util.ListItemUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
@@ -223,7 +223,7 @@ public class TrackListActivity extends FragmentActivity {
           startTime = null;
         }
         String description = cursor.getString(descriptionIndex);
-        ListItemUtil.setListItem(view,
+        ListItemUtils.setListItem(view,
             name,
             iconId,
             category,

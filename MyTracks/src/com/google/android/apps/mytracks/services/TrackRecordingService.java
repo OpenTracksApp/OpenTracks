@@ -933,12 +933,12 @@ public class TrackRecordingService extends Service {
           "Unable to insert waypoint marker while not recording!");
     }
     if (request == null) {
-      request = WaypointCreationRequest.DEFAULT_MARKER;
+      request = WaypointCreationRequest.DEFAULT_WAYPOINT;
     }
     Waypoint wpt = new Waypoint();
     switch (request.getType()) {
-      case MARKER:
-        buildMarker(wpt, request);
+      case WAYPOINT:
+        buildWaypointMarker(wpt, request);
         break;
       case STATISTICS:
         buildStatisticsMarker(wpt, request);
@@ -963,18 +963,22 @@ public class TrackRecordingService extends Service {
     return Long.parseLong(uri.getLastPathSegment());
   }
 
-  private void buildMarker(Waypoint wpt, WaypointCreationRequest request) {
+  private void buildWaypointMarker(Waypoint wpt, WaypointCreationRequest request) {
     wpt.setType(Waypoint.TYPE_WAYPOINT);
     if (request.getIconUrl() == null) {
       wpt.setIcon(getString(R.string.marker_waypoint_icon_url));
     } else {
       wpt.setIcon(request.getIconUrl());
     }
-    if (request.getName() == null) {
-      wpt.setName(getString(R.string.marker_edit_type_waypoint));
+    String name;
+    if (request.getName() != null) {
+      name = request.getName();
     } else {
-      wpt.setName(request.getName());
+      int nextMarkerNumber = providerUtils.getNextMarkerNumber(recordingTrackId, false);
+      name = nextMarkerNumber == -1 ? getString(R.string.marker_type_waypoint)
+          : getString(R.string.marker_waypoint_name_format, nextMarkerNumber);
     }
+    wpt.setName(name);
     if (request.getCategory() != null) {
       wpt.setCategory(request.getCategory());
     }
@@ -1003,8 +1007,15 @@ public class TrackRecordingService extends Service {
 
     // Set the rest of the waypoint data
     waypoint.setType(Waypoint.TYPE_STATISTICS);
-    waypoint.setName(request.getName() != null ? request.getName()
-        : getString(R.string.marker_edit_type_statistics));
+    String name;
+    if (request.getName() != null) {
+      name = request.getName();
+    } else {
+      int nextMarkerNumber = providerUtils.getNextMarkerNumber(recordingTrackId, true);
+      name = nextMarkerNumber == -1 ? getString(R.string.marker_type_statistics)
+          : getString(R.string.marker_statistics_name_format, nextMarkerNumber);
+    }
+    waypoint.setName(name);
     waypoint.setStatistics(waypointStatsBuilder.getStatistics());
     waypoint.setDescription(descriptionGenerator.generateWaypointDescription(waypoint));
     waypoint.setIcon(getString(R.string.marker_statistics_icon_url));

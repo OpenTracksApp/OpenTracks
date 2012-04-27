@@ -26,7 +26,7 @@ limitations under the License.
       android:padding="8dp" >
       <TextView
         android:text="@string/generic_name"
-        style="@style/TextMedium" />
+        style="@style/EditLabel" />
       <EditText
         android:drawableLeft="@drawable/track"
         android:hint="@string/generic_name"
@@ -35,7 +35,7 @@ limitations under the License.
         style="@style/EditName" />
       <TextView
         android:text="@string/track_edit_activity_type"
-        style="@style/TextMedium" />
+        style="@style/EditLabel.WithPaddingTop" />
       <AutoCompleteTextView
         android:hint="@string/track_edit_activity_type_hint"
         android:id="@+id/track_edit_activity_type"
@@ -43,7 +43,7 @@ limitations under the License.
         style="@style/EditCategory" />
       <TextView
         android:text="@string/generic_description"
-        style="@style/TextMedium" />
+        style="@style/EditLabel.WithPaddingTop" />
       <EditText
         android:hint="@string/generic_description"
         android:id="@+id/track_edit_description"

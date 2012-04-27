@@ -25,12 +25,12 @@ import com.google.android.apps.mytracks.fragments.ChartSettingsDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
 import com.google.android.apps.mytracks.fragments.MapFragment;
+import com.google.android.apps.mytracks.fragments.MarkerAddDialogFragment;
 import com.google.android.apps.mytracks.fragments.StatsFragment;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.io.sendtogoogle.UploadServiceChooserActivity;
-import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
@@ -47,7 +47,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.os.RemoteException;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,7 +54,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -271,8 +269,8 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
         TrackRecordingServiceConnectionUtils.stop(this, trackRecordingServiceConnection);
         return true;
       case R.id.track_detail_insert_marker:
-        intent = IntentUtils.newIntent(this, MarkerEditActivity.class);
-        startActivity(intent);
+        MarkerAddDialogFragment.newInstance(trackId)
+            .show(getSupportFragmentManager(), MarkerAddDialogFragment.MARKER_ADD_DIALOG_TAG);
         return true;
       case R.id.track_detail_play:
         if (isEarthInstalled()) {
@@ -379,25 +377,8 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
   public boolean onTrackballEvent(MotionEvent event) {
     if (event.getAction() == MotionEvent.ACTION_DOWN) {
       if (TrackRecordingServiceConnectionUtils.isRecording(this, trackRecordingServiceConnection)) {
-        ITrackRecordingService trackRecordingService = trackRecordingServiceConnection
-            .getServiceIfBound();
-        if (trackRecordingService == null) {
-          Log.e(TAG, "The track recording service is null");
-          return true;
-        }
-        boolean success = false;
-        try {
-          long waypointId = trackRecordingService.insertWaypoint(
-              WaypointCreationRequest.DEFAULT_STATISTICS);
-          if (waypointId != -1L) {
-            success = true;
-          }
-        } catch (RemoteException e) {
-          Log.e(TAG, "Unable to insert waypoint", e);
-        }
-        Toast.makeText(this,
-            success ? R.string.marker_edit_add_success : R.string.marker_edit_add_error,
-            success ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG).show();
+        TrackRecordingServiceConnectionUtils.addMarker(
+            this, trackRecordingServiceConnection, WaypointCreationRequest.DEFAULT_STATISTICS);
         return true;
       }
     }

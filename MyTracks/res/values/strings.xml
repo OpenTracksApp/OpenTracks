@@ -654,6 +654,10 @@ limitations under the License.
   </string>
 
   <!-- Generic Strings -->
+  <string name="generic_add"
+    translation_description="The text on a button to say add.">
+    Add
+  </string>
   <string name="generic_cancel"
     translation_description="The text on a button to say cancel.">
     Cancel
@@ -670,6 +674,10 @@ limitations under the License.
     translation_description="The title on an alert dialog indicating error.">
     Error
   </string>
+  <string name="generic_more_options"
+    translation_description="The text on a button to say more options.">
+    More options
+  </string>  
   <string name="generic_name"
     translation_description="The text label for entering a name.">
     Name
@@ -951,67 +959,47 @@ limitations under the License.
   </string>
 
   <!-- Marker -->
+  <string name="marker_add_error"
+    translation_description="When adding a marker, the message indicating error.">
+    Unable to insert a marker. Try again.
+  </string>
+  <string name="marker_add_success"
+    translation_description="When adding a marker, the message indicating success.">
+    A marker was inserted.
+  </string>
   <string name="marker_delete_one_marker_confirm_message"
     translation_description="When deleting a marker, the confirmation dialog message informing the
       user that the marker will be permanently deleted from the phone.">
     The marker will be permanently deleted from the phone.
   </string>
-  <string name="marker_detail_description"
-    translation_description="In the marker detail page, the label for the description.
+  <string name="marker_detail_name"
+    translation_description="In the marker detail page, the label for the marker name.
+
+      %1$s marker name. E.g., 'Waypoint 1'.">
+    Name: %1$s
+  </string>  
+  <string name="marker_detail_waypoint_description"
+    translation_description="In the marker detail page, the label for the waypoint description.
 
       %1$s marker description. E.g., 'At the top'.">
     Description: %1$s
   </string>  
-  <string name="marker_detail_marker_type"
-    translation_description="In the marker detail page, the label for the marker type.
+  <string name="marker_detail_waypoint_marker_type"
+    translation_description="In the marker detail page, the label for the waypoint marker type.
 
       %1$s marker type. E.g., 'building'.">
     Marker type: %1$s
   </string>  
-  <string name="marker_detail_name"
-    translation_description="In the marker detail page, the label for the marker name.
-
-      %1$s marker name. E.g., 'Waypoint1'.">
-    Name: %1$s
-  </string>  
-  <string name="marker_edit_add"
-    translation_description="The label on the button to add a marker.">
-    Add
-  </string>
-  <string name="marker_edit_add_error"
-    translation_description="When adding a marker, the message indicating error.">
-    Unable to insert a marker. Try again.
-  </string>
-  <string name="marker_edit_add_success"
-    translation_description="When adding a marker, the message indicating success.">
-    A marker was inserted.
-  </string>
-  <string name="marker_edit_add_title"
-    translation_description="The title of the page to add a new marker.">
-    New Marker
-  </string>
-  <string name="marker_edit_marker_type"
-    translation_description="The label for the text field to edit the marker type, including some
-      exmaples.">
+  <string name="marker_edit_waypoint_marker_type"
+    translation_description="In the marker edit page, the label for the waypoint marker type,
+      including some exmaples.">
     Marker type (e.g. building, pothole...)
   </string>
-  <string name="marker_edit_marker_type_hint"
-    translation_description="The hint in the 'Marker type' text field when it is empty.">
+  <string name="marker_edit_waypoint_marker_type_hint"
+    translation_description="In the marker edit page, the hint in the waypoint marker type text
+      field when it is empty.">
     Marker type
-  </string>
-  <string name="marker_edit_type"
-    translation_description="When adding a marker, the label to select a type, statistics or
-      waypoint.">
-    Type
-  </string>
-  <string name="marker_edit_type_statistics"
-    translation_description="The label to add a statistics marker.">
-    Statistics
-  </string>
-  <string name="marker_edit_type_waypoint"
-    translation_description="The label to add a waypoint marker.">
-    Waypoint
-  </string>    
+  </string> 
   <string name="marker_label_end"
     translation_description="When inserting a marker to indicate the end of a track, the marker's
       name. E.g., 'track_name (End)'.
@@ -1030,7 +1018,33 @@ limitations under the License.
     translation_description="The message when the marker list is empty.">
     You don\'t have any markers.
   </string>
+  <string name="marker_statistics"
+    translation_description="The label to add a statistics marker.">
+    Statistics
+  </string>
+  <string name="marker_statistics_name_format"
+    translation_description="When adding a statistics marker, the string format for the default
+      name.
 
+      %1$d: number. E.g., '1'.">
+    Statistics %1$d
+  </string>
+  <string name="marker_type"
+    translation_description="When adding a marker, the label to select a type, statistics or
+      waypoint.">
+    Type
+  </string>
+  <string name="marker_waypoint"
+    translation_description="The label to add a waypoint marker.">
+    Waypoint
+  </string>
+  <string name="marker_waypoint_name_format"
+    translation_description="When adding a waypoint marker, the string format for the default name.
+
+      %1$d: number. E.g., '1'.">
+    Waypoint %1$d
+  </string>
+      
   <!-- Menu Items -->
   <string name="menu_aggregated_statistics"
     translation_description="In the menu, to go to the aggregated statistics page.">

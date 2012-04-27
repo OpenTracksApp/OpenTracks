@@ -130,6 +130,15 @@ public interface MyTracksProviderUtils {
   long getLastWaypointId(long trackId);
 
   /**
+   * Gets the next marker number.
+   *
+   * @param trackId the track id
+   * @param statistics true for statistics marker, false for waypoint marker
+   * @return the next number or -1 if unable to get the value
+   */
+  int getNextMarkerNumber(long trackId, boolean statistics);
+  
+  /**
    * Finds the last recorded track from the track provider.
    *
    * @return the last track, or null if no tracks available
