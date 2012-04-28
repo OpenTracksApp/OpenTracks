@@ -70,7 +70,7 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
     instrumentation = getInstrumentation();
     activityMyTracks = getActivity();
     solo = new Solo(instrumentation, activityMyTracks);
-    // Checks if open MyTracks first time after install. If so, there would be a
+    // Check if open MyTracks first time after install. If so, there would be a
     // welcome view with accept buttons. And makes sure only check once.
     if (!checkedFirstLaunch) {
       if ((getButtonOnScreen(activityMyTracks.getString(R.string.eula_accept)) != null)) {
@@ -80,7 +80,7 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
       checkedFirstLaunch = true;
     }
 
-    // Makes every track name is unique to make sure every check can be trusted.
+    // Make every track name is unique to make sure every check can be trusted.
     trackName = TRACK_NAME_PREFIX + System.currentTimeMillis();
   }
 
@@ -90,6 +90,11 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
    * menus in these views.
    */
   public void testSwitchViewsAndMenusOfView() {
+    solo.sendKey(KeyEvent.KEYCODE_MENU);
+    findMenuItem(activityMyTracks.getString(R.string.menu_delete_all), true);
+    solo.clickOnButton(activityMyTracks.getString(R.string.generic_ok));
+    instrumentation.waitForIdleSync();
+    
     createSimpleTrack(3);
 
     solo.goBack();
@@ -195,7 +200,7 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
 
     solo.clickOnButton(activityMyTracks.getString(R.string.generic_save));
     instrumentation.waitForIdleSync();
-    // Goes back to track list.
+    // Go back to track list.
     solo.goBack();
 
     assertTrue(solo.searchText(newTrackName));
@@ -219,40 +224,40 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
     sendKeys(KeyEvent.KEYCODE_MENU);
     findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
     instrumentation.waitForIdleSync();
-    // Rotates on the settings page.
+    // Rotate on the settings page.
     rotateAllActivities();
     solo.waitForText(activityMyTracks.getString(R.string.settings_reset));
-    // Resets all settings at first.
+    // Reset all settings at first.
     solo.clickOnText(activityMyTracks.getString(R.string.settings_reset));
     solo.clickOnButton(activityMyTracks.getString(R.string.generic_ok));
-    // Changes a setting of display.
+    // Change a setting of display.
     solo.clickOnText(activityMyTracks.getString(R.string.settings_display));
     solo.waitForText(activityMyTracks.getString(R.string.settings_display_metric));
-    // Rotates on a sub setting page.
+    // Rotate on a sub setting page.
     rotateAllActivities();
     solo.waitForText(activityMyTracks.getString(R.string.settings_display_metric));
     ArrayList<CheckBox> displayCheckBoxs = solo.getCurrentCheckBoxes();
     boolean useMetric = displayCheckBoxs.get(0).isChecked();
     solo.clickOnCheckBox(0);
     solo.goBack();
-    // Changes a setting of sharing.
+    // Change a setting of sharing.
     solo.clickOnText(activityMyTracks.getString(R.string.settings_sharing));
     solo.waitForText(activityMyTracks.getString(R.string.settings_sharing_allow_access));
     ArrayList<CheckBox> sharingCheckBoxs = solo.getCurrentCheckBoxes();
     boolean newMapsPublic = sharingCheckBoxs.get(0).isChecked();
     solo.clickOnCheckBox(0);
-    // Rotates on a sub setting page when the value of a checkbox is changed.
+    // Rotate on a sub setting page when the value of a checkbox is changed.
     instrumentation.waitForIdleSync();
     rotateAllActivities();
     solo.waitForText(activityMyTracks.getString(R.string.settings_sharing_allow_access));
     assertEquals(!newMapsPublic, sharingCheckBoxs.get(0).isChecked());
     solo.goBack();
 
-    // Resets all settings.
+    // Reset all settings.
     solo.clickOnText(activityMyTracks.getString(R.string.settings_reset));
     solo.clickOnButton(activityMyTracks.getString(R.string.generic_ok));
 
-    // Checks settings.
+    // Check settings.
     solo.clickOnText(activityMyTracks.getString(R.string.settings_display));
     solo.waitForText(activityMyTracks.getString(R.string.settings_display_metric));
     displayCheckBoxs = solo.getCurrentCheckBoxes();
@@ -279,7 +284,7 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
     SmokeTestUtils.sendGps(2);
     createWaypointAndStatistics();
     SmokeTestUtils.sendGps(2);
-    // Backs to tracks list.
+    // Back to tracks list.
     solo.goBack();
     instrumentation.waitForIdleSync();
     rotateAllActivities();
@@ -288,7 +293,7 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
     solo.clickOnButton(activityMyTracks.getString(R.string.generic_save));
 
     instrumentation.waitForIdleSync();
-    // Checks the new track
+    // Check the new track
     assertTrue(solo.waitForText(trackName, 1, 5000, true, false));
   }
 
@@ -326,15 +331,15 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
    * </ul>
    */
   public void testExportAndImportTracks() {
-    // Creates a new track with 3 gps data.
+    // Create a new track with 3 gps data.
     createSimpleTrack(3);
     solo.goBack();
     instrumentation.waitForIdleSync();
-    // Creates a empty track.
+    // Create a empty track.
     createSimpleTrack(0);
     solo.goBack();
     instrumentation.waitForIdleSync();
-    // Deletes all exported gpx and kml tracks.
+    // Delete all exported gpx and kml tracks.
     deleteExportedFiles(GPX);
     deleteExportedFiles(KML);
     int gpxFilesNumber = 0;
@@ -344,7 +349,7 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
       gpxFilesNumber = getExportedFiles(GPX).length;
     }
 
-    // Gets track number in current track list of MyTracks.
+    // Get track number in current track list of MyTracks.
     int trackNumber = solo.getCurrentListViews().get(0).getCount();
 
     // No file to imported.
@@ -354,34 +359,34 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
         FileUtils.buildExternalDirectoryPath(GPX)));
     solo.clickOnButton(activityMyTracks.getString(R.string.generic_ok));
 
-    // Clicks to export tracks(At least one track) to Gpx files.
+    // Click to export tracks(At least one track) to Gpx files.
     sendKeys(KeyEvent.KEYCODE_MENU);
     findMenuItem(activityMyTracks.getString(R.string.menu_export_all), true);
     solo.clickOnText(String.format(activityMyTracks.getString(R.string.menu_export_all_format),
         GPX.toUpperCase()));
     rotateAllActivities();
     solo.waitForText(activityMyTracks.getString(R.string.export_success));
-    // Checks export file.
+    // Check export file.
     assertEquals(gpxFilesNumber + trackNumber, getExportedFiles(GPX).length);
     instrumentation.waitForIdleSync();
 
-    // Clicks to import track.
+    // Click to import track.
     gpxFilesNumber = getExportedFiles(GPX).length;
     trackNumber = solo.getCurrentListViews().get(0).getCount();
 
     sendKeys(KeyEvent.KEYCODE_MENU);
     findMenuItem(activityMyTracks.getString(R.string.menu_import_all), true);
     rotateAllActivities();
-    // Waits for the prefix of import success string is much faster than wait
+    // Wait for the prefix of import success string is much faster than wait
     // the whole string.
     solo.waitForText(activityMyTracks.getString(R.string.import_success).split("%")[0]);
-    // Checks import tracks should be equal with the sum of trackNumber and
+    // Check import tracks should be equal with the sum of trackNumber and
     // gpxFilesNumber;
     solo.clickOnText(activityMyTracks.getString(R.string.generic_ok));
     instrumentation.waitForIdleSync();
     assertEquals(trackNumber + gpxFilesNumber, solo.getCurrentListViews().get(0).getCount());
 
-    // Clicks to export tracks(At least two tracks) to KML files.
+    // Click to export tracks(At least two tracks) to KML files.
     gpxFilesNumber = getExportedFiles(GPX).length;
     trackNumber = solo.getCurrentListViews().get(0).getCount();
     sendKeys(KeyEvent.KEYCODE_MENU);
@@ -389,7 +394,7 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
     solo.clickOnText(String.format(activityMyTracks.getString(R.string.menu_export_all_format),
         KML.toUpperCase()));
     solo.waitForText(activityMyTracks.getString(R.string.export_success));
-    // Checks export file.
+    // Check export files.
     assertEquals(gpxFilesNumber, getExportedFiles(GPX).length);
     assertEquals(trackNumber, getExportedFiles(KML).length);
   }
@@ -407,7 +412,7 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
     if (!findMenuItem(activityMyTracks.getString(R.string.menu_satellite_mode), false)) {
       isMapMode = false;
     }
-    // Switches to satellite mode if it's map mode now..
+    // Switch to satellite mode if it's map mode now..
     solo.clickOnText(activityMyTracks.getString(isMapMode ? R.string.menu_satellite_mode
         : R.string.menu_map_mode));
 
@@ -416,7 +421,7 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
     ArrayList<View> allViews = solo.getViews();
     for (View view : allViews) {
       if (view instanceof MapView) {
-        assertEquals(isMapMode, !(((MapView) view).isSatellite()));
+        assertEquals(isMapMode, !((MapView) view).isSatellite());
       }
     }
     instrumentation.waitForIdleSync();
@@ -426,18 +431,18 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
     instrumentation.waitForIdleSync();
     rotateAllActivities();
 
-    // Switches back.
+    // Switch back.
     solo.clickOnText(activityMyTracks.getString(isMapMode ? R.string.menu_satellite_mode
         : R.string.menu_map_mode));
     isMapMode = !isMapMode;
     allViews = solo.getViews();
     for (View view : allViews) {
       if (view instanceof MapView) {
-        assertEquals(isMapMode, !(((MapView) view).isSatellite()));
+        assertEquals(isMapMode, !((MapView) view).isSatellite());
       }
     }
 
-    // Waits for the TrackDetailActivity, or the stop button will can not be
+    // Wait for the TrackDetailActivity, or the stop button will can not be
     // found in next step.
     solo.waitForText(activityMyTracks.getString(R.string.track_detail_chart_tab), 0, 1000);
     stopRecording(true);
@@ -512,9 +517,9 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
    */
   private void verifyFirstLaunch() {
     solo.clickOnText(activityMyTracks.getString(R.string.eula_accept));
-    // Clicks for welcome.
+    // Click for welcome.
     solo.clickOnText(activityMyTracks.getString(R.string.generic_ok));
-    // Clicks for choose units.
+    // Click for choose units.
     solo.clickOnText(activityMyTracks.getString(R.string.generic_ok));
     instrumentation.waitForIdleSync();
   }
@@ -599,7 +604,7 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
    * Gets a kind of exported files.
    * 
    * @param trackKind the kind of track
-   * @return files array of such kind of exported tracks
+   * @return files array  of such kind of exported tracks
    */
   private File[] getExportedFiles(final String trackKind) {
     String filePath = FileUtils.buildExternalDirectoryPath(trackKind);
@@ -676,7 +681,7 @@ public class MyTracksSmokeTest extends ActivityInstrumentationTestCase2<TrackLis
   }
 
   /**
-   * Rotates the all activities.
+   * Rotates all activities.
    */
   private void rotateAllActivities() {
     ArrayList<Activity> allActivities = solo.getAllOpenedActivities();

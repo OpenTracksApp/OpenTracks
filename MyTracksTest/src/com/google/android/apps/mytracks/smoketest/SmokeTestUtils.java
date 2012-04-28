@@ -42,8 +42,7 @@ public class SmokeTestUtils {
   private static final float DELTA_LONGITUDE = 0.0005f;
   private static final float DELTA_LADITUDE = 0.0005f;
 
-  private SmokeTestUtils() {
-  }
+  private SmokeTestUtils() {}
 
   /**
    * Sends Gps data to emulator.
@@ -51,9 +50,7 @@ public class SmokeTestUtils {
    * @param number send times
    */
   public static void sendGps(int number) {
-    if (number < 1) {
-      return;
-    }
+    if (number < 1) { return; }
     PrintStream out = null;
     Socket socket = null;
     try {
@@ -83,15 +80,11 @@ public class SmokeTestUtils {
   /**
    * Rotates the given activity.
    * 
-   * @param activity a given activity.
-   * @return current orientation of the activity.
+   * @param activity a given activity
    */
-  public static int rotateActivity(Activity activity) {
-    if (activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-      activity.setRequestedOrientation(ORIENTATION_LANDSCAPE);
-    } else {
-      activity.setRequestedOrientation(ORIENTATION_PORTRAIT);
-    }
-    return activity.getRequestedOrientation();
+  public static void rotateActivity(Activity activity) {
+    activity
+        .setRequestedOrientation(activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? ORIENTATION_LANDSCAPE
+            : ORIENTATION_PORTRAIT);
   }
 }
