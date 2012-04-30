@@ -237,9 +237,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity
     menu.findItem(R.id.track_detail_chart_settings).setVisible(
         ChartFragment.CHART_FRAGMENT_TAG.equals(currentTabTag));
     menu.findItem(R.id.track_detail_stats_settings).setVisible(
-        StatsFragment.STATS_FRAGMENT_TAG.equals(currentTabTag));
-    menu.findItem(R.id.track_detail_my_location)
-        .setVisible(MapFragment.MAP_FRAGMENT_TAG.equals(currentTabTag));
+        StatsFragment.STATS_FRAGMENT_TAG.equals(currentTabTag));   
     MenuItem satelliteMode = menu.findItem(R.id.track_detail_satellite_mode)
         .setVisible(MapFragment.MAP_FRAGMENT_TAG.equals(currentTabTag));
     
@@ -342,13 +340,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity
       case R.id.track_detail_delete:
         DeleteOneTrackDialogFragment.newInstance(trackId).show(
             getSupportFragmentManager(), DeleteOneTrackDialogFragment.DELETE_ONE_TRACK_DIALOG_TAG);
-        return true;
-      case R.id.track_detail_my_location:
-        mapFragment = (MapFragment) getSupportFragmentManager()
-            .findFragmentByTag(MapFragment.MAP_FRAGMENT_TAG);
-        if (mapFragment != null) {
-          mapFragment.showMyLocation();
-        }
         return true;
       case R.id.track_detail_satellite_mode:
         mapFragment = (MapFragment) getSupportFragmentManager()

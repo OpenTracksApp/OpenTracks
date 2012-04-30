@@ -43,6 +43,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -86,6 +87,7 @@ public class MapFragment extends Fragment
   private View mapViewContainer;
   private MapOverlay mapOverlay;
   private MapView mapView;
+  private ImageButton myLocationImageButton;
   private TextView messageTextView;
 
   @Override
@@ -100,6 +102,13 @@ public class MapFragment extends Fragment
     mapView.setOnTouchListener(this);
     mapView.setBuiltInZoomControls(true);
     mapView.getOverlays().add(mapOverlay);
+    myLocationImageButton = (ImageButton) mapViewContainer.findViewById(R.id.map_my_location);
+    myLocationImageButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        showMyLocation();       
+      }
+    });
     messageTextView = (TextView) mapViewContainer.findViewById(R.id.map_message);
 
     return mapViewContainer;
@@ -150,7 +159,7 @@ public class MapFragment extends Fragment
   /**
    * Shows my location.
    */
-  public void showMyLocation() {
+  private void showMyLocation() {
     updateTrackDataHub();
     keepMyLocationVisible = true;
     zoomToMyLocation = true;

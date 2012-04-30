@@ -77,10 +77,6 @@ limitations under the License.
     android:id="@+id/track_detail_delete"
     android:title="@string/menu_delete"/>
   <item
-    android:icon="@drawable/menu_my_location"
-    android:id="@+id/track_detail_my_location"
-    android:title="@string/menu_my_location"/>
-  <item
     android:icon="@drawable/menu_satellite_mode"
     android:id="@+id/track_detail_satellite_mode"
     android:title="@string/menu_satellite_mode"/>

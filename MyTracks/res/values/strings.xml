@@ -1070,10 +1070,6 @@ limitations under the License.
     translation_description="In the menu, to show a list of markers for the current track.">
     Markers
   </string>
-  <string name="menu_my_location"
-    translation_description="In the menu, to display the user's current location.">
-    My location
-  </string>
   <string name="menu_play"
     translation_description="In the menu, to play a track.">
     Play
@@ -1155,6 +1151,11 @@ limitations under the License.
   </string>
 
   <!-- My Location -->
+  <string name="my_location"
+    translation_description="The accessibility description for the My Location button on the map
+      view.">
+    My Location
+  </string>
   <string name="my_location_approximate_location"
     translation_description="When displaying the user's current location, a status message
       indicating that GPS is not available and an approximate location is used instead.">
