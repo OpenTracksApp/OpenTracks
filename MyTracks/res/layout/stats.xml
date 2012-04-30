@@ -34,8 +34,7 @@ limitations under the License.
         style="@style/StatsValue" />
     </TableRow>
     <include layout="@layout/stats_core" />
-    <!-- Latitude and longitude -->
-    <TableRow>
+    <TableRow android:id="@+id/stats_coordinate_label_table_row" >
       <TextView
         android:text="@string/stats_latitude"
         style="@style/StatsLabel" />
@@ -44,7 +43,7 @@ limitations under the License.
         android:text="@string/stats_longitude"
         style="@style/StatsLabel" />
     </TableRow>
-    <TableRow>
+    <TableRow android:id="@+id/stats_coordinate_value_table_row" >
       <TextView
         android:id="@+id/stats_latitude_value"
         style="@style/StatsValue" />

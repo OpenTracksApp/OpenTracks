@@ -1144,6 +1144,10 @@ limitations under the License.
   <string name="menu_show_on_map"
     translation_description="In the menu, to show a marker on map.">
     Show on map
+  </string>
+  <string name="menu_stats_settings"
+    translation_description="In the menu, to change the stats settings.">
+    Stats settings
   </string>  
   <string name="menu_stop_recording"
     translation_description="In the menu, to stop recording a track.">
@@ -2140,6 +2144,28 @@ limitations under the License.
     Total time
   </string>
 
+  <!-- Stats Settings -->
+  <string name="stats_settings_show"
+    translation_description="In the 'Stats settings' dialog, the section label to show additional
+      stats.">
+    Show
+  </string>
+  <string name="stats_settings_grade"
+    translation_description="In the 'Stats settings' dialog, the option to show grade. Grade is
+      the amount of inclination to the horizontal, also known as slope or incline.">
+    Grade
+  </string>
+  <string name="stats_settings_coordinate"
+    translation_description="In the 'Stats settings' dialog, the option to show latitude and
+      longitude.">
+    Latitude/Longitude
+  </string>
+  <string name="stats_settings_time"
+    translation_description="In the 'Stats settings' dialog, the section label to choose between
+      displaying total time or moving time.">
+    Time
+  </string>
+  
   <!-- Track -->
   <string name="track_detail_chart_tab"
     translation_description="In the track detail page, the title of the tab showing the chart.">

@@ -19,7 +19,6 @@ package com.google.android.apps.mytracks;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -38,17 +37,8 @@ public class AggregatedStatsActivity extends AbstractMyTracksActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.aggregated_stats);
-
-    boolean metricUnits = PreferencesUtils.isMetricUnits(this);
-    boolean reportSpeed = PreferencesUtils.isReportSpeed(this);
-
-    StatsUtils.setStats(this,
-        getTripStatistics(),
-        null,
-        Double.NaN,
-        metricUnits,
-        reportSpeed,
-        false);
+    StatsUtils.setTripStatisticsValues(this, getTripStatistics());
+    StatsUtils.setLocationValues(this, null, false);
   }
 
   /**

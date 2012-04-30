@@ -20,7 +20,6 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
 import com.google.android.apps.mytracks.util.IntentUtils;
-import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -82,17 +81,8 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity {
     } else {
       waypointSection.setVisibility(View.GONE);
       statisticsSection.setVisibility(View.VISIBLE);
-
-      boolean metricUnits = PreferencesUtils.isMetricUnits(this);
-      boolean reportSpeed = PreferencesUtils.isReportSpeed(this);
-      
-      StatsUtils.setStats(this,
-          waypoint.getStatistics(),
-          null,
-          waypoint.getLocation().getAltitude(),
-          metricUnits,
-          reportSpeed,
-          false);
+      StatsUtils.setTripStatisticsValues(this, waypoint.getStatistics());
+      StatsUtils.setLocationValues(this, waypoint.getLocation(), false);
     }
   }
 

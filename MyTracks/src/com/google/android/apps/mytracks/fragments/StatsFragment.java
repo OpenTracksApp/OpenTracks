@@ -55,8 +55,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   // The start time of the current track.
   private long startTime = -1L;
 
-  private boolean metricUnits = true; 
-  private boolean reportSpeed = true;
   private Location lastLocation = null;
   private TripStatistics lastTripStatistics = null;
   
@@ -98,8 +96,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   @Override
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-    metricUnits = PreferencesUtils.isMetricUnits(getActivity()); 
-    reportSpeed = PreferencesUtils.isReportSpeed(getActivity());
     updateUi();
   }
 
@@ -126,7 +122,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         @Override
         public void run() {
           lastLocation = null;
-          StatsUtils.setLocationValues(getActivity(), lastLocation, metricUnits, reportSpeed);
+          StatsUtils.setLocationValues(getActivity(), lastLocation, true);
         }
       });
     }
@@ -139,7 +135,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         @Override
         public void run() {
           lastLocation = location;
-          StatsUtils.setLocationValues(getActivity(), lastLocation, metricUnits, reportSpeed);
+          StatsUtils.setLocationValues(getActivity(), lastLocation, true);
         }
       });
     }
@@ -228,7 +224,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     getActivity().runOnUiThread(new Runnable() {
       @Override
       public void run() {
-        metricUnits = metric;
         updateUi();
       }
     });
@@ -240,7 +235,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     getActivity().runOnUiThread(new Runnable() {
       @Override
       public void run() {
-        reportSpeed = speed;
         updateUi();
       }
     });
@@ -277,13 +271,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     return trackDataHub != null && trackDataHub.isRecordingSelected();
   }
   
-  private void updateUi() {
-    StatsUtils.setStats(getActivity(),
-        lastTripStatistics,
-        lastLocation,
-        Double.NaN,
-        metricUnits,
-        reportSpeed,
-        true);
+  public void updateUi() {
+    StatsUtils.setTripStatisticsValues(getActivity(), lastTripStatistics);
+    StatsUtils.setLocationValues(getActivity(), lastLocation, true);
   }
 }

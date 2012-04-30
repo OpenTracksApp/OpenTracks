@@ -27,6 +27,8 @@ import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
 import com.google.android.apps.mytracks.fragments.MapFragment;
 import com.google.android.apps.mytracks.fragments.MarkerAddDialogFragment;
 import com.google.android.apps.mytracks.fragments.StatsFragment;
+import com.google.android.apps.mytracks.fragments.StatsSettingsDialogFragment;
+import com.google.android.apps.mytracks.fragments.StatsSettingsDialogFragment.OnStatsSettingsChangedListener;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
@@ -63,7 +65,8 @@ import java.util.List;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public class TrackDetailActivity extends AbstractMyTracksActivity {
+public class TrackDetailActivity extends AbstractMyTracksActivity
+    implements OnStatsSettingsChangedListener {
 
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_MARKER_ID = "marker_id";
@@ -233,6 +236,8 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
     String currentTabTag = tabHost.getCurrentTabTag();
     menu.findItem(R.id.track_detail_chart_settings).setVisible(
         ChartFragment.CHART_FRAGMENT_TAG.equals(currentTabTag));
+    menu.findItem(R.id.track_detail_stats_settings).setVisible(
+        StatsFragment.STATS_FRAGMENT_TAG.equals(currentTabTag));
     menu.findItem(R.id.track_detail_my_location)
         .setVisible(MapFragment.MAP_FRAGMENT_TAG.equals(currentTabTag));
     MenuItem satelliteMode = menu.findItem(R.id.track_detail_satellite_mode)
@@ -352,13 +357,17 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
           mapFragment.setSatelliteView(!mapFragment.isSatelliteView());
         }
         return true;
+      case R.id.track_detail_sensor_state:
+        intent = IntentUtils.newIntent(this, SensorStateActivity.class);
+        startActivity(intent);
+        return true;
       case R.id.track_detail_chart_settings:
         new ChartSettingsDialogFragment().show(
             getSupportFragmentManager(), ChartSettingsDialogFragment.CHART_SETTINGS_DIALOG_TAG);
         return true;
-      case R.id.track_detail_sensor_state:
-        intent = IntentUtils.newIntent(this, SensorStateActivity.class);
-        startActivity(intent);
+      case R.id.track_detail_stats_settings:
+        new StatsSettingsDialogFragment().show(
+            getSupportFragmentManager(), StatsSettingsDialogFragment.STATS_SETTINGS_DIALOG_TAG);
         return true;
       case R.id.track_detail_settings:
         intent = IntentUtils.newIntent(this, SettingsActivity.class);
@@ -392,6 +401,13 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
     return mapViewContainer;
   }
 
+  @Override
+  public void onStatsSettingsChanged() {
+    StatsFragment statsFragment = (StatsFragment) getSupportFragmentManager()
+        .findFragmentByTag(StatsFragment.STATS_FRAGMENT_TAG);
+    statsFragment.updateUi();    
+  }
+  
   /**
    * Handles the data in the intent.
    */
