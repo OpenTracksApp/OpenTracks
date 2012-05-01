@@ -190,7 +190,6 @@ public class SearchListActivity extends AbstractMyTracksActivity {
 
   @Override
   public void onNewIntent(Intent intent) {
-    super.onNewIntent(intent);
     setIntent(intent);
     handleIntent(intent);
   }
@@ -270,6 +269,8 @@ public class SearchListActivity extends AbstractMyTracksActivity {
               .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId);
         }
         startActivity(intent);
+        // Close the search result since its content can change after edit.
+        finish();
         return true;
       case R.id.list_context_menu_delete:
         if (markerId != null) {
