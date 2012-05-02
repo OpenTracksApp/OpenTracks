@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_height="fill_parent"
   android:layout_width="fill_parent" >
   <ListView
@@ -26,7 +26,7 @@ limitations under the License.
     android:id="@+id/track_list_empty"
     android:layout_height="fill_parent"
     android:layout_width="fill_parent"
-    android:orientation="vertical">
+    android:orientation="vertical" >
     <TextView
       android:text="@string/track_list_empty_message"
       style="@style/ListEmptyTextView" >
@@ -40,4 +40,4 @@ limitations under the License.
       android:src="@drawable/menu_record_track"
       style="@android:style/Widget.DeviceDefault.ImageButton" />
   </LinearLayout>
-</FrameLayout>
+</merge>

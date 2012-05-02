@@ -15,33 +15,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:gravity="center_vertical"
   android:layout_height="wrap_content"
   android:layout_width="fill_parent"
+  android:minHeight="?android:attr/listPreferredItemHeight"
   android:orientation="vertical"
-  android:paddingBottom="2dp"
-  android:paddingTop="2dp">
+  android:padding="8dp" >
   <TextView
-    android:id="@+id/choose_map_list_item_title"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="6dp"
-    android:layout_marginTop="6dp"
-    android:layout_width="fill_parent"
-    android:textColor="@color/white"
-    android:textSize="18sp"
-    android:textStyle="bold"
-    android:singleLine="true"/>
+    android:id="@+id/choose_map_item_title"
+    android:singleLine="true"
+    style="@style/TextLarge" />
   <TextView
-    android:id="@+id/choose_map_list_item_description"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="6dp"
-    android:layout_width="fill_parent"
-    android:textSize="14sp"
-    android:singleLine="true"/>
+    android:id="@+id/choose_map_item_description"
+    android:singleLine="false"
+    android:textColor="@android:color/secondary_text_dark"
+    style="@style/TextSmall" />
   <TextView
-    android:id="@+id/choose_map_list_item_search_status"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="6dp"
-    android:layout_width="fill_parent"
-    android:textSize="14sp"
-    android:singleLine="true"/>
+    android:id="@+id/choose_map_item_search_status"
+    android:singleLine="true"
+    style="@style/TextSmall" />
 </LinearLayout>

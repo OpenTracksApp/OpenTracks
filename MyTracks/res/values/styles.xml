@@ -15,215 +15,145 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-  <style name="ThemeSelector" parent="android:Theme" />
-
-  <!-- The style for the bottom button bar -->
-  <style name="BottomButtonBar" parent="@android:style/DeviceDefault.ButtonBar">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">fill_parent</item>
-    <item name="android:orientation">horizontal</item>
+  <!-- The style for the about value -->
+  <style name="AboutValue" parent="@style/TextMedium">
+    <item name="android:paddingLeft">48dp</item>
   </style>
   <!-- The style for the bottom button -->
   <style name="BottomButton" parent="@android:style/Widget.DeviceDefault.Button.Borderless">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_weight">1</item>
     <item name="android:layout_width">0dp</item>
-  </style>  
-  <!-- The style for the edit category -->
-  <style name="EditCategory" parent="@android:style/TextAppearance.DeviceDefault.Medium">
+  </style>
+  <!-- The style for the bottom button bar -->
+  <style name="BottomButtonBar" parent="@android:style/DeviceDefault.ButtonBar">
     <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:orientation">horizontal</item>
+  </style>
+  <!-- The style for the edit category -->
+  <style name="EditCategory" parent="@style/TextMedium">
     <item name="android:layout_width">fill_parent</item>
     <item name="android:selectAllOnFocus">true</item>
     <item name="android:singleLine">true</item>
   </style>
   <!-- The style for the edit description -->
-  <style name="EditDescription" parent="@android:style/TextAppearance.DeviceDefault.Medium">
-    <item name="android:layout_height">wrap_content</item>
+  <style name="EditDescription" parent="@style/TextMedium">
+    <item name="android:inputType">textAutoCorrect|textCapSentences</item>
     <item name="android:layout_width">fill_parent</item>
+    <item name="android:maxLines">50</item>
     <item name="android:selectAllOnFocus">true</item>
     <item name="android:singleLine">false</item>
-    <item name="android:maxLines">50</item>
-    <item name="android:inputType">textAutoCorrect|textCapSentences</item>
-  </style>
-  <!-- The style for the edit label -->
-  <style name="EditLabel" parent="@android:style/TextAppearance.DeviceDefault.Medium">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
   </style>
   <!-- The style for the edit name -->
-  <style name="EditName" parent="@android:style/TextAppearance.DeviceDefault.Medium">
-    <item name="android:layout_height">wrap_content</item>
+  <style name="EditName" parent="@style/TextMedium.WithIcon">
+    <item name="android:inputType">textAutoCorrect|textCapWords</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:selectAllOnFocus">true</item>
     <item name="android:singleLine">true</item>
-    <item name="android:inputType">textAutoCorrect|textCapWords</item>
+  </style>
+  <!-- The style for the list empty text view -->
+  <style name="ListEmptyTextView" parent="@style/TextLarge">
+    <item name="android:gravity">center</item>
+    <item name="android:layout_gravity">center</item>
+    <item name="android:padding">8dp</item>
+  </style>
+  <!-- style for the list item stats -->
+  <style name="ListItemStats" parent="@style/TextSmall">
+    <item name="android:singleLine">true</item>
+    <item name="android:textColor">@android:color/secondary_text_dark</item>
+  </style>
+  <!-- The style for the scroll view -->
+  <style name="ScrollView">
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:scrollbarStyle">outsideInset</item>
+  </style>
+  <!-- The style for the scroll view with bottom buttons -->
+  <style name="ScrollView.WithBottomButtons">
+    <item name="android:layout_height">0dp</item>
+    <item name="android:layout_weight">1</item>
+  </style>
+  <!-- The style for the sensor state value -->
+  <style name="SensorStateValue" parent="@style/TextLarge">
+    <item name="android:background">@android:color/background_light</item>
+    <item name="android:gravity">right</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:paddingRight">8dp</item>
+    <item name="android:textColor">@android:color/primary_text_light</item>
+  </style>
+  <!-- The style for the stats label -->
+  <style name="StatsLabel" parent="@style/TextMedium">
+    <item name="android:layout_weight">1</item>
+    <item name="android:layout_width">0dp</item>
+  </style>
+  <!-- The style for the stats spacer -->
+  <style name="StatsSpacer">
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:layout_width">8dp</item>
+  </style>
+  <!-- The style for the stats value -->
+  <style name="StatsValue" parent="@style/TextLarge">
+    <item name="android:background">@android:color/background_light</item>
+    <item name="android:gravity">right</item>
+    <item name="android:layout_weight">1</item>
+    <item name="android:layout_width">0dp</item>
+    <item name="android:paddingRight">8dp</item>
+    <item name="android:textColor">@android:color/primary_text_light</item>
+  </style>
+  <!-- The style for large size text -->
+  <style name="TextLarge">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textSize">22sp</item>
+  </style>
+  <!-- The style for large size text with an icon on the left -->
+  <style name="TextLarge.WithIcon">
     <item name="android:drawablePadding">8dp</item>
     <item name="android:gravity">center_vertical</item>
   </style>
-  <!-- The style for the list empty text view -->
-  <style name="ListEmptyTextView" parent="@android:style/TextAppearance.DeviceDefault.Large">
-    <item name="android:gravity">center</item>
-    <item name="android:layout_gravity">center</item>
+  <!-- The style for medium size text -->
+  <style name="TextMedium">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
-    <item name="android:padding">8dp</item>
+    <item name="android:textSize">18sp</item>
   </style>
-<!-- The style for the list item category -->
-  <style name="ListItemCategory" parent="@android:style/TextAppearance.DeviceDefault.Small">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:singleLine">true</item>
-    <item name="android:layout_marginLeft">8dp</item>    
-  </style>
-  <!-- The style for the list item description -->
-  <style name="ListItemDescription" parent="@android:style/TextAppearance.DeviceDefault.Small">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">fill_parent</item>
-    <item name="android:singleLine">false</item>    
-  </style>
-  <!-- The style for the list item name -->
-  <style name="ListItemName" parent="@android:style/TextAppearance.DeviceDefault.Large">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:singleLine">true</item>
+  <!-- The style for medium size text with an icon on the left -->
+  <style name="TextMedium.WithIcon">
+    <item name="android:drawablePadding">8dp</item>
     <item name="android:gravity">center_vertical</item>
-    <item name="android:paddingLeft">9dp</item>
   </style>
-  <!-- style for the list item stat -->
-  <style name="ListItemStat" parent="@android:style/TextAppearance.DeviceDefault.Small">
+  <!-- The style for large size text -->
+  <style name="TextSmall">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
-    <item name="android:singleLine">true</item>
-    <item name="android:textColor">@color/green</item>
+    <item name="android:textColor">?android:textColorSecondary</item>
+    <item name="android:textSize">14sp</item>
   </style>
-  <!-- The style for the marker detail label -->
-  <style name="MarkerDetailLabel" parent="@android:style/TextAppearance.DeviceDefault.Large">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
+  <!-- Theme selector -->
+  <style name="ThemeSelector" parent="android:Theme" />
+  <!-- The style for the track widget value -->
+  <style name="TrackWidgetValue" parent="@style/TextSmall">
+    <item name="android:width">100dp</item>
   </style>
-  <!-- The style for the marker detail statistics label -->
-  <style name="MarkerDetailStatisticsLabel" parent="@android:style/TextAppearance.DeviceDefault.Medium">
-    <item name="android:layout_height">wrap_content</item>
+  <!-- The style for upload service chooser check box -->
+  <style name="UploadServiceChooserCheckBox" parent="@style/TextMedium">
+    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:layout_marginLeft">8dp</item>
     <item name="android:layout_width">0dp</item>
-    <item name="android:layout_weight">1</item>
   </style>
-  <!--  The style for the marker detail statistics spacer -->
-  <style name="MarkerDetailStatisticsSpacer">
-    <item name="android:layout_height">fill_parent</item>
-    <item name="android:layout_width">8dp</item>    
-  </style>  
-  <!-- The style for the marker detail statistics value -->
-  <style name="MarkerDetailStatisticsValue" parent="@android:style/TextAppearance.DeviceDefault.Large">
-    <item name="android:gravity">right</item>
-    <item name="android:textColor">@color/stat_label_text</item>
+  <!-- The style for upload service chooser image view -->
+  <style name="UploadServiceChooserImageView">
     <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">0dp</item>
-    <item name="android:layout_weight">1</item>
-    <item name="android:background">@android:color/background_light</item>
-  </style>
-            
-  <style name="SensorStateLabel">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">fill_parent</item>
-    <item name="android:paddingLeft">4dp</item>
-    <item name="android:paddingRight">4dp</item>
-  </style>
-
-  <style name="SensorStateValue">
-    <item name="android:background">@color/stat_label_background</item>
-    <item name="android:gravity">right</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">fill_parent</item>
-    <item name="android:paddingLeft">4dp</item>
-    <item name="android:paddingRight">4dp</item>
-    <item name="android:textColor">@color/stat_label_text</item>
-    <item name="android:textSize">40sp</item>
-  </style>
-
-  <!-- The style for a view which divides the numerator and denominator of the units on the statistics activity. -->
-  <style name="StatsDivider" parent="@android:Widget.TextView">
-    <item name="android:background">@color/black</item>
-    <item name="android:layout_height">3dp</item>
-    <item name="android:layout_width">fill_parent</item>
-  </style>
-
-  <!-- The style for a text view for displaying a value on the statistics activity. -->
-  <style name="StatsRegister" parent="@android:Widget.TextView">
-    <item name="android:gravity">right</item>
-    <item name="android:layout_marginBottom">-9dp</item>
-    <item name="android:layout_marginTop">-9dp</item>
-    <item name="android:text">@string/value_unknown</item>
-    <item name="android:textColor">@color/stat_label_text</item>
-    <item name="android:textSize">40sp</item>
-  </style>
-
-  <!-- The style for a text view for displaying a large value on the statistics activity. -->
-  <style name="StatsRegister.Big">
-    <item name="android:layout_marginBottom">-13dp</item>
-    <item name="android:layout_marginTop">-13dp</item>
-    <item name="android:textSize">50sp</item>
-  </style>
-
-  <!-- The style for a text view for displaying a small value on the statistics activity. -->
-  <style name="StatsRegister.Small">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_marginBottom">-5dp</item>
-    <item name="android:layout_marginTop">-5dp</item>
-    <item name="android:layout_width">fill_parent</item>
-    <item name="android:textSize">25sp</item>
-  </style>
-
-  <!-- The style for a view which divides two columns in the statistics activity. -->
-  <style name="StatsSpacer" parent="@android:Widget.TextView">
-    <item name="android:background">@color/black</item>
-    <item name="android:layout_marginBottom">-9dp</item>
-    <item name="android:layout_marginTop">-9dp</item>
-    <item name="android:layout_width">5dp</item>
-    <item name="android:textSize">40sp</item>
-  </style>
-
-  <!-- The style for the unit on the statistics activity. -->
-  <style name="StatsUnit" parent="@android:Widget.TextView">
-    <item name="android:gravity">bottom</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_marginBottom">-2dp</item>
-    <item name="android:layout_marginTop">-2dp</item>
     <item name="android:layout_width">wrap_content</item>
-    <item name="android:textColor">@color/stat_label_text</item>
   </style>
-
-  <!-- The style for the unit on the statistics activity where there is only one string. -->
-  <style name="StatsUnitSolo" parent="@android:Widget.TextView">
-    <item name="android:gravity">right</item>
-    <item name="android:layout_marginBottom">-9dp</item>
-    <item name="android:layout_marginTop">-9dp</item>
-    <item name="android:textColor">@color/stat_label_text</item>
-  </style>
- 
   <!-- The style for the welcome page answer -->
-  <style name="WelcomeAnswerTextView" parent="@android:style/TextAppearance.DeviceDefault.Small">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
+  <style name="WelcomeAnswerTextView" parent="@style/TextSmall">
     <item name="android:paddingBottom">8dp</item>
   </style>
   <!-- The style for welcome page question -->
-  <style name="WelcomeQuestionTextView" parent="@android:style/TextAppearance.DeviceDefault.Medium">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:textStyle">bold</item>
+  <style name="WelcomeQuestionTextView" parent="@style/TextMedium">
     <item name="android:paddingTop">8dp</item>
-  </style>
-
-  <!-- Widget TextView -->
-  <style name="WidgetTextView">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:textColor">@color/appwidget_text</item>
-    <item name="android:textSize">14sp</item>
-  </style>
-
-  <!-- Widget TextView value  -->
-  <style name="WidgetTextView.Value">
-    <item name="android:width">160px</item>
+    <item name="android:textStyle">bold</item>
   </style>
 </resources>

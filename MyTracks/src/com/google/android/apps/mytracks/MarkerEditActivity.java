@@ -22,16 +22,12 @@ import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest.WaypointType;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.speech.tts.TextToSpeech;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
@@ -47,7 +43,7 @@ import android.widget.Toast;
  *
  * @author Jimmy Shih
  */
-public class MarkerEditActivity extends Activity {
+public class MarkerEditActivity extends AbstractMyTracksActivity {
 
   private static final String TAG = MarkerEditActivity.class.getSimpleName();
 
@@ -69,8 +65,6 @@ public class MarkerEditActivity extends Activity {
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
-    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
-    ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
     setContentView(R.layout.marker_edit);
 
     markerId = getIntent().getLongExtra(EXTRA_MARKER_ID, -1L);
@@ -85,6 +79,8 @@ public class MarkerEditActivity extends Activity {
         boolean statistics = checkedId == R.id.marker_edit_type_statistics;
         name.setText(
             statistics ? R.string.marker_edit_type_statistics : R.string.marker_edit_type_waypoint);
+        // Call selectAll so that all EditText have selectAllOnFocus style.
+        name.selectAll();
         updateUiByMarkerType(statistics);
       }
     });
@@ -170,15 +166,6 @@ public class MarkerEditActivity extends Activity {
   protected void onDestroy() {
     super.onDestroy();
     trackRecordingServiceConnection.unbind();
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() != android.R.id.home) {
-      return false;
-    }
-    finish();
-    return true;
   }
 
   /**

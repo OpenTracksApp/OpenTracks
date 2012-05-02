@@ -58,7 +58,7 @@ public class ChartURLGenerator {
     }
 
     return getChartUrl(distances, elevations, track,
-        context.getString(R.string.stat_elevation), metricUnits);
+        context.getString(R.string.stats_elevation), metricUnits);
   }
 
   /**

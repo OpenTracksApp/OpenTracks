@@ -68,11 +68,11 @@ public class ChooseMapActivity extends Activity {
         }
         MapsMapMetadata mapData = getItem(position).getMapData();
         
-        TextView title = (TextView) convertView.findViewById(R.id.choose_map_list_item_title);
+        TextView title = (TextView) convertView.findViewById(R.id.choose_map_item_title);
         title.setText(mapData.getTitle());
         
         TextView description = (TextView) convertView.findViewById(
-            R.id.choose_map_list_item_description);
+            R.id.choose_map_item_description);
         String descriptionText = mapData.getDescription();
         if (descriptionText == null || descriptionText.equals("")) {
           description.setVisibility(View.GONE);
@@ -82,7 +82,7 @@ public class ChooseMapActivity extends Activity {
         }
 
         TextView searchStatus = (TextView) convertView.findViewById(
-            R.id.choose_map_list_item_search_status);
+            R.id.choose_map_item_search_status);
         searchStatus.setTextColor(mapData.getSearchable() ? Color.RED : Color.GREEN);
         searchStatus.setText(mapData.getSearchable() ? R.string.maps_list_public_label
             : R.string.maps_list_unlisted_label);

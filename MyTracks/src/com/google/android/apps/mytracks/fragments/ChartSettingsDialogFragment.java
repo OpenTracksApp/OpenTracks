@@ -16,8 +16,6 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import static com.google.android.apps.mytracks.Constants.CHART_TAB_TAG;
-
 import com.google.android.apps.mytracks.ChartView;
 import com.google.android.maps.mytracks.R;
 
@@ -42,7 +40,7 @@ public class ChartSettingsDialogFragment extends DialogFragment {
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     final ChartFragment chartFragment = (ChartFragment) getActivity()
-        .getSupportFragmentManager().findFragmentByTag(CHART_TAB_TAG);
+        .getSupportFragmentManager().findFragmentByTag(ChartFragment.CHART_FRAGMENT_TAG);
     View view = getActivity().getLayoutInflater().inflate(R.layout.chart_settings, null);
     final RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.chart_settings_x);
     radioGroup.check(chartFragment.getMode() == ChartView.Mode.BY_DISTANCE
@@ -63,7 +61,7 @@ public class ChartSettingsDialogFragment extends DialogFragment {
       checkBoxes[i].setChecked(chartFragment.isChartValueSeriesEnabled(i));
     }
     checkBoxes[ChartView.SPEED_SERIES].setText(chartFragment.isReportSpeed()
-        ? R.string.stat_speed : R.string.stat_pace);
+        ? R.string.stats_speed : R.string.stats_pace);
 
     return new AlertDialog.Builder(getActivity())
         .setCancelable(true)

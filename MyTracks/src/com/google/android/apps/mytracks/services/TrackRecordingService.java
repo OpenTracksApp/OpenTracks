@@ -941,7 +941,7 @@ public class TrackRecordingService extends Service {
         buildMarker(wpt, request);
         break;
       case STATISTICS:
-        buildStatisticsMarker(wpt);
+        buildStatisticsMarker(wpt, request);
         break;
     }
     wpt.setTrackId(recordingTrackId);
@@ -987,9 +987,10 @@ public class TrackRecordingService extends Service {
    * Build a statistics marker.
    * A statistics marker holds the stats for the* last segment up to this marker.
    *
-   * @param waypoint The waypoint which will be populated with stats data.
+   * @param waypoint The waypoint which will be populated with stats data
+   * @param request The waypoint creation request
    */
-  private void buildStatisticsMarker(Waypoint waypoint) {
+  private void buildStatisticsMarker(Waypoint waypoint, WaypointCreationRequest request) {
     DescriptionGenerator descriptionGenerator = new DescriptionGeneratorImpl(this);
 
     // Set stop and total time in the stats data
@@ -1002,7 +1003,8 @@ public class TrackRecordingService extends Service {
 
     // Set the rest of the waypoint data
     waypoint.setType(Waypoint.TYPE_STATISTICS);
-    waypoint.setName(getString(R.string.marker_edit_type_statistics));
+    waypoint.setName(request.getName() != null ? request.getName()
+        : getString(R.string.marker_edit_type_statistics));
     waypoint.setStatistics(waypointStatsBuilder.getStatistics());
     waypoint.setDescription(descriptionGenerator.generateWaypointDescription(waypoint));
     waypoint.setIcon(getString(R.string.marker_statistics_icon_url));

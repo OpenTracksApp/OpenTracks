@@ -19,8 +19,6 @@ package com.google.android.apps.mytracks;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
-import com.google.android.apps.mytracks.stats.TripStatistics;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.maps.mytracks.R;
@@ -29,8 +27,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,7 +38,7 @@ import android.widget.TextView;
  *
  * @author Leif Hendrik Wilden
  */
-public class MarkerDetailActivity extends FragmentActivity {
+public class MarkerDetailActivity extends AbstractMyTracksActivity {
 
   public static final String EXTRA_MARKER_ID = "marker_id";
   private static final String TAG = MarkerDetailActivity.class.getSimpleName();
@@ -53,8 +49,6 @@ public class MarkerDetailActivity extends FragmentActivity {
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
-    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
-    ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
     setContentView(R.layout.marker_detail);
 
     markerId = getIntent().getLongExtra(EXTRA_MARKER_ID, -1L);
@@ -94,44 +88,9 @@ public class MarkerDetailActivity extends FragmentActivity {
       boolean metricUnits = preferences.getBoolean(getString(R.string.metric_units_key), true);
       boolean reportSpeed = preferences.getBoolean(getString(R.string.report_speed_key), true);
 
-      StatsUtils.setSpeedLabel(this, R.id.marker_detail_max_speed_label, R.string.stat_max_speed,
-          R.string.stat_fastest_pace, reportSpeed);
-      StatsUtils.setSpeedLabel(this, R.id.marker_detail_average_speed_label,
-          R.string.stat_average_speed, R.string.stat_average_pace, reportSpeed);
-      StatsUtils.setSpeedLabel(this, R.id.marker_detail_average_moving_speed_label,
-          R.string.stat_average_moving_speed, R.string.stat_average_moving_pace, reportSpeed);
-
-      TripStatistics tripStatistics = waypoint.getStatistics();
-
-      StatsUtils.setDistanceValue(this, R.id.marker_detail_total_distance_value,
-          tripStatistics.getTotalDistance(), metricUnits);
-      StatsUtils.setSpeedValue(this, R.id.marker_detail_max_speed_value,
-          tripStatistics.getMaxSpeed(), reportSpeed, metricUnits);
-
-      StatsUtils.setTimeValue(
-          this, R.id.marker_detail_total_time_value, tripStatistics.getTotalTime());
-      StatsUtils.setSpeedValue(this, R.id.marker_detail_average_speed_value,
-          tripStatistics.getAverageSpeed(), reportSpeed, metricUnits);
-
-      StatsUtils.setTimeValue(
-          this, R.id.marker_detail_moving_time_value, tripStatistics.getMovingTime());
-      StatsUtils.setSpeedValue(this, R.id.marker_detail_average_moving_speed_value,
-          tripStatistics.getAverageMovingSpeed(), reportSpeed, metricUnits);
-
-      StatsUtils.setAltitudeValue(this, R.id.marker_detail_elevation_value,
-          waypoint.getLocation().getAltitude(), metricUnits);
-      StatsUtils.setAltitudeValue(this, R.id.marker_detail_elevation_gain_value,
-          tripStatistics.getTotalElevationGain(), metricUnits);
-
-      StatsUtils.setAltitudeValue(this, R.id.marker_detail_min_elevation_value,
-          tripStatistics.getMinElevation(), metricUnits);
-      StatsUtils.setAltitudeValue(this, R.id.marker_detail_max_elevation_value,
-          tripStatistics.getMaxElevation(), metricUnits);
-
-      StatsUtils.setGradeValue(
-          this, R.id.marker_detail_min_grade_value, tripStatistics.getMinGrade());
-      StatsUtils.setGradeValue(
-          this, R.id.marker_detail_max_grade_value, tripStatistics.getMaxGrade());
+      StatsUtils.setSpeedLabels(this, reportSpeed, false);
+      StatsUtils.setTripStatisticsValues(this, waypoint.getStatistics(), metricUnits, reportSpeed);
+      StatsUtils.setLocationElevationValue(this, waypoint.getLocation().getAltitude(), metricUnits);
     }
   }
 
@@ -142,14 +101,16 @@ public class MarkerDetailActivity extends FragmentActivity {
   }
 
   @Override
+  protected void onHomeSelected() {
+    Intent intent = IntentUtils.newIntent(this, MarkerListActivity.class)
+        .putExtra(MarkerListActivity.EXTRA_TRACK_ID, waypoint.getTrackId());
+    startActivity(intent);
+  }
+  
+  @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     Intent intent;
     switch (item.getItemId()) {
-      case android.R.id.home:
-        intent = IntentUtils.newIntent(this, MarkerListActivity.class)
-            .putExtra(MarkerListActivity.EXTRA_TRACK_ID, waypoint.getTrackId());
-        startActivity(intent);
-        return true;
       case R.id.marker_detail_show_on_map:
         intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
             .putExtra(TrackDetailActivity.EXTRA_MARKER_ID, markerId);

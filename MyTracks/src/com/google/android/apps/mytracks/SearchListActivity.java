@@ -42,8 +42,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
-import android.speech.tts.TextToSpeech;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -69,7 +67,7 @@ import java.util.SortedSet;
  * 
  * @author Rodrigo Damazio
  */
-public class SearchListActivity extends FragmentActivity {
+public class SearchListActivity extends AbstractMyTracksActivity {
 
   private static final String TAG = SearchListActivity.class.getSimpleName();
 
@@ -119,9 +117,7 @@ public class SearchListActivity extends FragmentActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
     setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
-    ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
     setContentView(R.layout.search_list);
 
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
@@ -210,9 +206,6 @@ public class SearchListActivity extends FragmentActivity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
-      case android.R.id.home:
-        finish();
-        return true;
       case R.id.search_list_search:
         return ApiAdapterFactory.getApiAdapter().handleSearchMenuSelection(this);
       default:

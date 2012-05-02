@@ -18,10 +18,7 @@ limitations under the License.
   android:layout_height="fill_parent"
   android:layout_width="fill_parent"
   android:orientation="vertical" >
-  <ScrollView
-    android:layout_height="0dp"
-    android:layout_weight="1"
-    android:layout_width="fill_parent" >
+  <ScrollView style="@style/ScrollView.WithBottomButtons" >
     <LinearLayout
       android:layout_height="wrap_content"
       android:layout_width="fill_parent"
@@ -34,7 +31,7 @@ limitations under the License.
         android:orientation="vertical" >
         <TextView
           android:text="@string/marker_edit_type"
-          style="@style/EditLabel" />
+          style="@style/TextMedium" />
         <RadioGroup
           android:id="@+id/marker_edit_type"
           android:layout_height="wrap_content"
@@ -42,16 +39,16 @@ limitations under the License.
           <RadioButton
             android:id="@+id/marker_edit_type_statistics"
             android:text="@string/marker_edit_type_statistics"
-            style="@style/EditLabel" />
+            style="@style/TextMedium" />
           <RadioButton
             android:id="@+id/marker_edit_type_waypoint"
             android:text="@string/marker_edit_type_waypoint"
-            style="@style/EditLabel" />
+            style="@style/TextMedium" />
         </RadioGroup>
       </LinearLayout>
       <TextView
         android:text="@string/generic_name"
-        style="@style/EditLabel" />
+        style="@style/TextMedium" />
       <EditText
         android:hint="@string/generic_name"
         android:id="@+id/marker_edit_name"
@@ -63,7 +60,7 @@ limitations under the License.
         android:orientation="vertical" >
         <TextView
           android:text="@string/marker_edit_marker_type"
-          style="@style/EditLabel" />
+          style="@style/TextMedium" />
         <AutoCompleteTextView
           android:hint="@string/marker_edit_marker_type_hint"
           android:id="@+id/marker_edit_marker_type"
@@ -71,7 +68,7 @@ limitations under the License.
           style="@style/EditCategory" />
         <TextView
           android:text="@string/generic_description"
-          style="@style/EditLabel" />
+          style="@style/TextMedium" />
         <EditText
           android:hint="@string/generic_description"
           android:id="@+id/marker_edit_description"
