@@ -101,7 +101,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
           // Note that key can be null
-          if (PreferencesUtils.getRecordingTrackIdKey(TrackDetailActivity.this).equals(key)) {
+          if (PreferencesUtils.getKey(TrackDetailActivity.this, R.string.recording_track_id_key).equals(key)) {
             updateMenu();
           }
         }
@@ -438,7 +438,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity
    * Updates the menu.
    */
   private void updateMenu() {
-    updateMenuItems(trackId == PreferencesUtils.getRecordingTrackId(this));
+    updateMenuItems(trackId == PreferencesUtils.getLong(this, R.string.recording_track_id_key));
   }
 
   /**

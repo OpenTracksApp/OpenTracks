@@ -294,9 +294,9 @@ public class TrackDataHub {
   }
 
   private void loadSharedPreferences() {
-    selectedTrackId = PreferencesUtils.getSelectedTrackId(context);
-    metricUnits = PreferencesUtils.isMetricUnits(context);
-    reportSpeed = PreferencesUtils.isReportSpeed(context);
+    selectedTrackId = PreferencesUtils.getLong(context, R.string.selected_track_id_key);
+    metricUnits = PreferencesUtils.getBoolean(context, R.string.metric_units_key, true);
+    reportSpeed = PreferencesUtils.getBoolean(context, R.string.report_speed_key, true);
     minRequiredAccuracy = preferences.getInt(MIN_REQUIRED_ACCURACY_KEY,
         DEFAULT_MIN_REQUIRED_ACCURACY);
   }
@@ -372,7 +372,7 @@ public class TrackDataHub {
     if (!isStarted()) {
       loadSharedPreferences();
     }
-    long recordingTrackId = PreferencesUtils.getRecordingTrackId(context);
+    long recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
     return recordingTrackId != -1L && recordingTrackId == selectedTrackId;
   }
 
@@ -391,7 +391,7 @@ public class TrackDataHub {
 
     // Save the selection to memory and flush.
     selectedTrackId = trackId;
-    PreferencesUtils.setSelectedTrackId(context, selectedTrackId);
+    PreferencesUtils.setLong(context, R.string.selected_track_id_key, selectedTrackId);
 
     // Force it to reload data from the beginning.
     Log.d(TAG, "Loading track");
@@ -612,14 +612,14 @@ public class TrackDataHub {
     if (MIN_REQUIRED_ACCURACY_KEY.equals(key)) {
       minRequiredAccuracy = preferences.getInt(MIN_REQUIRED_ACCURACY_KEY,
           DEFAULT_MIN_REQUIRED_ACCURACY);
-    } else if (PreferencesUtils.getMetricUnitsKey(context).equals(key)) {
-      metricUnits = PreferencesUtils.isMetricUnits(context);
+    } else if (PreferencesUtils.getKey(context, R.string.metric_units_key).equals(key)) {
+      metricUnits = PreferencesUtils.getBoolean(context, R.string.metric_units_key, true);
       notifyUnitsChanged();
-    } else if (PreferencesUtils.getReportSpeedKey(context).equals(key)) {
-      reportSpeed = PreferencesUtils.isReportSpeed(context);
+    } else if (PreferencesUtils.getKey(context, R.string.report_speed_key).equals(key)) {
+      reportSpeed = PreferencesUtils.getBoolean(context, R.string.report_speed_key, true);
       notifySpeedReportingChanged();
-    } else if (PreferencesUtils.getSelectedTrackIdKey(context).equals(key)) {
-      loadTrack(PreferencesUtils.getSelectedTrackId(context));
+    } else if (PreferencesUtils.getKey(context, R.string.selected_track_id_key).equals(key)) {
+      loadTrack(PreferencesUtils.getLong(context, R.string.selected_track_id_key));
     }
   }
 

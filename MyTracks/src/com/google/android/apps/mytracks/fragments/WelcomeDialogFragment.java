@@ -55,7 +55,7 @@ public class WelcomeDialogFragment extends DialogFragment {
   }
 
   private void onDone() {
-    PreferencesUtils.setShowWelcome(getActivity());
+    PreferencesUtils.setBoolean(getActivity(), R.string.show_welcome_dialog_key, false);
     TrackListActivity trackListActivity = (TrackListActivity) getActivity();
     trackListActivity.showStartupDialogs();
   }

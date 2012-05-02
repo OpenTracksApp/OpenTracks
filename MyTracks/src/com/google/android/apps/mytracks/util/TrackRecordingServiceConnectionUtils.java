@@ -86,7 +86,7 @@ public class TrackRecordingServiceConnectionUtils {
         Log.e(TAG, "Failed to check if service is recording", e);
       }
     }
-    return PreferencesUtils.getRecordingTrackId(context) != -1L;
+    return PreferencesUtils.getLong(context, R.string.recording_track_id_key) != -1L;
   }
 
   /**
@@ -106,7 +106,7 @@ public class TrackRecordingServiceConnectionUtils {
          * Need to remember the recordingTrackId before calling endCurrentTrack.
          * endCurrentTrack sets the value to -1L.
          */
-        long recordingTrackId = PreferencesUtils.getRecordingTrackId(context);
+        long recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
         trackRecordingService.endCurrentTrack();
         if (recordingTrackId != -1L) {
           Intent intent = IntentUtils.newIntent(context, TrackEditActivity.class)
@@ -118,7 +118,7 @@ public class TrackRecordingServiceConnectionUtils {
         Log.e(TAG, "Unable to stop recording.", e);
       }
     } else {
-      PreferencesUtils.setRecordingTrackId(context, -1L);
+      PreferencesUtils.setLong(context, R.string.recording_track_id_key, -1L);
     }
     trackRecordingServiceConnection.stop();
   }
@@ -134,7 +134,7 @@ public class TrackRecordingServiceConnectionUtils {
       Context context, TrackRecordingServiceConnection trackRecordingServiceConnection) {
     trackRecordingServiceConnection.bindIfRunning();
     if (!isRecordingServiceRunning(context)) {
-      PreferencesUtils.setRecordingTrackId(context, -1L);
+      PreferencesUtils.setLong(context, R.string.recording_track_id_key, -1L);
     }
   }
 

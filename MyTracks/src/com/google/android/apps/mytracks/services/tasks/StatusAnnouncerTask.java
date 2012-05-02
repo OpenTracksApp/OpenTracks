@@ -150,8 +150,8 @@ public class StatusAnnouncerTask implements PeriodicTask {
    */
   // @VisibleForTesting
   protected String getAnnouncement(TripStatistics stats) {
-    boolean metricUnits = PreferencesUtils.isMetricUnits(context);
-    boolean reportSpeed = PreferencesUtils.isReportSpeed(context);   
+    boolean metricUnits = PreferencesUtils.getBoolean(context, R.string.metric_units_key, true);
+    boolean reportSpeed = PreferencesUtils.getBoolean(context, R.string.report_speed_key, true);   
     double d =  stats.getTotalDistance() * UnitConversions.M_TO_KM;
     double s =  stats.getAverageMovingSpeed() * UnitConversions.MS_TO_KMH;
     

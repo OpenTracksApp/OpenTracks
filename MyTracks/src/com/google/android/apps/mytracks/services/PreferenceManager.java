@@ -144,8 +144,8 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
           autoResumeTrackTimeoutKey,
           Constants.DEFAULT_AUTO_RESUME_TRACK_TIMEOUT));
     }
-    if (key == null || key.equals(PreferencesUtils.getRecordingTrackIdKey(service))) {
-      long recordingTrackId = PreferencesUtils.getRecordingTrackId(service);
+    if (key == null || key.equals(PreferencesUtils.getKey(service, R.string.recording_track_id_key))) {
+      long recordingTrackId = PreferencesUtils.getLong(service, R.string.recording_track_id_key);
       // Only read the id if it is valid.
       // Setting it to -1 should only happen in
       // TrackRecordingService.endCurrentTrack()
@@ -157,8 +157,8 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
       service.setSplitFrequency(
           sharedPreferences.getInt(splitFrequencyKey, 0));
     }
-    if (key == null || key.equals(PreferencesUtils.getMetricUnitsKey(service))) {
-      service.setMetricUnits(PreferencesUtils.isMetricUnits(service));
+    if (key == null || key.equals(PreferencesUtils.getKey(service, R.string.metric_units_key))) {
+      service.setMetricUnits(PreferencesUtils.getBoolean(service, R.string.metric_units_key, true));
     }
   }
 

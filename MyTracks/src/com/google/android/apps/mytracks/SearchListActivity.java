@@ -85,8 +85,8 @@ public class SearchListActivity extends AbstractMyTracksActivity {
       sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-          if (PreferencesUtils.getRecordingTrackIdKey(SearchListActivity.this).equals(key)) {
-            recordingTrackId = PreferencesUtils.getRecordingTrackId(SearchListActivity.this);
+          if (PreferencesUtils.getKey(SearchListActivity.this, R.string.recording_track_id_key).equals(key)) {
+            recordingTrackId = PreferencesUtils.getLong(SearchListActivity.this, R.string.recording_track_id_key);
             arrayAdapter.notifyDataSetChanged();
           }
         }
@@ -126,7 +126,7 @@ public class SearchListActivity extends AbstractMyTracksActivity {
     SharedPreferences sharedPreferences = getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-    recordingTrackId = PreferencesUtils.getRecordingTrackId(this);
+    recordingTrackId = PreferencesUtils.getLong(this, R.string.recording_track_id_key);
 
     listView = (ListView) findViewById(R.id.search_list);
     listView.setEmptyView(findViewById(R.id.search_list_empty));
@@ -185,7 +185,7 @@ public class SearchListActivity extends AbstractMyTracksActivity {
   @Override
   protected void onResume() {
     super.onResume();
-    metricUnits = PreferencesUtils.isMetricUnits(this);
+    metricUnits = PreferencesUtils.getBoolean(this, R.string.metric_units_key, true);
   }
 
   @Override

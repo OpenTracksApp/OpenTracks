@@ -167,7 +167,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     // Disable auto resume by default.
     updateAutoResumePrefs(0, -1);
     // No recording track.
-    PreferencesUtils.setRecordingTrackId(context, -1L);
+    PreferencesUtils.setLong(context, R.string.recording_track_id_key, -1L);
   }
 
   @SmallTest
@@ -219,7 +219,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     assertTrue(service.isRecording());
     assertEquals(id, service.getRecordingTrackId());
     shutdownService();
-    assertEquals(id, PreferencesUtils.getRecordingTrackId(context));
+    assertEquals(id, PreferencesUtils.getLong(context, R.string.recording_track_id_key));
 
     // Start the service in "resume" mode (simulates the on-reboot action).
     Intent startIntent = createStartIntent();
@@ -315,7 +315,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
   @MediumTest
   public void testRecording_orphanedRecordingTrack() throws Exception {
     // Just set recording track to a bogus value.
-    PreferencesUtils.setRecordingTrackId(context, 256L);
+    PreferencesUtils.setLong(context, R.string.recording_track_id_key, 256L);
 
     // Make sure that the service will not start recording and will clear
     // the bogus track.
@@ -389,7 +389,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     assertEquals(id, track.getId());
     assertEquals(sharedPreferences.getString(context.getString(R.string.default_activity_key), ""),
         track.getCategory());
-    assertEquals(id, PreferencesUtils.getRecordingTrackId(context));
+    assertEquals(id, PreferencesUtils.getLong(context, R.string.recording_track_id_key));
     assertEquals(id, service.getRecordingTrackId());
 
     // Verify that the start broadcast was received.
@@ -415,7 +415,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     long newTrack = service.startNewTrack();
     assertEquals(-1L, newTrack);
 
-    assertEquals(123L, PreferencesUtils.getRecordingTrackId(context));
+    assertEquals(123L, PreferencesUtils.getLong(context, R.string.recording_track_id_key));
     assertEquals(123L, service.getRecordingTrackId());
   }
 
@@ -434,7 +434,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     // End the current track.
     service.endCurrentTrack();
     assertFalse(service.isRecording());
-    assertEquals(-1L, PreferencesUtils.getRecordingTrackId(context));
+    assertEquals(-1L, PreferencesUtils.getLong(context, R.string.recording_track_id_key));
     assertEquals(-1L, service.getRecordingTrackId());
 
     // Verify that the stop broadcast was received.
@@ -457,7 +457,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     // Ending the current track when there is no recording should not result in any error.
     service.endCurrentTrack();
 
-    assertEquals(-1L, PreferencesUtils.getRecordingTrackId(context));
+    assertEquals(-1L, PreferencesUtils.getLong(context, R.string.recording_track_id_key));
     assertEquals(-1L, service.getRecordingTrackId());
   }
 
@@ -665,7 +665,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     assertTrue(track.getId() >= 0);
     providerUtils.insertTrack(track);
     assertEquals(track.getId(), providerUtils.getTrack(track.getId()).getId());
-    PreferencesUtils.setRecordingTrackId(context, isRecording ? track.getId() : -1L);
+    PreferencesUtils.setLong(context, R.string.recording_track_id_key, isRecording ? track.getId() : -1L);
   }
 
   // TODO: We support multiple values for readability, however this test's
@@ -706,7 +706,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     Track track = providerUtils.getTrack(id);
     assertNotNull(track);
     assertEquals(id, track.getId());
-    assertEquals(id, PreferencesUtils.getRecordingTrackId(context));
+    assertEquals(id, PreferencesUtils.getLong(context, R.string.recording_track_id_key));
     assertEquals(id, service.getRecordingTrackId());
 
     // Insert a few points, markers and statistics.

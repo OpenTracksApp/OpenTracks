@@ -86,7 +86,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
     @Override
     public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
       // Note that key can be null
-      if (PreferencesUtils.getRecordingTrackIdKey(MarkerListActivity.this).equals(key)) {
+      if (PreferencesUtils.getKey(MarkerListActivity.this, R.string.recording_track_id_key).equals(key)) {
         updateMenu();
       }
     }
@@ -188,7 +188,7 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
 
   private void updateMenu() {
     if (insertMarkerMenuItem != null) {
-      insertMarkerMenuItem.setVisible(trackId == PreferencesUtils.getRecordingTrackId(this));
+      insertMarkerMenuItem.setVisible(trackId == PreferencesUtils.getLong(this, R.string.recording_track_id_key));
     }
   }
 

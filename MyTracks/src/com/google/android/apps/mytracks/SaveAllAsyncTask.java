@@ -66,7 +66,7 @@ public class SaveAllAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(saveAllActivity);
 
     // Get the wake lock if not recording
-    if (PreferencesUtils.getRecordingTrackId(saveAllActivity) == -1L) {
+    if (PreferencesUtils.getLong(saveAllActivity, R.string.recording_track_id_key) == -1L) {
       wakeLock = SystemUtils.acquireWakeLock(saveAllActivity, wakeLock);
     }
     success = false;

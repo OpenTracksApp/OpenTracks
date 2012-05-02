@@ -271,7 +271,7 @@ public class TrackRecordingService extends Service {
             + "Resetting an orphaned recording track = " + recordingTrackId);
       }
       recordingTrackId = -1L;
-      PreferencesUtils.setRecordingTrackId(this, recordingTrackId);
+      PreferencesUtils.setLong(this, R.string.recording_track_id_key, recordingTrackId);
     }
     showNotification();
   }
@@ -328,7 +328,7 @@ public class TrackRecordingService extends Service {
           + recordingTrack + ") doesn't exist or is too old");
       isRecording = false;
       recordingTrackId = -1L;
-      PreferencesUtils.setRecordingTrackId(this, recordingTrackId);
+      PreferencesUtils.setLong(this, R.string.recording_track_id_key, recordingTrackId);
       stopSelfResult(startId);
       return;
     }
@@ -611,7 +611,7 @@ public class TrackRecordingService extends Service {
     // Reset the number of auto-resume retries.
     setAutoResumeTrackRetries(0);
     // Persist the current recording track.
-    PreferencesUtils.setRecordingTrackId(this, recordingTrackId);
+    PreferencesUtils.setLong(this, R.string.recording_track_id_key, recordingTrackId);
 
     // Notify the world that we're now recording.
     sendTrackBroadcast(
@@ -1054,7 +1054,7 @@ public class TrackRecordingService extends Service {
     showNotification();
     long recordedTrackId = recordingTrackId;
     recordingTrackId = -1L;
-    PreferencesUtils.setRecordingTrackId(this, recordingTrackId);
+    PreferencesUtils.setLong(this, R.string.recording_track_id_key, recordingTrackId);
 
     if (sensorManager != null) {
       SensorManagerFactory.getInstance().releaseSensorManager(sensorManager);

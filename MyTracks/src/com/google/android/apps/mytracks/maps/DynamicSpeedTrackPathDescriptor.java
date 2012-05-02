@@ -113,7 +113,7 @@ public class DynamicSpeedTrackPathDescriptor implements TrackPathDescriptor,
 
   @Override
   public boolean needsRedraw() {
-    long selectedTrackId = PreferencesUtils.getSelectedTrackId(context);
+    long selectedTrackId = PreferencesUtils.getLong(context, R.string.selected_track_id_key);
     if (selectedTrackId == -1L) {
       // Could not find track.
       return false;

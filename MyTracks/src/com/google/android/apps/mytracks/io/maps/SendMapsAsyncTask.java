@@ -258,7 +258,7 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
   boolean uploadAllTrackPoints(Track track) {
     Cursor locationsCursor = null;
     try {
-      boolean metricUnits = PreferencesUtils.isMetricUnits(context);
+      boolean metricUnits = PreferencesUtils.getBoolean(context, R.string.metric_units_key, true);
 
       locationsCursor = myTracksProviderUtils.getLocationsCursor(trackId, 0, -1, false);
       if (locationsCursor == null) {

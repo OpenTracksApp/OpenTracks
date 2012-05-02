@@ -30,6 +30,7 @@ import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener.ProviderState;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceTest.MockContext;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.maps.mytracks.R;
 import com.google.android.testing.mocking.AndroidMock;
 
 import android.content.Context;
@@ -112,8 +113,8 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     listener1 = AndroidMock.createStrictMock("listener1", TrackDataListener.class);
     listener2 = AndroidMock.createStrictMock("listener2", TrackDataListener.class);
-    PreferencesUtils.setRecordingTrackId(context, TRACK_ID);
-    PreferencesUtils.setSelectedTrackId(context, TRACK_ID);
+    PreferencesUtils.setLong(context, R.string.recording_track_id_key, TRACK_ID);
+    PreferencesUtils.setLong(context, R.string.selected_track_id_key, TRACK_ID);
   }
 
   @Override
@@ -797,8 +798,8 @@ public class TrackDataHubTest extends AndroidTestCase {
   }
 
   public void testDisplayPreferencesListen() throws Exception {
-    String metricUnitsKey = PreferencesUtils.getMetricUnitsKey(context);
-    String reportSpeedKey = PreferencesUtils.getReportSpeedKey(context);
+    String metricUnitsKey = PreferencesUtils.getKey(context, R.string.metric_units_key);
+    String reportSpeedKey = PreferencesUtils.getKey(context, R.string.report_speed_key);
     
     prefs.edit()
         .putBoolean(metricUnitsKey, true)
