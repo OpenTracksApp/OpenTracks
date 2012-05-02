@@ -21,6 +21,7 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
 import android.location.Location;
+import android.view.View;
 import android.widget.TextView;
 
 /**
@@ -33,111 +34,158 @@ public class StatsUtils {
   private StatsUtils() {}
 
   /**
-   * Sets the speed labels.
+   * Sets the location values.
    *
    * @param activity the activity
-   * @param reportSpeed true to report speed
-   * @param includeLocationSpeed true to include the current location speed
+   * @param location the location
+   * @param showAll true to show all the fields, false to show only the
+   *          elevation field
    */
-  public static void setSpeedLabels(
-      Activity activity, boolean reportSpeed, boolean includeLocationSpeed) {
-    StatsUtils.setSpeedLabel(activity, R.id.stats_max_speed_label, R.string.stats_max_speed,
-        R.string.stats_fastest_pace, reportSpeed);
-    StatsUtils.setSpeedLabel(activity, R.id.stats_average_speed_label, R.string.stats_average_speed,
-        R.string.stats_average_pace, reportSpeed);
-    StatsUtils.setSpeedLabel(activity, R.id.stats_average_moving_speed_label,
-        R.string.stats_average_moving_speed, R.string.stats_average_moving_pace, reportSpeed);
-    if (includeLocationSpeed) {
-      StatsUtils.setSpeedLabel(
-          activity, R.id.stats_speed_label, R.string.stats_speed, R.string.stats_pace, reportSpeed);
+  public static void setLocationValues(Activity activity, Location location, boolean showAll) {
+    boolean metricUnits = PreferencesUtils.getBoolean(activity, R.string.metric_units_key, true);
+    boolean reportSpeed = PreferencesUtils.getBoolean(activity, R.string.report_speed_key, true);
+
+    // Set elevation
+    boolean showElevation = PreferencesUtils.getBoolean(
+        activity, R.string.stats_show_elevation_key, false);
+    if (showElevation) {
+      double altitude = location == null ? Double.NaN : location.getAltitude();
+      setElevationValue(activity, R.id.stats_elevation_value, altitude, metricUnits);
+    }
+
+    if (!showAll) {
+      return;
+    }
+
+    // Set speed/pace
+    setSpeedLabel(
+        activity, R.id.stats_speed_label, R.string.stats_speed, R.string.stats_pace, reportSpeed);
+    double speed = location == null ? Double.NaN : location.getSpeed();
+    setSpeedValue(activity, R.id.stats_speed_value, speed, metricUnits, reportSpeed);
+
+    // Set coordinate
+    boolean showCoordinate = PreferencesUtils.getBoolean(
+        activity, R.string.stats_show_coordinate_key, false);
+    View coordinateLabelTableRow = activity.findViewById(R.id.stats_coordinate_label_table_row);
+    View coordinateValueTableRow = activity.findViewById(R.id.stats_coordinate_value_table_row);
+    coordinateLabelTableRow.setVisibility(showCoordinate ? View.VISIBLE : View.GONE);
+    coordinateValueTableRow.setVisibility(showCoordinate ? View.VISIBLE : View.GONE);
+    if (showCoordinate) {
+      double latitude = location == null ? Double.NaN : location.getLatitude();
+      double longitude = location == null ? Double.NaN : location.getLongitude();
+      setCoordinateValue(activity, R.id.stats_latitude_value, latitude);
+      setCoordinateValue(activity, R.id.stats_longitude_value, longitude);
     }
   }
 
   /**
-   * Sets the trip statistics values.
-   * 
-   * @param activity the activity
-   * @param tripStatistics the trip statistics
-   * @param metricUnits true to display in metric units
-   * @param reportSpeed true to report speed
-   */
-  public static void setTripStatisticsValues(
-      Activity activity, TripStatistics tripStatistics, boolean metricUnits, boolean reportSpeed) {
-    double totalDistance = tripStatistics == null ? Double.NaN : tripStatistics.getTotalDistance();
-    double maxSpeed = tripStatistics == null ? Double.NaN : tripStatistics.getMaxSpeed();
-    long totalTime = tripStatistics == null ? -1L : tripStatistics.getTotalTime();
-    double averageSpeed = tripStatistics == null ? Double.NaN : tripStatistics.getAverageSpeed();
-    long movingTime = tripStatistics == null ? -1L : tripStatistics.getMovingTime();
-    double averageMovingSpeed = tripStatistics == null ? Double.NaN
-        : tripStatistics.getAverageMovingSpeed();
-    double elevationGain = tripStatistics == null ? Double.NaN
-        : tripStatistics.getTotalElevationGain();
-    double minElevation = tripStatistics == null ? Double.NaN : tripStatistics.getMinElevation();
-    double maxElevation = tripStatistics == null ? Double.NaN : tripStatistics.getMaxElevation();
-    double minGrade = tripStatistics == null ? Double.NaN : tripStatistics.getMinGrade();
-    double maxGrade = tripStatistics == null ? Double.NaN : tripStatistics.getMaxGrade();
-
-    StatsUtils.setDistanceValue(
-        activity, R.id.stats_total_distance_value, totalDistance, metricUnits);
-    StatsUtils.setSpeedValue(
-        activity, R.id.stats_max_speed_value, maxSpeed, metricUnits, reportSpeed);
-    StatsUtils.setTimeValue(activity, R.id.stats_total_time_value, totalTime);
-    StatsUtils.setSpeedValue(
-        activity, R.id.stats_average_speed_value, averageSpeed, metricUnits, reportSpeed);
-    StatsUtils.setTimeValue(activity, R.id.stats_moving_time_value, movingTime);
-    StatsUtils.setSpeedValue(activity, R.id.stats_average_moving_speed_value, averageMovingSpeed,
-        metricUnits, reportSpeed);
-    StatsUtils.setAltitudeValue(
-        activity, R.id.stats_elevation_gain_value, elevationGain, metricUnits);
-    StatsUtils.setAltitudeValue(
-        activity, R.id.stats_min_elevation_value, minElevation, metricUnits);
-    StatsUtils.setAltitudeValue(
-        activity, R.id.stats_max_elevation_value, maxElevation, metricUnits);
-    StatsUtils.setGradeValue(activity, R.id.stats_min_grade_value, minGrade);
-    StatsUtils.setGradeValue(activity, R.id.stats_max_grade_value, maxGrade);
-  }
-
-  /**
-   * Sets the location values.
-   * 
-   * @param activity the activity
-   * @param location the location
-   * @param metricUnits true to display in metric units
-   * @param reportSpeed true to report speed
-   */
-  public static void setLocationValues(
-      Activity activity, Location location, boolean metricUnits, boolean reportSpeed) {
-    double speed = location == null ? Double.NaN : location.getSpeed();
-    double altitude = location == null ? Double.NaN : location.getAltitude();
-    double latitude = location == null ? Double.NaN : location.getLatitude();
-    double longitude = location == null ? Double.NaN : location.getLongitude();
-
-    StatsUtils.setSpeedValue(activity, R.id.stats_speed_value, speed, metricUnits, reportSpeed);
-    StatsUtils.setAltitudeValue(activity, R.id.stats_elevation_value, altitude, metricUnits);
-    StatsUtils.setCoordinateValue(activity, R.id.stats_latitude_value, latitude);
-    StatsUtils.setCoordinateValue(activity, R.id.stats_longitude_value, longitude);
-  }
-
-  /**
-   * Sets the location elevation value.
-   * 
-   * @param activity the activity
-   * @param elevation the elevation in meters
-   * @param metricUnits true to display in metric units
-   */
-  public static void setLocationElevationValue(
-      Activity activity, double elevation, boolean metricUnits) {
-    StatsUtils.setAltitudeValue(activity, R.id.stats_elevation_value, elevation, metricUnits);
-  }
-
-  /**
    * Sets the total time value.
-   * 
+   *
    * @param activity the activity
    * @param totalTime the total time
    */
   public static void setTotalTimeValue(Activity activity, long totalTime) {
-    StatsUtils.setTimeValue(activity, R.id.stats_total_time_value, totalTime);
+    setTimeValue(activity, R.id.stats_total_time_value, totalTime);
+  }
+
+  /**
+   * Sets the trip statistics values.
+   *
+   * @param activity the activity
+   * @param tripStatistics the trip statistics
+   */
+  public static void setTripStatisticsValues(Activity activity, TripStatistics tripStatistics) {
+    boolean metricUnits = PreferencesUtils.getBoolean(activity, R.string.metric_units_key, true);
+    boolean reportSpeed = PreferencesUtils.getBoolean(activity, R.string.report_speed_key, true);
+    boolean showTotalTime = PreferencesUtils.getBoolean(
+        activity, R.string.stats_show_total_time_key, true);
+    
+    // Set total distance
+    double totalDistance = tripStatistics == null ? Double.NaN : tripStatistics.getTotalDistance();
+    setDistanceValue(activity, R.id.stats_total_distance_value, totalDistance, metricUnits);
+    
+    // Set total time/moving time
+    setTimeLabel(activity, R.id.stats_total_time_label, R.string.stats_total_time,
+        R.string.stats_moving_time, showTotalTime);
+    long totalTime;
+    if (tripStatistics == null) {
+      totalTime = -1L;
+    } else {
+      totalTime = showTotalTime ? tripStatistics.getTotalTime() : tripStatistics.getMovingTime(); 
+    }
+    setTimeValue(activity, R.id.stats_total_time_value, totalTime);
+    
+    // Set average speed/moving average speed
+    if (showTotalTime) {
+      setSpeedLabel(activity, R.id.stats_average_speed_label, R.string.stats_average_speed,
+          R.string.stats_average_pace, reportSpeed);
+    } else {
+      setSpeedLabel(activity, R.id.stats_average_speed_label, R.string.stats_average_moving_speed,
+          R.string.stats_average_moving_pace, reportSpeed);
+    }
+    double averageSpeed;
+    if (tripStatistics == null) {
+      averageSpeed = Double.NaN;
+    } else {
+      averageSpeed = showTotalTime ? tripStatistics.getAverageSpeed()
+          : tripStatistics.getAverageMovingSpeed();
+    }
+    setSpeedValue(activity, R.id.stats_average_speed_value, averageSpeed, metricUnits, reportSpeed);
+    
+    // Set max speed
+    setSpeedLabel(activity, R.id.stats_max_speed_label, R.string.stats_max_speed,
+        R.string.stats_fastest_pace, reportSpeed);
+    double maxSpeed = tripStatistics == null ? Double.NaN : tripStatistics.getMaxSpeed();
+    setSpeedValue(activity, R.id.stats_max_speed_value, maxSpeed, metricUnits, reportSpeed);    
+    
+    // Set elevation
+    boolean showElevation = PreferencesUtils.getBoolean(
+        activity, R.string.stats_show_elevation_key, false);
+    View elevationLabelTableRow1 = activity.findViewById(R.id.stats_elevation_label_table_row1);
+    View elevationValueTableRow1 = activity.findViewById(R.id.stats_elevation_value_table_row1);
+    View elevationLabelTableRow2 = activity.findViewById(R.id.stats_elevation_label_table_row2);
+    View elevationValueTableRow2 = activity.findViewById(R.id.stats_elevation_value_table_row2);
+    elevationLabelTableRow1.setVisibility(showElevation ? View.VISIBLE : View.GONE);
+    elevationValueTableRow1.setVisibility(showElevation ? View.VISIBLE : View.GONE);
+    elevationLabelTableRow2.setVisibility(showElevation ? View.VISIBLE : View.GONE);
+    elevationValueTableRow2.setVisibility(showElevation ? View.VISIBLE : View.GONE);
+    if (showElevation) {
+      double elevationGain = tripStatistics == null ? Double.NaN
+          : tripStatistics.getTotalElevationGain();
+      double minElevation = tripStatistics == null ? Double.NaN : tripStatistics.getMinElevation();
+      double maxElevation = tripStatistics == null ? Double.NaN : tripStatistics.getMaxElevation();
+      setElevationValue(activity, R.id.stats_elevation_gain_value, elevationGain, metricUnits);
+      setElevationValue(activity, R.id.stats_min_elevation_value, minElevation, metricUnits);
+      setElevationValue(activity, R.id.stats_max_elevation_value, maxElevation, metricUnits);
+    }
+
+    // Set grade
+    boolean showGrade = PreferencesUtils.getBoolean(activity, R.string.stats_show_grade_key, false);
+    View gradeLabelTableRow = activity.findViewById(R.id.stats_grade_label_table_row);
+    View gradeValueTableRow = activity.findViewById(R.id.stats_grade_value_table_row);
+    gradeLabelTableRow.setVisibility(showGrade ? View.VISIBLE : View.GONE);
+    gradeValueTableRow.setVisibility(showGrade ? View.VISIBLE : View.GONE);
+    if (showGrade) {
+      double minGrade = tripStatistics == null ? Double.NaN : tripStatistics.getMinGrade();
+      double maxGrade = tripStatistics == null ? Double.NaN : tripStatistics.getMaxGrade();
+      setGradeValue(activity, R.id.stats_min_grade_value, minGrade);
+      setGradeValue(activity, R.id.stats_max_grade_value, maxGrade);
+    }
+  }
+  
+  /**
+   * Sets a time label.
+   * 
+   * @param activity the activity
+   * @param id the time label resource id
+   * @param totalTimeId the total time string id
+   * @param movingTimeId the moving time string id
+   * @param totalTime true to use total time
+   */
+  private static void setTimeLabel(Activity activity, int id, int totalTimeId, int movingTimeId,
+      boolean totalTime) {
+    TextView textView = (TextView) activity.findViewById(id);
+    textView.setText(totalTime ? totalTimeId : movingTimeId);
   }
 
   /**
@@ -235,25 +283,25 @@ public class StatsUtils {
   }
 
   /**
-   * Sets an altitude value.
+   * Sets an elevation value.
    *
    * @param activity the activity
-   * @param id the altitude value resource id
-   * @param altitude the altitude in meters
+   * @param id the elevation value resource id
+   * @param elevation the elevation in meters
    * @param metricUnits true to display in metric units
    */
-  private static void setAltitudeValue(
-      Activity activity, int id, double altitude, boolean metricUnits) {
+  private static void setElevationValue(
+      Activity activity, int id, double elevation, boolean metricUnits) {
     TextView textView = (TextView) activity.findViewById(id);
     String value;
-    if (Double.isNaN(altitude) || Double.isInfinite(altitude)) {
+    if (Double.isNaN(elevation) || Double.isInfinite(elevation)) {
       value = activity.getString(R.string.value_unknown);
     } else {
       if (metricUnits) {
-        value = activity.getString(R.string.value_float_meter, altitude);
+        value = activity.getString(R.string.value_float_meter, elevation);
       } else {
-        altitude *= UnitConversions.M_TO_FT;
-        value = activity.getString(R.string.value_float_feet, altitude);
+        elevation *= UnitConversions.M_TO_FT;
+        value = activity.getString(R.string.value_float_feet, elevation);
       }
     }
     textView.setText(value);

@@ -71,7 +71,7 @@ public class TrackWidgetProvider
   private Context context;
   private String unknown;
   private TrackObserver trackObserver;
-  private boolean isMetric;
+  private boolean metricUnits;
   private boolean reportSpeed;
   private long selectedTrackId;
   private SharedPreferences sharedPreferences;
@@ -178,11 +178,11 @@ public class TrackWidgetProvider
     if (TRACK_STARTED_ACTION.equals(action)) {
       // If a new track is started by this appwidget or elsewhere,
       // toggle the button to active and have it disable the track if pressed.
-      setButtonIntent(views, R.string.track_action_end, R.drawable.appwidget_button_enabled);
+      setButtonIntent(views, R.string.track_action_end, R.drawable.app_widget_button_enabled);
     } else {
       // If a track is stopped by this appwidget or elsewhere,
       // toggle the button to inactive and have it start a new track if pressed.
-      setButtonIntent(views, R.string.track_action_start, R.drawable.appwidget_button_disabled);
+      setButtonIntent(views, R.string.track_action_start, R.drawable.app_widget_button_disabled);
     }
   }
 
@@ -218,10 +218,10 @@ public class TrackWidgetProvider
     }
 
     TripStatistics stats = track.getStatistics();
-    String distance = StringUtils.formatDistance(context, stats.getTotalDistance(), isMetric);
+    String distance = StringUtils.formatDistance(context, stats.getTotalDistance(), metricUnits);
     String time = StringUtils.formatElapsedTime(stats.getMovingTime());
     String speed = StringUtils.formatSpeed(
-        context, stats.getAverageMovingSpeed(), isMetric, reportSpeed);
+        context, stats.getAverageMovingSpeed(), metricUnits, reportSpeed);
 
     views.setTextViewText(R.id.appwidget_distance_text, distance);
     views.setTextViewText(R.id.appwidget_time_text, time);
@@ -230,14 +230,12 @@ public class TrackWidgetProvider
 
   @Override
   public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-    String metricUnitsKey = context.getString(R.string.metric_units_key);
-    if (key == null || key.equals(metricUnitsKey)) {
-      isMetric = prefs.getBoolean(metricUnitsKey, true);
+    if (key == null || key.equals(PreferencesUtils.getMetricUnitsKey(context))) {
+      metricUnits = PreferencesUtils.isMetricUnits(context);
     }
 
-    String reportSpeedKey = context.getString(R.string.report_speed_key);
-    if (key == null || key.equals(reportSpeedKey)) {
-      reportSpeed = prefs.getBoolean(reportSpeedKey, true);
+    if (key == null || key.equals(PreferencesUtils.getReportSpeedKey(context))) {
+      reportSpeed = PreferencesUtils.isReportSpeed(context);
     }
 
     if (key == null || key.equals(PreferencesUtils.getSelectedTrackIdKey(context))) {

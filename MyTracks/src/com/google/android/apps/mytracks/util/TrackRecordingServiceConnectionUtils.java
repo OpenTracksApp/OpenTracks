@@ -17,9 +17,11 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.TrackEditActivity;
+import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
+import com.google.android.maps.mytracks.R;
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
@@ -28,6 +30,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.RemoteException;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -122,7 +125,7 @@ public class TrackRecordingServiceConnectionUtils {
 
   /**
    * Resumes the track recording service connection.
-   * 
+   *
    * @param context the context
    * @param trackRecordingServiceConnection the track recording service
    *          connection
@@ -133,5 +136,30 @@ public class TrackRecordingServiceConnectionUtils {
     if (!isRecordingServiceRunning(context)) {
       PreferencesUtils.setRecordingTrackId(context, -1L);
     }
+  }
+
+  /**
+   * Adds a marker.
+   */
+  public static void addMarker(Context context,
+      TrackRecordingServiceConnection trackRecordingServiceConnection,
+      WaypointCreationRequest waypointCreationRequest) {
+    ITrackRecordingService trackRecordingService = trackRecordingServiceConnection
+        .getServiceIfBound();
+    if (trackRecordingService == null) {
+      Log.d(TAG, "Unable to add marker, no track recording service");
+    } else {
+      try {
+        if (trackRecordingService.insertWaypoint(waypointCreationRequest) != -1L) {
+          Toast.makeText(context, R.string.marker_add_success, Toast.LENGTH_SHORT).show();
+          return;
+        }
+      } catch (RemoteException e) {
+        Log.e(TAG, "Unable to add marker", e);
+      } catch (IllegalStateException e) {
+        Log.e(TAG, "Unable to add marker.", e);
+      }
+    }
+    Toast.makeText(context, R.string.marker_add_error, Toast.LENGTH_LONG).show();
   }
 }

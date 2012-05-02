@@ -37,11 +37,11 @@ limitations under the License.
     android:title="@string/menu_share">
     <menu>
       <item
-        android:id="@+id/track_detail_share_map"
-        android:title="@string/menu_share_map"/>
+        android:id="@+id/track_detail_share_map_url"
+        android:title="@string/menu_share_map_url"/>
       <item
-        android:id="@+id/track_detail_share_fusion_table"
-        android:title="@string/menu_share_fusion_table"/>
+        android:id="@+id/track_detail_share_fusion_table_url"
+        android:title="@string/menu_share_fusion_table_url"/>
       <item android:id="@+id/track_detail_share_gpx"/>
       <item android:id="@+id/track_detail_share_kml"/>
       <item android:id="@+id/track_detail_share_csv"/>
@@ -77,21 +77,21 @@ limitations under the License.
     android:id="@+id/track_detail_delete"
     android:title="@string/menu_delete"/>
   <item
-    android:icon="@drawable/menu_my_location"
-    android:id="@+id/track_detail_my_location"
-    android:title="@string/menu_my_location"/>
-  <item
     android:icon="@drawable/menu_satellite_mode"
     android:id="@+id/track_detail_satellite_mode"
     android:title="@string/menu_satellite_mode"/>
+  <item
+    android:icon="@drawable/menu_sensor_state"
+    android:id="@+id/track_detail_sensor_state"
+    android:title="@string/menu_sensor_state"/>
   <item
     android:icon="@drawable/menu_chart_settings"
     android:id="@+id/track_detail_chart_settings"
     android:title="@string/menu_chart_settings"/>
   <item
-    android:icon="@drawable/menu_sensor_state"
-    android:id="@+id/track_detail_sensor_state"
-    android:title="@string/menu_sensor_state"/>
+    android:icon="@drawable/menu_stats_settings"
+    android:id="@+id/track_detail_stats_settings"
+    android:title="@string/menu_stats_settings"/>
   <item
     android:icon="@drawable/menu_settings"
     android:id="@+id/track_detail_settings"

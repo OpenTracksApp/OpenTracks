@@ -32,18 +32,18 @@ limitations under the License.
     android:showAsAction="always|collapseActionView"
     android:title="@string/menu_search"/>
   <item
-    android:icon="@drawable/menu_import_all"
-    android:id="@+id/track_list_import_all"
-    android:title="@string/menu_import_all"/>
+    android:icon="@drawable/menu_import"
+    android:id="@+id/track_list_import"
+    android:title="@string/menu_import"/>
   <item
-    android:icon="@drawable/menu_export_all"
-    android:id="@+id/track_list_export_all"
-    android:title="@string/menu_export_all">
+    android:icon="@drawable/menu_save_all"
+    android:id="@+id/track_list_save_all"
+    android:title="@string/menu_save_all">
     <menu>
-      <item android:id="@+id/track_list_export_gpx"/>
-      <item android:id="@+id/track_list_export_kml"/>
-      <item android:id="@+id/track_list_export_csv"/>
-      <item android:id="@+id/track_list_export_tcx"/>
+      <item android:id="@+id/track_list_save_all_gpx"/>
+      <item android:id="@+id/track_list_save_all_kml"/>
+      <item android:id="@+id/track_list_save_all_csv"/>
+      <item android:id="@+id/track_list_save_all_tcx"/>
     </menu>
   </item>
   <item

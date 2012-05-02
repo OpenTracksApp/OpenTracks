@@ -45,12 +45,27 @@ limitations under the License.
     <item name="android:selectAllOnFocus">true</item>
     <item name="android:singleLine">false</item>
   </style>
+  <!-- The style for the edit label -->
+  <style name="EditLabel" parent="@style/TextMedium" />
+  <!-- The style for the edit lable with padding top -->
+  <style name="EditLabel.WithPaddingTop">
+    <item name="android:paddingTop">16dp</item>
+  </style>
   <!-- The style for the edit name -->
   <style name="EditName" parent="@style/TextMedium.WithIcon">
     <item name="android:inputType">textAutoCorrect|textCapWords</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:selectAllOnFocus">true</item>
     <item name="android:singleLine">true</item>
+  </style>
+  <!-- The style for the help answer -->
+  <style name="HelpAnswer" parent="@style/TextSmall">
+    <item name="android:paddingBottom">8dp</item>
+  </style>
+  <!-- The style for help question -->
+  <style name="HelpQuestion" parent="@style/TextMedium">
+    <item name="android:paddingTop">8dp</item>
+    <item name="android:textStyle">bold</item>
   </style>
   <!-- The style for the list empty text view -->
   <style name="ListEmptyTextView" parent="@style/TextLarge">
@@ -146,14 +161,5 @@ limitations under the License.
   <style name="UploadServiceChooserImageView">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
-  </style>
-  <!-- The style for the welcome page answer -->
-  <style name="WelcomeAnswerTextView" parent="@style/TextSmall">
-    <item name="android:paddingBottom">8dp</item>
-  </style>
-  <!-- The style for welcome page question -->
-  <style name="WelcomeQuestionTextView" parent="@style/TextMedium">
-    <item name="android:paddingTop">8dp</item>
-    <item name="android:textStyle">bold</item>
   </style>
 </resources>

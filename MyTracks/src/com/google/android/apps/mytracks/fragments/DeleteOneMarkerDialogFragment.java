@@ -61,6 +61,8 @@ public class DeleteOneMarkerDialogFragment extends DialogFragment {
             Intent intent = IntentUtils.newIntent(getActivity(), MarkerListActivity.class)
                 .putExtra(MarkerListActivity.EXTRA_TRACK_ID, getArguments().getLong(KEY_TRACK_ID));
             startActivity(intent);
+            // Close the activity since its content can change after delete.
+            getActivity().finish();
           }
         });
   }

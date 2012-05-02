@@ -28,7 +28,9 @@ limitations under the License.
     android:layout_width="fill_parent"
     android:orientation="vertical" >
     <TextView
+      android:id="@+id/track_list_empty_message"
       android:text="@string/track_list_empty_message"
+      android:visibility="gone"
       style="@style/ListEmptyTextView" >
     </TextView>
     <ImageButton
@@ -38,6 +40,7 @@ limitations under the License.
       android:layout_width="wrap_content"
       android:padding="16dp"
       android:src="@drawable/menu_record_track"
+      android:visibility="gone"
       style="@android:style/Widget.DeviceDefault.ImageButton" />
   </LinearLayout>
 </merge>

@@ -25,12 +25,14 @@ import com.google.android.apps.mytracks.fragments.ChartSettingsDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
 import com.google.android.apps.mytracks.fragments.MapFragment;
+import com.google.android.apps.mytracks.fragments.MarkerAddDialogFragment;
 import com.google.android.apps.mytracks.fragments.StatsFragment;
+import com.google.android.apps.mytracks.fragments.StatsSettingsDialogFragment;
+import com.google.android.apps.mytracks.fragments.StatsSettingsDialogFragment.OnStatsSettingsChangedListener;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.io.sendtogoogle.UploadServiceChooserActivity;
-import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
@@ -47,7 +49,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.os.RemoteException;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,7 +56,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -65,7 +65,8 @@ import java.util.List;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public class TrackDetailActivity extends AbstractMyTracksActivity {
+public class TrackDetailActivity extends AbstractMyTracksActivity
+    implements OnStatsSettingsChangedListener {
 
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_MARKER_ID = "marker_id";
@@ -160,7 +161,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
 
   @Override
   public void onNewIntent(Intent intent) {
-    super.onNewIntent(intent);
     setIntent(intent);
     handleIntent(intent);
   }
@@ -235,16 +235,22 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
     String currentTabTag = tabHost.getCurrentTabTag();
     menu.findItem(R.id.track_detail_chart_settings).setVisible(
         ChartFragment.CHART_FRAGMENT_TAG.equals(currentTabTag));
-    menu.findItem(R.id.track_detail_my_location)
+    menu.findItem(R.id.track_detail_stats_settings).setVisible(
+        StatsFragment.STATS_FRAGMENT_TAG.equals(currentTabTag));   
+    MenuItem satelliteMode = menu.findItem(R.id.track_detail_satellite_mode)
         .setVisible(MapFragment.MAP_FRAGMENT_TAG.equals(currentTabTag));
-
-    // Set map or satellite mode
-    MapFragment mapFragment = (MapFragment) getSupportFragmentManager()
-        .findFragmentByTag(MapFragment.MAP_FRAGMENT_TAG);
-    boolean isSatelliteMode = mapFragment != null ? mapFragment.isSatelliteView() : false;
-    menu.findItem(R.id.track_detail_satellite_mode)
-        .setVisible(MapFragment.MAP_FRAGMENT_TAG.equals(currentTabTag))
-        .setTitle(isSatelliteMode ? R.string.menu_map_mode : R.string.menu_satellite_mode);
+    
+    if (satelliteMode.isVisible()) {
+      MapFragment mapFragment = (MapFragment) getSupportFragmentManager()
+          .findFragmentByTag(MapFragment.MAP_FRAGMENT_TAG);
+      /*
+       * The current tag is mapFragment, thus safe to call its methods like
+       * isSatelliteView.
+       */
+      boolean isSatelliteMode = mapFragment != null ? mapFragment.isSatelliteView() : false;
+      menu.findItem(R.id.track_detail_satellite_mode).setTitle(
+          isSatelliteMode ? R.string.menu_map_mode : R.string.menu_satellite_mode);
+    }
 
     return super.onPrepareOptionsMenu(menu);
   }
@@ -265,8 +271,8 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
         TrackRecordingServiceConnectionUtils.stop(this, trackRecordingServiceConnection);
         return true;
       case R.id.track_detail_insert_marker:
-        intent = IntentUtils.newIntent(this, MarkerEditActivity.class);
-        startActivity(intent);
+        MarkerAddDialogFragment.newInstance(trackId)
+            .show(getSupportFragmentManager(), MarkerAddDialogFragment.MARKER_ADD_DIALOG_TAG);
         return true;
       case R.id.track_detail_play:
         if (isEarthInstalled()) {
@@ -281,12 +287,12 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
               getSupportFragmentManager(), InstallEarthDialogFragment.INSTALL_EARTH_DIALOG_TAG);
         }
         return true;
-      case R.id.track_detail_share_map:
+      case R.id.track_detail_share_map_url:
         intent = IntentUtils.newIntent(this, UploadServiceChooserActivity.class)
             .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, true, false, false));
         startActivity(intent);
         return true;
-      case R.id.track_detail_share_fusion_table:
+      case R.id.track_detail_share_fusion_table_url:
         intent = IntentUtils.newIntent(this, UploadServiceChooserActivity.class)
             .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, false, true, false));
         startActivity(intent);
@@ -334,13 +340,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
         DeleteOneTrackDialogFragment.newInstance(trackId).show(
             getSupportFragmentManager(), DeleteOneTrackDialogFragment.DELETE_ONE_TRACK_DIALOG_TAG);
         return true;
-      case R.id.track_detail_my_location:
-        mapFragment = (MapFragment) getSupportFragmentManager()
-            .findFragmentByTag(MapFragment.MAP_FRAGMENT_TAG);
-        if (mapFragment != null) {
-          mapFragment.showMyLocation();
-        }
-        return true;
       case R.id.track_detail_satellite_mode:
         mapFragment = (MapFragment) getSupportFragmentManager()
             .findFragmentByTag(MapFragment.MAP_FRAGMENT_TAG);
@@ -348,13 +347,17 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
           mapFragment.setSatelliteView(!mapFragment.isSatelliteView());
         }
         return true;
+      case R.id.track_detail_sensor_state:
+        intent = IntentUtils.newIntent(this, SensorStateActivity.class);
+        startActivity(intent);
+        return true;
       case R.id.track_detail_chart_settings:
         new ChartSettingsDialogFragment().show(
             getSupportFragmentManager(), ChartSettingsDialogFragment.CHART_SETTINGS_DIALOG_TAG);
         return true;
-      case R.id.track_detail_sensor_state:
-        intent = IntentUtils.newIntent(this, SensorStateActivity.class);
-        startActivity(intent);
+      case R.id.track_detail_stats_settings:
+        new StatsSettingsDialogFragment().show(
+            getSupportFragmentManager(), StatsSettingsDialogFragment.STATS_SETTINGS_DIALOG_TAG);
         return true;
       case R.id.track_detail_settings:
         intent = IntentUtils.newIntent(this, SettingsActivity.class);
@@ -373,25 +376,8 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
   public boolean onTrackballEvent(MotionEvent event) {
     if (event.getAction() == MotionEvent.ACTION_DOWN) {
       if (TrackRecordingServiceConnectionUtils.isRecording(this, trackRecordingServiceConnection)) {
-        ITrackRecordingService trackRecordingService = trackRecordingServiceConnection
-            .getServiceIfBound();
-        if (trackRecordingService == null) {
-          Log.e(TAG, "The track recording service is null");
-          return true;
-        }
-        boolean success = false;
-        try {
-          long waypointId = trackRecordingService.insertWaypoint(
-              WaypointCreationRequest.DEFAULT_STATISTICS);
-          if (waypointId != -1L) {
-            success = true;
-          }
-        } catch (RemoteException e) {
-          Log.e(TAG, "Unable to insert waypoint", e);
-        }
-        Toast.makeText(this,
-            success ? R.string.marker_edit_add_success : R.string.marker_edit_add_error,
-            success ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG).show();
+        TrackRecordingServiceConnectionUtils.addMarker(
+            this, trackRecordingServiceConnection, WaypointCreationRequest.DEFAULT_STATISTICS);
         return true;
       }
     }
@@ -405,6 +391,13 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
     return mapViewContainer;
   }
 
+  @Override
+  public void onStatsSettingsChanged() {
+    StatsFragment statsFragment = (StatsFragment) getSupportFragmentManager()
+        .findFragmentByTag(StatsFragment.STATS_FRAGMENT_TAG);
+    statsFragment.updateUi();    
+  }
+  
   /**
    * Handles the data in the intent.
    */

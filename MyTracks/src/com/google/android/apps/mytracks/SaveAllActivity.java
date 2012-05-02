@@ -28,17 +28,17 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 /**
- * An activity to export all the tracks to the SD card.
+ * An activity to save all the tracks to the SD card.
  *
  * @author Sandor Dornbush
  */
-public class ExportActivity extends Activity {
+public class SaveAllActivity extends Activity {
 
   public static final String EXTRA_TRACK_FILE_FORMAT = "track_file_format";
 
   private static final int DIALOG_PROGRESS_ID = 0;
 
-  private ExportAsyncTask exportAsyncTask;
+  private SaveAllAsyncTask saveAllAsyncTask;
   private ProgressDialog progressDialog;
 
   @Override
@@ -46,22 +46,22 @@ public class ExportActivity extends Activity {
     super.onCreate(savedInstanceState);
 
     Object retained = getLastNonConfigurationInstance();
-    if (retained instanceof ExportAsyncTask) {
-      exportAsyncTask = (ExportAsyncTask) retained;
-      exportAsyncTask.setActivity(this);
+    if (retained instanceof SaveAllAsyncTask) {
+      saveAllAsyncTask = (SaveAllAsyncTask) retained;
+      saveAllAsyncTask.setActivity(this);
     } else {
       Intent intent = getIntent();
       TrackFileFormat trackFileFormat = intent.getParcelableExtra(EXTRA_TRACK_FILE_FORMAT);
       
-      exportAsyncTask = new ExportAsyncTask(this, trackFileFormat);
-      exportAsyncTask.execute();
+      saveAllAsyncTask = new SaveAllAsyncTask(this, trackFileFormat);
+      saveAllAsyncTask.execute();
     }
   }
 
   @Override
   public Object onRetainNonConfigurationInstance() {
-    exportAsyncTask.setActivity(null);
-    return exportAsyncTask;
+    saveAllAsyncTask.setActivity(null);
+    return saveAllAsyncTask;
   }
 
   @Override
@@ -70,10 +70,10 @@ public class ExportActivity extends Activity {
       return null;
     }
     progressDialog = DialogUtils.createHorizontalProgressDialog(
-        this, R.string.export_progress_message, new DialogInterface.OnCancelListener() {
+        this, R.string.save_all_progress_message, new DialogInterface.OnCancelListener() {
           @Override
           public void onCancel(DialogInterface dialog) {
-            exportAsyncTask.cancel(true);
+            saveAllAsyncTask.cancel(true);
             finish();
           }
         });
@@ -102,7 +102,7 @@ public class ExportActivity extends Activity {
   /**
    * Sets the progress dialog value.
    *
-   * @param number the number of tracks exported
+   * @param number the number of tracks saved
    * @param max the maximum number of tracks
    */
   public void setProgressDialogValue(int number, int max) {

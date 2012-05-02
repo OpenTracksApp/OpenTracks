@@ -16,13 +16,11 @@
 
 package com.google.android.apps.mytracks.util;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import java.util.Vector;
 
@@ -47,18 +45,11 @@ public class ChartURLGenerator {
    * @param track The track for this chart
    * @param context The current appplication context
    */
-  public static String getChartUrl(Vector<Double> distances,
-      Vector<Double> elevations, Track track, Context context) {
-    SharedPreferences preferences = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    boolean metricUnits = true;
-    if (preferences != null) {
-      metricUnits = preferences.getBoolean(
-          context.getString(R.string.metric_units_key), true);
-    }
-
-    return getChartUrl(distances, elevations, track,
-        context.getString(R.string.stats_elevation), metricUnits);
+  public static String getChartUrl(
+      Vector<Double> distances, Vector<Double> elevations, Track track, Context context) {
+    boolean metricUnits = PreferencesUtils.isMetricUnits(context);
+    return getChartUrl(
+        distances, elevations, track, context.getString(R.string.stats_elevation), metricUnits);
   }
 
   /**

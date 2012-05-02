@@ -30,10 +30,10 @@ limitations under the License.
       android:layout_width="fill_parent"
       android:orientation="vertical" >
       <TextView
-        android:id="@+id/marker_detail_marker_type"
+        android:id="@+id/marker_detail_waypoint_marker_type"
         style="@style/TextLarge" />
       <TextView
-        android:id="@+id/marker_detail_description"
+        android:id="@+id/marker_detail_waypoint_description"
         style="@style/TextLarge" />
     </LinearLayout>
     <TableLayout

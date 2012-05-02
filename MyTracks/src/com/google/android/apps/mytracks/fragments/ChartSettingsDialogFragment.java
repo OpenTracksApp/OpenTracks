@@ -64,7 +64,6 @@ public class ChartSettingsDialogFragment extends DialogFragment {
         ? R.string.stats_speed : R.string.stats_pace);
 
     return new AlertDialog.Builder(getActivity())
-        .setCancelable(true)
         .setNegativeButton(R.string.generic_cancel, null)
         .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
           @Override

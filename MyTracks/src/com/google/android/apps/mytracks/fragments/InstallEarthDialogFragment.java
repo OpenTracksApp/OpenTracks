@@ -39,7 +39,6 @@ public class InstallEarthDialogFragment extends DialogFragment {
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     return new AlertDialog.Builder(getActivity())
-        .setCancelable(true)
         .setMessage(R.string.track_detail_install_earth_message)
         .setNegativeButton(android.R.string.cancel, null)
         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {

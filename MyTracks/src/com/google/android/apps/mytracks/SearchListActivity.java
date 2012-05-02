@@ -28,7 +28,7 @@ import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.IntentUtils;
-import com.google.android.apps.mytracks.util.ListItemUtil;
+import com.google.android.apps.mytracks.util.ListItemUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
@@ -105,7 +105,6 @@ public class SearchListActivity extends AbstractMyTracksActivity {
   private SearchEngine searchEngine;
   private SearchRecentSuggestions searchRecentSuggestions;
   private LocationManager locationManager;
-  private SharedPreferences sharedPreferences;
   private long recordingTrackId;
   private boolean metricUnits;
   private ArrayAdapter<Map<String, Object>> arrayAdapter;
@@ -124,7 +123,8 @@ public class SearchListActivity extends AbstractMyTracksActivity {
     searchEngine = new SearchEngine(myTracksProviderUtils);
     searchRecentSuggestions = SearchEngineProvider.newHelper(this);
     locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-    sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    SharedPreferences sharedPreferences = getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     recordingTrackId = PreferencesUtils.getRecordingTrackId(this);
 
@@ -165,7 +165,7 @@ public class SearchListActivity extends AbstractMyTracksActivity {
         String totalDistance = (String) resultMap.get(TOTAL_DISTANCE_FIELD);
         String startTime = (String) resultMap.get(START_TIME_FIELD);
         String description = (String) resultMap.get(DESCRIPTION_FIELD);
-        ListItemUtil.setListItem(view,
+        ListItemUtils.setListItem(view,
             name,
             iconId,
             category,
@@ -185,12 +185,11 @@ public class SearchListActivity extends AbstractMyTracksActivity {
   @Override
   protected void onResume() {
     super.onResume();
-    metricUnits = sharedPreferences.getBoolean(getString(R.string.metric_units_key), true);
+    metricUnits = PreferencesUtils.isMetricUnits(this);
   }
 
   @Override
   public void onNewIntent(Intent intent) {
-    super.onNewIntent(intent);
     setIntent(intent);
     handleIntent(intent);
   }
@@ -270,6 +269,8 @@ public class SearchListActivity extends AbstractMyTracksActivity {
               .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId);
         }
         startActivity(intent);
+        // Close the search result since its content can change after edit.
+        finish();
         return true;
       case R.id.list_context_menu_delete:
         if (markerId != null) {
@@ -378,7 +379,7 @@ public class SearchListActivity extends AbstractMyTracksActivity {
 
     boolean statistics = waypoint.getType() == Waypoint.TYPE_STATISTICS;
     resultMap.put(NAME_FIELD, waypoint.getName());
-    resultMap.put(ICON_FIELD, statistics ? R.drawable.ylw_pushpin : R.drawable.blue_pushpin);
+    resultMap.put(ICON_FIELD, statistics ? R.drawable.yellow_pushpin : R.drawable.blue_pushpin);
     resultMap.put(CATEGORY_FIELD, statistics ? null : waypoint.getCategory());
 
     long time = waypoint.getLocation().getTime();

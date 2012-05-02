@@ -20,9 +20,10 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
+import com.google.android.apps.mytracks.fragments.MarkerAddDialogFragment;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.IntentUtils;
-import com.google.android.apps.mytracks.util.ListItemUtil;
+import com.google.android.apps.mytracks.util.ListItemUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
@@ -137,13 +138,13 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
 
         boolean statistics = cursor.getInt(typeIndex) == Waypoint.TYPE_STATISTICS;
         String name = cursor.getString(nameIndex);
-        int iconId = statistics ? R.drawable.ylw_pushpin : R.drawable.blue_pushpin;
+        int iconId = statistics ? R.drawable.yellow_pushpin : R.drawable.blue_pushpin;
         String category = statistics ? null : cursor.getString(categoryIndex);
         long time = cursor.getLong(timeIndex);
         String startTime = time == 0 
             ? null : StringUtils.formatDateTime(MarkerListActivity.this, time);
         String description = statistics ? null : cursor.getString(descriptionIndex);
-        ListItemUtil.setListItem(view, name, iconId, category, null, null, startTime, description);
+        ListItemUtils.setListItem(view, name, iconId, category, null, null, startTime, description);
       }
     };
     listView.setAdapter(resourceCursorAdapter);
@@ -195,8 +196,8 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.marker_list_insert_marker:
-        Intent intent = IntentUtils.newIntent(this, MarkerEditActivity.class);
-        startActivity(intent);
+        MarkerAddDialogFragment.newInstance(trackId)
+            .show(getSupportFragmentManager(), MarkerAddDialogFragment.MARKER_ADD_DIALOG_TAG);
         return true;
       case R.id.marker_list_search:
         return ApiAdapterFactory.getApiAdapter().handleSearchMenuSelection(this);

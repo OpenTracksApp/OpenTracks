@@ -22,7 +22,7 @@ limitations under the License.
     android:orientation="vertical"
     android:padding="8dp" >
     <TextView
-      android:drawableLeft="@drawable/arrow_icon"
+      android:drawableLeft="@drawable/my_tracks_icon"
       android:text="@string/about_copyright_notice"
       style="@style/TextMedium.WithIcon" />
     <TextView

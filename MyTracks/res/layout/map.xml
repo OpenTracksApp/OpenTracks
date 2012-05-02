@@ -26,8 +26,18 @@ limitations under the License.
     android:id="@+id/map_view"
     android:layout_height="fill_parent"
     android:layout_width="fill_parent" />
+  <ImageButton
+    android:background="@drawable/my_location"
+    android:contentDescription="@string/my_location"
+    android:id="@+id/map_my_location"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentRight="true"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_width="wrap_content" />
   <TextView
-    android:background="@color/background_warning"
+    android:background="@color/warning_background"
     android:drawableLeft="@android:drawable/ic_dialog_alert"
     android:gravity="center"
     android:id="@+id/map_message"

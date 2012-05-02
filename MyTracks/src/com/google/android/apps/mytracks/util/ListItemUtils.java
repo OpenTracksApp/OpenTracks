@@ -26,9 +26,9 @@ import android.widget.TextView;
  * 
  * @author Jimmy Shih
  */
-public class ListItemUtil {
+public class ListItemUtils {
 
-  private ListItemUtil() {}
+  private ListItemUtils() {}
 
   /**
    * Sets a list item.
