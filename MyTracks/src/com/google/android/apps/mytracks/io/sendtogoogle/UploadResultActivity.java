@@ -49,7 +49,7 @@ public class UploadResultActivity extends Activity {
   private SendRequest sendRequest;
   private Track track;
   private String shareUrl;
-  private Dialog dialog;
+  private Dialog resultDialog;
   
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -169,8 +169,8 @@ public class UploadResultActivity extends Activity {
             }
           });
     }
-    dialog = builder.create();
-    return dialog;
+    resultDialog = builder.create();
+    return resultDialog;
   }
 
   /**
@@ -192,6 +192,6 @@ public class UploadResultActivity extends Activity {
   
   @VisibleForTesting
   Dialog getDialog() {
-    return dialog;
+    return resultDialog;
   }
 }
