@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendAsyncTask;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.io.sendtogoogle.UploadResultActivity;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
@@ -47,10 +48,9 @@ public class SendMapsActivity extends AbstractSendActivity {
   @Override
   protected void startNextActivity(boolean success, boolean isCancel) {
     sendRequest.setMapsSuccess(success);
-
     Class<?> next = getNextClass(sendRequest, isCancel);
-    
-    Intent intent = new Intent(this, next).putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
+    Intent intent = IntentUtils.newIntent(this, next)
+        .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
     startActivity(intent);
     finish();
   }

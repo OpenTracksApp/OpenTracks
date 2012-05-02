@@ -27,6 +27,7 @@ import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.ListItemUtil;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
@@ -138,16 +139,14 @@ public class SearchListActivity extends FragmentActivity {
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Map<String, Object> item = arrayAdapter.getItem(position);
         Long trackId = (Long) item.get(TRACK_ID_FIELD);
+        Long markerId = (Long) item.get(MARKER_ID_FIELD);
         Intent intent;
-        if (trackId != null) {
-          intent = new Intent(SearchListActivity.this, TrackDetailActivity.class).addFlags(
-              Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-              .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
-
+        if (markerId != null) {
+          intent = IntentUtils.newIntent(SearchListActivity.this, TrackDetailActivity.class)
+              .putExtra(TrackDetailActivity.EXTRA_MARKER_ID, markerId);
         } else {
-          intent = new Intent(SearchListActivity.this, MarkerDetailActivity.class).addFlags(
-              Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-              .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, (Long) item.get(MARKER_ID_FIELD));
+          intent = IntentUtils.newIntent(SearchListActivity.this, TrackDetailActivity.class)
+              .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
         }
         startActivity(intent);
       }
@@ -256,40 +255,37 @@ public class SearchListActivity extends FragmentActivity {
   private boolean handleContextItem(int itemId, int position) {
     Map<String, Object> item = arrayAdapter.getItem(position);
     Long trackId = (Long) item.get(TRACK_ID_FIELD);
+    Long markerId = (Long) item.get(MARKER_ID_FIELD);
     Intent intent;
     switch (itemId) {
       case R.id.list_context_menu_show_on_map:
-        if (trackId != null) {
-          intent = new Intent(this, TrackDetailActivity.class).addFlags(
-              Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-              .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, (Long) item.get(TRACK_ID_FIELD));
+        if (markerId != null) {
+          intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
+              .putExtra(TrackDetailActivity.EXTRA_MARKER_ID, markerId);
         } else {
-          intent = new Intent(this, TrackDetailActivity.class).addFlags(
-              Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-              .putExtra(TrackDetailActivity.EXTRA_MARKER_ID, (Long) item.get(MARKER_ID_FIELD));
+          intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
+              .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
         }
         startActivity(intent);
         return true;
       case R.id.list_context_menu_edit:
-        if (trackId != null) {
-          intent = new Intent(this, TrackEditActivity.class).addFlags(
-              Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-              .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId);
+        if (markerId != null) {
+          intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
+              .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerId);
         } else {
-          intent = new Intent(this, MarkerEditActivity.class).addFlags(
-              Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-              .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, (Long) item.get(MARKER_ID_FIELD));
+          intent = IntentUtils.newIntent(this, TrackEditActivity.class)
+              .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId);
         }
         startActivity(intent);
         return true;
       case R.id.list_context_menu_delete:
-        if (trackId != null) {
-          DeleteOneTrackDialogFragment.newInstance(trackId).show(getSupportFragmentManager(),
-              DeleteOneTrackDialogFragment.DELETE_ONE_TRACK_DIALOG_TAG);
-        } else {
-          DeleteOneMarkerDialogFragment.newInstance((Long) item.get(MARKER_ID_FIELD)).show(
+        if (markerId != null) {
+          DeleteOneMarkerDialogFragment.newInstance(markerId, trackId).show(
               getSupportFragmentManager(),
               DeleteOneMarkerDialogFragment.DELETE_ONE_MARKER_DIALOG_TAG);
+        } else {
+          DeleteOneTrackDialogFragment.newInstance(trackId).show(getSupportFragmentManager(),
+              DeleteOneTrackDialogFragment.DELETE_ONE_TRACK_DIALOG_TAG);
         }
         return true;
       default:
@@ -337,7 +333,7 @@ public class SearchListActivity extends FragmentActivity {
         @Override
       public void run() {
         arrayAdapter.clear();
-        arrayAdapter.addAll(displayResults);
+        ApiAdapterFactory.getApiAdapter().addAllToArrayAdapter(arrayAdapter, displayResults);
       }
     });
 
@@ -401,7 +397,7 @@ public class SearchListActivity extends FragmentActivity {
         : getString(R.string.search_list_marker_track_location, trackName));
     resultMap.put(TOTAL_DISTANCE_FIELD, null);
     resultMap.put(DESCRIPTION_FIELD, statistics ? null : waypoint.getDescription());
-    resultMap.put(TRACK_ID_FIELD, null);
+    resultMap.put(TRACK_ID_FIELD, waypoint.getTrackId());
     resultMap.put(MARKER_ID_FIELD, waypoint.getId());
   }
 

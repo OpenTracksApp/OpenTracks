@@ -106,9 +106,9 @@ public class TrackRecordingServiceConnectionUtils {
         long recordingTrackId = PreferencesUtils.getRecordingTrackId(context);
         trackRecordingService.endCurrentTrack();
         if (recordingTrackId != -1L) {
-          Intent intent = new Intent(context, TrackEditActivity.class)
-              .putExtra(TrackEditActivity.EXTRA_SHOW_CANCEL, false)
-              .putExtra(TrackEditActivity.EXTRA_TRACK_ID, recordingTrackId);
+          Intent intent = IntentUtils.newIntent(context, TrackEditActivity.class)
+              .putExtra(TrackEditActivity.EXTRA_TRACK_ID, recordingTrackId)
+              .putExtra(TrackEditActivity.EXTRA_NEW_TRACK, true);
           context.startActivity(intent);
         }
       } catch (Exception e) {

@@ -38,6 +38,7 @@ import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.maps.mytracks.R;
@@ -101,15 +102,15 @@ public class TrackDetailActivity extends FragmentActivity {
    * class. Anonymous inner class will get garbage collected.
    */
   private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener =
-    new OnSharedPreferenceChangeListener() {
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-      // Note that key can be null
-      if (PreferencesUtils.getRecordingTrackIdKey(TrackDetailActivity.this).equals(key)) {
-        updateMenu();      
-      }
-    }
-  };
+      new OnSharedPreferenceChangeListener() {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
+          // Note that key can be null
+          if (PreferencesUtils.getRecordingTrackIdKey(TrackDetailActivity.this).equals(key)) {
+            updateMenu();
+          }
+        }
+      };
 
   /**
    * We are not displaying driving directions. Just an arbitrary track that is
@@ -260,20 +261,21 @@ public class TrackDetailActivity extends FragmentActivity {
     Intent intent;
     switch (item.getItemId()) {
       case android.R.id.home:
-        startTrackListActivity();
+        intent = IntentUtils.newIntent(this, TrackListActivity.class);
+        startActivity(intent);
         return true;
       case R.id.track_detail_stop_recording:
         updateMenuItems(false);
         TrackRecordingServiceConnectionUtils.stop(this, trackRecordingServiceConnection);
         return true;
       case R.id.track_detail_insert_marker:
-        startActivity(new Intent(this, MarkerEditActivity.class)
-            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+        intent = IntentUtils.newIntent(this, MarkerEditActivity.class);
+        startActivity(intent);
         return true;
       case R.id.track_detail_play:
         if (isEarthInstalled()) {
           AnalyticsUtils.sendPageViews(this, "/action/play");
-          intent = new Intent(this, SaveActivity.class)
+          intent = IntentUtils.newIntent(this, SaveActivity.class)
               .putExtra(SaveActivity.EXTRA_TRACK_ID, trackId)
               .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.KML)
               .putExtra(SaveActivity.EXTRA_PLAY_TRACK, true);
@@ -284,12 +286,12 @@ public class TrackDetailActivity extends FragmentActivity {
         }
         return true;
       case R.id.track_detail_share_map:
-        intent = new Intent(this, UploadServiceChooserActivity.class)
+        intent = IntentUtils.newIntent(this, UploadServiceChooserActivity.class)
             .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, true, false, false));
         startActivity(intent);
         return true;
       case R.id.track_detail_share_fusion_table:
-        intent = new Intent(this, UploadServiceChooserActivity.class)
+        intent = IntentUtils.newIntent(this, UploadServiceChooserActivity.class)
             .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, false, true, false));
         startActivity(intent);
         return true;
@@ -306,13 +308,12 @@ public class TrackDetailActivity extends FragmentActivity {
         startSaveActivity(TrackFileFormat.TCX, true);
         return true;
       case R.id.track_detail_markers:
-        intent = new Intent(this, MarkerListActivity.class)
-            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent = IntentUtils.newIntent(this, MarkerListActivity.class)
             .putExtra(MarkerListActivity.EXTRA_TRACK_ID, trackId);
         startActivity(intent);
         return true;
       case R.id.track_detail_send_google:
-        intent = new Intent(this, UploadServiceChooserActivity.class)
+        intent = IntentUtils.newIntent(this, UploadServiceChooserActivity.class)
             .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, true, true, true));
         startActivity(intent);
         return true;
@@ -329,8 +330,9 @@ public class TrackDetailActivity extends FragmentActivity {
         startSaveActivity(TrackFileFormat.TCX, false);
         return true;
       case R.id.track_detail_edit:
-        startActivity(new Intent(this, TrackEditActivity.class)
-            .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId));
+        intent = IntentUtils.newIntent(this, TrackEditActivity.class)
+            .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId);
+        startActivity(intent);
         return true;
       case R.id.track_detail_delete:
         DeleteOneTrackDialogFragment.newInstance(trackId).show(
@@ -353,13 +355,16 @@ public class TrackDetailActivity extends FragmentActivity {
             getSupportFragmentManager(), ChartSettingsDialogFragment.CHART_SETTINGS_DIALOG_TAG);
         return true;
       case R.id.track_detail_sensor_state:
-        startActivity(new Intent(this, SensorStateActivity.class));
+        intent = IntentUtils.newIntent(this, SensorStateActivity.class);
+        startActivity(intent);
         return true;
       case R.id.track_detail_settings:
-        startActivity(new Intent(this, SettingsActivity.class));
+        intent = IntentUtils.newIntent(this, SettingsActivity.class);
+        startActivity(intent);
         return true;
       case R.id.track_detail_help:
-        startActivity(new Intent(this, HelpActivity.class));
+        intent = IntentUtils.newIntent(this, HelpActivity.class);
+        startActivity(intent);
         return true;
       default:
         return false;
@@ -411,14 +416,16 @@ public class TrackDetailActivity extends FragmentActivity {
     if (markerId != -1L) {
       Waypoint waypoint = MyTracksProviderUtils.Factory.get(this).getWaypoint(markerId);
       if (waypoint == null) {
-        startTrackListActivity();
+        Intent newIntent = IntentUtils.newIntent(this, TrackListActivity.class);
+        startActivity(newIntent);
         finish();
         return;
       }
       trackId = waypoint.getTrackId();
     }
     if (trackId == -1L) {
-      startTrackListActivity();
+      Intent newIntent = IntentUtils.newIntent(this, TrackListActivity.class);
+      startActivity(newIntent);
       finish();
       return;
     }
@@ -476,21 +483,13 @@ public class TrackDetailActivity extends FragmentActivity {
   }
 
   /**
-   * Starts the {@link TrackListActivity}.
-   */
-  private void startTrackListActivity() {
-    startActivity(new Intent(this, TrackListActivity.class)
-        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-  }
-
-  /**
    * Starts the {@link SaveActivity} to save a track.
    *
    * @param trackFileFormat the track file format
    * @param shareTrack true to share the track after saving
    */
   private void startSaveActivity(TrackFileFormat trackFileFormat, boolean shareTrack) {
-    Intent intent = new Intent(this, SaveActivity.class)
+    Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
         .putExtra(SaveActivity.EXTRA_TRACK_ID, trackId)
         .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat)
         .putExtra(SaveActivity.EXTRA_SHARE_TRACK, shareTrack);

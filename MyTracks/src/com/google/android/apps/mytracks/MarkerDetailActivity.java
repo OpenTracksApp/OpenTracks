@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -142,24 +143,26 @@ public class MarkerDetailActivity extends FragmentActivity {
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
+    Intent intent;
     switch (item.getItemId()) {
       case android.R.id.home:
-        startActivity(new Intent(this, MarkerListActivity.class).addFlags(
-            Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-            .putExtra(MarkerListActivity.EXTRA_TRACK_ID, waypoint.getTrackId()));
+        intent = IntentUtils.newIntent(this, MarkerListActivity.class)
+            .putExtra(MarkerListActivity.EXTRA_TRACK_ID, waypoint.getTrackId());
+        startActivity(intent);
         return true;
       case R.id.marker_detail_show_on_map:
-        startActivity(new Intent(this, TrackDetailActivity.class)
-            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-            .putExtra(TrackDetailActivity.EXTRA_MARKER_ID, markerId));
-        return true;        
+        intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
+            .putExtra(TrackDetailActivity.EXTRA_MARKER_ID, markerId);
+        startActivity(intent);
+        return true;
       case R.id.marker_detail_edit:
-        startActivity(new Intent(this, MarkerEditActivity.class)
-            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-            .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerId));
+        intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
+            .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerId);
+        startActivity(intent);
         return true;
       case R.id.marker_detail_delete:
-        DeleteOneMarkerDialogFragment.newInstance(markerId).show(getSupportFragmentManager(),
+        DeleteOneMarkerDialogFragment.newInstance(markerId, waypoint.getTrackId()).show(
+            getSupportFragmentManager(),
             DeleteOneMarkerDialogFragment.DELETE_ONE_MARKER_DIALOG_TAG);
         return true;
       default:

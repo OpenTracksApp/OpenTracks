@@ -25,6 +25,7 @@ import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.EulaUtils;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.ListItemUtil;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
@@ -93,7 +94,9 @@ public class TrackListActivity extends FragmentActivity {
       try {
         recordingTrackId = service.startNewTrack();
         startNewRecording = false;
-        startTrackDetailActivity(recordingTrackId);
+        Intent intent = IntentUtils.newIntent(TrackListActivity.this, TrackDetailActivity.class)
+            .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, recordingTrackId);
+        startActivity(intent);
         Toast.makeText(
             TrackListActivity.this, R.string.track_list_record_success, Toast.LENGTH_SHORT).show();
         Log.d(TAG, "Started a new recording");
@@ -184,7 +187,9 @@ public class TrackListActivity extends FragmentActivity {
     listView.setOnItemClickListener(new OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        startTrackDetailActivity(id);
+        Intent intent = IntentUtils.newIntent(TrackListActivity.this, TrackDetailActivity.class)
+            .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, id);
+        startActivity(intent);
       }
     });
     resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.list_item, null, 0) {
@@ -329,6 +334,7 @@ public class TrackListActivity extends FragmentActivity {
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
+    Intent intent;
     switch (item.getItemId()) {
       case R.id.track_list_record_track:
         updateMenuItems(true);
@@ -341,37 +347,45 @@ public class TrackListActivity extends FragmentActivity {
       case R.id.track_list_search:
         return ApiAdapterFactory.getApiAdapter().handleSearchMenuSelection(this);
       case R.id.track_list_import_all:
-        startActivity(
-            new Intent(this, ImportActivity.class).putExtra(ImportActivity.EXTRA_IMPORT_ALL, true));
+        intent = IntentUtils.newIntent(this, ImportActivity.class)
+            .putExtra(ImportActivity.EXTRA_IMPORT_ALL, true);
+        startActivity(intent);
         return true;
       case R.id.track_list_export_gpx:
-        startActivity(new Intent(this, ExportActivity.class).putExtra(
-            ExportActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.GPX));
+        intent = IntentUtils.newIntent(this, ExportActivity.class)
+            .putExtra(ExportActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.GPX);
+        startActivity(intent);
         return true;
       case R.id.track_list_export_kml:
-        startActivity(new Intent(this, ExportActivity.class).putExtra(
-            ExportActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.KML));
+        intent = IntentUtils.newIntent(this, ExportActivity.class)
+            .putExtra(ExportActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.KML);
+        startActivity(intent);
         return true;
       case R.id.track_list_export_csv:
-        startActivity(new Intent(this, ExportActivity.class).putExtra(
-            ExportActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.CSV));
+        intent = IntentUtils.newIntent(this, ExportActivity.class)
+            .putExtra(ExportActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.CSV);
+        startActivity(intent);
         return true;
       case R.id.track_list_export_tcx:
-        startActivity(new Intent(this, ExportActivity.class).putExtra(
-            ExportActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.TCX));
+        intent = IntentUtils.newIntent(this, ExportActivity.class)
+            .putExtra(ExportActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.TCX);
+        startActivity(intent);
         return true;
       case R.id.track_list_delete_all:
         new DeleteAllTrackDialogFragment().show(
             getSupportFragmentManager(), DeleteAllTrackDialogFragment.DELETE_ALL_TRACK_DIALOG_TAG);
         return true;
       case R.id.track_list_aggregated_statistics:
-        startActivity(new Intent(this, AggregatedStatsActivity.class));
+        intent = IntentUtils.newIntent(this, AggregatedStatsActivity.class);
+        startActivity(intent);
         return true;
       case R.id.track_list_settings:
-        startActivity(new Intent(this, SettingsActivity.class));
+        intent = IntentUtils.newIntent(this, SettingsActivity.class);
+        startActivity(intent);
         return true;
       case R.id.track_list_help:
-        startActivity(new Intent(this, HelpActivity.class));
+        intent = IntentUtils.newIntent(this, HelpActivity.class);
+        startActivity(intent);
         return true;
       default:
         return super.onOptionsItemSelected(item);
@@ -403,14 +417,12 @@ public class TrackListActivity extends FragmentActivity {
     Intent intent;
     switch (itemId) {
       case R.id.list_context_menu_show_on_map:
-        intent = new Intent(this, TrackDetailActivity.class).addFlags(
-            Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
             .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
         startActivity(intent);
         return true;
       case R.id.list_context_menu_edit:
-        intent = new Intent(this, TrackEditActivity.class).addFlags(
-            Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent = IntentUtils.newIntent(this, TrackEditActivity.class)
             .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId);
         startActivity(intent);
         return true;
@@ -421,18 +433,6 @@ public class TrackListActivity extends FragmentActivity {
       default:
         return false;
     }
-  }
-
-  /**
-   * Starts {@link TrackDetailActivity}.
-   * 
-   * @param trackId the track id.
-   */
-  private void startTrackDetailActivity(long trackId) {
-    Intent intent = new Intent(TrackListActivity.this, TrackDetailActivity.class)
-        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-        .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
-    startActivity(intent);
   }
 
   /**

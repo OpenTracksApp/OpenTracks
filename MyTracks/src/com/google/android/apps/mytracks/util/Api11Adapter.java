@@ -28,9 +28,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+
+import java.util.List;
 
 /**
  * API level 11 specific implementation of the {@link ApiAdapter}.
@@ -107,5 +110,10 @@ public class Api11Adapter extends Api10Adapter {
   public boolean handleSearchMenuSelection(Activity activity) {
     // Returns false to allow the platform to expand the search widget.
     return false;
-  }  
+  }
+
+  @Override
+  public <T> void addAllToArrayAdapter(ArrayAdapter<T> arrayAdapter, List<T> items) {
+    arrayAdapter.addAll(items);
+  }
 }
