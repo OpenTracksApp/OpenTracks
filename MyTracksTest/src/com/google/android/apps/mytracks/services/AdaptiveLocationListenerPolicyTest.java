@@ -25,18 +25,18 @@ import junit.framework.TestCase;
 public class AdaptiveLocationListenerPolicyTest extends TestCase {
 
   private AdaptiveLocationListenerPolicy adocationListenerPolicy;
-  private long min = AdaptiveLocationListenerPolicy.SMALLEST_INTERVAL_UNIT;
-  private long max = AdaptiveLocationListenerPolicy.SMALLEST_INTERVAL_UNIT * 3;
-  private int minDistance = 10;
-  private long newIdleTimeBig = AdaptiveLocationListenerPolicy.SMALLEST_INTERVAL_UNIT * 10;
-  private long newIdleTimeNormal = AdaptiveLocationListenerPolicy.SMALLEST_INTERVAL_UNIT * 5;
-  private long newIdleTimeSmall = AdaptiveLocationListenerPolicy.SMALLEST_INTERVAL_UNIT * 2;
-  private long newIdleTimeLessThanMin = AdaptiveLocationListenerPolicy.SMALLEST_INTERVAL_UNIT / 2;
+  private static final long MIN = 1000;
+  private static final long MAX = 3000;
+  private static final int MIN_DISTANCE = 10;
+  private static final long NEW_IDLE_TIME_BIG = 10000;
+  private static final long NEW_IDLE_TIME_NORMAL = 5000;
+  private static final long NEW_IDLE_TIME_SMALL = 2000;
+  private static final long NEW_IDLE_TIME_LESS_THAN_MIN = 500;
 
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    adocationListenerPolicy = new AdaptiveLocationListenerPolicy(min, max, minDistance);
+    adocationListenerPolicy = new AdaptiveLocationListenerPolicy(MIN, MAX, MIN_DISTANCE);
   }
 
   /**
@@ -50,25 +50,25 @@ public class AdaptiveLocationListenerPolicyTest extends TestCase {
    * </ul> 
    */
   public void testGetDesiredPollingInterval() {
-    adocationListenerPolicy.updateIdleTime(newIdleTimeBig);
-    assertEquals(max, adocationListenerPolicy.getDesiredPollingInterval());
+    adocationListenerPolicy.updateIdleTime(NEW_IDLE_TIME_BIG);
+    assertEquals(MAX, adocationListenerPolicy.getDesiredPollingInterval());
 
-    adocationListenerPolicy.updateIdleTime(newIdleTimeNormal);
-    assertEquals((newIdleTimeNormal / 2 / AdaptiveLocationListenerPolicy.SMALLEST_INTERVAL_UNIT)
-        * AdaptiveLocationListenerPolicy.SMALLEST_INTERVAL_UNIT,
+    adocationListenerPolicy.updateIdleTime(NEW_IDLE_TIME_NORMAL);
+    assertEquals((NEW_IDLE_TIME_NORMAL / 2000)
+        * 1000,
         adocationListenerPolicy.getDesiredPollingInterval());
     
-    adocationListenerPolicy.updateIdleTime(newIdleTimeSmall);
-    assertEquals(min, adocationListenerPolicy.getDesiredPollingInterval());
+    adocationListenerPolicy.updateIdleTime(NEW_IDLE_TIME_SMALL);
+    assertEquals(MIN, adocationListenerPolicy.getDesiredPollingInterval());
 
-    adocationListenerPolicy.updateIdleTime(newIdleTimeLessThanMin);
-    assertEquals(min, adocationListenerPolicy.getDesiredPollingInterval());
+    adocationListenerPolicy.updateIdleTime(NEW_IDLE_TIME_LESS_THAN_MIN);
+    assertEquals(MIN, adocationListenerPolicy.getDesiredPollingInterval());
   }
   
   /**
    * Tests the method {@link AdaptiveLocationListenerPolicy#getMinDistance()}.
    */
   public void testGetMinDistance() {
-    assertEquals(minDistance, adocationListenerPolicy.getMinDistance());
+    assertEquals(MIN_DISTANCE, adocationListenerPolicy.getMinDistance());
   }
 }

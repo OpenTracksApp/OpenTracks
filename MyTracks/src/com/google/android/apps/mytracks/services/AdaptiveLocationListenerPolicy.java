@@ -16,7 +16,6 @@
 
 package com.google.android.apps.mytracks.services;
 
-import com.google.common.annotations.VisibleForTesting;
 
 /**
  * A LocationListenerPolicy that will change based on how long the user has been
@@ -43,12 +42,6 @@ public class AdaptiveLocationListenerPolicy implements LocationListenerPolicy {
   private final int minDistance;
   
   /**
-   * The smallest unit of interval to update.
-   */
-  @VisibleForTesting
-  static final long SMALLEST_INTERVAL_UNIT = 1000;
-
-  /**
    * The time the user has been at the current location, in milliseconds.
    */
   private long idleTime;
@@ -71,7 +64,7 @@ public class AdaptiveLocationListenerPolicy implements LocationListenerPolicy {
   public long getDesiredPollingInterval() {
     long desiredInterval = idleTime / 2;
     // Round to avoid setting the interval too often.
-    desiredInterval = (desiredInterval / SMALLEST_INTERVAL_UNIT) * SMALLEST_INTERVAL_UNIT;
+    desiredInterval = (desiredInterval / 1000) * 1000;
     return Math.max(Math.min(maxInterval, desiredInterval),
                     minInterval);
   }
