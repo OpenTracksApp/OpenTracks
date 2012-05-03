@@ -65,6 +65,7 @@ limitations under the License.
   <string name="reset_key">resetToDefaults</string>
   <string name="restore_from_sd_key">restoreFromSd</string>
   <string name="sensor_options_key">sensorOptions</string>
+  <string name="settings_backup_key">settingsBackup</string>
   <string name="settings_sharing_key">settingsSharing</string>
   <string name="track_color_mode_fixed_speed_options_key">trackColorModeFixedOptions</string>
 </resources>

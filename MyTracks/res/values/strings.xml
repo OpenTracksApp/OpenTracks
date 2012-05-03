@@ -1541,13 +1541,6 @@ limitations under the License.
       the SD card.">
     Restore all tracks and settings from the SD card.
   </string>
-  <string name="settings_backup_sd_card"
-    translation_description="In the 'Backup' settings, the section header for configuring backup to
-      the SD card.
-
-      Character limit: ~40 (1 line)">
-    SD card
-  </string>
   <string name="settings_display"
     translation_description="In the 'Settings' page, the option to change the display related
       settings.

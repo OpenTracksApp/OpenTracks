@@ -35,6 +35,7 @@ public class PreferencesUtils {
    */
   public static final boolean ALLOW_ACCESS_DEFAULT = false;
   public static final boolean DEFAULT_MAP_PUBLIC_DEFAULT = true;
+  public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
   public static final boolean SHARE_URL_ONLY_DEFAULT = false;
 
   private PreferencesUtils() {}

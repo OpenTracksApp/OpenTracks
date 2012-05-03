@@ -19,8 +19,6 @@ package com.google.android.apps.mytracks.settings;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.io.backup.BackupActivity;
-import com.google.android.apps.mytracks.io.backup.RestoreChooserActivity;
 import com.google.android.apps.mytracks.services.sensors.ant.AntUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.BluetoothDeviceUtils;
@@ -56,7 +54,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * An activity that let's the user see and edit the settings.
+ * An activity for accessing settings.
  * 
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
@@ -64,7 +62,6 @@ import java.util.Set;
 public class SettingsActivity extends AbstractSettingsActivity {
 
   private static final int DIALOG_CONFIRM_RESET_ID = 0;
-  private static final int DIALOG_CONFIRM_RESTORE_ID = 1;
 
   // Value when the task frequency is off.
   private static final String TASK_FREQUENCY_OFF = "0";
@@ -129,22 +126,32 @@ public class SettingsActivity extends AbstractSettingsActivity {
     customizeSensorOptionsPreferences();
     customizeTrackColorModePreferences();
     
-    // Hook up action for resetting all settings
-    Preference resetPreference = findPreference(getString(R.string.reset_key));
-    resetPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-      @Override
-      public boolean onPreferenceClick(Preference arg0) {
-        showDialog(DIALOG_CONFIRM_RESET_ID);
-        return true;
-      }
-    });
-    
     Preference sharingPreference = findPreference(getString(R.string.settings_sharing_key));
     sharingPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
       @Override
       public boolean onPreferenceClick(Preference preference) {
         Intent intent = IntentUtils.newIntent(SettingsActivity.this, SharingSettingsActivity.class);
         startActivity(intent);
+        return true;
+      }
+    });
+    
+    Preference backupPreference = findPreference(getString(R.string.settings_backup_key));
+    backupPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+      @Override
+      public boolean onPreferenceClick(Preference preference) {
+        Intent intent = IntentUtils.newIntent(SettingsActivity.this, BackupSettingsActivity.class);
+        startActivity(intent);
+        return true;
+      }
+    });
+    
+    // Hook up action for resetting all settings
+    Preference resetPreference = findPreference(getString(R.string.reset_key));
+    resetPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+      @Override
+      public boolean onPreferenceClick(Preference arg0) {
+        showDialog(DIALOG_CONFIRM_RESET_ID);
         return true;
       }
     });
@@ -159,17 +166,6 @@ public class SettingsActivity extends AbstractSettingsActivity {
               @Override
               public void onClick(DialogInterface dialog, int button) {
                 onResetPreferencesConfirmed();
-              }
-            });
-      case DIALOG_CONFIRM_RESTORE_ID:
-        return DialogUtils.createConfirmationDialog(this,
-            R.string.settings_backup_restore_confirm_message,
-            new DialogInterface.OnClickListener() {
-              @Override
-              public void onClick(DialogInterface dialog, int which) {
-                Intent intent = IntentUtils.newIntent(
-                    SettingsActivity.this, RestoreChooserActivity.class);
-                startActivity(intent);
               }
             });
       default:
@@ -304,46 +300,13 @@ public class SettingsActivity extends AbstractSettingsActivity {
   @Override
   protected void onResume() {
     super.onResume();
-    
     configureBluetoothPreferences();
-    Preference backupNowPreference =
-        findPreference(getString(R.string.backup_to_sd_key));
-    Preference restoreNowPreference =
-        findPreference(getString(R.string.restore_from_sd_key));
     Preference resetPreference = findPreference(getString(R.string.reset_key));
-
-    // If recording, disable backup/restore/reset
-    // (we don't want to get to inconsistent states)
     boolean recording = PreferencesUtils.getLong(this, R.string.recording_track_id_key) != -1;
-    backupNowPreference.setEnabled(!recording);
-    restoreNowPreference.setEnabled(!recording);
     resetPreference.setEnabled(!recording);
-    backupNowPreference.setSummary(
-        recording ? R.string.settings_not_while_recording
-                  : R.string.settings_backup_now_summary);
-    restoreNowPreference.setSummary(
-        recording ? R.string.settings_not_while_recording
-                  : R.string.settings_backup_restore_summary);
     resetPreference.setSummary(
         recording ? R.string.settings_not_while_recording
                   : R.string.settings_reset_summary);
-
-    // Add actions to the backup preferences
-    backupNowPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-      @Override
-      public boolean onPreferenceClick(Preference preference) {
-        Intent intent = IntentUtils.newIntent(SettingsActivity.this, BackupActivity.class);
-        startActivity(intent);
-        return true;
-      }
-    });
-    restoreNowPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-      @Override
-      public boolean onPreferenceClick(Preference preference) {
-        showDialog(DIALOG_CONFIRM_RESTORE_ID);
-        return true;
-      }
-    });
   }
 
   private void updateSensorSettings(String sensorType) {
