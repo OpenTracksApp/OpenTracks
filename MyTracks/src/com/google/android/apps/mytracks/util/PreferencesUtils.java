@@ -29,6 +29,14 @@ import android.content.SharedPreferences.Editor;
  */
 public class PreferencesUtils {
 
+  /*
+   * Preferences defaults, need to match the android:defaultValue in the xml
+   * files.
+   */
+  public static final boolean ALLOW_ACCESS_DEFAULT = false;
+  public static final boolean DEFAULT_MAP_PUBLIC_DEFAULT = true;
+  public static final boolean SHARE_URL_ONLY_DEFAULT = false;
+
   private PreferencesUtils() {}
 
   /**

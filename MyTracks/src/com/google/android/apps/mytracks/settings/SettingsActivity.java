@@ -13,12 +13,13 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.google.android.apps.mytracks;
+
+package com.google.android.apps.mytracks.settings;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
 
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.io.backup.BackupActivity;
-import com.google.android.apps.mytracks.io.backup.BackupPreferencesListener;
 import com.google.android.apps.mytracks.io.backup.RestoreChooserActivity;
 import com.google.android.apps.mytracks.services.sensors.ant.AntUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
@@ -31,6 +32,7 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -42,12 +44,9 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
-import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
-import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -62,11 +61,10 @@ import java.util.Set;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public class SettingsActivity extends PreferenceActivity {
+public class SettingsActivity extends AbstractSettingsActivity {
 
   private static final int DIALOG_CONFIRM_RESET_ID = 0;
-  private static final int DIALOG_CONFIRM_ACCESS_ID = 1;
-  private static final int DIALOG_CONFIRM_RESTORE_ID = 2;
+  private static final int DIALOG_CONFIRM_RESTORE_ID = 1;
 
   // Value when the task frequency is off.
   private static final String TASK_FREQUENCY_OFF = "0";
@@ -101,26 +99,10 @@ public class SettingsActivity extends PreferenceActivity {
   // Value when the GPS accuracy is for poor GPS signal.
   private static final String GPS_ACCURACY_POOR = "5000";
 
-  private BackupPreferencesListener backupListener;
-  private SharedPreferences preferences;
-  
   /** Called when the activity is first created. */
   @Override
   protected void onCreate(Bundle icicle) {
     super.onCreate(icicle);
-
-    // The volume we want to control is the Text-To-Speech volume
-    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
-
-    // Tell it where to read/write preferences
-    PreferenceManager preferenceManager = getPreferenceManager();
-    preferenceManager.setSharedPreferencesName(Constants.SETTINGS_NAME);
-    preferenceManager.setSharedPreferencesMode(0);
-
-    // Set up automatic preferences backup
-    backupListener = ApiAdapterFactory.getApiAdapter().getBackupPreferencesListener(this);
-    preferences = preferenceManager.getSharedPreferences();
-    preferences.registerOnSharedPreferenceChangeListener(backupListener);
 
     // Load the preferences to be displayed
     addPreferencesFromResource(R.xml.preferences);
@@ -157,18 +139,13 @@ public class SettingsActivity extends PreferenceActivity {
       }
     });
     
-    // Add a confirmation dialog for the 'Allow access' preference.
-    CheckBoxPreference allowAccessPreference = (CheckBoxPreference) findPreference(
-        getString(R.string.allow_access_key));
-    allowAccessPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+    Preference sharingPreference = findPreference(getString(R.string.settings_sharing_key));
+    sharingPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
       @Override
-      public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if ((Boolean) newValue) {
-          showDialog(DIALOG_CONFIRM_ACCESS_ID);
-          return false;
-        } else {
-          return true;
-        }
+      public boolean onPreferenceClick(Preference preference) {
+        Intent intent = IntentUtils.newIntent(SettingsActivity.this, SharingSettingsActivity.class);
+        startActivity(intent);
+        return true;
       }
     });
   }
@@ -182,17 +159,6 @@ public class SettingsActivity extends PreferenceActivity {
               @Override
               public void onClick(DialogInterface dialog, int button) {
                 onResetPreferencesConfirmed();
-              }
-            });
-      case DIALOG_CONFIRM_ACCESS_ID:
-        return DialogUtils.createConfirmationDialog(this,
-            R.string.settings_sharing_allow_access_confirm_message,
-            new DialogInterface.OnClickListener() {
-              @Override
-              public void onClick(DialogInterface dialog, int button) {
-                CheckBoxPreference pref = (CheckBoxPreference) findPreference(
-                    getString(R.string.allow_access_key));
-                pref.setChecked(true);
               }
             });
       case DIALOG_CONFIRM_RESTORE_ID:
@@ -378,14 +344,6 @@ public class SettingsActivity extends PreferenceActivity {
         return true;
       }
     });
-  }
-
-  @Override
-  protected void onDestroy() {
-    getPreferenceManager().getSharedPreferences()
-        .unregisterOnSharedPreferenceChangeListener(backupListener);
-
-    super.onPause();
   }
 
   private void updateSensorSettings(String sensorType) {
@@ -614,8 +572,10 @@ public class SettingsActivity extends PreferenceActivity {
       public void run() {
         Log.i(TAG, "Resetting all settings");
 
+        SharedPreferences sharedPreferences = getSharedPreferences(
+            Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
         // Actually wipe preferences (and save synchronously).
-        preferences.edit().clear().commit();
+        sharedPreferences.edit().clear().commit();
 
         // Give UI feedback in the UI thread.
         runOnUiThread(new Runnable() {

@@ -2040,10 +2040,6 @@ limitations under the License.
       sharing a URL with friends.">
    Remove any descriptive text when sharing a URL with friends.
   </string>
-  <string name="settings_title"
-    translation_description="The title of the 'Settings' page.">
-    My Tracks settings
-  </string>
 
   <!-- Share Track -->
   <string name="share_track_file_body_format"

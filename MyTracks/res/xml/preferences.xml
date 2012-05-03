@@ -14,8 +14,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<PreferenceScreen
-  xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+  android:title="@string/menu_settings">
 
   <!-- Display settings -->
   <PreferenceScreen android:title="@string/settings_display">
@@ -152,6 +152,12 @@ limitations under the License.
 
   </PreferenceScreen>
 
+  <!-- Sharing -->
+  <Preference
+      android:title="@string/settings_sharing"
+      android:key="@string/settings_sharing_key"
+      android:persistent="false" />
+
   <!-- Sensors -->
   <PreferenceScreen android:title="@string/settings_sensor"
       android:key="@string/sensor_options_key">
@@ -184,30 +190,6 @@ limitations under the License.
 	    	android:key="@string/ant_srm_bridge_sensor_id_key"
 	        android:title="@string/settings_sensor_unpair_srm"/>
     </PreferenceCategory>
-  </PreferenceScreen>
-
-  <!-- Sharing settings -->
-  <PreferenceScreen android:title="@string/settings_sharing">
-    <CheckBoxPreference
-        android:key="@string/default_map_public_key"
-        android:title="@string/settings_sharing_map_public"
-        android:summaryOn="@string/settings_sharing_map_public_summary_on"
-        android:summaryOff="@string/settings_sharing_map_public_summary_off"
-        android:defaultValue="true" />
-
-    <CheckBoxPreference
-        android:key="@string/share_url_only_key"
-        android:title="@string/settings_sharing_url_only"
-        android:summaryOn="@string/settings_sharing_url_only_summary_on"
-        android:summaryOff="@string/settings_sharing_url_only_summary_off"
-        android:defaultValue="false" />
-
-    <CheckBoxPreference
-        android:key="@string/allow_access_key"
-        android:title="@string/settings_sharing_allow_access"
-        android:summaryOn="@string/settings_sharing_allow_access_summary_on"
-        android:summaryOff="@string/settings_sharing_allow_access_summary_off"
-        android:defaultValue="false" />
   </PreferenceScreen>
 
   <!-- Backup settings -->

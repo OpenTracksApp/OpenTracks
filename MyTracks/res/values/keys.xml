@@ -15,8 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-
-  <!-- Keys for persisted preferences. Sorted alphabetically. - DO NOT TRANSLATE -->
+  <!-- Keys for persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
   <string name="allow_access_key">allowAccess</string>
   <string name="announcement_frequency_key">announcementFrequency</string>
   <string name="ant_cadence_sensor_id_key">antCadenceSensorId</string>
@@ -51,7 +50,7 @@ limitations under the License.
   <string name="stats_show_coordinate_key">statsShowCoordinate</string>
   <string name="stats_show_elevation_key">statsShowElevation</string>
   <string name="stats_show_grade_key">statsShowGrade</string>
-  <string name="stats_show_total_time_key">statsShowTotalTime</string>    
+  <string name="stats_show_total_time_key">statsShowTotalTime</string>
   <string name="track_color_mode_dynamic_speed_variation_key">trackColorModeDynamicVariation</string>
   <string name="track_color_mode_fixed_speed_medium_display_key">trackColorModeFixedMediumDisplay</string>
   <string name="track_color_mode_fixed_speed_medium_key">trackColorModeFixedMedium</string>
@@ -60,11 +59,12 @@ limitations under the License.
   <string name="track_color_mode_key">trackColorMode</string>
   <string name="track_name_key">trackName</string>
 
-  <!-- Keys for non-persisted preferences. Sorted alphabetically. - DO NOT TRANSLATE -->
+  <!-- Keys for non-persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
   <string name="ant_options_key">antOptions</string>
   <string name="backup_to_sd_key">backupToSd</string>
   <string name="reset_key">resetToDefaults</string>
   <string name="restore_from_sd_key">restoreFromSd</string>
   <string name="sensor_options_key">sensorOptions</string>
+  <string name="settings_sharing_key">settingsSharing</string>
   <string name="track_color_mode_fixed_speed_options_key">trackColorModeFixedOptions</string>
 </resources>

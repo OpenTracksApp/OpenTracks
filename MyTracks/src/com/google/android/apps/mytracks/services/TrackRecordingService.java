@@ -1075,10 +1075,8 @@ public class TrackRecordingService extends Service {
         .setAction(getString(actionResId))
         .putExtra(getString(R.string.track_id_broadcast_extra), trackId);
     sendBroadcast(broadcastIntent, getString(R.string.permission_notification_value));
-
-    SharedPreferences sharedPreferences = getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    if (sharedPreferences.getBoolean(getString(R.string.allow_access_key), false)) {
+    if (PreferencesUtils.getBoolean(
+        this, R.string.allow_access_key, PreferencesUtils.ALLOW_ACCESS_DEFAULT)) {
       sendBroadcast(broadcastIntent, getString(R.string.broadcast_notifications_permission));
     }
   }
@@ -1224,20 +1222,17 @@ public class TrackRecordingService extends Service {
 
     /**
      * Returns true if the RPC caller is from the same application or if the
-     * "Allow access" setting indicates that another app can invoke this service's
-     * RPCs.
+     * "Allow access" setting indicates that another app can invoke this
+     * service's RPCs.
      */
     private boolean canAccess() {
-
       // As a precondition for access, must check if the service is available.
       checkService();
-
       if (Process.myPid() == Binder.getCallingPid()) {
         return true;
       } else {
-        SharedPreferences sharedPreferences = service.getSharedPreferences(
-            Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getBoolean(service.getString(R.string.allow_access_key), false);
+        return PreferencesUtils.getBoolean(
+            service, R.string.allow_access_key, PreferencesUtils.ALLOW_ACCESS_DEFAULT);
       }
     }
 

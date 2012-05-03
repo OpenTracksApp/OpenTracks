@@ -15,21 +15,19 @@
  */
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesUtils;
 import com.google.android.apps.mytracks.io.maps.SendMapsUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -175,13 +173,12 @@ public class UploadResultActivity extends Activity {
 
   /**
    * Starts an activity to share the url.
-   *
+   * 
    * @param url the url
    */
   private void startShareUrlActivity(String url) {
-    SharedPreferences prefs = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    boolean shareUrlOnly = prefs.getBoolean(getString(R.string.share_url_only_key), false);
-
+    boolean shareUrlOnly = PreferencesUtils.getBoolean(
+        this, R.string.share_url_only_key, PreferencesUtils.SHARE_URL_ONLY_DEFAULT);
     Intent intent = new Intent(Intent.ACTION_SEND)
         .setType(TEXT_PLAIN_TYPE)
         .putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_track_subject))

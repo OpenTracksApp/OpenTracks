@@ -45,7 +45,6 @@ import android.accounts.AccountManager;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.location.Location;
 import android.util.Log;
@@ -225,15 +224,13 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
       mapId = chooseMapId;
       return true;
     } else {
-      SharedPreferences sharedPreferences = context.getSharedPreferences(
-          Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-      boolean mapPublic = sharedPreferences.getBoolean(
-          context.getString(R.string.default_map_public_key), true);
+      boolean defaultMapPublic = PreferencesUtils.getBoolean(
+          context, R.string.default_map_public_key, PreferencesUtils.DEFAULT_MAP_PUBLIC_DEFAULT);
       try {
         String description = track.getCategory() + "\n" + track.getDescription() + "\n"
             + context.getString(R.string.send_google_by_my_tracks, "", "");
         mapId = SendMapsUtils.createNewMap(
-            track.getName(), description, mapPublic, mapsClient, authToken);
+            track.getName(), description, defaultMapPublic, mapsClient, authToken);
       } catch (ParseException e) {
         Log.d(TAG, "Unable to create a new map", e);
         return false;
