@@ -41,30 +41,32 @@ public class AdaptiveLocationListenerPolicyTest extends TestCase {
 
   /**
    * Tests the
-   * {@link AdaptiveLocationListenerPolicy#getDesiredPollingInterval()} in four situations.
+   * {@link AdaptiveLocationListenerPolicy#getDesiredPollingInterval()} in four
+   * situations.
    * <ul>
    * <li>The newIdleTime is bigger than max interval.</li>
    * <li>The newIdleTime is between min and max interval.</li>
    * <li>The newIdleTime is smaller than max interval.</li>
    * <li>The newIdleTime is smaller than the smallest interval unit.</li>
-   * </ul> 
+   * </ul>
    */
   public void testGetDesiredPollingInterval() {
     adocationListenerPolicy.updateIdleTime(NEW_IDLE_TIME_BIG);
     assertEquals(MAX, adocationListenerPolicy.getDesiredPollingInterval());
 
     adocationListenerPolicy.updateIdleTime(NEW_IDLE_TIME_NORMAL);
-    assertEquals((NEW_IDLE_TIME_NORMAL / 2000)
-        * 1000,
+    // First get the half of NEW_IDLE_TIME_NORMAL, and then round it to the
+    // nearest second.
+    assertEquals((NEW_IDLE_TIME_NORMAL / 2 / 1000) * 1000,
         adocationListenerPolicy.getDesiredPollingInterval());
-    
+
     adocationListenerPolicy.updateIdleTime(NEW_IDLE_TIME_SMALL);
     assertEquals(MIN, adocationListenerPolicy.getDesiredPollingInterval());
 
     adocationListenerPolicy.updateIdleTime(NEW_IDLE_TIME_LESS_THAN_MIN);
     assertEquals(MIN, adocationListenerPolicy.getDesiredPollingInterval());
   }
-  
+
   /**
    * Tests the method {@link AdaptiveLocationListenerPolicy#getMinDistance()}.
    */
