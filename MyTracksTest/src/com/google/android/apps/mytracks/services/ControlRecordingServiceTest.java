@@ -52,12 +52,8 @@ public class ControlRecordingServiceTest extends ServiceTestCase<ControlRecordin
    */
   @UsesMocks(ITrackRecordingService.class)
   public void testStartRecording() {
-    Intent intent = new Intent(context, ControlRecordingService.class);
-    intent.setAction(context.getString(R.string.track_action_start));
-    controlRecordingService = getService();
     assertNull(controlRecordingService);
-    startService(intent);
-    controlRecordingService = getService();
+    Intent intent = startControlRecordingService(context.getString(R.string.track_action_start));
     assertNotNull(controlRecordingService);
 
     ITrackRecordingService iTrackRecordingServiceMock = EasyMock
@@ -79,10 +75,8 @@ public class ControlRecordingServiceTest extends ServiceTestCase<ControlRecordin
    */
   @UsesMocks(ITrackRecordingService.class)
   public void testStopRecording() {
-    Intent intent = new Intent(context, ControlRecordingService.class);
-    intent.setAction(context.getString(R.string.track_action_end));
-    startService(intent);
-    controlRecordingService = getService();
+    Intent intent = startControlRecordingService(context.getString(R.string.track_action_end));
+    
     ITrackRecordingService iTrackRecordingServiceMock = EasyMock
         .createStrictMock(ITrackRecordingService.class);
     try {
@@ -93,6 +87,19 @@ public class ControlRecordingServiceTest extends ServiceTestCase<ControlRecordin
     } catch (RemoteException e) {
       fail();
     }
+  }
+  
+  /**
+   * Starts a ControlRecordingService with a specified action.
+   * 
+   * @param action the action string in the start intent
+   */
+  private Intent startControlRecordingService(String action) {
+    Intent intent = new Intent(context, ControlRecordingService.class);
+    intent.setAction(action);
+    startService(intent);
+    controlRecordingService = getService();
+    return intent;
   }
 
 }
