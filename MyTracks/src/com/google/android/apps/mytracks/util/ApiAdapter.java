@@ -26,9 +26,11 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * A set of methods that may be implemented differently depending on the Android
@@ -160,6 +162,16 @@ public interface ApiAdapter {
    */
   public boolean handleSearchMenuSelection(Activity activity);
   
+  /**
+   * Adds all items to an array adapter.
+   * 
+   * Due to changes in API level 11.
+   *s
+   * @param arrayAdapter the array adapter
+   * @param items list of items
+   */
+  public <T> void addAllToArrayAdapter(ArrayAdapter<T> arrayAdapter, List<T> items);
+
   /**
    * Handles the search key press. Returns true if handled.
    * 

@@ -15,87 +15,52 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_height="fill_parent"
-  android:layout_width="fill_parent" >
-
+  style="@style/ScrollView" >
   <LinearLayout
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
     android:orientation="vertical"
     android:padding="8dp" >
-
     <TextView
       android:drawableLeft="@drawable/x_axis"
-      android:drawablePadding="8dp"
-      android:gravity="bottom"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      style="@android:style/TextAppearance.DeviceDefault.Large"
-      android:text="@string/chart_settings_x_axis" />
-
+      android:text="@string/chart_settings_x_axis"
+      style="@style/TextLarge.WithIcon" />
     <RadioGroup
       android:id="@+id/chart_settings_x"
       android:layout_height="wrap_content"
       android:layout_width="wrap_content" >
-
       <RadioButton
         android:id="@+id/chart_settings_by_distance"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        style="@android:style/TextAppearance.DeviceDefault.Medium"
-        android:text="@string/chart_settings_by_distance" />
-
+        android:text="@string/chart_settings_by_distance"
+        style="@style/TextMedium" />
       <RadioButton
         android:id="@+id/chart_settings_by_time"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        style="@android:style/TextAppearance.DeviceDefault.Medium"
-        android:text="@string/chart_settings_by_time" />
+        android:text="@string/chart_settings_by_time"
+        style="@style/TextMedium" />
     </RadioGroup>
-
     <TextView
       android:drawableLeft="@drawable/y_axis"
-      android:drawablePadding="8dp"
-      android:gravity="bottom"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      style="@android:style/TextAppearance.DeviceDefault.Large"
-      android:text="@string/chart_settings_y_axis" />
-
+      android:text="@string/chart_settings_y_axis"
+      style="@style/TextLarge.WithIcon" />
     <CheckBox
       android:id="@+id/chart_settings_elevation"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      style="@android:style/TextAppearance.DeviceDefault.Medium"
-      android:text="@string/stat_elevation" />
-
+      android:text="@string/stats_elevation"
+      style="@style/TextMedium" />
     <CheckBox
       android:id="@+id/chart_settings_speed"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      style="@android:style/TextAppearance.DeviceDefault.Medium"
-      android:text="@string/stat_speed" />
-
+      android:text="@string/stats_speed"
+      style="@style/TextMedium" />
     <CheckBox
       android:id="@+id/chart_settings_power"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      style="@android:style/TextAppearance.DeviceDefault.Medium"
-      android:text="@string/sensor_state_power" />
-
+      android:text="@string/sensor_state_power"
+      style="@style/TextMedium" />
     <CheckBox
       android:id="@+id/chart_settings_cadence"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      style="@android:style/TextAppearance.DeviceDefault.Medium"
-      android:text="@string/sensor_state_cadence" />
-
+      android:text="@string/sensor_state_cadence"
+      style="@style/TextMedium" />
     <CheckBox
       android:id="@+id/chart_settings_heart_rate"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      style="@android:style/TextAppearance.DeviceDefault.Medium"
-      android:text="@string/sensor_state_heart_rate" />
+      android:text="@string/sensor_state_heart_rate"
+      style="@style/TextMedium" />
   </LinearLayout>
-
 </ScrollView>

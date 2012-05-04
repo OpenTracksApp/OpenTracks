@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.maps.TrackPathPainter;
 import com.google.android.apps.mytracks.maps.TrackPathPainterFactory;
 import com.google.android.apps.mytracks.maps.TrackPathUtilities;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.GeoPoint;
@@ -145,7 +146,7 @@ public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListe
       arrow.setBounds(0, 0, arrowWidth, arrowHeight);
     }
 
-    statsMarker = resources.getDrawable(R.drawable.ylw_pushpin);
+    statsMarker = resources.getDrawable(R.drawable.yellow_pushpin);
     markerWidth = statsMarker.getIntrinsicWidth();
     markerHeight = statsMarker.getIntrinsicHeight();
     statsMarker.setBounds(0, 0, markerWidth, markerHeight);
@@ -442,10 +443,8 @@ public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListe
       }
     }
 
-    if (waypoint != null &&
-        dmin < 15000000 / Math.pow(2, mapView.getZoomLevel())) {
-      Intent intent = new Intent(context, MarkerDetailActivity.class)
-          .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+    if (waypoint != null && dmin < 15000000 / Math.pow(2, mapView.getZoomLevel())) {
+      Intent intent = IntentUtils.newIntent(context, MarkerDetailActivity.class)
           .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, waypoint.getId());
       context.startActivity(intent);
       return true;

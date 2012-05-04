@@ -494,7 +494,7 @@ limitations under the License.
     Accuracy (m)
   </string>
   <string name="description_location_altitude"
-    translation_description="Label for location altitude in degrees.">
+    translation_description="Label for location altitude in meters.">
     Altitude (m)
   </string>
   <string name="description_location_bearing"
@@ -637,23 +637,11 @@ limitations under the License.
     Terms of Service
   </string>
 
-  <!-- Export -->
-  <string name="export_error"
-    translation_description="When exporting all the tracks to the SD card, a toast message
-      indicating error.">
-    Unable to export.
-  </string>
-  <string name="export_progress_message"
-    translation_description="When exporting all the tracks to the SD card, the progress message.">
-    Exporting all tracks...
-  </string>
-  <string name="export_success"
-    translation_description="When exporting all the tracks to the SD card, a toast message
-      indicating success.">
-    Export finished.
-  </string>
-
   <!-- Generic Strings -->
+  <string name="generic_add"
+    translation_description="The text on a button to say add.">
+    Add
+  </string>
   <string name="generic_cancel"
     translation_description="The text on a button to say cancel.">
     Cancel
@@ -670,6 +658,10 @@ limitations under the License.
     translation_description="The title on an alert dialog indicating error.">
     Error
   </string>
+  <string name="generic_more_options"
+    translation_description="The text on a button to say more options.">
+    More options
+  </string>  
   <string name="generic_name"
     translation_description="The text label for entering a name.">
     Name
@@ -695,8 +687,8 @@ limitations under the License.
   <string name="gps_need_to_enable"
     translation_description="In the main view, the message on the top asking the user to enable
       GPS.">
-    Please tap here to go to \'Location &amp; security\' settings &amp; check
-    \'Use GPS satellites\'. Press the back button to return.
+    Tap here to go to \'Location services\' settings &amp; check \'GPS satellites\'. Press the back
+    button to return.
   </string>
   <string name="gps_not_found"
     translation_description="On application start, message when there is no GPS on the device.">
@@ -929,11 +921,6 @@ limitations under the License.
       'Maps' list page informing the user that he doesn't have any maps.">
     You don\'t have any maps.
   </string>
-  <string name="maps_list_pick_map"
-    translation_description="When sending a track to an existing Google Map, the text on the
-      'Maps' list page asking the user to pick one of his maps.">
-    Pick a map:
-  </string>
   <string name="maps_list_progress_message"
     translation_description="When sending a track to an existing Google Map, the progress message
       informing the user that his maps are being loaded.">
@@ -946,8 +933,8 @@ limitations under the License.
   </string>
   <string name="maps_list_title"
     translation_description="When sending a track to an existing Google Map, the title of the
-      page listing the user's maps in Google Maps.">
-    Your Google Maps
+      page asking the user to pick a map.">
+    Pick a Map
   </string>
   <string name="maps_list_unlisted_label"
     translation_description="When sending a track to an existing Google Map, in the 'Maps'
@@ -956,67 +943,47 @@ limitations under the License.
   </string>
 
   <!-- Marker -->
+  <string name="marker_add_error"
+    translation_description="When adding a marker, the message indicating error.">
+    Unable to insert a marker. Try again.
+  </string>
+  <string name="marker_add_success"
+    translation_description="When adding a marker, the message indicating success.">
+    A marker was inserted.
+  </string>
   <string name="marker_delete_one_marker_confirm_message"
     translation_description="When deleting a marker, the confirmation dialog message informing the
       user that the marker will be permanently deleted from the phone.">
     The marker will be permanently deleted from the phone.
   </string>
-  <string name="marker_detail_description"
-    translation_description="In the marker detail page, the label for the description.
+  <string name="marker_detail_name"
+    translation_description="In the marker detail page, the label for the marker name.
+
+      %1$s marker name. E.g., 'Waypoint 1'.">
+    Name: %1$s
+  </string>  
+  <string name="marker_detail_waypoint_description"
+    translation_description="In the marker detail page, the label for the waypoint description.
 
       %1$s marker description. E.g., 'At the top'.">
     Description: %1$s
   </string>  
-  <string name="marker_detail_marker_type"
-    translation_description="In the marker detail page, the label for the marker type.
+  <string name="marker_detail_waypoint_marker_type"
+    translation_description="In the marker detail page, the label for the waypoint marker type.
 
       %1$s marker type. E.g., 'building'.">
     Marker type: %1$s
   </string>  
-  <string name="marker_detail_name"
-    translation_description="In the marker detail page, the label for the marker name.
-
-      %1$s marker name. E.g., 'Waypoint1'.">
-    Name: %1$s
-  </string>  
-  <string name="marker_edit_add"
-    translation_description="The label on the button to add a marker.">
-    Add
-  </string>
-  <string name="marker_edit_add_error"
-    translation_description="When adding a marker, the message indicating error.">
-    Unable to insert a marker. Try again.
-  </string>
-  <string name="marker_edit_add_success"
-    translation_description="When adding a marker, the message indicating success.">
-    A marker was inserted.
-  </string>
-  <string name="marker_edit_add_title"
-    translation_description="The title of the page to add a new marker.">
-    New Marker
-  </string>
-  <string name="marker_edit_marker_type"
-    translation_description="The label for the text field to edit the marker type, including some
-      exmaples.">
+  <string name="marker_edit_waypoint_marker_type"
+    translation_description="In the marker edit page, the label for the waypoint marker type,
+      including some exmaples.">
     Marker type (e.g. building, pothole...)
   </string>
-  <string name="marker_edit_marker_type_hint"
-    translation_description="The hint in the 'Marker type' text field when it is empty.">
+  <string name="marker_edit_waypoint_marker_type_hint"
+    translation_description="In the marker edit page, the hint in the waypoint marker type text
+      field when it is empty.">
     Marker type
-  </string>
-  <string name="marker_edit_type"
-    translation_description="When adding a marker, the label to select a type, statistics or
-      waypoint.">
-    Type
-  </string>
-  <string name="marker_edit_type_statistics"
-    translation_description="The label to add a statistics marker.">
-    Statistics
-  </string>
-  <string name="marker_edit_type_waypoint"
-    translation_description="The label to add a waypoint marker.">
-    Waypoint
-  </string>    
+  </string> 
   <string name="marker_label_end"
     translation_description="When inserting a marker to indicate the end of a track, the marker's
       name. E.g., 'track_name (End)'.
@@ -1035,7 +1002,33 @@ limitations under the License.
     translation_description="The message when the marker list is empty.">
     You don\'t have any markers.
   </string>
+  <string name="marker_statistics"
+    translation_description="The label to add a statistics marker.">
+    Statistics
+  </string>
+  <string name="marker_statistics_name_format"
+    translation_description="When adding a statistics marker, the string format for the default
+      name.
 
+      %1$d: number. E.g., '1'.">
+    Statistics %1$d
+  </string>
+  <string name="marker_type"
+    translation_description="When adding a marker, the label to select a type, statistics or
+      waypoint.">
+    Type
+  </string>
+  <string name="marker_waypoint"
+    translation_description="The label to add a waypoint marker.">
+    Waypoint
+  </string>
+  <string name="marker_waypoint_name_format"
+    translation_description="When adding a waypoint marker, the string format for the default name.
+
+      %1$d: number. E.g., '1'.">
+    Waypoint %1$d
+  </string>
+      
   <!-- Menu Items -->
   <string name="menu_aggregated_statistics"
     translation_description="In the menu, to go to the aggregated statistics page.">
@@ -1057,25 +1050,13 @@ limitations under the License.
     translation_description="In the menu, to edit a track or a marker.">
     Edit
   </string>
-  <string name="menu_export_all"
-    translation_description="In the menu, to export all the tracks to the SD card.  This menu item
-      has a submenu.">
-    Export all...
-  </string>
-  <string name="menu_export_all_format"
-    translation_description="Under the 'Export all' menu option, the option to export all tracks as
-      a certain file format.
-
-      %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
-    Export as %1$s
-  </string>
   <string name="menu_help"
     translation_description="In the menu, to go to the help page.">
     Help
   </string>
-  <string name="menu_import_all"
-    translation_description="In the menu, to import all the tracks from the SD card.">
-    Import all
+  <string name="menu_import"
+    translation_description="In the menu, to import tracks from the SD card.">
+    Import from SD card
   </string>
   <string name="menu_insert_marker"
     translation_description="In the menu, to insert a marker.">
@@ -1088,10 +1069,6 @@ limitations under the License.
   <string name="menu_markers"
     translation_description="In the menu, to show a list of markers for the current track.">
     Markers
-  </string>
-  <string name="menu_my_location"
-    translation_description="In the menu, to display the user's current location.">
-    My location
   </string>
   <string name="menu_play"
     translation_description="In the menu, to play a track.">
@@ -1110,12 +1087,17 @@ limitations under the License.
       submenu.">
     Save to SD card...
   </string>
+  <string name="menu_save_all"
+    translation_description="In the menu, to save all the tracks to the SD card. This menu item has
+      a submenu.">
+    Save all to SD card...
+  </string>
   <string name="menu_save_format"
-    translation_description="Under the 'Save to SD card...' menu option, the option to save a track
+    translation_description="Under the save to SD card menu option, the option to save a track
       as a certain file format.
 
       %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
-    As a %1$s file
+    Save as %1$s
   </string>
   <string name="menu_search"
     translation_description="In the menu, to start a textual search for tracks or waypoints.">
@@ -1133,40 +1115,47 @@ limitations under the License.
     translation_description="In the menu, to go to the settings page.">
     Settings
   </string>
+  <string name="menu_share"
+    translation_description="In the menu, to share a track.">
+    Share
+  </string>
+  <string name="menu_share_file"
+    translation_description="Under the 'Share' menu option, the option to share a track as a
+      certain file format.
+
+      %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
+    %1$s file
+  </string>
+  <string name="menu_share_fusion_table_url"
+    translation_description="Under the 'Share' menu option, the option to save a track to Google
+      Fusion Tables and share the Fusion Table URL with friends. 'Fusion Table URL' in this context
+      means a Google Fusion Table URL.">
+    Fusion Table URL
+  </string>
+  <string name="menu_share_map_url"
+    translation_description="Under the 'Share' menu option, the option to save a track to Google
+      Maps and share the Map URL with friends. 'Map URL' in this context means a Google Map URL.">
+    Map URL
+  </string>
   <string name="menu_show_on_map"
     translation_description="In the menu, to show a marker on map.">
     Show on map
+  </string>
+  <string name="menu_stats_settings"
+    translation_description="In the menu, to change the stats settings.">
+    Stats settings
   </string>  
   <string name="menu_stop_recording"
     translation_description="In the menu, to stop recording a track.">
     Stop recording
   </string>
-  <string name="menu_share"
-    translation_description="In the menu, to share a track with friends through other
-      applications.">
-    Share with friends...
-  </string>
-  <string name="menu_share_file"
-    translation_description="Under the 'Share with friends...' menu option, the option to share a
-      track as a certain file format.
-
-      %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
-    A %1$s file
-  </string>
-  <string name="menu_share_fusion_table"
-    translation_description="Under the 'Share with friends...' menu option, the option to save a
-      track to Google Fusion Tables and share the Fusion Table url with friends. 'Fusion Table' in
-      this context means a Google Fusion Table.">
-    Fusion Table
-  </string>
-  <string name="menu_share_map"
-    translation_description="Under the 'Share with friends...' menu option, the option to save a
-      track to Google Maps and share the Map url with friends. 'Map' in this context means a Google
-      Map.">
-    Map
-  </string>
 
   <!-- My Location -->
+  <string name="my_location"
+    translation_description="The accessibility description for the My Location button on the map
+      view.">
+    My Location
+  </string>
   <string name="my_location_approximate_location"
     translation_description="When displaying the user's current location, a status message
       indicating that GPS is not available and an approximate location is used instead.">
@@ -1183,11 +1172,6 @@ limitations under the License.
   <string name="my_tracks_app_name"
     translation_description="The My Tracks application name.">
       My Tracks
-  </string>
-  <string name="my_tracks_importer"
-    translation_description="When opening a GPX file from a file manager, the name of the My Tracks
-      application that can import the file to My Tracks.">
-      My Tracks Importer
   </string>
   <string name="my_tracks_recording_service"
     translation_description="When viewing the 'Running services' on Android, the name of the My
@@ -1233,19 +1217,35 @@ limitations under the License.
   <string name="preferred_units_imperial"
     translation_description="In the dialog asking the user to choose a preferred units, the option
       to choose the imperial units.">
-    Imperial
+    Imperial (mi, ft)
   </string>
   <string name="preferred_units_metric"
     translation_description="In the dialog asking the user to choose a preferred units, the option
       to choose the metric units.">
-    Metric
+    Metric (km, m)
   </string>
   <string name="preferred_units_title"
     translation_description="The title of the dialog asking the user to choose a preferred units,
       metric or imperial.">
-    Preferred units
+    Preferred Units
   </string>
 
+  <!-- Save All -->
+  <string name="save_all_error"
+    translation_description="When saving all the tracks to the SD card, a toast message indicating
+      error.">
+    Unable to save.
+  </string>
+  <string name="save_all_progress_message"
+    translation_description="When saving all the tracks to the SD card, the progress message.">
+    Saving all tracks...
+  </string>
+  <string name="save_all_success"
+    translation_description="When saving all the tracks to the SD card, a toast message indicating
+      success.">
+    Save finished.
+  </string>
+  
   <!-- SD Card -->
   <string name="sd_card_canceled"
     translation_description="When exporting a track to the SD card, a message indicating that the
@@ -1288,11 +1288,11 @@ limitations under the License.
     Finished writing to the SD card.
   </string>
 
-  <!-- Search interface -->
+  <!-- Search -->
   <string name="search_global_description"
     translation_description="Description of what is searched in My Tracks, to be displayed in the
       global system search settings.">
-    Tracks and waypoints
+    Tracks and markers
   </string>
   <string name="search_hint"
     translation_description="The hint shown on the search box until the user types a search query.
@@ -1300,14 +1300,13 @@ limitations under the License.
       keeping this consistent with other Android apps.">
     Search My Tracks
   </string>
-  <string name="search_no_results"
-    translation_description="Message shown instead of a list of results to indicate there were no
-      search results.">
-    No tracks or waypoints matched your search.
+  <string name="search_list_empty_message"
+    translation_description="Message when the search result is empty.">
+    No tracks or markers matched your search.
   </string>
-  <string name="search_track_location"
-    translation_description="In the 'Search Result' page, the text field indicating the track that a
-      waypoint belongs to.
+  <string name="search_list_marker_track_location"
+    translation_description="For a marker returned in the search result, the text field indicating
+      the track that the marker belongs to.
 
       %1$s: track name. E.g., 'Grand Canyon trail'">
     In track \'%1$s\'.
@@ -1315,7 +1314,7 @@ limitations under the License.
   <string name="search_voice_prompt"
     translation_description="Prompt shown when the user activates voice search, asking him to speak
       what will be searched for.">
-    Speak the name of a track or waypoint.
+    Speak the name of a track or marker.
   </string>
 
   <!-- Send Google -->
@@ -2068,84 +2067,106 @@ limitations under the License.
     I think you might be interested in this track:\n\n%1$s
   </string>
 
-  <!-- Stat Page -->
-  <string name="stat_average_moving_pace"
-    translation_description="In the 'Statistics' page, the average moving pace.">
+  <!-- Stats Page -->
+  <string name="stats_average_moving_pace"
+    translation_description="In the 'Stats' page, the average moving pace.">
     Average moving pace
   </string>
-  <string name="stat_average_moving_speed"
-    translation_description="In the 'Statistics' page, the average moving speed.">
+  <string name="stats_average_moving_speed"
+    translation_description="In the 'Stats' page, the average moving speed.">
     Average moving speed
   </string>
-  <string name="stat_average_pace"
-    translation_description="In the 'Statistics' page, the average pace.">
+  <string name="stats_average_pace"
+    translation_description="In the 'Stats' page, the average pace.">
     Average pace
   </string>
-  <string name="stat_average_speed"
-    translation_description="In the 'Statistics' page, the average speed.">
+  <string name="stats_average_speed"
+    translation_description="In the 'Stats' page, the average speed.">
     Average speed
   </string>
-  <string name="stat_elevation"
-    translation_description="In the 'Statistics' page, the elevation.">
+  <string name="stats_elevation"
+    translation_description="In the 'Stats' page, the elevation.">
     Elevation
   </string>
-  <string name="stat_elevation_gain"
-    translation_description="In the 'Statistics' page, the elevation gain.">
+  <string name="stats_elevation_gain"
+    translation_description="In the 'Stats' page, the elevation gain.">
     Elevation gain
   </string>
-  <string name="stat_fastest_pace"
-    translation_description="In the 'Statistics' page, the fastest pace.">
+  <string name="stats_fastest_pace"
+    translation_description="In the 'Stats' page, the fastest pace.">
     Fastest pace
   </string>
-  <string name="stat_latitude"
-    translation_description="In the 'Statistics' page, the latitude.">
+  <string name="stats_latitude"
+    translation_description="In the 'Stats' page, the latitude.">
     Latitude
   </string>
-  <string name="stat_longitude"
-    translation_description="In the 'Statistics' page, the longitude.">
+  <string name="stats_longitude"
+    translation_description="In the 'Stats' page, the longitude.">
     Longitude
   </string>
-  <string name="stat_max_elevation"
-    translation_description="In the 'Statistics' page, the maximum elevation.">
+  <string name="stats_max_elevation"
+    translation_description="In the 'Stats' page, the maximum elevation.">
     Max elevation
   </string>
-  <string name="stat_max_grade"
-    translation_description="In the 'Statistics' page, the maximum grade.">
+  <string name="stats_max_grade"
+    translation_description="In the 'Stats' page, the maximum grade.">
     Max grade
   </string>
-  <string name="stat_max_speed"
-    translation_description="In the 'Statistics' page, the maximum speed.">
+  <string name="stats_max_speed"
+    translation_description="In the 'Stats' page, the maximum speed.">
     Max speed
   </string>
-  <string name="stat_min_elevation"
-    translation_description="In the 'Statistics' page, the minimum elevation.">
+  <string name="stats_min_elevation"
+    translation_description="In the 'Stats' page, the minimum elevation.">
     Min elevation
   </string>
-  <string name="stat_min_grade"
-    translation_description="In the 'Statistics' page, the minimum grade.">
+  <string name="stats_min_grade"
+    translation_description="In the 'Stats' page, the minimum grade.">
     Min grade
   </string>
-  <string name="stat_moving_time"
-    translation_description="In the 'Statistics' page, the moving time.">
+  <string name="stats_moving_time"
+    translation_description="In the 'Stats' page, the moving time.">
     Moving time
   </string>
-  <string name="stat_pace"
-    translation_description="In the 'Statistics' page, the pace like hours per mile.">
+  <string name="stats_pace"
+    translation_description="In the 'Stats' page, the pace like hours per mile.">
     Pace
   </string>
-  <string name="stat_speed"
-    translation_description="In the 'Statistics' page, the speed like miles per hour.">
+  <string name="stats_speed"
+    translation_description="In the 'Stats' page, the speed like miles per hour.">
     Speed
   </string>
-  <string name="stat_total_distance"
-    translation_description="In the 'Statistics' page, the total distance.">
+  <string name="stats_total_distance"
+    translation_description="In the 'Stats' page, the total distance.">
     Total distance
   </string>
-  <string name="stat_total_time"
-    translation_description="In the 'Statistics' page, the total time.">
+  <string name="stats_total_time"
+    translation_description="In the 'Stats' page, the total time.">
     Total time
   </string>
 
+  <!-- Stats Settings -->
+  <string name="stats_settings_show"
+    translation_description="In the 'Stats settings' dialog, the section label to show additional
+      stats.">
+    Show
+  </string>
+  <string name="stats_settings_grade"
+    translation_description="In the 'Stats settings' dialog, the option to show grade. Grade is
+      the amount of inclination to the horizontal, also known as slope or incline.">
+    Grade
+  </string>
+  <string name="stats_settings_coordinate"
+    translation_description="In the 'Stats settings' dialog, the option to show latitude and
+      longitude.">
+    Latitude/Longitude
+  </string>
+  <string name="stats_settings_time"
+    translation_description="In the 'Stats settings' dialog, the section label to choose between
+      displaying total time or moving time.">
+    Time
+  </string>
+  
   <!-- Track -->
   <string name="track_detail_chart_tab"
     translation_description="In the track detail page, the title of the tab showing the chart.">
@@ -2418,7 +2439,14 @@ limitations under the License.
       recommended value.">
     Smallest (recommended)
   </string>
-
+  <string name="value_coordinate_degree"
+    translation_description="To display a latitude or longitude coordinate in degree. E.g.,
+      2.2 \u00B0. \u00B0 is the unicode value for the degree symbol.
+          
+    %1$s: a string value of the coordinate. E.g., '2.2'">
+    %1$s \u00B0
+  </string>
+  
   <!-- Voice -->
   <string name="voice_hours_few"
     translation_description="For voice announcement, to say 'few' hours.
@@ -2925,6 +2953,14 @@ limitations under the License.
   </string>
 
   <!-- Welcome -->
+  <string name="welcome_message"
+    translation_description="The message of the welcome dialog.">
+    Use My Tracks while you run, bike, hike, or do anything outdoor to record your path. While
+    recording, you can visualize your track and watch live statistics. You can also add
+    markers, have markers inserted periodically, or hear automatic voice announcements of
+    your progress. For recorded tracks, you can play them on Google Earth, share with friends, or
+    upload to Google Maps, Google Fusion Tables, or Google Docs.    
+  </string>
   <string name="welcome_title"
     translation_description="The title of the welcome dialog.">
     Welcome to My Tracks

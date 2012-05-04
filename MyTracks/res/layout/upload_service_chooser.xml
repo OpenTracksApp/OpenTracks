@@ -15,27 +15,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_height="fill_parent"
-  android:layout_width="fill_parent" >
+  style="@style/ScrollView" >
   <TableLayout
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
     android:layout_width="fill_parent"
+    android:padding="8dp"
     android:stretchColumns="1" >
     <TableRow android:id="@+id/send_google_maps_row" >
       <ImageView
         android:contentDescription="@string/send_google_maps"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:src="@drawable/maps_icon" />
+        android:src="@drawable/google_maps_icon"
+        style="@style/UploadServiceChooserImageView" />
       <CheckBox
         android:id="@+id/send_google_maps"
-        android:layout_gravity="center_vertical"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_width="0dp"
         android:text="@string/send_google_maps"
-        style="@android:style/TextAppearance.DeviceDefault.Medium" />
+        style="@style/UploadServiceChooserCheckBox" />
     </TableRow>
     <TableRow android:id="@+id/send_google_maps_option_row" >
       <RadioGroup
@@ -45,47 +39,33 @@ limitations under the License.
         android:layout_width="0dp" >
         <RadioButton
           android:id="@+id/send_google_new_map"
-          android:layout_height="wrap_content"
-          android:layout_width="wrap_content"
           android:text="@string/send_google_new_map"
-          style="@android:style/TextAppearance.DeviceDefault.Medium" />
+          style="@style/TextMedium" />
         <RadioButton
           android:id="@+id/send_google_existing_map"
-          android:layout_height="wrap_content"
-          android:layout_width="wrap_content"
           android:text="@string/send_google_existing_map"
-          style="@android:style/TextAppearance.DeviceDefault.Medium" />
+          style="@style/TextMedium" />
       </RadioGroup>
     </TableRow>
     <TableRow android:id="@+id/send_google_fusion_tables_row" >
       <ImageView
         android:contentDescription="@string/send_google_fusion_tables"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:src="@drawable/googledocs_icon" />
+        android:src="@drawable/google_fusion_tables_icon"
+        style="@style/UploadServiceChooserImageView" />
       <CheckBox
         android:id="@+id/send_google_fusion_tables"
-        android:layout_gravity="center_vertical"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_width="0dp"
         android:text="@string/send_google_fusion_tables"
-        style="@android:style/TextAppearance.DeviceDefault.Medium" />
+        style="@style/UploadServiceChooserCheckBox" />
     </TableRow>
     <TableRow android:id="@+id/send_google_docs_row" >
       <ImageView
         android:contentDescription="@string/send_google_docs"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:src="@drawable/googledocs_icon" />
+        android:src="@drawable/google_docs_icon"
+        style="@style/UploadServiceChooserImageView" />
       <CheckBox
         android:id="@+id/send_google_docs"
-        android:layout_gravity="center_vertical"
-        android:layout_height="fill_parent"
-        android:layout_marginLeft="8dp"
-        android:layout_width="0dp"
         android:text="@string/send_google_docs"
-        style="@android:style/TextAppearance.DeviceDefault.Medium" />
+        style="@style/UploadServiceChooserCheckBox" />
     </TableRow>
   </TableLayout>
 </ScrollView>

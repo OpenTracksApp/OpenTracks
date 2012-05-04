@@ -131,13 +131,6 @@ public class StringUtilsTest extends AndroidTestCase {
   }
 
   /**
-   * Tests {@link StringUtils#formatTimeDistance(android.content.Context, long, double, boolean)}.
-   */
-  public void testFormatTimeDistance() {
-    assertEquals("00:10 5.00 km", StringUtils.formatTimeDistance(getContext(), 10000, 5000, true));
-  }
-  
-  /**
    * Tests {@link StringUtils#formatCData(String)}.
    */
   public void testFormatCData() {

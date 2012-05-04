@@ -24,6 +24,7 @@ import com.google.android.apps.mytracks.services.sensors.ant.AntUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.BluetoothDeviceUtils;
 import com.google.android.apps.mytracks.util.DialogUtils;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
@@ -130,8 +131,7 @@ public class SettingsActivity extends PreferenceActivity {
     // Hook up switching of displayed list entries between metric and imperial
     // units
     CheckBoxPreference metricUnitsPreference =
-        (CheckBoxPreference) findPreference(
-            getString(R.string.metric_units_key));
+        (CheckBoxPreference) findPreference(PreferencesUtils.getMetricUnitsKey(this));
     metricUnitsPreference.setOnPreferenceChangeListener(
         new OnPreferenceChangeListener() {
           @Override
@@ -201,7 +201,9 @@ public class SettingsActivity extends PreferenceActivity {
             new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialog, int which) {
-                startActivity(new Intent(SettingsActivity.this, RestoreChooserActivity.class));
+                Intent intent = IntentUtils.newIntent(
+                    SettingsActivity.this, RestoreChooserActivity.class);
+                startActivity(intent);
               }
             });
       default:
@@ -361,22 +363,21 @@ public class SettingsActivity extends PreferenceActivity {
                   : R.string.settings_reset_summary);
 
     // Add actions to the backup preferences
-    backupNowPreference.setOnPreferenceClickListener(
-        new OnPreferenceClickListener() {
-          @Override
-          public boolean onPreferenceClick(Preference preference) {
-            startActivity(new Intent(SettingsActivity.this, BackupActivity.class));
-            return true;
-          }
-        });
-    restoreNowPreference.setOnPreferenceClickListener(
-        new OnPreferenceClickListener() {
-          @Override
-          public boolean onPreferenceClick(Preference preference) {
-            showDialog(DIALOG_CONFIRM_RESTORE_ID);
-            return true;
-          }
-        });
+    backupNowPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+      @Override
+      public boolean onPreferenceClick(Preference preference) {
+        Intent intent = IntentUtils.newIntent(SettingsActivity.this, BackupActivity.class);
+        startActivity(intent);
+        return true;
+      }
+    });
+    restoreNowPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+      @Override
+      public boolean onPreferenceClick(Preference preference) {
+        showDialog(DIALOG_CONFIRM_RESTORE_ID);
+        return true;
+      }
+    });
   }
 
   @Override
@@ -627,8 +628,8 @@ public class SettingsActivity extends PreferenceActivity {
                 Toast.LENGTH_SHORT).show();
 
             // Restart the settings activity so all changes are loaded.
-            Intent intent = getIntent();
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            Intent intent = getIntent()
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
           }
         });
@@ -641,9 +642,7 @@ public class SettingsActivity extends PreferenceActivity {
    * If the units are not metric convert the value before displaying.  
    */
   private void viewTrackColorModeSettings(EditTextPreference preference, int id) {
-    CheckBoxPreference metricUnitsPreference = (CheckBoxPreference) findPreference(
-        getString(R.string.metric_units_key));
-    if(metricUnitsPreference.isChecked()) {
+    if (PreferencesUtils.isMetricUnits(this)) {
       return;
     }
     // Convert miles/h to km/h
@@ -663,10 +662,10 @@ public class SettingsActivity extends PreferenceActivity {
    * If the units are not metric convert the value before saving.  
    */
   private void validateTrackColorModeSettings(String newValue, int id) {
-    CheckBoxPreference metricUnitsPreference = (CheckBoxPreference) findPreference(
-        getString(R.string.metric_units_key));
     String metricspeed;
-    if(!metricUnitsPreference.isChecked()) {
+    if (PreferencesUtils.isMetricUnits(this)) {
+      metricspeed = newValue;
+    } else {
       // Convert miles/h to km/h
       try {
         metricspeed = String.valueOf(
@@ -674,8 +673,6 @@ public class SettingsActivity extends PreferenceActivity {
       } catch (NumberFormatException e) {
         metricspeed = "0";
       }
-    } else {
-      metricspeed = newValue;
     }
     SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
     Editor editor = prefs.edit();

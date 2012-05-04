@@ -26,7 +26,7 @@ import android.os.Parcelable;
 public class WaypointCreationRequest implements Parcelable {
 
   public static enum WaypointType {
-    MARKER,
+    WAYPOINT,
     STATISTICS;
   }
   
@@ -36,8 +36,8 @@ public class WaypointCreationRequest implements Parcelable {
   private String description;
   private String iconUrl;
 
-  public final static WaypointCreationRequest DEFAULT_MARKER =
-      new WaypointCreationRequest(WaypointType.MARKER);
+  public final static WaypointCreationRequest DEFAULT_WAYPOINT =
+      new WaypointCreationRequest(WaypointType.WAYPOINT);
   public final static WaypointCreationRequest DEFAULT_STATISTICS =
       new WaypointCreationRequest(WaypointType.STATISTICS);
   

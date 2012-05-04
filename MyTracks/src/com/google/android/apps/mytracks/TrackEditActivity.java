@@ -18,16 +18,11 @@ package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.maps.mytracks.R;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -39,10 +34,10 @@ import android.widget.EditText;
  * 
  * @author Leif Hendrik Wilden
  */
-public class TrackEditActivity extends Activity implements OnClickListener {
+public class TrackEditActivity extends AbstractMyTracksActivity {
 
   public static final String EXTRA_TRACK_ID = "track_id";
-  public static final String EXTRA_SHOW_CANCEL = "show_cancel";
+  public static final String EXTRA_NEW_TRACK = "new_track";
 
   private static final String TAG = TrackEditActivity.class.getSimpleName();
 
@@ -57,8 +52,6 @@ public class TrackEditActivity extends Activity implements OnClickListener {
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
-    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
-    ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
     setContentView(R.layout.track_edit);
 
     trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
@@ -89,36 +82,30 @@ public class TrackEditActivity extends Activity implements OnClickListener {
     description.setText(track.getDescription());
 
     Button save = (Button) findViewById(R.id.track_edit_save);
-    save.setOnClickListener(this);
+    save.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        track.setName(name.getText().toString());
+        track.setCategory(activityType.getText().toString());
+        track.setDescription(description.getText().toString());
+        myTracksProviderUtils.updateTrack(track);
+        finish();                
+      }
+    });
 
     Button cancel = (Button) findViewById(R.id.track_edit_cancel);
-    if (getIntent().getBooleanExtra(EXTRA_SHOW_CANCEL, true)) {
-      setTitle(R.string.menu_edit);
-      cancel.setOnClickListener(this);
-      cancel.setVisibility(View.VISIBLE);
-    } else {
+    if (getIntent().getBooleanExtra(EXTRA_NEW_TRACK, false)) {
       setTitle(R.string.track_edit_new_track_title);
       cancel.setVisibility(View.GONE);
+    } else {
+      setTitle(R.string.menu_edit);
+      cancel.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          finish();      
+        }
+      });
+      cancel.setVisibility(View.VISIBLE);
     }
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() != android.R.id.home) {
-      return false;
-    }
-    finish();
-    return true;
-  }
-
-  @Override
-  public void onClick(View view) {
-    if (view.getId() == R.id.track_edit_save) {
-      track.setName(name.getText().toString());
-      track.setCategory(activityType.getText().toString());
-      track.setDescription(description.getText().toString());
-      myTracksProviderUtils.updateTrack(track);
-    }
-    finish();
   }
 }

@@ -15,64 +15,35 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_height="fill_parent"
-  android:layout_width="fill_parent" >
-
+  style="@style/ScrollView" >
   <LinearLayout
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
     android:orientation="vertical"
     android:padding="8dp" >
-
     <TextView
-      android:drawableLeft="@drawable/arrow_icon"
-      android:drawablePadding="8dp"
-      android:gravity="center"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      style="@android:style/TextAppearance.DeviceDefault.Medium"
-      android:text="@string/about_copyright_notice" />
-
+      android:drawableLeft="@drawable/my_tracks_icon"
+      android:text="@string/about_copyright_notice"
+      style="@style/TextMedium.WithIcon" />
     <TextView
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      style="@android:style/TextAppearance.DeviceDefault.Large"
-      android:text="@string/about_version" />
-
+      android:text="@string/about_version"
+      style="@style/TextLarge" />
     <TextView
       android:id="@+id/about_version"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      android:paddingLeft="48dp"
-      style="@android:style/TextAppearance.DeviceDefault.Medium" />
-
+      style="@style/AboutValue" />
     <TextView
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      style="@android:style/TextAppearance.DeviceDefault.Large"
-      android:text="@string/about_support" />
-
+      android:text="@string/about_support"
+      style="@style/TextLarge" />
     <TextView
       android:autoLink="web"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      android:paddingLeft="48dp"
-      style="@android:style/TextAppearance.DeviceDefault.Medium"
-      android:text="@string/my_tracks_support_url" />
-
+      android:text="@string/my_tracks_support_url"
+      style="@style/AboutValue" />
     <TextView
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      style="@android:style/TextAppearance.DeviceDefault.Large"
-      android:text="@string/about_privacy" />
-
+      android:text="@string/about_privacy"
+      style="@style/TextLarge" />
     <TextView
       android:autoLink="web"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      android:paddingLeft="48dp"
-      style="@android:style/TextAppearance.DeviceDefault.Medium"
-      android:text="@string/my_tracks_privacy_url" />
+      android:text="@string/my_tracks_privacy_url"
+      style="@style/AboutValue" />
   </LinearLayout>
-
 </ScrollView>

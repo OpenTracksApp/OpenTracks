@@ -60,8 +60,6 @@ public class TrackDataHub {
 
   // Preference keys
   private final String MIN_REQUIRED_ACCURACY_KEY;
-  private final String METRIC_UNITS_KEY;
-  private final String SPEED_REPORTING_KEY;
 
   // Overridable constants
   private final int targetNumPoints;
@@ -171,7 +169,7 @@ public class TrackDataHub {
 
   // Cached preference values
   private int minRequiredAccuracy;
-  private boolean useMetricUnits;
+  private boolean metricUnits;
   private boolean reportSpeed;
 
   // Cached sensor readings
@@ -222,8 +220,6 @@ public class TrackDataHub {
     this.locationFactory = new DoubleBufferedLocationFactory();
 
     MIN_REQUIRED_ACCURACY_KEY = context.getString(R.string.min_required_accuracy_key);
-    METRIC_UNITS_KEY = context.getString(R.string.metric_units_key);
-    SPEED_REPORTING_KEY = context.getString(R.string.report_speed_key);
 
     resetState();
   }
@@ -299,8 +295,8 @@ public class TrackDataHub {
 
   private void loadSharedPreferences() {
     selectedTrackId = PreferencesUtils.getSelectedTrackId(context);
-    useMetricUnits = preferences.getBoolean(METRIC_UNITS_KEY, true);
-    reportSpeed = preferences.getBoolean(SPEED_REPORTING_KEY, true);
+    metricUnits = PreferencesUtils.isMetricUnits(context);
+    reportSpeed = PreferencesUtils.isReportSpeed(context);
     minRequiredAccuracy = preferences.getInt(MIN_REQUIRED_ACCURACY_KEY,
         DEFAULT_MIN_REQUIRED_ACCURACY);
   }
@@ -495,7 +491,7 @@ public class TrackDataHub {
         Set<TrackDataListener> listenerSet = Collections.singleton(listener);
 
         if (registration.isInterestedIn(ListenerDataType.DISPLAY_PREFERENCES)) {
-          reloadAll |= listener.onUnitsChanged(useMetricUnits);
+          reloadAll |= listener.onUnitsChanged(metricUnits);
           reloadAll |= listener.onReportSpeedChanged(reportSpeed);
         }
 
@@ -577,7 +573,7 @@ public class TrackDataHub {
         // Ignore the return values here, we're already sending the full data set anyway
         for (TrackDataListener listener :
              getListenersFor(ListenerDataType.DISPLAY_PREFERENCES)) {
-          listener.onUnitsChanged(useMetricUnits);
+          listener.onUnitsChanged(metricUnits);
           listener.onReportSpeedChanged(reportSpeed);
         }
 
@@ -616,11 +612,11 @@ public class TrackDataHub {
     if (MIN_REQUIRED_ACCURACY_KEY.equals(key)) {
       minRequiredAccuracy = preferences.getInt(MIN_REQUIRED_ACCURACY_KEY,
           DEFAULT_MIN_REQUIRED_ACCURACY);
-    } else if (METRIC_UNITS_KEY.equals(key)) {
-      useMetricUnits = preferences.getBoolean(METRIC_UNITS_KEY, true);
+    } else if (PreferencesUtils.getMetricUnitsKey(context).equals(key)) {
+      metricUnits = PreferencesUtils.isMetricUnits(context);
       notifyUnitsChanged();
-    } else if (SPEED_REPORTING_KEY.equals(key)) {
-      reportSpeed = preferences.getBoolean(SPEED_REPORTING_KEY, true);
+    } else if (PreferencesUtils.getReportSpeedKey(context).equals(key)) {
+      reportSpeed = PreferencesUtils.isReportSpeed(context);
       notifySpeedReportingChanged();
     } else if (PreferencesUtils.getSelectedTrackIdKey(context).equals(key)) {
       loadTrack(PreferencesUtils.getSelectedTrackId(context));
@@ -659,7 +655,7 @@ public class TrackDataHub {
         Set<TrackDataListener> displayListeners = getListenersFor(ListenerDataType.DISPLAY_PREFERENCES);
 
         for (TrackDataListener listener : displayListeners) {
-          if (listener.onUnitsChanged(useMetricUnits)) {
+          if (listener.onUnitsChanged(metricUnits)) {
             synchronized (dataListeners) {
               reloadDataForListener(listener);
             }

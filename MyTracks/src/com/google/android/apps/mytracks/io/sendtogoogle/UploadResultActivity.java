@@ -182,11 +182,11 @@ public class UploadResultActivity extends Activity {
     SharedPreferences prefs = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     boolean shareUrlOnly = prefs.getBoolean(getString(R.string.share_url_only_key), false);
 
-    Intent intent = new Intent(Intent.ACTION_SEND);
-    intent.setType(TEXT_PLAIN_TYPE);
-    intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_track_subject));
-    intent.putExtra(Intent.EXTRA_TEXT,
-        shareUrlOnly ? url : getString(R.string.share_track_url_body_format, url));
+    Intent intent = new Intent(Intent.ACTION_SEND)
+        .setType(TEXT_PLAIN_TYPE)
+        .putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_track_subject))
+        .putExtra(Intent.EXTRA_TEXT,
+            shareUrlOnly ? url : getString(R.string.share_track_url_body_format, url));
     startActivity(Intent.createChooser(intent, getString(R.string.share_track_picker_title)));
   }
   

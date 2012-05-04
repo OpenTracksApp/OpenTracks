@@ -102,7 +102,7 @@ public class CsvTrackWriter implements TrackFormatWriter {
   @Override
   public void writeBeginWaypoints() {
     writeCommaSeparatedLine(context.getString(R.string.generic_name),
-        context.getString(R.string.marker_edit_marker_type_hint),
+        context.getString(R.string.marker_edit_waypoint_marker_type_hint),
         context.getString(R.string.generic_description),
         context.getString(R.string.description_location_latitude),
         context.getString(R.string.description_location_longitude),

@@ -48,8 +48,8 @@ public class BootReceiver extends BroadcastReceiver {
   public void onReceive(Context context, Intent intent) {
     Log.d(TAG, "BootReceiver.onReceive: " + intent.getAction());
     if (ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
-      Intent startIntent = new Intent(context, TrackRecordingService.class);
-      startIntent.putExtra(RESUME_TRACK_EXTRA_NAME, true);
+      Intent startIntent = new Intent(context, TrackRecordingService.class)
+          .putExtra(RESUME_TRACK_EXTRA_NAME, true);
       context.startService(startIntent);
 
       Intent removeTempFilesIntent = new Intent(context, RemoveTempFilesService.class);

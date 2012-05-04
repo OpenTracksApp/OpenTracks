@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.io.sendtogoogle;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
@@ -237,7 +238,7 @@ public class UploadServiceChooserActivity extends Activity {
     sendRequest.setSendFusionTables(sendFusionTables());
     sendRequest.setSendDocs(sendDocs());
     sendRequest.setNewMap(!existingMapRadioButton.isChecked());
-    Intent intent = new Intent(this, AccountChooserActivity.class)
+    Intent intent = IntentUtils.newIntent(this, AccountChooserActivity.class)
         .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
     startActivity(intent);
     finish();

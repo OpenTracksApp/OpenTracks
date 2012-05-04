@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.io.gdata.docs.DocumentsClient;
 import com.google.android.apps.mytracks.io.gdata.docs.SpreadsheetsClient;
 import com.google.android.apps.mytracks.io.gdata.docs.SpreadsheetsClient.WorksheetEntry;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.ResourceUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
@@ -33,7 +34,6 @@ import com.google.wireless.gdata.parser.ParseException;
 import com.google.wireless.gdata2.client.AuthenticationException;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -270,10 +270,7 @@ public class SendDocsUtils {
       Track track, String spreadsheetId, String worksheetId, String authToken, Context context)
       throws IOException {
     String worksheetUri = String.format(GET_WORKSHEET_URI, spreadsheetId, worksheetId);
-    SharedPreferences prefs = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    boolean metricUnits = prefs.getBoolean(context.getString(R.string.metric_units_key), true);
-
+    boolean metricUnits = PreferencesUtils.isMetricUnits(context);
     addRow(worksheetUri, getRowContent(track, metricUnits, context), authToken);
   }
 

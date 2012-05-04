@@ -43,8 +43,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +58,8 @@ import java.util.EnumSet;
 public class MapFragment extends Fragment
     implements View.OnTouchListener, View.OnClickListener, TrackDataListener {
 
+  public static final String MAP_FRAGMENT_TAG = "mapFragment";
+  
   private static final String KEY_CURRENT_LOCATION = "currentLocation";
   private static final String KEY_KEEP_MY_LOCATION_VISIBLE = "keepMyLocationVisible";
 
@@ -85,11 +86,9 @@ public class MapFragment extends Fragment
   // UI elements
   private View mapViewContainer;
   private MapOverlay mapOverlay;
-  private RelativeLayout screen;
   private MapView mapView;
-  private LinearLayout messagePane;
-  private TextView messageText;
-  private LinearLayout busyPane;
+  private ImageButton myLocationImageButton;
+  private TextView messageTextView;
 
   @Override
   public View onCreateView(
@@ -98,15 +97,19 @@ public class MapFragment extends Fragment
 
     mapOverlay = new MapOverlay(getActivity());
     
-    screen = (RelativeLayout) mapViewContainer.findViewById(R.id.screen);
-    mapView = (MapView) mapViewContainer.findViewById(R.id.map);
+    mapView = (MapView) mapViewContainer.findViewById(R.id.map_view);
     mapView.requestFocus();
     mapView.setOnTouchListener(this);
     mapView.setBuiltInZoomControls(true);
     mapView.getOverlays().add(mapOverlay);
-    messagePane = (LinearLayout) mapViewContainer.findViewById(R.id.messagepane);
-    messageText = (TextView) mapViewContainer.findViewById(R.id.messagetext);
-    busyPane = (LinearLayout) mapViewContainer.findViewById(R.id.busypane);
+    myLocationImageButton = (ImageButton) mapViewContainer.findViewById(R.id.map_my_location);
+    myLocationImageButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        showMyLocation();       
+      }
+    });
+    messageTextView = (TextView) mapViewContainer.findViewById(R.id.map_message);
 
     return mapViewContainer;
   }
@@ -156,7 +159,7 @@ public class MapFragment extends Fragment
   /**
    * Shows my location.
    */
-  public void showMyLocation() {
+  private void showMyLocation() {
     updateTrackDataHub();
     keepMyLocationVisible = true;
     zoomToMyLocation = true;
@@ -238,8 +241,9 @@ public class MapFragment extends Fragment
 
   @Override
   public void onClick(View v) {
-    if (v == messagePane) {
-      startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+    if (v == messageTextView) {
+      Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+      startActivity(intent);
     }
   }
 
@@ -269,21 +273,20 @@ public class MapFragment extends Fragment
       @Override
       public void run() {
         if (messageId != -1) {
-          messageText.setText(messageId);
-          messagePane.setVisibility(View.VISIBLE);
+          messageTextView.setText(messageId);
+          messageTextView.setVisibility(View.VISIBLE);
 
           if (isGpsDisabled) {
             Toast.makeText(getActivity(), R.string.gps_not_found, Toast.LENGTH_LONG).show();
 
             // Click to show the location source settings
-            messagePane.setOnClickListener(MapFragment.this);
+            messageTextView.setOnClickListener(MapFragment.this);
           } else {
-            messagePane.setOnClickListener(null);
+            messageTextView.setOnClickListener(null);
           }
         } else {
-          messagePane.setVisibility(View.GONE);
+          messageTextView.setVisibility(View.GONE);
         }
-        screen.requestLayout();
       }
     });
   }
@@ -309,9 +312,7 @@ public class MapFragment extends Fragment
         boolean hasTrack = track != null;
         mapOverlay.setTrackDrawingEnabled(hasTrack);
   
-        if (hasTrack) {
-          busyPane.setVisibility(View.VISIBLE);
-  
+        if (hasTrack) { 
           synchronized (this) {
             /*
              * Synchronize to prevent race condition in changing markerTrackId
@@ -321,7 +322,6 @@ public class MapFragment extends Fragment
             updateMap(track);
           }
           mapOverlay.setShowEndMarker(!isRecording);
-          busyPane.setVisibility(View.GONE);
         }
         mapView.invalidate();
       }

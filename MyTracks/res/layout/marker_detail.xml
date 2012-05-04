@@ -15,8 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_height="fill_parent"
-  android:layout_width="fill_parent" >
+  style="@style/ScrollView" >
   <LinearLayout
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
@@ -24,139 +23,27 @@ limitations under the License.
     android:padding="8dp" >
     <TextView
       android:id="@+id/marker_detail_name"
-      style="@style/MarkerDetailLabel" />
+      style="@style/TextLarge" />
     <LinearLayout
       android:id="@+id/marker_detail_waypoint_section"
       android:layout_height="wrap_content"
       android:layout_width="fill_parent"
       android:orientation="vertical" >
       <TextView
-        android:id="@+id/marker_detail_marker_type"
-        style="@style/MarkerDetailLabel" />
+        android:id="@+id/marker_detail_waypoint_marker_type"
+        style="@style/TextLarge" />
       <TextView
-        android:id="@+id/marker_detail_description"
-        style="@style/MarkerDetailLabel" />
+        android:id="@+id/marker_detail_waypoint_description"
+        style="@style/TextLarge" />
     </LinearLayout>
     <TableLayout
       android:id="@+id/marker_detail_statistics_section"
       android:layout_height="wrap_content"
       android:layout_width="fill_parent"
+      android:paddingTop="8dp"
       android:shrinkColumns="0,2"
       android:stretchColumns="0,2" >
-      <!-- Total distance and max speed (fastest pace) -->
-      <TableRow>
-        <TextView
-          android:text="@string/stat_total_distance"
-          style="@style/MarkerDetailStatisticsLabel" />
-        <TextView
-          android:id="@+id/marker_detail_max_speed_label"
-          android:layout_column="2"
-          style="@style/MarkerDetailStatisticsLabel" />
-      </TableRow>
-      <TableRow>
-        <TextView
-          android:id="@+id/marker_detail_total_distance_value"
-          style="@style/MarkerDetailStatisticsValue" />
-        <TextView style="@style/MarkerDetailStatisticsSpacer" />
-        <TextView
-          android:id="@+id/marker_detail_max_speed_value"
-          style="@style/MarkerDetailStatisticsValue" />
-      </TableRow>
-      <!-- Total time and average speed (average pace) -->
-      <TableRow>
-        <TextView
-          android:text="@string/stat_total_time"
-          style="@style/MarkerDetailStatisticsLabel" />
-        <TextView
-          android:id="@+id/marker_detail_average_speed_label"
-          android:layout_column="2"
-          style="@style/MarkerDetailStatisticsLabel" />
-      </TableRow>
-      <TableRow>
-        <TextView
-          android:id="@+id/marker_detail_total_time_value"
-          style="@style/MarkerDetailStatisticsValue" />
-        <TextView style="@style/MarkerDetailStatisticsSpacer" />
-        <TextView
-          android:id="@+id/marker_detail_average_speed_value"
-          style="@style/MarkerDetailStatisticsValue" />
-      </TableRow>
-      <!-- Moving time and average moving speed (average moving pace) -->
-      <TableRow>
-        <TextView
-          android:text="@string/stat_moving_time"
-          style="@style/MarkerDetailStatisticsLabel" />
-        <TextView
-          android:id="@+id/marker_detail_average_moving_speed_label"
-          android:layout_column="2"
-          style="@style/MarkerDetailStatisticsLabel" />
-      </TableRow>
-      <TableRow>
-        <TextView
-          android:id="@+id/marker_detail_moving_time_value"
-          style="@style/MarkerDetailStatisticsValue" />
-        <TextView style="@style/MarkerDetailStatisticsSpacer" />
-        <TextView
-          android:id="@+id/marker_detail_average_moving_speed_value"
-          style="@style/MarkerDetailStatisticsValue" />
-      </TableRow>
-      <!-- Elevation and elevation gain -->
-      <TableRow>
-        <TextView
-          android:text="@string/stat_elevation"
-          style="@style/MarkerDetailStatisticsLabel" />
-        <TextView
-          android:layout_column="2"
-          android:text="@string/stat_elevation_gain"
-          style="@style/MarkerDetailStatisticsLabel" />
-      </TableRow>
-      <TableRow>
-        <TextView
-          android:id="@+id/marker_detail_elevation_value"
-          style="@style/MarkerDetailStatisticsValue" />
-        <TextView style="@style/MarkerDetailStatisticsSpacer" />
-        <TextView
-          android:id="@+id/marker_detail_elevation_gain_value"
-          style="@style/MarkerDetailStatisticsValue" />
-      </TableRow>
-      <!-- Min and max elevation -->
-      <TableRow>
-        <TextView
-          android:text="@string/stat_min_elevation"
-          style="@style/MarkerDetailStatisticsLabel" />
-        <TextView
-          android:layout_column="2"
-          android:text="@string/stat_max_elevation"
-          style="@style/MarkerDetailStatisticsLabel" />
-      </TableRow>
-      <TableRow>
-        <TextView
-          android:id="@+id/marker_detail_min_elevation_value"
-          style="@style/MarkerDetailStatisticsValue" />
-        <TextView style="@style/MarkerDetailStatisticsSpacer" />
-        <TextView
-          android:id="@+id/marker_detail_max_elevation_value"
-          style="@style/MarkerDetailStatisticsValue" />
-      </TableRow>
-      <!-- Min and max grade -->
-      <TableRow>
-        <TextView
-          android:text="@string/stat_min_grade"
-          style="@style/MarkerDetailStatisticsLabel" />
-        <TextView
-          android:layout_column="2"
-          android:text="@string/stat_max_grade"
-          style="@style/MarkerDetailStatisticsLabel" />
-      </TableRow>
-      <TableRow>
-        <TextView
-          android:id="@+id/marker_detail_min_grade_value"
-          style="@style/MarkerDetailStatisticsValue" />
-        <TextView style="@style/MarkerDetailStatisticsSpacer" />
-        <TextView
-          android:id="@+id/marker_detail_max_grade_value"
-          style="@style/MarkerDetailStatisticsValue" />
-      </TableRow>
+      <include layout="@layout/stats_core" />
     </TableLayout>
   </LinearLayout>
 </ScrollView>

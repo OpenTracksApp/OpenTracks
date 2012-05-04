@@ -15,13 +15,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-  <!-- Keys for application preferences. Sorted alphabetically. - DO NOT TRANSLATE -->
+
+  <!-- Keys for persisted preferences. Sorted alphabetically. - DO NOT TRANSLATE -->
   <string name="allow_access_key">allowAccess</string>
   <string name="announcement_frequency_key">announcementFrequency</string>
   <string name="ant_cadence_sensor_id_key">antCadenceSensorId</string>
   <string name="ant_cadence_speed_sensor_id_key">antCadenceSpeedSensorId</string>
   <string name="ant_heart_rate_sensor_id_key">antHeartRateSensorId</string>
   <string name="ant_srm_bridge_sensor_id_key">antSRMBridgeSensorId</string>
+  <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>
   <string name="auto_resume_track_timeout_key">autoResumeTrackTimeout</string>
   <string name="bluetooth_pairing_key">bluetoothPairing</string>
   <string name="bluetooth_sensor_key">bluetoothSensor</string>
@@ -33,30 +35,30 @@ limitations under the License.
   <string name="min_recording_interval_key">minRecordingInterval</string>
   <string name="min_required_accuracy_key">minRequiredAccuracy</string>
   <string name="pick_existing_map_key">pickExistingMap</string>
+  <string name="pick_statistics_marker_key">pickStatisticsMarker</string>
   <string name="preferred_account_key">preferredAccount</string>
+  <string name="recording_track_id_key">recordingTrackId</string>
   <string name="report_speed_key">reportSpeed</string>
+  <string name="selected_track_id_key">selectedTrackId</string>
   <string name="send_to_docs_key">sendToDocs</string>
   <string name="send_to_fusion_tables_key">sendToFusionTables</string>
   <string name="send_to_maps_key">sendToMaps</string>
   <string name="sensor_type_key">sensorType</string>
   <string name="share_url_only_key">shareUrlOnly</string>
+  <string name="show_check_units_dialog_key">showCheckUnitsDialog</string>
+  <string name="show_welcome_dialog_key">showWelcomeDialog</string>
   <string name="split_frequency_key">splitFrequency</string>
-  <string name="track_color_mode_dynamic_speed_variation_key">trackColorModeDynamicVariation
-          </string>
-  <string name="track_color_mode_fixed_speed_medium_display_key">trackColorModeFixedMediumDisplay
-          </string>
+  <string name="stats_show_coordinate_key">statsShowCoordinate</string>
+  <string name="stats_show_elevation_key">statsShowElevation</string>
+  <string name="stats_show_grade_key">statsShowGrade</string>
+  <string name="stats_show_total_time_key">statsShowTotalTime</string>    
+  <string name="track_color_mode_dynamic_speed_variation_key">trackColorModeDynamicVariation</string>
+  <string name="track_color_mode_fixed_speed_medium_display_key">trackColorModeFixedMediumDisplay</string>
   <string name="track_color_mode_fixed_speed_medium_key">trackColorModeFixedMedium</string>
-  <string name="track_color_mode_fixed_speed_slow_display_key">trackColorModeFixedSlowDisplay
-          </string>
+  <string name="track_color_mode_fixed_speed_slow_display_key">trackColorModeFixedSlowDisplay</string>
   <string name="track_color_mode_fixed_speed_slow_key">trackColorModeFixedSlow</string>
   <string name="track_color_mode_key">trackColorMode</string>
   <string name="track_name_key">trackName</string>
-
-  <!-- Preference keys which keep transient state (not user preferences). Sorted alphabetically.
-       - DO NOT TRANSLATE -->
-  <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>
-  <string name="recording_track_id_key">recordingTrackId</string>
-  <string name="selected_track_id_key">selectedTrackId</string>
 
   <!-- Keys for non-persisted preferences. Sorted alphabetically. - DO NOT TRANSLATE -->
   <string name="ant_options_key">antOptions</string>

@@ -38,6 +38,7 @@ import com.google.android.apps.mytracks.services.tasks.SplitTask;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
@@ -485,13 +486,11 @@ public class TrackRecordingService extends Service {
   private void showNotification() {
     if (isRecording) {
       Notification notification = new Notification(
-          R.drawable.arrow_320, null /* tickerText */,
-          System.currentTimeMillis());
-      Intent intent = new Intent(this, TrackDetailActivity.class)
-          .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+          R.drawable.my_tracks_notification_icon, null, System.currentTimeMillis());
+      Intent intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
           .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, recordingTrackId);
       PendingIntent contentIntent = PendingIntent.getActivity(
-          this, 0 /* requestCode */, intent, 0 /* flags */);
+          this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
       notification.setLatestEventInfo(this, getString(R.string.my_tracks_app_name),
           getString(R.string.track_record_notification), contentIntent);
       notification.flags += Notification.FLAG_NO_CLEAR;
@@ -934,15 +933,15 @@ public class TrackRecordingService extends Service {
           "Unable to insert waypoint marker while not recording!");
     }
     if (request == null) {
-      request = WaypointCreationRequest.DEFAULT_MARKER;
+      request = WaypointCreationRequest.DEFAULT_WAYPOINT;
     }
     Waypoint wpt = new Waypoint();
     switch (request.getType()) {
-      case MARKER:
-        buildMarker(wpt, request);
+      case WAYPOINT:
+        buildWaypointMarker(wpt, request);
         break;
       case STATISTICS:
-        buildStatisticsMarker(wpt);
+        buildStatisticsMarker(wpt, request);
         break;
     }
     wpt.setTrackId(recordingTrackId);
@@ -964,18 +963,22 @@ public class TrackRecordingService extends Service {
     return Long.parseLong(uri.getLastPathSegment());
   }
 
-  private void buildMarker(Waypoint wpt, WaypointCreationRequest request) {
+  private void buildWaypointMarker(Waypoint wpt, WaypointCreationRequest request) {
     wpt.setType(Waypoint.TYPE_WAYPOINT);
     if (request.getIconUrl() == null) {
       wpt.setIcon(getString(R.string.marker_waypoint_icon_url));
     } else {
       wpt.setIcon(request.getIconUrl());
     }
-    if (request.getName() == null) {
-      wpt.setName(getString(R.string.marker_edit_type_waypoint));
+    String name;
+    if (request.getName() != null) {
+      name = request.getName();
     } else {
-      wpt.setName(request.getName());
+      int nextMarkerNumber = providerUtils.getNextMarkerNumber(recordingTrackId, false);
+      name = nextMarkerNumber == -1 ? getString(R.string.marker_type_waypoint)
+          : getString(R.string.marker_waypoint_name_format, nextMarkerNumber);
     }
+    wpt.setName(name);
     if (request.getCategory() != null) {
       wpt.setCategory(request.getCategory());
     }
@@ -988,9 +991,10 @@ public class TrackRecordingService extends Service {
    * Build a statistics marker.
    * A statistics marker holds the stats for the* last segment up to this marker.
    *
-   * @param waypoint The waypoint which will be populated with stats data.
+   * @param waypoint The waypoint which will be populated with stats data
+   * @param request The waypoint creation request
    */
-  private void buildStatisticsMarker(Waypoint waypoint) {
+  private void buildStatisticsMarker(Waypoint waypoint, WaypointCreationRequest request) {
     DescriptionGenerator descriptionGenerator = new DescriptionGeneratorImpl(this);
 
     // Set stop and total time in the stats data
@@ -1003,7 +1007,15 @@ public class TrackRecordingService extends Service {
 
     // Set the rest of the waypoint data
     waypoint.setType(Waypoint.TYPE_STATISTICS);
-    waypoint.setName(getString(R.string.marker_edit_type_statistics));
+    String name;
+    if (request.getName() != null) {
+      name = request.getName();
+    } else {
+      int nextMarkerNumber = providerUtils.getNextMarkerNumber(recordingTrackId, true);
+      name = nextMarkerNumber == -1 ? getString(R.string.marker_type_statistics)
+          : getString(R.string.marker_statistics_name_format, nextMarkerNumber);
+    }
+    waypoint.setName(name);
     waypoint.setStatistics(waypointStatsBuilder.getStatistics());
     waypoint.setDescription(descriptionGenerator.generateWaypointDescription(waypoint));
     waypoint.setIcon(getString(R.string.marker_statistics_icon_url));

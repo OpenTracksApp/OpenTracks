@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.io.backup;
 
 import com.google.android.apps.mytracks.util.FileUtils;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -76,8 +77,9 @@ public class RestoreChooserActivity extends Activity {
     }
 
     if (backupDates.length == 1) {
-      startActivity(new Intent(this, RestoreActivity.class)
-          .putExtra(RestoreActivity.EXTRA_DATE, backupDates[0].getTime()));
+      Intent intent = IntentUtils.newIntent(this, RestoreActivity.class)
+          .putExtra(RestoreActivity.EXTRA_DATE, backupDates[0].getTime());
+      startActivity(intent);
       finish();
       return;
     }
@@ -100,8 +102,10 @@ public class RestoreChooserActivity extends Activity {
         .setItems(items, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
-            startActivity(new Intent(RestoreChooserActivity.this, RestoreActivity.class).putExtra(
-                RestoreActivity.EXTRA_DATE, backupDates[which].getTime()));
+            Intent intent = IntentUtils.newIntent(
+                RestoreChooserActivity.this, RestoreActivity.class)
+                .putExtra(RestoreActivity.EXTRA_DATE, backupDates[which].getTime());
+            startActivity(intent);
             finish();
           }
         })

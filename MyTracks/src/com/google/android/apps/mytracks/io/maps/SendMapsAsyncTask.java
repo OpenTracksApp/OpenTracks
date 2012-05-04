@@ -31,6 +31,7 @@ import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.LocationUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.common.gdata.AndroidXmlParserFactory;
 import com.google.android.maps.mytracks.R;
@@ -257,9 +258,7 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
   boolean uploadAllTrackPoints(Track track) {
     Cursor locationsCursor = null;
     try {
-      SharedPreferences prefs = context.getSharedPreferences(
-          Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-      boolean metricUnits = prefs.getBoolean(context.getString(R.string.metric_units_key), true);
+      boolean metricUnits = PreferencesUtils.isMetricUnits(context);
 
       locationsCursor = myTracksProviderUtils.getLocationsCursor(trackId, 0, -1, false);
       if (locationsCursor == null) {

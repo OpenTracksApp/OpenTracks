@@ -33,11 +33,13 @@ import android.content.SharedPreferences.Editor;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * API level 7 specific implementation of the {@link ApiAdapter}.
@@ -131,7 +133,14 @@ public class Api7Adapter implements ApiAdapter {
     activity.onSearchRequested();
     return true;
   }
-  
+
+  @Override
+  public <T> void addAllToArrayAdapter(ArrayAdapter<T> arrayAdapter, List<T> items) {
+    for (T item : items) {
+      arrayAdapter.add(item);
+    }
+  }
+
   @Override
   public boolean handleSearchKey(MenuItem menuItem) {
     // Return false and allow the framework to handle the search key.

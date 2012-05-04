@@ -39,7 +39,8 @@ public class MyTracksApplication extends Application {
       ApiAdapterFactory.getApiAdapter().enableStrictMode();
     }
     AnalyticsUtils.sendPageViews(this, "/appstart");
-    startService(new Intent(this, RemoveTempFilesService.class));
+    Intent intent = new Intent(this, RemoveTempFilesService.class);
+    startService(intent);
   }
 
   /**

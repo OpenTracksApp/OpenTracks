@@ -491,11 +491,9 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     assertEquals(1, service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS));
     assertEquals(2, service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS));
 
-    Waypoint wpt = providerUtils.getWaypoint(1);
-    assertEquals(getContext().getString(R.string.marker_statistics_icon_url),
-        wpt.getIcon());
-    assertEquals(getContext().getString(R.string.marker_edit_type_statistics),
-        wpt.getName());
+    Waypoint wpt = providerUtils.getWaypoint(2);
+    assertEquals(getContext().getString(R.string.marker_statistics_icon_url), wpt.getIcon());
+    assertEquals(getContext().getString(R.string.marker_statistics_name_format, 1), wpt.getName());
     assertEquals(Waypoint.TYPE_STATISTICS, wpt.getType());
     assertEquals(123L, wpt.getTrackId());
     assertEquals(0.0, wpt.getLength());
@@ -512,7 +510,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     assertFalse(service.isRecording());
 
     try {
-      service.insertWaypoint(WaypointCreationRequest.DEFAULT_MARKER);
+      service.insertWaypoint(WaypointCreationRequest.DEFAULT_WAYPOINT);
       fail("Expecting IllegalStateException");
     } catch (IllegalStateException e) {
       // Expected.
@@ -526,12 +524,11 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertTrue(service.isRecording());
 
-    assertEquals(1, service.insertWaypoint(WaypointCreationRequest.DEFAULT_MARKER));
+    assertEquals(1, service.insertWaypoint(WaypointCreationRequest.DEFAULT_WAYPOINT));
     Waypoint wpt = providerUtils.getWaypoint(1);
     assertEquals(getContext().getString(R.string.marker_waypoint_icon_url),
         wpt.getIcon());
-    assertEquals(getContext().getString(R.string.marker_edit_type_waypoint),
-        wpt.getName());
+    assertEquals(getContext().getString(R.string.marker_waypoint_name_format, 1), wpt.getName());
     assertEquals(Waypoint.TYPE_WAYPOINT, wpt.getType());
     assertEquals(123L, wpt.getTrackId());
     assertEquals(0.0, wpt.getLength());
@@ -727,7 +724,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
       if (i % 10 == 0) {
         service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
       } else if (i % 7 == 0) {
-        service.insertWaypoint(WaypointCreationRequest.DEFAULT_MARKER);
+        service.insertWaypoint(WaypointCreationRequest.DEFAULT_WAYPOINT);
       }
     }
 

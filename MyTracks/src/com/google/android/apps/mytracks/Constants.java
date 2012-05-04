@@ -33,14 +33,6 @@ public abstract class Constants {
    */
   public static final String SDCARD_TOP_DIR = "MyTracks";
 
-  /*
-   * Main screen tab tags:
-   */
-
-  public static final String MAP_TAB_TAG = "map";
-  public static final String STATS_TAB_TAG = "stats";
-  public static final String CHART_TAB_TAG = "chart";
-
   /**
    * The number of distance readings to smooth to get a stable signal.
    */

@@ -20,6 +20,7 @@ import com.google.android.apps.mytracks.MarkerListActivity;
 import com.google.android.apps.mytracks.content.DescriptionGeneratorImpl;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.util.DialogUtils;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Dialog;
@@ -37,10 +38,12 @@ public class DeleteOneMarkerDialogFragment extends DialogFragment {
 
   public static final String DELETE_ONE_MARKER_DIALOG_TAG = "deleteOneMarkerDialog";
   private static final String KEY_MARKER_ID = "markerId";
+  private static final String KEY_TRACK_ID = "trackId";
 
-  public static DeleteOneMarkerDialogFragment newInstance(long markerId) {
+  public static DeleteOneMarkerDialogFragment newInstance(long markerId, long trackId) {
     Bundle bundle = new Bundle();
     bundle.putLong(KEY_MARKER_ID, markerId);
+    bundle.putLong(KEY_TRACK_ID, trackId);
 
     DeleteOneMarkerDialogFragment deleteOneMarkerDialogFragment = new DeleteOneMarkerDialogFragment();
     deleteOneMarkerDialogFragment.setArguments(bundle);
@@ -55,8 +58,11 @@ public class DeleteOneMarkerDialogFragment extends DialogFragment {
           public void onClick(DialogInterface dialog, int which) {
             MyTracksProviderUtils.Factory.get(getActivity()).deleteWaypoint(
                 getArguments().getLong(KEY_MARKER_ID), new DescriptionGeneratorImpl(getActivity()));
-            startActivity(new Intent(getActivity(), MarkerListActivity.class).addFlags(
-                Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+            Intent intent = IntentUtils.newIntent(getActivity(), MarkerListActivity.class)
+                .putExtra(MarkerListActivity.EXTRA_TRACK_ID, getArguments().getLong(KEY_TRACK_ID));
+            startActivity(intent);
+            // Close the activity since its content can change after delete.
+            getActivity().finish();
           }
         });
   }

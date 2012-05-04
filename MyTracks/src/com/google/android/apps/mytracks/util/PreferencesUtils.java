@@ -33,6 +33,34 @@ public class PreferencesUtils {
   private PreferencesUtils() {}
 
   /**
+   * Gets the metric units key.
+   *
+   * @param context the context
+   */
+  public static String getMetricUnitsKey(Context context) {
+    return getKey(context, R.string.metric_units_key);
+  }
+
+  /**
+   * Returns the metric units value.
+   *
+   * @param context the context
+   */
+  public static boolean isMetricUnits(Context context) {
+    return getBoolean(context, R.string.metric_units_key, true);
+  }
+
+  /**
+   * Sets the metric units value.
+   *
+   * @param context the context
+   * @param value the value
+   */
+  public static void setMetricUnits(Context context, boolean value) {
+    setBoolean(context, R.string.metric_units_key, value);
+  }
+
+  /**
    * Gets the recording track id key.
    * 
    * @param context the context
@@ -60,6 +88,34 @@ public class PreferencesUtils {
     setLong(context, R.string.recording_track_id_key, trackId);
   }
 
+  /**
+   * Gets the report speed key.
+   *
+   * @param context the context
+   */
+  public static String getReportSpeedKey(Context context) {
+    return getKey(context, R.string.report_speed_key);
+  }
+
+  /**
+   * Returns the report speed value.
+   *
+   * @param context the context
+   */
+  public static boolean isReportSpeed(Context context) {
+    return getBoolean(context, R.string.report_speed_key, true);
+  }
+
+  /**
+   * Sets the report speed value.
+   *
+   * @param context the context
+   * @param value the value
+   */
+  public static void setReportSpeed(Context context, boolean value) {
+    setBoolean(context, R.string.report_speed_key, value);
+  }
+  
   /**
    * Gets the selected track id key.
    * 
@@ -89,6 +145,42 @@ public class PreferencesUtils {
   }
 
   /**
+   * Returns the show check units dialog value.
+   *
+   * @param context the context
+   */
+  public static boolean isShowCheckUnitsDialog(Context context) {
+    return getBoolean(context, R.string.show_check_units_dialog_key, true);
+  }
+
+  /**
+   * Sets the show check units dialog value to false.
+   *
+   * @param context the context
+   */
+  public static void setShowCheckUnitsDialog(Context context) {
+    setBoolean(context, R.string.show_check_units_dialog_key, false);
+  }
+
+  /**
+   * Returns the show welcomes dialog value.
+   *
+   * @param context the context
+   */
+  public static boolean isShowWelcomeDialog(Context context) {
+    return getBoolean(context, R.string.show_welcome_dialog_key, true);
+  }
+
+  /**
+   * Sets the show welcome dialog value to false.
+   *
+   * @param context the context
+   */
+  public static void setShowWelcome(Context context) {
+    setBoolean(context, R.string.show_welcome_dialog_key, false);
+  }
+  
+  /**
    * Gets a preference key
    * 
    * @param context the context
@@ -98,6 +190,34 @@ public class PreferencesUtils {
     return context.getString(keyId);
   }
 
+  /**
+   * Gets a boolean preference value.
+   * 
+   * @param context the context
+   * @param keyId the key id
+   * @param defaultValue the default value
+   */
+  public static boolean getBoolean(Context context, int keyId, boolean defaultValue) {
+    SharedPreferences sharedPreferences = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    return sharedPreferences.getBoolean(getKey(context, keyId), defaultValue);
+  }
+  
+  /**
+   * Sets a boolean preference value.
+   * 
+   * @param context the context
+   * @param keyId the key id
+   * @param value the value
+   */
+  public static void setBoolean(Context context, int keyId, boolean value) {
+    SharedPreferences sharedPreferences = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    Editor editor = sharedPreferences.edit();
+    editor.putBoolean(getKey(context, keyId), value);
+    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
+  }
+  
   /**
    * Gets a long preference value.
    * 

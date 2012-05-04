@@ -157,19 +157,6 @@ public class StringUtils {
       }
     }
   }
-  
-  /**
-   * Formats the elapsed time and distance.
-   *
-   * @param context the context
-   * @param elapsedTime the elapsed time in milliseconds
-   * @param distance the distance in meters
-   * @param metric true to use metric. False to use imperial
-   */
-  public static String formatTimeDistance(
-      Context context, long elapsedTime, double distance, boolean metric) {
-    return formatElapsedTime(elapsedTime) + " " + formatDistance(context, distance, metric);
-  }
 
   /**
    * Formats the given text as a XML CDATA element. This includes adding the

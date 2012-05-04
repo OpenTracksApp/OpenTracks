@@ -17,14 +17,14 @@
 package com.google.android.apps.mytracks.fragments;
 
 import com.google.android.apps.mytracks.MyTracksApplication;
-import com.google.android.apps.mytracks.StatsUtilities;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Waypoint;
+import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
-import com.google.android.apps.mytracks.util.UnitConversions;
+import com.google.android.apps.mytracks.util.StatsUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.location.Location;
@@ -34,7 +34,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
 
 import java.util.EnumSet;
 
@@ -46,20 +45,24 @@ import java.util.EnumSet;
  */
 public class StatsFragment extends Fragment implements TrackDataListener {
 
+  public static final String STATS_FRAGMENT_TAG = "statsFragment";
+  
   private static final String TAG = StatsFragment.class.getSimpleName();
 
-  private StatsUtilities statsUtilities;
   private TrackDataHub trackDataHub;
   private UiUpdateThread uiUpdateThread;
 
   // The start time of the current track.
   private long startTime = -1L;
 
+  private Location lastLocation = null;
+  private TripStatistics lastTripStatistics = null;
+  
   // A runnable to update the total time field.
   private final Runnable updateTotalTime = new Runnable() {
     public void run() {
       if (isRecording()) {
-        statsUtilities.setTime(R.id.total_time_register, System.currentTimeMillis() - startTime);
+        StatsUtils.setTotalTimeValue(getActivity(), System.currentTimeMillis() - startTime);
       }
     }
   };
@@ -68,7 +71,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
    * A thread that updates the total time field every second.
    */
   private class UiUpdateThread extends Thread {
-
     @Override
     public void run() {
       Log.d(TAG, "UI update thread started");
@@ -86,12 +88,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   }
 
   @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    statsUtilities = new StatsUtilities(getActivity());
-  }
-
-  @Override
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     return inflater.inflate(R.layout.stats, container, false);
@@ -100,10 +96,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   @Override
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-    ScrollView scrollView = (ScrollView) getActivity().findViewById(R.id.scrolly);
-    scrollView.setScrollBarStyle(ScrollView.SCROLLBARS_OUTSIDE_INSET);
-    updateLabels();
-    setLocationUnknown();
+    updateUi();
   }
 
   @Override
@@ -128,7 +121,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
       getActivity().runOnUiThread(new Runnable() {
         @Override
         public void run() {
-          setLocationUnknown();
+          lastLocation = null;
+          StatsUtils.setLocationValues(getActivity(), lastLocation, true);
         }
       });
     }
@@ -140,11 +134,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
       getActivity().runOnUiThread(new Runnable() {
         @Override
         public void run() {
-          if (location != null) {
-            setLocation(location);
-          } else {
-            setLocationUnknown();
-          }
+          lastLocation = location;
+          StatsUtils.setLocationValues(getActivity(), lastLocation, true);
         }
       });
     }
@@ -172,16 +163,18 @@ public class StatsFragment extends Fragment implements TrackDataListener {
       @Override
       public void run() {
         if (track == null || track.getStatistics() == null) {
-          statsUtilities.setAllToUnknown();
+          lastLocation = null;
+          lastTripStatistics = null;
+          updateUi();
           return;
         }
-
+        lastTripStatistics = track.getStatistics();
+        
         startTime = track.getStatistics().getStartTime();
         if (!isRecording()) {
-          statsUtilities.setTime(R.id.total_time_register, track.getStatistics().getTotalTime());
-          setLocationUnknown();
+          lastLocation = null;
         }
-        statsUtilities.setAllStats(track.getStatistics());
+        updateUi();
       }
     });
   }
@@ -227,30 +220,22 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   }
 
   @Override
-  public boolean onUnitsChanged(boolean metric) {
-    if (statsUtilities.isMetricUnits() == metric) {
-      return false;
-    }
-    statsUtilities.setMetricUnits(metric);
+  public boolean onUnitsChanged(final boolean metric) {
     getActivity().runOnUiThread(new Runnable() {
       @Override
       public void run() {
-        updateLabels();
+        updateUi();
       }
     });
     return true;
   }
 
   @Override
-  public boolean onReportSpeedChanged(boolean speed) {
-    if (statsUtilities.isReportSpeed() == speed) {
-      return false;
-    }
-    statsUtilities.setReportSpeed(speed);
+  public boolean onReportSpeedChanged(final boolean speed) {
     getActivity().runOnUiThread(new Runnable() {
       @Override
       public void run() {
-        updateLabels();
+        updateUi();
       }
     });
     return true;
@@ -285,35 +270,9 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   private synchronized boolean isRecording() {
     return trackDataHub != null && trackDataHub.isRecordingSelected();
   }
-
-  /**
-   * Updates the labels.
-   */
-  private void updateLabels() {
-    statsUtilities.updateUnits();
-    statsUtilities.setSpeedLabel(R.id.speed_label, R.string.stat_speed, R.string.stat_pace);
-    statsUtilities.setSpeedLabels();
-  }
-
-  /**
-   * Sets the current location.
-   *
-   * @param location the current location
-   */
-  private void setLocation(Location location) {
-    statsUtilities.setAltitude(R.id.elevation_register, location.getAltitude());
-    statsUtilities.setLatLong(R.id.latitude_register, location.getLatitude());
-    statsUtilities.setLatLong(R.id.longitude_register, location.getLongitude());
-    statsUtilities.setSpeed(R.id.speed_register, location.getSpeed() * UnitConversions.MS_TO_KMH);
-  }
-
-  /**
-   * Sets the current location to unknown.
-   */
-  private void setLocationUnknown() {
-    statsUtilities.setUnknown(R.id.elevation_register);
-    statsUtilities.setUnknown(R.id.latitude_register);
-    statsUtilities.setUnknown(R.id.longitude_register);
-    statsUtilities.setUnknown(R.id.speed_register);
+  
+  public void updateUi() {
+    StatsUtils.setTripStatisticsValues(getActivity(), lastTripStatistics);
+    StatsUtils.setLocationValues(getActivity(), lastLocation, true);
   }
 }
