@@ -15,7 +15,6 @@
  */
 package com.google.android.apps.mytracks.content;
 
-import static com.google.android.apps.mytracks.Constants.DEFAULT_MIN_REQUIRED_ACCURACY;
 import static com.google.android.apps.mytracks.Constants.MAX_DISPLAYED_WAYPOINTS_POINTS;
 import static com.google.android.apps.mytracks.Constants.MAX_LOCATION_AGE_MS;
 import static com.google.android.apps.mytracks.Constants.MAX_NETWORK_AGE_MS;
@@ -57,9 +56,6 @@ import java.util.Set;
  * @author Rodrigo Damazio
  */
 public class TrackDataHub {
-
-  // Preference keys
-  private final String MIN_REQUIRED_ACCURACY_KEY;
 
   // Overridable constants
   private final int targetNumPoints;
@@ -219,8 +215,6 @@ public class TrackDataHub {
     this.targetNumPoints = targetNumPoints;
     this.locationFactory = new DoubleBufferedLocationFactory();
 
-    MIN_REQUIRED_ACCURACY_KEY = context.getString(R.string.min_required_accuracy_key);
-
     resetState();
   }
 
@@ -297,8 +291,8 @@ public class TrackDataHub {
     selectedTrackId = PreferencesUtils.getLong(context, R.string.selected_track_id_key);
     metricUnits = PreferencesUtils.getBoolean(context, R.string.metric_units_key, true);
     reportSpeed = PreferencesUtils.getBoolean(context, R.string.report_speed_key, true);
-    minRequiredAccuracy = preferences.getInt(MIN_REQUIRED_ACCURACY_KEY,
-        DEFAULT_MIN_REQUIRED_ACCURACY);
+    minRequiredAccuracy = PreferencesUtils.getInt(context, R.string.min_required_accuracy_key,
+        PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT);
   }
 
   /** Updates known magnetic declination if needed. */
@@ -605,13 +599,13 @@ public class TrackDataHub {
 
   /**
    * Called when a preference changes.
-   *
+   * 
    * @param key the key to the preference that changed
    */
   private void notifyPreferenceChanged(String key) {
-    if (MIN_REQUIRED_ACCURACY_KEY.equals(key)) {
-      minRequiredAccuracy = preferences.getInt(MIN_REQUIRED_ACCURACY_KEY,
-          DEFAULT_MIN_REQUIRED_ACCURACY);
+    if (PreferencesUtils.getKey(context, R.string.min_required_accuracy_key).equals(key)) {
+      minRequiredAccuracy = PreferencesUtils.getInt(context, R.string.min_required_accuracy_key,
+          PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT);
     } else if (PreferencesUtils.getKey(context, R.string.metric_units_key).equals(key)) {
       metricUnits = PreferencesUtils.getBoolean(context, R.string.metric_units_key, true);
       notifyUnitsChanged();

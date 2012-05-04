@@ -165,7 +165,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     sharedPreferences.edit().clear().apply();
 
     // Disable auto resume by default.
-    updateAutoResumePrefs(0, -1);
+    updateAutoResumePrefs(PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT, 0);
     // No recording track.
     PreferencesUtils.setLong(context, R.string.recording_track_id_key, -1L);
   }
@@ -188,7 +188,8 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     createDummyTrack(123L, System.currentTimeMillis(), true);
 
     // Clear the number of attempts and set the timeout to 10 min.
-    updateAutoResumePrefs(0, 10);
+    updateAutoResumePrefs(PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT,
+        PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
 
     // Start the service in "resume" mode (simulates the on-reboot action).
     Intent startIntent = createStartIntent();
@@ -210,7 +211,8 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
   // TODO: If fixed, remove "disabled" prefix from the test name.
   @MediumTest
   public void disabledTestResumeAfterReboot_simulateReboot() throws Exception {
-    updateAutoResumePrefs(0, 10);
+    updateAutoResumePrefs(PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT,
+        PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertFalse(service.isRecording());
 
@@ -236,7 +238,8 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     createDummyTrack(123L, System.currentTimeMillis(), false);
 
     // Clear the number of attempts and set the timeout to 10 min.
-    updateAutoResumePrefs(0, 10);
+    updateAutoResumePrefs(PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT,
+        PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
 
     // Start the service in "resume" mode (simulates the on-reboot action).
     Intent startIntent = createStartIntent();
@@ -256,7 +259,8 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     createDummyTrack(123L, System.currentTimeMillis() - 20 * 60 * 1000, true);
 
     // Clear the number of attempts and set the timeout to 10 min.
-    updateAutoResumePrefs(0, 10);
+    updateAutoResumePrefs(PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT,
+        PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
 
     // Start the service in "resume" mode (simulates the on-reboot action).
     Intent startIntent = createStartIntent();
@@ -276,8 +280,8 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     createDummyTrack(123L, System.currentTimeMillis(), true);
 
     // Set the number of attempts to max.
-    updateAutoResumePrefs(
-        TrackRecordingService.MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS, 10);
+    updateAutoResumePrefs(TrackRecordingService.MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS,
+        PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT);
 
     // Start the service in "resume" mode (simulates the on-reboot action).
     Intent startIntent = createStartIntent();
@@ -387,7 +391,8 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     Track track = providerUtils.getTrack(id);
     assertNotNull(track);
     assertEquals(id, track.getId());
-    assertEquals(sharedPreferences.getString(context.getString(R.string.default_activity_key), ""),
+    assertEquals(PreferencesUtils.getString(
+        context, R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT),
         track.getCategory());
     assertEquals(id, PreferencesUtils.getLong(context, R.string.recording_track_id_key));
     assertEquals(id, service.getRecordingTrackId());
@@ -537,48 +542,67 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
   }
 
   @MediumTest
-  public void testWithProperties_noAnnouncementFreq() throws Exception {
-    functionalTest(R.string.announcement_frequency_key, (Object) null);
+  public void testWithProperties_announcementFrequencyDefault() throws Exception {
+    PreferencesUtils.setInt(context, R.string.announcement_frequency_key,
+        PreferencesUtils.ANNOUNCEMENT_FREQUENCY_DEFAULT);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_defaultAnnouncementFreq() throws Exception {
-    functionalTest(R.string.announcement_frequency_key, 1);
+  public void testWithProperties_announcementFrequencyByDistance() throws Exception {
+    PreferencesUtils.setInt(context, R.string.announcement_frequency_key, -1);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_noMaxRecordingDist() throws Exception {
-    functionalTest(R.string.max_recording_distance_key, (Object) null);
+  public void testWithProperties_announcementFrequencyByTime() throws Exception {
+    PreferencesUtils.setInt(context, R.string.announcement_frequency_key, 1);
+    fullRecordingSession();
+  }
+  
+  @MediumTest
+  public void testWithProperties_maxRecordingDistanceDefault() throws Exception {
+    PreferencesUtils.setInt(context, R.string.max_recording_distance_key,
+        PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_defaultMaxRecordingDist() throws Exception {
-    functionalTest(R.string.max_recording_distance_key, 5);
+  public void testWithProperties_maxRecordingDistance() throws Exception {
+    PreferencesUtils.setInt(context, R.string.max_recording_distance_key, 50);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_noMinRecordingDist() throws Exception {
-    functionalTest(R.string.min_recording_distance_key, (Object) null);
+  public void testWithProperties_minRecordingDistanceDefault() throws Exception {
+    PreferencesUtils.setInt(context, R.string.min_recording_distance_key,
+        PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_defaultMinRecordingDist() throws Exception {
-    functionalTest(R.string.min_recording_distance_key, 2);
+  public void testWithProperties_minRecordingDistance() throws Exception {
+    PreferencesUtils.setInt(context, R.string.min_recording_distance_key, 2);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_noSplitFreq() throws Exception {
-    functionalTest(R.string.split_frequency_key, (Object) null);
+  public void testWithProperties_splitFrequencyDefault() throws Exception {
+    PreferencesUtils.setInt(context, R.string.split_frequency_key,
+        PreferencesUtils.SPLIT_FREQUENCY_DEFAULT);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_defaultSplitFreqByDist() throws Exception {
-    functionalTest(R.string.split_frequency_key, 5);
+  public void testWithProperties_splitFrequencyByDistance() throws Exception {
+    PreferencesUtils.setInt(context, R.string.split_frequency_key, -1);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_defaultSplitFreqByTime() throws Exception {
-    functionalTest(R.string.split_frequency_key, -2);
+  public void testWithProperties_splitFrequencyByTime() throws Exception {
+    PreferencesUtils.setInt(context, R.string.split_frequency_key, 1);
+    fullRecordingSession();
   }
 
   @MediumTest
@@ -597,24 +621,29 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
   }
 
   @MediumTest
-  public void testWithProperties_noMinRecordingInterval() throws Exception {
-    functionalTest(R.string.min_recording_interval_key, (Object) null);
+  public void testWithProperties_minRecordingIntervalDefault() throws Exception {
+    PreferencesUtils.setInt(context, R.string.min_recording_interval_key,
+        PreferencesUtils.MIN_RECORDING_INTERVAL_DEFAULT);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_defaultMinRecordingInterval()
-      throws Exception {
-    functionalTest(R.string.min_recording_interval_key, 3);
+  public void testWithProperties_minRecordingInterval() throws Exception {
+    PreferencesUtils.setInt(context, R.string.min_recording_interval_key, 2);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_noMinRequiredAccuracy() throws Exception {
-    functionalTest(R.string.min_required_accuracy_key, (Object) null);
+  public void testWithProperties_minRequiredAccuracyDefault() throws Exception {
+    PreferencesUtils.setInt(context, R.string.min_required_accuracy_key,
+        PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT);
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_defaultMinRequiredAccuracy() throws Exception {
-    functionalTest(R.string.min_required_accuracy_key, 500);
+  public void testWithProperties_minRequiredAccuracy() throws Exception {
+    PreferencesUtils.setInt(context, R.string.min_required_accuracy_key, 500);
+    fullRecordingSession();
   }
 
   @MediumTest
@@ -647,12 +676,8 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
   }
 
   private void updateAutoResumePrefs(int attempts, int timeoutMins) {
-    Editor editor = sharedPreferences.edit();
-    editor.putInt(context.getString(
-    R.string.auto_resume_track_current_retry_key), attempts);
-    editor.putInt(context.getString(
-        R.string.auto_resume_track_timeout_key), timeoutMins);
-    editor.apply();
+    PreferencesUtils.setInt(context, R.string.auto_resume_track_current_retry_key, attempts);
+    PreferencesUtils.setInt(context, R.string.auto_resume_track_timeout_key, timeoutMins);
   }
 
   private Intent createStartIntent() {

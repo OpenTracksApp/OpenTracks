@@ -208,6 +208,7 @@ limitations under the License.
     <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.UploadResultActivity" />
     <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.UploadServiceChooserActivity" />
     <activity android:name="com.google.android.apps.mytracks.settings.BackupSettingsActivity" />
+    <activity android:name="com.google.android.apps.mytracks.settings.RecordingSettingsActivity" />
     <activity android:name="com.google.android.apps.mytracks.settings.SettingsActivity" />
     <activity android:name="com.google.android.apps.mytracks.settings.SharingSettingsActivity" />
     <!-- Services -->

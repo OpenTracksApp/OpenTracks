@@ -86,72 +86,12 @@ limitations under the License.
     </PreferenceCategory>
   </PreferenceScreen>
 
-  <!-- Recording settings -->
-  <PreferenceScreen android:title="@string/settings_recording">
-    <com.google.android.apps.mytracks.IntegerListPreference
-        android:key="@string/announcement_frequency_key"
-        android:title="@string/settings_recording_voice"
-        android:summary="@string/settings_recording_voice_summary"
-        android:entryValues="@array/recording_task_frequency_values"
-        android:defaultValue="0" />
-
-    <com.google.android.apps.mytracks.IntegerListPreference
-        android:key="@string/split_frequency_key"
-        android:title="@string/settings_recording_marker"
-        android:summary="@string/settings_recording_marker_summary"
-        android:entryValues="@array/recording_task_frequency_values"
-        android:defaultValue="0" />
-
-    <com.google.android.apps.mytracks.IntegerListPreference
-        android:key="@string/min_recording_interval_key"
-        android:title="@string/settings_recording_interval"
-        android:summary="@string/settings_recording_interval_summary"
-        android:entryValues="@array/recording_interval_values"
-        android:defaultValue="0" />
-
-    <com.google.android.apps.mytracks.IntegerListPreference
-        android:key="@string/min_recording_distance_key"
-        android:title="@string/settings_recording_distance"
-        android:summary="@string/settings_recording_distance_summary"
-        android:entryValues="@array/recording_distance_values"
-        android:defaultValue="5" />
-
-    <com.google.android.apps.mytracks.IntegerListPreference
-        android:key="@string/max_recording_distance_key"
-        android:title="@string/settings_recording_track_distance"
-        android:summary="@string/settings_recording_track_distance_summary"
-        android:entryValues="@array/recording_track_distance_values"
-        android:defaultValue="200" />
-
-    <com.google.android.apps.mytracks.IntegerListPreference
-        android:key="@string/min_required_accuracy_key"
-        android:title="@string/settings_recording_gps_accuracy"
-        android:summary="@string/settings_recording_gps_accuracy_summary"
-        android:entryValues="@array/recording_gps_accuracy_values"
-        android:defaultValue="200" />
-
-    <com.google.android.apps.mytracks.IntegerListPreference
-        android:key="@string/auto_resume_track_timeout_key"
-        android:title="@string/settings_recording_auto_resume"
-        android:summary="@string/settings_recording_auto_resume_summary"
-        android:entryValues="@array/recording_auto_resume_timeout_values"
-        android:defaultValue="10" />
-
-    <ListPreference android:key="@string/track_name_key"
-        android:title="@string/settings_recording_track_name"
-        android:summary="@string/settings_recording_track_name_summary"
-        android:entries="@array/settings_recording_track_name_options"
-        android:entryValues="@array/settings_recording_track_name_values"
-        android:defaultValue="@string/settings_recording_track_name_date_local_value"/>
-
-    <com.google.android.apps.mytracks.AutoCompleteTextPreference
-        android:key="@string/default_activity_key"
-        android:title="@string/settings_recording_default_activity"
-        android:summary="@string/settings_recording_default_activity_summary"
-        android:defaultValue="" />
-
-  </PreferenceScreen>
-
+  <!-- Recording -->
+  <Preference
+      android:title="@string/settings_recording"
+      android:key="@string/settings_recording_key"
+      android:persistent="false" />
+  
   <!-- Sharing -->
   <Preference
       android:title="@string/settings_sharing"

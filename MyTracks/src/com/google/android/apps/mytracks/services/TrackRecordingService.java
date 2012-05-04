@@ -50,7 +50,6 @@ import android.app.Service;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.location.Location;
@@ -84,14 +83,10 @@ public class TrackRecordingService extends Service {
   private LocationManager locationManager;
   private WakeLock wakeLock;
 
-  private int minRecordingDistance =
-      Constants.DEFAULT_MIN_RECORDING_DISTANCE;
-  private int maxRecordingDistance =
-      Constants.DEFAULT_MAX_RECORDING_DISTANCE;
-  private int minRequiredAccuracy =
-      Constants.DEFAULT_MIN_REQUIRED_ACCURACY;
-  private int autoResumeTrackTimeout =
-      Constants.DEFAULT_AUTO_RESUME_TRACK_TIMEOUT;
+  private int minRecordingDistance = PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT;
+  private int maxRecordingDistance = PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT;
+  private int minRequiredAccuracy = PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT;
+  private int autoResumeTrackTimeout = PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT;
 
   private long recordingTrackId = -1;
 
@@ -123,7 +118,7 @@ public class TrackRecordingService extends Service {
 
   private SensorManager sensorManager;
 
-  private PreferenceManager prefManager;
+  private PreferenceManager prefereceManager;
 
   /**
    * The interval in milliseconds that we have requested to be notified of gps
@@ -248,7 +243,7 @@ public class TrackRecordingService extends Service {
     setUpTaskExecutors();
     executorService = Executors.newSingleThreadExecutor();
 
-    prefManager = new PreferenceManager(this);
+    prefereceManager = new PreferenceManager(this);
 
     registerLocationListener();
 
@@ -354,8 +349,7 @@ public class TrackRecordingService extends Service {
 
     isRecording = false;
     showNotification();
-    prefManager.shutdown();
-    prefManager = null;
+    prefereceManager.shutdown();
     checkLocationListener.cancel();
     checkLocationListener = null;
     timer.cancel();
@@ -383,7 +377,7 @@ public class TrackRecordingService extends Service {
 
   private void setAutoResumeTrackRetries(int retryAttempts) {
     Log.d(TAG, "Updating auto-resume retry attempts to: " + retryAttempts);
-    prefManager.setAutoResumeTrackCurrentRetry(retryAttempts);
+    PreferencesUtils.setInt(this, R.string.auto_resume_track_current_retry_key, retryAttempts);
   }
 
   private boolean shouldResumeTrack(Track track) {
@@ -391,10 +385,8 @@ public class TrackRecordingService extends Service {
         + autoResumeTrackTimeout);
 
     // Check if we haven't exceeded the maximum number of retry attempts.
-    SharedPreferences sharedPreferences = getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    int retries = sharedPreferences.getInt(
-        getString(R.string.auto_resume_track_current_retry_key), 0);
+    int retries = PreferencesUtils.getInt(this, R.string.auto_resume_track_current_retry_key,
+        PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT);
     Log.d(TAG,
         "shouldResumeTrack: Attempting to auto-resume the track ("
         + (retries + 1) + "/" + MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS + ")");
@@ -409,12 +401,12 @@ public class TrackRecordingService extends Service {
     setAutoResumeTrackRetries(retries + 1);
 
     // Check for special cases.
-    if (autoResumeTrackTimeout == 0) {
+    if (autoResumeTrackTimeout == PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_NEVER) {
       // Never resume.
       Log.d(TAG,
           "shouldResumeTrack: Auto-resume disabled (never resume)");
       return false;
-    } else if (autoResumeTrackTimeout == -1) {
+    } else if (autoResumeTrackTimeout == PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_ALWAYS) {
       // Always resume.
       Log.d(TAG,
           "shouldResumeTrack: Auto-resume forced (always resume)");
@@ -565,12 +557,6 @@ public class TrackRecordingService extends Service {
         "Location listener now unregistered w/ TrackRecordingService.");
   }
 
-  private String getDefaultActivityType(Context context) {
-    SharedPreferences prefs = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    return prefs.getString(context.getString(R.string.default_activity_key), "");
-  }
-
   /*
    * Recording lifecycle.
    */
@@ -593,7 +579,8 @@ public class TrackRecordingService extends Service {
     track.setId(recordingTrackId);
     track.setName(new DefaultTrackNameFactory(this).getDefaultTrackName(
         recordingTrackId, startTime));
-    track.setCategory(getDefaultActivityType(this));
+    track.setCategory(PreferencesUtils.getString(
+        this, R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT));
     isRecording = true;
     isMoving = true;
 

@@ -15,13 +15,12 @@
  */
 package com.google.android.apps.mytracks.services;
 
-import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import java.text.SimpleDateFormat;
 
@@ -59,7 +58,7 @@ public class DefaultTrackNameFactory {
     } else {
       // trackNameSetting equals
       // R.string.settings_recording_track_name_number_value
-      return String.format(context.getString(R.string.track_name_format), trackId);
+      return context.getString(R.string.track_name_format, trackId);
     }
   }
 
@@ -68,10 +67,7 @@ public class DefaultTrackNameFactory {
    */
   @VisibleForTesting
   String getTrackNameSetting() {
-    SharedPreferences sharedPreferences = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    return sharedPreferences.getString(
-        context.getString(R.string.track_name_key),
+    return PreferencesUtils.getString(context, R.string.track_name_key,
         context.getString(R.string.settings_recording_track_name_date_local_value));
   }
 }
