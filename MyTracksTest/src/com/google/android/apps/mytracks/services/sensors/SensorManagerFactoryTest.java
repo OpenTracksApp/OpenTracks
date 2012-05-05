@@ -1,6 +1,7 @@
 package com.google.android.apps.mytracks.services.sensors;
 
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -38,10 +39,7 @@ public class SensorManagerFactoryTest extends AndroidTestCase {
   }
 
   private void assertClassForName(Class<?> c, int i) {
-    sharedPreferences.edit()
-        .putString(getContext().getString(R.string.sensor_type_key),
-            getContext().getString(i))
-        .apply();
+    PreferencesUtils.setString(getContext(), R.string.sensor_type_key, getContext().getString(i));
     SensorManager sm = SensorManagerFactory.getInstance().getSensorManager(getContext());
     assertNotNull(sm);
     assertTrue(c.isInstance(sm));

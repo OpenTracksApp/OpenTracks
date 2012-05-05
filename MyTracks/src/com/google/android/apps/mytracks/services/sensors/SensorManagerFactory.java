@@ -61,33 +61,35 @@ public class SensorManagerFactory {
 
     context = context.getApplicationContext();
 
-    String sensor = prefs.getString(context.getString(R.string.sensor_type_key), null);
-    Log.i(Constants.TAG, "Creating sensor of type: " + sensor);
+    String sensorTypeValueNone = context.getString(R.string.sensor_type_value_none);
+    String sensorType = prefs.getString(
+        context.getString(R.string.sensor_type_key), sensorTypeValueNone);
+    Log.i(Constants.TAG, "Creating sensor of type: " + sensorType);
 
-    if (sensor == null) {
+    if (sensorTypeValueNone.equals(sensorType)) {
       reset();
       return null;
     }
-    if (sensor.equals(activeSensorType)) {
+    if (sensorType.equals(activeSensorType)) {
       Log.i(Constants.TAG, "Returning existing sensor manager.");
       refCount++;
       return activeSensorManager;
     }
     reset();
 
-    if (sensor.equals(context.getString(R.string.sensor_type_value_ant))) {
+    if (sensorType.equals(context.getString(R.string.sensor_type_value_ant))) {
       activeSensorManager = new AntDirectSensorManager(context);
-    } else if (sensor.equals(context.getString(R.string.sensor_type_value_srm_ant_bridge))) {
+    } else if (sensorType.equals(context.getString(R.string.sensor_type_value_srm_ant_bridge))) {
       activeSensorManager = new AntSrmBridgeSensorManager(context);
-    } else if (sensor.equals(context.getString(R.string.sensor_type_value_zephyr))) {
+    } else if (sensorType.equals(context.getString(R.string.sensor_type_value_zephyr))) {
       activeSensorManager = new ZephyrSensorManager(context);
-    } else if (sensor.equals(context.getString(R.string.sensor_type_value_polar))) {
+    } else if (sensorType.equals(context.getString(R.string.sensor_type_value_polar))) {
       activeSensorManager = new PolarSensorManager(context);
     } else  {
-      Log.w(Constants.TAG, "Unable to find sensor type: " + sensor);
+      Log.w(Constants.TAG, "Unable to find sensor type: " + sensorType);
       return null;
     }
-    activeSensorType = sensor;
+    activeSensorType = sensorType;
     refCount = 1;
     activeSensorManager.onStartTrack();
     return activeSensorManager;

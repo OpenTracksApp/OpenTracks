@@ -41,6 +41,7 @@ public class PreferencesUtils {
   public static final int AUTO_RESUME_TRACK_TIMEOUT_DEFAULT = 10;
   public static final int AUTO_RESUME_TRACK_TIMEOUT_NEVER = 0;
 
+  public static final String BLUETOOTH_SENSOR_DEFAULT = "";
   public static final String DEFAULT_ACTIVITY_DEFAULT = "";
   public static final boolean DEFAULT_MAP_PUBLIC_DEFAULT = true;
   public static final int MAX_RECORDING_DISTANCE_DEFAULT = 200;
@@ -167,5 +168,20 @@ public class PreferencesUtils {
     SharedPreferences sharedPreferences = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     return sharedPreferences.getString(getKey(context, keyId), defaultValue);
+  }
+  
+  /**
+   * Sets a string preference value.
+   * 
+   * @param context the context
+   * @param keyId the key id
+   * @param value the value
+   */
+  public static void setString(Context context, int keyId, String value) {
+    SharedPreferences sharedPreferences = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    Editor editor = sharedPreferences.edit();
+    editor.putString(getKey(context, keyId), value);
+    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
   }
 }

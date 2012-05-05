@@ -19,9 +19,7 @@ package com.google.android.apps.mytracks.settings;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.services.sensors.ant.AntUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
-import com.google.android.apps.mytracks.util.BluetoothDeviceUtils;
 import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -29,7 +27,6 @@ import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Dialog;
-import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -42,15 +39,8 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceCategory;
-import android.preference.PreferenceScreen;
-import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * An activity for accessing settings.
@@ -67,7 +57,6 @@ public class SettingsActivity extends AbstractSettingsActivity {
     super.onCreate(bundle);
     addPreferencesFromResource(R.xml.preferences);
 
-    customizeSensorOptionsPreferences();
     customizeTrackColorModePreferences();
     
     Preference recordingPreference = findPreference(getString(R.string.settings_recording_key));
@@ -86,6 +75,16 @@ public class SettingsActivity extends AbstractSettingsActivity {
       @Override
       public boolean onPreferenceClick(Preference preference) {
         Intent intent = IntentUtils.newIntent(SettingsActivity.this, SharingSettingsActivity.class);
+        startActivity(intent);
+        return true;
+      }
+    });
+
+    Preference sensorPreference = findPreference(getString(R.string.settings_sensor_key));
+    sensorPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+      @Override
+      public boolean onPreferenceClick(Preference preference) {
+        Intent intent = IntentUtils.newIntent(SettingsActivity.this, SensorSettingsActivity.class);
         startActivity(intent);
         return true;
       }
@@ -128,53 +127,6 @@ public class SettingsActivity extends AbstractSettingsActivity {
     }
   }
 
-  private void customizeSensorOptionsPreferences() {
-    ListPreference sensorTypePreference =
-        (ListPreference) findPreference(getString(R.string.sensor_type_key));
-    sensorTypePreference.setOnPreferenceChangeListener(
-        new OnPreferenceChangeListener() {
-          @Override
-          public boolean onPreferenceChange(Preference preference,
-              Object newValue) {
-            updateSensorSettings((String) newValue);
-            return true;
-          }
-        });
-    updateSensorSettings(sensorTypePreference.getValue());
-
-    if (!AntUtils.hasAntSupport(this)) {
-      // The sensor options screen has a few ANT-specific options which we
-      // need to remove.  First, we need to remove the ANT sensor types.
-      // Second, we need to remove the ANT unpairing options.
-
-      Set<Integer> toRemove = new HashSet<Integer>();
-
-      String[] antValues = getResources().getStringArray(R.array.sensor_type_ant_values);
-      for (String antValue : antValues) {
-        toRemove.add(sensorTypePreference.findIndexOfValue(antValue));
-      }
-
-      CharSequence[] entries = sensorTypePreference.getEntries();
-      CharSequence[] entryValues = sensorTypePreference.getEntryValues();
-
-      CharSequence[] filteredEntries = new CharSequence[entries.length - toRemove.size()];
-      CharSequence[] filteredEntryValues = new CharSequence[filteredEntries.length];
-      for (int i = 0, last = 0; i < entries.length; i++) {
-        if (!toRemove.contains(i)) {
-          filteredEntries[last] = entries[i];
-          filteredEntryValues[last++] = entryValues[i];
-        }
-      }
-
-      sensorTypePreference.setEntries(filteredEntries);
-      sensorTypePreference.setEntryValues(filteredEntryValues);
-
-      PreferenceScreen sensorOptionsScreen =
-          (PreferenceScreen) findPreference(getString(R.string.sensor_options_key));
-      sensorOptionsScreen.removePreference(findPreference(getString(R.string.ant_options_key)));
-    }
-  }
-  
   private void customizeTrackColorModePreferences() {
     ListPreference trackColorModePreference =
         (ListPreference) findPreference(getString(R.string.track_color_mode_key));
@@ -203,34 +155,12 @@ public class SettingsActivity extends AbstractSettingsActivity {
   @Override
   protected void onResume() {
     super.onResume();
-    configureBluetoothPreferences();
     Preference resetPreference = findPreference(getString(R.string.reset_key));
     boolean recording = PreferencesUtils.getLong(this, R.string.recording_track_id_key) != -1;
     resetPreference.setEnabled(!recording);
     resetPreference.setSummary(
         recording ? R.string.settings_not_while_recording
                   : R.string.settings_reset_summary);
-  }
-
-  private void updateSensorSettings(String sensorType) {
-    boolean usesBluetooth =
-        getString(R.string.sensor_type_value_zephyr).equals(sensorType)
-        || getString(R.string.sensor_type_value_polar).equals(sensorType);
-    findPreference(
-        getString(R.string.bluetooth_sensor_key)).setEnabled(usesBluetooth);
-    findPreference(
-        getString(R.string.bluetooth_pairing_key)).setEnabled(usesBluetooth);
-
-    // Update the ANT+ sensors.
-    // TODO: Only enable on phones that have ANT+.
-    Preference antHrm = findPreference(getString(R.string.ant_heart_rate_sensor_id_key));
-    Preference antSrm = findPreference(getString(R.string.ant_srm_bridge_sensor_id_key));
-    if (antHrm != null && antSrm != null) {
-      antHrm
-          .setEnabled(getString(R.string.sensor_type_value_ant).equals(sensorType));
-      antSrm
-          .setEnabled(getString(R.string.sensor_type_value_srm_ant_bridge).equals(sensorType));
-    }
   }
 
   private void updateTrackColorModeSettings(String trackColorMode) {
@@ -245,45 +175,6 @@ public class SettingsActivity extends AbstractSettingsActivity {
         .setEnabled(usesFixedSpeed);
     findPreference(getString(R.string.track_color_mode_dynamic_speed_variation_key))
         .setEnabled(usesDynamicSpeed);
-  }
-
-  /**
-   * Configures preference actions related to bluetooth.
-   */
-  private void configureBluetoothPreferences() {
-    // Populate the list of bluetooth devices
-    populateBluetoothDeviceList();
-    // Make the pair devices preference go to the system preferences
-    findPreference(getString(R.string.bluetooth_pairing_key)).setOnPreferenceClickListener(
-        new OnPreferenceClickListener() {
-          public boolean onPreferenceClick(Preference preference) {
-            Intent settingsIntent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
-            startActivity(settingsIntent);
-            return false;
-          }
-        });
-  }
-
-  /**
-   * Populates the list preference with all available bluetooth devices.
-   */
-  private void populateBluetoothDeviceList() {
-    // Build the list of entries and their values
-    List<String> entries = new ArrayList<String>();
-    List<String> entryValues = new ArrayList<String>();
-
-    // The actual devices
-    BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    if (bluetoothAdapter != null) {
-      BluetoothDeviceUtils.populateDeviceLists(bluetoothAdapter, entries, entryValues);
-    }
-
-    CharSequence[] entriesArray = entries.toArray(new CharSequence[entries.size()]);
-    CharSequence[] entryValuesArray = entryValues.toArray(new CharSequence[entryValues.size()]);
-    ListPreference devicesPreference =
-        (ListPreference) findPreference(getString(R.string.bluetooth_sensor_key));
-    devicesPreference.setEntryValues(entryValuesArray);
-    devicesPreference.setEntries(entriesArray);
   }
 
   /** Callback for when user confirms resetting all settings. */

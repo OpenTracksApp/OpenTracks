@@ -24,7 +24,6 @@ limitations under the License.
   <string name="ant_srm_bridge_sensor_id_key">antSRMBridgeSensorId</string>
   <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>
   <string name="auto_resume_track_timeout_key">autoResumeTrackTimeout</string>
-  <string name="bluetooth_pairing_key">bluetoothPairing</string>
   <string name="bluetooth_sensor_key">bluetoothSensor</string>
   <string name="default_activity_key">defaultActivity</string>
   <string name="default_map_public_key">defaultMapPublic</string>
@@ -60,13 +59,16 @@ limitations under the License.
   <string name="track_name_key">trackName</string>
 
   <!-- Keys for non-persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
-  <string name="ant_options_key">antOptions</string>
   <string name="backup_to_sd_key">backupToSd</string>
   <string name="reset_key">resetToDefaults</string>
   <string name="restore_from_sd_key">restoreFromSd</string>
-  <string name="sensor_options_key">sensorOptions</string>
   <string name="settings_backup_key">settingsBackup</string>
   <string name="settings_recording_key">settingsRecording</string>
+  <string name="settings_sensor_key">settingsSensor</string>
+  <string name="settings_sensor_ant_key">settingsSensorAnt</string>
+  <string name="settings_sensor_bluetooth_key">settingsSensorBluetooth</string>
+  <string name="settings_sensor_bluetooth_pairing_key">settingsSensorBluetoothPairing</string>
+  <string name="settings_sensor_root_key">settingsSensorRoot</string>
   <string name="settings_sharing_key">settingsSharing</string>
   <string name="track_color_mode_fixed_speed_options_key">trackColorModeFixedOptions</string>
 </resources>

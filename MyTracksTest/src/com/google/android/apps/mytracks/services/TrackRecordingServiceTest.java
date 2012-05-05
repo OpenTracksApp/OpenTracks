@@ -647,14 +647,17 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
   }
 
   @MediumTest
-  public void testWithProperties_noSensorType() throws Exception {
-    functionalTest(R.string.sensor_type_key, (Object) null);
+  public void testWithProperties_sensorTypeDefault() throws Exception {
+    PreferencesUtils.setString(
+        context, R.string.sensor_type_key, context.getString(R.string.sensor_type_value_none));
+    fullRecordingSession();
   }
 
   @MediumTest
-  public void testWithProperties_zephyrSensorType() throws Exception {
-    functionalTest(R.string.sensor_type_key,
-        context.getString(R.string.sensor_type_value_zephyr));
+  public void testWithProperties_sensorTypeZephyr() throws Exception {
+    PreferencesUtils.setString(
+        context, R.string.sensor_type_key, context.getString(R.string.sensor_type_value_zephyr));
+    fullRecordingSession();
   }
 
   private ITrackRecordingService bindAndGetService(Intent intent) {

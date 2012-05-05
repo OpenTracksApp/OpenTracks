@@ -22,7 +22,7 @@ import com.dsi.ant.AntMesg;
 import com.dsi.ant.exception.AntInterfaceException;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Sensor;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.BuildConfig;
 import com.google.android.maps.mytracks.R;
 
@@ -71,9 +71,8 @@ public class AntSrmBridgeSensorManager extends AntSensorManager {
     SharedPreferences prefs = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     if (prefs != null) {
-      deviceNumber =
-        (short) prefs.getInt(context.getString(
-            R.string.ant_srm_bridge_sensor_id_key), 0);
+      deviceNumber = (short) PreferencesUtils.getInt(
+          context, R.string.ant_srm_bridge_sensor_id_key, WILDCARD);
     }
     Log.i(TAG, "Will pair with device: " + deviceNumber);
   }
@@ -194,12 +193,7 @@ public class AntSrmBridgeSensorManager extends AntSensorManager {
     AntChannelIdMessage message = new AntChannelIdMessage(rawMessage);
     deviceNumber = message.getDeviceNumber();
     Log.d(TAG, "Found device id: " + deviceNumber);
-
-    SharedPreferences prefs = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    SharedPreferences.Editor editor = prefs.edit();
-    editor.putInt(context.getString(R.string.ant_srm_bridge_sensor_id_key), deviceNumber);
-    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
+    PreferencesUtils.setInt(context, R.string.ant_srm_bridge_sensor_id_key, deviceNumber);
   }
 
   private void handleMessageResponse(byte[] rawMessage) {
