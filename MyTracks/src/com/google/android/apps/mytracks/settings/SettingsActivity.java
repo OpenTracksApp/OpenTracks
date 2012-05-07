@@ -52,12 +52,24 @@ public class SettingsActivity extends AbstractSettingsActivity {
 
   private static final int DIALOG_CONFIRM_RESET_ID = 0;
 
+  @SuppressWarnings("deprecation")
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
     addPreferencesFromResource(R.xml.preferences);
 
     customizeTrackColorModePreferences();
+
+    Preference statsPreference = findPreference(getString(R.string.settings_stats_key));
+    statsPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        @Override
+      public boolean onPreferenceClick(Preference preference) {
+        Intent intent = IntentUtils.newIntent(
+            SettingsActivity.this, StatsSettingsActivity.class);
+        startActivity(intent);
+        return true;
+      }
+    });
     
     Preference recordingPreference = findPreference(getString(R.string.settings_recording_key));
     recordingPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -215,7 +227,8 @@ public class SettingsActivity extends AbstractSettingsActivity {
    * If the units are not metric convert the value before displaying.  
    */
   private void viewTrackColorModeSettings(EditTextPreference preference, int id) {
-    if (PreferencesUtils.getBoolean(this, R.string.metric_units_key, true)) {
+    if (PreferencesUtils.getBoolean(
+        this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT)) {
       return;
     }
     // Convert miles/h to km/h
@@ -236,7 +249,8 @@ public class SettingsActivity extends AbstractSettingsActivity {
    */
   private void validateTrackColorModeSettings(String newValue, int id) {
     String metricspeed;
-    if (PreferencesUtils.getBoolean(this, R.string.metric_units_key, true)) {
+    if (PreferencesUtils.getBoolean(
+        this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT)) {
       metricspeed = newValue;
     } else {
       // Convert miles/h to km/h

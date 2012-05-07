@@ -270,8 +270,11 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   private synchronized boolean isRecording() {
     return trackDataHub != null && trackDataHub.isRecordingSelected();
   }
-  
-  public void updateUi() {
+
+  /**
+   * Updates the UI.
+   */
+  private void updateUi() {
     StatsUtils.setTripStatisticsValues(getActivity(), lastTripStatistics);
     StatsUtils.setLocationValues(getActivity(), lastLocation, true);
   }

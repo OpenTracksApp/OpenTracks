@@ -19,20 +19,6 @@ limitations under the License.
 
   <!-- Display settings -->
   <PreferenceScreen android:title="@string/settings_display">
-    <CheckBoxPreference
-        android:key="@string/metric_units_key"
-        android:title="@string/settings_display_metric"
-        android:summaryOn="@string/settings_display_metric_summary_on"
-        android:summaryOff="@string/settings_display_metric_summary_off"
-        android:defaultValue="true" />
-
-    <CheckBoxPreference
-        android:key="@string/report_speed_key"
-        android:title="@string/settings_display_speed"
-        android:summaryOn="@string/settings_display_speed_summary_on"
-        android:summaryOff="@string/settings_display_speed_summary_off"
-        android:defaultValue="true" />
-
     <ListPreference android:key="@string/track_color_mode_key"
         android:title="@string/settings_display_track_color"
         android:summary="@string/settings_display_track_color_summary"
@@ -85,7 +71,10 @@ limitations under the License.
         </EditTextPreference>
     </PreferenceCategory>
   </PreferenceScreen>
-
+  <Preference
+    android:key="@string/settings_stats_key"
+    android:persistent="false"
+    android:title="@string/track_detail_stats_tab" />
   <Preference
       android:title="@string/settings_recording"
       android:key="@string/settings_recording_key"

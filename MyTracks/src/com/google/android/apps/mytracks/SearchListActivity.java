@@ -185,7 +185,8 @@ public class SearchListActivity extends AbstractMyTracksActivity {
   @Override
   protected void onResume() {
     super.onResume();
-    metricUnits = PreferencesUtils.getBoolean(this, R.string.metric_units_key, true);
+    metricUnits = PreferencesUtils.getBoolean(
+        this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
   }
 
   @Override

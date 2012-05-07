@@ -798,13 +798,8 @@ public class TrackDataHubTest extends AndroidTestCase {
   }
 
   public void testDisplayPreferencesListen() throws Exception {
-    String metricUnitsKey = PreferencesUtils.getKey(context, R.string.metric_units_key);
-    String reportSpeedKey = PreferencesUtils.getKey(context, R.string.report_speed_key);
-    
-    prefs.edit()
-        .putBoolean(metricUnitsKey, true)
-        .putBoolean(reportSpeedKey, true)
-        .apply();
+    PreferencesUtils.setBoolean(context, R.string.report_speed_key, true);
+    PreferencesUtils.setBoolean(context, R.string.metric_units_key, true);
 
     Capture<OnSharedPreferenceChangeListener> listenerCapture =
         new Capture<OnSharedPreferenceChangeListener>();
@@ -828,11 +823,10 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     replay();
 
-    prefs.edit()
-        .putBoolean(reportSpeedKey, false)
-        .apply();
+    PreferencesUtils.setBoolean(context, R.string.report_speed_key, false);
     OnSharedPreferenceChangeListener listener = listenerCapture.getValue();
-    listener.onSharedPreferenceChanged(prefs, reportSpeedKey);
+    listener.onSharedPreferenceChanged(
+        prefs, PreferencesUtils.getKey(context, R.string.report_speed_key));
 
     AndroidMock.verify(dataSources, providerUtils, listener1, listener2);
     AndroidMock.reset(dataSources, providerUtils, listener1, listener2);
@@ -842,10 +836,9 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     replay();
 
-    prefs.edit()
-        .putBoolean(metricUnitsKey, false)
-        .apply();
-    listener.onSharedPreferenceChanged(prefs, metricUnitsKey);
+    PreferencesUtils.setBoolean(context, R.string.metric_units_key, false);
+    listener.onSharedPreferenceChanged(
+        prefs, PreferencesUtils.getKey(context, R.string.metric_units_key));
 
     verifyAndReset();
   }

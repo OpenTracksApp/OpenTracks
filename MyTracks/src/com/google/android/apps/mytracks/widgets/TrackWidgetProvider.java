@@ -230,15 +230,16 @@ public class TrackWidgetProvider
 
   @Override
   public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-    if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.metric_units_key))) {
-      metricUnits = PreferencesUtils.getBoolean(context, R.string.metric_units_key, true);
+    if (key == null || PreferencesUtils.getKey(context, R.string.metric_units_key).equals(key)) {
+      metricUnits = PreferencesUtils.getBoolean(
+          context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
     }
-
-    if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.report_speed_key))) {
-      reportSpeed = PreferencesUtils.getBoolean(context, R.string.report_speed_key, true);
+    if (key == null || PreferencesUtils.getKey(context, R.string.report_speed_key).equals(key)) {
+      reportSpeed = PreferencesUtils.getBoolean(
+          context, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
     }
-
-    if (key == null || key.equals(PreferencesUtils.getKey(context, R.string.selected_track_id_key))) {
+    if (key == null
+        || PreferencesUtils.getKey(context, R.string.selected_track_id_key).equals(key)) {
       selectedTrackId = PreferencesUtils.getLong(context, R.string.selected_track_id_key);
       Log.d(TAG, "TrackWidgetProvider setting selecting track from preference: " + selectedTrackId);
     }

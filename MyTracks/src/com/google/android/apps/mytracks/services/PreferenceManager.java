@@ -68,7 +68,8 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
       }
     }
     if (key == null || PreferencesUtils.getKey(service, R.string.metric_units_key).equals(key)) {
-      service.setMetricUnits(PreferencesUtils.getBoolean(service, R.string.metric_units_key, true));
+      service.setMetricUnits(PreferencesUtils.getBoolean(
+          service, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT));
     }
     if (key == null
         || PreferencesUtils.getKey(service, R.string.announcement_frequency_key).equals(key)) {

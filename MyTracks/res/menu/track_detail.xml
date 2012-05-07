@@ -89,10 +89,6 @@ limitations under the License.
     android:id="@+id/track_detail_chart_settings"
     android:title="@string/menu_chart_settings"/>
   <item
-    android:icon="@drawable/menu_stats_settings"
-    android:id="@+id/track_detail_stats_settings"
-    android:title="@string/menu_stats_settings"/>
-  <item
     android:icon="@drawable/menu_settings"
     android:id="@+id/track_detail_settings"
     android:title="@string/menu_settings"/>

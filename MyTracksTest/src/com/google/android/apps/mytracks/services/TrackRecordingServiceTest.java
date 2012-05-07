@@ -34,7 +34,6 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
@@ -606,18 +605,16 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
   }
 
   @MediumTest
-  public void testWithProperties_noMetricUnits() throws Exception {
-    functionalTest(R.string.metric_units_key, (Object) null);
-  }
-
-  @MediumTest
-  public void testWithProperties_metricUnitsEnabled() throws Exception {
-    functionalTest(R.string.metric_units_key, true);
+  public void testWithProperties_metricUnitsDefault() throws Exception {
+    PreferencesUtils.setBoolean(
+        context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+    fullRecordingSession();
   }
 
   @MediumTest
   public void testWithProperties_metricUnitsDisabled() throws Exception {
-    functionalTest(R.string.metric_units_key, false);
+    PreferencesUtils.setBoolean(context, R.string.metric_units_key, false);
+    fullRecordingSession();
   }
 
   @MediumTest
@@ -694,33 +691,6 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     providerUtils.insertTrack(track);
     assertEquals(track.getId(), providerUtils.getTrack(track.getId()).getId());
     PreferencesUtils.setLong(context, R.string.recording_track_id_key, isRecording ? track.getId() : -1L);
-  }
-
-  // TODO: We support multiple values for readability, however this test's
-  // base class doesn't properly shutdown the service, so it's not possible
-  // to pass more than 1 value at a time.
-  private void functionalTest(int resourceId, Object ...values)
-      throws Exception {
-    final String key = context.getString(resourceId);
-    for (Object value : values) {
-      // Remove all properties and set the property for the given key.
-      Editor editor = sharedPreferences.edit();
-      editor.clear();
-      if (value instanceof String) {
-        editor.putString(key, (String) value);
-      } else if (value instanceof Long) {
-        editor.putLong(key, (Long) value);
-      } else if (value instanceof Integer) {
-        editor.putInt(key, (Integer) value);
-      } else if (value instanceof Boolean) {
-        editor.putBoolean(key, (Boolean) value);
-      } else if (value == null) {
-        // Do nothing, as clear above has already removed this property.
-      }
-      editor.apply();
-
-      fullRecordingSession();
-    }
   }
 
   private void fullRecordingSession() throws Exception {

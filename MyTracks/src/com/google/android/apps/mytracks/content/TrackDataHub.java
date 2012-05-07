@@ -289,8 +289,10 @@ public class TrackDataHub {
 
   private void loadSharedPreferences() {
     selectedTrackId = PreferencesUtils.getLong(context, R.string.selected_track_id_key);
-    metricUnits = PreferencesUtils.getBoolean(context, R.string.metric_units_key, true);
-    reportSpeed = PreferencesUtils.getBoolean(context, R.string.report_speed_key, true);
+    metricUnits = PreferencesUtils.getBoolean(
+        context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+    reportSpeed = PreferencesUtils.getBoolean(
+        context, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
     minRequiredAccuracy = PreferencesUtils.getInt(context, R.string.min_required_accuracy_key,
         PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT);
   }
@@ -607,10 +609,12 @@ public class TrackDataHub {
       minRequiredAccuracy = PreferencesUtils.getInt(context, R.string.min_required_accuracy_key,
           PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT);
     } else if (PreferencesUtils.getKey(context, R.string.metric_units_key).equals(key)) {
-      metricUnits = PreferencesUtils.getBoolean(context, R.string.metric_units_key, true);
+      metricUnits = PreferencesUtils.getBoolean(
+          context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
       notifyUnitsChanged();
     } else if (PreferencesUtils.getKey(context, R.string.report_speed_key).equals(key)) {
-      reportSpeed = PreferencesUtils.getBoolean(context, R.string.report_speed_key, true);
+      reportSpeed = PreferencesUtils.getBoolean(
+          context, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
       notifySpeedReportingChanged();
     } else if (PreferencesUtils.getKey(context, R.string.selected_track_id_key).equals(key)) {
       loadTrack(PreferencesUtils.getLong(context, R.string.selected_track_id_key));

@@ -57,10 +57,16 @@ public class PreferencesUtils {
   public static final int MIN_REQUIRED_ACCURACY_POOR = 5000;
 
   public static final int PERIODIC_TASK_OFF = 0;
-  
+
   public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
+  public static final boolean REPORT_SPEED_DEFAULT = true;
   public static final boolean SHARE_URL_ONLY_DEFAULT = false;
   public static final int SPLIT_FREQUENCY_DEFAULT = 0;
+
+  public static final boolean STATS_SHOW_COORDINATE_DEFAULT = false;
+  public static final boolean STATS_SHOW_ELEVATION_DEFAULT = false;
+  public static final boolean STATS_SHOW_GRADE_DEFAULT = false;
+  public static final boolean STATS_USE_TOTAL_TIME_DEFAULT = true;
 
   private PreferencesUtils() {}
 

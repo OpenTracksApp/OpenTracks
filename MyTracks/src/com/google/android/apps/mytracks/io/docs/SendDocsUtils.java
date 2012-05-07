@@ -270,7 +270,8 @@ public class SendDocsUtils {
       Track track, String spreadsheetId, String worksheetId, String authToken, Context context)
       throws IOException {
     String worksheetUri = String.format(GET_WORKSHEET_URI, spreadsheetId, worksheetId);
-    boolean metricUnits = PreferencesUtils.getBoolean(context, R.string.metric_units_key, true);
+    boolean metricUnits = PreferencesUtils.getBoolean(
+        context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
     addRow(worksheetUri, getRowContent(track, metricUnits, context), authToken);
   }
 

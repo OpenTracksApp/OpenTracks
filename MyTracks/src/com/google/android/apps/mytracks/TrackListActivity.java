@@ -120,12 +120,16 @@ public class TrackListActivity extends FragmentActivity {
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
           boolean updateList = false;
           // Note that key can be null
-          if (PreferencesUtils.getKey(TrackListActivity.this, R.string.metric_units_key).equals(key)) {
-            metricUnits = PreferencesUtils.getBoolean(TrackListActivity.this, R.string.metric_units_key, true);
+          if (PreferencesUtils.getKey(TrackListActivity.this, R.string.metric_units_key)
+              .equals(key)) {
+            metricUnits = PreferencesUtils.getBoolean(TrackListActivity.this,
+                R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
             updateList = true;
           }
-          if (PreferencesUtils.getKey(TrackListActivity.this, R.string.recording_track_id_key).equals(key)) {
-            recordingTrackId = PreferencesUtils.getLong(TrackListActivity.this, R.string.recording_track_id_key);
+          if (PreferencesUtils.getKey(TrackListActivity.this, R.string.recording_track_id_key)
+              .equals(key)) {
+            recordingTrackId = PreferencesUtils.getLong(
+                TrackListActivity.this, R.string.recording_track_id_key);
             if (TrackRecordingServiceConnectionUtils.isRecording(
                 TrackListActivity.this, trackRecordingServiceConnection)) {
               trackRecordingServiceConnection.startAndBind();
@@ -177,7 +181,8 @@ public class TrackListActivity extends FragmentActivity {
     SharedPreferences sharedPreferences = getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-    metricUnits = PreferencesUtils.getBoolean(this, R.string.metric_units_key, true);
+    metricUnits = PreferencesUtils.getBoolean(
+        this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
     recordingTrackId = PreferencesUtils.getLong(this, R.string.recording_track_id_key);
 
     ImageButton recordImageButton = (ImageButton) findViewById(R.id.track_list_record_button);
