@@ -21,7 +21,7 @@ limitations under the License.
   <string name="ant_cadence_sensor_id_key">antCadenceSensorId</string>
   <string name="ant_cadence_speed_sensor_id_key">antCadenceSpeedSensorId</string>
   <string name="ant_heart_rate_sensor_id_key">antHeartRateSensorId</string>
-  <string name="ant_srm_bridge_sensor_id_key">antSRMBridgeSensorId</string>
+  <string name="ant_srm_bridge_sensor_id_key">antSrmBridgeSensorId</string>
   <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>
   <string name="auto_resume_track_timeout_key">autoResumeTrackTimeout</string>
   <string name="bluetooth_sensor_key">bluetoothSensor</string>
@@ -62,9 +62,9 @@ limitations under the License.
   <string name="track_color_mode_key">trackColorMode</string>
   <string name="track_name_key">trackName</string>
   <!-- Keys for non-persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
-  <string name="backup_to_sd_key">backupToSd</string>
-  <string name="restore_from_sd_key">restoreFromSd</string>
   <string name="settings_backup_key">settingsBackup</string>
+  <string name="settings_backup_now_key">settingsBackupNow</string>
+  <string name="settings_backup_restore_key">settingsBackupRestore</string>
   <string name="settings_chart_key">settingsChart</string>
   <string name="settings_map_key">settingsMap</string>
   <string name="settings_map_medium_display_key">settingsMapMediumDisplay</string>

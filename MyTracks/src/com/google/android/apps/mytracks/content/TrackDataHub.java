@@ -369,7 +369,8 @@ public class TrackDataHub {
       loadSharedPreferences();
     }
     long recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
-    return recordingTrackId != -1L && recordingTrackId == selectedTrackId;
+    return recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT
+        && recordingTrackId == selectedTrackId;
   }
 
   /**

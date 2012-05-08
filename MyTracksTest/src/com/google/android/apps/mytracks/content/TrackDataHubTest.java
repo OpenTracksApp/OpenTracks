@@ -71,7 +71,7 @@ public class TrackDataHubTest extends AndroidTestCase {
   private TrackDataHub hub;
   private TrackDataListeners listeners;
   private DataSourcesWrapper dataSources;
-  private SharedPreferences prefs;
+  private SharedPreferences sharedPreferences;
   private TrackDataListener listener1;
   private TrackDataListener listener2;
   private Capture<OnSharedPreferenceChangeListener> preferenceListenerCapture =
@@ -88,12 +88,12 @@ public class TrackDataHubTest extends AndroidTestCase {
         getContext(), getContext(), "test.");
     context = new MockContext(mockContentResolver, targetContext);
 
-    prefs = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     providerUtils = AndroidMock.createMock("providerUtils", MyTracksProviderUtils.class);
     dataSources = AndroidMock.createNiceMock("dataSources", DataSourcesWrapper.class);
 
     listeners = new TrackDataListeners();
-    hub = new TrackDataHub(context, listeners, prefs, providerUtils, TARGET_POINTS) {
+    hub = new TrackDataHub(context, listeners, sharedPreferences, providerUtils, TARGET_POINTS) {
       @Override
       protected DataSourcesWrapper newDataSources() {
         return dataSources;
@@ -826,7 +826,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     PreferencesUtils.setBoolean(context, R.string.report_speed_key, false);
     OnSharedPreferenceChangeListener listener = listenerCapture.getValue();
     listener.onSharedPreferenceChanged(
-        prefs, PreferencesUtils.getKey(context, R.string.report_speed_key));
+        sharedPreferences, PreferencesUtils.getKey(context, R.string.report_speed_key));
 
     AndroidMock.verify(dataSources, providerUtils, listener1, listener2);
     AndroidMock.reset(dataSources, providerUtils, listener1, listener2);
@@ -838,7 +838,7 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     PreferencesUtils.setBoolean(context, R.string.metric_units_key, false);
     listener.onSharedPreferenceChanged(
-        prefs, PreferencesUtils.getKey(context, R.string.metric_units_key));
+        sharedPreferences, PreferencesUtils.getKey(context, R.string.metric_units_key));
 
     verifyAndReset();
   }

@@ -178,9 +178,8 @@ public class TrackListActivity extends FragmentActivity {
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(
         this, bindChangedCallback);
 
-    SharedPreferences sharedPreferences = getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
+        .registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     metricUnits = PreferencesUtils.getBoolean(
         this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
     recordingTrackId = PreferencesUtils.getLong(this, R.string.recording_track_id_key);
@@ -280,14 +279,16 @@ public class TrackListActivity extends FragmentActivity {
         EulaDialogFragment.newInstance(false)
             .show(getSupportFragmentManager(), EulaDialogFragment.EULA_DIALOG_TAG);
       }
-    } else if (PreferencesUtils.getBoolean(this, R.string.show_welcome_dialog_key, true)) {
+    } else if (PreferencesUtils.getBoolean(
+        this, R.string.show_welcome_dialog_key, PreferencesUtils.SHOW_WELCOME_DIALOG_DEFAULT)) {
       Fragment fragment = getSupportFragmentManager()
           .findFragmentByTag(WelcomeDialogFragment.WELCOME_DIALOG_TAG);
       if (fragment == null) {
         new WelcomeDialogFragment().show(
             getSupportFragmentManager(), WelcomeDialogFragment.WELCOME_DIALOG_TAG);
       }
-    } else if (PreferencesUtils.getBoolean(this, R.string.show_check_units_dialog_key, true)) {
+    } else if (PreferencesUtils.getBoolean(this, R.string.show_check_units_dialog_key,
+        PreferencesUtils.SHOW_CHECK_UNITS_DIALOG_DEFAULT)) {
       Fragment fragment = getSupportFragmentManager()
           .findFragmentByTag(CheckUnitsDialogFragment.CHECK_UNITS_DIALOG_TAG);
       if (fragment == null) {

@@ -41,10 +41,10 @@ import android.preference.Preference.OnPreferenceClickListener;
  */
 public class BackupSettingsActivity extends AbstractSettingsActivity {
 
-  private static final int DIALOG_CONFIRM_RESTORE_NOW_ID = 0;
+  private static final int DIALOG_CONFIRM_RESTORE_ID = 0;
 
-  Preference backupNowPreference;
-  Preference restoreNowPreference;
+  Preference backupPreference;
+  Preference restorePreference;
 
   /*
    * Note that sharedPreferenceChangeListenr cannot be an anonymous inner class.
@@ -66,13 +66,12 @@ public class BackupSettingsActivity extends AbstractSettingsActivity {
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
-    SharedPreferences sharedPreferences = getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
+        .registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
     addPreferencesFromResource(R.xml.backup_settings);
-    backupNowPreference = findPreference(getString(R.string.backup_to_sd_key));
-    backupNowPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+    backupPreference = findPreference(getString(R.string.settings_backup_now_key));
+    backupPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
         @Override
       public boolean onPreferenceClick(Preference preference) {
         Intent intent = IntentUtils.newIntent(BackupSettingsActivity.this, BackupActivity.class);
@@ -80,11 +79,11 @@ public class BackupSettingsActivity extends AbstractSettingsActivity {
         return true;
       }
     });
-    restoreNowPreference = findPreference(getString(R.string.restore_from_sd_key));
-    restoreNowPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+    restorePreference = findPreference(getString(R.string.settings_backup_restore_key));
+    restorePreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
         @Override
       public boolean onPreferenceClick(Preference preference) {
-        showDialog(DIALOG_CONFIRM_RESTORE_NOW_ID);
+        showDialog(DIALOG_CONFIRM_RESTORE_ID);
         return true;
       }
     });
@@ -92,7 +91,7 @@ public class BackupSettingsActivity extends AbstractSettingsActivity {
 
   @Override
   protected Dialog onCreateDialog(int id) {
-    if (id != DIALOG_CONFIRM_RESTORE_NOW_ID) {
+    if (id != DIALOG_CONFIRM_RESTORE_ID) {
       return null;
     }
     return DialogUtils.createConfirmationDialog(this,
@@ -118,11 +117,11 @@ public class BackupSettingsActivity extends AbstractSettingsActivity {
   private void updateUi() {
     boolean isRecording = PreferencesUtils.getLong(this, R.string.recording_track_id_key)
         != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-    backupNowPreference.setEnabled(!isRecording);
-    restoreNowPreference.setEnabled(!isRecording);
-    backupNowPreference.setSummary(isRecording ? R.string.settings_not_while_recording
+    backupPreference.setEnabled(!isRecording);
+    restorePreference.setEnabled(!isRecording);
+    backupPreference.setSummary(isRecording ? R.string.settings_not_while_recording
         : R.string.settings_backup_now_summary);
-    restoreNowPreference.setSummary(isRecording ? R.string.settings_not_while_recording
+    restorePreference.setSummary(isRecording ? R.string.settings_not_while_recording
         : R.string.settings_backup_restore_summary);
   }
 }

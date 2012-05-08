@@ -63,7 +63,7 @@ public class PreferenceManager implements OnSharedPreferenceChangeListener {
        * Only set the id if it is valid. Setting it to -1L should only happen
        * in TrackRecordingService.endCurrentTrack()
        */
-      if (recordingTrackId != -1L) {
+      if (recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
         service.setRecordingTrackId(recordingTrackId);
       }
     }

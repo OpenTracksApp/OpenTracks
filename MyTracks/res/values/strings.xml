@@ -1956,12 +1956,12 @@ limitations under the License.
   <string name="settings_stats_rate_pace_imperial"
     translation_description="In the 'Stats' settings, the option to display pace, with example in
       imperial units.">
-    Pace (hr/mi).
+    Pace (hr/mi)
   </string>
   <string name="settings_stats_rate_pace_metric"
     translation_description="In the 'Stats' settings, the option to display pace, with example in
       metric units.">
-    Pace (hr/km).
+    Pace (hr/km)
   </string>
   <string name="settings_stats_rate_speed_imperial"
     translation_description="In the 'Stats' settings, the option to display speed, with example in
@@ -1976,12 +1976,12 @@ limitations under the License.
   <string name="settings_stats_rate_title"
     translation_description="In the 'Stats' settings, the option to change the preferred rate,
       either speed (mi/hr) or pace (hr/mi).">
-    Preferred Rate
+    Preferred rate
   </string>
   <string name="settings_stats_time_title"
     translation_description="In the 'Stats' settings, the option to change the time measurement,
       either total time or moving time.">
-    Time Measurement
+    Time measurement
   </string>
   <string name="settings_stats_units_imperial"
     translation_description="In the 'Stats' setttings, the option to use imperial units, with
@@ -1996,7 +1996,7 @@ limitations under the License.
   <string name="settings_stats_units_title"
     translation_description="In the 'Stats' settings page, the option to change the preferred units,
       either metric (km) or imperial (mi).">
-    Preferred Units
+    Preferred units
   </string>
 
   <!-- Share Track -->

@@ -49,9 +49,8 @@ public class DynamicSpeedTrackPathDescriptor implements TrackPathDescriptor,
 
   public DynamicSpeedTrackPathDescriptor(Context context) {
     this.context = context;
-    SharedPreferences prefs = context.getSharedPreferences(Constants.SETTINGS_NAME,
-        Context.MODE_PRIVATE);
-    prefs.registerOnSharedPreferenceChangeListener(this);
+    context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
+        .registerOnSharedPreferenceChangeListener(this);
 
     speedMargin = PreferencesUtils.getInt(context, R.string.track_color_mode_percentage_key,
         PreferencesUtils.TRACK_COLOR_MODE_PERCENTAGE_DEFAULT);
@@ -89,7 +88,7 @@ public class DynamicSpeedTrackPathDescriptor implements TrackPathDescriptor,
   @Override
   public boolean needsRedraw() {
     long selectedTrackId = PreferencesUtils.getLong(context, R.string.selected_track_id_key);
-    if (selectedTrackId == -1L) {
+    if (selectedTrackId == PreferencesUtils.SELECTED_TRACK_ID_DEFAULT) {
       // Could not find track.
       return false;
     }

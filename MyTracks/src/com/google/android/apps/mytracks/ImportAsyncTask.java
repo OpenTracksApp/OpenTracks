@@ -83,7 +83,8 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(importActivity);
 
     // Get the wake lock if not recording
-    if (PreferencesUtils.getLong(importActivity, R.string.recording_track_id_key) == -1L) {
+    if (PreferencesUtils.getLong(importActivity, R.string.recording_track_id_key)
+        == PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
       wakeLock = SystemUtils.acquireWakeLock(importActivity, wakeLock);
     }
 

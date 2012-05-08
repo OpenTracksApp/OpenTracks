@@ -81,7 +81,7 @@ public class TrackWidgetProvider
   public TrackWidgetProvider() {
     super();
     contentHandler = new Handler();
-    selectedTrackId = -1;
+    selectedTrackId = PreferencesUtils.SELECTED_TRACK_ID_DEFAULT;
   }
 
   private void initialize(Context aContext) {
@@ -134,7 +134,7 @@ public class TrackWidgetProvider
 
   private void updateTrack(String action) {
     Track track = null;
-    if (selectedTrackId != -1) {
+    if (selectedTrackId != PreferencesUtils.SELECTED_TRACK_ID_DEFAULT) {
       Log.d(TAG, "TrackWidgetProvider.updateTrack: Retrieving specified track.");
       track = providerUtils.getTrack(selectedTrackId);
     } else {

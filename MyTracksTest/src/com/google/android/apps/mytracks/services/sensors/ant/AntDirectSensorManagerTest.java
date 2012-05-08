@@ -28,7 +28,6 @@ import android.test.suitebuilder.annotation.SmallTest;
 
 public class AntDirectSensorManagerTest extends AndroidTestCase {
 
-  private SharedPreferences sharedPreferences;
   private AntSensorBase heartRateSensor;
   private static final byte HEART_RATE_CHANNEL = 0;
 
@@ -48,7 +47,7 @@ public class AntDirectSensorManagerTest extends AndroidTestCase {
   private AntDirectSensorManager manager;
 
   public void setUp() {
-    sharedPreferences = getContext().getSharedPreferences(
+    SharedPreferences sharedPreferences = getContext().getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     // Let's use default values.
     sharedPreferences.edit().clear().apply();

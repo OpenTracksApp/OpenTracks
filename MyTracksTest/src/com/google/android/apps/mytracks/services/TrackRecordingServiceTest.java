@@ -65,7 +65,6 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
 
   private Context context;
   private MyTracksProviderUtils providerUtils;
-  private SharedPreferences sharedPreferences;
 
   /*
    * In order to support starting and binding to the service in the same
@@ -159,14 +158,16 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
 
     providerUtils = MyTracksProviderUtils.Factory.get(context);
 
-    sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    SharedPreferences sharedPreferences = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     // Let's use default values.
     sharedPreferences.edit().clear().apply();
 
     // Disable auto resume by default.
     updateAutoResumePrefs(PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT, 0);
     // No recording track.
-    PreferencesUtils.setLong(context, R.string.recording_track_id_key, -1L);
+    PreferencesUtils.setLong(
+        context, R.string.recording_track_id_key, PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
   }
 
   @SmallTest
@@ -438,8 +439,9 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     // End the current track.
     service.endCurrentTrack();
     assertFalse(service.isRecording());
-    assertEquals(-1L, PreferencesUtils.getLong(context, R.string.recording_track_id_key));
-    assertEquals(-1L, service.getRecordingTrackId());
+    assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT,
+        PreferencesUtils.getLong(context, R.string.recording_track_id_key));
+    assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, service.getRecordingTrackId());
 
     // Verify that the stop broadcast was received.
     assertTrue(stopReceiver.waitUntilReceived(1));
@@ -461,8 +463,9 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     // Ending the current track when there is no recording should not result in any error.
     service.endCurrentTrack();
 
-    assertEquals(-1L, PreferencesUtils.getLong(context, R.string.recording_track_id_key));
-    assertEquals(-1L, service.getRecordingTrackId());
+    assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT,
+        PreferencesUtils.getLong(context, R.string.recording_track_id_key));
+    assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, service.getRecordingTrackId());
   }
 
   @MediumTest
@@ -690,7 +693,8 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     assertTrue(track.getId() >= 0);
     providerUtils.insertTrack(track);
     assertEquals(track.getId(), providerUtils.getTrack(track.getId()).getId());
-    PreferencesUtils.setLong(context, R.string.recording_track_id_key, isRecording ? track.getId() : -1L);
+    PreferencesUtils.setLong(context, R.string.recording_track_id_key, isRecording ? track.getId()
+        : PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
   }
 
   private void fullRecordingSession() throws Exception {

@@ -20,14 +20,12 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 import com.dsi.ant.AntDefine;
 import com.dsi.ant.AntMesg;
 import com.dsi.ant.exception.AntInterfaceException;
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Sensor;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.BuildConfig;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 /**
@@ -68,12 +66,8 @@ public class AntSrmBridgeSensorManager extends AntSensorManager {
     deviceNumber = WILDCARD;
 
     // First read the the device id that we will be pairing with.
-    SharedPreferences prefs = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    if (prefs != null) {
-      deviceNumber = (short) PreferencesUtils.getInt(
-          context, R.string.ant_srm_bridge_sensor_id_key, WILDCARD);
-    }
+    deviceNumber = (short) PreferencesUtils.getInt(
+        context, R.string.ant_srm_bridge_sensor_id_key, WILDCARD);
     Log.i(TAG, "Will pair with device: " + deviceNumber);
   }
 

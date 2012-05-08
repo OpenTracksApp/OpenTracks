@@ -71,7 +71,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
   private static final String TAG = TrackDetailActivity.class.getSimpleName();
   private static final String CURRENT_TAG_KEY = "tab";
  
-  private SharedPreferences sharedPreferences;
   private TrackDataHub trackDataHub;
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private TabHost tabHost;
@@ -93,12 +92,13 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
    * Note that sharedPreferenceChangeListener cannot be an anonymous inner
    * class. Anonymous inner class will get garbage collected.
    */
-  private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener =
-      new OnSharedPreferenceChangeListener() {
-        @Override
+  private final OnSharedPreferenceChangeListener
+      sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
+          @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
           // Note that key can be null
-          if (PreferencesUtils.getKey(TrackDetailActivity.this, R.string.recording_track_id_key).equals(key)) {
+          if (PreferencesUtils.getKey(TrackDetailActivity.this, R.string.recording_track_id_key)
+              .equals(key)) {
             updateMenu();
           }
         }
@@ -128,9 +128,9 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
     super.onCreate(savedInstanceState);
     ApiAdapterFactory.getApiAdapter().hideTitle(this);
     setContentView(R.layout.track_detail);
-    
-    sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+
+    getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
+        .registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     trackDataHub = ((MyTracksApplication) getApplication()).getTrackDataHub();
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
 

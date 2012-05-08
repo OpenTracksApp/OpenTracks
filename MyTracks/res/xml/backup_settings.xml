@@ -17,11 +17,11 @@ limitations under the License.
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
   android:title="@string/settings_backup" >
   <Preference
-    android:key="@string/backup_to_sd_key"
+    android:key="@string/settings_backup_now_key"
     android:persistent="false"
     android:title="@string/settings_backup_now" />
   <Preference
-    android:key="@string/restore_from_sd_key"
+    android:key="@string/settings_backup_restore_key"
     android:persistent="false"
     android:title="@string/settings_backup_restore" />
 </PreferenceScreen>

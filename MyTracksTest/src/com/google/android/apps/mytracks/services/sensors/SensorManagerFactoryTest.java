@@ -11,13 +11,11 @@ import android.test.suitebuilder.annotation.SmallTest;
 
 public class SensorManagerFactoryTest extends AndroidTestCase {
 
-  private SharedPreferences sharedPreferences;
-
   @Override
   protected void setUp() throws Exception {
     super.setUp();
 
-    sharedPreferences = getContext().getSharedPreferences(
+    SharedPreferences sharedPreferences = getContext().getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     // Let's use default values.
     sharedPreferences.edit().clear().apply();

@@ -74,7 +74,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     @Override
     public void run() {
       Log.d(TAG, "UI update thread started");
-      while (PreferencesUtils.getLong(getActivity(), R.string.recording_track_id_key) != -1L) {
+      while (PreferencesUtils.getLong(getActivity(), R.string.recording_track_id_key)
+          != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
         getActivity().runOnUiThread(updateTotalTime);
         try {
           Thread.sleep(1000L);

@@ -60,7 +60,6 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
         return true;
       }
     });
-    updateUiByTrackColorMode(trackColorModeListPreference.getValue());
 
     slowEditTextPreference = (EditTextPreference) findPreference(
         getString(R.string.settings_map_slow_display_key));
@@ -78,6 +77,8 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
     configureImeActionDone(slowEditTextPreference);
     configureImeActionDone(mediumEditTextPreference);
     configureImeActionDone(percentageEditTextPreference);
+
+    updateUiByTrackColorMode(trackColorModeListPreference.getValue());
   }
 
   /**
@@ -175,16 +176,14 @@ public class MapSettingsActivity extends AbstractSettingsActivity {
    * 
    * @param trackColorMode the track color mode
    */
-  @SuppressWarnings("deprecation")
   private void updateUiByTrackColorMode(String trackColorMode) {
     boolean isFixedValue = trackColorMode.equals(
         getString(R.string.settings_map_track_color_mode_fixed_value));
     boolean isDynamicValue = trackColorMode.equals(
         getString(R.string.settings_map_track_color_mode_dynamic_value));
-    findPreference(getString(R.string.settings_map_slow_display_key)).setEnabled(isFixedValue);
-    findPreference(getString(R.string.settings_map_medium_display_key)).setEnabled(isFixedValue);
-    findPreference(getString(R.string.settings_map_percentage_display_key))
-        .setEnabled(isDynamicValue);
+    slowEditTextPreference.setEnabled(isFixedValue);
+    mediumEditTextPreference.setEnabled(isFixedValue);
+    percentageEditTextPreference.setEnabled(isDynamicValue);
   }
 
   /**

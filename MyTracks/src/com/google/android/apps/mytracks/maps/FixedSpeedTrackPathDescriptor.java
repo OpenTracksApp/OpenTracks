@@ -38,9 +38,8 @@ public class FixedSpeedTrackPathDescriptor
   public FixedSpeedTrackPathDescriptor(Context context) {
     this.context = context;
 
-    SharedPreferences sharedPreferences = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+    context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
+        .registerOnSharedPreferenceChangeListener(this);
 
     slowSpeed = PreferencesUtils.getInt(context, R.string.track_color_mode_slow_key,
         PreferencesUtils.TRACK_COLOR_MODE_SLOW_DEFAULT);

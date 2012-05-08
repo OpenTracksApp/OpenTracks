@@ -86,7 +86,8 @@ public class TrackRecordingServiceConnectionUtils {
         Log.e(TAG, "Failed to check if service is recording", e);
       }
     }
-    return PreferencesUtils.getLong(context, R.string.recording_track_id_key) != -1L;
+    return PreferencesUtils.getLong(context, R.string.recording_track_id_key)
+        != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
   }
 
   /**
@@ -108,7 +109,7 @@ public class TrackRecordingServiceConnectionUtils {
          */
         long recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
         trackRecordingService.endCurrentTrack();
-        if (recordingTrackId != -1L) {
+        if (recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
           Intent intent = IntentUtils.newIntent(context, TrackEditActivity.class)
               .putExtra(TrackEditActivity.EXTRA_TRACK_ID, recordingTrackId)
               .putExtra(TrackEditActivity.EXTRA_NEW_TRACK, true);
@@ -118,7 +119,8 @@ public class TrackRecordingServiceConnectionUtils {
         Log.e(TAG, "Unable to stop recording.", e);
       }
     } else {
-      PreferencesUtils.setLong(context, R.string.recording_track_id_key, -1L);
+      PreferencesUtils.setLong(
+          context, R.string.recording_track_id_key, PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
     }
     trackRecordingServiceConnection.stop();
   }
@@ -134,7 +136,8 @@ public class TrackRecordingServiceConnectionUtils {
       Context context, TrackRecordingServiceConnection trackRecordingServiceConnection) {
     trackRecordingServiceConnection.bindIfRunning();
     if (!isRecordingServiceRunning(context)) {
-      PreferencesUtils.setLong(context, R.string.recording_track_id_key, -1L);
+      PreferencesUtils.setLong(
+          context, R.string.recording_track_id_key, PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
     }
   }
 

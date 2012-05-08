@@ -81,16 +81,17 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
    * Note that sharedPreferenceChangeListener cannot be an anonymous inner
    * class. Anonymous inner class will get garbage collected.
    */
-  private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener =
-    new OnSharedPreferenceChangeListener() {
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-      // Note that key can be null
-      if (PreferencesUtils.getKey(MarkerListActivity.this, R.string.recording_track_id_key).equals(key)) {
-        updateMenu();
-      }
-    }
-  };
+  private final OnSharedPreferenceChangeListener
+      sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
+          @Override
+        public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
+          // Note that key can be null
+          if (PreferencesUtils.getKey(MarkerListActivity.this, R.string.recording_track_id_key)
+              .equals(key)) {
+            updateMenu();
+          }
+        }
+      };
 
   private long trackId = -1;
   private ResourceCursorAdapter resourceCursorAdapter;
@@ -113,9 +114,8 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
     setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
     setContentView(R.layout.marker_list);
 
-    SharedPreferences sharedPreferences = getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
+        .registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
     ListView listView = (ListView) findViewById(R.id.marker_list);
     listView.setEmptyView(findViewById(R.id.marker_list_empty));
@@ -188,7 +188,8 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
 
   private void updateMenu() {
     if (insertMarkerMenuItem != null) {
-      insertMarkerMenuItem.setVisible(trackId == PreferencesUtils.getLong(this, R.string.recording_track_id_key));
+      insertMarkerMenuItem.setVisible(
+          trackId == PreferencesUtils.getLong(this, R.string.recording_track_id_key));
     }
   }
 

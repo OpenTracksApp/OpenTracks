@@ -18,10 +18,10 @@ package com.google.android.apps.mytracks.services.sensors;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.services.sensors.ant.AntDirectSensorManager;
 import com.google.android.apps.mytracks.services.sensors.ant.AntSrmBridgeSensorManager;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 /**
@@ -53,17 +53,10 @@ public class SensorManagerFactory {
    * @return The sensor manager that corresponds to the sensor type setting.
    */
   public SensorManager getSensorManager(Context context) {
-    SharedPreferences prefs = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    if (prefs == null) {
-      return null;
-    }
-
     context = context.getApplicationContext();
-
     String sensorTypeValueNone = context.getString(R.string.sensor_type_value_none);
-    String sensorType = prefs.getString(
-        context.getString(R.string.sensor_type_key), sensorTypeValueNone);
+    String sensorType = PreferencesUtils.getString(
+        context, R.string.sensor_type_key, sensorTypeValueNone);
     Log.i(Constants.TAG, "Creating sensor of type: " + sensorType);
 
     if (sensorTypeValueNone.equals(sensorType)) {

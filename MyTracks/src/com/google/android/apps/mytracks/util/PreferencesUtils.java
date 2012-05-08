@@ -65,10 +65,18 @@ public class PreferencesUtils {
   public static final int MIN_REQUIRED_ACCURACY_POOR = 5000;
 
   public static final int PERIODIC_TASK_OFF = 0;
-
+  public static final boolean PICK_EXISTING_MAP_DEFAULT = false;
+  public static final boolean PICK_STATISTICS_MARKER_DEFAULT = true;
+  public static final String PREFERRED_ACCOUNT_DEFAULT = "";
   public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
   public static final boolean REPORT_SPEED_DEFAULT = true;
+  public static final long SELECTED_TRACK_ID_DEFAULT = -1L;
+  public static final boolean SEND_TO_DOCS_DEFAULT = true;
+  public static final boolean SEND_TO_FUSION_TABLES_DEFAULT = true;
+  public static final boolean SEND_TO_MAPS_DEFAULT = true;
   public static final boolean SHARE_URL_ONLY_DEFAULT = false;
+  public static final boolean SHOW_CHECK_UNITS_DIALOG_DEFAULT = true;
+  public static final boolean SHOW_WELCOME_DIALOG_DEFAULT = true;
   public static final int SPLIT_FREQUENCY_DEFAULT = 0;
 
   public static final boolean STATS_SHOW_COORDINATE_DEFAULT = false;
