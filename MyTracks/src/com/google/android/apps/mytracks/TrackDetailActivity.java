@@ -21,7 +21,6 @@ import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.fragments.ChartFragment;
-import com.google.android.apps.mytracks.fragments.ChartSettingsDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
 import com.google.android.apps.mytracks.fragments.MapFragment;
@@ -231,8 +230,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
     String currentTabTag = tabHost.getCurrentTabTag();
-    menu.findItem(R.id.track_detail_chart_settings).setVisible(
-        ChartFragment.CHART_FRAGMENT_TAG.equals(currentTabTag));
     MenuItem satelliteMode = menu.findItem(R.id.track_detail_satellite_mode)
         .setVisible(MapFragment.MAP_FRAGMENT_TAG.equals(currentTabTag));
     
@@ -346,10 +343,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
       case R.id.track_detail_sensor_state:
         intent = IntentUtils.newIntent(this, SensorStateActivity.class);
         startActivity(intent);
-        return true;
-      case R.id.track_detail_chart_settings:
-        new ChartSettingsDialogFragment().show(
-            getSupportFragmentManager(), ChartSettingsDialogFragment.CHART_SETTINGS_DIALOG_TAG);
         return true;
       case R.id.track_detail_settings:
         intent = IntentUtils.newIntent(this, SettingsActivity.class);

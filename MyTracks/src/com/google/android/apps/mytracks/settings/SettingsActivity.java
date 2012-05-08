@@ -62,6 +62,16 @@ public class SettingsActivity extends AbstractSettingsActivity {
       }
     });
 
+    Preference chartPreference = findPreference(getString(R.string.settings_chart_key));
+    chartPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        @Override
+      public boolean onPreferenceClick(Preference preference) {
+        Intent intent = IntentUtils.newIntent(SettingsActivity.this, ChartSettingsActivity.class);
+        startActivity(intent);
+        return true;
+      }
+    });
+
     Preference statsPreference = findPreference(getString(R.string.settings_stats_key));
     statsPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
         @Override

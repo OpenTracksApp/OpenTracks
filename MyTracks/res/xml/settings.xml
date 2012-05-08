@@ -21,6 +21,10 @@ limitations under the License.
     android:persistent="false"
     android:title="@string/track_detail_map_tab" />
   <Preference
+    android:key="@string/settings_chart_key"
+    android:persistent="false"
+    android:title="@string/track_detail_chart_tab" />
+  <Preference
     android:key="@string/settings_stats_key"
     android:persistent="false"
     android:title="@string/track_detail_stats_tab" />

@@ -32,7 +32,7 @@ limitations under the License.
     android:summaryOff="@string/stats_total_time"
     android:summaryOn="@string/stats_moving_time"
     android:title="@string/settings_stats_time_title" />
-  <PreferenceCategory android:title="@string/settings_stats_show" >
+  <PreferenceCategory android:title="@string/settings_show" >
     <CheckBoxPreference
       android:defaultValue="false"
       android:key="@string/stats_show_elevation_key"

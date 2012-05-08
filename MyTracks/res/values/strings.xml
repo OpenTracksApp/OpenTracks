@@ -416,30 +416,6 @@ limitations under the License.
     Record and share your GPS tracks with My Tracks.
   </string>
 
-  <!-- Chart Settings -->
-  <string name="chart_settings_by_distance"
-    translation_description="In the 'Chart settings' dialog, under the 'X axis' section, the radio
-      option to show the charts by distance. The other radio option is to show by time. User can
-      only choose one of the options.">
-    By distance
-  </string>
-  <string name="chart_settings_by_time"
-    translation_description="In the 'Chart settings' dialog, under the 'X axis' section, the radio
-      option to show the charts by time. The other radio option is to show by distance. User can
-      only choose one of the options.">
-    By time
-  </string>
-  <string name="chart_settings_x_axis"
-    translation_description="In the 'Chart settings' dialog, the section label for configuring the X
-      axis.">
-    X axis
-  </string>
-  <string name="chart_settings_y_axis"
-    translation_description="In the 'Chart settings' dialog, the section label for configuring the Y
-      axis.">
-    Y axis
-  </string>
-
   <!-- Description -->
   <string name="description_activity_type"
     translation_description="Activity type description.
@@ -1034,10 +1010,6 @@ limitations under the License.
     translation_description="In the menu, to go to the aggregated statistics page.">
     Aggregated statistics
   </string>
-  <string name="menu_chart_settings"
-    translation_description="In the menu, to change the chart settings.">
-    Chart settings
-  </string>
   <string name="menu_delete_all"
     translation_description="In the menu, to delete all the tracks.">
     Delete all
@@ -1521,6 +1493,22 @@ limitations under the License.
     Restore all tracks and settings from the SD card.
   </string>
 
+  <!-- Settings Chart -->
+  <string name="settings_chart_by_distance"
+    translation_description="In the 'Chart' settings, the option to display the x axis by
+      distance.">
+    By distance
+  </string>  
+  <string name="settings_chart_by_time"
+    translation_description="In the 'Chart' settings, the option to display the x axis by time.">
+    By time
+  </string>
+  <string name="settings_chart_x_axis"
+    translation_description="In the 'Chart' setttings, the option to change the x axis display,
+      either by distance or by time.">
+    X axis
+  </string>
+
   <!-- Settings Map -->
   <string name="settings_map_medium"
     translation_description="In the 'Map' settings, under the 'Fixed thresholds' configurations, the
@@ -1574,6 +1562,10 @@ limitations under the License.
   </string>
 
   <!-- Settings Others -->
+  <string name="settings_show"
+    translation_description="In settings, the section label to show additional values.">
+    Show
+  </string>
   <string name="settings_not_while_recording"
     translation_description="In settings, the summary for an option that is not available during a
       track recording.">
@@ -1985,10 +1977,6 @@ limitations under the License.
     translation_description="In the 'Stats' settings, the option to change the preferred rate,
       either speed (mi/hr) or pace (hr/mi).">
     Preferred Rate
-  </string>
-  <string name="settings_stats_show"
-    translation_description="In the 'Stats' settings, the section label to show additional stats.">
-    Show
   </string>
   <string name="settings_stats_time_title"
     translation_description="In the 'Stats' settings, the option to change the time measurement,
