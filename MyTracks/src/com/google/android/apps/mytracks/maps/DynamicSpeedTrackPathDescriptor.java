@@ -42,7 +42,6 @@ public class DynamicSpeedTrackPathDescriptor implements TrackPathDescriptor,
   private int slowSpeed;
   private int normalSpeed;
   private int speedMargin;
-  private final int speedMarginDefault;
   private double averageMovingSpeed;
   private final Context context;
   @VisibleForTesting
@@ -50,29 +49,12 @@ public class DynamicSpeedTrackPathDescriptor implements TrackPathDescriptor,
 
   public DynamicSpeedTrackPathDescriptor(Context context) {
     this.context = context;
-    speedMarginDefault = Integer.parseInt(context
-        .getString(R.string.color_mode_dynamic_percentage_default));
     SharedPreferences prefs = context.getSharedPreferences(Constants.SETTINGS_NAME,
         Context.MODE_PRIVATE);
-
-    if (prefs == null) {
-      speedMargin = speedMarginDefault;
-      return;
-    }
     prefs.registerOnSharedPreferenceChangeListener(this);
 
-    speedMargin = getSpeedMargin(prefs);
-  }
-
-  @VisibleForTesting
-  int getSpeedMargin(SharedPreferences sharedPreferences) {
-    try {
-      return Integer.parseInt(sharedPreferences.getString(
-          context.getString(R.string.track_color_mode_dynamic_speed_variation_key),
-          Integer.toString(speedMarginDefault)));
-    } catch (NumberFormatException e) {
-      return speedMarginDefault;
-    }
+    speedMargin = PreferencesUtils.getInt(context, R.string.track_color_mode_percentage_key,
+        PreferencesUtils.TRACK_COLOR_MODE_PERCENTAGE_DEFAULT);
   }
 
   /**
@@ -98,17 +80,10 @@ public class DynamicSpeedTrackPathDescriptor implements TrackPathDescriptor,
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
     Log.d(TAG, "DynamicSpeedTrackPathDescriptor: onSharedPreferences changed " + key);
-    if (key == null
-        || !key.equals(context.getString(R.string.track_color_mode_dynamic_speed_variation_key))) { return; }
-    SharedPreferences prefs = context.getSharedPreferences(Constants.SETTINGS_NAME,
-        Context.MODE_PRIVATE);
-
-    if (prefs == null) {
-      speedMargin = speedMarginDefault;
-      return;
+    if (PreferencesUtils.getKey(context, R.string.track_color_mode_percentage_key).equals(key)) {
+      speedMargin = PreferencesUtils.getInt(context, R.string.track_color_mode_percentage_key,
+          PreferencesUtils.TRACK_COLOR_MODE_PERCENTAGE_DEFAULT);
     }
-
-    speedMargin = getSpeedMargin(prefs);
   }
 
   @Override

@@ -15,87 +15,35 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-  android:title="@string/menu_settings">
-
-  <!-- Display settings -->
-  <PreferenceScreen android:title="@string/settings_display">
-    <ListPreference android:key="@string/track_color_mode_key"
-        android:title="@string/settings_display_track_color"
-        android:summary="@string/settings_display_track_color_summary"
-        android:entries="@array/display_track_color_options"
-        android:entryValues="@array/display_track_color_values"
-        android:defaultValue="@string/display_track_color_value_none"/>
-
-    <PreferenceCategory android:title="@string/settings_display_track_color_fixed"
-        android:key="@string/track_color_mode_fixed_speed_options_key">
-        <EditTextPreference android:key="@string/track_color_mode_fixed_speed_slow_key"
-            android:title="@string/settings_display_track_color_fixed_slow"
-            android:summary="@string/settings_display_track_color_fixed_slow_summary"
-            android:defaultValue="@string/color_mode_fixed_slow_default"
-            android:inputType="number"
-            android:maxLength="3">
-        </EditTextPreference>
-
-        <EditTextPreference android:key="@string/track_color_mode_fixed_speed_slow_display_key"
-            android:title="@string/settings_display_track_color_fixed_slow"
-            android:summary="@string/settings_display_track_color_fixed_slow_summary"
-            android:defaultValue="@string/color_mode_fixed_slow_default"
-            android:inputType="number"
-            android:maxLength="3">
-        </EditTextPreference>
-
-        <EditTextPreference android:key="@string/track_color_mode_fixed_speed_medium_key"
-            android:title="@string/settings_display_track_color_fixed_medium"
-            android:summary="@string/settings_display_track_color_fixed_medium_summary"
-            android:defaultValue="@string/color_mode_fixed_medium_default"
-            android:inputType="number"
-            android:maxLength="3">
-        </EditTextPreference>
-
-        <EditTextPreference android:key="@string/track_color_mode_fixed_speed_medium_display_key"
-            android:title="@string/settings_display_track_color_fixed_medium"
-            android:summary="@string/settings_display_track_color_fixed_medium_summary"
-            android:defaultValue="@string/color_mode_fixed_medium_default"
-            android:inputType="number"
-            android:maxLength="3">
-        </EditTextPreference>
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="@string/settings_display_track_color_dynamic">
-        <EditTextPreference android:key="@string/track_color_mode_dynamic_speed_variation_key"
-            android:title="@string/settings_display_track_color_dynamic_medium"
-            android:summary="@string/settings_display_track_color_dynamic_medium_summary"
-            android:defaultValue="@string/color_mode_dynamic_percentage_default"
-            android:inputType="number"
-            android:maxLength="2">
-        </EditTextPreference>
-    </PreferenceCategory>
-  </PreferenceScreen>
+  android:title="@string/menu_settings" >
+  <Preference
+    android:key="@string/settings_map_key"
+    android:persistent="false"
+    android:title="@string/track_detail_map_tab" />
   <Preference
     android:key="@string/settings_stats_key"
     android:persistent="false"
     android:title="@string/track_detail_stats_tab" />
   <Preference
-      android:title="@string/settings_recording"
-      android:key="@string/settings_recording_key"
-      android:persistent="false" />
+    android:key="@string/settings_recording_key"
+    android:persistent="false"
+    android:title="@string/settings_recording" />
   <Preference
-      android:title="@string/settings_sharing"
-      android:key="@string/settings_sharing_key"
-      android:persistent="false" />
-   <Preference
-      android:title="@string/settings_sensor"
-      android:key="@string/settings_sensor_key"
-      android:persistent="false" />
+    android:key="@string/settings_sharing_key"
+    android:persistent="false"
+    android:title="@string/settings_sharing" />
   <Preference
-      android:title="@string/settings_backup"
-      android:key="@string/settings_backup_key"
-      android:persistent="false" />
-  
+    android:key="@string/settings_sensor_key"
+    android:persistent="false"
+    android:title="@string/settings_sensor" />
+  <Preference
+    android:key="@string/settings_backup_key"
+    android:persistent="false"
+    android:title="@string/settings_backup" />
   <!-- Reset to defaults -->
   <Preference
-      android:title="@string/settings_reset"
-      android:key="@string/reset_key"
-      android:summary="@string/settings_reset_summary"
-      android:persistent="false" />
+    android:key="@string/reset_key"
+    android:persistent="false"
+    android:summary="@string/settings_reset_summary"
+    android:title="@string/settings_reset" />
 </PreferenceScreen>

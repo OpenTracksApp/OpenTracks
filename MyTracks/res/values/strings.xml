@@ -1520,97 +1520,60 @@ limitations under the License.
       the SD card.">
     Restore all tracks and settings from the SD card.
   </string>
-  
-  <!-- Settings Display -->
-  <string name="settings_display"
-    translation_description="In the 'Settings' page, the option to change the display related
-      settings.
 
-      Character limit: ~26 (1 line)">
-    Display
+  <!-- Settings Map -->
+  <string name="settings_map_medium"
+    translation_description="In the 'Map' settings, under the 'Fixed thresholds' configurations, the
+      option for configuring the top medium speed.">
+    Top medium speed
   </string>
-  <string name="settings_display_track_color"
-    translation_description="In the 'Display' settings, the dropdown option to choose a track color
-      mode for how to use different colors to color a track based on slow, medium, and fast speed.
-
-      Character limit: ~23 (1 line)">
-    Color mode
+  <string name="settings_map_percentage"
+    translation_description="In the 'Map' settings, under the 'Dynamic thresholds' configurations,
+      the option for configuring the percentage from the average speed for the medium speed range.">
+    Percentage from average
   </string>
-  <string name="settings_display_track_color_dynamic"
-    translation_description="In the 'Display' settings, for the 'Color mode' dropdown, the
-      option to use different colors to color a track based on dynamically determined speed
-      thresholds. E.g., use one color when the speed is below the slow speed threshold.
-
-      Character limit: ~21 (1 line)">
-    Dynamic thresholds
-  </string>
-  <string name="settings_display_track_color_dynamic_medium"
-    translation_description="In the 'Display' settings, under the 'Dynamic thresholds'
-      configurations, the option for configuring the percentage from the average speed for the
-      medium speed range. The color mode will use different colors to color a track depending
-      on whether the speed is above, in, or below the medium speed range.
-
-      Character limit: ~23 (1 line)">
-    Percentage
-  </string>
-  <string name="settings_display_track_color_dynamic_medium_summary"
-    translation_description="In the 'Display' settings, under the 'Dynamic thresholds'
-      configurations, the summary for the 'Percentage' option explaining that it sets
-      the percentage from the average speed for the medium speed range. The color mode will
-      use different colors to color a track depending on whether the speed is above, in, or below
+  <string name="settings_map_percentage_summary"
+    translation_description="In the 'Map' settings, under the 'Dynamic thresholds' configurations,
+      the summary for the 'Percentage from average' option explaining that it sets the percentage
+      from the average speed for the medium speed range. The 'Dynamic thresholds' track color mode
+      uses different colors to color a track depending on whether the speed is above, in, or below
       the medium speed range.">
     Percentage from the average speed for the medium speed range.
   </string>
-  <string name="settings_display_track_color_fixed"
-    translation_description="In the 'Display' settings, for the 'Color mode' dropdown, the
-      option to use different colors to color a track based on fixed speed thresholds. E.g., use
-      one color when the speed is below the slow speed threshold.
-
-      Character limit: ~21 (1 line)">
+  <string name="settings_map_slow"
+    translation_description="In the 'Map' settings, under the 'Fixed thresholds' configurations,
+      the option for configuring the top slow speed.">
+    Top slow speed
+  </string>
+  <string name="settings_map_track_color_mode"
+    translation_description="In the 'Map' settings, the option to select a track color mode for how
+      to use different colors to color a track based on slow, medium, and fast speed.">
+    Track color mode
+  </string>
+  <string name="settings_map_track_color_mode_dynamic"
+    translation_description="In the 'Map' settings, for the 'Track color mode' dropdown, the
+      option to use different colors to color a track based on dynamically determined speed
+      thresholds.">
+    Dynamic thresholds
+  </string>
+  <string name="settings_map_track_color_mode_fixed"
+    translation_description="In the 'Map' settings, for the 'Track color mode' dropdown, the
+      option to use different colors to color a track based on fixed speed thresholds.">
     Fixed thresholds
   </string>
-  <string name="settings_display_track_color_fixed_medium"
-    translation_description="In the 'Display' settings, under the 'Fixed thresholds' configurations,
-      the option for configuring the medium speed threshold. Thus any speed lower than the
-      threshold but greater than the slow speed threshold will be colored by the medium speed
-      color.
-
-      Character limit: ~23 (1 line)">
-    Medium speed
-  </string>
-  <string name="settings_display_track_color_fixed_medium_summary"
-    translation_description="In the 'Display' settings, under the 'Fixed thresholds' configurations,
-      the summary for the 'Medium speed' option explaining that it sets a cutoff speed
-      for the medium speed color.">
-    Medium speed top value.
-  </string>
-  <string name="settings_display_track_color_fixed_slow"
-    translation_description="In the 'Display' settings, under the 'Fixed thresholds' configurations,
-      the option for configuring the slow speed threshold. Thus any speed lower than the threshold
-      will be colored by the slow speed color.
-
-      Character limit: ~23 (1 line)">
-    Slow speed
-  </string>
-  <string name="settings_display_track_color_fixed_slow_summary"
-    translation_description="In the 'Display' settings, under the 'Fixed thresholds' configurations,
-      the summary for the 'Slow speed' option explaining that it sets a cutoff speed for
-      the slow speed color.">
-    Slow speed top value.
-  </string>
-  <string name="settings_display_track_color_single"
-    translation_description="In the 'Display' settings, for the 'Color mode' dropdown, the
-      option to use a single color for all speeds.
-
-      Character limit: ~21 (1 line)">
+  <string name="settings_map_track_color_mode_single"
+    translation_description="In the 'Map' settings, for the 'Track color mode' dropdown, the
+      option to use a single color for all speeds.">
     Single color
   </string>
-  <string name="settings_display_track_color_summary"
-    translation_description="In the 'Display' settings, the summary for the 'Color mode'
-      dropdown explaining that it configures how colors are used to color a track based on
-      slow, medium, and fast speed.">
+  <string name="settings_map_track_color_mode_summary"
+    translation_description="In the 'Map' settings, the summary for the 'Track color mode' option
+      explaining that it configures how colors are used to color a track based on slow, medium, and
+      fast speed.">
     The way to color a track based on slow, medium, and fast speed.
   </string>
+
+  <!-- Settings Others -->
   <string name="settings_not_while_recording"
     translation_description="In settings, the summary for an option that is not available during a
       track recording.">
@@ -2281,7 +2244,7 @@ limitations under the License.
       %1$.2f: a float number. E.g., '2.22'">
     %1$.2f km
   </string>
-    <string name="value_float_kilometer_hour"
+  <string name="value_float_kilometer_hour"
     translation_description="Display a float value in kilometers per hour (km/h).
 
       %1$.2f: a float number. E.g., '2.22'">
@@ -2352,6 +2315,12 @@ limitations under the License.
       %1$d: an integer value. E.g., '2'">
     %1$d km
   </string>
+  <string name="value_integer_kilometer_hour"
+    translation_description="Display an integer value in kilometers per hour (km/h).
+
+      %1$d: an integer value. E.g., '2'">
+    %1$d km/h
+  </string>
   <string name="value_integer_meter"
     translation_description="In a setting picker, the string format to display an integer value in
       meters (m).
@@ -2386,6 +2355,12 @@ limitations under the License.
 
       %1$d: an integer value. E.g., '2'">
     %1$d mi
+  </string>
+  <string name="value_integer_mile_hour"
+    translation_description="Display an integer value in miles per hour (mi/h).
+
+      %1$d: an integer value. E.g., '2'">
+    %1$d mi/h
   </string>
   <string name="value_integer_minute"
     translation_description="In a setting picker, the string format to display an integer value in

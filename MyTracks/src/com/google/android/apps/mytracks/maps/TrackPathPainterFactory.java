@@ -17,11 +17,10 @@ package com.google.android.apps.mytracks.maps;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
 
-import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 /**
@@ -40,26 +39,18 @@ public class TrackPathPainterFactory {
    * @return The TrackPathPainter that corresponds to the track color mode setting.
    */
   public static TrackPathPainter getTrackPathPainter(Context context) {
-    SharedPreferences prefs = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    if (prefs == null) {
-      return new SingleColorTrackPathPainter(context);
-    }
-    
-    String colorMode = prefs.getString(context.getString(R.string.track_color_mode_key), null);
-    Log.i(TAG, "Creating track path painter of type: " + colorMode);
+    String trackColorMode = PreferencesUtils.getString(context, R.string.track_color_mode_key,
+        context.getString(R.string.settings_map_track_color_mode_single_value));
+    Log.i(TAG, "Creating track path painter of type: " + trackColorMode);
 
-    if (colorMode == null
-        || colorMode.equals(context.getString(R.string.display_track_color_value_none))) {
-      return new SingleColorTrackPathPainter(context);
-    } else if (colorMode.equals(context.getString(R.string.display_track_color_value_fixed))) {
-      return new DynamicSpeedTrackPathPainter(context, 
-          new FixedSpeedTrackPathDescriptor(context));
-    } else if (colorMode.equals(context.getString(R.string.display_track_color_value_dynamic))) {
-      return new DynamicSpeedTrackPathPainter(context, 
-          new DynamicSpeedTrackPathDescriptor(context));
+    if (context.getString(R.string.settings_map_track_color_mode_fixed_value)
+        .equals(trackColorMode)) {
+      return new DynamicSpeedTrackPathPainter(context, new FixedSpeedTrackPathDescriptor(context));
+    } else if (context.getString(R.string.settings_map_track_color_mode_dynamic_value)
+        .equals(trackColorMode)) {
+      return new DynamicSpeedTrackPathPainter(context, new DynamicSpeedTrackPathDescriptor(
+          context));
     } else {
-      Log.w(TAG, "Using default track path painter. Unrecognized painter: " + colorMode);
       return new SingleColorTrackPathPainter(context);
     }
   }

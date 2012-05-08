@@ -16,36 +16,25 @@ limitations under the License.
 -->
 <resources>
   <!-- DO NOT TRANSLATE ANY STRINGS IN THIS FILE. -->
-  <string name="color_mode_dynamic_percentage_default">25</string>
-  <string name="color_mode_fixed_medium_default">15</string>
-  <string name="color_mode_fixed_slow_default">9</string>
-  <string name="display_track_color_value_dynamic">DYNAMIC</string>
-  <string name="display_track_color_value_fixed">FIXED</string>
-  <string name="display_track_color_value_none">NONE</string>
-  <string name="marker_statistics_icon_url">
-    http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png
-  </string>
-  <string name="marker_waypoint_icon_url">
-    http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png
-  </string>
-  <string name="my_tracks_analytics_id">UA-7222692-2</string> 
+  <string name="marker_statistics_icon_url">http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png</string>
+  <string name="marker_waypoint_icon_url">http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png</string>
+  <string name="my_tracks_analytics_id">UA-7222692-2</string>
   <string name="my_tracks_privacy_url">www.google.com/policies/privacy/</string>
   <string name="my_tracks_recording_service_name">My Tracks Recording Service</string>
-  <string name="my_tracks_support_url">
-    groups.google.com/a/googleproductforums.com/forum/#!categories/maps/mytracks
-  </string>
+  <string name="my_tracks_support_url">groups.google.com/a/googleproductforums.com/forum/#!categories/maps/mytracks</string>
   <string name="my_tracks_web_url">www.google.com/mobile/mytracks</string>
-  <string name="permission_notification_value">
-    com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS
-  </string>
+  <string name="permission_notification_value">com.google.android.apps.mytracks.MYTRACKS_NOTIFICATIONS</string>
   <string name="send_google_docs_url">docs.google.com</string>
   <string name="send_google_fusion_tables_url">google.com/fusiontables</string>
   <string name="send_google_maps_url">maps.google.com</string>
-  <string name="sensor_type_value_ant">ANT</string>    
+  <string name="sensor_type_value_ant">ANT</string>
   <string name="sensor_type_value_none">NONE</string>
   <string name="sensor_type_value_polar">POLAR</string>
   <string name="sensor_type_value_srm_ant_bridge">SRM_ANT_BRIDGE</string>
   <string name="sensor_type_value_zephyr">ZEPHYR</string>
+  <string name="settings_map_track_color_mode_dynamic_value">DYNAMIC</string>
+  <string name="settings_map_track_color_mode_fixed_value">FIXED</string>
+  <string name="settings_map_track_color_mode_single_value">SINGLE</string>
   <string name="settings_recording_track_name_date_iso_8601_value">DATE_ISO_8601</string>
   <string name="settings_recording_track_name_date_local_value">DATE_LOCAL</string>
   <string name="settings_recording_track_name_number_value">NUMBER</string>
@@ -53,4 +42,4 @@ limitations under the License.
   <string name="track_action_save">android.intent.action.SAVE</string>
   <string name="track_action_start">com.google.android.apps.mytracks.START_NEW_TRACK</string>
   <string name="value_unknown">-</string>
- </resources>
+</resources>

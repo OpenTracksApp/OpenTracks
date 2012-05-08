@@ -19,11 +19,9 @@ package com.google.android.apps.mytracks.settings;
 import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
-import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Dialog;
@@ -31,14 +29,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
-import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceCategory;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -58,19 +51,26 @@ public class SettingsActivity extends AbstractSettingsActivity {
     super.onCreate(bundle);
     addPreferencesFromResource(R.xml.preferences);
 
-    customizeTrackColorModePreferences();
+    Preference mapPreference = findPreference(getString(R.string.settings_map_key));
+    mapPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        @Override
+      public boolean onPreferenceClick(Preference preference) {
+        Intent intent = IntentUtils.newIntent(SettingsActivity.this, MapSettingsActivity.class);
+        startActivity(intent);
+        return true;
+      }
+    });
 
     Preference statsPreference = findPreference(getString(R.string.settings_stats_key));
     statsPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
         @Override
       public boolean onPreferenceClick(Preference preference) {
-        Intent intent = IntentUtils.newIntent(
-            SettingsActivity.this, StatsSettingsActivity.class);
+        Intent intent = IntentUtils.newIntent(SettingsActivity.this, StatsSettingsActivity.class);
         startActivity(intent);
         return true;
       }
     });
-    
+
     Preference recordingPreference = findPreference(getString(R.string.settings_recording_key));
     recordingPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
         @Override
@@ -139,31 +139,6 @@ public class SettingsActivity extends AbstractSettingsActivity {
     }
   }
 
-  private void customizeTrackColorModePreferences() {
-    ListPreference trackColorModePreference =
-        (ListPreference) findPreference(getString(R.string.track_color_mode_key));
-    trackColorModePreference.setOnPreferenceChangeListener(
-        new OnPreferenceChangeListener() {
-          @Override
-          public boolean onPreferenceChange(Preference preference,
-              Object newValue) {
-            updateTrackColorModeSettings((String) newValue);
-            return true;
-          }
-        });
-    updateTrackColorModeSettings(trackColorModePreference.getValue());
-    
-    setTrackColorModePreferenceListeners();
-    
-    PreferenceCategory speedOptionsCategory = (PreferenceCategory) findPreference(
-        getString(R.string.track_color_mode_fixed_speed_options_key));
-
-    speedOptionsCategory.removePreference(
-        findPreference(getString(R.string.track_color_mode_fixed_speed_slow_key)));
-    speedOptionsCategory.removePreference(
-        findPreference(getString(R.string.track_color_mode_fixed_speed_medium_key)));
-  }
-
   @Override
   protected void onResume() {
     super.onResume();
@@ -173,20 +148,6 @@ public class SettingsActivity extends AbstractSettingsActivity {
     resetPreference.setSummary(
         recording ? R.string.settings_not_while_recording
                   : R.string.settings_reset_summary);
-  }
-
-  private void updateTrackColorModeSettings(String trackColorMode) {
-    boolean usesFixedSpeed =
-        trackColorMode.equals(getString(R.string.display_track_color_value_fixed));
-    boolean usesDynamicSpeed =
-        trackColorMode.equals(getString(R.string.display_track_color_value_dynamic));
-
-    findPreference(getString(R.string.track_color_mode_fixed_speed_slow_display_key))
-        .setEnabled(usesFixedSpeed);
-    findPreference(getString(R.string.track_color_mode_fixed_speed_medium_display_key))
-        .setEnabled(usesFixedSpeed);
-    findPreference(getString(R.string.track_color_mode_dynamic_speed_variation_key))
-        .setEnabled(usesDynamicSpeed);
   }
 
   /** Callback for when user confirms resetting all settings. */
@@ -220,85 +181,5 @@ public class SettingsActivity extends AbstractSettingsActivity {
         });
       }
     }.start();
-  }
-  
-  /** 
-   * Set the given edit text preference text.
-   * If the units are not metric convert the value before displaying.  
-   */
-  private void viewTrackColorModeSettings(EditTextPreference preference, int id) {
-    if (PreferencesUtils.getBoolean(
-        this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT)) {
-      return;
-    }
-    // Convert miles/h to km/h
-    SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
-    String metricspeed = prefs.getString(getString(id), null);
-    int englishspeed;
-    try {
-      englishspeed = (int) (Double.parseDouble(metricspeed) * UnitConversions.KM_TO_MI);
-    } catch (NumberFormatException e) {
-      englishspeed = 0;
-    }
-    preference.getEditText().setText(String.valueOf(englishspeed));
-  }
-  
-  /** 
-   * Saves the given edit text preference value.
-   * If the units are not metric convert the value before saving.  
-   */
-  private void validateTrackColorModeSettings(String newValue, int id) {
-    String metricspeed;
-    if (PreferencesUtils.getBoolean(
-        this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT)) {
-      metricspeed = newValue;
-    } else {
-      // Convert miles/h to km/h
-      try {
-        metricspeed = String.valueOf(
-            (int) (Double.parseDouble(newValue) * UnitConversions.MI_TO_KM));
-      } catch (NumberFormatException e) {
-        metricspeed = "0";
-      }
-    }
-    SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
-    Editor editor = prefs.edit();
-    editor.putString(getString(id), metricspeed);
-    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
-  }
-  
-  /** 
-   * Sets the TrackColorMode preference listeners.
-   */
-  private void setTrackColorModePreferenceListeners() {
-    setTrackColorModePreferenceListener(R.string.track_color_mode_fixed_speed_slow_display_key,
-        R.string.track_color_mode_fixed_speed_slow_key);
-    setTrackColorModePreferenceListener(R.string.track_color_mode_fixed_speed_medium_display_key,
-        R.string.track_color_mode_fixed_speed_medium_key);
-  }
-  
-  /** 
-   * Sets a TrackColorMode preference listener.
-   */
-  private void setTrackColorModePreferenceListener(int displayKey, final int metricKey) {
-    EditTextPreference trackColorModePreference =
-        (EditTextPreference) findPreference(getString(displayKey));
-    trackColorModePreference.setOnPreferenceChangeListener(
-        new OnPreferenceChangeListener() {
-          @Override
-          public boolean onPreferenceChange(Preference preference,
-              Object newValue) {
-            validateTrackColorModeSettings((String) newValue, metricKey);
-            return true;
-          }
-        });
-    trackColorModePreference.setOnPreferenceClickListener(
-        new OnPreferenceClickListener() {
-          @Override
-          public boolean onPreferenceClick(Preference preference) {
-            viewTrackColorModeSettings((EditTextPreference) preference, metricKey);
-            return true;
-          }
-        });
   }
 }
