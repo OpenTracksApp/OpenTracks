@@ -40,6 +40,9 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,6 +92,12 @@ public class MapFragment extends Fragment
   private MapView mapView;
   private ImageButton myLocationImageButton;
   private TextView messageTextView;
+
+  @Override
+  public void onCreate(Bundle bundle) {
+    super.onCreate(bundle);
+    setHasOptionsMenu(true);
+  }
 
   @Override
   public View onCreateView(
@@ -156,6 +165,30 @@ public class MapFragment extends Fragment
     }
   }
 
+  @Override
+  public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflator) {
+    menuInflator.inflate(R.menu.map, menu);
+  }
+
+  @Override
+  public void onPrepareOptionsMenu(Menu menu) {
+    int titleId = R.string.menu_satellite_mode;
+    if (mapView != null) {
+      titleId = mapView.isSatellite() ? R.string.menu_map_mode : R.string.menu_satellite_mode;
+    }
+    menu.findItem(R.id.map_satellite_mode).setTitle(titleId);
+    super.onPrepareOptionsMenu(menu);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem menuItem) {
+    if (mapView != null && menuItem.getItemId() == R.id.map_satellite_mode) {
+      mapView.setSatellite(!mapView.isSatellite());
+      return true;
+    }
+    return super.onOptionsItemSelected(menuItem);
+  }
+
   /**
    * Shows my location.
    */
@@ -207,22 +240,6 @@ public class MapFragment extends Fragment
       markerTrackId = trackId;
       markerId = id;
     }
-  }
-
-  /**
-   * Returns true if in satellite mode.
-   */
-  public boolean isSatelliteView() {
-    return mapView.isSatellite();
-  }
-
-  /**
-   * Sets the satellite mode
-   * 
-   * @param enabled true for satellite mode, false for map mode
-   */
-  public void setSatelliteView(boolean enabled) {
-    mapView.setSatellite(enabled);
   }
 
   @Override

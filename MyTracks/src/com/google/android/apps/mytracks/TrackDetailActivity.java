@@ -228,27 +228,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
   }
 
   @Override
-  public boolean onPrepareOptionsMenu(Menu menu) {
-    String currentTabTag = tabHost.getCurrentTabTag();
-    MenuItem satelliteMode = menu.findItem(R.id.track_detail_satellite_mode)
-        .setVisible(MapFragment.MAP_FRAGMENT_TAG.equals(currentTabTag));
-    
-    if (satelliteMode.isVisible()) {
-      MapFragment mapFragment = (MapFragment) getSupportFragmentManager()
-          .findFragmentByTag(MapFragment.MAP_FRAGMENT_TAG);
-      /*
-       * The current tag is mapFragment, thus safe to call its methods like
-       * isSatelliteView.
-       */
-      boolean isSatelliteMode = mapFragment != null ? mapFragment.isSatelliteView() : false;
-      menu.findItem(R.id.track_detail_satellite_mode).setTitle(
-          isSatelliteMode ? R.string.menu_map_mode : R.string.menu_satellite_mode);
-    }
-
-    return super.onPrepareOptionsMenu(menu);
-  }
-
-  @Override
   protected void onHomeSelected() {
     Intent intent = IntentUtils.newIntent(this, TrackListActivity.class);
     startActivity(intent);
@@ -256,7 +235,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
   
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    MapFragment mapFragment;
     Intent intent;
     switch (item.getItemId()) {
       case R.id.track_detail_stop_recording:
@@ -332,13 +310,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
       case R.id.track_detail_delete:
         DeleteOneTrackDialogFragment.newInstance(trackId).show(
             getSupportFragmentManager(), DeleteOneTrackDialogFragment.DELETE_ONE_TRACK_DIALOG_TAG);
-        return true;
-      case R.id.track_detail_satellite_mode:
-        mapFragment = (MapFragment) getSupportFragmentManager()
-            .findFragmentByTag(MapFragment.MAP_FRAGMENT_TAG);
-        if (mapFragment != null) {
-          mapFragment.setSatelliteView(!mapFragment.isSatelliteView());
-        }
         return true;
       case R.id.track_detail_sensor_state:
         intent = IntentUtils.newIntent(this, SensorStateActivity.class);
