@@ -16,8 +16,6 @@
 
 package com.google.android.apps.mytracks.settings;
 
-import static com.google.android.apps.mytracks.Constants.TAG;
-
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
@@ -43,13 +41,16 @@ import android.widget.Toast;
  */
 public class SettingsActivity extends AbstractSettingsActivity {
 
+  private static final String TAG = SettingsActivity.class.getSimpleName();
   private static final int DIALOG_CONFIRM_RESET_ID = 0;
+
+  private Preference resetPreference;
 
   @SuppressWarnings("deprecation")
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
-    addPreferencesFromResource(R.xml.preferences);
+    addPreferencesFromResource(R.xml.settings);
 
     Preference mapPreference = findPreference(getString(R.string.settings_map_key));
     mapPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -81,10 +82,10 @@ public class SettingsActivity extends AbstractSettingsActivity {
         return true;
       }
     });
-    
+
     Preference sharingPreference = findPreference(getString(R.string.settings_sharing_key));
     sharingPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-      @Override
+        @Override
       public boolean onPreferenceClick(Preference preference) {
         Intent intent = IntentUtils.newIntent(SettingsActivity.this, SharingSettingsActivity.class);
         startActivity(intent);
@@ -94,28 +95,27 @@ public class SettingsActivity extends AbstractSettingsActivity {
 
     Preference sensorPreference = findPreference(getString(R.string.settings_sensor_key));
     sensorPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-      @Override
+        @Override
       public boolean onPreferenceClick(Preference preference) {
         Intent intent = IntentUtils.newIntent(SettingsActivity.this, SensorSettingsActivity.class);
         startActivity(intent);
         return true;
       }
     });
-    
+
     Preference backupPreference = findPreference(getString(R.string.settings_backup_key));
     backupPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-      @Override
+        @Override
       public boolean onPreferenceClick(Preference preference) {
         Intent intent = IntentUtils.newIntent(SettingsActivity.this, BackupSettingsActivity.class);
         startActivity(intent);
         return true;
       }
     });
-    
-    // Hook up action for resetting all settings
-    Preference resetPreference = findPreference(getString(R.string.reset_key));
+
+    resetPreference = findPreference(getString(R.string.settings_reset_key));
     resetPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-      @Override
+        @Override
       public boolean onPreferenceClick(Preference arg0) {
         showDialog(DIALOG_CONFIRM_RESET_ID);
         return true;
@@ -124,56 +124,50 @@ public class SettingsActivity extends AbstractSettingsActivity {
   }
 
   @Override
-  protected Dialog onCreateDialog(int id) {
-    switch (id) {
-      case DIALOG_CONFIRM_RESET_ID:
-        return DialogUtils.createConfirmationDialog(
-            this, R.string.settings_reset_confirm_message, new DialogInterface.OnClickListener() {
-              @Override
-              public void onClick(DialogInterface dialog, int button) {
-                onResetPreferencesConfirmed();
-              }
-            });
-      default:
-        return null;
-    }
+  protected void onResume() {
+    super.onResume();
+    boolean isRecording = PreferencesUtils.getLong(this, R.string.recording_track_id_key)
+        != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+    resetPreference.setEnabled(!isRecording);
+    resetPreference.setSummary(isRecording ? R.string.settings_not_while_recording
+        : R.string.settings_reset_summary);
   }
 
   @Override
-  protected void onResume() {
-    super.onResume();
-    Preference resetPreference = findPreference(getString(R.string.reset_key));
-    boolean recording = PreferencesUtils.getLong(this, R.string.recording_track_id_key) != -1;
-    resetPreference.setEnabled(!recording);
-    resetPreference.setSummary(
-        recording ? R.string.settings_not_while_recording
-                  : R.string.settings_reset_summary);
+  protected Dialog onCreateDialog(int id) {
+    if (id != DIALOG_CONFIRM_RESET_ID) {
+      return null;
+    }
+    return DialogUtils.createConfirmationDialog(
+        this, R.string.settings_reset_confirm_message, new DialogInterface.OnClickListener() {
+            @Override
+          public void onClick(DialogInterface dialog, int button) {
+            onResetPreferencesConfirmed();
+          }
+        });
   }
 
-  /** Callback for when user confirms resetting all settings. */
+  /**
+   * Callback when the user confirms resetting all settings.
+   */
   private void onResetPreferencesConfirmed() {
-    // Change preferences in a separate thread.
+    // Change preferences in a separate thread
     new Thread() {
-      @Override
+        @Override
       public void run() {
         Log.i(TAG, "Resetting all settings");
-
         SharedPreferences sharedPreferences = getSharedPreferences(
             Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-        // Actually wipe preferences (and save synchronously).
+        // Actually wipe preferences and save synchronously
         sharedPreferences.edit().clear().commit();
 
-        // Give UI feedback in the UI thread.
+        // Give UI feedback in the UI thread
         runOnUiThread(new Runnable() {
-          @Override
+            @Override
           public void run() {
-            // Give feedback to the user.
-            Toast.makeText(
-                SettingsActivity.this,
-                R.string.settings_reset_done,
-                Toast.LENGTH_SHORT).show();
-
-            // Restart the settings activity so all changes are loaded.
+            Toast.makeText(SettingsActivity.this, R.string.settings_reset_done, Toast.LENGTH_SHORT)
+                .show();
+            // Restart the settings activity so all changes are loaded
             Intent intent = getIntent()
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);

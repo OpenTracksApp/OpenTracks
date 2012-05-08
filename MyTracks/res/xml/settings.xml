@@ -40,10 +40,8 @@ limitations under the License.
     android:key="@string/settings_backup_key"
     android:persistent="false"
     android:title="@string/settings_backup" />
-  <!-- Reset to defaults -->
   <Preference
-    android:key="@string/reset_key"
+    android:key="@string/settings_reset_key"
     android:persistent="false"
-    android:summary="@string/settings_reset_summary"
     android:title="@string/settings_reset" />
 </PreferenceScreen>

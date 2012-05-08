@@ -58,7 +58,6 @@ limitations under the License.
 
   <!-- Keys for non-persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
   <string name="backup_to_sd_key">backupToSd</string>
-  <string name="reset_key">resetToDefaults</string>
   <string name="restore_from_sd_key">restoreFromSd</string>
   <string name="settings_backup_key">settingsBackup</string>
   <string name="settings_map_key">settingsMap</string>
@@ -66,6 +65,7 @@ limitations under the License.
   <string name="settings_map_percentage_display_key">settingsMapPercentageDisplay</string>
   <string name="settings_map_slow_display_key">settingsMapSlowDisplay</string>
   <string name="settings_recording_key">settingsRecording</string>
+  <string name="settings_reset_key">settingsReset</string>
   <string name="settings_sensor_key">settingsSensor</string>
   <string name="settings_sensor_ant_key">settingsSensorAnt</string>
   <string name="settings_sensor_bluetooth_key">settingsSensorBluetooth</string>
