@@ -22,7 +22,6 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
-import android.view.KeyEvent;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -55,7 +54,6 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
    * menus in these views.
    */
   public void testSwitchViewsAndMenusOfView() {
-    EndToEndTestUtils.SOLO.sendKey(KeyEvent.KEYCODE_MENU);
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete_all), true,
         false);
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_ok));
@@ -68,7 +66,6 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
 
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_chart_tab));
     EndToEndTestUtils.rotateAllActivities();
-    sendKeys(KeyEvent.KEYCODE_MENU);
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_chart_settings), true,
         false);
     assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks
@@ -76,9 +73,6 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     EndToEndTestUtils.SOLO.goBack();
 
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
-    sendKeys(KeyEvent.KEYCODE_MENU);
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_satellite_mode), false,
-        false);
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_sensor_state), true,
         false);
     assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks
@@ -86,9 +80,8 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     EndToEndTestUtils.SOLO.goBack();
 
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_map_tab));
-    sendKeys(KeyEvent.KEYCODE_MENU);
     assertTrue(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_my_location), false, false));
+        activityMyTracks.getString(R.string.my_location), false, false));
   }
 
   /**
@@ -99,7 +92,6 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     instrumentation.waitForIdleSync();
     // Check current mode.
     boolean isMapMode = true;
-    sendKeys(KeyEvent.KEYCODE_MENU);
     // If can not find switch menu in top menu, click More menu.
     if (!EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_satellite_mode),
         false, false)) {
@@ -119,7 +111,6 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     }
     instrumentation.waitForIdleSync();
 
-    EndToEndTestUtils.SOLO.sendKey(KeyEvent.KEYCODE_MENU);
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_help), false, false);
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.rotateAllActivities();

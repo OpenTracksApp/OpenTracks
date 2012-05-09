@@ -21,7 +21,6 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
-import android.view.KeyEvent;
 
 import java.io.File;
 
@@ -80,19 +79,17 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     int trackNumber = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
 
     // No file to imported.
-    sendKeys(KeyEvent.KEYCODE_MENU);
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_import_all), true,
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_save_all), true,
         false);
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.import_no_file,
         FileUtils.buildExternalDirectoryPath(EndToEndTestUtils.GPX)));
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_ok));
 
     // Click to export tracks(At least one track) to Gpx files.
-    sendKeys(KeyEvent.KEYCODE_MENU);
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_export_all), true,
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_save_all), true,
         false);
     EndToEndTestUtils.SOLO.clickOnText(String.format(
-        activityMyTracks.getString(R.string.menu_export_all_format),
+        activityMyTracks.getString(R.string.menu_save_format),
         EndToEndTestUtils.GPX.toUpperCase()));
     EndToEndTestUtils.rotateAllActivities();
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.export_success));
@@ -105,8 +102,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     gpxFilesNumber = EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length;
     trackNumber = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
 
-    sendKeys(KeyEvent.KEYCODE_MENU);
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_import_all), true,
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_import), true,
         false);
     EndToEndTestUtils.rotateAllActivities();
     // Wait for the prefix of import success string is much faster than wait
@@ -123,11 +119,10 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     // Click to export tracks(At least two tracks) to KML files.
     gpxFilesNumber = EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length;
     trackNumber = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
-    sendKeys(KeyEvent.KEYCODE_MENU);
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_export_all), true,
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_save_all), true,
         false);
     EndToEndTestUtils.SOLO.clickOnText(String.format(
-        activityMyTracks.getString(R.string.menu_export_all_format),
+        activityMyTracks.getString(R.string.menu_save_format),
         EndToEndTestUtils.KML.toUpperCase()));
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.export_success));
     // Check export files.

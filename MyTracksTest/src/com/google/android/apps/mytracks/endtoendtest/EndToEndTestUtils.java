@@ -58,6 +58,7 @@ public class EndToEndTestUtils {
   static final String KML = "kml";
   static final String CSV = "csv";
   static final String TCX = "tcx";
+  static final String BACKUPS = "backups";
   static final String MENU_MORE = "More";
   static String TRACK_NAME;
 
@@ -77,7 +78,9 @@ public class EndToEndTestUtils {
    * @param number send times
    */
   public static void sendGps(int number) {
-    if (number < 1) { return; }
+    if (number < 1) { 
+      return; 
+    }
     PrintStream out = null;
     Socket socket = null;
     try {
@@ -347,6 +350,7 @@ public class EndToEndTestUtils {
       }
     }
 
+    SOLO.sendKey(KeyEvent.KEYCODE_MENU);
     if (SOLO.searchText(menuName)) {
       findResult = true;
     } else if (SOLO.searchText(MENU_MORE)) {

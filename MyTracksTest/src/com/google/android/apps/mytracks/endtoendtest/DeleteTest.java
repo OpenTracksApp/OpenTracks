@@ -20,7 +20,6 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
-import android.view.KeyEvent;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -59,7 +58,6 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
     assertTrue(trackListView.size() > 0);
     assertTrue(trackListView.get(0).getCount() > 0);
 
-    EndToEndTestUtils.SOLO.sendKey(KeyEvent.KEYCODE_MENU);
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete_all), true,
         false);
     instrumentation.waitForIdleSync();
@@ -77,6 +75,7 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
   public void testDeleteSingleTrack() {
     EndToEndTestUtils.createSimpleTrack(0);
     EndToEndTestUtils.SOLO.goBack();
+    instrumentation.waitForIdleSync();
     // Get the number of track( or tracks)
     ArrayList<ListView> trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
     int trackNumberOld = trackListView.get(0).getCount();

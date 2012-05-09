@@ -20,7 +20,6 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
-import android.view.KeyEvent;
 
 /**
  * Tests the function of go to my location.
@@ -49,8 +48,7 @@ public class GoToMyLocationTest extends ActivityInstrumentationTestCase2<TrackLi
    */
   public void testGotoMyLocation() {
     EndToEndTestUtils.createSimpleTrack(0);
-    EndToEndTestUtils.SOLO.sendKey(KeyEvent.KEYCODE_MENU);
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_my_location), true,
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.my_location), true,
         false);
     // TODO How to verify the location is shown on the map.
   }

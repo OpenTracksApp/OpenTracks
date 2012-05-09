@@ -20,7 +20,6 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
-import android.view.KeyEvent;
 
 /**
  * Tests some menu items of MyTracks.
@@ -54,23 +53,20 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
    */
   public void testSomeMenuItems() {
     // Menu in TrackListActivity.
-    sendKeys(KeyEvent.KEYCODE_MENU);
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_aggregated_statistics),
         true, false);
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.stat_total_distance));
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.stats_total_distance));
     EndToEndTestUtils.SOLO.goBack();
 
     EndToEndTestUtils.startRecording();
     instrumentation.waitForIdleSync();
     // Menu in TrackDetailActivity.
-    sendKeys(KeyEvent.KEYCODE_MENU);
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_sensor_state), true,
         false);
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks
         .getString(R.string.sensor_state_last_sensor_time));
 
     EndToEndTestUtils.SOLO.goBack();
-    sendKeys(KeyEvent.KEYCODE_MENU);
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_help), true, false);
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.help_about));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
