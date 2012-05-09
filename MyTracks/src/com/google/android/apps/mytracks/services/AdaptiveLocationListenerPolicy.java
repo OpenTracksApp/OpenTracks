@@ -16,6 +16,7 @@
 
 package com.google.android.apps.mytracks.services;
 
+
 /**
  * A LocationListenerPolicy that will change based on how long the user has been
  * stationary.
@@ -39,7 +40,7 @@ public class AdaptiveLocationListenerPolicy implements LocationListenerPolicy {
   private final long maxInterval;
 
   private final int minDistance;
-
+  
   /**
    * The time the user has been at the current location, in milliseconds.
    */
