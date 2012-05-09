@@ -1,0 +1,194 @@
+/*
+ * Copyright 2012 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+package com.google.android.apps.mytracks.io.sendtogoogle;
+
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesUtils;
+import com.google.android.apps.mytracks.io.maps.SendMapsUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+/**
+ * A dialog to show the result of uploading to Google services.
+ *
+ * @author Jimmy Shih
+ */
+public class UploadResultActivity extends Activity {
+
+  private static final String TEXT_PLAIN_TYPE = "text/plain";
+  private static final int DIALOG_RESULT_ID = 0;
+
+  private SendRequest sendRequest;
+  private Track track;
+  private String shareUrl;
+  private Dialog resultDialog;
+  
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    sendRequest = getIntent().getParcelableExtra(SendRequest.SEND_REQUEST_KEY);
+    track = null;
+    shareUrl = null;
+    
+    if (sendRequest.isSendMaps() && sendRequest.isMapsSuccess()) {
+      shareUrl = SendMapsUtils.getMapUrl(getTrack());
+    }
+    if (shareUrl == null && sendRequest.isSendFusionTables()
+        && sendRequest.isFusionTablesSuccess()) {
+      shareUrl = SendFusionTablesUtils.getMapUrl(getTrack());
+    }
+  }
+
+  private Track getTrack() {
+    if (track == null) {
+      track = MyTracksProviderUtils.Factory.get(this).getTrack(sendRequest.getTrackId());
+    }
+    return track;
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+    showDialog(DIALOG_RESULT_ID);
+  }
+
+  @Override
+  protected Dialog onCreateDialog(int id) {
+    if (id != DIALOG_RESULT_ID) {
+      return null;
+    }    
+    View view = getLayoutInflater().inflate(R.layout.upload_result, null);
+
+    LinearLayout mapsResult = (LinearLayout) view.findViewById(R.id.upload_result_maps_result);
+    LinearLayout fusionTablesResult = (LinearLayout) view.findViewById(
+        R.id.upload_result_fusion_tables_result);
+    LinearLayout docsResult = (LinearLayout) view.findViewById(R.id.upload_result_docs_result);
+
+    ImageView mapsResultIcon = (ImageView) view.findViewById(R.id.upload_result_maps_result_icon);
+    ImageView fusionTablesResultIcon = (ImageView) view.findViewById(
+        R.id.upload_result_fusion_tables_result_icon);
+    ImageView docsResultIcon = (ImageView) view.findViewById(R.id.upload_result_docs_result_icon);
+
+    TextView successFooter = (TextView) view.findViewById(R.id.upload_result_success_footer);
+    TextView errorFooter = (TextView) view.findViewById(R.id.upload_result_error_footer);
+
+    boolean hasError = false;
+    if (!sendRequest.isSendMaps()) {
+      mapsResult.setVisibility(View.GONE);
+    } else {
+      if (!sendRequest.isMapsSuccess()) {
+        mapsResultIcon.setImageResource(R.drawable.failure);
+        mapsResultIcon.setContentDescription(getString(R.string.generic_error_title));
+        hasError = true;
+      }
+    }
+
+    if (!sendRequest.isSendFusionTables()) {
+      fusionTablesResult.setVisibility(View.GONE);
+    } else {
+      if (!sendRequest.isFusionTablesSuccess()) {
+        fusionTablesResultIcon.setImageResource(R.drawable.failure);
+        fusionTablesResultIcon.setContentDescription(getString(R.string.generic_error_title));
+        hasError = true;
+      }
+    }
+
+    if (!sendRequest.isSendDocs()) {
+      docsResult.setVisibility(View.GONE);
+    } else {
+      if (!sendRequest.isDocsSuccess()) {
+        docsResultIcon.setImageResource(R.drawable.failure);
+        docsResultIcon.setContentDescription(getString(R.string.generic_error_title));
+        hasError = true;
+      }
+    }
+
+    if (hasError) {
+      successFooter.setVisibility(View.GONE);
+    } else {
+      errorFooter.setVisibility(View.GONE);
+    }
+
+    AlertDialog.Builder builder = new AlertDialog.Builder(this)
+        .setCancelable(true)
+        .setIcon(hasError ? android.R.drawable.ic_dialog_alert : android.R.drawable.ic_dialog_info)
+        .setOnCancelListener(new DialogInterface.OnCancelListener() {
+          @Override
+          public void onCancel(DialogInterface dialog) {
+            finish();
+          }
+        })
+        .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            if (!sendRequest.isShowAll() && shareUrl != null) {
+              startShareUrlActivity(shareUrl);
+            }
+            finish();
+          }
+        })
+        .setTitle(hasError ? R.string.generic_error_title : R.string.generic_success_title)
+        .setView(view);
+
+    // Add a Share URL button if showing all the options and a shareUrl exists
+    if (sendRequest.isShowAll() && shareUrl != null) {
+      builder.setNegativeButton(
+          R.string.send_google_result_share_url, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              startShareUrlActivity(shareUrl);
+              finish();
+            }
+          });
+    }
+    resultDialog = builder.create();
+    return resultDialog;
+  }
+
+  /**
+   * Starts an activity to share the url.
+   * 
+   * @param url the url
+   */
+  private void startShareUrlActivity(String url) {
+    boolean shareUrlOnly = PreferencesUtils.getBoolean(
+        this, R.string.share_url_only_key, PreferencesUtils.SHARE_URL_ONLY_DEFAULT);
+    Intent intent = new Intent(Intent.ACTION_SEND)
+        .setType(TEXT_PLAIN_TYPE)
+        .putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_track_subject))
+        .putExtra(Intent.EXTRA_TEXT,
+            shareUrlOnly ? url : getString(R.string.share_track_url_body_format, url));
+    startActivity(Intent.createChooser(intent, getString(R.string.share_track_picker_title)));
+  }
+  
+  @VisibleForTesting
+  Dialog getDialog() {
+    return resultDialog;
+  }
+}
