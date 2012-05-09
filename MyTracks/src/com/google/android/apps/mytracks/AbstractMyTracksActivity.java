@@ -34,8 +34,8 @@ public class AbstractMyTracksActivity extends FragmentActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
-    ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);   
-  } 
+    ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
+  }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
@@ -44,8 +44,8 @@ public class AbstractMyTracksActivity extends FragmentActivity {
     }
     onHomeSelected();
     return true;
-  }  
-  
+  }
+
   /**
    * Callback when the home menu item is selected.
    */

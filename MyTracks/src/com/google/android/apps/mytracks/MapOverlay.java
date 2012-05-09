@@ -23,6 +23,7 @@ import com.google.android.apps.mytracks.maps.TrackPathPainterFactory;
 import com.google.android.apps.mytracks.maps.TrackPathUtilities;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
@@ -462,10 +463,8 @@ public class MapOverlay extends Overlay implements OnSharedPreferenceChangeListe
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
     Log.d(TAG, "MapOverlay: onSharedPreferences changed " + key);
-    if (key != null) {
-      if (key.equals(context.getString(R.string.track_color_mode_key))) {
-        trackPathPainter = TrackPathPainterFactory.getTrackPathPainter(context);
-      }
+    if (PreferencesUtils.getKey(context, R.string.track_color_mode_key).equals(key)) {
+      trackPathPainter = TrackPathPainterFactory.getTrackPathPainter(context);
     }
   }
 }

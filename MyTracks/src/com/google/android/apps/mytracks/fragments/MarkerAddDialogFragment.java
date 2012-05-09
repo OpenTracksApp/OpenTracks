@@ -97,8 +97,8 @@ public class MarkerAddDialogFragment extends DialogFragment {
         dismiss();
       }
     });
-    boolean pickStatisticsMarker = PreferencesUtils.getBoolean(
-        getActivity(), R.string.pick_statistics_marker_key, true);
+    boolean pickStatisticsMarker = PreferencesUtils.getBoolean(getActivity(),
+        R.string.pick_statistics_marker_key, PreferencesUtils.PICK_STATISTICS_MARKER_DEFAULT);
     radioGroup.check(pickStatisticsMarker ? R.id.marker_add_statistics : R.id.marker_add_waypoint);
     return new AlertDialog.Builder(getActivity())
         .setNegativeButton(R.string.generic_cancel, null)

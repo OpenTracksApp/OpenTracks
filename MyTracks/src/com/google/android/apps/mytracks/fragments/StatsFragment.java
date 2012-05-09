@@ -74,7 +74,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     @Override
     public void run() {
       Log.d(TAG, "UI update thread started");
-      while (PreferencesUtils.getRecordingTrackId(getActivity()) != -1L) {
+      while (PreferencesUtils.getLong(getActivity(), R.string.recording_track_id_key)
+          != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
         getActivity().runOnUiThread(updateTotalTime);
         try {
           Thread.sleep(1000L);
@@ -270,8 +271,11 @@ public class StatsFragment extends Fragment implements TrackDataListener {
   private synchronized boolean isRecording() {
     return trackDataHub != null && trackDataHub.isRecordingSelected();
   }
-  
-  public void updateUi() {
+
+  /**
+   * Updates the UI.
+   */
+  private void updateUi() {
     StatsUtils.setTripStatisticsValues(getActivity(), lastTripStatistics);
     StatsUtils.setLocationValues(getActivity(), lastLocation, true);
   }

@@ -19,12 +19,12 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Sensor;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -127,16 +127,20 @@ public class BluetoothSensorManager extends SensorManager {
       Log.w(Constants.TAG, "Disabled manager onStartTrack");
       return;
     }
-    SharedPreferences prefs = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    String address =
-      prefs.getString(context.getString(R.string.bluetooth_sensor_key), "");
-    if (address == null || address.equals("")) {
+    String address = PreferencesUtils.getString(
+        context, R.string.bluetooth_sensor_key, PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT);
+    if (PreferencesUtils.BLUETOOTH_SENSOR_DEFAULT.equals(address)) {
       return;
     }
     Log.w(Constants.TAG, "Connecting to bluetooth sensor: " + address);
     // Get the BluetoothDevice object
-    BluetoothDevice device = bluetoothAdapter.getRemoteDevice(address);
+    BluetoothDevice device;
+    try {
+      device = bluetoothAdapter.getRemoteDevice(address);
+    } catch (IllegalArgumentException e) {
+      Log.d(Constants.TAG, "Invalid address " + address, e);
+      return;
+    }
     // Attempt to connect to the device
     connectionManager.connect(device);
 

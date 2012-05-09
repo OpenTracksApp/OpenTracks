@@ -46,9 +46,9 @@ public class CheckUnitsDialogFragment extends DialogFragment {
   public Dialog onCreateDialog(Bundle savedInstanceState) {    
     Locale defaultLocale = Locale.getDefault();        
     boolean defaultMetric = !defaultLocale.equals(Locale.US) && !defaultLocale.equals(Locale.UK);
-    PreferencesUtils.setMetricUnits(getActivity(), defaultMetric);
-    final String metric = getString(R.string.preferred_units_metric);
-    final String imperial = getString(R.string.preferred_units_imperial);
+    PreferencesUtils.setBoolean(getActivity(), R.string.metric_units_key, defaultMetric);
+    final String metric = getString(R.string.settings_stats_units_metric);
+    final String imperial = getString(R.string.settings_stats_units_imperial);
     final CharSequence[] items = defaultMetric ? new CharSequence[] { metric, imperial }
         : new CharSequence[] { imperial, metric };
     return new AlertDialog.Builder(getActivity())
@@ -56,19 +56,20 @@ public class CheckUnitsDialogFragment extends DialogFragment {
           @Override
           public void onClick(DialogInterface dialog, int which) {
             int position = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-            PreferencesUtils.setMetricUnits(getActivity(), items[position].equals(metric));            
+            PreferencesUtils.setBoolean(
+                getActivity(), R.string.metric_units_key, items[position].equals(metric));
             onDone();
           }
         })
         .setSingleChoiceItems(items, 0, null)
-        .setTitle(R.string.preferred_units_title).create();
+        .setTitle(R.string.settings_stats_units_title).create();
   }
   
   /**
    * Tasks to perform when done.
    */
   private void onDone() {
-    PreferencesUtils.setShowCheckUnitsDialog(getActivity());
+    PreferencesUtils.setBoolean(getActivity(), R.string.show_check_units_dialog_key, false);
     TrackListActivity trackListActivity = (TrackListActivity) getActivity();
     trackListActivity.showStartupDialogs();   
   }

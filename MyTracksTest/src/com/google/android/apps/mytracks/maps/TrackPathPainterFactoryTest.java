@@ -15,11 +15,10 @@
  */
 package com.google.android.apps.mytracks.maps;
 
-import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.location.Location;
 
 /**
@@ -41,25 +40,20 @@ public class TrackPathPainterFactoryTest extends TrackPathPainterTestCase {
     }
     
     Context context = getContext();
-    SharedPreferences prefs = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    if (prefs == null) {
-      return;
-    }
 
-    testTrackPathPainterFactorySpecific(context, prefs, R.string.display_track_color_value_none, 
-        SingleColorTrackPathPainter.class);
-    testTrackPathPainterFactorySpecific(context, prefs, R.string.display_track_color_value_fixed, 
+    testTrackPathPainterFactorySpecific(context,
+        R.string.settings_map_track_color_mode_single_value, SingleColorTrackPathPainter.class);
+    testTrackPathPainterFactorySpecific(context, R.string.settings_map_track_color_mode_fixed_value,
         DynamicSpeedTrackPathPainter.class);
-    testTrackPathPainterFactorySpecific(context, prefs, R.string.display_track_color_value_dynamic, 
-        DynamicSpeedTrackPathPainter.class);
+    testTrackPathPainterFactorySpecific(context,
+        R.string.settings_map_track_color_mode_dynamic_value, DynamicSpeedTrackPathPainter.class);
   }
   
-  private <T> void testTrackPathPainterFactorySpecific(Context context, SharedPreferences prefs, 
-      int track_color_mode, Class <?> c) {
-    prefs.edit().putString(context.getString(R.string.track_color_mode_key), 
-        context.getString(track_color_mode)).apply();
-    
+  private <T> void testTrackPathPainterFactorySpecific(
+      Context context, int track_color_mode, Class<?> c) {
+    PreferencesUtils.setString(
+        context, R.string.track_color_mode_key, context.getString(track_color_mode));
+
     int startLocationIdx = 0;
     Boolean alwaysVisible = true;
     

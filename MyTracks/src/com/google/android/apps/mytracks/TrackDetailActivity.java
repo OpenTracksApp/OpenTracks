@@ -21,19 +21,17 @@ import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.fragments.ChartFragment;
-import com.google.android.apps.mytracks.fragments.ChartSettingsDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
 import com.google.android.apps.mytracks.fragments.MapFragment;
 import com.google.android.apps.mytracks.fragments.MarkerAddDialogFragment;
 import com.google.android.apps.mytracks.fragments.StatsFragment;
-import com.google.android.apps.mytracks.fragments.StatsSettingsDialogFragment;
-import com.google.android.apps.mytracks.fragments.StatsSettingsDialogFragment.OnStatsSettingsChangedListener;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.io.sendtogoogle.UploadServiceChooserActivity;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
+import com.google.android.apps.mytracks.settings.SettingsActivity;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.IntentUtils;
@@ -65,8 +63,7 @@ import java.util.List;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public class TrackDetailActivity extends AbstractMyTracksActivity
-    implements OnStatsSettingsChangedListener {
+public class TrackDetailActivity extends AbstractMyTracksActivity {
 
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_MARKER_ID = "marker_id";
@@ -74,7 +71,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity
   private static final String TAG = TrackDetailActivity.class.getSimpleName();
   private static final String CURRENT_TAG_KEY = "tab";
  
-  private SharedPreferences sharedPreferences;
   private TrackDataHub trackDataHub;
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private TabHost tabHost;
@@ -96,12 +92,13 @@ public class TrackDetailActivity extends AbstractMyTracksActivity
    * Note that sharedPreferenceChangeListener cannot be an anonymous inner
    * class. Anonymous inner class will get garbage collected.
    */
-  private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener =
-      new OnSharedPreferenceChangeListener() {
-        @Override
+  private final OnSharedPreferenceChangeListener
+      sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
+          @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
           // Note that key can be null
-          if (PreferencesUtils.getRecordingTrackIdKey(TrackDetailActivity.this).equals(key)) {
+          if (PreferencesUtils.getKey(TrackDetailActivity.this, R.string.recording_track_id_key)
+              .equals(key)) {
             updateMenu();
           }
         }
@@ -131,9 +128,9 @@ public class TrackDetailActivity extends AbstractMyTracksActivity
     super.onCreate(savedInstanceState);
     ApiAdapterFactory.getApiAdapter().hideTitle(this);
     setContentView(R.layout.track_detail);
-    
-    sharedPreferences = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+
+    getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
+        .registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     trackDataHub = ((MyTracksApplication) getApplication()).getTrackDataHub();
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
 
@@ -231,31 +228,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity
   }
 
   @Override
-  public boolean onPrepareOptionsMenu(Menu menu) {
-    String currentTabTag = tabHost.getCurrentTabTag();
-    menu.findItem(R.id.track_detail_chart_settings).setVisible(
-        ChartFragment.CHART_FRAGMENT_TAG.equals(currentTabTag));
-    menu.findItem(R.id.track_detail_stats_settings).setVisible(
-        StatsFragment.STATS_FRAGMENT_TAG.equals(currentTabTag));   
-    MenuItem satelliteMode = menu.findItem(R.id.track_detail_satellite_mode)
-        .setVisible(MapFragment.MAP_FRAGMENT_TAG.equals(currentTabTag));
-    
-    if (satelliteMode.isVisible()) {
-      MapFragment mapFragment = (MapFragment) getSupportFragmentManager()
-          .findFragmentByTag(MapFragment.MAP_FRAGMENT_TAG);
-      /*
-       * The current tag is mapFragment, thus safe to call its methods like
-       * isSatelliteView.
-       */
-      boolean isSatelliteMode = mapFragment != null ? mapFragment.isSatelliteView() : false;
-      menu.findItem(R.id.track_detail_satellite_mode).setTitle(
-          isSatelliteMode ? R.string.menu_map_mode : R.string.menu_satellite_mode);
-    }
-
-    return super.onPrepareOptionsMenu(menu);
-  }
-
-  @Override
   protected void onHomeSelected() {
     Intent intent = IntentUtils.newIntent(this, TrackListActivity.class);
     startActivity(intent);
@@ -263,7 +235,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity
   
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    MapFragment mapFragment;
     Intent intent;
     switch (item.getItemId()) {
       case R.id.track_detail_stop_recording:
@@ -340,24 +311,9 @@ public class TrackDetailActivity extends AbstractMyTracksActivity
         DeleteOneTrackDialogFragment.newInstance(trackId).show(
             getSupportFragmentManager(), DeleteOneTrackDialogFragment.DELETE_ONE_TRACK_DIALOG_TAG);
         return true;
-      case R.id.track_detail_satellite_mode:
-        mapFragment = (MapFragment) getSupportFragmentManager()
-            .findFragmentByTag(MapFragment.MAP_FRAGMENT_TAG);
-        if (mapFragment != null) {
-          mapFragment.setSatelliteView(!mapFragment.isSatelliteView());
-        }
-        return true;
       case R.id.track_detail_sensor_state:
         intent = IntentUtils.newIntent(this, SensorStateActivity.class);
         startActivity(intent);
-        return true;
-      case R.id.track_detail_chart_settings:
-        new ChartSettingsDialogFragment().show(
-            getSupportFragmentManager(), ChartSettingsDialogFragment.CHART_SETTINGS_DIALOG_TAG);
-        return true;
-      case R.id.track_detail_stats_settings:
-        new StatsSettingsDialogFragment().show(
-            getSupportFragmentManager(), StatsSettingsDialogFragment.STATS_SETTINGS_DIALOG_TAG);
         return true;
       case R.id.track_detail_settings:
         intent = IntentUtils.newIntent(this, SettingsActivity.class);
@@ -391,13 +347,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity
     return mapViewContainer;
   }
 
-  @Override
-  public void onStatsSettingsChanged() {
-    StatsFragment statsFragment = (StatsFragment) getSupportFragmentManager()
-        .findFragmentByTag(StatsFragment.STATS_FRAGMENT_TAG);
-    statsFragment.updateUi();    
-  }
-  
   /**
    * Handles the data in the intent.
    */
@@ -438,7 +387,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity
    * Updates the menu.
    */
   private void updateMenu() {
-    updateMenuItems(trackId == PreferencesUtils.getRecordingTrackId(this));
+    updateMenuItems(trackId == PreferencesUtils.getLong(this, R.string.recording_track_id_key));
   }
 
   /**

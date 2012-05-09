@@ -156,12 +156,7 @@ public class ChartView extends View {
   private boolean metricUnits = true;
   private boolean showPointer = false;
 
-  /** Display chart versus distance or time */
-  public enum Mode {
-    BY_DISTANCE, BY_TIME
-  }
-
-  private Mode mode = Mode.BY_DISTANCE;
+  private boolean chartByDistance = true;
 
   public ChartView(Context context) {
     super(context);
@@ -394,22 +389,17 @@ public class ChartView extends View {
   }
 
   /**
-   * @return the current display mode (by distance, by time)
+   * Sets chart by distance value. It is expected that after changing this
+   * value, data will be reloaded.
+   * 
+   * @param value true for by distance, false for by time.
    */
-  public Mode getMode() {
-    return mode;
-  }
-
-  /**
-   * Sets the display mode (by distance, by time).
-   * It is expected that after the mode change, data will be reloaded.
-   */
-  public void setMode(Mode mode) {
-    this.mode = mode;
+  public void setChartByDistance(boolean value) {
+    this.chartByDistance = value;
   }
 
   private int getWaypointX(Waypoint waypoint) {
-    if (mode == Mode.BY_DISTANCE) {
+    if (chartByDistance) {
       double lenghtInKm = waypoint.getLength() * UnitConversions.M_TO_KM;
       return getX(metricUnits ? lenghtInKm : lenghtInKm * UnitConversions.KM_TO_MI);
     } else {
@@ -813,8 +803,7 @@ public class ChartView extends View {
     if (x < 0) {
       return;
     }
-    String s =
-        (mode == Mode.BY_DISTANCE)
+    String s = chartByDistance
             ? (shortFormat ? X_SHORT_FORMAT.format(x) : X_FORMAT.format(x))
             : StringUtils.formatElapsedTime((long) x);
     c.drawText(s,
@@ -841,7 +830,7 @@ public class ChartView extends View {
     final int y = effectiveHeight + topBorder;
     canvas.drawLine(leftBorder, y, rightEdge, y, borderPaint);
     Context c = getContext();
-    String s = mode == Mode.BY_DISTANCE
+    String s = chartByDistance
         ? (metricUnits ? c.getString(R.string.unit_kilometer) : c.getString(R.string.unit_mile))
         : c.getString(R.string.unit_minute);
     canvas.drawText(s, rightEdge, effectiveHeight + .2f * UNIT_BORDER + topBorder, labelPaint);
@@ -873,17 +862,6 @@ public class ChartView extends View {
       int y = i * effectiveHeight / MAX_INTERVALS + topBorder;
       c.drawLine(leftBorder, y, rightEdge, y, gridBarPaint);
     }
-  }
-
-  /**
-   * Returns whether a given time series is enabled for drawing.
-   *
-   * @param index the time series, one of {@link #ELEVATION_SERIES},
-   *        {@link #SPEED_SERIES}, {@link #POWER_SERIES}, etc.
-   * @return true if drawn, false otherwise
-   */
-  public boolean isChartValueSeriesEnabled(int index) {
-    return series[index].isEnabled();
   }
 
   /**

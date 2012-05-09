@@ -81,7 +81,7 @@ public class TrackWidgetProvider
   public TrackWidgetProvider() {
     super();
     contentHandler = new Handler();
-    selectedTrackId = -1;
+    selectedTrackId = PreferencesUtils.SELECTED_TRACK_ID_DEFAULT;
   }
 
   private void initialize(Context aContext) {
@@ -134,7 +134,7 @@ public class TrackWidgetProvider
 
   private void updateTrack(String action) {
     Track track = null;
-    if (selectedTrackId != -1) {
+    if (selectedTrackId != PreferencesUtils.SELECTED_TRACK_ID_DEFAULT) {
       Log.d(TAG, "TrackWidgetProvider.updateTrack: Retrieving specified track.");
       track = providerUtils.getTrack(selectedTrackId);
     } else {
@@ -230,16 +230,17 @@ public class TrackWidgetProvider
 
   @Override
   public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-    if (key == null || key.equals(PreferencesUtils.getMetricUnitsKey(context))) {
-      metricUnits = PreferencesUtils.isMetricUnits(context);
+    if (key == null || PreferencesUtils.getKey(context, R.string.metric_units_key).equals(key)) {
+      metricUnits = PreferencesUtils.getBoolean(
+          context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
     }
-
-    if (key == null || key.equals(PreferencesUtils.getReportSpeedKey(context))) {
-      reportSpeed = PreferencesUtils.isReportSpeed(context);
+    if (key == null || PreferencesUtils.getKey(context, R.string.report_speed_key).equals(key)) {
+      reportSpeed = PreferencesUtils.getBoolean(
+          context, R.string.report_speed_key, PreferencesUtils.REPORT_SPEED_DEFAULT);
     }
-
-    if (key == null || key.equals(PreferencesUtils.getSelectedTrackIdKey(context))) {
-      selectedTrackId = PreferencesUtils.getSelectedTrackId(context);
+    if (key == null
+        || PreferencesUtils.getKey(context, R.string.selected_track_id_key).equals(key)) {
+      selectedTrackId = PreferencesUtils.getLong(context, R.string.selected_track_id_key);
       Log.d(TAG, "TrackWidgetProvider setting selecting track from preference: " + selectedTrackId);
     }
   }

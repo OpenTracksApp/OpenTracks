@@ -416,30 +416,6 @@ limitations under the License.
     Record and share your GPS tracks with My Tracks.
   </string>
 
-  <!-- Chart Settings -->
-  <string name="chart_settings_by_distance"
-    translation_description="In the 'Chart settings' dialog, under the 'X axis' section, the radio
-      option to show the charts by distance. The other radio option is to show by time. User can
-      only choose one of the options.">
-    By distance
-  </string>
-  <string name="chart_settings_by_time"
-    translation_description="In the 'Chart settings' dialog, under the 'X axis' section, the radio
-      option to show the charts by time. The other radio option is to show by distance. User can
-      only choose one of the options.">
-    By time
-  </string>
-  <string name="chart_settings_x_axis"
-    translation_description="In the 'Chart settings' dialog, the section label for configuring the X
-      axis.">
-    X axis
-  </string>
-  <string name="chart_settings_y_axis"
-    translation_description="In the 'Chart settings' dialog, the section label for configuring the Y
-      axis.">
-    Y axis
-  </string>
-
   <!-- Description -->
   <string name="description_activity_type"
     translation_description="Activity type description.
@@ -1034,10 +1010,6 @@ limitations under the License.
     translation_description="In the menu, to go to the aggregated statistics page.">
     Aggregated statistics
   </string>
-  <string name="menu_chart_settings"
-    translation_description="In the menu, to change the chart settings.">
-    Chart settings
-  </string>
   <string name="menu_delete_all"
     translation_description="In the menu, to delete all the tracks.">
     Delete all
@@ -1141,10 +1113,6 @@ limitations under the License.
     translation_description="In the menu, to show a marker on map.">
     Show on map
   </string>
-  <string name="menu_stats_settings"
-    translation_description="In the menu, to change the stats settings.">
-    Stats settings
-  </string>  
   <string name="menu_stop_recording"
     translation_description="In the menu, to stop recording a track.">
     Stop recording
@@ -1211,23 +1179,6 @@ limitations under the License.
     translation_description="When installing a third-party app that wants to write data to My
       Tracks, the permission label that the Android Market shows to the user.">
     write data to My Tracks and start/stop My Tracks recording
-  </string>
-
-  <!-- Preferred Units -->
-  <string name="preferred_units_imperial"
-    translation_description="In the dialog asking the user to choose a preferred units, the option
-      to choose the imperial units.">
-    Imperial (mi, ft)
-  </string>
-  <string name="preferred_units_metric"
-    translation_description="In the dialog asking the user to choose a preferred units, the option
-      to choose the metric units.">
-    Metric (km, m)
-  </string>
-  <string name="preferred_units_title"
-    translation_description="The title of the dialog asking the user to choose a preferred units,
-      metric or imperial.">
-    Preferred Units
   </string>
 
   <!-- Save All -->
@@ -1480,7 +1431,7 @@ limitations under the License.
     Sending
   </string>
 
-  <!-- Settings -->
+  <!-- Settings Backup -->
   <string name="settings_backup"
     translation_description="In the 'Settings' page, the option to change the data backup related
       settings.
@@ -1541,142 +1492,87 @@ limitations under the License.
       the SD card.">
     Restore all tracks and settings from the SD card.
   </string>
-  <string name="settings_backup_sd_card"
-    translation_description="In the 'Backup' settings, the section header for configuring backup to
-      the SD card.
 
-      Character limit: ~40 (1 line)">
-    SD card
+  <!-- Settings Chart -->
+  <string name="settings_chart_by_distance"
+    translation_description="In the 'Chart' settings, the option to display the x axis by
+      distance.">
+    By distance
+  </string>  
+  <string name="settings_chart_by_time"
+    translation_description="In the 'Chart' settings, the option to display the x axis by time.">
+    By time
   </string>
-  <string name="settings_display"
-    translation_description="In the 'Settings' page, the option to change the display related
-      settings.
+  <string name="settings_chart_x_axis"
+    translation_description="In the 'Chart' setttings, the option to change the x axis display,
+      either by distance or by time.">
+    X axis
+  </string>
 
-      Character limit: ~26 (1 line)">
-    Display
+  <!-- Settings Map -->
+  <string name="settings_map_medium"
+    translation_description="In the 'Map' settings, under the 'Fixed thresholds' configurations, the
+      option for configuring the top medium speed.">
+    Top medium speed
   </string>
-  <string name="settings_display_metric"
-    translation_description="In the 'Display' settings, the checkbox option to use the metric units.
-
-      Character limit: ~23 (1 line)">
-    Use metric
+  <string name="settings_map_percentage"
+    translation_description="In the 'Map' settings, under the 'Dynamic thresholds' configurations,
+      the option for configuring the percentage from the average speed for the medium speed range.">
+    Percentage from average
   </string>
-  <string name="settings_display_metric_summary_off"
-    translation_description="In the 'Display' settings, the summary for the 'Use metric'
-      checkbox when it is unchecked explaining using the imperial units to display distances.">
-    Use imperial units to display distances.
-  </string>
-  <string name="settings_display_metric_summary_on"
-    translation_description="In the 'Display' settings, the summary for the 'Use metric'
-      checkbox when it is checked explaining using the metric units to display distances.">
-    Use metric units to display distances.
-  </string>
-  <string name="settings_display_speed"
-    translation_description="In the 'Display' settings, the checkbox option to display speed (e.g.,
-      5 miles per hour) instead of pace (e.g., 0.2 hours per mile).
-
-      Character limit: ~23 (1 line)">
-    Display speed
-  </string>
-  <string name="settings_display_speed_summary_off"
-    translation_description="In the 'Display' settings, the summary for the 'Display speed' checkbox
-      when it is unchecked explaining that pace (e.g., 0.2 hours per mile) will be used instead of
-      speed (e.g., 5 miles per hour).">
-    Display pace (e.g., hours/mile).
-  </string>
-  <string name="settings_display_speed_summary_on"
-    translation_description="In the 'Display' settings, the summary for the 'Display speed' checkbox
-      when it is checked explaining that speed (e.g., 5 miles per hour) will be used instead of pace
-      (e.g., 0.2 hours per mile).">
-    Display speed (e.g., miles/hour).
-  </string>
-  <string name="settings_display_track_color"
-    translation_description="In the 'Display' settings, the dropdown option to choose a track color
-      mode for how to use different colors to color a track based on slow, medium, and fast speed.
-
-      Character limit: ~23 (1 line)">
-    Color mode
-  </string>
-  <string name="settings_display_track_color_dynamic"
-    translation_description="In the 'Display' settings, for the 'Color mode' dropdown, the
-      option to use different colors to color a track based on dynamically determined speed
-      thresholds. E.g., use one color when the speed is below the slow speed threshold.
-
-      Character limit: ~21 (1 line)">
-    Dynamic thresholds
-  </string>
-  <string name="settings_display_track_color_dynamic_medium"
-    translation_description="In the 'Display' settings, under the 'Dynamic thresholds'
-      configurations, the option for configuring the percentage from the average speed for the
-      medium speed range. The color mode will use different colors to color a track depending
-      on whether the speed is above, in, or below the medium speed range.
-
-      Character limit: ~23 (1 line)">
-    Percentage
-  </string>
-  <string name="settings_display_track_color_dynamic_medium_summary"
-    translation_description="In the 'Display' settings, under the 'Dynamic thresholds'
-      configurations, the summary for the 'Percentage' option explaining that it sets
-      the percentage from the average speed for the medium speed range. The color mode will
-      use different colors to color a track depending on whether the speed is above, in, or below
+  <string name="settings_map_percentage_summary"
+    translation_description="In the 'Map' settings, under the 'Dynamic thresholds' configurations,
+      the summary for the 'Percentage from average' option explaining that it sets the percentage
+      from the average speed for the medium speed range. The 'Dynamic thresholds' track color mode
+      uses different colors to color a track depending on whether the speed is above, in, or below
       the medium speed range.">
     Percentage from the average speed for the medium speed range.
   </string>
-  <string name="settings_display_track_color_fixed"
-    translation_description="In the 'Display' settings, for the 'Color mode' dropdown, the
-      option to use different colors to color a track based on fixed speed thresholds. E.g., use
-      one color when the speed is below the slow speed threshold.
-
-      Character limit: ~21 (1 line)">
+  <string name="settings_map_slow"
+    translation_description="In the 'Map' settings, under the 'Fixed thresholds' configurations,
+      the option for configuring the top slow speed.">
+    Top slow speed
+  </string>
+  <string name="settings_map_track_color_mode"
+    translation_description="In the 'Map' settings, the option to select a track color mode for how
+      to use different colors to color a track based on slow, medium, and fast speed.">
+    Track color mode
+  </string>
+  <string name="settings_map_track_color_mode_dynamic"
+    translation_description="In the 'Map' settings, for the 'Track color mode' dropdown, the
+      option to use different colors to color a track based on dynamically determined speed
+      thresholds.">
+    Dynamic thresholds
+  </string>
+  <string name="settings_map_track_color_mode_fixed"
+    translation_description="In the 'Map' settings, for the 'Track color mode' dropdown, the
+      option to use different colors to color a track based on fixed speed thresholds.">
     Fixed thresholds
   </string>
-  <string name="settings_display_track_color_fixed_medium"
-    translation_description="In the 'Display' settings, under the 'Fixed thresholds' configurations,
-      the option for configuring the medium speed threshold. Thus any speed lower than the
-      threshold but greater than the slow speed threshold will be colored by the medium speed
-      color.
-
-      Character limit: ~23 (1 line)">
-    Medium speed
-  </string>
-  <string name="settings_display_track_color_fixed_medium_summary"
-    translation_description="In the 'Display' settings, under the 'Fixed thresholds' configurations,
-      the summary for the 'Medium speed' option explaining that it sets a cutoff speed
-      for the medium speed color.">
-    Medium speed top value.
-  </string>
-  <string name="settings_display_track_color_fixed_slow"
-    translation_description="In the 'Display' settings, under the 'Fixed thresholds' configurations,
-      the option for configuring the slow speed threshold. Thus any speed lower than the threshold
-      will be colored by the slow speed color.
-
-      Character limit: ~23 (1 line)">
-    Slow speed
-  </string>
-  <string name="settings_display_track_color_fixed_slow_summary"
-    translation_description="In the 'Display' settings, under the 'Fixed thresholds' configurations,
-      the summary for the 'Slow speed' option explaining that it sets a cutoff speed for
-      the slow speed color.">
-    Slow speed top value.
-  </string>
-  <string name="settings_display_track_color_single"
-    translation_description="In the 'Display' settings, for the 'Color mode' dropdown, the
-      option to use a single color for all speeds.
-
-      Character limit: ~21 (1 line)">
+  <string name="settings_map_track_color_mode_single"
+    translation_description="In the 'Map' settings, for the 'Track color mode' dropdown, the
+      option to use a single color for all speeds.">
     Single color
   </string>
-  <string name="settings_display_track_color_summary"
-    translation_description="In the 'Display' settings, the summary for the 'Color mode'
-      dropdown explaining that it configures how colors are used to color a track based on
-      slow, medium, and fast speed.">
+  <string name="settings_map_track_color_mode_summary"
+    translation_description="In the 'Map' settings, the summary for the 'Track color mode' option
+      explaining that it configures how colors are used to color a track based on slow, medium, and
+      fast speed.">
     The way to color a track based on slow, medium, and fast speed.
+  </string>
+
+  <!-- Settings Others -->
+  <string name="settings_show"
+    translation_description="In settings, the section label to show additional values.">
+    Show
   </string>
   <string name="settings_not_while_recording"
     translation_description="In settings, the summary for an option that is not available during a
       track recording.">
     Not available while recording a track.
   </string>
+  
+  <!-- Settings Recording -->
   <string name="settings_recording"
     translation_description="In the 'Settings' page, the option to change the track recording
       related settings.
@@ -1822,6 +1718,8 @@ limitations under the License.
       announcements.">
     Time/distance between two voice announcements.
   </string>
+  
+  <!-- Settings Reset -->
   <string name="settings_reset"
     translation_description="In the 'Settings' page, the option to reset everything to the defaults.
 
@@ -1845,6 +1743,8 @@ limitations under the License.
       explaining reverting all the settings to the default values.">
     Revert all your settings to the default values.
   </string>
+  
+  <!-- Settings Sensor -->
   <string name="settings_sensor"
     translation_description="In the 'Settings' page, the option to change the sensor related
       settings.
@@ -1968,6 +1868,8 @@ limitations under the License.
       Character limit: ~26 (1 line)">
     Unpair SRM ANT+ bridge
   </string>
+  
+  <!-- Settings Sharing -->
   <string name="settings_sharing"
     translation_description="In the 'Settings' page, the option to change the track sharing related
       settings.
@@ -2040,9 +1942,61 @@ limitations under the License.
       sharing a URL with friends.">
    Remove any descriptive text when sharing a URL with friends.
   </string>
-  <string name="settings_title"
-    translation_description="The title of the 'Settings' page.">
-    My Tracks settings
+
+  <!-- Settings Stats -->
+  <string name="settings_stats_coordinate"
+    translation_description="In the 'Stats settings, the option to show latitude and longitude.">
+    Latitude/Longitude
+  </string>
+  <string name="settings_stats_grade"
+    translation_description="In the 'Stats settings, the option to show grade. Grade is the amount
+      of inclination to the horizontal, also known as slope or incline.">
+    Grade
+  </string>
+  <string name="settings_stats_rate_pace_imperial"
+    translation_description="In the 'Stats' settings, the option to display pace, with example in
+      imperial units.">
+    Pace (hr/mi)
+  </string>
+  <string name="settings_stats_rate_pace_metric"
+    translation_description="In the 'Stats' settings, the option to display pace, with example in
+      metric units.">
+    Pace (hr/km)
+  </string>
+  <string name="settings_stats_rate_speed_imperial"
+    translation_description="In the 'Stats' settings, the option to display speed, with example in
+      imperial units.">
+    Speed (mi/hr)
+  </string>
+  <string name="settings_stats_rate_speed_metric"
+    translation_description="In the 'Stats' settings, the option to display speed, with example in
+      metric units.">
+    Speed (km/hr)
+  </string>
+  <string name="settings_stats_rate_title"
+    translation_description="In the 'Stats' settings, the option to change the preferred rate,
+      either speed (mi/hr) or pace (hr/mi).">
+    Preferred rate
+  </string>
+  <string name="settings_stats_time_title"
+    translation_description="In the 'Stats' settings, the option to change the time measurement,
+      either total time or moving time.">
+    Time measurement
+  </string>
+  <string name="settings_stats_units_imperial"
+    translation_description="In the 'Stats' setttings, the option to use imperial units, with
+      examples.">
+    Imperial (mi, ft)
+  </string>
+  <string name="settings_stats_units_metric"
+    translation_description="In the 'Stats' settings, the option to use metric units, with
+      examples.">
+    Metric (km, m)
+  </string>  
+  <string name="settings_stats_units_title"
+    translation_description="In the 'Stats' settings page, the option to change the preferred units,
+      either metric (km) or imperial (mi).">
+    Preferred units
   </string>
 
   <!-- Share Track -->
@@ -2145,28 +2099,6 @@ limitations under the License.
     Total time
   </string>
 
-  <!-- Stats Settings -->
-  <string name="stats_settings_show"
-    translation_description="In the 'Stats settings' dialog, the section label to show additional
-      stats.">
-    Show
-  </string>
-  <string name="stats_settings_grade"
-    translation_description="In the 'Stats settings' dialog, the option to show grade. Grade is
-      the amount of inclination to the horizontal, also known as slope or incline.">
-    Grade
-  </string>
-  <string name="stats_settings_coordinate"
-    translation_description="In the 'Stats settings' dialog, the option to show latitude and
-      longitude.">
-    Latitude/Longitude
-  </string>
-  <string name="stats_settings_time"
-    translation_description="In the 'Stats settings' dialog, the section label to choose between
-      displaying total time or moving time.">
-    Time
-  </string>
-  
   <!-- Track -->
   <string name="track_detail_chart_tab"
     translation_description="In the track detail page, the title of the tab showing the chart.">
@@ -2300,7 +2232,7 @@ limitations under the License.
       %1$.2f: a float number. E.g., '2.22'">
     %1$.2f km
   </string>
-    <string name="value_float_kilometer_hour"
+  <string name="value_float_kilometer_hour"
     translation_description="Display a float value in kilometers per hour (km/h).
 
       %1$.2f: a float number. E.g., '2.22'">
@@ -2371,6 +2303,12 @@ limitations under the License.
       %1$d: an integer value. E.g., '2'">
     %1$d km
   </string>
+  <string name="value_integer_kilometer_hour"
+    translation_description="Display an integer value in kilometers per hour (km/h).
+
+      %1$d: an integer value. E.g., '2'">
+    %1$d km/h
+  </string>
   <string name="value_integer_meter"
     translation_description="In a setting picker, the string format to display an integer value in
       meters (m).
@@ -2405,6 +2343,12 @@ limitations under the License.
 
       %1$d: an integer value. E.g., '2'">
     %1$d mi
+  </string>
+  <string name="value_integer_mile_hour"
+    translation_description="Display an integer value in miles per hour (mi/h).
+
+      %1$d: an integer value. E.g., '2'">
+    %1$d mi/h
   </string>
   <string name="value_integer_minute"
     translation_description="In a setting picker, the string format to display an integer value in

@@ -37,7 +37,7 @@ import java.util.List;
 
 /**
  * API level 11 specific implementation of the {@link ApiAdapter}.
- *
+ * 
  * @author Jimmy Shih
  */
 @TargetApi(11)
@@ -54,12 +54,11 @@ public class Api11Adapter extends Api10Adapter {
   }
 
   @Override
-  public void configureListViewContextualMenu(final Activity activity, ListView listView, final int menuId,
-      final int actionModeTitleId,
+  public void configureListViewContextualMenu(final Activity activity, ListView listView,
+      final int menuId, final int actionModeTitleId,
       final ContextualActionModeCallback contextualActionModeCallback) {
     listView.setOnItemLongClickListener(new OnItemLongClickListener() {
       ActionMode actionMode;
-
       @Override
       public boolean onItemLongClick(
           AdapterView<?> parent, View view, final int position, final long id) {
@@ -72,18 +71,15 @@ public class Api11Adapter extends Api10Adapter {
             mode.getMenuInflater().inflate(menuId, menu);
             return true;
           }
-
           @Override
           public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
             // Return false to indicate no change.
             return false;
           }
-
           @Override
           public void onDestroyActionMode(ActionMode mode) {
             actionMode = null;
           }
-
           @Override
           public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             mode.finish();
@@ -99,37 +95,13 @@ public class Api11Adapter extends Api10Adapter {
       }
     });
   };
-  
+
   @Override
   public void configureSearchWidget(Activity activity, final MenuItem menuItem) {
     SearchManager searchManager = (SearchManager) activity.getSystemService(Context.SEARCH_SERVICE);
     SearchView searchView = (SearchView) menuItem.getActionView();
     searchView.setSearchableInfo(searchManager.getSearchableInfo(activity.getComponentName()));
     searchView.setQueryRefinementEnabled(true);
-    searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {      
-      @Override
-      public boolean onQueryTextSubmit(String query) {
-        menuItem.collapseActionView();
-        return false;
-      }
-      
-      @Override
-      public boolean onQueryTextChange(String newText) {
-        return false;
-      }
-    });
-    searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {      
-      @Override
-      public boolean onSuggestionSelect(int position) {
-        return false;
-      }
-      
-      @Override
-      public boolean onSuggestionClick(int position) {
-        menuItem.collapseActionView();
-        return false;
-      }
-    });
   }
 
   @Override

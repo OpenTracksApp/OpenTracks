@@ -120,7 +120,7 @@ public class ChartFragmentTest extends AndroidTestCase {
    */
   public void testFillDataPoint_distanceMetric() {
     // By distance.
-    chartFragment.getChartView().setMode(ChartView.Mode.BY_DISTANCE);
+    chartFragment.setChartByDistance(true);
     // Resets last location and writes first location.
     MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
     double[] point = fillDataPointTestHelper(myTracksLocation1);
@@ -160,6 +160,8 @@ public class ChartFragmentTest extends AndroidTestCase {
    * {@link ChartFragment#fillDataPoint(Location, double[])}.
    */
   public void testFillDataPoint_distanceImperial() {
+    // By distance.
+    chartFragment.setChartByDistance(true);
     // Setups to use imperial.
     chartFragment.setMetricUnits(false);
 
@@ -204,7 +206,7 @@ public class ChartFragmentTest extends AndroidTestCase {
    */
   public void testFillDataPoint_time() {
     // By time
-    chartFragment.getChartView().setMode(ChartView.Mode.BY_TIME);
+    chartFragment.setChartByDistance(false);
     MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
     double[] point = fillDataPointTestHelper(myTracksLocation1);
     assertEquals(0.0, point[0]);

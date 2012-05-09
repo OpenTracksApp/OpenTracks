@@ -25,6 +25,7 @@ import com.google.android.apps.mytracks.fragments.WelcomeDialogFragment;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
+import com.google.android.apps.mytracks.settings.SettingsActivity;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.EulaUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
@@ -119,12 +120,16 @@ public class TrackListActivity extends FragmentActivity {
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
           boolean updateList = false;
           // Note that key can be null
-          if (PreferencesUtils.getMetricUnitsKey(TrackListActivity.this).equals(key)) {
-            metricUnits = PreferencesUtils.isMetricUnits(TrackListActivity.this);
+          if (PreferencesUtils.getKey(TrackListActivity.this, R.string.metric_units_key)
+              .equals(key)) {
+            metricUnits = PreferencesUtils.getBoolean(TrackListActivity.this,
+                R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
             updateList = true;
           }
-          if (PreferencesUtils.getRecordingTrackIdKey(TrackListActivity.this).equals(key)) {
-            recordingTrackId = PreferencesUtils.getRecordingTrackId(TrackListActivity.this);
+          if (PreferencesUtils.getKey(TrackListActivity.this, R.string.recording_track_id_key)
+              .equals(key)) {
+            recordingTrackId = PreferencesUtils.getLong(
+                TrackListActivity.this, R.string.recording_track_id_key);
             if (TrackRecordingServiceConnectionUtils.isRecording(
                 TrackListActivity.this, trackRecordingServiceConnection)) {
               trackRecordingServiceConnection.startAndBind();
@@ -173,11 +178,11 @@ public class TrackListActivity extends FragmentActivity {
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(
         this, bindChangedCallback);
 
-    SharedPreferences sharedPreferences = getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-    metricUnits = PreferencesUtils.isMetricUnits(this);
-    recordingTrackId = PreferencesUtils.getRecordingTrackId(this);
+    getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
+        .registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    metricUnits = PreferencesUtils.getBoolean(
+        this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+    recordingTrackId = PreferencesUtils.getLong(this, R.string.recording_track_id_key);
 
     ImageButton recordImageButton = (ImageButton) findViewById(R.id.track_list_record_button);
     recordImageButton.setOnClickListener(new View.OnClickListener() {
@@ -274,14 +279,16 @@ public class TrackListActivity extends FragmentActivity {
         EulaDialogFragment.newInstance(false)
             .show(getSupportFragmentManager(), EulaDialogFragment.EULA_DIALOG_TAG);
       }
-    } else if (PreferencesUtils.isShowWelcomeDialog(this)) {
+    } else if (PreferencesUtils.getBoolean(
+        this, R.string.show_welcome_dialog_key, PreferencesUtils.SHOW_WELCOME_DIALOG_DEFAULT)) {
       Fragment fragment = getSupportFragmentManager()
           .findFragmentByTag(WelcomeDialogFragment.WELCOME_DIALOG_TAG);
       if (fragment == null) {
         new WelcomeDialogFragment().show(
             getSupportFragmentManager(), WelcomeDialogFragment.WELCOME_DIALOG_TAG);
       }
-    } else if (PreferencesUtils.isShowCheckUnitsDialog(this)) {
+    } else if (PreferencesUtils.getBoolean(this, R.string.show_check_units_dialog_key,
+        PreferencesUtils.SHOW_CHECK_UNITS_DIALOG_DEFAULT)) {
       Fragment fragment = getSupportFragmentManager()
           .findFragmentByTag(CheckUnitsDialogFragment.CHECK_UNITS_DIALOG_TAG);
       if (fragment == null) {

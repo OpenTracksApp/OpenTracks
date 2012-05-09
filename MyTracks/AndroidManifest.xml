@@ -180,9 +180,6 @@ limitations under the License.
     <activity
       android:label="@string/menu_sensor_state"
       android:name="com.google.android.apps.mytracks.SensorStateActivity" />
-    <activity
-      android:label="@string/settings_title"
-      android:name="com.google.android.apps.mytracks.SettingsActivity" />
     <activity android:name="com.google.android.apps.mytracks.TrackDetailActivity" />
     <activity
       android:name="com.google.android.apps.mytracks.TrackEditActivity" />
@@ -210,6 +207,14 @@ limitations under the License.
     <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.AccountChooserActivity" />
     <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.UploadResultActivity" />
     <activity android:name="com.google.android.apps.mytracks.io.sendtogoogle.UploadServiceChooserActivity" />
+    <activity android:name="com.google.android.apps.mytracks.settings.BackupSettingsActivity" />
+    <activity android:name="com.google.android.apps.mytracks.settings.ChartSettingsActivity" />
+    <activity android:name="com.google.android.apps.mytracks.settings.MapSettingsActivity" />
+    <activity android:name="com.google.android.apps.mytracks.settings.RecordingSettingsActivity" />
+    <activity android:name="com.google.android.apps.mytracks.settings.SensorSettingsActivity" />
+    <activity android:name="com.google.android.apps.mytracks.settings.SettingsActivity" />
+    <activity android:name="com.google.android.apps.mytracks.settings.SharingSettingsActivity" />
+    <activity android:name="com.google.android.apps.mytracks.settings.StatsSettingsActivity" />
     <!-- Services -->
     <service
       android:exported="false"

@@ -21,6 +21,7 @@ import com.google.android.apps.mytracks.io.file.GpxImporter;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.SystemUtils;
+import com.google.android.maps.mytracks.R;
 
 import android.os.AsyncTask;
 import android.os.PowerManager.WakeLock;
@@ -82,7 +83,8 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(importActivity);
 
     // Get the wake lock if not recording
-    if (PreferencesUtils.getRecordingTrackId(importActivity) == -1L) {
+    if (PreferencesUtils.getLong(importActivity, R.string.recording_track_id_key)
+        == PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
       wakeLock = SystemUtils.acquireWakeLock(importActivity, wakeLock);
     }
 

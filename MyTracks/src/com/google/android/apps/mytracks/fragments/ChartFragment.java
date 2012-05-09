@@ -17,7 +17,6 @@
 package com.google.android.apps.mytracks.fragments;
 
 import com.google.android.apps.mytracks.ChartView;
-import com.google.android.apps.mytracks.ChartView.Mode;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.MyTracksApplication;
 import com.google.android.apps.mytracks.content.MyTracksLocation;
@@ -31,6 +30,7 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.LocationUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
@@ -75,6 +75,9 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   // Modes of operation
   private boolean metricUnits = true;
   private boolean reportSpeed = true;
+
+  private boolean chartByDistance = true;
+  private boolean[] chartShow = new boolean[] {true, true, true, true, true};
 
   // UI elements
   private ChartView chartView;
@@ -143,6 +146,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   public void onResume() {
     super.onResume();
     resumeTrackDataHub();
+    checkChartSettings();
     getActivity().runOnUiThread(updateChart);
   }
 
@@ -157,58 +161,6 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     super.onStop();
     ViewGroup layout = (ViewGroup) getActivity().findViewById(R.id.chart_view_layout);
     layout.removeView(chartView);
-  }
- 
-  /**
-   * Sets the chart view mode.
-   * 
-   * @param mode the chart view mode
-   */
-  public void setMode(Mode mode) {
-    if (chartView.getMode() != mode) {
-      chartView.setMode(mode);
-      reloadTrackDataHub();
-    }
-  }
-
-  /**
-   * Gets the chart view mode.
-   */
-  public Mode getMode() {
-    return chartView.getMode();
-  }
-
-  /**
-   * Enables or disables the chart value series.
-   * 
-   * @param index the index of the series
-   * @param enabled true to enable, false to disable
-   */
-  public void setChartValueSeriesEnabled(int index, boolean enabled) {
-    chartView.setChartValueSeriesEnabled(index, enabled);
-  }
-
-  /**
-   * Returns true if the chart value series is enabled.
-   * 
-   * @param index the index of the series
-   */
-  public boolean isChartValueSeriesEnabled(int index) {
-    return chartView.isChartValueSeriesEnabled(index);
-  }
-
-  /**
-   * Returns true to report speed instead of pace.
-   */
-  public boolean isReportSpeed() {
-    return reportSpeed;
-  }
-
-  /**
-   * Updates the chart.
-   */
-  public void update() {
-    chartView.postInvalidate();
   }
 
   @Override
@@ -339,6 +291,60 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   }
 
   /**
+   * Checks the chart settings.
+   */
+  private void checkChartSettings() {
+    boolean needUpdate = false;
+    if (chartByDistance != PreferencesUtils.getBoolean(getActivity(),
+        R.string.chart_by_distance_key, PreferencesUtils.CHART_BY_DISTANCE_DEFAULT)) {
+      chartByDistance = !chartByDistance;
+      chartView.setChartByDistance(chartByDistance);
+      reloadTrackDataHub();
+      needUpdate = true;
+    }
+    if (setSeriesEnabled(ChartView.ELEVATION_SERIES, PreferencesUtils.getBoolean(getActivity(),
+        R.string.chart_show_elevation_key, PreferencesUtils.CHART_SHOW_ELEVATION_DEFAULT))) {
+      needUpdate = true;
+    }
+    if (setSeriesEnabled(ChartView.SPEED_SERIES, PreferencesUtils.getBoolean(
+        getActivity(), R.string.chart_show_speed_key, PreferencesUtils.CHART_SHOW_SPEED_DEFAULT))) {
+      needUpdate = true;
+    }
+    if (setSeriesEnabled(ChartView.POWER_SERIES, PreferencesUtils.getBoolean(
+        getActivity(), R.string.chart_show_power_key, PreferencesUtils.CHART_SHOW_POWER_DEFAULT))) {
+      needUpdate = true;
+    }
+    if (setSeriesEnabled(ChartView.CADENCE_SERIES, PreferencesUtils.getBoolean(getActivity(),
+        R.string.chart_show_cadence_key, PreferencesUtils.CHART_SHOW_CADENCE_DEFAULT))) {
+      needUpdate = true;
+    }
+    if (setSeriesEnabled(ChartView.HEART_RATE_SERIES, PreferencesUtils.getBoolean(getActivity(),
+        R.string.chart_show_heart_rate_key, PreferencesUtils.CHART_SHOW_HEART_RATE_DEFAULT))) {
+      needUpdate = true;
+    }
+    if (needUpdate) {
+      chartView.postInvalidate();
+    }
+  }
+
+  /**
+   * Sets the series enabled value.
+   * 
+   * @param index the series index
+   * @param value the value
+   * @return true if changed
+   */
+  private boolean setSeriesEnabled(int index, boolean value) {
+    if (chartShow[index] != value) {
+      chartShow[index] = value;
+      chartView.setChartValueSeriesEnabled(index, value);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
    * Resumes the trackDataHub. Needs to be synchronized because trackDataHub can be
    * accessed by multiple threads.
    */
@@ -352,16 +358,16 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         ListenerDataType.SAMPLED_OUT_POINT_UPDATES,
         ListenerDataType.DISPLAY_PREFERENCES));
   }
-  
+
   /**
-   * Pauses the trackDataHub. Needs to be synchronized because trackDataHub can be
-   * accessed by multiple threads. 
+   * Pauses the trackDataHub. Needs to be synchronized because trackDataHub can
+   * be accessed by multiple threads.
    */
   private synchronized void pauseTrackDataHub() {
     trackDataHub.unregisterTrackDataListener(this);
     trackDataHub = null;
   }
-  
+
   /**
    * Returns true if recording. Needs to be synchronized because trackDataHub
    * can be accessed by multiple threads.
@@ -369,7 +375,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   private synchronized boolean isRecording() {
     return trackDataHub != null && trackDataHub.isRecordingSelected();
   }
-  
+
   /**
    * Reloads the trackDataHub. Needs to be synchronized because trackDataHub can be
    * accessed by multiple threads. 
@@ -420,7 +426,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     double heartRate = Double.NaN;  
    
     // TODO: Use TripStatisticsBuilder
-    if (chartView.getMode() == Mode.BY_DISTANCE) {
+    if (chartByDistance) {
       if (lastLocation != null) {
         double distance = lastLocation.distanceTo(location) * UnitConversions.M_TO_KM;
         if (metricUnits) {
@@ -511,5 +517,9 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   @VisibleForTesting
   void setReportSpeed(boolean value) {
     reportSpeed = value;
+  }
+  @VisibleForTesting
+  void setChartByDistance(boolean value) {
+    chartByDistance = value;
   }
 }
