@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
@@ -76,6 +77,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
   private TabHost tabHost;
   private TabManager tabManager;
   private long trackId;
+  private long markerId;
   
   private MenuItem stopRecordingMenuItem;
   private MenuItem insertMarkerMenuItem;
@@ -126,14 +128,16 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    handleIntent(getIntent());
     ApiAdapterFactory.getApiAdapter().hideTitle(this);
     setContentView(R.layout.track_detail);
 
     getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
         .registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-    trackDataHub = ((MyTracksApplication) getApplication()).getTrackDataHub();
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
-
+    trackDataHub = ((MyTracksApplication) getApplication()).getTrackDataHub();
+    trackDataHub.loadTrack(trackId);
+    
     mapViewContainer = getLayoutInflater().inflate(R.layout.map, null);
     tabHost = (TabHost) findViewById(android.R.id.tabhost);
     tabHost.setup();
@@ -152,14 +156,15 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
     if (savedInstanceState != null) {
       tabHost.setCurrentTabByTag(savedInstanceState.getString(CURRENT_TAG_KEY));
     }
-
-    handleIntent(getIntent());
+    showMarker();
   }
 
   @Override
   public void onNewIntent(Intent intent) {
     setIntent(intent);
     handleIntent(intent);
+    trackDataHub.loadTrack(trackId);
+    showMarker();
   }
 
   @Override
@@ -172,6 +177,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
   protected void onResume() {
     super.onResume();
     TrackRecordingServiceConnectionUtils.resume(this, trackRecordingServiceConnection);
+    setTitle(trackId == PreferencesUtils.getLong(this, R.string.recording_track_id_key));
   }
 
   @Override
@@ -248,6 +254,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
     switch (item.getItemId()) {
       case R.id.track_detail_stop_recording:
         updateMenuItems(false);
+        setTitle(false);
         TrackRecordingServiceConnectionUtils.stop(this, trackRecordingServiceConnection);
         return true;
       case R.id.track_detail_insert_marker:
@@ -360,26 +367,35 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
    * Handles the data in the intent.
    */
   private void handleIntent(Intent intent) {
-    trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1L);   
-    long markerId = intent.getLongExtra(EXTRA_MARKER_ID, -1L);
+    trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1L);
+    markerId = intent.getLongExtra(EXTRA_MARKER_ID, -1L);
     if (markerId != -1L) {
       Waypoint waypoint = MyTracksProviderUtils.Factory.get(this).getWaypoint(markerId);
       if (waypoint == null) {
-        Intent newIntent = IntentUtils.newIntent(this, TrackListActivity.class);
-        startActivity(newIntent);
-        finish();
+        exit();
         return;
       }
       trackId = waypoint.getTrackId();
     }
     if (trackId == -1L) {
-      Intent newIntent = IntentUtils.newIntent(this, TrackListActivity.class);
-      startActivity(newIntent);
-      finish();
+      exit();
       return;
     }
-    trackDataHub.loadTrack(trackId);
+  }
 
+  /**
+   * Exists and returns to {@link TrackListActivity}.
+   */
+  private void exit() {
+    Intent newIntent = IntentUtils.newIntent(this, TrackListActivity.class);
+    startActivity(newIntent);
+    finish();
+  }
+
+  /**
+   * Shows marker.
+   */
+  private void showMarker() {
     if (markerId != -1L) {
       MapFragment mapFragmet = (MapFragment) getSupportFragmentManager()
           .findFragmentByTag(MapFragment.MAP_FRAGMENT_TAG);
@@ -390,6 +406,22 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
         Log.e(TAG, "MapFragment is null");
       }
     }
+  }
+
+  /**
+   * Sets the title.
+   * 
+   * @param isRecording true if recording
+   */
+  private void setTitle(boolean isRecording) {
+    String title;
+    if (isRecording) {
+      title = getString(R.string.track_detail_title_recording);
+    } else {
+      Track track = MyTracksProviderUtils.Factory.get(this).getTrack(trackId);
+      title = track != null ? track.getName() : getString(R.string.my_tracks_app_name);
+    }
+    setTitle(title);
   }
 
   /**
