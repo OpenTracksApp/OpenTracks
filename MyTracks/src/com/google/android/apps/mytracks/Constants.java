@@ -33,14 +33,6 @@ public abstract class Constants {
    */
   public static final String SDCARD_TOP_DIR = "MyTracks";
 
-  /*
-   * Main screen tab tags:
-   */
-
-  public static final String MAP_TAB_TAG = "map";
-  public static final String STATS_TAB_TAG = "stats";
-  public static final String CHART_TAB_TAG = "chart";
-
   /**
    * The number of distance readings to smooth to get a stable signal.
    */
@@ -129,23 +121,10 @@ public abstract class Constants {
    * The name of extra intent property to indicate whether we want to resume
    * a previously recorded track.
    */
-  public static final String RESUME_TRACK_EXTRA_NAME =
-      "com.google.android.apps.mytracks.RESUME_TRACK";
+  public static final String
+      RESUME_TRACK_EXTRA_NAME = "com.google.android.apps.mytracks.RESUME_TRACK";
 
-  public static final String MAPSHOP_BASE_URL =
-    "https://maps.google.com/maps/ms";
-
-  /*
-   * Default values - keep in sync with those in preferences.xml.
-   */
-
-  public static final int DEFAULT_ANNOUNCEMENT_FREQUENCY = -1;
-  public static final int DEFAULT_AUTO_RESUME_TRACK_TIMEOUT = 10;  // In min.
-  public static final int DEFAULT_MAX_RECORDING_DISTANCE = 200;
-  public static final int DEFAULT_MIN_RECORDING_DISTANCE = 5;
-  public static final int DEFAULT_MIN_RECORDING_INTERVAL = 0;
-  public static final int DEFAULT_MIN_REQUIRED_ACCURACY = 200;
-  public static final int DEFAULT_SPLIT_FREQUENCY = 0;
+  public static final String MAPSHOP_BASE_URL = "https://maps.google.com/maps/ms";
 
   public static final String SETTINGS_NAME = "SettingsActivity";
 

@@ -17,13 +17,13 @@ limitations under the License.
 <resources>
   <color name="black">#FF000000</color>
   <color name="blue">#FF0000FF</color>
-  <color name="green">#FF00FF00</color>
   <color name="gray">#FFAAAAAA</color>
   <color name="red">#FFFF0000</color>
-  <color name="stat_label_background">#FFF0F0F0</color>
-  <color name="stat_label_text">#FF0F0F0F</color>
   <color name="white">#FFFFFFFF</color>
 
+  <!-- holo_orange_dark -->
+  <color name="warning_background">#FFFF8800</color>
+  
   <!-- Chart colors by series. -->
   <!-- Green and a transparent green -->
   <color name="elevation_border">#FF339933</color>
@@ -46,7 +46,6 @@ limitations under the License.
   <color name="power_fill">#40401465</color>
 
   <!-- AppWidget colors -->
-  <color name="appwidget_text">#EDEDED</color>
   <color name="appwidget_hr">#99999999</color>
   
   <!-- Colors for dynamic track drawing --> 

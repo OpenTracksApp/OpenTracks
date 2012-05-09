@@ -16,22 +16,21 @@
 
 package com.google.android.apps.mytracks.fragments;
 
-import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
-import com.google.android.apps.mytracks.util.CheckUnitsUtils;
+import com.google.android.apps.mytracks.TrackListActivity;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
+import java.util.Locale;
+
 /**
  * A DialogFragment to check preferred units.
- * 
+ *
  * @author Jimmy Shih
  */
 public class CheckUnitsDialogFragment extends DialogFragment {
@@ -39,31 +38,39 @@ public class CheckUnitsDialogFragment extends DialogFragment {
   public static final String CHECK_UNITS_DIALOG_TAG = "checkUnitsDialog";
   
   @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
-
+  public void onCancel(DialogInterface arg0) {
+    onDone();
+  }
+  
+  @Override
+  public Dialog onCreateDialog(Bundle savedInstanceState) {    
+    Locale defaultLocale = Locale.getDefault();        
+    boolean defaultMetric = !defaultLocale.equals(Locale.US) && !defaultLocale.equals(Locale.UK);
+    PreferencesUtils.setBoolean(getActivity(), R.string.metric_units_key, defaultMetric);
+    final String metric = getString(R.string.settings_stats_units_metric);
+    final String imperial = getString(R.string.settings_stats_units_imperial);
+    final CharSequence[] items = defaultMetric ? new CharSequence[] { metric, imperial }
+        : new CharSequence[] { imperial, metric };
     return new AlertDialog.Builder(getActivity())
-        .setCancelable(true)
-        .setOnCancelListener(new DialogInterface.OnCancelListener() {
-          @Override
-          public void onCancel(DialogInterface dialog) {
-            CheckUnitsUtils.setCheckUnitsValue(getActivity());
-          }
-        })
         .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
-            CheckUnitsUtils.setCheckUnitsValue(getActivity());
-
-            int position = ((AlertDialog) dialog).getListView().getSelectedItemPosition();
-            SharedPreferences sharedPreferences = getActivity()
-                .getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-            ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(sharedPreferences.edit()
-                .putBoolean(getString(R.string.metric_units_key), position == 0));
+            int position = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+            PreferencesUtils.setBoolean(
+                getActivity(), R.string.metric_units_key, items[position].equals(metric));
+            onDone();
           }
         })
-        .setSingleChoiceItems(new CharSequence[] { getString(R.string.preferred_units_metric),
-            getString(R.string.preferred_units_imperial) }, 0, null)
-        .setTitle(R.string.preferred_units_title)
-        .create();
+        .setSingleChoiceItems(items, 0, null)
+        .setTitle(R.string.settings_stats_units_title).create();
+  }
+  
+  /**
+   * Tasks to perform when done.
+   */
+  private void onDone() {
+    PreferencesUtils.setBoolean(getActivity(), R.string.show_check_units_dialog_key, false);
+    TrackListActivity trackListActivity = (TrackListActivity) getActivity();
+    trackListActivity.showStartupDialogs();   
   }
 }

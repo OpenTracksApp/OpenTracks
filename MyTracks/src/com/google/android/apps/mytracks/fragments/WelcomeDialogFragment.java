@@ -16,6 +16,8 @@
 
 package com.google.android.apps.mytracks.fragments;
 
+import com.google.android.apps.mytracks.TrackListActivity;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.AlertDialog;
@@ -23,7 +25,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.view.View;
 
 /**
  * A DialogFrament to show the welcome info.
@@ -35,29 +36,27 @@ public class WelcomeDialogFragment extends DialogFragment {
   public static final String WELCOME_DIALOG_TAG = "welcomeDialog";
 
   @Override
+  public void onCancel(DialogInterface arg0) {
+    onDone();
+  }
+  
+  @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
-    View view = getActivity().getLayoutInflater().inflate(R.layout.welcome, null);
     return new AlertDialog.Builder(getActivity())
-        .setCancelable(true)
-        .setOnCancelListener(new DialogInterface.OnCancelListener() {
-          @Override
-          public void onCancel(DialogInterface dialog) {
-            checkUnits();
-          }
-        })
         .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
-            checkUnits();
+            onDone();
           }
         })
         .setTitle(R.string.welcome_title)
-        .setView(view)
+        .setMessage(R.string.welcome_message)
         .create();
   }
 
-  private void checkUnits() {
-    new CheckUnitsDialogFragment().show(
-        getActivity().getSupportFragmentManager(), CheckUnitsDialogFragment.CHECK_UNITS_DIALOG_TAG);
+  private void onDone() {
+    PreferencesUtils.setBoolean(getActivity(), R.string.show_welcome_dialog_key, false);
+    TrackListActivity trackListActivity = (TrackListActivity) getActivity();
+    trackListActivity.showStartupDialogs();
   }
 }

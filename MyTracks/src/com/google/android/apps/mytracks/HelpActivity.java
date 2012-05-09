@@ -17,14 +17,9 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.fragments.AboutDialogFragment;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.maps.mytracks.R;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
-import android.support.v4.app.FragmentActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -33,13 +28,11 @@ import android.view.View.OnClickListener;
  * 
  * @author Sandor Dornbush
  */
-public class HelpActivity extends FragmentActivity {
+public class HelpActivity extends AbstractMyTracksActivity {
 
   @Override
-  public void onCreate(Bundle savedInstanceState) {
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
-    ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
     setContentView(R.layout.help);
 
     findViewById(R.id.help_ok).setOnClickListener(new OnClickListener() {
@@ -53,15 +46,5 @@ public class HelpActivity extends FragmentActivity {
             getSupportFragmentManager(), AboutDialogFragment.ABOUT_DIALOG_TAG);
       }
     });
-  }
-  
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() != android.R.id.home) {
-      return false;
-    }
-    startActivity(new Intent(this, TrackListActivity.class)
-        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-    return true;
   }
 }

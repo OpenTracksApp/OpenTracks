@@ -20,7 +20,10 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
+import com.google.android.apps.mytracks.fragments.MarkerAddDialogFragment;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.IntentUtils;
+import com.google.android.apps.mytracks.util.ListItemUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.maps.mytracks.R;
@@ -31,8 +34,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -48,14 +49,13 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.TextView;
 
 /**
  * Activity to show a list of markers in a track.
  *
  * @author Leif Hendrik Wilden
  */
-public class MarkerListActivity extends FragmentActivity {
+public class MarkerListActivity extends AbstractMyTracksActivity {
  
   public static final String EXTRA_TRACK_ID = "track_id";
 
@@ -72,7 +72,7 @@ public class MarkerListActivity extends FragmentActivity {
   private ContextualActionModeCallback contextualActionModeCallback =
     new ContextualActionModeCallback() {
     @Override
-    public boolean onClick(int itemId, long id) {
+    public boolean onClick(int itemId, int position, long id) {
       return handleContextItem(itemId, id);
     }
   };
@@ -81,16 +81,17 @@ public class MarkerListActivity extends FragmentActivity {
    * Note that sharedPreferenceChangeListener cannot be an anonymous inner
    * class. Anonymous inner class will get garbage collected.
    */
-  private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener =
-    new OnSharedPreferenceChangeListener() {
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-      // Note that key can be null
-      if (PreferencesUtils.getRecordingTrackIdKey(MarkerListActivity.this).equals(key)) {
-        updateMenu();
-      }
-    }
-  };
+  private final OnSharedPreferenceChangeListener
+      sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
+          @Override
+        public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
+          // Note that key can be null
+          if (PreferencesUtils.getKey(MarkerListActivity.this, R.string.recording_track_id_key)
+              .equals(key)) {
+            updateMenu();
+          }
+        }
+      };
 
   private long trackId = -1;
   private ResourceCursorAdapter resourceCursorAdapter;
@@ -110,26 +111,23 @@ public class MarkerListActivity extends FragmentActivity {
       return;
     }
     
-    setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
     setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
-    ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
     setContentView(R.layout.marker_list);
 
-    SharedPreferences sharedPreferences = getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
+        .registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
     ListView listView = (ListView) findViewById(R.id.marker_list);
     listView.setEmptyView(findViewById(R.id.marker_list_empty));
     listView.setOnItemClickListener(new OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        startActivity(new Intent(MarkerListActivity.this, MarkerDetailActivity.class).addFlags(
-            Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-            .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, id));
+        Intent intent = IntentUtils.newIntent(MarkerListActivity.this, MarkerDetailActivity.class)
+            .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, id);
+        startActivity(intent);
       }
     });
-    resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.marker_list_item, null, 0) {
+    resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.list_item, null, 0) {
       @Override
       public void bindView(View view, Context context, Cursor cursor) {
         int typeIndex = cursor.getColumnIndex(WaypointsColumns.TYPE);
@@ -139,40 +137,22 @@ public class MarkerListActivity extends FragmentActivity {
         int descriptionIndex = cursor.getColumnIndex(WaypointsColumns.DESCRIPTION);
 
         boolean statistics = cursor.getInt(typeIndex) == Waypoint.TYPE_STATISTICS;
-        TextView name = (TextView) view.findViewById(R.id.marker_list_item_name);
-        name.setText(cursor.getString(nameIndex));
-        name.setCompoundDrawablesWithIntrinsicBounds(statistics ? R.drawable.ylw_pushpin
-            : R.drawable.blue_pushpin, 0, 0, 0);
-
-        TextView category = (TextView) view.findViewById(R.id.marker_list_item_category);
-        if (!statistics) {
-          category.setText(cursor.getString(categoryIndex));
-        }
-        category.setVisibility(statistics || category.getText().length() == 0 ? View.GONE : View.VISIBLE);
-
-        TextView time = (TextView) view.findViewById(R.id.marker_list_item_time);
-        long timeValue = cursor.getLong(timeIndex);
-        if (timeValue == 0) {
-          time.setVisibility(View.GONE);
-        } else {
-          time.setText(StringUtils.formatDateTime(MarkerListActivity.this, timeValue));
-          time.setVisibility(View.VISIBLE);
-        }
-
-        TextView description = (TextView) view.findViewById(R.id.marker_list_item_description);
-        if (!statistics) {
-          description.setText(cursor.getString(descriptionIndex));
-        }
-        description.setVisibility(statistics || description.getText().length() == 0 ? View.GONE : View.VISIBLE);
+        String name = cursor.getString(nameIndex);
+        int iconId = statistics ? R.drawable.yellow_pushpin : R.drawable.blue_pushpin;
+        String category = statistics ? null : cursor.getString(categoryIndex);
+        long time = cursor.getLong(timeIndex);
+        String startTime = time == 0 
+            ? null : StringUtils.formatDateTime(MarkerListActivity.this, time);
+        String description = statistics ? null : cursor.getString(descriptionIndex);
+        ListItemUtils.setListItem(view, name, iconId, category, null, null, startTime, description);
       }
     };
     listView.setAdapter(resourceCursorAdapter);
-    ApiAdapterFactory.getApiAdapter().configureListViewContextualMenu(
-        this, listView, R.menu.marker_list_context_menu, R.id.marker_list_item_name,
-        contextualActionModeCallback);
+    ApiAdapterFactory.getApiAdapter().configureListViewContextualMenu(this, listView,
+        R.menu.list_context_menu, R.id.list_item_name, contextualActionModeCallback);
 
-
-    final long firstWaypointId = MyTracksProviderUtils.Factory.get(this).getFirstWaypointId(trackId);
+    final long firstWaypointId = MyTracksProviderUtils.Factory.get(this)
+        .getFirstWaypointId(trackId);
     getSupportLoaderManager().initLoader(0, null, new LoaderCallbacks<Cursor>() {
       @Override
       public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
@@ -208,19 +188,17 @@ public class MarkerListActivity extends FragmentActivity {
 
   private void updateMenu() {
     if (insertMarkerMenuItem != null) {
-      insertMarkerMenuItem.setVisible(trackId == PreferencesUtils.getRecordingTrackId(this));
+      insertMarkerMenuItem.setVisible(
+          trackId == PreferencesUtils.getLong(this, R.string.recording_track_id_key));
     }
   }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
-      case android.R.id.home:
-        finish();
-        return true;
       case R.id.marker_list_insert_marker:
-        startActivity(new Intent(this, MarkerEditActivity.class).addFlags(
-            Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+        MarkerAddDialogFragment.newInstance(trackId)
+            .show(getSupportFragmentManager(), MarkerAddDialogFragment.MARKER_ADD_DIALOG_TAG);
         return true;
       case R.id.marker_list_search:
         return ApiAdapterFactory.getApiAdapter().handleSearchMenuSelection(this);
@@ -232,7 +210,7 @@ public class MarkerListActivity extends FragmentActivity {
   @Override
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);
-    getMenuInflater().inflate(R.menu.marker_list_context_menu, menu);
+    getMenuInflater().inflate(R.menu.list_context_menu, menu);
   }
 
   @Override
@@ -252,19 +230,21 @@ public class MarkerListActivity extends FragmentActivity {
    * @return true if handled.
    */
   private boolean handleContextItem(int itemId, long markerId) {
+    Intent intent;
     switch (itemId) {
-      case R.id.marker_list_context_menu_show_on_map:
-        startActivity(new Intent(this, TrackDetailActivity.class).addFlags(
-            Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-            .putExtra(TrackDetailActivity.EXTRA_MARKER_ID, markerId));
+      case R.id.list_context_menu_show_on_map:
+        intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
+            .putExtra(TrackDetailActivity.EXTRA_MARKER_ID, markerId);
+        startActivity(intent);
         return true;
-      case R.id.marker_list_context_menu_edit:
-        startActivity(new Intent(this, MarkerEditActivity.class).addFlags(
-            Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-            .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerId));
+      case R.id.list_context_menu_edit:
+        intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
+            .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerId);
+        startActivity(intent);
         return true;
-      case R.id.marker_list_context_menu_delete:
-        DeleteOneMarkerDialogFragment.newInstance(markerId).show(getSupportFragmentManager(),
+      case R.id.list_context_menu_delete:
+        DeleteOneMarkerDialogFragment.newInstance(markerId, trackId).show(
+            getSupportFragmentManager(),
             DeleteOneMarkerDialogFragment.DELETE_ONE_MARKER_DIALOG_TAG);
         return true;
       default:

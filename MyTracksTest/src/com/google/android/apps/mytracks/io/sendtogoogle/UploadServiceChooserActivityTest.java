@@ -15,14 +15,11 @@
  */
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
-import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Instrumentation;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
@@ -123,14 +120,10 @@ public class UploadServiceChooserActivityTest extends
   public void testOnCreateDialog_initStateUnchecked() {
     initialActivity(true, true, true);
     // Initial all values to false in SharedPreferences.
-    SharedPreferences prefs = uploadServiceChooserActivity.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    Editor editor = prefs.edit();
-    editor.putBoolean(uploadServiceChooserActivity.getString(R.string.send_to_maps_key), false);
-    editor.putBoolean(uploadServiceChooserActivity.getString(R.string.send_to_fusion_tables_key),
-        false);
-    editor.putBoolean(uploadServiceChooserActivity.getString(R.string.send_to_docs_key), false);
-    editor.commit();
+    PreferencesUtils.setBoolean(uploadServiceChooserActivity, R.string.send_to_maps_key, false);
+    PreferencesUtils.setBoolean(
+        uploadServiceChooserActivity, R.string.send_to_fusion_tables_key, false);
+    PreferencesUtils.setBoolean(uploadServiceChooserActivity, R.string.send_to_docs_key, false);
     uploadServiceChooserActivity.runOnUiThread(new Runnable() {
       public void run() {
         uploadServiceChooserActivity.initState();
@@ -150,15 +143,11 @@ public class UploadServiceChooserActivityTest extends
   public void testOnCreateDialog_initStateChecked() {
     initialActivity(true, true, true);
     // Initial all values to true in SharedPreferences.
-    SharedPreferences prefs = uploadServiceChooserActivity.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    Editor editor = prefs.edit();
-    editor.putBoolean(uploadServiceChooserActivity.getString(R.string.send_to_maps_key), true);
-    editor.putBoolean(uploadServiceChooserActivity.getString(R.string.pick_existing_map_key), true);
-    editor.putBoolean(uploadServiceChooserActivity.getString(R.string.send_to_fusion_tables_key),
-        true);
-    editor.putBoolean(uploadServiceChooserActivity.getString(R.string.send_to_docs_key), true);
-    editor.commit();
+    PreferencesUtils.setBoolean(uploadServiceChooserActivity, R.string.pick_existing_map_key, true);
+    PreferencesUtils.setBoolean(uploadServiceChooserActivity, R.string.send_to_maps_key, true);
+    PreferencesUtils.setBoolean(
+        uploadServiceChooserActivity, R.string.send_to_fusion_tables_key, true);
+    PreferencesUtils.setBoolean(uploadServiceChooserActivity, R.string.send_to_docs_key, true);
     uploadServiceChooserActivity.runOnUiThread(new Runnable() {
       public void run() {
         uploadServiceChooserActivity.initState();
@@ -181,14 +170,10 @@ public class UploadServiceChooserActivityTest extends
   public void testOnCreateDialog_saveState() {
     initialActivity(true, true, true);
     // Initial all values to true in SharedPreferences.
-    SharedPreferences prefs = uploadServiceChooserActivity.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    Editor editor = prefs.edit();
-    editor.putBoolean(uploadServiceChooserActivity.getString(R.string.send_to_maps_key), true);
-    editor.putBoolean(uploadServiceChooserActivity.getString(R.string.send_to_fusion_tables_key),
-        true);
-    editor.putBoolean(uploadServiceChooserActivity.getString(R.string.send_to_docs_key), true);
-    editor.commit();
+    PreferencesUtils.setBoolean(uploadServiceChooserActivity, R.string.send_to_maps_key, true);
+    PreferencesUtils.setBoolean(
+        uploadServiceChooserActivity, R.string.send_to_fusion_tables_key, true);
+    PreferencesUtils.setBoolean(uploadServiceChooserActivity, R.string.send_to_docs_key, true);
     uploadServiceChooserActivity.runOnUiThread(new Runnable() {
       public void run() {
         uploadServiceChooserActivity.initState();
@@ -197,12 +182,13 @@ public class UploadServiceChooserActivityTest extends
     instrumentation.waitForIdleSync();
     uploadServiceChooserActivity.saveState();
     // All values in SharedPreferences must be changed.
-    assertTrue(prefs.getBoolean(uploadServiceChooserActivity.getString(R.string.send_to_maps_key),
-        false));
-    assertTrue(prefs.getBoolean(uploadServiceChooserActivity.getString(R.string.send_to_maps_key),
-        false));
-    assertTrue(prefs.getBoolean(uploadServiceChooserActivity.getString(R.string.send_to_maps_key),
-        false));
+    assertTrue(PreferencesUtils.getBoolean(uploadServiceChooserActivity, R.string.send_to_maps_key,
+        PreferencesUtils.SEND_TO_MAPS_DEFAULT));
+    assertTrue(PreferencesUtils.getBoolean(
+        uploadServiceChooserActivity, R.string.send_to_fusion_tables_key,
+        PreferencesUtils.SEND_TO_FUSION_TABLES_DEFAULT));
+    assertTrue(PreferencesUtils.getBoolean(uploadServiceChooserActivity, R.string.send_to_docs_key,
+        PreferencesUtils.SEND_TO_DOCS_DEFAULT));
   }
 
   /**
@@ -213,14 +199,10 @@ public class UploadServiceChooserActivityTest extends
   public void testOnCreateDialog_startNextActivity() {
     initialActivity(true, true, true);
     // Initial all values to true or false in SharedPreferences.
-    SharedPreferences prefs = uploadServiceChooserActivity.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    Editor editor = prefs.edit();
-    editor.putBoolean(uploadServiceChooserActivity.getString(R.string.send_to_maps_key), true);
-    editor.putBoolean(uploadServiceChooserActivity.getString(R.string.send_to_docs_key), true);
-    editor.putBoolean(uploadServiceChooserActivity.getString(R.string.send_to_fusion_tables_key),
-        false);
-    editor.commit();
+    PreferencesUtils.setBoolean(uploadServiceChooserActivity, R.string.send_to_maps_key, true);
+    PreferencesUtils.setBoolean(uploadServiceChooserActivity, R.string.send_to_docs_key, true);
+    PreferencesUtils.setBoolean(
+        uploadServiceChooserActivity, R.string.send_to_fusion_tables_key, false);
     uploadServiceChooserActivity.runOnUiThread(new Runnable() {
       public void run() {
         uploadServiceChooserActivity.initState();

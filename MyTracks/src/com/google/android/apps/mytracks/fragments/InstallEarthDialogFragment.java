@@ -39,13 +39,13 @@ public class InstallEarthDialogFragment extends DialogFragment {
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     return new AlertDialog.Builder(getActivity())
-        .setCancelable(true)
         .setMessage(R.string.track_detail_install_earth_message)
         .setNegativeButton(android.R.string.cancel, null)
         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
-            startActivity(new Intent().setData(Uri.parse(SaveActivity.GOOGLE_EARTH_MARKET_URL)));
+            Intent intent = new Intent().setData(Uri.parse(SaveActivity.GOOGLE_EARTH_MARKET_URL));
+            startActivity(intent);
           }
         })
         .create();

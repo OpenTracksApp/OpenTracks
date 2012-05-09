@@ -42,7 +42,6 @@ public class AboutDialogFragment extends DialogFragment {
     TextView aboutVersion = (TextView) view.findViewById(R.id.about_version);
     aboutVersion.setText(SystemUtils.getMyTracksVersion(getActivity()));
     return new AlertDialog.Builder(getActivity())
-        .setCancelable(true)
         .setNegativeButton(R.string.about_license, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {

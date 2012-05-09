@@ -17,14 +17,19 @@
 package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.TracksColumns;
+import com.google.android.apps.mytracks.fragments.CheckUnitsDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteAllTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
+import com.google.android.apps.mytracks.fragments.WelcomeDialogFragment;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
+import com.google.android.apps.mytracks.settings.SettingsActivity;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.EulaUtils;
+import com.google.android.apps.mytracks.util.IntentUtils;
+import com.google.android.apps.mytracks.util.ListItemUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
@@ -56,7 +61,6 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -93,10 +97,11 @@ public class TrackListActivity extends FragmentActivity {
       try {
         recordingTrackId = service.startNewTrack();
         startNewRecording = false;
-        startTrackDetailActivity(recordingTrackId);
+        Intent intent = IntentUtils.newIntent(TrackListActivity.this, TrackDetailActivity.class)
+            .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, recordingTrackId);
+        startActivity(intent);
         Toast.makeText(
             TrackListActivity.this, R.string.track_list_record_success, Toast.LENGTH_SHORT).show();
-        Log.d(TAG, "Started a new recording");
       } catch (Exception e) {
         Toast.makeText(TrackListActivity.this, R.string.track_list_record_error, Toast.LENGTH_LONG)
             .show();
@@ -113,19 +118,28 @@ public class TrackListActivity extends FragmentActivity {
       sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
+          boolean updateList = false;
           // Note that key can be null
-          if (getString(R.string.metric_units_key).equals(key)) {
-            metricUnits = preferences.getBoolean(getString(R.string.metric_units_key), true);
+          if (PreferencesUtils.getKey(TrackListActivity.this, R.string.metric_units_key)
+              .equals(key)) {
+            metricUnits = PreferencesUtils.getBoolean(TrackListActivity.this,
+                R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+            updateList = true;
           }
-          if (PreferencesUtils.getRecordingTrackIdKey(TrackListActivity.this).equals(key)) {
-            recordingTrackId = PreferencesUtils.getRecordingTrackId(TrackListActivity.this);
+          if (PreferencesUtils.getKey(TrackListActivity.this, R.string.recording_track_id_key)
+              .equals(key)) {
+            recordingTrackId = PreferencesUtils.getLong(
+                TrackListActivity.this, R.string.recording_track_id_key);
             if (TrackRecordingServiceConnectionUtils.isRecording(
                 TrackListActivity.this, trackRecordingServiceConnection)) {
               trackRecordingServiceConnection.startAndBind();
             }
             updateMenu();
+            updateList = true;
           }
-          resourceCursorAdapter.notifyDataSetChanged();
+          if (updateList) {
+            resourceCursorAdapter.notifyDataSetChanged();
+          }
         }
       };
 
@@ -133,7 +147,7 @@ public class TrackListActivity extends FragmentActivity {
   private ContextualActionModeCallback contextualActionModeCallback =
     new ContextualActionModeCallback() {
     @Override
-    public boolean onClick(int itemId, long id) {
+    public boolean onClick(int itemId, int position, long id) {
       return handleContextItem(itemId, id);
     }
   };
@@ -150,8 +164,8 @@ public class TrackListActivity extends FragmentActivity {
   private MenuItem recordTrackMenuItem;
   private MenuItem stopRecordingMenuItem;
   private MenuItem searchMenuItem;
-  private MenuItem importAllMenuItem;
-  private MenuItem exportAllMenuItem;
+  private MenuItem importMenuItem;
+  private MenuItem saveAllMenuItem;
   private MenuItem deleteAllMenuItem;
 
   @Override
@@ -164,11 +178,11 @@ public class TrackListActivity extends FragmentActivity {
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(
         this, bindChangedCallback);
 
-    SharedPreferences sharedPreferences = getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-    metricUnits = sharedPreferences.getBoolean(getString(R.string.metric_units_key), true);
-    recordingTrackId = PreferencesUtils.getRecordingTrackId(this);
+    getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE)
+        .registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    metricUnits = PreferencesUtils.getBoolean(
+        this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+    recordingTrackId = PreferencesUtils.getLong(this, R.string.recording_track_id_key);
 
     ImageButton recordImageButton = (ImageButton) findViewById(R.id.track_list_record_button);
     recordImageButton.setOnClickListener(new View.OnClickListener() {
@@ -184,11 +198,13 @@ public class TrackListActivity extends FragmentActivity {
     listView.setOnItemClickListener(new OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        startTrackDetailActivity(id);
+        Intent intent = IntentUtils.newIntent(TrackListActivity.this, TrackDetailActivity.class)
+            .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, id);
+        startActivity(intent);
       }
     });
-    resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.track_list_item, null, 0) {
-      @Override
+    resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.list_item, null, 0) {
+        @Override
       public void bindView(View view, Context context, Cursor cursor) {
         int idIndex = cursor.getColumnIndex(TracksColumns._ID);
         int nameIndex = cursor.getColumnIndex(TracksColumns.NAME);
@@ -199,37 +215,32 @@ public class TrackListActivity extends FragmentActivity {
         int descriptionIndex = cursor.getColumnIndex(TracksColumns.DESCRIPTION);
 
         boolean isRecording = cursor.getLong(idIndex) == recordingTrackId;
-
-        TextView name = (TextView) view.findViewById(R.id.track_list_item_name);
-        name.setText(cursor.getString(nameIndex));
-        name.setCompoundDrawablesWithIntrinsicBounds(
-            isRecording ? R.drawable.menu_record_track : R.drawable.track, 0, 0, 0);
-
-        TextView category = (TextView) view.findViewById(R.id.track_list_item_category);
-        category.setText(cursor.getString(categoryIndex));
-
-        TextView time = (TextView) view.findViewById(R.id.track_list_item_time);
-        time.setText(StringUtils.formatElapsedTime(cursor.getLong(timeIndex)));
-        time.setVisibility(isRecording ? View.GONE : View.VISIBLE);
-
-        TextView distance = (TextView) view.findViewById(R.id.track_list_item_distance);
-        distance.setText(StringUtils.formatDistance(
-            TrackListActivity.this, cursor.getDouble(distanceIndex), metricUnits));
-        distance.setVisibility(isRecording ? View.GONE : View.VISIBLE);
-
-        TextView start = (TextView) view.findViewById(R.id.track_list_item_start);
-        start.setText(
-            StringUtils.formatDateTime(TrackListActivity.this, cursor.getLong(startIndex)));
-        start.setVisibility(start.getText().equals(name.getText()) ? View.GONE : View.VISIBLE);
-
-        TextView description = (TextView) view.findViewById(R.id.track_list_item_description);
-        description.setText(cursor.getString(descriptionIndex));
-        description.setVisibility(description.getText().length() == 0 ? View.GONE : View.VISIBLE);
+        String name = cursor.getString(nameIndex);
+        int iconId = isRecording ? R.drawable.menu_record_track : R.drawable.track;
+        String category = cursor.getString(categoryIndex);
+        String totalTime = isRecording 
+            ? null : StringUtils.formatElapsedTime(cursor.getLong(timeIndex));
+        String totalDistance = isRecording ? null : StringUtils.formatDistance(
+            TrackListActivity.this, cursor.getDouble(distanceIndex), metricUnits);
+        String startTime = 
+            StringUtils.formatDateTime(TrackListActivity.this, cursor.getLong(startIndex));
+        if (startTime.equals(name)) {
+          startTime = null;
+        }
+        String description = cursor.getString(descriptionIndex);
+        ListItemUtils.setListItem(view,
+            name,
+            iconId,
+            category,
+            totalTime,
+            totalDistance,
+            startTime,
+            description);
       }
     };
     listView.setAdapter(resourceCursorAdapter);
     ApiAdapterFactory.getApiAdapter().configureListViewContextualMenu(
-        this, listView, R.menu.track_list_context_menu, R.id.track_list_item_name,
+        this, listView, R.menu.list_context_menu, R.id.list_item_name,
         contextualActionModeCallback);
    
     getSupportLoaderManager().initLoader(0, null, new LoaderCallbacks<Cursor>() {
@@ -254,14 +265,49 @@ public class TrackListActivity extends FragmentActivity {
       }
     });
 
+    showStartupDialogs();
+  }
+
+  /**
+   * Shows start up dialogs.
+   */
+  public void showStartupDialogs() {
     if (!EulaUtils.getEulaValue(this)) {
       Fragment fragment = getSupportFragmentManager()
           .findFragmentByTag(EulaDialogFragment.EULA_DIALOG_TAG);
       if (fragment == null) {
-        EulaDialogFragment.newInstance(false).show(
-            getSupportFragmentManager(), EulaDialogFragment.EULA_DIALOG_TAG);
+        EulaDialogFragment.newInstance(false)
+            .show(getSupportFragmentManager(), EulaDialogFragment.EULA_DIALOG_TAG);
       }
+    } else if (PreferencesUtils.getBoolean(
+        this, R.string.show_welcome_dialog_key, PreferencesUtils.SHOW_WELCOME_DIALOG_DEFAULT)) {
+      Fragment fragment = getSupportFragmentManager()
+          .findFragmentByTag(WelcomeDialogFragment.WELCOME_DIALOG_TAG);
+      if (fragment == null) {
+        new WelcomeDialogFragment().show(
+            getSupportFragmentManager(), WelcomeDialogFragment.WELCOME_DIALOG_TAG);
+      }
+    } else if (PreferencesUtils.getBoolean(this, R.string.show_check_units_dialog_key,
+        PreferencesUtils.SHOW_CHECK_UNITS_DIALOG_DEFAULT)) {
+      Fragment fragment = getSupportFragmentManager()
+          .findFragmentByTag(CheckUnitsDialogFragment.CHECK_UNITS_DIALOG_TAG);
+      if (fragment == null) {
+        new CheckUnitsDialogFragment().show(
+            getSupportFragmentManager(), CheckUnitsDialogFragment.CHECK_UNITS_DIALOG_TAG);
+      }
+    } else {
+      enableEmptyView();
     }
+  }
+  
+  /**
+   * Enables the content of the empty view.
+   */
+  private void enableEmptyView() {
+    View emptyMessage = findViewById(R.id.track_list_empty_message);
+    emptyMessage.setVisibility(View.VISIBLE);
+    View recordButton = findViewById(R.id.track_list_record_button);
+    recordButton.setVisibility(View.VISIBLE);
   }
 
   @Override
@@ -280,20 +326,20 @@ public class TrackListActivity extends FragmentActivity {
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.track_list, menu);
     String fileTypes[] = getResources().getStringArray(R.array.file_types);
-    menu.findItem(R.id.track_list_export_gpx)
-        .setTitle(getString(R.string.menu_export_all_format, fileTypes[0]));
-    menu.findItem(R.id.track_list_export_kml)
-        .setTitle(getString(R.string.menu_export_all_format, fileTypes[1]));
-    menu.findItem(R.id.track_list_export_csv)
-        .setTitle(getString(R.string.menu_export_all_format, fileTypes[2]));
-    menu.findItem(R.id.track_list_export_tcx)
-        .setTitle(getString(R.string.menu_export_all_format, fileTypes[3]));
+    menu.findItem(R.id.track_list_save_all_gpx)
+        .setTitle(getString(R.string.menu_save_format, fileTypes[0]));
+    menu.findItem(R.id.track_list_save_all_kml)
+        .setTitle(getString(R.string.menu_save_format, fileTypes[1]));
+    menu.findItem(R.id.track_list_save_all_csv)
+        .setTitle(getString(R.string.menu_save_format, fileTypes[2]));
+    menu.findItem(R.id.track_list_save_all_tcx)
+        .setTitle(getString(R.string.menu_save_format, fileTypes[3]));
     
     recordTrackMenuItem = menu.findItem(R.id.track_list_record_track);
     stopRecordingMenuItem = menu.findItem(R.id.track_list_stop_recording);
     searchMenuItem = menu.findItem(R.id.track_list_search);
-    importAllMenuItem = menu.findItem(R.id.track_list_import_all);
-    exportAllMenuItem = menu.findItem(R.id.track_list_export_all);
+    importMenuItem = menu.findItem(R.id.track_list_import);
+    saveAllMenuItem = menu.findItem(R.id.track_list_save_all);
     deleteAllMenuItem = menu.findItem(R.id.track_list_delete_all);
 
     ApiAdapterFactory.getApiAdapter().configureSearchWidget(this, searchMenuItem);
@@ -321,11 +367,11 @@ public class TrackListActivity extends FragmentActivity {
     if (stopRecordingMenuItem != null) {
       stopRecordingMenuItem.setVisible(isRecording);
     }
-    if (importAllMenuItem != null) {
-      importAllMenuItem.setVisible(!isRecording);
+    if (importMenuItem != null) {
+      importMenuItem.setVisible(!isRecording);
     }
-    if (exportAllMenuItem != null) {
-      exportAllMenuItem.setVisible(!isRecording);
+    if (saveAllMenuItem != null) {
+      saveAllMenuItem.setVisible(!isRecording);
     }
     if (deleteAllMenuItem != null) {
       deleteAllMenuItem.setVisible(!isRecording);
@@ -334,6 +380,7 @@ public class TrackListActivity extends FragmentActivity {
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
+    Intent intent;
     switch (item.getItemId()) {
       case R.id.track_list_record_track:
         updateMenuItems(true);
@@ -345,38 +392,46 @@ public class TrackListActivity extends FragmentActivity {
         return true;
       case R.id.track_list_search:
         return ApiAdapterFactory.getApiAdapter().handleSearchMenuSelection(this);
-      case R.id.track_list_import_all:
-        startActivity(
-            new Intent(this, ImportActivity.class).putExtra(ImportActivity.EXTRA_IMPORT_ALL, true));
+      case R.id.track_list_import:
+        intent = IntentUtils.newIntent(this, ImportActivity.class)
+            .putExtra(ImportActivity.EXTRA_IMPORT_ALL, true);
+        startActivity(intent);
         return true;
-      case R.id.track_list_export_gpx:
-        startActivity(new Intent(this, ExportActivity.class).putExtra(
-            ExportActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.GPX));
+      case R.id.track_list_save_all_gpx:
+        intent = IntentUtils.newIntent(this, SaveAllActivity.class)
+            .putExtra(SaveAllActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.GPX);
+        startActivity(intent);
         return true;
-      case R.id.track_list_export_kml:
-        startActivity(new Intent(this, ExportActivity.class).putExtra(
-            ExportActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.KML));
+      case R.id.track_list_save_all_kml:
+        intent = IntentUtils.newIntent(this, SaveAllActivity.class)
+            .putExtra(SaveAllActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.KML);
+        startActivity(intent);
         return true;
-      case R.id.track_list_export_csv:
-        startActivity(new Intent(this, ExportActivity.class).putExtra(
-            ExportActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.CSV));
+      case R.id.track_list_save_all_csv:
+        intent = IntentUtils.newIntent(this, SaveAllActivity.class)
+            .putExtra(SaveAllActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.CSV);
+        startActivity(intent);
         return true;
-      case R.id.track_list_export_tcx:
-        startActivity(new Intent(this, ExportActivity.class).putExtra(
-            ExportActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.TCX));
+      case R.id.track_list_save_all_tcx:
+        intent = IntentUtils.newIntent(this, SaveAllActivity.class)
+            .putExtra(SaveAllActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.TCX);
+        startActivity(intent);
         return true;
       case R.id.track_list_delete_all:
         new DeleteAllTrackDialogFragment().show(
             getSupportFragmentManager(), DeleteAllTrackDialogFragment.DELETE_ALL_TRACK_DIALOG_TAG);
         return true;
       case R.id.track_list_aggregated_statistics:
-        startActivity(new Intent(this, AggregatedStatsActivity.class));
+        intent = IntentUtils.newIntent(this, AggregatedStatsActivity.class);
+        startActivity(intent);
         return true;
       case R.id.track_list_settings:
-        startActivity(new Intent(this, SettingsActivity.class));
+        intent = IntentUtils.newIntent(this, SettingsActivity.class);
+        startActivity(intent);
         return true;
       case R.id.track_list_help:
-        startActivity(new Intent(this, HelpActivity.class));
+        intent = IntentUtils.newIntent(this, HelpActivity.class);
+        startActivity(intent);
         return true;
       default:
         return super.onOptionsItemSelected(item);
@@ -386,7 +441,7 @@ public class TrackListActivity extends FragmentActivity {
   @Override
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);
-    getMenuInflater().inflate(R.menu.track_list_context_menu, menu);
+    getMenuInflater().inflate(R.menu.list_context_menu, menu);
   }
   
   @Override
@@ -396,39 +451,34 @@ public class TrackListActivity extends FragmentActivity {
     }
     return super.onContextItemSelected(item);
   }
-  
+
   /**
    * Handles a context item selection.
-   *
+   * 
    * @param itemId the menu item id
    * @param trackId the track id
    * @return true if handled.
    */
   private boolean handleContextItem(int itemId, long trackId) {
+    Intent intent;
     switch (itemId) {
-      case R.id.track_list_context_menu_edit:
-        startActivity(new Intent(this, TrackEditActivity.class).putExtra(
-            TrackEditActivity.EXTRA_TRACK_ID, trackId));
+      case R.id.list_context_menu_show_on_map:
+        intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
+            .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
+        startActivity(intent);
         return true;
-      case R.id.track_list_context_menu_delete:
+      case R.id.list_context_menu_edit:
+        intent = IntentUtils.newIntent(this, TrackEditActivity.class)
+            .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId);
+        startActivity(intent);
+        return true;
+      case R.id.list_context_menu_delete:
         DeleteOneTrackDialogFragment.newInstance(trackId).show(
             getSupportFragmentManager(), DeleteOneTrackDialogFragment.DELETE_ONE_TRACK_DIALOG_TAG);
         return true;
       default:
         return false;
     }
-  }
-  
-  /**
-   * Starts {@link TrackDetailActivity}.
-   * 
-   * @param trackId the track id.
-   */
-  private void startTrackDetailActivity(long trackId) {
-    Intent intent = new Intent(TrackListActivity.this, TrackDetailActivity.class)
-        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-        .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
-    startActivity(intent);
   }
 
   /**

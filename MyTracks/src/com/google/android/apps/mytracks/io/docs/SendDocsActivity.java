@@ -19,6 +19,7 @@ import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendActivity;
 import com.google.android.apps.mytracks.io.sendtogoogle.AbstractSendAsyncTask;
 import com.google.android.apps.mytracks.io.sendtogoogle.SendRequest;
 import com.google.android.apps.mytracks.io.sendtogoogle.UploadResultActivity;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Intent;
@@ -43,7 +44,7 @@ public class SendDocsActivity extends AbstractSendActivity {
   @Override
   protected void startNextActivity(boolean success, boolean isCancel) {
     sendRequest.setDocsSuccess(success);
-    Intent intent = new Intent(this, UploadResultActivity.class)
+    Intent intent = IntentUtils.newIntent(this, UploadResultActivity.class)
         .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
     startActivity(intent);
     finish();

@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.maps;
 
 import com.google.android.apps.mytracks.Constants;
@@ -21,26 +22,23 @@ import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.test.AndroidTestCase;
 
 /**
  * Tests for the {@link DynamicSpeedTrackPathDescriptor}.
- *
+ * 
  * @author Youtao Liu
  */
 public class DynamicSpeedTrackPathDescriptorTest extends AndroidTestCase {
 
   private Context context;
   private SharedPreferences sharedPreferences;
-  private Editor sharedPreferencesEditor;
 
   @Override
   protected void setUp() throws Exception {
     super.setUp();
     context = getContext();
     sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    sharedPreferencesEditor = sharedPreferences.edit();
   }
 
   /**
@@ -48,96 +46,77 @@ public class DynamicSpeedTrackPathDescriptorTest extends AndroidTestCase {
    * with zero, normal and illegal value.
    */
   public void testGetSpeedMargin() {
-    String[] actuals = { "0", "50", "99", "" };
     // The default value of speedMargin is 25.
     int[] expectations = { 0, 50, 99, 25 };
     // Test
     for (int i = 0; i < expectations.length; i++) {
-      sharedPreferencesEditor.putString(
-          context.getString(R.string.track_color_mode_dynamic_speed_variation_key), actuals[i]);
-      sharedPreferencesEditor.commit();
+      PreferencesUtils.setInt(context, R.string.track_color_mode_percentage_key, expectations[i]);
       DynamicSpeedTrackPathDescriptor dynamicSpeedTrackPathDescriptor = new DynamicSpeedTrackPathDescriptor(
           context);
-      assertEquals(expectations[i],
-          dynamicSpeedTrackPathDescriptor.getSpeedMargin(sharedPreferences));
+      assertEquals(expectations[i], dynamicSpeedTrackPathDescriptor.getSpeedMargin());
     }
   }
 
   /**
-   * Tests {@link
-   * DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged(SharedPreferences,
+   * Tests {@link DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged(SharedPreferences,
    * String)} when the key is null.
    */
   public void testOnSharedPreferenceChanged_nullKey() {
     DynamicSpeedTrackPathDescriptor dynamicSpeedTrackPathDescriptor = new DynamicSpeedTrackPathDescriptor(
         context);
-    int speedMargin = dynamicSpeedTrackPathDescriptor.getSpeedMargin(sharedPreferences);
+    int speedMargin = dynamicSpeedTrackPathDescriptor.getSpeedMargin();
     // Change value in shared preferences.
-    sharedPreferencesEditor.putString(
-        context.getString(R.string.track_color_mode_dynamic_speed_variation_key),
-        Integer.toString(speedMargin + 2));
-    sharedPreferencesEditor.commit();
+    PreferencesUtils.setInt(context, R.string.track_color_mode_percentage_key, speedMargin + 2);
 
     dynamicSpeedTrackPathDescriptor.onSharedPreferenceChanged(sharedPreferences, null);
     assertEquals(speedMargin, dynamicSpeedTrackPathDescriptor.getSpeedMargin());
   }
 
   /**
-   * Tests {@link
-   * DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged(SharedPreferences,
+   * Tests {@link DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged(SharedPreferences,
    * String)} when the key is not null, and not trackColorModeDynamicVariation.
    */
   public void testOnSharedPreferenceChanged_otherKey() {
     DynamicSpeedTrackPathDescriptor dynamicSpeedTrackPathDescriptor = new DynamicSpeedTrackPathDescriptor(
         context);
-    int speedMargin = dynamicSpeedTrackPathDescriptor.getSpeedMargin(sharedPreferences);
+    int speedMargin = dynamicSpeedTrackPathDescriptor.getSpeedMargin();
     // Change value in shared preferences.
-    sharedPreferencesEditor.putString(
-        context.getString(R.string.track_color_mode_dynamic_speed_variation_key),
-        Integer.toString(speedMargin + 2));
-    sharedPreferencesEditor.commit();
-
+    PreferencesUtils.setInt(context, R.string.track_color_mode_percentage_key, speedMargin + 2);
     dynamicSpeedTrackPathDescriptor.onSharedPreferenceChanged(sharedPreferences, "anyKey");
     assertEquals(speedMargin, dynamicSpeedTrackPathDescriptor.getSpeedMargin());
   }
 
   /**
-   * Tests {@link
-   * DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged(SharedPreferences,
+   * Tests {@link DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged(SharedPreferences,
    * String)} when the key is trackColorModeDynamicVariation.
    */
   public void testOnSharedPreferenceChanged_trackColorModeDynamicVariationKey() {
     DynamicSpeedTrackPathDescriptor dynamicSpeedTrackPathDescriptor = new DynamicSpeedTrackPathDescriptor(
         context);
-    int speedMargin = dynamicSpeedTrackPathDescriptor.getSpeedMargin(sharedPreferences);
+    int speedMargin = dynamicSpeedTrackPathDescriptor.getSpeedMargin();
     // Change value in shared preferences.
-    sharedPreferencesEditor.putString(
-        "trackColorModeDynamicVariation",
-        Integer.toString(speedMargin + 2));
-    sharedPreferencesEditor.commit();
+    PreferencesUtils.setInt(context, R.string.track_color_mode_percentage_key, speedMargin + 2);
 
     dynamicSpeedTrackPathDescriptor.onSharedPreferenceChanged(sharedPreferences,
-        "trackColorModeDynamicVariation");
+        PreferencesUtils.getKey(context, R.string.track_color_mode_percentage_key));
     assertEquals(speedMargin + 2, dynamicSpeedTrackPathDescriptor.getSpeedMargin());
   }
 
   /**
-   * Tests {@link
-   * DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged(SharedPreferences,
-   * String)} when the values of speedMargin is "".
+   * Tests {@link DynamicSpeedTrackPathDescriptor#onSharedPreferenceChanged(SharedPreferences,
+   * String)} when the values of speedMargin is the default value.
    */
-  public void testOnSharedPreferenceChanged_emptyValue() {
+  public void testOnSharedPreferenceChanged_defaultValue() {
     DynamicSpeedTrackPathDescriptor dynamicSpeedTrackPathDescriptor = new DynamicSpeedTrackPathDescriptor(
         context);
     // Change value in shared preferences
-    sharedPreferencesEditor.putString(
-        context.getString(R.string.track_color_mode_dynamic_speed_variation_key), "");
-    sharedPreferencesEditor.commit();
-
+    PreferencesUtils.setInt(context, R.string.track_color_mode_percentage_key,
+        PreferencesUtils.TRACK_COLOR_MODE_PERCENTAGE_DEFAULT);
     dynamicSpeedTrackPathDescriptor.onSharedPreferenceChanged(sharedPreferences,
-        context.getString(R.string.track_color_mode_dynamic_speed_variation_key));
+        PreferencesUtils.getKey(context, R.string.track_color_mode_percentage_key));
     // The default value of speedMargin is 25.
-    assertEquals(25, dynamicSpeedTrackPathDescriptor.getSpeedMargin());
+    assertEquals(PreferencesUtils.TRACK_COLOR_MODE_PERCENTAGE_DEFAULT,
+        dynamicSpeedTrackPathDescriptor.getSpeedMargin());
   }
 
   /**
@@ -145,7 +124,8 @@ public class DynamicSpeedTrackPathDescriptorTest extends AndroidTestCase {
    * id.
    */
   public void testNeedsRedraw_WrongTrackId() {
-    PreferencesUtils.setSelectedTrackId(context, -1L);
+    PreferencesUtils.setLong(
+        context, R.string.selected_track_id_key, PreferencesUtils.SELECTED_TRACK_ID_DEFAULT);
     DynamicSpeedTrackPathDescriptor dynamicSpeedTrackPathDescriptor = new DynamicSpeedTrackPathDescriptor(
         context);
     assertEquals(false, dynamicSpeedTrackPathDescriptor.needsRedraw());
@@ -160,9 +140,9 @@ public class DynamicSpeedTrackPathDescriptorTest extends AndroidTestCase {
         context);
     double[] averageMovingSpeeds = { 0, 30, 30, 30 };
     double[] newAverageMovingSpeed = { 20, 30,
-        // Difference is less than CRITICAL_DIFFERENCE_PERCENTAGE
+    // Difference is less than CRITICAL_DIFFERENCE_PERCENTAGE
         30 * (1 + (DynamicSpeedTrackPathDescriptor.CRITICAL_DIFFERENCE_PERCENTAGE / 100) / 2),
-        // Difference is more than CRITICAL_DIFFERENCE_PERCENTAGE
+    // Difference is more than CRITICAL_DIFFERENCE_PERCENTAGE
         30 * (1 + (DynamicSpeedTrackPathDescriptor.CRITICAL_DIFFERENCE_PERCENTAGE / 100.00) * 2) };
     boolean[] expectedValues = { true, false, false, true };
     double[] expectedAverageMovingSpeed = { 20, 30, 30,
@@ -172,8 +152,8 @@ public class DynamicSpeedTrackPathDescriptorTest extends AndroidTestCase {
       dynamicSpeedTrackPathDescriptor.setAverageMovingSpeed(averageMovingSpeeds[i]);
       assertEquals(expectedValues[i], dynamicSpeedTrackPathDescriptor.isDifferenceSignificant(
           averageMovingSpeeds[i], newAverageMovingSpeed[i]));
-      assertEquals(expectedAverageMovingSpeed[i],
-          dynamicSpeedTrackPathDescriptor.getAverageMovingSpeed());
+      assertEquals(
+          expectedAverageMovingSpeed[i], dynamicSpeedTrackPathDescriptor.getAverageMovingSpeed());
     }
   }
 }

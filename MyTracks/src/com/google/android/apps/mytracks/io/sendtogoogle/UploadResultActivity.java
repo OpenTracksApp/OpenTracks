@@ -15,21 +15,19 @@
  */
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesUtils;
 import com.google.android.apps.mytracks.io.maps.SendMapsUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -49,7 +47,7 @@ public class UploadResultActivity extends Activity {
   private SendRequest sendRequest;
   private Track track;
   private String shareUrl;
-  private Dialog dialog;
+  private Dialog resultDialog;
   
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -169,29 +167,28 @@ public class UploadResultActivity extends Activity {
             }
           });
     }
-    dialog = builder.create();
-    return dialog;
+    resultDialog = builder.create();
+    return resultDialog;
   }
 
   /**
    * Starts an activity to share the url.
-   *
+   * 
    * @param url the url
    */
   private void startShareUrlActivity(String url) {
-    SharedPreferences prefs = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    boolean shareUrlOnly = prefs.getBoolean(getString(R.string.share_url_only_key), false);
-
-    Intent intent = new Intent(Intent.ACTION_SEND);
-    intent.setType(TEXT_PLAIN_TYPE);
-    intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_track_subject));
-    intent.putExtra(Intent.EXTRA_TEXT,
-        shareUrlOnly ? url : getString(R.string.share_track_url_body_format, url));
+    boolean shareUrlOnly = PreferencesUtils.getBoolean(
+        this, R.string.share_url_only_key, PreferencesUtils.SHARE_URL_ONLY_DEFAULT);
+    Intent intent = new Intent(Intent.ACTION_SEND)
+        .setType(TEXT_PLAIN_TYPE)
+        .putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_track_subject))
+        .putExtra(Intent.EXTRA_TEXT,
+            shareUrlOnly ? url : getString(R.string.share_track_url_body_format, url));
     startActivity(Intent.createChooser(intent, getString(R.string.share_track_picker_title)));
   }
   
   @VisibleForTesting
   Dialog getDialog() {
-    return dialog;
+    return resultDialog;
   }
 }

@@ -16,13 +16,13 @@
 package com.google.android.apps.mytracks.content;
 
 import com.google.android.apps.mytracks.Constants;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -190,13 +190,11 @@ public class MyTracksProvider extends ContentProvider {
     if (Binder.getCallingPid() == Process.myPid()) {
       return true;
     } else {
-      Context context = getContext();
-      SharedPreferences sharedPreferences = context.getSharedPreferences(
-          Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-      return sharedPreferences.getBoolean(context.getString(R.string.allow_access_key), false);
+      return PreferencesUtils.getBoolean(
+          getContext(), R.string.allow_access_key, PreferencesUtils.ALLOW_ACCESS_DEFAULT);
     }
   }
-  
+
   @Override
   public boolean onCreate() {
     if (!canAccess()) {

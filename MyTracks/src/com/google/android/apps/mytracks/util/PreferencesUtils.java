@@ -17,7 +17,6 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.Constants;
-import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -30,63 +29,66 @@ import android.content.SharedPreferences.Editor;
  */
 public class PreferencesUtils {
 
+  /*
+   * Preferences values. The defaults need to match the defaults in the xml
+   * files.
+   */
+  public static final boolean ALLOW_ACCESS_DEFAULT = false;
+  public static final int ANNOUNCEMENT_FREQUENCY_DEFAULT = 0;
+  public static final int AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT = 0;
+
+  public static final int AUTO_RESUME_TRACK_TIMEOUT_ALWAYS = -1;
+  public static final int AUTO_RESUME_TRACK_TIMEOUT_DEFAULT = 10;
+  public static final int AUTO_RESUME_TRACK_TIMEOUT_NEVER = 0;
+
+  public static final String BLUETOOTH_SENSOR_DEFAULT = "";
+
+  public static final boolean CHART_BY_DISTANCE_DEFAULT = true;
+  public static final boolean CHART_SHOW_CADENCE_DEFAULT = true;
+  public static final boolean CHART_SHOW_ELEVATION_DEFAULT = true;
+  public static final boolean CHART_SHOW_HEART_RATE_DEFAULT = true;
+  public static final boolean CHART_SHOW_POWER_DEFAULT = true;
+  public static final boolean CHART_SHOW_SPEED_DEFAULT = true;
+
+  public static final String DEFAULT_ACTIVITY_DEFAULT = "";
+  public static final boolean DEFAULT_MAP_PUBLIC_DEFAULT = true;
+  public static final int MAX_RECORDING_DISTANCE_DEFAULT = 200;
+  public static final boolean METRIC_UNITS_DEFAULT = true;
+  public static final int MIN_RECORDING_DISTANCE_DEFAULT = 5;
+
+  public static final int MIN_RECORDING_INTERVAL_ADAPT_ACCURACY = -1;
+  public static final int MIN_RECORDING_INTERVAL_ADAPT_BATTERY_LIFE = -2;
+  public static final int MIN_RECORDING_INTERVAL_DEFAULT = 0;
+
+  public static final int MIN_REQUIRED_ACCURACY_DEFAULT = 200;
+  public static final int MIN_REQUIRED_ACCURACY_EXCELLENT = 10;
+  public static final int MIN_REQUIRED_ACCURACY_POOR = 5000;
+
+  public static final int PERIODIC_TASK_OFF = 0;
+  public static final boolean PICK_EXISTING_MAP_DEFAULT = false;
+  public static final boolean PICK_STATISTICS_MARKER_DEFAULT = true;
+  public static final String PREFERRED_ACCOUNT_DEFAULT = "";
+  public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
+  public static final boolean REPORT_SPEED_DEFAULT = true;
+  public static final long SELECTED_TRACK_ID_DEFAULT = -1L;
+  public static final boolean SEND_TO_DOCS_DEFAULT = true;
+  public static final boolean SEND_TO_FUSION_TABLES_DEFAULT = true;
+  public static final boolean SEND_TO_MAPS_DEFAULT = true;
+  public static final boolean SHARE_URL_ONLY_DEFAULT = false;
+  public static final boolean SHOW_CHECK_UNITS_DIALOG_DEFAULT = true;
+  public static final boolean SHOW_WELCOME_DIALOG_DEFAULT = true;
+  public static final int SPLIT_FREQUENCY_DEFAULT = 0;
+
+  public static final boolean STATS_SHOW_COORDINATE_DEFAULT = false;
+  public static final boolean STATS_SHOW_ELEVATION_DEFAULT = false;
+  public static final boolean STATS_SHOW_GRADE_DEFAULT = false;
+  public static final boolean STATS_USE_TOTAL_TIME_DEFAULT = true;
+
+  public static final int TRACK_COLOR_MODE_MEDIUM_DEFAULT = 15;
+  public static final int TRACK_COLOR_MODE_PERCENTAGE_DEFAULT = 25;
+  public static final int TRACK_COLOR_MODE_SLOW_DEFAULT = 9;
+
   private PreferencesUtils() {}
-
-  /**
-   * Gets the recording track id key.
-   * 
-   * @param context the context
-   */
-  public static String getRecordingTrackIdKey(Context context) {
-    return getKey(context, R.string.recording_track_id_key);
-  }
-
-  /**
-   * Gets the recording track id.
-   * 
-   * @param context the context
-   */
-  public static long getRecordingTrackId(Context context) {
-    return getLong(context, R.string.recording_track_id_key);
-  }
-
-  /**
-   * Sets the recording track id.
-   * 
-   * @param context the context
-   * @param trackId the track id
-   */
-  public static void setRecordingTrackId(Context context, long trackId) {
-    setLong(context, R.string.recording_track_id_key, trackId);
-  }
-
-  /**
-   * Gets the selected track id key.
-   * 
-   * @param context the context
-   */
-  public static String getSelectedTrackIdKey(Context context) {
-    return getKey(context, R.string.selected_track_id_key);
-  }
-
-  /**
-   * Gets the selected track id.
-   * 
-   * @param context the context
-   */
-  public static long getSelectedTrackId(Context context) {
-    return getLong(context, R.string.selected_track_id_key);
-  }
-
-  /**
-   * Sets the selected track id.
-   * 
-   * @param context the context
-   * @param trackId the track id
-   */
-  public static void setSelectedTrackId(Context context, long trackId) {
-    setLong(context, R.string.selected_track_id_key, trackId);
-  }
 
   /**
    * Gets a preference key
@@ -94,8 +96,64 @@ public class PreferencesUtils {
    * @param context the context
    * @param keyId the key id
    */
-  private static String getKey(Context context, int keyId) {
+  public static String getKey(Context context, int keyId) {
     return context.getString(keyId);
+  }
+
+  /**
+   * Gets a boolean preference value.
+   * 
+   * @param context the context
+   * @param keyId the key id
+   * @param defaultValue the default value
+   */
+  public static boolean getBoolean(Context context, int keyId, boolean defaultValue) {
+    SharedPreferences sharedPreferences = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    return sharedPreferences.getBoolean(getKey(context, keyId), defaultValue);
+  }
+
+  /**
+   * Sets a boolean preference value.
+   * 
+   * @param context the context
+   * @param keyId the key id
+   * @param value the value
+   */
+  public static void setBoolean(Context context, int keyId, boolean value) {
+    SharedPreferences sharedPreferences = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    Editor editor = sharedPreferences.edit();
+    editor.putBoolean(getKey(context, keyId), value);
+    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
+  }
+
+  /**
+   * Gets an integer preference value.
+   * 
+   * @param context the context
+   * @param keyId the key id
+   * @param defaultValue the default value
+   */
+  public static int getInt(Context context, int keyId, int defaultValue) {
+    SharedPreferences sharedPreferences = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    return sharedPreferences.getInt(getKey(context, keyId), defaultValue);
+  }
+
+  /**
+   * Sets an integer preference value.
+   * 
+   * @param context the context
+   * @param keyId the key id
+   * @param value the value
+   */
+  public static void setInt(Context context, int keyId, int value) {
+    SharedPreferences sharedPreferences = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    Editor editor = sharedPreferences.edit();
+    editor.putInt(getKey(context, keyId), value);
+    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
   }
 
   /**
@@ -104,7 +162,7 @@ public class PreferencesUtils {
    * @param context the context
    * @param keyId the key id
    */
-  private static long getLong(Context context, int keyId) {
+  public static long getLong(Context context, int keyId) {
     SharedPreferences sharedPreferences = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     return sharedPreferences.getLong(getKey(context, keyId), -1L);
@@ -117,11 +175,39 @@ public class PreferencesUtils {
    * @param keyId the key id
    * @param value the value
    */
-  private static void setLong(Context context, int keyId, long value) {
+  public static void setLong(Context context, int keyId, long value) {
     SharedPreferences sharedPreferences = context.getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     Editor editor = sharedPreferences.edit();
     editor.putLong(getKey(context, keyId), value);
+    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
+  }
+  
+  /**
+   * Gets a string preference value.
+   * 
+   * @param context the context
+   * @param keyId the key id
+   * @param defaultValue default value
+   */
+  public static String getString(Context context, int keyId, String defaultValue) {
+    SharedPreferences sharedPreferences = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    return sharedPreferences.getString(getKey(context, keyId), defaultValue);
+  }
+  
+  /**
+   * Sets a string preference value.
+   * 
+   * @param context the context
+   * @param keyId the key id
+   * @param value the value
+   */
+  public static void setString(Context context, int keyId, String value) {
+    SharedPreferences sharedPreferences = context.getSharedPreferences(
+        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
+    Editor editor = sharedPreferences.edit();
+    editor.putString(getKey(context, keyId), value);
     ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
   }
 }

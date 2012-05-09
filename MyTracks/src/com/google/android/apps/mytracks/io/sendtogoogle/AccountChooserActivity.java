@@ -24,7 +24,8 @@ import com.google.android.apps.mytracks.io.gdata.docs.SpreadsheetsClient;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsConstants;
 import com.google.android.apps.mytracks.io.maps.ChooseMapActivity;
 import com.google.android.apps.mytracks.io.maps.SendMapsActivity;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.IntentUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.accounts.Account;
@@ -36,11 +37,8 @@ import android.accounts.OperationCanceledException;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -92,8 +90,8 @@ public class AccountChooserActivity extends Activity {
       return;
     }
 
-    SharedPreferences prefs = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    String preferredAccount = prefs.getString(getString(R.string.preferred_account_key), "");
+    String preferredAccount = PreferencesUtils.getString(this, R.string.preferred_account_key,
+        PreferencesUtils.PREFERRED_ACCOUNT_DEFAULT);
 
     selectedAccountIndex = 0;
     for (int i = 0; i < accounts.length; i++) {
@@ -165,12 +163,8 @@ public class AccountChooserActivity extends Activity {
         .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int which) {
             Account account = accounts[selectedAccountIndex];
-            SharedPreferences sharedPreferences = getSharedPreferences(
-                Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-            Editor editor = sharedPreferences.edit();
-            editor.putString(getString(R.string.preferred_account_key), account.name);
-            ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
-
+            PreferencesUtils.setString(
+                AccountChooserActivity.this, R.string.preferred_account_key, account.name);
             sendRequest.setAccount(account);
             getPermission(MapsConstants.SERVICE_NAME, sendRequest.isSendMaps(), mapsCallback);
           }
@@ -294,7 +288,7 @@ public class AccountChooserActivity extends Activity {
     } else {
       next = UploadResultActivity.class;
     }
-    Intent intent = new Intent(this, next)
+    Intent intent = IntentUtils.newIntent(this, next)
         .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
     startActivity(intent);
     finish();

@@ -31,6 +31,7 @@ import com.google.android.apps.mytracks.io.sendtogoogle.SendToGoogleUtils;
 import com.google.android.apps.mytracks.stats.DoubleBuffer;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.LocationUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.common.gdata.AndroidXmlParserFactory;
 import com.google.android.maps.mytracks.R;
@@ -44,7 +45,6 @@ import android.accounts.AccountManager;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.location.Location;
 import android.util.Log;
@@ -224,15 +224,13 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
       mapId = chooseMapId;
       return true;
     } else {
-      SharedPreferences sharedPreferences = context.getSharedPreferences(
-          Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-      boolean mapPublic = sharedPreferences.getBoolean(
-          context.getString(R.string.default_map_public_key), true);
+      boolean defaultMapPublic = PreferencesUtils.getBoolean(
+          context, R.string.default_map_public_key, PreferencesUtils.DEFAULT_MAP_PUBLIC_DEFAULT);
       try {
         String description = track.getCategory() + "\n" + track.getDescription() + "\n"
             + context.getString(R.string.send_google_by_my_tracks, "", "");
         mapId = SendMapsUtils.createNewMap(
-            track.getName(), description, mapPublic, mapsClient, authToken);
+            track.getName(), description, defaultMapPublic, mapsClient, authToken);
       } catch (ParseException e) {
         Log.d(TAG, "Unable to create a new map", e);
         return false;
@@ -257,9 +255,8 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
   boolean uploadAllTrackPoints(Track track) {
     Cursor locationsCursor = null;
     try {
-      SharedPreferences prefs = context.getSharedPreferences(
-          Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-      boolean metricUnits = prefs.getBoolean(context.getString(R.string.metric_units_key), true);
+      boolean metricUnits = PreferencesUtils.getBoolean(
+          context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
 
       locationsCursor = myTracksProviderUtils.getLocationsCursor(trackId, 0, -1, false);
       if (locationsCursor == null) {

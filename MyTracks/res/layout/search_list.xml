@@ -14,21 +14,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apl/res/com.google.android.apps.mytracks"
-  android:orientation="vertical"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent">
-  <ListView android:id="@android:id/list"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_height="fill_parent"
+  android:layout_width="fill_parent" >
+  <ListView
+    android:id="@+id/search_list"
     android:layout_height="fill_parent"
     android:layout_width="fill_parent" />
-  <TextView android:id="@android:id/empty"
-    android:gravity="center"
-    android:layout_height="fill_parent"
-    android:layout_width="fill_parent"
-    android:text="@string/search_no_results"
-    android:textColor="@android:color/white"
-    android:textSize="20dp"
-    android:textStyle="bold"
-    android:visibility="gone" />
-</LinearLayout>
+  <TextView
+    android:id="@+id/search_list_empty"
+    android:text="@string/search_list_empty_message"
+    style="@style/ListEmptyTextView" >
+  </TextView>
+</merge>

@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.services.sensors.ant;
 import com.dsi.ant.AntMesg;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Sensor;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
@@ -27,7 +28,6 @@ import android.test.suitebuilder.annotation.SmallTest;
 
 public class AntDirectSensorManagerTest extends AndroidTestCase {
 
-  private SharedPreferences sharedPreferences;
   private AntSensorBase heartRateSensor;
   private static final byte HEART_RATE_CHANNEL = 0;
 
@@ -47,7 +47,7 @@ public class AntDirectSensorManagerTest extends AndroidTestCase {
   private AntDirectSensorManager manager;
 
   public void setUp() {
-    sharedPreferences = getContext().getSharedPreferences(
+    SharedPreferences sharedPreferences = getContext().getSharedPreferences(
         Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     // Let's use default values.
     sharedPreferences.edit().clear().apply();
@@ -87,9 +87,8 @@ public class AntDirectSensorManagerTest extends AndroidTestCase {
     manager.handleMessage(AntMesg.MESG_CHANNEL_ID_ID, buff);
 
     assertEquals(43, heartRateSensor.getDeviceNumber());
-    assertEquals(43,
-        sharedPreferences.getInt(
-            getContext().getString(R.string.ant_heart_rate_sensor_id_key), -1));
+    assertEquals(43, PreferencesUtils.getInt(
+        getContext(), R.string.ant_heart_rate_sensor_id_key, AntSensorManager.WILDCARD));
     assertNull(manager.getSensorDataSet());
   }
 

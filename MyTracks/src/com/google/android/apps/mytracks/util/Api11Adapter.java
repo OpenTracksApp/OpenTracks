@@ -28,13 +28,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import java.util.List;
+
 /**
  * API level 11 specific implementation of the {@link ApiAdapter}.
- *
+ * 
  * @author Jimmy Shih
  */
 @TargetApi(11)
@@ -51,15 +54,14 @@ public class Api11Adapter extends Api10Adapter {
   }
 
   @Override
-  public void configureListViewContextualMenu(final Activity activity, ListView listView, final int menuId,
-      final int actionModeTitleId,
+  public void configureListViewContextualMenu(final Activity activity, ListView listView,
+      final int menuId, final int actionModeTitleId,
       final ContextualActionModeCallback contextualActionModeCallback) {
     listView.setOnItemLongClickListener(new OnItemLongClickListener() {
       ActionMode actionMode;
-
       @Override
       public boolean onItemLongClick(
-          AdapterView<?> parent, View view, int position, final long id) {
+          AdapterView<?> parent, View view, final int position, final long id) {
         if (actionMode != null) {
           return false;
         }
@@ -69,21 +71,19 @@ public class Api11Adapter extends Api10Adapter {
             mode.getMenuInflater().inflate(menuId, menu);
             return true;
           }
-
           @Override
           public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
             // Return false to indicate no change.
             return false;
           }
-
           @Override
           public void onDestroyActionMode(ActionMode mode) {
             actionMode = null;
           }
-
           @Override
           public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            return contextualActionModeCallback.onClick(item.getItemId(), id);
+            mode.finish();
+            return contextualActionModeCallback.onClick(item.getItemId(), position, id);
           }
         });
         TextView textView = (TextView) view.findViewById(actionModeTitleId);
@@ -95,17 +95,23 @@ public class Api11Adapter extends Api10Adapter {
       }
     });
   };
-  
+
   @Override
-  public void configureSearchWidget(Activity activity, MenuItem menuItem) {
+  public void configureSearchWidget(Activity activity, final MenuItem menuItem) {
     SearchManager searchManager = (SearchManager) activity.getSystemService(Context.SEARCH_SERVICE);
     SearchView searchView = (SearchView) menuItem.getActionView();
     searchView.setSearchableInfo(searchManager.getSearchableInfo(activity.getComponentName()));
+    searchView.setQueryRefinementEnabled(true);
   }
 
   @Override
   public boolean handleSearchMenuSelection(Activity activity) {
     // Returns false to allow the platform to expand the search widget.
     return false;
-  }  
+  }
+
+  @Override
+  public <T> void addAllToArrayAdapter(ArrayAdapter<T> arrayAdapter, List<T> items) {
+    arrayAdapter.addAll(items);
+  }
 }

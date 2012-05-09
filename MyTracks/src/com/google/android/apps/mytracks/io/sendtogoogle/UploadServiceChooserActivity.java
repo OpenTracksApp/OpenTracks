@@ -15,20 +15,17 @@
  */
 package com.google.android.apps.mytracks.io.sendtogoogle;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.util.AnalyticsUtils;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.IntentUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
@@ -152,16 +149,18 @@ public class UploadServiceChooserActivity extends Activity {
    */
   @VisibleForTesting
   void initState() {
-    SharedPreferences prefs = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    boolean pickExistingMap = prefs.getBoolean(getString(R.string.pick_existing_map_key), false);
+    boolean pickExistingMap = PreferencesUtils.getBoolean(
+        this, R.string.pick_existing_map_key, PreferencesUtils.PICK_EXISTING_MAP_DEFAULT);
 
     newMapRadioButton.setChecked(!pickExistingMap);
     existingMapRadioButton.setChecked(pickExistingMap);
 
-    mapsCheckBox.setChecked(prefs.getBoolean(getString(R.string.send_to_maps_key), true));
-    fusionTablesCheckBox.setChecked(
-        prefs.getBoolean(getString(R.string.send_to_fusion_tables_key), true));
-    docsCheckBox.setChecked(prefs.getBoolean(getString(R.string.send_to_docs_key), true));
+    mapsCheckBox.setChecked(PreferencesUtils.getBoolean(
+        this, R.string.send_to_maps_key, PreferencesUtils.SEND_TO_MAPS_DEFAULT));
+    fusionTablesCheckBox.setChecked(PreferencesUtils.getBoolean(
+        this, R.string.send_to_fusion_tables_key, PreferencesUtils.SEND_TO_FUSION_TABLES_DEFAULT));
+    docsCheckBox.setChecked(PreferencesUtils.getBoolean(
+        this, R.string.send_to_docs_key, PreferencesUtils.SEND_TO_DOCS_DEFAULT));
   }
 
   /**
@@ -194,16 +193,13 @@ public class UploadServiceChooserActivity extends Activity {
    */
   @VisibleForTesting
   void saveState() {
-    SharedPreferences prefs = getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    Editor editor = prefs.edit();
-    editor.putBoolean(
-        getString(R.string.pick_existing_map_key), existingMapRadioButton.isChecked());
+    PreferencesUtils.setBoolean(
+        this, R.string.pick_existing_map_key, existingMapRadioButton.isChecked());
     if (sendRequest.isShowAll()) {
-      editor.putBoolean(getString(R.string.send_to_maps_key), sendMaps());
-      editor.putBoolean(getString(R.string.send_to_fusion_tables_key), sendFusionTables());
-      editor.putBoolean(getString(R.string.send_to_docs_key), sendDocs());
+      PreferencesUtils.setBoolean(this, R.string.send_to_maps_key, sendMaps());
+      PreferencesUtils.setBoolean(this, R.string.send_to_fusion_tables_key, sendFusionTables());
+      PreferencesUtils.setBoolean(this, R.string.send_to_docs_key, sendDocs());
     }
-    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
   }
 
   /**
@@ -237,7 +233,7 @@ public class UploadServiceChooserActivity extends Activity {
     sendRequest.setSendFusionTables(sendFusionTables());
     sendRequest.setSendDocs(sendDocs());
     sendRequest.setNewMap(!existingMapRadioButton.isChecked());
-    Intent intent = new Intent(this, AccountChooserActivity.class)
+    Intent intent = IntentUtils.newIntent(this, AccountChooserActivity.class)
         .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
     startActivity(intent);
     finish();

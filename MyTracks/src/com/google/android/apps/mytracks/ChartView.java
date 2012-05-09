@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks;
 import com.google.android.apps.mytracks.ChartValueSeries.ZoomSettings;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.ExtremityMonitor;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
@@ -75,7 +76,7 @@ public class ChartView extends View {
   /**
    * Unscaled top border of the chart.
    */
-  private static final int TOP_BORDER = 15;
+  private static final int TOP_BORDER = 16;
 
   /**
    * Device scaled top border of the chart.
@@ -85,7 +86,7 @@ public class ChartView extends View {
   /**
    * Unscaled bottom border of the chart.
    */
-  private static final float BOTTOM_BORDER = 40;
+  private static final float BOTTOM_BORDER = 8;
 
   /**
    * Device scaled bottom border of the chart.
@@ -155,12 +156,7 @@ public class ChartView extends View {
   private boolean metricUnits = true;
   private boolean showPointer = false;
 
-  /** Display chart versus distance or time */
-  public enum Mode {
-    BY_DISTANCE, BY_TIME
-  }
-
-  private Mode mode = Mode.BY_DISTANCE;
+  private boolean chartByDistance = true;
 
   public ChartView(Context context) {
     super(context);
@@ -190,7 +186,7 @@ public class ChartView extends View {
     pointer.setBounds(0, 0,
         pointer.getIntrinsicWidth(), pointer.getIntrinsicHeight());
 
-    statsMarker = getResources().getDrawable(R.drawable.ylw_pushpin);
+    statsMarker = getResources().getDrawable(R.drawable.yellow_pushpin);
     markerWidth = statsMarker.getIntrinsicWidth();
     markerHeight = statsMarker.getIntrinsicHeight();
     statsMarker.setBounds(0, 0, markerWidth, markerHeight);
@@ -214,7 +210,7 @@ public class ChartView extends View {
                              R.color.elevation_border,
                              new ZoomSettings(MAX_INTERVALS,
                                  new int[] {5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000}),
-                             R.string.stat_elevation);
+                             R.string.stats_elevation);
 
     series[SPEED_SERIES] =
         new ChartValueSeries(context,
@@ -222,7 +218,7 @@ public class ChartView extends View {
                              R.color.speed_border,
                              new ZoomSettings(MAX_INTERVALS, 0, Integer.MIN_VALUE,
                                  new int[] {1, 5, 10, 20, 50}),
-                             R.string.stat_speed);
+                             R.string.stats_speed);
     series[POWER_SERIES] =
         new ChartValueSeries(context,
                              R.color.power_fill,
@@ -269,8 +265,8 @@ public class ChartView extends View {
 
   public void setReportSpeed(boolean reportSpeed, Context c) {
     series[SPEED_SERIES].setTitle(c.getString(reportSpeed
-                                              ? R.string.stat_speed
-                                              : R.string.stat_pace));
+                                              ? R.string.stats_speed
+                                              : R.string.stats_pace));
   }
 
   private void addDataPointInternal(double[] theData) {
@@ -393,22 +389,17 @@ public class ChartView extends View {
   }
 
   /**
-   * @return the current display mode (by distance, by time)
+   * Sets chart by distance value. It is expected that after changing this
+   * value, data will be reloaded.
+   * 
+   * @param value true for by distance, false for by time.
    */
-  public Mode getMode() {
-    return mode;
-  }
-
-  /**
-   * Sets the display mode (by distance, by time).
-   * It is expected that after the mode change, data will be reloaded.
-   */
-  public void setMode(Mode mode) {
-    this.mode = mode;
+  public void setChartByDistance(boolean value) {
+    this.chartByDistance = value;
   }
 
   private int getWaypointX(Waypoint waypoint) {
-    if (mode == Mode.BY_DISTANCE) {
+    if (chartByDistance) {
       double lenghtInKm = waypoint.getLength() * UnitConversions.M_TO_KM;
       return getX(metricUnits ? lenghtInKm : lenghtInKm * UnitConversions.KM_TO_MI);
     } else {
@@ -485,8 +476,7 @@ public class ChartView extends View {
             }
           }
           if (nearestWaypoint != null && dmin < 100) {
-            Intent intent = new Intent(getContext(), MarkerDetailActivity.class)
-                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+            Intent intent = IntentUtils.newIntent(getContext(), MarkerDetailActivity.class)
                 .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, nearestWaypoint.getId());
             getContext().startActivity(intent);
             return true;
@@ -510,9 +500,15 @@ public class ChartView extends View {
   }
 
   @Override
+  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    updateEffectiveDimensionsIfChanged(
+        View.MeasureSpec.getSize(widthMeasureSpec), View.MeasureSpec.getSize(heightMeasureSpec));
+    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+  }
+  
+  @Override
   protected void onDraw(Canvas c) {
     synchronized (data) {
-      updateEffectiveDimensionsIfChanged(c);
 
       // Keep original state.
       c.save();
@@ -742,13 +738,16 @@ public class ChartView extends View {
 
   /**
    * Updates the effective dimensions where the graph will be drawn, only if the
-   * dimensions of the given canvas have changed since the last call.
+   * dimensions have changed since the last call.
+   *
+   * @param newWidth the new width
+   * @param newHeight the new height
    */
-  private void updateEffectiveDimensionsIfChanged(Canvas c) {
-    if (w != c.getWidth() || h != c.getHeight()) {
+  private void updateEffectiveDimensionsIfChanged(int newWidth, int newHeight) {
+    if (w != newWidth || h != newHeight) {
       // Dimensions have changed (for example due to orientation change).
-      w = c.getWidth();
-      h = c.getHeight();
+      w = newWidth;
+      h = newHeight;
       updateEffectiveDimensions();
       setUpPath();
     }
@@ -804,8 +803,7 @@ public class ChartView extends View {
     if (x < 0) {
       return;
     }
-    String s =
-        (mode == Mode.BY_DISTANCE)
+    String s = chartByDistance
             ? (shortFormat ? X_SHORT_FORMAT.format(x) : X_FORMAT.format(x))
             : StringUtils.formatElapsedTime((long) x);
     c.drawText(s,
@@ -832,7 +830,7 @@ public class ChartView extends View {
     final int y = effectiveHeight + topBorder;
     canvas.drawLine(leftBorder, y, rightEdge, y, borderPaint);
     Context c = getContext();
-    String s = mode == Mode.BY_DISTANCE
+    String s = chartByDistance
         ? (metricUnits ? c.getString(R.string.unit_kilometer) : c.getString(R.string.unit_mile))
         : c.getString(R.string.unit_minute);
     canvas.drawText(s, rightEdge, effectiveHeight + .2f * UNIT_BORDER + topBorder, labelPaint);
@@ -864,17 +862,6 @@ public class ChartView extends View {
       int y = i * effectiveHeight / MAX_INTERVALS + topBorder;
       c.drawLine(leftBorder, y, rightEdge, y, gridBarPaint);
     }
-  }
-
-  /**
-   * Returns whether a given time series is enabled for drawing.
-   *
-   * @param index the time series, one of {@link #ELEVATION_SERIES},
-   *        {@link #SPEED_SERIES}, {@link #POWER_SERIES}, etc.
-   * @return true if drawn, false otherwise
-   */
-  public boolean isChartValueSeriesEnabled(int index) {
-    return series[index].isEnabled();
   }
 
   /**

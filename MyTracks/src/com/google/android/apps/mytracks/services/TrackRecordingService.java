@@ -38,6 +38,7 @@ import com.google.android.apps.mytracks.services.tasks.SplitTask;
 import com.google.android.apps.mytracks.services.tasks.StatusAnnouncerFactory;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
@@ -49,7 +50,6 @@ import android.app.Service;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.location.Location;
@@ -83,14 +83,10 @@ public class TrackRecordingService extends Service {
   private LocationManager locationManager;
   private WakeLock wakeLock;
 
-  private int minRecordingDistance =
-      Constants.DEFAULT_MIN_RECORDING_DISTANCE;
-  private int maxRecordingDistance =
-      Constants.DEFAULT_MAX_RECORDING_DISTANCE;
-  private int minRequiredAccuracy =
-      Constants.DEFAULT_MIN_REQUIRED_ACCURACY;
-  private int autoResumeTrackTimeout =
-      Constants.DEFAULT_AUTO_RESUME_TRACK_TIMEOUT;
+  private int minRecordingDistance = PreferencesUtils.MIN_RECORDING_DISTANCE_DEFAULT;
+  private int maxRecordingDistance = PreferencesUtils.MAX_RECORDING_DISTANCE_DEFAULT;
+  private int minRequiredAccuracy = PreferencesUtils.MIN_REQUIRED_ACCURACY_DEFAULT;
+  private int autoResumeTrackTimeout = PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_DEFAULT;
 
   private long recordingTrackId = -1;
 
@@ -122,7 +118,7 @@ public class TrackRecordingService extends Service {
 
   private SensorManager sensorManager;
 
-  private PreferenceManager prefManager;
+  private PreferenceManager prefereceManager;
 
   /**
    * The interval in milliseconds that we have requested to be notified of gps
@@ -247,7 +243,7 @@ public class TrackRecordingService extends Service {
     setUpTaskExecutors();
     executorService = Executors.newSingleThreadExecutor();
 
-    prefManager = new PreferenceManager(this);
+    prefereceManager = new PreferenceManager(this);
 
     registerLocationListener();
 
@@ -270,7 +266,7 @@ public class TrackRecordingService extends Service {
             + "Resetting an orphaned recording track = " + recordingTrackId);
       }
       recordingTrackId = -1L;
-      PreferencesUtils.setRecordingTrackId(this, recordingTrackId);
+      PreferencesUtils.setLong(this, R.string.recording_track_id_key, recordingTrackId);
     }
     showNotification();
   }
@@ -327,7 +323,7 @@ public class TrackRecordingService extends Service {
           + recordingTrack + ") doesn't exist or is too old");
       isRecording = false;
       recordingTrackId = -1L;
-      PreferencesUtils.setRecordingTrackId(this, recordingTrackId);
+      PreferencesUtils.setLong(this, R.string.recording_track_id_key, recordingTrackId);
       stopSelfResult(startId);
       return;
     }
@@ -353,8 +349,7 @@ public class TrackRecordingService extends Service {
 
     isRecording = false;
     showNotification();
-    prefManager.shutdown();
-    prefManager = null;
+    prefereceManager.shutdown();
     checkLocationListener.cancel();
     checkLocationListener = null;
     timer.cancel();
@@ -382,7 +377,7 @@ public class TrackRecordingService extends Service {
 
   private void setAutoResumeTrackRetries(int retryAttempts) {
     Log.d(TAG, "Updating auto-resume retry attempts to: " + retryAttempts);
-    prefManager.setAutoResumeTrackCurrentRetry(retryAttempts);
+    PreferencesUtils.setInt(this, R.string.auto_resume_track_current_retry_key, retryAttempts);
   }
 
   private boolean shouldResumeTrack(Track track) {
@@ -390,10 +385,8 @@ public class TrackRecordingService extends Service {
         + autoResumeTrackTimeout);
 
     // Check if we haven't exceeded the maximum number of retry attempts.
-    SharedPreferences sharedPreferences = getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    int retries = sharedPreferences.getInt(
-        getString(R.string.auto_resume_track_current_retry_key), 0);
+    int retries = PreferencesUtils.getInt(this, R.string.auto_resume_track_current_retry_key,
+        PreferencesUtils.AUTO_RESUME_TRACK_CURRENT_RETRY_DEFAULT);
     Log.d(TAG,
         "shouldResumeTrack: Attempting to auto-resume the track ("
         + (retries + 1) + "/" + MAX_AUTO_RESUME_TRACK_RETRY_ATTEMPTS + ")");
@@ -408,12 +401,12 @@ public class TrackRecordingService extends Service {
     setAutoResumeTrackRetries(retries + 1);
 
     // Check for special cases.
-    if (autoResumeTrackTimeout == 0) {
+    if (autoResumeTrackTimeout == PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_NEVER) {
       // Never resume.
       Log.d(TAG,
           "shouldResumeTrack: Auto-resume disabled (never resume)");
       return false;
-    } else if (autoResumeTrackTimeout == -1) {
+    } else if (autoResumeTrackTimeout == PreferencesUtils.AUTO_RESUME_TRACK_TIMEOUT_ALWAYS) {
       // Always resume.
       Log.d(TAG,
           "shouldResumeTrack: Auto-resume forced (always resume)");
@@ -485,13 +478,11 @@ public class TrackRecordingService extends Service {
   private void showNotification() {
     if (isRecording) {
       Notification notification = new Notification(
-          R.drawable.arrow_320, null /* tickerText */,
-          System.currentTimeMillis());
-      Intent intent = new Intent(this, TrackDetailActivity.class)
-          .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+          R.drawable.my_tracks_notification_icon, null, System.currentTimeMillis());
+      Intent intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
           .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, recordingTrackId);
       PendingIntent contentIntent = PendingIntent.getActivity(
-          this, 0 /* requestCode */, intent, 0 /* flags */);
+          this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
       notification.setLatestEventInfo(this, getString(R.string.my_tracks_app_name),
           getString(R.string.track_record_notification), contentIntent);
       notification.flags += Notification.FLAG_NO_CLEAR;
@@ -566,12 +557,6 @@ public class TrackRecordingService extends Service {
         "Location listener now unregistered w/ TrackRecordingService.");
   }
 
-  private String getDefaultActivityType(Context context) {
-    SharedPreferences prefs = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    return prefs.getString(context.getString(R.string.default_activity_key), "");
-  }
-
   /*
    * Recording lifecycle.
    */
@@ -594,7 +579,8 @@ public class TrackRecordingService extends Service {
     track.setId(recordingTrackId);
     track.setName(new DefaultTrackNameFactory(this).getDefaultTrackName(
         recordingTrackId, startTime));
-    track.setCategory(getDefaultActivityType(this));
+    track.setCategory(PreferencesUtils.getString(
+        this, R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT));
     isRecording = true;
     isMoving = true;
 
@@ -612,7 +598,7 @@ public class TrackRecordingService extends Service {
     // Reset the number of auto-resume retries.
     setAutoResumeTrackRetries(0);
     // Persist the current recording track.
-    PreferencesUtils.setRecordingTrackId(this, recordingTrackId);
+    PreferencesUtils.setLong(this, R.string.recording_track_id_key, recordingTrackId);
 
     // Notify the world that we're now recording.
     sendTrackBroadcast(
@@ -934,15 +920,15 @@ public class TrackRecordingService extends Service {
           "Unable to insert waypoint marker while not recording!");
     }
     if (request == null) {
-      request = WaypointCreationRequest.DEFAULT_MARKER;
+      request = WaypointCreationRequest.DEFAULT_WAYPOINT;
     }
     Waypoint wpt = new Waypoint();
     switch (request.getType()) {
-      case MARKER:
-        buildMarker(wpt, request);
+      case WAYPOINT:
+        buildWaypointMarker(wpt, request);
         break;
       case STATISTICS:
-        buildStatisticsMarker(wpt);
+        buildStatisticsMarker(wpt, request);
         break;
     }
     wpt.setTrackId(recordingTrackId);
@@ -964,18 +950,22 @@ public class TrackRecordingService extends Service {
     return Long.parseLong(uri.getLastPathSegment());
   }
 
-  private void buildMarker(Waypoint wpt, WaypointCreationRequest request) {
+  private void buildWaypointMarker(Waypoint wpt, WaypointCreationRequest request) {
     wpt.setType(Waypoint.TYPE_WAYPOINT);
     if (request.getIconUrl() == null) {
       wpt.setIcon(getString(R.string.marker_waypoint_icon_url));
     } else {
       wpt.setIcon(request.getIconUrl());
     }
-    if (request.getName() == null) {
-      wpt.setName(getString(R.string.marker_edit_type_waypoint));
+    String name;
+    if (request.getName() != null) {
+      name = request.getName();
     } else {
-      wpt.setName(request.getName());
+      int nextMarkerNumber = providerUtils.getNextMarkerNumber(recordingTrackId, false);
+      name = nextMarkerNumber == -1 ? getString(R.string.marker_type_waypoint)
+          : getString(R.string.marker_waypoint_name_format, nextMarkerNumber);
     }
+    wpt.setName(name);
     if (request.getCategory() != null) {
       wpt.setCategory(request.getCategory());
     }
@@ -988,9 +978,10 @@ public class TrackRecordingService extends Service {
    * Build a statistics marker.
    * A statistics marker holds the stats for the* last segment up to this marker.
    *
-   * @param waypoint The waypoint which will be populated with stats data.
+   * @param waypoint The waypoint which will be populated with stats data
+   * @param request The waypoint creation request
    */
-  private void buildStatisticsMarker(Waypoint waypoint) {
+  private void buildStatisticsMarker(Waypoint waypoint, WaypointCreationRequest request) {
     DescriptionGenerator descriptionGenerator = new DescriptionGeneratorImpl(this);
 
     // Set stop and total time in the stats data
@@ -1003,7 +994,15 @@ public class TrackRecordingService extends Service {
 
     // Set the rest of the waypoint data
     waypoint.setType(Waypoint.TYPE_STATISTICS);
-    waypoint.setName(getString(R.string.marker_edit_type_statistics));
+    String name;
+    if (request.getName() != null) {
+      name = request.getName();
+    } else {
+      int nextMarkerNumber = providerUtils.getNextMarkerNumber(recordingTrackId, true);
+      name = nextMarkerNumber == -1 ? getString(R.string.marker_type_statistics)
+          : getString(R.string.marker_statistics_name_format, nextMarkerNumber);
+    }
+    waypoint.setName(name);
     waypoint.setStatistics(waypointStatsBuilder.getStatistics());
     waypoint.setDescription(descriptionGenerator.generateWaypointDescription(waypoint));
     waypoint.setIcon(getString(R.string.marker_statistics_icon_url));
@@ -1042,7 +1041,7 @@ public class TrackRecordingService extends Service {
     showNotification();
     long recordedTrackId = recordingTrackId;
     recordingTrackId = -1L;
-    PreferencesUtils.setRecordingTrackId(this, recordingTrackId);
+    PreferencesUtils.setLong(this, R.string.recording_track_id_key, recordingTrackId);
 
     if (sensorManager != null) {
       SensorManagerFactory.getInstance().releaseSensorManager(sensorManager);
@@ -1063,10 +1062,8 @@ public class TrackRecordingService extends Service {
         .setAction(getString(actionResId))
         .putExtra(getString(R.string.track_id_broadcast_extra), trackId);
     sendBroadcast(broadcastIntent, getString(R.string.permission_notification_value));
-
-    SharedPreferences sharedPreferences = getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    if (sharedPreferences.getBoolean(getString(R.string.allow_access_key), false)) {
+    if (PreferencesUtils.getBoolean(
+        this, R.string.allow_access_key, PreferencesUtils.ALLOW_ACCESS_DEFAULT)) {
       sendBroadcast(broadcastIntent, getString(R.string.broadcast_notifications_permission));
     }
   }
@@ -1212,20 +1209,17 @@ public class TrackRecordingService extends Service {
 
     /**
      * Returns true if the RPC caller is from the same application or if the
-     * "Allow access" setting indicates that another app can invoke this service's
-     * RPCs.
+     * "Allow access" setting indicates that another app can invoke this
+     * service's RPCs.
      */
     private boolean canAccess() {
-
       // As a precondition for access, must check if the service is available.
       checkService();
-
       if (Process.myPid() == Binder.getCallingPid()) {
         return true;
       } else {
-        SharedPreferences sharedPreferences = service.getSharedPreferences(
-            Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getBoolean(service.getString(R.string.allow_access_key), false);
+        return PreferencesUtils.getBoolean(
+            service, R.string.allow_access_key, PreferencesUtils.ALLOW_ACCESS_DEFAULT);
       }
     }
 

@@ -20,13 +20,11 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 import com.dsi.ant.AntDefine;
 import com.dsi.ant.AntMesg;
 import com.dsi.ant.exception.AntInterfaceException;
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Sensor;
-import com.google.android.apps.mytracks.util.ApiAdapterFactory;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 /**
@@ -107,11 +105,7 @@ public class AntDirectSensorManager extends AntSensorManager
     }
     Log.i(TAG, "Found ANT device id: " + deviceNumber + " on channel: " + channel);
 
-    SharedPreferences prefs = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    SharedPreferences.Editor editor = prefs.edit();
-    editor.putInt(context.getString(sensorIdKeys[channel]), deviceNumber);
-    ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
+    PreferencesUtils.setInt(context, sensorIdKeys[channel], deviceNumber);
     return deviceNumber;
   }
 
@@ -171,12 +165,8 @@ public class AntDirectSensorManager extends AntSensorManager
   protected void setupAntSensorChannels() {
     short devIds[] = new short[sensorIdKeys.length];
 
-    SharedPreferences prefs = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
-    if (prefs != null) {
-      for (int i = 0; i < sensorIdKeys.length; ++i) {
-        devIds[i] = (short) prefs.getInt(context.getString(sensorIdKeys[i]), WILDCARD);
-      }
+    for (int i = 0; i < sensorIdKeys.length; ++i) {
+      devIds[i] = (short) PreferencesUtils.getInt(context, sensorIdKeys[i], WILDCARD);
     }
 
     sensors = new AntSensorBase[] {
