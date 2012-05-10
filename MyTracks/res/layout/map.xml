@@ -28,7 +28,7 @@ limitations under the License.
     android:layout_width="fill_parent" />
   <ImageButton
     android:background="@drawable/my_location"
-    android:contentDescription="@string/my_location"
+    android:contentDescription="@string/icon_my_location"
     android:id="@+id/map_my_location"
     android:layout_alignParentTop="true"
     android:layout_alignParentRight="true"

@@ -23,6 +23,7 @@ import android.text.format.DateUtils;
 
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
@@ -42,7 +43,6 @@ public class StringUtils {
       "yyyy-MM-dd'T'HH:mm:ss");
   private static final Pattern ISO_8601_EXTRAS = Pattern.compile(
       "^(\\.\\d+)?(?:Z|([+-])(\\d{2}):(\\d{2}))?$");
-
   static {
     ISO_8601_DATE_TIME_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
     ISO_8601_BASE.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -51,24 +51,30 @@ public class StringUtils {
   private StringUtils() {}
 
   /**
-   * Formats the time based on user's phone date/time preferences.
-   *
-   * @param context the context
-   * @param time the time in milliseconds
-   */
-  public static String formatTime(Context context, long time) {
-    return android.text.format.DateFormat.getTimeFormat(context).format(time);
-  }
-
-  /**
    * Formats the date and time based on user's phone date/time preferences.
-   *
+   * 
    * @param context the context
    * @param time the time in milliseconds
    */
   public static String formatDateTime(Context context, long time) {
     return android.text.format.DateFormat.getDateFormat(context).format(time) + " "
-        + formatTime(context, time);
+        + DateUtils.formatDateTime(context, time, DateUtils.FORMAT_SHOW_TIME).toString();
+  }
+
+  /**
+   * Formats the relative date and time based on user's phone date/time preferences.
+   * 
+   * @param context the context
+   * @param time the time in milliseconds
+   */
+  public static String formatRelativeDateTime(Context context, long time) {
+    long now = Calendar.getInstance().getTimeInMillis();
+    if (now - time > DateUtils.WEEK_IN_MILLIS) {
+      return formatDateTime(context, time);
+    } else {
+      return DateUtils.getRelativeTimeSpanString(time, now, DateUtils.MINUTE_IN_MILLIS,
+          DateUtils.FORMAT_ABBREV_RELATIVE).toString();
+    }
   }
 
   /**

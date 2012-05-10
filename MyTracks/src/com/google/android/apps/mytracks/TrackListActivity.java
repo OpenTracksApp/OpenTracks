@@ -217,20 +217,20 @@ public class TrackListActivity extends FragmentActivity {
         boolean isRecording = cursor.getLong(idIndex) == recordingTrackId;
         String name = cursor.getString(nameIndex);
         int iconId = isRecording ? R.drawable.menu_record_track : R.drawable.track;
+        String iconContentDescription = getString(isRecording ? R.string.icon_recording
+            : R.string.icon_track);
         String category = cursor.getString(categoryIndex);
         String totalTime = isRecording 
             ? null : StringUtils.formatElapsedTime(cursor.getLong(timeIndex));
         String totalDistance = isRecording ? null : StringUtils.formatDistance(
             TrackListActivity.this, cursor.getDouble(distanceIndex), metricUnits);
-        String startTime = 
-            StringUtils.formatDateTime(TrackListActivity.this, cursor.getLong(startIndex));
-        if (startTime.equals(name)) {
-          startTime = null;
-        }
+        long startTime = cursor.getLong(startIndex);
         String description = cursor.getString(descriptionIndex);
-        ListItemUtils.setListItem(view,
+        ListItemUtils.setListItem(TrackListActivity.this,
+            view,
             name,
             iconId,
+            iconContentDescription,
             category,
             totalTime,
             totalDistance,

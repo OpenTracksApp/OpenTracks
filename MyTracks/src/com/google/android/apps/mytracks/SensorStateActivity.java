@@ -22,13 +22,13 @@ import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection
 import com.google.android.apps.mytracks.services.sensors.SensorManager;
 import com.google.android.apps.mytracks.services.sensors.SensorManagerFactory;
 import com.google.android.apps.mytracks.services.sensors.SensorUtils;
-import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -221,7 +221,7 @@ public class SensorStateActivity extends AbstractMyTracksActivity {
    * @param sensorDataSet sensor data set
    */
   private String getLastSensorTime(Sensor.SensorDataSet sensorDataSet) {
-    return StringUtils.formatTime(this, sensorDataSet.getCreationTime());
+    return DateFormat.format("h:mm:ss aa", sensorDataSet.getCreationTime()).toString();
   }
 
   /**

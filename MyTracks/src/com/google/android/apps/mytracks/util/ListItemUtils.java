@@ -18,7 +18,9 @@ package com.google.android.apps.mytracks.util;
 
 import com.google.android.maps.mytracks.R;
 
+import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -33,26 +35,32 @@ public class ListItemUtils {
   /**
    * Sets a list item.
    * 
+   * @param context the context
    * @param view the list item view
    * @param name the name value
    * @param iconId the icon id
+   * @param iconContentDescription the icon content description
    * @param category the category value
    * @param totalTime the total time value
    * @param totalDistance the total distance value
    * @param startTime the start time value
    * @param description the description value
    */
-  public static void setListItem(View view,
+  public static void setListItem(Context context, View view,
       String name,
       int iconId,
+      String iconContentDescription,
       String category,
       String totalTime,
       String totalDistance,
-      String startTime,
+      long startTime,
       String description) {
+    ImageView iconImageView = (ImageView) view.findViewById(R.id.list_item_icon);
+    iconImageView.setImageResource(iconId);
+    iconImageView.setContentDescription(iconContentDescription);
+    
     TextView nameTextView = (TextView) view.findViewById(R.id.list_item_name);
     nameTextView.setText(name);
-    nameTextView.setCompoundDrawablesWithIntrinsicBounds(iconId, 0, 0, 0);
 
     TextView categoryTextView = (TextView) view.findViewById(R.id.list_item_category);
     setTextView(categoryTextView, category);
@@ -63,8 +71,11 @@ public class ListItemUtils {
     TextView totalDistanceTextView = (TextView) view.findViewById(R.id.list_item_total_distance);
     setTextView(totalDistanceTextView, totalDistance);
 
+    String startTimeDisplay = startTime == 0L
+        || StringUtils.formatDateTime(context, startTime).equals(name) ? null
+        : StringUtils.formatRelativeDateTime(context, startTime);
     TextView startTimeTextView = (TextView) view.findViewById(R.id.list_item_start_time);
-    setTextView(startTimeTextView, startTime);
+    setTextView(startTimeTextView, startTimeDisplay);
 
     TextView descriptionTextView = (TextView) view.findViewById(R.id.list_item_description);
     setTextView(descriptionTextView, description);

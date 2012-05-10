@@ -73,6 +73,7 @@ public class SearchListActivity extends AbstractMyTracksActivity {
 
   private static final String NAME_FIELD = "name";
   private static final String ICON_FIELD = "icon";
+  private static final String ICON_CONTENT_DESCRIPTION_FIELD = "iconContentDescription";
   private static final String CATEGORY_FIELD = "category";
   private static final String TOTAL_TIME_FIELD = "totalTime";
   private static final String TOTAL_DISTANCE_FIELD = "totalDistance";
@@ -161,14 +162,17 @@ public class SearchListActivity extends AbstractMyTracksActivity {
         Map<String, Object> resultMap = getItem(position);
         String name = (String) resultMap.get(NAME_FIELD);
         int iconId = (Integer) resultMap.get(ICON_FIELD);
+        String iconContentDescription = (String) resultMap.get(ICON_CONTENT_DESCRIPTION_FIELD);
         String category = (String) resultMap.get(CATEGORY_FIELD);
         String totalTime = (String) resultMap.get(TOTAL_TIME_FIELD);
         String totalDistance = (String) resultMap.get(TOTAL_DISTANCE_FIELD);
-        String startTime = (String) resultMap.get(START_TIME_FIELD);
+        long startTime = (Long) resultMap.get(START_TIME_FIELD);
         String description = (String) resultMap.get(DESCRIPTION_FIELD);
-        ListItemUtils.setListItem(view,
+        ListItemUtils.setListItem(SearchListActivity.this,
+            view,
             name,
             iconId,
+            iconContentDescription,
             category,
             totalTime,
             totalDistance,
@@ -382,11 +386,9 @@ public class SearchListActivity extends AbstractMyTracksActivity {
     boolean statistics = waypoint.getType() == Waypoint.TYPE_STATISTICS;
     resultMap.put(NAME_FIELD, waypoint.getName());
     resultMap.put(ICON_FIELD, statistics ? R.drawable.yellow_pushpin : R.drawable.blue_pushpin);
+    resultMap.put(ICON_CONTENT_DESCRIPTION_FIELD, getString(R.string.icon_marker));
     resultMap.put(CATEGORY_FIELD, statistics ? null : waypoint.getCategory());
-
-    long time = waypoint.getLocation().getTime();
-    String startTime = StringUtils.formatDateTime(this, time);
-    resultMap.put(START_TIME_FIELD, time == 0 || startTime.equals(trackName) ? null : startTime);
+    resultMap.put(START_TIME_FIELD, waypoint.getLocation().getTime());
 
     // Display the marker's track name in the total time field
     resultMap.put(TOTAL_TIME_FIELD, trackName == null ? null
@@ -408,16 +410,14 @@ public class SearchListActivity extends AbstractMyTracksActivity {
     TripStatistics tripStatitics = track.getStatistics();
     resultMap.put(NAME_FIELD, track.getName());
     resultMap.put(ICON_FIELD, isRecording ? R.drawable.menu_record_track : R.drawable.track);
+    resultMap.put(ICON_CONTENT_DESCRIPTION_FIELD, getString(isRecording ? R.string.icon_recording
+        : R.string.icon_track));
     resultMap.put(CATEGORY_FIELD, track.getCategory());
     resultMap.put(TOTAL_TIME_FIELD, isRecording ? null : StringUtils.formatElapsedTime(
         tripStatitics.getTotalTime()));
     resultMap.put(TOTAL_DISTANCE_FIELD, isRecording ? null : StringUtils.formatDistance(
         this, tripStatitics.getTotalDistance(), metricUnits));
-    String startTime = StringUtils.formatDateTime(this, tripStatitics.getStartTime());
-    if (startTime.equals(track.getName())) {
-      startTime = null;
-    }
-    resultMap.put(START_TIME_FIELD, startTime);
+    resultMap.put(START_TIME_FIELD, tripStatitics.getStartTime());
     resultMap.put(DESCRIPTION_FIELD, track.getDescription());
     resultMap.put(TRACK_ID_FIELD, track.getId());
     resultMap.put(MARKER_ID_FIELD, null);
