@@ -20,6 +20,7 @@ import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.fragments.CheckUnitsDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteAllTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
+import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
 import com.google.android.apps.mytracks.fragments.WelcomeDialogFragment;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
@@ -68,7 +69,7 @@ import android.widget.Toast;
  *
  * @author Leif Hendrik Wilden
  */
-public class TrackListActivity extends FragmentActivity {
+public class TrackListActivity extends FragmentActivity implements DeleteOneTrackCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
 
@@ -388,7 +389,7 @@ public class TrackListActivity extends FragmentActivity {
         return true;
       case R.id.track_list_stop_recording:
         updateMenuItems(false);
-        TrackRecordingServiceConnectionUtils.stop(this, trackRecordingServiceConnection);
+        TrackRecordingServiceConnectionUtils.stop(this, trackRecordingServiceConnection, true);
         return true;
       case R.id.track_list_search:
         return ApiAdapterFactory.getApiAdapter().handleSearchMenuSelection(this);
@@ -505,5 +506,10 @@ public class TrackListActivity extends FragmentActivity {
       }
     }
     return super.onKeyUp(keyCode, event);
+  }
+
+  @Override
+  public TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
+    return trackRecordingServiceConnection;
   }
 }

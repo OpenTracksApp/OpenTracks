@@ -89,7 +89,7 @@ public class TrackEditActivity extends AbstractMyTracksActivity {
         track.setCategory(activityType.getText().toString());
         track.setDescription(description.getText().toString());
         myTracksProviderUtils.updateTrack(track);
-        finish();                
+        finish();
       }
     });
 
@@ -102,7 +102,7 @@ public class TrackEditActivity extends AbstractMyTracksActivity {
       cancel.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          finish();      
+          finish();
         }
       });
       cancel.setVisibility(View.VISIBLE);

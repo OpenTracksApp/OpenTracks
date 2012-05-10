@@ -96,24 +96,30 @@ public class TrackRecordingServiceConnectionUtils {
    * @param context the context
    * @param trackRecordingServiceConnection the track recording service
    *          connection
+   * @param showEditor true to show the editor
    */
-  public static void stop(
-      Context context, TrackRecordingServiceConnection trackRecordingServiceConnection) {
+  public static void stop(Context context,
+      TrackRecordingServiceConnection trackRecordingServiceConnection, boolean showEditor) {
     ITrackRecordingService trackRecordingService = trackRecordingServiceConnection
         .getServiceIfBound();
     if (trackRecordingService != null) {
       try {
-        /*
-         * Need to remember the recordingTrackId before calling endCurrentTrack.
-         * endCurrentTrack sets the value to -1L.
-         */
-        long recordingTrackId = PreferencesUtils.getLong(context, R.string.recording_track_id_key);
-        trackRecordingService.endCurrentTrack();
-        if (recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
-          Intent intent = IntentUtils.newIntent(context, TrackEditActivity.class)
-              .putExtra(TrackEditActivity.EXTRA_TRACK_ID, recordingTrackId)
-              .putExtra(TrackEditActivity.EXTRA_NEW_TRACK, true);
-          context.startActivity(intent);
+        if (showEditor) {
+          /*
+           * Need to remember the recordingTrackId before calling
+           * endCurrentTrack. endCurrentTrack sets the value to -1L.
+           */
+          long recordingTrackId = PreferencesUtils.getLong(
+              context, R.string.recording_track_id_key);
+          trackRecordingService.endCurrentTrack();
+          if (recordingTrackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
+            Intent intent = IntentUtils.newIntent(context, TrackEditActivity.class)
+                .putExtra(TrackEditActivity.EXTRA_TRACK_ID, recordingTrackId)
+                .putExtra(TrackEditActivity.EXTRA_NEW_TRACK, true);
+            context.startActivity(intent);
+          }
+        } else {
+          trackRecordingService.endCurrentTrack();
         }
       } catch (Exception e) {
         Log.e(TAG, "Unable to stop recording.", e);

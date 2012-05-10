@@ -25,12 +25,15 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
+import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
+import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.ListItemUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
+import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.SearchManager;
@@ -67,7 +70,7 @@ import java.util.SortedSet;
  * 
  * @author Rodrigo Damazio
  */
-public class SearchListActivity extends AbstractMyTracksActivity {
+public class SearchListActivity extends AbstractMyTracksActivity implements DeleteOneTrackCaller {
 
   private static final String TAG = SearchListActivity.class.getSimpleName();
 
@@ -104,6 +107,7 @@ public class SearchListActivity extends AbstractMyTracksActivity {
         }
       };
 
+  private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private MyTracksProviderUtils myTracksProviderUtils;
   private SearchEngine searchEngine;
   private SearchRecentSuggestions searchRecentSuggestions;
@@ -122,6 +126,7 @@ public class SearchListActivity extends AbstractMyTracksActivity {
     setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
     setContentView(R.layout.search_list);
 
+    trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     searchEngine = new SearchEngine(myTracksProviderUtils);
     searchRecentSuggestions = SearchEngineProvider.newHelper(this);
@@ -190,8 +195,15 @@ public class SearchListActivity extends AbstractMyTracksActivity {
   @Override
   protected void onResume() {
     super.onResume();
+    TrackRecordingServiceConnectionUtils.resume(this, trackRecordingServiceConnection);
     metricUnits = PreferencesUtils.getBoolean(
         this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+  }
+
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    trackRecordingServiceConnection.unbind();
   }
 
   @Override
@@ -421,5 +433,10 @@ public class SearchListActivity extends AbstractMyTracksActivity {
     resultMap.put(DESCRIPTION_FIELD, track.getDescription());
     resultMap.put(TRACK_ID_FIELD, track.getId());
     resultMap.put(MARKER_ID_FIELD, null);
+  }
+
+  @Override
+  public TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
+    return trackRecordingServiceConnection;
   }
 }
