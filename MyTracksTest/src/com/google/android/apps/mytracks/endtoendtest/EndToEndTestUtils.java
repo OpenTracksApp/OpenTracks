@@ -24,7 +24,9 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.res.Configuration;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -124,12 +126,37 @@ public class EndToEndTestUtils {
       if ((EndToEndTestUtils.getButtonOnScreen(EndToEndTestUtils.ACTIVITYMYTRACKS
           .getString(R.string.eula_accept)) != null)) {
         EndToEndTestUtils.verifyFirstLaunch();
+      } else if (EndToEndTestUtils.SOLO.waitForText(
+      // After reset setting, welcome page will show again.
+          ACTIVITYMYTRACKS.getString(R.string.welcome_title), 0, 500)) {
+        resetPreferredUnits();
       }
 
       EndToEndTestUtils.CHECKED_FIRSTLAUNCH = true;
       EndToEndTestUtils.setHasActionBar();
+    } else if (EndToEndTestUtils.SOLO.waitForText(
+        // After reset setting, welcome page will show again.
+        ACTIVITYMYTRACKS.getString(R.string.welcome_title), 0, 500)) {
+      resetPreferredUnits();
+    }
+    
+    // Check whether is under recording. If previous test failed, the recording
+    // may not be recording.
+    if (isUnderRecording()) {
+      stopRecording(true);
     }
   }
+  
+  /**
+   * Checks if need reset preferred units.
+   */
+  public static void resetPreferredUnits() {
+    EndToEndTestUtils.SOLO.clickOnText(ACTIVITYMYTRACKS.getString(R.string.generic_ok));
+    SOLO.waitForText(ACTIVITYMYTRACKS.getString(R.string.settings_stats_units_title));
+    EndToEndTestUtils.SOLO.clickOnText(ACTIVITYMYTRACKS.getString(R.string.generic_ok));
+    INSTRUMENTATION.waitForIdleSync();
+  }
+
 
   /**
    * Rotates the given activity.
@@ -162,7 +189,29 @@ public class EndToEndTestUtils {
   static void createSimpleTrack(int numberOfGpsData) {
     startRecording();
     EndToEndTestUtils.sendGps(numberOfGpsData);
+    INSTRUMENTATION.waitForIdleSync();
     stopRecording(true);
+  }
+  
+  /**
+   * Checks if there is no track in track list. For some tests need at least one
+   * track, the method can save time to create a new track.
+   * 
+   * @param isClick if not empty, true means click any track
+   * @return return true if the track list is empty
+   */
+  static boolean isTrackListEmpty(boolean isClick) {
+    int trackNumber = SOLO.getCurrentListViews().get(0).getCount();
+    if(trackNumber <= 0) {
+      return true;
+    } else {
+      View oneTrack = SOLO.getCurrentListViews().get(0).getChildAt(0);
+      TRACK_NAME = (String) ((TextView) oneTrack.findViewById(R.id.list_item_name)).getText();
+      if (isClick) {
+        SOLO.clickOnView(oneTrack);
+      }
+      return false;
+    }
   }
 
   /**
@@ -193,6 +242,32 @@ public class EndToEndTestUtils {
       SOLO.clickOnText(ACTIVITYMYTRACKS.getString(R.string.menu_record_track));
     }
   }
+  
+  /**
+   * Checks if the MyTracks is under recording.
+   * 
+   * @return true if it is under recording.
+   */
+  static boolean isUnderRecording() {
+    if (HAS_ACTIONBAR) {
+      Button startButton = getButtonOnScreen(ACTIVITYMYTRACKS.getString(R.string.menu_record_track));
+      // In case a track is recording.
+      if (startButton == null) {
+        return true;
+      }
+    } else {
+      SOLO.sendKey(KeyEvent.KEYCODE_MENU);
+      if (!SOLO.searchText(ACTIVITYMYTRACKS.getString(R.string.menu_record_track))) {
+        // Check if in TrackDetailActivity.
+        if (SOLO.searchText(ACTIVITYMYTRACKS.getString(R.string.menu_play))) {
+          SOLO.goBack();
+        } else {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 
   /**
    * Stops recoding track.
@@ -200,7 +275,6 @@ public class EndToEndTestUtils {
    * @param isSave ture means should save this track
    */
   static void stopRecording(boolean isSave) {
-    INSTRUMENTATION.waitForIdleSync();
     if (HAS_ACTIONBAR) {
       SOLO.clickOnView(getButtonOnScreen(ACTIVITYMYTRACKS.getString(R.string.menu_stop_recording)));
     } else {
@@ -288,6 +362,7 @@ public class EndToEndTestUtils {
    * @return false means can not check failed.
    */
   static boolean setHasActionBar() {
+    INSTRUMENTATION.waitForIdleSync();
     // If can find record button without pressing Menu, it should be an action
     // bar.
     Button startButton = getButtonOnScreen(ACTIVITYMYTRACKS.getString(R.string.menu_record_track));

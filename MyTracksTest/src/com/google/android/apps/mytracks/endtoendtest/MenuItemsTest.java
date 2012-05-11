@@ -57,8 +57,10 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
         true, false);
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.stats_total_distance));
     EndToEndTestUtils.SOLO.goBack();
-
-    EndToEndTestUtils.startRecording();
+    instrumentation.waitForIdleSync();
+    if(EndToEndTestUtils.isTrackListEmpty(true)) {
+      EndToEndTestUtils.createSimpleTrack(1);
+    }
     instrumentation.waitForIdleSync();
     // Menu in TrackDetailActivity.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_sensor_state), true,
@@ -71,8 +73,6 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.help_about));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
-
-    EndToEndTestUtils.stopRecording(true);
   }
 
   @Override

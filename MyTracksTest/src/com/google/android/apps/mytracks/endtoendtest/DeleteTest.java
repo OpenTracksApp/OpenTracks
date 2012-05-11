@@ -50,8 +50,11 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
    * Deletes all tracks.
    */
   public void testDeleteAllTracks() {
-    EndToEndTestUtils.createSimpleTrack(0);
-    EndToEndTestUtils.SOLO.goBack();
+    if (EndToEndTestUtils.isTrackListEmpty(false)) {
+      // Create a simple track.
+      EndToEndTestUtils.createSimpleTrack(0);
+      EndToEndTestUtils.SOLO.goBack();
+    }   
     instrumentation.waitForIdleSync();
     // There is at least one track.
     ArrayList<ListView> trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
@@ -73,8 +76,11 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
    * Deletes only one track.
    */
   public void testDeleteSingleTrack() {
-    EndToEndTestUtils.createSimpleTrack(0);
-    EndToEndTestUtils.SOLO.goBack();
+    if (EndToEndTestUtils.isTrackListEmpty(false)) {
+      // Create a simple track.
+      EndToEndTestUtils.createSimpleTrack(0);
+      EndToEndTestUtils.SOLO.goBack();
+    } 
     instrumentation.waitForIdleSync();
     // Get the number of track( or tracks)
     ArrayList<ListView> trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();

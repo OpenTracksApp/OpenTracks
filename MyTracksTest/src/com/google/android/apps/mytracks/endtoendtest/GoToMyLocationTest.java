@@ -47,9 +47,11 @@ public class GoToMyLocationTest extends ActivityInstrumentationTestCase2<TrackLi
    * Tests the menu My Location.
    */
   public void testGotoMyLocation() {
-    EndToEndTestUtils.createSimpleTrack(0);
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.my_location), true,
-        false);
+    if (EndToEndTestUtils.isTrackListEmpty(true)) {
+      // Create a simple track.
+      EndToEndTestUtils.createSimpleTrack(2);
+    }
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.my_location), true, false);
     // TODO How to verify the location is shown on the map.
   }
 

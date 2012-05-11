@@ -29,7 +29,6 @@ public class SaveToSdCardTest extends ActivityInstrumentationTestCase2<TrackList
 
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
-  private static boolean isCreateTrack = true;
 
   public SaveToSdCardTest() {
     super(TrackListActivity.class);
@@ -41,12 +40,9 @@ public class SaveToSdCardTest extends ActivityInstrumentationTestCase2<TrackList
     instrumentation = getInstrumentation();
     activityMyTracks = getActivity();
     EndToEndTestUtils.setupForAllTest(instrumentation, activityMyTracks);
-    if (isCreateTrack) {
-      EndToEndTestUtils.createSimpleTrack(0);
-      // Only create one track for this test.
-      isCreateTrack = false;
-    } else {
-      EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.TRACK_NAME);
+    if (EndToEndTestUtils.isTrackListEmpty(true)) {
+      // Create a simple track.
+      EndToEndTestUtils.createSimpleTrack(1);
     }
   }
 

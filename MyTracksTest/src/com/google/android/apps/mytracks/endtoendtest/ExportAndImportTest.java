@@ -58,8 +58,11 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
    */
   public void testExportAndImportTracks() {
     // Create a new track with 3 gps data.
-    EndToEndTestUtils.createSimpleTrack(3);
-    EndToEndTestUtils.SOLO.goBack();
+    if (EndToEndTestUtils.isTrackListEmpty(false)) {
+      // Create a simple track.
+      EndToEndTestUtils.createSimpleTrack(3);
+      EndToEndTestUtils.SOLO.goBack();
+    }
     instrumentation.waitForIdleSync();
     // Create a empty track.
     EndToEndTestUtils.createSimpleTrack(0);
@@ -79,20 +82,18 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     int trackNumber = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
 
     // No file to imported.
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_save_all), true,
-        false);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_import), true, false);
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.import_no_file,
         FileUtils.buildExternalDirectoryPath(EndToEndTestUtils.GPX)));
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_ok));
 
     // Click to export tracks(At least one track) to Gpx files.
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_save_all), true,
-        false);
-    EndToEndTestUtils.SOLO.clickOnText(String.format(
-        activityMyTracks.getString(R.string.menu_save_format),
-        EndToEndTestUtils.GPX.toUpperCase()));
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_save_all), true, false);
+    EndToEndTestUtils.SOLO
+        .clickOnText(String.format(activityMyTracks.getString(R.string.menu_save_format),
+            EndToEndTestUtils.GPX.toUpperCase()));
     EndToEndTestUtils.rotateAllActivities();
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.export_success));
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.save_all_success));
     // Check export file.
     assertEquals(gpxFilesNumber + trackNumber,
         EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length);
@@ -102,8 +103,7 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     gpxFilesNumber = EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length;
     trackNumber = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
 
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_import), true,
-        false);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_import), true, false);
     EndToEndTestUtils.rotateAllActivities();
     // Wait for the prefix of import success string is much faster than wait
     // the whole string.
@@ -119,12 +119,11 @@ public class ExportAndImportTest extends ActivityInstrumentationTestCase2<TrackL
     // Click to export tracks(At least two tracks) to KML files.
     gpxFilesNumber = EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length;
     trackNumber = EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount();
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_save_all), true,
-        false);
-    EndToEndTestUtils.SOLO.clickOnText(String.format(
-        activityMyTracks.getString(R.string.menu_save_format),
-        EndToEndTestUtils.KML.toUpperCase()));
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.export_success));
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_save_all), true, false);
+    EndToEndTestUtils.SOLO
+        .clickOnText(String.format(activityMyTracks.getString(R.string.menu_save_format),
+            EndToEndTestUtils.KML.toUpperCase()));
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.save_all_success));
     // Check export files.
     assertEquals(gpxFilesNumber, EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.GPX).length);
     assertEquals(trackNumber, EndToEndTestUtils.getExportedFiles(EndToEndTestUtils.KML).length);

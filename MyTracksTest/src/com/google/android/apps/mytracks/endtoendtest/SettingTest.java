@@ -66,14 +66,12 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     // Reset all settings at first.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset));
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_ok));
-    // Change a setting of display.
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_display));
-    EndToEndTestUtils.SOLO
-        .waitForText(activityMyTracks.getString(R.string.settings_display_metric));
+    // Change a setting of Map.
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
     // Rotate on a sub setting page.
     EndToEndTestUtils.rotateAllActivities();
-    EndToEndTestUtils.SOLO
-        .waitForText(activityMyTracks.getString(R.string.settings_display_metric));
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.settings_stats_units_title));
     ArrayList<CheckBox> displayCheckBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
     boolean useMetric = displayCheckBoxs.get(0).isChecked();
     EndToEndTestUtils.SOLO.clickOnCheckBox(0);
@@ -98,9 +96,9 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_ok));
 
     // Check settings.
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_display));
-    EndToEndTestUtils.SOLO
-        .waitForText(activityMyTracks.getString(R.string.settings_display_metric));
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.settings_stats_units_title));
     displayCheckBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
     assertEquals(useMetric, displayCheckBoxs.get(0).isChecked());
 
@@ -118,9 +116,12 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
   public void testBackup() {
     // Delete all backup at first.
     EndToEndTestUtils.deleteExportedFiles(EndToEndTestUtils.BACKUPS);
-    // Create a simple track.
-    EndToEndTestUtils.createSimpleTrack(3);
-    EndToEndTestUtils.SOLO.goBack();
+    if (EndToEndTestUtils.isTrackListEmpty(false)) {
+      // Create a simple track.
+      EndToEndTestUtils.createSimpleTrack(3);
+      EndToEndTestUtils.SOLO.goBack();
+    }
+
     assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.TRACK_NAME));
 
     // Write to SD card.
@@ -173,7 +174,9 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.SOLO.goBack();
 
     EndToEndTestUtils.startRecording();
+    instrumentation.waitForIdleSync();
     EndToEndTestUtils.stopRecording(false);
+    instrumentation.waitForIdleSync();
     assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks.getString(
         R.string.track_name_format).split(" ")[0]));
     assertTrue(EndToEndTestUtils.SOLO.searchText(DEFAULTACTIVITY));

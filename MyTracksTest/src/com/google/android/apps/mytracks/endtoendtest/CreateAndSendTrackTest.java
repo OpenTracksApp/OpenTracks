@@ -53,8 +53,10 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
    * Creates a track with markers and the setting to send to google.
    */
   public void testCreateAndSendTrack() {
-    // Create a track at first.
-    EndToEndTestUtils.createSimpleTrack(1);
+    if (EndToEndTestUtils.isTrackListEmpty(true)) {
+      // Create a simple track.
+      EndToEndTestUtils.createSimpleTrack(1);
+    }
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_send_google), true,
         false);
@@ -90,7 +92,10 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
    * Tests editing a track.
    */
   public void testEditTrack() {
-    EndToEndTestUtils.createSimpleTrack(0);
+    if (EndToEndTestUtils.isTrackListEmpty(true)) {
+      // Create a simple track.
+      EndToEndTestUtils.createSimpleTrack(0);
+    }
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_edit), true, false);
 
@@ -111,7 +116,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     instrumentation.waitForIdleSync();
     // Go back to track list.
     EndToEndTestUtils.SOLO.goBack();
-
+    instrumentation.waitForIdleSync();
     assertTrue(EndToEndTestUtils.SOLO.searchText(newTrackName));
     assertTrue(EndToEndTestUtils.SOLO.searchText(newDesc));
   }
@@ -149,8 +154,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
    * Creates a way point and a statistics during track recording.
    */
   private void createWaypointAndStatistics() {
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers), true,
-        true);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers), true, true);
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_insert_marker), true,
         true);
@@ -161,7 +165,6 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils.SOLO.enterText(0, WAYPOINT_NAME);
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_add));
     assertTrue(EndToEndTestUtils.SOLO.searchText(WAYPOINT_NAME));
-
 
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_insert_marker), true,
         true);
