@@ -31,19 +31,27 @@ limitations under the License.
       android:orientation="vertical" >
       <TextView
         android:id="@+id/marker_detail_waypoint_marker_type"
-        style="@style/TextLarge" />
+        style="@style/TextLarge.WithTopMargin" />
       <TextView
         android:id="@+id/marker_detail_waypoint_description"
-        style="@style/TextLarge" />
+        style="@style/TextLarge.WithTopMargin" />
     </LinearLayout>
-    <TableLayout
+    <LinearLayout
       android:id="@+id/marker_detail_statistics_section"
       android:layout_height="wrap_content"
       android:layout_width="fill_parent"
-      android:paddingTop="8dp"
-      android:shrinkColumns="0,2"
-      android:stretchColumns="0,2" >
-      <include layout="@layout/stats_core" />
-    </TableLayout>
+      android:orientation="vertical" >
+      <TextView
+        android:text="@string/marker_detail_statistics_title"
+        style="@style/TextLarge.WithTopMargin" />
+      <TableLayout
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:paddingTop="8dp"
+        android:shrinkColumns="0,2"
+        android:stretchColumns="0,2" >
+        <include layout="@layout/stats_core" />
+      </TableLayout>
+    </LinearLayout>
   </LinearLayout>
 </ScrollView>

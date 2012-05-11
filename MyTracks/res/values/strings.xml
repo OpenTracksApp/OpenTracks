@@ -965,6 +965,11 @@ limitations under the License.
       %1$s marker type. E.g., 'building'.">
     Marker type: %1$s
   </string>  
+  <string name="marker_detail_statistics_title"
+    translation_description="In the marker detail page, the title for the statistics section
+      indicating that the data below are since the last Statistics marker.">
+    Since last Statistics marker:
+  </string>  
   <string name="marker_edit_marker_type"
     translation_description="In the marker edit page, the label for the marker type, including some
       exmaples.">
