@@ -84,8 +84,14 @@ public class AccountChooserActivity extends Activity {
     sendRequest = getIntent().getParcelableExtra(SendRequest.SEND_REQUEST_KEY);
     accounts = AccountManager.get(this).getAccountsByType(Constants.ACCOUNT_TYPE);
 
+    if (accounts.length == 0) {
+      showDialog(DIALOG_NO_ACCOUNT_ID);
+      return;
+    }
+    
     if (accounts.length == 1) {
       sendRequest.setAccount(accounts[0]);
+      PreferencesUtils.setString(this, R.string.preferred_account_key, accounts[0].name);
       getPermission(MapsConstants.SERVICE_NAME, sendRequest.isSendMaps(), mapsCallback);
       return;
     }
@@ -100,16 +106,7 @@ public class AccountChooserActivity extends Activity {
         break;
       }
     }
-  }
-
-  @Override
-  protected void onResume() {
-    super.onResume();
-    if (accounts.length == 0) {
-      showDialog(DIALOG_NO_ACCOUNT_ID);
-    } else if (accounts.length > 1 ) {
-      showDialog(DIALOG_CHOOSER_ID);
-    }
+    showDialog(DIALOG_CHOOSER_ID);
   }
 
   @Override
