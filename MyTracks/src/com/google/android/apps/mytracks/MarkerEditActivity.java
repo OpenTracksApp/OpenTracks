@@ -21,7 +21,6 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest.WaypointType;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
-import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -33,7 +32,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 
 /**
  * An activity to add/edit a marker.
@@ -46,17 +44,13 @@ public class MarkerEditActivity extends AbstractMyTracksActivity {
 
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_MARKER_ID = "marker_id";
-  public static final String EXTRA_STATISTICS_MARKER = "statistics_marker";
 
   private long trackId;
   private long markerId;
-  private boolean statisticsMarker;
   private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private Waypoint waypoint;
 
   // UI elements
-  private View typeSection;
-  private RadioGroup type;
   private View statisticsSection;
   private EditText statisticsName;
   private View waypointSection;
@@ -72,36 +66,9 @@ public class MarkerEditActivity extends AbstractMyTracksActivity {
 
     trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
     markerId = getIntent().getLongExtra(EXTRA_MARKER_ID, -1L);
-    statisticsMarker = getIntent().getBooleanExtra(EXTRA_STATISTICS_MARKER, true);
-    trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);   
+    trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
         
     // Setup UI elements
-    typeSection = findViewById(R.id.marker_edit_type_section);
-    type = (RadioGroup) findViewById(R.id.marker_edit_type);
-    type.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-      @Override
-      public void onCheckedChanged(RadioGroup group, int checkedId) {
-        boolean statistics = checkedId == R.id.marker_edit_statistics;
-        statisticsSection.setVisibility(statistics ? View.VISIBLE : View.GONE);
-        waypointSection.setVisibility(statistics ? View.GONE : View.VISIBLE);
-        int nextMarkerNumber = trackId == -1L ? -1
-            : MyTracksProviderUtils.Factory.get(MarkerEditActivity.this)
-                .getNextMarkerNumber(trackId, statistics);
-        if (statistics) {
-          String name = nextMarkerNumber == -1 ? getString(R.string.marker_type_statistics)
-              : getString(R.string.marker_statistics_name_format, nextMarkerNumber);
-          statisticsName.setText(name);
-          statisticsName.selectAll();
-        } else {
-          String name = nextMarkerNumber == -1 ? getString(R.string.marker_type_waypoint)
-              : getString(R.string.marker_waypoint_name_format, nextMarkerNumber);
-          waypointName.setText(name);
-          waypointName.selectAll();
-          waypointMarkerType.setText("");
-          waypointDescription.setText("");
-        }
-      }
-    });
     statisticsSection = findViewById(R.id.marker_edit_statistics_section);
     statisticsName = (EditText) findViewById(R.id.marker_edit_statistics_name);
     
@@ -131,7 +98,6 @@ public class MarkerEditActivity extends AbstractMyTracksActivity {
     final boolean newMarker = markerId == -1L;
 
     setTitle(newMarker ? R.string.menu_insert_marker : R.string.menu_edit);
-    typeSection.setVisibility(newMarker ? View.VISIBLE : View.GONE);
     done.setText(newMarker ? R.string.generic_add : R.string.generic_save);
     done.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -146,7 +112,16 @@ public class MarkerEditActivity extends AbstractMyTracksActivity {
     });
 
     if (newMarker) {
-      type.check(statisticsMarker ? R.id.marker_edit_statistics : R.id.marker_edit_waypoint);    
+      statisticsSection.setVisibility(View.GONE);
+      waypointSection.setVisibility(View.VISIBLE);
+      int nextMarkerNumber = trackId == -1L ? -1
+          : MyTracksProviderUtils.Factory.get(this).getNextMarkerNumber(trackId, false);
+      String name = nextMarkerNumber == -1 ? getString(R.string.marker_type_waypoint)
+          : getString(R.string.marker_name_format, nextMarkerNumber);
+      waypointName.setText(name);
+      waypointName.selectAll();
+      waypointMarkerType.setText("");
+      waypointDescription.setText("");
     } else {
       waypoint = MyTracksProviderUtils.Factory.get(this).getWaypoint(markerId);
       if (waypoint == null) {
@@ -183,18 +158,12 @@ public class MarkerEditActivity extends AbstractMyTracksActivity {
    * Adds a marker.
    */
   private void addMarker() {
-    boolean statistics = type.getCheckedRadioButtonId() == R.id.marker_edit_statistics;
-    PreferencesUtils.setBoolean(this, R.string.pick_statistics_marker_key, statistics);
-
-    WaypointType waypointType = statistics ? WaypointType.STATISTICS : WaypointType.WAYPOINT;
-    String markerName = statistics ? statisticsName.getText().toString()
-        : waypointName.getText().toString();
-    String markerCategory = statistics ? null : waypointMarkerType.getText().toString();
-    String markerDescription = statistics ? null : waypointDescription.getText().toString();
-    String markerIconUrl = getString(statistics ? R.string.marker_statistics_icon_url
-        : R.string.marker_waypoint_icon_url);
     WaypointCreationRequest waypointCreationRequest = new WaypointCreationRequest(
-        waypointType, markerName, markerCategory, markerDescription, markerIconUrl);
+        WaypointType.WAYPOINT,
+        waypointName.getText().toString(),
+        waypointMarkerType.getText().toString(),
+        waypointDescription.getText().toString(),
+        getString(R.string.marker_waypoint_icon_url));
     TrackRecordingServiceConnectionUtils.addMarker(
         this, trackRecordingServiceConnection, waypointCreationRequest);
   }

@@ -20,7 +20,6 @@ import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
-import com.google.android.apps.mytracks.fragments.MarkerAddDialogFragment;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.ListItemUtils;
@@ -196,8 +195,9 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.marker_list_insert_marker:
-        MarkerAddDialogFragment.newInstance(trackId)
-            .show(getSupportFragmentManager(), MarkerAddDialogFragment.MARKER_ADD_DIALOG_TAG);
+        Intent intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
+            .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, trackId);
+        startActivity(intent);
         return true;
       case R.id.marker_list_search:
         return ApiAdapterFactory.getApiAdapter().handleSearchMenuSelection(this);

@@ -26,7 +26,6 @@ import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
 import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
 import com.google.android.apps.mytracks.fragments.MapFragment;
-import com.google.android.apps.mytracks.fragments.MarkerAddDialogFragment;
 import com.google.android.apps.mytracks.fragments.StatsFragment;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
@@ -255,8 +254,9 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
         TrackRecordingServiceConnectionUtils.stop(this, trackRecordingServiceConnection, true);
         return true;
       case R.id.track_detail_insert_marker:
-        MarkerAddDialogFragment.newInstance(trackId)
-            .show(getSupportFragmentManager(), MarkerAddDialogFragment.MARKER_ADD_DIALOG_TAG);
+        intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
+            .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, trackId);
+        startActivity(intent);
         return true;
       case R.id.track_detail_play:
         if (isEarthInstalled()) {

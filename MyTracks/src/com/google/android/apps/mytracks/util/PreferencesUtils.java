@@ -66,7 +66,6 @@ public class PreferencesUtils {
 
   public static final int PERIODIC_TASK_OFF = 0;
   public static final boolean PICK_EXISTING_MAP_DEFAULT = false;
-  public static final boolean PICK_STATISTICS_MARKER_DEFAULT = true;
   public static final String PREFERRED_ACCOUNT_DEFAULT = "";
   public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
   public static final boolean REPORT_SPEED_DEFAULT = true;

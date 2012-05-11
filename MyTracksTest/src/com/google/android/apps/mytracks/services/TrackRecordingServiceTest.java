@@ -535,7 +535,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     Waypoint wpt = providerUtils.getWaypoint(1);
     assertEquals(getContext().getString(R.string.marker_waypoint_icon_url),
         wpt.getIcon());
-    assertEquals(getContext().getString(R.string.marker_waypoint_name_format, 1), wpt.getName());
+    assertEquals(getContext().getString(R.string.marker_name_format, 1), wpt.getName());
     assertEquals(Waypoint.TYPE_WAYPOINT, wpt.getType());
     assertEquals(123L, wpt.getTrackId());
     assertEquals(0.0, wpt.getLength());
