@@ -934,8 +934,9 @@ limitations under the License.
 
   <!-- Marker -->
   <string name="marker_add_error"
-    translation_description="When adding a marker, the message indicating error.">
-    Unable to insert a marker. Try again.
+    translation_description="When adding a marker, the message indicating error due to no GPS
+      signal.">
+    Unable to insert a marker. No GPS signal. Try again.
   </string>
   <string name="marker_add_success"
     translation_description="When adding a marker, the message indicating success.">

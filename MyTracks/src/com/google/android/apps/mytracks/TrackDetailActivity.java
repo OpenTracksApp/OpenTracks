@@ -346,7 +346,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     if (event.getAction() == MotionEvent.ACTION_DOWN) {
       if (TrackRecordingServiceConnectionUtils.isRecording(this, trackRecordingServiceConnection)) {
         TrackRecordingServiceConnectionUtils.addMarker(
-            this, trackRecordingServiceConnection, WaypointCreationRequest.DEFAULT_STATISTICS);
+            this, trackRecordingServiceConnection, WaypointCreationRequest.DEFAULT_WAYPOINT);
         return true;
       }
     }

@@ -20,34 +20,38 @@ import android.os.Parcelable;
 
 /**
  * A request for the service to create a waypoint at the current location.
- *
+ * 
  * @author Sandor Dornbush
  */
 public class WaypointCreationRequest implements Parcelable {
 
   public static enum WaypointType {
-    WAYPOINT,
-    STATISTICS;
+    WAYPOINT, STATISTICS;
   }
-  
+
   private WaypointType type;
+  // true if this marker contains the track statistics
+  private boolean isTrackStatistics;
   private String name;
   private String category;
   private String description;
   private String iconUrl;
 
-  public final static WaypointCreationRequest DEFAULT_WAYPOINT =
-      new WaypointCreationRequest(WaypointType.WAYPOINT);
-  public final static WaypointCreationRequest DEFAULT_STATISTICS =
-      new WaypointCreationRequest(WaypointType.STATISTICS);
-  
-  private WaypointCreationRequest(WaypointType type) {
-    this.type = type;
+  public final static WaypointCreationRequest DEFAULT_WAYPOINT = new WaypointCreationRequest(
+      WaypointType.WAYPOINT, false);
+  public final static WaypointCreationRequest DEFAULT_STATISTICS = new WaypointCreationRequest(
+      WaypointType.STATISTICS, false);
+  public final static WaypointCreationRequest DEFAULT_START_TRACK = new WaypointCreationRequest(
+      WaypointType.STATISTICS, true);
+
+  private WaypointCreationRequest(WaypointType type, boolean isTrackStatistics) {
+    this(type, isTrackStatistics, null, null, null, null);
   }
 
-  public WaypointCreationRequest(WaypointType type, String name, String category,
-      String description, String iconUrl) {
+  public WaypointCreationRequest(WaypointType type, boolean isTrackStatistics, String name,
+      String category, String description, String iconUrl) {
     this.type = type;
+    this.isTrackStatistics = isTrackStatistics;
     this.name = name;
     this.category = category;
     this.description = description;
@@ -58,15 +62,13 @@ public class WaypointCreationRequest implements Parcelable {
 
     @Override
     public WaypointCreationRequest createFromParcel(Parcel source) {
-      int i = source.readInt();
-      if (i > WaypointType.values().length) {
-        throw new IllegalArgumentException("Could not find waypoint type: " + i);
-      }
-      WaypointCreationRequest request = new WaypointCreationRequest(WaypointType.values()[i]);
-      request.name = source.readString();
-      request.category = source.readString();
-      request.description = source.readString();
-      request.iconUrl = source.readString();
+      WaypointCreationRequest request = new WaypointCreationRequest(
+          WaypointType.values()[source.readInt()],
+          source.readByte() == 1,
+          source.readString(),
+          source.readString(),
+          source.readString(),
+          source.readString());
       return request;
     }
 
@@ -76,7 +78,7 @@ public class WaypointCreationRequest implements Parcelable {
   }
 
   public static final Creator CREATOR = new Creator();
-  
+
   @Override
   public int describeContents() {
     return 0;
@@ -85,14 +87,19 @@ public class WaypointCreationRequest implements Parcelable {
   @Override
   public void writeToParcel(Parcel parcel, int arg1) {
     parcel.writeInt(type.ordinal());
+    parcel.writeByte((byte) (isTrackStatistics ? 1 : 0));
     parcel.writeString(name);
     parcel.writeString(category);
     parcel.writeString(description);
     parcel.writeString(iconUrl);
   }
-  
+
   public WaypointType getType() {
     return type;
+  }
+
+  public boolean isTrackStatistics() {
+    return isTrackStatistics;
   }
 
   public String getName() {
@@ -102,7 +109,7 @@ public class WaypointCreationRequest implements Parcelable {
   public String getCategory() {
     return category;
   }
-  
+
   public String getDescription() {
     return description;
   }

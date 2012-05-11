@@ -39,6 +39,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.provider.Settings;
 import android.test.RenamingDelegatingContext;
 import android.test.ServiceTestCase;
@@ -494,6 +495,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
 
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertTrue(service.isRecording());
+    insertLocation(service);
 
     assertEquals(1, service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS));
     assertEquals(2, service.insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS));
@@ -530,6 +532,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
 
     ITrackRecordingService service = bindAndGetService(createStartIntent());
     assertTrue(service.isRecording());
+    insertLocation(service);
 
     assertEquals(1, service.insertWaypoint(WaypointCreationRequest.DEFAULT_WAYPOINT));
     Waypoint wpt = providerUtils.getWaypoint(1);
@@ -741,5 +744,23 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     assertNotNull(tripStatistics);
     assertTrue(tripStatistics.getStartTime() > 0);
     assertTrue(tripStatistics.getStopTime() >= tripStatistics.getStartTime());
+  }
+  
+  /**
+   * Inserts a location and waits for 100ms.
+   * 
+   * @param trackRecordingService the track recording service
+   */
+  private void insertLocation(ITrackRecordingService trackRecordingService)
+      throws RemoteException, InterruptedException {
+    Location location = new Location("gps");
+    location.setLongitude(35.0f);
+    location.setLatitude(45.0f);
+    location.setAccuracy(5);
+    location.setSpeed(10);
+    location.setTime(System.currentTimeMillis());
+    location.setBearing(3.0f);
+    trackRecordingService.recordLocation(location);
+    Thread.sleep(100);
   }
 }

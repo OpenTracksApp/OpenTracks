@@ -160,6 +160,7 @@ public class MarkerEditActivity extends AbstractMyTracksActivity {
   private void addMarker() {
     WaypointCreationRequest waypointCreationRequest = new WaypointCreationRequest(
         WaypointType.WAYPOINT,
+        false,
         waypointName.getText().toString(),
         waypointMarkerType.getText().toString(),
         waypointDescription.getText().toString(),
