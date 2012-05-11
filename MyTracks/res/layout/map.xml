@@ -26,16 +26,6 @@ limitations under the License.
     android:id="@+id/map_view"
     android:layout_height="fill_parent"
     android:layout_width="fill_parent" />
-  <ImageButton
-    android:background="@drawable/my_location"
-    android:contentDescription="@string/icon_my_location"
-    android:id="@+id/map_my_location"
-    android:layout_alignParentTop="true"
-    android:layout_alignParentRight="true"
-    android:layout_height="wrap_content"
-    android:layout_marginRight="8dp"
-    android:layout_marginTop="8dp"
-    android:layout_width="wrap_content" />
   <TextView
     android:background="@color/warning_background"
     android:drawableLeft="@android:drawable/ic_dialog_alert"
@@ -47,4 +37,14 @@ limitations under the License.
     android:textColor="@android:color/primary_text_dark"
     android:visibility="gone"
     style="@style/TextMedium.WithIcon" />
+  <ImageButton
+    android:background="@drawable/my_location"
+    android:contentDescription="@string/icon_my_location"
+    android:id="@+id/map_my_location"
+    android:layout_below="@id/map_message"
+    android:layout_alignParentRight="true"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_width="wrap_content" />
 </RelativeLayout>

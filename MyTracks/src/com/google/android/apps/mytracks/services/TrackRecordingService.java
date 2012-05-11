@@ -997,7 +997,7 @@ public class TrackRecordingService extends Service {
     } else {
       int nextMarkerNumber = providerUtils.getNextMarkerNumber(recordingTrackId, true);
       name = nextMarkerNumber == -1 ? getString(R.string.marker_type_statistics)
-          : getString(R.string.marker_statistics_name_format, nextMarkerNumber);
+          : getString(R.string.marker_split_name_format, nextMarkerNumber);
     }
     waypoint.setName(name);
     waypoint.setStatistics(waypointStatsBuilder.getStatistics());

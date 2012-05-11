@@ -377,8 +377,8 @@ limitations under the License.
     Use My Tracks while you run, bike, hike, or do anything else outdoors, and it will use the GPS
     sensor in your phone to record the path you took. It will also gather useful statistics such as
     time, speed, distance, and elevation. You can review all of this data live, or you can save it
-    for use later. While you\'re out, you can mark relevant waypoints, and can ask to hear automatic
-    voice announcements about your progress.\n
+    for use later. While you\'re out, you can insert markers, have split markers inserted
+    automatically, and can ask to hear periodic voice announcements of your progress.\n
     \n
     My Tracks can record data from external sensors:\n
     - Zephyr Technology Consumer HxM Bluetooth heart rate monitor\n
@@ -654,7 +654,7 @@ limitations under the License.
     translation_description="The title on an alert dialog indicating success.">
     Success
   </string>
-  
+
   <!-- GPS -->
   <string name="gps_need_to_enable"
     translation_description="In the main view, the message on the top asking the user to enable
@@ -755,6 +755,14 @@ limitations under the License.
     translation_description="In the 'Help' page, the question on location precision.">
     How precise are the recorded tracks?
   </string>
+  <string name="help_marker_answer"
+    translation_description="In the 'Help' page, the answer on markers.">
+    Markers are used to annotate a location.
+  </string>
+  <string name="help_marker_question"
+    translation_description="In the 'Help' page, the question on markers.">
+    What are markers?
+  </string>
   <string name="help_my_tracks_answer"
     translation_description="In the 'Help' page, the answer on what is My Tracks.">
     My Tracks allows you to record GPS tracks and visualize your hiking, running, biking or any
@@ -793,6 +801,15 @@ limitations under the License.
     translation_description="In the 'Help' page, the question on share visibility.">
     Who can see the tracks I send to Google Maps and Google Fusion Tables?
   </string>
+  <string name="help_split_marker_answer"
+    translation_description="In the 'Help' page, the answer on split markers.">
+    The split markers are used to segment a track to calculate statistics for each segment. Split
+    markers are inserted by setting the split frequency in the menu.
+  </string>
+  <string name="help_split_marker_question"
+    translation_description="In the 'Help' page, the question on split markers.">
+    What are split markers?
+  </string>
   <string name="help_split_track_answer"
     translation_description="In the 'Help' page, the answer on splitting long tracks.">
     Tracks on Google Maps and Google Fusion Tables are limited to certain sizes.
@@ -801,24 +818,6 @@ limitations under the License.
     translation_description="In the 'Help' page, the question on splitting long tracks.">
     Why do very long tracks split into multiple segments upon sending them to Google Maps and
     Google Fusion Tables?
-  </string>
-  <string name="help_statistics_marker_answer"
-    translation_description="In the 'Help' page, the answer on statistics markers.">
-    Statistics markers are used to segment a track to calculate statistics for each segment. For
-    example, let\'s say you are recording a bike ride up a hill, you can insert a statistics marker
-    at the bottom of the hill and another at the top.
-  </string>
-  <string name="help_statistics_marker_question"
-    translation_description="In the 'Help' page, the question on statistics markers.">
-    What are statistics markers?
-  </string>
-  <string name="help_waypoint_marker_answer"
-    translation_description="In the 'Help' page, the answer on waypoint markers.">
-    Waypoint markers are used to annotate a location.
-  </string>
-  <string name="help_waypoint_marker_question"
-    translation_description="In the 'Help' page, the question on waypoint markers.">
-    What are waypoint markers?
   </string>
 
   <!-- Icon -->
@@ -952,34 +951,34 @@ limitations under the License.
 
       %1$s marker name. E.g., 'Marker 1'.">
     Name: %1$s
-  </string>  
+  </string>
   <string name="marker_detail_description"
     translation_description="In the marker detail page, the label for the description.
 
       %1$s marker description. E.g., 'At the top'.">
     Description: %1$s
-  </string>  
+  </string>
   <string name="marker_detail_marker_type"
     translation_description="In the marker detail page, the label for the marker type.
 
       %1$s marker type. E.g., 'building'.">
     Marker type: %1$s
-  </string>  
+  </string>
   <string name="marker_detail_statistics_title"
     translation_description="In the marker detail page, the title for the statistics section
-      indicating that the data below are since the last Statistics marker.">
-    Since last Statistics marker:
-  </string>  
+      indicating that the data below are since the last split marker.">
+    Since last split marker:
+  </string>
   <string name="marker_edit_marker_type"
     translation_description="In the marker edit page, the label for the marker type, including some
-      exmaples.">
+      examples.">
     Marker type (e.g. building, pothole...)
   </string>
   <string name="marker_edit_marker_type_hint"
     translation_description="In the marker edit page, the hint in the marker type text field when it
       is empty.">
     Marker type
-  </string> 
+  </string>
   <string name="marker_label_end"
     translation_description="When inserting a marker to indicate the end of a track, the marker's
       name. E.g., 'track_name (End)'.
@@ -998,20 +997,19 @@ limitations under the License.
     translation_description="The message when the marker list is empty.">
     You don\'t have any markers.
   </string>
-  <string name="marker_statistics_name_format"
-    translation_description="When adding a statistics marker, the string format for the default
-      name.
-
-      %1$d: number. E.g., '1'.">
-    Statistics %1$d
-  </string>
   <string name="marker_name_format"
     translation_description="When adding a marker, the string format for the default name.
 
       %1$d: number. E.g., '1'.">
     Marker %1$d
   </string>
-      
+  <string name="marker_split_name_format"
+    translation_description="When adding a split marker, the string format for the default name.
+
+      %1$d: number. E.g., '1'.">
+    Split %1$d
+  </string>
+
   <!-- Menu Items -->
   <string name="menu_aggregated_statistics"
     translation_description="In the menu, to go to the aggregated statistics page.">
@@ -1134,7 +1132,7 @@ limitations under the License.
       status.">
     Voice frequency
   </string>
-  
+
   <!-- My Location -->
   <string name="my_location_approximate_location"
     translation_description="When displaying the user's current location, a status message
@@ -1208,7 +1206,7 @@ limitations under the License.
       success.">
     Save finished.
   </string>
-  
+
   <!-- SD Card -->
   <string name="sd_card_canceled"
     translation_description="When exporting a track to the SD card, a message indicating that the
@@ -1510,13 +1508,13 @@ limitations under the License.
     translation_description="In the 'Chart' settings, the option to display the x axis by
       distance.">
     By distance
-  </string>  
+  </string>
   <string name="settings_chart_by_time"
     translation_description="In the 'Chart' settings, the option to display the x axis by time.">
     By time
   </string>
   <string name="settings_chart_x_axis"
-    translation_description="In the 'Chart' setttings, the option to change the x axis display,
+    translation_description="In the 'Chart' settings, the option to change the x axis display,
       either by distance or by time.">
     X axis
   </string>
@@ -1583,7 +1581,7 @@ limitations under the License.
       track recording.">
     Not available while recording a track.
   </string>
-  
+
   <!-- Settings Recording -->
   <string name="settings_recording"
     translation_description="In the 'Settings' page, the option to change the track recording
@@ -1729,7 +1727,7 @@ limitations under the License.
       explaining reverting all the settings to the default values.">
     Revert all your settings to the default values.
   </string>
-  
+
   <!-- Settings Sensor -->
   <string name="settings_sensor"
     translation_description="In the 'Settings' page, the option to change the sensor related
@@ -1854,7 +1852,7 @@ limitations under the License.
       Character limit: ~26 (1 line)">
     Unpair SRM ANT+ bridge
   </string>
-  
+
   <!-- Settings Sharing -->
   <string name="settings_sharing"
     translation_description="In the 'Settings' page, the option to change the track sharing related
@@ -1931,10 +1929,10 @@ limitations under the License.
 
   <!-- Settings Split -->
   <string name="settings_split_frequency_title"
-    translation_description="In title of the 'Split frequency' dialog."> 
+    translation_description="In title of the 'Split frequency' dialog.">
     Time/distance between two split markers
   </string>
-  
+
   <!-- Settings Stats -->
   <string name="settings_stats_coordinate"
     translation_description="In the 'Stats settings, the option to show latitude and longitude.">
@@ -1976,7 +1974,7 @@ limitations under the License.
     Time measurement
   </string>
   <string name="settings_stats_units_imperial"
-    translation_description="In the 'Stats' setttings, the option to use imperial units, with
+    translation_description="In the 'Stats' settings, the option to use imperial units, with
       examples.">
     Imperial (mi, ft)
   </string>
@@ -1984,7 +1982,7 @@ limitations under the License.
     translation_description="In the 'Stats' settings, the option to use metric units, with
       examples.">
     Metric (km, m)
-  </string>  
+  </string>
   <string name="settings_stats_units_title"
     translation_description="In the 'Stats' settings page, the option to change the preferred units,
       either metric (km) or imperial (mi).">
@@ -2120,11 +2118,11 @@ limitations under the License.
   <string name="track_detail_stats_tab"
     translation_description="In the track detail page, the title of the tab showing the stats.">
     Stats
-  </string> 
+  </string>
   <string name="track_detail_title_recording"
     translation_description="In the track detail page, the title when recording.">
     Recording...
-  </string> 
+  </string>
   <string name="track_edit_activity_type"
     translation_description="In the page to edit a track, the label for the text field to edit the
       activity type, including some examples of activity types.">
@@ -2357,10 +2355,10 @@ limitations under the License.
   </string>
   <string name="value_integer_percent"
      translation_description="To display a value in percent like 2 %.
-     
+
      %1$d: an integer value. E.g., '2'">
-    %1$d %%    
-  </string> 
+    %1$d %%
+  </string>
   <string name="value_integer_second"
     translation_description="In a setting picker, the string format to display an integer value in
       seconds (s).
@@ -2384,11 +2382,11 @@ limitations under the License.
   <string name="value_coordinate_degree"
     translation_description="To display a latitude or longitude coordinate in degree. E.g.,
       2.2 \u00B0. \u00B0 is the unicode value for the degree symbol.
-          
+
     %1$s: a string value of the coordinate. E.g., '2.2'">
     %1$s \u00B0
   </string>
-  
+
   <!-- Voice -->
   <string name="voice_hours_few"
     translation_description="For voice announcement, to say 'few' hours.
@@ -2898,10 +2896,10 @@ limitations under the License.
   <string name="welcome_message"
     translation_description="The message of the welcome dialog.">
     Use My Tracks while you run, bike, hike, or do anything outdoor to record your path. While
-    recording, you can visualize your track and watch live statistics. You can also add
-    markers, have markers inserted periodically, or hear automatic voice announcements of
-    your progress. For recorded tracks, you can play them on Google Earth, share with friends, or
-    upload to Google Maps, Google Fusion Tables, or Google Docs.    
+    recording, you can visualize your track and watch live statistics. You can also add markers,
+    have split markers inserted periodically, or hear periodic announcements of your progress.
+    For recorded tracks, you can play them on Google Earth, share with friends, or upload to Google
+    Maps, Google Fusion Tables, or Google Docs.
   </string>
   <string name="welcome_title"
     translation_description="The title of the welcome dialog.">
