@@ -24,6 +24,7 @@ import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.fragments.ChartFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
+import com.google.android.apps.mytracks.fragments.FrequencyDialogFragment;
 import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
 import com.google.android.apps.mytracks.fragments.MapFragment;
 import com.google.android.apps.mytracks.fragments.StatsFragment;
@@ -83,6 +84,8 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   private MenuItem insertMarkerMenuItem;
   private MenuItem playMenuItem;
   private MenuItem shareMenuItem;
+  private MenuItem voiceFrequencyMenuItem;
+  private MenuItem splitFrequencyMenuItem;
   private MenuItem sendGoogleMenuItem;
   private MenuItem saveMenuItem;
 
@@ -222,6 +225,8 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
     playMenuItem = menu.findItem(R.id.track_detail_play);
     shareMenuItem = menu.findItem(R.id.track_detail_share);
+    voiceFrequencyMenuItem = menu.findItem(R.id.track_detail_voice_frequency);
+    splitFrequencyMenuItem = menu.findItem(R.id.track_detail_split_frequency);
     sendGoogleMenuItem = menu.findItem(R.id.track_detail_send_google);
     saveMenuItem = menu.findItem(R.id.track_detail_save);
 
@@ -297,6 +302,17 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
         intent = IntentUtils.newIntent(this, MarkerListActivity.class)
             .putExtra(MarkerListActivity.EXTRA_TRACK_ID, trackId);
         startActivity(intent);
+        return true;
+      case R.id.track_detail_voice_frequency:
+        FrequencyDialogFragment.newInstance(R.string.announcement_frequency_key,
+            PreferencesUtils.ANNOUNCEMENT_FREQUENCY_DEFAULT,
+            R.string.settings_voice_frequency_title)
+            .show(getSupportFragmentManager(), FrequencyDialogFragment.FREQUENCY_DIALOG_TAG);
+        return true;
+      case R.id.track_detail_split_frequency:
+        FrequencyDialogFragment.newInstance(R.string.split_frequency_key,
+            PreferencesUtils.SPLIT_FREQUENCY_DEFAULT, R.string.settings_split_frequency_title)
+            .show(getSupportFragmentManager(), FrequencyDialogFragment.FREQUENCY_DIALOG_TAG);
         return true;
       case R.id.track_detail_send_google:
         intent = IntentUtils.newIntent(this, UploadServiceChooserActivity.class)
@@ -445,6 +461,12 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     }
     if (shareMenuItem != null) {
       shareMenuItem.setVisible(!isRecording);
+    }
+    if (voiceFrequencyMenuItem != null) {
+      voiceFrequencyMenuItem.setVisible(isRecording);
+    }
+    if (splitFrequencyMenuItem != null) {
+      splitFrequencyMenuItem.setVisible(isRecording);
     }
     if (sendGoogleMenuItem != null) {
       sendGoogleMenuItem.setVisible(!isRecording);

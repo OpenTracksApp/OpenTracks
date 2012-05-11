@@ -96,6 +96,22 @@ limitations under the License.
     <item>CSV</item>
     <item>TCX</item>
   </string-array>
+  <string-array name="frequency_values">
+    <item>0</item>
+    <item>1</item>
+    <item>2</item>
+    <item>5</item>
+    <item>10</item>
+    <item>15</item>
+    <item>30</item>
+    <item>60</item>
+    <item>-1</item>
+    <item>-5</item>
+    <item>-10</item>
+    <item>-25</item>
+    <item>-50</item>
+    <item>-100</item>
+  </string-array>
   <string-array name="max_recording_distance_values">
     <item>50</item>
     <item>100</item>
@@ -141,22 +157,6 @@ limitations under the License.
     <item>1000</item>
     <item>2000</item>
     <item>5000</item>
-  </string-array>
-  <string-array name="periodic_task_values">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-    <item>5</item>
-    <item>10</item>
-    <item>15</item>
-    <item>30</item>
-    <item>60</item>
-    <item>-1</item>
-    <item>-5</item>
-    <item>-10</item>
-    <item>-25</item>
-    <item>-50</item>
-    <item>-100</item>
   </string-array>
   <string-array name="sensor_type_all_options">
     <item>@string/settings_sensor_type_none</item>

@@ -16,18 +16,6 @@ limitations under the License.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
   android:title="@string/settings_recording" >
-  <com.google.android.apps.mytracks.IntegerListPreference
-    android:defaultValue="0"
-    android:entryValues="@array/periodic_task_values"
-    android:key="@string/announcement_frequency_key"
-    android:summary="@string/settings_recording_voice_summary"
-    android:title="@string/settings_recording_voice" />
-  <com.google.android.apps.mytracks.IntegerListPreference
-    android:defaultValue="0"
-    android:entryValues="@array/periodic_task_values"
-    android:key="@string/split_frequency_key"
-    android:summary="@string/settings_recording_marker_summary"
-    android:title="@string/settings_recording_marker" />
   <ListPreference
     android:defaultValue="@string/settings_recording_track_name_date_local_value"
     android:entries="@array/track_name_options"

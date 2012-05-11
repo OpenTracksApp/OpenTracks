@@ -35,7 +35,7 @@ public class PeriodicTaskExecutor {
    * A value greater than zero is a frequency in time.
    * A value less than zero is considered a frequency in distance.
    */
-  private int taskFrequency = PreferencesUtils.PERIODIC_TASK_OFF;
+  private int taskFrequency = PreferencesUtils.FREQUENCY_OFF;
 
   /**
    * The next distance when the task should execute.
@@ -75,7 +75,7 @@ public class PeriodicTaskExecutor {
         timerExecutor = null;
       }
     }
-    if (taskFrequency == PreferencesUtils.PERIODIC_TASK_OFF) {
+    if (taskFrequency == PreferencesUtils.FREQUENCY_OFF) {
       return;
     }
 

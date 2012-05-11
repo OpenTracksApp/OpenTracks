@@ -60,14 +60,24 @@ limitations under the License.
     android:title="@string/menu_markers"/>
   <!-- android:orderInCategory="6" is in map.xml -->
   <item
+    android:icon="@drawable/menu_voice_frequency"
+    android:id="@+id/track_detail_voice_frequency"
+    android:orderInCategory="7"
+    android:title="@string/menu_voice_frequency"/>
+  <item
+    android:icon="@drawable/menu_split_frequency"
+    android:id="@+id/track_detail_split_frequency"
+    android:orderInCategory="8"
+    android:title="@string/menu_split_frequency"/>
+  <item
     android:icon="@drawable/menu_send_google"
     android:id="@+id/track_detail_send_google"
-    android:orderInCategory="7"
+    android:orderInCategory="9"
     android:title="@string/menu_send_google"/>
   <item
     android:icon="@drawable/menu_save"
     android:id="@+id/track_detail_save"
-    android:orderInCategory="8"
+    android:orderInCategory="10"
     android:title="@string/menu_save">
     <menu>
       <item android:id="@+id/track_detail_save_gpx"/>
@@ -79,26 +89,26 @@ limitations under the License.
   <item
     android:icon="@drawable/menu_edit"
     android:id="@+id/track_detail_edit"
-    android:orderInCategory="9"
+    android:orderInCategory="11"
     android:title="@string/menu_edit"/>
   <item
     android:icon="@drawable/menu_delete"
     android:id="@+id/track_detail_delete"
-    android:orderInCategory="10"
+    android:orderInCategory="12"
     android:title="@string/menu_delete"/>
   <item
     android:icon="@drawable/menu_sensor_state"
     android:id="@+id/track_detail_sensor_state"
-    android:orderInCategory="11"
+    android:orderInCategory="13"
     android:title="@string/menu_sensor_state"/>
   <item
     android:icon="@drawable/menu_settings"
     android:id="@+id/track_detail_settings"
-    android:orderInCategory="12"
+    android:orderInCategory="14"
     android:title="@string/menu_settings"/>
   <item
     android:icon="@drawable/menu_help"
     android:id="@+id/track_detail_help"
-    android:orderInCategory="13"
+    android:orderInCategory="15"
     android:title="@string/menu_help"/>
 </menu>

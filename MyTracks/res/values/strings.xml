@@ -1117,14 +1117,24 @@ limitations under the License.
     Map URL
   </string>
   <string name="menu_show_on_map"
-    translation_description="In the menu, to show a marker on map.">
+    translation_description="In the menu, to show a track or a marker on the map.">
     Show on map
+  </string>
+  <string name="menu_split_frequency"
+    translation_description="In the menu, to configure the split frequency, how frequent to insert
+      a split marker.">
+    Split frequency
   </string>
   <string name="menu_stop_recording"
     translation_description="In the menu, to stop recording a track.">
     Stop recording
   </string>
-
+  <string name="menu_voice_frequency"
+    translation_description="In the menu, to configure the voice frequency, how frequent to announce
+      status.">
+    Voice frequency
+  </string>
+  
   <!-- My Location -->
   <string name="my_location_approximate_location"
     translation_description="When displaying the user's current location, a status message
@@ -1647,19 +1657,6 @@ limitations under the License.
       recordings of your position.">
     Smallest time interval between two recordings of your position.
   </string>
-  <string name="settings_recording_marker"
-    translation_description="In the 'Recording' settings, the dropdown option to configure the time
-      or distance a new marker will be inserted.
-
-      Character limit: ~23 (1 line)">
-    Marker
-  </string>
-  <string name="settings_recording_marker_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Marker'
-      dropdown option explaining that it configures the time or distance after which a new marker
-      will be inserted.">
-    Time/distance after which a new marker will be inserted.
-  </string>
   <string name="settings_recording_track_distance"
     translation_description="In the 'Recording' settings, the dropdown option to configure the
       distance between two tracks.
@@ -1707,20 +1704,7 @@ limitations under the License.
       list explaining that it chooses the default track name format.">
     Default track name
   </string>
-  <string name="settings_recording_voice"
-    translation_description="In the 'Recording' settings, the dropdown option to configure the voice
-      announcement frequency.
 
-      Character limit: ~23 (1 line)">
-    Voice
-  </string>
-  <string name="settings_recording_voice_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Voice'
-      dropdown option explaining that it configures the time or distance between two voice
-      announcements.">
-    Time/distance between two voice announcements.
-  </string>
-  
   <!-- Settings Reset -->
   <string name="settings_reset"
     translation_description="In the 'Settings' page, the option to reset everything to the defaults.
@@ -1945,6 +1929,12 @@ limitations under the License.
    Remove any descriptive text when sharing a URL with friends.
   </string>
 
+  <!-- Settings Split -->
+  <string name="settings_split_frequency_title"
+    translation_description="In title of the 'Split frequency' dialog."> 
+    Time/distance between two split markers
+  </string>
+  
   <!-- Settings Stats -->
   <string name="settings_stats_coordinate"
     translation_description="In the 'Stats settings, the option to show latitude and longitude.">
@@ -1999,6 +1989,12 @@ limitations under the License.
     translation_description="In the 'Stats' settings page, the option to change the preferred units,
       either metric (km) or imperial (mi).">
     Preferred units
+  </string>
+
+  <!-- Settings Voice -->
+  <string name="settings_voice_frequency_title"
+    translation_description="The title of the 'Voice frequency' dialog.">
+    Time/distance between two voice announcements
   </string>
 
   <!-- Share Track -->

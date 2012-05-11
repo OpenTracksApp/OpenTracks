@@ -52,6 +52,7 @@ public class PreferencesUtils {
 
   public static final String DEFAULT_ACTIVITY_DEFAULT = "";
   public static final boolean DEFAULT_MAP_PUBLIC_DEFAULT = true;
+  public static final int FREQUENCY_OFF = 0;
   public static final int MAX_RECORDING_DISTANCE_DEFAULT = 200;
   public static final boolean METRIC_UNITS_DEFAULT = true;
   public static final int MIN_RECORDING_DISTANCE_DEFAULT = 5;
@@ -64,7 +65,6 @@ public class PreferencesUtils {
   public static final int MIN_REQUIRED_ACCURACY_EXCELLENT = 10;
   public static final int MIN_REQUIRED_ACCURACY_POOR = 5000;
 
-  public static final int PERIODIC_TASK_OFF = 0;
   public static final boolean PICK_EXISTING_MAP_DEFAULT = false;
   public static final String PREFERRED_ACCOUNT_DEFAULT = "";
   public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
