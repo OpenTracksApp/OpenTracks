@@ -80,9 +80,6 @@ public abstract class AbstractSendAsyncTask extends AsyncTask<Void, Integer, Boo
       return performTask();
     } finally {
       closeConnection();
-      if (success) {
-        saveResult();
-      }
     }
   }
 
@@ -97,6 +94,9 @@ public abstract class AbstractSendAsyncTask extends AsyncTask<Void, Integer, Boo
   protected void onPostExecute(Boolean result) {
     success = result;
     completed = true;
+    if (success) {
+      saveResult();
+    }
     if (activity != null) {
       activity.onAsyncTaskCompleted(success);
     }

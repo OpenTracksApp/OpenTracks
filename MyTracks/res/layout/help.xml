@@ -91,16 +91,16 @@ limitations under the License.
         android:text="@string/help_saved_files_answer"
         style="@style/HelpAnswer" />
       <TextView
-        android:text="@string/help_waypoint_marker_question"
+        android:text="@string/help_marker_question"
         style="@style/HelpQuestion" />
       <TextView
-        android:text="@string/help_waypoint_marker_answer"
+        android:text="@string/help_marker_answer"
         style="@style/HelpAnswer" />
       <TextView
-        android:text="@string/help_statistics_marker_question"
+        android:text="@string/help_split_marker_question"
         style="@style/HelpQuestion" />
       <TextView
-        android:text="@string/help_statistics_marker_answer"
+        android:text="@string/help_split_marker_answer"
         style="@style/HelpAnswer" />
       <TextView
         android:text="@string/help_delete_tracks_question"

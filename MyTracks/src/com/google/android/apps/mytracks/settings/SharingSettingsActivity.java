@@ -16,15 +16,22 @@
 
 package com.google.android.apps.mytracks.settings;
 
+import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.util.DialogUtils;
 import com.google.android.maps.mytracks.R;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An activity for accessing the sharing settings.
@@ -56,6 +63,21 @@ public class SharingSettingsActivity extends AbstractSettingsActivity {
         }
       }
     });
+    
+    ListPreference sharingAccountListPreference = (ListPreference) findPreference(
+        getString(R.string.sharing_account_key));
+    List<String> entries = new ArrayList<String>();
+    Account[] accounts = AccountManager.get(this).getAccountsByType(Constants.ACCOUNT_TYPE);
+    for (Account account : accounts) {
+      entries.add(account.name);
+    }
+    
+    sharingAccountListPreference.setEntries(entries.toArray(new CharSequence[entries.size()]));
+    sharingAccountListPreference.setEntryValues(entries.toArray(
+        new CharSequence[entries.size()]));
+    if (entries.size() == 1) {
+      sharingAccountListPreference.setValueIndex(0);
+    }
   }
 
   @Override

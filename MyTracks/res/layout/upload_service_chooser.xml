@@ -21,7 +21,7 @@ limitations under the License.
     android:layout_width="fill_parent"
     android:padding="8dp"
     android:stretchColumns="1" >
-    <TableRow android:id="@+id/send_google_maps_row" >
+    <TableRow>
       <ImageView
         android:contentDescription="@string/send_google_maps"
         android:src="@drawable/google_maps_icon"
@@ -47,7 +47,7 @@ limitations under the License.
           style="@style/TextMedium" />
       </RadioGroup>
     </TableRow>
-    <TableRow android:id="@+id/send_google_fusion_tables_row" >
+    <TableRow>
       <ImageView
         android:contentDescription="@string/send_google_fusion_tables"
         android:src="@drawable/google_fusion_tables_icon"
@@ -57,7 +57,7 @@ limitations under the License.
         android:text="@string/send_google_fusion_tables"
         style="@style/UploadServiceChooserCheckBox" />
     </TableRow>
-    <TableRow android:id="@+id/send_google_docs_row" >
+    <TableRow>
       <ImageView
         android:contentDescription="@string/send_google_docs"
         android:src="@drawable/google_docs_icon"

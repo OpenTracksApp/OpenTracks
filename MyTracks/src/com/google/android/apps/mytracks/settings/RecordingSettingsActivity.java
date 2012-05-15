@@ -39,14 +39,6 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
     boolean metricUnits = PreferencesUtils.getBoolean(
         this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
 
-    ListPreference announcementFrequencyListPreference = (ListPreference) findPreference(
-        getString(R.string.announcement_frequency_key));
-    announcementFrequencyListPreference.setEntries(getPeriodicTaskDisplayOptions(metricUnits));
-
-    ListPreference splitFrequencyListPreference = (ListPreference) findPreference(
-        getString(R.string.split_frequency_key));
-    splitFrequencyListPreference.setEntries(getPeriodicTaskDisplayOptions(metricUnits));
-
     ListPreference minRecordingIntervalListPreference = (ListPreference) findPreference(
         getString(R.string.min_recording_interval_key));
     minRecordingIntervalListPreference.setEntries(getMinRecordingIntervalDisplayOptions());
@@ -68,28 +60,6 @@ public class RecordingSettingsActivity extends AbstractSettingsActivity {
     ListPreference autoResumeTrackTimeoutListPreference = (ListPreference) findPreference(
         getString(R.string.auto_resume_track_timeout_key));
     autoResumeTrackTimeoutListPreference.setEntries(getAutoResumeTrackTimeoutDisplayOptions());
-  }
-
-  /**
-   * Gets the periodic task display options.
-   * 
-   * @param metricUnits true to display metric units
-   */
-  private String[] getPeriodicTaskDisplayOptions(boolean metricUnits) {
-    String[] values = getResources().getStringArray(R.array.periodic_task_values);
-    String[] options = new String[values.length];
-    for (int i = 0; i < values.length; i++) {
-      int value = Integer.parseInt(values[i]);
-      if (value == PreferencesUtils.PERIODIC_TASK_OFF) {
-        options[i] = getString(R.string.value_off);
-      } else if (value < 0) {
-        options[i] = getString(metricUnits ? R.string.value_integer_kilometer
-            : R.string.value_integer_mile, Math.abs(value));
-      } else {
-        options[i] = getString(R.string.value_integer_minute, value);
-      }
-    }
-    return options;
   }
 
   /**

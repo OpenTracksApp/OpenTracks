@@ -50,7 +50,7 @@ public class UploadServiceChooserActivityTest extends
    */
   public void testOnCreateDialog_displayAll() {
     // Initials activity to display all send items.
-    initialActivity(true, true, true);
+    initialActivity();
     instrumentation.waitForIdleSync();
     assertTrue(getMapsCheckBox().isShown());
     assertTrue(getFusionTablesCheckBox().isShown());
@@ -80,45 +80,12 @@ public class UploadServiceChooserActivityTest extends
   }
 
   /**
-   * Tests the logic to display only the "Send to Google Maps" option.
-   */
-  public void testOnCreateDialog_displayOne() {
-    // Initials activity to display all send items.
-    initialActivity(true, false, false);
-    instrumentation.waitForIdleSync();
-    assertTrue(getMapsCheckBox().isShown());
-
-    // Clicks to enable this items.
-    uploadServiceChooserActivity.runOnUiThread(new Runnable() {
-      public void run() {
-        if (!getMapsCheckBox().isChecked()) {
-          getMapsCheckBox().performClick();
-        }
-      }
-    });
-    instrumentation.waitForIdleSync();
-    assertTrue(getMapsCheckBox().isShown());
-    assertTrue(getNewMapRadioButton().isShown());
-    assertTrue(getExistingMapRadioButton().isShown());
-  }
-
-  /**
-   * Tests the logic to display no option.
-   */
-  public void testOnCreateDialog_displayNone() {
-    initialActivity(false, false, false);
-    assertFalse(getMapsCheckBox().isShown());
-    assertFalse(getFusionTablesCheckBox().isShown());
-    assertFalse(getDocsCheckBox().isShown());
-  }
-
-  /**
    * Tests the logic to initial state of check box to unchecked. This test cover
    * code in method {@link UploadServiceChooserActivity#onCreateDialog(int)},
    * {@link UploadServiceChooserActivity#initState()}.
    */
   public void testOnCreateDialog_initStateUnchecked() {
-    initialActivity(true, true, true);
+    initialActivity();
     // Initial all values to false in SharedPreferences.
     PreferencesUtils.setBoolean(uploadServiceChooserActivity, R.string.send_to_maps_key, false);
     PreferencesUtils.setBoolean(
@@ -141,7 +108,7 @@ public class UploadServiceChooserActivityTest extends
    * {@link UploadServiceChooserActivity#initState()}.
    */
   public void testOnCreateDialog_initStateChecked() {
-    initialActivity(true, true, true);
+    initialActivity();
     // Initial all values to true in SharedPreferences.
     PreferencesUtils.setBoolean(uploadServiceChooserActivity, R.string.pick_existing_map_key, true);
     PreferencesUtils.setBoolean(uploadServiceChooserActivity, R.string.send_to_maps_key, true);
@@ -168,7 +135,7 @@ public class UploadServiceChooserActivityTest extends
    * {@link UploadServiceChooserActivity#saveState()},
    */
   public void testOnCreateDialog_saveState() {
-    initialActivity(true, true, true);
+    initialActivity();
     // Initial all values to true in SharedPreferences.
     PreferencesUtils.setBoolean(uploadServiceChooserActivity, R.string.send_to_maps_key, true);
     PreferencesUtils.setBoolean(
@@ -197,7 +164,7 @@ public class UploadServiceChooserActivityTest extends
    * {@link UploadServiceChooserActivity#startNextActivity()}.
    */
   public void testOnCreateDialog_startNextActivity() {
-    initialActivity(true, true, true);
+    initialActivity();
     // Initial all values to true or false in SharedPreferences.
     PreferencesUtils.setBoolean(uploadServiceChooserActivity, R.string.send_to_maps_key, true);
     PreferencesUtils.setBoolean(uploadServiceChooserActivity, R.string.send_to_docs_key, true);
@@ -224,10 +191,9 @@ public class UploadServiceChooserActivityTest extends
    * @param showFusionTables
    * @param showDocs
    */
-  private void initialActivity(boolean showMaps, boolean showFusionTables, boolean showDocs) {
+  private void initialActivity() {
     Intent intent = new Intent();
-    intent.putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(1L, showMaps, showFusionTables,
-        showDocs));
+    intent.putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(1L));
     setActivityIntent(intent);
     uploadServiceChooserActivity = this.getActivity();
   }
