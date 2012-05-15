@@ -16,8 +16,8 @@ limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   android:installLocation="auto"
-  android:versionCode="39"
-  android:versionName="1.1.16"
+  android:versionCode="40"
+  android:versionName="2.0"
   package="com.google.android.maps.mytracks" >
 
   <!-- Permission to initialize services -->

@@ -44,6 +44,10 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity {
   private long markerId;
   private Waypoint waypoint;
 
+  private TextView name;
+  private View waypointSection;
+  private View statisticsSection;
+
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
@@ -55,29 +59,29 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity {
       finish();
       return;
     }
+    name = (TextView) findViewById(R.id.marker_detail_name);
+    waypointSection = findViewById(R.id.marker_detail_waypoint_section);
+    statisticsSection = findViewById(R.id.marker_detail_statistics_section);
+  }
 
+  @Override
+  protected void onResume() {
+    super.onResume();
     waypoint = MyTracksProviderUtils.Factory.get(this).getWaypoint(markerId);
     if (waypoint == null) {
       Log.d(TAG, "waypoint is null");
       finish();
       return;
     }
-
-    TextView name = (TextView) findViewById(R.id.marker_detail_name);
     name.setText(getString(R.string.marker_detail_name, waypoint.getName()));
-    View waypointSection = findViewById(R.id.marker_detail_waypoint_section);
-    View statisticsSection = findViewById(R.id.marker_detail_statistics_section);
-
     if (waypoint.getType() == Waypoint.TYPE_WAYPOINT) {
       waypointSection.setVisibility(View.VISIBLE);
       statisticsSection.setVisibility(View.GONE);
 
       TextView markerType = (TextView) findViewById(R.id.marker_detail_waypoint_marker_type);
-      markerType.setText(getString(
-          R.string.marker_detail_waypoint_marker_type, waypoint.getCategory()));
+      markerType.setText(getString(R.string.marker_detail_marker_type, waypoint.getCategory()));
       TextView description = (TextView) findViewById(R.id.marker_detail_waypoint_description);
-      description.setText(getString(
-          R.string.marker_detail_waypoint_description, waypoint.getDescription()));
+      description.setText(getString(R.string.marker_detail_description, waypoint.getDescription()));
     } else {
       waypointSection.setVisibility(View.GONE);
       statisticsSection.setVisibility(View.VISIBLE);
@@ -85,7 +89,7 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity {
       StatsUtils.setLocationValues(this, waypoint.getLocation(), false);
     }
   }
-
+  
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.marker_detail, menu);

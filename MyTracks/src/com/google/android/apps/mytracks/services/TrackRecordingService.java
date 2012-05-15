@@ -30,6 +30,7 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
+import com.google.android.apps.mytracks.content.WaypointCreationRequest.WaypointType;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 import com.google.android.apps.mytracks.services.sensors.SensorManager;
 import com.google.android.apps.mytracks.services.sensors.SensorManagerFactory;
@@ -589,7 +590,7 @@ public class TrackRecordingService extends Service {
     statsBuilder.setMinRecordingDistance(minRecordingDistance);
     waypointStatsBuilder = new TripStatisticsBuilder(startTime);
     waypointStatsBuilder.setMinRecordingDistance(minRecordingDistance);
-    currentWaypointId = insertWaypoint(WaypointCreationRequest.DEFAULT_STATISTICS);
+    currentWaypointId = insertWaypoint(WaypointCreationRequest.DEFAULT_START_TRACK);
     length = 0;
     showNotification();
     registerLocationListener();
@@ -916,37 +917,33 @@ public class TrackRecordingService extends Service {
 
   public long insertWaypoint(WaypointCreationRequest request) {
     if (!isRecording()) {
-      throw new IllegalStateException(
-          "Unable to insert waypoint marker while not recording!");
+      throw new IllegalStateException("Unable to insert marker while not recording!");
     }
-    if (request == null) {
-      request = WaypointCreationRequest.DEFAULT_WAYPOINT;
-    }
-    Waypoint wpt = new Waypoint();
-    switch (request.getType()) {
-      case WAYPOINT:
-        buildWaypointMarker(wpt, request);
-        break;
-      case STATISTICS:
-        buildStatisticsMarker(wpt, request);
-        break;
-    }
-    wpt.setTrackId(recordingTrackId);
-    wpt.setLength(length);
-    if (lastLocation == null
-        || statsBuilder == null || statsBuilder.getStatistics() == null) {
-      // A null location is ok, and expected on track start.
-      // Make it an impossible location.
-      Location l = new Location("");
-      l.setLatitude(100);
-      l.setLongitude(180);
-      wpt.setLocation(l);
+    Waypoint waypoint = new Waypoint();
+    if (request.getType() == WaypointType.WAYPOINT) {
+      buildWaypointMarker(waypoint, request);
     } else {
-      wpt.setLocation(lastLocation);
-      wpt.setDuration(lastLocation.getTime()
-          - statsBuilder.getStatistics().getStartTime());
+      buildStatisticsMarker(waypoint, request);
     }
-    Uri uri = providerUtils.insertWaypoint(wpt);
+    waypoint.setTrackId(recordingTrackId);
+    waypoint.setLength(length);
+    if (lastLocation == null || statsBuilder == null || statsBuilder.getStatistics() == null) {
+      if (!request.isTrackStatistics()) {
+        return -1L;
+      }
+      /*
+       * For track statistics, a null location is OK. Make it an impossible
+       * location.
+       */
+      Location location = new Location("");
+      location.setLatitude(100);
+      location.setLongitude(180);
+      waypoint.setLocation(location);
+    } else {
+      waypoint.setLocation(lastLocation);
+      waypoint.setDuration(lastLocation.getTime() - statsBuilder.getStatistics().getStartTime());
+    }
+    Uri uri = providerUtils.insertWaypoint(waypoint);
     return Long.parseLong(uri.getLastPathSegment());
   }
 
@@ -963,7 +960,7 @@ public class TrackRecordingService extends Service {
     } else {
       int nextMarkerNumber = providerUtils.getNextMarkerNumber(recordingTrackId, false);
       name = nextMarkerNumber == -1 ? getString(R.string.marker_type_waypoint)
-          : getString(R.string.marker_waypoint_name_format, nextMarkerNumber);
+          : getString(R.string.marker_name_format, nextMarkerNumber);
     }
     wpt.setName(name);
     if (request.getCategory() != null) {

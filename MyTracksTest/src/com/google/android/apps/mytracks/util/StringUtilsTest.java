@@ -17,7 +17,6 @@
 package com.google.android.apps.mytracks.util;
 
 import android.test.AndroidTestCase;
-import android.text.format.DateFormat;
 
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
@@ -28,23 +27,6 @@ import java.util.TimeZone;
  * @author Rodrigo Damazio
  */
 public class StringUtilsTest extends AndroidTestCase {
-
-  /**
-   * Tests {@link StringUtils#formatDateTime(android.content.Context, long)}.
-   */
-  public void testFormatTime() {
-    assertEquals(DateFormat.getTimeFormat(getContext()).format(0L),
-        StringUtils.formatTime(getContext(), 0L));
-  }
-
-  /**
-   * Tests {@link StringUtils#formatDateTime(android.content.Context, long)}.
-   */
-  public void testFormatDateTime() {
-    String expected = DateFormat.getDateFormat(getContext()).format(0L) + " "
-        + DateFormat.getTimeFormat(getContext()).format(0L);
-    assertEquals(expected, StringUtils.formatDateTime(getContext(), 0L));
-  }
 
   /**
    * Tests {@link StringUtils#formatDateTimeIso8601(long)}.

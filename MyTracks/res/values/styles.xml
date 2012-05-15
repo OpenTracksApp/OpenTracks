@@ -122,10 +122,9 @@ limitations under the License.
     <item name="android:layout_width">wrap_content</item>
     <item name="android:textSize">22sp</item>
   </style>
-  <!-- The style for large size text with an icon on the left -->
-  <style name="TextLarge.WithIcon">
-    <item name="android:drawablePadding">8dp</item>
-    <item name="android:gravity">center_vertical</item>
+  <!-- The style for large size text with top margin -->
+  <style name="TextLarge.WithTopMargin">
+    <item name="android:layout_marginTop">8dp</item>
   </style>
   <!-- The style for medium size text -->
   <style name="TextMedium">

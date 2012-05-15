@@ -23,9 +23,9 @@ import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.fragments.ChartFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
+import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
 import com.google.android.apps.mytracks.fragments.InstallEarthDialogFragment;
 import com.google.android.apps.mytracks.fragments.MapFragment;
-import com.google.android.apps.mytracks.fragments.MarkerAddDialogFragment;
 import com.google.android.apps.mytracks.fragments.StatsFragment;
 import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
@@ -64,7 +64,7 @@ import java.util.List;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public class TrackDetailActivity extends AbstractMyTracksActivity {
+public class TrackDetailActivity extends AbstractMyTracksActivity implements DeleteOneTrackCaller {
 
   public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_MARKER_ID = "marker_id";
@@ -85,8 +85,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
   private MenuItem shareMenuItem;
   private MenuItem sendGoogleMenuItem;
   private MenuItem saveMenuItem;
-  private MenuItem editMenuItem;
-  private MenuItem deleteMenuItem;
 
   private View mapViewContainer;
   
@@ -226,8 +224,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
     shareMenuItem = menu.findItem(R.id.track_detail_share);
     sendGoogleMenuItem = menu.findItem(R.id.track_detail_send_google);
     saveMenuItem = menu.findItem(R.id.track_detail_save);
-    editMenuItem = menu.findItem(R.id.track_detail_edit);
-    deleteMenuItem = menu.findItem(R.id.track_detail_delete);
 
     updateMenu();
     return true;
@@ -255,11 +251,12 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
       case R.id.track_detail_stop_recording:
         updateMenuItems(false);
         setTitle(false);
-        TrackRecordingServiceConnectionUtils.stop(this, trackRecordingServiceConnection);
+        TrackRecordingServiceConnectionUtils.stop(this, trackRecordingServiceConnection, true);
         return true;
       case R.id.track_detail_insert_marker:
-        MarkerAddDialogFragment.newInstance(trackId)
-            .show(getSupportFragmentManager(), MarkerAddDialogFragment.MARKER_ADD_DIALOG_TAG);
+        intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
+            .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, trackId);
+        startActivity(intent);
         return true;
       case R.id.track_detail_play:
         if (isEarthInstalled()) {
@@ -349,7 +346,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
     if (event.getAction() == MotionEvent.ACTION_DOWN) {
       if (TrackRecordingServiceConnectionUtils.isRecording(this, trackRecordingServiceConnection)) {
         TrackRecordingServiceConnectionUtils.addMarker(
-            this, trackRecordingServiceConnection, WaypointCreationRequest.DEFAULT_STATISTICS);
+            this, trackRecordingServiceConnection, WaypointCreationRequest.DEFAULT_WAYPOINT);
         return true;
       }
     }
@@ -455,12 +452,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
     if (saveMenuItem != null) {
       saveMenuItem.setVisible(!isRecording);
     }
-    if (editMenuItem != null) {
-      editMenuItem.setVisible(!isRecording);
-    }
-    if (deleteMenuItem != null) {
-      deleteMenuItem.setVisible(!isRecording);
-    }
   }
 
   /**
@@ -491,5 +482,10 @@ public class TrackDetailActivity extends AbstractMyTracksActivity {
       }
     }
     return false;
+  }
+
+  @Override
+  public TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
+    return trackRecordingServiceConnection;
   }
 }

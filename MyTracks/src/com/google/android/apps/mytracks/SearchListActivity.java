@@ -25,12 +25,15 @@ import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.fragments.DeleteOneMarkerDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
+import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
+import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.ListItemUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
+import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.SearchManager;
@@ -67,12 +70,13 @@ import java.util.SortedSet;
  * 
  * @author Rodrigo Damazio
  */
-public class SearchListActivity extends AbstractMyTracksActivity {
+public class SearchListActivity extends AbstractMyTracksActivity implements DeleteOneTrackCaller {
 
   private static final String TAG = SearchListActivity.class.getSimpleName();
 
   private static final String NAME_FIELD = "name";
   private static final String ICON_FIELD = "icon";
+  private static final String ICON_CONTENT_DESCRIPTION_FIELD = "iconContentDescription";
   private static final String CATEGORY_FIELD = "category";
   private static final String TOTAL_TIME_FIELD = "totalTime";
   private static final String TOTAL_DISTANCE_FIELD = "totalDistance";
@@ -103,6 +107,7 @@ public class SearchListActivity extends AbstractMyTracksActivity {
         }
       };
 
+  private TrackRecordingServiceConnection trackRecordingServiceConnection;
   private MyTracksProviderUtils myTracksProviderUtils;
   private SearchEngine searchEngine;
   private SearchRecentSuggestions searchRecentSuggestions;
@@ -121,6 +126,7 @@ public class SearchListActivity extends AbstractMyTracksActivity {
     setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
     setContentView(R.layout.search_list);
 
+    trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     searchEngine = new SearchEngine(myTracksProviderUtils);
     searchRecentSuggestions = SearchEngineProvider.newHelper(this);
@@ -161,14 +167,17 @@ public class SearchListActivity extends AbstractMyTracksActivity {
         Map<String, Object> resultMap = getItem(position);
         String name = (String) resultMap.get(NAME_FIELD);
         int iconId = (Integer) resultMap.get(ICON_FIELD);
+        String iconContentDescription = (String) resultMap.get(ICON_CONTENT_DESCRIPTION_FIELD);
         String category = (String) resultMap.get(CATEGORY_FIELD);
         String totalTime = (String) resultMap.get(TOTAL_TIME_FIELD);
         String totalDistance = (String) resultMap.get(TOTAL_DISTANCE_FIELD);
-        String startTime = (String) resultMap.get(START_TIME_FIELD);
+        long startTime = (Long) resultMap.get(START_TIME_FIELD);
         String description = (String) resultMap.get(DESCRIPTION_FIELD);
-        ListItemUtils.setListItem(view,
+        ListItemUtils.setListItem(SearchListActivity.this,
+            view,
             name,
             iconId,
+            iconContentDescription,
             category,
             totalTime,
             totalDistance,
@@ -186,8 +195,15 @@ public class SearchListActivity extends AbstractMyTracksActivity {
   @Override
   protected void onResume() {
     super.onResume();
+    TrackRecordingServiceConnectionUtils.resume(this, trackRecordingServiceConnection);
     metricUnits = PreferencesUtils.getBoolean(
         this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
+  }
+
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    trackRecordingServiceConnection.unbind();
   }
 
   @Override
@@ -382,11 +398,9 @@ public class SearchListActivity extends AbstractMyTracksActivity {
     boolean statistics = waypoint.getType() == Waypoint.TYPE_STATISTICS;
     resultMap.put(NAME_FIELD, waypoint.getName());
     resultMap.put(ICON_FIELD, statistics ? R.drawable.yellow_pushpin : R.drawable.blue_pushpin);
+    resultMap.put(ICON_CONTENT_DESCRIPTION_FIELD, getString(R.string.icon_marker));
     resultMap.put(CATEGORY_FIELD, statistics ? null : waypoint.getCategory());
-
-    long time = waypoint.getLocation().getTime();
-    String startTime = StringUtils.formatDateTime(this, time);
-    resultMap.put(START_TIME_FIELD, time == 0 || startTime.equals(trackName) ? null : startTime);
+    resultMap.put(START_TIME_FIELD, waypoint.getLocation().getTime());
 
     // Display the marker's track name in the total time field
     resultMap.put(TOTAL_TIME_FIELD, trackName == null ? null
@@ -408,18 +422,21 @@ public class SearchListActivity extends AbstractMyTracksActivity {
     TripStatistics tripStatitics = track.getStatistics();
     resultMap.put(NAME_FIELD, track.getName());
     resultMap.put(ICON_FIELD, isRecording ? R.drawable.menu_record_track : R.drawable.track);
+    resultMap.put(ICON_CONTENT_DESCRIPTION_FIELD, getString(isRecording ? R.string.icon_recording
+        : R.string.icon_track));
     resultMap.put(CATEGORY_FIELD, track.getCategory());
     resultMap.put(TOTAL_TIME_FIELD, isRecording ? null : StringUtils.formatElapsedTime(
         tripStatitics.getTotalTime()));
     resultMap.put(TOTAL_DISTANCE_FIELD, isRecording ? null : StringUtils.formatDistance(
         this, tripStatitics.getTotalDistance(), metricUnits));
-    String startTime = StringUtils.formatDateTime(this, tripStatitics.getStartTime());
-    if (startTime.equals(track.getName())) {
-      startTime = null;
-    }
-    resultMap.put(START_TIME_FIELD, startTime);
+    resultMap.put(START_TIME_FIELD, tripStatitics.getStartTime());
     resultMap.put(DESCRIPTION_FIELD, track.getDescription());
     resultMap.put(TRACK_ID_FIELD, track.getId());
     resultMap.put(MARKER_ID_FIELD, null);
+  }
+
+  @Override
+  public TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
+    return trackRecordingServiceConnection;
   }
 }

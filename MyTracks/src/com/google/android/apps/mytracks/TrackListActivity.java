@@ -20,6 +20,7 @@ import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.fragments.CheckUnitsDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteAllTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
+import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
 import com.google.android.apps.mytracks.fragments.WelcomeDialogFragment;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
@@ -68,7 +69,7 @@ import android.widget.Toast;
  *
  * @author Leif Hendrik Wilden
  */
-public class TrackListActivity extends FragmentActivity {
+public class TrackListActivity extends FragmentActivity implements DeleteOneTrackCaller {
 
   private static final String TAG = TrackListActivity.class.getSimpleName();
 
@@ -217,20 +218,20 @@ public class TrackListActivity extends FragmentActivity {
         boolean isRecording = cursor.getLong(idIndex) == recordingTrackId;
         String name = cursor.getString(nameIndex);
         int iconId = isRecording ? R.drawable.menu_record_track : R.drawable.track;
+        String iconContentDescription = getString(isRecording ? R.string.icon_recording
+            : R.string.icon_track);
         String category = cursor.getString(categoryIndex);
         String totalTime = isRecording 
             ? null : StringUtils.formatElapsedTime(cursor.getLong(timeIndex));
         String totalDistance = isRecording ? null : StringUtils.formatDistance(
             TrackListActivity.this, cursor.getDouble(distanceIndex), metricUnits);
-        String startTime = 
-            StringUtils.formatDateTime(TrackListActivity.this, cursor.getLong(startIndex));
-        if (startTime.equals(name)) {
-          startTime = null;
-        }
+        long startTime = cursor.getLong(startIndex);
         String description = cursor.getString(descriptionIndex);
-        ListItemUtils.setListItem(view,
+        ListItemUtils.setListItem(TrackListActivity.this,
+            view,
             name,
             iconId,
+            iconContentDescription,
             category,
             totalTime,
             totalDistance,
@@ -388,7 +389,7 @@ public class TrackListActivity extends FragmentActivity {
         return true;
       case R.id.track_list_stop_recording:
         updateMenuItems(false);
-        TrackRecordingServiceConnectionUtils.stop(this, trackRecordingServiceConnection);
+        TrackRecordingServiceConnectionUtils.stop(this, trackRecordingServiceConnection, true);
         return true;
       case R.id.track_list_search:
         return ApiAdapterFactory.getApiAdapter().handleSearchMenuSelection(this);
@@ -505,5 +506,10 @@ public class TrackListActivity extends FragmentActivity {
       }
     }
     return super.onKeyUp(keyCode, event);
+  }
+
+  @Override
+  public TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
+    return trackRecordingServiceConnection;
   }
 }

@@ -634,10 +634,6 @@ limitations under the License.
     translation_description="The title on an alert dialog indicating error.">
     Error
   </string>
-  <string name="generic_more_options"
-    translation_description="The text on a button to say more options.">
-    More options
-  </string>  
   <string name="generic_name"
     translation_description="The text label for entering a name.">
     Name
@@ -825,6 +821,24 @@ limitations under the License.
     What are waypoint markers?
   </string>
 
+  <!-- Icon -->
+  <string name="icon_marker"
+    translation_description="The accessibility description for the 'Marker' icon.">
+    Marker
+  </string>
+  <string name="icon_my_location"
+    translation_description="The accessibility description for the 'My Location' icon.">
+    My Location
+  </string>
+  <string name="icon_recording"
+    translation_description="The accessibility description for the 'Recording' icon.">
+    Recording
+  </string>
+  <string name="icon_track"
+    translation_description="The accessibility description for the 'Track' icon.">
+    Track
+  </string>
+
   <!-- Import -->
   <string name="import_error"
     translation_description="When importing all the tracks, a toast message indicating import error
@@ -920,8 +934,9 @@ limitations under the License.
 
   <!-- Marker -->
   <string name="marker_add_error"
-    translation_description="When adding a marker, the message indicating error.">
-    Unable to insert a marker. Try again.
+    translation_description="When adding a marker, the message indicating error due to no GPS
+      signal.">
+    Unable to insert a marker. No GPS signal. Try again.
   </string>
   <string name="marker_add_success"
     translation_description="When adding a marker, the message indicating success.">
@@ -935,29 +950,34 @@ limitations under the License.
   <string name="marker_detail_name"
     translation_description="In the marker detail page, the label for the marker name.
 
-      %1$s marker name. E.g., 'Waypoint 1'.">
+      %1$s marker name. E.g., 'Marker 1'.">
     Name: %1$s
   </string>  
-  <string name="marker_detail_waypoint_description"
-    translation_description="In the marker detail page, the label for the waypoint description.
+  <string name="marker_detail_description"
+    translation_description="In the marker detail page, the label for the description.
 
       %1$s marker description. E.g., 'At the top'.">
     Description: %1$s
   </string>  
-  <string name="marker_detail_waypoint_marker_type"
-    translation_description="In the marker detail page, the label for the waypoint marker type.
+  <string name="marker_detail_marker_type"
+    translation_description="In the marker detail page, the label for the marker type.
 
       %1$s marker type. E.g., 'building'.">
     Marker type: %1$s
   </string>  
-  <string name="marker_edit_waypoint_marker_type"
-    translation_description="In the marker edit page, the label for the waypoint marker type,
-      including some exmaples.">
+  <string name="marker_detail_statistics_title"
+    translation_description="In the marker detail page, the title for the statistics section
+      indicating that the data below are since the last Statistics marker.">
+    Since last Statistics marker:
+  </string>  
+  <string name="marker_edit_marker_type"
+    translation_description="In the marker edit page, the label for the marker type, including some
+      exmaples.">
     Marker type (e.g. building, pothole...)
   </string>
-  <string name="marker_edit_waypoint_marker_type_hint"
-    translation_description="In the marker edit page, the hint in the waypoint marker type text
-      field when it is empty.">
+  <string name="marker_edit_marker_type_hint"
+    translation_description="In the marker edit page, the hint in the marker type text field when it
+      is empty.">
     Marker type
   </string> 
   <string name="marker_label_end"
@@ -978,10 +998,6 @@ limitations under the License.
     translation_description="The message when the marker list is empty.">
     You don\'t have any markers.
   </string>
-  <string name="marker_statistics"
-    translation_description="The label to add a statistics marker.">
-    Statistics
-  </string>
   <string name="marker_statistics_name_format"
     translation_description="When adding a statistics marker, the string format for the default
       name.
@@ -989,20 +1005,11 @@ limitations under the License.
       %1$d: number. E.g., '1'.">
     Statistics %1$d
   </string>
-  <string name="marker_type"
-    translation_description="When adding a marker, the label to select a type, statistics or
-      waypoint.">
-    Type
-  </string>
-  <string name="marker_waypoint"
-    translation_description="The label to add a waypoint marker.">
-    Waypoint
-  </string>
-  <string name="marker_waypoint_name_format"
-    translation_description="When adding a waypoint marker, the string format for the default name.
+  <string name="marker_name_format"
+    translation_description="When adding a marker, the string format for the default name.
 
       %1$d: number. E.g., '1'.">
-    Waypoint %1$d
+    Marker %1$d
   </string>
       
   <!-- Menu Items -->
@@ -1072,7 +1079,7 @@ limitations under the License.
     Save as %1$s
   </string>
   <string name="menu_search"
-    translation_description="In the menu, to start a textual search for tracks or waypoints.">
+    translation_description="In the menu, to start a textual search for tracks or markers.">
     Search
   </string>
   <string name="menu_send_google"
@@ -1119,11 +1126,6 @@ limitations under the License.
   </string>
 
   <!-- My Location -->
-  <string name="my_location"
-    translation_description="The accessibility description for the My Location button on the map
-      view.">
-    My Location
-  </string>
   <string name="my_location_approximate_location"
     translation_description="When displaying the user's current location, a status message
       indicating that GPS is not available and an approximate location is used instead.">
@@ -2127,10 +2129,6 @@ limitations under the License.
     translation_description="In the track detail page, the title when recording.">
     Recording...
   </string> 
-  <string name="track_icon_description"
-    translation_description="The accessibility description for the track icon.">
-    Track
-  </string>
   <string name="track_edit_activity_type"
     translation_description="In the page to edit a track, the label for the text field to edit the
       activity type, including some examples of activity types.">
