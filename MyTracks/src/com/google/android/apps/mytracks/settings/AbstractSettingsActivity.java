@@ -36,13 +36,13 @@ public class AbstractSettingsActivity extends PreferenceActivity {
 
   private BackupPreferencesListener backupPreferencesListener;
 
+  @SuppressWarnings("deprecation")
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
     setVolumeControlStream(TextToSpeech.Engine.DEFAULT_STREAM);
     ApiAdapterFactory.getApiAdapter().configureActionBarHomeAsUp(this);
 
-    @SuppressWarnings("deprecation")
     PreferenceManager preferenceManager = getPreferenceManager();
     preferenceManager.setSharedPreferencesName(Constants.SETTINGS_NAME);
     preferenceManager.setSharedPreferencesMode(Context.MODE_PRIVATE);
@@ -63,10 +63,10 @@ public class AbstractSettingsActivity extends PreferenceActivity {
     return true;
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   protected void onDestroy() {
     super.onDestroy();
-    @SuppressWarnings("deprecation")
     PreferenceManager preferenceManager = getPreferenceManager();
     preferenceManager.getSharedPreferences()
         .unregisterOnSharedPreferenceChangeListener(backupPreferencesListener);

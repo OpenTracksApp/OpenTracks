@@ -76,7 +76,6 @@ public class AccountChooserActivity extends Activity {
 
   private SendRequest sendRequest;
   private Account[] accounts;
-  private int selectedAccountIndex;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -91,19 +90,18 @@ public class AccountChooserActivity extends Activity {
     
     if (accounts.length == 1) {
       sendRequest.setAccount(accounts[0]);
-      PreferencesUtils.setString(this, R.string.preferred_account_key, accounts[0].name);
+      PreferencesUtils.setString(this, R.string.sharing_account_key, accounts[0].name);
       getPermission(MapsConstants.SERVICE_NAME, sendRequest.isSendMaps(), mapsCallback);
       return;
     }
 
-    String preferredAccount = PreferencesUtils.getString(this, R.string.preferred_account_key,
-        PreferencesUtils.PREFERRED_ACCOUNT_DEFAULT);
-
-    selectedAccountIndex = 0;
+    String sharingAccount = PreferencesUtils.getString(this, R.string.sharing_account_key,
+        PreferencesUtils.SHARING_ACCOUNT_DEFAULT);
     for (int i = 0; i < accounts.length; i++) {
-      if (accounts[i].name.equals(preferredAccount)) {
-        selectedAccountIndex = i;
-        break;
+      if (accounts[i].name.equals(sharingAccount)) {
+        sendRequest.setAccount(accounts[i]);
+        getPermission(MapsConstants.SERVICE_NAME, sendRequest.isSendMaps(), mapsCallback);
+        return;
       }
     }
     showDialog(DIALOG_CHOOSER_ID);
@@ -159,20 +157,15 @@ public class AccountChooserActivity extends Activity {
         })
         .setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int which) {
-            Account account = accounts[selectedAccountIndex];
+            int position = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+            Account account = accounts[position];
             PreferencesUtils.setString(
-                AccountChooserActivity.this, R.string.preferred_account_key, account.name);
+                AccountChooserActivity.this, R.string.sharing_account_key, account.name);
             sendRequest.setAccount(account);
             getPermission(MapsConstants.SERVICE_NAME, sendRequest.isSendMaps(), mapsCallback);
           }
         })
-        .setSingleChoiceItems(
-            choices, selectedAccountIndex, new DialogInterface.OnClickListener() {
-              @Override
-              public void onClick(DialogInterface dialog, int which) {
-                selectedAccountIndex = which;
-              }
-            })
+        .setSingleChoiceItems(choices, 0, null)
         .setTitle(R.string.send_google_choose_account_title)
         .create();
   }

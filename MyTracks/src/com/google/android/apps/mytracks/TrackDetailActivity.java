@@ -22,6 +22,7 @@ import com.google.android.apps.mytracks.content.TrackDataHub;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.content.WaypointCreationRequest;
 import com.google.android.apps.mytracks.fragments.ChartFragment;
+import com.google.android.apps.mytracks.fragments.ChooseActivityDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
 import com.google.android.apps.mytracks.fragments.FrequencyDialogFragment;
@@ -212,15 +213,6 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     menu.findItem(R.id.track_detail_save_tcx)
         .setTitle(getString(R.string.menu_save_format, fileTypes[3]));
 
-    menu.findItem(R.id.track_detail_share_gpx)
-        .setTitle(getString(R.string.menu_share_file, fileTypes[0]));
-    menu.findItem(R.id.track_detail_share_kml)
-        .setTitle(getString(R.string.menu_share_file, fileTypes[1]));
-    menu.findItem(R.id.track_detail_share_csv)
-        .setTitle(getString(R.string.menu_share_file, fileTypes[2]));
-    menu.findItem(R.id.track_detail_share_tcx)
-        .setTitle(getString(R.string.menu_share_file, fileTypes[3]));
-
     stopRecordingMenuItem = menu.findItem(R.id.track_detail_stop_recording);
     insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
     playMenuItem = menu.findItem(R.id.track_detail_play);
@@ -276,27 +268,9 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
               getSupportFragmentManager(), InstallEarthDialogFragment.INSTALL_EARTH_DIALOG_TAG);
         }
         return true;
-      case R.id.track_detail_share_map_url:
-        intent = IntentUtils.newIntent(this, UploadServiceChooserActivity.class)
-            .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, true, false, false));
-        startActivity(intent);
-        return true;
-      case R.id.track_detail_share_fusion_table_url:
-        intent = IntentUtils.newIntent(this, UploadServiceChooserActivity.class)
-            .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, false, true, false));
-        startActivity(intent);
-        return true;
-      case R.id.track_detail_share_gpx:
-        startSaveActivity(TrackFileFormat.GPX, true);
-        return true;
-      case R.id.track_detail_share_kml:
-        startSaveActivity(TrackFileFormat.KML, true);
-        return true;
-      case R.id.track_detail_share_csv:
-        startSaveActivity(TrackFileFormat.CSV, true);
-        return true;
-      case R.id.track_detail_share_tcx:
-        startSaveActivity(TrackFileFormat.TCX, true);
+      case R.id.track_detail_share:
+        ChooseActivityDialogFragment.newInstance(trackId, null).show(
+            getSupportFragmentManager(), ChooseActivityDialogFragment.CHOOSE_ACTIVITY_DIALOG_TAG);
         return true;
       case R.id.track_detail_markers:
         intent = IntentUtils.newIntent(this, MarkerListActivity.class)
@@ -316,20 +290,20 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
         return true;
       case R.id.track_detail_send_google:
         intent = IntentUtils.newIntent(this, UploadServiceChooserActivity.class)
-            .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId, true, true, true));
+            .putExtra(SendRequest.SEND_REQUEST_KEY, new SendRequest(trackId));
         startActivity(intent);
         return true;
       case R.id.track_detail_save_gpx:
-        startSaveActivity(TrackFileFormat.GPX, false);
+        startSaveActivity(TrackFileFormat.GPX);
         return true;
       case R.id.track_detail_save_kml:
-        startSaveActivity(TrackFileFormat.KML, false);
+        startSaveActivity(TrackFileFormat.KML);
         return true;
       case R.id.track_detail_save_csv:
-        startSaveActivity(TrackFileFormat.CSV, false);
+        startSaveActivity(TrackFileFormat.CSV);
         return true;
       case R.id.track_detail_save_tcx:
-        startSaveActivity(TrackFileFormat.TCX, false);
+        startSaveActivity(TrackFileFormat.TCX);
         return true;
       case R.id.track_detail_edit:
         intent = IntentUtils.newIntent(this, TrackEditActivity.class)
@@ -480,13 +454,11 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
    * Starts the {@link SaveActivity} to save a track.
    *
    * @param trackFileFormat the track file format
-   * @param shareTrack true to share the track after saving
    */
-  private void startSaveActivity(TrackFileFormat trackFileFormat, boolean shareTrack) {
+  private void startSaveActivity(TrackFileFormat trackFileFormat) {
     Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
         .putExtra(SaveActivity.EXTRA_TRACK_ID, trackId)
-        .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat)
-        .putExtra(SaveActivity.EXTRA_SHARE_TRACK, shareTrack);
+        .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
     startActivity(intent);
   }
 

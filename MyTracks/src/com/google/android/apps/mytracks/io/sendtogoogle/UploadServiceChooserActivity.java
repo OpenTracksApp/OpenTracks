@@ -49,10 +49,6 @@ public class UploadServiceChooserActivity extends Activity {
   private SendRequest sendRequest;
   private AlertDialog alertDialog;
 
-  private TableRow mapsTableRow;
-  private TableRow fusionTablesTableRow;
-  private TableRow docsTableRow;
-
   private CheckBox mapsCheckBox;
   private CheckBox fusionTablesCheckBox;
   private CheckBox docsCheckBox;
@@ -80,10 +76,6 @@ public class UploadServiceChooserActivity extends Activity {
     }
     View view = getLayoutInflater().inflate(R.layout.upload_service_chooser, null);
 
-    mapsTableRow = (TableRow) view.findViewById(R.id.send_google_maps_row);
-    fusionTablesTableRow = (TableRow) view.findViewById(R.id.send_google_fusion_tables_row);
-    docsTableRow = (TableRow) view.findViewById(R.id.send_google_docs_row);
-
     mapsCheckBox = (CheckBox) view.findViewById(R.id.send_google_maps);
     fusionTablesCheckBox = (CheckBox) view.findViewById(R.id.send_google_fusion_tables);
     docsCheckBox = (CheckBox) view.findViewById(R.id.send_google_docs);
@@ -104,9 +96,6 @@ public class UploadServiceChooserActivity extends Activity {
 
     // Setup initial state
     initState();
-
-    // Update state based on sendRequest
-    updateStateBySendRequest();
 
     // Update state based on current selection
     updateStateBySelection();
@@ -164,24 +153,6 @@ public class UploadServiceChooserActivity extends Activity {
   }
 
   /**
-   * Updates the UI state based on sendRequest.
-   */
-  private void updateStateBySendRequest() {
-    if (!sendRequest.isShowAll()) {
-      if (sendRequest.isShowMaps()) {
-        mapsCheckBox.setChecked(true);
-      } else if (sendRequest.isShowFusionTables()) {
-        fusionTablesCheckBox.setChecked(true);
-      } else if (sendRequest.isShowDocs()) {
-        docsCheckBox.setChecked(true);
-      }
-    }
-    mapsTableRow.setVisibility(sendRequest.isShowMaps() ? View.VISIBLE : View.GONE);
-    fusionTablesTableRow.setVisibility(sendRequest.isShowFusionTables() ? View.VISIBLE : View.GONE);
-    docsTableRow.setVisibility(sendRequest.isShowDocs() ? View.VISIBLE : View.GONE);
-  }
-
-  /**
    * Updates the UI state based on the current selection.
    */
   private void updateStateBySelection() {
@@ -195,32 +166,30 @@ public class UploadServiceChooserActivity extends Activity {
   void saveState() {
     PreferencesUtils.setBoolean(
         this, R.string.pick_existing_map_key, existingMapRadioButton.isChecked());
-    if (sendRequest.isShowAll()) {
-      PreferencesUtils.setBoolean(this, R.string.send_to_maps_key, sendMaps());
-      PreferencesUtils.setBoolean(this, R.string.send_to_fusion_tables_key, sendFusionTables());
-      PreferencesUtils.setBoolean(this, R.string.send_to_docs_key, sendDocs());
-    }
+    PreferencesUtils.setBoolean(this, R.string.send_to_maps_key, sendMaps());
+    PreferencesUtils.setBoolean(this, R.string.send_to_fusion_tables_key, sendFusionTables());
+    PreferencesUtils.setBoolean(this, R.string.send_to_docs_key, sendDocs());
   }
 
   /**
    * Returns true to send to Google Maps.
    */
   private boolean sendMaps() {
-    return sendRequest.isShowMaps() && mapsCheckBox.isChecked();
+    return mapsCheckBox.isChecked();
   }
 
   /**
    * Returns true to send to Google Fusion Tables.
    */
   private boolean sendFusionTables() {
-    return sendRequest.isShowFusionTables() && fusionTablesCheckBox.isChecked();
+    return fusionTablesCheckBox.isChecked();
   }
 
   /**
    * Returns true to send to Google Docs.
    */
   private boolean sendDocs() {
-    return sendRequest.isShowDocs() && docsCheckBox.isChecked();
+    return docsCheckBox.isChecked();
   }
 
   /**
