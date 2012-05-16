@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.mytracks.ContextualActionModeCallback;
+import com.google.android.maps.mytracks.R;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -55,7 +56,6 @@ public class Api11Adapter extends Api10Adapter {
 
   @Override
   public void configureListViewContextualMenu(final Activity activity, ListView listView,
-      final int menuId, final int actionModeTitleId,
       final ContextualActionModeCallback contextualActionModeCallback) {
     listView.setOnItemLongClickListener(new OnItemLongClickListener() {
       ActionMode actionMode;
@@ -68,7 +68,7 @@ public class Api11Adapter extends Api10Adapter {
         actionMode = activity.startActionMode(new ActionMode.Callback() {
           @Override
           public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            mode.getMenuInflater().inflate(menuId, menu);
+            mode.getMenuInflater().inflate(R.menu.list_context_menu, menu);
             return true;
           }
           @Override
@@ -86,7 +86,7 @@ public class Api11Adapter extends Api10Adapter {
             return contextualActionModeCallback.onClick(item.getItemId(), position, id);
           }
         });
-        TextView textView = (TextView) view.findViewById(actionModeTitleId);
+        TextView textView = (TextView) view.findViewById(R.id.list_item_name);
         if (textView != null) {
           actionMode.setTitle(textView.getText());
         }

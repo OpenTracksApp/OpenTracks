@@ -241,9 +241,8 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
       }
     };
     listView.setAdapter(resourceCursorAdapter);
-    ApiAdapterFactory.getApiAdapter().configureListViewContextualMenu(
-        this, listView, R.menu.list_context_menu, R.id.list_item_name,
-        contextualActionModeCallback);
+    ApiAdapterFactory.getApiAdapter()
+        .configureListViewContextualMenu(this, listView, contextualActionModeCallback);
    
     getSupportLoaderManager().initLoader(0, null, new LoaderCallbacks<Cursor>() {
       @Override

@@ -118,8 +118,8 @@ public class Api7Adapter implements ApiAdapter {
   }
 
   @Override
-  public void configureListViewContextualMenu(Activity activity, ListView listView, int menuId,
-      int actionModeTitleId, ContextualActionModeCallback contextualActionModeCallback) {
+  public void configureListViewContextualMenu(Activity activity, ListView listView,
+      ContextualActionModeCallback contextualActionModeCallback) {
     activity.registerForContextMenu(listView);
   }
 
