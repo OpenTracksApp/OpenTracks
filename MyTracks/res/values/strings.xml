@@ -844,14 +844,7 @@ limitations under the License.
     Track
   </string>
 
-  <!-- Import -->
-  <string name="import_error"
-    translation_description="When importing all the tracks, a toast message indicating import error
-      for one of the tracks.
-
-      %1$s: the track's file path on the SD card. E.g., '/mnt/sdcard/MyTacks/gpx/1.gpx'.">
-    Import error for file %1$s.
-  </string>
+  <!-- Import GPX Files -->
   <string name="import_gpx_files_few"
     translation_description="When importing all the tracks, phrase for 'few' GPX files.
 
@@ -882,27 +875,6 @@ limitations under the License.
   <string name="import_gpx_files_zero"
     translation_description="When importing all the tracks, phrase for 0 GPX files.">
     0 GPX files
-  </string>
-  <string name="import_no_file"
-    translation_description="After importing all the tracks from the SD card, the alert message
-      indicating that no track is imported.
-
-      %1$s: the SD card directory path. E.g., '/mnt/sdcard/MyTracks/gpx/'.">
-    No GPX file found in %1$s. The SD card may be unreadable or the directory may not contain any
-    GPX file.
-  </string>
-  <string name="import_progress_message"
-    translation_description="When importing all the tracks from the SD card, the progress message.">
-    Importing all tracks...
-  </string>
-  <string name="import_success"
-    translation_description="After importing all the tracks from the SD card, the alert message
-      indicating success.
-
-      %1$d the number of successfully imported tracks. E.g., '1'.
-      %2$s the number of GPX files in the SD card. E.g., '1 GPX file' or '2 GPX files'.
-      %3$s the SD card directory path. E.g., '/mnt/sdcard/MyTracks/gpx/'.">
-    My Tracks: Imported %1$d of %2$s from %3$s.
   </string>
 
   <!-- Maps List -->
@@ -1179,63 +1151,69 @@ limitations under the License.
     write data to My Tracks and start/stop My Tracks recording
   </string>
 
-  <!-- Save All -->
-  <string name="save_all_error"
-    translation_description="When saving all the tracks to the SD card, a toast message indicating
-      error.">
-    Unable to save.
-  </string>
-  <string name="save_all_progress_message"
-    translation_description="When saving all the tracks to the SD card, the progress message.">
-    Saving all tracks...
-  </string>
-  <string name="save_all_success"
-    translation_description="When saving all the tracks to the SD card, a toast message indicating
-      success.">
-    Save finished.
-  </string>
-
   <!-- SD Card -->
   <string name="sd_card_canceled"
-    translation_description="When exporting a track to the SD card, a message indicating that the
-      export operation was canceled.">
+    translation_description="When importing/saving to the SD card, the message indicating that the
+      operation was canceled.">
     The operation was canceled.
   </string>
-  <string name="sd_card_error_create_dir"
-    translation_description="When writing to the SD card, the error message when not able to create
-      a directory on the SD card.">
-    Unable to create a directory on the SD card.
-  </string>
   <string name="sd_card_error_no_storage"
-    translation_description="When writing to the SD card, the error message when the SD card is not
-      found.">
-    No external storage was found. Make sure that a SD card is inserted and that your phone is not
-    mounted to a computer.
+    translation_description="When importing/saving to the SD card, the error message indicating that
+      no SD card is found.">
+    No SD card is found.
   </string>
-  <string name="sd_card_error_read_file"
-    translation_description="When reading from the SD card, the error message when not able to read
-      a file.">
-    Unable to read from a file.
+  <string name="sd_card_import_error"
+    translation_description="When importing from the SD card, the error message indicating not able
+      to import.">
+    Unable to import from SD card.
   </string>
-  <string name="sd_card_error_write_file"
-    translation_description="When writing to the SD card, the error message when not able to write a
-      file.">
-    Unable to write to a file.
+  <string name="sd_card_import_error_no_file"
+    translation_description="When importing from the SD card, the error message indicating that no
+      file is found on a SD card directory.
+
+      %1$s: the SD card directory. E.g., '/mnt/sdcard/MyTracks/gpx/'.">
+    No file found in %1$s.
+  </string>  
+  <string name="sd_card_import_progress_message"
+    translation_description="When importing from the SD card, the progress message.">
+    Importing from SD card...
   </string>
-  <string name="sd_card_progress_message"
-    translation_description="When saving a track to the SD card, the progress message.">
-    Saving to the SD card...
+  <string name="sd_card_import_success"
+    translation_description="When importing from the SD card, the success message.">
+    Finished importing from SD card.
   </string>
-  <string name="sd_card_success_read_file"
-    translation_description="When reading from the SD card, the success message when finish reading
-      from the SD card.">
-    Finished reading from the SD card.
+  <string name="sd_card_import_success_count"
+    translation_description="When importing from the SD card, the success message with a count of
+      the imported files.
+
+      %1$d the number of successfully imported tracks. E.g., '1'.
+      %2$s the number of files in the SD card. E.g., '1 GPX file' or '2 GPX files'.
+      %3$s the SD card directory. E.g., '/mnt/sdcard/MyTracks/gpx/'.">
+    Imported %1$d of %2$s from %3$s.
   </string>
-  <string name="sd_card_success_write_file"
-    translation_description="When writing to the SD card, the success message when finish writing to
-      the SD card.">
-    Finished writing to the SD card.
+  <string name="sd_card_save_error"
+    translation_description="When saving to the SD card, the error message indicating not able to
+      save.">
+    Unable to save to SD card.
   </string>
+  <string name="sd_card_save_error_create_dir"
+    translation_description="When saving to the SD card, the error message indicating not able to
+      create a directory on the SD card.">
+    Unable to create a directory on SD card.
+  </string>
+  <string name="sd_card_save_error_no_track"
+    translation_description="When saving to the SD card, the error message indicating that no track
+      is available.">
+    You have no track to save to SD card.
+  </string>
+  <string name="sd_card_save_progress_message"
+    translation_description="When saving to the SD card, the progress message.">
+    Saving to SD card...
+  </string>
+    <string name="sd_card_save_success"
+    translation_description="When saving to the SD card, the success message">
+    Finished saving to SD card.
+  </string> 
 
   <!-- Search -->
   <string name="search_global_description"

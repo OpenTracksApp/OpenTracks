@@ -16,10 +16,8 @@
 
 package com.google.android.apps.mytracks.io.file;
 
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.util.DialogUtils;
-import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -30,20 +28,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 
 import java.io.File;
 
 /**
- * Activity for saving a track to the SD card, and optionally share or play the
- * track.
+ * An activity for saving tracks to the SD card, and optionally play the track.
  *
  * @author Rodrigo Damazio
  */
 public class SaveActivity extends Activity {
 
-  public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_TRACK_FILE_FORMAT = "track_file_format";
+  public static final String EXTRA_TRACK_ID = "track_id";
   public static final String EXTRA_SHARE_TRACK = "share_track";
   public static final String EXTRA_PLAY_TRACK = "play_track";
 
@@ -55,13 +51,11 @@ public class SaveActivity extends Activity {
       GOOGLE_EARTH_TOUR_FEATURE_ID = "com.google.earth.EXTRA.tour_feature_id";
   private static final String GOOGLE_EARTH_CLASS = "com.google.earth.EarthActivity";
 
-  private static final String TAG = SaveActivity.class.getSimpleName();
-  
   private static final int DIALOG_PROGRESS_ID = 0;
   private static final int DIALOG_RESULT_ID = 1;
 
-  private long trackId;
   private TrackFileFormat trackFileFormat;
+  private long trackId;
   private boolean shareTrack;
   private boolean playTrack;
 
@@ -74,22 +68,16 @@ public class SaveActivity extends Activity {
   // message id from the AsyncTask
   private int messageId;
   
-  // path of the saved file
-  private String filePath;
+  // saved file path from the AsyncTask
+  private String savedPath;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
     Intent intent = getIntent();
-    trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1L);
-    if (trackId < 0) {
-      Log.d(TAG, "Invalid track id");
-      finish();
-      return;
-    }
-
     trackFileFormat = intent.getParcelableExtra(EXTRA_TRACK_FILE_FORMAT);
+    trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1L);
     shareTrack = intent.getBooleanExtra(EXTRA_SHARE_TRACK, false);
     playTrack = intent.getBooleanExtra(EXTRA_PLAY_TRACK, false);
 
@@ -98,20 +86,7 @@ public class SaveActivity extends Activity {
       saveAsyncTask = (SaveAsyncTask) retained;
       saveAsyncTask.setActivity(this);
     } else {
-      TrackWriter trackWriter = TrackWriterFactory.newWriter(
-          this, MyTracksProviderUtils.Factory.get(this), trackId, trackFileFormat);
-      if (trackWriter == null) {
-        Log.e(TAG, "Track writer is null");
-        finish();
-        return;
-      }
-      if (shareTrack || playTrack) {
-        // Save to the temp directory
-        String dirName = FileUtils.buildExternalDirectoryPath(
-            trackFileFormat.getExtension(), "tmp");
-        trackWriter.setDirectory(new File(dirName));
-      }
-      saveAsyncTask = new SaveAsyncTask(this, trackWriter);
+      saveAsyncTask = new SaveAsyncTask(this, trackFileFormat, trackId, shareTrack || playTrack);
       saveAsyncTask.execute();
     }
   }
@@ -127,7 +102,7 @@ public class SaveActivity extends Activity {
     switch (id) {
       case DIALOG_PROGRESS_ID:
         progressDialog = DialogUtils.createHorizontalProgressDialog(
-            this, R.string.sd_card_progress_message, new DialogInterface.OnCancelListener() {
+            this, R.string.sd_card_save_progress_message, new DialogInterface.OnCancelListener() {
               @Override
               public void onCancel(DialogInterface dialog) {
                 saveAsyncTask.cancel(true);
@@ -167,12 +142,12 @@ public class SaveActivity extends Activity {
    *
    * @param isSuccess true if the AsyncTask is successful
    * @param aMessageId the id of the AsyncTask message
-   * @param aPath the path of the saved file
+   * @param aSavedPath the path of the saved file
    */
-  public void onAsyncTaskCompleted(boolean isSuccess, int aMessageId, String aPath) {
+  public void onAsyncTaskCompleted(boolean isSuccess, int aMessageId, String aSavedPath) {
     this.success = isSuccess;
     this.messageId = aMessageId;
-    this.filePath = aPath;
+    this.savedPath = aSavedPath;
     removeDialog(DIALOG_PROGRESS_ID);
     showDialog(DIALOG_RESULT_ID);
   }
@@ -205,7 +180,7 @@ public class SaveActivity extends Activity {
     if (success) {
       if (shareTrack) {
         Intent intent = new Intent(Intent.ACTION_SEND)
-            .putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(filePath)))
+            .putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(savedPath)))
             .putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_track_subject))
             .putExtra(Intent.EXTRA_TEXT, getString(R.string.share_track_file_body_format))
             .putExtra(getString(R.string.track_id_broadcast_extra), trackId)
@@ -216,7 +191,7 @@ public class SaveActivity extends Activity {
             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
             .putExtra(GOOGLE_EARTH_TOUR_FEATURE_ID, KmlTrackWriter.TOUR_FEATURE_ID)
             .setClassName(GOOGLE_EARTH_PACKAGE, GOOGLE_EARTH_CLASS)
-            .setDataAndType(Uri.fromFile(new File(filePath)), GOOGLE_EARTH_KML_MIME_TYPE);
+            .setDataAndType(Uri.fromFile(new File(savedPath)), GOOGLE_EARTH_KML_MIME_TYPE);
         startActivity(intent);
       }
     }
