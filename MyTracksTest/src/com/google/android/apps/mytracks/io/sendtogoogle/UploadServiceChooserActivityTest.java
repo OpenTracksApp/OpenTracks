@@ -186,10 +186,6 @@ public class UploadServiceChooserActivityTest extends
 
   /**
    * Initials a activity to be tested.
-   * 
-   * @param showMaps
-   * @param showFusionTables
-   * @param showDocs
    */
   private void initialActivity() {
     Intent intent = new Intent();

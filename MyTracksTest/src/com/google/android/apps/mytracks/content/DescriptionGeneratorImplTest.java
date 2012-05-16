@@ -40,7 +40,7 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
 
   /**
    * Tests {@link DescriptionGeneratorImpl#generateTrackDescription(Track,
-   * java.util.Vector, java.util.Vector)}.
+   * java.util.Vector, java.util.Vector, boolean)}.
    */
   public void testGenerateTrackDescription() {
     Track track = new Track();
