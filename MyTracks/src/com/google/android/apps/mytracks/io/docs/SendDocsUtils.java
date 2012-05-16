@@ -106,7 +106,7 @@ public class SendDocsUtils {
       throws IOException, ParseException, HttpException {
     GDataParser gDataParser = null;
     try {
-      String uri = String.format(GET_SPREADSHEET_BY_TITLE_URI, URLEncoder.encode(title));
+      String uri = String.format(Locale.US, GET_SPREADSHEET_BY_TITLE_URI, URLEncoder.encode(title));
       gDataParser = documentsClient.getParserForFeed(Entry.class, uri, authToken);
       gDataParser.init();
 
@@ -222,7 +222,7 @@ public class SendDocsUtils {
       throws IOException, AuthenticationException, ParseException {
     GDataParser gDataParser = null;
     try {
-      String uri = String.format(GET_WORKSHEETS_URI, spreadsheetId);
+      String uri = String.format(Locale.US, GET_WORKSHEETS_URI, spreadsheetId);
       gDataParser = spreadsheetClient.getParserForWorksheetsFeed(uri, authToken);
       gDataParser.init();
       if (!gDataParser.hasMoreData()) {
@@ -269,7 +269,7 @@ public class SendDocsUtils {
   public static void addTrackInfo(
       Track track, String spreadsheetId, String worksheetId, String authToken, Context context)
       throws IOException {
-    String worksheetUri = String.format(GET_WORKSHEET_URI, spreadsheetId, worksheetId);
+    String worksheetUri = String.format(Locale.US, GET_WORKSHEET_URI, spreadsheetId, worksheetId);
     boolean metricUnits = PreferencesUtils.getBoolean(
         context, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
     addRow(worksheetUri, getRowContent(track, metricUnits, context), authToken);
@@ -312,8 +312,8 @@ public class SendDocsUtils {
     appendTag(builder, "elevationunit", elevationUnit);
 
     if (track.getMapId().length() > 0) {
-      appendTag(builder, "map",
-          String.format("%s?msa=0&msid=%s", Constants.MAPSHOP_BASE_URL, track.getMapId()));
+      appendTag(builder, "map", String.format(
+          Locale.US, "%s?msa=0&msid=%s", Constants.MAPSHOP_BASE_URL, track.getMapId()));
     }
 
     builder.append("</entry>");

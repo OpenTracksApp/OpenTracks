@@ -33,6 +33,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 
+import java.util.Locale;
+
 /**
  * This is the common superclass for ANT-based sensors.  It handles tasks which
  * apply to the ANT framework as a whole, such as framework initialization and
@@ -279,7 +281,7 @@ public abstract class AntSensorManager extends SensorManager {
    */
   protected boolean handleMessage(byte messageId, byte[] messageData) {
     if (messageId == AntMesg.MESG_STARTUP_MESG_ID) {
-      Log.d(TAG, String.format(
+      Log.d(TAG, String.format(Locale.US,
           "Received startup message (reason %02x); initializing channel",
           new AntStartupMessage(messageData).getMessage()));
       setupAntSensorChannels();
@@ -376,7 +378,7 @@ public abstract class AntSensorManager extends SensorManager {
   private String messageToString(byte[] message) {
     StringBuilder out = new StringBuilder();
     for (byte b : message) {
-      out.append(String.format("%s%02x", (out.length() == 0 ? "" : " "), b));
+      out.append(String.format(Locale.US, "%s%02x", (out.length() == 0 ? "" : " "), b));
     }
     return out.toString();
   }
