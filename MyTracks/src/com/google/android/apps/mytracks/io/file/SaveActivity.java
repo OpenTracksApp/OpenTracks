@@ -32,15 +32,15 @@ import android.os.Bundle;
 import java.io.File;
 
 /**
- * An activity for saving tracks to the SD card, and optionally play the track.
- *
+ * An activity for saving tracks to the SD card. If saving a specific track,
+ * option to save it to a temp directory and play the track afterward.
+ * 
  * @author Rodrigo Damazio
  */
 public class SaveActivity extends Activity {
 
   public static final String EXTRA_TRACK_FILE_FORMAT = "track_file_format";
   public static final String EXTRA_TRACK_ID = "track_id";
-  public static final String EXTRA_SHARE_TRACK = "share_track";
   public static final String EXTRA_PLAY_TRACK = "play_track";
 
   public static final String GOOGLE_EARTH_KML_MIME_TYPE = "application/vnd.google-earth.kml+xml";
@@ -56,7 +56,6 @@ public class SaveActivity extends Activity {
 
   private TrackFileFormat trackFileFormat;
   private long trackId;
-  private boolean shareTrack;
   private boolean playTrack;
 
   private SaveAsyncTask saveAsyncTask;
@@ -78,7 +77,6 @@ public class SaveActivity extends Activity {
     Intent intent = getIntent();
     trackFileFormat = intent.getParcelableExtra(EXTRA_TRACK_FILE_FORMAT);
     trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1L);
-    shareTrack = intent.getBooleanExtra(EXTRA_SHARE_TRACK, false);
     playTrack = intent.getBooleanExtra(EXTRA_PLAY_TRACK, false);
 
     Object retained = getLastNonConfigurationInstance();
@@ -86,7 +84,7 @@ public class SaveActivity extends Activity {
       saveAsyncTask = (SaveAsyncTask) retained;
       saveAsyncTask.setActivity(this);
     } else {
-      saveAsyncTask = new SaveAsyncTask(this, trackFileFormat, trackId, shareTrack || playTrack);
+      saveAsyncTask = new SaveAsyncTask(this, trackFileFormat, trackId, playTrack);
       saveAsyncTask.execute();
     }
   }
@@ -111,7 +109,7 @@ public class SaveActivity extends Activity {
             });
         return progressDialog;
       case DIALOG_RESULT_ID:
-        return new AlertDialog.Builder(this)
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
             .setCancelable(true)
             .setIcon(success 
                 ? android.R.drawable.ic_dialog_info : android.R.drawable.ic_dialog_alert)
@@ -130,8 +128,25 @@ public class SaveActivity extends Activity {
                 onPostResultDialog();
               }
             })
-            .setTitle(success ? R.string.generic_success_title : R.string.generic_error_title)
-            .create();
+            .setTitle(success ? R.string.generic_success_title : R.string.generic_error_title);
+
+        if (success && trackId != -1L && !playTrack) {
+          builder.setNegativeButton(
+              R.string.share_track_share_file, new DialogInterface.OnClickListener() {
+                  @Override
+                public void onClick(DialogInterface dialog, int which) {
+                  Intent intent = new Intent(Intent.ACTION_SEND)
+                      .putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(savedPath)))
+                      .putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_track_subject))
+                      .putExtra(Intent.EXTRA_TEXT, getString(R.string.share_track_file_body_format))
+                      .putExtra(getString(R.string.track_id_broadcast_extra), trackId)
+                      .setType(trackFileFormat.getMimeType());
+                  startActivity(
+                      Intent.createChooser(intent, getString(R.string.share_track_picker_title)));
+                }
+              });
+        }
+        return builder.create();
       default:
         return null;
     }
@@ -177,23 +192,13 @@ public class SaveActivity extends Activity {
    * To be invoked after showing the result dialog.
    */
   private void onPostResultDialog() {
-    if (success) {
-      if (shareTrack) {
-        Intent intent = new Intent(Intent.ACTION_SEND)
-            .putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(savedPath)))
-            .putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_track_subject))
-            .putExtra(Intent.EXTRA_TEXT, getString(R.string.share_track_file_body_format))
-            .putExtra(getString(R.string.track_id_broadcast_extra), trackId)
-            .setType(trackFileFormat.getMimeType());
-        startActivity(Intent.createChooser(intent, getString(R.string.share_track_picker_title)));
-      } else if (playTrack) {
-        Intent intent = new Intent()
-            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
-            .putExtra(GOOGLE_EARTH_TOUR_FEATURE_ID, KmlTrackWriter.TOUR_FEATURE_ID)
-            .setClassName(GOOGLE_EARTH_PACKAGE, GOOGLE_EARTH_CLASS)
-            .setDataAndType(Uri.fromFile(new File(savedPath)), GOOGLE_EARTH_KML_MIME_TYPE);
-        startActivity(intent);
-      }
+    if (success && playTrack) {
+      Intent intent = new Intent()
+          .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK)
+          .putExtra(GOOGLE_EARTH_TOUR_FEATURE_ID, KmlTrackWriter.TOUR_FEATURE_ID)
+          .setClassName(GOOGLE_EARTH_PACKAGE, GOOGLE_EARTH_CLASS)
+          .setDataAndType(Uri.fromFile(new File(savedPath)), GOOGLE_EARTH_KML_MIME_TYPE);
+      startActivity(intent);
     }
     finish();
   }
