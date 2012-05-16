@@ -66,7 +66,7 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_chart_tab));
     EndToEndTestUtils.rotateAllActivities();
 
-    EndToEndTestUtils.SOLO.sendKey(KeyEvent.KEYCODE_MENU);
+    EndToEndTestUtils.showMoreMenuItem();
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.menu_settings), 1, 3000));
     assertFalse(EndToEndTestUtils.SOLO.waitForText(
@@ -86,7 +86,7 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     EndToEndTestUtils.SOLO.goBack();
 
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_map_tab));
-    EndToEndTestUtils.SOLO.sendKey(KeyEvent.KEYCODE_MENU);
+    EndToEndTestUtils.showMoreMenuItem();
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.menu_settings), 1, 3000));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
@@ -111,6 +111,7 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
         false, false)) {
       isMapMode = false;
     }
+    EndToEndTestUtils.showMoreMenuItem();
     // Switch to satellite mode if it's map mode now..
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(isMapMode ? R.string.menu_satellite_mode : R.string.menu_map_mode));
@@ -130,6 +131,7 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     EndToEndTestUtils.rotateAllActivities();
 
     // Switch back.
+    EndToEndTestUtils.showMoreMenuItem();
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(isMapMode ? R.string.menu_satellite_mode : R.string.menu_map_mode));
     isMapMode = !isMapMode;

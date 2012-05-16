@@ -54,7 +54,7 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
       // Create a simple track.
       EndToEndTestUtils.createSimpleTrack(0);
       EndToEndTestUtils.SOLO.goBack();
-    }   
+    }
     instrumentation.waitForIdleSync();
     // There is at least one track.
     ArrayList<ListView> trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
@@ -80,20 +80,39 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
       // Create a simple track.
       EndToEndTestUtils.createSimpleTrack(0);
       EndToEndTestUtils.SOLO.goBack();
-    } 
+    }
     instrumentation.waitForIdleSync();
     // Get the number of track( or tracks)
     ArrayList<ListView> trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
     int trackNumberOld = trackListView.get(0).getCount();
 
-    EndToEndTestUtils.SOLO.clickLongOnText(EndToEndTestUtils.TRACK_NAME);
+    EndToEndTestUtils.SOLO.clickOnView(trackListView.get(0).getChildAt(0));
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete), true, true);
     EndToEndTestUtils.SOLO.clickLongOnText(activityMyTracks.getString(R.string.generic_ok));
     instrumentation.waitForIdleSync();
     trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
     int trackNumberNew = trackListView.get(0).getCount();
     assertEquals(trackNumberOld - 1, trackNumberNew);
+  }
 
+  /**
+   * Deletes a track which is under recording.
+   */
+  public void testDeleteOneTrackUnderRecording() {
+    EndToEndTestUtils.startRecording();
+    instrumentation.waitForIdleSync();
+    assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_stop_recording),
+        false, true));
+    instrumentation.waitForIdleSync();
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete),
+        true, false);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
+    instrumentation.waitForIdleSync();
+    assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_record_track),
+        false, true));
+    instrumentation.waitForIdleSync();
+    assertTrue(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_record_track), false, true));
   }
 
   @Override

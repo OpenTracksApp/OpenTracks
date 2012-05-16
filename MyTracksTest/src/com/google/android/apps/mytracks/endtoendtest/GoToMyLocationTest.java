@@ -16,7 +16,6 @@
 package com.google.android.apps.mytracks.endtoendtest;
 
 import com.google.android.apps.mytracks.TrackListActivity;
-import com.google.android.maps.mytracks.R;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
@@ -51,7 +50,7 @@ public class GoToMyLocationTest extends ActivityInstrumentationTestCase2<TrackLi
       // Create a simple track.
       EndToEndTestUtils.createSimpleTrack(2);
     }
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.my_location), true, false);
+    
     // TODO How to verify the location is shown on the map.
   }
 

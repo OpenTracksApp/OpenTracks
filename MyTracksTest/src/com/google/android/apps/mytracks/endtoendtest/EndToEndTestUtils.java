@@ -26,6 +26,7 @@ import android.content.res.Configuration;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.io.File;
@@ -54,6 +55,8 @@ public class EndToEndTestUtils {
   private static final float START_LATITUDE = -1.3f;
   private static final float DELTA_LONGITUDE = 0.0005f;
   private static final float DELTA_LADITUDE = 0.0005f;
+  
+  private static final String MOREOPTION_CLASSNAME = "com.android.internal.view.menu.ActionMenuPresenter$OverflowMenuButton";
 
   static final String TRACK_NAME_PREFIX = "testTrackName";
   static final String GPX = "gpx";
@@ -227,7 +230,7 @@ public class EndToEndTestUtils {
       }
       SOLO.clickOnView(startButton);
     } else {
-      SOLO.sendKey(KeyEvent.KEYCODE_MENU);
+      showMoreMenuItem();
       if (!SOLO.searchText(ACTIVITYMYTRACKS.getString(R.string.menu_record_track))) {
         // Check if in TrackDetailActivity.
         if (SOLO.searchText(ACTIVITYMYTRACKS.getString(R.string.menu_play))) {
@@ -235,7 +238,7 @@ public class EndToEndTestUtils {
         } else {
           // In case a track is recording.
           stopRecording(true);
-          SOLO.sendKey(KeyEvent.KEYCODE_MENU);
+          showMoreMenuItem();
         }
       }
       INSTRUMENTATION.waitForIdleSync();
@@ -256,7 +259,7 @@ public class EndToEndTestUtils {
         return true;
       }
     } else {
-      SOLO.sendKey(KeyEvent.KEYCODE_MENU);
+      showMoreMenuItem();
       if (!SOLO.searchText(ACTIVITYMYTRACKS.getString(R.string.menu_record_track))) {
         // Check if in TrackDetailActivity.
         if (SOLO.searchText(ACTIVITYMYTRACKS.getString(R.string.menu_play))) {
@@ -264,6 +267,8 @@ public class EndToEndTestUtils {
         } else {
           return true;
         }
+      } else {
+        SOLO.goBack();
       }
     }
     return false;
@@ -278,7 +283,7 @@ public class EndToEndTestUtils {
     if (HAS_ACTIONBAR) {
       SOLO.clickOnView(getButtonOnScreen(ACTIVITYMYTRACKS.getString(R.string.menu_stop_recording)));
     } else {
-      SOLO.sendKey(KeyEvent.KEYCODE_MENU);
+      showMoreMenuItem();
       INSTRUMENTATION.waitForIdleSync();
       SOLO.clickOnText(ACTIVITYMYTRACKS.getString(R.string.menu_stop_recording));
     }
@@ -333,9 +338,8 @@ public class EndToEndTestUtils {
   static void saveTrackToSdCard(String trackKind) {
     deleteExportedFiles(trackKind);
     INSTRUMENTATION.waitForIdleSync();
-    SOLO.sendKey(KeyEvent.KEYCODE_MENU);
+    findMenuItem(ACTIVITYMYTRACKS.getString(R.string.menu_save), true, true);
     INSTRUMENTATION.waitForIdleSync();
-    SOLO.clickOnText(ACTIVITYMYTRACKS.getString(R.string.menu_save));
     SOLO.clickOnText(trackKind.toUpperCase());
     rotateAllActivities();
     SOLO.waitForText(ACTIVITYMYTRACKS.getString(R.string.generic_success_title));
@@ -351,7 +355,9 @@ public class EndToEndTestUtils {
     ArrayList<Button> currentButtons = SOLO.getCurrentButtons();
     for (Button button : currentButtons) {
       String title = (String) button.getText();
-      if (title.equalsIgnoreCase(buttonName)) { return button; }
+      if (title.equalsIgnoreCase(buttonName)) { 
+        return button; 
+      }
     }
     return null;
   }
@@ -370,7 +376,7 @@ public class EndToEndTestUtils {
     if (startButton != null || stopButton != null) {
       HAS_ACTIONBAR = true;
     } else {
-      SOLO.sendKey(KeyEvent.KEYCODE_MENU);
+      showMoreMenuItem();
       if (SOLO.searchText(ACTIVITYMYTRACKS.getString(R.string.menu_record_track))
           || SOLO.searchText(ACTIVITYMYTRACKS.getString(R.string.menu_stop_recording))) {
         HAS_ACTIONBAR = false;
@@ -425,7 +431,7 @@ public class EndToEndTestUtils {
       }
     }
 
-    SOLO.sendKey(KeyEvent.KEYCODE_MENU);
+    showMoreMenuItem();
     if (SOLO.searchText(menuName)) {
       findResult = true;
     } else if (SOLO.searchText(MENU_MORE)) {
@@ -435,7 +441,42 @@ public class EndToEndTestUtils {
 
     if (findResult && click) {
       SOLO.clickOnText(menuName);
+    } else {
+      SOLO.goBack();
     }
     return findResult;
+  }
+
+  /**
+   * Get more menu items operation is different for different Android OS.
+   */
+  public static void showMoreMenuItem() {
+    if (HAS_ACTIONBAR) {
+      View moreButton = getMoreOptionView();
+      if (moreButton == null) {
+        SOLO.sendKey(KeyEvent.KEYCODE_MENU);
+      } else {
+        SOLO.clickOnView(moreButton);
+      }
+
+    } else {
+      SOLO.sendKey(KeyEvent.KEYCODE_MENU);
+    }
+  }
+  
+  /**
+   * Finds the more option menu. It should match following conditions:
+   * <ul>
+   * <li>The view extends ImageButton.</li>
+   * <li>The view name equals {@link EndToEndTestUtils#MOREOPTION_CLASSNAME}.</li>
+   * </ul>
+   * @return the more option view. Null means can not find it.
+   */
+  private static View getMoreOptionView() {
+    ArrayList<View> allViews = SOLO.getViews();
+    for (View view : allViews) {
+      if (view instanceof ImageButton && view.getClass().getName().equals(MOREOPTION_CLASSNAME)) { return view; }
+    }
+    return null;
   }
 }
