@@ -109,9 +109,10 @@ public class ChooseActivityDialogFragment extends DialogFragment {
             String packageName = activityInfo.applicationInfo.packageName;
             String className = activityInfo.name;
             
+            long trackId = getArguments().getLong(KEY_TRACK_ID);
             String trackUrl = getArguments().getString(KEY_TRACK_URL);
             if (trackUrl == null) {
-              SendRequest sendRequest = new SendRequest(getArguments().getLong(KEY_TRACK_ID));
+              SendRequest sendRequest = new SendRequest(trackId);
               sendRequest.setSendMaps(true);
               sendRequest.setNewMap(true);
               sendRequest.setSharingAppPackageName(packageName);
@@ -122,7 +123,7 @@ public class ChooseActivityDialogFragment extends DialogFragment {
               dismiss();
             } else {
               Intent intent = IntentUtils.newShareUrlIntent(
-                  getActivity(), trackUrl, packageName, className);
+                  getActivity(), trackId, trackUrl, packageName, className);
               startActivity(intent);
               getActivity().finish();
             }

@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.io.file;
 
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.util.DialogUtils;
+import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.Activity;
@@ -135,14 +136,11 @@ public class SaveActivity extends Activity {
               R.string.share_track_share_file, new DialogInterface.OnClickListener() {
                   @Override
                 public void onClick(DialogInterface dialog, int which) {
-                  Intent intent = new Intent(Intent.ACTION_SEND)
-                      .putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(savedPath)))
-                      .putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_track_subject))
-                      .putExtra(Intent.EXTRA_TEXT, getString(R.string.share_track_file_body_format))
-                      .putExtra(getString(R.string.track_id_broadcast_extra), trackId)
-                      .setType(trackFileFormat.getMimeType());
+                  Intent intent = IntentUtils.newShareFileIntent(
+                      SaveActivity.this, trackId, savedPath, trackFileFormat);
                   startActivity(
                       Intent.createChooser(intent, getString(R.string.share_track_picker_title)));
+                  finish();
                 }
               });
         }

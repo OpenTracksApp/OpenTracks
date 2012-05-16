@@ -59,7 +59,7 @@ public class UploadResultActivity extends FragmentActivity {
     if (sendRequest.isSendMaps() && sendRequest.isMapsSuccess()) {
       shareUrl = SendMapsUtils.getMapUrl(getTrack());
       if (sendRequest.getSharingAppPackageName() != null) {
-        Intent intent = IntentUtils.newShareUrlIntent(this, shareUrl,
+        Intent intent = IntentUtils.newShareUrlIntent(this, sendRequest.getTrackId(), shareUrl,
             sendRequest.getSharingAppPackageName(), sendRequest.getSharingAppClassName());
         startActivity(intent);
         finish();

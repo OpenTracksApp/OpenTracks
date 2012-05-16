@@ -353,7 +353,8 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
   String getTrackDescription(Track track, Vector<Double> distances, Vector<Double> elevations) {
     DescriptionGenerator descriptionGenerator = new DescriptionGeneratorImpl(context);
     return "<p>" + track.getDescription() + "</p><p>"
-        + descriptionGenerator.generateTrackDescription(track, distances, elevations) + "</p>";
+        + descriptionGenerator.generateTrackDescription(track, distances, elevations, true)
+        + "</p>";
   }
   
   /**

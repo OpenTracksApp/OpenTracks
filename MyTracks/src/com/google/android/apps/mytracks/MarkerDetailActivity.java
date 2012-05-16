@@ -73,7 +73,7 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity {
       finish();
       return;
     }
-    name.setText(getString(R.string.marker_detail_name, waypoint.getName()));
+    name.setText(getString(R.string.generic_name_line, waypoint.getName()));
     if (waypoint.getType() == Waypoint.TYPE_WAYPOINT) {
       waypointSection.setVisibility(View.VISIBLE);
       statisticsSection.setVisibility(View.GONE);
@@ -81,7 +81,7 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity {
       TextView markerType = (TextView) findViewById(R.id.marker_detail_waypoint_marker_type);
       markerType.setText(getString(R.string.marker_detail_marker_type, waypoint.getCategory()));
       TextView description = (TextView) findViewById(R.id.marker_detail_waypoint_description);
-      description.setText(getString(R.string.marker_detail_description, waypoint.getDescription()));
+      description.setText(getString(R.string.generic_description_line, waypoint.getDescription()));
     } else {
       waypointSection.setVisibility(View.GONE);
       statisticsSection.setVisibility(View.VISIBLE);

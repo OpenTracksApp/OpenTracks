@@ -630,6 +630,12 @@ limitations under the License.
     translation_description="The text label for entering a description.">
     Description
   </string>
+  <string name="generic_description_line"
+    translation_description="A line containing a description.
+
+      %1$s description. E.g., 'At the top'.">
+    Description: %1$s
+  </string>
   <string name="generic_error_title"
     translation_description="The title on an alert dialog indicating error.">
     Error
@@ -637,6 +643,12 @@ limitations under the License.
   <string name="generic_name"
     translation_description="The text label for entering a name.">
     Name
+  </string>
+  <string name="generic_name_line"
+    translation_description="A line containing a name.
+
+      %1$s name. E.g., 'Track 1'.">
+    Name: %1$s
   </string>
   <string name="generic_ok"
     translation_description="The text on a button to say ok.">
@@ -923,18 +935,6 @@ limitations under the License.
     translation_description="When deleting a marker, the confirmation dialog message informing the
       user that the marker will be permanently deleted from the phone.">
     The marker will be permanently deleted from the phone.
-  </string>
-  <string name="marker_detail_name"
-    translation_description="In the marker detail page, the label for the marker name.
-
-      %1$s marker name. E.g., 'Marker 1'.">
-    Name: %1$s
-  </string>
-  <string name="marker_detail_description"
-    translation_description="In the marker detail page, the label for the description.
-
-      %1$s marker description. E.g., 'At the top'.">
-    Description: %1$s
   </string>
   <string name="marker_detail_marker_type"
     translation_description="In the marker detail page, the label for the marker type.
@@ -1946,35 +1946,38 @@ limitations under the License.
   </string>
 
   <!-- Share Track -->
-  <string name="share_track_file_body_format"
-    translation_description="When sharing a track file with friends, the body of the message.">
-    I think you might be interested in this track.\n\nTo view this track use Google Earth or other
-    mapping software.
-  </string>
   <string name="share_track_picker_title"
-    translation_description="When sharing a track URL with friends, the title on the picker to ask
+    translation_description="When sharing a track with friends, the title on the picker to ask
       the user to select an application.">
     Select an application
   </string>
   <string name="share_track_share_file"
-    translation_description="After saving a track to SD card, the button on the result dialog to
+    translation_description="After saving a track to the SD card, the button on the result dialog to
       share the saved track file with friends.">
     Share track file
+  </string>
+  <string name="share_track_share_file_body"
+    translation_description="When sharing a track file with friends, the body of the message.
+    
+    %1$s: track description.">
+    I think you might be interested in this track.\n\nTo view this track, use Google Earth or other
+    mapping software.\n\n%1$s
   </string>
   <string name="share_track_share_url"
     translation_description="After sending a track to Google, the button on the result dialog to
       share the uploaded track URL with friends.">
     Share track URL
   </string>
+  <string name="share_track_share_url_body"
+    translation_description="When sharing a track URL with friends, the body of the message.
+
+      %1$s: url. E.g, 'https://maps.google.com/maps'.
+      %2$s: track description.">
+    I think you might be interested in this track:\n\n%1$s\n\n%2$s
+  </string>
   <string name="share_track_subject"
     translation_description="When sharing a track with friends, the subject line.">
     I would like to share a track with you
-  </string>
-  <string name="share_track_url_body_format"
-    translation_description="When sharing a track URL with friends, the body of the message.
-
-      %1$s: url. E.g, 'https://maps.google.com/maps'.">
-    I think you might be interested in this track:\n\n%1$s
   </string>
 
   <!-- Stats Page -->
