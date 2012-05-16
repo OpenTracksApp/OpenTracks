@@ -65,8 +65,8 @@ public class IntentUtils {
   public static final Intent newShareUrlIntent(
       Context context, long trackId, String trackUrl, String packageName, String className) {
     Track track = MyTracksProviderUtils.Factory.get(context).getTrack(trackId);
-    String trackDescription = new DescriptionGeneratorImpl(context).generateTrackDescription(
-        track, null, null, false);
+    String trackDescription = track == null ? ""
+        : new DescriptionGeneratorImpl(context).generateTrackDescription(track, null, null, false);
     
     return new Intent(Intent.ACTION_SEND)
         .addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP)
@@ -89,8 +89,8 @@ public class IntentUtils {
   public static final Intent newShareFileIntent(
       Context context, long trackId, String filePath, TrackFileFormat trackFileFormat) {
     Track track = MyTracksProviderUtils.Factory.get(context).getTrack(trackId);
-    String trackDescription = new DescriptionGeneratorImpl(context).generateTrackDescription(
-        track, null, null, false);
+    String trackDescription = track == null ? ""
+        : new DescriptionGeneratorImpl(context).generateTrackDescription(track, null, null, false);
 
     return new Intent(Intent.ACTION_SEND)
         .putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(filePath)))

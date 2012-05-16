@@ -30,6 +30,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -42,10 +43,10 @@ import android.widget.TextView;
  */
 public class UploadResultActivity extends FragmentActivity {
 
+  private static final String TAG = UploadResultActivity.class.getSimpleName();
   private static final int DIALOG_RESULT_ID = 0;
 
   private SendRequest sendRequest;
-  private Track track;
   private String shareUrl;
   private Dialog resultDialog;
 
@@ -53,11 +54,17 @@ public class UploadResultActivity extends FragmentActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     sendRequest = getIntent().getParcelableExtra(SendRequest.SEND_REQUEST_KEY);
-    track = null;
     shareUrl = null;
 
+    Track track = MyTracksProviderUtils.Factory.get(this).getTrack(sendRequest.getTrackId());
+    if (track == null) {
+      Log.d(TAG, "No track for " + sendRequest.getTrackId());
+      finish();
+      return;
+    }
+    
     if (sendRequest.isSendMaps() && sendRequest.isMapsSuccess()) {
-      shareUrl = SendMapsUtils.getMapUrl(getTrack());
+      shareUrl = SendMapsUtils.getMapUrl(track);
       if (sendRequest.getSharingAppPackageName() != null) {
         Intent intent = IntentUtils.newShareUrlIntent(this, sendRequest.getTrackId(), shareUrl,
             sendRequest.getSharingAppPackageName(), sendRequest.getSharingAppClassName());
@@ -68,16 +75,9 @@ public class UploadResultActivity extends FragmentActivity {
     }
     if (shareUrl == null && sendRequest.isSendFusionTables()
         && sendRequest.isFusionTablesSuccess()) {
-      shareUrl = SendFusionTablesUtils.getMapUrl(getTrack());
+      shareUrl = SendFusionTablesUtils.getMapUrl(track);
     }
     showDialog(DIALOG_RESULT_ID);
-  }
-
-  private Track getTrack() {
-    if (track == null) {
-      track = MyTracksProviderUtils.Factory.get(this).getTrack(sendRequest.getTrackId());
-    }
-    return track;
   }
 
   @Override

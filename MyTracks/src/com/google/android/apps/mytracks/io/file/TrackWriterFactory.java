@@ -118,7 +118,7 @@ public class TrackWriterFactory {
       long trackId, TrackFileFormat format) {
     Track track = providerUtils.getTrack(trackId);
     if (track == null) {
-      Log.w(TAG, "Trying to create a writer for an invalid track, id=" + trackId);
+      Log.d(TAG, "No track for " + trackId);
       return null;
     }
 

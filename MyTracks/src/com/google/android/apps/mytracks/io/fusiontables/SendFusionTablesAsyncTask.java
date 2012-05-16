@@ -105,12 +105,12 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
   @Override
   protected void saveResult() {
     Track track = myTracksProviderUtils.getTrack(trackId);
-    if (track != null) {
-      track.setTableId(tableId);
-      myTracksProviderUtils.updateTrack(track);
-    } else {
-      Log.d(TAG, "No track");
+    if (track == null) {
+      Log.d(TAG, "No track for " + trackId);
+      return;
     }
+    track.setTableId(tableId);
+    myTracksProviderUtils.updateTrack(track);
   }
 
   @Override
@@ -136,7 +136,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
 
     Track track = myTracksProviderUtils.getTrack(trackId);
     if (track == null) {
-      Log.d(TAG, "Track is null");
+      Log.d(TAG, "No track for " + trackId);
       return false;
     }
 
