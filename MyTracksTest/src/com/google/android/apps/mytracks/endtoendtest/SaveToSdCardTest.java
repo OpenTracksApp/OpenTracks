@@ -40,10 +40,7 @@ public class SaveToSdCardTest extends ActivityInstrumentationTestCase2<TrackList
     instrumentation = getInstrumentation();
     activityMyTracks = getActivity();
     EndToEndTestUtils.setupForAllTest(instrumentation, activityMyTracks);
-    if (EndToEndTestUtils.isTrackListEmpty(true)) {
-      // Create a simple track.
-      EndToEndTestUtils.createSimpleTrack(1);
-    }
+    EndToEndTestUtils.createTrackIfEmpty(1, false);
   }
 
   /**

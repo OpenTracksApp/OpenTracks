@@ -55,10 +55,7 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
    * menus in these views.
    */
   public void testSwitchViewsAndMenusOfView() {
-    if (EndToEndTestUtils.isTrackListEmpty(true)) {
-      // Create a simple track.
-      EndToEndTestUtils.createSimpleTrack(3);
-    }
+    EndToEndTestUtils.createTrackIfEmpty(3, false);
 
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.TRACK_NAME);
@@ -100,15 +97,13 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
    */
   public void testSatelliteAndMapView() {
     instrumentation.waitForIdleSync();
-    if(EndToEndTestUtils.isTrackListEmpty(true)) {
-      EndToEndTestUtils.createSimpleTrack(1);
-    }
+    EndToEndTestUtils.createTrackIfEmpty(1, false);
     instrumentation.waitForIdleSync();
     // Check current mode.
     boolean isMapMode = true;
     // If can not find switch menu in top menu, click More menu.
     if (!EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_satellite_mode),
-        false, false)) {
+        false)) {
       isMapMode = false;
     }
     EndToEndTestUtils.showMoreMenuItem();
@@ -126,7 +121,7 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     }
     instrumentation.waitForIdleSync();
 
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_help), false, false);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_help), false);
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.rotateAllActivities();
 

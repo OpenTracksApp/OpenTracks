@@ -58,7 +58,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
    * </ul>
    */
   public void testSetting() {
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true, false);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
     instrumentation.waitForIdleSync();
     // Rotate on the settings page.
     EndToEndTestUtils.rotateAllActivities();
@@ -111,43 +111,39 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
   }
 
   /**
-   * Tests reseting all settings.
+   * Tests the backup.
    */
   public void testBackup() {
     // Delete all backup at first.
     EndToEndTestUtils.deleteExportedFiles(EndToEndTestUtils.BACKUPS);
-    if (EndToEndTestUtils.isTrackListEmpty(false)) {
-      // Create a simple track.
-      EndToEndTestUtils.createSimpleTrack(3);
-      EndToEndTestUtils.SOLO.goBack();
-    }
+    EndToEndTestUtils.createTrackIfEmpty(3, true);
 
     assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.TRACK_NAME));
 
     // Write to SD card.
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true, false);
-    EndToEndTestUtils.SOLO.clickLongOnText(activityMyTracks.getString(R.string.settings_backup));
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup));
     EndToEndTestUtils.SOLO
-        .clickLongOnText(activityMyTracks.getString(R.string.settings_backup_now));
+        .clickOnText(activityMyTracks.getString(R.string.settings_backup_now));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.sd_card_success_write_file), 0, 10000));
+        activityMyTracks.getString(R.string.sd_card_save_success), 0, 100000));
     instrumentation.waitForIdleSync();
 
     // Delete all tracks.
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.goBack();
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete_all), true,
-        false);
-    EndToEndTestUtils.SOLO.clickLongOnText(activityMyTracks.getString(R.string.generic_ok));
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete_all), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
+    instrumentation.waitForIdleSync();
 
     // Read from SD card.
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true, false);
-    EndToEndTestUtils.SOLO.clickLongOnText(activityMyTracks.getString(R.string.settings_backup));
-    EndToEndTestUtils.SOLO.clickLongOnText(activityMyTracks
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup));
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(R.string.settings_backup_restore));
-    EndToEndTestUtils.SOLO.clickLongOnText(activityMyTracks.getString(R.string.generic_ok));
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.sd_card_success_read_file), 0, 10000));
+        activityMyTracks.getString(R.string.sd_card_import_success), 0, 10000));
     // Check restore track.
     assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.TRACK_NAME));
   }
@@ -157,18 +153,18 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
    * activity of tracks, and the creates a new track to check it.
    */
   public void testRecording() {
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true, false);
-    EndToEndTestUtils.SOLO.clickLongOnText(activityMyTracks.getString(R.string.settings_recording));
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_recording));
     // Changes the setting of recording name.
-    EndToEndTestUtils.SOLO.clickLongOnText(activityMyTracks
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(R.string.settings_recording_track_name));
-    EndToEndTestUtils.SOLO.clickLongOnText(activityMyTracks
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(R.string.settings_recording_track_name_number_option));
     // Changes the setting of default activity.
-    EndToEndTestUtils.SOLO.clickLongOnText(activityMyTracks
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(R.string.settings_recording_default_activity));
     EndToEndTestUtils.SOLO.enterText(0, DEFAULTACTIVITY);
-    EndToEndTestUtils.SOLO.clickLongOnText(activityMyTracks.getString(R.string.generic_ok));
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
 
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.goBack();

@@ -54,22 +54,19 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
   public void testSomeMenuItems() {
     // Menu in TrackListActivity.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_aggregated_statistics),
-        true, false);
+        true);
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.stats_total_distance));
     EndToEndTestUtils.SOLO.goBack();
     instrumentation.waitForIdleSync();
-    if(EndToEndTestUtils.isTrackListEmpty(true)) {
-      EndToEndTestUtils.createSimpleTrack(1);
-    }
+    EndToEndTestUtils.createTrackIfEmpty(1, false);
     instrumentation.waitForIdleSync();
     // Menu in TrackDetailActivity.
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_sensor_state), true,
-        false);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_sensor_state), true);
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks
         .getString(R.string.sensor_state_last_sensor_time));
 
     EndToEndTestUtils.SOLO.goBack();
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_help), true, false);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_help), true);
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.help_about));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));

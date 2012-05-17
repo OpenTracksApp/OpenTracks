@@ -53,14 +53,9 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
    * Creates a track with markers and the setting to send to google.
    */
   public void testCreateAndSendTrack() {
-    if (EndToEndTestUtils.isTrackListEmpty(true)) {
-      // Create a simple track.
-      EndToEndTestUtils.createSimpleTrack(1);
-      assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.TRACK_NAME));
-    }
+    EndToEndTestUtils.createTrackIfEmpty(1, false);
     instrumentation.waitForIdleSync();
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_send_google), true,
-        false);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_send_google), true);
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.send_google_title));
     EndToEndTestUtils.rotateCurrentActivity();
     instrumentation.waitForIdleSync();
@@ -93,12 +88,9 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
    * Tests editing a track.
    */
   public void testEditTrack() {
-    if (EndToEndTestUtils.isTrackListEmpty(true)) {
-      // Create a simple track.
-      EndToEndTestUtils.createSimpleTrack(0);
-    }
+    EndToEndTestUtils.createTrackIfEmpty(1, false);
     instrumentation.waitForIdleSync();
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_edit), true, false);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_edit), true);
 
     String newTrackName = EndToEndTestUtils.TRACK_NAME_PREFIX + "_new" + System.currentTimeMillis();
     String newType = "type" + newTrackName;
@@ -130,12 +122,12 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     instrumentation.waitForIdleSync();
     // Send Gps before send marker.
     EndToEndTestUtils.sendGps(2);
-    if (EndToEndTestUtils.HAS_ACTIONBAR) {
+    if (EndToEndTestUtils.hasActionBar) {
       // Check the title is Recording.
       assertTrue(EndToEndTestUtils.SOLO.searchText(activityMyTracks
           .getString(R.string.icon_recording)));
     }
-    createWaypointAndSplit();
+    createWaypoint();
     EndToEndTestUtils.sendGps(2);
     // Back to tracks list.
     EndToEndTestUtils.SOLO.goBack();
@@ -159,8 +151,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
    */
   public void testTrackStartTime() {
     // Delete all track first.
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete_all), true,
-        false);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete_all), true);
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_ok));
     instrumentation.waitForIdleSync();
     // Test should not show relative time.
@@ -177,25 +168,22 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     // Test should show relative time.
     EndToEndTestUtils.createSimpleTrack(2);
     EndToEndTestUtils.SOLO.goBack();
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(RELATIVE_STARTTIME_POSTFIX, 1, 500));
-
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(RELATIVE_STARTTIME_POSTFIX, 1, 5000));
   }
 
   /**
    * Creates a way point and a split maker during track recording.
    */
-  private void createWaypointAndSplit() {
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers), true, true);
+  private void createWaypoint() {
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers), true);
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.marker_list_empty_message));
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_insert_marker), true,
-        true);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_insert_marker), true);
     // Rotate when show insert page.
     EndToEndTestUtils.rotateAllActivities();
     EndToEndTestUtils.SOLO.enterText(0, WAYPOINT_NAME);
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_add));
     assertTrue(EndToEndTestUtils.SOLO.searchText(WAYPOINT_NAME));
 
-    // TODO Add test when Split maker feature is finished.
     EndToEndTestUtils.SOLO.goBack();
   }
 

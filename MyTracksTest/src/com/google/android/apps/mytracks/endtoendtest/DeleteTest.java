@@ -50,19 +50,14 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
    * Deletes all tracks.
    */
   public void testDeleteAllTracks() {
-    if (EndToEndTestUtils.isTrackListEmpty(false)) {
-      // Create a simple track.
-      EndToEndTestUtils.createSimpleTrack(0);
-      EndToEndTestUtils.SOLO.goBack();
-    }
+    EndToEndTestUtils.createTrackIfEmpty(1, true);
     instrumentation.waitForIdleSync();
     // There is at least one track.
     ArrayList<ListView> trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
     assertTrue(trackListView.size() > 0);
     assertTrue(trackListView.get(0).getCount() > 0);
 
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete_all), true,
-        false);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete_all), true);
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.rotateAllActivities();
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_ok));
@@ -76,18 +71,14 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
    * Deletes only one track.
    */
   public void testDeleteSingleTrack() {
-    if (EndToEndTestUtils.isTrackListEmpty(false)) {
-      // Create a simple track.
-      EndToEndTestUtils.createSimpleTrack(0);
-      EndToEndTestUtils.SOLO.goBack();
-    }
+    EndToEndTestUtils.createTrackIfEmpty(1, true);
     instrumentation.waitForIdleSync();
     // Get the number of track( or tracks)
     ArrayList<ListView> trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
     int trackNumberOld = trackListView.get(0).getCount();
 
     EndToEndTestUtils.SOLO.clickOnView(trackListView.get(0).getChildAt(0));
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete), true, true);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete), true);
     EndToEndTestUtils.SOLO.clickLongOnText(activityMyTracks.getString(R.string.generic_ok));
     instrumentation.waitForIdleSync();
     trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
@@ -102,17 +93,17 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
     EndToEndTestUtils.startRecording();
     instrumentation.waitForIdleSync();
     assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_stop_recording),
-        false, true));
+        false));
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete),
-        true, false);
+        true);
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
     instrumentation.waitForIdleSync();
     assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_record_track),
-        false, true));
+        false));
     instrumentation.waitForIdleSync();
     assertTrue(EndToEndTestUtils.findMenuItem(
-        activityMyTracks.getString(R.string.menu_record_track), false, true));
+        activityMyTracks.getString(R.string.menu_record_track), false));
   }
 
   @Override

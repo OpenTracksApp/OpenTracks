@@ -45,7 +45,7 @@ import java.util.ArrayList;
 public class EndToEndTestUtils {
   private static final String ANDROID_LOCAL_IP = "10.0.2.2";
   // usually 5554.
-  private static final int ANDROID_LOCAL_PORT = 5554;
+  private static final int ANDROID_LOCAL_PORT = 5556;
 
   private static final int ORIENTATION_PORTRAIT = 1;
   private static final int ORIENTATION_LANDSCAPE = 0;
@@ -72,8 +72,8 @@ public class EndToEndTestUtils {
   static TrackListActivity ACTIVITYMYTRACKS;
   // Check whether the UI has an action bar which is related with the version of
   // Android OS.
-  static boolean HAS_ACTIONBAR = false;
-  static boolean CHECKED_FIRSTLAUNCH = false;
+  static boolean hasActionBar = false;
+  static boolean isCheckedFirstLaunch = false;
 
   private EndToEndTestUtils() {}
 
@@ -125,7 +125,7 @@ public class EndToEndTestUtils {
         EndToEndTestUtils.ACTIVITYMYTRACKS);
     // Check if open MyTracks first time after install. If so, there would be a
     // welcome view with accept buttons. And makes sure only check once.
-    if (!EndToEndTestUtils.CHECKED_FIRSTLAUNCH) {
+    if (!EndToEndTestUtils.isCheckedFirstLaunch) {
       if ((EndToEndTestUtils.getButtonOnScreen(EndToEndTestUtils.ACTIVITYMYTRACKS
           .getString(R.string.eula_accept)) != null)) {
         EndToEndTestUtils.verifyFirstLaunch();
@@ -135,7 +135,7 @@ public class EndToEndTestUtils {
         resetPreferredUnits();
       }
 
-      EndToEndTestUtils.CHECKED_FIRSTLAUNCH = true;
+      EndToEndTestUtils.isCheckedFirstLaunch = true;
       EndToEndTestUtils.setHasActionBar();
     } else if (EndToEndTestUtils.SOLO.waitForText(
         // After reset setting, welcome page will show again.
@@ -153,7 +153,7 @@ public class EndToEndTestUtils {
   /**
    * Checks if need reset preferred units.
    */
-  public static void resetPreferredUnits() {
+  private static void resetPreferredUnits() {
     EndToEndTestUtils.SOLO.clickOnText(ACTIVITYMYTRACKS.getString(R.string.generic_ok));
     SOLO.waitForText(ACTIVITYMYTRACKS.getString(R.string.settings_stats_units_title));
     EndToEndTestUtils.SOLO.clickOnText(ACTIVITYMYTRACKS.getString(R.string.generic_ok));
@@ -207,13 +207,30 @@ public class EndToEndTestUtils {
     int trackNumber = SOLO.getCurrentListViews().get(0).getCount();
     if(trackNumber <= 0) {
       return true;
-    } else {
-      View oneTrack = SOLO.getCurrentListViews().get(0).getChildAt(0);
-      TRACK_NAME = (String) ((TextView) oneTrack.findViewById(R.id.list_item_name)).getText();
-      if (isClick) {
-        SOLO.clickOnView(oneTrack);
+    } 
+
+    View oneTrack = SOLO.getCurrentListViews().get(0).getChildAt(0);
+    TRACK_NAME = (String) ((TextView) oneTrack.findViewById(R.id.list_item_name)).getText();
+    if (isClick) {
+      SOLO.clickOnView(oneTrack);
+    }
+    return false;
+  }
+  
+  /**
+   * Create a new track if the track is empty.
+   * 
+   * @param gpsNumber the number of gps signals
+   * @param showTrackList whether stay on track list activity or track detail
+   *          activity
+   */
+  static void createTrackIfEmpty(int gpsNumber, boolean showTrackList) {
+    if (EndToEndTestUtils.isTrackListEmpty(!showTrackList)) {
+      // Create a simple track.
+      EndToEndTestUtils.createSimpleTrack(gpsNumber);
+      if (showTrackList) {
+        EndToEndTestUtils.SOLO.goBack();
       }
-      return false;
     }
   }
 
@@ -221,7 +238,7 @@ public class EndToEndTestUtils {
    * Starts recoding track.
    */
   static void startRecording() {
-    if (HAS_ACTIONBAR) {
+    if (hasActionBar) {
       Button startButton = getButtonOnScreen(ACTIVITYMYTRACKS.getString(R.string.menu_record_track));
       // In case a track is recording.
       if (startButton == null) {
@@ -252,26 +269,19 @@ public class EndToEndTestUtils {
    * @return true if it is under recording.
    */
   static boolean isUnderRecording() {
-    if (HAS_ACTIONBAR) {
-      Button startButton = getButtonOnScreen(ACTIVITYMYTRACKS.getString(R.string.menu_record_track));
-      // In case a track is recording.
-      if (startButton == null) {
-        return true;
-      }
-    } else {
-      showMoreMenuItem();
-      if (!SOLO.searchText(ACTIVITYMYTRACKS.getString(R.string.menu_record_track))) {
-        // Check if in TrackDetailActivity.
-        if (SOLO.searchText(ACTIVITYMYTRACKS.getString(R.string.menu_play))) {
-          SOLO.goBack();
-        } else {
-          return true;
-        }
-      } else {
-        SOLO.goBack();
-      }
+    if (hasActionBar) { 
+      return getButtonOnScreen(ACTIVITYMYTRACKS
+        .getString(R.string.menu_record_track)) == null; 
     }
-    return false;
+    showMoreMenuItem();
+    if (SOLO.searchText(ACTIVITYMYTRACKS.getString(R.string.menu_record_track))) { 
+      return false; 
+    }
+    if (SOLO.searchText(ACTIVITYMYTRACKS.getString(R.string.menu_play))) {
+      SOLO.goBack();
+      return false;
+    }
+    return true;
   }
 
   /**
@@ -280,7 +290,7 @@ public class EndToEndTestUtils {
    * @param isSave ture means should save this track
    */
   static void stopRecording(boolean isSave) {
-    if (HAS_ACTIONBAR) {
+    if (hasActionBar) {
       SOLO.clickOnView(getButtonOnScreen(ACTIVITYMYTRACKS.getString(R.string.menu_stop_recording)));
     } else {
       showMoreMenuItem();
@@ -338,7 +348,7 @@ public class EndToEndTestUtils {
   static void saveTrackToSdCard(String trackKind) {
     deleteExportedFiles(trackKind);
     INSTRUMENTATION.waitForIdleSync();
-    findMenuItem(ACTIVITYMYTRACKS.getString(R.string.menu_save), true, true);
+    findMenuItem(ACTIVITYMYTRACKS.getString(R.string.menu_save), true);
     INSTRUMENTATION.waitForIdleSync();
     SOLO.clickOnText(trackKind.toUpperCase());
     rotateAllActivities();
@@ -374,12 +384,12 @@ public class EndToEndTestUtils {
     Button startButton = getButtonOnScreen(ACTIVITYMYTRACKS.getString(R.string.menu_record_track));
     Button stopButton = getButtonOnScreen(ACTIVITYMYTRACKS.getString(R.string.menu_stop_recording));
     if (startButton != null || stopButton != null) {
-      HAS_ACTIONBAR = true;
+      hasActionBar = true;
     } else {
       showMoreMenuItem();
       if (SOLO.searchText(ACTIVITYMYTRACKS.getString(R.string.menu_record_track))
           || SOLO.searchText(ACTIVITYMYTRACKS.getString(R.string.menu_stop_recording))) {
-        HAS_ACTIONBAR = false;
+        hasActionBar = false;
       } else {
         return false;
       }
@@ -413,22 +423,19 @@ public class EndToEndTestUtils {
    * 
    * @param menuName the name of item
    * @param click true means need click this menu
-   * @param checkActionBar whether this item may on the action bar
    * @return true if find this menu
    */
-  static boolean findMenuItem(String menuName, boolean click, boolean checkActionBar) {
+  static boolean findMenuItem(String menuName, boolean click) {
     boolean findResult = false;
 
     // Firstly find in action bar.
-    if (checkActionBar) {
-      Button button = getButtonOnScreen(menuName);
-      if (button != null) {
-        findResult = true;
-        if (click) {
-          SOLO.clickOnView(button);
-        }
-        return findResult;
+    Button button = getButtonOnScreen(menuName);
+    if (button != null) {
+      findResult = true;
+      if (click) {
+        SOLO.clickOnView(button);
       }
+      return findResult;
     }
 
     showMoreMenuItem();
@@ -451,17 +458,14 @@ public class EndToEndTestUtils {
    * Get more menu items operation is different for different Android OS.
    */
   public static void showMoreMenuItem() {
-    if (HAS_ACTIONBAR) {
+    if (hasActionBar) {
       View moreButton = getMoreOptionView();
-      if (moreButton == null) {
-        SOLO.sendKey(KeyEvent.KEYCODE_MENU);
-      } else {
+      if (moreButton != null) {
         SOLO.clickOnView(moreButton);
-      }
-
-    } else {
-      SOLO.sendKey(KeyEvent.KEYCODE_MENU);
+        return;
+      } 
     }
+    SOLO.sendKey(KeyEvent.KEYCODE_MENU);
   }
   
   /**
@@ -475,7 +479,9 @@ public class EndToEndTestUtils {
   private static View getMoreOptionView() {
     ArrayList<View> allViews = SOLO.getViews();
     for (View view : allViews) {
-      if (view instanceof ImageButton && view.getClass().getName().equals(MOREOPTION_CLASSNAME)) { return view; }
+      if (view instanceof ImageButton && view.getClass().getName().equals(MOREOPTION_CLASSNAME)) { 
+        return view; 
+      }
     }
     return null;
   }

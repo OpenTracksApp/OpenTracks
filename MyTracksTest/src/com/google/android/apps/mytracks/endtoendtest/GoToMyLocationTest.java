@@ -16,9 +16,11 @@
 package com.google.android.apps.mytracks.endtoendtest;
 
 import com.google.android.apps.mytracks.TrackListActivity;
+import com.google.android.maps.mytracks.R;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
+import android.view.View;
 
 /**
  * Tests the function of go to my location.
@@ -46,12 +48,16 @@ public class GoToMyLocationTest extends ActivityInstrumentationTestCase2<TrackLi
    * Tests the menu My Location.
    */
   public void testGotoMyLocation() {
-    if (EndToEndTestUtils.isTrackListEmpty(true)) {
-      // Create a simple track.
-      EndToEndTestUtils.createSimpleTrack(2);
+    EndToEndTestUtils.createTrackIfEmpty(1, false);
+    EndToEndTestUtils.sendGps(30);
+    View myLocation = EndToEndTestUtils.SOLO.getCurrentActivity()
+        .findViewById(R.id.map_my_location);
+    EndToEndTestUtils.SOLO.clickOnView(myLocation);
+    if (!EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.my_location_no_location), 1, 1000)) {
+      // TODO How to verify the location is shown on the map.
     }
-    
-    // TODO How to verify the location is shown on the map.
+
   }
 
   @Override
