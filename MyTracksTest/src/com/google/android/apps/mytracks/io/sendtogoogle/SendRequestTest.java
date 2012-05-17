@@ -35,7 +35,7 @@ public class SendRequestTest extends AndroidTestCase {
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    sendRequest = new SendRequest(1, true, true, true);
+    sendRequest = new SendRequest(1);
   }
 
   /**
@@ -44,44 +44,6 @@ public class SendRequestTest extends AndroidTestCase {
    */
   public void testGetTrackId() {
     assertEquals(1, sendRequest.getTrackId());
-  }
-
-  /**
-   * Tests the method {@link SendRequest#isShowMaps()}. The value should be set
-   * to true when it is initialed in setup method.
-   */
-  public void testIsShowMaps() {
-    assertEquals(true, sendRequest.isShowMaps());
-  }
-
-  /**
-   * Tests the method {@link SendRequest#isShowFusionTables()}. The value should
-   * be set to true when it is initialed in setup method.
-   */
-  public void testIsShowFusionTables() {
-    assertEquals(true, sendRequest.isShowFusionTables());
-  }
-
-  /**
-   * Tests the method {@link SendRequest#isShowDocs()}. The value should be set
-   * to true when it is initialed in setup method.
-   */
-  public void testIsShowDocs() {
-    assertEquals(true, sendRequest.isShowDocs());
-  }
-
-  public void testIsShowAll() {
-    assertEquals(true, sendRequest.isShowAll());
-    sendRequest = new SendRequest(1, false, true, true);
-    assertEquals(false, sendRequest.isShowAll());
-    sendRequest = new SendRequest(1, true, false, true);
-    assertEquals(false, sendRequest.isShowAll());
-    sendRequest = new SendRequest(1, true, true, false);
-    assertEquals(false, sendRequest.isShowAll());
-    sendRequest = new SendRequest(1, false, true, false);
-    assertEquals(false, sendRequest.isShowAll());
-    sendRequest = new SendRequest(1, false, false, false);
-    assertEquals(false, sendRequest.isShowAll());
   }
 
   public void testIsSendMaps() {
@@ -174,120 +136,114 @@ public class SendRequestTest extends AndroidTestCase {
    * Tests SendRequest.CREATOR.createFromParcel when all values are true.
    */
   public void testCreateFromParcel_true() {
-    Parcel sourceParcel = Parcel.obtain();
-    sourceParcel.setDataPosition(0);
-    sourceParcel.writeLong(2);
-    sourceParcel.writeByte((byte) 1);
-    sourceParcel.writeByte((byte) 1);
-    sourceParcel.writeByte((byte) 1);
-    sourceParcel.writeByte((byte) 1);
-    sourceParcel.writeByte((byte) 1);
-    sourceParcel.writeByte((byte) 1);
-    sourceParcel.writeByte((byte) 1);
+    Parcel parcel = Parcel.obtain();
+    parcel.setDataPosition(0);
+    parcel.writeLong(2);
+    parcel.writeString("");
+    parcel.writeString("");
+    parcel.writeByte((byte) 1);
+    parcel.writeByte((byte) 1);
+    parcel.writeByte((byte) 1);
+    parcel.writeByte((byte) 1);
     Account account = new Account(ACCOUNTNAME, ACCOUNTYPE);
-    sourceParcel.writeParcelable(account, 0);
-    sourceParcel.writeString(MAPID);
-    sourceParcel.writeByte((byte) 1);
-    sourceParcel.writeByte((byte) 1);
-    sourceParcel.writeByte((byte) 1);
-    sourceParcel.setDataPosition(0);
-    sendRequest = SendRequest.CREATOR.createFromParcel(sourceParcel);
+    parcel.writeParcelable(account, 0);
+    parcel.writeString(MAPID);
+    parcel.writeByte((byte) 1);
+    parcel.writeByte((byte) 1);
+    parcel.writeByte((byte) 1);
+    parcel.setDataPosition(0);
+    sendRequest = SendRequest.CREATOR.createFromParcel(parcel);
     assertEquals(2, sendRequest.getTrackId());
-    assertEquals(true, sendRequest.isShowMaps());
-    assertEquals(true, sendRequest.isShowFusionTables());
-    assertEquals(true, sendRequest.isShowDocs());
-    assertEquals(true, sendRequest.isSendMaps());
-    assertEquals(true, sendRequest.isSendFusionTables());
-    assertEquals(true, sendRequest.isSendDocs());
-    assertEquals(true, sendRequest.isNewMap());
+    assertEquals("", sendRequest.getSharingAppPackageName());
+    assertEquals("", sendRequest.getSharingAppClassName());
+    assertTrue(sendRequest.isSendMaps());
+    assertTrue(sendRequest.isSendFusionTables());
+    assertTrue(sendRequest.isSendDocs());
+    assertTrue(sendRequest.isNewMap());
     assertEquals(account, sendRequest.getAccount());
     assertEquals(MAPID, sendRequest.getMapId());
-    assertEquals(true, sendRequest.isMapsSuccess());
-    assertEquals(true, sendRequest.isFusionTablesSuccess());
-    assertEquals(true, sendRequest.isDocsSuccess());
+    assertTrue(sendRequest.isMapsSuccess());
+    assertTrue(sendRequest.isFusionTablesSuccess());
+    assertTrue(sendRequest.isDocsSuccess());
   }
 
   /**
    * Tests SendRequest.CREATOR.createFromParcel when all values are false.
    */
   public void testCreateFromParcel_false() {
-    Parcel sourceParcel = Parcel.obtain();
-    sourceParcel.setDataPosition(0);
-    sourceParcel.writeLong(4);
-    sourceParcel.writeByte((byte) 0);
-    sourceParcel.writeByte((byte) 0);
-    sourceParcel.writeByte((byte) 0);
-    sourceParcel.writeByte((byte) 0);
-    sourceParcel.writeByte((byte) 0);
-    sourceParcel.writeByte((byte) 0);
-    sourceParcel.writeByte((byte) 0);
+    Parcel parcel = Parcel.obtain();
+    parcel.setDataPosition(0);
+    parcel.writeLong(4);
+    parcel.writeString(null);
+    parcel.writeString(null);
+    parcel.writeByte((byte) 0);
+    parcel.writeByte((byte) 0);
+    parcel.writeByte((byte) 0);
+    parcel.writeByte((byte) 0);
     Account account = new Account(ACCOUNTNAME, ACCOUNTYPE);
-    sourceParcel.writeParcelable(account, 0);
-    sourceParcel.writeString(MAPID);
-    sourceParcel.writeByte((byte) 0);
-    sourceParcel.writeByte((byte) 0);
-    sourceParcel.writeByte((byte) 0);
-    sourceParcel.setDataPosition(0);
-    sendRequest = SendRequest.CREATOR.createFromParcel(sourceParcel);
+    parcel.writeParcelable(account, 0);
+    parcel.writeString(MAPID);
+    parcel.writeByte((byte) 0);
+    parcel.writeByte((byte) 0);
+    parcel.writeByte((byte) 0);
+    parcel.setDataPosition(0);
+    sendRequest = SendRequest.CREATOR.createFromParcel(parcel);
     assertEquals(4, sendRequest.getTrackId());
-    assertEquals(false, sendRequest.isShowMaps());
-    assertEquals(false, sendRequest.isShowFusionTables());
-    assertEquals(false, sendRequest.isShowDocs());
-    assertEquals(false, sendRequest.isSendMaps());
-    assertEquals(false, sendRequest.isSendFusionTables());
-    assertEquals(false, sendRequest.isSendDocs());
-    assertEquals(false, sendRequest.isNewMap());
+    assertNull(sendRequest.getSharingAppPackageName());
+    assertNull(sendRequest.getSharingAppClassName());
+    assertFalse(sendRequest.isSendMaps());
+    assertFalse(sendRequest.isSendFusionTables());
+    assertFalse(sendRequest.isSendDocs());
+    assertFalse(sendRequest.isNewMap());
     assertEquals(account, sendRequest.getAccount());
     assertEquals(MAPID, sendRequest.getMapId());
-    assertEquals(false, sendRequest.isMapsSuccess());
-    assertEquals(false, sendRequest.isFusionTablesSuccess());
-    assertEquals(false, sendRequest.isDocsSuccess());
+    assertFalse(sendRequest.isMapsSuccess());
+    assertFalse(sendRequest.isFusionTablesSuccess());
+    assertFalse(sendRequest.isDocsSuccess());
   }
 
   /**
-   * Tests {@link SendRequest#writeToParcel(Parcel, int)} when all input values
-   * are true or affirmative.
+   * Tests {@link SendRequest#writeToParcel(Parcel, int)} with default values.
    */
-  public void testWriteToParcel_allTrue() {
-    sendRequest = new SendRequest(1, false, false, false);
-    Parcel parcelWrite1st = Parcel.obtain();
-    parcelWrite1st.setDataPosition(0);
-    sendRequest.writeToParcel(parcelWrite1st, 1);
-    parcelWrite1st.setDataPosition(0);
-    long trackId = parcelWrite1st.readLong();
-    boolean showMaps = parcelWrite1st.readByte() == 1;
-    boolean showFusionTables = parcelWrite1st.readByte() == 1;
-    boolean showDocs = parcelWrite1st.readByte() == 1;
-    boolean sendMaps = parcelWrite1st.readByte() == 1;
-    boolean sendFusionTables = parcelWrite1st.readByte() == 1;
-    boolean sendDocs = parcelWrite1st.readByte() == 1;
-    boolean newMap = parcelWrite1st.readByte() == 1;
-    Parcelable account = parcelWrite1st.readParcelable(null);
-    String mapId = parcelWrite1st.readString();
-    boolean mapsSuccess = parcelWrite1st.readByte() == 1;
-    boolean fusionTablesSuccess = parcelWrite1st.readByte() == 1;
-    boolean docsSuccess = parcelWrite1st.readByte() == 1;
+  public void testWriteToParcel_default() {
+    sendRequest = new SendRequest(1);
+    Parcel parcel = Parcel.obtain();
+    parcel.setDataPosition(0);
+    sendRequest.writeToParcel(parcel, 1);
+    parcel.setDataPosition(0);
+    long trackId = parcel.readLong();
+    String sharingAppPackageName = parcel.readString();
+    String sharingAppClassName = parcel.readString();
+    boolean sendMaps = parcel.readByte() == 1;
+    boolean sendFusionTables = parcel.readByte() == 1;
+    boolean sendDocs = parcel.readByte() == 1;
+    boolean newMap = parcel.readByte() == 1;
+    Parcelable account = parcel.readParcelable(null);
+    String mapId = parcel.readString();
+    boolean mapsSuccess = parcel.readByte() == 1;
+    boolean fusionTablesSuccess = parcel.readByte() == 1;
+    boolean docsSuccess = parcel.readByte() == 1;
     assertEquals(1, trackId);
-    assertEquals(false, showMaps);
-    assertEquals(false, showFusionTables);
-    assertEquals(false, showDocs);
-    assertEquals(false, sendMaps);
-    assertEquals(false, sendFusionTables);
-    assertEquals(false, sendDocs);
-    assertEquals(false, newMap);
-    assertEquals(null, account);
-    assertEquals(null, mapId);
-    assertEquals(false, mapsSuccess);
-    assertEquals(false, fusionTablesSuccess);
-    assertEquals(false, docsSuccess);
+    assertNull(sharingAppPackageName);
+    assertNull(sharingAppClassName);
+    assertFalse(sendMaps);
+    assertFalse(sendFusionTables);
+    assertFalse(sendDocs);
+    assertFalse(newMap);
+    assertNull(account);
+    assertNull(mapId);
+    assertFalse(mapsSuccess);
+    assertFalse(fusionTablesSuccess);
+    assertFalse(docsSuccess);
   }
 
   /**
-   * Tests {@link SendRequest#writeToParcel(Parcel, int)} when all input values
-   * are false or negative.
+   * Tests {@link SendRequest#writeToParcel(Parcel, int)}.
    */
-  public void testWriteToParcel_allFalse() {
-    sendRequest = new SendRequest(4, true, true, true);
+  public void testWriteToParcel() {
+    sendRequest = new SendRequest(4);
+    sendRequest.setSharingAppPackageName("package");
+    sendRequest.setSharingAppClassName("class"); 
     sendRequest.setSendMaps(true);
     sendRequest.setSendFusionTables(true);
     sendRequest.setSendDocs(true);
@@ -298,36 +254,33 @@ public class SendRequestTest extends AndroidTestCase {
     sendRequest.setMapsSuccess(true);
     sendRequest.setFusionTablesSuccess(true);
     sendRequest.setDocsSuccess(true);
-    Parcel parcelWrite2nd = Parcel.obtain();
-    parcelWrite2nd.setDataPosition(0);
-    sendRequest.writeToParcel(parcelWrite2nd, 1);
-    parcelWrite2nd.setDataPosition(0);
-    long trackId = parcelWrite2nd.readLong();
-    boolean showMaps = parcelWrite2nd.readByte() == 1;
-    boolean showFusionTables = parcelWrite2nd.readByte() == 1;
-    boolean showDocs = parcelWrite2nd.readByte() == 1;
-    boolean sendMaps = parcelWrite2nd.readByte() == 1;
-    boolean sendFusionTables = parcelWrite2nd.readByte() == 1;
-    boolean sendDocs = parcelWrite2nd.readByte() == 1;
-    boolean newMap = parcelWrite2nd.readByte() == 1;
-    Parcelable account = parcelWrite2nd.readParcelable(null);
-    String mapId = parcelWrite2nd.readString();
-    boolean mapsSuccess = parcelWrite2nd.readByte() == 1;
-    boolean fusionTablesSuccess = parcelWrite2nd.readByte() == 1;
-    boolean docsSuccess = parcelWrite2nd.readByte() == 1;
+    Parcel parcel = Parcel.obtain();
+    parcel.setDataPosition(0);
+    sendRequest.writeToParcel(parcel, 1);
+    parcel.setDataPosition(0);
+    long trackId = parcel.readLong();
+    String sharingAppPackageName = parcel.readString();
+    String sharingAppClassName = parcel.readString();
+    boolean sendMaps = parcel.readByte() == 1;
+    boolean sendFusionTables = parcel.readByte() == 1;
+    boolean sendDocs = parcel.readByte() == 1;
+    boolean newMap = parcel.readByte() == 1;
+    Parcelable account = parcel.readParcelable(null);
+    String mapId = parcel.readString();
+    boolean mapsSuccess = parcel.readByte() == 1;
+    boolean fusionTablesSuccess = parcel.readByte() == 1;
+    boolean docsSuccess = parcel.readByte() == 1;
     assertEquals(4, trackId);
-    assertEquals(true, showMaps);
-    assertEquals(true, showFusionTables);
-    assertEquals(true, showDocs);
-    assertEquals(true, sendMaps);
-    assertEquals(true, sendFusionTables);
-    assertEquals(true, sendDocs);
-    assertEquals(true, newMap);
+    assertEquals("package", sharingAppPackageName);
+    assertEquals("class", sharingAppClassName);
+    assertTrue(sendMaps);
+    assertTrue(sendFusionTables);
+    assertTrue(sendDocs);
+    assertTrue(newMap);
     assertEquals(accountNew, account);
     assertEquals(MAPID, mapId);
-    assertEquals(true, mapsSuccess);
-    assertEquals(true, fusionTablesSuccess);
-    assertEquals(true, docsSuccess);
+    assertTrue(mapsSuccess);
+    assertTrue(fusionTablesSuccess);
+    assertTrue(docsSuccess);
   }
-
 }

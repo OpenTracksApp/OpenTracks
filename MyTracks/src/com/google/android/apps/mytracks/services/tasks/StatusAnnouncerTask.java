@@ -182,7 +182,7 @@ public class StatusAnnouncerTask implements PeriodicTask {
       speed = context.getResources().getQuantityString(speedId, getQuantityCount(s), s);
     } else {
       int paceId = metricUnits ? R.string.voice_pace_per_kilometer : R.string.voice_pace_per_mile;
-      speed = String.format(context.getString(paceId), getAnnounceTime((long) s));
+      speed = context.getString(paceId, getAnnounceTime((long) s));
     }
 
     int totalDistanceId = metricUnits ? R.plurals.voiceTotalDistanceKilometers

@@ -51,7 +51,7 @@ public class SingleColorTrackPathPainter implements TrackPathPainter {
   @Override
   public void updatePath(Projection projection, Rect viewRect, int startLocationIdx,
       Boolean alwaysVisible, List<CachedLocation> points) {
-    path = new Path();
+    path = newPath();
     updatePath(projection, viewRect, startLocationIdx, alwaysVisible, points, path);
 
   }

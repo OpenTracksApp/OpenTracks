@@ -66,6 +66,7 @@ import android.os.PowerManager.WakeLock;
 import android.os.Process;
 import android.util.Log;
 
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
@@ -777,9 +778,9 @@ public class TrackRecordingService extends Service {
           return;
         }
       } else {
-        Log.d(TAG, String.format(
-            "Not recording. Distance to last recorded point (%f m) is less than"
-            + " %d m.", distanceToLastRecorded, minRecordingDistance));
+        Log.d(TAG, String.format(Locale.US,
+            "Not recording. Distance to last recorded point (%f m) is less than %d m.",
+            distanceToLastRecorded, minRecordingDistance));
         // Return here so that the location is NOT recorded as the last location.
         return;
       }
@@ -997,7 +998,7 @@ public class TrackRecordingService extends Service {
     } else {
       int nextMarkerNumber = providerUtils.getNextMarkerNumber(recordingTrackId, true);
       name = nextMarkerNumber == -1 ? getString(R.string.marker_type_statistics)
-          : getString(R.string.marker_statistics_name_format, nextMarkerNumber);
+          : getString(R.string.marker_split_name_format, nextMarkerNumber);
     }
     waypoint.setName(name);
     waypoint.setStatistics(waypointStatsBuilder.getStatistics());

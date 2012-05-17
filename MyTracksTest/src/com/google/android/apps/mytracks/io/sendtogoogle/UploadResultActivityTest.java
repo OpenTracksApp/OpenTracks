@@ -97,7 +97,7 @@ public class UploadResultActivityTest
   private void initialActivity(boolean isSendMaps, boolean isSendFusionTables, boolean isSendDocs,
       boolean isMapsSuccess, boolean isFusionTablesSuccess, boolean isDocsSuccess) {
     Intent intent = new Intent();
-    SendRequest sendRequest = new SendRequest(1L, true, true, true);
+    SendRequest sendRequest = new SendRequest(1L);
     sendRequest.setSendMaps(isSendMaps);
     sendRequest.setSendFusionTables(isSendFusionTables);
     sendRequest.setSendDocs(isSendDocs);

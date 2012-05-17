@@ -120,8 +120,8 @@ public class SensorSettingsActivity extends AbstractSettingsActivity {
   /**
    * Updates the bluetooth sensor list preference.
    */
+  @SuppressWarnings("deprecation")
   private void updateBluetoothSensorListPreference() {
-    @SuppressWarnings("deprecation")
     ListPreference bluetoothSensorListPreference = (ListPreference) findPreference(
         getString(R.string.bluetooth_sensor_key));
     List<String> entries = new ArrayList<String>();

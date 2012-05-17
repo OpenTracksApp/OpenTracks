@@ -911,15 +911,13 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     String selection;
     String[] selectionArgs;
     if (minWaypointId > 0) {
-      selection = String.format("%s = ? AND %s >= ?",
-          WaypointsColumns.TRACKID,
-          WaypointsColumns._ID);
+      selection = WaypointsColumns.TRACKID + "=? AND " +  WaypointsColumns._ID + ">=?";
       selectionArgs = new String[] {
           Long.toString(trackId),
           Long.toString(minWaypointId)
       };
     } else {
-      selection = String.format("%s=?", WaypointsColumns.TRACKID);
+      selection = WaypointsColumns.TRACKID + "=?";
       selectionArgs = new String[] { Long.toString(trackId) };
     }
 

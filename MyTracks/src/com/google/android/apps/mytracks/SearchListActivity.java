@@ -187,8 +187,8 @@ public class SearchListActivity extends AbstractMyTracksActivity implements Dele
       }
     };
     listView.setAdapter(arrayAdapter);
-    ApiAdapterFactory.getApiAdapter().configureListViewContextualMenu(this, listView,
-        R.menu.list_context_menu, R.id.list_item_name, contextualActionModeCallback);
+    ApiAdapterFactory.getApiAdapter()
+        .configureListViewContextualMenu(this, listView, contextualActionModeCallback);
     handleIntent(getIntent());
   }
 

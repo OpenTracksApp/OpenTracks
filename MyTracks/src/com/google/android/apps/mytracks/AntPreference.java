@@ -47,8 +47,7 @@ public class AntPreference extends Preference {
     if (sensorId == 0) {
       setSummary(R.string.settings_sensor_ant_not_paired);
     } else {
-      setSummary(
-          String.format(getContext().getString(R.string.settings_sensor_ant_paired), sensorId));
+      setSummary(getContext().getString(R.string.settings_sensor_ant_paired, sensorId));
     }
 
     // Add actions to allow repairing.

@@ -31,6 +31,17 @@ limitations under the License.
     <item name="android:layout_width">fill_parent</item>
     <item name="android:orientation">horizontal</item>
   </style>
+  <!-- The style for choose upload service check box -->
+  <style name="ChooseUploadServiceCheckBox" parent="@style/TextMedium">
+    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:layout_marginLeft">8dp</item>
+    <item name="android:layout_width">0dp</item>
+  </style>
+  <!-- The style for choose upload service image view -->
+  <style name="ChooseUploadServiceImageView">
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+  </style>
   <!-- The style for the edit category -->
   <style name="EditCategory" parent="@style/TextMedium">
     <item name="android:layout_width">fill_parent</item>
@@ -149,16 +160,5 @@ limitations under the License.
   <!-- The style for the track widget value -->
   <style name="TrackWidgetValue" parent="@style/TextSmall">
     <item name="android:width">100dp</item>
-  </style>
-  <!-- The style for upload service chooser check box -->
-  <style name="UploadServiceChooserCheckBox" parent="@style/TextMedium">
-    <item name="android:layout_gravity">center_vertical</item>
-    <item name="android:layout_marginLeft">8dp</item>
-    <item name="android:layout_width">0dp</item>
-  </style>
-  <!-- The style for upload service chooser image view -->
-  <style name="UploadServiceChooserImageView">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_width">wrap_content</item>
   </style>
 </resources>

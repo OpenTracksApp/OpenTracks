@@ -64,7 +64,7 @@ public class TrackEditActivity extends AbstractMyTracksActivity {
     myTracksProviderUtils = MyTracksProviderUtils.Factory.get(this);
     track = myTracksProviderUtils.getTrack(trackId);
     if (track == null) {
-      Log.e(TAG, "no track");
+      Log.e(TAG, "No track for " + trackId);
       finish();
       return;
     }

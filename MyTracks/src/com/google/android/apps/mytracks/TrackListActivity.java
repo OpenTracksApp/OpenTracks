@@ -23,6 +23,7 @@ import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment;
 import com.google.android.apps.mytracks.fragments.DeleteOneTrackDialogFragment.DeleteOneTrackCaller;
 import com.google.android.apps.mytracks.fragments.EulaDialogFragment;
 import com.google.android.apps.mytracks.fragments.WelcomeDialogFragment;
+import com.google.android.apps.mytracks.io.file.SaveActivity;
 import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileFormat;
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
@@ -240,9 +241,8 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
       }
     };
     listView.setAdapter(resourceCursorAdapter);
-    ApiAdapterFactory.getApiAdapter().configureListViewContextualMenu(
-        this, listView, R.menu.list_context_menu, R.id.list_item_name,
-        contextualActionModeCallback);
+    ApiAdapterFactory.getApiAdapter()
+        .configureListViewContextualMenu(this, listView, contextualActionModeCallback);
    
     getSupportLoaderManager().initLoader(0, null, new LoaderCallbacks<Cursor>() {
       @Override
@@ -399,24 +399,16 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
         startActivity(intent);
         return true;
       case R.id.track_list_save_all_gpx:
-        intent = IntentUtils.newIntent(this, SaveAllActivity.class)
-            .putExtra(SaveAllActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.GPX);
-        startActivity(intent);
+        startSaveActivity(TrackFileFormat.GPX);
         return true;
       case R.id.track_list_save_all_kml:
-        intent = IntentUtils.newIntent(this, SaveAllActivity.class)
-            .putExtra(SaveAllActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.KML);
-        startActivity(intent);
+        startSaveActivity(TrackFileFormat.KML);
         return true;
       case R.id.track_list_save_all_csv:
-        intent = IntentUtils.newIntent(this, SaveAllActivity.class)
-            .putExtra(SaveAllActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.CSV);
-        startActivity(intent);
+        startSaveActivity(TrackFileFormat.CSV);
         return true;
       case R.id.track_list_save_all_tcx:
-        intent = IntentUtils.newIntent(this, SaveAllActivity.class)
-            .putExtra(SaveAllActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) TrackFileFormat.TCX);
-        startActivity(intent);
+        startSaveActivity(TrackFileFormat.TCX);
         return true;
       case R.id.track_list_delete_all:
         new DeleteAllTrackDialogFragment().show(
@@ -439,6 +431,17 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     }
   }
 
+  /**
+   * Starts the {@link SaveActivity} to save all tracks.
+   *
+   * @param trackFileFormat the track file format
+   */
+  private void startSaveActivity(TrackFileFormat trackFileFormat) {
+    Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
+        .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
+    startActivity(intent);
+  }
+  
   @Override
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);

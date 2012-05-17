@@ -146,8 +146,8 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
       }
     };
     listView.setAdapter(resourceCursorAdapter);
-    ApiAdapterFactory.getApiAdapter().configureListViewContextualMenu(this, listView,
-        R.menu.list_context_menu, R.id.list_item_name, contextualActionModeCallback);
+    ApiAdapterFactory.getApiAdapter()
+        .configureListViewContextualMenu(this, listView, contextualActionModeCallback);
 
     final long firstWaypointId = MyTracksProviderUtils.Factory.get(this)
         .getFirstWaypointId(trackId);

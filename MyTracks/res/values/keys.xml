@@ -39,7 +39,6 @@ limitations under the License.
   <string name="min_recording_interval_key">minRecordingInterval</string>
   <string name="min_required_accuracy_key">minRequiredAccuracy</string>
   <string name="pick_existing_map_key">pickExistingMap</string>
-  <string name="preferred_account_key">preferredAccount</string>
   <string name="recording_track_id_key">recordingTrackId</string>
   <string name="report_speed_key">reportSpeed</string>
   <string name="selected_track_id_key">selectedTrackId</string>
@@ -47,7 +46,7 @@ limitations under the License.
   <string name="send_to_fusion_tables_key">sendToFusionTables</string>
   <string name="send_to_maps_key">sendToMaps</string>
   <string name="sensor_type_key">sensorType</string>
-  <string name="share_url_only_key">shareUrlOnly</string>
+  <string name="sharing_account_key">sharingAccount</string>
   <string name="show_check_units_dialog_key">showCheckUnitsDialog</string>
   <string name="show_welcome_dialog_key">showWelcomeDialog</string>
   <string name="split_frequency_key">splitFrequency</string>

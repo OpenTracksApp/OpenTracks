@@ -53,7 +53,7 @@ class TrackWriterImpl implements TrackWriter {
   private final Track track;
   private final TrackFormatWriter writer;
   private boolean success = false;
-  private int errorMessage = -1;
+  private int errorMessage = R.string.sd_card_save_error;
   private File directory = null;
   private File file = null;
   private OnWriteListener onWriteListener;
@@ -105,7 +105,7 @@ class TrackWriterImpl implements TrackWriter {
   private void doWriteTrack() {
     // Open the input and output
     success = false;
-    errorMessage = R.string.sd_card_error_write_file;
+    errorMessage = R.string.sd_card_save_error;
     if (track != null) {
       if (openFile()) {
         try {
@@ -186,7 +186,7 @@ class TrackWriterImpl implements TrackWriter {
       writer.prepare(track, newOutputStream(fileName));
     } catch (FileNotFoundException e) {
       Log.e(Constants.TAG, "Failed to open output file.", e);
-      errorMessage = R.string.sd_card_error_write_file;
+      errorMessage = R.string.sd_card_save_error;
       return false;
     }
     return true;
@@ -209,7 +209,7 @@ class TrackWriterImpl implements TrackWriter {
     }
     if (!FileUtils.ensureDirectoryExists(directory)) {
       Log.i(Constants.TAG, "Could not create export directory.");
-      errorMessage = R.string.sd_card_error_create_dir;
+      errorMessage = R.string.sd_card_save_error_create_dir;
       return false;
     }
 
@@ -283,7 +283,7 @@ class TrackWriterImpl implements TrackWriter {
     writer.close();
     success = true;
     Log.d(Constants.TAG, "Done writing track.");
-    errorMessage = R.string.sd_card_success_write_file;
+    errorMessage = R.string.sd_card_save_success;
   }
 
   private void writeLocations() throws InterruptedException {

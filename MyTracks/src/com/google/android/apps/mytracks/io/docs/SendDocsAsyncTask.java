@@ -119,7 +119,7 @@ public class SendDocsAsyncTask extends AbstractSendAsyncTask {
 
     Track track = myTracksProviderUtils.getTrack(trackId);
     if (track == null) {
-      Log.d(TAG, "Track is null");
+      Log.d(TAG, "No track for " + trackId);
       return false;
     }
 

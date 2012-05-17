@@ -131,14 +131,14 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
   @Override
   protected void saveResult() {
     Track track = myTracksProviderUtils.getTrack(trackId);
-    if (track != null) {
-      track.setMapId(mapId);
-      myTracksProviderUtils.updateTrack(track);
-    } else {
-      Log.d(TAG, "No track");
+    if (track == null) {
+      Log.d(TAG, "No track for " + trackId);
+      return;
     }
+    track.setMapId(mapId);
+    myTracksProviderUtils.updateTrack(track);
   }
-  
+
   @Override
   protected boolean performTask() {
     // Reset the per upload states
@@ -173,7 +173,7 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
     // Get the track
     Track track = myTracksProviderUtils.getTrack(trackId);
     if (track == null) {
-      Log.d(TAG, "Track is null");
+      Log.d(TAG, "No track for " + trackId);
       return false;
     }
 
@@ -353,7 +353,8 @@ public class SendMapsAsyncTask extends AbstractSendAsyncTask {
   String getTrackDescription(Track track, Vector<Double> distances, Vector<Double> elevations) {
     DescriptionGenerator descriptionGenerator = new DescriptionGeneratorImpl(context);
     return "<p>" + track.getDescription() + "</p><p>"
-        + descriptionGenerator.generateTrackDescription(track, distances, elevations) + "</p>";
+        + descriptionGenerator.generateTrackDescription(track, distances, elevations, true)
+        + "</p>";
   }
   
   /**

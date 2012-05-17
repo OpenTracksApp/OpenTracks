@@ -43,7 +43,7 @@ public class KmlTrackWriterTest extends TrackFormatWriterTest {
   private class FakeDescriptionGenerator implements DescriptionGenerator {
     @Override
     public String generateTrackDescription(
-        Track aTrack, Vector<Double> distances, Vector<Double> elevations) {
+        Track aTrack, Vector<Double> distances, Vector<Double> elevations, boolean html) {
       return FULL_TRACK_DESCRIPTION;
     }
 

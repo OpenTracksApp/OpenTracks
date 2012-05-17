@@ -233,8 +233,7 @@ public class SensorStateActivity extends AbstractMyTracksActivity {
     String value;
     if (sensorDataSet.hasPower() && sensorDataSet.getPower().hasValue()
         && sensorDataSet.getPower().getState() == Sensor.SensorState.SENDING) {
-      String format = getString(R.string.sensor_state_power_value);
-      value = String.format(format, sensorDataSet.getPower().getValue());
+      value = getString(R.string.sensor_state_power_value, sensorDataSet.getPower().getValue());
     } else {
       value = SensorUtils.getStateAsString(
           sensorDataSet.hasPower() ? sensorDataSet.getPower().getState() : Sensor.SensorState.NONE,
@@ -252,8 +251,7 @@ public class SensorStateActivity extends AbstractMyTracksActivity {
     String value;
     if (sensorDataSet.hasCadence() && sensorDataSet.getCadence().hasValue()
         && sensorDataSet.getCadence().getState() == Sensor.SensorState.SENDING) {
-      String format = getString(R.string.sensor_state_cadence_value);
-      value = String.format(format, sensorDataSet.getCadence().getValue());
+      value = getString(R.string.sensor_state_cadence_value, sensorDataSet.getCadence().getValue());
     } else {
       value = SensorUtils.getStateAsString(
           sensorDataSet.hasCadence() ? sensorDataSet.getCadence().getState()
@@ -271,8 +269,8 @@ public class SensorStateActivity extends AbstractMyTracksActivity {
     String value;
     if (sensorDataSet.hasHeartRate() && sensorDataSet.getHeartRate().hasValue()
         && sensorDataSet.getHeartRate().getState() == Sensor.SensorState.SENDING) {
-      String format = getString(R.string.sensor_state_heart_rate_value);
-      value = String.format(format, sensorDataSet.getHeartRate().getValue());
+      value = getString(
+          R.string.sensor_state_heart_rate_value, sensorDataSet.getHeartRate().getValue());
     } else {
       value = SensorUtils.getStateAsString(
           sensorDataSet.hasHeartRate() ? sensorDataSet.getHeartRate().getState()

@@ -105,12 +105,12 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
   @Override
   protected void saveResult() {
     Track track = myTracksProviderUtils.getTrack(trackId);
-    if (track != null) {
-      track.setTableId(tableId);
-      myTracksProviderUtils.updateTrack(track);
-    } else {
-      Log.d(TAG, "No track");
+    if (track == null) {
+      Log.d(TAG, "No track for " + trackId);
+      return;
     }
+    track.setTableId(tableId);
+    myTracksProviderUtils.updateTrack(track);
   }
 
   @Override
@@ -136,7 +136,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
 
     Track track = myTracksProviderUtils.getTrack(trackId);
     if (track == null) {
-      Log.d(TAG, "Track is null");
+      Log.d(TAG, "No track for " + trackId);
       return false;
     }
 
@@ -277,7 +277,8 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
         elevations.add(elevationBuffer.getAverage());
         DescriptionGenerator descriptionGenerator = new DescriptionGeneratorImpl(context);
         track.setDescription("<p>" + track.getDescription() + "</p><p>"
-            + descriptionGenerator.generateTrackDescription(track, distances, elevations) + "</p>");
+            + descriptionGenerator.generateTrackDescription(track, distances, elevations, true)
+            + "</p>");
         String name = context.getString(R.string.marker_label_end, track.getName());
         if (!createNewPoint(name, track.getDescription(), lastLocation, MARKER_TYPE_END)) {
           Log.d(TAG, "Unable to create the end marker");

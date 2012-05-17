@@ -377,8 +377,8 @@ limitations under the License.
     Use My Tracks while you run, bike, hike, or do anything else outdoors, and it will use the GPS
     sensor in your phone to record the path you took. It will also gather useful statistics such as
     time, speed, distance, and elevation. You can review all of this data live, or you can save it
-    for use later. While you\'re out, you can mark relevant waypoints, and can ask to hear automatic
-    voice announcements about your progress.\n
+    for use later. While you\'re out, you can insert markers, have split markers inserted
+    automatically, and can ask to hear periodic voice announcements of your progress.\n
     \n
     My Tracks can record data from external sensors:\n
     - Zephyr Technology Consumer HxM Bluetooth heart rate monitor\n
@@ -630,6 +630,12 @@ limitations under the License.
     translation_description="The text label for entering a description.">
     Description
   </string>
+  <string name="generic_description_line"
+    translation_description="A line containing a description.
+
+      %1$s description. E.g., 'At the top'.">
+    Description: %1$s
+  </string>
   <string name="generic_error_title"
     translation_description="The title on an alert dialog indicating error.">
     Error
@@ -637,6 +643,12 @@ limitations under the License.
   <string name="generic_name"
     translation_description="The text label for entering a name.">
     Name
+  </string>
+  <string name="generic_name_line"
+    translation_description="A line containing a name.
+
+      %1$s name. E.g., 'Track 1'.">
+    Name: %1$s
   </string>
   <string name="generic_ok"
     translation_description="The text on a button to say ok.">
@@ -654,7 +666,7 @@ limitations under the License.
     translation_description="The title on an alert dialog indicating success.">
     Success
   </string>
-  
+
   <!-- GPS -->
   <string name="gps_need_to_enable"
     translation_description="In the main view, the message on the top asking the user to enable
@@ -755,6 +767,14 @@ limitations under the License.
     translation_description="In the 'Help' page, the question on location precision.">
     How precise are the recorded tracks?
   </string>
+  <string name="help_marker_answer"
+    translation_description="In the 'Help' page, the answer on markers.">
+    Markers are used to annotate a location.
+  </string>
+  <string name="help_marker_question"
+    translation_description="In the 'Help' page, the question on markers.">
+    What are markers?
+  </string>
   <string name="help_my_tracks_answer"
     translation_description="In the 'Help' page, the answer on what is My Tracks.">
     My Tracks allows you to record GPS tracks and visualize your hiking, running, biking or any
@@ -793,6 +813,15 @@ limitations under the License.
     translation_description="In the 'Help' page, the question on share visibility.">
     Who can see the tracks I send to Google Maps and Google Fusion Tables?
   </string>
+  <string name="help_split_marker_answer"
+    translation_description="In the 'Help' page, the answer on split markers.">
+    The split markers are used to segment a track to calculate statistics for each segment. Split
+    markers are inserted by setting the split frequency in the menu.
+  </string>
+  <string name="help_split_marker_question"
+    translation_description="In the 'Help' page, the question on split markers.">
+    What are split markers?
+  </string>
   <string name="help_split_track_answer"
     translation_description="In the 'Help' page, the answer on splitting long tracks.">
     Tracks on Google Maps and Google Fusion Tables are limited to certain sizes.
@@ -802,26 +831,14 @@ limitations under the License.
     Why do very long tracks split into multiple segments upon sending them to Google Maps and
     Google Fusion Tables?
   </string>
-  <string name="help_statistics_marker_answer"
-    translation_description="In the 'Help' page, the answer on statistics markers.">
-    Statistics markers are used to segment a track to calculate statistics for each segment. For
-    example, let\'s say you are recording a bike ride up a hill, you can insert a statistics marker
-    at the bottom of the hill and another at the top.
-  </string>
-  <string name="help_statistics_marker_question"
-    translation_description="In the 'Help' page, the question on statistics markers.">
-    What are statistics markers?
-  </string>
-  <string name="help_waypoint_marker_answer"
-    translation_description="In the 'Help' page, the answer on waypoint markers.">
-    Waypoint markers are used to annotate a location.
-  </string>
-  <string name="help_waypoint_marker_question"
-    translation_description="In the 'Help' page, the question on waypoint markers.">
-    What are waypoint markers?
-  </string>
 
   <!-- Icon -->
+  <string name="icon_application"
+    translation_description="When sharing a track, we display a list of Android applications on the
+      phone that can be used. In the list, we display an application icon for each application. This
+      is the accessibility description for the icon.">
+    Application
+  </string>
   <string name="icon_marker"
     translation_description="The accessibility description for the 'Marker' icon.">
     Marker
@@ -839,14 +856,7 @@ limitations under the License.
     Track
   </string>
 
-  <!-- Import -->
-  <string name="import_error"
-    translation_description="When importing all the tracks, a toast message indicating import error
-      for one of the tracks.
-
-      %1$s: the track's file path on the SD card. E.g., '/mnt/sdcard/MyTacks/gpx/1.gpx'.">
-    Import error for file %1$s.
-  </string>
+  <!-- Import GPX Files -->
   <string name="import_gpx_files_few"
     translation_description="When importing all the tracks, phrase for 'few' GPX files.
 
@@ -877,27 +887,6 @@ limitations under the License.
   <string name="import_gpx_files_zero"
     translation_description="When importing all the tracks, phrase for 0 GPX files.">
     0 GPX files
-  </string>
-  <string name="import_no_file"
-    translation_description="After importing all the tracks from the SD card, the alert message
-      indicating that no track is imported.
-
-      %1$s: the SD card directory path. E.g., '/mnt/sdcard/MyTracks/gpx/'.">
-    No GPX file found in %1$s. The SD card may be unreadable or the directory may not contain any
-    GPX file.
-  </string>
-  <string name="import_progress_message"
-    translation_description="When importing all the tracks from the SD card, the progress message.">
-    Importing all tracks...
-  </string>
-  <string name="import_success"
-    translation_description="After importing all the tracks from the SD card, the alert message
-      indicating success.
-
-      %1$d the number of successfully imported tracks. E.g., '1'.
-      %2$s the number of GPX files in the SD card. E.g., '1 GPX file' or '2 GPX files'.
-      %3$s the SD card directory path. E.g., '/mnt/sdcard/MyTracks/gpx/'.">
-    My Tracks: Imported %1$d of %2$s from %3$s.
   </string>
 
   <!-- Maps List -->
@@ -947,39 +936,27 @@ limitations under the License.
       user that the marker will be permanently deleted from the phone.">
     The marker will be permanently deleted from the phone.
   </string>
-  <string name="marker_detail_name"
-    translation_description="In the marker detail page, the label for the marker name.
-
-      %1$s marker name. E.g., 'Marker 1'.">
-    Name: %1$s
-  </string>  
-  <string name="marker_detail_description"
-    translation_description="In the marker detail page, the label for the description.
-
-      %1$s marker description. E.g., 'At the top'.">
-    Description: %1$s
-  </string>  
   <string name="marker_detail_marker_type"
     translation_description="In the marker detail page, the label for the marker type.
 
       %1$s marker type. E.g., 'building'.">
     Marker type: %1$s
-  </string>  
+  </string>
   <string name="marker_detail_statistics_title"
     translation_description="In the marker detail page, the title for the statistics section
-      indicating that the data below are since the last Statistics marker.">
-    Since last Statistics marker:
-  </string>  
+      indicating that the data below are since the last split marker.">
+    Since last split marker:
+  </string>
   <string name="marker_edit_marker_type"
     translation_description="In the marker edit page, the label for the marker type, including some
-      exmaples.">
+      examples.">
     Marker type (e.g. building, pothole...)
   </string>
   <string name="marker_edit_marker_type_hint"
     translation_description="In the marker edit page, the hint in the marker type text field when it
       is empty.">
     Marker type
-  </string> 
+  </string>
   <string name="marker_label_end"
     translation_description="When inserting a marker to indicate the end of a track, the marker's
       name. E.g., 'track_name (End)'.
@@ -998,20 +975,19 @@ limitations under the License.
     translation_description="The message when the marker list is empty.">
     You don\'t have any markers.
   </string>
-  <string name="marker_statistics_name_format"
-    translation_description="When adding a statistics marker, the string format for the default
-      name.
-
-      %1$d: number. E.g., '1'.">
-    Statistics %1$d
-  </string>
   <string name="marker_name_format"
     translation_description="When adding a marker, the string format for the default name.
 
       %1$d: number. E.g., '1'.">
     Marker %1$d
   </string>
-      
+  <string name="marker_split_name_format"
+    translation_description="When adding a split marker, the string format for the default name.
+
+      %1$d: number. E.g., '1'.">
+    Split %1$d
+  </string>
+
   <!-- Menu Items -->
   <string name="menu_aggregated_statistics"
     translation_description="In the menu, to go to the aggregated statistics page.">
@@ -1098,31 +1074,23 @@ limitations under the License.
     translation_description="In the menu, to share a track.">
     Share
   </string>
-  <string name="menu_share_file"
-    translation_description="Under the 'Share' menu option, the option to share a track as a
-      certain file format.
-
-      %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
-    %1$s file
-  </string>
-  <string name="menu_share_fusion_table_url"
-    translation_description="Under the 'Share' menu option, the option to save a track to Google
-      Fusion Tables and share the Fusion Table URL with friends. 'Fusion Table URL' in this context
-      means a Google Fusion Table URL.">
-    Fusion Table URL
-  </string>
-  <string name="menu_share_map_url"
-    translation_description="Under the 'Share' menu option, the option to save a track to Google
-      Maps and share the Map URL with friends. 'Map URL' in this context means a Google Map URL.">
-    Map URL
-  </string>
   <string name="menu_show_on_map"
-    translation_description="In the menu, to show a marker on map.">
+    translation_description="In the menu, to show a track or a marker on the map.">
     Show on map
+  </string>
+  <string name="menu_split_frequency"
+    translation_description="In the menu, to configure the split frequency, how frequent to insert
+      a split marker.">
+    Split frequency
   </string>
   <string name="menu_stop_recording"
     translation_description="In the menu, to stop recording a track.">
     Stop recording
+  </string>
+  <string name="menu_voice_frequency"
+    translation_description="In the menu, to configure the voice frequency, how frequent to announce
+      status.">
+    Voice frequency
   </string>
 
   <!-- My Location -->
@@ -1183,63 +1151,69 @@ limitations under the License.
     write data to My Tracks and start/stop My Tracks recording
   </string>
 
-  <!-- Save All -->
-  <string name="save_all_error"
-    translation_description="When saving all the tracks to the SD card, a toast message indicating
-      error.">
-    Unable to save.
-  </string>
-  <string name="save_all_progress_message"
-    translation_description="When saving all the tracks to the SD card, the progress message.">
-    Saving all tracks...
-  </string>
-  <string name="save_all_success"
-    translation_description="When saving all the tracks to the SD card, a toast message indicating
-      success.">
-    Save finished.
-  </string>
-  
   <!-- SD Card -->
   <string name="sd_card_canceled"
-    translation_description="When exporting a track to the SD card, a message indicating that the
-      export operation was canceled.">
+    translation_description="When importing/saving to the SD card, the message indicating that the
+      operation was canceled.">
     The operation was canceled.
   </string>
-  <string name="sd_card_error_create_dir"
-    translation_description="When writing to the SD card, the error message when not able to create
-      a directory on the SD card.">
-    Unable to create a directory on the SD card.
-  </string>
   <string name="sd_card_error_no_storage"
-    translation_description="When writing to the SD card, the error message when the SD card is not
-      found.">
-    No external storage was found. Make sure that a SD card is inserted and that your phone is not
-    mounted to a computer.
+    translation_description="When importing/saving to the SD card, the error message indicating that
+      no SD card is found.">
+    No SD card is found.
   </string>
-  <string name="sd_card_error_read_file"
-    translation_description="When reading from the SD card, the error message when not able to read
-      a file.">
-    Unable to read from a file.
+  <string name="sd_card_import_error"
+    translation_description="When importing from the SD card, the error message indicating not able
+      to import.">
+    Unable to import from SD card.
   </string>
-  <string name="sd_card_error_write_file"
-    translation_description="When writing to the SD card, the error message when not able to write a
-      file.">
-    Unable to write to a file.
+  <string name="sd_card_import_error_no_file"
+    translation_description="When importing from the SD card, the error message indicating that no
+      file is found on a SD card directory.
+
+      %1$s: the SD card directory. E.g., '/mnt/sdcard/MyTracks/gpx/'.">
+    No file found in %1$s.
+  </string>  
+  <string name="sd_card_import_progress_message"
+    translation_description="When importing from the SD card, the progress message.">
+    Importing from SD card...
   </string>
-  <string name="sd_card_progress_message"
-    translation_description="When saving a track to the SD card, the progress message.">
-    Saving to the SD card...
+  <string name="sd_card_import_success"
+    translation_description="When importing from the SD card, the success message.">
+    Finished importing from SD card.
   </string>
-  <string name="sd_card_success_read_file"
-    translation_description="When reading from the SD card, the success message when finish reading
-      from the SD card.">
-    Finished reading from the SD card.
+  <string name="sd_card_import_success_count"
+    translation_description="When importing from the SD card, the success message with a count of
+      the imported files.
+
+      %1$d the number of successfully imported tracks. E.g., '1'.
+      %2$s the number of files in the SD card. E.g., '1 GPX file' or '2 GPX files'.
+      %3$s the SD card directory. E.g., '/mnt/sdcard/MyTracks/gpx/'.">
+    Imported %1$d of %2$s from %3$s.
   </string>
-  <string name="sd_card_success_write_file"
-    translation_description="When writing to the SD card, the success message when finish writing to
-      the SD card.">
-    Finished writing to the SD card.
+  <string name="sd_card_save_error"
+    translation_description="When saving to the SD card, the error message indicating not able to
+      save.">
+    Unable to save to SD card.
   </string>
+  <string name="sd_card_save_error_create_dir"
+    translation_description="When saving to the SD card, the error message indicating not able to
+      create a directory on the SD card.">
+    Unable to create a directory on SD card.
+  </string>
+  <string name="sd_card_save_error_no_track"
+    translation_description="When saving to the SD card, the error message indicating that no track
+      is available.">
+    You have no track to save to SD card.
+  </string>
+  <string name="sd_card_save_progress_message"
+    translation_description="When saving to the SD card, the progress message.">
+    Saving to SD card...
+  </string>
+    <string name="sd_card_save_success"
+    translation_description="When saving to the SD card, the success message">
+    Finished saving to SD card.
+  </string> 
 
   <!-- Search -->
   <string name="search_global_description"
@@ -1333,11 +1307,6 @@ limitations under the License.
 
       %1$s: service name. 'Google Maps', 'Google Fusion Tables', or 'Google Docs'.">
     Sending to %1$s...
-  </string>
-  <string name="send_google_result_share_url"
-    translation_description="When sending a track to Google, in the result dialog, the button on
-      the bottom to share with friends the URL of the uploaded track.">
-    Share track URL
   </string>
   <string name="send_google_send_now"
     translation_description="When sending a track to Google, under the 'Send to...' dialog, the
@@ -1500,13 +1469,13 @@ limitations under the License.
     translation_description="In the 'Chart' settings, the option to display the x axis by
       distance.">
     By distance
-  </string>  
+  </string>
   <string name="settings_chart_by_time"
     translation_description="In the 'Chart' settings, the option to display the x axis by time.">
     By time
   </string>
   <string name="settings_chart_x_axis"
-    translation_description="In the 'Chart' setttings, the option to change the x axis display,
+    translation_description="In the 'Chart' settings, the option to change the x axis display,
       either by distance or by time.">
     X axis
   </string>
@@ -1573,7 +1542,7 @@ limitations under the License.
       track recording.">
     Not available while recording a track.
   </string>
-  
+
   <!-- Settings Recording -->
   <string name="settings_recording"
     translation_description="In the 'Settings' page, the option to change the track recording
@@ -1647,19 +1616,6 @@ limitations under the License.
       recordings of your position.">
     Smallest time interval between two recordings of your position.
   </string>
-  <string name="settings_recording_marker"
-    translation_description="In the 'Recording' settings, the dropdown option to configure the time
-      or distance a new marker will be inserted.
-
-      Character limit: ~23 (1 line)">
-    Marker
-  </string>
-  <string name="settings_recording_marker_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Marker'
-      dropdown option explaining that it configures the time or distance after which a new marker
-      will be inserted.">
-    Time/distance after which a new marker will be inserted.
-  </string>
   <string name="settings_recording_track_distance"
     translation_description="In the 'Recording' settings, the dropdown option to configure the
       distance between two tracks.
@@ -1707,20 +1663,7 @@ limitations under the License.
       list explaining that it chooses the default track name format.">
     Default track name
   </string>
-  <string name="settings_recording_voice"
-    translation_description="In the 'Recording' settings, the dropdown option to configure the voice
-      announcement frequency.
 
-      Character limit: ~23 (1 line)">
-    Voice
-  </string>
-  <string name="settings_recording_voice_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Voice'
-      dropdown option explaining that it configures the time or distance between two voice
-      announcements.">
-    Time/distance between two voice announcements.
-  </string>
-  
   <!-- Settings Reset -->
   <string name="settings_reset"
     translation_description="In the 'Settings' page, the option to reset everything to the defaults.
@@ -1745,7 +1688,7 @@ limitations under the License.
       explaining reverting all the settings to the default values.">
     Revert all your settings to the default values.
   </string>
-  
+
   <!-- Settings Sensor -->
   <string name="settings_sensor"
     translation_description="In the 'Settings' page, the option to change the sensor related
@@ -1870,7 +1813,7 @@ limitations under the License.
       Character limit: ~26 (1 line)">
     Unpair SRM ANT+ bridge
   </string>
-  
+
   <!-- Settings Sharing -->
   <string name="settings_sharing"
     translation_description="In the 'Settings' page, the option to change the track sharing related
@@ -1878,6 +1821,14 @@ limitations under the License.
 
       Character limit: ~26 (1 line)">
     Sharing
+  </string>
+  <string name="settings_sharing_account"
+    translation_description="In the 'Sharing' settings, the option to switch account.">
+    Switch account
+  </string>
+  <string name="settings_sharing_account_summary"
+    translation_description="In the 'Sharing' settings, the summary for 'Switch account'.">
+    Switch account used when sending a track to Google.
   </string>
   <string name="settings_sharing_allow_access"
     translation_description="In the 'Sharing' settings, the checkbox option to allow third party
@@ -1925,24 +1876,11 @@ limitations under the License.
       be public, as opposed to unlisted.">
     Make new maps created in Google Maps public.
   </string>
-  <string name="settings_sharing_url_only"
-    translation_description="In the 'Sharing' settings, the checkbox option to share only the URL,
-      without any descriptive text, when sharing a URL with friends.
 
-      Character limit: ~23 (1 line)">
-    Share only URL
-  </string>
-  <string name="settings_sharing_url_only_summary_off"
-    translation_description="In the 'Sharing' settings, the summary for the 'Share only URL'
-      checkbox option when it is unchecked explaining that it will include descriptive text when
-      sharing a URL with friends.">
-    Include descriptive text when sharing a URL with friends.
-  </string>
-  <string name="settings_sharing_url_only_summary_on"
-    translation_description="In the 'Sharing' settings, the summary for the 'Share only URL'
-      checkbox option when it is checked explaining that it will remove any descriptive text when
-      sharing a URL with friends.">
-   Remove any descriptive text when sharing a URL with friends.
+  <!-- Settings Split -->
+  <string name="settings_split_frequency_title"
+    translation_description="In title of the 'Split frequency' dialog.">
+    Time/distance between two split markers
   </string>
 
   <!-- Settings Stats -->
@@ -1986,7 +1924,7 @@ limitations under the License.
     Time measurement
   </string>
   <string name="settings_stats_units_imperial"
-    translation_description="In the 'Stats' setttings, the option to use imperial units, with
+    translation_description="In the 'Stats' settings, the option to use imperial units, with
       examples.">
     Imperial (mi, ft)
   </string>
@@ -1994,33 +1932,52 @@ limitations under the License.
     translation_description="In the 'Stats' settings, the option to use metric units, with
       examples.">
     Metric (km, m)
-  </string>  
+  </string>
   <string name="settings_stats_units_title"
     translation_description="In the 'Stats' settings page, the option to change the preferred units,
       either metric (km) or imperial (mi).">
     Preferred units
   </string>
 
-  <!-- Share Track -->
-  <string name="share_track_file_body_format"
-    translation_description="When sharing a track file with friends, the body of the message.">
-    I think you might be interested in this track.\n\nTo view this track use Google Earth or other
-    mapping software.
+  <!-- Settings Voice -->
+  <string name="settings_voice_frequency_title"
+    translation_description="The title of the 'Voice frequency' dialog.">
+    Time/distance between two voice announcements
   </string>
+
+  <!-- Share Track -->
   <string name="share_track_picker_title"
-    translation_description="When sharing a track URL with friends, the title on the picker to ask
-      the user which application he wants to use.">
-    Share track using:
+    translation_description="When sharing a track with friends, the title on the picker to ask
+      the user to select an application.">
+    Select an application
+  </string>
+  <string name="share_track_share_file"
+    translation_description="After saving a track to the SD card, the button on the result dialog to
+      share the saved track file with friends.">
+    Share track file
+  </string>
+  <string name="share_track_share_file_body"
+    translation_description="When sharing a track file with friends, the body of the message.
+    
+    %1$s: track description.">
+    I think you might be interested in this track.\n\nTo view this track, use Google Earth or other
+    mapping software.\n\n%1$s
+  </string>
+  <string name="share_track_share_url"
+    translation_description="After sending a track to Google, the button on the result dialog to
+      share the uploaded track URL with friends.">
+    Share track URL
+  </string>
+  <string name="share_track_share_url_body"
+    translation_description="When sharing a track URL with friends, the body of the message.
+
+      %1$s: url. E.g, 'https://maps.google.com/maps'.
+      %2$s: track description.">
+    I think you might be interested in this track:\n\n%1$s\n\n%2$s
   </string>
   <string name="share_track_subject"
     translation_description="When sharing a track with friends, the subject line.">
     I would like to share a track with you
-  </string>
-  <string name="share_track_url_body_format"
-    translation_description="When sharing a track URL with friends, the body of the message.
-
-      %1$s: url. E.g, 'https://maps.google.com/maps'.">
-    I think you might be interested in this track:\n\n%1$s
   </string>
 
   <!-- Stats Page -->
@@ -2124,11 +2081,11 @@ limitations under the License.
   <string name="track_detail_stats_tab"
     translation_description="In the track detail page, the title of the tab showing the stats.">
     Stats
-  </string> 
+  </string>
   <string name="track_detail_title_recording"
     translation_description="In the track detail page, the title when recording.">
     Recording...
-  </string> 
+  </string>
   <string name="track_edit_activity_type"
     translation_description="In the page to edit a track, the label for the text field to edit the
       activity type, including some examples of activity types.">
@@ -2361,10 +2318,10 @@ limitations under the License.
   </string>
   <string name="value_integer_percent"
      translation_description="To display a value in percent like 2 %.
-     
+
      %1$d: an integer value. E.g., '2'">
-    %1$d %%    
-  </string> 
+    %1$d %%
+  </string>
   <string name="value_integer_second"
     translation_description="In a setting picker, the string format to display an integer value in
       seconds (s).
@@ -2388,11 +2345,11 @@ limitations under the License.
   <string name="value_coordinate_degree"
     translation_description="To display a latitude or longitude coordinate in degree. E.g.,
       2.2 \u00B0. \u00B0 is the unicode value for the degree symbol.
-          
+
     %1$s: a string value of the coordinate. E.g., '2.2'">
     %1$s \u00B0
   </string>
-  
+
   <!-- Voice -->
   <string name="voice_hours_few"
     translation_description="For voice announcement, to say 'few' hours.
@@ -2902,10 +2859,10 @@ limitations under the License.
   <string name="welcome_message"
     translation_description="The message of the welcome dialog.">
     Use My Tracks while you run, bike, hike, or do anything outdoor to record your path. While
-    recording, you can visualize your track and watch live statistics. You can also add
-    markers, have markers inserted periodically, or hear automatic voice announcements of
-    your progress. For recorded tracks, you can play them on Google Earth, share with friends, or
-    upload to Google Maps, Google Fusion Tables, or Google Docs.    
+    recording, you can visualize your track and watch live statistics. You can also add markers,
+    have split markers inserted periodically, or hear periodic announcements of your progress.
+    For recorded tracks, you can play them on Google Earth, share with friends, or upload to Google
+    Maps, Google Fusion Tables, or Google Docs.
   </string>
   <string name="welcome_title"
     translation_description="The title of the welcome dialog.">

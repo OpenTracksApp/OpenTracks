@@ -31,9 +31,10 @@ public interface DescriptionGenerator {
    * @param track the track
    * @param distances a vector of distances to generate the elevation chart
    * @param elevations a vector of elevations to generate the elevation chart
+   * @param html true to output html, false to output plain text
    */
   public String generateTrackDescription(
-      Track track, Vector<Double> distances, Vector<Double> elevations);
+      Track track, Vector<Double> distances, Vector<Double> elevations, boolean html);
 
   /**
    * Generate a waypoint description.
