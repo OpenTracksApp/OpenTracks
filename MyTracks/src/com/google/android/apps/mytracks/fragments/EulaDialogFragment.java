@@ -35,6 +35,7 @@ public class EulaDialogFragment extends DialogFragment {
 
   public static final String EULA_DIALOG_TAG = "eulaDialog";
   private static final String KEY_HAS_ACCEPTED = "hasAccepted";
+  private static final String GOOGLE_URL = "m.google.com";
 
   /**
    * Creates a new instance of {@link EulaDialogFragment}.
@@ -61,7 +62,7 @@ public class EulaDialogFragment extends DialogFragment {
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     boolean hasAccepted = getArguments().getBoolean(KEY_HAS_ACCEPTED);
     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-        .setMessage(EulaUtils.getEulaMessage(getActivity()))
+        .setMessage(getEulaText())
         .setTitle(R.string.eula_title);
 
     if (hasAccepted) {
@@ -84,11 +85,25 @@ public class EulaDialogFragment extends DialogFragment {
     }
     return builder.create();
   }
-  
+
   /**
    * Exits the application.
    */
   private void exitApp() {
     getActivity().finish();
+  }
+
+  /**
+   * Gets the EULA text.
+   * 
+   */
+  private String getEulaText() {
+    return getString(R.string.eula_date) 
+        + "\n\n"
+        + getString(R.string.eula_body, GOOGLE_URL) 
+        + "\n\n" 
+        + getString(R.string.eula_footer, GOOGLE_URL) 
+        + "\n\n" 
+        + getString(R.string.eula_copyright_year);
   }
 }
