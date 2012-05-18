@@ -65,6 +65,14 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
     // There is no track now.
     trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
     assertEquals(0, trackListView.get(0).getCount());
+    // Export when there is no track.
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_save_all), true);
+    EndToEndTestUtils.SOLO
+        .clickOnText(String.format(activityMyTracks.getString(R.string.menu_save_format),
+            EndToEndTestUtils.GPX.toUpperCase()));
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.sd_card_save_error_no_track)));
+    EndToEndTestUtils.SOLO.clickLongOnText(activityMyTracks.getString(R.string.generic_ok));
   }
 
   /**

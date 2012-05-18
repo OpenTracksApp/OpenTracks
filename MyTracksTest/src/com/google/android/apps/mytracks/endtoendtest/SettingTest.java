@@ -68,6 +68,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_ok));
     // Change a setting of Map.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
+    instrumentation.waitForIdleSync();
     // Rotate on a sub setting page.
     EndToEndTestUtils.rotateAllActivities();
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks
@@ -75,19 +76,18 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     ArrayList<CheckBox> displayCheckBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
     boolean useMetric = displayCheckBoxs.get(0).isChecked();
     EndToEndTestUtils.SOLO.clickOnCheckBox(0);
+    instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.goBack();
     // Change a setting of sharing.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_sharing));
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.settings_sharing_allow_access));
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.settings_sharing_map_public), 1, 5000));
     ArrayList<CheckBox> sharingCheckBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
     boolean newMapsPublic = sharingCheckBoxs.get(0).isChecked();
     EndToEndTestUtils.SOLO.clickOnCheckBox(0);
-    // Rotate on a sub setting page when the value of a checkbox is changed.
     instrumentation.waitForIdleSync();
-    EndToEndTestUtils.rotateAllActivities();
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.settings_sharing_allow_access));
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(
+        activityMyTracks.getString(R.string.settings_sharing_map_public), 1, 5000));
     assertEquals(!newMapsPublic, sharingCheckBoxs.get(0).isChecked());
     EndToEndTestUtils.SOLO.goBack();
 
