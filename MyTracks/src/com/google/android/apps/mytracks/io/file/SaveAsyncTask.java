@@ -173,6 +173,10 @@ public class SaveAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         return false;
       }
       int count = cursor.getCount();
+      if (count == 0) {
+        messageId = R.string.sd_card_save_error_no_track;
+        return false;
+      }
       int idIndex = cursor.getColumnIndexOrThrow(TracksColumns._ID);
       for (int i = 0; i < count; i++) {
         if (isCancelled()) {

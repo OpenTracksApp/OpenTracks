@@ -581,6 +581,11 @@ limitations under the License.
     translation_description="In the 'Terms of Service' dialog, the button to accept.">
     Accept
   </string>
+  <string name="eula_copyright_year"
+    translation_description="The copyright year in the 'Terms of Service'. See
+      http://m.google.com/toscountry. \u00A9 is the unicode value for the copyright symbol."> 
+    \u00A92012
+  </string>
   <string name="eula_decline"
     translation_description="In the 'Terms of Service' dialog, the button to decline.">
     Decline
