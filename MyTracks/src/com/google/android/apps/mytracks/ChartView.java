@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.ChartValueSeries.ZoomSettings;
+import com.google.android.apps.mytracks.ChartValueSeries.YAxisDimension;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.ExtremityMonitor;
 import com.google.android.apps.mytracks.util.IntentUtils;
@@ -208,7 +208,7 @@ public class ChartView extends View {
         new ChartValueSeries(context,
                              R.color.elevation_fill,
                              R.color.elevation_border,
-                             new ZoomSettings(MAX_INTERVALS,
+                             new YAxisDimension(MAX_INTERVALS, Integer.MIN_VALUE, Integer.MAX_VALUE,
                                  new int[] {5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000}),
                              R.string.stats_elevation);
 
@@ -216,27 +216,27 @@ public class ChartView extends View {
         new ChartValueSeries(context,
                              R.color.speed_fill,
                              R.color.speed_border,
-                             new ZoomSettings(MAX_INTERVALS, 0, Integer.MIN_VALUE,
+                             new YAxisDimension(MAX_INTERVALS, 0, Integer.MAX_VALUE,
                                  new int[] {1, 5, 10, 20, 50}),
                              R.string.stats_speed);
     series[POWER_SERIES] =
         new ChartValueSeries(context,
                              R.color.power_fill,
                              R.color.power_border,
-                             new ZoomSettings(MAX_INTERVALS, 0, 1000, new int[] {5, 50, 100, 200}),
+                             new YAxisDimension(MAX_INTERVALS, 0, 1000, new int[] {5, 50, 100, 200}),
                              R.string.sensor_state_power);
     series[CADENCE_SERIES] =
         new ChartValueSeries(context,
                              R.color.cadence_fill,
                              R.color.cadence_border,
-                             new ZoomSettings(MAX_INTERVALS, 0, Integer.MIN_VALUE,
+                             new YAxisDimension(MAX_INTERVALS, 0, Integer.MAX_VALUE,
                                  new int[] {5, 10, 25, 50}),
                              R.string.sensor_state_cadence);
     series[HEART_RATE_SERIES] =
         new ChartValueSeries(context,
                              R.color.heartrate_fill,
                              R.color.heartrate_border,
-                             new ZoomSettings(MAX_INTERVALS, 0, Integer.MIN_VALUE,
+                             new YAxisDimension(MAX_INTERVALS, 0, Integer.MAX_VALUE,
                                  new int[] {25, 50}),
                              R.string.sensor_state_heart_rate);
   }
@@ -819,7 +819,7 @@ public class ChartView extends View {
     desiredY = topBorder + effectiveHeight + FONT_HEIGHT / 2 - desiredY - 1;
     Paint p = new Paint(cvs.getLabelPaint());
     p.setTextAlign(Align.RIGHT);
-    String text = cvs.getFormat().format(y);
+    String text = cvs.getNumberFormat().format(y);
     c.drawText(text, x, desiredY, p);
     return p.measureText(text);
   }
