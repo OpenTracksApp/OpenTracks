@@ -71,11 +71,9 @@ public class StatsSettingsActivity extends AbstractSettingsActivity {
         getString(R.string.report_speed_key));
     boolean metric = PreferencesUtils.getBoolean(
         this, R.string.metric_units_key, PreferencesUtils.METRIC_UNITS_DEFAULT);
-    reportSpeedCheckBoxPreference.setSummaryOn(
-        metric ? getString(R.string.settings_stats_rate_speed_metric)
-            : getString(R.string.settings_stats_rate_speed_imperial));
-    reportSpeedCheckBoxPreference.setSummaryOff(
-        metric ? getString(R.string.settings_stats_rate_pace_metric)
-            : getString(R.string.settings_stats_rate_pace_imperial));
+    reportSpeedCheckBoxPreference.setSummaryOn(metric ? getString(R.string.description_speed_metric)
+        : getString(R.string.description_speed_imperial));
+    reportSpeedCheckBoxPreference.setSummaryOff(metric ? getString(R.string.description_pace_metric)
+        : getString(R.string.description_pace_imperial));
   }
 }

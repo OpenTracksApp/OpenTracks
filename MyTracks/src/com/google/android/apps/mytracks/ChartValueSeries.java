@@ -22,195 +22,93 @@ import com.google.common.annotations.VisibleForTesting;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 
 import java.text.NumberFormat;
 
 /**
- * This class encapsulates the meta data for one series of chart values.
- *
+ * This class encapsulates the meta data for one series of the chart values.
+ * 
  * @author Sandor Dornbush
  */
 public class ChartValueSeries {
 
   private static final float STROKE_WIDTH = 2f;
 
+  private final int absoluteMin;
+  private final int absoluteMax;
+  private final int[] intervalValues;
+  private final int metricTitleId;
+  private final int imperialTitleId;
+  private final Paint fillPaint;
+  private final Paint strokePaint;
+  private final Paint titlePaint;
+  private final Paint markerPaint;
   private final ExtremityMonitor extremityMonitor;
   private final NumberFormat numberFormat;
   private final Path path;
-  private final Paint fillPaint;
-  private final Paint strokePaint;
-  private final Paint labelPaint;
-  private final YAxisDimension markingInterval;
-  private String title;
-
-  private boolean enabled = true;
+  
   private int interval = 1;
-  private int effectiveMin = 0;
-  private int effectiveMax = 1;
+  private int minMarkerValue = 0;
+  private int maxMarkerValue = interval * ChartView.Y_AXIS_INTERVALS;
+  private boolean enabled = true;
 
   /**
-   * This class to calculates the y axis dimension, interval, effective min, and
-   * effective max.
-   */
-  public static class YAxisDimension {
-    private final int numberOfIntervals;
-    private final int absoluteMin;
-    private final int absoluteMax;
-    private final int[] intervalValues;
-
-    /**
-     * Constructor.
-     *
-     * @param numberOfIntervals the number of intervals
-     * @param absoluteMin the absolute minimum value
-     * @param absoluteMax the absolute maximum value
-     * @param intervalValues the list of interval values
-     */
-    public YAxisDimension(
-        int numberOfIntervals, int absoluteMin, int absoluteMax, int[] intervalValues) {
-      this.numberOfIntervals = numberOfIntervals;
-      this.absoluteMin = absoluteMin;
-      this.absoluteMax = absoluteMax;
-      this.intervalValues = intervalValues;
-    }
-
-    /**
-     * Gets the y axis dimension. Returns an array of int[3], containing interval, effectiveMin, 
-     * and effectiveMax. 
-     * 
-     * @param min the min value
-     * @param max the max value
-     */
-    public int[] getYAxisDimension(double min, double max) {
-      min = Math.max(min, absoluteMin);
-      max = Math.min(max, absoluteMax);
-      int interval = 0;
-      int effectiveMin = 0;
-      for (int i = 0; i < intervalValues.length; i++) {
-        interval = intervalValues[i];
-        effectiveMin = getEffetiveMin(min, interval);
-        double targetInterval = (max - effectiveMin) / numberOfIntervals;
-        if (interval >= targetInterval) {
-          break;
-        }
-      }
-      int effectiveMax = getEffectiveMax(max, interval);
-      return new int[] { interval, effectiveMin, effectiveMax };
-    }
-
-    /**
-     * Gets the effective min value.
-     * 
-     * @param min the min value
-     * @param interval the interval
-     */
-    private int getEffetiveMin(double min, int interval) {
-      int value = (int) (min / interval) * interval;
-      // value > min if min is negative
-      if (value > min) {
-        return value - interval;
-      }
-      return value;
-    }
-
-    /**
-     * Gets the effective max value
-     * 
-     * @param max the max value
-     * @param interval the interval
-     */
-    private int getEffectiveMax(double max, int interval) {
-      return ((int) (max / interval)) * interval + interval;
-    }
-  }
-
-  /**
-   * Constructs a new chart value series.
-   *
+   * Constructor.
+   * 
    * @param context the context
+   * @param absoluteMin the absolute min value
+   * @param absoluteMax the absolute max value
+   * @param intervalValues the list of interval values
+   * @param metricTitleId the metric title id
+   * @param imperialTitleId the imperial title id
    * @param fillColor the fill color
    * @param strokeColor the stroke color
-   * @param yAxisDimension the marking interval
-   * @param titleId the title id
    */
-  public ChartValueSeries(Context context, int fillColor, int strokeColor,
-      YAxisDimension yAxisDimension, int titleId) {
-    extremityMonitor = new ExtremityMonitor();
-    numberFormat = NumberFormat.getIntegerInstance();
-    path = new Path();
+  public ChartValueSeries(Context context, int absoluteMin, int absoluteMax, int[] intervalValues,
+      int metricTitleId, int imperialTitleId, int fillColor, int strokeColor) {
+    this.absoluteMin = absoluteMin;
+    this.absoluteMax = absoluteMax;
+    this.intervalValues = intervalValues;
+    this.metricTitleId = metricTitleId;
+    this.imperialTitleId = imperialTitleId;
+
     fillPaint = new Paint();
     fillPaint.setStyle(Style.FILL);
     fillPaint.setColor(context.getResources().getColor(fillColor));
     fillPaint.setAntiAlias(true);
-    if (strokeColor != -1) {
-      strokePaint = new Paint();
-      strokePaint.setStyle(Style.STROKE);
-      strokePaint.setColor(context.getResources().getColor(strokeColor));
-      strokePaint.setAntiAlias(true);
-      // Make a copy of the stroke paint with the default thickness
-      labelPaint = new Paint(strokePaint);
-      strokePaint.setStrokeWidth(STROKE_WIDTH);
-    } else {
-      strokePaint = null;
-      labelPaint = fillPaint;
-    }
-    this.markingInterval = yAxisDimension;
-    title = context.getString(titleId);
+
+    strokePaint = new Paint();
+    strokePaint.setStyle(Style.STROKE);
+    strokePaint.setColor(context.getResources().getColor(strokeColor));
+    strokePaint.setAntiAlias(true);
+
+    // Make copies of the stroke paint with the default thickness
+    titlePaint = new Paint(strokePaint);
+    titlePaint.setTextSize(ChartView.LARGE_TEXT_SIZE);
+    titlePaint.setTextAlign(Align.CENTER);
+
+    markerPaint = new Paint(strokePaint);
+    markerPaint.setTextSize(ChartView.MEDIUM_TEXT_SIZE);
+    markerPaint.setTextAlign(Align.RIGHT);
+
+    // Set stroke paint thickness
+    strokePaint.setStrokeWidth(STROKE_WIDTH);
+
+    extremityMonitor = new ExtremityMonitor();
+    numberFormat = NumberFormat.getIntegerInstance();
+    path = new Path();
   }
 
   /**
-   * Returns true if the series has data.
+   * Sets the series enabled value.
+   * 
+   * @param enabled true to enable
    */
-  public boolean hasData() {
-    return extremityMonitor.hasData();
-  }
-  
-  /**
-   * Updates the series with a new value.
-   *
-   * @param value the new value
-   */
-  public void update(double value) {
-    extremityMonitor.update(value);
-  }
-  
-  /**
-   * Gets the number format for the series.
-   */
-  public NumberFormat getNumberFormat() {
-    return numberFormat;
-  }
-  
-  /**
-   * Gets the path.
-   */
-  public Path getPath() {
-    return path;
-  }
-
-  /**
-   * Gets the label paint.
-   */
-  public Paint getLabelPaint() {
-    return labelPaint;
-  }
-  
-  /**
-   * Gets the title.
-   */
-  public String getTitle() {
-    return title;
-  }
-
-  /**
-   * Sets the title.
-   *
-   * @param title the title
-   */
-  public void setTitle(String title) {
-    this.title = title;
+  public void setEnabled(boolean enabled) {
+    this.enabled = enabled;
   }
 
   /**
@@ -221,65 +119,144 @@ public class ChartValueSeries {
   }
 
   /**
-   * Sets the enabled value.
-   *
-   * @param enabled true to enable
+   * Returns true if the series has data.
    */
-  public void setEnabled(boolean enabled) {
-    this.enabled = enabled;
+  public boolean hasData() {
+    return extremityMonitor.hasData();
   }
-  
+
+  /**
+   * Updates the series with a new value.
+   * 
+   * @param value the new value
+   */
+  public void update(double value) {
+    extremityMonitor.update(value);
+  }
+
+  /**
+   * Gets the path.
+   */
+  public Path getPath() {
+    return path;
+  }
+
   /**
    * Draws the path on canvas.
-   *
+   * 
    * @param canvas the canvas
    */
   public void drawPath(Canvas canvas) {
     canvas.drawPath(path, fillPaint);
-    if (strokePaint != null) {
-      canvas.drawPath(path, strokePaint);
-    }
+    canvas.drawPath(path, strokePaint);
   }
 
   /**
    * Updates the y axis dimension.
    */
   public void updateDimension() {
-    boolean hasData = extremityMonitor.hasData();
-    double min = hasData ? extremityMonitor.getMin() : 0.0;
-    double max = hasData ? extremityMonitor.getMax() : 1.0;
-    int[] dimension = markingInterval.getYAxisDimension(min, max);
-    interval = dimension[0];
-    effectiveMin = dimension[1];
-    effectiveMax = dimension[2];
+    double min = hasData() ? extremityMonitor.getMin() : 0.0;
+    double max = hasData() ? extremityMonitor.getMax() : 1.0;
+    min = Math.max(min, absoluteMin);
+    max = Math.min(max, absoluteMax);
+    interval = getInterval(min, max);
+    minMarkerValue = getMinMarkerValue(min, interval);
+    maxMarkerValue = minMarkerValue + interval * ChartView.Y_AXIS_INTERVALS;
   }
 
   /**
-   * Gets the y axis interval value.
+   * Gets the interval value.
+   * 
+   * @param min the min value
+   * @param max the max value
+   */
+  private int getInterval(double min, double max) {
+    for (int i = 0; i < intervalValues.length; i++) {
+      int intervalValue = intervalValues[i];
+      int minValue = getMinMarkerValue(min, intervalValue);
+      double targetInterval = (max - minValue) / ChartView.Y_AXIS_INTERVALS;
+      if (intervalValue >= targetInterval) {
+        return intervalValue;
+      }
+    }
+    // Return the largest interval
+    return intervalValues[intervalValues.length - 1];
+  }
+
+  /**
+   * Gets the min marker value.
+   * 
+   * @param min the min series value
+   * @param intervalValue the interval value
+   */
+  private int getMinMarkerValue(double min, int intervalValue) {
+    // Round down to the nearest intervalValue
+    int value = ((int) (min / intervalValue)) * intervalValue;
+    // value > min if min is negative
+    if (value > min) {
+      return value - intervalValue;
+    }
+    return value;
+  }
+
+  /**
+   * Gets the interval value.
    */
   public int getInterval() {
     return interval;
   }
 
   /**
-   * Gets the minimum value.
+   * Gets the minimum marker value.
    */
-  public int getMin() {
-    return effectiveMin;
+  public int getMinMarkerValue() {
+    return minMarkerValue;
   }
 
   /**
-   * Gets the maximum value.
+   * Gets the maximum marker value.
    */
   @VisibleForTesting
-  int getMax() {
-    return effectiveMax;
+  int getMaxMarkerValue() {
+    return maxMarkerValue;
   }
 
   /**
-   * Gets the maximum label length.
+   * Gets the title id.
    */
-  public int getMaxLabelLength() {
-    return Math.max(numberFormat.format(getMin()).length(), numberFormat.format(getMax()).length());
+  public int getTitleId(boolean metricUnits) {
+    return metricUnits ? metricTitleId : imperialTitleId;
+  }
+
+  /**
+   * Gets the title paint.
+   */
+  public Paint getTitlePaint() {
+    return titlePaint;
+  }
+
+  /**
+   * Gets the marker paint.
+   */
+  public Paint getMarkerPaint() {
+    return markerPaint;
+  }
+
+  /**
+   * Gets the largest marker.
+   */
+  public String getLargestMarker() {
+    String minMarker = numberFormat.format(getMinMarkerValue());
+    String maxMarker = numberFormat.format(getMaxMarkerValue());
+    return minMarker.length() >= maxMarker.length() ? minMarker : maxMarker;
+  }
+
+  /**
+   * Formats a marker value.
+   * 
+   * @param value the value
+   */
+  public String formatMarker(int value) {
+    return numberFormat.format(value);
   }
 }

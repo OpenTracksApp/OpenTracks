@@ -44,7 +44,8 @@ import android.widget.TextView;
 public class UploadResultActivity extends FragmentActivity {
 
   private static final String TAG = UploadResultActivity.class.getSimpleName();
-  private static final int DIALOG_RESULT_ID = 0;
+  @VisibleForTesting
+  static final int DIALOG_RESULT_ID = 0;
 
   private SendRequest sendRequest;
   private String shareUrl;

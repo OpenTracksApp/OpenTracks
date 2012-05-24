@@ -15,7 +15,6 @@
  */
 package com.google.android.apps.mytracks;
 
-import com.google.android.apps.mytracks.ChartValueSeries.YAxisDimension;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.ExtremityMonitor;
 import com.google.android.apps.mytracks.util.IntentUtils;
@@ -30,7 +29,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
-import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.drawable.Drawable;
@@ -50,6 +48,21 @@ import java.util.ArrayList;
  * @author Leif Hendrik Wilden
  */
 public class ChartView extends View {
+
+  public static final float LARGE_TEXT_SIZE = 22f;
+  public static final float MEDIUM_TEXT_SIZE = 18f;
+  public static final float SMALL_TEXT_SIZE = 14f;
+
+  public static final int Y_AXIS_INTERVALS = 5;
+
+  public static final int NUM_SERIES = 6;
+  public static final int ELEVATION_SERIES = 0;
+  public static final int SPEED_SERIES = 1;
+  public static final int PACE_SERIES = 2;
+  public static final int HEART_RATE_SERIES = 3;
+  public static final int CADENCE_SERIES = 4;
+  public static final int POWER_SERIES = 5;
+
   private static final int MIN_ZOOM_LEVEL = 1;
 
   /*
@@ -65,8 +78,6 @@ public class ChartView extends View {
    */
   private int zoomLevel = 1;
   private int maxZoomLevel = 10;
-
-  private static final int MAX_INTERVALS = 5;
 
   /*
    * Borders, margins, dimensions (in pixels):
@@ -109,15 +120,6 @@ public class ChartView extends View {
    */
   private double maxX = 1;
 
-  /**
-   * The various series.
-   */
-  public static final int ELEVATION_SERIES = 0;
-  public static final int SPEED_SERIES = 1;
-  public static final int POWER_SERIES = 2;
-  public static final int CADENCE_SERIES = 3;
-  public static final int HEART_RATE_SERIES = 4;
-  public static final int NUM_SERIES = 5;
   private ChartValueSeries[] series;
 
   private final ExtremityMonitor xMonitor = new ExtremityMonitor();
@@ -204,41 +206,54 @@ public class ChartView extends View {
     series = new ChartValueSeries[NUM_SERIES];
 
     // Create the value series.
-    series[ELEVATION_SERIES] =
-        new ChartValueSeries(context,
-                             R.color.elevation_fill,
-                             R.color.elevation_border,
-                             new YAxisDimension(MAX_INTERVALS, Integer.MIN_VALUE, Integer.MAX_VALUE,
-                                 new int[] {5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000}),
-                             R.string.stats_elevation);
-
-    series[SPEED_SERIES] =
-        new ChartValueSeries(context,
-                             R.color.speed_fill,
-                             R.color.speed_border,
-                             new YAxisDimension(MAX_INTERVALS, 0, Integer.MAX_VALUE,
-                                 new int[] {1, 5, 10, 20, 50}),
-                             R.string.stats_speed);
-    series[POWER_SERIES] =
-        new ChartValueSeries(context,
-                             R.color.power_fill,
-                             R.color.power_border,
-                             new YAxisDimension(MAX_INTERVALS, 0, 1000, new int[] {5, 50, 100, 200}),
-                             R.string.sensor_state_power);
-    series[CADENCE_SERIES] =
-        new ChartValueSeries(context,
-                             R.color.cadence_fill,
-                             R.color.cadence_border,
-                             new YAxisDimension(MAX_INTERVALS, 0, Integer.MAX_VALUE,
-                                 new int[] {5, 10, 25, 50}),
-                             R.string.sensor_state_cadence);
-    series[HEART_RATE_SERIES] =
-        new ChartValueSeries(context,
-                             R.color.heartrate_fill,
-                             R.color.heartrate_border,
-                             new YAxisDimension(MAX_INTERVALS, 0, Integer.MAX_VALUE,
-                                 new int[] {25, 50}),
-                             R.string.sensor_state_heart_rate);
+    series[ELEVATION_SERIES] = new ChartValueSeries(context,
+        Integer.MIN_VALUE,
+        Integer.MAX_VALUE,
+        new int[] {5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000},
+        R.string.description_elevation_metric,
+        R.string.description_elevation_imperial,
+        R.color.elevation_fill,
+        R.color.elevation_border);
+    series[SPEED_SERIES] = new ChartValueSeries(context,
+        0,
+        Integer.MAX_VALUE,
+        new int[] {1, 5, 10, 20, 50},
+        R.string.description_speed_metric,
+        R.string.description_speed_imperial,
+        R.color.speed_fill,
+        R.color.speed_border);
+    series[PACE_SERIES] = new ChartValueSeries(context,
+        0,
+        Integer.MAX_VALUE,
+        new int[] { 1, 2, 5, 10, 15, 20, 30, 60, 120 },
+        R.string.description_pace_metric,
+        R.string.description_pace_imperial,
+        R.color.pace_fill,
+        R.color.pace_border);
+    series[HEART_RATE_SERIES] = new ChartValueSeries(context,
+        0,
+        Integer.MAX_VALUE,
+        new int[] {25, 50},
+        R.string.description_sensor_heart_rate,
+        R.string.description_sensor_heart_rate,
+        R.color.heartrate_fill,
+        R.color.heartrate_border);
+    series[CADENCE_SERIES] = new ChartValueSeries(context,
+        0,
+        Integer.MAX_VALUE,
+        new int[] {5, 10, 25, 50},
+        R.string.description_sensor_cadence,
+        R.string.description_sensor_cadence,
+        R.color.cadence_fill,
+        R.color.cadence_border);
+    series[POWER_SERIES] = new ChartValueSeries(context,
+        0,
+        1000,
+        new int[] {5, 50, 100, 200},
+        R.string.description_sensor_power,
+        R.string.description_sensor_power,
+        R.color.power_fill,
+        R.color.power_border);
   }
 
   public void clearWaypoints() {
@@ -261,12 +276,6 @@ public class ChartView extends View {
    */
   public void setMetricUnits(boolean metricUnits) {
     this.metricUnits = metricUnits;
-  }
-
-  public void setReportSpeed(boolean reportSpeed, Context c) {
-    series[SPEED_SERIES].setTitle(c.getString(reportSpeed
-                                              ? R.string.stats_speed
-                                              : R.string.stats_pace));
   }
 
   private void addDataPointInternal(double[] theData) {
@@ -622,7 +631,8 @@ public class ChartView extends View {
     for (ChartValueSeries cvs : series) {
       if (cvs.isEnabled() && cvs.hasData()) {
         int x = (int) (w * (double) ++j / sections) + getScrollX();
-        c.drawText(cvs.getTitle(), x, topBorder, cvs.getLabelPaint());
+        c.drawText(
+            getContext().getString(cvs.getTitleId(metricUnits)), x, topBorder, cvs.getTitlePaint());
       }
     }
   }
@@ -719,7 +729,7 @@ public class ChartView extends View {
     int maxLength = 0;
     for (ChartValueSeries cvs : series) {
       if (cvs.isEnabled() && cvs.hasData()) {
-        maxLength += cvs.getMaxLabelLength();
+        maxLength += cvs.getLargestMarker().length();
       }
     }
     float density = getContext().getResources().getDisplayMetrics().density;
@@ -758,9 +768,9 @@ public class ChartView extends View {
   }
 
   private int getY(ChartValueSeries cvs, double y) {
-    int effectiveSpread = cvs.getInterval() * MAX_INTERVALS;
+    int effectiveSpread = cvs.getInterval() * Y_AXIS_INTERVALS;
     return topBorder + effectiveHeight
-        - (int) ((y - cvs.getMin()) * effectiveHeight / effectiveSpread);
+        - (int) ((y - cvs.getMinMarkerValue()) * effectiveHeight / effectiveSpread);
   }
 
   /** Draws the labels on the X axis into the given canvas. */
@@ -792,8 +802,8 @@ public class ChartView extends View {
   private float drawYLabels(ChartValueSeries cvs, Canvas c, int x) {
     int interval = cvs.getInterval();
     float maxTextWidth = 0;
-    for (int i = 0; i < MAX_INTERVALS; ++i) {
-      maxTextWidth = Math.max(maxTextWidth, drawYLabel(cvs, c, x, i * interval + cvs.getMin()));
+    for (int i = 0; i < Y_AXIS_INTERVALS; ++i) {
+      maxTextWidth = Math.max(maxTextWidth, drawYLabel(cvs, c, x, i * interval + cvs.getMinMarkerValue()));
     }
     return maxTextWidth;
   }
@@ -814,14 +824,13 @@ public class ChartView extends View {
 
   /** Draws a single label on the Y axis. */
   private float drawYLabel(ChartValueSeries cvs, Canvas c, int x, int y) {
-    int desiredY = (int) ((y - cvs.getMin()) * effectiveHeight /
-        (cvs.getInterval() * MAX_INTERVALS));
+    int desiredY = (int) ((y - cvs.getMinMarkerValue()) * effectiveHeight /
+        (cvs.getInterval() * Y_AXIS_INTERVALS));
     desiredY = topBorder + effectiveHeight + FONT_HEIGHT / 2 - desiredY - 1;
-    Paint p = new Paint(cvs.getLabelPaint());
-    p.setTextAlign(Align.RIGHT);
-    String text = cvs.getNumberFormat().format(y);
-    c.drawText(text, x, desiredY, p);
-    return p.measureText(text);
+    Paint markerPaint = cvs.getMarkerPaint();
+    String text = cvs.formatMarker(y);
+    c.drawText(text, x, desiredY, markerPaint);
+    return markerPaint.measureText(text);
   }
 
   /** Draws the actual X axis line and its label. */
@@ -844,8 +853,8 @@ public class ChartView extends View {
     canvas.drawLine(leftBorder, UNIT_BORDER + topBorder,
                     leftBorder, effectiveHeight + topBorder,
                     borderPaint);
-    for (int i = 1; i < MAX_INTERVALS; ++i) {
-      int y = i * effectiveHeight / MAX_INTERVALS + topBorder;
+    for (int i = 1; i < Y_AXIS_INTERVALS; ++i) {
+      int y = i * effectiveHeight / Y_AXIS_INTERVALS + topBorder;
       canvas.drawLine(leftBorder - 5, y, leftBorder, y, gridPaint);
     }
 
@@ -858,8 +867,8 @@ public class ChartView extends View {
   /** Draws the grid for the graph. */
   private void drawGrid(Canvas c) {
     float rightEdge = getX(maxX);
-    for (int i = 1; i < MAX_INTERVALS; ++i) {
-      int y = i * effectiveHeight / MAX_INTERVALS + topBorder;
+    for (int i = 1; i < Y_AXIS_INTERVALS; ++i) {
+      int y = i * effectiveHeight / Y_AXIS_INTERVALS + topBorder;
       c.drawLine(leftBorder, y, rightEdge, y, gridBarPaint);
     }
   }

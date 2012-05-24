@@ -451,12 +451,20 @@ limitations under the License.
       %2$.1f speed in miles per hour">
     Average speed: %1$.2f km/h (%2$.1f mi/h)
   </string>
+  <string name="description_elevation_imperial"
+    translation_description="Elevation in imperial units, feet.">
+    Elevation (ft)
+  </string>
   <string name="description_elevation_gain"
     translation_description="Elevation gain description.
 
       %1$d elevation in meters
       %2$d elevation in feet">
     Elevation gain: %1$d m (%2$d ft)
+  </string>
+  <string name="description_elevation_metric"
+    translation_description="Elevation in metric units, meters.">
+    Elevation (m)
   </string>
   <string name="description_fastest_pace"
     translation_description="Fastest pace description.
@@ -532,6 +540,14 @@ limitations under the License.
       %1$s time. E.g., '1:08:59'">
     Moving time: %1$s
   </string>
+  <string name="description_pace_imperial"
+    translation_description="Pace in imperial units, hours per mile.">
+    Pace (hr/mi)
+  </string>
+  <string name="description_pace_metric"
+    translation_description="Pace in metric units, hours per kilometer.">
+    Pace (hr/km)
+  </string>
   <string name="description_recorded_time"
     translation_description="Recorded time description.
 
@@ -553,6 +569,14 @@ limitations under the License.
   <string name="description_sensor_power"
     translation_description="Label for power with its unit watt (W).">
     Power (W)
+  </string>
+  <string name="description_speed_imperial"
+    translation_description="Speed in imperial units, miles per hour.">
+    Speed (mi/hr)
+  </string>
+  <string name="description_speed_metric"
+    translation_description="Speed in metric units, kilometers per hour.">
+    Speed (km/hr)
   </string>
   <string name="description_track_point"
     translation_description="Label for a track point">
@@ -1897,26 +1921,6 @@ limitations under the License.
     translation_description="In the 'Stats settings, the option to show grade. Grade is the amount
       of inclination to the horizontal, also known as slope or incline.">
     Grade
-  </string>
-  <string name="settings_stats_rate_pace_imperial"
-    translation_description="In the 'Stats' settings, the option to display pace, with example in
-      imperial units.">
-    Pace (hr/mi)
-  </string>
-  <string name="settings_stats_rate_pace_metric"
-    translation_description="In the 'Stats' settings, the option to display pace, with example in
-      metric units.">
-    Pace (hr/km)
-  </string>
-  <string name="settings_stats_rate_speed_imperial"
-    translation_description="In the 'Stats' settings, the option to display speed, with example in
-      imperial units.">
-    Speed (mi/hr)
-  </string>
-  <string name="settings_stats_rate_speed_metric"
-    translation_description="In the 'Stats' settings, the option to display speed, with example in
-      metric units.">
-    Speed (km/hr)
   </string>
   <string name="settings_stats_rate_title"
     translation_description="In the 'Stats' settings, the option to change the preferred rate,
