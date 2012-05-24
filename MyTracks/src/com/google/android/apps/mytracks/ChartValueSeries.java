@@ -207,14 +207,14 @@ public class ChartValueSeries {
   }
 
   /**
-   * Gets the minimum marker value.
+   * Gets the min marker value.
    */
   public int getMinMarkerValue() {
     return minMarkerValue;
   }
 
   /**
-   * Gets the maximum marker value.
+   * Gets the max marker value.
    */
   @VisibleForTesting
   int getMaxMarkerValue() {
