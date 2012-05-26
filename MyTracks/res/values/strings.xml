@@ -497,10 +497,6 @@ limitations under the License.
     translation_description="Label for location speed in meters per second.">
     Speed (m/s)
   </string>
-  <string name="description_location_time"
-    translation_description="Label for location time.">
-    Time
-  </string>
   <string name="description_max_elevation"
     translation_description="Max elevation description.
 
@@ -577,6 +573,10 @@ limitations under the License.
   <string name="description_speed_metric"
     translation_description="Speed in metric units, kilometers per hour.">
     Speed (km/hr)
+  </string>
+  <string name="description_time"
+    translation_description="Label for time.">
+    Time
   </string>
   <string name="description_track_point"
     translation_description="Label for a track point">

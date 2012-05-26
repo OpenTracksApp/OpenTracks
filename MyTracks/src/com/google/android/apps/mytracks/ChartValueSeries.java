@@ -85,13 +85,15 @@ public class ChartValueSeries {
     strokePaint.setColor(context.getResources().getColor(strokeColor));
     strokePaint.setAntiAlias(true);
 
+    float scale = context.getResources().getDisplayMetrics().density;
+    
     // Make copies of the stroke paint with the default thickness
     titlePaint = new Paint(strokePaint);
-    titlePaint.setTextSize(ChartView.LARGE_TEXT_SIZE);
+    titlePaint.setTextSize(ChartView.MEDIUM_TEXT_SIZE * scale);
     titlePaint.setTextAlign(Align.CENTER);
 
     markerPaint = new Paint(strokePaint);
-    markerPaint.setTextSize(ChartView.MEDIUM_TEXT_SIZE);
+    markerPaint.setTextSize(ChartView.SMALL_TEXT_SIZE * scale);
     markerPaint.setTextAlign(Align.RIGHT);
 
     // Set stroke paint thickness

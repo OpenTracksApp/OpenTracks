@@ -110,7 +110,7 @@ public class CsvTrackWriter implements TrackFormatWriter {
         context.getString(R.string.description_location_bearing),
         context.getString(R.string.description_location_accuracy),
         context.getString(R.string.description_location_speed),
-        context.getString(R.string.description_location_time));
+        context.getString(R.string.description_time));
   }
 
   @Override
@@ -143,7 +143,7 @@ public class CsvTrackWriter implements TrackFormatWriter {
         context.getString(R.string.description_location_bearing),
         context.getString(R.string.description_location_accuracy),
         context.getString(R.string.description_location_speed),
-        context.getString(R.string.description_location_time),
+        context.getString(R.string.description_time),
         context.getString(R.string.description_sensor_power),
         context.getString(R.string.description_sensor_cadence),
         context.getString(R.string.description_sensor_heart_rate),

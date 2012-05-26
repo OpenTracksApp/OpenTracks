@@ -280,8 +280,10 @@ public class ChartFragment extends Fragment implements TrackDataListener {
       return false;
     }
     reportSpeed = speed;
-    setSeriesEnabled(ChartView.SPEED_SERIES, reportSpeed);
-    setSeriesEnabled(ChartView.PACE_SERIES, !reportSpeed);
+    boolean chartShowSpeed = PreferencesUtils.getBoolean(
+        getActivity(), R.string.chart_show_speed_key, PreferencesUtils.CHART_SHOW_SPEED_DEFAULT);
+    setSeriesEnabled(ChartView.SPEED_SERIES, chartShowSpeed && reportSpeed);
+    setSeriesEnabled(ChartView.PACE_SERIES, chartShowSpeed && !reportSpeed);
     getActivity().runOnUiThread(new Runnable() {
       @Override
       public void run() {
@@ -307,12 +309,13 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         R.string.chart_show_elevation_key, PreferencesUtils.CHART_SHOW_ELEVATION_DEFAULT))) {
       needUpdate = true;
     }
-    if (setSeriesEnabled(ChartView.SPEED_SERIES, PreferencesUtils.getBoolean(
-        getActivity(), R.string.chart_show_speed_key, PreferencesUtils.CHART_SHOW_SPEED_DEFAULT))) {
+    
+    boolean chartShowSpeed = PreferencesUtils.getBoolean(
+        getActivity(), R.string.chart_show_speed_key, PreferencesUtils.CHART_SHOW_SPEED_DEFAULT);
+    if (setSeriesEnabled(ChartView.SPEED_SERIES, chartShowSpeed && reportSpeed)) {
       needUpdate = true;
     }
-    if (setSeriesEnabled(ChartView.PACE_SERIES, !PreferencesUtils.getBoolean(
-        getActivity(), R.string.chart_show_speed_key, PreferencesUtils.CHART_SHOW_SPEED_DEFAULT))) {
+    if (setSeriesEnabled(ChartView.PACE_SERIES, chartShowSpeed && !reportSpeed)) {
       needUpdate = true;
     }
     if (setSeriesEnabled(ChartView.POWER_SERIES, PreferencesUtils.getBoolean(
