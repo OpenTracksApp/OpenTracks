@@ -724,7 +724,7 @@ public class TrackRecordingService extends Service {
       boolean hasSensorData = sensorManager != null
           && sensorManager.isEnabled()
           && sensorManager.getSensorDataSet() != null
-          && sensorManager.isDataValid();
+          && sensorManager.isSensorDataSetValid();
 
       // If the user has been stationary for two recording just record the first
       // two and ignore the rest. This code will only have an effect if the
@@ -823,7 +823,7 @@ public class TrackRecordingService extends Service {
       Location locationToInsert = location;
       if (sensorManager != null && sensorManager.isEnabled()) {
         SensorDataSet sd = sensorManager.getSensorDataSet();
-        if (sd != null && sensorManager.isDataValid()) {
+        if (sd != null && sensorManager.isSensorDataSetValid()) {
           locationToInsert = new MyTracksLocation(location, sd);
         }
       }

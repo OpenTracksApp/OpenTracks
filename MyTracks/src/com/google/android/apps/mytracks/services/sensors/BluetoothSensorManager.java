@@ -19,6 +19,8 @@ import static com.google.android.apps.mytracks.Constants.TAG;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Sensor;
+import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
+import com.google.android.apps.mytracks.content.Sensor.SensorState;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -118,11 +120,13 @@ public class BluetoothSensorManager extends SensorManager {
     return adapters.get(0);
   }
   
+  @Override
   public boolean isEnabled() {
     return bluetoothAdapter != null && bluetoothAdapter.isEnabled();
   }
 
-  public void setupChannel() {
+  @Override
+  protected void setUpChannel() {
     if (!isEnabled() || connectionManager == null) {
       Log.w(Constants.TAG, "Disabled manager onStartTrack");
       return;
@@ -158,21 +162,22 @@ public class BluetoothSensorManager extends SensorManager {
     }
   }
 
-  public void onDestroy() {
+  @Override
+  protected void tearDownChannel() {
     // Stop the Bluetooth sensor services
     if (connectionManager != null) {
       connectionManager.stop();
     }
   }
 
-  public Sensor.SensorDataSet getSensorDataSet() {
+  @Override
+  public SensorDataSet getSensorDataSet() {
     return sensorDataSet;
   }
 
-  public Sensor.SensorState getSensorState() {
-    return (connectionManager == null)
-        ? Sensor.SensorState.NONE
-            : connectionManager.getState();
+  @Override
+  public SensorState getSensorState() {
+    return connectionManager == null ? Sensor.SensorState.NONE : connectionManager.getState();
   }
 
   // The Handler that gets information back from the BluetoothSensorService

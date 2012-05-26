@@ -84,7 +84,7 @@ public class SensorManagerFactory {
     }
     activeSensorType = sensorType;
     refCount = 1;
-    activeSensorManager.onStartTrack();
+    activeSensorManager.startSensor();
     return activeSensorManager;
   }
 
@@ -105,7 +105,7 @@ public class SensorManagerFactory {
   private void reset() {
     activeSensorType = null;
     if (activeSensorManager != null) {
-      activeSensorManager.shutdown();
+      activeSensorManager.stopSensor();
     }
     activeSensorManager = null;
     refCount = 0;
