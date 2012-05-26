@@ -34,12 +34,12 @@ limitations under the License.
     <TextView
       android:id="@+id/sensor_state_last_sensor_time"
       style="@style/SensorStateValue" />
-    <!-- Power -->
+    <!-- Heart rate -->
     <TextView
-      android:text="@string/sensor_state_power"
+      android:text="@string/sensor_state_heart_rate"
       style="@style/TextMedium" />
     <TextView
-      android:id="@+id/sensor_state_power"
+      android:id="@+id/sensor_state_heart_rate"
       style="@style/SensorStateValue" />
     <!-- Cadence -->
     <TextView
@@ -48,12 +48,12 @@ limitations under the License.
     <TextView
       android:id="@+id/sensor_state_cadence"
       style="@style/SensorStateValue" />
-    <!-- Heart rate -->
+    <!-- Power -->
     <TextView
-      android:text="@string/sensor_state_heart_rate"
+      android:text="@string/sensor_state_power"
       style="@style/TextMedium" />
     <TextView
-      android:id="@+id/sensor_state_heart_rate"
+      android:id="@+id/sensor_state_power"
       style="@style/SensorStateValue" />
     <!-- Battery level -->
     <TextView

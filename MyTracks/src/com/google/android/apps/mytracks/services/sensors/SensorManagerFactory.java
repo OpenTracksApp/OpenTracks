@@ -31,9 +31,9 @@ import android.util.Log;
  */
 public class SensorManagerFactory {
 
-  private String activeSensorType;
-  private SensorManager activeSensorManager;
-  private int refCount;
+  private String activeSensorType = null;
+  private SensorManager activeSensorManager = null;
+  private int refCount = 0;
 
   private static SensorManagerFactory instance = new SensorManagerFactory();
 

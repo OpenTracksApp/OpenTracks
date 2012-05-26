@@ -199,19 +199,19 @@ public class SensorStateActivity extends AbstractMyTracksActivity {
 
     String lastSensorTime = sensorDataSet == null ? getString(R.string.value_unknown)
         : getLastSensorTime(sensorDataSet);
-    String power = sensorDataSet == null ? getString(R.string.value_unknown)
-        : getPower(sensorDataSet);
-    String cadence = sensorDataSet == null ? getString(R.string.value_unknown)
-        : getCadence(sensorDataSet);
     String heartRate = sensorDataSet == null ? getString(R.string.value_unknown)
         : getHeartRate(sensorDataSet);
+    String cadence = sensorDataSet == null ? getString(R.string.value_unknown)
+        : getCadence(sensorDataSet);
+    String power = sensorDataSet == null ? getString(R.string.value_unknown)
+        : getPower(sensorDataSet);
     String battery = sensorDataSet == null ? getString(R.string.value_unknown)
         : getBattery(sensorDataSet);
 
     ((TextView) findViewById(R.id.sensor_state_last_sensor_time)).setText(lastSensorTime);
-    ((TextView) findViewById(R.id.sensor_state_power)).setText(power);
-    ((TextView) findViewById(R.id.sensor_state_cadence)).setText(cadence);
     ((TextView) findViewById(R.id.sensor_state_heart_rate)).setText(heartRate);
+    ((TextView) findViewById(R.id.sensor_state_cadence)).setText(cadence);
+    ((TextView) findViewById(R.id.sensor_state_power)).setText(power);
     ((TextView) findViewById(R.id.sensor_state_battery)).setText(battery);
   }
 
@@ -225,19 +225,20 @@ public class SensorStateActivity extends AbstractMyTracksActivity {
   }
 
   /**
-   * Gets the power.
+   * Gets the heart rate.
    * 
    * @param sensorDataSet sensor data set
    */
-  private String getPower(Sensor.SensorDataSet sensorDataSet) {
+  private String getHeartRate(Sensor.SensorDataSet sensorDataSet) {
     String value;
-    if (sensorDataSet.hasPower() && sensorDataSet.getPower().hasValue()
-        && sensorDataSet.getPower().getState() == Sensor.SensorState.SENDING) {
-      value = getString(R.string.sensor_state_power_value, sensorDataSet.getPower().getValue());
+    if (sensorDataSet.hasHeartRate() && sensorDataSet.getHeartRate().hasValue()
+        && sensorDataSet.getHeartRate().getState() == Sensor.SensorState.SENDING) {
+      value = getString(
+          R.string.sensor_state_heart_rate_value, sensorDataSet.getHeartRate().getValue());
     } else {
       value = SensorUtils.getStateAsString(
-          sensorDataSet.hasPower() ? sensorDataSet.getPower().getState() : Sensor.SensorState.NONE,
-          this);
+          sensorDataSet.hasHeartRate() ? sensorDataSet.getHeartRate().getState()
+              : Sensor.SensorState.NONE, this);
     }
     return value;
   }
@@ -261,20 +262,19 @@ public class SensorStateActivity extends AbstractMyTracksActivity {
   }
 
   /**
-   * Gets the heart rate.
+   * Gets the power.
    * 
    * @param sensorDataSet sensor data set
    */
-  private String getHeartRate(Sensor.SensorDataSet sensorDataSet) {
+  private String getPower(Sensor.SensorDataSet sensorDataSet) {
     String value;
-    if (sensorDataSet.hasHeartRate() && sensorDataSet.getHeartRate().hasValue()
-        && sensorDataSet.getHeartRate().getState() == Sensor.SensorState.SENDING) {
-      value = getString(
-          R.string.sensor_state_heart_rate_value, sensorDataSet.getHeartRate().getValue());
+    if (sensorDataSet.hasPower() && sensorDataSet.getPower().hasValue()
+        && sensorDataSet.getPower().getState() == Sensor.SensorState.SENDING) {
+      value = getString(R.string.sensor_state_power_value, sensorDataSet.getPower().getValue());
     } else {
       value = SensorUtils.getStateAsString(
-          sensorDataSet.hasHeartRate() ? sensorDataSet.getHeartRate().getState()
-              : Sensor.SensorState.NONE, this);
+          sensorDataSet.hasPower() ? sensorDataSet.getPower().getState() : Sensor.SensorState.NONE,
+          this);
     }
     return value;
   }
