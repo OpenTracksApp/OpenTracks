@@ -487,24 +487,23 @@ public class ChartView extends View {
     synchronized (chartData) {
 
       canvas.save();
+      
       canvas.drawColor(Color.WHITE);
 
-      if (chartData.isEmpty()) {
-        drawXAxis(canvas);
-        clearYAxisMarkers(canvas);
-        drawYAxis(canvas);
-        canvas.restore();
-        return;
-      }
-
       canvas.save();
+      
       clipToGraphArea(canvas);
       drawDataSeries(canvas);
       drawWaypoints(canvas);
       drawGrid(canvas);
+      
       canvas.restore();
 
-      drawAxesAndMarkers(canvas);
+      drawSeriesTitles(canvas);
+      drawXAxis(canvas);
+      canvas.translate(getScrollX(), 0);
+      drawYAxis(canvas);
+      
       canvas.restore();
 
       if (showPointer) {
@@ -589,28 +588,6 @@ public class ChartView extends View {
   }
 
   /**
-   * Draws the axes and markers.
-   * 
-   * @param canvas the canvas
-   */
-  private void drawAxesAndMarkers(Canvas canvas) {
-    drawSeriesTitles(canvas);
-    drawXAxis(canvas);
-    drawXAxisMarkers(canvas);
-
-    canvas.translate(getScrollX(), 0);
-    clearYAxisMarkers(canvas);
-    drawYAxis(canvas);
-    int x = leftBorder - spacer;
-    for (int i = series.length - 1; i >= 0; i--) {
-      ChartValueSeries chartValueSeries = series[i];
-      if (chartValueSeries.isEnabled() && chartValueSeries.hasData()) {
-        x -= drawYAxisMarkers(chartValueSeries, canvas, x) + spacer;
-      }
-    }
-  }
-
-  /**
    * Draws series titles.
    * 
    * @param canvas the canvas
@@ -619,14 +596,13 @@ public class ChartView extends View {
     int[] titleDimensions = getTitleDimenions();
     int lines = titleDimensions[0];
     int lineHeight = titleDimensions[1];
-    int i = 0;
-    for (ChartValueSeries chartValueSeries : series) {
-      if (chartValueSeries.isEnabled() && chartValueSeries.hasData()) {
-        i++;
+    for (int i = 0; i < series.length; i++) {
+      ChartValueSeries chartValueSeries = series[i];
+      if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(i)) {
         String title = getContext().getString(chartValueSeries.getTitleId(metricUnits));
         Paint paint = chartValueSeries.getTitlePaint();
         int x = (int) (0.5 * width) + getScrollX();
-        int y = topBorder - spacer - (lines - i) * (lineHeight + spacer);
+        int y = topBorder - spacer - (lines - i - 1) * (lineHeight + spacer);
         canvas.drawText(title, x, y, paint);
       }
     }
@@ -639,8 +615,9 @@ public class ChartView extends View {
   private int[] getTitleDimenions() {
     int lines = 0;
     int lineHeight = 0;
-    for (ChartValueSeries chartValueSeries : series) {
-      if (chartValueSeries.isEnabled() && chartValueSeries.hasData()) {
+    for (int i = 0; i < series.length; i++) {
+      ChartValueSeries chartValueSeries = series[i];
+      if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(i)) {
         lines++;
         String title = getContext().getString(chartValueSeries.getTitleId(metricUnits));
         Rect rect = getRect(chartValueSeries.getTitlePaint(), title);
@@ -664,6 +641,12 @@ public class ChartView extends View {
     String label = getXAxisLabel();
     Rect rect = getRect(axisPaint, label);
     canvas.drawText(label, rightEdge + spacer, y + ((int) rect.height() / 2), axisPaint);
+    
+    ArrayList<Double> intervals = getXIntervals();
+    NumberFormat numberFormat = intervals.get(0) < 1 ? X_FRACTION_FORMAT : X_NUMBER_FORMAT;
+    for (int i = 1; i < intervals.size(); i++) {
+      drawXAxisMarker(canvas, intervals.get(i), numberFormat);
+    }
   }
 
   /**
@@ -676,19 +659,6 @@ public class ChartView extends View {
           : context.getString(R.string.unit_mile);
     } else {
       return context.getString(R.string.description_time);
-    }
-  }
-
-  /**
-   * Draws the x axis markers.
-   * 
-   * @param canvas the canvas
-   */
-  private void drawXAxisMarkers(Canvas canvas) {
-    ArrayList<Double> intervals = getXIntervals();
-    NumberFormat numberFormat = intervals.get(0) < 1 ? X_FRACTION_FORMAT : X_NUMBER_FORMAT;
-    for (int i = 1; i < intervals.size(); i++) {
-      drawXAxisMarker(canvas, intervals.get(i), numberFormat);
     }
   }
 
@@ -735,21 +705,23 @@ public class ChartView extends View {
   }
 
   /**
-   * Clears the y axis markers.
-   * 
-   * @param canvas the canvas
-   */
-  private void clearYAxisMarkers(Canvas canvas) {
-    canvas.drawRect(0, topBorder, leftBorder, topBorder + effectiveHeight + spacer, clearPaint);
-  }
-
-  /**
    * Draws the y axis.
    * 
    * @param canvas the canvas
    */
   private void drawYAxis(Canvas canvas) {
+    // Clears the y axis markers.
+    canvas.drawRect(0, topBorder, leftBorder, topBorder + effectiveHeight + spacer, clearPaint);
     canvas.drawLine(leftBorder, topBorder, leftBorder, topBorder + effectiveHeight, axisPaint);
+    
+    int x = leftBorder - spacer;
+    for (int i = 0; i < series.length; i++) {
+      int index = series.length - 1 - i;
+      ChartValueSeries chartValueSeries = series[index];
+      if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(index)) {
+        x -= drawYAxisMarkers(chartValueSeries, canvas, x) + spacer;
+      }
+    }
   }
 
   /**
@@ -907,8 +879,9 @@ public class ChartView extends View {
     yAxisOffset = (int) (density * Y_AXIS_OFFSET);
 
     int markerLength = 0;
-    for (ChartValueSeries chartValueSeries : series) {
-      if (chartValueSeries.isEnabled() && chartValueSeries.hasData()) {
+    for (int i = 0; i < series.length; i ++) {
+      ChartValueSeries chartValueSeries = series[i];
+      if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(i)) {
         Rect rect = getRect(chartValueSeries.getMarkerPaint(), chartValueSeries.getLargestMarker());
         markerLength += rect.width() + spacer;
       }
@@ -995,5 +968,14 @@ public class ChartView extends View {
     Rect rect = new Rect();
     paint.getTextBounds(string, 0, string.length(), rect);
     return rect;
+  }
+
+  /**
+   * Returns true if the index is allowed when the chartData is empty.
+   * 
+   * @param index the index
+   */
+  private boolean allowIfEmpty(int index) {
+    return index == ELEVATION_SERIES && chartData.isEmpty(); 
   }
 }
