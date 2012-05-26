@@ -280,6 +280,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
       return false;
     }
     reportSpeed = speed;
+    chartView.setReportSpeed(reportSpeed);
     boolean chartShowSpeed = PreferencesUtils.getBoolean(
         getActivity(), R.string.chart_show_speed_key, PreferencesUtils.CHART_SHOW_SPEED_DEFAULT);
     setSeriesEnabled(ChartView.SPEED_SERIES, chartShowSpeed && reportSpeed);
