@@ -208,12 +208,11 @@ public class BluetoothSensorManager extends SensorManager {
           }
           break;
         case BluetoothConnectionManager.MESSAGE_DEVICE_NAME:
-          // save the connected device's name
-          connectedDeviceName =
-              msg.getData().getString(BluetoothConnectionManager.DEVICE_NAME);
-          Toast.makeText(context.getApplicationContext(),
-              "Connected to " + connectedDeviceName, Toast.LENGTH_SHORT)
-              .show();
+          // Save the connected device name
+          connectedDeviceName = msg.getData().getString(BluetoothConnectionManager.DEVICE_NAME);
+          Toast.makeText(context,
+              context.getString(R.string.settings_sensor_bluetooth_connected, connectedDeviceName),
+              Toast.LENGTH_SHORT).show();
           break;
       }
     }

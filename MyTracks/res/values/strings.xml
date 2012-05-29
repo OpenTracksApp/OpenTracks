@@ -1745,6 +1745,12 @@ limitations under the License.
       %1$d: sensor id number. E.g., '1'.">
     Paired with: %1$d.
   </string>
+  <string name="settings_sensor_bluetooth_connected"
+    translation_description="The message when connected to a bluetooth sensor.
+    
+      %1$s: sensor name. E.g., 'polar bluetooth'.">
+   Connected to %1$s
+  </string>
   <string name="settings_sensor_bluetooth_options"
     translation_description="In the 'Sensor' settings, the section header to configure the Bluetooth
       options.

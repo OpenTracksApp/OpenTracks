@@ -172,8 +172,7 @@ public class ImportActivity extends Activity {
     if (success) {
       showDialog(DIALOG_RESULT_ID);
     } else {
-      Toast.makeText(this, getString(R.string.sd_card_import_error), Toast.LENGTH_LONG)
-          .show();
+      Toast.makeText(this, R.string.sd_card_import_error, Toast.LENGTH_LONG).show();
       finish();
     }
   }

@@ -154,7 +154,7 @@ class DataSourcesWrapperImpl implements DataSourcesWrapper {
       }
 
       // Let the user know we have only an approximate location:
-     Toast.makeText(context, context.getString(toastResId), Toast.LENGTH_LONG).show();
+     Toast.makeText(context, toastResId, Toast.LENGTH_LONG).show();
     }
     return loc;
   }
