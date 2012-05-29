@@ -104,7 +104,7 @@ public class Api7Adapter implements ApiAdapter {
     } catch (InvocationTargetException e) {
       Log.d(Constants.TAG, "Unable to create insecure connection", e);
     }
-    return bluetoothDevice.createRfcommSocketToServiceRecord(BluetoothConnectionManager.SPP_UUID);
+    return bluetoothDevice.createRfcommSocketToServiceRecord(BluetoothConnectionManager.MY_TRACKS_UUID);
   }
 
   @Override

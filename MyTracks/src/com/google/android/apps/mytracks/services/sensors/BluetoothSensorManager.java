@@ -154,10 +154,10 @@ public class BluetoothSensorManager extends SensorManager {
     if (connectionManager != null) {
       // Only if the state is STATE_NONE, do we know that we haven't started
       // already
-      if (connectionManager.getState() == Sensor.SensorState.NONE) {
-        // Start the Bluetooth sensor services
+      if (connectionManager.getSensorState() == Sensor.SensorState.NONE) {
+        // Reset the connection manager
         Log.w(Constants.TAG, "Disabled manager onStartTrack");
-        connectionManager.start();
+        connectionManager.reset();
       }
     }
   }
@@ -166,7 +166,7 @@ public class BluetoothSensorManager extends SensorManager {
   protected void tearDownChannel() {
     // Stop the Bluetooth sensor services
     if (connectionManager != null) {
-      connectionManager.stop();
+      connectionManager.reset();
     }
   }
 
@@ -177,7 +177,7 @@ public class BluetoothSensorManager extends SensorManager {
 
   @Override
   public SensorState getSensorState() {
-    return connectionManager == null ? Sensor.SensorState.NONE : connectionManager.getState();
+    return connectionManager == null ? Sensor.SensorState.NONE : connectionManager.getSensorState();
   }
 
   // The Handler that gets information back from the BluetoothSensorService
@@ -189,7 +189,12 @@ public class BluetoothSensorManager extends SensorManager {
           // TODO should we update the SensorManager state var?
           Log.i(Constants.TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
           break;
-        case BluetoothConnectionManager.MESSAGE_WRITE:
+        case BluetoothConnectionManager.MESSAGE_DEVICE_NAME:
+          // Save the connected device name
+          connectedDeviceName = msg.getData().getString(BluetoothConnectionManager.KEY_DEVICE_NAME);
+          Toast.makeText(context,
+              context.getString(R.string.settings_sensor_bluetooth_connected, connectedDeviceName),
+              Toast.LENGTH_SHORT).show();
           break;
         case BluetoothConnectionManager.MESSAGE_READ:
           byte[] readBuf = null;
@@ -206,13 +211,6 @@ public class BluetoothSensorManager extends SensorManager {
             sensorDataSet = null;
             Log.i(Constants.TAG, "Unexpected exception on read.", re);
           }
-          break;
-        case BluetoothConnectionManager.MESSAGE_DEVICE_NAME:
-          // Save the connected device name
-          connectedDeviceName = msg.getData().getString(BluetoothConnectionManager.DEVICE_NAME);
-          Toast.makeText(context,
-              context.getString(R.string.settings_sensor_bluetooth_connected, connectedDeviceName),
-              Toast.LENGTH_SHORT).show();
           break;
       }
     }
