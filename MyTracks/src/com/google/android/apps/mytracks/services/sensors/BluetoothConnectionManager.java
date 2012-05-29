@@ -44,18 +44,17 @@ public class BluetoothConnectionManager {
   public static final UUID MY_TRACKS_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
   // Message types sent to hander
-  public static final int MESSAGE_STATE_CHANGE = 1;
-  public static final int MESSAGE_DEVICE_NAME = 2;
-  public static final int MESSAGE_READ = 3;
+  public static final int MESSAGE_DEVICE_NAME = 1;
+  public static final int MESSAGE_READ = 2;
 
   // Key for storing the device name
   public static final String KEY_DEVICE_NAME = "device_name";
 
   private static final String TAG = BluetoothConnectionManager.class.getSimpleName();
 
+  private final BluetoothAdapter bluetoothAdapter;
   private final Handler handler;
   private final MessageParser messageParser;
-  private final BluetoothAdapter bluetoothAdapter;
   private SensorState sensorState;
 
   private ConnectThread connectThread;
@@ -64,13 +63,15 @@ public class BluetoothConnectionManager {
   /**
    * Constructor.
    * 
+   * @param bluetoothAdapter the bluetooth adapter
    * @param handler a hander for sending messages back to the UI activity
    * @param messageParser a message parser
    */
-  public BluetoothConnectionManager(Handler handler, MessageParser messageParser) {
+  public BluetoothConnectionManager(
+      BluetoothAdapter bluetoothAdapter, Handler handler, MessageParser messageParser) {
+    this.bluetoothAdapter = bluetoothAdapter;
     this.handler = handler;
     this.messageParser = messageParser;
-    this.bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     this.sensorState = SensorState.NONE;
   }
 
@@ -88,9 +89,6 @@ public class BluetoothConnectionManager {
    */
   private synchronized void setState(Sensor.SensorState sensorState) {
     this.sensorState = sensorState;
-
-    // Send the sensor state to the handler
-    handler.obtainMessage(MESSAGE_STATE_CHANGE, sensorState.getNumber(), -1).sendToTarget();
   }
 
   /**
@@ -173,6 +171,10 @@ public class BluetoothConnectionManager {
 
     @Override
     public void run() {
+      if (bluetoothAdapter == null) {
+        BluetoothConnectionManager.this.reset();
+        return;
+      }
       // Cancel discovery to prevent slow down
       bluetoothAdapter.cancelDiscovery();
 

@@ -13,14 +13,16 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.services.sensors;
 
 import android.content.Context;
 
 /**
- * PolarSensorManager - A sensor manager for Polar heart rate monitors.
+ * A Polar heart rate sensor manager.
+ * 
+ * @author Jimmy Shih
  */
-
 public class PolarSensorManager extends BluetoothSensorManager {
   public PolarSensorManager(Context context) {
     super(context, new PolarMessageParser());
