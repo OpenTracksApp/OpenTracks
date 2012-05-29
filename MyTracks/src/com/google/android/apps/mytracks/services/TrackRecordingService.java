@@ -359,7 +359,7 @@ public class TrackRecordingService extends Service {
     unregisterLocationListener();
     shutdownTaskExecutors();
     if (sensorManager != null) {
-      SensorManagerFactory.getInstance().releaseSensorManager(sensorManager);
+      SensorManagerFactory.releaseSystemSensorManager();
       sensorManager = null;
     }
 
@@ -595,7 +595,7 @@ public class TrackRecordingService extends Service {
     length = 0;
     showNotification();
     registerLocationListener();
-    sensorManager = SensorManagerFactory.getInstance().getSensorManager(this);
+    sensorManager = SensorManagerFactory.getSystemSensorManager(this);
 
     // Reset the number of auto-resume retries.
     setAutoResumeTrackRetries(0);
@@ -1042,7 +1042,7 @@ public class TrackRecordingService extends Service {
     PreferencesUtils.setLong(this, R.string.recording_track_id_key, recordingTrackId);
 
     if (sensorManager != null) {
-      SensorManagerFactory.getInstance().releaseSensorManager(sensorManager);
+      SensorManagerFactory.releaseSystemSensorManager();
       sensorManager = null;
     }
 

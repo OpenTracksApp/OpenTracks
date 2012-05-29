@@ -126,7 +126,7 @@ public class SensorStateActivity extends AbstractMyTracksActivity {
    */
   private void stopTempSensorManager() {
     if (tempSensorManager != null) {
-      SensorManagerFactory.getInstance().releaseSensorManager(tempSensorManager);
+      SensorManagerFactory.releaseTempSensorManager();
       tempSensorManager = null;
     }
   }
@@ -139,7 +139,7 @@ public class SensorStateActivity extends AbstractMyTracksActivity {
     Sensor.SensorDataSet sensorDataSet = null;
 
     if (tempSensorManager == null) {
-      tempSensorManager = SensorManagerFactory.getInstance().getSensorManager(this);
+      tempSensorManager = SensorManagerFactory.getTempSensorManager(this);
     }
 
     if (tempSensorManager != null) {
