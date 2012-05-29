@@ -600,13 +600,15 @@ public class ChartView extends View {
     int[] titleDimensions = getTitleDimenions();
     int lines = titleDimensions[0];
     int lineHeight = titleDimensions[1];
+    int count = 0;
     for (int i = 0; i < series.length; i++) {
       ChartValueSeries chartValueSeries = series[i];
       if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(i)) {
+        count++;
         String title = getContext().getString(chartValueSeries.getTitleId(metricUnits));
         Paint paint = chartValueSeries.getTitlePaint();
         int x = (int) (0.5 * width) + getScrollX();
-        int y = topBorder - spacer - (lines - i - 1) * (lineHeight + spacer);
+        int y = topBorder - spacer - (lines - count) * (lineHeight + spacer);
         canvas.drawText(title, x, y, paint);
       }
     }
