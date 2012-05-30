@@ -133,7 +133,7 @@ public abstract class AntSensorManager extends SensorManager {
   }
 
   @Override
-  public void onDestroy() {
+  protected void tearDownChannel() {
     Log.i(TAG, "destroying AntSensorManager");
     
     cleanAntInterface();
@@ -161,7 +161,7 @@ public abstract class AntSensorManager extends SensorManager {
    * {@link #setupAntSensorChannels}.
    */
   @Override
-  protected final void setupChannel() {
+  protected void setUpChannel() {
     setup();
   }
   

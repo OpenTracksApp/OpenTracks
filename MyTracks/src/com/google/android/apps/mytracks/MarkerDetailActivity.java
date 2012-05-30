@@ -101,6 +101,7 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity {
     Intent intent = IntentUtils.newIntent(this, MarkerListActivity.class)
         .putExtra(MarkerListActivity.EXTRA_TRACK_ID, waypoint.getTrackId());
     startActivity(intent);
+    finish();
   }
   
   @Override

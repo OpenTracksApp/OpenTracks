@@ -77,15 +77,15 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   private boolean reportSpeed = true;
 
   private boolean chartByDistance = true;
-  private boolean[] chartShow = new boolean[] {true, true, true, true, true};
+  private boolean[] chartShow = new boolean[] {true, true, true, true, true, true};
 
   // UI elements
   private ChartView chartView;
   private ZoomControls zoomControls;
 
   /**
-   * A runnable that will remove the spinner (if any), enable/disable zoom
-   * controls and orange pointer as appropriate and redraw.
+   * A runnable that will enable/disable zoom controls and orange pointer as
+   * appropriate and redraw.
    */
   private final Runnable updateChart = new Runnable() {
     @Override
@@ -215,7 +215,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   @Override
   public void onNewTrackPoint(Location location) {
     if (LocationUtils.isValidLocation(location)) {
-      double[] data = new double[6];
+      double[] data = new double[ChartView.NUM_SERIES + 1];
       fillDataPoint(location, data);
       pendingPoints.add(data);
     }
@@ -280,7 +280,11 @@ public class ChartFragment extends Fragment implements TrackDataListener {
       return false;
     }
     reportSpeed = speed;
-    chartView.setReportSpeed(speed, getActivity());
+    chartView.setReportSpeed(reportSpeed);
+    boolean chartShowSpeed = PreferencesUtils.getBoolean(
+        getActivity(), R.string.chart_show_speed_key, PreferencesUtils.CHART_SHOW_SPEED_DEFAULT);
+    setSeriesEnabled(ChartView.SPEED_SERIES, chartShowSpeed && reportSpeed);
+    setSeriesEnabled(ChartView.PACE_SERIES, chartShowSpeed && !reportSpeed);
     getActivity().runOnUiThread(new Runnable() {
       @Override
       public void run() {
@@ -306,8 +310,13 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         R.string.chart_show_elevation_key, PreferencesUtils.CHART_SHOW_ELEVATION_DEFAULT))) {
       needUpdate = true;
     }
-    if (setSeriesEnabled(ChartView.SPEED_SERIES, PreferencesUtils.getBoolean(
-        getActivity(), R.string.chart_show_speed_key, PreferencesUtils.CHART_SHOW_SPEED_DEFAULT))) {
+    
+    boolean chartShowSpeed = PreferencesUtils.getBoolean(
+        getActivity(), R.string.chart_show_speed_key, PreferencesUtils.CHART_SHOW_SPEED_DEFAULT);
+    if (setSeriesEnabled(ChartView.SPEED_SERIES, chartShowSpeed && reportSpeed)) {
+      needUpdate = true;
+    }
+    if (setSeriesEnabled(ChartView.PACE_SERIES, chartShowSpeed && !reportSpeed)) {
       needUpdate = true;
     }
     if (setSeriesEnabled(ChartView.POWER_SERIES, PreferencesUtils.getBoolean(
@@ -405,13 +414,14 @@ public class ChartFragment extends Fragment implements TrackDataListener {
   }
   
   /**
-   * Given a location, fill in a data point, an array of double[6]. <br>
+   * Given a location, fill in a data point, an array of double[]. <br>
    * data[0] = time/distance <br>
    * data[1] = elevation <br>
    * data[2] = speed <br>
-   * data[3] = power <br>
-   * data[4] = cadence <br>
-   * data[5] = heart rate <br>
+   * data[3] = pace <br>
+   * data[4] = heart rate <br>
+   * data[5] = cadence <br>
+   * data[6] = power <br>
    * 
    * @param location the location
    * @param data the data point to fill in, can be null
@@ -421,9 +431,10 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     double timeOrDistance = Double.NaN;
     double elevation = Double.NaN;
     double speed = Double.NaN;
-    double power = Double.NaN;
+    double pace = Double.NaN;
+    double heartRate = Double.NaN;
     double cadence = Double.NaN;
-    double heartRate = Double.NaN;  
+    double power = Double.NaN;
    
     // TODO: Use TripStatisticsBuilder
     if (chartByDistance) {
@@ -460,36 +471,36 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     if (!metricUnits) {
       speed *= UnitConversions.KM_TO_MI;
     }
-    if (!reportSpeed) {
-      speed = speed == 0 ? 0.0 : 60.0 / speed;
-    }
-  
+    pace = speed == 0 ? 0.0 : 60.0 / speed;
+
     if (location instanceof MyTracksLocation
         && ((MyTracksLocation) location).getSensorDataSet() != null) {
       SensorDataSet sensorDataSet = ((MyTracksLocation) location).getSensorDataSet();
-      if (sensorDataSet.hasPower() && sensorDataSet.getPower().getState() == Sensor.SensorState.SENDING
-          && sensorDataSet.getPower().hasValue()) {
-        power = sensorDataSet.getPower().getValue();
+      if (sensorDataSet.hasHeartRate()
+          && sensorDataSet.getHeartRate().getState() == Sensor.SensorState.SENDING
+          && sensorDataSet.getHeartRate().hasValue()) {
+        heartRate = sensorDataSet.getHeartRate().getValue();
       }
       if (sensorDataSet.hasCadence()
           && sensorDataSet.getCadence().getState() == Sensor.SensorState.SENDING
           && sensorDataSet.getCadence().hasValue()) {
         cadence = sensorDataSet.getCadence().getValue();
       }
-      if (sensorDataSet.hasHeartRate()
-          && sensorDataSet.getHeartRate().getState() == Sensor.SensorState.SENDING
-          && sensorDataSet.getHeartRate().hasValue()) {
-        heartRate = sensorDataSet.getHeartRate().getValue();
+      if (sensorDataSet.hasPower()
+          && sensorDataSet.getPower().getState() == Sensor.SensorState.SENDING
+          && sensorDataSet.getPower().hasValue()) {
+        power = sensorDataSet.getPower().getValue();
       }
     }
-    
+
     if (data != null) {
       data[0] = timeOrDistance;
       data[1] = elevation;
       data[2] = speed;
-      data[3] = power;
-      data[4] = cadence;
-      data[5] = heartRate;
+      data[3] = pace;
+      data[4] = heartRate;
+      data[5] = cadence;
+      data[6] = power;
     }
     lastLocation = location;
   }

@@ -33,6 +33,10 @@ limitations under the License.
   <color name="speed_border">#FF0066FF</color>
   <color name="speed_fill">#40C8E0FF</color>
 
+  <!-- Blue and a transparent blue -->
+  <color name="pace_border">#FF0066FF</color>
+  <color name="pace_fill">#40C8E0FF</color>
+  
   <!-- Red and a transparent red -->
   <color name="heartrate_border">#FFCC3300</color>
   <color name="heartrate_fill">#40E88A70</color>

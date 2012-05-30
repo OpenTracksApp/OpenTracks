@@ -16,8 +16,8 @@
 
 package com.google.android.apps.mytracks.services.sensors;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Sensor;
+import com.google.android.apps.mytracks.content.Sensor.SensorState;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 
 import android.bluetooth.BluetoothAdapter;
@@ -30,382 +30,264 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.UUID;
 
 /**
- * This class does all the work for setting up and managing Bluetooth
- * connections with other devices. It has a thread that listens for incoming
- * connections, a thread for connecting with a device, and a thread for
- * performing data transmissions when connected.
- *
+ * Manages bluetooth connection. It has a thread for connecting with a bluetooth
+ * device and a thread for performing data transmission when connected.
+ * 
  * @author Sandor Dornbush
  */
 public class BluetoothConnectionManager {
 
-  // Unique Bluetooth UUID for My Tracks
-  public static final UUID SPP_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+  // My Tracks UUID
+  public static final UUID MY_TRACKS_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
-  private MessageParser parser;
+  // Message types sent to hander
+  public static final int MESSAGE_DEVICE_NAME = 1;
+  public static final int MESSAGE_READ = 2;
 
-  // Member fields
-  private final BluetoothAdapter adapter;
+  // Key for storing the device name
+  public static final String KEY_DEVICE_NAME = "device_name";
+
+  private static final String TAG = BluetoothConnectionManager.class.getSimpleName();
+
+  private final BluetoothAdapter bluetoothAdapter;
   private final Handler handler;
+  private final MessageParser messageParser;
+  private SensorState sensorState;
+
   private ConnectThread connectThread;
   private ConnectedThread connectedThread;
 
-  private Sensor.SensorState state;
-
-  // Message types sent from the BluetoothSenorService Handler
-  public static final int MESSAGE_STATE_CHANGE = 1;
-  public static final int MESSAGE_READ = 2;
-  public static final int MESSAGE_WRITE = 3;
-  public static final int MESSAGE_DEVICE_NAME = 4;
-
-  // Key names received from the BluetoothSenorService Handler
-  public static final String DEVICE_NAME = "device_name";
-
   /**
-   * Constructor. Prepares a new BluetoothSensor session.
-   *
-   * @param handler A Handler to send messages back to the UI Activity
-   * @param parser A message parser
+   * Constructor.
+   * 
+   * @param bluetoothAdapter the bluetooth adapter
+   * @param handler a hander for sending messages back to the UI activity
+   * @param messageParser a message parser
    */
-  public BluetoothConnectionManager(Handler handler, MessageParser parser) {
-    this.adapter = BluetoothAdapter.getDefaultAdapter();
-    this.state = Sensor.SensorState.NONE;
+  public BluetoothConnectionManager(
+      BluetoothAdapter bluetoothAdapter, Handler handler, MessageParser messageParser) {
+    this.bluetoothAdapter = bluetoothAdapter;
     this.handler = handler;
-    this.parser = parser;
+    this.messageParser = messageParser;
+    this.sensorState = SensorState.NONE;
   }
 
   /**
-   * Set the current state of the sensor connection
-   *
-   * @param state An integer defining the current connection state
+   * Gets the sensor state.
    */
-  private synchronized void setState(Sensor.SensorState state) {
-    // TODO pretty print this.
-    Log.d(Constants.TAG, "setState(" + state + ")");
-    this.state = state;
-
-    // Give the new state to the Handler so the UI Activity can update
-    handler.obtainMessage(MESSAGE_STATE_CHANGE, state.getNumber(), -1).sendToTarget();
+  public synchronized SensorState getSensorState() {
+    return sensorState;
   }
 
   /**
-   * Return the current connection state.
+   * Sets the sensor state.
+   * 
+   * @param sensorState the sensor state
    */
-  public synchronized Sensor.SensorState getState() {
-    return state;
+  private synchronized void setState(Sensor.SensorState sensorState) {
+    this.sensorState = sensorState;
   }
 
   /**
-   * Start the sensor service. Specifically start AcceptThread to begin a session
-   * in listening (server) mode. Called by the Activity onResume()
+   * Resets the bluetooth connection manager.
    */
-  public synchronized void start() {
-    Log.d(Constants.TAG, "BluetoothConnectionManager.start()");
-
-    // Cancel any thread attempting to make a connection
-    if (connectThread != null) {
-      connectThread.cancel();
-      connectThread = null;
-    }
-
-    // Cancel any thread currently running a connection
-    if (connectedThread != null) {
-      connectedThread.cancel();
-      connectedThread = null;
-    }
-
+  public synchronized void reset() {
+    cancelThreads();
     setState(Sensor.SensorState.NONE);
   }
 
   /**
-   * Start the ConnectThread to initiate a connection to a remote device.
-   *
-   * @param device The BluetoothDevice to connect
+   * Cancels all the threads.
    */
-  public synchronized void connect(BluetoothDevice device) {
-    Log.d(Constants.TAG, "connect to: " + device);
-
-    // Cancel any thread attempting to make a connection
-    if (state == Sensor.SensorState.CONNECTING) {
-      if (connectThread != null) {
-        connectThread.cancel();
-        connectThread = null;
-      }
+  private void cancelThreads() {
+    if (connectThread != null) {
+      connectThread.cancel();
+      connectThread = null;
     }
-
-    // Cancel any thread currently running a connection
     if (connectedThread != null) {
       connectedThread.cancel();
       connectedThread = null;
     }
+  }
 
-    // Start the thread to connect with the given device
-    connectThread = new ConnectThread(device);
+  /**
+   * Connects to a bluetooth device.
+   * 
+   * @param bluetoothDevice the bluetooth device
+   */
+  public synchronized void connect(BluetoothDevice bluetoothDevice) {
+    Log.d(TAG, "connect to: " + bluetoothDevice);
+    cancelThreads();
+
+    connectThread = new ConnectThread(bluetoothDevice);
     connectThread.start();
     setState(Sensor.SensorState.CONNECTING);
   }
 
   /**
-   * Start the ConnectedThread to begin managing a Bluetooth connection
-   *
-   * @param socket The BluetoothSocket on which the connection was made
-   * @param device The BluetoothDevice that has been connected
+   * Starts the ConnectedThread to read data.
+   * 
+   * @param bluetoothSocket the bluetooth socket
+   * @param bluetoothDevice the bluetooth device
    */
-  public synchronized void connected(BluetoothSocket socket,
-      BluetoothDevice device) {
-    Log.d(Constants.TAG, "connected");
+  private synchronized void connected(
+      BluetoothSocket bluetoothSocket, BluetoothDevice bluetoothDevice) {
+    cancelThreads();
 
-    // Cancel the thread that completed the connection
-    if (connectThread != null) {
-      connectThread.cancel();
-      connectThread = null;
-    }
-
-    // Cancel any thread currently running a connection
-    if (connectedThread != null) {
-      connectedThread.cancel();
-      connectedThread = null;
-    }
-
-    // Start the thread to manage the connection and perform transmissions
-    connectedThread = new ConnectedThread(socket);
+    connectedThread = new ConnectedThread(bluetoothSocket);
     connectedThread.start();
 
-    // Send the name of the connected device back to the UI Activity
-    Message msg = handler.obtainMessage(MESSAGE_DEVICE_NAME);
+    // Send the device name to the handler
+    Message message = handler.obtainMessage(MESSAGE_DEVICE_NAME);
     Bundle bundle = new Bundle();
-    bundle.putString(DEVICE_NAME, device.getName());
-    msg.setData(bundle);
-    handler.sendMessage(msg);
+    bundle.putString(KEY_DEVICE_NAME, bluetoothDevice.getName());
+    message.setData(bundle);
+    handler.sendMessage(message);
 
     setState(Sensor.SensorState.CONNECTED);
   }
 
   /**
-   * Stop all threads
-   */
-  public synchronized void stop() {
-    Log.d(Constants.TAG, "stop()");
-    if (connectThread != null) {
-      connectThread.cancel();
-      connectThread = null;
-    }
-    if (connectedThread != null) {
-      connectedThread.cancel();
-      connectedThread = null;
-    }
-    setState(Sensor.SensorState.NONE);
-  }
-
-  /**
-   * Write to the ConnectedThread in an unsynchronized manner
-   *
-   * @param out The bytes to write
-   * @see ConnectedThread#write(byte[])
-   */
-  public void write(byte[] out) {
-    // Create temporary object
-    ConnectedThread r;
-    // Synchronize a copy of the ConnectedThread
-    synchronized (this) {
-      if (state != Sensor.SensorState.CONNECTED) {
-        return;
-      }
-      r = connectedThread;
-    }
-    // Perform the write unsynchronized
-    r.write(out);
-  }
-
-  /**
-   * Indicate that the connection attempt failed and notify the UI Activity.
-   */
-  private void connectionFailed() {
-    setState(Sensor.SensorState.DISCONNECTED);
-    Log.i(Constants.TAG, "Bluetooth connection failed.");
-  }
-
-  /**
-   * Indicate that the connection was lost and notify the UI Activity.
-   */
-  private void connectionLost() {
-    setState(Sensor.SensorState.DISCONNECTED);
-    Log.i(Constants.TAG, "Bluetooth connection lost.");
-  }
-
-  /**
-   * This thread runs while attempting to make an outgoing connection with a
-   * device. It runs straight through; the connection either succeeds or fails.
+   * A thread to connect to a bluetooth device.
    */
   private class ConnectThread extends Thread {
-    private final BluetoothSocket socket;
-    private final BluetoothDevice device;
+    private final BluetoothSocket bluetoothSocket;
+    private final BluetoothDevice bluetoothDevice;
 
     public ConnectThread(BluetoothDevice device) {
       setName("ConnectThread-" + device.getName());
-      this.device = device;
+      this.bluetoothDevice = device;
       BluetoothSocket tmp = null;
-
-      // Get a BluetoothSocket for a connection with the
-      // given BluetoothDevice
       try {
         tmp = ApiAdapterFactory.getApiAdapter().getBluetoothSocket(device);
       } catch (IOException e) {
-        Log.e(Constants.TAG, "create() failed", e);
+        Log.e(TAG, "Unable to get blueooth socket.", e);
       }
-      socket = tmp;
+      bluetoothSocket = tmp;
     }
 
     @Override
     public void run() {
-      Log.d(Constants.TAG, "BEGIN mConnectThread");
+      if (bluetoothAdapter == null) {
+        BluetoothConnectionManager.this.reset();
+        return;
+      }
+      // Cancel discovery to prevent slow down
+      bluetoothAdapter.cancelDiscovery();
 
-      // Always cancel discovery because it will slow down a connection
-      adapter.cancelDiscovery();
-
-      // Make a connection to the BluetoothSocket
       try {
-        // This is a blocking call and will only return on a
-        // successful connection or an exception
-        socket.connect();
-      } catch (IOException e) {
-        connectionFailed();
-        // Close the socket
+        bluetoothSocket.connect();
+      } catch (IOException connectException) {
+        Log.i(TAG, "Unable to connect.", connectException);
+        setState(Sensor.SensorState.DISCONNECTED);
         try {
-          socket.close();
-        } catch (IOException e2) {
-          Log.e(Constants.TAG,
-              "unable to close() socket during connection failure", e2);
+          bluetoothSocket.close();
+        } catch (IOException e) {
+          Log.e(TAG, "Unable to close blueooth socket.", e);
         }
-        // Start the service over to restart listening mode
-        BluetoothConnectionManager.this.start();
+        // Reset the bluetooth connection manager
+        BluetoothConnectionManager.this.reset();
         return;
       }
 
-      // Reset the ConnectThread because we're done
+      // Reset the ConnectThread since we are done
       synchronized (BluetoothConnectionManager.this) {
         connectThread = null;
       }
 
       // Start the connected thread
-      connected(socket, device);
+      connected(bluetoothSocket, bluetoothDevice);
     }
 
+    /**
+     * Cancels this thread.
+     */
     public void cancel() {
       try {
-        socket.close();
+        bluetoothSocket.close();
       } catch (IOException e) {
-        Log.e(Constants.TAG, "close() of connect socket failed", e);
+        Log.e(TAG, "Unable to close bluetooth socket.", e);
       }
     }
   }
 
   /**
-   * This thread runs during a connection with a remote device. It handles all
-   * incoming and outgoing transmissions.
+   * This thread handles data transmission when connected.
    */
   private class ConnectedThread extends Thread {
-    private final BluetoothSocket btSocket;
-    private final InputStream mmInStream;
-    private final OutputStream mmOutStream;
+    private final BluetoothSocket bluetoothSSocket;
+    private final InputStream inputStream;
 
-    public ConnectedThread(BluetoothSocket socket) {
-      Log.d(Constants.TAG, "create ConnectedThread");
-      btSocket = socket;
-      InputStream tmpIn = null;
-      OutputStream tmpOut = null;
+    public ConnectedThread(BluetoothSocket bluetoothSocket) {
+      this.bluetoothSSocket = bluetoothSocket;
+      InputStream tmp = null;
 
-      // Get the BluetoothSocket input and output streams
       try {
-        tmpIn = socket.getInputStream();
-        tmpOut = socket.getOutputStream();
+        tmp = bluetoothSocket.getInputStream();
       } catch (IOException e) {
-        Log.e(Constants.TAG, "temp sockets not created", e);
+        Log.e(TAG, "Unable to get input stream.", e);
       }
-
-      mmInStream = tmpIn;
-      mmOutStream = tmpOut;
+      inputStream = tmp;
     }
 
     @Override
     public void run() {
-      Log.i(Constants.TAG, "BEGIN mConnectedThread");
-      byte[] buffer = new byte[parser.getFrameSize()];
-      int bytes;
+      byte[] buffer = new byte[messageParser.getFrameSize()];
+      int bytes; // bytes read
       int offset = 0;
 
-      // Keep listening to the InputStream while connected
+      // Keep listening to the inputStream while connected
       while (true) {
         try {
-          // Read from the InputStream
-          bytes = mmInStream.read(buffer, offset, parser.getFrameSize() - offset);
+          // Read from the inputStream
+          bytes = inputStream.read(buffer, offset, messageParser.getFrameSize() - offset);
 
-          if (bytes < 0) {
-            throw new IOException("EOF reached");
-          }
+          if (bytes == -1) { throw new IOException("EOF reached."); }
 
           offset += bytes;
 
-          if (offset != parser.getFrameSize()) {
-            // partial frame received, call read() again to receive the rest
+          if (offset != messageParser.getFrameSize()) {
+            // Partial frame received. Call read again to receive the rest.
             continue;
           }
 
-          // check if its a valid frame
-          if (!parser.isValid(buffer)) {
-            int index = parser.findNextAlignment(buffer);
-            if (index > 0) {
-              // re-align
-              offset = parser.getFrameSize() - index;
-              System.arraycopy(buffer, index, buffer, 0, offset);
-              Log.w(Constants.TAG, "Misaligned data, found new message at " +
-                   index + " recovering...");
+          if (!messageParser.isValid(buffer)) {
+            int index = messageParser.findNextAlignment(buffer);
+            if (index == -1) {
+              Log.w(TAG, "Could not find any valid data. Drop data.");
+              offset = 0;
               continue;
             }
-            Log.w(Constants.TAG, "Could not find valid data, dropping data");
-            offset = 0;
+            Log.w(TAG, "Misaligned data. Found new message at " + index + ". Recovering...");
+            offset = messageParser.getFrameSize() - index;
+            System.arraycopy(buffer, index, buffer, 0, offset);
             continue;
           }
 
           offset = 0;
 
-          // Send copy of the obtained bytes to the UI Activity.
-          // Avoids memory inconsistency issues.
-          handler.obtainMessage(MESSAGE_READ, bytes, -1, buffer.clone())
-              .sendToTarget();
+          // Send a copy of the obtained bytes to the handler to avoid memory
+          // inconsistency issues
+          handler.obtainMessage(MESSAGE_READ, bytes, -1, buffer.clone()).sendToTarget();
         } catch (IOException e) {
-          Log.e(Constants.TAG, "disconnected", e);
-          connectionLost();
+          Log.i(TAG, "Bluetooth connection lost.", e);
+          setState(Sensor.SensorState.DISCONNECTED);
           break;
         }
       }
     }
 
     /**
-     * Write to the connected OutStream.
-     *
-     * @param buffer The bytes to write
+     * Cancels this thread.
      */
-    public void write(byte[] buffer) {
-      try {
-        mmOutStream.write(buffer);
-
-        // Share the sent message back to the UI Activity
-        handler.obtainMessage(MESSAGE_WRITE, -1, -1, buffer).sendToTarget();
-      } catch (IOException e) {
-        Log.e(Constants.TAG, "Exception during write", e);
-      }
-    }
-
     public void cancel() {
       try {
-        btSocket.close();
+        bluetoothSSocket.close();
       } catch (IOException e) {
-        Log.e(Constants.TAG, "close() of connect socket failed", e);
+        Log.e(TAG, "Unable to close bluetooth socket.", e);
       }
     }
   }

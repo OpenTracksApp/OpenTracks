@@ -230,6 +230,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   protected void onHomeSelected() {
     Intent intent = IntentUtils.newIntent(this, TrackListActivity.class);
     startActivity(intent);
+    finish();
   }
 
   @Override

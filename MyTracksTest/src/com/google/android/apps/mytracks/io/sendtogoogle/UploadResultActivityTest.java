@@ -46,6 +46,7 @@ public class UploadResultActivityTest
    */
   public void testAllSuccess() {
     initialActivity(true, true, true, true, true, true);
+    uploadResultActivity.showDialog(UploadResultActivity.DIALOG_RESULT_ID);
     Dialog dialog = uploadResultActivity.getDialog();
     TextView textView = (TextView) dialog.findViewById(R.id.upload_result_success_footer);
     assertTrue(textView.isShown());
@@ -57,6 +58,7 @@ public class UploadResultActivityTest
   public void testAllFailed() {
     // Send all kinds but all failed.
     initialActivity(true, true, true, false, false, false);
+    uploadResultActivity.showDialog(UploadResultActivity.DIALOG_RESULT_ID);
     Dialog dialog = uploadResultActivity.getDialog();
     TextView textView = (TextView) dialog.findViewById(R.id.upload_result_error_footer);
     assertTrue(textView.isShown());
@@ -72,6 +74,7 @@ public class UploadResultActivityTest
    */
   public void testPartialSuccess() {
     initialActivity(true, false, true, true, false, false);
+    uploadResultActivity.showDialog(UploadResultActivity.DIALOG_RESULT_ID);
     Dialog dialog = uploadResultActivity.getDialog();
     TextView textView = (TextView) dialog.findViewById(R.id.upload_result_error_footer);
     assertTrue(textView.isShown());

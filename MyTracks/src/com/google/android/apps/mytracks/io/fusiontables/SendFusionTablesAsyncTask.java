@@ -70,8 +70,9 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
   // See http://support.google.com/fusiontables/bin/answer.py?hl=en&answer=185991
   private static final String MARKER_TYPE_START = "large_green";
   private static final String MARKER_TYPE_END = "large_red";
-  private static final String MARKER_TYPE_WAYPOINT = "large_yellow";
-
+  private static final String MARKER_TYPE_WAYPOINT = "large_blue";
+  private static final String MARKER_TYPE_STATISTICS = "large_yellow";
+  
   private static final String TAG = SendFusionTablesAsyncTask.class.getSimpleName();
   
   private final Context context;
@@ -336,8 +337,9 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
         // track).
         while (cursor.moveToNext()) {
           Waypoint wpt = myTracksProviderUtils.createWaypoint(cursor);
-          if (!createNewPoint(
-              wpt.getName(), wpt.getDescription(), wpt.getLocation(), MARKER_TYPE_WAYPOINT)) {
+          String type = wpt.getType() == Waypoint.TYPE_STATISTICS ? MARKER_TYPE_STATISTICS
+              : MARKER_TYPE_WAYPOINT;
+          if (!createNewPoint(wpt.getName(), wpt.getDescription(), wpt.getLocation(), type)) {
             Log.d(TAG, "Upload waypoints failed");
             return false;
           }

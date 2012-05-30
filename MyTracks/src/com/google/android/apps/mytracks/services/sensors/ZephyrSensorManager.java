@@ -13,14 +13,19 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.services.sensors;
 
 import android.content.Context;
 
+/**
+ * A Zephyr heart rate sensor manager.
+ * 
+ * @author Jimmy Shih
+ */
 public class ZephyrSensorManager extends BluetoothSensorManager {
 
   public ZephyrSensorManager(Context context) {
     super(context, new ZephyrMessageParser());
   }
-
 }

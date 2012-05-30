@@ -23,7 +23,7 @@ public class SensorManagerFactoryTest extends AndroidTestCase {
 
   @SmallTest
   public void testDefaultSettings() throws Exception {
-    assertNull(SensorManagerFactory.getInstance().getSensorManager(getContext()));
+    assertNull(SensorManagerFactory.getSystemSensorManager(getContext()));
   }
 
   @SmallTest
@@ -38,9 +38,9 @@ public class SensorManagerFactoryTest extends AndroidTestCase {
 
   private void assertClassForName(Class<?> c, int i) {
     PreferencesUtils.setString(getContext(), R.string.sensor_type_key, getContext().getString(i));
-    SensorManager sm = SensorManagerFactory.getInstance().getSensorManager(getContext());
+    SensorManager sm = SensorManagerFactory.getSystemSensorManager(getContext());
     assertNotNull(sm);
     assertTrue(c.isInstance(sm));
-    SensorManagerFactory.getInstance().releaseSensorManager(sm);
+    SensorManagerFactory.releaseSystemSensorManager();
   }
 }

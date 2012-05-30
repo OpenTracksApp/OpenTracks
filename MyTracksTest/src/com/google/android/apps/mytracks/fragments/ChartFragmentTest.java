@@ -52,31 +52,32 @@ public class ChartFragmentTest extends AndroidTestCase {
     
     // No input.
     double[] point = fillDataPointTestHelper(myTracksLocation);
-    assertEquals(Double.NaN, point[3]);
-    assertEquals(Double.NaN, point[4]);
-    assertEquals(Double.NaN, point[5]);
+    assertEquals(Double.NaN, point[ChartView.HEART_RATE_SERIES + 1]);
+    assertEquals(Double.NaN, point[ChartView.CADENCE_SERIES + 1]);
+    assertEquals(Double.NaN, point[ChartView.POWER_SERIES + 1]);
 
     // Input incorrect state.
     // Creates SensorData.
-    Sensor.SensorData.Builder powerData = Sensor.SensorData.newBuilder()
-        .setValue(20).setState(Sensor.SensorState.NONE);
-    Sensor.SensorData.Builder cadenceData = Sensor.SensorData.newBuilder()
-        .setValue(20).setState(Sensor.SensorState.NONE);
     Sensor.SensorData.Builder heartRateData = Sensor.SensorData.newBuilder()
-        .setValue(20).setState(Sensor.SensorState.NONE);
+        .setValue(100).setState(Sensor.SensorState.NONE);
+    Sensor.SensorData.Builder cadenceData = Sensor.SensorData.newBuilder()
+        .setValue(101).setState(Sensor.SensorState.NONE);
+    Sensor.SensorData.Builder powerData = Sensor.SensorData.newBuilder()
+        .setValue(102).setState(Sensor.SensorState.NONE);
+
     // Creates SensorDataSet.
     SensorDataSet sensorDataSet = myTracksLocation.getSensorDataSet();
     sensorDataSet = sensorDataSet.toBuilder()
-        .setPower(powerData)
-        .setCadence(cadenceData)
         .setHeartRate(heartRateData)
+        .setCadence(cadenceData)
+        .setPower(powerData)
         .build();
     myTracksLocation.setSensorData(sensorDataSet);
     // Test.
     point = fillDataPointTestHelper(myTracksLocation);
-    assertEquals(Double.NaN, point[3]);
-    assertEquals(Double.NaN, point[4]);
-    assertEquals(Double.NaN, point[5]);
+    assertEquals(Double.NaN, point[ChartView.HEART_RATE_SERIES + 1]);
+    assertEquals(Double.NaN, point[ChartView.CADENCE_SERIES + 1]);
+    assertEquals(Double.NaN, point[ChartView.POWER_SERIES + 1]);
   }
 
   /**
@@ -87,31 +88,31 @@ public class ChartFragmentTest extends AndroidTestCase {
     MyTracksLocation myTracksLocation = TrackStubUtils.createMyTracksLocation();
     // No input.
     double[] point = fillDataPointTestHelper(myTracksLocation);
-    assertEquals(Double.NaN, point[3]);
-    assertEquals(Double.NaN, point[4]);
-    assertEquals(Double.NaN, point[5]);
+    assertEquals(Double.NaN, point[ChartView.HEART_RATE_SERIES + 1]);
+    assertEquals(Double.NaN, point[ChartView.CADENCE_SERIES + 1]);
+    assertEquals(Double.NaN, point[ChartView.POWER_SERIES + 1]);
 
     // Creates SensorData.
-    Sensor.SensorData.Builder powerData = Sensor.SensorData.newBuilder()
-        .setValue(20).setState(Sensor.SensorState.SENDING);
-    Sensor.SensorData.Builder cadenceData = Sensor.SensorData.newBuilder()
-        .setValue(20).setState(Sensor.SensorState.SENDING);
     Sensor.SensorData.Builder heartRateData = Sensor.SensorData.newBuilder()
-        .setValue(20).setState(Sensor.SensorState.SENDING);
+        .setValue(100).setState(Sensor.SensorState.SENDING);
+    Sensor.SensorData.Builder cadenceData = Sensor.SensorData.newBuilder()
+        .setValue(101).setState(Sensor.SensorState.SENDING);
+    Sensor.SensorData.Builder powerData = Sensor.SensorData.newBuilder()
+        .setValue(102).setState(Sensor.SensorState.SENDING);
     
     // Creates SensorDataSet.
     SensorDataSet sensorDataSet = myTracksLocation.getSensorDataSet();
     sensorDataSet = sensorDataSet.toBuilder()
-        .setPower(powerData)
-        .setCadence(cadenceData)
         .setHeartRate(heartRateData)
+        .setCadence(cadenceData)
+        .setPower(powerData)
         .build();
     myTracksLocation.setSensorData(sensorDataSet);
     // Test.
     point = fillDataPointTestHelper(myTracksLocation);
-    assertEquals(20.0, point[3]);
-    assertEquals(20.0, point[4]);
-    assertEquals(20.0, point[5]);
+    assertEquals(100.0, point[ChartView.HEART_RATE_SERIES + 1]);
+    assertEquals(101.0, point[ChartView.CADENCE_SERIES + 1]);
+    assertEquals(102.0, point[ChartView.POWER_SERIES + 1]);
   }
 
   /**
@@ -230,7 +231,7 @@ public class ChartFragmentTest extends AndroidTestCase {
      * parameter. Then only one value INITIALLONGTITUDE in buffer.
      */
     double[] point = fillDataPointTestHelper(myTracksLocation1);
-    assertEquals(TrackStubUtils.INITIAL_ALTITUDE, point[1]);
+    assertEquals(TrackStubUtils.INITIAL_ALTITUDE, point[ChartView.ELEVATION_SERIES + 1]);
 
     /*
      * Send another value to buffer, now there are two values, INITIALALTITUDE
@@ -239,8 +240,8 @@ public class ChartFragmentTest extends AndroidTestCase {
     MyTracksLocation myTracksLocation2 = TrackStubUtils.createMyTracksLocation();
     myTracksLocation2.setAltitude(TrackStubUtils.INITIAL_ALTITUDE * 2);
     point = fillDataPointTestHelper(myTracksLocation2);
-    assertEquals(
-        (TrackStubUtils.INITIAL_ALTITUDE + TrackStubUtils.INITIAL_ALTITUDE * 2) / 2.0, point[1]);
+    assertEquals((TrackStubUtils.INITIAL_ALTITUDE + TrackStubUtils.INITIAL_ALTITUDE * 2) / 2.0,
+        point[ChartView.ELEVATION_SERIES + 1]);
   }
 
   /**
@@ -260,7 +261,7 @@ public class ChartFragmentTest extends AndroidTestCase {
     MyTracksLocation myTracksLocation1 = TrackStubUtils.createMyTracksLocation();
     myTracksLocation1.setSpeed(129);
     double[] point = fillDataPointTestHelper(myTracksLocation1);
-    assertEquals(0.0, point[2]);
+    assertEquals(0.0, point[ChartView.SPEED_SERIES + 1]);
 
     /*
      * Tests the logic when both metricUnits and reportSpeed are true.This
@@ -275,7 +276,7 @@ public class ChartFragmentTest extends AndroidTestCase {
     myTracksLocation2.setTime(myTracksLocation1.getTime() + 222);
     myTracksLocation2.setSpeed(130);
     point = fillDataPointTestHelper(myTracksLocation2);
-    assertEquals(130.0 * UnitConversions.MS_TO_KMH, point[2]);
+    assertEquals(130.0 * UnitConversions.MS_TO_KMH, point[ChartView.SPEED_SERIES + 1]);
   }
 
   /**
@@ -287,7 +288,8 @@ public class ChartFragmentTest extends AndroidTestCase {
     MyTracksLocation myTracksLocation = TrackStubUtils.createMyTracksLocation();
     myTracksLocation.setSpeed(132);
     double[] point = fillDataPointTestHelper(myTracksLocation);
-    assertEquals(132.0 * UnitConversions.MS_TO_KMH * UnitConversions.KM_TO_MI, point[2]);
+    assertEquals(132.0 * UnitConversions.MS_TO_KMH * UnitConversions.KM_TO_MI,
+        point[ChartView.SPEED_SERIES + 1]);
   }
 
   /**
@@ -299,8 +301,8 @@ public class ChartFragmentTest extends AndroidTestCase {
     MyTracksLocation myTracksLocation = TrackStubUtils.createMyTracksLocation();
     myTracksLocation.setSpeed(134);
     double[] point = fillDataPointTestHelper(myTracksLocation);
-    assertEquals(HOURS_PER_UNIT / (134.0 * UnitConversions.MS_TO_KMH), point[2]);
-
+    assertEquals(
+        HOURS_PER_UNIT / (134.0 * UnitConversions.MS_TO_KMH), point[ChartView.PACE_SERIES + 1]);
   }
 
   /**
@@ -313,7 +315,7 @@ public class ChartFragmentTest extends AndroidTestCase {
     MyTracksLocation myTracksLocation = TrackStubUtils.createMyTracksLocation();
     myTracksLocation.setSpeed(0);
     double[] point = fillDataPointTestHelper(myTracksLocation);
-    assertEquals(0.0, point[2]);
+    assertEquals(0.0, point[ChartView.PACE_SERIES + 1]);
   }
 
   /**
@@ -323,7 +325,7 @@ public class ChartFragmentTest extends AndroidTestCase {
    * @return data of this location
    */
   private double[] fillDataPointTestHelper(Location location) {
-    double[] point = new double[6];
+    double[] point = new double[ChartView.NUM_SERIES + 1];
     chartFragment.fillDataPoint(location, point);
     return point;
   }
