@@ -65,7 +65,7 @@ public class EndToEndTestUtils {
   static final String TCX = "tcx";
   static final String BACKUPS = "backups";
   static final String MENU_MORE = "More";
-  static String TRACK_NAME;
+  static String trackName;
 
   static Solo SOLO;
   static Instrumentation INSTRUMENTATION;
@@ -185,7 +185,8 @@ public class EndToEndTestUtils {
   }
 
   /**
-   * Creates a simple track which can be used by subsequent test.
+   * Creates a simple track which can be used by subsequent test. This method
+   * will save a customized track name.
    * 
    * @param numberOfGpsData number of simulated Gps data
    */
@@ -210,7 +211,7 @@ public class EndToEndTestUtils {
     } 
 
     View oneTrack = SOLO.getCurrentListViews().get(0).getChildAt(0);
-    TRACK_NAME = (String) ((TextView) oneTrack.findViewById(R.id.list_item_name)).getText();
+    trackName = (String) ((TextView) oneTrack.findViewById(R.id.list_item_name)).getText();
     if (isClick) {
       SOLO.clickOnView(oneTrack);
     }
@@ -300,9 +301,9 @@ public class EndToEndTestUtils {
       INSTRUMENTATION.waitForIdleSync();
       // Make every track name is unique to make sure every check can be
       // trusted.
-      EndToEndTestUtils.TRACK_NAME = EndToEndTestUtils.TRACK_NAME_PREFIX
+      EndToEndTestUtils.trackName = EndToEndTestUtils.TRACK_NAME_PREFIX
           + System.currentTimeMillis();
-      SOLO.enterText(0, TRACK_NAME);
+      SOLO.enterText(0, trackName);
       SOLO.clickLongOnText(ACTIVITYMYTRACKS.getString(R.string.generic_save));
     }
   }

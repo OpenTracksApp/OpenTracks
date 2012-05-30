@@ -118,7 +118,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.deleteExportedFiles(EndToEndTestUtils.BACKUPS);
     EndToEndTestUtils.createTrackIfEmpty(3, true);
 
-    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.TRACK_NAME));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.trackName));
 
     // Write to SD card.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
@@ -145,7 +145,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.sd_card_import_success), 0, 10000));
     // Check restore track.
-    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.TRACK_NAME));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.trackName));
   }
 
   /**

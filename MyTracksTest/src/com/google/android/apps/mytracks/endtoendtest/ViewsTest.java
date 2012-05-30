@@ -58,7 +58,7 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     EndToEndTestUtils.createTrackIfEmpty(3, false);
 
     EndToEndTestUtils.SOLO.goBack();
-    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.TRACK_NAME);
+    EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.trackName);
 
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_chart_tab));
     EndToEndTestUtils.rotateAllActivities();

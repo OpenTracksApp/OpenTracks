@@ -46,6 +46,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     super.setUp();
     instrumentation = getInstrumentation();
     activityMyTracks = getActivity();
+    System.out.println(activityMyTracks.getString(R.string.value_unknown));
     EndToEndTestUtils.setupForAllTest(instrumentation, activityMyTracks);
   }
 
@@ -134,13 +135,13 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.rotateAllActivities();
     EndToEndTestUtils.stopRecording(false);
-    EndToEndTestUtils.TRACK_NAME = EndToEndTestUtils.TRACK_NAME_PREFIX + System.currentTimeMillis();
-    EndToEndTestUtils.SOLO.enterText(0, EndToEndTestUtils.TRACK_NAME);
+    EndToEndTestUtils.trackName = EndToEndTestUtils.TRACK_NAME_PREFIX + System.currentTimeMillis();
+    EndToEndTestUtils.SOLO.enterText(0, EndToEndTestUtils.trackName);
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_save));
 
     instrumentation.waitForIdleSync();
     // Check the new track
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.TRACK_NAME, 1, 5000, true,
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.trackName, 1, 5000, true,
         false));
   }
 
@@ -165,7 +166,8 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     instrumentation.waitForIdleSync();
     assertFalse(EndToEndTestUtils.SOLO.waitForText(RELATIVE_STARTTIME_POSTFIX, 1, 500));
 
-    // Test should show relative time.
+    // Test should show relative time for createSimpleTrack would save a track
+    // name that is different with the start time.
     EndToEndTestUtils.createSimpleTrack(2);
     EndToEndTestUtils.SOLO.goBack();
     assertTrue(EndToEndTestUtils.SOLO.waitForText(RELATIVE_STARTTIME_POSTFIX, 1, 5000));
