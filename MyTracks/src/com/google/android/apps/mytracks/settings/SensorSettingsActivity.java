@@ -16,8 +16,10 @@
 
 package com.google.android.apps.mytracks.settings;
 
-import com.google.android.apps.mytracks.services.sensors.ant.AntUtils;
+import com.dsi.ant.AntInterface;
+import com.google.android.apps.mytracks.services.sensors.ant.AntSensorManager;
 import com.google.android.apps.mytracks.util.BluetoothDeviceUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.bluetooth.BluetoothAdapter;
@@ -47,13 +49,14 @@ public class SensorSettingsActivity extends AbstractSettingsActivity {
     super.onCreate(bundle);
     addPreferencesFromResource(R.xml.sensor_settings);
 
+    boolean hasAntSupport = AntInterface.hasAntSupport(this);
     ListPreference sensorTypeListPreference = (ListPreference) findPreference(
         getString(R.string.sensor_type_key));
     List<String> sensorTypeEntries = Arrays.asList(getResources().getStringArray(
-        AntUtils.hasAntSupport(this) ? R.array.sensor_type_all_options
+        hasAntSupport ? R.array.sensor_type_all_options
             : R.array.sensor_type_bluetooth_options));
     List<String> sensorTypeEntryValues = Arrays.asList(getResources().getStringArray(
-        AntUtils.hasAntSupport(this) ? R.array.sensor_type_all_values
+        hasAntSupport ? R.array.sensor_type_all_values
             : R.array.sensor_type_bluetooth_values));
     sensorTypeListPreference.setEntries(sensorTypeEntries.toArray(
         new CharSequence[sensorTypeEntries.size()]));
@@ -78,7 +81,7 @@ public class SensorSettingsActivity extends AbstractSettingsActivity {
           }
         });
 
-    if (!AntUtils.hasAntSupport(this)) {
+    if (!hasAntSupport) {
       PreferenceScreen rootPreferenceScreen = (PreferenceScreen) findPreference(
           getString(R.string.settings_sensor_root_key));
       rootPreferenceScreen.removePreference(
@@ -97,17 +100,39 @@ public class SensorSettingsActivity extends AbstractSettingsActivity {
         || getString(R.string.sensor_type_value_zephyr).equals(sensorType);
     findPreference(getString(R.string.settings_sensor_bluetooth_key)).setEnabled(isBluetooth);
 
-    Preference antHeartRateSensorId = findPreference(
-        getString(R.string.ant_heart_rate_sensor_id_key));
-    if (antHeartRateSensorId != null) {
-      antHeartRateSensorId.setEnabled(getString(R.string.sensor_type_value_ant).equals(sensorType));
-    }
-
-    Preference antSrmBridgetSensorId = findPreference(
-        getString(R.string.ant_srm_bridge_sensor_id_key));
-    if (antSrmBridgetSensorId != null) {
-      antSrmBridgetSensorId.setEnabled(
-          getString(R.string.sensor_type_value_srm_ant_bridge).equals(sensorType));
+    boolean isAnt = getString(R.string.sensor_type_value_ant).equals(sensorType);
+    updateAntSensor(R.string.settings_sensor_ant_reset_heart_rate_monitor_key,
+        R.string.ant_heart_rate_monitor_id_key, isAnt);
+    updateAntSensor(R.string.settings_sensor_ant_reset_speed_distance_monitor_key,
+        R.string.ant_speed_distance_monitor_id_key, isAnt);
+  }
+  
+  /**
+   * Updates an ant sensor.
+   * 
+   * @param preferenceKey the preference key
+   * @param valueKey the value key
+   * @param enabled true if enabled
+   */
+  @SuppressWarnings("deprecation")
+  private void updateAntSensor(int preferenceKey, final int valueKey, boolean enabled) {
+    Preference preference = findPreference(getString(preferenceKey));
+    if (preference != null) {
+      preference.setEnabled(enabled);
+      int deviceId = PreferencesUtils.getInt(this, valueKey, AntSensorManager.WILDCARD);
+      if (deviceId == AntSensorManager.WILDCARD) {
+        preference.setSummary(R.string.settings_sensor_not_connected);
+      } else {
+        preference.setSummary(getString(R.string.settings_sensor_ant_paired, deviceId));
+      }
+      preference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+          @Override
+        public boolean onPreferenceClick(Preference pref) {
+          PreferencesUtils.setInt(SensorSettingsActivity.this, valueKey, AntSensorManager.WILDCARD);
+          pref.setSummary(R.string.settings_sensor_not_connected);
+          return true;
+        }
+      });
     }
   }
 

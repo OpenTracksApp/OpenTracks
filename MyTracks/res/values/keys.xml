@@ -18,10 +18,8 @@ limitations under the License.
   <!-- Keys for persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
   <string name="allow_access_key">allowAccess</string>
   <string name="announcement_frequency_key">announcementFrequency</string>
-  <string name="ant_cadence_sensor_id_key">antCadenceSensorId</string>
-  <string name="ant_cadence_speed_sensor_id_key">antCadenceSpeedSensorId</string>
-  <string name="ant_heart_rate_sensor_id_key">antHeartRateSensorId</string>
-  <string name="ant_srm_bridge_sensor_id_key">antSrmBridgeSensorId</string>
+  <string name="ant_heart_rate_monitor_id_key">antHeartRateMonitorId</string>
+  <string name="ant_speed_distance_monitor_id_key">antSpeedDistanceMonitorId</string>
   <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>
   <string name="auto_resume_track_timeout_key">autoResumeTrackTimeout</string>
   <string name="bluetooth_sensor_key">bluetoothSensor</string>
@@ -72,6 +70,8 @@ limitations under the License.
   <string name="settings_reset_key">settingsReset</string>
   <string name="settings_sensor_key">settingsSensor</string>
   <string name="settings_sensor_ant_key">settingsSensorAnt</string>
+  <string name="settings_sensor_ant_reset_heart_rate_monitor_key">settingsSensorAntResetHeartRateMonitor</string>
+  <string name="settings_sensor_ant_reset_speed_distance_monitor_key">settingsSensorAntResetSpeedDistanceMonitor</string>
   <string name="settings_sensor_bluetooth_key">settingsSensorBluetooth</string>
   <string name="settings_sensor_bluetooth_pairing_key">settingsSensorBluetoothPairing</string>
   <string name="settings_sensor_root_key">settingsSensorRoot</string>

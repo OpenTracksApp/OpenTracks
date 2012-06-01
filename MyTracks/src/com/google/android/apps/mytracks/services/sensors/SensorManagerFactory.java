@@ -16,8 +16,7 @@
 
 package com.google.android.apps.mytracks.services.sensors;
 
-import com.google.android.apps.mytracks.services.sensors.ant.AntDirectSensorManager;
-import com.google.android.apps.mytracks.services.sensors.ant.AntSrmBridgeSensorManager;
+import com.google.android.apps.mytracks.services.sensors.ant.AntSensorManager;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -98,9 +97,7 @@ public class SensorManagerFactory {
         context, R.string.sensor_type_key, sensorTypeValueNone);
 
     if (sensorType.equals(context.getString(R.string.sensor_type_value_ant))) {
-      return new AntDirectSensorManager(context);
-    } else if (sensorType.equals(context.getString(R.string.sensor_type_value_srm_ant_bridge))) {
-      return new AntSrmBridgeSensorManager(context);
+      return new AntSensorManager(context);
     } else if (sensorType.equals(context.getString(R.string.sensor_type_value_zephyr))) {
       return new ZephyrSensorManager(context);
     } else if (sensorType.equals(context.getString(R.string.sensor_type_value_polar))) {

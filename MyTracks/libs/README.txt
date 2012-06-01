@@ -7,6 +7,9 @@ Android Support Package:
 android-support-v4-r7-googlemaps.jar
 - see https://github.com/petedoyle/android-support-v4-googlemaps
 
+Ant+:
+antlib.jar - see http://www.thisisant.com/pages/developer-zone/android-api
+
 Google APIs Client Library for Java:
 commons-codec-1.3.jar
 commons-logging-1.1.1.jar
