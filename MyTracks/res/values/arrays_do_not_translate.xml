@@ -161,14 +161,12 @@ limitations under the License.
   <string-array name="sensor_type_all_options">
     <item>@string/settings_sensor_type_none</item>
     <item>@string/settings_sensor_type_ant</item>
-    <item>@string/settings_sensor_type_srm</item>
     <item>@string/settings_sensor_type_polar</item>
     <item>@string/settings_sensor_type_zephyr</item>
   </string-array>
   <string-array name="sensor_type_all_values">
     <item>@string/sensor_type_value_none</item>
     <item>@string/sensor_type_value_ant</item>
-    <item>@string/sensor_type_value_srm_ant_bridge</item>
     <item>@string/sensor_type_value_polar</item>
     <item>@string/sensor_type_value_zephyr</item>
   </string-array>

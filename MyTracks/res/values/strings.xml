@@ -1726,11 +1726,6 @@ limitations under the License.
       Character limit: ~26 (1 line)">
     Sensor
   </string>
-  <string name="settings_sensor_ant_not_paired"
-    translation_description="In the 'Sensor' settings, the summary for 'Unpair ANT+ heart rate
-      sensor' or 'Unpair SRM ANT+ bridge' when there no ANT+ device paired.">
-    Not paired.
-  </string>
   <string name="settings_sensor_ant_options"
     translation_description="In the 'Sensor' settings, the section header to configure the ANT+
       options. Note that ANT+ is a radio standard.
@@ -1739,17 +1734,25 @@ limitations under the License.
     ANT+ options
   </string>
   <string name="settings_sensor_ant_paired"
-    translation_description="In the 'Sensor' settings, the summary for 'Unpair ANT+ heart rate
-      sensor' or 'Unpair SRM ANT+ bridge' when there is an ANT+ device paired.
+    translation_description="In the 'Sensor' settings, the summary to indicate the paired ANT+
+     device. Note that ANT+ is a radio standard.
 
-      %1$d: sensor id number. E.g., '1'.">
+      %1$d: device id number. E.g., '1'.">
     Paired with: %1$d.
   </string>
-  <string name="settings_sensor_bluetooth_connected"
-    translation_description="The message when connected to a bluetooth sensor.
-    
-      %1$s: sensor name. E.g., 'polar bluetooth'.">
-   Connected to %1$s
+  <string name="settings_sensor_ant_reset_heart_rate_monitor"
+    translation_description="In the 'Sensor' settings, under the 'ANT+ options', the option to reset
+      an ANT+ heart rate monitor. Note that ANT+ is a radio standard.
+
+      Character limit: ~26 (1 line)">
+    Reset heart rate monitor
+  </string>
+  <string name="settings_sensor_ant_reset_speed_distance_monitor"
+    translation_description="In the 'Sensor' settings, under the 'ANT+ options', the option to reset
+      an ANT+ speed distance monitor. Note that ANT+ is a radio standard.
+
+      Character limit: ~26 (1 line)">
+    Reset speed distance monitor
   </string>
   <string name="settings_sensor_bluetooth_options"
     translation_description="In the 'Sensor' settings, the section header to configure the Bluetooth
@@ -1784,6 +1787,16 @@ limitations under the License.
       sensor to connect to.">
     The Bluetooth sensor to connect to.
   </string>
+  <string name="settings_sensor_connected"
+    translation_description="The message when connected to a sensor.
+    
+      %1$s: sensor name. E.g., 'polar bluetooth'.">
+   Connected to %1$s
+  </string>
+  <string name="settings_sensor_not_connected"
+    translation_description="The message when not connected to a sensor.">
+    Not connected.
+  </string>
   <string name="settings_sensor_type"
     translation_description="In the 'Sensor' settings, the dropdown option to choose a sensor type.
 
@@ -1792,10 +1805,10 @@ limitations under the License.
   </string>
   <string name="settings_sensor_type_ant"
     translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
-      connect to an ANT+ heart rate sensor. Note that ANT+ is a radio standard.
+      connect to an ANT+ sensor. Note that ANT+ is a radio standard.
 
       Character limit: ~21 (1 line)">
-    ANT+ heart rate
+    ANT+
   </string>
   <string name="settings_sensor_type_none"
     translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
@@ -1812,14 +1825,6 @@ limitations under the License.
       Character limit: ~21 (1 line)">
     Polar Bluetooth
   </string>
-  <string name="settings_sensor_type_srm"
-    translation_description="In the 'Sensor' settings, for the 'Sensor type' dropdown, the option to
-      connect to a SRM ANT+ bridge.  Do not translate SRM, the company name, but can translate
-      ANT+, the radio standard, and bridge (network bridge).
-
-      Character limit: ~21 (1 line)">
-    SRM ANT+ bridge
-  </string>
   <string name="settings_sensor_type_summary"
     translation_description="In the 'Sensor' settings, the summary for the 'Sensor type' option
       explaining that it is to configure the type of sensor to connect to.">
@@ -1832,21 +1837,6 @@ limitations under the License.
 
       Character limit: ~21 (1 line)">
     Zephyr Bluetooth
-  </string>
-  <string name="settings_sensor_unpair_ant"
-    translation_description="In the 'Sensor' settings, under the 'ANT+ options' configurations, the
-      option to unpair an ANT+ heart rate sensor. Note that ANT+ is a radio standard.
-
-      Character limit: ~26 (1 line)">
-    Unpair ANT+ heart rate
-  </string>
-  <string name="settings_sensor_unpair_srm"
-    translation_description="In the 'Sensor' settings, under the 'ANT+ options' configurations, the
-      option to unpair a SRM ANT+ bridge. Do not translate SRM, the company name, but can translate
-      ANT+, the radio standard, and bridge (network bridge).
-
-      Character limit: ~26 (1 line)">
-    Unpair SRM ANT+ bridge
   </string>
 
   <!-- Settings Sharing -->

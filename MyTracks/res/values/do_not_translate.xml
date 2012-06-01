@@ -30,7 +30,6 @@ limitations under the License.
   <string name="sensor_type_value_ant">ANT</string>
   <string name="sensor_type_value_none">NONE</string>
   <string name="sensor_type_value_polar">POLAR</string>
-  <string name="sensor_type_value_srm_ant_bridge">SRM_ANT_BRIDGE</string>
   <string name="sensor_type_value_zephyr">ZEPHYR</string>
   <string name="settings_map_track_color_mode_dynamic_value">DYNAMIC</string>
   <string name="settings_map_track_color_mode_fixed_value">FIXED</string>
