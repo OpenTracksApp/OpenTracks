@@ -160,8 +160,8 @@ public class ChartView extends View {
         new int[] {25, 50 },
         R.string.description_sensor_heart_rate,
         R.string.description_sensor_heart_rate,
-        R.color.heartrate_fill,
-        R.color.heartrate_border);
+        R.color.heart_rate_fill,
+        R.color.heart_rate_border);
     series[CADENCE_SERIES] = new ChartValueSeries(context,
         0,
         Integer.MAX_VALUE,
