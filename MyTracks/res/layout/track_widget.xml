@@ -14,71 +14,72 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:background="@drawable/app_widget_background"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_height="fill_parent"
   android:layout_width="fill_parent"
-  android:paddingBottom="5dp"
-  android:paddingLeft="10dp"
-  android:paddingRight="10dp"
-  android:paddingTop="5dp" >
-  <ImageButton
-    android:background="@android:color/transparent"
-    android:contentDescription="@string/my_tracks_app_name"
-    android:id="@+id/appwidget_button"
-    android:layout_height="fill_parent"
-    android:layout_width="wrap_content"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:src="@drawable/app_widget_button_disabled" />
+  android:padding="@dimen/widget_margin" >
   <LinearLayout
-    android:clickable="true"
-    android:id="@+id/appwidget_track_statistics"
+    android:background="@drawable/app_widget_background"
     android:layout_height="fill_parent"
-    android:layout_weight="1"
-    android:layout_width="0dp"
-    android:orientation="vertical"
-    android:paddingLeft="16dp" >
+    android:layout_width="fill_parent"
+    android:orientation="horizontal" >
+    <ImageButton
+      android:background="@android:color/transparent"
+      android:contentDescription="@string/my_tracks_app_name"
+      android:id="@+id/track_widget_button"
+      android:layout_height="fill_parent"
+      android:layout_width="wrap_content"
+      android:padding="8dp"
+      android:src="@drawable/app_widget_button_disabled" />
     <LinearLayout
-      android:layout_height="wrap_content"
-      android:layout_width="fill_parent"
-      android:orientation="horizontal" >
-      <TextView
-        android:id="@+id/appwidget_distance_text"
-        style="@style/TrackWidgetValue" />
-      <TextView
-        android:text="@string/stats_total_distance"
-        style="@style/TextSmall" />
-    </LinearLayout>
-    <LinearLayout
-      android:background="@color/appwidget_hr"
-      android:layout_height="1dp"
-      android:layout_width="fill_parent" />
-    <LinearLayout
-      android:layout_height="wrap_content"
-      android:layout_width="fill_parent"
-      android:orientation="horizontal" >
-      <TextView
-        android:id="@+id/appwidget_time_text"
-        style="@style/TrackWidgetValue" />
-      <TextView
-        android:text="@string/stats_moving_time"
-        style="@style/TextSmall" />
-    </LinearLayout>
-    <LinearLayout
-      android:background="@color/appwidget_hr"
-      android:layout_height="1dp"
-      android:layout_width="fill_parent" />
-    <LinearLayout
-      android:layout_height="wrap_content"
-      android:layout_width="fill_parent"
-      android:orientation="horizontal" >
-      <TextView
-        android:id="@+id/appwidget_speed_text"
-        style="@style/TrackWidgetValue" />
-      <TextView
-        android:text="@string/stats_speed"
-        style="@style/TextSmall" />
+      android:clickable="true"
+      android:id="@+id/track_widget_statistics"
+      android:layout_height="fill_parent"
+      android:layout_weight="1"
+      android:layout_width="0dp"
+      android:orientation="vertical"
+      android:paddingLeft="8dp" >
+      <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:orientation="horizontal" >
+        <TextView
+          android:id="@+id/track_widget_distance_value"
+          style="@style/TrackWidgetValue" />
+        <TextView
+          android:text="@string/stats_total_distance"
+          style="@style/TrackWidgetLabel" />
+      </LinearLayout>
+      <LinearLayout
+        android:background="@color/track_widget_line"
+        android:layout_height="1dp"
+        android:layout_width="fill_parent" />
+      <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:orientation="horizontal" >
+        <TextView
+          android:id="@+id/track_widget_time_value"
+          style="@style/TrackWidgetValue" />
+        <TextView
+          android:id="@+id/track_widget_time_label"
+          style="@style/TrackWidgetLabel" />
+      </LinearLayout>
+      <LinearLayout
+        android:background="@color/track_widget_line"
+        android:layout_height="1dp"
+        android:layout_width="fill_parent" />
+      <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:orientation="horizontal" >
+        <TextView
+          android:id="@+id/track_widget_speed_value"
+          style="@style/TrackWidgetValue" />
+        <TextView
+          android:id="@+id/track_widget_speed_label"
+          style="@style/TrackWidgetLabel" />
+      </LinearLayout>
     </LinearLayout>
   </LinearLayout>
-</LinearLayout>
+</FrameLayout>

@@ -29,8 +29,8 @@ limitations under the License.
   <CheckBoxPreference
     android:defaultValue="true"
     android:key="@string/stats_use_total_time_key"
-    android:summaryOff="@string/stats_total_time"
-    android:summaryOn="@string/stats_moving_time"
+    android:summaryOff="@string/stats_moving_time"
+    android:summaryOn="@string/stats_total_time"
     android:title="@string/settings_stats_time_title" />
   <PreferenceCategory android:title="@string/settings_show" >
     <CheckBoxPreference
