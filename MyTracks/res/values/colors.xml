@@ -49,8 +49,8 @@ limitations under the License.
   <color name="power_border">#FF401465</color>
   <color name="power_fill">#40401465</color>
 
-  <!-- app widget horizontal line -->
-  <color name="appwidget_hr">#99999999</color>
+  <!-- track widget line -->
+  <color name="track_widget_line">#99999999</color>
 
   <!-- dynamic track slow path, green -->
   <color name="slow_path">#F774DF00</color>
