@@ -116,9 +116,10 @@ public class MarkerEditActivity extends AbstractMyTracksActivity {
       waypointSection.setVisibility(View.VISIBLE);
       int nextMarkerNumber = trackId == -1L ? -1
           : MyTracksProviderUtils.Factory.get(this).getNextMarkerNumber(trackId, false);
-      String name = nextMarkerNumber == -1 ? getString(R.string.marker_type_waypoint)
-          : getString(R.string.marker_name_format, nextMarkerNumber);
-      waypointName.setText(name);
+      if (nextMarkerNumber == -1) {
+        nextMarkerNumber = 0;
+      }
+      waypointName.setText(getString(R.string.marker_name_format, nextMarkerNumber));
       waypointName.selectAll();
       waypointMarkerType.setText("");
       waypointDescription.setText("");
