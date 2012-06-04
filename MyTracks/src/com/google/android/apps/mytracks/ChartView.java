@@ -81,7 +81,7 @@ public class ChartView extends View {
   private static final int Y_AXIS_OFFSET = 16;
 
   // Marker pin x position / marker icon width
-  private static final double MARKER_PIN_X_POSITION_PERCENTAGE = (double) 10 / 32;
+  private static final double MARKER_PIN_X_POSITION_PERCENTAGE = 13 / 48.0;
 
   private final ChartValueSeries[] series = new ChartValueSeries[NUM_SERIES];
   private final ArrayList<double[]> chartData = new ArrayList<double[]>();

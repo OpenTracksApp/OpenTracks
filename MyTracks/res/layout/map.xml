@@ -28,7 +28,7 @@ limitations under the License.
     android:layout_width="fill_parent" />
   <TextView
     android:background="@color/warning_background"
-    android:drawableLeft="@android:drawable/ic_dialog_alert"
+    android:drawableLeft="@drawable/warning"
     android:gravity="center"
     android:id="@+id/map_message"
     android:layout_alignParentTop="true"

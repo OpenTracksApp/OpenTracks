@@ -498,11 +498,11 @@ limitations under the License.
     Max elevation: %1$d m (%2$d ft)
   </string>
   <string name="description_max_grade"
-    translation_description="Max grade description. \u0025 is the unicode value for the percent
+    translation_description="Max grade description. %% is the escape sequence for the percent
       symbol.
 
       %1$d grade in percentage">
-    Max grade: %1$d \u0025
+    Max grade: %1$d %%
   </string>
   <string name="description_max_speed"
     translation_description="Max speed description.
@@ -519,11 +519,11 @@ limitations under the License.
     Min elevation: %1$d m (%2$d ft)
   </string>
   <string name="description_min_grade"
-    translation_description="Min grade description. \u0025 is the unicode value for the percent
+    translation_description="Min grade description. %% is the escape sequence for the percent
       symbol.
 
       %1$d grade in percentage">
-    Min grade: %1$d \u0025
+    Min grade: %1$d %%
   </string>
   <string name="description_moving_time"
     translation_description="Moving time description.
@@ -2317,11 +2317,12 @@ limitations under the License.
     %1$d min
   </string>
   <string name="value_integer_percent"
-     translation_description="To display a value in percent like 2 %. \u0025 is the unicode value
+     translation_description="To display a value in percent like 2 %. %% is the escape sequence for
+      the percent symbol.
       for the percent symbol.
 
      %1$d: an integer value. E.g., '2'">
-    %1$d \u0025
+    %1$d %%
   </string>
   <string name="value_integer_second"
     translation_description="In a setting picker, the string format to display an integer value in
