@@ -43,10 +43,10 @@ limitations under the License.
         android:text="@string/help_location_precision_answer"
         style="@style/HelpAnswer" />
       <TextView
-        android:text="@string/help_gps_fix_question"
+        android:text="@string/help_gps_signal_question"
         style="@style/HelpQuestion" />
       <TextView
-        android:text="@string/help_gps_fix_answer"
+        android:text="@string/help_gps_signal_answer"
         style="@style/HelpAnswer" />
       <TextView
         android:text="@string/help_data_connection_question"

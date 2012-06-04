@@ -19,11 +19,11 @@ limitations under the License.
   <string-array name="activity_types">
     <item>@string/activity_type_airplane</item>
     <item>@string/activity_type_atv</item>
+    <item>@string/activity_type_biking</item>
     <item>@string/activity_type_blimp</item>
     <item>@string/activity_type_climbing</item>
     <item>@string/activity_type_commercial_airplane</item>
-    <item>@string/activity_type_cross_country_skiing_classic</item>
-    <item>@string/activity_type_cross_country_skiing_skate</item>
+    <item>@string/activity_type_cross_country_skiing</item>
     <item>@string/activity_type_cycling</item>
     <item>@string/activity_type_dirt_bike</item>
     <item>@string/activity_type_donkey_back_riding</item>
@@ -55,8 +55,7 @@ limitations under the License.
     <item>@string/activity_type_rc_helicopter</item>
     <item>@string/activity_type_riding</item>
     <item>@string/activity_type_road_biking</item>
-    <item>@string/activity_type_roller_skiing_classic</item>
-    <item>@string/activity_type_roller_skiing_skate</item>
+    <item>@string/activity_type_roller_skiing</item>
     <item>@string/activity_type_rowing</item>
     <item>@string/activity_type_running</item>
     <item>@string/activity_type_sailing</item>
