@@ -108,23 +108,26 @@ public class StringUtils {
 
   /**
    * Formats the distance.
-   *
+   * 
    * @param context the context
    * @param distance the distance in meters
-   * @param metric true to use metric. False to use imperial
+   * @param metricUnits true to use metric units. False to use imperial units
    */
-  public static String formatDistance(Context context, double distance, boolean metric) {
-    if (metric) {
-      if (distance > 2000.0) {
+  public static String formatDistance(Context context, double distance, boolean metricUnits) {
+    if (Double.isNaN(distance) || Double.isInfinite(distance)) {
+      return context.getString(R.string.value_unknown);
+    }
+    if (metricUnits) {
+      if (distance > 1000.0) {
         distance *= UnitConversions.M_TO_KM;
         return context.getString(R.string.value_float_kilometer, distance);
       } else {
-        return context.getString(R.string.value_float_meter, distance);        
+        return context.getString(R.string.value_float_meter, distance);
       }
     } else {
-      if (distance * UnitConversions.M_TO_MI > 2) {
+      if (distance * UnitConversions.M_TO_MI > 1) {
         distance *= UnitConversions.M_TO_MI;
-        return context.getString(R.string.value_float_mile, distance);        
+        return context.getString(R.string.value_float_mile, distance);
       } else {
         distance *= UnitConversions.M_TO_FT;
         return context.getString(R.string.value_float_feet, distance);
@@ -137,29 +140,31 @@ public class StringUtils {
    * 
    * @param context the context
    * @param speed the speed in meters per second
-   * @param metric true to use metric. False to use imperial
+   * @param metricUnits true to use metric units. False to use imperial units
    * @param reportSpeed true to report as speed. False to report as pace
    */
   public static String formatSpeed(
-      Context context, double speed, boolean metric, boolean reportSpeed) {
+      Context context, double speed, boolean metricUnits, boolean reportSpeed) {
     if (Double.isNaN(speed) || Double.isInfinite(speed)) {
       return context.getString(R.string.value_unknown);
     }
-    if (metric) {
-      speed = speed * UnitConversions.MS_TO_KMH;
+    speed *= UnitConversions.MS_TO_KMH;
+    if (metricUnits) {
       if (reportSpeed) {
         return context.getString(R.string.value_float_kilometer_hour, speed);
       } else {
-        double paceInMinute = speed == 0 ? 0.0 : 60 / speed;
-        return context.getString(R.string.value_float_minute_kilometer, paceInMinute);
+        // convert from hours to minutes
+        double pace = speed == 0 ? 0.0 : 60.0 / speed;
+        return context.getString(R.string.value_float_minute_kilometer, pace);
       }
     } else {
-      speed = speed * UnitConversions.MS_TO_KMH * UnitConversions.KM_TO_MI;
+      speed *= UnitConversions.KM_TO_MI;
       if (reportSpeed) {
         return context.getString(R.string.value_float_mile_hour, speed);
       } else {
-        double paceInMinute = speed == 0 ? 0.0 : 60 / speed;
-        return context.getString(R.string.value_float_minute_mile, paceInMinute);
+        // convert from hours to minutes
+        double pace = speed == 0 ? 0.0 : 60.0 / speed;
+        return context.getString(R.string.value_float_minute_mile, pace);
       }
     }
   }

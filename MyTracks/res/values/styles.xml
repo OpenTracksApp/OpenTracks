@@ -157,8 +157,13 @@ limitations under the License.
   </style>
   <!-- Theme selector -->
   <style name="ThemeSelector" parent="android:Theme" />
+  <!-- The style for the track widget label -->
+  <style name="TrackWidgetLabel" parent="@style/TextSmall">
+    <item name="android:width">100dp</item>
+  </style>
   <!-- The style for the track widget value -->
   <style name="TrackWidgetValue" parent="@style/TextSmall">
-    <item name="android:width">100dp</item>
+    <item name="android:layout_weight">1</item>
+    <item name="android:layout_width">0dp</item>
   </style>
 </resources>

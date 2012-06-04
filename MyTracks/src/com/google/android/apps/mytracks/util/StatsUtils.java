@@ -220,31 +220,7 @@ public class StatsUtils {
   private static void setSpeedValue(
       Activity activity, int id, double speed, boolean metricUnits, boolean reportSpeed) {
     TextView textView = (TextView) activity.findViewById(id);
-    String value;
-    if (Double.isNaN(speed) || Double.isInfinite(speed)) {
-      value = activity.getString(R.string.value_unknown);
-    } else {
-      speed *= UnitConversions.MS_TO_KMH;
-      if (metricUnits) {
-        if (reportSpeed) {
-          value = activity.getString(R.string.value_float_kilometer_hour, speed);
-        } else {
-          // convert from hours to minutes
-          double pace = speed == 0 ? 0.0 : 60.0 / speed;
-          value = activity.getString(R.string.value_float_minute_kilometer, pace);
-        }
-      } else {
-        speed *= UnitConversions.KM_TO_MI;
-        if (reportSpeed) {
-          value = activity.getString(R.string.value_float_mile_hour, speed);
-        } else {
-          // convert from hours to minutes
-          double pace = speed == 0 ? 0.0 : 60.0 / speed;
-          value = activity.getString(R.string.value_float_minute_mile, pace);
-        }
-      }
-    }
-    textView.setText(value);
+    textView.setText(StringUtils.formatSpeed(activity, speed, metricUnits, reportSpeed));
   }
 
   /**
@@ -258,19 +234,7 @@ public class StatsUtils {
   private static void setDistanceValue(
       Activity activity, int id, double distance, boolean metricUnits) {
     TextView textView = (TextView) activity.findViewById(id);
-    String value;
-    if (Double.isNaN(distance) || Double.isInfinite(distance)) {
-      value = activity.getString(R.string.value_unknown);
-    } else {
-      distance *= UnitConversions.M_TO_KM;
-      if (metricUnits) {
-        value = activity.getString(R.string.value_float_kilometer, distance);
-      } else {
-        distance *= UnitConversions.KM_TO_MI;
-        value = activity.getString(R.string.value_float_mile, distance);
-      }
-    }
-    textView.setText(value);
+    textView.setText(StringUtils.formatDistance(activity, distance, metricUnits));
   }
 
   /**

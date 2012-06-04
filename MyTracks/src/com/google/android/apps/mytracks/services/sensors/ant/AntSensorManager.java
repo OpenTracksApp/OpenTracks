@@ -126,28 +126,39 @@ public class AntSensorManager extends SensorManager {
   }
 
   @Override
-  protected void setUpChannel() {
+  protected synchronized void setUpChannel() {
+    tearDownChannel();
     if (AntInterface.hasAntSupport(context)) {
       context.registerReceiver(statusReceiver, statusIntentFilter);
       if (!antInterface.initService(context, serviceListener)) {
         AntInterface.goToMarket(context);
       } else {
         setSensorState(Sensor.SensorState.CONNECTING);
-        serviceConnected = antInterface.isServiceConnected();
-        if (serviceConnected) {
-          try {
-            hasClaimedInterface = antInterface.hasClaimedInterface();
-            if (hasClaimedInterface) {
-              enableDataMessage(true);
-            }
-          } catch (AntInterfaceException e) {
-            handleAntError();
-          }
-        }
+        handleServiceConnected();
       }
     }
   }
 
+  /**
+   * Handles service connected. Needs to be synchronized.
+   */
+  private synchronized void handleServiceConnected() {
+    serviceConnected = antInterface.isServiceConnected();
+    if (serviceConnected) {
+      try {
+        hasClaimedInterface = antInterface.hasClaimedInterface();
+        if (hasClaimedInterface) {
+          enableDataMessage(true);
+        } else {
+          // Need to claim the ant interface if it is available
+          hasClaimedInterface = antInterface.claimInterface();
+        }
+      } catch (AntInterfaceException e) {
+        handleAntError();
+      }
+    }
+  }
+  
   @Override
   protected void tearDownChannel() {
     try {
@@ -161,6 +172,7 @@ public class AntSensorManager extends SensorManager {
         if (hasClaimedInterface) {
           antInterface.releaseInterface();
         }
+        hasClaimedInterface = false;
         antInterface.stopRequestForceClaimInterface();
       } catch (AntServiceNotConnectedException e) {
         // Can safely ignore
@@ -168,6 +180,7 @@ public class AntSensorManager extends SensorManager {
         Log.w(TAG, "Exception in tearDonwChannel.", e);
       }
       antInterface.releaseService();
+      serviceConnected = false;
     }
   }
 
@@ -190,18 +203,7 @@ public class AntSensorManager extends SensorManager {
   private AntInterface.ServiceListener serviceListener = new AntInterface.ServiceListener() {
       @Override
     public void onServiceConnected() {
-      serviceConnected = true;
-      try {
-        hasClaimedInterface = antInterface.hasClaimedInterface();
-        if (hasClaimedInterface) {
-          enableDataMessage(true);
-        } else {
-          // Need to claim the ant interface if it is available
-          hasClaimedInterface = antInterface.claimInterface();
-        }
-      } catch (AntInterfaceException e) {
-        handleAntError();
-      }
+      handleServiceConnected();
     }
 
       @Override

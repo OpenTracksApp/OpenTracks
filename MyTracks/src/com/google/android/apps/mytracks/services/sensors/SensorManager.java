@@ -33,8 +33,8 @@ public abstract class SensorManager {
 
   private static final String TAG = SensorManager.class.getSimpleName();
   private static final long MAX_SENSOR_DATE_SET_AGE = 5000;
-  private static final long MAX_SENSOR_STATE_AGE = 30000;
-  private static final int RETRY_PERIOD = 30000;
+  private static final long MAX_SENSOR_STATE_AGE = 20000;
+  private static final int RETRY_PERIOD = 20000;
 
   private SensorState sensorState = SensorState.NONE;
   private long sensorStateTimestamp = System.currentTimeMillis();

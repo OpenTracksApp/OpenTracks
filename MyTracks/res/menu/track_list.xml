@@ -36,7 +36,7 @@ limitations under the License.
     android:id="@+id/track_list_import"
     android:title="@string/menu_import"/>
   <item
-    android:icon="@drawable/menu_save_all"
+    android:icon="@drawable/menu_save"
     android:id="@+id/track_list_save_all"
     android:title="@string/menu_save_all">
     <menu>
@@ -47,7 +47,7 @@ limitations under the License.
     </menu>
   </item>
   <item
-    android:icon="@drawable/menu_delete_all"
+    android:icon="@drawable/menu_delete"
     android:id="@+id/track_list_delete_all"
     android:title="@string/menu_delete_all"/>
   <item
