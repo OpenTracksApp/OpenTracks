@@ -40,6 +40,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.ContentObserver;
 import android.os.Handler;
+import android.support.v4.app.TaskStackBuilder;
 import android.widget.RemoteViews;
 
 /**
@@ -172,26 +173,13 @@ public class TrackWidgetProvider extends AppWidgetProvider
    * @param action the action
    */
   private void updateTrack(String action) {
-    Track track = selectedTrackId != PreferencesUtils.SELECTED_TRACK_ID_DEFAULT ? myTracksProviderUtils
-        .getTrack(selectedTrackId)
-        : myTracksProviderUtils.getLastTrack();
     RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.track_widget);
-
-    Intent intent;
-    if (track != null) {
-      intent = IntentUtils.newIntent(context, TrackDetailActivity.class)
-          .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, track.getId());
-    } else {
-      intent = IntentUtils.newIntent(context, TrackListActivity.class);
-    }
-    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-    remoteViews.setOnClickPendingIntent(R.id.track_widget_statistics, pendingIntent);
 
     if (action != null) {
       updateButton(remoteViews, action);
     }
-    updateStatistics(remoteViews, track);
-    
+    updateStatistics(remoteViews);
+
     AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
     int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
         new ComponentName(context, TrackWidgetProvider.class));
@@ -209,13 +197,14 @@ public class TrackWidgetProvider extends AppWidgetProvider
   private void updateButton(RemoteViews remoteViews, String action) {
     int trackAction = trackStartedBroadcastAction.equals(action) ? R.string.track_action_end
         : R.string.track_action_start;
-    int icon = trackStartedBroadcastAction.equals(action) ? R.drawable.app_widget_button_enabled
-        : R.drawable.app_widget_button_disabled;
     Intent intent = new Intent(context, ControlRecordingService.class).setAction(
         context.getString(trackAction));
     PendingIntent pendingIntent = PendingIntent.getService(
         context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     remoteViews.setOnClickPendingIntent(R.id.track_widget_button, pendingIntent);
+
+    int icon = trackStartedBroadcastAction.equals(action) ? R.drawable.app_widget_button_enabled
+        : R.drawable.app_widget_button_disabled;
     remoteViews.setImageViewResource(R.id.track_widget_button, icon);
   }
 
@@ -223,9 +212,10 @@ public class TrackWidgetProvider extends AppWidgetProvider
    * Updates statistics.
    * 
    * @param remoteViews the remote views
-   * @param track the track
    */
-  private void updateStatistics(RemoteViews remoteViews, Track track) {
+  private void updateStatistics(RemoteViews remoteViews) {
+    Track track = selectedTrackId != PreferencesUtils.SELECTED_TRACK_ID_DEFAULT 
+        ? myTracksProviderUtils.getTrack(selectedTrackId) : myTracksProviderUtils.getLastTrack();
     TripStatistics tripStatistics = track == null ? null : track.getStatistics();
     String distance = tripStatistics == null ? unknown
         : StringUtils.formatDistance(context, tripStatistics.getTotalDistance(), metricUnits);
@@ -240,6 +230,7 @@ public class TrackWidgetProvider extends AppWidgetProvider
       speedLabelId = reportSpeed ? R.string.stats_average_moving_speed
           : R.string.stats_average_moving_pace;
     }
+
     String speed = tripStatistics == null ? unknown : StringUtils.formatSpeed(
         context, useTotalTime ? tripStatistics.getAverageSpeed()
             : tripStatistics.getAverageMovingSpeed(), metricUnits, reportSpeed);
@@ -248,5 +239,17 @@ public class TrackWidgetProvider extends AppWidgetProvider
     remoteViews.setTextViewText(R.id.track_widget_time_value, time);
     remoteViews.setTextViewText(R.id.track_widget_speed_label, context.getString(speedLabelId));
     remoteViews.setTextViewText(R.id.track_widget_speed_value, speed);
+
+    Intent intent;
+    if (track != null) {
+      intent = IntentUtils.newIntent(context, TrackDetailActivity.class)
+          .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, track.getId());
+    } else {
+      intent = IntentUtils.newIntent(context, TrackListActivity.class);
+    }
+    TaskStackBuilder taskStackBuilder = TaskStackBuilder.from(context);
+    taskStackBuilder.addNextIntent(intent);
+    remoteViews.setOnClickPendingIntent(
+        R.id.track_widget_statistics, taskStackBuilder.getPendingIntent(0, 0));
   }
 }

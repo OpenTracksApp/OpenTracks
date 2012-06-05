@@ -30,6 +30,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -142,10 +143,12 @@ public class ImportActivity extends Activity {
               @Override
               public void onClick(DialogInterface dialog, int which) {
                 if (!importAll && trackId != -1L) {
-                  Intent intent = IntentUtils.newIntent(
-                      ImportActivity.this, TrackDetailActivity.class)
+                  Intent intent = IntentUtils
+                      .newIntent(ImportActivity.this, TrackDetailActivity.class)
                       .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
-                  startActivity(intent);
+                  TaskStackBuilder taskStackBuilder = TaskStackBuilder.from(ImportActivity.this);
+                  taskStackBuilder.addNextIntent(intent);
+                  taskStackBuilder.startActivities();
                 }
                 finish();
               }

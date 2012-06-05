@@ -74,8 +74,6 @@ public class AntSensorManager extends SensorManager {
   private static final short SDM_PERIOD = 8134;
 
   private static final byte DEFAULT_PROXIMITY_SEARCH_BIN = 7;
-  private static final short SCREEN_ON_BUFFER_THRESHOLD = AntDefine.MIN_BUFFER_THRESHOLD;
-  private static final short SCREEN_OFF_BUFFER_THRESHOLD = AntDefine.MAX_BUFFER_THRESHOLD;
 
   private static final String RADIO_ANT = "ant";
   private static final byte ANT_NETWORK = (byte) 0x01;
@@ -222,13 +220,12 @@ public class AntSensorManager extends SensorManager {
     try {
       if (serviceConnected && hasClaimedInterface && antInterface.isEnabled()) {
         try {
-          antInterface.ANTConfigEventBuffering((short) 0xFFFF, SCREEN_ON_BUFFER_THRESHOLD,
-              (short) 0xFFFF, SCREEN_OFF_BUFFER_THRESHOLD);
+          antInterface.ANTDisableEventBuffering();
         } catch (AntInterfaceException e) {
-          Log.e(TAG, "Cannot configure event buffering.", e);
+          Log.e(TAG, "Cannot disable event buffering.", e);
         }
       } else {
-        Log.i(TAG, "Cannot set event buffering now.");
+        Log.i(TAG, "Cannot disable event buffering now.");
       }
     } catch (AntInterfaceException e) {
       Log.e(TAG, "Unable to check enabled state.", e);
