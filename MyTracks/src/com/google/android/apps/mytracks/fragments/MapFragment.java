@@ -275,7 +275,7 @@ public class MapFragment extends Fragment
         break;
       case NO_FIX:
       case BAD_FIX:
-        messageId = R.string.gps_wait_for_fix;
+        messageId = R.string.gps_wait_for_signal;
         isGpsDisabled = false;
         break;
       case GOOD_FIX:

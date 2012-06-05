@@ -960,8 +960,10 @@ public class TrackRecordingService extends Service {
       name = request.getName();
     } else {
       int nextMarkerNumber = providerUtils.getNextMarkerNumber(recordingTrackId, false);
-      name = nextMarkerNumber == -1 ? getString(R.string.marker_type_waypoint)
-          : getString(R.string.marker_name_format, nextMarkerNumber);
+      if (nextMarkerNumber == -1) {
+        nextMarkerNumber = 0;
+      }
+      name = getString(R.string.marker_name_format, nextMarkerNumber);
     }
     wpt.setName(name);
     if (request.getCategory() != null) {
@@ -997,8 +999,10 @@ public class TrackRecordingService extends Service {
       name = request.getName();
     } else {
       int nextMarkerNumber = providerUtils.getNextMarkerNumber(recordingTrackId, true);
-      name = nextMarkerNumber == -1 ? getString(R.string.marker_type_statistics)
-          : getString(R.string.marker_split_name_format, nextMarkerNumber);
+      if (nextMarkerNumber == -1) {
+        nextMarkerNumber = 0;
+      }
+      name = getString(R.string.marker_split_name_format, nextMarkerNumber);
     }
     waypoint.setName(name);
     waypoint.setStatistics(waypointStatsBuilder.getStatistics());
