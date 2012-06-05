@@ -64,6 +64,8 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.Process;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import java.util.Locale;
@@ -479,16 +481,19 @@ public class TrackRecordingService extends Service {
    */
   private void showNotification() {
     if (isRecording) {
-      Notification notification = new Notification(
-          R.drawable.my_tracks_notification_icon, null, System.currentTimeMillis());
       Intent intent = IntentUtils.newIntent(this, TrackDetailActivity.class)
           .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, recordingTrackId);
-      PendingIntent contentIntent = PendingIntent.getActivity(
-          this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-      notification.setLatestEventInfo(this, getString(R.string.my_tracks_app_name),
-          getString(R.string.track_record_notification), contentIntent);
-      notification.flags += Notification.FLAG_NO_CLEAR;
-      startForegroundService(notification);
+      TaskStackBuilder taskStackBuilder = TaskStackBuilder.from(this);
+      taskStackBuilder.addNextIntent(intent);
+
+      NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+          .setContentIntent(taskStackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT))
+          .setContentText(getString(R.string.track_record_notification))
+          .setContentTitle(getString(R.string.my_tracks_app_name))
+          .setOngoing(true)
+          .setSmallIcon(R.drawable.my_tracks_notification_icon)
+          .setWhen(System.currentTimeMillis());
+      startForegroundService(builder.getNotification());
     } else {
       stopForegroundService();
     }
