@@ -36,8 +36,6 @@ import android.widget.RadioButton;
 import android.widget.TableRow;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 /**
  * A DialogFragment to choose upload service.
  * 
@@ -143,11 +141,11 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
    * Starts the next activity, {@link AccountChooserActivity}.
    */
   private void startNextActivity() {
-    sendStats();
     sendRequest.setSendMaps(mapsCheckBox.isChecked());
     sendRequest.setSendFusionTables(fusionTablesCheckBox.isChecked());
     sendRequest.setSendDocs(docsCheckBox.isChecked());
     sendRequest.setNewMap(!existingMapRadioButton.isChecked());
+    sendStats();
     Intent intent = IntentUtils.newIntent(getActivity(), AccountChooserActivity.class)
         .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
     startActivity(intent);
@@ -157,16 +155,14 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
    * Sends stats to Google Analytics.
    */
   private void sendStats() {
-    ArrayList<String> pages = new ArrayList<String>();
     if (sendRequest.isSendMaps()) {
-      pages.add("/send/maps");
+      AnalyticsUtils.sendPageViews(getActivity(), "/send/maps");
     }
     if (sendRequest.isSendFusionTables()) {
-      pages.add("/send/fusion_tables");
+      AnalyticsUtils.sendPageViews(getActivity(), "/send/fusion_tables");
     }
     if (sendRequest.isSendDocs()) {
-      pages.add("/send/docs");
+      AnalyticsUtils.sendPageViews(getActivity(), "/send/docs");
     }
-    AnalyticsUtils.sendPageViews(getActivity(), pages.toArray(new String[pages.size()]));
   }
 }
