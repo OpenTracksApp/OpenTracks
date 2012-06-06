@@ -18,7 +18,6 @@ limitations under the License.
   <!-- DO NOT TRANSLATE ANY STRINGS IN THIS FILE. -->
   <string name="marker_statistics_icon_url">http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png</string>
   <string name="marker_waypoint_icon_url">http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png</string>
-  <string name="my_tracks_analytics_id">UA-7222692-2</string>
   <string name="my_tracks_privacy_url">www.google.com/policies/privacy/</string>
   <string name="my_tracks_recording_service_name">My Tracks Recording Service</string>
   <string name="my_tracks_support_url">groups.google.com/a/googleproductforums.com/forum/#!categories/maps/mytracks</string>

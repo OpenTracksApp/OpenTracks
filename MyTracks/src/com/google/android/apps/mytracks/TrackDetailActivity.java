@@ -91,7 +91,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
   private MenuItem saveMenuItem;
 
   private View mapViewContainer;
-  
+
   /*
    * Note that sharedPreferenceChangeListener cannot be an anonymous inner
    * class. Anonymous inner class will get garbage collected.
@@ -252,6 +252,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
         TrackRecordingServiceConnectionUtils.stop(this, trackRecordingServiceConnection, true);
         return true;
       case R.id.track_detail_insert_marker:
+        AnalyticsUtils.sendPageViews(this, "/action/insert_marker");
         intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
             .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, trackId);
         startActivity(intent);
@@ -270,6 +271,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
         }
         return true;
       case R.id.track_detail_share:
+        AnalyticsUtils.sendPageViews(this, "/action/share");
         ChooseActivityDialogFragment.newInstance(trackId, null).show(
             getSupportFragmentManager(), ChooseActivityDialogFragment.CHOOSE_ACTIVITY_DIALOG_TAG);
         return true;
@@ -290,6 +292,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
             .show(getSupportFragmentManager(), FrequencyDialogFragment.FREQUENCY_DIALOG_TAG);
         return true;
       case R.id.track_detail_send_google:
+        AnalyticsUtils.sendPageViews(this, "/action/send_google");
         ChooseUploadServiceDialogFragment.newInstance(new SendRequest(trackId)).show(
             getSupportFragmentManager(),
             ChooseUploadServiceDialogFragment.CHOOSE_UPLOAD_SERVICE_DIALOG_TAG);
@@ -457,6 +460,7 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
    * @param trackFileFormat the track file format
    */
   private void startSaveActivity(TrackFileFormat trackFileFormat) {
+    AnalyticsUtils.sendPageViews(this, "/action/save");
     Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
         .putExtra(SaveActivity.EXTRA_TRACK_ID, trackId)
         .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);

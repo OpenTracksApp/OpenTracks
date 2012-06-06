@@ -28,6 +28,7 @@ import com.google.android.apps.mytracks.io.file.TrackWriterFactory.TrackFileForm
 import com.google.android.apps.mytracks.services.ITrackRecordingService;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceConnection;
 import com.google.android.apps.mytracks.settings.SettingsActivity;
+import com.google.android.apps.mytracks.util.AnalyticsUtils;
 import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.EulaUtils;
 import com.google.android.apps.mytracks.util.IntentUtils;
@@ -384,6 +385,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
     Intent intent;
     switch (item.getItemId()) {
       case R.id.track_list_record_track:
+        AnalyticsUtils.sendPageViews(this, "/action/record_track");
         updateMenuItems(true);
         startRecording();
         return true;
@@ -394,6 +396,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
       case R.id.track_list_search:
         return ApiAdapterFactory.getApiAdapter().handleSearchMenuSelection(this);
       case R.id.track_list_import:
+        AnalyticsUtils.sendPageViews(this, "/action/import");
         intent = IntentUtils.newIntent(this, ImportActivity.class)
             .putExtra(ImportActivity.EXTRA_IMPORT_ALL, true);
         startActivity(intent);
@@ -437,6 +440,7 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
    * @param trackFileFormat the track file format
    */
   private void startSaveActivity(TrackFileFormat trackFileFormat) {
+    AnalyticsUtils.sendPageViews(this, "/action/save_all");
     Intent intent = IntentUtils.newIntent(this, SaveActivity.class)
         .putExtra(SaveActivity.EXTRA_TRACK_FILE_FORMAT, (Parcelable) trackFileFormat);
     startActivity(intent);

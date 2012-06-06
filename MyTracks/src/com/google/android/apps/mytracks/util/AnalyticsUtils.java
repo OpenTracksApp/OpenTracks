@@ -17,7 +17,6 @@
 package com.google.android.apps.mytracks.util;
 
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
-import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
 
@@ -28,16 +27,23 @@ import android.content.Context;
  */
 public class AnalyticsUtils {
 
+  private static final String UA = "UA-7222692-2";
+  private static final String PRODUCT_NAME = "android-mytracks";
+  
   private AnalyticsUtils() {}
-
-  public static void sendPageViews(Context context, String ... pages) {
+  
+  /**
+   * Sends a page view.
+   * 
+   * @param context the context
+   * @param page the page
+   */
+  public static void sendPageViews(Context context, String page) {
     GoogleAnalyticsTracker tracker = GoogleAnalyticsTracker.getInstance();
-    tracker.start(context.getString(R.string.my_tracks_analytics_id), context);
-    tracker.setProductVersion("android-mytracks", SystemUtils.getMyTracksVersion(context));
-    for (String page : pages) {
-      tracker.trackPageView(page);
-    }
+    tracker.startNewSession(UA, context);
+    tracker.setProductVersion(PRODUCT_NAME, SystemUtils.getMyTracksVersion(context));
+    tracker.trackPageView(page);
     tracker.dispatch();
-    tracker.stop();
+    tracker.stopSession();
   }
 }
