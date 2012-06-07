@@ -1742,14 +1742,15 @@ limitations under the License.
       an ANT+ heart rate monitor. Note that ANT+ is a radio standard.
 
       Character limit: ~26 (1 line)">
-    Reset heart rate monitor
+    Reset heart rate
   </string>
   <string name="settings_sensor_ant_reset_speed_distance_monitor"
     translation_description="In the 'Sensor' settings, under the 'ANT+ options', the option to reset
-      an ANT+ speed distance monitor. Note that ANT+ is a radio standard.
+      an ANT+ stride based speed distance monitor, also known as foot pod. Note that ANT+ is a radio
+      standard.
 
       Character limit: ~26 (1 line)">
-    Reset speed distance monitor
+    Reset foot pod
   </string>
   <string name="settings_sensor_bluetooth_options"
     translation_description="In the 'Sensor' settings, the section header to configure the Bluetooth
