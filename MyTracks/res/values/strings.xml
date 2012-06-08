@@ -363,52 +363,7 @@ limitations under the License.
       completion suggestion for wind surfing.">
     wind surfing
   </string>
-
-  <!-- Android Market -->
-  <string name="android_market_description_text"
-    translation_description="For the Android Market (not used in the app), the description text.
-
-      Character limit: 4000.">
-    Use My Tracks while you walk, run, bike, or do anything else outdoors. It uses the GPS sensor
-    in your phone to record your path and gather useful statistics such as time, speed, distance,
-    and elevation. You can review all of this data live or save it for use later. While recording,
-    you can insert markers, have split markers inserted automatically, and hear periodic voice
-    announcements of your progress.\n
-    \n
-    My Tracks can record data from external sensors:\n
-    - Zephyr HxM Bluetooth heart rate monitor\n
-    - Polar WearLink Bluetooth heart rate monitor\n
-    - ANT+ heart rate monitors (*)\n
-    - Ant+ speed distance monitors (*)\n
-    \n
-    * Requires an ANT+ compatible phone\n
-    \n
-    My Tracks can share your track data:\n
-    - Via Google+, Facebook, or Twitter\n
-    - Using Google Maps, Google Fusion Tables, or Google Docs\n
-    - As a GPX, KML, CSV, or TCX file\n
-    \n
-    Other features:\n
-    - Record in metric (km, m) or imperial (mi, ft) units\n
-    - Display your movement in terms of speed or pace\n
-    \n
-    My Tracks is an open source project. If you like to contribute, please visit:\n
-    \n
-    http://mytracks.googlecode.com\n
-  </string>
-  <string name="android_market_promo_text"
-    translation_description="For the Android Market (not used in the app), the promotion text.
-
-      Character limit: 80.">
-    Record and share your GPS tracks with My Tracks.
-  </string>
-  <string name="android_market_recent_changes_text"
-    translation_description="For the Android Market (not used in the app), the recent changes text.
-
-      Character limit: 500.">
-    Please see the English version for more information.
-  </string>
-
+ 
   <!-- Description -->
   <string name="description_activity_type"
     translation_description="Activity type description.
