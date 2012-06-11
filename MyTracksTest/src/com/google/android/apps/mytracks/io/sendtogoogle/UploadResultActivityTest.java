@@ -149,8 +149,8 @@ public class UploadResultActivityTest
     docsResult = (LinearLayout) view.findViewById(R.id.upload_result_docs_result);
     
     mapsResultIcon = (ImageView) view.findViewById(R.id.upload_result_maps_result_icon);
-    fusionTablesResultIcon = (ImageView) view.findViewById(
-        R.id.upload_result_fusion_tables_result_icon);
+    fusionTablesResultIcon = (ImageView) view
+        .findViewById(R.id.upload_result_fusion_tables_result_icon);
     docsResultIcon = (ImageView) view.findViewById(R.id.upload_result_docs_result_icon);
   }
 }
