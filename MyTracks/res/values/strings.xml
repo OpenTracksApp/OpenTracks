@@ -1800,14 +1800,6 @@ limitations under the License.
       Character limit: ~26 (1 line)">
     Sharing
   </string>
-  <string name="settings_sharing_account"
-    translation_description="In the 'Sharing' settings, the option to switch account.">
-    Switch account
-  </string>
-  <string name="settings_sharing_account_summary"
-    translation_description="In the 'Sharing' settings, the summary for 'Switch account'.">
-    Account used when sending a track to Google.
-  </string>
   <string name="settings_sharing_allow_access"
     translation_description="In the 'Sharing' settings, the checkbox option to allow third party
       apps access to the My Tracks data.
@@ -1910,6 +1902,12 @@ limitations under the License.
     translation_description="In the 'Stats' settings page, the option to change the preferred units,
       either metric (km) or imperial (mi).">
     Preferred units
+  </string>
+
+  <!--  Settings Switch Account -->
+  <string name="settings_switch_account"
+    translation_description="In the 'Settings' page, the option to switch account.">
+    Switch account
   </string>
 
   <!-- Settings Voice -->

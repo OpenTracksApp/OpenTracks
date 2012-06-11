@@ -22,16 +22,23 @@ import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.util.Log;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An activity for accessing settings.
@@ -44,6 +51,7 @@ public class SettingsActivity extends AbstractSettingsActivity {
   private static final String TAG = SettingsActivity.class.getSimpleName();
   private static final int DIALOG_CONFIRM_RESET_ID = 0;
 
+  private ListPreference googleAccountListPreference;
   private Preference resetPreference;
 
   @SuppressWarnings("deprecation")
@@ -123,6 +131,29 @@ public class SettingsActivity extends AbstractSettingsActivity {
       }
     });
 
+    googleAccountListPreference = (ListPreference) findPreference(getString(R.string.google_account_key));
+    List<String> entries = new ArrayList<String>();
+    Account[] accounts = AccountManager.get(this).getAccountsByType(Constants.ACCOUNT_TYPE);
+    for (Account account : accounts) {
+      entries.add(account.name);
+    }
+    googleAccountListPreference.setEntries(entries.toArray(new CharSequence[entries.size()]));
+    googleAccountListPreference.setEntryValues(entries.toArray(
+        new CharSequence[entries.size()]));
+    if (entries.size() == 1) {
+      googleAccountListPreference.setValueIndex(0);
+    }
+    String googleAccount = PreferencesUtils.getString(this, R.string.google_account_key,
+        PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT);
+    updateSwitchAccountSummary(googleAccount);
+    googleAccountListPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+      @Override
+      public boolean onPreferenceChange(Preference preference, Object newValue) {
+        updateSwitchAccountSummary((String) newValue);
+        return true;
+      }
+    });
+
     resetPreference = findPreference(getString(R.string.settings_reset_key));
     resetPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
         @Override
@@ -141,6 +172,17 @@ public class SettingsActivity extends AbstractSettingsActivity {
     resetPreference.setEnabled(!isRecording);
     resetPreference.setSummary(isRecording ? R.string.settings_not_while_recording
         : R.string.settings_reset_summary);
+  }
+
+  /**
+   * Updates the switch account summary.
+   * 
+   * @param value the value
+   */
+  private void updateSwitchAccountSummary(String value) {
+    googleAccountListPreference.setSummary(
+        PreferencesUtils.GOOGLE_ACCOUNT_DEFAULT.equals(value) ? getString(R.string.value_unknown)
+            : value);
   }
 
   @Override
