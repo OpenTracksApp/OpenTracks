@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.settings;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.util.DialogUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.accounts.Account;
@@ -41,7 +42,8 @@ import java.util.List;
 public class SharingSettingsActivity extends AbstractSettingsActivity {
 
   private static final int DIALOG_CONFIRM_ALLOW_ACCESS_ID = 0;
-
+  
+  private CheckBoxPreference defaultMapPublicCheckBoxPreference;
   private CheckBoxPreference allowAccessCheckBoxPreference;
 
   @SuppressWarnings("deprecation")
@@ -49,6 +51,20 @@ public class SharingSettingsActivity extends AbstractSettingsActivity {
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
     addPreferencesFromResource(R.xml.sharing_settings);
+
+    defaultMapPublicCheckBoxPreference = (CheckBoxPreference) findPreference(
+        getString(R.string.default_map_public_key));
+    boolean defaultMapPublic = PreferencesUtils.getBoolean(
+        this, R.string.default_map_public_key, PreferencesUtils.DEFAULT_MAP_PUBLIC_DEFAULT);
+    updateDefaultMapPublicTitle(defaultMapPublic);
+    defaultMapPublicCheckBoxPreference.setOnPreferenceChangeListener(
+        new OnPreferenceChangeListener() {
+            @Override
+          public boolean onPreferenceChange(Preference preference, Object newValue) {
+            updateDefaultMapPublicTitle((Boolean) newValue);
+            return true;
+          }
+        });
 
     allowAccessCheckBoxPreference = (CheckBoxPreference) findPreference(
         getString(R.string.allow_access_key));
@@ -93,5 +109,15 @@ public class SharingSettingsActivity extends AbstractSettingsActivity {
             allowAccessCheckBoxPreference.setChecked(true);
           }
         });
+  }
+  
+  /**
+   * Updates the title for the default map public check box preference.
+   * 
+   * @param value the value
+   */
+  private void updateDefaultMapPublicTitle(boolean value) {
+    defaultMapPublicCheckBoxPreference.setTitle(value ? R.string.settings_sharing_map_public
+        : R.string.settings_sharing_map_unlisted);
   }
 }

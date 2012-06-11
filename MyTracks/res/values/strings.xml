@@ -1836,23 +1836,32 @@ limitations under the License.
     Other apps can read, write, start/stop recording My Tracks data.
   </string>
   <string name="settings_sharing_map_public"
-    translation_description="In the 'Sharing' settings, the checkbox option to make a new map
-      created in Google Maps public.
+    translation_description="In the 'Sharing' settings, the title of the option to make new maps
+      created in Google Maps public, as opposed to unlisted. See
+      http://support.google.com/maps/bin/answer.py?answer=62845 for public versus unlisted.
 
       Character limit: ~23 (1 line)">
     Make new maps public
   </string>
-  <string name="settings_sharing_map_public_summary_off"
+  <string name="settings_sharing_map_public_summary"
     translation_description="In the 'Sharing' settings, the summary for the 'Make new maps public'
-      checkbox option when it is unchecked explaining that new maps created in Google Maps will
-      be unlisted, as opposed to public.">
-    New maps created in Google Maps will be unlisted.
-  </string>
-  <string name="settings_sharing_map_public_summary_on"
-    translation_description="In the 'Sharing' settings, the summary for the 'Make new maps public'
-      checkbox option when it is checked explaining that new maps created in Google Maps will
-      be public, as opposed to unlisted.">
+      option explaining that new maps created in Google Maps will be public, as opposed to unlisted.
+      See http://support.google.com/maps/bin/answer.py?answer=62845 for public versus unlisted.">
     New maps created in Google Maps will be public.
+  </string>
+  <string name="settings_sharing_map_unlisted"
+    translation_description="In the 'Sharing' settings, the title of the option to make new maps
+      created in Google Maps unlisted, as opposed to public. See
+      http://support.google.com/maps/bin/answer.py?answer=62845 for public versus unlisted.
+
+      Character limit: ~23 (1 line)">
+    Make new maps unlisted
+  </string>
+  <string name="settings_sharing_map_unlisted_summary"
+    translation_description="In the 'Sharing' settings, the summary for the 'Make new maps unlisted'
+      option explaining that new maps created in Google Maps will be unlisted, as opposed to public.
+      See http://support.google.com/maps/bin/answer.py?answer=62845 for public versus unlisted.">
+    New maps created in Google Maps will be unlisted.
   </string>
 
   <!-- Settings Show -->

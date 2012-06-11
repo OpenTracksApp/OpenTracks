@@ -51,7 +51,7 @@ public class PreferencesUtils {
   public static final boolean CHART_SHOW_SPEED_DEFAULT = true;
 
   public static final String DEFAULT_ACTIVITY_DEFAULT = "";
-  public static final boolean DEFAULT_MAP_PUBLIC_DEFAULT = true;
+  public static final boolean DEFAULT_MAP_PUBLIC_DEFAULT = false;
   public static final int FREQUENCY_OFF = 0;
   public static final int MAX_RECORDING_DISTANCE_DEFAULT = 200;
   public static final boolean METRIC_UNITS_DEFAULT = true;

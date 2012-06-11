@@ -22,11 +22,10 @@ limitations under the License.
     android:summary="@string/settings_sharing_account_summary"
     android:title="@string/settings_sharing_account" />
   <CheckBoxPreference
-    android:defaultValue="true"
+    android:defaultValue="false"
     android:key="@string/default_map_public_key"
-    android:summaryOff="@string/settings_sharing_map_public_summary_off"
-    android:summaryOn="@string/settings_sharing_map_public_summary_on"
-    android:title="@string/settings_sharing_map_public" />
+    android:summaryOff="@string/settings_sharing_map_unlisted_summary"
+    android:summaryOn="@string/settings_sharing_map_public_summary" />
   <CheckBoxPreference
     android:defaultValue="false"
     android:key="@string/allow_access_key"
