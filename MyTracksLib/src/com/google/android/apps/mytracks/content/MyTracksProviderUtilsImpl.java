@@ -654,6 +654,11 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   }
 
   @Override
+  public Location getFirstLocation() {
+    return findLocationBy("_id=(select min(_id) from trackpoints)");
+  }
+  
+  @Override
   public Location getLastLocation() {
     return findLocationBy("_id=(select max(_id) from trackpoints)");
   }

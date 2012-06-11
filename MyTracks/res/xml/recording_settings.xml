@@ -17,7 +17,7 @@ limitations under the License.
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
   android:title="@string/settings_recording" >
   <ListPreference
-    android:defaultValue="@string/settings_recording_track_name_date_local_value"
+    android:defaultValue="@string/settings_recording_track_name_location_value"
     android:entries="@array/track_name_options"
     android:entryValues="@array/track_name_values"
     android:key="@string/track_name_key"

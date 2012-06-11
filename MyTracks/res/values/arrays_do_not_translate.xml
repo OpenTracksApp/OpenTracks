@@ -190,11 +190,13 @@ limitations under the License.
     <item>@string/settings_map_track_color_mode_dynamic_value</item>
   </string-array>
   <string-array name="track_name_options">
+    <item>@string/settings_recording_track_name_location_option</item>
     <item>@string/settings_recording_track_name_date_local_option</item>
     <item>@string/settings_recording_track_name_date_iso_8601_option</item>
     <item>@string/settings_recording_track_name_number_option</item>
   </string-array>
   <string-array name="track_name_values">
+    <item>@string/settings_recording_track_name_location_value</item>
     <item>@string/settings_recording_track_name_date_local_value</item>
     <item>@string/settings_recording_track_name_date_iso_8601_value</item>
     <item>@string/settings_recording_track_name_number_value</item>

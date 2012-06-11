@@ -35,6 +35,7 @@ limitations under the License.
   <string name="settings_map_track_color_mode_single_value">SINGLE</string>
   <string name="settings_recording_track_name_date_iso_8601_value">DATE_ISO_8601</string>
   <string name="settings_recording_track_name_date_local_value">DATE_LOCAL</string>
+  <string name="settings_recording_track_name_location_value">LOCATION</string>
   <string name="settings_recording_track_name_number_value">NUMBER</string>
   <string name="track_action_end">com.google.android.apps.mytracks.END_CURRENT_TRACK</string>
   <string name="track_action_save">android.intent.action.SAVE</string>

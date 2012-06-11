@@ -77,6 +77,13 @@ public interface MyTracksProviderUtils {
   boolean updateWaypoint(Waypoint waypoint);
 
   /**
+   * Finds the first recorded location from the location provider.
+   * 
+   * @return the first location, or null if no locations available
+   */
+  Location getFirstLocation();
+
+  /**
    * Finds the last recorded location from the location provider.
    *
    * @return the last location, or null if no locations available

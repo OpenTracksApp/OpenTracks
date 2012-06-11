@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.util.TrackNameUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.os.Bundle;
@@ -95,6 +96,11 @@ public class TrackEditActivity extends AbstractMyTracksActivity {
 
     Button cancel = (Button) findViewById(R.id.track_edit_cancel);
     if (getIntent().getBooleanExtra(EXTRA_NEW_TRACK, false)) {
+      String trackName = TrackNameUtils.getTrackName(
+          this, -1L, -1L, myTracksProviderUtils.getLastLocation());
+      if (trackName != null) {
+        name.setText(trackName);
+      }
       setTitle(R.string.track_edit_new_track_title);
       cancel.setVisibility(View.GONE);
     } else {

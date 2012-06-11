@@ -363,52 +363,7 @@ limitations under the License.
       completion suggestion for wind surfing.">
     wind surfing
   </string>
-
-  <!-- Android Market -->
-  <string name="android_market_description_text"
-    translation_description="For the Android Market (not used in the app), the description text.
-
-      Character limit: 4000.">
-    Use My Tracks while you walk, run, bike, or do anything else outdoors. It uses the GPS sensor
-    in your phone to record your path and gather useful statistics such as time, speed, distance,
-    and elevation. You can review all of this data live or save it for use later. While recording,
-    you can insert markers, have split markers inserted automatically, and hear periodic voice
-    announcements of your progress.\n
-    \n
-    My Tracks can record data from external sensors:\n
-    - Zephyr HxM Bluetooth heart rate monitor\n
-    - Polar WearLink Bluetooth heart rate monitor\n
-    - ANT+ heart rate monitors (*)\n
-    - Ant+ speed distance monitors (*)\n
-    \n
-    * Requires an ANT+ compatible phone\n
-    \n
-    My Tracks can share your track data:\n
-    - Via Google+, Facebook, or Twitter\n
-    - Using Google Maps, Google Fusion Tables, or Google Docs\n
-    - As a GPX, KML, CSV, or TCX file\n
-    \n
-    Other features:\n
-    - Record in metric (km, m) or imperial (mi, ft) units\n
-    - Display your movement in terms of speed or pace\n
-    \n
-    My Tracks is an open source project. If you like to contribute, please visit:\n
-    \n
-    http://mytracks.googlecode.com\n
-  </string>
-  <string name="android_market_promo_text"
-    translation_description="For the Android Market (not used in the app), the promotion text.
-
-      Character limit: 80.">
-    Record and share your GPS tracks with My Tracks.
-  </string>
-  <string name="android_market_recent_changes_text"
-    translation_description="For the Android Market (not used in the app), the recent changes text.
-
-      Character limit: 500.">
-    Please see the English version for more information.
-  </string>
-
+ 
   <!-- Description -->
   <string name="description_activity_type"
     translation_description="Activity type description.
@@ -1670,6 +1625,13 @@ limitations under the License.
       Character limit: ~21 (1 line)">
     Date (local)
   </string>
+  <string name="settings_recording_track_name_location_option"
+    translation_description="In the 'Recording' settings, the option in the 'Track name' dropdown
+      list to use the track location as the track name.
+
+      Character limit: ~21 (1 line)">
+    Location
+  </string>
   <string name="settings_recording_track_name_number_option"
     translation_description="In the 'Recording' settings, the option in the 'Track name' dropdown
       list to use a number as the track name.
@@ -1735,14 +1697,15 @@ limitations under the License.
       an ANT+ heart rate monitor. Note that ANT+ is a radio standard.
 
       Character limit: ~26 (1 line)">
-    Reset heart rate monitor
+    Reset heart rate
   </string>
   <string name="settings_sensor_ant_reset_speed_distance_monitor"
     translation_description="In the 'Sensor' settings, under the 'ANT+ options', the option to reset
-      an ANT+ speed distance monitor. Note that ANT+ is a radio standard.
+      an ANT+ stride based speed distance monitor, also known as foot pod. Note that ANT+ is a radio
+      standard.
 
       Character limit: ~26 (1 line)">
-    Reset speed distance monitor
+    Reset foot pod
   </string>
   <string name="settings_sensor_bluetooth_options"
     translation_description="In the 'Sensor' settings, the section header to configure the Bluetooth

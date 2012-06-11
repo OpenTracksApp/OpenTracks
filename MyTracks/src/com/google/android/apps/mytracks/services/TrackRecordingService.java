@@ -42,6 +42,7 @@ import com.google.android.apps.mytracks.stats.TripStatisticsBuilder;
 import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.apps.mytracks.util.TrackNameUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.common.annotations.VisibleForTesting;
 
@@ -584,8 +585,7 @@ public class TrackRecordingService extends Service {
     Uri trackUri = providerUtils.insertTrack(track);
     recordingTrackId = Long.parseLong(trackUri.getLastPathSegment());
     track.setId(recordingTrackId);
-    track.setName(new DefaultTrackNameFactory(this).getDefaultTrackName(
-        recordingTrackId, startTime));
+    track.setName(TrackNameUtils.getTrackName(this, recordingTrackId, startTime, null));
     track.setCategory(PreferencesUtils.getString(
         this, R.string.default_activity_key, PreferencesUtils.DEFAULT_ACTIVITY_DEFAULT));
     isRecording = true;
