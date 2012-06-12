@@ -30,9 +30,8 @@ import android.widget.TextView;
  * 
  * @author Youtao Liu
  */
-public class UploadResultActivityTest
-    extends ActivityInstrumentationTestCase2<UploadResultActivity> {
-  
+public class UploadResultActivityTest extends
+    ActivityInstrumentationTestCase2<UploadResultActivity> {
 
   private UploadResultActivity uploadResultActivity;
   private TextView errorFooter;
@@ -43,6 +42,9 @@ public class UploadResultActivityTest
   private ImageView mapsResultIcon;
   private ImageView fusionTablesResultIcon;
   private ImageView docsResultIcon;
+
+  private String successTitle;
+  private String errorTitle;
 
   /**
    * This method is necessary for ActivityInstrumentationTestCase2.
@@ -57,16 +59,16 @@ public class UploadResultActivityTest
   public void testAllSuccess() {
     initialActivity(true, true, true, true, true, true);
     createDialogAndGetViews();
-    assertEquals(View.VISIBLE, successFooter.getVisibility()); 
-    assertEquals(View.GONE, errorFooter.getVisibility()); 
-    
-    assertEquals(View.VISIBLE, mapsResult.getVisibility()); 
-    assertEquals(View.VISIBLE, fusionTablesResult.getVisibility()); 
-    assertEquals(View.VISIBLE, docsResult.getVisibility()); 
-    
-    assertEquals(uploadResultActivity.getString(R.string.generic_success_title), mapsResultIcon.getContentDescription());
-    assertEquals(uploadResultActivity.getString(R.string.generic_success_title), fusionTablesResultIcon.getContentDescription());
-    assertEquals(uploadResultActivity.getString(R.string.generic_success_title), docsResultIcon.getContentDescription()); 
+    assertEquals(View.VISIBLE, successFooter.getVisibility());
+    assertEquals(View.GONE, errorFooter.getVisibility());
+
+    assertEquals(View.VISIBLE, mapsResult.getVisibility());
+    assertEquals(View.VISIBLE, fusionTablesResult.getVisibility());
+    assertEquals(View.VISIBLE, docsResult.getVisibility());
+
+    assertEquals(successTitle, mapsResultIcon.getContentDescription());
+    assertEquals(successTitle, fusionTablesResultIcon.getContentDescription());
+    assertEquals(successTitle, docsResultIcon.getContentDescription());
   }
 
   /**
@@ -76,16 +78,16 @@ public class UploadResultActivityTest
     // Send all kinds but all failed.
     initialActivity(true, true, true, false, false, false);
     createDialogAndGetViews();
-    assertEquals(View.GONE, successFooter.getVisibility()); 
-    assertEquals(View.VISIBLE, errorFooter.getVisibility()); 
-    
-    assertEquals(View.VISIBLE, mapsResult.getVisibility()); 
-    assertEquals(View.VISIBLE, fusionTablesResult.getVisibility()); 
-    assertEquals(View.VISIBLE, docsResult.getVisibility()); 
-    
-    assertEquals(uploadResultActivity.getString(R.string.generic_error_title), mapsResultIcon.getContentDescription());
-    assertEquals(uploadResultActivity.getString(R.string.generic_error_title), fusionTablesResultIcon.getContentDescription());
-    assertEquals(uploadResultActivity.getString(R.string.generic_error_title), docsResultIcon.getContentDescription());
+    assertEquals(View.GONE, successFooter.getVisibility());
+    assertEquals(View.VISIBLE, errorFooter.getVisibility());
+
+    assertEquals(View.VISIBLE, mapsResult.getVisibility());
+    assertEquals(View.VISIBLE, fusionTablesResult.getVisibility());
+    assertEquals(View.VISIBLE, docsResult.getVisibility());
+
+    assertEquals(errorTitle, mapsResultIcon.getContentDescription());
+    assertEquals(errorTitle, fusionTablesResultIcon.getContentDescription());
+    assertEquals(errorTitle, docsResultIcon.getContentDescription());
   }
 
   /**
@@ -99,14 +101,14 @@ public class UploadResultActivityTest
   public void testPartialSuccess() {
     initialActivity(true, false, true, true, false, false);
     createDialogAndGetViews();
-    assertEquals(View.VISIBLE, errorFooter.getVisibility()); 
-    
-    assertEquals(View.VISIBLE, mapsResult.getVisibility()); 
-    assertEquals(View.GONE, fusionTablesResult.getVisibility()); 
-    assertEquals(View.VISIBLE, docsResult.getVisibility()); 
-    
-    assertEquals(uploadResultActivity.getString(R.string.generic_success_title), mapsResultIcon.getContentDescription());
-    assertEquals(uploadResultActivity.getString(R.string.generic_error_title), docsResultIcon.getContentDescription());
+    assertEquals(View.VISIBLE, errorFooter.getVisibility());
+
+    assertEquals(View.VISIBLE, mapsResult.getVisibility());
+    assertEquals(View.GONE, fusionTablesResult.getVisibility());
+    assertEquals(View.VISIBLE, docsResult.getVisibility());
+
+    assertEquals(successTitle, mapsResultIcon.getContentDescription());
+    assertEquals(errorTitle, docsResultIcon.getContentDescription());
   }
 
   /**
@@ -132,8 +134,10 @@ public class UploadResultActivityTest
     intent.putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
     setActivityIntent(intent);
     uploadResultActivity = this.getActivity();
+    successTitle = uploadResultActivity.getString(R.string.generic_success_title);
+    errorTitle = uploadResultActivity.getString(R.string.generic_error_title);
   }
-  
+
   /**
    * Creates result dialog and gets views in the dialog.
    */
@@ -142,12 +146,11 @@ public class UploadResultActivityTest
     View view = uploadResultActivity.view;
     errorFooter = (TextView) view.findViewById(R.id.upload_result_error_footer);
     successFooter = (TextView) view.findViewById(R.id.upload_result_success_footer);
-    
+
     mapsResult = (LinearLayout) view.findViewById(R.id.upload_result_maps_result);
-    fusionTablesResult = (LinearLayout) view.findViewById(
-        R.id.upload_result_fusion_tables_result);
+    fusionTablesResult = (LinearLayout) view.findViewById(R.id.upload_result_fusion_tables_result);
     docsResult = (LinearLayout) view.findViewById(R.id.upload_result_docs_result);
-    
+
     mapsResultIcon = (ImageView) view.findViewById(R.id.upload_result_maps_result_icon);
     fusionTablesResultIcon = (ImageView) view
         .findViewById(R.id.upload_result_fusion_tables_result_icon);
