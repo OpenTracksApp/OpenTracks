@@ -498,7 +498,9 @@ public class EndToEndTestUtils {
     ArrayList<TextView> textViews = EndToEndTestUtils.SOLO.getCurrentTextViews(parent);
     for (TextView textView : textViews) {
       String text = (String) textView.getText();
-      if (textView.isShown() && text.endsWith(findText)) { return textView; }
+      if (textView.isShown() && text.endsWith(findText)) { 
+        return textView; 
+      }
     }
     return null;
   }
@@ -511,7 +513,9 @@ public class EndToEndTestUtils {
   static ChartView getChartView() {
     ArrayList<View> views = EndToEndTestUtils.SOLO.getViews();
     for (View view : views) {
-      if (view instanceof ChartView) { return (ChartView) view; }
+      if (view instanceof ChartView) { 
+        return (ChartView) view; 
+      }
     }
     return null;
   }

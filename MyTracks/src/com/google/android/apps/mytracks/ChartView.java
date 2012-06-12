@@ -119,8 +119,7 @@ public class ChartView extends View {
   private int effectiveHeight = 0;
 
   private boolean chartByDistance = true;
-  @VisibleForTesting
-  public boolean metricUnits = true;
+  private boolean metricUnits = true;
   private boolean reportSpeed = true;
   private boolean showPointer = false;
 
@@ -1000,5 +999,15 @@ public class ChartView extends View {
       default:
         return false;
     }
+  }
+  
+  /**
+   * Returns the status of metricUnits.
+   * 
+   * @return the status of metricUnits
+   */
+  @VisibleForTesting
+  public boolean isMetricUnits() {
+    return metricUnits;
   }
 }

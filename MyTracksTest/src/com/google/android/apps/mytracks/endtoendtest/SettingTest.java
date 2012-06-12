@@ -131,14 +131,11 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
         .getString(R.string.settings_stats_units_title)));
 
-    boolean isImperial = !(EndToEndTestUtils.findTextView(activityMyTracks
+    boolean isImperial = EndToEndTestUtils.findTextView(activityMyTracks
         .getString(R.string.settings_stats_units_imperial), EndToEndTestUtils.SOLO
-        .getCurrentListViews().get(0)) == null);
-    assertEquals(isImperial, EndToEndTestUtils.findTextView(activityMyTracks
-        .getString(R.string.settings_stats_units_metric), EndToEndTestUtils.SOLO
-        .getCurrentListViews().get(0)) == null);
+        .getCurrentListViews().get(0)) != null;
 
-    // Changes status
+    // Change preferred units.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(R.string.settings_stats_units_title));
     isImperial = !isImperial;
@@ -147,7 +144,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_chart_tab));
     instrumentation.waitForIdleSync();
     ChartView chartView = EndToEndTestUtils.getChartView();
-    assertEquals(!isImperial, chartView.metricUnits);
+    assertEquals(!isImperial, chartView.isMetricUnits());
   }
 
   /**
