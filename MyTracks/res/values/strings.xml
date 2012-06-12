@@ -1281,19 +1281,28 @@ limitations under the License.
     Use existing map
   </string>
   <string name="send_google_fusion_tables"
-    translation_description="When sending a track to Google, under the 'Send to...' dialog, the
-      checkbox option to send to Google Fusion Tables.">
+    translation_description="When sending a track to Google, the Google Fusion Tables name.">
     Google Fusion Tables
+  </string>
+  <string name="send_google_fusion_tables_new_public_table"
+    translation_description="When sending a track to Google, under the 'Send to...' dialog, the
+      checkbox option to send to Google Fusion Tables as a new public table.">
+    Google Fusion Tables\n(new public table)
   </string>
   <string name="send_google_maps"
     translation_description="When sending a track to Google, under the 'Send to...' dialog, the
       checkbox option to send to Google Maps.">
     Google Maps
   </string>
-  <string name="send_google_new_map"
+  <string name="send_google_new_public_map"
     translation_description="When sending a track to Google Maps, the radio option to create a
-      new map as opposed to use an existing map.">
-    Create new map
+      new public map as opposed to use an existing map.">
+    Create new public map 
+  </string>
+  <string name="send_google_new_unlisted_map"
+    translation_description="When sending a track to Google Maps, the radio option to create a
+      new unlisted map as opposed to use an existing map.">
+    Create new unlisted map 
   </string>
   <string name="send_google_no_account_message"
     translation_description="When sending to Google, the dialog message when no Google account is
