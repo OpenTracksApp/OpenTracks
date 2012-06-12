@@ -43,31 +43,34 @@ public class DialogUtils {
    */
   public static Dialog createConfirmationDialog(
       Context context, int messageId, DialogInterface.OnClickListener okListener) {
-    return createConfirmationDialog(context, context.getString(messageId), null, okListener, null);
+    return createConfirmationDialog(context, messageId, null, okListener, null);
   }
 
   /**
    * Creates a confirmation dialog.
    * 
    * @param context the context
-   * @param message the message
+   * @param messageId the messageId
    * @param view the view
    * @param okListener the listener when OK is clicked
    * @param cancelListener the listener when cancel is clicked
    */
   public static Dialog createConfirmationDialog(
-      Context context, String message, View view, DialogInterface.OnClickListener okListener,
+      Context context, int messageId, View view, DialogInterface.OnClickListener okListener,
       DialogInterface.OnClickListener cancelListener) {
     AlertDialog.Builder builder = new AlertDialog.Builder(context)
         .setCancelable(true)
         .setIcon(android.R.drawable.ic_dialog_alert)
-        .setMessage(message)
         .setNegativeButton(android.R.string.cancel, cancelListener)
         .setPositiveButton(android.R.string.ok, okListener)
         .setTitle(R.string.generic_confirm_title);
+    if (messageId != -1) {
+      builder.setMessage(messageId);
+    }
     if (view != null) {
       builder.setView(view);
     }
+    
     return builder.create();
   }
 

@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 /**
  * An interstitial to confirm sharing with friends.
@@ -59,7 +60,12 @@ public class ConfirmSharingActivity extends Activity {
       return null;
     }
     View view = getLayoutInflater().inflate(R.layout.confirm_sharing, null);
-    checkBox = (CheckBox) view.findViewById(R.id.confirm_sharing);
+    
+    TextView textView = (TextView) view.findViewById(R.id.confirm_sharing_text_view);
+    textView.setText(getString(
+        R.string.share_track_confirm_message, getString(R.string.maps_public_unlisted_url)));
+    
+    checkBox = (CheckBox) view.findViewById(R.id.confirm_sharing_check_box);
     DialogInterface.OnClickListener okListener = new DialogInterface.OnClickListener() {
         @Override
       public void onClick(DialogInterface dialog, int button) {
@@ -74,10 +80,9 @@ public class ConfirmSharingActivity extends Activity {
         finish();
       }
     };
-    String message = getString(
-        R.string.share_track_confirm_message, getString(R.string.maps_public_unlisted_url));
+  
     Dialog dialog = DialogUtils.createConfirmationDialog(
-        this, message, view, okListener, cancelListener);
+        this, -1, view, okListener, cancelListener);
     dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
         @Override
       public void onCancel(DialogInterface dialogInterface) {
