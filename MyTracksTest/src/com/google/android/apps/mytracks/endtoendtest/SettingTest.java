@@ -121,6 +121,47 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     // Change it back and verify it.
     ChangePreferredUnits();
   }
+  
+  /**
+   * Tests the change of stats settings during recording.
+   */
+  public void testChangeStatsSettings_UnderRecording() {
+    EndToEndTestUtils.startRecording();
+    
+    // Test change preferred units and preferred rate when display STATS tab.
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
+    EndToEndTestUtils.sendGps(3);
+    ChangeStatsSettings(false);
+    EndToEndTestUtils.sendGps(3);
+    // Test just change preferred units when display CHART tab.
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_chart_tab));
+    EndToEndTestUtils.sendGps(3);
+    ChangeStatsSettings(true);
+    EndToEndTestUtils.sendGps(3);
+    
+    EndToEndTestUtils.stopRecording(true);
+
+  }
+  
+  /**
+   * Changes settings of preferred units and preferred rate.
+   */
+  private void ChangeStatsSettings(boolean isOnlyChangeUnits) {
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.settings_stats_units_title)));
+
+    // Change preferred units.
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+        .getString(R.string.settings_stats_units_title));
+    if(!isOnlyChangeUnits) {
+      EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+          .getString(R.string.settings_stats_rate_title));
+    }
+    EndToEndTestUtils.SOLO.goBack();
+    EndToEndTestUtils.SOLO.goBack();
+  }
 
   /**
    * Changes PreferredUnits and verifies the change.
