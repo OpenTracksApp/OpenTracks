@@ -35,7 +35,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 public class SharingSettingsActivity extends AbstractSettingsActivity {
 
   private static final int DIALOG_CONFIRM_ALLOW_ACCESS_ID = 0;
-  
+
   private CheckBoxPreference defaultMapPublicCheckBoxPreference;
   private CheckBoxPreference allowAccessCheckBoxPreference;
 
@@ -47,6 +47,12 @@ public class SharingSettingsActivity extends AbstractSettingsActivity {
 
     defaultMapPublicCheckBoxPreference = (CheckBoxPreference) findPreference(
         getString(R.string.default_map_public_key));
+    defaultMapPublicCheckBoxPreference.setSummaryOn(getString(
+        R.string.settings_sharing_map_public_summary,
+        getString(R.string.maps_public_unlisted_url)));
+    defaultMapPublicCheckBoxPreference.setSummaryOff(getString(
+        R.string.settings_sharing_map_unlisted_summary,
+        getString(R.string.maps_public_unlisted_url)));
     boolean defaultMapPublic = PreferencesUtils.getBoolean(
         this, R.string.default_map_public_key, PreferencesUtils.DEFAULT_MAP_PUBLIC_DEFAULT);
     updateDefaultMapPublicTitle(defaultMapPublic);
@@ -82,7 +88,7 @@ public class SharingSettingsActivity extends AbstractSettingsActivity {
     return DialogUtils.createConfirmationDialog(this,
         R.string.settings_sharing_allow_access_confirm_message,
         new DialogInterface.OnClickListener() {
-          @Override
+            @Override
           public void onClick(DialogInterface dialog, int button) {
             allowAccessCheckBoxPreference.setChecked(true);
           }

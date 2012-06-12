@@ -23,6 +23,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.view.View;
 
 /**
  * Utilities for creating dialogs.
@@ -37,19 +38,37 @@ public class DialogUtils {
    * Creates a confirmation dialog.
    *
    * @param context the context
-   * @param messageId the confirmation message id
-   * @param onClickListener the listener to invoke when the user clicks OK
+   * @param messageId the message id
+   * @param okListener the listener when OK is clicked
    */
   public static Dialog createConfirmationDialog(
-      Context context, int messageId, DialogInterface.OnClickListener onClickListener) {
-    return new AlertDialog.Builder(context)
+      Context context, int messageId, DialogInterface.OnClickListener okListener) {
+    return createConfirmationDialog(context, context.getString(messageId), null, okListener, null);
+  }
+
+  /**
+   * Creates a confirmation dialog.
+   * 
+   * @param context the context
+   * @param message the message
+   * @param view the view
+   * @param okListener the listener when OK is clicked
+   * @param cancelListener the listener when cancel is clicked
+   */
+  public static Dialog createConfirmationDialog(
+      Context context, String message, View view, DialogInterface.OnClickListener okListener,
+      DialogInterface.OnClickListener cancelListener) {
+    AlertDialog.Builder builder = new AlertDialog.Builder(context)
         .setCancelable(true)
         .setIcon(android.R.drawable.ic_dialog_alert)
-        .setMessage(context.getString(messageId))
-        .setNegativeButton(android.R.string.cancel, null)
-        .setPositiveButton(android.R.string.ok, onClickListener)
-        .setTitle(R.string.generic_confirm_title)
-        .create();
+        .setMessage(message)
+        .setNegativeButton(android.R.string.cancel, cancelListener)
+        .setPositiveButton(android.R.string.ok, okListener)
+        .setTitle(R.string.generic_confirm_title);
+    if (view != null) {
+      builder.setView(view);
+    }
+    return builder.create();
   }
 
   /**

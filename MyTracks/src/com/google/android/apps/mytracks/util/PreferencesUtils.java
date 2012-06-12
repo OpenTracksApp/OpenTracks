@@ -74,6 +74,7 @@ public class PreferencesUtils {
   public static final boolean SEND_TO_FUSION_TABLES_DEFAULT = true;
   public static final boolean SEND_TO_MAPS_DEFAULT = true;
   public static final boolean SHOW_CHECK_UNITS_DIALOG_DEFAULT = true;
+  public static final boolean SHOW_CONFIRM_SHARING_DIALOG_DEFAULT = true;
   public static final boolean SHOW_WELCOME_DIALOG_DEFAULT = true;
   public static final int SPLIT_FREQUENCY_DEFAULT = 0;
 

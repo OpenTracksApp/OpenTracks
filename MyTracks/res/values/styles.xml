@@ -71,6 +71,7 @@ limitations under the License.
   </style>
   <!-- The style for the help answer -->
   <style name="HelpAnswer" parent="@style/TextSmall">
+    <item name="android:autoLink">web</item>
     <item name="android:paddingBottom">8dp</item>
   </style>
   <!-- The style for help question -->

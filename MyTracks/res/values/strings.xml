@@ -615,6 +615,11 @@ limitations under the License.
       %1$s description. E.g., 'At the top'.">
     Description: %1$s
   </string>
+  <string name="generic_do_not_show_again"
+    translation_description="When showing a confirmation message, the message in the footer checkbox
+      to not show the message again.">
+    Do no show this again.
+  </string>
   <string name="generic_error_title"
     translation_description="The title on an alert dialog indicating error.">
     Error
@@ -696,8 +701,9 @@ limitations under the License.
     translation_description="In the 'Help' page, the answer on delete tracks.">
     From the track list, select \"Delete all\" when not recording. This permanently deletes the
     recorded tracks from memory. If you have saved tracks or backups on the SD card, you must delete
-    them separately. Tracks uploaded to Google Maps, Google Fusion Tables, and Google Doc must also
-    be deleted separately.
+    them separately. You can access the SD card using any file manager app from the Play Store or
+    using a USB cable to connect your phone to your computer. Tracks uploaded to Google Maps,
+    Google Fusion Tables, and Google Docs must also be deleted separately.
   </string>
   <string name="help_delete_tracks_question"
     translation_description="In the 'Help' page, the question on delete tracks.">
@@ -724,6 +730,19 @@ limitations under the License.
     translation_description="In the 'Help' page, the question on elevation precision.">
     How precise is the elevation measurement?
   </string>
+  <string name="help_google_services_answer"
+    translation_description="In the 'Help' page, the answer on locations of google services.
+    
+     %1$s url. E.g., 'maps.google.com'.
+     %2$s url. E.g., 'google.com/fusiontables'.
+     %3$s url. E.g., 'docs.google.com'.">
+    For Google Maps, go to %1$s and click on \"My Places\". For Google Fusion Tables, go to %2$s.
+    For Google Docs, go to %3$s.
+  </string>
+  <string name="help_google_services_question"
+    translation_description="In the 'Help' page, the question on locations of google services.">
+    Where are the tracks after sending to Google?
+  </string>
   <string name="help_gps_signal_answer"
     translation_description="In the 'Help' page, the answer on the GPS signal message.">
     For My Tracks to work, your phone needs to be in line-of-sight contact with the GPS satellites.
@@ -739,12 +758,22 @@ limitations under the License.
     translation_description="In the 'Help' page, the answer on location precision.">
     Under optimal conditions, the location error can be +/- 20 feet (6 meters). However, precision
     depends on the quality of the GPS signal. The blue circle around the orange location arrow
-    indicates estimated precision. (You may need to zoom in or out to see the circle.) You can
+    indicates estimated precision. (You may need to zoom in or zoom out to see the circle.) You can
     change the GPS precision at Settings -> Recording -> GPS accuracy.
   </string>
   <string name="help_location_precision_question"
     translation_description="In the 'Help' page, the question on location precision.">
     How precise are the recorded tracks?
+  </string>
+  <string name="help_maps_public_unlisted_answer"
+    translation_description="In the 'Help' page, the answer on public versus unlisted maps.
+
+    %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=62845'.">
+    See %1$s.
+  </string>
+  <string name="help_maps_public_unlisted_question"
+    translation_description="In the 'Help' page, the question on public versus unlsited maps.">
+    What is the difference between public and unlisted when sending a track to Google Maps?
   </string>
   <string name="help_marker_answer"
     translation_description="In the 'Help' page, the answer on markers.">
@@ -783,9 +812,10 @@ limitations under the License.
   </string>
   <string name="help_share_visibility_answer"
     translation_description="In the 'Help' page, the answer on share visibility.">
-    By default, tracks sent to Google Maps and Google Fusion Tables are public, while tracks sent to
-    Google Docs are private. You can change the visibility of your tracks in Google Maps, Google
-    Fusion, and Google Docs.
+    By default, tracks sent to Google Maps are unlisted, tracks sent to Google Fusion Tables are
+    public, and tracks sent to Google Docs are private. For Google Maps, you can change the
+    default between public and unlisted via Settings -> Sharing. After uploading tracks, you can
+    change their visibility in Google Maps, Google Fusion Tables, and Google Docs.
   </string>
   <string name="help_share_visibility_question"
     translation_description="In the 'Help' page, the question on share visibility.">
@@ -793,8 +823,8 @@ limitations under the License.
   </string>
   <string name="help_split_marker_answer"
     translation_description="In the 'Help' page, the answer on split markers.">
-    The split markers are used to segment a track to calculate statistics for each segment. Split
-    markers are inserted by setting the split frequency in the menu.
+    Split markers are used to segment a track to calculate statistics for each segment. Split
+    markers are inserted by setting the split frequency from the menu.
   </string>
   <string name="help_split_marker_question"
     translation_description="In the 'Help' page, the question on split markers.">
@@ -1838,8 +1868,10 @@ limitations under the License.
   <string name="settings_sharing_map_public_summary"
     translation_description="In the 'Sharing' settings, the summary for the 'Make new maps public'
       option explaining that new maps created in Google Maps will be public, as opposed to unlisted.
-      See http://support.google.com/maps/bin/answer.py?answer=62845 for public versus unlisted.">
-    New maps created in Google Maps will be public.
+      See http://support.google.com/maps/bin/answer.py?answer=62845 for public versus unlisted.
+
+      %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=62845'.">
+    New maps created in Google Maps will be public. See %1$s for more info.
   </string>
   <string name="settings_sharing_map_unlisted"
     translation_description="In the 'Sharing' settings, the title of the option to make new maps
@@ -1852,8 +1884,10 @@ limitations under the License.
   <string name="settings_sharing_map_unlisted_summary"
     translation_description="In the 'Sharing' settings, the summary for the 'Make new maps unlisted'
       option explaining that new maps created in Google Maps will be unlisted, as opposed to public.
-      See http://support.google.com/maps/bin/answer.py?answer=62845 for public versus unlisted.">
-    New maps created in Google Maps will be unlisted.
+      See http://support.google.com/maps/bin/answer.py?answer=62845 for public versus unlisted.
+
+      %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=62845'.">
+    New maps created in Google Maps will be unlisted. See %1$s for more info.
   </string>
 
   <!-- Settings Show -->
@@ -1917,6 +1951,14 @@ limitations under the License.
   </string>
 
   <!-- Share Track -->
+  <string name="share_track_confirm_message"
+    translation_description="The confirmation message when sharing a track with friends.
+
+    %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=62845'.">
+    This will upload your track to Google Maps so that you can share the map url with friends. The
+    map will be either public or unlisted depending on your setting at Settings -> Sharing. For more
+    info on public versus unlisted, see %1$s.
+  </string>
   <string name="share_track_picker_title"
     translation_description="When sharing a track with friends, the title on the picker to ask
       the user to select an application.">
