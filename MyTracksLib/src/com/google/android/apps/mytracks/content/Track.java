@@ -36,7 +36,6 @@ public class Track implements Parcelable {
   private String name = "";
   private String description = "";
   private String category = "";
-  private String categoryIcon = "";
   private long startId = -1;
   private long stopId = -1;
 
@@ -45,6 +44,7 @@ public class Track implements Parcelable {
   private int numberOfPoints = 0;
   private String mapId = "";
   private String tableId = "";
+  private String icon = "";
 
   private TripStatistics tripStatistics = new TripStatistics();
 
@@ -58,20 +58,20 @@ public class Track implements Parcelable {
     name = in.readString();
     description = in.readString();
     category = in.readString();
-    categoryIcon = in.readString();
     startId = in.readLong();
     stopId = in.readLong();
     numberOfPoints = in.readInt();
     mapId = in.readString();
     tableId = in.readString();
+    icon = in.readString();
 
     ClassLoader classLoader = getClass().getClassLoader();
+    tripStatistics = in.readParcelable(classLoader);
+
     for (int i = 0; i < numberOfPoints; ++i) {
       Location loc = in.readParcelable(classLoader);
       locations.add(loc);
     }
-
-    tripStatistics = in.readParcelable(classLoader);
   }
 
   @Override
@@ -85,25 +85,25 @@ public class Track implements Parcelable {
     dest.writeString(name);
     dest.writeString(description);
     dest.writeString(category);
-    dest.writeString(categoryIcon);
     dest.writeLong(startId);
     dest.writeLong(stopId);
     dest.writeInt(numberOfPoints);
     dest.writeString(mapId);
     dest.writeString(tableId);
+    dest.writeString(icon);
+    dest.writeParcelable(tripStatistics, 0);
     for (int i = 0; i < numberOfPoints; ++i) {
       dest.writeParcelable(locations.get(i), 0);
     }
-    dest.writeParcelable(tripStatistics, 0);
   }
 
   public static final Parcelable.Creator<Track> CREATOR = new Parcelable.Creator<Track>() {
-    @Override
+      @Override
     public Track createFromParcel(Parcel in) {
       return new Track(in);
     }
 
-    @Override
+      @Override
     public Track[] newArray(int size) {
       return new Track[size];
     }
@@ -141,14 +141,6 @@ public class Track implements Parcelable {
     this.category = category;
   }
 
-  public String getCategoryIcon() {
-    return categoryIcon;
-  }
-
-  public void setCategoryIcon(String categoryIcon) {
-    this.categoryIcon = categoryIcon;
-  }
-  
   public long getStartId() {
     return startId;
   }
@@ -189,6 +181,22 @@ public class Track implements Parcelable {
     this.tableId = tableId;
   }
 
+  public String getIcon() {
+    return icon;
+  }
+
+  public void setIcon(String icon) {
+    this.icon = icon;
+  }
+
+  public TripStatistics getTripStatistics() {
+    return tripStatistics;
+  }
+
+  public void setTripStatistics(TripStatistics tripStatistics) {
+    this.tripStatistics = tripStatistics;
+  }
+
   public void addLocation(Location l) {
     locations.add(l);
   }
@@ -199,13 +207,5 @@ public class Track implements Parcelable {
 
   public void setLocations(ArrayList<Location> locations) {
     this.locations = locations;
-  }
-
-  public TripStatistics getTripStatistics() {
-    return tripStatistics;
-  }
-
-  public void setTripStatistics(TripStatistics tripStatistics) {
-    this.tripStatistics = tripStatistics;
   }
 }

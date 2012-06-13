@@ -152,8 +152,8 @@ class ExternalFileBackup {
     // Create all the auxiliary classes that will do the writing
     PreferenceBackupHelper preferencesHelper = new PreferenceBackupHelper();
     DatabaseDumper trackDumper = new DatabaseDumper(
-        BackupColumns.TRACKS_BACKUP_COLUMNS,
-        BackupColumns.TRACKS_BACKUP_COLUMN_TYPES,
+        TracksColumns.COLUMNS,
+        TracksColumns.COLUMN_TYPES,
         false);
     DatabaseDumper waypointDumper = new DatabaseDumper(
         BackupColumns.WAYPOINTS_BACKUP_COLUMNS,

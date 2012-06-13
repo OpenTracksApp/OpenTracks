@@ -100,21 +100,19 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     }
     values.put(TracksColumns.NAME, track.getName());
     values.put(TracksColumns.DESCRIPTION, track.getDescription());
-    values.put(TracksColumns.MAPID, track.getMapId());
-    values.put(TracksColumns.TABLEID, track.getTableId());
     values.put(TracksColumns.CATEGORY, track.getCategory());
-    values.put(TracksColumns.NUMPOINTS, track.getNumberOfPoints());
     values.put(TracksColumns.STARTID, track.getStartId());
+    values.put(TracksColumns.STOPID, track.getStopId());
     values.put(TracksColumns.STARTTIME, stats.getStartTime());
     values.put(TracksColumns.STOPTIME, stats.getStopTime());
-    values.put(TracksColumns.STOPID, track.getStopId());
+    values.put(TracksColumns.NUMPOINTS, track.getNumberOfPoints());
     values.put(TracksColumns.TOTALDISTANCE, stats.getTotalDistance());
     values.put(TracksColumns.TOTALTIME, stats.getTotalTime());
     values.put(TracksColumns.MOVINGTIME, stats.getMovingTime());
-    values.put(TracksColumns.MAXLAT, stats.getTop());
     values.put(TracksColumns.MINLAT, stats.getBottom());
-    values.put(TracksColumns.MAXLON, stats.getRight());
+    values.put(TracksColumns.MAXLAT, stats.getTop());
     values.put(TracksColumns.MINLON, stats.getLeft());
+    values.put(TracksColumns.MAXLON, stats.getRight());
     values.put(TracksColumns.AVGSPEED, stats.getAverageSpeed());
     values.put(TracksColumns.AVGMOVINGSPEED, stats.getAverageMovingSpeed());
     values.put(TracksColumns.MAXSPEED, stats.getMaxSpeed());
@@ -123,6 +121,9 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     values.put(TracksColumns.ELEVATIONGAIN, stats.getTotalElevationGain());
     values.put(TracksColumns.MINGRADE, stats.getMinGrade());
     values.put(TracksColumns.MAXGRADE, stats.getMaxGrade());
+    values.put(TracksColumns.MAPID, track.getMapId());
+    values.put(TracksColumns.TABLEID, track.getTableId());
+    values.put(TracksColumns.ICON, track.getIcon());
     return values;
   }
 
@@ -267,37 +268,32 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   public Track createTrack(Cursor cursor) {
     int idxId = cursor.getColumnIndexOrThrow(TracksColumns._ID);
     int idxName = cursor.getColumnIndexOrThrow(TracksColumns.NAME);
-    int idxDescription =
-        cursor.getColumnIndexOrThrow(TracksColumns.DESCRIPTION);
-    int idxMapId = cursor.getColumnIndexOrThrow(TracksColumns.MAPID);
-    int idxTableId = cursor.getColumnIndexOrThrow(TracksColumns.TABLEID);
+    int idxDescription = cursor.getColumnIndexOrThrow(TracksColumns.DESCRIPTION);
     int idxCategory = cursor.getColumnIndexOrThrow(TracksColumns.CATEGORY);
     int idxStartId = cursor.getColumnIndexOrThrow(TracksColumns.STARTID);
+    int idxStopId = cursor.getColumnIndexOrThrow(TracksColumns.STOPID);
     int idxStartTime = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
     int idxStopTime = cursor.getColumnIndexOrThrow(TracksColumns.STOPTIME);
-    int idxStopId = cursor.getColumnIndexOrThrow(TracksColumns.STOPID);
     int idxNumPoints = cursor.getColumnIndexOrThrow(TracksColumns.NUMPOINTS);
-    int idxMaxlat = cursor.getColumnIndexOrThrow(TracksColumns.MAXLAT);
-    int idxMinlat = cursor.getColumnIndexOrThrow(TracksColumns.MINLAT);
-    int idxMaxlon = cursor.getColumnIndexOrThrow(TracksColumns.MAXLON);
-    int idxMinlon = cursor.getColumnIndexOrThrow(TracksColumns.MINLON);
-
-    int idxTotalDistance =
-        cursor.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE);
+    int idxTotalDistance = cursor.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE);
     int idxTotalTime = cursor.getColumnIndexOrThrow(TracksColumns.TOTALTIME);
     int idxMovingTime = cursor.getColumnIndexOrThrow(TracksColumns.MOVINGTIME);
+    int idxMinlat = cursor.getColumnIndexOrThrow(TracksColumns.MINLAT);
+    int idxMaxlat = cursor.getColumnIndexOrThrow(TracksColumns.MAXLAT);
+    int idxMinlon = cursor.getColumnIndexOrThrow(TracksColumns.MINLON);
+    int idxMaxlon = cursor.getColumnIndexOrThrow(TracksColumns.MAXLON);
     int idxMaxSpeed = cursor.getColumnIndexOrThrow(TracksColumns.MAXSPEED);
-    int idxMinElevation =
-        cursor.getColumnIndexOrThrow(TracksColumns.MINELEVATION);
-    int idxMaxElevation =
-        cursor.getColumnIndexOrThrow(TracksColumns.MAXELEVATION);
-    int idxElevationGain =
-        cursor.getColumnIndexOrThrow(TracksColumns.ELEVATIONGAIN);
+    int idxMinElevation = cursor.getColumnIndexOrThrow(TracksColumns.MINELEVATION);
+    int idxMaxElevation = cursor.getColumnIndexOrThrow(TracksColumns.MAXELEVATION);
+    int idxElevationGain = cursor.getColumnIndexOrThrow(TracksColumns.ELEVATIONGAIN);
     int idxMinGrade = cursor.getColumnIndexOrThrow(TracksColumns.MINGRADE);
     int idxMaxGrade = cursor.getColumnIndexOrThrow(TracksColumns.MAXGRADE);
+    int idxMapId = cursor.getColumnIndexOrThrow(TracksColumns.MAPID);
+    int idxTableId = cursor.getColumnIndexOrThrow(TracksColumns.TABLEID);
+    int idxIcon = cursor.getColumnIndexOrThrow(TracksColumns.ICON);
 
     Track track = new Track();
-    TripStatistics stats = track.getTripStatistics();
+    TripStatistics tripStatistics = track.getTripStatistics();
     if (!cursor.isNull(idxId)) {
       track.setId(cursor.getLong(idxId));
     }
@@ -307,66 +303,69 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     if (!cursor.isNull(idxDescription)) {
       track.setDescription(cursor.getString(idxDescription));
     }
-    if (!cursor.isNull(idxMapId)) {
-      track.setMapId(cursor.getString(idxMapId));
-    }
-    if (!cursor.isNull(idxTableId)) {
-      track.setTableId(cursor.getString(idxTableId));
-    }
     if (!cursor.isNull(idxCategory)) {
       track.setCategory(cursor.getString(idxCategory));
     }
     if (!cursor.isNull(idxStartId)) {
       track.setStartId(cursor.getInt(idxStartId));
     }
-    if (!cursor.isNull(idxStartTime)) {
-      stats.setStartTime(cursor.getLong(idxStartTime));
-    }
-    if (!cursor.isNull(idxStopTime)) {
-      stats.setStopTime(cursor.getLong(idxStopTime));
-    }
     if (!cursor.isNull(idxStopId)) {
       track.setStopId(cursor.getInt(idxStopId));
+    }
+    if (!cursor.isNull(idxStartTime)) {
+      tripStatistics.setStartTime(cursor.getLong(idxStartTime));
+    }
+    if (!cursor.isNull(idxStopTime)) {
+      tripStatistics.setStopTime(cursor.getLong(idxStopTime));
     }
     if (!cursor.isNull(idxNumPoints)) {
       track.setNumberOfPoints(cursor.getInt(idxNumPoints));
     }
     if (!cursor.isNull(idxTotalDistance)) {
-      stats.setTotalDistance(cursor.getFloat(idxTotalDistance));
+      tripStatistics.setTotalDistance(cursor.getFloat(idxTotalDistance));
     }
     if (!cursor.isNull(idxTotalTime)) {
-      stats.setTotalTime(cursor.getLong(idxTotalTime));
+      tripStatistics.setTotalTime(cursor.getLong(idxTotalTime));
     }
     if (!cursor.isNull(idxMovingTime)) {
-      stats.setMovingTime(cursor.getLong(idxMovingTime));
+      tripStatistics.setMovingTime(cursor.getLong(idxMovingTime));
     }
-    if (!cursor.isNull(idxMaxlat)
-        && !cursor.isNull(idxMinlat)
-        && !cursor.isNull(idxMaxlon)
-        && !cursor.isNull(idxMinlon)) {
-      int top = cursor.getInt(idxMaxlat);
+    if (!cursor.isNull(idxMinlat) 
+        && !cursor.isNull(idxMaxlat)
+        && !cursor.isNull(idxMinlon)
+        && !cursor.isNull(idxMaxlon)) {
       int bottom = cursor.getInt(idxMinlat);
-      int right = cursor.getInt(idxMaxlon);
+      int top = cursor.getInt(idxMaxlat);
       int left = cursor.getInt(idxMinlon);
-      stats.setBounds(left, top, right, bottom);
+      int right = cursor.getInt(idxMaxlon);
+      tripStatistics.setBounds(left, top, right, bottom);
     }
     if (!cursor.isNull(idxMaxSpeed)) {
-      stats.setMaxSpeed(cursor.getFloat(idxMaxSpeed));
+      tripStatistics.setMaxSpeed(cursor.getFloat(idxMaxSpeed));
     }
     if (!cursor.isNull(idxMinElevation)) {
-      stats.setMinElevation(cursor.getFloat(idxMinElevation));
+      tripStatistics.setMinElevation(cursor.getFloat(idxMinElevation));
     }
     if (!cursor.isNull(idxMaxElevation)) {
-      stats.setMaxElevation(cursor.getFloat(idxMaxElevation));
+      tripStatistics.setMaxElevation(cursor.getFloat(idxMaxElevation));
     }
     if (!cursor.isNull(idxElevationGain)) {
-      stats.setTotalElevationGain(cursor.getFloat(idxElevationGain));
+      tripStatistics.setTotalElevationGain(cursor.getFloat(idxElevationGain));
     }
     if (!cursor.isNull(idxMinGrade)) {
-      stats.setMinGrade(cursor.getFloat(idxMinGrade));
+      tripStatistics.setMinGrade(cursor.getFloat(idxMinGrade));
     }
     if (!cursor.isNull(idxMaxGrade)) {
-      stats.setMaxGrade(cursor.getFloat(idxMaxGrade));
+      tripStatistics.setMaxGrade(cursor.getFloat(idxMaxGrade));
+    }
+    if (!cursor.isNull(idxMapId)) {
+      track.setMapId(cursor.getString(idxMapId));
+    }
+    if (!cursor.isNull(idxTableId)) {
+      track.setTableId(cursor.getString(idxTableId));
+    }
+    if (!cursor.isNull(idxIcon)) {
+      track.setIcon(cursor.getString(idxIcon));
     }
     return track;
   }

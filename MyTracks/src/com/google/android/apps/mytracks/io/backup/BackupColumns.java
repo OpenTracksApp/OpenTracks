@@ -15,9 +15,13 @@
  */
 package com.google.android.apps.mytracks.io.backup;
 
-import static com.google.android.apps.mytracks.content.ContentTypeIds.*;
+import static com.google.android.apps.mytracks.content.ContentTypeIds.BLOB_TYPE_ID;
+import static com.google.android.apps.mytracks.content.ContentTypeIds.FLOAT_TYPE_ID;
+import static com.google.android.apps.mytracks.content.ContentTypeIds.INT_TYPE_ID;
+import static com.google.android.apps.mytracks.content.ContentTypeIds.LONG_TYPE_ID;
+import static com.google.android.apps.mytracks.content.ContentTypeIds.STRING_TYPE_ID;
+
 import com.google.android.apps.mytracks.content.TrackPointsColumns;
-import com.google.android.apps.mytracks.content.TracksColumns;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 
 public class BackupColumns {
@@ -30,23 +34,6 @@ public class BackupColumns {
   public static final byte[] POINTS_BACKUP_COLUMN_TYPES =
       { LONG_TYPE_ID, LONG_TYPE_ID, INT_TYPE_ID, INT_TYPE_ID, FLOAT_TYPE_ID,
         FLOAT_TYPE_ID, LONG_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID, BLOB_TYPE_ID };
-
-  public static final String[] TRACKS_BACKUP_COLUMNS = {
-      TracksColumns._ID, TracksColumns.NAME, TracksColumns.DESCRIPTION, TracksColumns.CATEGORY,
-      TracksColumns.STARTID, TracksColumns.STOPID, TracksColumns.STARTTIME, TracksColumns.STOPTIME,
-      TracksColumns.NUMPOINTS, TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME,
-      TracksColumns.MOVINGTIME, TracksColumns.AVGSPEED, TracksColumns.AVGMOVINGSPEED,
-      TracksColumns.MAXSPEED, TracksColumns.MINELEVATION, TracksColumns.MAXELEVATION,
-      TracksColumns.ELEVATIONGAIN, TracksColumns.MINGRADE, TracksColumns.MAXGRADE,
-      TracksColumns.MINLAT, TracksColumns.MAXLAT, TracksColumns.MINLON, TracksColumns.MAXLON,
-      TracksColumns.MAPID, TracksColumns.TABLEID};
-  public static final byte[] TRACKS_BACKUP_COLUMN_TYPES = {
-      LONG_TYPE_ID, STRING_TYPE_ID, STRING_TYPE_ID, STRING_TYPE_ID,
-      LONG_TYPE_ID, LONG_TYPE_ID, LONG_TYPE_ID, LONG_TYPE_ID, INT_TYPE_ID,
-      FLOAT_TYPE_ID, LONG_TYPE_ID, LONG_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID,
-      FLOAT_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID,
-      FLOAT_TYPE_ID, INT_TYPE_ID, INT_TYPE_ID, INT_TYPE_ID, INT_TYPE_ID, STRING_TYPE_ID,
-      STRING_TYPE_ID};
 
   public static final String[] WAYPOINTS_BACKUP_COLUMNS = {
       WaypointsColumns._ID, WaypointsColumns.TRACKID, WaypointsColumns.NAME,
