@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <searchable xmlns:android="http://schemas.android.com/apk/res/android"
-  android:hint="@string/search_hint"
+  android:hint="@string/menu_search"
   android:imeOptions="actionSearch"
   android:includeInGlobalSearch="true"
   android:label="@string/my_tracks_app_name"

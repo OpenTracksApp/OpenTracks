@@ -1229,12 +1229,6 @@ limitations under the License.
       global system search settings.">
     Tracks and markers
   </string>
-  <string name="search_hint"
-    translation_description="The hint shown on the search box until the user types a search query.
-      See suggestion at http://developer.android.com/guide/topics/search/search-dialog.html about
-      keeping this consistent with other Android apps.">
-    Search My Tracks
-  </string>
   <string name="search_list_empty_message"
     translation_description="Message when the search result is empty.">
     No tracks or markers matched your search.
