@@ -31,6 +31,7 @@ limitations under the License.
   <string name="chart_show_speed_key">chartShowSpeed</string>
   <string name="default_activity_key">defaultActivity</string>
   <string name="default_map_public_key">defaultMapPublic</string>
+  <string name="google_account_key">googleAccount</string>
   <string name="max_recording_distance_key">maxRecordingDistance</string>
   <string name="metric_units_key">metricUnits</string>
   <string name="min_recording_distance_key">minRecordingDistance</string>
@@ -44,8 +45,8 @@ limitations under the License.
   <string name="send_to_fusion_tables_key">sendToFusionTables</string>
   <string name="send_to_maps_key">sendToMaps</string>
   <string name="sensor_type_key">sensorType</string>
-  <string name="sharing_account_key">sharingAccount</string>
   <string name="show_check_units_dialog_key">showCheckUnitsDialog</string>
+  <string name="show_confirm_sharing_dialog_key">showConfrimSharingDialog</string>
   <string name="show_welcome_dialog_key">showWelcomeDialog</string>
   <string name="split_frequency_key">splitFrequency</string>
   <string name="stats_show_coordinate_key">statsShowCoordinate</string>

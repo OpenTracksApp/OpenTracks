@@ -90,8 +90,14 @@ public class ChooseUploadServiceDialogFragment extends DialogFragment {
     });
 
     mapsOptionTableRow = (TableRow) view.findViewById(R.id.choose_upload_service_maps_options);
+
     RadioButton newMapRadioButton = (RadioButton) view.findViewById(
         R.id.choose_upload_service_new_map);
+    boolean defaultMapPublic = PreferencesUtils.getBoolean(getActivity(),
+        R.string.default_map_public_key, PreferencesUtils.DEFAULT_MAP_PUBLIC_DEFAULT);
+    newMapRadioButton.setText(defaultMapPublic ? R.string.send_google_new_public_map
+        : R.string.send_google_new_unlisted_map);
+
     existingMapRadioButton = (RadioButton) view.findViewById(
         R.id.choose_upload_service_existing_map);
 

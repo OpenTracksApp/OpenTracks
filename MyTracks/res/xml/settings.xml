@@ -44,6 +44,10 @@ limitations under the License.
     android:key="@string/settings_backup_key"
     android:persistent="false"
     android:title="@string/settings_backup" />
+  <ListPreference
+    android:defaultValue=""
+    android:key="@string/google_account_key"
+    android:title="@string/settings_switch_account" />
   <Preference
     android:key="@string/settings_reset_key"
     android:persistent="false"

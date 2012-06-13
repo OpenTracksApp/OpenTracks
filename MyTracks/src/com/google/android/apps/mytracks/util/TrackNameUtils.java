@@ -79,8 +79,11 @@ public class TrackNameUtils {
       if (location != null) {
         return getReverseGeoCoding(context, location);
       } else {
-        // assume startTime != -1L when location == null
-        return StringUtils.formatDateTime(context, startTime);
+        // Use the startTime if available
+        if (startTime != -1L) {
+          return StringUtils.formatDateTime(context, startTime);
+        }
+        return null;
       }
     }
   }

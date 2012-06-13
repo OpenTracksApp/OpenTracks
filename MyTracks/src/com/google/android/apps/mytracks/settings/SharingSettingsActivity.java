@@ -16,22 +16,16 @@
 
 package com.google.android.apps.mytracks.settings;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.util.DialogUtils;
+import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * An activity for accessing the sharing settings.
@@ -42,6 +36,7 @@ public class SharingSettingsActivity extends AbstractSettingsActivity {
 
   private static final int DIALOG_CONFIRM_ALLOW_ACCESS_ID = 0;
 
+  private CheckBoxPreference defaultMapPublicCheckBoxPreference;
   private CheckBoxPreference allowAccessCheckBoxPreference;
 
   @SuppressWarnings("deprecation")
@@ -49,6 +44,26 @@ public class SharingSettingsActivity extends AbstractSettingsActivity {
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
     addPreferencesFromResource(R.xml.sharing_settings);
+
+    defaultMapPublicCheckBoxPreference = (CheckBoxPreference) findPreference(
+        getString(R.string.default_map_public_key));
+    defaultMapPublicCheckBoxPreference.setSummaryOn(getString(
+        R.string.settings_sharing_map_public_summary,
+        getString(R.string.maps_public_unlisted_url)));
+    defaultMapPublicCheckBoxPreference.setSummaryOff(getString(
+        R.string.settings_sharing_map_unlisted_summary,
+        getString(R.string.maps_public_unlisted_url)));
+    boolean defaultMapPublic = PreferencesUtils.getBoolean(
+        this, R.string.default_map_public_key, PreferencesUtils.DEFAULT_MAP_PUBLIC_DEFAULT);
+    updateDefaultMapPublicTitle(defaultMapPublic);
+    defaultMapPublicCheckBoxPreference.setOnPreferenceChangeListener(
+        new OnPreferenceChangeListener() {
+            @Override
+          public boolean onPreferenceChange(Preference preference, Object newValue) {
+            updateDefaultMapPublicTitle((Boolean) newValue);
+            return true;
+          }
+        });
 
     allowAccessCheckBoxPreference = (CheckBoxPreference) findPreference(
         getString(R.string.allow_access_key));
@@ -63,21 +78,6 @@ public class SharingSettingsActivity extends AbstractSettingsActivity {
         }
       }
     });
-    
-    ListPreference sharingAccountListPreference = (ListPreference) findPreference(
-        getString(R.string.sharing_account_key));
-    List<String> entries = new ArrayList<String>();
-    Account[] accounts = AccountManager.get(this).getAccountsByType(Constants.ACCOUNT_TYPE);
-    for (Account account : accounts) {
-      entries.add(account.name);
-    }
-    
-    sharingAccountListPreference.setEntries(entries.toArray(new CharSequence[entries.size()]));
-    sharingAccountListPreference.setEntryValues(entries.toArray(
-        new CharSequence[entries.size()]));
-    if (entries.size() == 1) {
-      sharingAccountListPreference.setValueIndex(0);
-    }
   }
 
   @Override
@@ -88,10 +88,20 @@ public class SharingSettingsActivity extends AbstractSettingsActivity {
     return DialogUtils.createConfirmationDialog(this,
         R.string.settings_sharing_allow_access_confirm_message,
         new DialogInterface.OnClickListener() {
-          @Override
+            @Override
           public void onClick(DialogInterface dialog, int button) {
             allowAccessCheckBoxPreference.setChecked(true);
           }
         });
+  }
+
+  /**
+   * Updates the title for the default map public check box preference.
+   * 
+   * @param value the value
+   */
+  private void updateDefaultMapPublicTitle(boolean value) {
+    defaultMapPublicCheckBoxPreference.setTitle(value ? R.string.settings_sharing_map_public
+        : R.string.settings_sharing_map_unlisted);
   }
 }

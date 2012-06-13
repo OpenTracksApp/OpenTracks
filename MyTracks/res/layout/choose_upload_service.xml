@@ -39,7 +39,6 @@ limitations under the License.
         android:layout_width="0dp" >
         <RadioButton
           android:id="@+id/choose_upload_service_new_map"
-          android:text="@string/send_google_new_map"
           style="@style/TextMedium" />
         <RadioButton
           android:id="@+id/choose_upload_service_existing_map"
@@ -54,7 +53,7 @@ limitations under the License.
         style="@style/ChooseUploadServiceImageView" />
       <CheckBox
         android:id="@+id/choose_upload_service_fusion_tables"
-        android:text="@string/send_google_fusion_tables"
+        android:text="@string/send_google_fusion_tables_new_public_table"
         style="@style/ChooseUploadServiceCheckBox" />
     </TableRow>
     <TableRow>
