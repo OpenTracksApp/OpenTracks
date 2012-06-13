@@ -53,7 +53,6 @@ public class UploadResultActivity extends FragmentActivity {
   private String shareUrl;
   private Dialog resultDialog;
 
-  @SuppressWarnings("deprecation")
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
