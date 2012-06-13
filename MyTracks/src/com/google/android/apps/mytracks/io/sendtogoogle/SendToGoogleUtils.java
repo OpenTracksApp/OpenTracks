@@ -56,8 +56,8 @@ public class SendToGoogleUtils {
     segment.setDescription("");
     segment.setCategory(track.getCategory());
 
-    TripStatistics segmentStats = segment.getStatistics();
-    TripStatistics trackStats = track.getStatistics();
+    TripStatistics segmentStats = segment.getTripStatistics();
+    TripStatistics trackStats = track.getTripStatistics();
     segmentStats.setStartTime(trackStats.getStartTime());
     segmentStats.setStopTime(trackStats.getStopTime());
     boolean startNewTrackSegment = false;
@@ -78,7 +78,7 @@ public class SendToGoogleUtils {
         segment.setName(track.getName());
         segment.setDescription("");
         segment.setCategory(track.getCategory());
-        segmentStats = segment.getStatistics();
+        segmentStats = segment.getTripStatistics();
       }
 
       if (loc.getLatitude() <= 90) {
@@ -119,7 +119,7 @@ public class SendToGoogleUtils {
     }
 
     // For a new segment, sets it stop time
-    TripStatistics segmentStats = segment.getStatistics();
+    TripStatistics segmentStats = segment.getTripStatistics();
     if (segmentStats.getStopTime() < 0) {
       Location lastLocation = segment.getLocations().get(segment.getLocations().size() - 1);
       segmentStats.setStopTime(lastLocation.getTime());

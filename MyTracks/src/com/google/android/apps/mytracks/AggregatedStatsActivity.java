@@ -49,9 +49,9 @@ public class AggregatedStatsActivity extends AbstractMyTracksActivity {
     List<Track> tracks = MyTracksProviderUtils.Factory.get(this).getAllTracks();
     TripStatistics tripStatistics = null;
     if (!tracks.isEmpty()) {
-      tripStatistics = new TripStatistics(tracks.iterator().next().getStatistics());
+      tripStatistics = new TripStatistics(tracks.iterator().next().getTripStatistics());
       for (int i = 1; i < tracks.size(); i++) {
-        tripStatistics.merge(tracks.get(i).getStatistics());
+        tripStatistics.merge(tracks.get(i).getTripStatistics());
       }
     }
     return tripStatistics;

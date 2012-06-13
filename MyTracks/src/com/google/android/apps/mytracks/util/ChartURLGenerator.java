@@ -75,7 +75,7 @@ public class ChartURLGenerator {
     }
 
     // Round it up.
-    TripStatistics stats = track.getStatistics();
+    TripStatistics stats = track.getTripStatistics();
     double effectiveMaxY = metricUnits
         ? stats.getMaxElevation()
         : stats.getMaxElevation() * UnitConversions.M_TO_FT;
@@ -155,7 +155,7 @@ public class ChartURLGenerator {
   }
 
   private static double getNormalizedDistance(double d, Track track) {
-    return d / track.getStatistics().getTotalDistance();
+    return d / track.getTripStatistics().getTotalDistance();
   }
 
   private static double getNormalizedElevation(

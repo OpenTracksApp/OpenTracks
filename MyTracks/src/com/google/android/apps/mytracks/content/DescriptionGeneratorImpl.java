@@ -64,7 +64,7 @@ public class DescriptionGeneratorImpl implements DescriptionGenerator {
     writeString(track.getName(), builder, R.string.generic_name_line, lineBreak);
     writeString(track.getCategory(), builder, R.string.description_activity_type, lineBreak);
     writeString(track.getDescription(), builder, R.string.generic_description_line, lineBreak);
-    builder.append(generateTripStatisticsDescription(track.getStatistics(), html));
+    builder.append(generateTripStatisticsDescription(track.getTripStatistics(), html));
 
     // Elevation chart
     if (html && distances != null && elevations != null) {

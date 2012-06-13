@@ -13,51 +13,66 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.content;
 
 import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
- * Defines the URI for the tracks provider and the available column names
- * and content types.
- *
+ * Constants for track table.
+ * 
  * @author Leif Hendrik Wilden
  */
 public interface TracksColumns extends BaseColumns {
 
-  public static final Uri CONTENT_URI =
-      Uri.parse("content://com.google.android.maps.mytracks/tracks");
-  public static final String CONTENT_TYPE =
-      "vnd.android.cursor.dir/vnd.google.track";
-  public static final String CONTENT_ITEMTYPE =
-      "vnd.android.cursor.item/vnd.google.track";
+  /**
+   * Tracks provider uri.
+   */
+  public static final Uri CONTENT_URI = Uri.parse(
+      "content://com.google.android.maps.mytracks/tracks");
+
+  /**
+   * Track content type.
+   */
+  public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.google.track";
+
+  /**
+   * Track id content type.
+   */
+  public static final String CONTENT_ITEMTYPE = "vnd.android.cursor.item/vnd.google.track";
+
+  /**
+   * Tracks table default sort order.
+   */
   public static final String DEFAULT_SORT_ORDER = "_id";
 
-  /* All columns */
-  public static final String NAME = "name";
-  public static final String DESCRIPTION = "description";
-  public static final String CATEGORY = "category";
-  public static final String STARTID = "startid";
-  public static final String STOPID = "stopid";
-  public static final String STARTTIME = "starttime";
-  public static final String STOPTIME = "stoptime";
-  public static final String NUMPOINTS = "numpoints";
-  public static final String TOTALDISTANCE = "totaldistance";
-  public static final String TOTALTIME = "totaltime";
-  public static final String MOVINGTIME = "movingtime";
-  public static final String AVGSPEED = "avgspeed";
-  public static final String AVGMOVINGSPEED = "avgmovingspeed";
-  public static final String MAXSPEED = "maxspeed";
-  public static final String MINELEVATION = "minelevation";
-  public static final String MAXELEVATION = "maxelevation";
-  public static final String ELEVATIONGAIN = "elevationgain";
-  public static final String MINGRADE = "mingrade";
-  public static final String MAXGRADE = "maxgrade";
-  public static final String MINLAT = "minlat";
-  public static final String MAXLAT = "maxlat";
-  public static final String MINLON = "minlon";
-  public static final String MAXLON = "maxlon";
-  public static final String MAPID = "mapid";
-  public static final String TABLEID = "tableid";
+  // Tracks table columns
+  public static final String NAME = "name"; // track name
+  public static final String DESCRIPTION = "description"; // track description
+  public static final String CATEGORY = "category"; // track activity type
+  public static final String CATEGORY_ICON = "categoryicon"; // track activity type icon
+  public static final String STARTID = "startid"; // first track point id
+  public static final String STOPID = "stopid"; // last track point id
+  public static final String STARTTIME = "starttime"; // track start time
+  public static final String STOPTIME = "stoptime"; // track stop time
+  public static final String NUMPOINTS = "numpoints"; // number of track points
+  public static final String TOTALDISTANCE = "totaldistance"; // total distance
+  public static final String TOTALTIME = "totaltime"; // total time
+  public static final String MOVINGTIME = "movingtime"; // moving time
+  public static final String AVGSPEED = "avgspeed"; // average speed
+  public static final String AVGMOVINGSPEED = "avgmovingspeed"; // average
+                                                                // moving speed
+  public static final String MAXSPEED = "maxspeed"; // maximum speed
+  public static final String MINELEVATION = "minelevation"; // minimum elevation
+  public static final String MAXELEVATION = "maxelevation"; // maximum elevation
+  public static final String ELEVATIONGAIN = "elevationgain"; // elevation gain
+  public static final String MINGRADE = "mingrade"; // minimum grade
+  public static final String MAXGRADE = "maxgrade"; // maximum grade
+  public static final String MINLAT = "minlat"; // minimum latitude
+  public static final String MAXLAT = "maxlat"; // maximum latitude
+  public static final String MINLON = "minlon"; // minimum longitude
+  public static final String MAXLON = "maxlon"; // maximum longitude
+  public static final String MAPID = "mapid"; // Google Maps id
+  public static final String TABLEID = "tableid"; // Google Fusion Tables id
 }

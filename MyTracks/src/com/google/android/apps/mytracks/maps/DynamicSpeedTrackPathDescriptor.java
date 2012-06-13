@@ -97,7 +97,7 @@ public class DynamicSpeedTrackPathDescriptor implements TrackPathDescriptor,
       Log.d(TAG, "No track for " + selectedTrackId);
       return false;
     }
-    TripStatistics stats = track.getStatistics();
+    TripStatistics stats = track.getTripStatistics();
     double newAverageMovingSpeed = (int) Math.floor(
         stats.getAverageMovingSpeed() * UnitConversions.MS_TO_KMH);
 

@@ -422,7 +422,7 @@ public class GpxImporter extends DefaultHandler {
       statsBuilder.pauseAt(lastLocation.getTime());
       track.setStopId(getLastPointId());
       track.setNumberOfPoints(numberOfLocations);
-      track.setStatistics(statsBuilder.getStatistics());
+      track.setTripStatistics(statsBuilder.getStatistics());
       providerUtils.updateTrack(track);
       tracksWritten.add(track.getId());
       isCurrentTrackRollbackable = false;

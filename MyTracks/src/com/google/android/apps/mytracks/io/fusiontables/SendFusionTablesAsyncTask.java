@@ -221,7 +221,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
       // For chart server, limit the number of elevation readings to 250.
       int elevationSamplingFrequency = Math.max(1, (int) (locationsCount / 250.0));
       TripStatisticsBuilder tripStatisticsBuilder = new TripStatisticsBuilder(
-          track.getStatistics().getStartTime());
+          track.getTripStatistics().getStartTime());
       DoubleBuffer elevationBuffer = new DoubleBuffer(Constants.ELEVATION_SMOOTHING_FACTOR);
       Vector<Double> distances = new Vector<Double>();
       Vector<Double> elevations = new Vector<Double>();

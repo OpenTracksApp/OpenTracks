@@ -147,15 +147,16 @@ public class TcxTrackWriter implements TrackFormatWriter {
   @Override
   public void writeBeginTrack(Location firstPoint) {
     if (printWriter != null) {
-      String startTime = StringUtils.formatDateTimeIso8601(track.getStatistics().getStartTime());
-      long totalTimeInSeconds = track.getStatistics().getTotalTime() / 1000;
+      String startTime = StringUtils.formatDateTimeIso8601(
+          track.getTripStatistics().getStartTime());
+      long totalTimeInSeconds = track.getTripStatistics().getTotalTime() / 1000;
 
       printWriter.println("<Activities>");
       printWriter.println("<Activity Sport=\"" + sportType.getName() + "\">");
       printWriter.println("<Id>" + startTime + "</Id>");
       printWriter.println("<Lap StartTime=\"" + startTime + "\">");
       printWriter.println("<TotalTimeSeconds>" + totalTimeInSeconds + "</TotalTimeSeconds>");
-      printWriter.println("<DistanceMeters>" + track.getStatistics().getTotalDistance()
+      printWriter.println("<DistanceMeters>" + track.getTripStatistics().getTotalDistance()
           + "</DistanceMeters>");
       // <Calories> is required, just put in 0.
       printWriter.println("<Calories>0</Calories>");

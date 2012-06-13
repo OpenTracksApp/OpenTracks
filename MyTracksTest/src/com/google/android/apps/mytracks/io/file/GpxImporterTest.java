@@ -19,10 +19,9 @@ import static com.google.android.testing.mocking.AndroidMock.eq;
 import static com.google.android.testing.mocking.AndroidMock.expect;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
+import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
 import com.google.android.apps.mytracks.content.Track;
 import com.google.android.apps.mytracks.content.TracksColumns;
-import com.google.android.apps.mytracks.content.MyTracksProviderUtils.Factory;
-import com.google.android.apps.mytracks.io.file.GpxImporter;
 import com.google.android.apps.mytracks.testing.TestingProviderUtilsFactory;
 import com.google.android.testing.mocking.AndroidMock;
 import com.google.android.testing.mocking.UsesMocks;
@@ -171,7 +170,7 @@ public class GpxImporterTest extends AndroidTestCase {
     Track track = trackParam.getValue();
     assertEquals(TRACK_NAME, track.getName());
     assertEquals(TRACK_DESC, track.getDescription());
-    assertEquals(DATE_FORMAT2.parse(TRACK_TIME_1).getTime(), track.getStatistics()
+    assertEquals(DATE_FORMAT2.parse(TRACK_TIME_1).getTime(), track.getTripStatistics()
         .getStartTime());
     assertNotSame(-1, track.getStartId());
     assertNotSame(-1, track.getStopId());

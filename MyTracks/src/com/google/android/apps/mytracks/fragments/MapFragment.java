@@ -522,7 +522,7 @@ public class MapFragment extends Fragment
       return;
     }
 
-    TripStatistics tripStatistics = track.getStatistics();
+    TripStatistics tripStatistics = track.getTripStatistics();
     int bottom = tripStatistics.getBottom();
     int left = tripStatistics.getLeft();
     int latitudeSpanE6 = tripStatistics.getTop() - bottom;

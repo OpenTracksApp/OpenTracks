@@ -676,7 +676,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     dummyTrack.setName("Dummy Track");
     TripStatistics tripStatistics = new TripStatistics();
     tripStatistics.setStopTime(stopTime);
-    dummyTrack.setStatistics(tripStatistics);
+    dummyTrack.setTripStatistics(tripStatistics);
     addTrack(dummyTrack, isRecording);
     return dummyTrack;
   }
@@ -740,7 +740,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     track = providerUtils.getTrack(id);
     assertNotNull(track);
     assertEquals(id, track.getId());
-    TripStatistics tripStatistics = track.getStatistics();
+    TripStatistics tripStatistics = track.getTripStatistics();
     assertNotNull(tripStatistics);
     assertTrue(tripStatistics.getStartTime() > 0);
     assertTrue(tripStatistics.getStopTime() >= tripStatistics.getStartTime());

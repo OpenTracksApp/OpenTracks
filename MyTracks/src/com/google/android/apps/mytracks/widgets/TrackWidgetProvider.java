@@ -216,7 +216,7 @@ public class TrackWidgetProvider extends AppWidgetProvider
   private void updateStatistics(RemoteViews remoteViews) {
     Track track = selectedTrackId != PreferencesUtils.SELECTED_TRACK_ID_DEFAULT 
         ? myTracksProviderUtils.getTrack(selectedTrackId) : myTracksProviderUtils.getLastTrack();
-    TripStatistics tripStatistics = track == null ? null : track.getStatistics();
+    TripStatistics tripStatistics = track == null ? null : track.getTripStatistics();
     String distance = tripStatistics == null ? unknown
         : StringUtils.formatDistance(context, tripStatistics.getTotalDistance(), metricUnits);
     int timeLabelId = useTotalTime ? R.string.stats_total_time : R.string.stats_moving_time;

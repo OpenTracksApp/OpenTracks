@@ -92,7 +92,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   @Override
   public ContentValues createContentValues(Track track) {
     ContentValues values = new ContentValues();
-    TripStatistics stats = track.getStatistics();
+    TripStatistics stats = track.getTripStatistics();
 
     // Values id < 0 indicate no id is available:
     if (track.getId() >= 0) {
@@ -297,7 +297,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     int idxMaxGrade = cursor.getColumnIndexOrThrow(TracksColumns.MAXGRADE);
 
     Track track = new Track();
-    TripStatistics stats = track.getStatistics();
+    TripStatistics stats = track.getTripStatistics();
     if (!cursor.isNull(idxId)) {
       track.setId(cursor.getLong(idxId));
     }

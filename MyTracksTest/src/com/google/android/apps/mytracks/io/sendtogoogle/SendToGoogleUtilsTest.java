@@ -56,13 +56,14 @@ public class SendToGoogleUtilsTest extends TestCase {
    */
   public void testPrepareTrackSegment_noStopTime() {
     Track trackStub = TrackStubUtils.createTrack(2);
-    assertEquals(-1L, trackStub.getStatistics().getStopTime());
+    assertEquals(-1L, trackStub.getTripStatistics().getStopTime());
 
     ArrayList<Track> tracksArray = new ArrayList<Track>();
     assertTrue(SendToGoogleUtils.prepareTrackSegment(trackStub, tracksArray));
     assertEquals(trackStub, tracksArray.get(0));
     // The stop time should be the time of last location
-    assertEquals(trackStub.getLocations().get(1).getTime(), trackStub.getStatistics().getStopTime());
+    assertEquals(
+        trackStub.getLocations().get(1).getTime(), trackStub.getTripStatistics().getStopTime());
   }
 
   /**
@@ -75,12 +76,12 @@ public class SendToGoogleUtilsTest extends TestCase {
     // Gives a margin to make sure the this time will be not same with the last
     // location in the track.
     long stopTime = System.currentTimeMillis() + 1000;
-    trackStub.getStatistics().setStopTime(stopTime);
+    trackStub.getTripStatistics().setStopTime(stopTime);
 
     ArrayList<Track> tracksArray = new ArrayList<Track>();
     SendToGoogleUtils.prepareTrackSegment(trackStub, tracksArray);
     assertEquals(trackStub, tracksArray.get(0));
-    assertEquals(stopTime, trackStub.getStatistics().getStopTime());
+    assertEquals(stopTime, trackStub.getTripStatistics().getStopTime());
   }
 
   /**

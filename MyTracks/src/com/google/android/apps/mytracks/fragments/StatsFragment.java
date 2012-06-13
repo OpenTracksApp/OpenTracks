@@ -163,15 +163,15 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     getActivity().runOnUiThread(new Runnable() {
       @Override
       public void run() {
-        if (track == null || track.getStatistics() == null) {
+        if (track == null || track.getTripStatistics() == null) {
           lastLocation = null;
           lastTripStatistics = null;
           updateUi();
           return;
         }
-        lastTripStatistics = track.getStatistics();
+        lastTripStatistics = track.getTripStatistics();
         
-        startTime = track.getStatistics().getStartTime();
+        startTime = track.getTripStatistics().getStartTime();
         if (!isRecording()) {
           lastLocation = null;
         }

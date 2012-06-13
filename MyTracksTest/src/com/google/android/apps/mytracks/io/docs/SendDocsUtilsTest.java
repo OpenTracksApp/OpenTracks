@@ -180,7 +180,7 @@ public class SendDocsUtilsTest extends AndroidTestCase {
     track.setName("trackName");
     track.setDescription("trackDescription");
     track.setMapId("trackMapId");
-    track.setStatistics(stats);
+    track.setTripStatistics(stats);
     return track;
   }
 

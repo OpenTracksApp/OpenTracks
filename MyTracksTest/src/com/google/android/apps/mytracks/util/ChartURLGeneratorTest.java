@@ -33,7 +33,7 @@ public class ChartURLGeneratorTest extends TestCase {
     Vector<Double> distances = new Vector<Double>();
     Vector<Double> elevations = new Vector<Double>();
     Track t = new Track();
-    TripStatistics stats = t.getStatistics();
+    TripStatistics stats = t.getTripStatistics();
     stats.setMinElevation(0);
     stats.setMaxElevation(2000);
     stats.setTotalDistance(100);

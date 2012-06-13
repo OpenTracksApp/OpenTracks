@@ -420,7 +420,7 @@ public class TrackRecordingService extends Service {
 
     // Check if the last modified time is within the acceptable range.
     long lastModified =
-        track.getStatistics() != null ? track.getStatistics().getStopTime() : 0;
+        track.getTripStatistics() != null ? track.getTripStatistics().getStopTime() : 0;
     Log.d(TAG,
         "shouldResumeTrack: lastModified = " + lastModified
         + ", autoResumeTrackTimeout: " + autoResumeTrackTimeout);
@@ -579,7 +579,7 @@ public class TrackRecordingService extends Service {
     acquireWakeLock();
 
     Track track = new Track();
-    TripStatistics trackStats = track.getStatistics();
+    TripStatistics trackStats = track.getTripStatistics();
     trackStats.setStartTime(startTime);
     track.setStartId(-1);
     Uri trackUri = providerUtils.insertTrack(track);
@@ -620,7 +620,7 @@ public class TrackRecordingService extends Service {
     Log.d(TAG,
         "Restoring stats of track with ID: " + track.getId());
 
-    TripStatistics stats = track.getStatistics();
+    TripStatistics stats = track.getTripStatistics();
     statsBuilder = new TripStatisticsBuilder(stats.getStartTime());
     statsBuilder.setMinRecordingDistance(minRecordingDistance);
 
@@ -1031,7 +1031,7 @@ public class TrackRecordingService extends Service {
     isRecording = false;
     Track recordedTrack = providerUtils.getTrack(recordingTrackId);
     if (recordedTrack != null) {
-      TripStatistics stats = recordedTrack.getStatistics();
+      TripStatistics stats = recordedTrack.getTripStatistics();
       stats.setStopTime(System.currentTimeMillis());
       stats.setTotalTime(stats.getStopTime() - stats.getStartTime());
       long lastRecordedLocationId =

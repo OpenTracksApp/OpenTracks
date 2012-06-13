@@ -284,7 +284,7 @@ public class SendDocsUtils {
    */
   @VisibleForTesting
   static String getRowContent(Track track, boolean metricUnits, Context context) {
-    TripStatistics stats = track.getStatistics();
+    TripStatistics stats = track.getTripStatistics();
 
     String distanceUnit = context.getString(
         metricUnits ? R.string.unit_kilometer : R.string.unit_mile);

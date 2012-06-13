@@ -185,11 +185,11 @@ public class ChartFragment extends Fragment implements TrackDataListener {
 
   @Override
   public void onTrackUpdated(Track track) {
-    if (track == null || track.getStatistics() == null) {
+    if (track == null || track.getTripStatistics() == null) {
       trackMaxSpeed = 0.0;
       return;
     }
-    trackMaxSpeed = track.getStatistics().getMaxSpeed();
+    trackMaxSpeed = track.getTripStatistics().getMaxSpeed();
   }
 
   @Override

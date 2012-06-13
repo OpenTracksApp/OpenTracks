@@ -52,14 +52,14 @@ public class SendFusionTablesUtils {
    * @return the url.
    */
   public static String getMapUrl(Track track) {
-    if (track == null || track.getStatistics() == null || track.getTableId() == null) {
+    if (track == null || track.getTripStatistics() == null || track.getTableId() == null) {
       Log.e(TAG, "Invalid track");
       return null;
     }
 
     // TODO(jshih): Determine the correct bounding box and zoom level that
     // will show the entire track.
-    TripStatistics stats = track.getStatistics();
+    TripStatistics stats = track.getTripStatistics();
     double latE6 = stats.getBottom() + (stats.getTop() - stats.getBottom()) / 2;
     double lonE6 = stats.getLeft() + (stats.getRight() - stats.getLeft()) / 2;
     int z = 15;

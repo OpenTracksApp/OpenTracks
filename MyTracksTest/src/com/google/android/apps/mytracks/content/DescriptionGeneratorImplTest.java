@@ -55,7 +55,7 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
     stats.setMaxGrade(0.42);
     stats.setMinGrade(0.11);
     stats.setStartTime(START_TIME);
-    track.setStatistics(stats);
+    track.setTripStatistics(stats);
     track.setCategory("hiking");
     String expected = "Created by" 
       + " <a href='http://www.google.com/mobile/mytracks'>My Tracks</a> on Android.<p>" 
