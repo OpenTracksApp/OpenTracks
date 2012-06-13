@@ -25,8 +25,7 @@ limitations under the License.
     android:contentDescription="@string/icon_track"
     android:id="@+id/list_item_icon"
     android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
-    android:src="@drawable/track" />
+    android:layout_width="wrap_content" />
   <LinearLayout
     android:layout_height="wrap_content"
     android:layout_marginLeft="8dp"

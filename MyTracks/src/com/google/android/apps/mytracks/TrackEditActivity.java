@@ -18,12 +18,14 @@ package com.google.android.apps.mytracks;
 
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils;
 import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackNameUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -75,10 +77,30 @@ public class TrackEditActivity extends AbstractMyTracksActivity {
 
     activityType = (AutoCompleteTextView) findViewById(R.id.track_edit_activity_type);
     activityType.setText(track.getCategory());
-
+    setActivityTypeIcon(track.getIcon());
     ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
         this, R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
     activityType.setAdapter(adapter);
+    activityType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        @Override
+      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        String iconValue = TrackIconUtils.getIconValue(
+            TrackEditActivity.this, (String) activityType.getAdapter().getItem(position));
+        setActivityTypeIcon(iconValue);
+      }
+    });
+    activityType.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+        @Override
+      public void onFocusChange(View v, boolean hasFocus) {
+        if (!hasFocus) {
+          String iconValue = TrackIconUtils.getIconValue(
+              TrackEditActivity.this, activityType.getText().toString());
+          setActivityTypeIcon(iconValue);
+        }
+
+      }
+    });
     description = (EditText) findViewById(R.id.track_edit_description);
     description.setText(track.getDescription());
 
@@ -87,7 +109,9 @@ public class TrackEditActivity extends AbstractMyTracksActivity {
       @Override
       public void onClick(View v) {
         track.setName(name.getText().toString());
-        track.setCategory(activityType.getText().toString());
+        String category = activityType.getText().toString();
+        track.setCategory(category);
+        track.setIcon(TrackIconUtils.getIconValue(TrackEditActivity.this, category));
         track.setDescription(description.getText().toString());
         myTracksProviderUtils.updateTrack(track);
         finish();
@@ -113,5 +137,15 @@ public class TrackEditActivity extends AbstractMyTracksActivity {
       });
       cancel.setVisibility(View.VISIBLE);
     }
+  }
+
+  /**
+   * Sets the activity type icon.
+   * 
+   * @param iconValue the icon value
+   */
+  private void setActivityTypeIcon(String iconValue) {
+    activityType.setCompoundDrawablesWithIntrinsicBounds(
+        TrackIconUtils.getIconDrawable(iconValue), 0, 0, 0);
   }
 }

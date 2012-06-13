@@ -35,6 +35,7 @@ import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.ListItemUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
+import com.google.android.apps.mytracks.util.TrackIconUtils;
 import com.google.android.apps.mytracks.util.TrackRecordingServiceConnectionUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -221,7 +222,8 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
         
         boolean isRecording = cursor.getLong(idIndex) == recordingTrackId;
         String name = cursor.getString(nameIndex);
-        int iconId = isRecording ? R.drawable.menu_record_track : R.drawable.track;
+        int iconId = isRecording ? R.drawable.menu_record_track
+            : TrackIconUtils.getIconDrawable(cursor.getString(iconIndex));
         String iconContentDescription = getString(isRecording ? R.string.icon_recording
             : R.string.icon_track);
         String category = cursor.getString(categoryIndex);

@@ -28,11 +28,10 @@ limitations under the License.
         android:text="@string/generic_name"
         style="@style/EditLabel" />
       <EditText
-        android:drawableLeft="@drawable/track"
         android:hint="@string/generic_name"
         android:id="@+id/track_edit_name"
         android:imeOptions="actionNext"
-        style="@style/EditName" />
+        style="@style/EditNameTrack" />
       <TextView
         android:text="@string/track_edit_activity_type"
         style="@style/EditLabel.WithPaddingTop" />
@@ -40,7 +39,7 @@ limitations under the License.
         android:hint="@string/track_edit_activity_type_hint"
         android:id="@+id/track_edit_activity_type"
         android:imeOptions="actionNext"
-        style="@style/EditCategory" />
+        style="@style/EditCategoryTrack" />
       <TextView
         android:text="@string/generic_description"
         style="@style/EditLabel.WithPaddingTop" />

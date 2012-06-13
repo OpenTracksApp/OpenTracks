@@ -93,6 +93,11 @@ limitations under the License.
       completion suggestion for donkey back riding.">
     donkey back riding
   </string>
+  <string name="activity_type_driving"
+    translation_description="When entering an 'Activity type', in the auto-complete text box, the
+      completion suggestion for driving.">
+    driving
+  </string>
   <string name="activity_type_driving_bus"
     translation_description="When entering an 'Activity type', in the auto-complete text box, the
       completion suggestion for driving bus.">

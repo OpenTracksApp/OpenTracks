@@ -27,6 +27,7 @@ limitations under the License.
     <item>@string/activity_type_cycling</item>
     <item>@string/activity_type_dirt_bike</item>
     <item>@string/activity_type_donkey_back_riding</item>
+    <item>@string/activity_type_driving</item>
     <item>@string/activity_type_driving_bus</item>
     <item>@string/activity_type_driving_car</item>
     <item>@string/activity_type_ferry</item>
