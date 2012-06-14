@@ -15,26 +15,15 @@
  */
 package com.google.android.apps.mytracks.io.backup;
 
-import static com.google.android.apps.mytracks.content.ContentTypeIds.BLOB_TYPE_ID;
 import static com.google.android.apps.mytracks.content.ContentTypeIds.FLOAT_TYPE_ID;
 import static com.google.android.apps.mytracks.content.ContentTypeIds.INT_TYPE_ID;
 import static com.google.android.apps.mytracks.content.ContentTypeIds.LONG_TYPE_ID;
 import static com.google.android.apps.mytracks.content.ContentTypeIds.STRING_TYPE_ID;
 
-import com.google.android.apps.mytracks.content.TrackPointsColumns;
 import com.google.android.apps.mytracks.content.WaypointsColumns;
 
 public class BackupColumns {
   /** Columns that go into the backup. */
-  public static final String[] POINTS_BACKUP_COLUMNS =
-      { TrackPointsColumns._ID, TrackPointsColumns.TRACKID, TrackPointsColumns.LATITUDE,
-        TrackPointsColumns.LONGITUDE, TrackPointsColumns.ALTITUDE, TrackPointsColumns.BEARING,
-        TrackPointsColumns.TIME, TrackPointsColumns.ACCURACY, TrackPointsColumns.SPEED,
-        TrackPointsColumns.SENSOR };
-  public static final byte[] POINTS_BACKUP_COLUMN_TYPES =
-      { LONG_TYPE_ID, LONG_TYPE_ID, INT_TYPE_ID, INT_TYPE_ID, FLOAT_TYPE_ID,
-        FLOAT_TYPE_ID, LONG_TYPE_ID, FLOAT_TYPE_ID, FLOAT_TYPE_ID, BLOB_TYPE_ID };
-
   public static final String[] WAYPOINTS_BACKUP_COLUMNS = {
       WaypointsColumns._ID, WaypointsColumns.TRACKID, WaypointsColumns.NAME,
       WaypointsColumns.DESCRIPTION, WaypointsColumns.CATEGORY, WaypointsColumns.ICON,

@@ -160,8 +160,8 @@ class ExternalFileBackup {
         BackupColumns.WAYPOINTS_BACKUP_COLUMN_TYPES,
         false);
     DatabaseDumper pointDumper = new DatabaseDumper(
-        BackupColumns.POINTS_BACKUP_COLUMNS,
-        BackupColumns.POINTS_BACKUP_COLUMN_TYPES,
+        TrackPointsColumns.COLUMNS,
+        TrackPointsColumns.COLUMN_TYPES,
         false);
 
     // Open the target for writing

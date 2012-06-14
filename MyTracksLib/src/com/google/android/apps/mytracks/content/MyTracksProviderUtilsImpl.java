@@ -17,6 +17,7 @@ package com.google.android.apps.mytracks.content;
 
 import static com.google.android.apps.mytracks.lib.MyTracksLibConstants.TAG;
 
+import com.google.android.apps.mytracks.content.Sensor.SensorDataSet;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.protobuf.InvalidProtocolBufferException;
 
@@ -54,25 +55,18 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
    * @param trackId the id of the track it belongs to
    * @return a filled in ContentValues object
    */
-  private static ContentValues createContentValues(
-      Location location, long trackId) {
+  private static ContentValues createContentValues(Location location, long trackId) {
     ContentValues values = new ContentValues();
     values.put(TrackPointsColumns.TRACKID, trackId);
-    values.put(TrackPointsColumns.LATITUDE,
-        (int) (location.getLatitude() * 1E6));
-    values.put(TrackPointsColumns.LONGITUDE,
-        (int) (location.getLongitude() * 1E6));
+    values.put(TrackPointsColumns.LONGITUDE, (int) (location.getLongitude() * 1E6));
+    values.put(TrackPointsColumns.LATITUDE, (int) (location.getLatitude() * 1E6));
+
     // This is an ugly hack for Samsung phones that don't properly populate the
     // time field.
     values.put(TrackPointsColumns.TIME,
-        (location.getTime() == 0)
-            ? System.currentTimeMillis()
-            : location.getTime());
+        (location.getTime() == 0) ? System.currentTimeMillis() : location.getTime());
     if (location.hasAltitude()) {
       values.put(TrackPointsColumns.ALTITUDE, location.getAltitude());
-    }
-    if (location.hasBearing()) {
-      values.put(TrackPointsColumns.BEARING, location.getBearing());
     }
     if (location.hasAccuracy()) {
       values.put(TrackPointsColumns.ACCURACY, location.getAccuracy());
@@ -80,6 +74,10 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     if (location.hasSpeed()) {
       values.put(TrackPointsColumns.SPEED, location.getSpeed());
     }
+    if (location.hasBearing()) {
+      values.put(TrackPointsColumns.BEARING, location.getBearing());
+    }
+
     if (location instanceof MyTracksLocation) {
       MyTracksLocation mtLocation = (MyTracksLocation) location;
       if (mtLocation.getSensorDataSet() != null) {
@@ -197,61 +195,58 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
    */
   private static class CachedTrackColumnIndices {
     public final int idxId;
-    public final int idxLatitude;
     public final int idxLongitude;
-    public final int idxAltitude;
+    public final int idxLatitude;
     public final int idxTime;
-    public final int idxBearing;
+    public final int idxAltitude;
     public final int idxAccuracy;
     public final int idxSpeed;
+    public final int idxBearing;
     public final int idxSensor;
 
     public CachedTrackColumnIndices(Cursor cursor) {
       idxId = cursor.getColumnIndex(TrackPointsColumns._ID);
-      idxLatitude = cursor.getColumnIndexOrThrow(TrackPointsColumns.LATITUDE);
       idxLongitude = cursor.getColumnIndexOrThrow(TrackPointsColumns.LONGITUDE);
-      idxAltitude = cursor.getColumnIndexOrThrow(TrackPointsColumns.ALTITUDE);
+      idxLatitude = cursor.getColumnIndexOrThrow(TrackPointsColumns.LATITUDE);
       idxTime = cursor.getColumnIndexOrThrow(TrackPointsColumns.TIME);
-      idxBearing = cursor.getColumnIndexOrThrow(TrackPointsColumns.BEARING);
+      idxAltitude = cursor.getColumnIndexOrThrow(TrackPointsColumns.ALTITUDE);
       idxAccuracy = cursor.getColumnIndexOrThrow(TrackPointsColumns.ACCURACY);
       idxSpeed = cursor.getColumnIndexOrThrow(TrackPointsColumns.SPEED);
+      idxBearing = cursor.getColumnIndexOrThrow(TrackPointsColumns.BEARING);
       idxSensor = cursor.getColumnIndexOrThrow(TrackPointsColumns.SENSOR);
     }
   }
 
-  private void fillLocation(Cursor cursor, CachedTrackColumnIndices columnIndices,
-      Location location) {
+  private void fillLocation(
+      Cursor cursor, CachedTrackColumnIndices columnIndices, Location location) {
     location.reset();
 
-    if (!cursor.isNull(columnIndices.idxLatitude)) {
-      location.setLatitude(1. * cursor.getInt(columnIndices.idxLatitude) / 1E6);
-    }
     if (!cursor.isNull(columnIndices.idxLongitude)) {
       location.setLongitude(1. * cursor.getInt(columnIndices.idxLongitude) / 1E6);
     }
-    if (!cursor.isNull(columnIndices.idxAltitude)) {
-      location.setAltitude(cursor.getFloat(columnIndices.idxAltitude));
+    if (!cursor.isNull(columnIndices.idxLatitude)) {
+      location.setLatitude(1. * cursor.getInt(columnIndices.idxLatitude) / 1E6);
     }
     if (!cursor.isNull(columnIndices.idxTime)) {
       location.setTime(cursor.getLong(columnIndices.idxTime));
     }
-    if (!cursor.isNull(columnIndices.idxBearing)) {
-      location.setBearing(cursor.getFloat(columnIndices.idxBearing));
-    }
-    if (!cursor.isNull(columnIndices.idxSpeed)) {
-      location.setSpeed(cursor.getFloat(columnIndices.idxSpeed));
+    if (!cursor.isNull(columnIndices.idxAltitude)) {
+      location.setAltitude(cursor.getFloat(columnIndices.idxAltitude));
     }
     if (!cursor.isNull(columnIndices.idxAccuracy)) {
       location.setAccuracy(cursor.getFloat(columnIndices.idxAccuracy));
     }
-    if (location instanceof MyTracksLocation &&
-        !cursor.isNull(columnIndices.idxSensor)) {
-      MyTracksLocation mtLocation = (MyTracksLocation) location;
-      // TODO get the right buffer.
-      Sensor.SensorDataSet sensorData;
+    if (!cursor.isNull(columnIndices.idxSpeed)) {
+      location.setSpeed(cursor.getFloat(columnIndices.idxSpeed));
+    }
+    if (!cursor.isNull(columnIndices.idxBearing)) {
+      location.setBearing(cursor.getFloat(columnIndices.idxBearing));
+    }
+    if (location instanceof MyTracksLocation && !cursor.isNull(columnIndices.idxSensor)) {
+      MyTracksLocation myTracksLocation = (MyTracksLocation) location;
       try {
-        sensorData = Sensor.SensorDataSet.parseFrom(cursor.getBlob(columnIndices.idxSensor));
-        mtLocation.setSensorData(sensorData);
+        myTracksLocation.setSensorDataSet(
+            SensorDataSet.parseFrom(cursor.getBlob(columnIndices.idxSensor)));
       } catch (InvalidProtocolBufferException e) {
         Log.w(TAG, "Failed to parse sensor data.", e);
       }
