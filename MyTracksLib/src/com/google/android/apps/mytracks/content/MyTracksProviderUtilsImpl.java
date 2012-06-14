@@ -143,8 +143,28 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     values.put(WaypointsColumns.STARTID, waypoint.getStartId());
     values.put(WaypointsColumns.STOPID, waypoint.getStopId());
 
-    TripStatistics stats = waypoint.getStatistics();
+    Location location = waypoint.getLocation();
+    if (location != null) {
+      values.put(WaypointsColumns.LONGITUDE, (int) (location.getLongitude() * 1E6));
+      values.put(WaypointsColumns.LATITUDE, (int) (location.getLatitude() * 1E6));
+      values.put(WaypointsColumns.TIME, location.getTime());
+      if (location.hasAltitude()) {
+        values.put(WaypointsColumns.ALTITUDE, location.getAltitude());
+      }
+      if (location.hasAccuracy()) {
+        values.put(WaypointsColumns.ACCURACY, location.getAccuracy());
+      }
+      if (location.hasSpeed()) {
+        values.put(WaypointsColumns.SPEED, location.getSpeed());
+      }
+      if (location.hasBearing()) {
+        values.put(WaypointsColumns.BEARING, location.getBearing());
+      }
+    }
+
+    TripStatistics stats = waypoint.getTripStatistics();
     if (stats != null) {
+      values.put(WaypointsColumns.STARTTIME, stats.getStartTime());
       values.put(WaypointsColumns.TOTALDISTANCE, stats.getTotalDistance());
       values.put(WaypointsColumns.TOTALTIME, stats.getTotalTime());
       values.put(WaypointsColumns.MOVINGTIME, stats.getMovingTime());
@@ -156,30 +176,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       values.put(WaypointsColumns.ELEVATIONGAIN, stats.getTotalElevationGain());
       values.put(WaypointsColumns.MINGRADE, stats.getMinGrade());
       values.put(WaypointsColumns.MAXGRADE, stats.getMaxGrade());
-      values.put(WaypointsColumns.STARTTIME, stats.getStartTime());
     }
-
-    Location location = waypoint.getLocation();
-    if (location != null) {
-      values.put(WaypointsColumns.LATITUDE,
-          (int) (location.getLatitude() * 1E6));
-      values.put(WaypointsColumns.LONGITUDE,
-          (int) (location.getLongitude() * 1E6));
-      values.put(WaypointsColumns.TIME, location.getTime());
-      if (location.hasAltitude()) {
-        values.put(WaypointsColumns.ALTITUDE, location.getAltitude());
-      }
-      if (location.hasBearing()) {
-        values.put(WaypointsColumns.BEARING, location.getBearing());
-      }
-      if (location.hasAccuracy()) {
-        values.put(WaypointsColumns.ACCURACY, location.getAccuracy());
-      }
-      if (location.hasSpeed()) {
-        values.put(WaypointsColumns.SPEED, location.getSpeed());
-      }
-    }
-
     return values;
   }
 
@@ -369,8 +366,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
   public Waypoint createWaypoint(Cursor cursor) {
     int idxId = cursor.getColumnIndexOrThrow(WaypointsColumns._ID);
     int idxName = cursor.getColumnIndexOrThrow(WaypointsColumns.NAME);
-    int idxDescription =
-        cursor.getColumnIndexOrThrow(WaypointsColumns.DESCRIPTION);
+    int idxDescription = cursor.getColumnIndexOrThrow(WaypointsColumns.DESCRIPTION);
     int idxCategory = cursor.getColumnIndexOrThrow(WaypointsColumns.CATEGORY);
     int idxIcon = cursor.getColumnIndexOrThrow(WaypointsColumns.ICON);
     int idxTrackId = cursor.getColumnIndexOrThrow(WaypointsColumns.TRACKID);
@@ -381,28 +377,23 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
     int idxStartId = cursor.getColumnIndexOrThrow(WaypointsColumns.STARTID);
     int idxStopId = cursor.getColumnIndexOrThrow(WaypointsColumns.STOPID);
 
-    int idxTotalDistance =
-        cursor.getColumnIndexOrThrow(WaypointsColumns.TOTALDISTANCE);
-    int idxTotalTime = cursor.getColumnIndexOrThrow(WaypointsColumns.TOTALTIME);
-    int idxMovingTime =
-        cursor.getColumnIndexOrThrow(WaypointsColumns.MOVINGTIME);
-    int idxMaxSpeed = cursor.getColumnIndexOrThrow(WaypointsColumns.MAXSPEED);
-    int idxMinElevation =
-        cursor.getColumnIndexOrThrow(WaypointsColumns.MINELEVATION);
-    int idxMaxElevation =
-        cursor.getColumnIndexOrThrow(WaypointsColumns.MAXELEVATION);
-    int idxElevationGain =
-        cursor.getColumnIndexOrThrow(WaypointsColumns.ELEVATIONGAIN);
-    int idxMinGrade = cursor.getColumnIndexOrThrow(WaypointsColumns.MINGRADE);
-    int idxMaxGrade = cursor.getColumnIndexOrThrow(WaypointsColumns.MAXGRADE);
-
-    int idxLatitude = cursor.getColumnIndexOrThrow(WaypointsColumns.LATITUDE);
     int idxLongitude = cursor.getColumnIndexOrThrow(WaypointsColumns.LONGITUDE);
-    int idxAltitude = cursor.getColumnIndexOrThrow(WaypointsColumns.ALTITUDE);
+    int idxLatitude = cursor.getColumnIndexOrThrow(WaypointsColumns.LATITUDE);
     int idxTime = cursor.getColumnIndexOrThrow(WaypointsColumns.TIME);
-    int idxBearing = cursor.getColumnIndexOrThrow(WaypointsColumns.BEARING);
+    int idxAltitude = cursor.getColumnIndexOrThrow(WaypointsColumns.ALTITUDE);
     int idxAccuracy = cursor.getColumnIndexOrThrow(WaypointsColumns.ACCURACY);
     int idxSpeed = cursor.getColumnIndexOrThrow(WaypointsColumns.SPEED);
+    int idxBearing = cursor.getColumnIndexOrThrow(WaypointsColumns.BEARING);
+
+    int idxTotalDistance = cursor.getColumnIndexOrThrow(WaypointsColumns.TOTALDISTANCE);
+    int idxTotalTime = cursor.getColumnIndexOrThrow(WaypointsColumns.TOTALTIME);
+    int idxMovingTime = cursor.getColumnIndexOrThrow(WaypointsColumns.MOVINGTIME);
+    int idxMaxSpeed = cursor.getColumnIndexOrThrow(WaypointsColumns.MAXSPEED);
+    int idxMinElevation = cursor.getColumnIndexOrThrow(WaypointsColumns.MINELEVATION);
+    int idxMaxElevation = cursor.getColumnIndexOrThrow(WaypointsColumns.MAXELEVATION);
+    int idxElevationGain = cursor.getColumnIndexOrThrow(WaypointsColumns.ELEVATIONGAIN);
+    int idxMinGrade = cursor.getColumnIndexOrThrow(WaypointsColumns.MINGRADE);
+    int idxMaxGrade = cursor.getColumnIndexOrThrow(WaypointsColumns.MAXGRADE);
 
     Waypoint waypoint = new Waypoint();
 
@@ -440,73 +431,74 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       waypoint.setStopId(cursor.getLong(idxStopId));
     }
 
-    TripStatistics stats = new TripStatistics();
-    boolean hasStats = false;
-    if (!cursor.isNull(idxStartTime)) {
-      stats.setStartTime(cursor.getLong(idxStartTime));
-      hasStats = true;
-    }
-    if (!cursor.isNull(idxTotalDistance)) {
-      stats.setTotalDistance(cursor.getFloat(idxTotalDistance));
-      hasStats = true;
-    }
-    if (!cursor.isNull(idxTotalTime)) {
-      stats.setTotalTime(cursor.getLong(idxTotalTime));
-      hasStats = true;
-    }
-    if (!cursor.isNull(idxMovingTime)) {
-      stats.setMovingTime(cursor.getLong(idxMovingTime));
-      hasStats = true;
-    }
-    if (!cursor.isNull(idxMaxSpeed)) {
-      stats.setMaxSpeed(cursor.getFloat(idxMaxSpeed));
-      hasStats = true;
-    }
-    if (!cursor.isNull(idxMinElevation)) {
-      stats.setMinElevation(cursor.getFloat(idxMinElevation));
-      hasStats = true;
-    }
-    if (!cursor.isNull(idxMaxElevation)) {
-      stats.setMaxElevation(cursor.getFloat(idxMaxElevation));
-      hasStats = true;
-    }
-    if (!cursor.isNull(idxElevationGain)) {
-      stats.setTotalElevationGain(cursor.getFloat(idxElevationGain));
-      hasStats = true;
-    }
-    if (!cursor.isNull(idxMinGrade)) {
-      stats.setMinGrade(cursor.getFloat(idxMinGrade));
-      hasStats = true;
-    }
-    if (!cursor.isNull(idxMaxGrade)) {
-      stats.setMaxGrade(cursor.getFloat(idxMaxGrade));
-      hasStats = true;
-    }
-    if (hasStats) {
-      waypoint.setStatistics(stats);
-    }
-
     Location location = new Location("");
-    if (!cursor.isNull(idxLatitude) && !cursor.isNull(idxLongitude)) {
-      location.setLatitude(1. * cursor.getInt(idxLatitude) / 1E6);
+    if (!cursor.isNull(idxLongitude) && !cursor.isNull(idxLatitude)) {
       location.setLongitude(1. * cursor.getInt(idxLongitude) / 1E6);
-    }
-    if (!cursor.isNull(idxAltitude)) {
-      location.setAltitude(cursor.getFloat(idxAltitude));
+      location.setLatitude(1. * cursor.getInt(idxLatitude) / 1E6);
+
     }
     if (!cursor.isNull(idxTime)) {
       location.setTime(cursor.getLong(idxTime));
     }
-    if (!cursor.isNull(idxBearing)) {
-      location.setBearing(cursor.getFloat(idxBearing));
-    }
-    if (!cursor.isNull(idxSpeed)) {
-      location.setSpeed(cursor.getFloat(idxSpeed));
+    if (!cursor.isNull(idxAltitude)) {
+      location.setAltitude(cursor.getFloat(idxAltitude));
     }
     if (!cursor.isNull(idxAccuracy)) {
       location.setAccuracy(cursor.getFloat(idxAccuracy));
     }
+    if (!cursor.isNull(idxSpeed)) {
+      location.setSpeed(cursor.getFloat(idxSpeed));
+    }
+    if (!cursor.isNull(idxBearing)) {
+      location.setBearing(cursor.getFloat(idxBearing));
+    }
     waypoint.setLocation(location);
+
+    TripStatistics tripStatistics = new TripStatistics();
+    boolean hasTripStatistics = false;
+    if (!cursor.isNull(idxStartTime)) {
+      tripStatistics.setStartTime(cursor.getLong(idxStartTime));
+      hasTripStatistics = true;
+    }
+    if (!cursor.isNull(idxTotalDistance)) {
+      tripStatistics.setTotalDistance(cursor.getFloat(idxTotalDistance));
+      hasTripStatistics = true;
+    }
+    if (!cursor.isNull(idxTotalTime)) {
+      tripStatistics.setTotalTime(cursor.getLong(idxTotalTime));
+      hasTripStatistics = true;
+    }
+    if (!cursor.isNull(idxMovingTime)) {
+      tripStatistics.setMovingTime(cursor.getLong(idxMovingTime));
+      hasTripStatistics = true;
+    }
+    if (!cursor.isNull(idxMaxSpeed)) {
+      tripStatistics.setMaxSpeed(cursor.getFloat(idxMaxSpeed));
+      hasTripStatistics = true;
+    }
+    if (!cursor.isNull(idxMinElevation)) {
+      tripStatistics.setMinElevation(cursor.getFloat(idxMinElevation));
+      hasTripStatistics = true;
+    }
+    if (!cursor.isNull(idxMaxElevation)) {
+      tripStatistics.setMaxElevation(cursor.getFloat(idxMaxElevation));
+      hasTripStatistics = true;
+    }
+    if (!cursor.isNull(idxElevationGain)) {
+      tripStatistics.setTotalElevationGain(cursor.getFloat(idxElevationGain));
+      hasTripStatistics = true;
+    }
+    if (!cursor.isNull(idxMinGrade)) {
+      tripStatistics.setMinGrade(cursor.getFloat(idxMinGrade));
+      hasTripStatistics = true;
+    }
+    if (!cursor.isNull(idxMaxGrade)) {
+      tripStatistics.setMaxGrade(cursor.getFloat(idxMaxGrade));
+      hasTripStatistics = true;
+    }
+    if (hasTripStatistics) {
+      waypoint.setTripStatistics(tripStatistics);
+    }
     return waypoint;
   }
 
@@ -543,7 +535,7 @@ public class MyTracksProviderUtilsImpl implements MyTracksProviderUtils {
       if (nextWaypoint != null) {
         Log.d(TAG, "Correcting marker " + nextWaypoint.getId()
             + " after deleted marker " + deletedWaypoint.getId());
-        nextWaypoint.getStatistics().merge(deletedWaypoint.getStatistics());
+        nextWaypoint.getTripStatistics().merge(deletedWaypoint.getTripStatistics());
         nextWaypoint.setDescription(
             descriptionGenerator.generateWaypointDescription(nextWaypoint));
         if (!updateWaypoint(nextWaypoint)) {

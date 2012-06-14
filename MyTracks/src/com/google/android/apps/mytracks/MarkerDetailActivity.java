@@ -86,7 +86,7 @@ public class MarkerDetailActivity extends AbstractMyTracksActivity {
     } else {
       waypointSection.setVisibility(View.GONE);
       statisticsSection.setVisibility(View.VISIBLE);
-      StatsUtils.setTripStatisticsValues(this, waypoint.getStatistics());
+      StatsUtils.setTripStatisticsValues(this, waypoint.getTripStatistics());
       StatsUtils.setLocationValues(this, waypoint.getLocation(), false);
     }
   }

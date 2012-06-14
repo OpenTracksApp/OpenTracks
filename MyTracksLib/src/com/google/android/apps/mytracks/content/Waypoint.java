@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.android.apps.mytracks.content;
 
 import com.google.android.apps.mytracks.stats.TripStatistics;
@@ -22,50 +23,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * A way point. It has a location, meta data such as name, description,
- * category, and icon, plus it can store track statistics for a "sub-track".
- *
- * TODO: hashCode and equals
- *
+ * A waypoint.
+ * 
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
 public final class Waypoint implements Parcelable {
-
-  /**
-   * Creator for a Waypoint object
-   */
-  public static class Creator implements Parcelable.Creator<Waypoint> {
-
-    public Waypoint createFromParcel(Parcel source) {
-      ClassLoader classLoader = getClass().getClassLoader();
-      Waypoint waypoint = new Waypoint();
-      waypoint.id = source.readLong();
-      waypoint.name = source.readString();
-      waypoint.description = source.readString();
-      waypoint.category = source.readString();
-      waypoint.icon = source.readString();
-      waypoint.trackId = source.readLong();
-      waypoint.type = source.readInt();
-      waypoint.startId = source.readLong();
-      waypoint.stopId = source.readLong();
-      byte hasStats = source.readByte();
-      if (hasStats > 0) {
-        waypoint.stats = source.readParcelable(classLoader);
-      }
-      byte hasLocation = source.readByte();
-      if (hasLocation > 0) {
-        waypoint.location = source.readParcelable(classLoader);
-      }
-      return waypoint;
-    }
-
-    public Waypoint[] newArray(int size) {
-      return new Waypoint[size];
-    }
-  }
-
-  public static final Creator CREATOR = new Creator();
 
   public static final int TYPE_WAYPOINT = 0;
   public static final int TYPE_STATISTICS = 1;
@@ -77,22 +40,45 @@ public final class Waypoint implements Parcelable {
   private String icon = "";
   private long trackId = -1;
   private int type = 0;
-
-  private Location location;
-
-  /** Start track point id */
+  private double length = 0.0;
+  private long duration = 0;
   private long startId = -1;
-  /** Stop track point id */
   private long stopId = -1;
+  private Location location = null;
+  private TripStatistics tripStatistics = null;
 
-  private TripStatistics stats;
+  public Waypoint() {}
+  
+  private Waypoint(Parcel source) {
+    id = source.readLong();
+    name = source.readString();
+    description = source.readString();
+    category = source.readString();
+    icon = source.readString();
+    trackId = source.readLong();
+    type = source.readInt();
+    length = source.readDouble();
+    duration = source.readLong();
+    startId = source.readLong();
+    stopId = source.readLong();
+ 
+    ClassLoader classLoader = getClass().getClassLoader();
+    byte hasLocation = source.readByte();
+    if (hasLocation > 0) {
+      location = source.readParcelable(classLoader);
+    }
+    byte hasStats = source.readByte();
+    if (hasStats > 0) {
+      tripStatistics = source.readParcelable(classLoader);
+    }
+  }
 
-  /** The length of the track, without smoothing. */
-  private double length;
+  @Override
+  public int describeContents() {
+    return 0;
+  }
 
-  /** The total duration of the track (not from the last waypoint) */
-  private long duration;
-
+  @Override
   public void writeToParcel(Parcel dest, int flags) {
     dest.writeLong(id);
     dest.writeString(name);
@@ -101,40 +87,31 @@ public final class Waypoint implements Parcelable {
     dest.writeString(icon);
     dest.writeLong(trackId);
     dest.writeInt(type);
+    dest.writeDouble(length);
+    dest.writeLong(duration);
     dest.writeLong(startId);
     dest.writeLong(stopId);
-    dest.writeByte(stats == null ? (byte) 0 : (byte) 1);
-    if (stats != null) {
-      dest.writeParcelable(stats, 0);
-    }
     dest.writeByte(location == null ? (byte) 0 : (byte) 1);
     if (location != null) {
       dest.writeParcelable(location, 0);
     }
+    dest.writeByte(tripStatistics == null ? (byte) 0 : (byte) 1);
+    if (tripStatistics != null) {
+      dest.writeParcelable(tripStatistics, 0);
+    }
   }
 
-  // Getters and setters:
-  //---------------------
+  public static final Parcelable.Creator<Waypoint> CREATOR = new Parcelable.Creator<Waypoint>() {
+      @Override
+    public Waypoint createFromParcel(Parcel in) {
+      return new Waypoint(in);
+    }
 
-  public String getIcon() {
-    return icon;
-  }
-
-  public void setIcon(String icon) {
-    this.icon = icon;
-  }
-
-  public Location getLocation() {
-    return location;
-  }
-
-  public void setTrackId(long trackId) {
-    this.trackId = trackId;
-  }
-
-  public int describeContents() {
-    return 0;
-  }
+      @Override
+    public Waypoint[] newArray(int size) {
+      return new Waypoint[size];
+    }
+  };
 
   public long getId() {
     return id;
@@ -150,34 +127,6 @@ public final class Waypoint implements Parcelable {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public long getTrackId() {
-    return trackId;
-  }
-
-  public int getType() {
-    return type;
-  }
-
-  public void setType(int type) {
-    this.type = type;
-  }
-
-  public long getStartId() {
-    return startId;
-  }
-
-  public void setStartId(long startId) {
-    this.startId = startId;
-  }
-
-  public long getStopId() {
-    return stopId;
-  }
-
-  public void setStopId(long stopId) {
-    this.stopId = stopId;
   }
 
   public String getDescription() {
@@ -196,20 +145,29 @@ public final class Waypoint implements Parcelable {
     this.category = category;
   }
 
-  public void setLocation(Location location) {
-    this.location = location;
+  public String getIcon() {
+    return icon;
   }
 
-  public TripStatistics getStatistics() {
-    return stats;
+  public void setIcon(String icon) {
+    this.icon = icon;
   }
 
-  public void setStatistics(TripStatistics stats) {
-    this.stats = stats;
+  public long getTrackId() {
+    return trackId;
   }
 
-  // WARNING: These fields are used for internal state keeping. You probably
-  // want to look at getStatistics instead.
+  public void setTrackId(long trackId) {
+    this.trackId = trackId;
+  }
+
+  public int getType() {
+    return type;
+  }
+
+  public void setType(int type) {
+    this.type = type;
+  }
 
   public double getLength() {
     return length;
@@ -225,5 +183,37 @@ public final class Waypoint implements Parcelable {
 
   public void setDuration(long duration) {
     this.duration = duration;
+  }
+
+  public long getStartId() {
+    return startId;
+  }
+
+  public void setStartId(long startId) {
+    this.startId = startId;
+  }
+
+  public long getStopId() {
+    return stopId;
+  }
+
+  public void setStopId(long stopId) {
+    this.stopId = stopId;
+  }
+
+  public Location getLocation() {
+    return location;
+  }
+
+  public void setLocation(Location location) {
+    this.location = location;
+  }
+
+  public TripStatistics getTripStatistics() {
+    return tripStatistics;
+  }
+
+  public void setTripStatistics(TripStatistics tripStatistics) {
+    this.tripStatistics = tripStatistics;
   }
 }

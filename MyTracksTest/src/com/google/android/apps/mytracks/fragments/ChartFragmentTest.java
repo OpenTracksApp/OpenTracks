@@ -72,7 +72,7 @@ public class ChartFragmentTest extends AndroidTestCase {
         .setCadence(cadenceData)
         .setPower(powerData)
         .build();
-    myTracksLocation.setSensorData(sensorDataSet);
+    myTracksLocation.setSensorDataSet(sensorDataSet);
     // Test.
     point = fillDataPointTestHelper(myTracksLocation);
     assertEquals(Double.NaN, point[ChartView.HEART_RATE_SERIES + 1]);
@@ -107,7 +107,7 @@ public class ChartFragmentTest extends AndroidTestCase {
         .setCadence(cadenceData)
         .setPower(powerData)
         .build();
-    myTracksLocation.setSensorData(sensorDataSet);
+    myTracksLocation.setSensorDataSet(sensorDataSet);
     // Test.
     point = fillDataPointTestHelper(myTracksLocation);
     assertEquals(100.0, point[ChartView.HEART_RATE_SERIES + 1]);

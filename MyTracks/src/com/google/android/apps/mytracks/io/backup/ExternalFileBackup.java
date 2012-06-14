@@ -156,8 +156,8 @@ class ExternalFileBackup {
         TracksColumns.COLUMN_TYPES,
         false);
     DatabaseDumper waypointDumper = new DatabaseDumper(
-        BackupColumns.WAYPOINTS_BACKUP_COLUMNS,
-        BackupColumns.WAYPOINTS_BACKUP_COLUMN_TYPES,
+        WaypointsColumns.COLUMNS,
+        WaypointsColumns.COLUMN_TYPES,
         false);
     DatabaseDumper pointDumper = new DatabaseDumper(
         TrackPointsColumns.COLUMNS,

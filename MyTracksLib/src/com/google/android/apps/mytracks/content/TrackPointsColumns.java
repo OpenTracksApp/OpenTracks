@@ -59,7 +59,8 @@ public interface TrackPointsColumns extends BaseColumns {
       + ACCURACY + " FLOAT, "
       + SPEED + " FLOAT, "
       + BEARING + " FLOAT, "
-      + SENSOR + " BLOB);";
+      + SENSOR + " BLOB" 
+      + ");";
 
   public static final String[] COLUMNS = {
       _ID,

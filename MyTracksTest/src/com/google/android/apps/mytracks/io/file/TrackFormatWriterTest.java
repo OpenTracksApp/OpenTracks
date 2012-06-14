@@ -104,7 +104,7 @@ public abstract class TrackFormatWriterTest extends AndroidTestCase {
           .setState(Sensor.SensorState.SENDING);
       Sensor.SensorDataSet sensorDataSet = Sensor.SensorDataSet.newBuilder().setPower(power)
           .setCadence(cadence).setHeartRate(heartRate).setBatteryLevel(batteryLevel).build();
-      location.setSensorData(sensorDataSet);
+      location.setSensorDataSet(sensorDataSet);
     }
   }
 
