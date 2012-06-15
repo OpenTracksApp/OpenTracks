@@ -368,7 +368,7 @@ limitations under the License.
       completion suggestion for wind surfing.">
     wind surfing
   </string>
- 
+
   <!-- Description -->
   <string name="description_activity_type"
     translation_description="Activity type description.
@@ -737,7 +737,7 @@ limitations under the License.
   </string>
   <string name="help_google_services_answer"
     translation_description="In the 'Help' page, the answer on locations of google services.
-    
+
      %1$s url. E.g., 'maps.google.com'.
      %2$s url. E.g., 'google.com/fusiontables'.
      %3$s url. E.g., 'docs.google.com'.">
@@ -1296,12 +1296,12 @@ limitations under the License.
   <string name="send_google_new_public_map"
     translation_description="When sending a track to Google Maps, the radio option to create a
       new public map as opposed to use an existing map.">
-    Create new public map 
+    Create new public map
   </string>
   <string name="send_google_new_unlisted_map"
     translation_description="When sending a track to Google Maps, the radio option to create a
       new unlisted map as opposed to use an existing map.">
-    Create new unlisted map 
+    Create new unlisted map
   </string>
   <string name="send_google_no_account_message"
     translation_description="When sending to Google, the dialog message when no Google account is
