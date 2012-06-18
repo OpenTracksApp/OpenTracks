@@ -123,22 +123,29 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
   }
   
   /**
-   * Tests the change of stats settings during recording.
+   * Tests the change of stats settings during recording on chart view.
    */
-  public void testChangeStatsSettings_UnderRecording() {
+  public void testChangeStatsSettings_UnderRecording_Chart() {
     EndToEndTestUtils.startRecording();
-    
-    // Test change preferred units and preferred rate when display STATS tab.
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
-    EndToEndTestUtils.sendGps(3);
-    ChangeStatsSettings(false);
-    EndToEndTestUtils.sendGps(3);
     // Test just change preferred units when display CHART tab.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_chart_tab));
     EndToEndTestUtils.sendGps(3);
-    ChangeStatsSettings(true);
+    ChangeStatsSettings(true, false);
     EndToEndTestUtils.sendGps(3);
-    
+    EndToEndTestUtils.stopRecording(true);
+
+  }
+  
+  /**
+   * Tests the change of stats settings during recording on stats view.
+   */
+  public void testChangeStatsSettings_UnderRecording_Stats() {
+    EndToEndTestUtils.startRecording();
+    // Test change preferred units and preferred rate when display STATS tab.
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
+    EndToEndTestUtils.sendGps(3);
+    ChangeStatsSettings(true, true);
+    EndToEndTestUtils.sendGps(3);
     EndToEndTestUtils.stopRecording(true);
 
   }
@@ -146,16 +153,18 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
   /**
    * Changes settings of preferred units and preferred rate.
    */
-  private void ChangeStatsSettings(boolean isOnlyChangeUnits) {
+  private void ChangeStatsSettings(boolean changeUnits, boolean changeRate) {
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
         .getString(R.string.settings_stats_units_title)));
 
     // Change preferred units.
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
-        .getString(R.string.settings_stats_units_title));
-    if(!isOnlyChangeUnits) {
+    if (changeUnits) {
+      EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+          .getString(R.string.settings_stats_units_title));
+    }
+    if (changeRate) {
       EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
           .getString(R.string.settings_stats_rate_title));
     }
