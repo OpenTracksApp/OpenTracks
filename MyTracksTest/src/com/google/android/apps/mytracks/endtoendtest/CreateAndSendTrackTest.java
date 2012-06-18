@@ -109,6 +109,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     // Go back to track list.
     EndToEndTestUtils.SOLO.goBack();
     instrumentation.waitForIdleSync();
+    // For all characters will be change to lower case during sendKeys() method, add to lower() method here.
     assertTrue(EndToEndTestUtils.SOLO.searchText(newTrackName.toLowerCase().replaceAll(" ", "")));
     assertTrue(EndToEndTestUtils.SOLO.searchText(newDesc.toLowerCase().replaceAll(" ", "")));
   }

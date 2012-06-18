@@ -121,7 +121,7 @@ public class EndToEndTestUtils {
   /**
    * Checks if the test is run under an emulator.
    */
-  static void isEmulator() {
+  static void setIsEmulator() {
     isEmulator = android.os.Build.MODEL.equals("google_sdk");
   }
 
@@ -132,7 +132,7 @@ public class EndToEndTestUtils {
    * @param activityMyTracks the startup activity
    */
   static void setupForAllTest(Instrumentation instrumentation, TrackListActivity activityMyTracks) {
-    isEmulator();
+    setIsEmulator();
     EndToEndTestUtils.INSTRUMENTATION = instrumentation;
     EndToEndTestUtils.ACTIVITYMYTRACKS = activityMyTracks;
     EndToEndTestUtils.SOLO = new Solo(EndToEndTestUtils.INSTRUMENTATION,
@@ -503,5 +503,4 @@ public class EndToEndTestUtils {
     }
     return null;
   }
-
 }
