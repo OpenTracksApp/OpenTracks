@@ -119,7 +119,7 @@ public class EndToEndTestUtils {
   }
   
   /**
-   * Checks if the test is run under an emulator.
+   * Sets the status whether the test is run on an emulator or not.
    */
   static void setIsEmulator() {
     isEmulator = android.os.Build.MODEL.equals("google_sdk");
