@@ -670,7 +670,7 @@ limitations under the License.
   <string name="gps_wait_for_signal"
     translation_description="In the main view, the message on the top indicating My Tracks is
       waiting for a better GPS signal.">
-    Waiting for a better GPS signal. Make sure the sky is visible.
+    Waiting for a better GPS signal. Make sure the sky is visible. No data is being recorded.
   </string>
 
   <!-- Help page -->
