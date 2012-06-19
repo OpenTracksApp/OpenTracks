@@ -19,9 +19,9 @@ package com.google.android.apps.mytracks.services.sensors.ant;
 import java.util.LinkedList;
 
 /**
- * Counter that processes an Ant+ sensor data (counter + sensor time pair) and
- * returns the instantaneous cadence value.
- * 
+ * A counter that processes an Ant+ sensor data (count + event time) and returns
+ * the instantaneous cadence value.
+ *
  * @author Laszlo Molnar
  */
 public class CadenceCounter {
@@ -29,7 +29,7 @@ public class CadenceCounter {
   private static final int MILLIS_PER_MINUTE = 60000;
   private static final int MAX_HISTORY_TIME_IN_MILLIS = 5000; // 5 seconds
   private static final int MAX_HISTORY_SIZE = 100;
-  private static final int SENSOR_TIME_PER_MINUTE = 60 * 1024;
+  private static final int EVENT_TIME_PER_MINUTE = 60 * 1024;
 
   /**
    * Cadence data.
@@ -38,18 +38,18 @@ public class CadenceCounter {
    */
   private static class CadenceData {
     final long systemTime;
-    final int counter;
-    final int sensorTime;
+    final int count;
+    final int eventTime;
 
-    private CadenceData(long systemTime, int counter, int sensorTime) {
+    private CadenceData(long systemTime, int count, int eventTime) {
       this.systemTime = systemTime;
-      this.counter = counter;
-      this.sensorTime = sensorTime;
+      this.count = count;
+      this.eventTime = eventTime;
     }
   }
 
-  // The last counter value
-  private int lastCounter;
+  // The last count
+  private int lastCount;
 
   // The last calculated cadence
   private int eventsPerMinute;
@@ -58,7 +58,7 @@ public class CadenceCounter {
   private LinkedList<CadenceData> history;
 
   public CadenceCounter() {
-    lastCounter = -1;
+    lastCount = -1;
     eventsPerMinute = 0;
     history = new LinkedList<CadenceData>();
   }
@@ -66,35 +66,35 @@ public class CadenceCounter {
   /**
    * Gets the cadence value.
    * 
-   * @param counter counter
-   * @param sensorTime sensor time
+   * @param count count
+   * @param eventTime event time
    */
-  public int getEventsPerMinute(int counter, int sensorTime) {
+  public int getEventsPerMinute(int count, int eventTime) {
     long now = System.currentTimeMillis();
-    int counterChange = (counter - lastCounter) & 0xFFFF;
+    int countChange = (count - lastCount) & 0xFFFF;
 
-    if (lastCounter < 0) {
+    if (lastCount < 0) {
       /*
-       * sensorTime for the initial counter value is probably out of date, so
-       * not updating the history.
+       * eventTime for the initial count value is probably out of date, so not
+       * updating the history.
        */
-      lastCounter = counter;
+      lastCount = count;
       eventsPerMinute = 0;
       return 0;
     }
 
-    lastCounter = counter;
+    lastCount = count;
 
-    if (counterChange != 0) {
+    if (countChange != 0) {
       if (removeOldHistory(now)) {
         CadenceData lastCadenceData = history.getLast();
-        int sensorTimeChange = (sensorTime - lastCadenceData.sensorTime) & 0xFFFF;
-        if (sensorTimeChange != 0) {
-          counterChange = (counter - lastCadenceData.counter) & 0xFFFF;
-          eventsPerMinute = counterChange * SENSOR_TIME_PER_MINUTE / sensorTimeChange;
+        int eventTimeChange = (eventTime - lastCadenceData.eventTime) & 0xFFFF;
+        if (eventTimeChange != 0) {
+          countChange = (count - lastCadenceData.count) & 0xFFFF;
+          eventsPerMinute = countChange * EVENT_TIME_PER_MINUTE / eventTimeChange;
         }
       }
-      history.addLast(new CadenceData(now, counter, sensorTime));
+      history.addLast(new CadenceData(now, count, eventTime));
       return eventsPerMinute;
     } else {
       // The sensor has resent old data
@@ -114,9 +114,9 @@ public class CadenceCounter {
         eventsPerMinute = 0;
         return 0;
       }
-      
+
       /*
-       * Too much time has passed since the last counter change. A smaller value
+       * Too much time has passed since the last count change. A smaller value
        * than eventsPerMinute must be returned. The value is calculated from the
        * history.
        */
@@ -133,12 +133,12 @@ public class CadenceCounter {
   private int getValueFromHistory(long now) {
     CadenceData firstCadenceData = history.getFirst();
     CadenceData lastCadenceData = history.getLast();
-    int sensorTimeChange = (lastCadenceData.sensorTime - firstCadenceData.sensorTime) & 0xFFFF;
-    int counterChange = (lastCounter - firstCadenceData.counter) & 0xFFFF;
+    int eventTimeChange = (lastCadenceData.eventTime - firstCadenceData.eventTime) & 0xFFFF;
+    int countChange = (lastCount - firstCadenceData.count) & 0xFFFF;
 
     // (now - lastCadenceData) + (lastCadenceData - firstCadenceData)
     int systemTimeChange = (int) (now - lastCadenceData.systemTime
-        + (sensorTimeChange * MILLIS_PER_MINUTE) / SENSOR_TIME_PER_MINUTE);
+        + (eventTimeChange * MILLIS_PER_MINUTE) / EVENT_TIME_PER_MINUTE);
 
     /*
      * eventsPerMinute is not updated because it is still needed when a new
@@ -147,12 +147,12 @@ public class CadenceCounter {
     if (systemTimeChange == 0) {
       return eventsPerMinute;
     }
-    int value = (counterChange * MILLIS_PER_MINUTE) / systemTimeChange;
+    int value = (countChange * MILLIS_PER_MINUTE) / systemTimeChange;
 
     /*
      * Do not return a larger number than eventsPerMinute because this function
-     * is only called when more time has passed after the last counter change
-     * than the interval from eventsPerMinute.
+     * is only called when more time has passed after the last count change than
+     * the interval from eventsPerMinute.
      */
     return value < eventsPerMinute ? value : eventsPerMinute;
   }
