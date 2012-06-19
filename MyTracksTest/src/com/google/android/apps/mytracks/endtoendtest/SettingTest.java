@@ -125,7 +125,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
   /**
    * Tests the change of stats settings during recording on chart view.
    */
-  public void testChangeStatsSettings_UnderRecording_Chart() {
+  public void testChangeStatsSettings_underRecording_chart() {
     EndToEndTestUtils.startRecording();
     // Test just change preferred units when display CHART tab.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_chart_tab));
@@ -139,7 +139,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
   /**
    * Tests the change of stats settings during recording on stats view.
    */
-  public void testChangeStatsSettings_UnderRecording_Stats() {
+  public void testChangeStatsSettings_underRecording_stats() {
     EndToEndTestUtils.startRecording();
     // Test change preferred units and preferred rate when display STATS tab.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
@@ -152,6 +152,9 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
   
   /**
    * Changes settings of preferred units and preferred rate.
+   * 
+   * @param changeUnits is change the preferred unit
+   * @param changeRate is change the preferred rate
    */
   private void ChangeStatsSettings(boolean changeUnits, boolean changeRate) {
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
