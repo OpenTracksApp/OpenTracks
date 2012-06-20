@@ -18,6 +18,8 @@ limitations under the License.
   <!-- Keys for persisted preferences. Sorted alphabetically. DO NOT TRANSLATE. -->
   <string name="allow_access_key">allowAccess</string>
   <string name="announcement_frequency_key">announcementFrequency</string>
+  <string name="ant_bike_cadence_sensor_id_key">antBikeCadenceSensorId</string>
+  <string name="ant_combined_bike_sensor_id_key">antCombinedBikeSensorId</string>
   <string name="ant_heart_rate_monitor_id_key">antHeartRateMonitorId</string>
   <string name="ant_speed_distance_monitor_id_key">antSpeedDistanceMonitorId</string>
   <string name="auto_resume_track_current_retry_key">autoResumeTrackCurrentRetry</string>
@@ -71,6 +73,8 @@ limitations under the License.
   <string name="settings_reset_key">settingsReset</string>
   <string name="settings_sensor_key">settingsSensor</string>
   <string name="settings_sensor_ant_key">settingsSensorAnt</string>
+  <string name="settings_sensor_ant_reset_bike_cadence_sensor_key">settingsSensorAntResetBikeCadenceSensor</string>
+  <string name="settings_sensor_ant_reset_combined_bike_sensor_key">settingsSensorAntResetCombinedBikeSensor</string>
   <string name="settings_sensor_ant_reset_heart_rate_monitor_key">settingsSensorAntResetHeartRateMonitor</string>
   <string name="settings_sensor_ant_reset_speed_distance_monitor_key">settingsSensorAntResetSpeedDistanceMonitor</string>
   <string name="settings_sensor_bluetooth_key">settingsSensorBluetooth</string>

@@ -40,6 +40,7 @@ limitations under the License.
   </style>
   <!-- The style for choose upload service image view -->
   <style name="ChooseUploadServiceImageView">
+    <item name="android:layout_gravity">center</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
   </style>

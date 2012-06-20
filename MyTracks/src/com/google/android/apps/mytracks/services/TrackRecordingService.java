@@ -628,10 +628,10 @@ public class TrackRecordingService extends Service {
     lastValidLocation = null;
 
     Waypoint waypoint = providerUtils.getFirstWaypoint(recordingTrackId);
-    if (waypoint != null && waypoint.getStatistics() != null) {
+    if (waypoint != null && waypoint.getTripStatistics() != null) {
       currentWaypointId = waypoint.getId();
       waypointStatsBuilder = new TripStatisticsBuilder(
-          waypoint.getStatistics());
+          waypoint.getTripStatistics());
     } else {
       // This should never happen, but we got to do something so life goes on:
       waypointStatsBuilder = new TripStatisticsBuilder(stats.getStartTime());
@@ -1010,7 +1010,7 @@ public class TrackRecordingService extends Service {
       name = getString(R.string.marker_split_name_format, nextMarkerNumber);
     }
     waypoint.setName(name);
-    waypoint.setStatistics(waypointStatsBuilder.getStatistics());
+    waypoint.setTripStatistics(waypointStatsBuilder.getStatistics());
     waypoint.setDescription(descriptionGenerator.generateWaypointDescription(waypoint));
     waypoint.setIcon(getString(R.string.marker_statistics_icon_url));
 

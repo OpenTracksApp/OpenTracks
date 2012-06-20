@@ -52,8 +52,6 @@ public class MyTracksProvider extends ContentProvider {
   private static final int TRACKS_ID = 4;
   private static final int WAYPOINTS = 5;
   private static final int WAYPOINTS_ID = 6;
-  private static final String TRACKPOINTS_TABLE = "trackpoints";
-  private static final String WAYPOINTS_TABLE = "waypoints";
   private static final String TAG = MyTracksProvider.class.getSimpleName();
 
   /**
@@ -67,49 +65,9 @@ public class MyTracksProvider extends ContentProvider {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-      db.execSQL("CREATE TABLE " + TRACKPOINTS_TABLE + " ("
-          + TrackPointsColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-          + TrackPointsColumns.TRACKID + " INTEGER, "
-          + TrackPointsColumns.LONGITUDE + " INTEGER, "
-          + TrackPointsColumns.LATITUDE + " INTEGER, "
-          + TrackPointsColumns.TIME + " INTEGER, "
-          + TrackPointsColumns.ALTITUDE + " FLOAT, "
-          + TrackPointsColumns.ACCURACY + " FLOAT, "
-          + TrackPointsColumns.SPEED + " FLOAT, "
-          + TrackPointsColumns.BEARING + " FLOAT, "
-          + TrackPointsColumns.SENSOR + " BLOB);");
+      db.execSQL(TrackPointsColumns.CREATE_TABLE);
       db.execSQL(TracksColumns.CREATE_TABLE);
-      db.execSQL("CREATE TABLE " + WAYPOINTS_TABLE + " ("
-          + WaypointsColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-          + WaypointsColumns.NAME + " STRING, "
-          + WaypointsColumns.DESCRIPTION + " STRING, "
-          + WaypointsColumns.CATEGORY + " STRING, "
-          + WaypointsColumns.ICON + " STRING, "
-          + WaypointsColumns.TRACKID + " INTEGER, "
-          + WaypointsColumns.TYPE + " INTEGER, "
-          + WaypointsColumns.LENGTH + " FLOAT, "
-          + WaypointsColumns.DURATION + " INTEGER, "
-          + WaypointsColumns.STARTTIME + " INTEGER, "
-          + WaypointsColumns.STARTID + " INTEGER, "
-          + WaypointsColumns.STOPID + " INTEGER, "
-          + WaypointsColumns.LONGITUDE + " INTEGER, "
-          + WaypointsColumns.LATITUDE + " INTEGER, "
-          + WaypointsColumns.TIME + " INTEGER, "
-          + WaypointsColumns.ALTITUDE + " FLOAT, "
-          + WaypointsColumns.ACCURACY + " FLOAT, "
-          + WaypointsColumns.SPEED + " FLOAT, "
-          + WaypointsColumns.BEARING + " FLOAT, "
-          + WaypointsColumns.TOTALDISTANCE + " FLOAT, "
-          + WaypointsColumns.TOTALTIME + " INTEGER, "
-          + WaypointsColumns.MOVINGTIME + " INTEGER, "
-          + WaypointsColumns.AVGSPEED + " FLOAT, "
-          + WaypointsColumns.AVGMOVINGSPEED + " FLOAT, "
-          + WaypointsColumns.MAXSPEED + " FLOAT, "
-          + WaypointsColumns.MINELEVATION + " FLOAT, "
-          + WaypointsColumns.MAXELEVATION + " FLOAT, "
-          + WaypointsColumns.ELEVATIONGAIN + " FLOAT, "
-          + WaypointsColumns.MINGRADE + " FLOAT, "
-          + WaypointsColumns.MAXGRADE + " FLOAT);");
+      db.execSQL(WaypointsColumns.CREATE_TABLE);
     }
 
     @Override
@@ -118,9 +76,9 @@ public class MyTracksProvider extends ContentProvider {
       if (oldVersion < 17) {
         // Delete the old data
         Log.w(TAG, "Delete all old data");
-        db.execSQL("DROP TABLE IF EXISTS " + TRACKPOINTS_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + TrackPointsColumns.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + TracksColumns.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + WAYPOINTS_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + WaypointsColumns.TABLE_NAME);
         onCreate(db);
       } else {
         // Incremental updates go here. For each DB version, add a corresponding if clause.
@@ -128,8 +86,8 @@ public class MyTracksProvider extends ContentProvider {
         // Track points sensor column
         if (oldVersion <= 17) {
           Log.w(TAG, "Upgrade DB: Adding sensor column.");
-          db.execSQL(
-              "ALTER TABLE " + TRACKPOINTS_TABLE + " ADD " + TrackPointsColumns.SENSOR + " BLOB");
+          db.execSQL("ALTER TABLE " + TrackPointsColumns.TABLE_NAME + " ADD "
+              + TrackPointsColumns.SENSOR + " BLOB");
         }
         // Tracks table id column
         if (oldVersion <= 18) {
@@ -196,14 +154,14 @@ public class MyTracksProvider extends ContentProvider {
     boolean shouldVacuum = false;
     switch (urlMatcher.match(url)) {
       case TRACKPOINTS:
-        table = TRACKPOINTS_TABLE;
+        table = TrackPointsColumns.TABLE_NAME;
         break;
       case TRACKS:
         table = TracksColumns.TABLE_NAME;
         shouldVacuum = true;
         break;
       case WAYPOINTS:
-        table = WAYPOINTS_TABLE;
+        table = WaypointsColumns.TABLE_NAME;
         break;
       default:
         throw new IllegalArgumentException("Unknown URL " + url);
@@ -311,7 +269,7 @@ public class MyTracksProvider extends ContentProvider {
       throw new IllegalArgumentException(
           "Latitude, longitude, and time values are required.");
     }
-    long rowId = db.insert(TRACKPOINTS_TABLE, TrackPointsColumns._ID, values);
+    long rowId = db.insert(TrackPointsColumns.TABLE_NAME, TrackPointsColumns._ID, values);
     if (rowId >= 0) {
       Uri uri = ContentUris.appendId(
           TrackPointsColumns.CONTENT_URI.buildUpon(), rowId).build();
@@ -339,7 +297,7 @@ public class MyTracksProvider extends ContentProvider {
   }
 
   private Uri insertWaypoint(Uri url, ContentValues values) {
-    long rowId = db.insert(WAYPOINTS_TABLE, WaypointsColumns._ID, values);
+    long rowId = db.insert(WaypointsColumns.TABLE_NAME, WaypointsColumns._ID, values);
     if (rowId > 0) {
       Uri uri = ContentUris.appendId(
           WaypointsColumns.CONTENT_URI.buildUpon(), rowId).build();
@@ -360,14 +318,14 @@ public class MyTracksProvider extends ContentProvider {
     int match = urlMatcher.match(url);
     String sortOrder = null;
     if (match == TRACKPOINTS) {
-      qb.setTables(TRACKPOINTS_TABLE);
+      qb.setTables(TrackPointsColumns.TABLE_NAME);
       if (sort != null) {
         sortOrder = sort;
       } else {
         sortOrder = TrackPointsColumns.DEFAULT_SORT_ORDER;
       }
     } else if (match == TRACKPOINTS_ID) {
-      qb.setTables(TRACKPOINTS_TABLE);
+      qb.setTables(TrackPointsColumns.TABLE_NAME);
       qb.appendWhere("_id=" + url.getPathSegments().get(1));
     } else if (match == TRACKS) {
       qb.setTables(TracksColumns.TABLE_NAME);
@@ -380,14 +338,14 @@ public class MyTracksProvider extends ContentProvider {
       qb.setTables(TracksColumns.TABLE_NAME);
       qb.appendWhere("_id=" + url.getPathSegments().get(1));
     } else if (match == WAYPOINTS) {
-      qb.setTables(WAYPOINTS_TABLE);
+      qb.setTables(WaypointsColumns.TABLE_NAME);
       if (sort != null) {
         sortOrder = sort;
       } else {
         sortOrder = WaypointsColumns.DEFAULT_SORT_ORDER;
       }
     } else if (match == WAYPOINTS_ID) {
-      qb.setTables(WAYPOINTS_TABLE);
+      qb.setTables(WaypointsColumns.TABLE_NAME);
       qb.appendWhere("_id=" + url.getPathSegments().get(1));
     } else {
       throw new IllegalArgumentException("Unknown URL " + url);
@@ -410,10 +368,10 @@ public class MyTracksProvider extends ContentProvider {
     int count;
     int match = urlMatcher.match(url);
     if (match == TRACKPOINTS) {
-      count = db.update(TRACKPOINTS_TABLE, values, where, selectionArgs);
+      count = db.update(TrackPointsColumns.TABLE_NAME, values, where, selectionArgs);
     } else if (match == TRACKPOINTS_ID) {
       String segment = url.getPathSegments().get(1);
-      count = db.update(TRACKPOINTS_TABLE, values, "_id=" + segment
+      count = db.update(TrackPointsColumns.TABLE_NAME, values, "_id=" + segment
           + (!TextUtils.isEmpty(where)
               ? " AND (" + where + ')'
               : ""),
@@ -428,10 +386,10 @@ public class MyTracksProvider extends ContentProvider {
               : ""),
           selectionArgs);
     } else if (match == WAYPOINTS) {
-      count = db.update(WAYPOINTS_TABLE, values, where, selectionArgs);
+      count = db.update(WaypointsColumns.TABLE_NAME, values, where, selectionArgs);
     } else if (match == WAYPOINTS_ID) {
       String segment = url.getPathSegments().get(1);
-      count = db.update(WAYPOINTS_TABLE, values, "_id=" + segment
+      count = db.update(WaypointsColumns.TABLE_NAME, values, "_id=" + segment
           + (!TextUtils.isEmpty(where)
               ? " AND (" + where + ')'
               : ""),

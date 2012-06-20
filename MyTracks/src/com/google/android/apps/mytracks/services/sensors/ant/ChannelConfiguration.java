@@ -16,20 +16,108 @@
 
 package com.google.android.apps.mytracks.services.sensors.ant;
 
+import com.google.android.apps.mytracks.services.sensors.ant.AntSensorManager.ChannelStates;
+
 /**
  * Ant channel configuration.
- * 
+ *
  * @author Jimmy Shih
  */
-public class ChannelConfiguration {
+public abstract class ChannelConfiguration {
 
-  public short deviceNumber;
-  public byte deviceType;
-  public byte TransmissionType;
-  public short period;
-  public byte freq;
-  public byte proxSearch;
-  public boolean isInitializing = false;
-  public boolean isDeinitializing = false;
+  public static final byte FREQUENCY = 57; // 2457Mhz (Ant+ frequency)
+  public static final byte TRANSMISSION_TYPE = 0; // 0 for wild card search
+  public static final byte PROXIMITY_SEARCH = 7;
+
+  private short deviceNumber = AntSensorManager.WILDCARD;
+  private ChannelStates channelState = ChannelStates.CLOSED;
+  private boolean isInitializing = false;
+  private boolean isDeinitializing = false;
+
+  /**
+   * Gets the My Tracks settings device id key.
+   */
+  public abstract int getDeviceIdKey();
+
+  /**
+   * Gets the device type.
+   */
+  public abstract byte getDeviceType();
+
+  /**
+   * Gets the message period.
+   */
+  public abstract short getMessagPeriod();
+
+  /**
+   * Decodes the message and places the value in antSensorValue.
+   *
+   * @param message the message
+   * @param antSensorValue the ant sensor value
+   */
+  public abstract void decodeMessage(byte[] message, AntSensorValue antSensorValue);
+
+  /**
+   * Gets the device number.
+   */
+  public short getDeviceNumber() {
+    return deviceNumber;
+  }
+
+  /**
+   * Sets the device number.
+   *
+   * @param deviceNumber the device number to set
+   */
+  public void setDeviceNumber(short deviceNumber) {
+    this.deviceNumber = deviceNumber;
+  }
+
+  /**
+   * Gets the channel state.
+   */
+  public ChannelStates getChannelState() {
+    return channelState;
+  }
+
+  /**
+   * Sets the channel state.
+   *
+   * @param channelState the channelState to set
+   */
+  public void setChannelState(ChannelStates channelState) {
+    this.channelState = channelState;
+  }
+
+  /**
+   * Returns true if initializing.
+   */
+  public boolean isInitializing() {
+    return isInitializing;
+  }
+
+  /**
+   * Sets isInitializing.
+   *
+   * @param isInitializing true if isInitializing
+   */
+  public void setInitializing(boolean isInitializing) {
+    this.isInitializing = isInitializing;
+  }
+
+  /**
+   * Returns true if deinitializing.
+   */
+  public boolean isDeinitializing() {
+    return isDeinitializing;
+  }
+
+  /**
+   * Sets isDeinitializing.
+   *
+   * @param isDeinitializing true if isDeinitializing
+   */
+  public void setDeinitializing(boolean isDeinitializing) {
+    this.isDeinitializing = isDeinitializing;
+  }
 }
-

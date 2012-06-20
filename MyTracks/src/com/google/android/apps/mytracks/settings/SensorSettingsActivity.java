@@ -105,6 +105,10 @@ public class SensorSettingsActivity extends AbstractSettingsActivity {
         R.string.ant_heart_rate_monitor_id_key, isAnt);
     updateAntSensor(R.string.settings_sensor_ant_reset_speed_distance_monitor_key,
         R.string.ant_speed_distance_monitor_id_key, isAnt);
+    updateAntSensor(R.string.settings_sensor_ant_reset_bike_cadence_sensor_key,
+        R.string.ant_bike_cadence_sensor_id_key, isAnt);
+    updateAntSensor(R.string.settings_sensor_ant_reset_combined_bike_sensor_key,
+        R.string.ant_combined_bike_sensor_id_key, isAnt);
   }
   
   /**

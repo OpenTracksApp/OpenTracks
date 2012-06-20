@@ -507,7 +507,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     assertEquals(123L, wpt.getTrackId());
     assertEquals(0.0, wpt.getLength());
     assertNotNull(wpt.getLocation());
-    assertNotNull(wpt.getStatistics());
+    assertNotNull(wpt.getTripStatistics());
     // TODO check the rest of the params.
 
     // TODO: Check waypoint 2.
@@ -543,7 +543,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     assertEquals(123L, wpt.getTrackId());
     assertEquals(0.0, wpt.getLength());
     assertNotNull(wpt.getLocation());
-    assertNull(wpt.getStatistics());
+    assertNull(wpt.getTripStatistics());
   }
 
   @MediumTest

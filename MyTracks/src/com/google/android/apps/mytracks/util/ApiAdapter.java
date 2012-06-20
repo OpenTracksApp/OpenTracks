@@ -97,6 +97,13 @@ public interface ApiAdapter {
   public HttpTransport getHttpTransport();
 
   /**
+   * Returns true if GeoCoder is present.
+   * <p>
+   * Due to changes in API level 9.
+   */
+  public boolean isGeoCoderPresent();
+
+  /**
    * Gets a {@link BluetoothSocket}.
    * <p>
    * Due to changes in API level 10.

@@ -85,7 +85,12 @@ public class Api7Adapter implements ApiAdapter {
   public HttpTransport getHttpTransport() {
     return new ApacheHttpTransport();
   }
-  
+
+  @Override
+  public boolean isGeoCoderPresent() {
+    return true;
+  }
+
   @Override
   public BluetoothSocket getBluetoothSocket(BluetoothDevice bluetoothDevice) throws IOException {
     try {

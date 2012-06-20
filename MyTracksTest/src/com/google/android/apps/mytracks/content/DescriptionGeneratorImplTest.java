@@ -96,7 +96,7 @@ public class DescriptionGeneratorImplTest extends AndroidTestCase {
     stats.setMaxGrade(0.42);
     stats.setMinGrade(0.11);
     stats.setStartTime(START_TIME);
-    waypoint.setStatistics(stats);
+    waypoint.setTripStatistics(stats);
     String expected = "Total distance: 20.00 km (12.4 mi)\n"
       + "Total time: 10:00\n"
       + "Moving time: 05:00\n"

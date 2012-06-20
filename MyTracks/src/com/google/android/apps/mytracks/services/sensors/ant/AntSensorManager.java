@@ -41,7 +41,7 @@ import java.lang.reflect.Field;
 
 /**
  * Ant Sensor Manager.
- * 
+ *
  * @author Jimmy Shih
  */
 public class AntSensorManager extends SensorManager {
@@ -58,27 +58,12 @@ public class AntSensorManager extends SensorManager {
                    // recently
     OFFLINE // Channel is closed as the result of a search timeout
   }
-
-  private static final String TAG = AntSensorManager.class.getSimpleName();
-
   public static final short WILDCARD = 0;
-
-  private static final int CHANNELS = 2;
-  private static final byte HRM_CHANNEL = (byte) 0;
-  private static final byte SDM_CHANNEL = (byte) 1;
-
-  private static final byte HRM_DEVICE_TYPE = 0x78;
-  private static final byte SDM_DEVICE_TYPE = 0x7C;
-
-  private static final short HRM_PERIOD = 8070;
-  private static final short SDM_PERIOD = 8134;
-
-  private static final byte DEFAULT_PROXIMITY_SEARCH_BIN = 7;
-
+  
+  private static final String TAG = AntSensorManager.class.getSimpleName();
+  private static final int CHANNELS = 4;
   private static final String RADIO_ANT = "ant";
   private static final byte ANT_NETWORK = (byte) 0x01;
-  private static final int ANT_FREQUENCY = 57; // 2457Mhz (Ant+ frequency)
-  private static final int ANT_TRANSMISSION_TYPE = 0; // 0 for wild card search
 
   private final Context context;
   private final ChannelConfiguration channelConfig[];
@@ -87,29 +72,26 @@ public class AntSensorManager extends SensorManager {
 
   private boolean serviceConnected = false;
   private boolean hasClaimedInterface = false;
-  private ChannelStates hrmState = ChannelStates.CLOSED;
-  private ChannelStates sdmState = ChannelStates.CLOSED;
-  private short hrmDeviceNumber = WILDCARD;
-  private short sdmDeviceNumber = WILDCARD;
 
   private SensorDataSet sensorDataSet = null;
-  private int lastHeartRate = -1;
-  private int lastCadence = -1;
   private long lastSensorDataSetTime = 0;
+  private AntSensorValue antSensorValue = new AntSensorValue();
 
   private boolean requestedReset = false;
 
   /**
    * Constructor.
-   * 
+   *
    * @param context the context
    */
   public AntSensorManager(Context context) {
     this.context = context;
 
     channelConfig = new ChannelConfiguration[CHANNELS];
-    channelConfig[HRM_CHANNEL] = new ChannelConfiguration();
-    channelConfig[SDM_CHANNEL] = new ChannelConfiguration();
+    channelConfig[0] = new HeartRateChannelConfiguration();
+    channelConfig[1] = new SpeedDistanceChannelConfiguration();
+    channelConfig[2] = new BikeCadenceChannelConfiguration();
+    channelConfig[3] = new CombinedBikeChannelConfiguration();
 
     statusIntentFilter = new IntentFilter();
     statusIntentFilter.addAction(AntInterfaceIntent.ANT_ENABLED_ACTION);
@@ -156,7 +138,7 @@ public class AntSensorManager extends SensorManager {
       }
     }
   }
-  
+
   @Override
   protected void tearDownChannel() {
     try {
@@ -199,12 +181,12 @@ public class AntSensorManager extends SensorManager {
   }
 
   private AntInterface.ServiceListener serviceListener = new AntInterface.ServiceListener() {
-      @Override
+    @Override
     public void onServiceConnected() {
       handleServiceConnected();
     }
 
-      @Override
+    @Override
     public void onServiceDisconnected() {
       serviceConnected = false;
       if (hasClaimedInterface) {
@@ -241,57 +223,26 @@ public class AntSensorManager extends SensorManager {
 
   /**
    * Opens a channel.
-   * 
+   *
    * @param channel the channel
    */
   private void openChannel(byte channel) {
-    channelConfig[channel].deviceNumber = 0;
-    channelConfig[channel].deviceType = 0;
-    channelConfig[channel].TransmissionType = ANT_TRANSMISSION_TYPE;
-    channelConfig[channel].period = 0;
-    channelConfig[channel].freq = ANT_FREQUENCY;
-    channelConfig[channel].proxSearch = DEFAULT_PROXIMITY_SEARCH_BIN;
-    switch (channel) {
-      case HRM_CHANNEL:
-        hrmDeviceNumber = (short) PreferencesUtils.getInt(
-            context, R.string.ant_heart_rate_monitor_id_key, WILDCARD);
-        channelConfig[channel].deviceNumber = hrmDeviceNumber;
-        channelConfig[channel].deviceType = HRM_DEVICE_TYPE;
-        channelConfig[channel].period = HRM_PERIOD;
-        hrmState = ChannelStates.PENDING_OPEN;
-        break;
-      case SDM_CHANNEL:
-        sdmDeviceNumber = (short) PreferencesUtils.getInt(
-            context, R.string.ant_speed_distance_monitor_id_key, WILDCARD);
-        channelConfig[channel].deviceNumber = sdmDeviceNumber;
-        channelConfig[channel].deviceType = SDM_DEVICE_TYPE;
-        channelConfig[channel].period = SDM_PERIOD;
-        sdmState = ChannelStates.PENDING_OPEN;
-        break;
-      default:
-        break;
-    }
+    short deviceNumber = (short) PreferencesUtils.getInt(
+        context, channelConfig[channel].getDeviceIdKey(), WILDCARD);
+    channelConfig[channel].setDeviceNumber(deviceNumber);
+    channelConfig[channel].setChannelState(ChannelStates.PENDING_OPEN);
     setupAntChannel(ANT_NETWORK, channel);
   }
 
   /**
    * Closes a channel.
-   * 
+   *
    * @param channel the channel
    */
   private void closeChannel(byte channel) {
-    channelConfig[channel].isInitializing = false;
-    channelConfig[channel].isDeinitializing = true;
-    switch (channel) {
-      case HRM_CHANNEL:
-        hrmState = ChannelStates.CLOSED;
-        break;
-      case SDM_CHANNEL:
-        sdmState = ChannelStates.CLOSED;
-        break;
-      default:
-        break;
-    }
+    channelConfig[channel].setInitializing(false);
+    channelConfig[channel].setDeinitializing(true);
+    channelConfig[channel].setChannelState(ChannelStates.CLOSED);
     setSensorState(SensorState.DISCONNECTED);
     try {
       antInterface.ANTCloseChannel(channel);
@@ -306,8 +257,9 @@ public class AntSensorManager extends SensorManager {
    * Clears all channels.
    */
   private void clearAllChannels() {
-    hrmState = ChannelStates.CLOSED;
-    sdmState = ChannelStates.CLOSED;
+    for (int i = 0; i < CHANNELS; i++) {
+      channelConfig[i].setChannelState(ChannelStates.CLOSED);
+    }
     setSensorState(SensorState.DISCONNECTED);
   }
 
@@ -378,54 +330,42 @@ public class AntSensorManager extends SensorManager {
   };
 
   private final BroadcastReceiver dataReceiver = new BroadcastReceiver() {
-      @Override
+    @Override
     public void onReceive(Context c, Intent intent) {
       if (intent.getAction().equals(AntInterfaceIntent.ANT_RX_MESSAGE_ACTION)) {
-        byte[] ANTRxMessage = intent.getByteArrayExtra(AntInterfaceIntent.ANT_MESSAGE);
-        switch (ANTRxMessage[AntMesg.MESG_ID_OFFSET]) {
+        byte[] antRxMessage = intent.getByteArrayExtra(AntInterfaceIntent.ANT_MESSAGE);
+        byte channel;
+        switch (antRxMessage[AntMesg.MESG_ID_OFFSET]) {
           case AntMesg.MESG_BROADCAST_DATA_ID:
           case AntMesg.MESG_ACKNOWLEDGED_DATA_ID:
-            // Switch on channel number
-            switch (ANTRxMessage[AntMesg.MESG_DATA_OFFSET]) {
-              case HRM_CHANNEL:
-                decodeHrmMessage(ANTRxMessage);
-                break;
-              case SDM_CHANNEL:
-                decodeSdmMessage(ANTRxMessage);
-                break;
-              default:
-                break;
+            channel = antRxMessage[AntMesg.MESG_DATA_OFFSET];
+            if (channelConfig[channel].getChannelState() != ChannelStates.CLOSED) {
+              channelConfig[channel].setChannelState(ChannelStates.TRACKING_DATA);
             }
+
+            if (channelConfig[channel].getDeviceNumber() == WILDCARD) {
+              try {
+                antInterface.ANTRequestMessage(channel, AntMesg.MESG_CHANNEL_ID_ID);
+              } catch (AntInterfaceException e) {
+                handleAntError();
+              }
+            }
+            channelConfig[channel].decodeMessage(antRxMessage, antSensorValue);
+            setSensorDataSet();
             break;
           case AntMesg.MESG_RESPONSE_EVENT_ID:
-            handleResponseEventMessage(ANTRxMessage);
+            handleResponseEventMessage(antRxMessage);
             break;
           case AntMesg.MESG_CHANNEL_ID_ID:
-            short deviceNum = (short) ((ANTRxMessage[AntMesg.MESG_DATA_OFFSET + 1] & 0xFF
-                | ((ANTRxMessage[AntMesg.MESG_DATA_OFFSET + 2] & 0xFF) << 8)) & 0xFFFF);
-            // Switch on channel number
-            switch (ANTRxMessage[AntMesg.MESG_DATA_OFFSET]) {
-              case HRM_CHANNEL:
-                hrmDeviceNumber = deviceNum;
-                PreferencesUtils.setInt(
-                    context, R.string.ant_heart_rate_monitor_id_key, hrmDeviceNumber);
-                Toast.makeText(context,
-                    context.getString(R.string.settings_sensor_connected, deviceNum),
-                    Toast.LENGTH_SHORT).show();
-                setSensorState(SensorState.CONNECTED);
-                break;
-              case SDM_CHANNEL:
-                sdmDeviceNumber = deviceNum;
-                PreferencesUtils.setInt(
-                    context, R.string.ant_speed_distance_monitor_id_key, sdmDeviceNumber);
-                Toast.makeText(context,
-                    context.getString(R.string.settings_sensor_connected, deviceNum),
-                    Toast.LENGTH_SHORT).show();
-                setSensorState(SensorState.CONNECTED);
-                break;
-              default:
-                break;
-            }
+            channel = antRxMessage[AntMesg.MESG_DATA_OFFSET];
+            short deviceNumber = (short) ((antRxMessage[AntMesg.MESG_DATA_OFFSET + 1] & 0xFF
+                | ((antRxMessage[AntMesg.MESG_DATA_OFFSET + 2] & 0xFF) << 8)) & 0xFFFF);
+            channelConfig[channel].setDeviceNumber(deviceNumber);
+            PreferencesUtils.setInt(context, channelConfig[channel].getDeviceIdKey(), deviceNumber);
+            Toast.makeText(context,
+                context.getString(R.string.settings_sensor_connected, deviceNumber),
+                Toast.LENGTH_SHORT).show();
+            setSensorState(SensorState.CONNECTED);
             break;
           default:
             break;
@@ -435,72 +375,54 @@ public class AntSensorManager extends SensorManager {
 
     /**
      * Handles response event message.
-     * 
+     *
      * @param message the message
      */
     private void handleResponseEventMessage(byte[] message) {
       // For a list of possible message codes see ANT Message Protocol and Usage
       // section 9.5.6.1 available from thisisant.com
-      byte channelNumber = message[AntMesg.MESG_DATA_OFFSET];
+      byte channel = message[AntMesg.MESG_DATA_OFFSET];
       if ((message[AntMesg.MESG_DATA_OFFSET + 1] == AntMesg.MESG_EVENT_ID)
           && (message[AntMesg.MESG_DATA_OFFSET + 2] == AntDefine.EVENT_RX_SEARCH_TIMEOUT)) {
         // A channel timed out searching, unassign it
-        channelConfig[channelNumber].isInitializing = false;
-        channelConfig[channelNumber].isDeinitializing = false;
-        switch (channelNumber) {
-          case HRM_CHANNEL:
-            try {
-              hrmState = ChannelStates.OFFLINE;
-              antInterface.ANTUnassignChannel(HRM_CHANNEL);
-              setSensorState(SensorState.DISCONNECTED);
-            } catch (AntInterfaceException e) {
-              handleAntError();
-            }
-            break;
-          case SDM_CHANNEL:
-            try {
-              sdmState = ChannelStates.OFFLINE;
-              antInterface.ANTUnassignChannel(SDM_CHANNEL);
-              setSensorState(SensorState.DISCONNECTED);
-            } catch (AntInterfaceException e) {
-              handleAntError();
-            }
-            break;
-          default:
-            break;
+        channelConfig[channel].setInitializing(false);
+        channelConfig[channel].setDeinitializing(false);
+        channelConfig[channel].setChannelState(ChannelStates.OFFLINE);
+        try {
+          antInterface.ANTUnassignChannel(channel);
+        } catch (AntInterfaceException e) {
+          handleAntError();
         }
+        setSensorState(SensorState.DISCONNECTED);
       }
 
-      if (channelConfig[channelNumber].isInitializing) {
+      if (channelConfig[channel].isInitializing()) {
         if (message[AntMesg.MESG_DATA_OFFSET + 2] != 0) {
           // Error response
           Log.e(TAG, String.format("Error code(%#02x) on message ID(%#02x) on channel %d",
-              message[AntMesg.MESG_DATA_OFFSET + 2],
-              message[AntMesg.MESG_DATA_OFFSET + 1], channelNumber));
+              message[AntMesg.MESG_DATA_OFFSET + 2], message[AntMesg.MESG_DATA_OFFSET + 1],
+              channel));
         } else {
           // Switch on message id
           switch (message[AntMesg.MESG_DATA_OFFSET + 1]) {
             case AntMesg.MESG_ASSIGN_CHANNEL_ID:
               try {
-                antInterface.ANTSetChannelId(channelNumber,
-                    channelConfig[channelNumber].deviceNumber,
-                    channelConfig[channelNumber].deviceType,
-                    channelConfig[channelNumber].TransmissionType);
+                antInterface.ANTSetChannelId(channel, channelConfig[channel].getDeviceNumber(),
+                    channelConfig[channel].getDeviceType(), ChannelConfiguration.TRANSMISSION_TYPE);
               } catch (AntInterfaceException e) {
                 handleAntError();
               }
               break;
             case AntMesg.MESG_CHANNEL_ID_ID:
               try {
-                antInterface.ANTSetChannelPeriod(
-                    channelNumber, channelConfig[channelNumber].period);
+                antInterface.ANTSetChannelPeriod(channel, channelConfig[channel].getMessagPeriod());
               } catch (AntInterfaceException e) {
                 handleAntError();
               }
               break;
             case AntMesg.MESG_CHANNEL_MESG_PERIOD_ID:
               try {
-                antInterface.ANTSetChannelRFFreq(channelNumber, channelConfig[channelNumber].freq);
+                antInterface.ANTSetChannelRFFreq(channel, ChannelConfiguration.FREQUENCY);
               } catch (AntInterfaceException e) {
                 handleAntError();
               }
@@ -508,7 +430,7 @@ public class AntSensorManager extends SensorManager {
             case AntMesg.MESG_CHANNEL_RADIO_FREQ_ID:
               try {
                 // Disable high priority search
-                antInterface.ANTSetChannelSearchTimeout(channelNumber, (byte) 0);
+                antInterface.ANTSetChannelSearchTimeout(channel, (byte) 0);
               } catch (AntInterfaceException e) {
                 handleAntError();
               }
@@ -516,23 +438,23 @@ public class AntSensorManager extends SensorManager {
             case AntMesg.MESG_CHANNEL_SEARCH_TIMEOUT_ID:
               try {
                 // Set search timeout to 30 seconds (low priority search)
-                antInterface.ANTSetLowPriorityChannelSearchTimeout(channelNumber, (byte) 12);
+                antInterface.ANTSetLowPriorityChannelSearchTimeout(channel, (byte) 12);
               } catch (AntInterfaceException e) {
                 handleAntError();
               }
               break;
             case AntMesg.MESG_SET_LP_SEARCH_TIMEOUT_ID:
-              if (channelConfig[channelNumber].deviceNumber == WILDCARD) {
+              if (channelConfig[channel].getDeviceNumber() == WILDCARD) {
                 try {
                   // Configure proximity search, if using wild card search
                   antInterface.ANTSetProximitySearch(
-                      channelNumber, channelConfig[channelNumber].proxSearch);
+                      channel, ChannelConfiguration.PROXIMITY_SEARCH);
                 } catch (AntInterfaceException e) {
                   handleAntError();
                 }
               } else {
                 try {
-                  antInterface.ANTOpenChannel(channelNumber);
+                  antInterface.ANTOpenChannel(channel);
                 } catch (AntInterfaceException e) {
                   handleAntError();
                 }
@@ -540,87 +462,31 @@ public class AntSensorManager extends SensorManager {
               break;
             case AntMesg.MESG_PROX_SEARCH_CONFIG_ID:
               try {
-                antInterface.ANTOpenChannel(channelNumber);
+                antInterface.ANTOpenChannel(channel);
               } catch (AntInterfaceException e) {
                 handleAntError();
               }
               break;
             case AntMesg.MESG_OPEN_CHANNEL_ID:
-              channelConfig[channelNumber].isInitializing = false;
-              switch (channelNumber) {
-                case HRM_CHANNEL:
-                  hrmState = ChannelStates.SEARCHING;
-                  break;
-                case SDM_CHANNEL:
-                  sdmState = ChannelStates.SEARCHING;
-                  break;
-                default:
-                  break;
-              }
+              channelConfig[channel].setInitializing(false);
+              channelConfig[channel].setChannelState(ChannelStates.SEARCHING);
               break;
             default:
               break;
           }
         }
-      } else if (channelConfig[channelNumber].isDeinitializing) {
+      } else if (channelConfig[channel].isDeinitializing()) {
         if ((message[AntMesg.MESG_DATA_OFFSET + 1] == AntMesg.MESG_EVENT_ID)
             && (message[AntMesg.MESG_DATA_OFFSET + 2] == AntDefine.EVENT_CHANNEL_CLOSED)) {
           try {
-            antInterface.ANTUnassignChannel(channelNumber);
+            antInterface.ANTUnassignChannel(channel);
           } catch (AntInterfaceException e) {
             handleAntError();
           }
         } else if ((message[AntMesg.MESG_DATA_OFFSET + 1] == AntMesg.MESG_UNASSIGN_CHANNEL_ID)
             && (message[AntMesg.MESG_DATA_OFFSET + 2] == AntDefine.RESPONSE_NO_ERROR)) {
-          channelConfig[channelNumber].isDeinitializing = false;
+          channelConfig[channel].setDeinitializing(false);
         }
-      }
-    }
-
-    /**
-     * Decodes HRM message.
-     * 
-     * @param message the message
-     */
-    private void decodeHrmMessage(byte[] message) {
-      if (hrmState != ChannelStates.CLOSED) {
-        hrmState = ChannelStates.TRACKING_DATA;
-      }
-
-      if (hrmDeviceNumber == WILDCARD) {
-        try {
-          antInterface.ANTRequestMessage(HRM_CHANNEL, AntMesg.MESG_CHANNEL_ID_ID);
-        } catch (AntInterfaceException e) {
-          handleAntError();
-        }
-      }
-
-      lastHeartRate = message[10] & 0xFF;
-      setSenorDataSet();
-    }
-
-    /**
-     * Decodes SDM message.
-     * 
-     * @param message the message
-     */
-    private void decodeSdmMessage(byte[] message) {
-      if (sdmState != ChannelStates.CLOSED) {
-        sdmState = ChannelStates.TRACKING_DATA;
-      }
-
-      if (sdmDeviceNumber == WILDCARD) {
-        try {
-          antInterface.ANTRequestMessage(SDM_CHANNEL, AntMesg.MESG_CHANNEL_ID_ID);
-        } catch (AntInterfaceException e) {
-          handleAntError();
-        }
-      }
-
-      // Check page 2 data
-      if (message[3] == 0x02) {
-        lastCadence = (int) ((message[6] & 0xFF) + (((message[7] >>> 4) & 0x0F) / 16.0f));
-        setSenorDataSet();
       }
     }
   };
@@ -628,21 +494,25 @@ public class AntSensorManager extends SensorManager {
   /**
    * Sets sensor data set.
    */
-  private void setSenorDataSet() {
+  private void setSensorDataSet() {
     long now = System.currentTimeMillis();
     // Data comes in at ~4Hz rate from the sensors, so after >300 msec fresh
     // data is here from all the connected sensors
-    if (now < lastSensorDataSetTime + 300) { return; }
+    if (now < lastSensorDataSetTime + 300) {
+      return;
+    }
     lastSensorDataSetTime = now;
 
     SensorDataSet.Builder builder = Sensor.SensorDataSet.newBuilder();
-    if (lastHeartRate != -1) {
+    int heartRate = antSensorValue.getHeartRate();
+    if (heartRate != -1) {
       builder.setHeartRate(Sensor.SensorData.newBuilder()
-          .setValue(lastHeartRate).setState(Sensor.SensorState.SENDING));
+          .setValue(heartRate).setState(Sensor.SensorState.SENDING));
     }
-    if (lastCadence != -1) {
+    int cadence = antSensorValue.getCadence();
+    if (cadence != -1) {
       builder.setCadence(Sensor.SensorData.newBuilder()
-          .setValue(lastCadence).setState(Sensor.SensorState.SENDING));
+          .setValue(cadence).setState(Sensor.SensorState.SENDING));
     }
     sensorDataSet = builder.setCreationTime(now).build();
     setSensorState(SensorState.SENDING);
@@ -650,14 +520,14 @@ public class AntSensorManager extends SensorManager {
 
   /**
    * Sets up ant channel.
-   * 
+   *
    * @param networkNumber the network number
    * @param channel the channel
    */
   private void setupAntChannel(byte networkNumber, byte channel) {
     try {
-      channelConfig[channel].isInitializing = true;
-      channelConfig[channel].isDeinitializing = false;
+      channelConfig[channel].setInitializing(true);
+      channelConfig[channel].setDeinitializing(false);
 
       // Assign as slave channel on selected network
       antInterface.ANTAssignChannel(channel, AntDefine.PARAMETER_RX_NOT_TX, networkNumber);
@@ -671,20 +541,22 @@ public class AntSensorManager extends SensorManager {
 
   /**
    * Enables data message.
-   * 
+   *
    * @param enabled true to enable
    */
   private void enableDataMessage(boolean enabled) {
     if (enabled) {
       context.registerReceiver(
           dataReceiver, new IntentFilter(AntInterfaceIntent.ANT_RX_MESSAGE_ACTION));
-      openChannel(HRM_CHANNEL);
-      openChannel(SDM_CHANNEL);
+      for (int i = 0; i < CHANNELS; i++) {
+        openChannel((byte) i);
+      }
     } else {
       try {
         context.unregisterReceiver(dataReceiver);
-        closeChannel(HRM_CHANNEL);
-        closeChannel(SDM_CHANNEL);
+        for (int i = 0; i < CHANNELS; i++) {
+          closeChannel((byte) i);
+        }
         setSensorState(SensorState.DISCONNECTED);
       } catch (IllegalArgumentException e) {
         // Can safely ignore

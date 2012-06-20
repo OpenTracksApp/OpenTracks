@@ -368,7 +368,7 @@ limitations under the License.
       completion suggestion for wind surfing.">
     wind surfing
   </string>
- 
+
   <!-- Description -->
   <string name="description_activity_type"
     translation_description="Activity type description.
@@ -737,7 +737,7 @@ limitations under the License.
   </string>
   <string name="help_google_services_answer"
     translation_description="In the 'Help' page, the answer on locations of google services.
-    
+
      %1$s url. E.g., 'maps.google.com'.
      %2$s url. E.g., 'google.com/fusiontables'.
      %3$s url. E.g., 'docs.google.com'.">
@@ -1296,12 +1296,12 @@ limitations under the License.
   <string name="send_google_new_public_map"
     translation_description="When sending a track to Google Maps, the radio option to create a
       new public map as opposed to use an existing map.">
-    Create new public map 
+    Create new public map
   </string>
   <string name="send_google_new_unlisted_map"
     translation_description="When sending a track to Google Maps, the radio option to create a
       new unlisted map as opposed to use an existing map.">
-    Create new unlisted map 
+    Create new unlisted map
   </string>
   <string name="send_google_no_account_message"
     translation_description="When sending to Google, the dialog message when no Google account is
@@ -1729,6 +1729,20 @@ limitations under the License.
 
       %1$d: device id number. E.g., '1'.">
     Paired with: %1$d
+  </string>
+  <string name="settings_sensor_ant_reset_bike_candence_sensor"
+    translation_description="In the 'Sensor' settings, under the 'ANT+ options', the option to reset
+      an ANT+ bike cadence sensor. Note that ANT+ is a radio standard.
+
+      Character limit: ~26 (1 line)">
+    Reset bike cadence
+  </string>
+  <string name="settings_sensor_ant_reset_combined_bike_sensor"
+    translation_description="In the 'Sensor' settings, under the 'ANT+ options', the option to reset
+      an ANT+ combined bike cadence and speed sensor. Note that ANT+ is a radio standard.
+
+      Character limit: ~26 (1 line)">
+    Reset combined bike
   </string>
   <string name="settings_sensor_ant_reset_heart_rate_monitor"
     translation_description="In the 'Sensor' settings, under the 'ANT+ options', the option to reset

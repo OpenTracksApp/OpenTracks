@@ -59,12 +59,13 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
 
   private static final String TAG = MarkerListActivity.class.getSimpleName();
   
-  private static final String[] PROJECTION = new String[] { WaypointsColumns._ID,
-      WaypointsColumns.TYPE,
+  private static final String[] PROJECTION = new String[] {
+      WaypointsColumns._ID,
       WaypointsColumns.NAME,
+      WaypointsColumns.DESCRIPTION,
       WaypointsColumns.CATEGORY,
-      WaypointsColumns.TIME,
-      WaypointsColumns.DESCRIPTION };
+      WaypointsColumns.TYPE,
+      WaypointsColumns.TIME};
 
   // Callback when an item is selected in the contextual action mode
   private ContextualActionModeCallback contextualActionModeCallback =
@@ -128,11 +129,11 @@ public class MarkerListActivity extends AbstractMyTracksActivity {
     resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.list_item, null, 0) {
       @Override
       public void bindView(View view, Context context, Cursor cursor) {
-        int typeIndex = cursor.getColumnIndex(WaypointsColumns.TYPE);
         int nameIndex = cursor.getColumnIndex(WaypointsColumns.NAME);
-        int categoryIndex = cursor.getColumnIndex(WaypointsColumns.CATEGORY);
-        int timeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.TIME);
         int descriptionIndex = cursor.getColumnIndex(WaypointsColumns.DESCRIPTION);
+        int categoryIndex = cursor.getColumnIndex(WaypointsColumns.CATEGORY);
+        int typeIndex = cursor.getColumnIndex(WaypointsColumns.TYPE);
+        int timeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.TIME);
 
         boolean statistics = cursor.getInt(typeIndex) == Waypoint.TYPE_STATISTICS;
         String name = cursor.getString(nameIndex);
