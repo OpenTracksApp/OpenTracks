@@ -37,6 +37,7 @@ import java.io.File;
 public class IntentUtils {
 
   public static final String TEXT_PLAIN_TYPE = "text/plain";
+  private static final String BLUETOOTH_PACKAGE_NAME = "com.android.bluetooth";
   private static final String TWITTER_PACKAGE_NAME = "com.twitter.android";
 
   private IntentUtils() {}
@@ -67,12 +68,14 @@ public class IntentUtils {
     Track track = MyTracksProviderUtils.Factory.get(context).getTrack(trackId);
     String trackDescription = track == null ? ""
         : new DescriptionGeneratorImpl(context).generateTrackDescription(track, null, null, false);
+    boolean urlOnly = TWITTER_PACKAGE_NAME.equals(packageName)
+        || BLUETOOTH_PACKAGE_NAME.equals(packageName);
     
     return new Intent(Intent.ACTION_SEND)
         .addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP)
         .putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.share_track_subject))
-        .putExtra(Intent.EXTRA_TEXT, TWITTER_PACKAGE_NAME.equals(packageName) 
-            ? trackUrl
+        .putExtra(Intent.EXTRA_TEXT, urlOnly 
+            ? trackUrl 
             : context.getString(R.string.share_track_share_url_body, trackUrl, trackDescription))
         .setComponent(new ComponentName(packageName, className))
         .setType(TEXT_PLAIN_TYPE);
