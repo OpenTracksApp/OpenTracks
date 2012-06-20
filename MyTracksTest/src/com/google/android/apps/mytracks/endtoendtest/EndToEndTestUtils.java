@@ -15,6 +15,7 @@
  */
 package com.google.android.apps.mytracks.endtoendtest;
 
+import com.google.android.apps.mytracks.ChartView;
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.maps.mytracks.R;
@@ -481,6 +482,39 @@ public class EndToEndTestUtils {
     for (View view : allViews) {
       if (view instanceof ImageButton && view.getClass().getName().equals(MOREOPTION_CLASSNAME)) { 
         return view; 
+      }
+    }
+    return null;
+  }
+  
+  /**
+   * Finds a text view with specified test in a view.
+   * 
+   * @param findText text to find
+   * @param parent which text view in in
+   * @return the text view, null means can not find it
+   */
+  static TextView findTextView(String findText, View parent) {
+    ArrayList<TextView> textViews = EndToEndTestUtils.SOLO.getCurrentTextViews(parent);
+    for (TextView textView : textViews) {
+      String text = (String) textView.getText();
+      if (textView.isShown() && text.endsWith(findText)) { 
+        return textView; 
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Gets the ChartView.
+   * 
+   * @return the ChartView or null if not find
+   */
+  static ChartView getChartView() {
+    ArrayList<View> views = EndToEndTestUtils.SOLO.getViews();
+    for (View view : views) {
+      if (view instanceof ChartView) { 
+        return (ChartView) view; 
       }
     }
     return null;

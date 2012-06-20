@@ -22,6 +22,7 @@ import com.google.android.apps.mytracks.util.IntentUtils;
 import com.google.android.apps.mytracks.util.StringUtils;
 import com.google.android.apps.mytracks.util.UnitConversions;
 import com.google.android.maps.mytracks.R;
+import com.google.common.annotations.VisibleForTesting;
 
 import android.content.Context;
 import android.content.Intent;
@@ -998,5 +999,15 @@ public class ChartView extends View {
       default:
         return false;
     }
+  }
+  
+  /**
+   * Returns the status of metricUnits.
+   * 
+   * @return the status of metricUnits
+   */
+  @VisibleForTesting
+  public boolean isMetricUnits() {
+    return metricUnits;
   }
 }
