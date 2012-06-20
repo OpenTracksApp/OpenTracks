@@ -50,14 +50,16 @@ public class GoToMyLocationTest extends ActivityInstrumentationTestCase2<TrackLi
   public void testGotoMyLocation() {
     EndToEndTestUtils.createTrackIfEmpty(1, false);
     EndToEndTestUtils.sendGps(30);
+    instrumentation.waitForIdleSync();
     View myLocation = EndToEndTestUtils.SOLO.getCurrentActivity()
         .findViewById(R.id.map_my_location);
     EndToEndTestUtils.SOLO.clickOnView(myLocation);
-    if (!EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.my_location_no_location), 1, 1000)) {
+    if (EndToEndTestUtils.isEmulator) {
+      EndToEndTestUtils.SOLO.waitForText(
+          activityMyTracks.getString(R.string.my_location_no_location), 1, 1000);
+    } else {
       // TODO How to verify the location is shown on the map.
     }
-
   }
 
   @Override

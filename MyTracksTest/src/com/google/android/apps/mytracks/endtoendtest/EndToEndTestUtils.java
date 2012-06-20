@@ -15,6 +15,7 @@
  */
 package com.google.android.apps.mytracks.endtoendtest;
 
+import com.google.android.apps.mytracks.ChartView;
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.apps.mytracks.util.FileUtils;
 import com.google.android.maps.mytracks.R;
@@ -73,6 +74,7 @@ public class EndToEndTestUtils {
   // Check whether the UI has an action bar which is related with the version of
   // Android OS.
   static boolean hasActionBar = false;
+  static boolean isEmulator = true;
   static boolean isCheckedFirstLaunch = false;
 
   private EndToEndTestUtils() {}
@@ -86,6 +88,11 @@ public class EndToEndTestUtils {
     if (number < 1) { 
       return; 
     }
+    // If it's a real device, does not send simulated GPS signal.
+    if (!isEmulator) {
+      return;
+    }
+    
     PrintStream out = null;
     Socket socket = null;
     try {
@@ -111,6 +118,13 @@ public class EndToEndTestUtils {
       }
     }
   }
+  
+  /**
+   * Sets the status whether the test is run on an emulator or not.
+   */
+  static void setIsEmulator() {
+    isEmulator = android.os.Build.MODEL.equals("google_sdk");
+  }
 
   /**
    * A setup for all end-to-end tests.
@@ -119,6 +133,7 @@ public class EndToEndTestUtils {
    * @param activityMyTracks the startup activity
    */
   static void setupForAllTest(Instrumentation instrumentation, TrackListActivity activityMyTracks) {
+    setIsEmulator();
     EndToEndTestUtils.INSTRUMENTATION = instrumentation;
     EndToEndTestUtils.ACTIVITYMYTRACKS = activityMyTracks;
     EndToEndTestUtils.SOLO = new Solo(EndToEndTestUtils.INSTRUMENTATION,
@@ -304,6 +319,10 @@ public class EndToEndTestUtils {
       EndToEndTestUtils.trackName = EndToEndTestUtils.TRACK_NAME_PREFIX
           + System.currentTimeMillis();
       SOLO.enterText(0, trackName);
+      if(!EndToEndTestUtils.isEmulator) {
+        // Close soft keyboard.
+        EndToEndTestUtils.SOLO.goBack();
+      }
       SOLO.clickLongOnText(ACTIVITYMYTRACKS.getString(R.string.generic_save));
     }
   }
@@ -481,6 +500,39 @@ public class EndToEndTestUtils {
     for (View view : allViews) {
       if (view instanceof ImageButton && view.getClass().getName().equals(MOREOPTION_CLASSNAME)) { 
         return view; 
+      }
+    }
+    return null;
+  }
+  
+  /**
+   * Finds a text view with specified test in a view.
+   * 
+   * @param findText text to find
+   * @param parent which text view in in
+   * @return the text view, null means can not find it
+   */
+  static TextView findTextView(String findText, View parent) {
+    ArrayList<TextView> textViews = EndToEndTestUtils.SOLO.getCurrentTextViews(parent);
+    for (TextView textView : textViews) {
+      String text = (String) textView.getText();
+      if (textView.isShown() && text.endsWith(findText)) { 
+        return textView; 
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Gets the ChartView.
+   * 
+   * @return the ChartView or null if not find
+   */
+  static ChartView getChartView() {
+    ArrayList<View> views = EndToEndTestUtils.SOLO.getViews();
+    for (View view : views) {
+      if (view instanceof ChartView) { 
+        return (ChartView) view; 
       }
     }
     return null;

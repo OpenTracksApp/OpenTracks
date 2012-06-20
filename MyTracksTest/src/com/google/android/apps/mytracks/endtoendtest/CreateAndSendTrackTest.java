@@ -22,6 +22,7 @@ import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.KeyEvent;
 import android.widget.CheckBox;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 
@@ -93,18 +94,24 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_edit), true);
 
     String newTrackName = EndToEndTestUtils.TRACK_NAME_PREFIX + "_new" + System.currentTimeMillis();
-    String newType = "type" + newTrackName;
+    String newType = "type" + newTrackName; 
     String newDesc = "desc" + newTrackName;
 
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.rotateAllActivities();
     sendKeys(KeyEvent.KEYCODE_DEL);
-    EndToEndTestUtils.SOLO.enterText(0, newTrackName);
-    sendKeys(KeyEvent.KEYCODE_TAB);
-    EndToEndTestUtils.SOLO.enterText(1, newType);
-    sendKeys(KeyEvent.KEYCODE_TAB);
-    EndToEndTestUtils.SOLO.enterText(2, newDesc);
-
+    ArrayList<EditText> editTexts = EndToEndTestUtils.SOLO.getCurrentEditTexts();
+    
+    EndToEndTestUtils.SOLO.enterText(editTexts.get(0), newTrackName);
+    EndToEndTestUtils.SOLO.enterText(editTexts.get(1), newType);
+    // In landscape, there are only two visible edit texts.
+    if (editTexts.size() > 2) {
+      EndToEndTestUtils.SOLO.enterText(editTexts.get(2), newDesc);
+    } else {
+      EndToEndTestUtils.SOLO.scrollDown();
+      editTexts = EndToEndTestUtils.SOLO.getCurrentEditTexts();
+      EndToEndTestUtils.SOLO.enterText(editTexts.get(editTexts.size() - 1), newDesc);
+    }
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_save));
     instrumentation.waitForIdleSync();
     // Go back to track list.
@@ -136,6 +143,10 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils.stopRecording(false);
     EndToEndTestUtils.trackName = EndToEndTestUtils.TRACK_NAME_PREFIX + System.currentTimeMillis();
     EndToEndTestUtils.SOLO.enterText(0, EndToEndTestUtils.trackName);
+    if(!EndToEndTestUtils.isEmulator) {
+      // Close soft keyboard.
+      EndToEndTestUtils.SOLO.goBack();
+    }
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_save));
 
     instrumentation.waitForIdleSync();
@@ -182,6 +193,10 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     // Rotate when show insert page.
     EndToEndTestUtils.rotateAllActivities();
     EndToEndTestUtils.SOLO.enterText(0, WAYPOINT_NAME);
+    if(!EndToEndTestUtils.isEmulator) {
+      // Close soft keyboard.
+      EndToEndTestUtils.SOLO.goBack();
+    }
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_add));
     assertTrue(EndToEndTestUtils.SOLO.searchText(WAYPOINT_NAME));
 
