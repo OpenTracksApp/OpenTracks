@@ -16,7 +16,7 @@ limitations under the License.
 -->
 <resources>
   <!-- DO NOT TRANSLATE ANY STRINGS IN THIS FILE. -->
-  <string name="maps_public_unlisted_url">support.google.com/maps/bin/answer.py?answer=62845</string>
+  <string name="maps_public_unlisted_url">support.google.com/maps/bin/answer.py?answer=144365</string>
   <string name="marker_statistics_icon_url">http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png</string>
   <string name="marker_waypoint_icon_url">http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png</string>
   <string name="my_tracks_privacy_url">www.google.com/policies/privacy/</string>
