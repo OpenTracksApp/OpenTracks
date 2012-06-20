@@ -82,7 +82,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     // Change a setting of sharing.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_sharing));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.settings_sharing_map_public), 1, 5000));
+        activityMyTracks.getString(R.string.settings_sharing_allow_access), 1, 5000));
     ArrayList<CheckBox> sharingCheckBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
     boolean newMapsPublic = sharingCheckBoxs.get(0).isChecked();
     EndToEndTestUtils.SOLO.clickOnCheckBox(0);
