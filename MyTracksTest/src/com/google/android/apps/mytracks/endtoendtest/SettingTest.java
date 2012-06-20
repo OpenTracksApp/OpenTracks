@@ -15,6 +15,7 @@
  */
 package com.google.android.apps.mytracks.endtoendtest;
 
+import com.google.android.apps.mytracks.ChartView;
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.maps.mytracks.R;
 
@@ -57,7 +58,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
    * <li>Changes the setting of Sharing.</li>
    * </ul>
    */
-  public void testSetting() {
+  public void testChangeAndReset() {
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
     instrumentation.waitForIdleSync();
     // Rotate on the settings page.
@@ -108,6 +109,95 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
         .getString(R.string.settings_sharing_allow_access));
     sharingCheckBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
     assertEquals(newMapsPublic, sharingCheckBoxs.get(0).isChecked());
+  }
+
+  /**
+   * Tests the change of preferred units.
+   */
+  public void testChangePreferredUnits() {
+    EndToEndTestUtils.createTrackIfEmpty(5, false);
+    // Change it and verify it.
+    ChangePreferredUnits();
+    // Change it back and verify it.
+    ChangePreferredUnits();
+  }
+  
+  /**
+   * Tests the change of stats settings during recording on chart view.
+   */
+  public void testChangeStatsSettings_underRecording_chart() {
+    EndToEndTestUtils.startRecording();
+    // Test just change preferred units when display CHART tab.
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_chart_tab));
+    EndToEndTestUtils.sendGps(3);
+    ChangeStatsSettings(true, false);
+    EndToEndTestUtils.sendGps(3);
+    EndToEndTestUtils.stopRecording(true);
+
+  }
+  
+  /**
+   * Tests the change of stats settings during recording on stats view.
+   */
+  public void testChangeStatsSettings_underRecording_stats() {
+    EndToEndTestUtils.startRecording();
+    // Test change preferred units and preferred rate when display STATS tab.
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
+    EndToEndTestUtils.sendGps(3);
+    ChangeStatsSettings(true, true);
+    EndToEndTestUtils.sendGps(3);
+    EndToEndTestUtils.stopRecording(true);
+
+  }
+  
+  /**
+   * Changes settings of preferred units and preferred rate.
+   * 
+   * @param changeUnits is change the preferred unit
+   * @param changeRate is change the preferred rate
+   */
+  private void ChangeStatsSettings(boolean changeUnits, boolean changeRate) {
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.settings_stats_units_title)));
+
+    // Change preferred units.
+    if (changeUnits) {
+      EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+          .getString(R.string.settings_stats_units_title));
+    }
+    if (changeRate) {
+      EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+          .getString(R.string.settings_stats_rate_title));
+    }
+    EndToEndTestUtils.SOLO.goBack();
+    EndToEndTestUtils.SOLO.goBack();
+  }
+
+  /**
+   * Changes PreferredUnits and verifies the change.
+   */
+  private void ChangePreferredUnits() {
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.settings_stats_units_title)));
+
+    boolean isImperial = EndToEndTestUtils.findTextView(activityMyTracks
+        .getString(R.string.settings_stats_units_imperial), EndToEndTestUtils.SOLO
+        .getCurrentListViews().get(0)) != null;
+
+    // Change preferred units.
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+        .getString(R.string.settings_stats_units_title));
+    isImperial = !isImperial;
+    EndToEndTestUtils.SOLO.goBack();
+    EndToEndTestUtils.SOLO.goBack();
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_chart_tab));
+    instrumentation.waitForIdleSync();
+    ChartView chartView = EndToEndTestUtils.getChartView();
+    assertEquals(!isImperial, chartView.isMetricUnits());
   }
 
   /**
