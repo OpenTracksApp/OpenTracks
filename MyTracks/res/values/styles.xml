@@ -143,10 +143,15 @@ limitations under the License.
     <item name="android:paddingRight">8dp</item>
     <item name="android:textColor">@android:color/primary_text_light</item>
   </style>
+  <!-- The style for choose activity text -->
+  <style name="TextChooseActivity">
+    <item name="android:textSize">18sp</item>
+  </style>
   <!-- The style for large size text -->
   <style name="TextLarge">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
+    <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">22sp</item>
   </style>
   <!-- The style for large size text with top margin -->
@@ -157,6 +162,7 @@ limitations under the License.
   <style name="TextMedium">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
+    <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">18sp</item>
   </style>
   <!-- The style for medium size text with an icon on the left -->
@@ -164,7 +170,7 @@ limitations under the License.
     <item name="android:drawablePadding">8dp</item>
     <item name="android:gravity">center_vertical</item>
   </style>
-  <!-- The style for large size text -->
+  <!-- The style for small size text -->
   <style name="TextSmall">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
