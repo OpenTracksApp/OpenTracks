@@ -1,0 +1,54 @@
+// Copyright 2010 Google Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not
+// use this file except in compliance with the License. You may obtain a copy of
+// the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+// WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+// License for the specific language governing permissions and limitations under
+// the License.
+
+package com.google.android.apps.mytracks.content;
+
+option optimize_for = LITE_RUNTIME;
+
+// An enumeration of the state of a single sensor.
+enum SensorState {
+  // There is no sensor.
+  NONE = 1;
+
+  // Now initiating an outgoing connection.
+  CONNECTING = 2;
+
+  // Now connected to a remote device.
+  CONNECTED = 3;
+
+  // A state where the sensor is not connected.
+  DISCONNECTED = 4;
+
+  // This is the only state where the sensor data can be used.
+  SENDING = 5;
+};
+
+// The state and possible reading for one integer sensor.
+message SensorData {
+  required SensorState state = 1 [default = NONE];
+  
+  // Value is only defined if state = SENDING.
+  optional int32 value = 2;
+};
+
+// A message to encapsulate sensor readings associated with a track point.
+message SensorDataSet {
+  // This is a required field.
+  optional uint64 creation_time = 1 [default = 0];
+  
+  optional SensorData heart_rate = 2;
+  optional SensorData cadence = 3;
+  optional SensorData power = 4;
+  optional SensorData battery_level = 5;
+}
