@@ -724,8 +724,7 @@ limitations under the License.
     How can I edit or correct tracks for accuracy?
   </string>
   <string name="help_elevation_precision_answer"
-    translation_description="In the 'Help' page, the help content answer on elevation
-      precision.">
+    translation_description="In the 'Help' page, the help content answer on elevation precision.">
     GPS receivers measure elevations much less precisely than latitude and longitude. Elevations
     can sometimes be off by a few hundred feet, though relative changes are tracked more precisely.
     To get a good elevation measurement, make sure that you have a strong GPS signal and wait a few
@@ -738,9 +737,9 @@ limitations under the License.
   <string name="help_google_services_answer"
     translation_description="In the 'Help' page, the answer on locations of google services.
 
-     %1$s url. E.g., 'maps.google.com'.
-     %2$s url. E.g., 'google.com/fusiontables'.
-     %3$s url. E.g., 'docs.google.com'.">
+      %1$s url. E.g., 'maps.google.com'.
+      %2$s url. E.g., 'google.com/fusiontables'.
+      %3$s url. E.g., 'docs.google.com'.">
     For Google Maps, go to %1$s and click on \"My Places\". For Google Fusion Tables, go to %2$s.
     For Google Docs, go to %3$s.
   </string>
@@ -773,7 +772,7 @@ limitations under the License.
   <string name="help_maps_public_unlisted_answer"
     translation_description="In the 'Help' page, the answer on public versus unlisted maps.
 
-    %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=62845'.">
+      %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=144365'.">
     See %1$s.
   </string>
   <string name="help_maps_public_unlisted_question"
@@ -904,13 +903,13 @@ limitations under the License.
 
   <!-- Maps List -->
   <string name="maps_list_error"
-    translation_description="When sending a track to an existing Google Map, the text on the
-      'Maps' list page informing the user that his maps cannot be loaded at this time.">
+    translation_description="When sending a track to an existing Google Map, the text on the Maps'
+      list page informing the user that his maps cannot be loaded at this time.">
     Your maps could not be loaded at this time.
   </string>
   <string name="maps_list_no_maps"
-    translation_description="When sending a track to an existing Google Map, the text on the
-      'Maps' list page informing the user that he doesn't have any maps.">
+    translation_description="When sending a track to an existing Google Map, the text on the 'Maps'
+      list page informing the user that he doesn't have any maps.">
     You don\'t have any maps.
   </string>
   <string name="maps_list_progress_message"
@@ -919,18 +918,18 @@ limitations under the License.
     Loading your Google Maps...
   </string>
   <string name="maps_list_public_label"
-    translation_description="When sending a track to an existing Google Map, in the 'Maps'
-      list page, the label next to the maps that are public, as opposed to being unlisted.">
+    translation_description="When sending a track to an existing Google Map, in the 'Maps' list
+      page, the label next to the maps that are public, as opposed to being unlisted.">
     Public
   </string>
   <string name="maps_list_title"
-    translation_description="When sending a track to an existing Google Map, the title of the
-      page asking the user to pick a map.">
+    translation_description="When sending a track to an existing Google Map, the title of the page
+      asking the user to pick a map.">
     Pick a Map
   </string>
   <string name="maps_list_unlisted_label"
-    translation_description="When sending a track to an existing Google Map, in the 'Maps'
-      list page, the label next to the maps that are unlisted, as opposed to being public.">
+    translation_description="When sending a track to an existing Google Map, in the 'Maps' list
+      page, the label next to the maps that are unlisted, as opposed to being public.">
     Unlisted
   </string>
 
@@ -982,7 +981,7 @@ limitations under the License.
       name. E.g., 'track_name (Start)'.
 
       %1$s track name. E.g., 'track_name'.">
-     %1$s (Start)
+    %1$s (Start)
   </string>
   <string name="marker_list_empty_message"
     translation_description="The message when the marker list is empty.">
@@ -1061,8 +1060,8 @@ limitations under the License.
     Save all to SD card...
   </string>
   <string name="menu_save_format"
-    translation_description="Under the save to SD card menu option, the option to save a track
-      as a certain file format.
+    translation_description="Under the save to SD card menu option, the option to save a track as a
+      certain file format.
 
       %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
     Save as %1$s
@@ -1092,8 +1091,8 @@ limitations under the License.
     Show on map
   </string>
   <string name="menu_split_frequency"
-    translation_description="In the menu, to configure the split frequency, how frequent to insert
-      a split marker.">
+    translation_description="In the menu, to configure the split frequency, how frequent to insert a
+      split marker.">
     Split frequency
   </string>
   <string name="menu_stop_recording"
@@ -1253,8 +1252,8 @@ limitations under the License.
 
   <!-- Send Google -->
   <string name="send_google_by_my_tracks"
-    translation_description="When sending a track to Google, a note indicating it is created by
-      My Tracks on Android.
+    translation_description="When sending a track to Google, a note indicating it is created by My
+      Tracks on Android.
 
       %1$s: the html anchor opening tag. Place this placeholder before the app name, 'My Tracks'.
       %2$s: the html anchor closing tag. Place this placeholder after the app name, 'My Tracks'.">
@@ -1294,13 +1293,13 @@ limitations under the License.
     Google Maps
   </string>
   <string name="send_google_new_public_map"
-    translation_description="When sending a track to Google Maps, the radio option to create a
-      new public map as opposed to use an existing map.">
+    translation_description="When sending a track to Google Maps, the radio option to create a new
+      public map as opposed to use an existing map.">
     Create new public map
   </string>
   <string name="send_google_new_unlisted_map"
-    translation_description="When sending a track to Google Maps, the radio option to create a
-      new unlisted map as opposed to use an existing map.">
+    translation_description="When sending a track to Google Maps, the radio option to create a new
+      unlisted map as opposed to use an existing map.">
     Create new unlisted map
   </string>
   <string name="send_google_no_account_message"
@@ -1357,8 +1356,9 @@ limitations under the License.
   </string>
   <string name="sensor_state_cadence"
     translation_description="In the 'Sensor state' page, the label for the cadence on the bike
-      sensor. Cadence is the number of revolutions of the crank per minute. E.g.,
-      'Cadence: 80 rpm'.">
+      sensor. Cadence is the number of revolutions of the crank per minute. E.g., 'Cadence: 80 rpm'.
+
+      Character limit: ~23 (1 line)">
     Cadence
   </string>
   <string name="sensor_state_cadence_value"
@@ -1385,7 +1385,9 @@ limitations under the License.
   </string>
   <string name="sensor_state_heart_rate"
     translation_description="In the 'Sensor state' page, the label for the heart rate from a heart
-      rate sensor. E.g., 'Hear rate: 100 bpm'.">
+      rate sensor. E.g., 'Hear rate: 100 bpm'.
+
+      Character limit: ~23 (1 line)">
     Heart rate
   </string>
   <string name="sensor_state_heart_rate_value"
@@ -1402,7 +1404,9 @@ limitations under the License.
   </string>
   <string name="sensor_state_power"
     translation_description="In the 'Sensor state' page, the label for the power from the bike
-      sensor. Power is the power output of the rider. E.g., 'Power: 50 W'.">
+      sensor. Power is the power output of the rider. E.g., 'Power: 50 W'.
+
+      Character limit: ~23 (1 line)">
     Power
   </string>
   <string name="sensor_state_power_value"
@@ -1427,8 +1431,8 @@ limitations under the License.
     Backup
   </string>
   <string name="settings_backup_now"
-    translation_description="In the 'Backup' settings, under the 'SD card' section, the
-      option to backup to the SD card now.
+    translation_description="In the 'Backup' settings, under the 'SD card' section, the option to
+      backup to the SD card now.
 
       Character limit: ~26 (1 line)">
     Backup now
@@ -1439,14 +1443,14 @@ limitations under the License.
     Writing all tracks and settings...
   </string>
   <string name="settings_backup_now_summary"
-    translation_description="In the 'Backup' settings, under the 'SD card' section, the
-      summary for the 'Backup now' option explaining that all tracks and settings will be written to
-      the SD card.">
+    translation_description="In the 'Backup' settings, under the 'SD card' section, the summary for
+      the 'Backup now' option explaining that all tracks and settings will be written to the SD
+      card.">
     Write a full copy of all your tracks and settings to the SD card.
   </string>
   <string name="settings_backup_restore"
-    translation_description="In the 'Backup' settings, under the 'SD card' section, the
-      option to restore everything from the SD card.
+    translation_description="In the 'Backup' settings, under the 'SD card' section, the option to
+      restore everything from the SD card.
 
       Character limit: ~26 (1 line)">
     Restore now
@@ -1474,9 +1478,9 @@ limitations under the License.
     Select a backup to restore
   </string>
   <string name="settings_backup_restore_summary"
-    translation_description="In the 'Backup' settings, under the 'SD card' section, the
-      summary for the 'Restore now' option explaining that it restores all tracks and settings from
-      the SD card.">
+    translation_description="In the 'Backup' settings, under the 'SD card' section, the summary for
+      the 'Restore now' option explaining that it restores all tracks and settings from the SD
+      card.">
     Restore all tracks and settings from the SD card.
   </string>
 
@@ -1492,19 +1496,25 @@ limitations under the License.
   </string>
   <string name="settings_chart_x_axis"
     translation_description="In the 'Chart' settings, the option to change the x axis display,
-      either by distance or by time.">
+      either by distance or by time.
+
+      Character limit: ~23 (1 line)">
     X axis
   </string>
 
   <!-- Settings Map -->
   <string name="settings_map_medium"
     translation_description="In the 'Map' settings, under the 'Fixed thresholds' configurations, the
-      option for configuring the top medium speed.">
+      option for configuring the top medium speed.
+
+      Character limit: ~23 (1 line)">
     Top medium speed
   </string>
   <string name="settings_map_percentage"
     translation_description="In the 'Map' settings, under the 'Dynamic thresholds' configurations,
-      the option for configuring the percentage from the average speed for the medium speed range.">
+      the option for configuring the percentage from the average speed for the medium speed range.
+
+      Character limit: ~23 (1 line)">
     Percentage from average
   </string>
   <string name="settings_map_percentage_summary"
@@ -1516,29 +1526,38 @@ limitations under the License.
     Percentage from the average speed for the medium speed range.
   </string>
   <string name="settings_map_slow"
-    translation_description="In the 'Map' settings, under the 'Fixed thresholds' configurations,
-      the option for configuring the top slow speed.">
+    translation_description="In the 'Map' settings, under the 'Fixed thresholds' configurations, the
+      option for configuring the top slow speed.
+
+      Character limit: ~23 (1 line)">
     Top slow speed
   </string>
   <string name="settings_map_track_color_mode"
     translation_description="In the 'Map' settings, the option to select a track color mode for how
-      to use different colors to color a track based on slow, medium, and fast speed.">
-    Track color mode
+      to use different colors to color a track based on slow, medium, and fast speed.
+
+      Character limit: ~23 (1 line)">
+    Track color
   </string>
   <string name="settings_map_track_color_mode_dynamic"
-    translation_description="In the 'Map' settings, for the 'Track color mode' dropdown, the
-      option to use different colors to color a track based on dynamically determined speed
-      thresholds.">
+    translation_description="In the 'Map' settings, for the 'Track color mode' dropdown, the option
+      to use different colors to color a track based on dynamically determined speed thresholds.
+
+      Character limit: ~21 (1 line)">
     Dynamic thresholds
   </string>
   <string name="settings_map_track_color_mode_fixed"
-    translation_description="In the 'Map' settings, for the 'Track color mode' dropdown, the
-      option to use different colors to color a track based on fixed speed thresholds.">
+    translation_description="In the 'Map' settings, for the 'Track color mode' dropdown, the option
+      to use different colors to color a track based on fixed speed thresholds.
+
+      Character limit: ~21 (1 line)">
     Fixed thresholds
   </string>
   <string name="settings_map_track_color_mode_single"
-    translation_description="In the 'Map' settings, for the 'Track color mode' dropdown, the
-      option to use a single color for all speeds.">
+    translation_description="In the 'Map' settings, for the 'Track color mode' dropdown, the option
+      to use a single color for all speeds.
+
+      Character limit: ~21 (1 line)">
     Single color
   </string>
   <string name="settings_map_track_color_mode_summary"
@@ -1571,9 +1590,9 @@ limitations under the License.
     Auto-resume
   </string>
   <string name="settings_recording_auto_resume_summary"
-    translation_description="In the 'Recording' settings, the summary for the 'Auto-resume'
-      dropdown option explaining that it configures the maximum time after which a previous
-      recording will not be resumed after phone reboot.">
+    translation_description="In the 'Recording' settings, the summary for the 'Auto-resume' dropdown
+      option explaining that it configures the maximum time after which a previous recording will
+      not be resumed after phone reboot.">
     Maximum time after which a previously recording track will not be resumed after phone reboot.
   </string>
   <string name="settings_recording_default_activity"
@@ -1597,14 +1616,14 @@ limitations under the License.
   </string>
   <string name="settings_recording_distance_summary"
     translation_description="In the 'Recording' settings, the summary for the 'Distance interval'
-      dropdown option explaining that it configures the smallest distance between two
-      recordings of your position.">
+      dropdown option explaining that it configures the smallest distance between two recordings of
+      your position.">
     Smallest distance between two recordings of your position.
   </string>
   <string name="settings_recording_gps_accuracy"
     translation_description="In the 'Recording' settings, the dropdown option to configure the
-      required GPS accuracy. If a GPS position's accuracy is below the requirement, then it will
-      not be used.
+      required GPS accuracy. If a GPS position's accuracy is below the requirement, then it will not
+      be used.
 
       Character limit: ~23 (1 line)">
     GPS accuracy
@@ -1616,8 +1635,8 @@ limitations under the License.
     GPS position will be ignored if it is not this accurate.
   </string>
   <string name="settings_recording_interval"
-    translation_description="In the 'Recording' settings, the dropdown option to configure the
-      time between two recorded points.
+    translation_description="In the 'Recording' settings, the dropdown option to configure the time
+      between two recorded points.
 
       Character limit: ~23 (1 line)">
     Time interval
@@ -1637,8 +1656,8 @@ limitations under the License.
   </string>
   <string name="settings_recording_track_distance_summary"
     translation_description="In the 'Recording' settings, the summary for the 'Max interval'
-      dropdown option explaining that it configures the maximum distance for two recorded
-      points for them to be still considered as the same track.">
+      dropdown option explaining that it configures the maximum distance for two recorded points for
+      them to be still considered as the same track.">
     Maximum distance between two recordings of your position. If two positions are further than
     this, the track will be split.
   </string>
@@ -1697,14 +1716,14 @@ limitations under the License.
     preserved.
   </string>
   <string name="settings_reset_done"
-    translation_description="In the 'Settings' page, after pressing the 'Reset' option,
-      the confirmation dialog informing the user that all settings have been reverted to their
+    translation_description="In the 'Settings' page, after pressing the 'Reset' option, the
+      confirmation dialog informing the user that all settings have been reverted to their
       defaults.">
     All settings have been reverted to their defaults.
   </string>
   <string name="settings_reset_summary"
-    translation_description="In the 'Settings' page, the summary for the 'Reset' option
-      explaining reverting all the settings to the default values.">
+    translation_description="In the 'Settings' page, the summary for the 'Reset' option explaining
+      reverting all the settings to the default values.">
     Revert all your settings to the default values.
   </string>
 
@@ -1720,7 +1739,7 @@ limitations under the License.
     translation_description="In the 'Sensor' settings, the section header to configure the ANT+
       options. Note that ANT+ is a radio standard.
 
-      Character limit: ~40 (1 line)">
+      Character limit: ~26 (1 line)">
     ANT+ options
   </string>
   <string name="settings_sensor_ant_paired"
@@ -1763,7 +1782,7 @@ limitations under the License.
     translation_description="In the 'Sensor' settings, the section header to configure the Bluetooth
       options.
 
-      Character limit: ~40 (1 line)">
+      Character limit: ~26 (1 line)">
    Bluetooth options
   </string>
   <string name="settings_sensor_bluetooth_pairing"
@@ -1861,9 +1880,9 @@ limitations under the License.
   </string>
   <string name="settings_sharing_allow_access_confirm_message"
     translation_description="In the 'Sharing' settings, after checking the 'Allow access' checkbox,
-      the confirmation dialog message informing the user that other apps, including apps
-      installed in the future, will be able to control and access My Tracks data. In addition, no
-      further notification of third party app access will be shown.">
+      the confirmation dialog message informing the user that other apps, including apps installed
+      in the future, will be able to control and access My Tracks data. In addition, no further
+      notification of third party app access will be shown.">
     Other apps, including future apps, will be able to control and access My Tracks data. There will
     be no further notification.
   </string>
@@ -1882,7 +1901,7 @@ limitations under the License.
   <string name="settings_sharing_map_public"
     translation_description="In the 'Sharing' settings, the title of the option to make new maps
       created in Google Maps public, as opposed to unlisted. See
-      http://support.google.com/maps/bin/answer.py?answer=62845 for public versus unlisted.
+      http://support.google.com/maps/bin/answer.py?answer=144365 for public versus unlisted.
 
       Character limit: ~23 (1 line)">
     Make new maps public
@@ -1890,15 +1909,15 @@ limitations under the License.
   <string name="settings_sharing_map_public_summary"
     translation_description="In the 'Sharing' settings, the summary for the 'Make new maps public'
       option explaining that new maps created in Google Maps will be public, as opposed to unlisted.
-      See http://support.google.com/maps/bin/answer.py?answer=62845 for public versus unlisted.
+      See http://support.google.com/maps/bin/answer.py?answer=144365 for public versus unlisted.
 
-      %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=62845'.">
+      %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=144365'.">
     New maps created in Google Maps will be public. See %1$s for more info.
   </string>
   <string name="settings_sharing_map_unlisted"
     translation_description="In the 'Sharing' settings, the title of the option to make new maps
       created in Google Maps unlisted, as opposed to public. See
-      http://support.google.com/maps/bin/answer.py?answer=62845 for public versus unlisted.
+      http://support.google.com/maps/bin/answer.py?answer=144365 for public versus unlisted.
 
       Character limit: ~23 (1 line)">
     Make new maps unlisted
@@ -1906,15 +1925,17 @@ limitations under the License.
   <string name="settings_sharing_map_unlisted_summary"
     translation_description="In the 'Sharing' settings, the summary for the 'Make new maps unlisted'
       option explaining that new maps created in Google Maps will be unlisted, as opposed to public.
-      See http://support.google.com/maps/bin/answer.py?answer=62845 for public versus unlisted.
+      See http://support.google.com/maps/bin/answer.py?answer=144365 for public versus unlisted.
 
-      %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=62845'.">
+      %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=144365'.">
     New maps created in Google Maps will be unlisted. See %1$s for more info.
   </string>
 
   <!-- Settings Show -->
   <string name="settings_show"
-    translation_description="In settings, the section label to show additional values.">
+    translation_description="In settings, the section label to show additional values.
+
+      Character limit: ~26 (1 line)">
     Show
   </string>
 
@@ -1926,22 +1947,30 @@ limitations under the License.
 
   <!-- Settings Stats -->
   <string name="settings_stats_coordinate"
-    translation_description="In the 'Stats settings, the option to show latitude and longitude.">
+    translation_description="In the 'Stats settings, the option to show latitude and longitude.
+
+      Character limit: ~23 (1 line)">
     Latitude/Longitude
   </string>
   <string name="settings_stats_grade"
     translation_description="In the 'Stats settings, the option to show grade. Grade is the amount
-      of inclination to the horizontal, also known as slope or incline.">
+      of inclination to the horizontal, also known as slope or incline.
+
+      Character limit: ~23 (1 line)">
     Grade
   </string>
   <string name="settings_stats_rate_title"
     translation_description="In the 'Stats' settings, the option to change the preferred rate,
-      either speed (mi/hr) or pace (hr/mi).">
+      either speed (mi/hr) or pace (hr/mi).
+
+      Character limit: ~23 (1 line)">
     Preferred rate
   </string>
   <string name="settings_stats_time_title"
     translation_description="In the 'Stats' settings, the option to change the time measurement,
-      either total time or moving time.">
+      either total time or moving time.
+
+      Character limit: ~23 (1 line)">
     Time measurement
   </string>
   <string name="settings_stats_units_imperial"
@@ -1956,13 +1985,17 @@ limitations under the License.
   </string>
   <string name="settings_stats_units_title"
     translation_description="In the 'Stats' settings page, the option to change the preferred units,
-      either metric (km) or imperial (mi).">
+      either metric (km) or imperial (mi).
+
+      Character limit: ~23 (1 line)">
     Preferred units
   </string>
 
   <!--  Settings Switch Account -->
   <string name="settings_switch_account"
-    translation_description="In the 'Settings' page, the option to switch account.">
+    translation_description="In the 'Settings' page, the option to switch account.
+
+      Character limit: ~26 (1 line)">
     Switch account
   </string>
 
@@ -1976,14 +2009,14 @@ limitations under the License.
   <string name="share_track_confirm_message"
     translation_description="The confirmation message when sharing a track with friends.
 
-    %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=62845'.">
+      %1$s url. E.g., 'support.google.com/maps/bin/answer.py?answer=144365'.">
     This will upload your track to Google Maps so that you can share the map url with friends. The
     map will be either public or unlisted depending on your setting at Settings -> Sharing. For more
     info on public versus unlisted, see %1$s.
   </string>
   <string name="share_track_picker_title"
-    translation_description="When sharing a track with friends, the title on the picker to ask
-      the user to select an application.">
+    translation_description="When sharing a track with friends, the title on the picker to ask the
+      user to select an application.">
     Select an application
   </string>
   <string name="share_track_share_file"
@@ -1994,7 +2027,7 @@ limitations under the License.
   <string name="share_track_share_file_body"
     translation_description="When sharing a track file with friends, the body of the message.
 
-    %1$s: track description.">
+      %1$s: track description.">
     I think you might be interested in this track.\n\nTo view this track, use Google Earth or other
     mapping software.\n\n%1$s
   </string>
@@ -2033,7 +2066,9 @@ limitations under the License.
     Average speed
   </string>
   <string name="stats_elevation"
-    translation_description="In the 'Stats' page, the elevation.">
+    translation_description="In the 'Stats' page, the elevation.
+
+      Character limit: ~23 (1 line)">
     Elevation
   </string>
   <string name="stats_elevation_gain"
@@ -2077,11 +2112,15 @@ limitations under the License.
     Moving time
   </string>
   <string name="stats_pace"
-    translation_description="In the 'Stats' page, the pace like hours per mile.">
+    translation_description="In the 'Stats' page, the pace like hours per mile.
+
+      Character limit: ~23 (1 line)">
     Pace
   </string>
   <string name="stats_speed"
-    translation_description="In the 'Stats' page, the speed like miles per hour.">
+    translation_description="In the 'Stats' page, the speed like miles per hour.
+
+      Character limit: ~23 (1 line)">
     Speed
   </string>
   <string name="stats_total_distance"
@@ -2210,7 +2249,7 @@ limitations under the License.
     translation_description="To display a latitude or longitude coordinate in degree. E.g.,
       2.2 \u00B0. \u00B0 is the unicode value for the degree symbol.
 
-    %1$s: a string value of the coordinate. E.g., '2.2'">
+      %1$s: a string value of the coordinate. E.g., '2.2'">
     %1$s \u00B0
   </string>
   <string name="value_float_feet"
@@ -2353,9 +2392,8 @@ limitations under the License.
   <string name="value_integer_percent"
      translation_description="To display a value in percent like 2 %. %% is the escape sequence for
       the percent symbol.
-      for the percent symbol.
 
-     %1$d: an integer value. E.g., '2'">
+      %1$d: an integer value. E.g., '2'">
     %1$d %%
   </string>
   <string name="value_integer_second"
