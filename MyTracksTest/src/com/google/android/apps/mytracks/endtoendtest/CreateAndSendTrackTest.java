@@ -164,7 +164,13 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     // Delete all track first.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete_all), true);
     EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_ok));
+    
+     // Reset all settings.
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset));
+    EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_ok));
     instrumentation.waitForIdleSync();
+    EndToEndTestUtils.SOLO.goBack();
     // Test should not show relative time.
     EndToEndTestUtils.startRecording();
     instrumentation.waitForIdleSync();
