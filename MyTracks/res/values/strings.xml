@@ -1002,106 +1002,153 @@ limitations under the License.
 
   <!-- Menu Items -->
   <string name="menu_aggregated_statistics"
-    translation_description="In the menu, to go to the aggregated statistics page.">
-    Aggregated statistics
+    translation_description="In the menu, to go to the aggregated statistics page.
+    
+      Character limit: ~21 (1 line)">
+    Aggregated stats
   </string>
   <string name="menu_delete"
-    translation_description="In the menu, to delete a track or a marker.">
+    translation_description="In the menu, to delete a track or a marker.
+    
+      Character limit: ~21 (1 line)">
     Delete
   </string>
   <string name="menu_delete_all"
-    translation_description="In the menu, to delete all the tracks.">
+    translation_description="In the menu, to delete all the tracks.
+    
+      Character limit: ~21 (1 line)">
     Delete all
   </string>
   <string name="menu_edit"
-    translation_description="In the menu, to edit a track or a marker.">
+    translation_description="In the menu, to edit a track or a marker.
+    
+      Character limit: ~21 (1 line)">
     Edit
   </string>
   <string name="menu_help"
-    translation_description="In the menu, to go to the help page.">
+    translation_description="In the menu, to go to the help page.
+    
+      Character limit: ~21 (1 line)">
     Help
   </string>
   <string name="menu_import"
-    translation_description="In the menu, to import tracks from the SD card.">
+    translation_description="In the menu, to import tracks from the SD card.
+    
+      Character limit: ~21 (1 line)">
     Import from SD card
   </string>
   <string name="menu_insert_marker"
-    translation_description="In the menu, to insert a marker.">
+    translation_description="In the menu, to insert a marker.
+    
+      Character limit: ~21 (1 line)">
     Insert marker
   </string>
   <string name="menu_map_mode"
-    translation_description="In the menu, to switch the display to the map mode.">
+    translation_description="In the menu, to switch the display to the map mode.
+    
+      Character limit: ~21 (1 line)">
     Map mode
   </string>
   <string name="menu_markers"
-    translation_description="In the menu, to show a list of markers for the current track.">
+    translation_description="In the menu, to show a list of markers for the current track.
+    
+      Character limit: ~21 (1 line)">
     Markers
   </string>
   <string name="menu_play"
-    translation_description="In the menu, to play a track.">
+    translation_description="In the menu, to play a track.
+    
+      Character limit: ~21 (1 line)">
     Play
   </string>
   <string name="menu_record_track"
-    translation_description="In the menu, to start recording a track.">
+    translation_description="In the menu, to start recording a track.
+    
+      Character limit: ~21 (1 line)">
     Record track
   </string>
   <string name="menu_satellite_mode"
-    translation_description="In the menu, to switch the display to the satellite mode.">
+    translation_description="In the menu, to switch the display to the satellite mode.
+    
+      Character limit: ~21 (1 line)">
     Satellite mode
   </string>
   <string name="menu_save"
     translation_description="In the menu, to save a track to the SD card. This menu item has a
-      submenu.">
-    Save to SD card...
+      submenu.
+      
+      Character limit: ~21 (1 line)">
+    Save to SD card
   </string>
   <string name="menu_save_all"
     translation_description="In the menu, to save all the tracks to the SD card. This menu item has
-      a submenu.">
-    Save all to SD card...
+      a submenu.
+      
+      Character limit: ~21 (1 line)">
+    Save all to SD card
   </string>
   <string name="menu_save_format"
     translation_description="Under the save to SD card menu option, the option to save a track as a
       certain file format.
 
-      %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.">
+      %1$s: file format. 'GPX', 'KML', 'CSV', or 'TCX'.
+      Character limit: ~21 (1 line)">
     Save as %1$s
   </string>
   <string name="menu_search"
-    translation_description="In the menu, to start a textual search for tracks or markers.">
+    translation_description="In the menu, to start a textual search for tracks or markers.
+    
+      Character limit: ~21 (1 line)">
     Search
   </string>
   <string name="menu_send_google"
-    translation_description="In the menu, to send a track to Google.">
-    Send to Google...
+    translation_description="In the menu, to send a track to Google.
+    
+      Character limit: ~21 (1 line)">
+    Send to Google
   </string>
   <string name="menu_sensor_state"
-    translation_description="In the menu, to go to the sensor state page.">
+    translation_description="In the menu, to go to the sensor state page.
+    
+      Character limit: ~21 (1 line)">
     Sensor state
   </string>
   <string name="menu_settings"
-    translation_description="In the menu, to go to the settings page.">
+    translation_description="In the menu, to go to the settings page.
+    
+      Character limit: ~21 (1 line)">
     Settings
   </string>
   <string name="menu_share"
-    translation_description="In the menu, to share a track.">
+    translation_description="In the menu, to share a track.
+    
+      Character limit: ~21 (1 line)">
     Share
   </string>
   <string name="menu_show_on_map"
-    translation_description="In the menu, to show a track or a marker on the map.">
+    translation_description="In the menu, to show a track or a marker on the map.
+    
+      Character limit: ~21 (1 line)">
     Show on map
   </string>
   <string name="menu_split_frequency"
     translation_description="In the menu, to configure the split frequency, how frequent to insert a
-      split marker.">
+      split marker.
+      
+      Character limit: ~21 (1 line)">
     Split frequency
   </string>
   <string name="menu_stop_recording"
-    translation_description="In the menu, to stop recording a track.">
+    translation_description="In the menu, to stop recording a track.
+    
+      Character limit: ~21 (1 line)">
     Stop recording
   </string>
   <string name="menu_voice_frequency"
     translation_description="In the menu, to configure the voice frequency, how frequent to announce
-      status.">
+      status.
+      
+      Character limit: ~21 (1 line)">
     Voice frequency
   </string>
 
