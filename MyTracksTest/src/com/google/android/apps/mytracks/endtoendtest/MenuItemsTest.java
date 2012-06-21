@@ -20,6 +20,10 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
+import android.view.KeyEvent;
+import android.widget.EditText;
+
+import java.util.ArrayList;
 
 /**
  * Tests some menu items of MyTracks.
@@ -70,6 +74,21 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.help_about));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
+  }
+  
+  /**
+   * Tests search menu item.
+   */
+  public void testSearch() {
+    EndToEndTestUtils.createSimpleTrack(1);
+    EndToEndTestUtils.SOLO.goBack();
+    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.getButtonOnScreen(activityMyTracks
+        .getString(R.string.menu_search)));
+    ArrayList<EditText> editTexts = EndToEndTestUtils.SOLO.getCurrentEditTexts();
+    EndToEndTestUtils.SOLO.enterText(editTexts.get(0), EndToEndTestUtils.trackName);
+    sendKeys(KeyEvent.KEYCODE_ENTER);
+    instrumentation.waitForIdleSync();
+    assertEquals(1, EndToEndTestUtils.SOLO.getCurrentListViews().size());
   }
 
   @Override
