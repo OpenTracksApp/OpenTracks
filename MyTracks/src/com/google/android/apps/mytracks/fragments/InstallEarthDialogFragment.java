@@ -21,11 +21,13 @@ import com.google.android.maps.mytracks.R;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.widget.Toast;
 
 /**
  * A DialogFragment to install Google Earth.
@@ -45,7 +47,13 @@ public class InstallEarthDialogFragment extends DialogFragment {
           @Override
           public void onClick(DialogInterface dialog, int which) {
             Intent intent = new Intent().setData(Uri.parse(SaveActivity.GOOGLE_EARTH_MARKET_URL));
-            startActivity(intent);
+            try {
+              startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+              Toast.makeText(
+                  getActivity(), R.string.track_detail_install_earth_error, Toast.LENGTH_LONG)
+                  .show();
+            }
           }
         })
         .create();

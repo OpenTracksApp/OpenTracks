@@ -2200,6 +2200,11 @@ limitations under the License.
       Play Store.">
     You need Google Earth to play the track. Do you want to install from the Play Store?
   </string>
+  <string name="track_detail_install_earth_error"
+    translation_description="Message informing the user not able to install Google Earth from the
+      Play Store.">
+    Unalbe to install Google Earth from the Play Store.
+  </string>
   <string name="track_detail_map_tab"
     translation_description="In the track detail page, the title of the tab showing the map.">
     Map
