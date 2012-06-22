@@ -1359,6 +1359,11 @@ limitations under the License.
       found.">
     No account found
   </string>
+  <string name="send_google_no_account_permission"
+    translation_description="When sending to Google, the message when not able to get account
+      permission.">
+    Not able to get account permission. Make sure network is available.
+  </string>
   <string name="send_google_no_service_selected"
     translation_description="When sending a track to Google, a message indicating that the user has
       not selected any Google service and no data is sent.">
