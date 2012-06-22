@@ -114,4 +114,9 @@ public class Api11Adapter extends Api10Adapter {
   public <T> void addAllToArrayAdapter(ArrayAdapter<T> arrayAdapter, List<T> items) {
     arrayAdapter.addAll(items);
   }
+
+  @Override
+  public void invalidMenu(Activity activity) {
+    activity.invalidateOptionsMenu();
+  }
 }

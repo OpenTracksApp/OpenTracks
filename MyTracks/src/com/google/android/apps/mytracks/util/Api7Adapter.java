@@ -147,6 +147,11 @@ public class Api7Adapter implements ApiAdapter {
   }
 
   @Override
+  public void invalidMenu(Activity activity) {
+    // Do nothing
+  }
+
+  @Override
   public boolean handleSearchKey(MenuItem menuItem) {
     // Return false and allow the framework to handle the search key.
     return false;

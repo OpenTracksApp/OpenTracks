@@ -149,7 +149,7 @@ public interface ApiAdapter {
 
   /**
    * Configures the search widget.
-   * 
+   * <p>
    * Due to changes in API level 11.
    * 
    * @param activity the activity
@@ -159,7 +159,7 @@ public interface ApiAdapter {
  
   /**
    * Handles the search menu selection. Returns true if handled.
-   * 
+   * <p>
    * Due to changes in API level 11.
    * 
    * @param activity the activity
@@ -168,17 +168,24 @@ public interface ApiAdapter {
   
   /**
    * Adds all items to an array adapter.
-   * 
+   * <p>
    * Due to changes in API level 11.
-   *s
+   *
    * @param arrayAdapter the array adapter
    * @param items list of items
    */
   public <T> void addAllToArrayAdapter(ArrayAdapter<T> arrayAdapter, List<T> items);
 
   /**
+   * Invalidates the menu.
+   * <p>
+   * Due to changes in API level 11.
+   */
+  public void invalidMenu(Activity activity);
+
+  /**
    * Handles the search key press. Returns true if handled.
-   * 
+   * <p>
    * Due to changes in API level 14.
    * 
    * @param menu the search menu

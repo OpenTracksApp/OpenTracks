@@ -27,6 +27,7 @@ import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener;
 import com.google.android.apps.mytracks.content.Waypoint;
 import com.google.android.apps.mytracks.stats.TripStatistics;
+import com.google.android.apps.mytracks.util.ApiAdapterFactory;
 import com.google.android.apps.mytracks.util.GeoRect;
 import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.maps.GeoPoint;
@@ -120,6 +121,7 @@ public class MapFragment extends Fragment
     });
     messageTextView = (TextView) mapViewContainer.findViewById(R.id.map_message);
 
+    ApiAdapterFactory.getApiAdapter().invalidMenu(getActivity());
     return mapViewContainer;
   }
 
