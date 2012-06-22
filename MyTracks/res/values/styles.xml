@@ -65,7 +65,9 @@ limitations under the License.
     <item name="android:singleLine">false</item>
   </style>
   <!-- The style for the edit label -->
-  <style name="EditLabel" parent="@style/TextMedium" />
+  <style name="EditLabel" parent="@style/TextMedium">
+    <item name="android:layout_width">fill_parent</item>
+  </style>
   <!-- The style for the edit lable with padding top -->
   <style name="EditLabel.WithPaddingTop">
     <item name="android:paddingTop">16dp</item>
