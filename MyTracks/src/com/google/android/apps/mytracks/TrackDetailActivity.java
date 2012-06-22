@@ -139,8 +139,10 @@ public class TrackDetailActivity extends AbstractMyTracksActivity implements Del
     trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
     trackDataHub = ((MyTracksApplication) getApplication()).getTrackDataHub();
     trackDataHub.loadTrack(trackId);
-    
+
     mapViewContainer = getLayoutInflater().inflate(R.layout.map, null);
+    mapViewContainer.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+
     tabHost = (TabHost) findViewById(android.R.id.tabhost);
     tabHost.setup();
     tabManager = new TabManager(this, tabHost, R.id.realtabcontent);
