@@ -70,6 +70,9 @@ public class StatsUtils {
         R.string.stats_show_coordinate_key, PreferencesUtils.STATS_SHOW_COORDINATE_DEFAULT);
     View coordinateLabelTableRow = activity.findViewById(R.id.stats_coordinate_label_table_row);
     View coordinateValueTableRow = activity.findViewById(R.id.stats_coordinate_value_table_row);
+    if (coordinateLabelTableRow == null || coordinateValueTableRow == null) {
+      return;
+    }
     coordinateLabelTableRow.setVisibility(showCoordinate ? View.VISIBLE : View.GONE);
     coordinateValueTableRow.setVisibility(showCoordinate ? View.VISIBLE : View.GONE);
     if (showCoordinate) {
@@ -149,6 +152,12 @@ public class StatsUtils {
     View elevationValueTableRow1 = activity.findViewById(R.id.stats_elevation_value_table_row1);
     View elevationLabelTableRow2 = activity.findViewById(R.id.stats_elevation_label_table_row2);
     View elevationValueTableRow2 = activity.findViewById(R.id.stats_elevation_value_table_row2);
+    if (elevationLabelTableRow1 == null 
+        || elevationValueTableRow1 == null
+        || elevationLabelTableRow2 == null 
+        || elevationValueTableRow2 == null) {
+      return;
+    }
     elevationLabelTableRow1.setVisibility(showElevation ? View.VISIBLE : View.GONE);
     elevationValueTableRow1.setVisibility(showElevation ? View.VISIBLE : View.GONE);
     elevationLabelTableRow2.setVisibility(showElevation ? View.VISIBLE : View.GONE);
@@ -168,6 +177,9 @@ public class StatsUtils {
         activity, R.string.stats_show_grade_key, PreferencesUtils.STATS_SHOW_GRADE_DEFAULT);
     View gradeLabelTableRow = activity.findViewById(R.id.stats_grade_label_table_row);
     View gradeValueTableRow = activity.findViewById(R.id.stats_grade_value_table_row);
+    if (gradeLabelTableRow == null || gradeValueTableRow == null) {
+      return;
+    }
     gradeLabelTableRow.setVisibility(showGrade ? View.VISIBLE : View.GONE);
     gradeValueTableRow.setVisibility(showGrade ? View.VISIBLE : View.GONE);
     if (showGrade) {
@@ -190,6 +202,9 @@ public class StatsUtils {
   private static void setTimeLabel(Activity activity, int id, int totalTimeId, int movingTimeId,
       boolean totalTime) {
     TextView textView = (TextView) activity.findViewById(id);
+    if (textView == null) {
+      return;
+    }
     textView.setText(totalTime ? totalTimeId : movingTimeId);
   }
 
@@ -205,6 +220,9 @@ public class StatsUtils {
   private static void setSpeedLabel(
       Activity activity, int id, int speedId, int paceId, boolean reportSpeed) {
     TextView textView = (TextView) activity.findViewById(id);
+    if (textView == null) {
+      return;
+    }
     textView.setText(reportSpeed ? speedId : paceId);
   }
 
@@ -220,6 +238,9 @@ public class StatsUtils {
   private static void setSpeedValue(
       Activity activity, int id, double speed, boolean metricUnits, boolean reportSpeed) {
     TextView textView = (TextView) activity.findViewById(id);
+    if (textView == null) {
+      return;
+    }
     textView.setText(StringUtils.formatSpeed(activity, speed, metricUnits, reportSpeed));
   }
 
@@ -234,6 +255,9 @@ public class StatsUtils {
   private static void setDistanceValue(
       Activity activity, int id, double distance, boolean metricUnits) {
     TextView textView = (TextView) activity.findViewById(id);
+    if (textView == null) {
+      return;
+    }
     textView.setText(StringUtils.formatDistance(activity, distance, metricUnits));
   }
 
@@ -246,6 +270,9 @@ public class StatsUtils {
    */
   private static void setTimeValue(Activity activity, int id, long time) {
     TextView textView = (TextView) activity.findViewById(id);
+    if (textView == null) {
+      return;
+    }
     String value = time == -1L ? activity.getString(R.string.value_unknown)
         : StringUtils.formatElapsedTime(time);
     textView.setText(value);
@@ -262,6 +289,9 @@ public class StatsUtils {
   private static void setElevationValue(
       Activity activity, int id, double elevation, boolean metricUnits) {
     TextView textView = (TextView) activity.findViewById(id);
+    if (textView == null) {
+      return;
+    }
     String value;
     if (Double.isNaN(elevation) || Double.isInfinite(elevation)) {
       value = activity.getString(R.string.value_unknown);
@@ -285,6 +315,9 @@ public class StatsUtils {
    */
   private static void setGradeValue(Activity activity, int id, double grade) {
     TextView textView = (TextView) activity.findViewById(id);
+    if (textView == null) {
+      return;
+    }
     String value;
     if (Double.isNaN(grade) || Double.isInfinite(grade)) {
       value = activity.getString(R.string.value_unknown);
@@ -303,6 +336,9 @@ public class StatsUtils {
    */
   private static void setCoordinateValue(Activity activity, int id, double coordinate) {
     TextView textView = (TextView) activity.findViewById(id);
+    if (textView == null) {
+      return;
+    }
     String value;
     if (Double.isNaN(coordinate) || Double.isInfinite(coordinate)) {
       value = activity.getString(R.string.value_unknown);
