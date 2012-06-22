@@ -789,7 +789,7 @@ public class ChartView extends View {
         break;
       }
     }
-    if (index != -1) {
+    if (index != -1 && chartData.size() > 0) {
       int dx = getX(maxX) - pointer.getIntrinsicWidth() / 2;
       int dy = getY(series[index], chartData.get(chartData.size() - 1)[index + 1])
           - pointer.getIntrinsicHeight();
