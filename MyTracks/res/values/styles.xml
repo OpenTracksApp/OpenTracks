@@ -44,14 +44,8 @@ limitations under the License.
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
   </style>
-  <!-- The style for the editing marker category -->
-  <style name="EditCategoryMarker" parent="@style/TextMedium">
-    <item name="android:layout_width">fill_parent</item>
-    <item name="android:selectAllOnFocus">true</item>
-    <item name="android:singleLine">true</item>
-  </style>
-  <!-- The style for the editing track category -->
-  <style name="EditCategoryTrack" parent="@style/TextMedium.WithIcon">
+  <!-- The style for the editing category -->
+  <style name="EditCategory" parent="@style/TextMedium">
     <item name="android:layout_width">fill_parent</item>
     <item name="android:selectAllOnFocus">true</item>
     <item name="android:singleLine">true</item>
@@ -67,6 +61,14 @@ limitations under the License.
   <!-- The style for the edit label -->
   <style name="EditLabel" parent="@style/TextMedium">
     <item name="android:layout_width">fill_parent</item>
+  </style>
+  <!-- The style for the edit label with icon -->
+  <style name="EditLabel.WithIcon" parent="@style/TextMedium.WithIcon">
+    <item name="android:layout_width">fill_parent</item>
+  </style>
+  <!-- The style for the edit label with icon and with padding top -->
+  <style name="EditLabel.WithIcon.WithPaddingTop">
+    <item name="android:paddingTop">16dp</item>
   </style>
   <!-- The style for the edit lable with padding top -->
   <style name="EditLabel.WithPaddingTop">
@@ -153,7 +155,6 @@ limitations under the License.
   <style name="TextLarge">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
-    <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">22sp</item>
   </style>
   <!-- The style for large size text with top margin -->
@@ -164,7 +165,6 @@ limitations under the License.
   <style name="TextMedium">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
-    <item name="android:textColor">?android:textColorPrimary</item>
     <item name="android:textSize">18sp</item>
   </style>
   <!-- The style for medium size text with an icon on the left -->
@@ -176,7 +176,6 @@ limitations under the License.
   <style name="TextSmall">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
-    <item name="android:textColor">?android:textColorSecondary</item>
     <item name="android:textSize">14sp</item>
   </style>
   <!-- Theme selector -->

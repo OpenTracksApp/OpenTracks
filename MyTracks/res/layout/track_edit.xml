@@ -33,13 +33,14 @@ limitations under the License.
         android:imeOptions="actionNext"
         style="@style/EditNameTrack" />
       <TextView
+        android:id="@+id/track_edit_activity_type_label"
         android:text="@string/track_edit_activity_type"
-        style="@style/EditLabel.WithPaddingTop" />
+        style="@style/EditLabel.WithIcon.WithPaddingTop" />
       <AutoCompleteTextView
         android:hint="@string/track_edit_activity_type_hint"
         android:id="@+id/track_edit_activity_type"
         android:imeOptions="actionNext"
-        style="@style/EditCategoryTrack" />
+        style="@style/EditCategory" />
       <TextView
         android:text="@string/generic_description"
         style="@style/EditLabel.WithPaddingTop" />

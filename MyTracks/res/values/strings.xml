@@ -960,9 +960,9 @@ limitations under the License.
     Marker type: %1$s
   </string>
   <string name="marker_edit_marker_type"
-    translation_description="In the marker edit page, the label for the marker type, including some
-      examples.">
-    Marker type (e.g. building, waterfall...)
+    translation_description="In the marker edit page, the label for the marker type, including an
+      example.">
+    Marker type (e.g. waterfall)
   </string>
   <string name="marker_edit_marker_type_hint"
     translation_description="In the marker edit page, the hint in the marker type text field when it
@@ -2209,8 +2209,8 @@ limitations under the License.
   </string>
   <string name="track_edit_activity_type"
     translation_description="In the page to edit a track, the label for the text field to edit the
-      activity type, including some examples of activity types.">
-    Activity type (e.g. hiking, cycling...)
+      activity type, including an example.">
+    Activity type (e.g. hiking)
   </string>
   <string name="track_edit_activity_type_hint"
     translation_description="In the page to edit a track, the hint in the 'Activity type' text field
