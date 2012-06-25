@@ -27,6 +27,7 @@ import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
+import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -124,6 +125,7 @@ public class TrackRecordingServiceTest extends ServiceTestCase<TestRecordingServ
     super.shutdownService();
   }
 
+  @TargetApi(9)
   @Override
   protected void setUp() throws Exception {
     super.setUp();

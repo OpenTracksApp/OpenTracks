@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.endtoendtest;
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.maps.mytracks.R;
 
+import android.annotation.TargetApi;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -31,6 +32,7 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
 
+  @TargetApi(8)
   public MenuItemsTest() {
     super(TrackListActivity.class);
   }

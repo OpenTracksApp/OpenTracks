@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.endtoendtest;
 import com.google.android.apps.mytracks.TrackListActivity;
 import com.google.android.maps.mytracks.R;
 
+import android.annotation.TargetApi;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.KeyEvent;
@@ -38,6 +39,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
 
+  @TargetApi(8)
   public CreateAndSendTrackTest() {
     super(TrackListActivity.class);
   }

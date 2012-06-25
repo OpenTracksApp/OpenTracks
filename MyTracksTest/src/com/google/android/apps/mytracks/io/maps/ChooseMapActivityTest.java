@@ -18,6 +18,7 @@ package com.google.android.apps.mytracks.io.maps;
 import com.google.android.apps.mytracks.io.gdata.maps.MapsMapMetadata;
 import com.google.android.maps.mytracks.R;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.test.AndroidTestCase;
 import android.widget.ArrayAdapter;
@@ -46,6 +47,7 @@ public class ChooseMapActivityTest extends AndroidTestCase {
    * 
    * @author youtaol
    */
+  @TargetApi(11)
   public class ChooseMapActivityMock extends ChooseMapActivity {
     /**
      * By overriding this method, avoids to start next activity.
