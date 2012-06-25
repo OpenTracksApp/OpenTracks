@@ -53,9 +53,9 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
   }
 
   /**
-   * Creates a track with markers and the setting to send to google.
+   * Does not check any service and try to send to google.
    */
-  public void testCreateAndSendTrack() {
+  public void testCreateAndSendTrack_notSend() {
     EndToEndTestUtils.createTrackIfEmpty(1, false);
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_send_google), true);
@@ -85,6 +85,53 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
         .getString(R.string.send_google_no_service_selected)));
     // Stop here for do not really send.
+  }
+  
+  /**
+   * Check all services and send to google.
+   */
+  public void testCreateAndSendTrack_Send() {
+    EndToEndTestUtils.createTrackIfEmpty(1, false);
+    instrumentation.waitForIdleSync();
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_send_google), true);
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.send_google_title));
+    ArrayList<CheckBox> checkBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
+    for (int i = 0; i < checkBoxs.size(); i++) {
+      if (!checkBoxs.get(i).isChecked()) {
+        EndToEndTestUtils.SOLO.clickOnCheckBox(i);
+      }
+    }
+
+    if (checkBoxs.size() < 3) {
+      EndToEndTestUtils.SOLO.scrollDown();
+      checkBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
+      for (int i = 0; i < checkBoxs.size(); i++) {
+        if (!checkBoxs.get(i).isChecked()) {
+          EndToEndTestUtils.SOLO.clickOnCheckBox(i);
+        }
+      }
+    }
+    instrumentation.waitForIdleSync();
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.send_google_send_now));
+    
+    // If no account is binded with this device.
+    if (EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.send_google_no_account_title), 1, 500)) {
+      EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
+    } else {
+      assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+          .getString(R.string.generic_progress_title)));
+      // Waiting the send is finish.
+      while (EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+          .getString(R.string.generic_progress_title), 1, 500)) {
+      }
+      
+      // For we not sure the send will be successful, just check whether the result dialog is display. 
+      assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+          .getString(R.string.share_track_share_url)));
+      EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
+    }
+    
   }
 
   /**
