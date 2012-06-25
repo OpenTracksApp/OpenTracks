@@ -118,14 +118,14 @@ public class StringUtils {
       return context.getString(R.string.value_unknown);
     }
     if (metricUnits) {
-      if (distance > 1000.0) {
+      if (distance > 500.0) {
         distance *= UnitConversions.M_TO_KM;
         return context.getString(R.string.value_float_kilometer, distance);
       } else {
         return context.getString(R.string.value_float_meter, distance);
       }
     } else {
-      if (distance * UnitConversions.M_TO_MI > 1) {
+      if (distance * UnitConversions.M_TO_MI > 0.5) {
         distance *= UnitConversions.M_TO_MI;
         return context.getString(R.string.value_float_mile, distance);
       } else {

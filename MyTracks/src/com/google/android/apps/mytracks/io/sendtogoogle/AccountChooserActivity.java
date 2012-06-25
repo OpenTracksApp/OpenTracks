@@ -41,6 +41,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -177,7 +178,7 @@ public class AccountChooserActivity extends Activity {
     }  
     @Override
     public void onFailure() {
-      finish();
+      handleNoAccountPermission();
     }
   };
   
@@ -188,7 +189,7 @@ public class AccountChooserActivity extends Activity {
     }  
     @Override
     public void onFailure() {
-      finish();
+      handleNoAccountPermission();
     }
   };
   
@@ -199,7 +200,7 @@ public class AccountChooserActivity extends Activity {
     }  
     @Override
     public void onFailure() {
-      finish();
+      handleNoAccountPermission();
     }
   };
   
@@ -211,7 +212,7 @@ public class AccountChooserActivity extends Activity {
     }
     @Override
     public void onFailure() {
-      finish();
+      handleNoAccountPermission();
     }
   };
   
@@ -281,6 +282,14 @@ public class AccountChooserActivity extends Activity {
     Intent intent = IntentUtils.newIntent(this, next)
         .putExtra(SendRequest.SEND_REQUEST_KEY, sendRequest);
     startActivity(intent);
+    finish();
+  }
+  
+  /**
+   * Handles when not able to get account permission.
+   */
+  private void handleNoAccountPermission() {
+    Toast.makeText(this, R.string.send_google_no_account_permission, Toast.LENGTH_LONG).show();
     finish();
   }
 }

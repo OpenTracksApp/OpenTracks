@@ -142,7 +142,7 @@ public class ChartView extends View {
     series[SPEED_SERIES] = new ChartValueSeries(context,
         0,
         Integer.MAX_VALUE,
-        new int[] {1, 5, 10, 20, 50 },
+        new int[] {1, 5, 10, 20, 50, 100 },
         R.string.description_speed_metric,
         R.string.description_speed_imperial,
         R.color.speed_fill,
@@ -789,7 +789,7 @@ public class ChartView extends View {
         break;
       }
     }
-    if (index != -1) {
+    if (index != -1 && chartData.size() > 0) {
       int dx = getX(maxX) - pointer.getIntrinsicWidth() / 2;
       int dy = getY(series[index], chartData.get(chartData.size() - 1)[index + 1])
           - pointer.getIntrinsicHeight();

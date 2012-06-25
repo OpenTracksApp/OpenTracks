@@ -26,6 +26,7 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -149,7 +150,7 @@ public interface ApiAdapter {
 
   /**
    * Configures the search widget.
-   * 
+   * <p>
    * Due to changes in API level 11.
    * 
    * @param activity the activity
@@ -159,7 +160,7 @@ public interface ApiAdapter {
  
   /**
    * Handles the search menu selection. Returns true if handled.
-   * 
+   * <p>
    * Due to changes in API level 11.
    * 
    * @param activity the activity
@@ -168,17 +169,33 @@ public interface ApiAdapter {
   
   /**
    * Adds all items to an array adapter.
-   * 
+   * <p>
    * Due to changes in API level 11.
-   *s
+   *
    * @param arrayAdapter the array adapter
    * @param items list of items
    */
   public <T> void addAllToArrayAdapter(ArrayAdapter<T> arrayAdapter, List<T> items);
 
   /**
-   * Handles the search key press. Returns true if handled.
+   * Invalidates the menu.
+   * <p>
+   * Due to changes in API level 11.
+   */
+  public void invalidMenu(Activity activity);
+
+  /**
+   * Diables hardware-accelerated rendering for a view.
+   * <p>
+   * Due to chagnes in API level 11.
    * 
+   * @param view the view
+   */
+  public void disableHardwareAccelerated(View view);
+
+  /**
+   * Handles the search key press. Returns true if handled.
+   * <p>
    * Due to changes in API level 14.
    * 
    * @param menu the search menu

@@ -44,14 +44,8 @@ limitations under the License.
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
   </style>
-  <!-- The style for the editing marker category -->
-  <style name="EditCategoryMarker" parent="@style/TextMedium">
-    <item name="android:layout_width">fill_parent</item>
-    <item name="android:selectAllOnFocus">true</item>
-    <item name="android:singleLine">true</item>
-  </style>
-  <!-- The style for the editing track category -->
-  <style name="EditCategoryTrack" parent="@style/TextMedium.WithIcon">
+  <!-- The style for the editing category -->
+  <style name="EditCategory" parent="@style/TextMedium">
     <item name="android:layout_width">fill_parent</item>
     <item name="android:selectAllOnFocus">true</item>
     <item name="android:singleLine">true</item>
@@ -65,7 +59,17 @@ limitations under the License.
     <item name="android:singleLine">false</item>
   </style>
   <!-- The style for the edit label -->
-  <style name="EditLabel" parent="@style/TextMedium" />
+  <style name="EditLabel" parent="@style/TextMedium">
+    <item name="android:layout_width">fill_parent</item>
+  </style>
+  <!-- The style for the edit label with icon -->
+  <style name="EditLabel.WithIcon" parent="@style/TextMedium.WithIcon">
+    <item name="android:layout_width">fill_parent</item>
+  </style>
+  <!-- The style for the edit label with icon and with padding top -->
+  <style name="EditLabel.WithIcon.WithPaddingTop">
+    <item name="android:paddingTop">16dp</item>
+  </style>
   <!-- The style for the edit lable with padding top -->
   <style name="EditLabel.WithPaddingTop">
     <item name="android:paddingTop">16dp</item>
@@ -143,6 +147,10 @@ limitations under the License.
     <item name="android:paddingRight">8dp</item>
     <item name="android:textColor">@android:color/primary_text_light</item>
   </style>
+  <!-- The style for choose activity text -->
+  <style name="TextChooseActivity">
+    <item name="android:textSize">18sp</item>
+  </style>
   <!-- The style for large size text -->
   <style name="TextLarge">
     <item name="android:layout_height">wrap_content</item>
@@ -164,11 +172,10 @@ limitations under the License.
     <item name="android:drawablePadding">8dp</item>
     <item name="android:gravity">center_vertical</item>
   </style>
-  <!-- The style for large size text -->
+  <!-- The style for small size text -->
   <style name="TextSmall">
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
-    <item name="android:textColor">?android:textColorSecondary</item>
     <item name="android:textSize">14sp</item>
   </style>
   <!-- Theme selector -->

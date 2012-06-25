@@ -30,6 +30,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 /**
  * An activity that let's the user see and edit the user editable track meta
@@ -49,6 +50,7 @@ public class TrackEditActivity extends AbstractMyTracksActivity {
   private Track track;
 
   private EditText name;
+  private TextView activityTypeLabel;
   private AutoCompleteTextView activityType;
   private EditText description;
 
@@ -77,6 +79,8 @@ public class TrackEditActivity extends AbstractMyTracksActivity {
 
     activityType = (AutoCompleteTextView) findViewById(R.id.track_edit_activity_type);
     activityType.setText(track.getCategory());
+
+    activityTypeLabel = (TextView) findViewById(R.id.track_edit_activity_type_label);
     setActivityTypeIcon(track.getIcon());
     ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
         this, R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
@@ -145,7 +149,7 @@ public class TrackEditActivity extends AbstractMyTracksActivity {
    * @param iconValue the icon value
    */
   private void setActivityTypeIcon(String iconValue) {
-    activityType.setCompoundDrawablesWithIntrinsicBounds(
+    activityTypeLabel.setCompoundDrawablesWithIntrinsicBounds(
         TrackIconUtils.getIconDrawable(iconValue), 0, 0, 0);
   }
 }

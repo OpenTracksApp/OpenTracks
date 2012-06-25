@@ -79,6 +79,40 @@ public class AntSensorManager extends SensorManager {
 
   private boolean requestedReset = false;
 
+  private AntInterface.ServiceListener serviceListener = new AntInterface.ServiceListener() {
+      @Override
+    public void onServiceConnected() {
+      setSensorState(Sensor.SensorState.CONNECTING);
+      serviceConnected = true;
+      try {
+        hasClaimedInterface = antInterface.hasClaimedInterface();
+        if (!hasClaimedInterface) {
+          hasClaimedInterface = antInterface.claimInterface();
+        }
+        if (!hasClaimedInterface) {
+          tryClaimAnt();
+          return;
+        }
+        if (!antInterface.isEnabled()) {
+          antInterface.enable();
+        }
+        requestReset();
+        enableDataMessage(true);
+      } catch (AntInterfaceException e) {
+        handleAntError();
+      }
+    }
+  
+    @Override
+    public void onServiceDisconnected() {
+      serviceConnected = false;
+      if (hasClaimedInterface) {
+        enableDataMessage(false);
+      }
+      setSensorState(SensorState.DISCONNECTED);
+    }
+  };
+
   /**
    * Constructor.
    *
@@ -112,29 +146,6 @@ public class AntSensorManager extends SensorManager {
       context.registerReceiver(statusReceiver, statusIntentFilter);
       if (!antInterface.initService(context, serviceListener)) {
         AntInterface.goToMarket(context);
-      } else {
-        setSensorState(Sensor.SensorState.CONNECTING);
-        handleServiceConnected();
-      }
-    }
-  }
-
-  /**
-   * Handles service connected. Needs to be synchronized.
-   */
-  private synchronized void handleServiceConnected() {
-    serviceConnected = antInterface.isServiceConnected();
-    if (serviceConnected) {
-      try {
-        hasClaimedInterface = antInterface.hasClaimedInterface();
-        if (hasClaimedInterface) {
-          enableDataMessage(true);
-        } else {
-          // Need to claim the ant interface if it is available
-          hasClaimedInterface = antInterface.claimInterface();
-        }
-      } catch (AntInterfaceException e) {
-        handleAntError();
       }
     }
   }
@@ -162,6 +173,7 @@ public class AntSensorManager extends SensorManager {
       antInterface.releaseService();
       serviceConnected = false;
     }
+    setSensorState(SensorState.DISCONNECTED);
   }
 
   @Override
@@ -172,28 +184,13 @@ public class AntSensorManager extends SensorManager {
   /**
    * Tries to claim the ant interface.
    */
-  public void tryClaimAnt() {
+  private void tryClaimAnt() {
     try {
       antInterface.requestForceClaimInterface(context.getString(R.string.my_tracks_app_name));
     } catch (AntInterfaceException e) {
       handleAntError();
     }
   }
-
-  private AntInterface.ServiceListener serviceListener = new AntInterface.ServiceListener() {
-    @Override
-    public void onServiceConnected() {
-      handleServiceConnected();
-    }
-
-    @Override
-    public void onServiceDisconnected() {
-      serviceConnected = false;
-      if (hasClaimedInterface) {
-        enableDataMessage(false);
-      }
-    }
-  };
 
   /**
    * Configures ant radio.
@@ -243,7 +240,6 @@ public class AntSensorManager extends SensorManager {
     channelConfig[channel].setInitializing(false);
     channelConfig[channel].setDeinitializing(true);
     channelConfig[channel].setChannelState(ChannelStates.CLOSED);
-    setSensorState(SensorState.DISCONNECTED);
     try {
       antInterface.ANTCloseChannel(channel);
       // Note, unassign channel after getting channel closed event
@@ -266,7 +262,7 @@ public class AntSensorManager extends SensorManager {
   /**
    * Requests reset.
    */
-  public void requestReset() {
+  private void requestReset() {
     try {
       requestedReset = true;
       antInterface.ANTResetSystem();
@@ -316,6 +312,7 @@ public class AntSensorManager extends SensorManager {
             if (wasClaimed) {
               // Claimed by another application
               enableDataMessage(false);
+              setSensorState(SensorState.DISCONNECTED);
             }
           }
         } catch (AntInterfaceException e) {
@@ -557,7 +554,6 @@ public class AntSensorManager extends SensorManager {
         for (int i = 0; i < CHANNELS; i++) {
           closeChannel((byte) i);
         }
-        setSensorState(SensorState.DISCONNECTED);
       } catch (IllegalArgumentException e) {
         // Can safely ignore
       }
