@@ -56,14 +56,20 @@ public class SendFusionTablesUtils {
       Log.e(TAG, "Invalid track");
       return null;
     }
-
-    // TODO(jshih): Determine the correct bounding box and zoom level that
-    // will show the entire track.
-    TripStatistics stats = track.getTripStatistics();
-    double latE6 = stats.getBottom() + (stats.getTop() - stats.getBottom()) / 2;
-    double lonE6 = stats.getLeft() + (stats.getRight() - stats.getLeft()) / 2;
-    int z = 15;
-
+    double latE6;
+    double lonE6;
+    int z;
+    if (track.getNumberOfPoints() < 2) {
+      // Use Google's latitude and longitude
+      latE6 = 37.423 * 1.E6; 
+      lonE6 = -122.084 * 1.E6;
+      z = 2;
+    } else {
+      TripStatistics stats = track.getTripStatistics();
+      latE6 = stats.getBottom() + (stats.getTop() - stats.getBottom()) / 2;
+      lonE6 = stats.getLeft() + (stats.getRight() - stats.getLeft()) / 2;
+      z = 15;
+    }
     // We explicitly format with Locale.US because we need the latitude and
     // longitude to be formatted in a locale-independent manner. Specifically,
     // we need the decimal separator to be a period rather than a comma.
