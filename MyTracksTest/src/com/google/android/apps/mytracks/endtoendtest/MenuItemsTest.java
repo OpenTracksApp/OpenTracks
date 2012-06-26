@@ -74,8 +74,8 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_help), true);
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.help_about));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
   }
   
   /**
@@ -84,8 +84,8 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
   public void testSearch() {
     EndToEndTestUtils.createSimpleTrack(1);
     EndToEndTestUtils.SOLO.goBack();
-    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.getButtonOnScreen(activityMyTracks
-        .getString(R.string.menu_search)));
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks
+        .getString(R.string.menu_search), true, true);
     ArrayList<EditText> editTexts = EndToEndTestUtils.SOLO.getCurrentEditTexts();
     EndToEndTestUtils.SOLO.enterText(editTexts.get(0), EndToEndTestUtils.trackName);
     sendKeys(KeyEvent.KEYCODE_ENTER);

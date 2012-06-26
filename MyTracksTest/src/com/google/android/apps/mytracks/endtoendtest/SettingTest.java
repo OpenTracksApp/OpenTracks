@@ -90,7 +90,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
 
     // Reset all settings.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset));
-    EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_ok));
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
 
     // Check settings.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
@@ -251,7 +251,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete_all), true);
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     instrumentation.waitForIdleSync();
 
     // Read from SD card.
@@ -259,7 +259,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(R.string.settings_backup_restore));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.sd_card_import_success), 0, 10000));
     // Check restore track.
@@ -286,7 +286,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
       // Close soft keyboard.
       EndToEndTestUtils.SOLO.goBack();
     }
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.goBack();

@@ -88,10 +88,7 @@ public class ViewsTest extends ActivityInstrumentationTestCase2<TrackListActivit
     EndToEndTestUtils.showMoreMenuItem();
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.menu_settings), 1, 3000));
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(
-        activityMyTracks.getString(R.string.menu_satellite_mode), 1, 0)
-        || EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.menu_map_mode),
-            1, 0));
+    assertTrue(EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.VIEW_MODE, 1, true, false));
   }
 
   /**
