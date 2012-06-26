@@ -29,21 +29,47 @@ public class EulaUtils {
   private static final String EULA_PREFERENCE_FILE = "eula";
 
   // Accepting Google mobile terms of service
-  private static final String EULA_PREFERENCE_KEY = "eula.google_mobile_tos_accepted";
-
+  private static final String ACCEPT_EULA_PREFERENCE_KEY = "eula.google_mobile_tos_accepted";
+  private static final String SHOW_WELCOME_PREFERENCE_KEY = "showWelcome";
+  private static final String SHOW_CHECK_UNITS_PREFERENCE_KEY = "showCheckUnits";
+  
   private EulaUtils() {}
 
-  public static boolean getEulaValue(Context context) {
-    SharedPreferences sharedPreferences = context.getSharedPreferences(
-        EULA_PREFERENCE_FILE, Context.MODE_PRIVATE);
-    return sharedPreferences.getBoolean(EULA_PREFERENCE_KEY, false);
+  public static boolean getAcceptEula(Context context) {
+    return getValue(context, ACCEPT_EULA_PREFERENCE_KEY, false);
   }
 
-  public static void setEulaValue(Context context) {
+  public static void setAcceptEula(Context context) {
+    setValue(context, ACCEPT_EULA_PREFERENCE_KEY, true);
+  }
+
+  public static boolean getShowWelcome(Context context) {
+    return getValue(context, SHOW_WELCOME_PREFERENCE_KEY, true);
+  }
+
+  public static void setShowWelcome(Context context) {
+    setValue(context, SHOW_WELCOME_PREFERENCE_KEY, false);
+  }
+
+  public static boolean getShowCheckUnits(Context context) {
+    return getValue(context, SHOW_CHECK_UNITS_PREFERENCE_KEY, true);
+  }
+
+  public static void setShowCheckUnits(Context context) {
+    setValue(context, SHOW_CHECK_UNITS_PREFERENCE_KEY, false);
+  }
+  
+  private static boolean getValue(Context context, String key, boolean defaultValue) {
+    SharedPreferences sharedPreferences = context.getSharedPreferences(
+        EULA_PREFERENCE_FILE, Context.MODE_PRIVATE);
+    return sharedPreferences.getBoolean(key, defaultValue);
+  }
+
+  private static void setValue(Context context, String key, boolean value) {
     SharedPreferences sharedPreferences = context.getSharedPreferences(
         EULA_PREFERENCE_FILE, Context.MODE_PRIVATE);
     Editor editor = sharedPreferences.edit();
-    editor.putBoolean(EULA_PREFERENCE_KEY, true);
+    editor.putBoolean(key, value);
     ApiAdapterFactory.getApiAdapter().applyPreferenceChanges(editor);
   }
 }

@@ -77,7 +77,7 @@ public class EulaDialogFragment extends DialogFragment {
       .setPositiveButton(R.string.eula_accept, new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-          EulaUtils.setEulaValue(getActivity());
+          EulaUtils.setAcceptEula(getActivity());
           TrackListActivity trackListActivity = (TrackListActivity) getActivity();
           trackListActivity.showStartupDialogs();
         }
