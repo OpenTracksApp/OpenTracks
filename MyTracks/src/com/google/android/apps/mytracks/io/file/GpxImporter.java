@@ -410,6 +410,10 @@ public class GpxImporter extends DefaultHandler {
       return;
     }
 
+    if (content == null) {
+      return;
+    }
+      
     // Parse the time
     long time;
     try {
@@ -452,7 +456,7 @@ public class GpxImporter extends DefaultHandler {
    * On altitude element end.
    */
   private void onAltitudeElementEnd() throws SAXException {
-    if (location != null) {
+    if (location != null && content != null) {
       try {
         location.setAltitude(Double.parseDouble(content));
       } catch (NumberFormatException e) {
@@ -465,14 +469,18 @@ public class GpxImporter extends DefaultHandler {
    * On name element end.
    */
   private void onNameElementEnd() {
-    track.setName(content.toString().trim());
+    if (content != null) {
+      track.setName(content.toString().trim());
+    }
   }
 
   /**
    * On description element end.
    */
   private void onDescriptionElementEnd() {
-    track.setDescription(content.toString().trim());
+    if (content != null) {
+      track.setDescription(content.toString().trim());
+    }
   }
 
   /**
