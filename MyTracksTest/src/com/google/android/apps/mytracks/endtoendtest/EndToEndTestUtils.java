@@ -331,7 +331,7 @@ public class EndToEndTestUtils {
       SOLO.clickOnText(activityMytracks.getString(R.string.menu_stop_recording));
     }
     if (isSave) {
-      EndToEndTestUtils.SOLO.waitForText(activityMytracks.getString(R.string.generic_save));
+      EndToEndTestUtils.SOLO.waitForText(activityMytracks.getString(R.string.generic_save), 1, 5000);
       // Make every track name is unique to make sure every check can be
       // trusted.
       EndToEndTestUtils.trackName = EndToEndTestUtils.TRACK_NAME_PREFIX
@@ -401,6 +401,7 @@ public class EndToEndTestUtils {
    * @return the button to search, and null means can not find the button
    */
   static Button getButtonOnScreen(String buttonName, boolean isWait,boolean isClick) {
+    instrumentation.waitForIdleSync();
     if (isWait) {
       SOLO.waitForText(buttonName);
     }
@@ -572,6 +573,7 @@ public class EndToEndTestUtils {
    */
   public static void resetAllSettings(Activity activityMyTracks, boolean keepInSettingList) {
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
+    SOLO.waitForText(activityMyTracks.getString(R.string.settings_reset));
     SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset));
     getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
     instrumentation.waitForIdleSync();

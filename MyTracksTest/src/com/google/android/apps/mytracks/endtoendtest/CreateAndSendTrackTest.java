@@ -216,6 +216,8 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     
     // Reset all settings.
     EndToEndTestUtils.resetAllSettings(activityMyTracks, false);
+    
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.track_list_empty_message)));
     // Test should not show relative time.
     EndToEndTestUtils.startRecording();
     instrumentation.waitForIdleSync();
@@ -225,7 +227,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.goBack();
     instrumentation.waitForIdleSync();
-    assertFalse(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.RELATIVE_STARTTIME_POSTFIX, 1, 500));
+    assertFalse(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.RELATIVE_STARTTIME_POSTFIX, 1, 5000));
 
     // Test should show relative time for createSimpleTrack would save a track
     // name that is different with the start time.
