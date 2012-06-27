@@ -15,11 +15,12 @@
  */
 package com.google.android.apps.mytracks.io.docs;
 
-import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.Track;
+import com.google.android.apps.mytracks.io.fusiontables.SendFusionTablesUtils;
 import com.google.android.apps.mytracks.io.gdata.docs.DocumentsClient;
 import com.google.android.apps.mytracks.io.gdata.docs.SpreadsheetsClient;
 import com.google.android.apps.mytracks.io.gdata.docs.SpreadsheetsClient.WorksheetEntry;
+import com.google.android.apps.mytracks.io.maps.SendMapsUtils;
 import com.google.android.apps.mytracks.stats.TripStatistics;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.apps.mytracks.util.ResourceUtils;
@@ -153,7 +154,7 @@ public class SendDocsUtils {
     URL url = new URL(CREATE_SPREADSHEET_URI);
     URLConnection conn = url.openConnection();
     conn.addRequestProperty(CONTENT_TYPE, OPENDOCUMENT_SPREADSHEET_MIME_TYPE);
-    conn.addRequestProperty(SLUG, URLEncoder.encode(title, "UTF-8"));
+    conn.addRequestProperty(SLUG, title);
     conn.addRequestProperty(AUTHORIZATION, AUTHORIZATION_PREFIX + authToken);
     conn.setDoOutput(true);
     OutputStream outputStream = conn.getOutputStream();
@@ -311,10 +312,17 @@ public class SendDocsUtils {
     appendTag(builder, "maxelevation", getElevation(stats.getMaxElevation(), metricUnits));
     appendTag(builder, "elevationunit", elevationUnit);
 
-    if (track.getMapId().length() > 0) {
-      appendTag(builder, "map", String.format(
-          Locale.US, "%s?msa=0&msid=%s", Constants.MAPSHOP_BASE_URL, track.getMapId()));
+    String map = SendMapsUtils.getMapUrl(track); 
+    if (map == null) {
+      map = context.getString(R.string.value_unknown);
     }
+    appendTag(builder, "map", map);
+
+    String fusionTable = SendFusionTablesUtils.getMapUrl(track);
+    if (fusionTable == null) {
+      fusionTable = context.getString(R.string.value_unknown);
+    }
+    appendTag(builder, "fusiontable", fusionTable);
 
     builder.append("</entry>");
     return builder.toString();
