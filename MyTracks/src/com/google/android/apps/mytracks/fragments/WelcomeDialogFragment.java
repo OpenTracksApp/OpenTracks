@@ -17,7 +17,7 @@
 package com.google.android.apps.mytracks.fragments;
 
 import com.google.android.apps.mytracks.TrackListActivity;
-import com.google.android.apps.mytracks.util.PreferencesUtils;
+import com.google.android.apps.mytracks.util.EulaUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.app.AlertDialog;
@@ -55,7 +55,7 @@ public class WelcomeDialogFragment extends DialogFragment {
   }
 
   private void onDone() {
-    PreferencesUtils.setBoolean(getActivity(), R.string.show_welcome_dialog_key, false);
+    EulaUtils.setShowWelcome(getActivity());
     TrackListActivity trackListActivity = (TrackListActivity) getActivity();
     trackListActivity.showStartupDialogs();
   }
