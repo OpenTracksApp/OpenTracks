@@ -153,7 +153,7 @@ public class SendDocsUtils {
     URL url = new URL(CREATE_SPREADSHEET_URI);
     URLConnection conn = url.openConnection();
     conn.addRequestProperty(CONTENT_TYPE, OPENDOCUMENT_SPREADSHEET_MIME_TYPE);
-    conn.addRequestProperty(SLUG, title);
+    conn.addRequestProperty(SLUG, URLEncoder.encode(title, "UTF-8"));
     conn.addRequestProperty(AUTHORIZATION, AUTHORIZATION_PREFIX + authToken);
     conn.setDoOutput(true);
     OutputStream outputStream = conn.getOutputStream();
