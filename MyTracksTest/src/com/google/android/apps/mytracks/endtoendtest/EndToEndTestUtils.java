@@ -77,8 +77,8 @@ public class EndToEndTestUtils {
   public static String VIEW_MODE = VIEW_MODE_ENGLISH;
 
   static Solo SOLO;
-  static Instrumentation INSTRUMENTATION;
-  static TrackListActivity ACTIVITYMYTRACKS;
+  static Instrumentation instrumentation;
+  static TrackListActivity activityMytracks;
   // Check whether the UI has an action bar which is related with the version of
   // Android OS.
   static boolean hasActionBar = false;
@@ -142,33 +142,34 @@ public class EndToEndTestUtils {
    */
   static void setupForAllTest(Instrumentation instrumentation, TrackListActivity activityMyTracks) {
     setIsEmulator();
-    EndToEndTestUtils.INSTRUMENTATION = instrumentation;
-    EndToEndTestUtils.ACTIVITYMYTRACKS = activityMyTracks;
-    EndToEndTestUtils.SOLO = new Solo(EndToEndTestUtils.INSTRUMENTATION,
-        EndToEndTestUtils.ACTIVITYMYTRACKS);
+    EndToEndTestUtils.instrumentation = instrumentation;
+    EndToEndTestUtils.activityMytracks = activityMyTracks;
+    EndToEndTestUtils.SOLO = new Solo(EndToEndTestUtils.instrumentation,
+        EndToEndTestUtils.activityMytracks);
     // Check if open MyTracks first time after install. If so, there would be a
     // welcome view with accept buttons. And makes sure only check once.
     if (!EndToEndTestUtils.isCheckedFirstLaunch) {
-      if ((EndToEndTestUtils.getButtonOnScreen(EndToEndTestUtils.ACTIVITYMYTRACKS
+      if ((EndToEndTestUtils.getButtonOnScreen(EndToEndTestUtils.activityMytracks
           .getString(R.string.eula_accept), false, false) != null)) {
         EndToEndTestUtils.verifyFirstLaunch();
       } else if (EndToEndTestUtils.SOLO.waitForText(
       // After reset setting, welcome page will show again.
-          ACTIVITYMYTRACKS.getString(R.string.welcome_title), 0, 500)) {
+          activityMytracks.getString(R.string.welcome_title), 0, 500)) {
         resetPreferredUnits();
       }
 
       EndToEndTestUtils.isCheckedFirstLaunch = true;
       EndToEndTestUtils.setHasActionBar();
       
-      String loc = INSTRUMENTATION.getContext().getResources().getConfiguration().locale.getLanguage();
-      if (loc.equalsIgnoreCase("zh")) {
+      // Check the language, test in Chinese or English.
+      String deviceLanguage = instrumentation.getContext().getResources().getConfiguration().locale.getLanguage();
+      if (deviceLanguage.equalsIgnoreCase("zh")) {
         RELATIVE_STARTTIME_POSTFIX = RELATIVE_STARTTIME_POSTFIX_CHINESE;
         VIEW_MODE = VIEW_MODE_CHINESE;
       }
     } else if (EndToEndTestUtils.SOLO.waitForText(
         // After reset setting, welcome page will show again.
-        ACTIVITYMYTRACKS.getString(R.string.welcome_title), 0, 500)) {
+        activityMytracks.getString(R.string.welcome_title), 0, 500)) {
       resetPreferredUnits();
     }
     
@@ -183,10 +184,10 @@ public class EndToEndTestUtils {
    * Checks if need reset preferred units.
    */
   private static void resetPreferredUnits() {
-    getButtonOnScreen(ACTIVITYMYTRACKS.getString(R.string.generic_ok), true, true);
-    SOLO.waitForText(ACTIVITYMYTRACKS.getString(R.string.settings_stats_units_title));
-    getButtonOnScreen(ACTIVITYMYTRACKS.getString(R.string.generic_ok), true, true);
-    INSTRUMENTATION.waitForIdleSync();
+    getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
+    SOLO.waitForText(activityMytracks.getString(R.string.settings_stats_units_title));
+    getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
+    instrumentation.waitForIdleSync();
   }
 
 
@@ -205,13 +206,13 @@ public class EndToEndTestUtils {
    * Accepts terms and configures units.
    */
   static void verifyFirstLaunch() {
-    SOLO.clickOnText(ACTIVITYMYTRACKS.getString(R.string.eula_accept));
-    if (SOLO.waitForText(ACTIVITYMYTRACKS.getString(R.string.generic_ok))) {
+    SOLO.clickOnText(activityMytracks.getString(R.string.eula_accept));
+    if (SOLO.waitForText(activityMytracks.getString(R.string.generic_ok))) {
       // Click for welcome.
-      getButtonOnScreen(ACTIVITYMYTRACKS.getString(R.string.generic_ok), true, true);
+      getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
       // Click for choose units.
-      getButtonOnScreen(ACTIVITYMYTRACKS.getString(R.string.generic_ok), true, true);
-      INSTRUMENTATION.waitForIdleSync();
+      getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
+      instrumentation.waitForIdleSync();
     }
   }
 
@@ -224,7 +225,7 @@ public class EndToEndTestUtils {
   static void createSimpleTrack(int numberOfGpsData) {
     startRecording();
     EndToEndTestUtils.sendGps(numberOfGpsData);
-    INSTRUMENTATION.waitForIdleSync();
+    instrumentation.waitForIdleSync();
     stopRecording(true);
   }
   
@@ -272,18 +273,18 @@ public class EndToEndTestUtils {
    */
   static void startRecording() {
     if (hasActionBar) {
-      Button startButton = getButtonOnScreen(ACTIVITYMYTRACKS.getString(R.string.menu_record_track), false, false);
+      Button startButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_record_track), false, false);
       // In case a track is recording.
       if (startButton == null) {
         stopRecording(true);
-        startButton = getButtonOnScreen(ACTIVITYMYTRACKS.getString(R.string.menu_record_track), false, false);
+        startButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_record_track), false, false);
       }
       SOLO.clickOnView(startButton);
     } else {
       showMoreMenuItem();
-      if (!SOLO.searchText(ACTIVITYMYTRACKS.getString(R.string.menu_record_track))) {
+      if (!SOLO.searchText(activityMytracks.getString(R.string.menu_record_track))) {
         // Check if in TrackDetailActivity.
-        if (SOLO.searchText(ACTIVITYMYTRACKS.getString(R.string.menu_play))) {
+        if (SOLO.searchText(activityMytracks.getString(R.string.menu_play))) {
           SOLO.goBack();
         } else {
           // In case a track is recording.
@@ -291,8 +292,8 @@ public class EndToEndTestUtils {
           showMoreMenuItem();
         }
       }
-      INSTRUMENTATION.waitForIdleSync();
-      SOLO.clickOnText(ACTIVITYMYTRACKS.getString(R.string.menu_record_track));
+      instrumentation.waitForIdleSync();
+      SOLO.clickOnText(activityMytracks.getString(R.string.menu_record_track));
     }
   }
   
@@ -303,12 +304,12 @@ public class EndToEndTestUtils {
    */
   static boolean isUnderRecording() {
     if (hasActionBar) { 
-      return getButtonOnScreen(ACTIVITYMYTRACKS
+      return getButtonOnScreen(activityMytracks
         .getString(R.string.menu_record_track), false, false) == null; 
     }
     showMoreMenuItem();
-    if (SOLO.searchText(ACTIVITYMYTRACKS.getString(R.string.menu_record_track))
-        || SOLO.searchText(ACTIVITYMYTRACKS.getString(R.string.menu_play))) {
+    if (SOLO.searchText(activityMytracks.getString(R.string.menu_record_track))
+        || SOLO.searchText(activityMytracks.getString(R.string.menu_play))) {
       SOLO.goBack();
       return false;
     }
@@ -323,14 +324,14 @@ public class EndToEndTestUtils {
    */
   static void stopRecording(boolean isSave) {
     if (hasActionBar) {
-      getButtonOnScreen(ACTIVITYMYTRACKS.getString(R.string.menu_stop_recording), false, true);
+      getButtonOnScreen(activityMytracks.getString(R.string.menu_stop_recording), false, true);
     } else {
       showMoreMenuItem();
-      INSTRUMENTATION.waitForIdleSync();
-      SOLO.clickOnText(ACTIVITYMYTRACKS.getString(R.string.menu_stop_recording));
+      instrumentation.waitForIdleSync();
+      SOLO.clickOnText(activityMytracks.getString(R.string.menu_stop_recording));
     }
     if (isSave) {
-      EndToEndTestUtils.SOLO.waitForText(ACTIVITYMYTRACKS.getString(R.string.generic_save));
+      EndToEndTestUtils.SOLO.waitForText(activityMytracks.getString(R.string.generic_save));
       // Make every track name is unique to make sure every check can be
       // trusted.
       EndToEndTestUtils.trackName = EndToEndTestUtils.TRACK_NAME_PREFIX
@@ -340,7 +341,7 @@ public class EndToEndTestUtils {
         // Close soft keyboard.
         EndToEndTestUtils.SOLO.goBack();
       }
-      SOLO.clickLongOnText(ACTIVITYMYTRACKS.getString(R.string.generic_save));
+      SOLO.clickLongOnText(activityMytracks.getString(R.string.generic_save));
     }
   }
 
@@ -383,12 +384,12 @@ public class EndToEndTestUtils {
    */
   static void saveTrackToSdCard(String trackKind) {
     deleteExportedFiles(trackKind);
-    INSTRUMENTATION.waitForIdleSync();
-    findMenuItem(ACTIVITYMYTRACKS.getString(R.string.menu_save), true);
-    INSTRUMENTATION.waitForIdleSync();
+    instrumentation.waitForIdleSync();
+    findMenuItem(activityMytracks.getString(R.string.menu_save), true);
+    instrumentation.waitForIdleSync();
     SOLO.clickOnText(trackKind.toUpperCase());
     rotateAllActivities();
-    SOLO.waitForText(ACTIVITYMYTRACKS.getString(R.string.generic_success_title));
+    SOLO.waitForText(activityMytracks.getString(R.string.generic_success_title));
   }
 
   /**
@@ -422,17 +423,17 @@ public class EndToEndTestUtils {
    * @return false means can not check failed.
    */
   static boolean setHasActionBar() {
-    INSTRUMENTATION.waitForIdleSync();
+    instrumentation.waitForIdleSync();
     // If can find record button without pressing Menu, it should be an action
     // bar.
-    Button startButton = getButtonOnScreen(ACTIVITYMYTRACKS.getString(R.string.menu_record_track), false, false);
-    Button stopButton = getButtonOnScreen(ACTIVITYMYTRACKS.getString(R.string.menu_stop_recording), false, false);
+    Button startButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_record_track), false, false);
+    Button stopButton = getButtonOnScreen(activityMytracks.getString(R.string.menu_stop_recording), false, false);
     if (startButton != null || stopButton != null) {
       hasActionBar = true;
     } else {
       showMoreMenuItem();
-      if (SOLO.searchText(ACTIVITYMYTRACKS.getString(R.string.menu_record_track))
-          || SOLO.searchText(ACTIVITYMYTRACKS.getString(R.string.menu_stop_recording))) {
+      if (SOLO.searchText(activityMytracks.getString(R.string.menu_record_track))
+          || SOLO.searchText(activityMytracks.getString(R.string.menu_stop_recording))) {
         hasActionBar = false;
       } else {
         return false;
@@ -447,7 +448,7 @@ public class EndToEndTestUtils {
    */
   static void rotateCurrentActivity() {
     EndToEndTestUtils.rotateActivity(SOLO.getCurrentActivity());
-    INSTRUMENTATION.waitForIdleSync();
+    instrumentation.waitForIdleSync();
   }
 
   /**
@@ -459,7 +460,7 @@ public class EndToEndTestUtils {
       EndToEndTestUtils.rotateActivity(activity);
     }
 
-    INSTRUMENTATION.waitForIdleSync();
+    instrumentation.waitForIdleSync();
   }
 
   /**
@@ -572,8 +573,8 @@ public class EndToEndTestUtils {
   public static void resetAllSettings(Activity activityMyTracks, boolean keepInSettingList) {
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
     SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset));
-    getButtonOnScreen(ACTIVITYMYTRACKS.getString(R.string.generic_ok), true, true);
-    INSTRUMENTATION.waitForIdleSync();
+    getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
+    instrumentation.waitForIdleSync();
     if (!keepInSettingList) {
       EndToEndTestUtils.SOLO.goBack();
     }
