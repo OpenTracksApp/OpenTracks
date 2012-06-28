@@ -206,7 +206,7 @@ public class EndToEndTestUtils {
    * Accepts terms and configures units.
    */
   static void verifyFirstLaunch() {
-    SOLO.clickOnText(activityMytracks.getString(R.string.eula_accept));
+    getButtonOnScreen(activityMytracks.getString(R.string.eula_accept), true, true);
     if (SOLO.waitForText(activityMytracks.getString(R.string.generic_ok))) {
       // Click for welcome.
       getButtonOnScreen(activityMytracks.getString(R.string.generic_ok), true, true);
