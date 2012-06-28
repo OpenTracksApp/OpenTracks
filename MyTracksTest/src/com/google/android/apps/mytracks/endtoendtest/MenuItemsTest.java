@@ -84,8 +84,7 @@ public class MenuItemsTest extends ActivityInstrumentationTestCase2<TrackListAct
   public void testSearch() {
     EndToEndTestUtils.createSimpleTrack(1);
     EndToEndTestUtils.SOLO.goBack();
-    EndToEndTestUtils.getButtonOnScreen(activityMyTracks
-        .getString(R.string.menu_search), true, true);
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_search), true);
     ArrayList<EditText> editTexts = EndToEndTestUtils.SOLO.getCurrentEditTexts();
     EndToEndTestUtils.SOLO.enterText(editTexts.get(0), EndToEndTestUtils.trackName);
     sendKeys(KeyEvent.KEYCODE_ENTER);

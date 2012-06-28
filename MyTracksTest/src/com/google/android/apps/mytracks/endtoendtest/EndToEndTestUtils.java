@@ -37,6 +37,7 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Provides utilities to smoke test.
@@ -69,12 +70,10 @@ public class EndToEndTestUtils {
   static String trackName;
   
   // Following is some check strings in English and Chinese
-  private static final String RELATIVE_STARTTIME_POSTFIX_ENGLISH = "mins ago";
-  private static final String RELATIVE_STARTTIME_POSTFIX_CHINESE = "分钟前";
-  public static String RELATIVE_STARTTIME_POSTFIX = RELATIVE_STARTTIME_POSTFIX_ENGLISH;
-  private static final String VIEW_MODE_ENGLISH = "mode";
-  private static final String VIEW_MODE_CHINESE = "模式";
-  public static String VIEW_MODE = VIEW_MODE_ENGLISH;
+  private static final HashMap<String, String> RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL = new HashMap<String, String>(); 
+  private static final HashMap<String, String> VIEW_MODE_ENGLISH_MULTILINGUAL = new HashMap<String, String>(); 
+  public static String RELATIVE_STARTTIME_POSTFIX = "";
+  public static String VIEW_MODE = "";
 
   static Solo SOLO;
   static Instrumentation instrumentation;
@@ -86,6 +85,27 @@ public class EndToEndTestUtils {
   static boolean isCheckedFirstLaunch = false;
 
   private EndToEndTestUtils() {}
+  
+  private static void checkLanguage() {
+    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("es", "mins ago");
+    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("de", "Minuten");
+    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("zh", "分钟前");
+    
+    VIEW_MODE_ENGLISH_MULTILINGUAL.put("es", "mode");
+    VIEW_MODE_ENGLISH_MULTILINGUAL.put("de", "modus");
+    VIEW_MODE_ENGLISH_MULTILINGUAL.put("zh", "模式");
+    
+    
+    // Check the language, test in Chinese or English.
+    String deviceLanguage = instrumentation.getContext().getResources().getConfiguration().locale.getLanguage();
+    if (deviceLanguage.equalsIgnoreCase("zh") || deviceLanguage.equalsIgnoreCase("de")) {
+      RELATIVE_STARTTIME_POSTFIX = RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.get(deviceLanguage);
+      VIEW_MODE = VIEW_MODE_ENGLISH_MULTILINGUAL.get(deviceLanguage);
+    } else {
+      RELATIVE_STARTTIME_POSTFIX = RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.get("es");
+      VIEW_MODE = VIEW_MODE_ENGLISH_MULTILINGUAL.get("es");
+    }
+  }
 
   /**
    * Sends Gps data to emulator.
@@ -157,16 +177,9 @@ public class EndToEndTestUtils {
           activityMytracks.getString(R.string.welcome_title), 0, 500)) {
         resetPreferredUnits();
       }
-
+      checkLanguage();
       EndToEndTestUtils.isCheckedFirstLaunch = true;
       EndToEndTestUtils.setHasActionBar();
-      
-      // Check the language, test in Chinese or English.
-      String deviceLanguage = instrumentation.getContext().getResources().getConfiguration().locale.getLanguage();
-      if (deviceLanguage.equalsIgnoreCase("zh")) {
-        RELATIVE_STARTTIME_POSTFIX = RELATIVE_STARTTIME_POSTFIX_CHINESE;
-        VIEW_MODE = VIEW_MODE_CHINESE;
-      }
     } else if (EndToEndTestUtils.SOLO.waitForText(
         // After reset setting, welcome page will show again.
         activityMytracks.getString(R.string.welcome_title), 0, 500)) {
@@ -388,7 +401,7 @@ public class EndToEndTestUtils {
     findMenuItem(activityMytracks.getString(R.string.menu_save), true);
     instrumentation.waitForIdleSync();
     SOLO.clickOnText(trackKind.toUpperCase());
-    rotateAllActivities();
+   // rotateAllActivities();
     SOLO.waitForText(activityMytracks.getString(R.string.generic_success_title));
   }
 
@@ -480,6 +493,7 @@ public class EndToEndTestUtils {
       findResult = true;
       if (click) {
         SOLO.clickOnView(button);
+        instrumentation.waitForIdleSync();
       }
       return findResult;
     }
@@ -494,6 +508,7 @@ public class EndToEndTestUtils {
 
     if (findResult && click) {
       SOLO.clickOnText(menuName);
+      instrumentation.waitForIdleSync();
     } else {
       SOLO.goBack();
     }
