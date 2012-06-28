@@ -56,8 +56,14 @@ public class DeleteOneMarkerDialogFragment extends DialogFragment {
         R.string.marker_delete_one_marker_confirm_message, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
-            MyTracksProviderUtils.Factory.get(getActivity()).deleteWaypoint(
-                getArguments().getLong(KEY_MARKER_ID), new DescriptionGeneratorImpl(getActivity()));
+            new Thread(new Runnable() {
+              @Override
+              public void run() {
+                MyTracksProviderUtils.Factory.get(getActivity()).deleteWaypoint(
+                    getArguments().getLong(KEY_MARKER_ID),
+                    new DescriptionGeneratorImpl(getActivity()));
+              }
+            }).start();
             Intent intent = IntentUtils.newIntent(getActivity(), MarkerListActivity.class)
                 .putExtra(MarkerListActivity.EXTRA_TRACK_ID, getArguments().getLong(KEY_TRACK_ID));
             startActivity(intent);
