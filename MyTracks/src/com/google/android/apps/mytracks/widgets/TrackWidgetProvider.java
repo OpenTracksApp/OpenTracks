@@ -41,6 +41,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.ContentObserver;
 import android.os.Handler;
 import android.support.v4.app.TaskStackBuilder;
+import android.view.View;
 import android.widget.RemoteViews;
 
 /**
@@ -178,7 +179,7 @@ public class TrackWidgetProvider extends AppWidgetProvider
     if (action != null) {
       updateButton(remoteViews, action);
     }
-    updateStatistics(remoteViews);
+    updateView(remoteViews);
 
     AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
     int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
@@ -195,25 +196,25 @@ public class TrackWidgetProvider extends AppWidgetProvider
    * @param action the action
    */
   private void updateButton(RemoteViews remoteViews, String action) {
-    int trackAction = trackStartedBroadcastAction.equals(action) ? R.string.track_action_end
-        : R.string.track_action_start;
+    boolean isRecording = trackStartedBroadcastAction.equals(action);
+    remoteViews.setViewVisibility(R.id.track_widget_record_button, isRecording ? View.GONE
+        : View.VISIBLE);
+    remoteViews.setViewVisibility(R.id.track_widget_stop_button, isRecording ? View.VISIBLE
+        : View.INVISIBLE);
     Intent intent = new Intent(context, ControlRecordingService.class).setAction(
-        context.getString(trackAction));
+        context.getString(isRecording ? R.string.track_action_end : R.string.track_action_start));
     PendingIntent pendingIntent = PendingIntent.getService(
         context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-    remoteViews.setOnClickPendingIntent(R.id.track_widget_button, pendingIntent);
-
-    int icon = trackStartedBroadcastAction.equals(action) ? R.drawable.app_widget_button_enabled
-        : R.drawable.app_widget_button_disabled;
-    remoteViews.setImageViewResource(R.id.track_widget_button, icon);
+    remoteViews.setOnClickPendingIntent(isRecording ? R.id.track_widget_stop_button
+        : R.id.track_widget_record_button, pendingIntent);
   }
 
   /**
-   * Updates statistics.
+   * Updates view.
    * 
    * @param remoteViews the remote views
    */
-  private void updateStatistics(RemoteViews remoteViews) {
+  private void updateView(RemoteViews remoteViews) {
     Track track = selectedTrackId != PreferencesUtils.SELECTED_TRACK_ID_DEFAULT 
         ? myTracksProviderUtils.getTrack(selectedTrackId) : myTracksProviderUtils.getLastTrack();
     TripStatistics tripStatistics = track == null ? null : track.getTripStatistics();
@@ -249,7 +250,9 @@ public class TrackWidgetProvider extends AppWidgetProvider
     }
     TaskStackBuilder taskStackBuilder = TaskStackBuilder.from(context);
     taskStackBuilder.addNextIntent(intent);
+    PendingIntent pendingIntent = taskStackBuilder.getPendingIntent(0, 0);
     remoteViews.setOnClickPendingIntent(
-        R.id.track_widget_statistics, taskStackBuilder.getPendingIntent(0, 0));
+        R.id.track_widget_statistics, pendingIntent);
+    remoteViews.setOnClickPendingIntent(R.id.track_widget_icon, pendingIntent);
   }
 }
