@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  style="@style/ScrollView" >
+  <TableLayout
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:padding="8dp"
+    android:stretchColumns="1" >
+    <TableRow>
+      <ImageView
+        android:contentDescription="@string/send_google_maps"
+        android:src="@drawable/google_maps_icon"
+        style="@style/ChooseUploadServiceImageView" />
+      <CheckBox
+        android:id="@+id/choose_upload_service_maps"
+        android:text="@string/send_google_maps"
+        style="@style/ChooseUploadServiceCheckBox" />
+    </TableRow>
+    <TableRow android:id="@+id/choose_upload_service_maps_options" >
+      <RadioGroup
+        android:layout_column="1"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_width="0dp" >
+        <RadioButton
+          android:id="@+id/choose_upload_service_new_map"
+          style="@style/TextMedium" />
+        <RadioButton
+          android:id="@+id/choose_upload_service_existing_map"
+          android:text="@string/send_google_existing_map"
+          style="@style/TextMedium" />
+      </RadioGroup>
+    </TableRow>
+    <TableRow>
+      <ImageView
+        android:contentDescription="@string/send_google_fusion_tables"
+        android:src="@drawable/google_fusion_tables_icon"
+        style="@style/ChooseUploadServiceImageView" />
+      <CheckBox
+        android:id="@+id/choose_upload_service_fusion_tables"
+        android:text="@string/send_google_fusion_tables_new_public_table"
+        style="@style/ChooseUploadServiceCheckBox" />
+    </TableRow>
+    <TableRow>
+      <ImageView
+        android:contentDescription="@string/send_google_docs"
+        android:src="@drawable/google_docs_icon"
+        style="@style/ChooseUploadServiceImageView" />
+      <CheckBox
+        android:id="@+id/choose_upload_service_docs"
+        android:text="@string/send_google_docs"
+        style="@style/ChooseUploadServiceCheckBox" />
+    </TableRow>
+  </TableLayout>
+</ScrollView>
