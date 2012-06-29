@@ -88,8 +88,8 @@ public class EndToEndTestUtils {
   
   private static void checkLanguage() {
     RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("es", "mins ago");
-    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("de", "minute");
-    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("fr", "Minuten");
+    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("de", "Minuten");
+    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("fr", "minute");
     RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("ar", "دقيقة");
     RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("zh", "分钟前");
     
