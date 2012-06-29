@@ -88,17 +88,21 @@ public class EndToEndTestUtils {
   
   private static void checkLanguage() {
     RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("es", "mins ago");
-    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("de", "Minuten");
+    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("de", "minute");
+    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("fr", "Minuten");
+    RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("ar", "دقيقة");
     RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.put("zh", "分钟前");
     
     VIEW_MODE_ENGLISH_MULTILINGUAL.put("es", "mode");
     VIEW_MODE_ENGLISH_MULTILINGUAL.put("de", "modus");
+    VIEW_MODE_ENGLISH_MULTILINGUAL.put("fr", "Mode");
+    VIEW_MODE_ENGLISH_MULTILINGUAL.put("ar", "وضع");
     VIEW_MODE_ENGLISH_MULTILINGUAL.put("zh", "模式");
     
     
     // Check the language, test in Chinese or English.
     String deviceLanguage = instrumentation.getContext().getResources().getConfiguration().locale.getLanguage();
-    if (deviceLanguage.equalsIgnoreCase("zh") || deviceLanguage.equalsIgnoreCase("de")) {
+    if (RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.get(deviceLanguage) != null) {
       RELATIVE_STARTTIME_POSTFIX = RELATIVE_STARTTIME_POSTFIX_MULTILINGUAL.get(deviceLanguage);
       VIEW_MODE = VIEW_MODE_ENGLISH_MULTILINGUAL.get(deviceLanguage);
     } else {
