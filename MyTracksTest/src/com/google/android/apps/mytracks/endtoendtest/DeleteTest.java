@@ -62,7 +62,7 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete_all), true);
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.rotateAllActivities();
-    EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_ok));
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     instrumentation.waitForIdleSync();
     // There is no track now.
     trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
@@ -74,7 +74,7 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
             EndToEndTestUtils.GPX.toUpperCase()));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
         .getString(R.string.sd_card_save_error_no_track)));
-    EndToEndTestUtils.SOLO.clickLongOnText(activityMyTracks.getString(R.string.generic_ok));
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
   }
 
   /**
@@ -89,7 +89,8 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
 
     EndToEndTestUtils.SOLO.clickOnView(trackListView.get(0).getChildAt(0));
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete), true);
-    EndToEndTestUtils.SOLO.clickLongOnText(activityMyTracks.getString(R.string.generic_ok));
+    EndToEndTestUtils
+    .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     instrumentation.waitForIdleSync();
     trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
     int trackNumberNew = trackListView.get(0).getCount();
@@ -102,15 +103,15 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
   public void testDeleteOneTrackUnderRecording() {
     EndToEndTestUtils.startRecording();
     instrumentation.waitForIdleSync();
-    assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_stop_recording),
-        false));
+    assertTrue(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_stop_recording), false));
     instrumentation.waitForIdleSync();
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete),
-        true);
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete), true);
+    EndToEndTestUtils
+        .getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     instrumentation.waitForIdleSync();
-    assertTrue(EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_record_track),
-        false));
+    assertTrue(EndToEndTestUtils.findMenuItem(
+        activityMyTracks.getString(R.string.menu_record_track), false));
     instrumentation.waitForIdleSync();
     assertTrue(EndToEndTestUtils.findMenuItem(
         activityMyTracks.getString(R.string.menu_record_track), false));

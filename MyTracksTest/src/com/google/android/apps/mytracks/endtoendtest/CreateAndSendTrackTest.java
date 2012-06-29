@@ -35,7 +35,6 @@ import java.util.ArrayList;
 public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<TrackListActivity> {
 
   private static final String WAYPOINT_NAME = "testWaypoint";
-  private static final String RELATIVE_STARTTIME_POSTFIX = "mins ago";
   private Instrumentation instrumentation;
   private TrackListActivity activityMyTracks;
 
@@ -116,8 +115,8 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     
     // If no account is binded with this device.
     if (EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.send_google_no_account_title), 1, 500)) {
-      EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
+        .getString(R.string.send_google_no_account_title), 1, 10000)) {
+      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     } else {
       assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
           .getString(R.string.generic_progress_title)));
@@ -129,7 +128,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
       // For we not sure the send will be successful, just check whether the result dialog is display. 
       assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
           .getString(R.string.share_track_share_url)));
-      EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
+      EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     }
     
   }
@@ -148,6 +147,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
 
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.rotateAllActivities();
+    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.generic_save));
     sendKeys(KeyEvent.KEYCODE_DEL);
     ArrayList<EditText> editTexts = EndToEndTestUtils.SOLO.getCurrentEditTexts();
     
@@ -212,14 +212,12 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
   public void testTrackStartTime() {
     // Delete all track first.
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete_all), true);
-    EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_ok));
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     
-     // Reset all settings.
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset));
-    EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_ok));
-    instrumentation.waitForIdleSync();
-    EndToEndTestUtils.SOLO.goBack();
+    // Reset all settings.
+    EndToEndTestUtils.resetAllSettings(activityMyTracks, false);
+    
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.track_list_empty_message)));
     // Test should not show relative time.
     EndToEndTestUtils.startRecording();
     instrumentation.waitForIdleSync();
@@ -229,13 +227,13 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     instrumentation.waitForIdleSync();
     EndToEndTestUtils.SOLO.goBack();
     instrumentation.waitForIdleSync();
-    assertFalse(EndToEndTestUtils.SOLO.waitForText(RELATIVE_STARTTIME_POSTFIX, 1, 500));
+    assertFalse(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.RELATIVE_STARTTIME_POSTFIX, 1, 5000));
 
     // Test should show relative time for createSimpleTrack would save a track
     // name that is different with the start time.
     EndToEndTestUtils.createSimpleTrack(2);
     EndToEndTestUtils.SOLO.goBack();
-    assertTrue(EndToEndTestUtils.SOLO.waitForText(RELATIVE_STARTTIME_POSTFIX, 1, 5000));
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.RELATIVE_STARTTIME_POSTFIX, 1, 5000));
   }
 
   /**

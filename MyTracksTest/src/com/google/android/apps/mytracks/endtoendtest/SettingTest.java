@@ -61,14 +61,8 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
    * </ul>
    */
   public void testChangeAndReset() {
-    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
-    instrumentation.waitForIdleSync();
-    // Rotate on the settings page.
-    EndToEndTestUtils.rotateAllActivities();
-    EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.settings_reset));
-    // Reset all settings at first.
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset));
-    EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_ok));
+    // Reset all settings.
+    EndToEndTestUtils.resetAllSettings(activityMyTracks, true);
     // Change a setting of Map.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
     instrumentation.waitForIdleSync();
@@ -96,12 +90,12 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
 
     // Reset all settings.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_reset));
-    EndToEndTestUtils.SOLO.clickOnButton(activityMyTracks.getString(R.string.generic_ok));
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
 
     // Check settings.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
     EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-        .getString(R.string.settings_stats_units_title));
+        .getString(R.string.settings_stats_units_title), 1, 20000);
     displayCheckBoxs = EndToEndTestUtils.SOLO.getCurrentCheckBoxes();
     assertEquals(useMetric, displayCheckBoxs.get(0).isChecked());
 
@@ -132,24 +126,40 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     // Test just change preferred units when display CHART tab.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_chart_tab));
     EndToEndTestUtils.sendGps(3);
-    ChangeStatsSettings(true, false);
+    ChangeStatsSettings(true, false, false, false, false);
     EndToEndTestUtils.sendGps(3);
     EndToEndTestUtils.stopRecording(true);
 
   }
   
   /**
-   * Tests the change of stats settings during recording on stats view.
+   * Tests the change of stats settings during recording on stats tab.
    */
   public void testChangeStatsSettings_underRecording_stats() {
     EndToEndTestUtils.startRecording();
     // Test change preferred units and preferred rate when display STATS tab.
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
     EndToEndTestUtils.sendGps(3);
-    ChangeStatsSettings(true, true);
+    ChangeStatsSettings(true, true, false, false, false);
     EndToEndTestUtils.sendGps(3);
     EndToEndTestUtils.stopRecording(true);
 
+  }
+  
+  /**
+   * Tests displaying elevation, grade and latitude and longitude information in Stats tab.
+   */
+  public void testChangeStatsSettings_showExtraInfos() {
+    EndToEndTestUtils.createTrackIfEmpty(5, false);
+    EndToEndTestUtils.resetAllSettings(activityMyTracks, true);
+    ChangeStatsSettings(false, false, true, true, true);
+    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.stats_min_elevation)));
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.stats_min_grade)));
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
+        .getString(R.string.stats_latitude)));
   }
   
   /**
@@ -157,8 +167,12 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
    * 
    * @param changeUnits is change the preferred unit
    * @param changeRate is change the preferred rate
+   * @param changeElevation is change the elevation
+   * @param changeGrade is change the grade
+   * @param changeLatLong is change the latitude and longitude
    */
-  private void ChangeStatsSettings(boolean changeUnits, boolean changeRate) {
+  private void ChangeStatsSettings(boolean changeUnits, boolean changeRate,
+      boolean changeElevation, boolean changeGrade, boolean changeLatLong) {
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_settings), true);
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.track_detail_stats_tab));
     assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
@@ -172,6 +186,18 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     if (changeRate) {
       EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
           .getString(R.string.settings_stats_rate_title));
+    }
+    if (changeElevation) {
+      EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+          .getString(R.string.stats_elevation));
+    }
+    if (changeGrade) {
+      EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+          .getString(R.string.settings_stats_grade));
+    }
+    if (changeLatLong) {
+      EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
+          .getString(R.string.settings_stats_coordinate));
     }
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.goBack();
@@ -225,7 +251,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_delete_all), true);
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     instrumentation.waitForIdleSync();
 
     // Read from SD card.
@@ -233,7 +259,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.settings_backup));
     EndToEndTestUtils.SOLO.clickOnText(activityMyTracks
         .getString(R.string.settings_backup_restore));
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     assertTrue(EndToEndTestUtils.SOLO.waitForText(
         activityMyTracks.getString(R.string.sd_card_import_success), 0, 10000));
     // Check restore track.
@@ -260,7 +286,7 @@ public class SettingTest extends ActivityInstrumentationTestCase2<TrackListActiv
       // Close soft keyboard.
       EndToEndTestUtils.SOLO.goBack();
     }
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.generic_ok));
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     
     EndToEndTestUtils.SOLO.goBack();
     EndToEndTestUtils.SOLO.goBack();
