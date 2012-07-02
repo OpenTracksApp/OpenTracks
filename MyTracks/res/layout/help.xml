@@ -73,16 +73,16 @@ limitations under the License.
         android:text="@string/help_share_friends_answer"
         style="@style/HelpAnswer" />
       <TextView
+        android:text="@string/help_send_track_question"
+        style="@style/HelpQuestion" />
+      <TextView
+        android:id="@+id/help_send_track_answer"
+        style="@style/HelpAnswer" />
+      <TextView
         android:text="@string/help_maps_public_unlisted_question"
         style="@style/HelpQuestion" />
       <TextView
         android:id="@+id/help_maps_public_unlisted_answer"
-        style="@style/HelpAnswer" />
-      <TextView
-        android:text="@string/help_google_services_question"
-        style="@style/HelpQuestion" />
-      <TextView
-        android:id="@+id/help_google_services_answer"
         style="@style/HelpAnswer" />
       <TextView
         android:text="@string/help_share_visibility_question"
