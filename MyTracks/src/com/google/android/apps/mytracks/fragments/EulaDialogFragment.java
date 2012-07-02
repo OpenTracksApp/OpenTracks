@@ -36,6 +36,7 @@ public class EulaDialogFragment extends DialogFragment {
   public static final String EULA_DIALOG_TAG = "eulaDialog";
   private static final String KEY_HAS_ACCEPTED = "hasAccepted";
   private static final String GOOGLE_URL = "m.google.com";
+  private static final String KOREAN = "ko";
 
   /**
    * Creates a new instance of {@link EulaDialogFragment}.
@@ -98,12 +99,17 @@ public class EulaDialogFragment extends DialogFragment {
    * 
    */
   private String getEulaText() {
-    return getString(R.string.eula_date) 
+    String tos = getString(R.string.eula_date) 
         + "\n\n"
         + getString(R.string.eula_body, GOOGLE_URL) 
         + "\n\n" 
         + getString(R.string.eula_footer, GOOGLE_URL) 
         + "\n\n" 
         + getString(R.string.eula_copyright_year);
+    boolean isKorean = getResources().getConfiguration().locale.getLanguage().equals(KOREAN);
+    if (isKorean) {
+      tos += "\n\n" + getString(R.string.eula_korean);
+    }
+    return tos;
   }
 }
