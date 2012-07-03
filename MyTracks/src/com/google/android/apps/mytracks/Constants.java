@@ -124,8 +124,6 @@ public abstract class Constants {
   public static final String
       RESUME_TRACK_EXTRA_NAME = "com.google.android.apps.mytracks.RESUME_TRACK";
 
-  public static final String MAPSHOP_BASE_URL = "https://maps.google.com/maps/ms";
-
   public static final String SETTINGS_NAME = "SettingsActivity";
 
   /**

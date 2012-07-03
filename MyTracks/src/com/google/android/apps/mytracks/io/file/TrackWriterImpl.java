@@ -318,7 +318,9 @@ class TrackWriterImpl implements TrackWriter {
         locationFactory);
     try {
       if (!it.hasNext()) {
-        Log.w(Constants.TAG, "Unable to get any points to write");
+        // Writes an empty track
+        writer.writeBeginTrack(null);
+        writer.writeEndTrack(null);
         return;
       }
       int pointNumber = 0;

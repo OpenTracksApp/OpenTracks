@@ -33,14 +33,19 @@ import android.support.v4.app.DialogFragment;
 public class DeleteAllTrackDialogFragment extends DialogFragment {
 
   public static final String DELETE_ALL_TRACK_DIALOG_TAG = "deleteAllTrackDialog";
-  
+
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     return DialogUtils.createConfirmationDialog(getActivity(),
         R.string.track_list_delete_all_confirm_message, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
-            MyTracksProviderUtils.Factory.get(getActivity()).deleteAllTracks();
+            new Thread(new Runnable() {
+              @Override
+              public void run() {
+                MyTracksProviderUtils.Factory.get(getActivity()).deleteAllTracks();
+              }
+            }).start();
           }
         });
   }

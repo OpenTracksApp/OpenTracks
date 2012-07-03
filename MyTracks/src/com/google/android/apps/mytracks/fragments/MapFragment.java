@@ -33,6 +33,7 @@ import com.google.android.apps.mytracks.util.LocationUtils;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
+import com.google.android.maps.Overlay;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Intent;
@@ -52,6 +53,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.EnumSet;
+import java.util.List;
 
 /**
  * A fragment to display map to the user.
@@ -89,8 +91,8 @@ public class MapFragment extends Fragment
 
   // UI elements
   private View mapViewContainer;
-  private MapOverlay mapOverlay;
   private MapView mapView;
+  private MapOverlay mapOverlay;
   private ImageButton myLocationImageButton;
   private TextView messageTextView;
 
@@ -104,14 +106,16 @@ public class MapFragment extends Fragment
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     mapViewContainer = ((TrackDetailActivity) getActivity()).getMapViewContainer();
-
+    mapView = (MapView) mapViewContainer.findViewById(R.id.map_view);
     mapOverlay = new MapOverlay(getActivity());
     
-    mapView = (MapView) mapViewContainer.findViewById(R.id.map_view);
+    List<Overlay> overlays = mapView.getOverlays();
+    overlays.clear();
+    overlays.add(mapOverlay);
+    
     mapView.requestFocus();
     mapView.setOnTouchListener(this);
     mapView.setBuiltInZoomControls(true);
-    mapView.getOverlays().add(mapOverlay);
     myLocationImageButton = (ImageButton) mapViewContainer.findViewById(R.id.map_my_location);
     myLocationImageButton.setOnClickListener(new View.OnClickListener() {
       @Override

@@ -52,7 +52,10 @@ public class SendFusionTablesUtils {
    * @return the url.
    */
   public static String getMapUrl(Track track) {
-    if (track == null || track.getTripStatistics() == null || track.getTableId() == null) {
+    if (track == null 
+        || track.getTripStatistics() == null 
+        || track.getTableId() == null
+        || track.getTableId().length() == 0) {
       Log.e(TAG, "Invalid track");
       return null;
     }

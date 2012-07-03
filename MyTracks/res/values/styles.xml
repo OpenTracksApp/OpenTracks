@@ -184,6 +184,14 @@ limitations under the License.
   <style name="TrackWidgetLabel" parent="@style/TextSmall">
     <item name="android:width">100dp</item>
   </style>
+  <!-- The style for the track widget button -->
+  <style name="TrackWidgetButton">
+    <item name="android:layout_gravity">center_horizontal</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginTop">8dp</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:padding">8dp</item>
+  </style>
   <!-- The style for the track widget value -->
   <style name="TrackWidgetValue" parent="@style/TextSmall">
     <item name="android:layout_weight">1</item>

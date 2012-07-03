@@ -17,6 +17,7 @@
 package com.google.android.apps.mytracks.fragments;
 
 import com.google.android.apps.mytracks.TrackListActivity;
+import com.google.android.apps.mytracks.util.EulaUtils;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
@@ -69,7 +70,7 @@ public class CheckUnitsDialogFragment extends DialogFragment {
    * Tasks to perform when done.
    */
   private void onDone() {
-    PreferencesUtils.setBoolean(getActivity(), R.string.show_check_units_dialog_key, false);
+    EulaUtils.setShowCheckUnits(getActivity());
     TrackListActivity trackListActivity = (TrackListActivity) getActivity();
     trackListActivity.showStartupDialogs();   
   }

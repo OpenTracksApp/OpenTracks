@@ -278,23 +278,21 @@ public class TrackListActivity extends FragmentActivity implements DeleteOneTrac
    * Shows start up dialogs.
    */
   public void showStartupDialogs() {
-    if (!EulaUtils.getEulaValue(this)) {
+    if (!EulaUtils.getAcceptEula(this)) {
       Fragment fragment = getSupportFragmentManager()
           .findFragmentByTag(EulaDialogFragment.EULA_DIALOG_TAG);
       if (fragment == null) {
         EulaDialogFragment.newInstance(false)
             .show(getSupportFragmentManager(), EulaDialogFragment.EULA_DIALOG_TAG);
       }
-    } else if (PreferencesUtils.getBoolean(
-        this, R.string.show_welcome_dialog_key, PreferencesUtils.SHOW_WELCOME_DIALOG_DEFAULT)) {
+    } else if (EulaUtils.getShowWelcome(this)) {
       Fragment fragment = getSupportFragmentManager()
           .findFragmentByTag(WelcomeDialogFragment.WELCOME_DIALOG_TAG);
       if (fragment == null) {
         new WelcomeDialogFragment().show(
             getSupportFragmentManager(), WelcomeDialogFragment.WELCOME_DIALOG_TAG);
       }
-    } else if (PreferencesUtils.getBoolean(this, R.string.show_check_units_dialog_key,
-        PreferencesUtils.SHOW_CHECK_UNITS_DIALOG_DEFAULT)) {
+    } else if (EulaUtils.getShowCheckUnits(this)) {
       Fragment fragment = getSupportFragmentManager()
           .findFragmentByTag(CheckUnitsDialogFragment.CHECK_UNITS_DIALOG_TAG);
       if (fragment == null) {
