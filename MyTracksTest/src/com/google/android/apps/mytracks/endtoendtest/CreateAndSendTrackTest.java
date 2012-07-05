@@ -124,7 +124,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
           .getString(R.string.generic_progress_title)));
       // Waiting the send is finish.
       while (EndToEndTestUtils.SOLO.waitForText(activityMyTracks
-          .getString(R.string.generic_progress_title), 1, 500)) {
+          .getString(R.string.generic_progress_title), 1, 2000)) {
       }
       
       // Check whether the result dialog is display. 
@@ -136,6 +136,8 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
       assertTrue(GoogleUtils.searchMapByTitle(EndToEndTestUtils.trackName, activityMyTracks));
       assertTrue(GoogleUtils.searchFusionTableByTitle(EndToEndTestUtils.TRACK_NAME_PREFIX, activityMyTracks));
       assertTrue(GoogleUtils.searchTrackTitleInSpreadsheet(EndToEndTestUtils.trackName, activityMyTracks, "My Tracks-" + EndToEndTestUtils.DEFAULTACTIVITY));
+      GoogleUtils.dropMaps(EndToEndTestUtils.trackName, activityMyTracks);
+      GoogleUtils.dropFusionTables(EndToEndTestUtils.trackName, activityMyTracks);
     }
     
   }

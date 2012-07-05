@@ -359,12 +359,15 @@ public class EndToEndTestUtils {
           + System.currentTimeMillis();
       SOLO.sendKey(KeyEvent.KEYCODE_DEL);
       SOLO.enterText(0, trackName);
+      SOLO.clickOnEditText(1);
+      SOLO.sendKey(KeyEvent.KEYCODE_DEL);
       SOLO.enterText(1, DEFAULTACTIVITY);
       if(!EndToEndTestUtils.isEmulator) {
         // Close soft keyboard.
         EndToEndTestUtils.SOLO.goBack();
       }
       SOLO.clickLongOnText(activityMytracks.getString(R.string.generic_save));
+      instrumentation.waitForIdleSync();
     }
   }
 

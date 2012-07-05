@@ -50,6 +50,7 @@ import android.content.Context;
 import android.util.Log;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -74,6 +75,9 @@ public class GoogleUtils {
    * @return true means set successfully
    */
   private static boolean getMaps(Context context) {
+    
+    account = AccountManager.get(context).getAccountsByType(
+        Constants.ACCOUNT_TYPE)[0];
     // Reset the per request states
     authToken = null;
     mapIds = new ArrayList<String>();
@@ -118,8 +122,6 @@ public class GoogleUtils {
    * @return true means find the map
    */
   static boolean searchMapByTitle(String title, Activity activity) {
-    account = AccountManager.get(activity.getApplicationContext()).getAccountsByType(
-        Constants.ACCOUNT_TYPE)[0];
     if (getMaps(activity.getApplicationContext())) {
       for (MapsMapMetadata oneData : mapData) {
         if (oneData.getTitle().indexOf(title) > -1) { 
@@ -128,6 +130,36 @@ public class GoogleUtils {
       }
     }
     return false;
+  }
+  
+  /**
+   * Drops map which contain the string in title and is created by My Tracks on Google Maps.
+   * 
+   * @param title the title of track to drop
+   * @param activity activity to get context
+   */
+  static void dropMaps(String title, Activity activity) {
+    Context context = activity.getApplicationContext();
+    // Get all maps at first.
+    getMaps(context);
+
+    // Drop maps.
+    MapsClient mapsClient = new MapsClient(GDataClientFactory.getGDataClient(context),
+        new XmlMapsGDataParserFactory(new AndroidXmlParserFactory()));
+    for (MapsMapMetadata oneData : mapData) {
+      // Only drop maps created by My Tracks.
+      if (oneData.getDescription().indexOf("My Tracks") > -1 && oneData.getTitle().indexOf(title) > -1) {
+        try {
+          account = AccountManager.get(context).getAccountsByType(Constants.ACCOUNT_TYPE)[0];
+          authToken = AccountManager.get(context).blockingGetAuthToken(account,
+              MapsConstants.SERVICE_NAME, false);
+
+          mapsClient.deleteEntry(oneData.getGDataEditUri(), authToken);
+        } catch (Exception e) {
+          Log.d(LOG_TAG, "Unable to drop map", e);
+        }
+      }
+    }
   }
 
   /**
@@ -217,7 +249,6 @@ public class GoogleUtils {
    */
   static boolean searchFusionTableByTitle(String title, Activity activity) {
     Context context = activity.getApplicationContext();
-    account = AccountManager.get(context).getAccountsByType(Constants.ACCOUNT_TYPE)[0];
     try {
       HttpResponse response = sendFusionTableQuery("SHOW TABLES", context);
       // We can use index of method to check new table for every track name is unique.
@@ -228,6 +259,31 @@ public class GoogleUtils {
       Log.d(LOG_TAG, "Unable to query fusion table.", e);
     }
     return false;
+  }
+  
+  /**
+   * Remove one fusion table which contain the string in title of current user.
+   * 
+   * @param title the title of a track to drop 
+   * @param activity to get context
+   */
+  static void dropFusionTables(String title, Activity activity) {
+    Context context = activity.getApplicationContext();
+
+    HttpResponse response = sendFusionTableQuery("SHOW TABLES", context);
+    String[] rowsTable;
+    try {
+      rowsTable = response.parseAsString().split("\n");
+      for (String string : rowsTable) {
+        // If the first column is all figure, it is the table id.
+        String regularExpression = "^[0-9]*$";
+        if (string.split(",")[0].matches(regularExpression) && string.indexOf(title) > -1) {
+          sendFusionTableQuery("DROP TABLE " + string.split(",")[0], context);
+        }
+      }
+    } catch (IOException e) {
+      Log.d(LOG_TAG, "Failed when delete all fusion tables.", e);
+    }
   }
   
   /**
