@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="AdapterViewChildren" severity="error" />
+    <issue id="DuplicateIds" severity="error" />
+    <issue id="DuplicateIncludedIds" severity="error" />
+    <issue id="ExtraTranslation" severity="error" />
+    <issue id="GifUsage" severity="error" />
+    <issue id="InconsistentArrays" severity="error" />
+    <issue id="MissingTranslation" severity="warning" />
+    <issue id="Proguard" severity="warning" />
+    <issue id="ScrollViewCount" severity="error" />
+    <issue id="ScrollViewSize" severity="error" />
+    <issue id="StateListReachable" severity="error" />
+    <issue id="TypographyDashes" severity="informational" />
+    <issue id="TypographyEllipsis" severity="informational" />
+    <issue id="TypographyFractions" severity="informational" />
+    <issue id="TypographyOther" severity="informational" />
+    <issue id="TypographyQuotes" severity="informational" />
+</lint>
