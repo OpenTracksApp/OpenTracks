@@ -133,10 +133,9 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
       EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
       
       // Check whether all data is correct on Google Map, Documents, and Spreadsheet.
-      assertTrue(GoogleUtils.searchMapByTitle(EndToEndTestUtils.trackName, activityMyTracks));
+      assertTrue(GoogleUtils.searchMapByTitle(EndToEndTestUtils.trackName, activityMyTracks, true));
       assertTrue(GoogleUtils.searchFusionTableByTitle(EndToEndTestUtils.TRACK_NAME_PREFIX, activityMyTracks));
-      assertTrue(GoogleUtils.searchTrackTitleInSpreadsheet(EndToEndTestUtils.trackName, activityMyTracks, "My Tracks-" + EndToEndTestUtils.DEFAULTACTIVITY));
-      GoogleUtils.dropMaps(EndToEndTestUtils.trackName, activityMyTracks);
+      assertTrue(GoogleUtils.searchTrackTitleInSpreadsheet(EndToEndTestUtils.trackName, activityMyTracks, "My Tracks-" + EndToEndTestUtils.DEFAULTACTIVITY, true));
       GoogleUtils.dropFusionTables(EndToEndTestUtils.trackName, activityMyTracks);
     }
     

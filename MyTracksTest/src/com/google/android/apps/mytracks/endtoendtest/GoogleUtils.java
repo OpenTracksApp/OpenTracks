@@ -65,6 +65,7 @@ public class GoogleUtils {
   private static String authToken;
   private static ArrayList<String> mapIds = new ArrayList<String>();
   private static ArrayList<MapsMapMetadata> mapData;
+  private static MapsClient mapsClient;
   private static Account account;
   public static final String LOG_TAG = "MyTracksTest";
 
@@ -91,7 +92,7 @@ public class GoogleUtils {
       return false;
     }
 
-    MapsClient mapsClient = new MapsClient(GDataClientFactory.getGDataClient(context),
+    mapsClient = new MapsClient(GDataClientFactory.getGDataClient(context),
         new XmlMapsGDataParserFactory(new AndroidXmlParserFactory()));
     GDataParser gDataParser = null;
     try {
@@ -119,47 +120,27 @@ public class GoogleUtils {
    * 
    * @param title the title of map
    * @param activity activity to get context
+   * @param isDelete whether delete the map of this track in the Google Maps
    * @return true means find the map
    */
-  static boolean searchMapByTitle(String title, Activity activity) {
+  static boolean searchMapByTitle(String title, Activity activity, boolean isDelete) {
     if (getMaps(activity.getApplicationContext())) {
       for (MapsMapMetadata oneData : mapData) {
-        if (oneData.getTitle().indexOf(title) > -1) { 
-          return true; 
+        if (oneData.getDescription().indexOf("My Tracks") > -1
+            && oneData.getTitle().indexOf(title) > -1) {
+          if (isDelete) {
+            try {
+              mapsClient.deleteEntry(oneData.getGDataEditUri(), authToken);
+            } catch (Exception e) {
+              Log.d(LOG_TAG, "Unable to drop map", e);
+              return false;
+            }
+          }
+          return true;
         }
       }
     }
     return false;
-  }
-  
-  /**
-   * Drops map which contain the string in title and is created by My Tracks on Google Maps.
-   * 
-   * @param title the title of track to drop
-   * @param activity activity to get context
-   */
-  static void dropMaps(String title, Activity activity) {
-    Context context = activity.getApplicationContext();
-    // Get all maps at first.
-    getMaps(context);
-
-    // Drop maps.
-    MapsClient mapsClient = new MapsClient(GDataClientFactory.getGDataClient(context),
-        new XmlMapsGDataParserFactory(new AndroidXmlParserFactory()));
-    for (MapsMapMetadata oneData : mapData) {
-      // Only drop maps created by My Tracks.
-      if (oneData.getDescription().indexOf("My Tracks") > -1 && oneData.getTitle().indexOf(title) > -1) {
-        try {
-          account = AccountManager.get(context).getAccountsByType(Constants.ACCOUNT_TYPE)[0];
-          authToken = AccountManager.get(context).blockingGetAuthToken(account,
-              MapsConstants.SERVICE_NAME, false);
-
-          mapsClient.deleteEntry(oneData.getGDataEditUri(), authToken);
-        } catch (Exception e) {
-          Log.d(LOG_TAG, "Unable to drop map", e);
-        }
-      }
-    }
   }
 
   /**
@@ -169,7 +150,7 @@ public class GoogleUtils {
    * @param activity to get context
    * @return the entry of the document, null means can not find the spreadsheet.
    */
-  static Entry searchSpeadsheetByTitle(String title, Activity activity) {
+  private static Entry searchSpeadsheetByTitle(String title, Activity activity) {
     account = AccountManager.get(activity.getApplicationContext()).getAccountsByType(
         Constants.ACCOUNT_TYPE)[0];
 
@@ -206,13 +187,12 @@ public class GoogleUtils {
    * @param title the track name to search
    * @param activity to get context
    * @param spreadsheetTitle the title of spreadsheet
+   * @param isDelete whether delete the information of this track in the document
    * @return true means find the track name in the spreadsheet
    */
-  static boolean searchTrackTitleInSpreadsheet(String title, Activity activity, String spreadsheetTitle) {
+  static boolean searchTrackTitleInSpreadsheet(String title, Activity activity, String spreadsheetTitle, boolean isDelete) {
     String spreadsheetId = searchSpeadsheetByTitle(spreadsheetTitle, activity).getId().replace(SendDocsUtils.SPREADSHEET_ID_PREFIX, "");
     Context context = activity.getApplicationContext();
-    account = AccountManager.get(context).getAccountsByType(
-        Constants.ACCOUNT_TYPE)[0];
     try {
     SpreadsheetsClient spreadsheetsClient = new SpreadsheetsClient(
         GDataClientFactory.getGDataClient(context), new XmlDocsGDataParserFactory(new AndroidXmlParserFactory()));
@@ -230,13 +210,15 @@ public class GoogleUtils {
       Entry entry = gDataParser.readNextEntry(null);
       String entryTitle = entry.getTitle();
       if (entryTitle.indexOf(title) > -1) { 
+        if (isDelete) {
+          spreadsheetsClient.deleteEntry(entry.getEditUri(), spreadsheetsAuthToken);
+        }
         return true;
       }
     }
     } catch (Exception e) {
       Log.d(LOG_TAG, "Unable to fetch content of spreadsheet.", e);
     }
-    
     return false;
   }
 
