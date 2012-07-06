@@ -40,8 +40,8 @@ public class HelpActivity extends AbstractMyTracksActivity {
     mapsPublicUnlisted.setText(getString(
         R.string.help_maps_public_unlisted_answer, getString(R.string.maps_public_unlisted_url)));
 
-    TextView googleServices = (TextView) findViewById(R.id.help_google_services_answer);
-    googleServices.setText(getString(R.string.help_google_services_answer,
+    TextView sendTrack = (TextView) findViewById(R.id.help_send_track_answer);
+    sendTrack.setText(getString(R.string.help_send_track_answer,
         getString(R.string.send_google_maps_url),
         getString(R.string.send_google_fusion_tables_url),
         getString(R.string.send_google_docs_url)));

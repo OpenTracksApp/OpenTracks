@@ -67,6 +67,7 @@ public class SendFusionTablesUtilsTest extends TestCase {
    */
   public void testGetMapUrl_valid_track() {
     Track track = new Track();
+    track.setNumberOfPoints(2);
     TripStatistics stats = new TripStatistics();
     stats.setBounds((int) 100.E6, (int) 10.E6, (int) 50.E6, (int) 5.E6);
     track.setTripStatistics(stats);

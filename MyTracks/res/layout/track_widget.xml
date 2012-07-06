@@ -19,18 +19,18 @@ limitations under the License.
   android:layout_width="fill_parent"
   android:padding="@dimen/widget_margin" >
   <LinearLayout
-    android:background="@drawable/app_widget_background"
+    android:background="@drawable/track_widget_background"
     android:layout_height="fill_parent"
     android:layout_width="fill_parent"
     android:orientation="horizontal" >
     <ImageButton
       android:background="@android:color/transparent"
       android:contentDescription="@string/my_tracks_app_name"
-      android:id="@+id/track_widget_button"
+      android:id="@+id/track_widget_icon"
       android:layout_height="fill_parent"
       android:layout_width="wrap_content"
       android:padding="8dp"
-      android:src="@drawable/app_widget_button_disabled" />
+      android:src="@drawable/my_tracks_icon" />
     <LinearLayout
       android:clickable="true"
       android:id="@+id/track_widget_statistics"
@@ -80,6 +80,18 @@ limitations under the License.
           android:id="@+id/track_widget_speed_label"
           style="@style/TrackWidgetLabel" />
       </LinearLayout>
+      <ImageButton
+        android:background="@drawable/track_widget_record_button_background"
+        android:contentDescription="@string/menu_record_track"
+        android:id="@+id/track_widget_record_button"
+        android:src="@drawable/track_widget_record_button"
+        style="@style/TrackWidgetButton" />
+      <ImageButton
+        android:background="@drawable/track_widget_stop_button_background"
+        android:contentDescription="@string/menu_stop_recording"
+        android:id="@+id/track_widget_stop_button"
+        android:src="@drawable/track_widget_stop_button"
+        style="@style/TrackWidgetButton" />
     </LinearLayout>
   </LinearLayout>
 </FrameLayout>

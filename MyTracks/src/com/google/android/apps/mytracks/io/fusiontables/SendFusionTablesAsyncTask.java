@@ -277,9 +277,8 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
         distances.add(tripStatisticsBuilder.getStatistics().getTotalDistance());
         elevations.add(elevationBuffer.getAverage());
         DescriptionGenerator descriptionGenerator = new DescriptionGeneratorImpl(context);
-        track.setDescription("<p>" + track.getDescription() + "</p><p>"
-            + descriptionGenerator.generateTrackDescription(track, distances, elevations, true)
-            + "</p>");
+        track.setDescription(
+            descriptionGenerator.generateTrackDescription(track, distances, elevations, true));
         String name = context.getString(R.string.marker_label_end, track.getName());
         if (!createNewPoint(name, track.getDescription(), lastLocation, MARKER_TYPE_END)) {
           Log.d(TAG, "Unable to create the end marker");

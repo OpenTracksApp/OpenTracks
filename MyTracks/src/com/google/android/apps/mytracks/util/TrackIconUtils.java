@@ -29,10 +29,13 @@ import java.util.HashMap;
  */
 public class TrackIconUtils {
 
+  private static final String AIRPLANE = "AIRPLANE";
   private static final String BIKE = "BIKE";
+  private static final String BOAT = "BOAT";
   private static final String DRIVE = "DRIVE";
   private static final String RUN = "RUN";
   private static final String SKI = "SKI";
+  private static final String SNOW_BOARDING = "SNOW_BOARDING";
   private static final String WALK = "WALK";
 
   private TrackIconUtils() {}
@@ -40,13 +43,21 @@ public class TrackIconUtils {
   private static HashMap<String, Integer> map = new HashMap<String, Integer>();
 
   static {
+    map.put(AIRPLANE, R.drawable.track_airplane);
     map.put(BIKE, R.drawable.track_bike);
+    map.put(BOAT, R.drawable.track_boat);
     map.put(DRIVE, R.drawable.track_drive);
     map.put(RUN, R.drawable.track_run);
     map.put(SKI, R.drawable.track_ski);
+    map.put(SNOW_BOARDING, R.drawable.track_snow_boarding);
     map.put(WALK, R.drawable.track_walk);
   }
 
+  private static int[] airplane = new int[] {
+      R.string.activity_type_airplane,
+      R.string.activity_type_commercial_airplane,
+      R.string.activity_type_rc_airplane
+  };
   private static int[] bike = new int[] {
       R.string.activity_type_biking,
       R.string.activity_type_cycling,
@@ -55,6 +66,12 @@ public class TrackIconUtils {
       R.string.activity_type_mountain_biking,
       R.string.activity_type_road_biking,
       R.string.activity_type_track_cycling };
+  private static int[] boat = new int[] {
+      R.string.activity_type_boat,
+      R.string.activity_type_ferry,
+      R.string.activity_type_motor_boating,
+      R.string.activity_type_rc_boat
+  };
   private static int[] drive = new int[] {
       R.string.activity_type_atv,
       R.string.activity_type_driving,
@@ -68,6 +85,9 @@ public class TrackIconUtils {
   private static int[] ski = new int[] {
       R.string.activity_type_cross_country_skiing,
       R.string.activity_type_skiing };
+  private static int[] snowBoarding = new int[] {
+      R.string.activity_type_snow_boarding
+  };
   private static int[] walk = new int[] {
       R.string.activity_type_hiking,
       R.string.activity_type_off_trail_hiking,
@@ -95,9 +115,15 @@ public class TrackIconUtils {
    * @param activityType the activity type
    */
   public static String getIconValue(Context context, String activityType) {
+    if (inList(context, activityType, airplane)) {
+      return AIRPLANE;
+    }    
     if (inList(context, activityType, bike)) {
       return BIKE;
     }
+    if (inList(context, activityType, boat)) {
+      return BOAT;
+    }    
     if (inList(context, activityType, drive)) {
       return DRIVE;
     }
@@ -106,6 +132,9 @@ public class TrackIconUtils {
     }
     if (inList(context, activityType, ski)) {
       return SKI;
+    }
+    if (inList(context, activityType, snowBoarding)) {
+      return SNOW_BOARDING;
     }
     if (inList(context, activityType, walk)) {
       return WALK;

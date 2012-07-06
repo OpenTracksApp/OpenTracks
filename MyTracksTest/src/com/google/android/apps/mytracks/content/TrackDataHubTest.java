@@ -531,34 +531,19 @@ public class TrackDataHubTest extends AndroidTestCase {
     dataSources.registerContentObserver(
         eq(TrackPointsColumns.CONTENT_URI), eq(false), capture(observerCapture));
 
-    locationIterator = new FixedSizeLocationIterator(11, 10);
+    locationIterator = new FixedSizeLocationIterator(1, 10, 5);
     expect(providerUtils.getLocationIterator(
-        eq(TRACK_ID), eq(11L), eq(false), isA(LocationFactory.class)))
+        eq(TRACK_ID), eq(0L), eq(false), isA(LocationFactory.class)))
         .andReturn(locationIterator);
-    expect(providerUtils.getLastLocationId(TRACK_ID)).andReturn(20L);
+    expect(providerUtils.getLastLocationId(TRACK_ID)).andReturn(10L);
 
+    listener1.clearTrackPoints();
     locationIterator.expectLocationsDelivered(listener1);
     listener1.onNewTrackPointsDone();
 
     replay();
 
     hub.registerTrackDataListener(listener1, EnumSet.of(ListenerDataType.POINT_UPDATES));
-
-    verifyAndReset();
-
-    // Deliver more points - should still be incremental.
-    locationIterator = new FixedSizeLocationIterator(21, 10, 1);
-    expect(providerUtils.getLocationIterator(
-        eq(TRACK_ID), eq(21L), eq(false), isA(LocationFactory.class)))
-        .andReturn(locationIterator);
-    expect(providerUtils.getLastLocationId(TRACK_ID)).andReturn(30L);
-
-    locationIterator.expectLocationsDelivered(listener1);
-    listener1.onNewTrackPointsDone();
-
-    replay();
-
-    observer.onChange(false);
 
     verifyAndReset();
   }

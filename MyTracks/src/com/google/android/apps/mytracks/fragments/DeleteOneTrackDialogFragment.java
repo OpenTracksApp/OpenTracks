@@ -79,13 +79,18 @@ public class DeleteOneTrackDialogFragment extends DialogFragment {
         R.string.track_detail_delete_confirm_message, new DialogInterface.OnClickListener() {
             @Override
           public void onClick(DialogInterface dialog, int which) {
-            long trackId = getArguments().getLong(KEY_TRACK_ID);
-            Context context = getActivity();
+            final long trackId = getArguments().getLong(KEY_TRACK_ID);
+            final Context context = getActivity();
             if (trackId == PreferencesUtils.getLong(context, R.string.recording_track_id_key)) {
               TrackRecordingServiceConnectionUtils.stop(
                   context, caller.getTrackRecordingServiceConnection(), false);
             }
-            MyTracksProviderUtils.Factory.get(context).deleteTrack(trackId);
+            new Thread(new Runnable() {
+              @Override
+              public void run() {
+                MyTracksProviderUtils.Factory.get(context).deleteTrack(trackId);
+              }
+            }).start();
             Intent intent = IntentUtils.newIntent(context, TrackListActivity.class);
             startActivity(intent);
             // Close the activity since its content can change after delete

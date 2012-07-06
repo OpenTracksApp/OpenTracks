@@ -21,6 +21,7 @@ limitations under the License.
     <item>@string/activity_type_atv</item>
     <item>@string/activity_type_biking</item>
     <item>@string/activity_type_blimp</item>
+    <item>@string/activity_type_boat</item>
     <item>@string/activity_type_climbing</item>
     <item>@string/activity_type_commercial_airplane</item>
     <item>@string/activity_type_cross_country_skiing</item>

@@ -38,6 +38,8 @@ import android.content.Context;
 import android.util.Log;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /**
  * AsyncTask to send a track to Google Docs.
@@ -126,6 +128,13 @@ public class SendDocsAsyncTask extends AbstractSendAsyncTask {
     String title = context.getString(R.string.my_tracks_app_name);
     if (track.getCategory() != null && !track.getCategory().equals("")) {
       title += "-" + track.getCategory();
+    }
+    try {
+      title = URLEncoder.encode(title, "UTF-8");
+      title = title.replace('+', ' ');
+    } catch (UnsupportedEncodingException e) {
+      Log.d(TAG, "No UTF-8 encoding", e);
+      return false;
     }
 
     // Get the spreadsheet ID
@@ -259,7 +268,8 @@ public class SendDocsAsyncTask extends AbstractSendAsyncTask {
       return false;
     }
     try {
-      spreadsheetId = SendDocsUtils.createSpreadsheet(spreadsheetTitle, documentsAuthToken, context);
+      spreadsheetId = SendDocsUtils.createSpreadsheet(
+          spreadsheetTitle, documentsAuthToken, context);
     } catch (IOException e) {
       Log.d(TAG, "Unable to create spreadsheet", e);
       return false;

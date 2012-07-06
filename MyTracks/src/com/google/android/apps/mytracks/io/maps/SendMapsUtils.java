@@ -54,11 +54,12 @@ public class SendMapsUtils {
    * @return the url if available.
    */
   public static String getMapUrl(Track track) {
-    if (track == null || track.getMapId() == null) {
+    if (track == null 
+        || track.getMapId() == null 
+        || track.getMapId().length() == 0) {
       Log.e(TAG, "Invalid track");
       return null;
     }
-
     return MapsClient.buildMapUrl(track.getMapId());
   }
 

@@ -33,6 +33,7 @@ limitations under the License.
         android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:padding="4dp"
         android:src="@drawable/success" />
       <LinearLayout
         android:layout_gravity="center_vertical"
@@ -60,6 +61,7 @@ limitations under the License.
         android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:padding="4dp"
         android:src="@drawable/success" />
       <LinearLayout
         android:layout_gravity="center_vertical"
@@ -87,6 +89,7 @@ limitations under the License.
         android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:padding="4dp"
         android:src="@drawable/success" />
       <LinearLayout
         android:layout_gravity="center_vertical"
