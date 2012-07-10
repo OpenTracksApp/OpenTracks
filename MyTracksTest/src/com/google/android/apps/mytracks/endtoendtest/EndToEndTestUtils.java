@@ -188,6 +188,7 @@ public class EndToEndTestUtils {
       checkLanguage();
       EndToEndTestUtils.isCheckedFirstLaunch = true;
       EndToEndTestUtils.setHasActionBar();
+      EndToEndTestUtils.resetAllSettings(activityMyTracks, false);
     } else if (EndToEndTestUtils.SOLO.waitForText(
         // After reset setting, welcome page will show again.
         activityMytracks.getString(R.string.welcome_title), 0, 500)) {
@@ -359,8 +360,6 @@ public class EndToEndTestUtils {
           + System.currentTimeMillis();
       SOLO.sendKey(KeyEvent.KEYCODE_DEL);
       SOLO.enterText(0, trackName);
-      SOLO.clickOnEditText(1);
-      SOLO.sendKey(KeyEvent.KEYCODE_DEL);
       SOLO.enterText(1, DEFAULTACTIVITY);
       if(!EndToEndTestUtils.isEmulator) {
         // Close soft keyboard.
@@ -529,7 +528,7 @@ public class EndToEndTestUtils {
   }
 
   /**
-   * Get more menu items operation is different for different Android OS.
+   * Gets more menu items operation is different for different Android OS.
    */
   public static void showMoreMenuItem() {
     if (hasActionBar) {

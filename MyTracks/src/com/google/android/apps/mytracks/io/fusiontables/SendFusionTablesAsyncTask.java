@@ -396,8 +396,7 @@ public class SendFusionTablesAsyncTask extends AbstractSendAsyncTask {
    * @param setTableId true to set the table id
    * @return true if success.
    */
-  @VisibleForTesting
-  public boolean sendQuery(String query, boolean setTableId) {
+  private boolean sendQuery(String query, boolean setTableId) {
     Log.d(TAG, "SendQuery: " + query);
 
     if (isCancelled()) {

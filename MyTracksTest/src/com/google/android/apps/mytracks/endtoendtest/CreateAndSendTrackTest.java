@@ -113,7 +113,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
       }
     }
     instrumentation.waitForIdleSync();
-    EndToEndTestUtils.SOLO.clickOnText(activityMyTracks.getString(R.string.send_google_send_now));
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.send_google_send_now), true, true);
     
     // If no account is binded with this device.
     if (EndToEndTestUtils.SOLO.waitForText(activityMyTracks
@@ -131,14 +131,16 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
       assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks
           .getString(R.string.share_track_share_url)));
       EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
-      
+
       // Check whether all data is correct on Google Map, Documents, and Spreadsheet.
-      assertTrue(GoogleUtils.searchMapByTitle(EndToEndTestUtils.trackName, activityMyTracks, true));
-      assertTrue(GoogleUtils.searchFusionTableByTitle(EndToEndTestUtils.TRACK_NAME_PREFIX, activityMyTracks));
-      assertTrue(GoogleUtils.searchTrackTitleInSpreadsheet(EndToEndTestUtils.trackName, activityMyTracks, "My Tracks-" + EndToEndTestUtils.DEFAULTACTIVITY, true));
-      GoogleUtils.dropFusionTables(EndToEndTestUtils.trackName, activityMyTracks);
+      assertTrue(GoogleUtils.deleteMap(EndToEndTestUtils.trackName, activityMyTracks));
+      assertTrue(GoogleUtils.searchFusionTableByTitle(EndToEndTestUtils.TRACK_NAME_PREFIX,
+          activityMyTracks));
+      assertTrue(GoogleUtils.searchTrackTitleInSpreadsheet(EndToEndTestUtils.trackName,
+          activityMyTracks, GoogleUtils.SPREADSHEET_NAME, true));
+      assertTrue(GoogleUtils.dropFusionTables(EndToEndTestUtils.trackName, activityMyTracks));
     }
-    
+
   }
 
   /**

@@ -64,6 +64,7 @@ public class DeleteTest extends ActivityInstrumentationTestCase2<TrackListActivi
     EndToEndTestUtils.rotateAllActivities();
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     instrumentation.waitForIdleSync();
+    assertTrue(EndToEndTestUtils.SOLO.waitForText(activityMyTracks.getString(R.string.track_list_empty_message)));
     // There is no track now.
     trackListView = EndToEndTestUtils.SOLO.getCurrentListViews();
     assertEquals(0, trackListView.get(0).getCount());

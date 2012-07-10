@@ -62,38 +62,38 @@ import java.util.Locale;
  * @author Youtao Liu
  */
 public class GoogleUtils {
-  private static String authToken;
-  private static ArrayList<String> mapIds = new ArrayList<String>();
-  private static ArrayList<MapsMapMetadata> mapData;
-  private static MapsClient mapsClient;
   private static Account account;
   public static final String LOG_TAG = "MyTracksTest";
+  public static final String DOCUMENT_NAME_PREFIX = "My Tracks";
+  public static final String SPREADSHEET_NAME = DOCUMENT_NAME_PREFIX + "-" + EndToEndTestUtils.DEFAULTACTIVITY;
 
+  private static Account getAccount(Context context) {
+    return account == null ? account = AccountManager.get(context).getAccountsByType(
+        Constants.ACCOUNT_TYPE)[0] : account;
+  }
+  
+  
   /**
-   * Get Google maps of a user.
+   * Gets Google maps of a user.
    * 
    * @param context used to get maps
+   * @param mapsClient the client to access Google Maps
    * @return true means set successfully
    */
-  private static boolean getMaps(Context context) {
-    
-    account = AccountManager.get(context).getAccountsByType(
-        Constants.ACCOUNT_TYPE)[0];
+  private static ArrayList<MapsMapMetadata> getMaps(Context context, MapsClient mapsClient) {
     // Reset the per request states
-    authToken = null;
-    mapIds = new ArrayList<String>();
-    mapData = new ArrayList<MapsMapMetadata>();
+    String authToken = null;
+    ArrayList<String> mapIds = new ArrayList<String>();
+    ArrayList<MapsMapMetadata> mapData = new ArrayList<MapsMapMetadata>();
 
     try {
-      authToken = AccountManager.get(context).blockingGetAuthToken(account,
+      authToken = AccountManager.get(context).blockingGetAuthToken(getAccount(context),
           MapsConstants.SERVICE_NAME, false);
     } catch (Exception e) {
       Log.d(LOG_TAG, "Unable to get auth token", e);
-      return false;
+      return mapData;
     }
 
-    mapsClient = new MapsClient(GDataClientFactory.getGDataClient(context),
-        new XmlMapsGDataParserFactory(new AndroidXmlParserFactory()));
     GDataParser gDataParser = null;
     try {
       gDataParser = mapsClient.getParserForFeed(MapFeatureEntry.class, MapsClient.getMapsFeed(),
@@ -112,7 +112,7 @@ public class GoogleUtils {
       }
     }
 
-    return true;
+    return mapData;
   }
 
   /**
@@ -123,24 +123,50 @@ public class GoogleUtils {
    * @param isDelete whether delete the map of this track in the Google Maps
    * @return true means find the map
    */
-  static boolean searchMapByTitle(String title, Activity activity, boolean isDelete) {
-    if (getMaps(activity.getApplicationContext())) {
-      for (MapsMapMetadata oneData : mapData) {
-        if (oneData.getDescription().indexOf("My Tracks") > -1
-            && oneData.getTitle().indexOf(title) > -1) {
-          if (isDelete) {
-            try {
-              mapsClient.deleteEntry(oneData.getGDataEditUri(), authToken);
-            } catch (Exception e) {
-              Log.d(LOG_TAG, "Unable to drop map", e);
-              return false;
-            }
+  private static boolean searchMapByTitle(String title, Activity activity, boolean isDelete) {
+    Context context = activity.getApplicationContext();
+    MapsClient mapsClient = new MapsClient(GDataClientFactory.getGDataClient(context),
+        new XmlMapsGDataParserFactory(new AndroidXmlParserFactory()));
+    ArrayList<MapsMapMetadata> mapData = getMaps(context, mapsClient);
+    for (MapsMapMetadata oneData : mapData) {
+      if (oneData.getDescription().indexOf(DOCUMENT_NAME_PREFIX) > -1
+          && oneData.getTitle().equals(title)) {
+        if (isDelete) {
+          try {
+            mapsClient.deleteEntry(oneData.getGDataEditUri(), AccountManager.get(context).blockingGetAuthToken(getAccount(context),
+                MapsConstants.SERVICE_NAME, false));
+            return true;
+          } catch (Exception e) {
+            Log.d(LOG_TAG, "Unable to drop map", e);
+            return false;
           }
-          return true;
         }
+        return true;
       }
     }
     return false;
+  }
+  
+  /**
+   * Searches a map in user's Google Maps.
+   * 
+   * @param title the title of map
+   * @param activity activity to get context
+   * @return true means find the map
+   */
+  public static boolean searchMap(String title, Activity activity) {
+    return searchMapByTitle(title, activity, false);
+  }
+  
+  /**
+   * Searches a map in user's Google Maps and then delete it.
+   * 
+   * @param title the title of map
+   * @param activity activity to get context
+   * @return true means find the map and delete it successfully
+   */
+  public static boolean deleteMap(String title, Activity activity) {
+    return searchMapByTitle(title, activity, true);
   }
 
   /**
@@ -150,17 +176,15 @@ public class GoogleUtils {
    * @param activity to get context
    * @return the entry of the document, null means can not find the spreadsheet.
    */
-  private static Entry searchSpeadsheetByTitle(String title, Activity activity) {
-    account = AccountManager.get(activity.getApplicationContext()).getAccountsByType(
-        Constants.ACCOUNT_TYPE)[0];
-
+  private static Entry searchSepeadsheetByTitle(String title, Activity activity) {
+    Context context = activity.getApplicationContext(); 
     DocumentsClient documentsClient = new DocumentsClient(
-        GDataClientFactory.getGDataClient(activity.getApplicationContext()),
+        GDataClientFactory.getGDataClient(context),
         new XmlDocsGDataParserFactory(new AndroidXmlParserFactory()));
     
     try {
-      String documentsAuthToken = AccountManager.get(activity.getApplicationContext())
-          .blockingGetAuthToken(account, documentsClient.getServiceName(), false);
+      String documentsAuthToken = AccountManager.get(context)
+          .blockingGetAuthToken(getAccount(context), documentsClient.getServiceName(), false);
       String uri = String.format(Locale.US, SendDocsUtils.GET_SPREADSHEET_BY_TITLE_URI,
           URLEncoder.encode(title, "utf-8"));
       GDataParser gDataParser = documentsClient.getParserForFeed(Entry.class, uri,
@@ -182,7 +206,7 @@ public class GoogleUtils {
   
   
   /**
-   * Search a track title in a spreadsheet.
+   * Searches a track title in a spreadsheet.
    * 
    * @param title the track name to search
    * @param activity to get context
@@ -190,14 +214,18 @@ public class GoogleUtils {
    * @param isDelete whether delete the information of this track in the document
    * @return true means find the track name in the spreadsheet
    */
-  static boolean searchTrackTitleInSpreadsheet(String title, Activity activity, String spreadsheetTitle, boolean isDelete) {
-    String spreadsheetId = searchSpeadsheetByTitle(spreadsheetTitle, activity).getId().replace(SendDocsUtils.SPREADSHEET_ID_PREFIX, "");
+  public static boolean searchTrackTitleInSpreadsheet(String title, Activity activity, String spreadsheetTitle, boolean isDelete) {
+    String spreadsheetId = searchSepeadsheetByTitle(spreadsheetTitle, activity).getId().replace(SendDocsUtils.SPREADSHEET_ID_PREFIX, "");
+    if(spreadsheetId == null) {
+      Log.d(LOG_TAG, "Unable to find the spreadsheet -- " + spreadsheetTitle);
+      return false;
+    }
     Context context = activity.getApplicationContext();
     try {
     SpreadsheetsClient spreadsheetsClient = new SpreadsheetsClient(
         GDataClientFactory.getGDataClient(context), new XmlDocsGDataParserFactory(new AndroidXmlParserFactory()));
     String spreadsheetsAuthToken = AccountManager.get(activity.getApplicationContext()).blockingGetAuthToken(
-        account, spreadsheetsClient.getServiceName(), false);
+        getAccount(context), spreadsheetsClient.getServiceName(), false);
     
     String weekSheetId = SendDocsUtils.getWorksheetId(spreadsheetId, spreadsheetsClient, spreadsheetsAuthToken);
     String worksheetUri = String.format(Locale.US, SendDocsUtils.GET_WORKSHEET_URI, URLEncoder.encode(spreadsheetId, "utf-8"),
@@ -229,12 +257,12 @@ public class GoogleUtils {
    * @param activity to get context
    * @return true means find the fusion table
    */
-  static boolean searchFusionTableByTitle(String title, Activity activity) {
+  public static boolean searchFusionTableByTitle(String title, Activity activity) {
     Context context = activity.getApplicationContext();
     try {
       HttpResponse response = sendFusionTableQuery("SHOW TABLES", context);
       // We can use index of method to check new table for every track name is unique.
-      if ((response != null) && response.parseAsString().indexOf(title) > 0) { 
+      if (response != null && response.parseAsString().indexOf(title) > 0) { 
         return true; 
       }
     } catch (Exception e) {
@@ -244,28 +272,32 @@ public class GoogleUtils {
   }
   
   /**
-   * Remove one fusion table which contain the string in title of current user.
+   * Drops one fusion table which contain the string in title of current user.
    * 
    * @param title the title of a track to drop 
    * @param activity to get context
    */
-  static void dropFusionTables(String title, Activity activity) {
+  public static boolean dropFusionTables(String title, Activity activity) {
     Context context = activity.getApplicationContext();
 
     HttpResponse response = sendFusionTableQuery("SHOW TABLES", context);
     String[] rowsTable;
     try {
       rowsTable = response.parseAsString().split("\n");
-      for (String string : rowsTable) {
+      for (String row : rowsTable) {
+        String firstColumn = row.split(",")[0];
+        String secondColumn = row.split(",")[1];
         // If the first column is all figure, it is the table id.
         String regularExpression = "^[0-9]*$";
-        if (string.split(",")[0].matches(regularExpression) && string.indexOf(title) > -1) {
-          sendFusionTableQuery("DROP TABLE " + string.split(",")[0], context);
+        if (firstColumn.matches(regularExpression) && secondColumn.equals(title)) {
+          sendFusionTableQuery("DROP TABLE " + row.split(",")[0], context);
+          return true; 
         }
       }
     } catch (IOException e) {
       Log.d(LOG_TAG, "Failed when delete all fusion tables.", e);
     }
+    return false;
   }
   
   /**
@@ -277,9 +309,7 @@ public class GoogleUtils {
    */
   private static HttpResponse sendFusionTableQuery(String query, Context context) {
     try {
-      account = AccountManager.get(context).getAccountsByType(Constants.ACCOUNT_TYPE)[0];
-
-      String fusionTableAuthToken = AccountManager.get(context).blockingGetAuthToken(account,
+      String fusionTableAuthToken = AccountManager.get(context).blockingGetAuthToken(getAccount(context),
           SendFusionTablesUtils.SERVICE, false);
 
       GenericUrl url = new GenericUrl(SendFusionTablesAsyncTask.FUSION_TABLES_BASE_URL);
