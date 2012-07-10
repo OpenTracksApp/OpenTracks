@@ -251,7 +251,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     } else {
       EndToEndTestUtils.SOLO.clickOnText("1 mi");
     }
-    EndToEndTestUtils.SOLO.clickOnView(EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok)));
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     // Send Gps to give a distance more than one kilometer or one mile.
     EndToEndTestUtils.sendGps(20);
     
