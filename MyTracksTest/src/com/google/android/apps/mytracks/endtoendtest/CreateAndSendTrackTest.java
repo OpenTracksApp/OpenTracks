@@ -254,13 +254,11 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils.startRecording();
     
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_split_frequency), true);
-    // TODO Make "1 km" and "1 mi" can be used in other language after pulling another change.
-    String km = "1 km";
-    boolean isMetric = EndToEndTestUtils.SOLO.searchText(km);
-    if(isMetric) {
-      EndToEndTestUtils.SOLO.clickOnText(km);
+    boolean isFoundKM = EndToEndTestUtils.SOLO.searchText(EndToEndTestUtils.ONE_KM);
+    if(isFoundKM) {
+      EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.ONE_KM);
     } else {
-      EndToEndTestUtils.SOLO.clickOnText("1 mi");
+      EndToEndTestUtils.SOLO.clickOnText(EndToEndTestUtils.ONE_MILE);
     }
     EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
     // Send Gps to give a distance more than one kilometer or one mile.
@@ -270,6 +268,7 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers), true);
     instrumentation.waitForIdleSync();
     assertTrue(EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount() > 0);
+    EndToEndTestUtils.SOLO.goBack();
     
     EndToEndTestUtils.stopRecording(true);
   }
