@@ -246,6 +246,33 @@ public class CreateAndSendTrackTest extends ActivityInstrumentationTestCase2<Tra
     EndToEndTestUtils.SOLO.goBack();
     assertTrue(EndToEndTestUtils.SOLO.waitForText(EndToEndTestUtils.RELATIVE_STARTTIME_POSTFIX, 1, 5000));
   }
+  
+  /**
+   * Tests whether the split marker is created as setting.
+   */
+  public void testSplitSetting() {
+    EndToEndTestUtils.startRecording();
+    
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_split_frequency), true);
+    // TODO Make "1 km" and "1 mi" can be used in other language after pulling another change.
+    String km = "1 km";
+    boolean isMetric = EndToEndTestUtils.SOLO.searchText(km);
+    if(isMetric) {
+      EndToEndTestUtils.SOLO.clickOnText(km);
+    } else {
+      EndToEndTestUtils.SOLO.clickOnText("1 mi");
+    }
+    EndToEndTestUtils.getButtonOnScreen(activityMyTracks.getString(R.string.generic_ok), true, true);
+    // Send Gps to give a distance more than one kilometer or one mile.
+    EndToEndTestUtils.sendGps(20);
+    
+    
+    EndToEndTestUtils.findMenuItem(activityMyTracks.getString(R.string.menu_markers), true);
+    instrumentation.waitForIdleSync();
+    assertTrue(EndToEndTestUtils.SOLO.getCurrentListViews().get(0).getCount() > 0);
+    
+    EndToEndTestUtils.stopRecording(true);
+  }
 
   /**
    * Creates a way point and a split maker during track recording.
