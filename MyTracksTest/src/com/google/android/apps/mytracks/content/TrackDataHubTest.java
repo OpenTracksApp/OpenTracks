@@ -15,13 +15,11 @@
  */
 package com.google.android.apps.mytracks.content;
 
-import static com.google.android.testing.mocking.AndroidMock.anyInt;
 import static com.google.android.testing.mocking.AndroidMock.capture;
 import static com.google.android.testing.mocking.AndroidMock.eq;
 import static com.google.android.testing.mocking.AndroidMock.expect;
 import static com.google.android.testing.mocking.AndroidMock.isA;
 import static com.google.android.testing.mocking.AndroidMock.leq;
-import static com.google.android.testing.mocking.AndroidMock.same;
 
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationFactory;
@@ -32,6 +30,7 @@ import com.google.android.apps.mytracks.services.TrackRecordingServiceTest.MockC
 import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 import com.google.android.testing.mocking.AndroidMock;
+import com.google.android.testing.mocking.UsesMocks;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -70,7 +69,7 @@ public class TrackDataHubTest extends AndroidTestCase {
   private MyTracksProviderUtils providerUtils;
   private TrackDataHub hub;
   private TrackDataListeners listeners;
-  private DataSourcesWrapper dataSources;
+  private DataSource dataSource;
   private SharedPreferences sharedPreferences;
   private TrackDataListener listener1;
   private TrackDataListener listener2;
@@ -79,6 +78,7 @@ public class TrackDataHubTest extends AndroidTestCase {
   private MockContext context;
   private float declination;
 
+  @UsesMocks({MyTracksProviderUtils.class, DataSource.class, TrackDataListener.class})
   @Override
   protected void setUp() throws Exception {
     super.setUp();
@@ -90,13 +90,13 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     sharedPreferences = context.getSharedPreferences(Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     providerUtils = AndroidMock.createMock("providerUtils", MyTracksProviderUtils.class);
-    dataSources = AndroidMock.createNiceMock("dataSources", DataSourcesWrapper.class);
+    dataSource = AndroidMock.createMock("dataSource", DataSource.class, context);
 
     listeners = new TrackDataListeners();
-    hub = new TrackDataHub(context, listeners, sharedPreferences, providerUtils, TARGET_POINTS) {
+    hub = new TrackDataHub(context, listeners, providerUtils, TARGET_POINTS) {
       @Override
-      protected DataSourcesWrapper newDataSources() {
-        return dataSources;
+      protected DataSource newDataSource() {
+        return dataSource;
       }
 
       @Override
@@ -119,18 +119,18 @@ public class TrackDataHubTest extends AndroidTestCase {
 
   @Override
   protected void tearDown() throws Exception {
-    AndroidMock.reset(dataSources);
+    AndroidMock.reset(dataSource);
 
     // Expect everything to be unregistered.
     if (preferenceListenerCapture.hasCaptured()) {
-      dataSources.unregisterOnSharedPreferenceChangeListener(preferenceListenerCapture.getValue());
+      dataSource.unregisterOnSharedPreferenceChangeListener(preferenceListenerCapture.getValue());
     }
-    dataSources.removeLocationUpdates(isA(LocationListener.class));
-    dataSources.unregisterSensorListener(isA(SensorEventListener.class));
-    dataSources.unregisterContentObserver(isA(ContentObserver.class));
+    dataSource.unregisterLocationListener(isA(LocationListener.class));
+    dataSource.unregisterCompassListener(isA(SensorEventListener.class));
+    dataSource.unregisterContentObserver(isA(ContentObserver.class));
     AndroidMock.expectLastCall().times(3);
 
-    AndroidMock.replay(dataSources);
+    AndroidMock.replay(dataSource);
 
     hub.stop();
     hub = null;
@@ -143,8 +143,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     Track track = new Track();
     expect(providerUtils.getTrack(TRACK_ID)).andStubReturn(track);
     expectStart();
-    dataSources.registerContentObserver(
-        eq(TracksColumns.CONTENT_URI), eq(false), capture(observerCapture));
+    dataSource.registerContentObserver(eq(TracksColumns.CONTENT_URI), capture(observerCapture));
 
     // Expect the initial loading.
     // Both listeners (registered before and after start) should get the same data.
@@ -185,7 +184,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     verifyAndReset();
 
     // Unregister the other, expect internal unregistration
-    dataSources.unregisterContentObserver(observer);
+    dataSource.unregisterContentObserver(observer);
 
     replay();
 
@@ -321,8 +320,7 @@ public class TrackDataHubTest extends AndroidTestCase {
         .andReturn(wpt2);
 
     expectStart();
-    dataSources.registerContentObserver(
-        eq(WaypointsColumns.CONTENT_URI), eq(false), capture(observerCapture));
+    dataSource.registerContentObserver(eq(WaypointsColumns.CONTENT_URI), capture(observerCapture));
 
     // Expect the initial loading.
     // Both listeners (registered before and after start) should get the same data.
@@ -398,7 +396,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     verifyAndReset();
 
     // Unregister the other, expect internal unregistration
-    dataSources.unregisterContentObserver(observer);
+    dataSource.unregisterContentObserver(observer);
 
     replay();
 
@@ -412,8 +410,8 @@ public class TrackDataHubTest extends AndroidTestCase {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
 
     expectStart();
-    dataSources.registerContentObserver(
-        eq(TrackPointsColumns.CONTENT_URI), eq(false), capture(observerCapture));
+    dataSource.registerContentObserver(
+        eq(TrackPointsColumns.CONTENT_URI), capture(observerCapture));
 
     FixedSizeLocationIterator locationIterator = new FixedSizeLocationIterator(1, 10, 5);
     expect(providerUtils.getLocationIterator(
@@ -497,8 +495,8 @@ public class TrackDataHubTest extends AndroidTestCase {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
 
     expectStart();
-    dataSources.registerContentObserver(
-        eq(TrackPointsColumns.CONTENT_URI), eq(false), capture(observerCapture));
+    dataSource.registerContentObserver(
+        eq(TrackPointsColumns.CONTENT_URI), capture(observerCapture));
 
     FixedSizeLocationIterator locationIterator = new FixedSizeLocationIterator(1, 10, 5);
     expect(providerUtils.getLocationIterator(
@@ -519,7 +517,7 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     // Unregister
     ContentObserver observer = observerCapture.getValue();
-    dataSources.unregisterContentObserver(observer);
+    dataSource.unregisterContentObserver(observer);
 
     replay();
 
@@ -528,8 +526,8 @@ public class TrackDataHubTest extends AndroidTestCase {
     verifyAndReset();
 
     // Register again, except only points since unregistered.
-    dataSources.registerContentObserver(
-        eq(TrackPointsColumns.CONTENT_URI), eq(false), capture(observerCapture));
+    dataSource.registerContentObserver(
+        eq(TrackPointsColumns.CONTENT_URI), capture(observerCapture));
 
     locationIterator = new FixedSizeLocationIterator(1, 10, 5);
     expect(providerUtils.getLocationIterator(
@@ -552,8 +550,8 @@ public class TrackDataHubTest extends AndroidTestCase {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
 
     expectStart();
-    dataSources.registerContentObserver(
-        eq(TrackPointsColumns.CONTENT_URI), eq(false), capture(observerCapture));
+    dataSource.registerContentObserver(
+        eq(TrackPointsColumns.CONTENT_URI), capture(observerCapture));
 
     FixedSizeLocationIterator locationIterator = new FixedSizeLocationIterator(1, 10, 5);
     expect(providerUtils.getLocationIterator(
@@ -574,7 +572,7 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     // Unregister
     ContentObserver observer = observerCapture.getValue();
-    dataSources.unregisterContentObserver(observer);
+    dataSource.unregisterContentObserver(observer);
 
     replay();
 
@@ -583,8 +581,8 @@ public class TrackDataHubTest extends AndroidTestCase {
     verifyAndReset();
 
     // Register again after track changed, expect all points.
-    dataSources.registerContentObserver(
-        eq(TrackPointsColumns.CONTENT_URI), eq(false), capture(observerCapture));
+    dataSource.registerContentObserver(
+        eq(TrackPointsColumns.CONTENT_URI), capture(observerCapture));
 
     locationIterator = new FixedSizeLocationIterator(1, 10);
     expect(providerUtils.getLocationIterator(
@@ -608,8 +606,8 @@ public class TrackDataHubTest extends AndroidTestCase {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
 
     expectStart();
-    dataSources.registerContentObserver(
-        eq(TrackPointsColumns.CONTENT_URI), eq(false), capture(observerCapture));
+    dataSource.registerContentObserver(
+        eq(TrackPointsColumns.CONTENT_URI), capture(observerCapture));
 
     FixedSizeLocationIterator locationIterator = new FixedSizeLocationIterator(1, 200, 4, 25, 71, 120);
     expect(providerUtils.getLocationIterator(
@@ -639,8 +637,8 @@ public class TrackDataHubTest extends AndroidTestCase {
     Capture<ContentObserver> observerCapture = new Capture<ContentObserver>();
 
     expectStart();
-    dataSources.registerContentObserver(
-        eq(TrackPointsColumns.CONTENT_URI), eq(false), capture(observerCapture));
+    dataSource.registerContentObserver(
+        eq(TrackPointsColumns.CONTENT_URI), capture(observerCapture));
 
     // Deliver 30 points (no sampling happens)
     FixedSizeLocationIterator locationIterator = new FixedSizeLocationIterator(1, 30, 5);
@@ -702,16 +700,14 @@ public class TrackDataHubTest extends AndroidTestCase {
   public void testCompassListen() throws Exception {
     AndroidMock.resetToDefault(listener1);
 
-    Sensor compass = newSensor();
-    expect(dataSources.getSensor(Sensor.TYPE_ORIENTATION)).andReturn(compass);
+    expectStart();
     Capture<SensorEventListener> listenerCapture = new Capture<SensorEventListener>();
-    dataSources.registerSensorListener(capture(listenerCapture), same(compass), anyInt());
+    dataSource.registerCompassListener(capture(listenerCapture));
 
     Capture<LocationListener> locationListenerCapture = new Capture<LocationListener>();
-    dataSources.requestLocationUpdates(capture(locationListenerCapture));
+    dataSource.registerLocationListener(capture(locationListenerCapture));
 
     SensorEvent event = newSensorEvent();
-    event.sensor = compass;
 
     // First, get a dummy heading update.
     listener1.onCurrentHeadingChanged(0.0);
@@ -786,9 +782,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     PreferencesUtils.setBoolean(context, R.string.report_speed_key, true);
     PreferencesUtils.setBoolean(context, R.string.metric_units_key, true);
 
-    Capture<OnSharedPreferenceChangeListener> listenerCapture =
-        new Capture<OnSharedPreferenceChangeListener>();
-    dataSources.registerOnSharedPreferenceChangeListener(capture(listenerCapture));
+    expectStart();
 
     expect(listener1.onUnitsChanged(true)).andReturn(false);
     expect(listener2.onUnitsChanged(true)).andReturn(false);
@@ -809,12 +803,12 @@ public class TrackDataHubTest extends AndroidTestCase {
     replay();
 
     PreferencesUtils.setBoolean(context, R.string.report_speed_key, false);
-    OnSharedPreferenceChangeListener listener = listenerCapture.getValue();
+    OnSharedPreferenceChangeListener listener = preferenceListenerCapture.getValue();
     listener.onSharedPreferenceChanged(
         sharedPreferences, PreferencesUtils.getKey(context, R.string.report_speed_key));
 
-    AndroidMock.verify(dataSources, providerUtils, listener1, listener2);
-    AndroidMock.reset(dataSources, providerUtils, listener1, listener2);
+    AndroidMock.verify(dataSource, providerUtils, listener1, listener2);
+    AndroidMock.reset(dataSource, providerUtils, listener1, listener2);
 
     expect(listener1.onUnitsChanged(false)).andReturn(false);
     expect(listener2.onUnitsChanged(false)).andReturn(false);
@@ -829,15 +823,15 @@ public class TrackDataHubTest extends AndroidTestCase {
   }
 
   private void expectStart() {
-    dataSources.registerOnSharedPreferenceChangeListener(capture(preferenceListenerCapture));
+    dataSource.registerOnSharedPreferenceChangeListener(capture(preferenceListenerCapture));
   }
 
   private void replay() {
-    AndroidMock.replay(dataSources, providerUtils, listener1, listener2);
+    AndroidMock.replay(dataSource, providerUtils, listener1, listener2);
   }
 
   private void verifyAndReset() {
-    AndroidMock.verify(listener1, listener2, dataSources, providerUtils);
-    AndroidMock.reset(listener1, listener2, dataSources, providerUtils);
+    AndroidMock.verify(listener1, listener2, dataSource, providerUtils);
+    AndroidMock.reset(listener1, listener2, dataSource, providerUtils);
   }
 }

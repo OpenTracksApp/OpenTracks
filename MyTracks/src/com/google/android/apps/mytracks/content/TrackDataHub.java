@@ -21,8 +21,6 @@ import static com.google.android.apps.mytracks.Constants.MAX_NETWORK_AGE_MS;
 import static com.google.android.apps.mytracks.Constants.TAG;
 import static com.google.android.apps.mytracks.Constants.TARGET_DISPLAYED_TRACK_POINTS;
 
-import com.google.android.apps.mytracks.Constants;
-import com.google.android.apps.mytracks.content.DataSourceManager.DataSourceListener;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.DoubleBufferedLocationFactory;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
 import com.google.android.apps.mytracks.content.TrackDataListener.ProviderState;
@@ -32,7 +30,6 @@ import com.google.android.apps.mytracks.util.PreferencesUtils;
 import com.google.android.maps.mytracks.R;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.hardware.GeomagneticField;
 import android.location.Location;
@@ -94,17 +91,17 @@ public class TrackDataHub {
   /** Listener which receives events from the system. */
   private class HubDataSourceListener implements DataSourceListener {
     @Override
-    public void notifyTrackUpdated() {
+    public void notifyTracksTableUpdated() {
       TrackDataHub.this.notifyTrackUpdated(getListenersFor(ListenerDataType.TRACK_UPDATES));
     }
 
     @Override
-    public void notifyWaypointUpdated() {
+    public void notifyWaypointsTableUpdated() {
       TrackDataHub.this.notifyWaypointUpdated(getListenersFor(ListenerDataType.WAYPOINT_UPDATES));
     }
 
     @Override
-    public void notifyPointsUpdated() {
+    public void notifyTrackPointsTableUpdated() {
       TrackDataHub.this.notifyPointsUpdated(true, 0, 0,
           getListenersFor(ListenerDataType.POINT_UPDATES),
           getListenersFor(ListenerDataType.SAMPLED_OUT_POINT_UPDATES));
@@ -144,7 +141,6 @@ public class TrackDataHub {
   // Application services
   private final Context context;
   private final MyTracksProviderUtils providerUtils;
-  private final SharedPreferences preferences;
 
   // Get content notifications on the main thread, send listener callbacks in another.
   // This ensures listener calls are serialized.
@@ -154,8 +150,7 @@ public class TrackDataHub {
   /** Manager for external listeners (those from activities). */
   private final TrackDataListeners dataListeners;
 
-  /** Wrapper for interacting with system data managers. */
-  private DataSourcesWrapper dataSources;
+  private DataSource dataSource;
 
   /** Manager for system data listener registrations. */
   private DataSourceManager dataSourceManager;
@@ -193,24 +188,19 @@ public class TrackDataHub {
    * Builds a new {@link TrackDataHub} instance.
    */
   public synchronized static TrackDataHub newInstance(Context context) {
-    SharedPreferences preferences = context.getSharedPreferences(
-        Constants.SETTINGS_NAME, Context.MODE_PRIVATE);
     MyTracksProviderUtils providerUtils = MyTracksProviderUtils.Factory.get(context);
-    return new TrackDataHub(context,
-        new TrackDataListeners(),
-        preferences, providerUtils,
-        TARGET_DISPLAYED_TRACK_POINTS);
+    return new TrackDataHub(
+        context, new TrackDataListeners(), providerUtils, TARGET_DISPLAYED_TRACK_POINTS);
   }
 
   /**
    * Injection constructor.
    */
   // @VisibleForTesting
-  TrackDataHub(Context ctx, TrackDataListeners listeners, SharedPreferences preferences,
-      MyTracksProviderUtils providerUtils, int targetNumPoints) {
+  TrackDataHub(Context ctx, TrackDataListeners listeners, MyTracksProviderUtils providerUtils,
+      int targetNumPoints) {
     this.context = ctx;
     this.dataListeners = listeners;
-    this.preferences = preferences;
     this.providerUtils = providerUtils;
     this.targetNumPoints = targetNumPoints;
     this.locationFactory = new DoubleBufferedLocationFactory();
@@ -233,12 +223,12 @@ public class TrackDataHub {
     listenerHandlerThread = new HandlerThread("trackDataContentThread");
     listenerHandlerThread.start();
     listenerHandler = new Handler(listenerHandlerThread.getLooper());
-    dataSources = newDataSources();
-    dataSourceManager = new DataSourceManager(dataSourceListener, dataSources);
+    dataSource = newDataSource();
+    dataSourceManager = new DataSourceManager(dataSource, dataSourceListener);
 
     // This may or may not register internal listeners, depending on whether
     // we already had external listeners.
-    dataSourceManager.updateAllListeners(getNeededListenerTypes());
+    dataSourceManager.updateListeners(getNeededListenerTypes());
     loadSharedPreferences();
 
     // If there were listeners already registered, make sure they become up-to-date.
@@ -246,8 +236,8 @@ public class TrackDataHub {
   }
 
   // @VisibleForTesting
-  protected DataSourcesWrapper newDataSources() {
-    return new DataSourcesWrapperImpl(context, preferences);
+  protected DataSource newDataSource() {
+    return new DataSource(context);
   }
 
   /**
@@ -267,7 +257,7 @@ public class TrackDataHub {
 
     started = false;
 
-    dataSources = null;
+    dataSource = null;
     dataSourceManager = null;
     listenerHandlerThread = null;
     listenerHandler = null;
@@ -343,7 +333,7 @@ public class TrackDataHub {
     }
     Log.i(TAG, "Forcing location update");
 
-    Location loc = dataSources.getLastKnownLocation();
+    Location loc = dataSource.getLastKnownLocation();
     if (loc != null) {
       notifyLocationChanged(loc, getListenersFor(ListenerDataType.LOCATION_UPDATES));
     }
@@ -426,7 +416,7 @@ public class TrackDataHub {
 
       loadNewDataForListener(registration);
 
-      dataSourceManager.updateAllListeners(getNeededListenerTypes());
+      dataSourceManager.updateListeners(getNeededListenerTypes());
     }
   }
 
@@ -438,7 +428,7 @@ public class TrackDataHub {
       // called. When it is called, we'll do both things.
       if (!isStarted()) return;
 
-      dataSourceManager.updateAllListeners(getNeededListenerTypes());
+      dataSourceManager.updateListeners(getNeededListenerTypes());
     }
   }
 
