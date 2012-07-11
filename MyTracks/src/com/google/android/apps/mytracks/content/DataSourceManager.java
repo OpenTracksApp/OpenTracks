@@ -18,8 +18,6 @@ package com.google.android.apps.mytracks.content;
 
 import static com.google.android.apps.mytracks.Constants.TAG;
 
-import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
-
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.ContentObserver;
@@ -169,7 +167,7 @@ public class DataSourceManager {
   private final DataSourceListener dataSourceListener;
 
   // Registered listeners
-  private final Set<ListenerDataType> registeredListeners = EnumSet.noneOf(ListenerDataType.class);
+  private final Set<TrackDataType> registeredListeners = EnumSet.noneOf(TrackDataType.class);
   
   private final Handler handler;
   private final TracksTableObserver tracksTableObserver;
@@ -197,36 +195,36 @@ public class DataSourceManager {
    * 
    * @param listeners the listeners
    */
-  public void updateListeners(EnumSet<ListenerDataType> listeners) {
-    EnumSet<ListenerDataType> neededListeners = EnumSet.copyOf(listeners);
+  public void updateListeners(EnumSet<TrackDataType> listeners) {
+    EnumSet<TrackDataType> neededListeners = EnumSet.copyOf(listeners);
 
     /*
      * Map SAMPLED_OUT_POINT_UPDATES to POINT_UPDATES since they correspond to
      * the same internal listener
      */
-    if (neededListeners.contains(ListenerDataType.SAMPLED_OUT_POINT_UPDATES)) {
-      neededListeners.remove(ListenerDataType.SAMPLED_OUT_POINT_UPDATES);
-      neededListeners.add(ListenerDataType.POINT_UPDATES);
+    if (neededListeners.contains(TrackDataType.SAMPLED_OUT_TRACK_POINTS)) {
+      neededListeners.remove(TrackDataType.SAMPLED_OUT_TRACK_POINTS);
+      neededListeners.add(TrackDataType.TRACK_POINTS_TABLE);
     }
 
     Log.d(TAG, "Updating listeners " + neededListeners);
 
     // Unnecessary = registered - needed
-    Set<ListenerDataType> unnecessaryListeners = EnumSet.copyOf(registeredListeners);
+    Set<TrackDataType> unnecessaryListeners = EnumSet.copyOf(registeredListeners);
     unnecessaryListeners.removeAll(neededListeners);
 
     // Missing = needed - registered
-    Set<ListenerDataType> missingListeners = EnumSet.copyOf(neededListeners);
+    Set<TrackDataType> missingListeners = EnumSet.copyOf(neededListeners);
     missingListeners.removeAll(registeredListeners);
 
     // Remove unnecessary listeners
-    for (ListenerDataType type : unnecessaryListeners) {
-      unregisterListener(type);
+    for (TrackDataType trackDataType : unnecessaryListeners) {
+      unregisterListener(trackDataType);
     }
 
     // Add missing listeners
-    for (ListenerDataType type : missingListeners) {
-      registerListener(type);
+    for (TrackDataType trackDataType : missingListeners) {
+      registerListener(trackDataType);
     }
 
     // Update registered listeners
@@ -237,33 +235,33 @@ public class DataSourceManager {
   /**
    * Registers a listener with data source.
    * 
-   * @param type the listener data type
+   * @param trackDataType the listener data type
    */
-  private void registerListener(ListenerDataType type) {
-    switch (type) {
-      case SELECTED_TRACK_CHANGED:
+  private void registerListener(TrackDataType trackDataType) {
+    switch (trackDataType) {
+      case SELECTED_TRACK:
         // Do nothing
         break;
-      case TRACK_UPDATES:
+      case TRACKS_TABLE:
         dataSource.registerContentObserver(TracksColumns.CONTENT_URI, tracksTableObserver);
         break;
-      case WAYPOINT_UPDATES:
+      case WAYPOINTS_TABLE:
         dataSource.registerContentObserver(WaypointsColumns.CONTENT_URI, waypointsTableObserver);
         break;
-      case POINT_UPDATES:
+      case TRACK_POINTS_TABLE:
         dataSource.registerContentObserver(
             TrackPointsColumns.CONTENT_URI, trackPointsTableObserver);
         break;
-      case SAMPLED_OUT_POINT_UPDATES:
+      case SAMPLED_OUT_TRACK_POINTS:
         // Do nothing. SAMPLED_OUT_POINT_UPDATES is mapped to POINT_UPDATES.
         break;
-      case LOCATION_UPDATES:
+      case LOCATION:
         dataSource.registerLocationListener(currentLocationListener);
         break;
-      case COMPASS_UPDATES:
+      case COMPASS:
         dataSource.registerCompassListener(compassListener);
         break;
-      case DISPLAY_PREFERENCES:
+      case PREFERENCE:
         dataSource.registerOnSharedPreferenceChangeListener(preferenceListener);
         break;
       default:
@@ -274,32 +272,32 @@ public class DataSourceManager {
   /**
    * Unregisters a listener with data source.
    * 
-   * @param type listener data type
+   * @param trackDataType listener data type
    */
-  private void unregisterListener(ListenerDataType type) {
-    switch (type) {
-      case SELECTED_TRACK_CHANGED:
+  private void unregisterListener(TrackDataType trackDataType) {
+    switch (trackDataType) {
+      case SELECTED_TRACK:
         // Do nothing
         break;
-      case TRACK_UPDATES:
+      case TRACKS_TABLE:
         dataSource.unregisterContentObserver(tracksTableObserver);
         break;
-      case WAYPOINT_UPDATES:
+      case WAYPOINTS_TABLE:
         dataSource.unregisterContentObserver(waypointsTableObserver);
         break;
-      case POINT_UPDATES:
+      case TRACK_POINTS_TABLE:
         dataSource.unregisterContentObserver(trackPointsTableObserver);
         break;
-      case SAMPLED_OUT_POINT_UPDATES:
+      case SAMPLED_OUT_TRACK_POINTS:
         // Do nothing. SAMPLED_OUT_POINT_UPDATES is mapped to POINT_UPDATES.
         break;
-      case LOCATION_UPDATES:
+      case LOCATION:
         dataSource.unregisterLocationListener(currentLocationListener);
         break;
-      case COMPASS_UPDATES:
+      case COMPASS:
         dataSource.unregisterCompassListener(compassListener);
         break;
-      case DISPLAY_PREFERENCES:
+      case PREFERENCE:
         dataSource.unregisterOnSharedPreferenceChangeListener(preferenceListener);
         break;
       default:
@@ -311,8 +309,8 @@ public class DataSourceManager {
    * Unregisters all listeners with data source.
    */
   public void unregisterAllListeners() {
-    for (ListenerDataType type : ListenerDataType.values()) {
-      unregisterListener(type);
+    for (TrackDataType trackDataType : TrackDataType.values()) {
+      unregisterListener(trackDataType);
     }
   }
 }

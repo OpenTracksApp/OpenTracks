@@ -24,7 +24,6 @@ import static com.google.android.testing.mocking.AndroidMock.leq;
 import com.google.android.apps.mytracks.Constants;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationFactory;
 import com.google.android.apps.mytracks.content.MyTracksProviderUtils.LocationIterator;
-import com.google.android.apps.mytracks.content.TrackDataHub.ListenerDataType;
 import com.google.android.apps.mytracks.content.TrackDataListener.ProviderState;
 import com.google.android.apps.mytracks.services.TrackRecordingServiceTest.MockContext;
 import com.google.android.apps.mytracks.util.PreferencesUtils;
@@ -68,7 +67,7 @@ public class TrackDataHubTest extends AndroidTestCase {
 
   private MyTracksProviderUtils providerUtils;
   private TrackDataHub hub;
-  private TrackDataListeners listeners;
+  private TrackDataManager trackDataManager;
   private DataSource dataSource;
   private SharedPreferences sharedPreferences;
   private TrackDataListener listener1;
@@ -92,8 +91,8 @@ public class TrackDataHubTest extends AndroidTestCase {
     providerUtils = AndroidMock.createMock("providerUtils", MyTracksProviderUtils.class);
     dataSource = AndroidMock.createMock("dataSource", DataSource.class, context);
 
-    listeners = new TrackDataListeners();
-    hub = new TrackDataHub(context, listeners, providerUtils, TARGET_POINTS) {
+    trackDataManager = new TrackDataManager();
+    hub = new TrackDataHub(context, trackDataManager, providerUtils, TARGET_POINTS) {
       @Override
       protected DataSource newDataSource() {
         return dataSource;
@@ -152,9 +151,9 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     replay();
 
-    hub.registerTrackDataListener(listener1, EnumSet.of(ListenerDataType.TRACK_UPDATES));
+    hub.registerTrackDataListener(listener1, EnumSet.of(TrackDataType.TRACKS_TABLE));
     hub.start();
-    hub.registerTrackDataListener(listener2, EnumSet.of(ListenerDataType.TRACK_UPDATES));
+    hub.registerTrackDataListener(listener2, EnumSet.of(TrackDataType.TRACKS_TABLE));
 
     verifyAndReset();
 
@@ -335,9 +334,9 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     replay();
 
-    hub.registerTrackDataListener(listener1, EnumSet.of(ListenerDataType.WAYPOINT_UPDATES));
+    hub.registerTrackDataListener(listener1, EnumSet.of(TrackDataType.WAYPOINTS_TABLE));
     hub.start();
-    hub.registerTrackDataListener(listener2, EnumSet.of(ListenerDataType.WAYPOINT_UPDATES));
+    hub.registerTrackDataListener(listener2, EnumSet.of(TrackDataType.WAYPOINTS_TABLE));
 
     verifyAndReset();
 
@@ -426,7 +425,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     replay();
 
     hub.start();
-    hub.registerTrackDataListener(listener1, EnumSet.of(ListenerDataType.POINT_UPDATES));
+    hub.registerTrackDataListener(listener1, EnumSet.of(TrackDataType.TRACK_POINTS_TABLE));
 
     verifyAndReset();
 
@@ -444,7 +443,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     replay();
 
     hub.start();
-    hub.registerTrackDataListener(listener2, EnumSet.of(ListenerDataType.POINT_UPDATES));
+    hub.registerTrackDataListener(listener2, EnumSet.of(TrackDataType.TRACK_POINTS_TABLE));
 
     verifyAndReset();
 
@@ -511,7 +510,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     replay();
 
     hub.start();
-    hub.registerTrackDataListener(listener1, EnumSet.of(ListenerDataType.POINT_UPDATES));
+    hub.registerTrackDataListener(listener1, EnumSet.of(TrackDataType.TRACK_POINTS_TABLE));
 
     verifyAndReset();
 
@@ -541,7 +540,7 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     replay();
 
-    hub.registerTrackDataListener(listener1, EnumSet.of(ListenerDataType.POINT_UPDATES));
+    hub.registerTrackDataListener(listener1, EnumSet.of(TrackDataType.TRACK_POINTS_TABLE));
 
     verifyAndReset();
   }
@@ -566,7 +565,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     replay();
 
     hub.start();
-    hub.registerTrackDataListener(listener1, EnumSet.of(ListenerDataType.POINT_UPDATES));
+    hub.registerTrackDataListener(listener1, EnumSet.of(TrackDataType.TRACK_POINTS_TABLE));
 
     verifyAndReset();
 
@@ -597,7 +596,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     replay();
 
     hub.loadTrack(TRACK_ID + 1);
-    hub.registerTrackDataListener(listener1, EnumSet.of(ListenerDataType.POINT_UPDATES));
+    hub.registerTrackDataListener(listener1, EnumSet.of(TrackDataType.TRACK_POINTS_TABLE));
 
     verifyAndReset();
   }
@@ -625,9 +624,9 @@ public class TrackDataHubTest extends AndroidTestCase {
     replay();
 
     hub.registerTrackDataListener(listener1,
-        EnumSet.of(ListenerDataType.POINT_UPDATES));
+        EnumSet.of(TrackDataType.TRACK_POINTS_TABLE));
     hub.registerTrackDataListener(listener2,
-        EnumSet.of(ListenerDataType.POINT_UPDATES, ListenerDataType.SAMPLED_OUT_POINT_UPDATES));
+        EnumSet.of(TrackDataType.TRACK_POINTS_TABLE, TrackDataType.SAMPLED_OUT_TRACK_POINTS));
     hub.start();
 
     verifyAndReset();
@@ -654,7 +653,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     replay();
 
     hub.start();
-    hub.registerTrackDataListener(listener1, EnumSet.of(ListenerDataType.POINT_UPDATES));
+    hub.registerTrackDataListener(listener1, EnumSet.of(TrackDataType.TRACK_POINTS_TABLE));
 
     verifyAndReset();
 
@@ -722,7 +721,7 @@ public class TrackDataHubTest extends AndroidTestCase {
     replay();
 
     hub.registerTrackDataListener(listener1,
-        EnumSet.of(ListenerDataType.COMPASS_UPDATES, ListenerDataType.LOCATION_UPDATES));
+        EnumSet.of(TrackDataType.COMPASS, TrackDataType.LOCATION));
     hub.start();
 
     SensorEventListener sensorListener = listenerCapture.getValue();
@@ -791,9 +790,9 @@ public class TrackDataHubTest extends AndroidTestCase {
 
     replay();
 
-    hub.registerTrackDataListener(listener1, EnumSet.of(ListenerDataType.DISPLAY_PREFERENCES));
+    hub.registerTrackDataListener(listener1, EnumSet.of(TrackDataType.PREFERENCE));
     hub.start();
-    hub.registerTrackDataListener(listener2, EnumSet.of(ListenerDataType.DISPLAY_PREFERENCES));
+    hub.registerTrackDataListener(listener2, EnumSet.of(TrackDataType.PREFERENCE));
 
     verifyAndReset();
 
